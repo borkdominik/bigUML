@@ -1,0 +1,48 @@
+{
+  "name": "@eclipsesource/uml-theia",
+  "description": "Glue code to integrate UML GLSP sprotty client into Eclipse Theia",
+  "keywords": [
+    "theia-extension"
+  ],
+  "author": {
+    "name": "EclipseSource"
+  },
+  "license": "(EPL-2.0 OR MIT)",
+  "version": "0.1.0",
+  "files": [
+    "lib",
+    "src"
+  ],
+  "homepage": "https://github.com/eclipsesource/uml-glsp",
+  "bugs": "https://github.com/eclipsesource/uml-glsp/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eclipsesource/uml-glsp.git"
+  },
+  "dependencies": {
+    "@eclipse-emfcloud/modelserver-theia": "next",
+    "@eclipse-glsp/theia-integration": "next",
+    "@eclipsesource/uml-glsp-common": "0.1.0",
+    "@eclipsesource/uml-sprotty": "0.1.0",
+    "@theia/core": "latest",
+    "@theia/navigator": "latest"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "rimraf": "^2.6.1",
+    "typescript": "~3.9.2"
+  },
+  "scripts": {
+    "prepare": "yarn run clean && yarn run build",
+    "clean": "rimraf lib",
+    "build": "tsc && yarn run lint",
+    "lint": "eslint -c ./.eslintrc.js --ext .ts ./src",
+    "watch": "tsc -w"
+  },
+  "theiaExtensions": [
+    {
+      "frontend": "lib/browser/frontend-extension",
+      "backend": "lib/node/backend-extension"
+    }
+  ]
+}

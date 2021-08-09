@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="unotation" nsURI="http://www.eclipsesource.com/glsp/uml/notation"
+    nsPrefix="unotation">
+  <eClassifiers xsi:type="ecore:EClass" name="Shape" eSuperTypes="#//NotationElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="position" eType="ecore:EClass platform:/plugin/org.eclipse.glsp.graph/model/glsp-graph.ecore#//GPoint"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="size" eType="ecore:EClass platform:/plugin/org.eclipse.glsp.graph/model/glsp-graph.ecore#//GDimension"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Edge" eSuperTypes="#//NotationElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="bendPoints" upperBound="-1"
+        eType="ecore:EClass platform:/plugin/org.eclipse.glsp.graph/model/glsp-graph.ecore#//GPoint"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="source" eType="#//NotationElement"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="target" eType="#//NotationElement"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NotationElement" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="semanticElement" eType="#//SemanticProxy"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Diagram" eSuperTypes="#//NotationElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="elements" upperBound="-1"
+        eType="#//NotationElement" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="diagramType" lowerBound="1"
+        eType="#//Representation" defaultValueLiteral="CLASS"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SemanticProxy">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="uri" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="resolvedElement" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"
+        transient="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Representation">
+    <eLiterals name="ACTIVITY"/>
+    <eLiterals name="CLASS" value="1"/>
+    <eLiterals name="PACKAGE" value="2"/>
+    <eLiterals name="SEQUENCE" value="3"/>
+    <eLiterals name="STATEMACHINE" value="4"/>
+    <eLiterals name="USECASE" value="5"/>
+    <eLiterals name="DEPLOYMENT" value="6"/>
+    <eLiterals name="COMPONENT" value="7"/>
+  </eClassifiers>
+</ecore:EPackage>

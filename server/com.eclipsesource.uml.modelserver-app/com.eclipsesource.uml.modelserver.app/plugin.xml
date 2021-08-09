@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         id="product"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="com.eclipsesource.uml.modelserver.app.uml-glsp-modelserver"
+            name="UML GLSP Modelserver">
+         <property
+               name="appName"
+               value="UML GLSP Modelserver">
+         </property>
+      </product>
+   </extension>
+   <extension
+         id="uml-glsp-modelserver"
+         point="org.eclipse.core.runtime.applications">
+      <application
+            cardinality="singleton-global"
+            thread="main"
+            visible="true">
+         <run
+               class="com.eclipsesource.uml.modelserver.app.ServerApplication">
+         </run>
+      </application>
+   </extension>
+
+</plugin>

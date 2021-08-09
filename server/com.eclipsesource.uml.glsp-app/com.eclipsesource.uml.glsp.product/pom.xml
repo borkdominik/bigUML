@@ -1,0 +1,55 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.eclipsesource.uml</groupId>
+		<artifactId>com.eclipsesource.uml.glsp-app</artifactId>
+		<version>0.1.0</version>
+	</parent>
+
+	<artifactId>com.eclipsesource.uml.glsp.product</artifactId>
+	<packaging>eclipse-repository</packaging>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-p2-director-plugin</artifactId>
+				<version>${tycho.version}</version>
+				<executions>
+					<execution>
+						<id>materialize-products</id>
+						<goals>
+							<goal>materialize-products</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>${maven.antrun.plugin.version}</version>
+				<executions>
+					<execution>
+						<id>Copy Jar to client/packages/uml-theia-integration</id>
+						<phase>package</phase>
+						<configuration>
+							<target>
+								<delete dir="../../../client/packages/uml-theia-integration/build/${project.artifactId}-${project.version}" />
+								<copy todir="../../../client/packages/uml-theia-integration/build/${project.artifactId}-${project.version}">
+									<fileset dir="target/products/${project.artifactId}/linux/gtk/x86_64" includes="**/*" />
+								</copy>
+							</target>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

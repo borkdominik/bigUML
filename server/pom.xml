@@ -1,0 +1,85 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.eclipsesource.uml</groupId>
+	<artifactId>com.eclipsesource.uml.parent</artifactId>
+	<packaging>pom</packaging>
+	<version>0.1.0</version>
+	
+	<properties>
+		<!-- Encoding: used by the maven-resource-plugin -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<!-- Compiler: used by the maven-compiler-plugin for Java source and target -->
+		<maven.compiler.source>11</maven.compiler.source>
+		<maven.compiler.target>11</maven.compiler.target>
+		<!-- Maven Plugin Versions: General maven plugin versions -->
+		<tycho.version>1.6.0</tycho.version>
+		<maven.antrun.plugin.version>1.8</maven.antrun.plugin.version>
+	</properties>
+
+	<modules>
+		<module>targetplatform</module>
+		<module>com.eclipsesource.uml.glsp</module>
+		<module>com.eclipsesource.uml.glsp-app</module>
+		<module>com.eclipsesource.uml.modelserver</module>
+		<module>com.eclipsesource.uml.modelserver-app</module>
+	</modules>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.eclipse.tycho</groupId>
+					<artifactId>target-platform-configuration</artifactId>
+					<version>${tycho.version}</version>
+					<configuration>
+						<target>
+							<artifact>
+								<groupId>com.eclipsesource.uml</groupId>
+								<artifactId>targetplatform</artifactId>
+								<version>0.1.0</version>
+								<classifier>r2020-09</classifier>
+							</artifact>
+						</target>
+						<environments>
+							<environment>
+								<os>linux</os>
+								<ws>gtk</ws>
+								<arch>x86_64</arch>
+							</environment>
+							<environment>
+								<os>win32</os>
+								<ws>win32</ws>
+								<arch>x86_64</arch>
+							</environment>
+							<environment>
+								<os>macosx</os>
+								<ws>cocoa</ws>
+								<arch>x86_64</arch>
+							</environment>
+						</environments>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.eclipse.tycho</groupId>
+					<artifactId>tycho-maven-plugin</artifactId>
+					<version>${tycho.version}</version>
+					<extensions>true</extensions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+
+		<plugins>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>target-platform-configuration</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+</project>

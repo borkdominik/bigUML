@@ -1,0 +1,53 @@
+{
+  "private": true,
+  "engines": {
+    "yarn": "1.0.x || >=1.2.1",
+    "node": ">=10.11.0 <13"
+  },
+  "scripts": {
+    "prepare": "lerna run prepare",
+    "watch": "lerna run --parallel watch",
+    "start": "cd browser-app && yarn start",
+    "start:debug": "cd browser-app && yarn start:debug"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^2.16.0",
+    "@typescript-eslint/parser": "^2.16.0",
+    "babel-loader": "8.0.6",
+    "eslint": "^6.8.0",
+    "eslint-plugin-header": "^3.0.0",
+    "eslint-plugin-import": "^2.20.0",
+    "eslint-plugin-no-null": "^1.0.2",
+    "eslint-plugin-react": "^7.20.3",
+    "lerna": "^2.11.0"
+  },
+  "resolutions": {
+    "**/@theia/application-manager": "^1.4.0",
+    "**/@theia/application-package": "^1.4.0",
+    "**/@theia/core": "^1.4.0",
+    "**/@theia/editor": "^1.4.0",
+    "**/@theia/filesystem": "^1.4.0",
+    "**/@theia/languages": "^1.4.0",
+    "**/@theia/markers": "^1.4.0",
+    "**/@theia/messages": "^1.4.0",
+    "**/@theia/monaco": "^1.4.0",
+    "**/@theia/navigator": "^1.4.0",
+    "**/@theia/preferences": "^1.4.0",
+    "**/@theia/process": "^1.4.0",
+    "**/@theia/terminal": "^1.4.0",
+    "**/@theia/workspace": "^1.4.0",
+    "**/sprotty": "0.9.0",
+    "**/sprotty-theia": "0.9.0",
+    "**/@eclipse-glsp/client": "0.8.0-next.5c0863ff",
+    "**/@eclipse-glsp/theia-integration": "0.8.0-next.cef5529d",
+    "**/@eclipse-emfcloud/modelserver-theia": "0.8.0-next.5bf1df0"
+  },
+  "workspaces": [
+    "browser-app",
+    "configs",
+    "packages/*/"
+  ],
+  "dependencies": {
+    "yarn": "^1.22.4"
+  }
+}

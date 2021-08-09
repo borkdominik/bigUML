@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-SymbolicName: com.eclipsesource.uml.glsp.app;singleton:=true
+Bundle-Version: 0.1.0.qualifier
+Bundle-Vendor: %providerName
+Automatic-Module-Name: com.eclipsesource.uml.glsp.app
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Require-Bundle: org.eclipse.equinox.app;bundle-version="1.4.0",
+ com.eclipsesource.uml.glsp;bundle-version="0.1.0",
+ org.eclipse.equinox.event;bundle-version="1.5.500"
+Export-Package: com.eclipsesource.uml.glsp.app

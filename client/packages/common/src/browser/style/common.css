@@ -1,0 +1,57 @@
+/********************************************************************************
+ * Copyright (c) 2021 EclipseSource and others.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v. 2.0 which is available at
+ * https://www.eclipse.org/legal/epl-2.0, or the MIT License which is
+ * available at https://opensource.org/licenses/MIT.
+ *
+ * SPDX-License-Identifier: EPL-2.0 OR MIT
+ ********************************************************************************/
+
+.p-Menu-itemIcon.fa.fa-project-diagram {
+    font-size: smaller;
+}
+
+.p-Menu-itemIcon.fa.fa-project-diagram:before {
+    font-family: "Font Awesome 5 Free";
+}
+
+.umlmodelfile {
+    background-image: url(../../../resources/icons/UMLModelFile.gif);
+    height: 16px;
+    width: 16px;
+    margin-left: -3px;
+}
+
+.p-TabBar.theia-app-centers .p-TabBar-tabIcon.umlmodelfileTabIcon {
+    background-image: url(../../../resources/icons/UMLModelFile.gif);
+    height: 16px;
+    width: 16px;
+    background-color: transparent;
+    background-repeat: no-repeat;
+}
+
+.p-Menu-itemIcon.umlmodelfile {
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.umlimg {
+    background-size: 16px 16px;
+    height: 16px;
+    width: 16px;
+    margin-right: 6px;
+}
+
+.umlclass {
+    background-image: var(--uml-icon-class);
+}
+
+.umlassociation {
+    background-image: var(--uml-icon-association);
+}
+
+.umlproperty {
+    background-image: var(--uml-icon-property);
+}

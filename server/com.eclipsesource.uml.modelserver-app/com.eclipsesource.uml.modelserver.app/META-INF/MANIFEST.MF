@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-SymbolicName: com.eclipsesource.uml.modelserver.app;singleton:=true
+Bundle-Version: 0.1.0.qualifier
+Bundle-Vendor: %providerName
+Automatic-Module-Name: com.eclipsesource.uml.modelserver.app
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Export-Package: com.eclipsesource.uml.modelserver.app;uses:="org.eclipse.equinox.app"
+Require-Bundle: org.eclipse.equinox.app;bundle-version="1.4.0",
+ com.eclipsesource.uml.modelserver;bundle-version="0.1.0"

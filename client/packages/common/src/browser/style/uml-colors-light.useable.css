@@ -1,0 +1,8 @@
+:root {
+    --uml-border: var(--uml-medium-blue);
+    --uml-diagram-background: var(--theia-editor-background);
+    --uml-drop-shadow: lightgrey;
+    --uml-edge: var(--uml-medium-blue);
+    --uml-label: var(--theia-editor-foreground);
+    --uml-node: var(--uml-light-blue);
+}

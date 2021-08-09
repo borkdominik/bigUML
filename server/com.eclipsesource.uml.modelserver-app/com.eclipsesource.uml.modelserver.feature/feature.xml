@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="com.eclipsesource.uml.modelserver.feature"
+      label="UML GLSP Modelserver Feature"
+      version="0.1.0.qualifier"
+      provider-name="EclipseSource">
+
+   <description url="https://github.com/eclipsesource/uml-glsp">
+      UML GLSP Modelserver Application, for creating and editing UML Diagrams.
+   </description>
+
+   <copyright url="https://github.com/eclipsesource/uml-glsp">
+      Copyright (c) 2021 EclipseSource and others.
+ 
+  This program and the accompanying materials are made available under the
+  terms of the Eclipse Public License v. 2.0 which is available at
+  https://www.eclipse.org/legal/epl-2.0, or the MIT License which is
+  available at https://opensource.org/licenses/MIT.
+ 
+  SPDX-License-Identifier: EPL-2.0 OR MIT
+   </copyright>
+
+   <license url="">
+      EPL-2.0 or MIT
+   </license>
+
+   <includes
+         id="org.eclipse.core.runtime.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="com.eclipsesource.uml.glsp.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.glsp.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emfcloud.modelserver.feature"
+         version="0.0.0"/>
+
+   <requires>
+      <import plugin="org.apache.log4j" version="1.2.15" match="compatible"/>
+      <import plugin="org.apache.commons.io" version="2.6.0" match="compatible"/>
+      <import plugin="com.google.inject" version="3.0.0" match="greaterOrEqual"/>
+      <import plugin="com.google.guava"/>
+      <import plugin="org.eclipse.emf.common"/>
+      <import plugin="org.eclipse.emf.ecore.xmi"/>
+      <import plugin="org.slf4j.api" version="1.7.30" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.core.runtime" version="3.18.0" match="compatible"/>
+      <import plugin="org.eclipse.emf.ecore" version="2.22.0" match="compatible"/>
+      <import plugin="org.eclipse.elk.core" version="0.6.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.elk.graph" version="0.6.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.elk.alg.layered" version="0.6.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.emf.edit" version="2.16.0" match="compatible"/>
+      <import plugin="javax.inject"/>
+      <import plugin="org.eclipse.equinox.app" version="1.4.0" match="greaterOrEqual"/>
+   </requires>
+
+   <plugin
+         id="com.eclipsesource.uml.modelserver.app"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="com.eclipsesource.uml.modelserver"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

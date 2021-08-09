@@ -1,0 +1,12 @@
+dockerfiles
+.git
+.travis.yaml
+.gitignore
+.vscode/
+
+**/node_modules
+**/lib
+**/src-gen
+
+Dockerfile
+.dockerignore

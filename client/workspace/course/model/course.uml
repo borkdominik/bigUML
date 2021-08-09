@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_YahsEICsEeuZ-81mmATQSA" name="Course">
+  <packageImport xmi:id="_YfGDAICsEeuZ-81mmATQSA">
+    <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
+  </packageImport>
+  <packagedElement xmi:type="uml:Class" xmi:id="_Y_ah0ICsEeuZ-81mmATQSA" name="Student">
+    <ownedAttribute xmi:id="_P8CnYICtEeuzso-BU3w9ZA" name="name">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_QfHfQICtEeuzso-BU3w9ZA" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_QfHfQYCtEeuzso-BU3w9ZA" value="1"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_Q0qRcICtEeuzso-BU3w9ZA" name="registrationNumber">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_R-OhkICtEeuzso-BU3w9ZA" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_R-OhkYCtEeuzso-BU3w9ZA" value="1"/>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_aEhIsICsEeuZ-81mmATQSA" name="Course">
+    <ownedAttribute xmi:id="_Nl-H4ICtEeuzso-BU3w9ZA" name="title">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_OMhxkICtEeuzso-BU3w9ZA" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_OMhxkYCtEeuzso-BU3w9ZA" value="1"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_OnsDkICtEeuzso-BU3w9ZA" name="courseId">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_PdbYwICtEeuzso-BU3w9ZA" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_PdbYwYCtEeuzso-BU3w9ZA" value="1"/>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_gistEICsEeuZ-81mmATQSA" memberEnd="_givJUICsEeuZ-81mmATQSA _gi1P8ICsEeuZ-81mmATQSA">
+    <ownedEnd xmi:id="_givJUICsEeuZ-81mmATQSA" name="students" type="_Y_ah0ICsEeuZ-81mmATQSA" association="_gistEICsEeuZ-81mmATQSA">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_yiQC4ICsEeuZ-81mmATQSA" value="5"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_yiiWwICsEeuZ-81mmATQSA" value="25"/>
+    </ownedEnd>
+    <ownedEnd xmi:id="_gi1P8ICsEeuZ-81mmATQSA" name="courses" type="_aEhIsICsEeuZ-81mmATQSA" association="_gistEICsEeuZ-81mmATQSA">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_1OmUYICsEeuZ-81mmATQSA"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_1OzIsICsEeuZ-81mmATQSA" value="*"/>
+    </ownedEnd>
+  </packagedElement>
+</uml:Model>

@@ -1,0 +1,20 @@
+{
+  "extends": "./configs/base.tsconfig",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@eclipsesource/uml-glsp-common": [
+        "packages/common/src/*"
+      ],
+      "@eclipsesource/uml-sprotty": [
+        "packages/uml-sprotty/src/*"
+      ],
+      "@eclipsesource/uml-theia": [
+        "packages/uml-theia-integration/src/*"
+      ],
+    }
+  },
+  "include": [
+    "packages/*/src"
+  ]
+}

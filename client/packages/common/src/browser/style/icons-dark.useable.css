@@ -1,0 +1,5 @@
+:root {
+    --uml-icon-class: url(../../../resources/icons/dark/Class.gif);
+    --uml-icon-association: url(../../../resources/icons/dark/Association.gif);
+    --uml-icon-property: url(../../../resources/icons/dark/Property.gif);
+}

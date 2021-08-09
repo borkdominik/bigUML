@@ -1,0 +1,12 @@
+{
+  "extends": "../../configs/base.tsconfig.json",
+  "compilerOptions": {
+    "outDir": "lib",
+    "baseUrl": ".",
+    "reactNamespace": "JSX",
+    "skipLibCheck": true
+  },
+  "include": [
+    "src"
+  ]
+}

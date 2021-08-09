@@ -1,0 +1,47 @@
+{
+  "name": "@eclipsesource/uml-sprotty",
+  "version": "0.1.0",
+  "description": "Sprotty diagrams for UML",
+  "author": {
+    "name": "EclipseSource"
+  },
+  "license": "(EPL-2.0 OR MIT)",
+  "keywords": [
+    "sprotty",
+    "workflow",
+    "diagram"
+  ],
+  "homepage": "https://github.com/eclipsesource/uml-glsp",
+  "bugs": "https://github.com/eclipsesource/uml-glsp/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eclipsesource/uml-glsp.git"
+  },
+  "dependencies": {
+    "@eclipsesource/uml-glsp-common": "0.1.0",
+    "@eclipse-glsp/client": "next",
+    "reflect-metadata": "^0.1.10"
+  },
+  "devDependencies": {
+    "css-loader": "^1.0.1",
+    "eslint": "^6.8.0",
+    "rimraf": "^2.6.1",
+    "ts-loader": "^5.3.0",
+    "typescript": "~3.9.2",
+    "webpack": "^4.23.1"
+  },
+  "scripts": {
+    "prepare": "yarn run clean && yarn run build",
+    "clean": "rimraf lib",
+    "build": "tsc && yarn run lint",
+    "lint": "eslint -c ./.eslintrc.js --ext .ts,.tsx ./src",
+    "watch": "tsc -w",
+    "bundle": "webpack --progress --config ./configs/webpack.config.js"
+  },
+  "files": [
+    "lib",
+    "src",
+    "css",
+    "images"
+  ]
+}

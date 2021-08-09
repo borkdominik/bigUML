@@ -1,0 +1,7 @@
+.tool-palette {
+    width: 200px !important;
+}
+
+.uml-tool-button {
+    display: flex;
+}

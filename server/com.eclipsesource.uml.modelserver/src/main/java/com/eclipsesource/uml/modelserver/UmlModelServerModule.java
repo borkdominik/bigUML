@@ -20,18 +20,18 @@ import org.eclipse.emfcloud.modelserver.emf.configuration.EPackageConfiguration;
 import org.eclipse.emfcloud.modelserver.emf.di.DefaultModelServerModule;
 import org.eclipse.uml2.uml.resource.UMLResource;
 
-import com.eclipsesource.uml.modelserver.commands.contributions.AddAssociationCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.contributions.AddClassCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.contributions.AddPropertyCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.contributions.ChangeBoundsCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.contributions.ChangeRoutingPointsCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.contributions.RemoveAssociationCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.contributions.RemoveClassCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.contributions.RemovePropertyCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.contributions.SetAssociationEndMultiplicityCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.contributions.SetAssociationEndNameCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.contributions.SetClassNameCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.contributions.SetPropertyCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.classdiagram.contributions.AddAssociationCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.classdiagram.contributions.AddClassCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.classdiagram.contributions.AddPropertyCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.classdiagram.contributions.ChangeBoundsCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.classdiagram.contributions.ChangeRoutingPointsCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.classdiagram.contributions.RemoveAssociationCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.classdiagram.contributions.RemoveClassCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.classdiagram.contributions.RemovePropertyCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.classdiagram.contributions.SetAssociationEndMultiplicityCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.classdiagram.contributions.SetAssociationEndNameCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.classdiagram.contributions.SetClassNameCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.classdiagram.contributions.SetPropertyCommandContribution;
 
 public class UmlModelServerModule extends DefaultModelServerModule {
 

@@ -14,17 +14,57 @@ public final class UmlConfig {
 
    public static final class Types {
 
-      public static final String LABEL_NAME = "label:name";
-      public static final String LABEL_TEXT = "label:text";
-      public static final String LABEL_EDGE_NAME = "label:edge-name";
-      public static final String LABEL_EDGE_MULTIPLICITY = "label:edge-multiplicity";
-      public static final String COMP = "comp:comp";
-      public static final String COMP_HEADER = "comp:header";
-      public static final String LABEL_ICON = "label:icon";
-      public static final String ICON_CLASS = "icon:class";
-      public static final String CLASS = "node:class";
-      public static final String PROPERTY = "node:property";
-      public static final String ASSOCIATION = "edge:association";
+      //Icon
+      public static final String ICON = "icon:";
+      //Node
+      public static final String NODE = "node:";
+      //Edge
+      public static final String EDGE = "edge:";
+      //Label
+      public static final String LABEL = "label:";
+      //Comp
+      public static final String COMP_PRE = "comp:";
+
+      //COMMONS
+      public static final String LABEL_NAME = LABEL + "name";
+      public static final String LABEL_TEXT = LABEL + "text";
+      public static final String LABEL_EDGE_NAME = LABEL + "edge-name";
+      public static final String LABEL_EDGE_MULTIPLICITY = LABEL + "edge-multiplicity";
+      public static final String COMP = COMP_PRE + "comp";
+      public static final String COMP_HEADER = COMP_PRE + "header";
+      public static final String LABEL_ICON = LABEL + "icon";
+
+      //CLASS DIAGRAM
+      public static final String ICON_CLASS = ICON + "class";
+      public static final String CLASS = NODE + "class";
+      public static final String PROPERTY = NODE + "property";
+      public static final String ASSOCIATION = EDGE + "association";
+
+      //ACTIVITY DIAGRAM
+      //Activity
+      public static final String ICON_ACTIVITY = ICON + "activity";
+      public static final String ACTIVITY = NODE + "activity";
+      public static final String PARTITION = NODE + "partition";
+      public static final String CONDITION = NODE + "condition";
+      public static final String CONTROLFLOW = EDGE + "controlflow";
+      public static final String LABEL_GUARD = LABEL + "guard";
+      public static final String LABEL_WEIGHT = LABEL + "weight ";
+
+      //Actions
+
+      //Control Nodes
+
+      //Data Flow
+
+      //Exceptions
+
+      //Comments
+
+      //TODO: StateMachine
+
+      //TODO: UseCase
+
+      //TODO: Deployment
 
       private Types() {}
    }

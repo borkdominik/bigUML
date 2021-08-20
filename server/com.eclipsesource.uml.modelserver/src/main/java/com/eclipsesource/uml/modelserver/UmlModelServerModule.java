@@ -10,6 +10,8 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver;
 
+import com.eclipsesource.uml.modelserver.commands.activitydiagram.contributions.AddActivityCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.activitydiagram.contributions.RemoveActivityCommandContribution;
 import org.eclipse.emfcloud.modelserver.common.Routing;
 import org.eclipse.emfcloud.modelserver.common.codecs.Codec;
 import org.eclipse.emfcloud.modelserver.common.utils.MapBinding;
@@ -50,6 +52,7 @@ public class UmlModelServerModule extends DefaultModelServerModule {
    @Override
    protected void configureCommandCodecs(final MapBinding<String, CommandContribution> binding) {
       super.configureCommandCodecs(binding);
+      // CLASS DIAGRAM
       // UML Class
       binding.put(AddClassCommandContribution.TYPE, AddClassCommandContribution.class);
       binding.put(RemoveClassCommandContribution.TYPE, RemoveClassCommandContribution.class);
@@ -64,6 +67,22 @@ public class UmlModelServerModule extends DefaultModelServerModule {
       binding.put(SetAssociationEndNameCommandContribution.TYPE, SetAssociationEndNameCommandContribution.class);
       binding.put(SetAssociationEndMultiplicityCommandContribution.TYPE,
          SetAssociationEndMultiplicityCommandContribution.class);
+
+      // ACTIVITY DIAGRAM
+      // UML Activity
+      binding.put(AddActivityCommandContribution.TYPE, AddActivityCommandContribution.class);
+      binding.put(RemoveActivityCommandContribution.TYPE, RemoveActivityCommandContribution.class);
+
+
+      //TODO: Remaining activity diagram elements
+
+      //TODO: StateMachine
+
+      //TODO: UseCase
+
+      //TODO: Deployment
+
+
       // ChangeBounds
       binding.put(ChangeBoundsCommandContribution.TYPE, ChangeBoundsCommandContribution.class);
       // ChangeRoutingPoints

@@ -10,6 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp;
 
+import com.eclipsesource.uml.glsp.operations.activitydiagram.CreateActivityNodeOperationHandler;
 import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.ActionHandler;
 import org.eclipse.glsp.server.actions.DisposeClientSessionActionHandler;
@@ -101,10 +102,15 @@ public class UmlGLSPModule extends DefaultGLSPModule {
       bindings.rebind(ChangeBoundsOperationHandler.class, UmlChangeBoundsOperationHandler.class);
       bindings.rebind(ChangeRoutingPointsHandler.class, UmlChangeRoutingPointsOperationHandler.class);
       bindings.rebind(DeleteOperationHandler.class, UmlDeleteOperationHandler.class);
+
+      //CLASS DIAGRAM
       bindings.add(CreateClassifierNodeOperationHandler.class);
       bindings.add(CreateEdgeOperationHandler.class);
       bindings.add(CreateClassifierChildNodeOperationHandler.class);
       bindings.add(LayoutOperationHandler.class);
+
+      //ACTIVTIY DIAGRAM
+      bindings.add(CreateActivityNodeOperationHandler.class);
    }
 
    @Override

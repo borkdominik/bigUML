@@ -46,6 +46,9 @@ public class UmlDiagramConfiguration implements DiagramConfiguration {
       hints.add(new ShapeTypeHint(DefaultTypes.GRAPH, false, false, false, false, List.of(Types.CLASS)));
       hints.add(new ShapeTypeHint(Types.CLASS, true, true, false, false, List.of(Types.PROPERTY)));
       hints.add(new ShapeTypeHint(Types.PROPERTY, false, true, false, true));
+
+      //ACTIVITY DIAGRAM
+      hints.add(new ShapeTypeHint(DefaultTypes.GRAPH, false, false, false, false, List.of(Types.ACTIVITY)));
       return hints;
    }
 
@@ -61,6 +64,7 @@ public class UmlDiagramConfiguration implements DiagramConfiguration {
       mappings.put(Types.COMP_HEADER, GraphPackage.Literals.GCOMPARTMENT);
       mappings.put(Types.LABEL_ICON, GraphPackage.Literals.GCOMPARTMENT);
 
+      // CLASS DIAGRAM
       // UML Class
       mappings.put(Types.ICON_CLASS, GraphPackage.Literals.GCOMPARTMENT);
       mappings.put(Types.CLASS, GraphPackage.Literals.GNODE);
@@ -68,6 +72,14 @@ public class UmlDiagramConfiguration implements DiagramConfiguration {
       mappings.put(Types.PROPERTY, GraphPackage.Literals.GLABEL);
       // UML Associations
       mappings.put(Types.ASSOCIATION, GraphPackage.Literals.GEDGE);
+
+      // ACTIVITY DIAGRAM
+      // UML Activity
+      mappings.put(Types.ACTIVITY, GraphPackage.Literals.GNODE);
+      mappings.put(Types.ICON_ACTIVITY, GraphPackage.Literals.GCOMPARTMENT);
+
+      //TODO: ADD REMAINING ACTIVITY ELEMENTS
+
       return mappings;
    }
 

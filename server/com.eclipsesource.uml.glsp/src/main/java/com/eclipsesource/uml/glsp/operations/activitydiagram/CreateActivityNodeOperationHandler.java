@@ -14,6 +14,7 @@ import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.operations.Operation;
+import org.eclipse.glsp.server.protocol.GLSPServerException;
 import org.eclipse.uml2.uml.Activity;
 import org.eclipse.uml2.uml.ActivityPartition;
 import org.eclipse.uml2.uml.Element;
@@ -41,13 +42,25 @@ public class CreateActivityNodeOperationHandler extends ModelServerAwareBasicCre
     @Override
     public void executeOperation(final CreateNodeOperation operation, final GModelState modelState, final UmlModelServerAccess modelAccess) throws Exception {
         UmlModelState umlModelState = UmlModelState.getModelState(modelState);
-        String containerId = operation.getContainerId();
+        /*String containerId = operation.getContainerId();
         Element container = getOrThrow(umlModelState.getIndex().getSemantic(containerId), Element.class,
                 "No valid activity container with id " + containerId + " found!");
         String elementTypeId = operation.getElementTypeId();
-        GPoint position = getPosition(umlModelState, container,operation.getLocation().orElse(GraphUtil.point(0,0)));
+        GPoint position = getPosition(umlModelState, container,operation.getLocation().orElse(GraphUtil.point(0,0)));*/
 
         //TODO: ADD THE REMAINING TYPES
+
+        switch (operation.getElementTypeId()) {
+            case Types.ACTIVITY: {
+                modelAccess.addClass(UmlModelState.getModelState(modelState), operation.getLocation())
+                        .thenAccept(response -> {
+                            if (!response.body()) {
+                                throw new GLSPServerException("Could not generate new Actvity Node");
+                            }
+                        });
+                break;
+            }
+        }
     }
 
     private GPoint getPosition(final UmlModelState modelState, final Element container, final GPoint position) {

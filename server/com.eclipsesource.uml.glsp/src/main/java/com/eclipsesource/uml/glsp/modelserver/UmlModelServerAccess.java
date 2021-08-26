@@ -17,6 +17,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 import com.eclipsesource.uml.modelserver.commands.activitydiagram.contributions.AddActivityCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.activitydiagram.contributions.RemoveActivityCommandContribution;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -32,10 +33,8 @@ import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.glsp.server.protocol.GLSPServerException;
 import org.eclipse.glsp.server.types.ElementAndBounds;
 import org.eclipse.glsp.server.types.ElementAndRoutingPoints;
-import org.eclipse.uml2.uml.Association;
+import org.eclipse.uml2.uml.*;
 import org.eclipse.uml2.uml.Class;
-import org.eclipse.uml2.uml.NamedElement;
-import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.resource.UMLResource;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
@@ -217,10 +216,25 @@ public class UmlModelServerAccess {
    /*
     * UML ACTIVITY
     */
-   public CompletableFuture<Response<Boolean>> addActivity(final UmlModelState modelState, final Optional<GPoint> newPosition) {
+   /*public CompletableFuture<Response<Boolean>> addActivity(final UmlModelState modelState, final Optional<GPoint> newPosition) {
       CCompoundCommand addActivityCompoundCommand = AddActivityCommandContribution
               .create(newPosition.orElse(GraphUtil.point(0,0)));
       return this.edit(addActivityCompoundCommand);
+   }*/
+
+   public CompletableFuture<Response<Boolean>> addActivity(final UmlModelState modelState,
+                                                           final Optional<GPoint> newPosition) {
+
+      CCompoundCommand addActivityCompoundCommand = AddActivityCommandContribution
+              .create(newPosition.orElse(GraphUtil.point(0, 0)));
+      return this.edit(addActivityCompoundCommand);
+   }
+
+   public CompletableFuture<Response<Boolean>> removeActivity(final UmlModelState modelState,
+                                                              final Activity activity) {
+      CCommand removePropertyCommand = RemoveActivityCommandContribution
+              .create(getSemanticUriFragment(activity));
+      return this.edit(removePropertyCommand);
    }
 
    /*

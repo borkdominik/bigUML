@@ -1,6 +1,6 @@
 package com.eclipsesource.uml.glsp.operations.activitydiagram;
 
-/*import static org.eclipse.glsp.server.protocol.GLSPServerException.getOrThrow;
+import static org.eclipse.glsp.server.protocol.GLSPServerException.getOrThrow;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;
@@ -19,11 +19,11 @@ import org.eclipse.uml2.uml.Activity;
 import org.eclipse.uml2.uml.ActivityPartition;
 import org.eclipse.uml2.uml.Element;
 
-import java.util.List;*/
+import java.util.List;
 
-public class CreateActivityNodeOperationHandler /*extends ModelServerAwareBasicCreateOperationHandler<CreateNodeOperation>*/ {
+public class CreateActivityNodeOperationHandler extends ModelServerAwareBasicCreateOperationHandler<CreateNodeOperation> {
 
-    /*public CreateActivityNodeOperationHandler() {
+    public CreateActivityNodeOperationHandler() {
         super(handledElementTypeIds);
     }
 
@@ -49,7 +49,6 @@ public class CreateActivityNodeOperationHandler /*extends ModelServerAwareBasicC
         GPoint position = getPosition(umlModelState, container,operation.getLocation().orElse(GraphUtil.point(0,0)));*/
 
         //TODO: ADD THE REMAINING TYPES
-/*
         switch (operation.getElementTypeId()) {
             case Types.ACTIVITY: {
                 modelAccess.addClass(UmlModelState.getModelState(modelState), operation.getLocation())
@@ -82,6 +81,6 @@ public class CreateActivityNodeOperationHandler /*extends ModelServerAwareBasicC
     }
 
     @Override
-    public String getLabel() { return "Create uml activity"; }*/
+    public String getLabel() { return "Create uml activity"; }
 
 }

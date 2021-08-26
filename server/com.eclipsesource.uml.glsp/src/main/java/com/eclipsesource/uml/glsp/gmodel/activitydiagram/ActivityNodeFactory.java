@@ -17,6 +17,7 @@ import org.eclipse.uml2.uml.Activity;
 import org.eclipse.uml2.uml.ActivityNode;
 import org.eclipse.uml2.uml.ObjectNode;
 
+//TODO: ADD REMAINING ELEMENTS
 public class ActivityNodeFactory extends AbstractGModelFactory<ActivityNode, GNode> {
 
     private final LabelFactory labelFactory;

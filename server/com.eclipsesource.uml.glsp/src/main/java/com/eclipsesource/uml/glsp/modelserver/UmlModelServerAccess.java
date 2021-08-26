@@ -16,6 +16,7 @@ import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
+import com.eclipsesource.uml.modelserver.commands.activitydiagram.contributions.AddActivityCommandContribution;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -210,6 +211,16 @@ public class UmlModelServerAccess {
       CCommand setClassNameCommand = SetAssociationEndMultiplicityCommandContribution.create(
          getSemanticUriFragment(associationEnd), newBounds);
       return this.edit(setClassNameCommand);
+   }
+
+   //TODO: Activity Diagram
+   /*
+    * UML ACTIVITY
+    */
+   public CompletableFuture<Response<Boolean>> addActivity(final UmlModelState modelState, final Optional<GPoint> newPosition) {
+      CCompoundCommand addActivityCompoundCommand = AddActivityCommandContribution
+              .create(newPosition.orElse(GraphUtil.point(0,0)));
+      return this.edit(addActivityCompoundCommand);
    }
 
    /*

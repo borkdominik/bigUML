@@ -19,7 +19,7 @@ public class AddActivityCommand extends UmlSemanticElementCommand {
     @Override
     protected void doExecute() {
         //TODO: ADD THIS IN OVERVIEW FILE AND THEN UNCOMMENT IT AGAIN
-        //activity.setName(UmlSemanticCommandUtil.getNewPackageableElementName(umlModel, Activity.class));
+        activity.setName(UmlSemanticCommandUtil.getNewPackageableElementName(umlModel, Activity.class));
         umlModel.getPackagedElements().add(activity);
     }
 

@@ -106,6 +106,11 @@ public final class UmlSemanticCommandUtil {
       return nameProvider.apply(classifierCounter);
    }
 
+   //Added for activity
+   public static String getNewPackageableElementName(final Model umlModel, final java.lang.Class<? extends PackageableElement> clazz) {
+      return UmlSemanticCommandUtil.getNewPackageableElementName(clazz, umlModel);
+   }
+
    private static String multiplicityRegex() {
       return "\\.\\.";
    }

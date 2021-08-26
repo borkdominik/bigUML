@@ -35,7 +35,7 @@ public class UmlToolPaletteItemProvider implements ToolPaletteItemProvider {
 
    private PaletteItem classifiers() {
       PaletteItem createClass = node(Types.CLASS, "Class", "umlclass");
-      //TODO: ADD TO ANOTHER ITEM LATER
+      //TODO: ADD TO ANOTHER CATEGORY LATER
       PaletteItem createActivity = node(Types.ACTIVITY, "Activity", "umlactivty");
 
 

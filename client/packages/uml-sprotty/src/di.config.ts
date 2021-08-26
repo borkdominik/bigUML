@@ -70,7 +70,8 @@ import umlToolPaletteModule from "./features/tool-palette/di.config";
 import { LabelSelectionFeedback } from "./feedback";
 import { IconClass, LabeledNode, SEditableLabel, SLabelNodeProperty } from "./model";
 import { BaseTypes, UmlTypes } from "./utils";
-import { ClassNodeView, IconView, LabelNodeView } from "./views";
+import { ClassNodeView, IconView, LabelNodeView} from "./views";
+import { ActivityNodeView } from "./views/activityviews";
 
 export default (containerId: string): Container => {
     const classDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
@@ -100,6 +101,10 @@ export default (containerId: string): Container => {
             needsClientLayout: true,
             baseDiv: containerId
         });
+        //ACTIVITY DIAGRAM
+        configureModelElement(context, UmlTypes.ACTIVTIY, LabeledNode, ActivityNodeView);
+
+        //TODO: STATEMACHINE etc.
     });
 
     const container = new Container();

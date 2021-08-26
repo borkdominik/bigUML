@@ -12,14 +12,20 @@ import { BaseTypes } from "./base-types";
 
 export namespace UmlTypes {
 
+    // COMMONS
     export const LABEL_NAME = `${BaseTypes.LABEL}:name`;
     export const LABEL_TEXT = `${BaseTypes.LABEL}:text`;
     export const LABEL_EDGE_NAME = `${BaseTypes.LABEL}:edge-name`;
     export const LABEL_EDGE_MULTIPLICITY = `${BaseTypes.LABEL}:edge-multiplicity`;
-    export const ICON_CLASS = `${BaseTypes.ICON}:class`;
     export const LABEL_ICON = `${BaseTypes.LABEL}:${BaseTypes.ICON}`;
+
+    // CLASS DIAGRAM
+    export const ICON_CLASS = `${BaseTypes.ICON}:class`;
     export const CLASS = `${BaseTypes.NODE}:class`;
     export const ASSOCIATION = `${BaseTypes.EDGE}:association`;
     export const PROPERTY = `${BaseTypes.NODE}:property`;
 
+    // ACTIVITY DIAGRAM
+    export const ACTIVTIY = `${BaseTypes.NODE}:activity`;
+    export const ICON_ACTIVTIY = `${BaseTypes.ICON}:activity`;
 }

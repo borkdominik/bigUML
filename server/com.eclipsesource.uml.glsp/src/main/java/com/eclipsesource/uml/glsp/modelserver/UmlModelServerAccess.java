@@ -216,17 +216,9 @@ public class UmlModelServerAccess {
    /*
     * UML ACTIVITY
     */
-   /*public CompletableFuture<Response<Boolean>> addActivity(final UmlModelState modelState, final Optional<GPoint> newPosition) {
+   public CompletableFuture<Response<Boolean>> addActivity(final UmlModelState modelState, final Optional<GPoint> newPosition) {
       CCompoundCommand addActivityCompoundCommand = AddActivityCommandContribution
               .create(newPosition.orElse(GraphUtil.point(0,0)));
-      return this.edit(addActivityCompoundCommand);
-   }*/
-
-   public CompletableFuture<Response<Boolean>> addActivity(final UmlModelState modelState,
-                                                           final Optional<GPoint> newPosition) {
-
-      CCompoundCommand addActivityCompoundCommand = AddActivityCommandContribution
-              .create(newPosition.orElse(GraphUtil.point(0, 0)));
       return this.edit(addActivityCompoundCommand);
    }
 

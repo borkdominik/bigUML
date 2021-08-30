@@ -1,6 +1,7 @@
 package com.eclipsesource.uml.glsp.gmodel.activitydiagram;
 
 import com.eclipsesource.uml.glsp.gmodel.AbstractGModelFactory;
+import com.eclipsesource.uml.glsp.gmodel.GModelFactory;
 import com.eclipsesource.uml.glsp.gmodel.LabelFactory;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.util.UmlConfig;
@@ -19,11 +20,11 @@ import org.eclipse.uml2.uml.ObjectNode;
 //TODO: ADD REMAINING ELEMENTS
 public class ActivityNodeFactory extends AbstractGModelFactory<ActivityNode, GNode> {
 
-    private final LabelFactory labelFactory;
+    private final GModelFactory parentFactory;
 
-    public ActivityNodeFactory(final UmlModelState modelState, final LabelFactory labelFactory) {
+    public ActivityNodeFactory(final UmlModelState modelState, final GModelFactory parentFactory) {
         super(modelState);
-        this.labelFactory = labelFactory;
+        this.parentFactory = parentFactory;
     }
 
     @Override

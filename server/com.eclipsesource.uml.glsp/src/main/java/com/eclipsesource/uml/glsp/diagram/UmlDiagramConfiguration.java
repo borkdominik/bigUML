@@ -49,6 +49,7 @@ public class UmlDiagramConfiguration implements DiagramConfiguration {
 
       //ACTIVITY DIAGRAM
       hints.add(new ShapeTypeHint(DefaultTypes.GRAPH, false, false, false, false, List.of(Types.ACTIVITY)));
+      //hints.add(new ShapeTypeHint(Types.ACTIVITY, true, true, true, false, List.of(Types.ACTION)));
       return hints;
    }
 

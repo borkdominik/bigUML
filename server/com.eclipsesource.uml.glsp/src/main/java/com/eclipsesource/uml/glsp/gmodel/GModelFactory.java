@@ -10,6 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.gmodel;
 
+import com.eclipsesource.uml.glsp.gmodel.activitydiagram.ActivityNodeFactory;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.graph.GGraph;
 import org.eclipse.glsp.graph.GModelElement;
@@ -26,11 +27,23 @@ public abstract class GModelFactory extends AbstractGModelFactory<EObject, GMode
    protected final LabelFactory labelFactory;
    protected final RelationshipEdgeFactory relationshipEdgeFactory;
 
+   // ACTIVITY DIAGRAM
+   protected final ActivityNodeFactory activityNodeFactory;
+
+   //TODO: Other diagram types
+
+   // DEPLOYMENT DIAGRAM
+
+   // USECASE DIAGRAM
+
+   // STATE MACHINE DIAGRAM
+
    public GModelFactory(final UmlModelState modelState) {
       super(modelState);
       labelFactory = new LabelFactory(modelState);
       relationshipEdgeFactory = new RelationshipEdgeFactory(modelState);
       classifierNodeFactory = new ClassifierNodeFactory(modelState, labelFactory);
+      activityNodeFactory = new ActivityNodeFactory(modelState, this);
       getOrCreateRoot();
    }
 

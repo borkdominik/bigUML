@@ -2,8 +2,11 @@ package com.eclipsesource.uml.glsp.gmodel;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.modelserver.unotation.Diagram;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.graph.GGraph;
+import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.uml2.uml.Activity;
+import org.eclipse.uml2.uml.ActivityNode;
 import org.eclipse.uml2.uml.Model;
 
 import java.util.stream.Collectors;
@@ -12,6 +15,19 @@ public class UmlActivityDiagramModelFactory extends GModelFactory {
 
     public UmlActivityDiagramModelFactory(final UmlModelState modelState) {
         super(modelState);
+    }
+
+    @Override
+    public GModelElement create(final EObject semanticElement) {
+        GModelElement result = null;
+        if (semanticElement instanceof Model) {
+            result = create(semanticElement);
+        } else if (semanticElement instanceof Activity) {
+            result = classifierNodeFactory.create((Activity) semanticElement);
+        } else if (semanticElement instanceof ActivityNode) {
+            result = activityNodeFactory.create((ActivityNode) semanticElement);
+        }
+        return result;
     }
 
     @Override

@@ -10,6 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver;
 
+import com.eclipsesource.uml.modelserver.commands.activitydiagram.contributions.action.AddActionCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.activitydiagram.contributions.activity.AddActivityCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.activitydiagram.contributions.activity.RemoveActivityCommandContribution;
 import org.eclipse.emfcloud.modelserver.common.Routing;
@@ -72,6 +73,9 @@ public class UmlModelServerModule extends DefaultModelServerModule {
       // UML Activity
       binding.put(AddActivityCommandContribution.TYPE, AddActivityCommandContribution.class);
       binding.put(RemoveActivityCommandContribution.TYPE, RemoveActivityCommandContribution.class);
+
+      // UML Action
+      binding.put(AddActionCommandContribution.TYPE, AddActionCommandContribution.class);
 
       //TODO: StateMachine
 

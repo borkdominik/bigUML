@@ -33,7 +33,9 @@ public class UmlToolPaletteItemProvider implements ToolPaletteItemProvider {
    @Override
    public List<PaletteItem> getItems(final Map<String, String> args, final GModelState modelState) {
       Representation diagramType = UmlModelState.getModelState(modelState).getUmlFacade().getDiagram().getDiagramType();
-      System.out.println("THIS IS THE CURRENT DIAGRAM TYPE: " + diagramType);
+
+      System.out.println("------- CURRENT DIAGRAM TYPE: " + diagramType + " ----------");
+
       List<PaletteItem> classDiagram = Lists.newArrayList(classifiers(), relations(), features());
       List<PaletteItem> activityDiagram = Lists.newArrayList(activities());
       List<PaletteItem> stateMachineDiagram = Lists.newArrayList();

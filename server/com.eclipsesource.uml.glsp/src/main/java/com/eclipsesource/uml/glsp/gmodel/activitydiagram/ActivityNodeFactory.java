@@ -11,10 +11,12 @@ import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.builder.impl.GCompartmentBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 import org.eclipse.glsp.graph.builder.impl.GNodeBuilder;
+import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.uml2.uml.Action;
 import org.eclipse.uml2.uml.ActivityNode;
 import org.eclipse.uml2.uml.ObjectNode;
+import org.eclipse.uml2.uml.OpaqueAction;
 
 //TODO: ADD REMAINING ELEMENTS
 public class ActivityNodeFactory extends AbstractGModelFactory<ActivityNode, GNode> {
@@ -32,6 +34,21 @@ public class ActivityNodeFactory extends AbstractGModelFactory<ActivityNode, GNo
             return create((Action) activityNode);
         }
         return null;
+    }
+
+    protected GNode create(final Action action) {
+        String type = null;
+        if (action instanceof OpaqueAction) {
+            type = UmlConfig.Types.ACTION;
+        } else {
+            return null;
+        }
+        GNodeBuilder builder = new GNodeBuilder(type)
+                .id(toId(action))
+                .layout(GConstants.Layout.VBOX)
+                .addCssClass(UmlConfig.CSS.NODE)
+                .add(buildActivityHeader(action));
+        return builder.build();
     }
 
     protected void applyShapeData(final ActivityNode activityNode, final GNodeBuilder builder) {

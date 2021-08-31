@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.commands.classdiagram.contributions;
+package com.eclipsesource.uml.modelserver.commands.classdiagram.contributions.association;
 
 import java.util.ArrayList;
 import java.util.List;

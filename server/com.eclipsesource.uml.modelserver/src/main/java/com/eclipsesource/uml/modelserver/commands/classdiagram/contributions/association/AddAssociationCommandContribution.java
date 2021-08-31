@@ -8,10 +8,9 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.commands.classdiagram.contributions;
+package com.eclipsesource.uml.modelserver.commands.classdiagram.contributions.association;
 
 import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlCompoundCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlNotationCommandContribution;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -19,20 +18,20 @@ import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
 import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
 import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
-import org.eclipse.glsp.graph.GPoint;
 
-import com.eclipsesource.uml.modelserver.commands.classdiagram.compound.AddClassCompoundCommand;
-import com.eclipsesource.uml.modelserver.commands.commons.util.UmlNotationCommandUtil;
+import com.eclipsesource.uml.modelserver.commands.classdiagram.compound.AddAssociationCompoundCommand;
 
-public class AddClassCommandContribution extends UmlCompoundCommandContribution {
+public class AddAssociationCommandContribution extends UmlCompoundCommandContribution {
 
-   public static final String TYPE = "addClassContributuion";
+   public static final String TYPE = "addAssociationContributuion";
+   public static final String SOURCE_CLASS_URI_FRAGMENT = "sourceClassUriFragment";
+   public static final String TARGET_CLASS_URI_FRAGMENT = "targetClassUriFragment";
 
-   public static CCompoundCommand create(final GPoint position) {
+   public static CCompoundCommand create(final String sourceClassUriFragment, final String targetClassUriFragment) {
       CCompoundCommand addClassCommand = CCommandFactory.eINSTANCE.createCompoundCommand();
       addClassCommand.setType(TYPE);
-      addClassCommand.getProperties().put(UmlNotationCommandContribution.POSITION_X, String.valueOf(position.getX()));
-      addClassCommand.getProperties().put(UmlNotationCommandContribution.POSITION_Y, String.valueOf(position.getY()));
+      addClassCommand.getProperties().put(SOURCE_CLASS_URI_FRAGMENT, sourceClassUriFragment);
+      addClassCommand.getProperties().put(TARGET_CLASS_URI_FRAGMENT, targetClassUriFragment);
       return addClassCommand;
    }
 
@@ -40,11 +39,10 @@ public class AddClassCommandContribution extends UmlCompoundCommandContribution 
    protected CompoundCommand toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
       throws DecodingException {
 
-      GPoint classPosition = UmlNotationCommandUtil.getGPoint(
-         command.getProperties().get(UmlNotationCommandContribution.POSITION_X),
-         command.getProperties().get(UmlNotationCommandContribution.POSITION_Y));
+      String sourceClassUriFragment = command.getProperties().get(SOURCE_CLASS_URI_FRAGMENT);
+      String targetClassUriFragment = command.getProperties().get(TARGET_CLASS_URI_FRAGMENT);
 
-      return new AddClassCompoundCommand(domain, modelUri, classPosition);
+      return new AddAssociationCompoundCommand(domain, modelUri, sourceClassUriFragment, targetClassUriFragment);
    }
 
 }

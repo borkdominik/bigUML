@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.commands.classdiagram.contributions;
+package com.eclipsesource.uml.modelserver.commands.classdiagram.contributions.classes;
 
 import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlCompoundCommandContribution;
 import org.eclipse.emf.common.command.CompoundCommand;
@@ -19,17 +19,17 @@ import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
 import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
 import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
 
-import com.eclipsesource.uml.modelserver.commands.classdiagram.compound.RemoveAssociationCompoundCommand;
+import com.eclipsesource.uml.modelserver.commands.classdiagram.compound.RemoveClassCompoundCommand;
 
-public class RemoveAssociationCommandContribution extends UmlCompoundCommandContribution {
+public class RemoveClassCommandContribution extends UmlCompoundCommandContribution {
 
-   public static final String TYPE = "removeAssociation";
+   public static final String TYPE = "removeClass";
 
-   public static CCompoundCommand create(final String semanticUriFragment) {
-      CCompoundCommand removeAssociationCommand = CCommandFactory.eINSTANCE.createCompoundCommand();
-      removeAssociationCommand.setType(TYPE);
-      removeAssociationCommand.getProperties().put(SEMANTIC_URI_FRAGMENT, semanticUriFragment);
-      return removeAssociationCommand;
+   public static CCompoundCommand create(final String semanticUri) {
+      CCompoundCommand removeClassCommand = CCommandFactory.eINSTANCE.createCompoundCommand();
+      removeClassCommand.setType(TYPE);
+      removeClassCommand.getProperties().put(SEMANTIC_URI_FRAGMENT, semanticUri);
+      return removeClassCommand;
    }
 
    @Override
@@ -37,7 +37,7 @@ public class RemoveAssociationCommandContribution extends UmlCompoundCommandCont
       throws DecodingException {
 
       String semanticUriFragment = command.getProperties().get(SEMANTIC_URI_FRAGMENT);
-      return new RemoveAssociationCompoundCommand(domain, modelUri, semanticUriFragment);
+      return new RemoveClassCompoundCommand(domain, modelUri, semanticUriFragment);
    }
 
 }

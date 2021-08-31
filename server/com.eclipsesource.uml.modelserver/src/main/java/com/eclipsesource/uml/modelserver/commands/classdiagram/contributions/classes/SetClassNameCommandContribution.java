@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.commands.classdiagram.contributions;
+package com.eclipsesource.uml.modelserver.commands.classdiagram.contributions.classes;
 
 import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlSemanticCommandContribution;
 import org.eclipse.emf.common.command.Command;
@@ -18,28 +18,29 @@ import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
 import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
 
-import com.eclipsesource.uml.modelserver.commands.classdiagram.semantic.RemovePropertyCommand;
+import com.eclipsesource.uml.modelserver.commands.classdiagram.semantic.SetClassNameCommand;
 
-public class RemovePropertyCommandContribution extends UmlSemanticCommandContribution {
+public class SetClassNameCommandContribution extends UmlSemanticCommandContribution {
 
-   public static final String TYPE = "removeProperty";
+   public static final String TYPE = "setClassName";
+   public static final String NEW_NAME = "newName";
 
-   public static CCommand create(final String parentSemanticUri, final String semanticUri) {
-      CCommand removePropertyCommand = CCommandFactory.eINSTANCE.createCommand();
-      removePropertyCommand.setType(TYPE);
-      removePropertyCommand.getProperties().put(PARENT_SEMANTIC_URI_FRAGMENT, parentSemanticUri);
-      removePropertyCommand.getProperties().put(SEMANTIC_URI_FRAGMENT, semanticUri);
-      return removePropertyCommand;
+   public static CCommand create(final String semanticUri, final String newName) {
+      CCommand setClassNameCommand = CCommandFactory.eINSTANCE.createCommand();
+      setClassNameCommand.setType(TYPE);
+      setClassNameCommand.getProperties().put(SEMANTIC_URI_FRAGMENT, semanticUri);
+      setClassNameCommand.getProperties().put(NEW_NAME, newName);
+      return setClassNameCommand;
    }
 
    @Override
    protected Command toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
       throws DecodingException {
 
-      String parentSemanticUri = command.getProperties().get(PARENT_SEMANTIC_URI_FRAGMENT);
-      String semanticUri = command.getProperties().get(SEMANTIC_URI_FRAGMENT);
+      String semanticUriFragment = command.getProperties().get(SEMANTIC_URI_FRAGMENT);
+      String newName = command.getProperties().get(NEW_NAME);
 
-      return new RemovePropertyCommand(domain, modelUri, parentSemanticUri, semanticUri);
+      return new SetClassNameCommand(domain, modelUri, semanticUriFragment, newName);
    }
 
 }

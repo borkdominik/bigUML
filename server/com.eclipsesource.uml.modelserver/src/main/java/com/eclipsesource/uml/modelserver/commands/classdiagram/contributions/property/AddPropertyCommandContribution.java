@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.commands.classdiagram.contributions;
+package com.eclipsesource.uml.modelserver.commands.classdiagram.contributions.property;
 
 import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlSemanticCommandContribution;
 import org.eclipse.emf.common.command.Command;
@@ -18,29 +18,25 @@ import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
 import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
 
-import com.eclipsesource.uml.modelserver.commands.classdiagram.semantic.SetAssociationEndNameCommand;
+import com.eclipsesource.uml.modelserver.commands.classdiagram.semantic.AddPropertyCommand;
 
-public class SetAssociationEndNameCommandContribution extends UmlSemanticCommandContribution {
+public class AddPropertyCommandContribution extends UmlSemanticCommandContribution {
 
-   public static final String TYPE = "setAssociationEndName";
-   public static final String NEW_NAME = "newName";
+   public static final String TYPE = "addProperty";
 
-   public static CCommand create(final String semanticUri, final String newName) {
-      CCommand setAssociationEndNameCommand = CCommandFactory.eINSTANCE.createCommand();
-      setAssociationEndNameCommand.setType(TYPE);
-      setAssociationEndNameCommand.getProperties().put(SEMANTIC_URI_FRAGMENT, semanticUri);
-      setAssociationEndNameCommand.getProperties().put(NEW_NAME, newName);
-      return setAssociationEndNameCommand;
+   public static CCommand create(final String parentSemanticUri) {
+      CCommand addPropertyCommand = CCommandFactory.eINSTANCE.createCommand();
+      addPropertyCommand.setType(TYPE);
+      addPropertyCommand.getProperties().put(PARENT_SEMANTIC_URI_FRAGMENT, parentSemanticUri);
+      return addPropertyCommand;
    }
 
    @Override
    protected Command toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
       throws DecodingException {
 
-      String semanticUriFragment = command.getProperties().get(SEMANTIC_URI_FRAGMENT);
-      String newName = command.getProperties().get(NEW_NAME);
-
-      return new SetAssociationEndNameCommand(domain, modelUri, semanticUriFragment, newName);
+      String parentSemanticUriFragment = command.getProperties().get(PARENT_SEMANTIC_URI_FRAGMENT);
+      return new AddPropertyCommand(domain, modelUri, parentSemanticUriFragment);
    }
 
 }

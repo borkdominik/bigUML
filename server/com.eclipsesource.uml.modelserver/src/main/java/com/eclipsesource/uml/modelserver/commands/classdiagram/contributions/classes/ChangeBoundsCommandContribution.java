@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.commands.classdiagram.contributions;
+package com.eclipsesource.uml.modelserver.commands.classdiagram.contributions.classes;
 
 import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlNotationCommandContribution;
 import org.eclipse.emf.common.command.CompoundCommand;

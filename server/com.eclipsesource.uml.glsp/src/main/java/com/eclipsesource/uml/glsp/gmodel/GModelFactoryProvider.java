@@ -21,6 +21,9 @@ public class GModelFactoryProvider {
          case CLASS: {
             return new UmlClassDiagramModelFactory(modelState);
          }
+         case ACTIVITY: {
+            return new UmlActivityDiagramModelFactory(modelState);
+         }
       }
       return null;
    }

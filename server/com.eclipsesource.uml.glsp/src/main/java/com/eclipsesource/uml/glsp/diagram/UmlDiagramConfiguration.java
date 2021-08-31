@@ -76,8 +76,8 @@ public class UmlDiagramConfiguration implements DiagramConfiguration {
 
       // ACTIVITY DIAGRAM
       // UML Activity
-      mappings.put(Types.ACTIVITY, GraphPackage.Literals.GNODE);
-      mappings.put(Types.ICON_ACTIVITY, GraphPackage.Literals.GCOMPARTMENT);
+      //mappings.put(Types.ACTIVITY, GraphPackage.Literals.GNODE);
+      //mappings.put(Types.ICON_ACTIVITY, GraphPackage.Literals.GCOMPARTMENT);
 
       //TODO: ADD REMAINING ACTIVITY ELEMENTS
 

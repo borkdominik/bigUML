@@ -70,7 +70,7 @@ import umlToolPaletteModule from "./features/tool-palette/di.config";
 import { LabelSelectionFeedback } from "./feedback";
 import { IconClass, LabeledNode, SEditableLabel, SLabelNodeProperty } from "./model";
 import { BaseTypes, UmlTypes } from "./utils";
-import { ClassNodeView, IconView, LabelNodeView} from "./views";
+import { ClassNodeView, IconView, LabelNodeView } from "./views";
 import { ActivityNodeView } from "./views/activityviews";
 
 export default (containerId: string): Container => {

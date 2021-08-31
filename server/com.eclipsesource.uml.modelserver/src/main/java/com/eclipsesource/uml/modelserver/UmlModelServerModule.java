@@ -10,8 +10,8 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver;
 
-import com.eclipsesource.uml.modelserver.commands.activitydiagram.contributions.AddActivityCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.activitydiagram.contributions.RemoveActivityCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.activitydiagram.contributions.activity.AddActivityCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.activitydiagram.contributions.activity.RemoveActivityCommandContribution;
 import org.eclipse.emfcloud.modelserver.common.Routing;
 import org.eclipse.emfcloud.modelserver.common.codecs.Codec;
 import org.eclipse.emfcloud.modelserver.common.utils.MapBinding;

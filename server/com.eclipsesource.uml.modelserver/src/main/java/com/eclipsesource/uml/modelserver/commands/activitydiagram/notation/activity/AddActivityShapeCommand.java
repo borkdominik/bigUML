@@ -1,4 +1,4 @@
-package com.eclipsesource.uml.modelserver.commands.activitydiagram.notation;
+package com.eclipsesource.uml.modelserver.commands.activitydiagram.notation.activity;
 
 import com.eclipsesource.uml.modelserver.commands.commons.notation.UmlNotationElementCommand;
 import com.eclipsesource.uml.modelserver.commands.commons.util.UmlNotationCommandUtil;

@@ -17,5 +17,6 @@ import createUmlDiagramContainer from "./di.config";
 
 export * from "./model";
 export * from "./views";
+export * from "./views/activityviews";
 export * from "./features/edit-label";
 export { createUmlDiagramContainer };

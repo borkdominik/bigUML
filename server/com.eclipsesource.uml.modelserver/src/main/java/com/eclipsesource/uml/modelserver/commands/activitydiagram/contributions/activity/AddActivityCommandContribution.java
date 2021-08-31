@@ -1,6 +1,6 @@
-package com.eclipsesource.uml.modelserver.commands.activitydiagram.contributions;
+package com.eclipsesource.uml.modelserver.commands.activitydiagram.contributions.activity;
 
-import com.eclipsesource.uml.modelserver.commands.activitydiagram.compound.AddActivityCompoundCommand;
+import com.eclipsesource.uml.modelserver.commands.activitydiagram.compound.activity.AddActivityCompoundCommand;
 import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlCompoundCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlNotationCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.commons.util.UmlNotationCommandUtil;

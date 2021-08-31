@@ -1,4 +1,4 @@
-package com.eclipsesource.uml.modelserver.commands.activitydiagram.semantic;
+package com.eclipsesource.uml.modelserver.commands.activitydiagram.semantic.activity;
 
 import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
 

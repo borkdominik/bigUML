@@ -1,6 +1,6 @@
-package com.eclipsesource.uml.modelserver.commands.activitydiagram.contributions;
+package com.eclipsesource.uml.modelserver.commands.activitydiagram.contributions.activity;
 
-import com.eclipsesource.uml.modelserver.commands.activitydiagram.compound.RemoveActivityCompoundCommand;
+import com.eclipsesource.uml.modelserver.commands.activitydiagram.compound.activity.RemoveActivityCompoundCommand;
 import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlSemanticCommandContribution;
 
 import org.eclipse.emf.common.command.Command;

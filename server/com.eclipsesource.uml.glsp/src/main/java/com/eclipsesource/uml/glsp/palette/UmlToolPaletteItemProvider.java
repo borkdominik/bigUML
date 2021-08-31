@@ -13,6 +13,8 @@ package com.eclipsesource.uml.glsp.palette;
 import java.util.List;
 import java.util.Map;
 
+import com.eclipsesource.uml.modelserver.UmlNotationUtil;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
 import org.apache.log4j.Logger;
 import org.eclipse.glsp.server.actions.TriggerEdgeCreationAction;
 import org.eclipse.glsp.server.actions.TriggerNodeCreationAction;
@@ -36,7 +38,7 @@ public class UmlToolPaletteItemProvider implements ToolPaletteItemProvider {
    private PaletteItem classifiers() {
       PaletteItem createClass = node(Types.CLASS, "Class", "umlclass");
       //TODO: ADD TO ANOTHER CATEGORY LATER
-      PaletteItem createActivity = node(Types.ACTIVITY, "Activity", "umlclass");
+      PaletteItem createActivity = node(Types.ACTIVITY, "Activity", "umlactivity");
 
 
       List<PaletteItem> classifiers = Lists.newArrayList(createClass, createActivity);

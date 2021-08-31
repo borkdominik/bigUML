@@ -1,7 +1,7 @@
-package com.eclipsesource.uml.modelserver.commands.activitydiagram.compound;
+package com.eclipsesource.uml.modelserver.commands.activitydiagram.compound.activity;
 
-import com.eclipsesource.uml.modelserver.commands.activitydiagram.notation.AddActivityShapeCommand;
-import com.eclipsesource.uml.modelserver.commands.activitydiagram.semantic.AddActivityCommand;
+import com.eclipsesource.uml.modelserver.commands.activitydiagram.notation.activity.AddActivityShapeCommand;
+import com.eclipsesource.uml.modelserver.commands.activitydiagram.semantic.activity.AddActivityCommand;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;

@@ -13,6 +13,7 @@ package com.eclipsesource.uml.glsp.palette;
 import java.util.List;
 import java.util.Map;
 
+import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.modelserver.UmlNotationUtil;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import org.apache.log4j.Logger;
@@ -31,20 +32,36 @@ public class UmlToolPaletteItemProvider implements ToolPaletteItemProvider {
 
    @Override
    public List<PaletteItem> getItems(final Map<String, String> args, final GModelState modelState) {
+      Representation diagramType = UmlModelState.getModelState(modelState).getUmlFacade().getDiagram().getDiagramType();
+      System.out.println("THIS IS THE CURRENT DIAGRAM TYPE: " + diagramType);
+      List<PaletteItem> classDiagram = Lists.newArrayList(classifiers(), relations(), features());
+      List<PaletteItem> activityDiagram = Lists.newArrayList(activities());
+      List<PaletteItem> stateMachineDiagram = Lists.newArrayList();
+      List<PaletteItem> deploymentDiagram = Lists.newArrayList();
+      List<PaletteItem> useCaseDiagram = Lists.newArrayList();
+
       LOGGER.info("Create palette");
-      return Lists.newArrayList(classifiers(), relations(), features());
+      
+      List<PaletteItem> finalPalette = null;
+
+      if (diagramType == Representation.CLASS) {
+         finalPalette = classDiagram;
+      } else if (diagramType == Representation.ACTIVITY) {
+         finalPalette = activityDiagram;
+      } else if (diagramType == Representation.DEPLOYMENT) {
+         finalPalette = deploymentDiagram;
+      } else if (diagramType == Representation.STATEMACHINE) {
+         finalPalette = stateMachineDiagram;
+      } else if (diagramType == Representation.USECASE) {
+         finalPalette = useCaseDiagram;
+      }
+      return finalPalette;
    }
 
    private PaletteItem classifiers() {
-
-      System.out.println(Representation.get("activity"));
-
       PaletteItem createClass = node(Types.CLASS, "Class", "umlclass");
-      //TODO: ADD TO ANOTHER CATEGORY LATER
-      PaletteItem createActivity = node(Types.ACTIVITY, "Activity", "umlactivity");
 
-
-      List<PaletteItem> classifiers = Lists.newArrayList(createClass, createActivity);
+      List<PaletteItem> classifiers = Lists.newArrayList(createClass);
       return PaletteItem.createPaletteGroup("uml.classifier", "Classifier", classifiers, "fa-hammer");
    }
 
@@ -61,6 +78,13 @@ public class UmlToolPaletteItemProvider implements ToolPaletteItemProvider {
       List<PaletteItem> features = Lists.newArrayList(createProperty);
 
       return PaletteItem.createPaletteGroup("uml.feature", "Feature", features, "fa-hammer");
+   }
+
+   private PaletteItem activities() {
+      PaletteItem createActivity = node(Types.ACTIVITY, "Activity", "umlactivity");
+
+      List<PaletteItem> activities = Lists.newArrayList(createActivity);
+      return PaletteItem.createPaletteGroup("uml.activities", "Activities", activities, "fa-hammer");
    }
 
    private PaletteItem node(final String elementTypeId, final String label, final String icon) {

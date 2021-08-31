@@ -16,8 +16,10 @@ import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
+import com.eclipsesource.uml.modelserver.commands.activitydiagram.contributions.action.AddActionCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.activitydiagram.contributions.activity.AddActivityCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.activitydiagram.contributions.activity.RemoveActivityCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.commons.util.UmlSemanticCommandUtil;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -228,6 +230,35 @@ public class UmlModelServerAccess {
               .create(getSemanticUriFragment(activity));
       return this.edit(removePropertyCommand);
    }
+
+   /*
+    * UML ACTION
+    */
+   public CompletableFuture<Response<Boolean>> addAction(final UmlModelState modelState,
+                                                         final GPoint newPosition, final EObject parent, final java.lang.Class<? extends Action> clazz) {
+
+      CCompoundCommand addActivityCompoundCommand = AddActionCommandContribution
+              .create(newPosition, UmlSemanticCommandUtil.getSemanticUriFragment(parent), clazz);
+      return this.edit(addActivityCompoundCommand);
+   }
+
+   public CompletableFuture<Response<Boolean>> addEventAction(final UmlModelState modelState,
+                                                              final GPoint newPosition, final EObject parent, final boolean isTimeEvent) {
+
+      CCompoundCommand addActivityCompoundCommand = AddActionCommandContribution
+              .create(newPosition, UmlSemanticCommandUtil.getSemanticUriFragment(parent), isTimeEvent);
+      return this.edit(addActivityCompoundCommand);
+   }
+
+   // TODO: Add later again
+   /*public CompletableFuture<Response<Boolean>> removeActivityNode(final UmlModelState modelState,
+                                                                  final ActivityNode node) {
+      Activity activity = node.getActivity();
+
+      CCommand removePropertyCommand = RemoveActivityNodeCommandContribution
+              .create(getSemanticUriFragment(activity), getSemanticUriFragment(node));
+      return this.edit(removePropertyCommand);
+   }*/
 
    /*
     * Change Bounds

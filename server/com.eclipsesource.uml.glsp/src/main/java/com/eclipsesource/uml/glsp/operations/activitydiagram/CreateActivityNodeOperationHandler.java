@@ -45,27 +45,21 @@ public class CreateActivityNodeOperationHandler extends ModelServerAwareBasicCre
         Element container = getOrThrow(umlModelState.getIndex().getSemantic(containerId), Element.class,
                 "No valid activity container with id " + containerId + " found!");
         String elementTypeId = operation.getElementTypeId();
-        GPoint position = getPosition(umlModelState, container,operation.getLocation().orElse(GraphUtil.point(0,0)));
+        GPoint location = getPosition(umlModelState, container,operation.getLocation().orElse(GraphUtil.point(0,0)));
 
         if (Types.ACTION.contains(elementTypeId)) {
             Class<? extends Action> clazz = null;
             if (Types.ACTION.equals(elementTypeId)) {
                 clazz = OpaqueAction.class;
             }
+            modelAccess
+                    .addAction(UmlModelState.getModelState(modelState), location, container, clazz)
+                    .thenAccept(res -> {
+                        if (!res.body()) {
+                            throw new GLSPServerException("Could not execute create operation on new Action node");
+                        }
+                    });
         }
-
-        //TODO: ADD THE REMAINING TYPES
-        /*switch (operation.getElementTypeId()) {
-            case Types.ACTIVITY: {
-                modelAccess.addClass(UmlModelState.getModelState(modelState), operation.getLocation())
-                        .thenAccept(response -> {
-                            if (!response.body()) {
-                                throw new GLSPServerException("Could not generate new Actvity Node");
-                            }
-                        });
-                break;
-            }
-        }*/
     }
 
     private GPoint getPosition(final UmlModelState modelState, final Element container, final GPoint position) {

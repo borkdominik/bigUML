@@ -41,6 +41,10 @@ public final class UmlSemanticCommandUtil {
       return EcoreUtil.getURI(element).fragment();
    }
 
+   public static String getSemanticUriFragment(final EObject element) {
+      return EcoreUtil.getURI(element).fragment();
+   }
+
    public static EObject getElement(final Model umlModel, final String semanticUriFragment) {
       return umlModel.eResource().getEObject(semanticUriFragment);
    }

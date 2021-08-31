@@ -8,30 +8,32 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.operations;
+package com.eclipsesource.uml.glsp.operations.classdiagram;
+
+import static org.eclipse.glsp.server.protocol.GLSPServerException.getOrThrow;
 
 import java.util.List;
 
+import com.eclipsesource.uml.glsp.operations.ModelServerAwareBasicCreateOperationHandler;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.operations.Operation;
 import org.eclipse.glsp.server.protocol.GLSPServerException;
+import org.eclipse.uml2.uml.Class;
+import org.eclipse.uml2.uml.PackageableElement;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
-import com.google.common.collect.Lists;
 
-public class CreateClassifierNodeOperationHandler
+public class CreateClassifierChildNodeOperationHandler
    extends ModelServerAwareBasicCreateOperationHandler<CreateNodeOperation> {
 
-   public CreateClassifierNodeOperationHandler() {
+   public CreateClassifierChildNodeOperationHandler() {
       super(handledElementTypeIds);
    }
 
-   //private static List<String> handledElementTypeIds = Lists.newArrayList(Types.CLASS);
-
-   private static List<String> handledElementTypeIds = Lists.newArrayList(Types.CLASS, Types.ACTIVITY);
+   private static List<String> handledElementTypeIds = List.of(Types.PROPERTY);
 
    @Override
    public boolean handles(final Operation execAction) {
@@ -43,32 +45,28 @@ public class CreateClassifierNodeOperationHandler
    }
 
    @Override
-   public void executeOperation(final CreateNodeOperation operation, final GModelState modelState,
+   public void executeOperation(final CreateNodeOperation operation, final GModelState graphicalModelState,
       final UmlModelServerAccess modelAccess) throws Exception {
+      UmlModelState modelState = UmlModelState.getModelState(graphicalModelState);
 
-      switch (operation.getElementTypeId()) {
-         /*case Types.CLASS: {
-            modelAccess.addClass(UmlModelState.getModelState(modelState), operation.getLocation())
-               .thenAccept(response -> {
-                  if (!response.body()) {
-                     throw new GLSPServerException("Could not execute create operation on new Class node");
-                  }
-               });
-            break;
-         }*/
-         case Types.ACTIVITY: {
-            modelAccess.addActivity(UmlModelState.getModelState(modelState), operation.getLocation())
-                 .thenAccept(response -> {
-                    if (!response.body()) {
-                       throw new GLSPServerException("Could not execute create operation on new Activity node");
-                    }
-                 });
-            break;
-         }
+      String containerId = operation.getContainerId();
+      String elementTypeId = operation.getElementTypeId();
+
+      PackageableElement container = getOrThrow(modelState.getIndex().getSemantic(containerId),
+         PackageableElement.class, "No valid container with id " + operation.getContainerId() + " found");
+
+      if (elementTypeId.equals(Types.PROPERTY) && container instanceof Class) {
+         modelAccess.addProperty(UmlModelState.getModelState(modelState), (Class) container)
+            .thenAccept(response -> {
+               if (!response.body()) {
+                  throw new GLSPServerException("Could not execute create operation on new Property node");
+               }
+            });
       }
+
    }
 
    @Override
-   public String getLabel() { return "Create uml classifier"; }
+   public String getLabel() { return "Create Classifier child node"; }
 
 }

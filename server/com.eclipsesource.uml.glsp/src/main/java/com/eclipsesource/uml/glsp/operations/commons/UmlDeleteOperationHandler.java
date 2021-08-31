@@ -8,10 +8,11 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.operations;
+package com.eclipsesource.uml.glsp.operations.commons;
 
 import static org.eclipse.glsp.server.protocol.GLSPServerException.getOrThrow;
 
+import com.eclipsesource.uml.glsp.operations.ModelServerAwareBasicOperationHandler;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.server.model.GModelState;

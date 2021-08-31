@@ -8,13 +8,14 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.operations;
+package com.eclipsesource.uml.glsp.operations.commons;
 
 import static org.eclipse.glsp.server.protocol.GLSPServerException.getOrThrow;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.eclipsesource.uml.glsp.operations.ModelServerAwareBasicOperationHandler;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperation;
 import org.eclipse.glsp.server.model.GModelState;

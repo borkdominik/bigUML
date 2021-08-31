@@ -46,13 +46,13 @@ import com.eclipsesource.uml.glsp.layout.UmlServerLayoutConfiguration;
 import com.eclipsesource.uml.glsp.model.UmlModelFactory;
 import com.eclipsesource.uml.glsp.model.UmlModelStateProvider;
 import com.eclipsesource.uml.glsp.modelserver.ModelServerClientProvider;
-import com.eclipsesource.uml.glsp.operations.CreateClassifierChildNodeOperationHandler;
-import com.eclipsesource.uml.glsp.operations.CreateClassifierNodeOperationHandler;
-import com.eclipsesource.uml.glsp.operations.CreateEdgeOperationHandler;
+import com.eclipsesource.uml.glsp.operations.classdiagram.CreateClassifierChildNodeOperationHandler;
+import com.eclipsesource.uml.glsp.operations.classdiagram.CreateClassifierNodeOperationHandler;
+import com.eclipsesource.uml.glsp.operations.commons.CreateEdgeOperationHandler;
 import com.eclipsesource.uml.glsp.operations.UmlChangeBoundsOperationHandler;
 import com.eclipsesource.uml.glsp.operations.UmlChangeRoutingPointsOperationHandler;
-import com.eclipsesource.uml.glsp.operations.UmlDeleteOperationHandler;
-import com.eclipsesource.uml.glsp.operations.UmlLabelEditOperationHandler;
+import com.eclipsesource.uml.glsp.operations.commons.UmlDeleteOperationHandler;
+import com.eclipsesource.uml.glsp.operations.commons.UmlLabelEditOperationHandler;
 import com.eclipsesource.uml.glsp.operations.UmlOperationActionHandler;
 import com.eclipsesource.uml.glsp.palette.UmlToolPaletteItemProvider;
 

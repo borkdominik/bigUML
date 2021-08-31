@@ -8,12 +8,13 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.operations;
+package com.eclipsesource.uml.glsp.operations.commons;
 
 import static org.eclipse.glsp.server.protocol.GLSPServerException.getOrThrow;
 
 import java.util.List;
 
+import com.eclipsesource.uml.glsp.operations.ModelServerAwareBasicCreateOperationHandler;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 import org.eclipse.glsp.server.operations.Operation;
@@ -56,6 +57,7 @@ public class CreateEdgeOperationHandler extends ModelServerAwareBasicCreateOpera
       Class targetClass = getOrThrow(modelIndex.getSemantic(operation.getTargetElementId(), Class.class),
          "No semantic Class found for target element with id" + operation.getTargetElementId());
 
+      // TODO: add the different edge types
       if (elementTypeId.equals(Types.ASSOCIATION)) {
          modelAccess.addAssociation(modelState, sourceClass, targetClass)
             .thenAccept(response -> {

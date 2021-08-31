@@ -10,6 +10,8 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.util;
 
+import java.util.List;
+
 public final class UmlConfig {
 
    public static final class Types {
@@ -51,6 +53,9 @@ public final class UmlConfig {
       public static final String LABEL_WEIGHT = LABEL + "weight ";
 
       //Actions
+      public static final String ICON_ACTION = ICON + "action";
+      public static final String ACTION = NODE + "action";
+      public static final List<String> ACTIONS = List.of(ACTION);
 
       //Control Nodes
 

@@ -73,13 +73,11 @@ public class UmlModelServerModule extends DefaultModelServerModule {
       binding.put(AddActivityCommandContribution.TYPE, AddActivityCommandContribution.class);
       binding.put(RemoveActivityCommandContribution.TYPE, RemoveActivityCommandContribution.class);
 
-
       //TODO: StateMachine
 
       //TODO: UseCase
 
       //TODO: Deployment
-
 
       // ChangeBounds
       binding.put(ChangeBoundsCommandContribution.TYPE, ChangeBoundsCommandContribution.class);

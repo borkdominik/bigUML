@@ -11,6 +11,9 @@
 package com.eclipsesource.uml.glsp.gmodel;
 
 import com.eclipsesource.uml.glsp.gmodel.activitydiagram.ActivityNodeFactory;
+import com.eclipsesource.uml.glsp.gmodel.classdiagram.ClassifierNodeFactory;
+import com.eclipsesource.uml.glsp.gmodel.classdiagram.LabelFactory;
+import com.eclipsesource.uml.glsp.gmodel.classdiagram.RelationshipEdgeFactory;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.graph.GGraph;
 import org.eclipse.glsp.graph.GModelElement;

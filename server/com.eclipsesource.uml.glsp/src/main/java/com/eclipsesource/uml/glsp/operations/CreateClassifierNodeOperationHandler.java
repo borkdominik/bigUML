@@ -56,7 +56,7 @@ public class CreateClassifierNodeOperationHandler
                });
             break;
          }
-         case Types.ACTIVITY: {
+         /*case Types.ACTIVITY: {
             modelAccess.addActivity(UmlModelState.getModelState(modelState), operation.getLocation())
                  .thenAccept(response -> {
                     if (!response.body()) {
@@ -64,7 +64,7 @@ public class CreateClassifierNodeOperationHandler
                     }
                  });
             break;
-         }
+         }*/
       }
    }
 

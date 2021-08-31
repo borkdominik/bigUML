@@ -2,7 +2,6 @@ package com.eclipsesource.uml.glsp.gmodel.activitydiagram;
 
 import com.eclipsesource.uml.glsp.gmodel.AbstractGModelFactory;
 import com.eclipsesource.uml.glsp.gmodel.GModelFactory;
-import com.eclipsesource.uml.glsp.gmodel.LabelFactory;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.util.UmlConfig;
 import com.eclipsesource.uml.glsp.util.UmlIDUtil;

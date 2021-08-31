@@ -101,10 +101,10 @@ export default (containerId: string): Container => {
             needsClientLayout: true,
             baseDiv: containerId
         });
-        //ACTIVITY DIAGRAM
+        // ACTIVITY DIAGRAM
         configureModelElement(context, UmlTypes.ACTIVTIY, LabeledNode, ActivityNodeView);
 
-        //TODO: STATEMACHINE etc.
+        // TODO: STATEMACHINE etc.
     });
 
     const container = new Container();

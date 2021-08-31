@@ -28,7 +28,7 @@ public class CreateActivityNodeOperationHandler extends ModelServerAwareBasicCre
     }
 
     //TODO: Add types: e.g. TIMEEVENT, PARAMETER, CONDITION
-    private static List<String> handledElementTypeIds = Lists.newArrayList();
+    private static List<String> handledElementTypeIds = Lists.newArrayList(Types.ACTION);
 
     @Override
     public boolean handles(final Operation operation) {

@@ -8,10 +8,11 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.gmodel;
+package com.eclipsesource.uml.glsp.gmodel.classdiagram;
 
 import java.util.ArrayList;
 
+import com.eclipsesource.uml.glsp.gmodel.AbstractGModelFactory;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.glsp.graph.GEdge;
 import org.eclipse.glsp.graph.GLabel;

@@ -1,5 +1,14 @@
 :root {
+    /*
+     * CLASS DIAGRAM
+     */
     --uml-icon-class: url(../../../resources/icons/dark/Class.gif);
     --uml-icon-association: url(../../../resources/icons/dark/Association.gif);
     --uml-icon-property: url(../../../resources/icons/dark/Property.gif);
+
+    /*
+     * ACTIVITY DIAGRAM
+     */
+    --uml-icon-activtiy: url(../../../resources/icons/dark/Activity.gif);
+    --uml-icon-action: url(../../../resources/icons/dark/Action.gif);
 }

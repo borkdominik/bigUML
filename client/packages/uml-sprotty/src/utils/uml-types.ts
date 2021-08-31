@@ -28,4 +28,6 @@ export namespace UmlTypes {
     // ACTIVITY DIAGRAM
     export const ACTIVTIY = `${BaseTypes.NODE}:activity`;
     export const ICON_ACTIVTIY = `${BaseTypes.ICON}:activity`;
+    export const ACTION = `${BaseTypes.NODE}:action`;
+    export const ICON_ACTION = `${BaseTypes.ICON}:action`;
 }

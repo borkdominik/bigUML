@@ -55,3 +55,16 @@
 .umlproperty {
     background-image: var(--uml-icon-property);
 }
+
+
+/*
+ * UML ACTIVITY DIAGRAM
+ */
+
+.umlactivity {
+    background-image: var(--uml-icon-activtiy);
+}
+
+.umlaction {
+    background-image: var(--uml-icon-action);
+}

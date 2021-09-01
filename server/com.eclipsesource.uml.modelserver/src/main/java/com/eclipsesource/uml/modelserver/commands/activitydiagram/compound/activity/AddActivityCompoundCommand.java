@@ -17,7 +17,7 @@ public class AddActivityCompoundCommand extends CompoundCommand {
         // Chain semantic and notation command
         AddActivityCommand command = new AddActivityCommand(domain, modelUri);
         this.append(command);
-        Supplier<Activity> semanticResultSupplier = command::getNewActivity;
+        Supplier<Activity> semanticResultSupplier = () -> command.getNewActivity();
         this.append(new AddActivityShapeCommand(domain, modelUri, position, semanticResultSupplier));
 
     }

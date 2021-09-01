@@ -28,7 +28,7 @@ public class AddClassCompoundCommand extends CompoundCommand {
       // Chain semantic and notation command
       AddClassCommand command = new AddClassCommand(domain, modelUri);
       this.append(command);
-      Supplier<Class> semanticResultSupplier = () -> command.getNewClass();
+      Supplier<Class> semanticResultSupplier = command::getNewClass;
       this.append(new AddClassShapeCommand(domain, modelUri, classPosition, semanticResultSupplier));
    }
 

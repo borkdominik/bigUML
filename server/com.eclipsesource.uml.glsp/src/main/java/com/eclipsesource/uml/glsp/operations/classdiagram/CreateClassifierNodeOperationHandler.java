@@ -48,7 +48,7 @@ public class CreateClassifierNodeOperationHandler
       final UmlModelServerAccess modelAccess) throws Exception {
 
       switch (operation.getElementTypeId()) {
-         /*case Types.CLASS: {
+         case Types.CLASS: {
             modelAccess.addClass(UmlModelState.getModelState(modelState), operation.getLocation())
                .thenAccept(response -> {
                   if (!response.body()) {
@@ -56,7 +56,7 @@ public class CreateClassifierNodeOperationHandler
                   }
                });
             break;
-         }*/
+         }
          case Types.ACTIVITY: {
             modelAccess.addActivity(UmlModelState.getModelState(modelState), operation.getLocation())
                  .thenAccept(response -> {

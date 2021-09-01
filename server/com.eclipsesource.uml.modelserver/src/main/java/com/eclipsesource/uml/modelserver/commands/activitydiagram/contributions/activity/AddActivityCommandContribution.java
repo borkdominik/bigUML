@@ -15,7 +15,7 @@ import org.eclipse.glsp.graph.GPoint;
 
 public class AddActivityCommandContribution extends UmlCompoundCommandContribution {
 
-    public static final String TYPE = "addActivityContribution";
+    public static final String TYPE = "addActivityContributuion";
 
     public static CCompoundCommand create(final GPoint position) {
         CCompoundCommand addActivityCommand = CCommandFactory.eINSTANCE.createCompoundCommand();

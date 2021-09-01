@@ -29,7 +29,7 @@ public class AddAssociationCompoundCommand extends CompoundCommand {
       AddAssociationCommand command = new AddAssociationCommand(domain, modelUri, sourceClassUriFragment,
          targetClassUriFragment);
       this.append(command);
-      Supplier<Association> semanticResultSupplier = () -> command.getNewAssociation();
+      Supplier<Association> semanticResultSupplier = command::getNewAssociation;
       this.append(new AddAssociationEdgeCommand(domain, modelUri, semanticResultSupplier));
    }
 

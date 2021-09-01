@@ -35,3 +35,19 @@ export class ActivityNodeView extends RectangularNodeView {
         </g>;
     }
 }
+
+@injectable()
+export class ActionNodeView extends RectangularNodeView {
+    render(node: LabeledNode,  context: RenderingContext): VNode {
+        return <g class-node={true} class-selected={node.selected} class-mouseover={node.hoverFeedback}>
+            <defs>
+                <filter id="dropShadow">
+                    <feDropShadow dx="1.5" dy="1.5" stdDeviation="0.5" style-flood-color="var(--uml-drop-shadow)" style-flood-opacity="0.5" />
+                </filter>
+            </defs>
+
+            <rect x={0} y={0} rx={10} ry={10} width={Math.max(0, node.bounds.width)} height={Math.max(0, node.bounds.height)} />
+            {context.renderChildren(node)}
+        </g>;
+    }
+}

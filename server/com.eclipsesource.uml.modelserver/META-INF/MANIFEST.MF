@@ -31,8 +31,11 @@ Require-Bundle: org.apache.log4j;bundle-version="[1.2.15,2.0.0)",
  org.eclipse.uml2.uml.resources;bundle-version="5.5.0"
 Bundle-ActivationPolicy: lazy
 Export-Package: com.eclipsesource.uml.modelserver,
- com.eclipsesource.uml.modelserver.commands.classdiagram.contributions.*,
- com.eclipsesource.uml.modelserver.commands.activitydiagram.contributions.*,
+ com.eclipsesource.uml.modelserver.commands.classdiagram.contributions.classes,
+ com.eclipsesource.uml.modelserver.commands.classdiagram.contributions.association,
+ com.eclipsesource.uml.modelserver.commands.classdiagram.contributions.property,
+ com.eclipsesource.uml.modelserver.commands.activitydiagram.contributions.activity,
+ com.eclipsesource.uml.modelserver.commands.activitydiagram.contributions.action,
  com.eclipsesource.uml.modelserver.commands.deploymentdiagram.contributions.*,
  com.eclipsesource.uml.modelserver.commands.statemachinediagram.contributions.*,
  com.eclipsesource.uml.modelserver.commands.usecasediagram.contributions.*,

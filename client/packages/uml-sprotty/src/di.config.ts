@@ -68,10 +68,10 @@ import { EditLabelUI } from "sprotty/lib";
 import { EditLabelUIAutocomplete } from "./features/edit-label";
 import umlToolPaletteModule from "./features/tool-palette/di.config";
 import { LabelSelectionFeedback } from "./feedback";
-import { IconClass, LabeledNode, SEditableLabel, SLabelNodeProperty } from "./model";
+import {IconAction, IconActivity, IconClass, LabeledNode, SEditableLabel, SLabelNodeProperty} from "./model";
 import { BaseTypes, UmlTypes } from "./utils";
-import { ClassNodeView, IconView, LabelNodeView } from "./views";
-import { ActivityNodeView } from "./views/activityviews";
+import { ClassNodeView, IconView, LabelNodeView } from "./viewsTmp";
+import { ActivityNodeView, ActionNodeView } from "./views";
 
 export default (containerId: string): Container => {
     const classDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
@@ -103,8 +103,11 @@ export default (containerId: string): Container => {
         });
         // ACTIVITY DIAGRAM
         configureModelElement(context, UmlTypes.ACTIVTIY, LabeledNode, ActivityNodeView);
+        configureModelElement(context, UmlTypes.ICON_ACTIVTIY, IconActivity, IconView);
+        configureModelElement(context, UmlTypes.ACTION, LabeledNode, ActionNodeView);
+        configureModelElement(context, UmlTypes.ICON_ACTION, IconAction, IconView);
 
-        // TODO: STATEMACHINE etc.
+        // TODO: Other Model Types etc.
     });
 
     const container = new Container();

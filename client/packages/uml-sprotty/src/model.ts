@@ -76,6 +76,10 @@ export class IconActivity extends Icon {
     iconImageName = "Activity.svg";
 }
 
+export class IconAction extends Icon {
+    iconImageName = "OpaqueAction.gif";
+}
+
 export class SLabelNode extends SLabel implements EditableLabel {
     hoverFeedback = false;
     imageName: string;

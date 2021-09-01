@@ -68,7 +68,7 @@ import { EditLabelUI } from "sprotty/lib";
 import { EditLabelUIAutocomplete } from "./features/edit-label";
 import umlToolPaletteModule from "./features/tool-palette/di.config";
 import { LabelSelectionFeedback } from "./feedback";
-import {IconAction, IconActivity, IconClass, LabeledNode, SEditableLabel, SLabelNodeProperty} from "./model";
+import { IconActivity, IconClass, LabeledNode, SEditableLabel, SLabelNodeProperty} from "./model";
 import { BaseTypes, UmlTypes } from "./utils";
 import { ClassNodeView, IconView, LabelNodeView } from "./viewsTmp";
 import { ActivityNodeView, ActionNodeView } from "./views";
@@ -105,7 +105,7 @@ export default (containerId: string): Container => {
         configureModelElement(context, UmlTypes.ACTIVTIY, LabeledNode, ActivityNodeView);
         configureModelElement(context, UmlTypes.ICON_ACTIVTIY, IconActivity, IconView);
         configureModelElement(context, UmlTypes.ACTION, LabeledNode, ActionNodeView);
-        configureModelElement(context, UmlTypes.ICON_ACTION, IconAction, IconView);
+        // configureModelElement(context, UmlTypes.ICON_ACTION, IconAction, IconView);
 
         // TODO: Other Model Types etc.
     });

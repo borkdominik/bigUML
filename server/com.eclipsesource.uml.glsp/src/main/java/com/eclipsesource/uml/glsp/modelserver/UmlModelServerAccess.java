@@ -35,8 +35,11 @@ import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.glsp.server.protocol.GLSPServerException;
 import org.eclipse.glsp.server.types.ElementAndBounds;
 import org.eclipse.glsp.server.types.ElementAndRoutingPoints;
-import org.eclipse.uml2.uml.*;
+import org.eclipse.uml2.uml.Action;
+import org.eclipse.uml2.uml.Activity;
 import org.eclipse.uml2.uml.Class;
+import org.eclipse.uml2.uml.Property;
+import org.eclipse.uml2.uml.*;
 import org.eclipse.uml2.uml.resource.UMLResource;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
@@ -60,7 +63,7 @@ import com.google.common.base.Preconditions;
 
 public class UmlModelServerAccess {
 
-   private static Logger LOGGER = Logger.getLogger(UmlModelServerAccess.class);
+   private static final Logger LOGGER = Logger.getLogger(UmlModelServerAccess.class);
 
    private static final String FORMAT_XMI = "xmi";
 
@@ -85,7 +88,7 @@ public class UmlModelServerAccess {
 
    public EObject getModel() {
       try {
-         return modelServerClient.get(getSemanticURI(), UMLResource.FILE_EXTENSION).thenApply(res -> res.body()).get();
+         return modelServerClient.get(getSemanticURI(), UMLResource.FILE_EXTENSION).thenApply(Response::body).get();
       } catch (InterruptedException | ExecutionException e) {
          LOGGER.error(e);
          throw new GLSPServerException("Error during model loading", e);
@@ -94,7 +97,7 @@ public class UmlModelServerAccess {
 
    public EObject getNotationModel() {
       try {
-         return modelServerClient.get(getNotationURI(), FORMAT_XMI).thenApply(res -> res.body()).get();
+         return modelServerClient.get(getNotationURI(), FORMAT_XMI).thenApply(Response::body).get();
       } catch (InterruptedException | ExecutionException e) {
          LOGGER.error(e);
          throw new GLSPServerException("Error during model loading", e);
@@ -218,7 +221,7 @@ public class UmlModelServerAccess {
    /*
     * UML ACTIVITY
     */
-   public CompletableFuture<Response<Boolean>> addActivity(final UmlModelState modelState, final Optional<GPoint> newPosition) {
+   /*public CompletableFuture<Response<Boolean>> addActivity(final UmlModelState modelState, final Optional<GPoint> newPosition) {
 
       CCompoundCommand addActivityCompoundCommand = AddActivityCommandContribution
               .create(newPosition.orElse(GraphUtil.point(0, 0)));
@@ -230,12 +233,12 @@ public class UmlModelServerAccess {
       CCommand removePropertyCommand = RemoveActivityCommandContribution
               .create(getSemanticUriFragment(activity));
       return this.edit(removePropertyCommand);
-   }
+   }*/
 
    /*
     * UML ACTION
     */
-   public CompletableFuture<Response<Boolean>> addAction(final UmlModelState modelState,
+   /*public CompletableFuture<Response<Boolean>> addAction(final UmlModelState modelState,
                                                          final GPoint newPosition, final EObject parent, final java.lang.Class<? extends Action> clazz) {
 
       CCompoundCommand addActivityCompoundCommand = AddActionCommandContribution
@@ -249,7 +252,7 @@ public class UmlModelServerAccess {
       CCompoundCommand addActivityCompoundCommand = AddActionCommandContribution
               .create(newPosition, UmlSemanticCommandUtil.getSemanticUriFragment(parent), isTimeEvent);
       return this.edit(addActivityCompoundCommand);
-   }
+   }*/
 
    // TODO: Add later again
    /*public CompletableFuture<Response<Boolean>> removeActivityNode(final UmlModelState modelState,

@@ -72,14 +72,13 @@ public class UmlModelServerModule extends DefaultModelServerModule {
 
       // ACTIVITY DIAGRAM
       // UML Activity
-      binding.put(AddActivityCommandContribution.TYPE, AddActivityCommandContribution.class);
-      binding.put(RemoveActivityCommandContribution.TYPE, RemoveActivityCommandContribution.class);
+      //binding.put(AddActivityCommandContribution.TYPE, AddActivityCommandContribution.class);
+      //binding.put(RemoveActivityCommandContribution.TYPE, RemoveActivityCommandContribution.class);
 
       // UML Action
-      binding.put(AddActionCommandContribution.TYPE, AddActionCommandContribution.class);
-      //TODO: ADD LATER AGAIN
+      //binding.put(AddActionCommandContribution.TYPE, AddActionCommandContribution.class);
       //binding.put(RemoveActivityNodeCommandContribution.TYPE, RemoveActivityNodeCommandContribution.class);
-      binding.put(SetBehaviourCommandContribution.TYPE, SetBehaviourCommandContribution.class);
+      //binding.put(SetBehaviourCommandContribution.TYPE, SetBehaviourCommandContribution.class);
 
       //TODO: StateMachine
 

@@ -47,7 +47,14 @@ public class CreateActivityNodeOperationHandler extends ModelServerAwareBasicCre
         String elementTypeId = operation.getElementTypeId();
         GPoint location = getPosition(umlModelState, container,operation.getLocation().orElse(GraphUtil.point(0,0)));
 
-        if (Types.ACTION.contains(elementTypeId)) {
+        /*if (Types.ACTIVITY.contains(elementTypeId)) {
+            modelAccess.addActivity(UmlModelState.getModelState(modelState), operation.getLocation())
+                    .thenAccept(response -> {
+                        if (!response.body()) {
+                            throw new GLSPServerException("Could not execute create operation on new Class node");
+                        }
+                    });
+        } else if (Types.ACTION.contains(elementTypeId)) {
             Class<? extends Action> clazz = null;
             if (Types.ACTION.equals(elementTypeId)) {
                 clazz = OpaqueAction.class;
@@ -59,7 +66,7 @@ public class CreateActivityNodeOperationHandler extends ModelServerAwareBasicCre
                             throw new GLSPServerException("Could not execute create operation on new Action node");
                         }
                     });
-        }
+        }*/
     }
 
     private GPoint getPosition(final UmlModelState modelState, final Element container, final GPoint position) {

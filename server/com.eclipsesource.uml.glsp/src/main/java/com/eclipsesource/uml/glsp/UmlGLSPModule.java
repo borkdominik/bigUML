@@ -110,7 +110,7 @@ public class UmlGLSPModule extends DefaultGLSPModule {
       bindings.add(LayoutOperationHandler.class);
 
       //ACTIVTIY DIAGRAM
-      bindings.add(CreateActivityNodeOperationHandler.class);
+       //bindings.add(CreateActivityNodeOperationHandler.class);
    }
 
    @Override

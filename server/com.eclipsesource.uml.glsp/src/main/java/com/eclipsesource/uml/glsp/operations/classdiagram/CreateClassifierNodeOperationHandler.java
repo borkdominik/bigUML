@@ -24,15 +24,13 @@ import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
 import com.google.common.collect.Lists;
 
 public class CreateClassifierNodeOperationHandler
-   extends ModelServerAwareBasicCreateOperationHandler<CreateNodeOperation> {
+        extends ModelServerAwareBasicCreateOperationHandler<CreateNodeOperation> {
 
    public CreateClassifierNodeOperationHandler() {
       super(handledElementTypeIds);
    }
 
-   //private static List<String> handledElementTypeIds = Lists.newArrayList(Types.CLASS);
-
-   private static List<String> handledElementTypeIds = Lists.newArrayList(Types.CLASS, Types.ACTIVITY);
+   private static List<String> handledElementTypeIds = Lists.newArrayList(Types.CLASS);
 
    @Override
    public boolean handles(final Operation execAction) {
@@ -45,25 +43,16 @@ public class CreateClassifierNodeOperationHandler
 
    @Override
    public void executeOperation(final CreateNodeOperation operation, final GModelState modelState,
-      final UmlModelServerAccess modelAccess) throws Exception {
+                                final UmlModelServerAccess modelAccess) throws Exception {
 
       switch (operation.getElementTypeId()) {
          case Types.CLASS: {
             modelAccess.addClass(UmlModelState.getModelState(modelState), operation.getLocation())
-               .thenAccept(response -> {
-                  if (!response.body()) {
-                     throw new GLSPServerException("Could not execute create operation on new Class node");
-                  }
-               });
-            break;
-         }
-         case Types.ACTIVITY: {
-            modelAccess.addActivity(UmlModelState.getModelState(modelState), operation.getLocation())
-                 .thenAccept(response -> {
-                    if (!response.body()) {
-                       throw new GLSPServerException("Could not execute create operation on new Activity node");
-                    }
-                 });
+                    .thenAccept(response -> {
+                       if (!response.body()) {
+                          throw new GLSPServerException("Could not execute create operation on new Class node");
+                       }
+                    });
             break;
          }
       }

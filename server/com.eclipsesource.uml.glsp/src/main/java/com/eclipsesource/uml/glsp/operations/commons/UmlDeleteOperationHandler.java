@@ -61,14 +61,14 @@ public class UmlDeleteOperationHandler extends ModelServerAwareBasicOperationHan
                      "Could not execute delete operation on Property: " + semanticElement.toString());
                }
             });
-         } else if (semanticElement instanceof Activity) {
+         } /*else if (semanticElement instanceof Activity) {
             modelAccess.removeActivity(modelState, (Activity) semanticElement).thenAccept(response -> {
                if (!response.body()) {
                   throw new GLSPServerException(
                           "Could not execute delete operation on Activity: " + semanticElement.toString());
                }
             });
-         }
+         }*/
       });
    }
 

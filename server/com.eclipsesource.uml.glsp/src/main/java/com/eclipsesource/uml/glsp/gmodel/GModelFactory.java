@@ -10,10 +10,6 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.gmodel;
 
-import com.eclipsesource.uml.glsp.gmodel.activitydiagram.ActivityNodeFactory;
-import com.eclipsesource.uml.glsp.gmodel.classdiagram.ClassifierNodeFactory;
-import com.eclipsesource.uml.glsp.gmodel.classdiagram.LabelFactory;
-import com.eclipsesource.uml.glsp.gmodel.classdiagram.RelationshipEdgeFactory;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.graph.GGraph;
 import org.eclipse.glsp.graph.GModelElement;
@@ -31,7 +27,7 @@ public abstract class GModelFactory extends AbstractGModelFactory<EObject, GMode
    protected final RelationshipEdgeFactory relationshipEdgeFactory;
 
    // ACTIVITY DIAGRAM
-   protected final ActivityNodeFactory activityNodeFactory;
+   //protected final ActivityNodeFactory activityNodeFactory;
 
    //TODO: Other diagram types
 
@@ -46,7 +42,7 @@ public abstract class GModelFactory extends AbstractGModelFactory<EObject, GMode
       labelFactory = new LabelFactory(modelState);
       relationshipEdgeFactory = new RelationshipEdgeFactory(modelState);
       classifierNodeFactory = new ClassifierNodeFactory(modelState, labelFactory);
-      activityNodeFactory = new ActivityNodeFactory(modelState, this);
+      //activityNodeFactory = new ActivityNodeFactory(modelState, this);
       getOrCreateRoot();
    }
 

@@ -24,9 +24,9 @@ public class UmlActivityDiagramModelFactory extends GModelFactory {
             result = create(semanticElement);
         } else if (semanticElement instanceof Activity) {
             result = classifierNodeFactory.create((Activity) semanticElement);
-        } else if (semanticElement instanceof ActivityNode) {
+        } /*else if (semanticElement instanceof ActivityNode) {
             result = activityNodeFactory.create((ActivityNode) semanticElement);
-        }
+        }*/
         return result;
     }
 

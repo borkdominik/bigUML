@@ -28,7 +28,7 @@ import com.google.common.collect.Lists;
 
 public class UmlToolPaletteItemProvider implements ToolPaletteItemProvider {
 
-   private static Logger LOGGER = Logger.getLogger(UmlToolPaletteItemProvider.class.getSimpleName());
+   private static final Logger LOGGER = Logger.getLogger(UmlToolPaletteItemProvider.class.getSimpleName());
 
    @Override
    public List<PaletteItem> getItems(final Map<String, String> args, final GModelState modelState) {
@@ -37,7 +37,7 @@ public class UmlToolPaletteItemProvider implements ToolPaletteItemProvider {
       System.out.println("------- CURRENT DIAGRAM TYPE: " + diagramType + " ----------");
 
       List<PaletteItem> classDiagram = Lists.newArrayList(classifiers(), relations(), features());
-      List<PaletteItem> activityDiagram = Lists.newArrayList(activities());
+      List<PaletteItem> activityDiagram = Lists.newArrayList(/*activities(), activityFeatures()*/);
       List<PaletteItem> stateMachineDiagram = Lists.newArrayList();
       List<PaletteItem> deploymentDiagram = Lists.newArrayList();
       List<PaletteItem> useCaseDiagram = Lists.newArrayList();
@@ -82,12 +82,19 @@ public class UmlToolPaletteItemProvider implements ToolPaletteItemProvider {
       return PaletteItem.createPaletteGroup("uml.feature", "Feature", features, "fa-hammer");
    }
 
-   private PaletteItem activities() {
+   /*private PaletteItem activities() {
       PaletteItem createActivity = node(Types.ACTIVITY, "Activity", "umlactivity");
 
       List<PaletteItem> activities = Lists.newArrayList(createActivity);
       return PaletteItem.createPaletteGroup("uml.activities", "Activities", activities, "fa-hammer");
    }
+
+   private PaletteItem activityFeatures() {
+      PaletteItem createAction = node(Types.ACTION, "Action", "umlaction");
+
+      List<PaletteItem> features = Lists.newArrayList(createAction);
+      return PaletteItem.createPaletteGroup("uml.features", "Features", features, "fa-hammer");
+   }*/
 
    private PaletteItem node(final String elementTypeId, final String label, final String icon) {
       return new PaletteItem(elementTypeId, label, new TriggerNodeCreationAction(elementTypeId), icon);

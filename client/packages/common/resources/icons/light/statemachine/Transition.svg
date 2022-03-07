@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="115px" height="109px" viewBox="0 0 115 109" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Transition</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Transition" transform="translate(1.808000, 1.163000)">
+            <g id="State" stroke-linecap="round" stroke="#4E81B4" stroke-width="2">
+                <rect id="Rectangle" stroke-linejoin="round" x="0" y="0" width="55.516" height="42.337" rx="8"></rect>
+                <line x1="0" y1="11.359" x2="55.516" y2="11.359" id="Path" fill="#4E81B4" fill-rule="nonzero"></line>
+            </g>
+            <g id="State" stroke-linecap="round" transform="translate(56.000000, 64.000000)" stroke="#4E81B4" stroke-width="2">
+                <rect id="Rectangle" stroke-linejoin="round" x="0" y="0" width="55.516" height="42.337" rx="8"></rect>
+                <line x1="0" y1="11.359" x2="55.516" y2="11.359" id="Path" fill="#4E81B4" fill-rule="nonzero"></line>
+            </g>
+            <g id="arrow" transform="translate(55.692000, 20.325025)">
+                <line x1="-7.10542736e-15" y1="1.01197475" x2="28" y2="1.01197475" id="Line" stroke="#4E81B4" stroke-width="2" stroke-linecap="square"></line>
+                <path d="M28.9878801,0 L28.9999274,0.999927429 L29.34,29.2779747 L34.5051449,29.2164417 C34.9308569,29.2113126 35.2860031,29.525641 35.3424923,29.9367665 L35.3503212,30.0414356 C35.3518225,30.1710737 35.3231798,30.2992952 35.2666009,30.4159456 L35.2666009,30.4159456 L29.2507935,42.8189064 C29.0495139,43.2338904 28.5499334,43.407132 28.1349494,43.2058523 C27.9723699,43.1269964 27.8397522,42.9975363 27.7570022,42.8369038 L27.7570022,42.8369038 L21.444118,30.5824815 C21.2328985,30.1724673 21.3940535,29.668858 21.8040677,29.4576386 C21.9193211,29.3982657 22.0468152,29.3665421 22.1764534,29.3649802 L22.1764534,29.3649802 L27.341,29.3029747 L27.0000726,1.02402207 L26.9880253,0.024094637 L28.9878801,0 Z" id="Line-2" fill="#4E81B4" fill-rule="nonzero"></path>
+            </g>
+        </g>
+    </g>
+</svg>

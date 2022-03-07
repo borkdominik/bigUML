@@ -13,22 +13,23 @@ package com.eclipsesource.uml.glsp.operations;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSBasicOperationHandler;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.operations.ChangeBoundsOperation;
-import org.eclipse.glsp.server.protocol.GLSPServerException;
 import org.eclipse.glsp.server.types.ElementAndBounds;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;
 import com.eclipsesource.uml.modelserver.unotation.Shape;
+import org.eclipse.glsp.server.types.GLSPServerException;
 
-public class UmlChangeBoundsOperationHandler extends ModelServerAwareBasicOperationHandler<ChangeBoundsOperation> {
+public class UmlChangeBoundsOperationHandler extends EMSBasicOperationHandler<ChangeBoundsOperation, UmlModelServerAccess> {
+
+   protected UmlModelState getUmlModelState() { return (UmlModelState) getEMSModelState(); }
 
    @Override
-   public void executeOperation(final ChangeBoundsOperation changeBoundsOperation,
-      final GModelState graphicalModelState,
-      final UmlModelServerAccess modelServerAccess) throws Exception {
-      UmlModelState modelState = UmlModelState.getModelState(graphicalModelState);
+   public void executeOperation(final ChangeBoundsOperation changeBoundsOperation, final UmlModelServerAccess modelServerAccess) {
+      UmlModelState modelState = getUmlModelState();
       Map<Shape, ElementAndBounds> changeBoundsMap = new HashMap<>();
       for (ElementAndBounds element : changeBoundsOperation.getNewBounds()) {
          modelState.getIndex().getNotation(element.getElementId(), Shape.class).ifPresent(notationElement -> {

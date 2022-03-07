@@ -10,11 +10,9 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.gmodel;
 
-import com.eclipsesource.uml.glsp.gmodel.AbstractGModelFactory;
 import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
-import org.eclipse.uml2.uml.NamedElement;
-import org.eclipse.uml2.uml.Property;
+import org.eclipse.uml2.uml.*;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
@@ -43,6 +41,37 @@ public class LabelFactory extends AbstractGModelFactory<NamedElement, GLabel> {
          .id(toId(property))
          .text(label)
          .build();
+   }
+
+   protected GLabel createAttributeLabel(final Slot attribute) {
+      /*String label = attribute.getDefiningFeature()
+              .getName()
+              .concat(UmlLabelUtil.getTypeName(attribute))
+              .concat(UmlLabelUtil.getMultiplicity(attribute));*/
+
+      return new GLabelBuilder(Types.ATTRIBUTE)
+              .id(toId(attribute))
+              .text("attribute test")
+              .build();
+   }
+
+   protected GLabel createUseCaseExtensionPointsHeading(final UseCase useCase) {
+      String label = "extension points";
+
+      return new GLabelBuilder(Types.LABEL_TEXT)
+              .id(toId(useCase) + "_epheading")
+              .text(label)
+              .addCssClass("bold")
+              .build();
+   }
+
+   protected GLabel createUseCaseExtensionPointsLabel(final ExtensionPoint extensionPoint) {
+      String label = extensionPoint.getName();
+
+      return new GLabelBuilder(Types.EXTENSIONPOINT)
+              .id(toId(extensionPoint))
+              .text(label)
+              .build();
    }
 
 }

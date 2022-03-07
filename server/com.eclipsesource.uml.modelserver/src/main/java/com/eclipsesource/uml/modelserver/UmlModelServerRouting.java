@@ -54,6 +54,21 @@ public class UmlModelServerRouting extends ModelServerRoutingV1 {
       // () -> missingParameter(ctx, ModelServerPathParametersV1.MODEL_URI));
    }
 
+   protected void getUmlBehaviors(final Context ctx) {
+      getResolvedFileUri(ctx, ModelServerPathParametersV1.MODEL_URI).ifPresent(
+         param -> {
+            try {
+               ctx.json(JsonResponse
+                  .success(JsonCodec.encode(((UmlModelResourceManager) resourceManager).getUmlBehaviors(param))));
+            } catch (EncodingException e) {
+               // FIXME add once modelserver dependency gets updated
+               // encodingError(ctx, e);
+            }
+         });
+      // FIXME add once modelserver dependency gets updated
+      // () -> missingParameter(ctx, ModelServerPathParametersV1.MODEL_URI));
+   }
+
    protected void createUmlModel(final Context ctx) {
       getResolvedFileUri(ctx, ModelServerPathParametersV1.MODEL_URI).ifPresent(
          param -> {
@@ -80,6 +95,7 @@ public class UmlModelServerRouting extends ModelServerRoutingV1 {
 
    private void apiEndpoints() {
       get(UmlModelServerPaths.UML_TYPES, this::getUmlTypes);
+      get(UmlModelServerPaths.UML_BEHAVIORS, this::getUmlBehaviors);
       get(UmlModelServerPaths.UML_CREATE, this::createUmlModel);
    }
 

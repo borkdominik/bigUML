@@ -26,8 +26,10 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emfcloud.modelserver.emf.common.RecordingModelResourceManager;
+import org.eclipse.emfcloud.modelserver.emf.common.watchers.ModelWatchersManager;
 import org.eclipse.emfcloud.modelserver.emf.configuration.EPackageConfiguration;
 import org.eclipse.emfcloud.modelserver.emf.configuration.ServerConfiguration;
+import org.eclipse.uml2.uml.Behavior;
 import org.eclipse.uml2.uml.DataType;
 import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.NamedElement;
@@ -45,8 +47,9 @@ public class UmlModelResourceManager extends RecordingModelResourceManager {
 
    @Inject
    public UmlModelResourceManager(final Set<EPackageConfiguration> configurations, final AdapterFactory adapterFactory,
-      final ServerConfiguration serverConfiguration) {
-      super(configurations, adapterFactory, serverConfiguration);
+                                  final ServerConfiguration serverConfiguration,
+                                  final ModelWatchersManager watchersManager) {
+      super(configurations, adapterFactory, serverConfiguration, watchersManager);
    }
 
    @Override
@@ -90,8 +93,7 @@ public class UmlModelResourceManager extends RecordingModelResourceManager {
                resourceSets.put(absolutePath, resourceSet);
                loadResourceLibraries(resourceSet);
             }
-            loadResource(absolutePath.toString(),
-               false /* do not remove unloadable resources on workspace startup */);
+            loadResource(absolutePath.toString());
          }
       }
    }
@@ -146,6 +148,19 @@ public class UmlModelResourceManager extends RecordingModelResourceManager {
          }
       }
       return listOfClassifiers;
+   }
+
+   public Set<String> getUmlBehaviors(final String modeluri) {
+      ResourceSet resourceSet = getResourceSet(modeluri);
+      Set<String> listOfBehaviors = new HashSet<>();
+      TreeIterator<Notifier> resourceSetContent = resourceSet.getAllContents();
+      while (resourceSetContent.hasNext()) {
+         Notifier res = resourceSetContent.next();
+         if (res instanceof Behavior) {
+            listOfBehaviors.add(((Behavior) res).getName());
+         }
+      }
+      return listOfBehaviors;
    }
 
    public boolean addUmlResources(final String modeluri, final String diagramType) {

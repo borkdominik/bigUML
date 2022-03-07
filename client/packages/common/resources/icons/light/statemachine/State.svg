@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="57px" height="44px" viewBox="0 0 57 44" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>State</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="State">
+            <rect id="Rectangle" stroke="#4E81B4" stroke-linecap="round" stroke-linejoin="round" x="0.808" y="1.163" width="55.516" height="42.337" rx="8"></rect>
+            <line x1="0.808" y1="12.522" x2="56.324" y2="12.522" id="Path" stroke="#4E81B4" fill="#4E81B4" stroke-linecap="round"></line>
+            <text fill="#4E81B4" fill-rule="nonzero" font-family="Helvetica" font-size="10" font-weight="normal">
+                <tspan x="16.566" y="10.659">State</tspan>
+            </text>
+        </g>
+    </g>
+</svg>

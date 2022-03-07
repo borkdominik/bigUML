@@ -86,4 +86,24 @@ public class UmlModelServerClient extends ModelServerClient {
          }));
    }
 
+   public CompletableFuture<Response<List<String>>> getUmlBehaviors(final String modelUri) {
+      final Request request = new Request.Builder()
+         .url(
+            createHttpUrlBuilder(baseUrl + UmlModelServerPaths.UML_BEHAVIORS)
+               .addQueryParameter(ModelServerPathParametersV1.MODEL_URI, modelUri)
+               .build())
+         .build();
+
+      return makeCallAndGetDataBody(request)
+         .thenApply(response -> response.mapBody(body -> {
+            List<String> uris = new ArrayList<>();
+            try {
+               Json.parse(body).forEach(uri -> uris.add(uri.textValue()));
+               return uris;
+            } catch (IOException e) {
+               throw new CompletionException(e);
+            }
+         }));
+   }
+
 }

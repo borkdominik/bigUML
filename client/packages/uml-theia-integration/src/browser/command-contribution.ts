@@ -12,15 +12,11 @@ import { MenuContribution, MenuModelRegistry } from "@theia/core";
 import {
     CommonMenus,
     OpenerService,
-    QuickOpenItem,
-    QuickOpenMode,
-    QuickOpenOptions,
-    QuickOpenService
+    QuickInputService
 } from "@theia/core/lib/browser";
 import { Command, CommandContribution, CommandRegistry, CommandService } from "@theia/core/lib/common/command";
-import { QuickOpenModel } from "@theia/core/lib/common/quick-open-model";
 import URI from "@theia/core/lib/common/uri";
-import { FileSystem } from "@theia/filesystem/lib/common/filesystem";
+import { FileService } from "@theia/filesystem/lib/browser/file-service";
 import { FileNavigatorCommands, NavigatorContextMenu } from "@theia/navigator/lib/browser/navigator-contribution";
 import { WorkspaceService } from "@theia/workspace/lib/browser";
 import { inject, injectable } from "inversify";
@@ -37,52 +33,53 @@ export const NEW_UML_DIAGRAM_COMMAND: Command = {
 @injectable()
 export class UmlModelContribution implements CommandContribution, MenuContribution {
 
-    @inject(FileSystem) protected readonly fileSystem: FileSystem;
+    @inject(FileService) protected readonly fileService: FileService;
     @inject(CommandService) protected readonly commandService: CommandService;
     @inject(OpenerService) protected readonly openerService: OpenerService;
-    @inject(QuickOpenService) protected readonly quickOpenService: QuickOpenService;
+    @inject(QuickInputService) protected readonly quickInputService: QuickInputService;
     @inject(WorkspaceService) protected readonly workspaceService: WorkspaceService;
     @inject(UmlModelServerClient) protected readonly modelServerClient: UmlModelServerClient;
 
     registerCommands(registry: CommandRegistry): void {
         registry.registerCommand(NEW_UML_DIAGRAM_COMMAND, {
-            execute: () => {
+            execute: async () => {
                 let workspaceUri: URI = new URI();
                 if (this.workspaceService.tryGetRoots().length) {
-                    workspaceUri = new URI(this.workspaceService.tryGetRoots()[0].uri);
+                    workspaceUri = this.workspaceService.tryGetRoots()[0].resource;
 
-                    this.showInput("Enter Name of UML Diagram", "Diagram name", nameOfUmlModel => {
-                        this.showInput("Enter UML Diagram Type", "activity | class | component | deployment | package | sequence | statemachine | usecase",
-                            diagramType => this.createUmlDiagram(nameOfUmlModel, workspaceUri, diagramType));
+                    this.showInput("Enter Name of UML Diagram", "Diagram name").then(nameOfUmlModel => {
+                        if (nameOfUmlModel) {
+                            this.showInput("Enter UML Diagram Type", "activity | class | component | deployment | object | package | sequence | statemachine | usecase").then(
+                                diagramType => {
+                                    if (diagramType) {
+                                        this.createUmlDiagram(nameOfUmlModel, workspaceUri, diagramType);
+                                    }
+                                });
+                        }
                     });
                 }
             }
         });
     }
 
-    protected showInput(prefix: string, hint: string, onEnter: (result: string) => void): void {
-        const quickOpenModel: QuickOpenModel = {
-            onType(lookFor: string, acceptor: (items: QuickOpenItem[]) => void): void {
-                const dynamicItems: QuickOpenItem[] = [];
-                const suffix = "Press 'Enter' to confirm or 'Escape' to cancel.";
-
-                dynamicItems.push(new SingleStringInputOpenItem(
-                    `${prefix}: '${lookFor}'  > ${suffix}`,
-                    () => onEnter(lookFor),
-                    (mode: QuickOpenMode) => mode === QuickOpenMode.OPEN,
-                    () => false
-                ));
-
-                acceptor(dynamicItems);
+    protected async showInput(prefix: string, hint: string, inputCheck?: (input: string) => Promise<string | undefined>): Promise<string | undefined> {
+        return this.quickInputService.input({
+            prompt: prefix,
+            placeHolder: hint,
+            ignoreFocusLost: true,
+            validateInput: async input => {
+                if (inputCheck) {
+                    return inputCheck(input);
+                }
+                return !input ? `Please enter a valid string for '${prefix}'` : undefined;
             }
-        };
-        this.quickOpenService.open(quickOpenModel, this.getOptions(hint, false));
+        });
     }
 
     protected createUmlDiagram(diagramName: string, workspaceUri: URI, diagramType: string): void {
         if (diagramName) {
             this.modelServerClient.createUmlResource(diagramName, this.getUmlDiagramType(diagramType)).then(() => {
-                this.quickOpenService.hide();
+                this.quickInputService.hide();
                 const modelUri = new URI(workspaceUri.path.toString() + `/${diagramName}/model/${diagramName}.uml`);
                 this.commandService.executeCommand(FileNavigatorCommands.REFRESH_NAVIGATOR.id);
                 this.openerService.getOpener(modelUri).then(openHandler => {
@@ -103,6 +100,7 @@ export class UmlModelContribution implements CommandContribution, MenuContributi
             case ("sequence"): return UmlDiagramType.SEQUENCE;
             case ("statemachine"): return UmlDiagramType.STATEMACHINE;
             case ("usecase"): return UmlDiagramType.USECASE;
+            case ("object"): return UmlDiagramType.OBJECT;
         }
         return UmlDiagramType.NONE;
     }
@@ -122,42 +120,6 @@ export class UmlModelContribution implements CommandContribution, MenuContributi
             order: "0"
         });
 
-    }
-
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    private getOptions(placeholder: string, fuzzyMatchLabel = true, onClose: (canceled: boolean) => void = () => { }): QuickOpenOptions {
-        return QuickOpenOptions.resolve({
-            placeholder,
-            fuzzyMatchLabel,
-            fuzzySort: false,
-            onClose
-        });
-    }
-
-}
-
-class SingleStringInputOpenItem extends QuickOpenItem {
-
-    constructor(
-        private readonly label: string,
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        private readonly execute: (item: QuickOpenItem) => void = () => { },
-        private readonly canRun: (mode: QuickOpenMode) => boolean = mode => mode === QuickOpenMode.OPEN,
-        private readonly canClose: (mode: QuickOpenMode) => boolean = mode => true) {
-
-        super();
-    }
-
-    getLabel(): string {
-        return this.label;
-    }
-
-    run(mode: QuickOpenMode): boolean {
-        if (!this.canRun(mode)) {
-            return false;
-        }
-        this.execute(this);
-        return this.canClose(mode);
     }
 
 }

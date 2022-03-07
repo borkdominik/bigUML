@@ -9,39 +9,56 @@
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
 import { ModelServerClient } from "@eclipse-emfcloud/modelserver-theia";
-import { GLSPClientContribution } from "@eclipse-glsp/theia-integration/lib/browser";
+import {
+    ContainerContext,
+    GLSPClientContribution,
+    GLSPTheiaFrontendModule,
+    registerDiagramManager,
+    TheiaGLSPConnector
+} from "@eclipse-glsp/theia-integration/lib/browser";
 import { CommandContribution, MenuContribution } from "@theia/core";
-import { FrontendApplicationContribution, OpenHandler, WidgetFactory } from "@theia/core/lib/browser";
-import { ContainerModule, interfaces } from "inversify";
-import { DiagramConfiguration, DiagramManager, DiagramManagerProvider } from "sprotty-theia/lib";
+import { DiagramConfiguration } from "sprotty-theia/lib";
+
+import { UmlLanguage } from "../common/uml-language";
 
 import { UmlModelServerClient } from "../common/uml-model-server-client";
 import { UmlModelContribution } from "./command-contribution";
-import { UmlGLSPDiagramClient } from "./diagram/diagram-client";
 import { UmlDiagramConfiguration } from "./diagram/diagram-configuration";
 import { UmlDiagramManager } from "./diagram/diagram-manager";
-import { UmlModelServerFrontendContribution } from "./frontend-contribution";
+import { UmlTheiaGLSPConnector } from "./diagram/theia-glsp-connector";
 import { UmlGLSPClientContribution } from "./glsp-client-contribution";
 
-export default new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Unbind, isBound: interfaces.IsBound, rebind: interfaces.Rebind) => {
-    bind(UmlModelServerFrontendContribution).toSelf().inSingletonScope();
-    bind(FrontendApplicationContribution).toService(UmlModelServerFrontendContribution);
-    bind(UmlGLSPClientContribution).toSelf().inSingletonScope();
-    bind(GLSPClientContribution).toService(UmlGLSPClientContribution);
-    bind(UmlGLSPDiagramClient).toSelf().inSingletonScope();
-    bind(DiagramConfiguration).to(UmlDiagramConfiguration).inSingletonScope();
-    bind(UmlDiagramManager).toSelf().inSingletonScope();
-    bind(FrontendApplicationContribution).toService(UmlDiagramManager);
-    bind(OpenHandler).toService(UmlDiagramManager);
-    bind(WidgetFactory).toService(UmlDiagramManager);
-    bind(DiagramManagerProvider).toProvider<DiagramManager>(context => () => new Promise<DiagramManager>(resolve => {
-        const diagramManager = context.container.get<UmlDiagramManager>(UmlDiagramManager);
-        resolve(diagramManager);
-    }));
+export class UmlTheiaFrontendModule extends GLSPTheiaFrontendModule {
 
-    bind(UmlModelServerClient).toService(ModelServerClient);
+    readonly diagramLanguage = UmlLanguage;
 
-    bind(UmlModelContribution).toSelf().inSingletonScope();
-    bind(CommandContribution).toService(UmlModelContribution);
-    bind(MenuContribution).toService(UmlModelContribution);
-});
+    bindTheiaGLSPConnector(context: ContainerContext): void {
+        context.bind(TheiaGLSPConnector).toDynamicValue(dynamicContext => {
+            const connector = dynamicContext.container.resolve(UmlTheiaGLSPConnector);
+            connector.doConfigure(this.diagramLanguage);
+            return connector;
+        });
+    }
+
+    bindDiagramConfiguration(context: ContainerContext): void {
+        context.bind(DiagramConfiguration).to(UmlDiagramConfiguration);
+    }
+
+    bindGLSPClientContribution(context: ContainerContext): void {
+        context.bind(GLSPClientContribution).to(UmlGLSPClientContribution);
+    }
+
+    configure(context: ContainerContext): void {
+        context.bind(UmlModelContribution).toSelf().inSingletonScope();
+        context.bind(CommandContribution).toService(UmlModelContribution);
+        context.bind(MenuContribution).toService(UmlModelContribution);
+        context.bind(UmlModelServerClient).toService(ModelServerClient);
+    }
+
+    configureDiagramManager(context: ContainerContext): void {
+        registerDiagramManager(context.bind, UmlDiagramManager);
+    }
+
+}
+
+export default new UmlTheiaFrontendModule();

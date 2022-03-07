@@ -25,7 +25,7 @@ export class UmlFrontendContribution implements FrontendApplicationContribution 
 
     onStart(): void {
         this.updateTheme();
-        this.themeService.onThemeChange(() => this.updateTheme());
+        this.themeService.onDidColorThemeChange(() => this.updateTheme());
     }
 
     protected updateTheme(): void {

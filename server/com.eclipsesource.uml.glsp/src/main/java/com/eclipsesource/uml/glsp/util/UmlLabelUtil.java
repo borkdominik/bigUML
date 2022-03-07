@@ -11,6 +11,7 @@
 package com.eclipsesource.uml.glsp.util;
 
 import org.eclipse.uml2.uml.Property;
+import org.eclipse.uml2.uml.Slot;
 
 public final class UmlLabelUtil {
 
@@ -30,5 +31,12 @@ public final class UmlLabelUtil {
       }
       return String.format(" [%s..%s]", property.getLower(), property.getUpper() == -1 ? "*" : property.getUpper());
    }
+
+   /*public static String getMultiplicity(final Slot property) {
+      if (property.getLower() == property.getUpper()) {
+         return String.format(" [%s]", property.getUpper() == -1 ? "*" : property.getUpper());
+      }
+      return String.format(" [%s..%s]", property.getLower(), property.getUpper() == -1 ? "*" : property.getUpper());
+   }*/
 
 }

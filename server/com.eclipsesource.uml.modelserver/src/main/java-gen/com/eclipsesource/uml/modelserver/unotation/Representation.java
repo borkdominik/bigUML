@@ -100,7 +100,16 @@ public enum Representation implements Enumerator {
     * @generated
     * @ordered
     */
-   COMPONENT(7, "COMPONENT", "COMPONENT");
+   COMPONENT(8, "COMPONENT", "COMPONENT"), /**
+    * The '<em><b>OBJECT</b></em>' literal object.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @see #COMPONENT_VALUE
+    * @generated
+    * @ordered
+    */
+   OBJECT(7, "OBJECT", "OBJECT");
+
 
    /**
     * The '<em><b>ACTIVITY</b></em>' literal value.
@@ -188,7 +197,18 @@ public enum Representation implements Enumerator {
     * @generated
     * @ordered
     */
-   public static final int COMPONENT_VALUE = 7;
+   public static final int COMPONENT_VALUE = 8;
+
+   /**
+    * The '<em><b>OBJECT</b></em>' literal value.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @see #COMPONENT
+    * @model
+    * @generated
+    * @ordered
+    */
+   public static final int OBJECT_VALUE = 7;
 
    /**
     * An array of all the '<em><b>Representation</b></em>' enumerators.
@@ -205,6 +225,7 @@ public enum Representation implements Enumerator {
          STATEMACHINE,
          USECASE,
          DEPLOYMENT,
+         OBJECT,
          COMPONENT,
       };
 
@@ -270,6 +291,7 @@ public enum Representation implements Enumerator {
          case USECASE_VALUE: return USECASE;
          case DEPLOYMENT_VALUE: return DEPLOYMENT;
          case COMPONENT_VALUE: return COMPONENT;
+         case OBJECT_VALUE: return OBJECT;
       }
       return null;
    }

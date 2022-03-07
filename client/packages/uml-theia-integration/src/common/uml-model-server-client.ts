@@ -19,7 +19,8 @@ export enum UmlDiagramType {
     PACKAGE = "PACKAGE",
     SEQUENCE = "SEQUENCE",
     STATEMACHINE = "STATEMACHINE",
-    USECASE = "USECASE"
+    USECASE = "USECASE",
+    OBJECT = "OBJECT"
 }
 
 export const UmlModelServerClient = Symbol("UmlModelServerClient");

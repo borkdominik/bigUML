@@ -21,6 +21,15 @@ public final class UmlIDUtil {
    public static String HEADER_LABEL_SUFFIX = "_header_label";
    public static String CHILD_COMPARTMENT_SUFFIX = "_childCompartment";
 
+   // ACTIVITY
+   public static String LABEL_GUARD_SUFFIX = "_guard";
+   public static String LABEL_WEIGHT_SUFFIX = "_weight";
+
+   // STATEMACHINE
+   public static String LABEL_STATE_GUARD_SUFFIX = "_label_guard";
+   public static String LABEL_EFFECT_SUFFIX = "_label_effect";
+   public static String LABEL_TRIGGER_SUFFIX = "_label_trigger";
+
    public static String createLabelNameId(final String containerId) {
       return containerId + LABEL_NAME_SUFFIX;
    }
@@ -67,6 +76,47 @@ public final class UmlIDUtil {
 
    public static String getElementIdFromChildCompartment(final String childCompartmentId) {
       return childCompartmentId.replace(CHILD_COMPARTMENT_SUFFIX, "");
+   }
+
+   public static String getEdgeIdFromGuardLabel(final String guardLabel) {
+      return guardLabel.replace(LABEL_GUARD_SUFFIX, "");
+   }
+
+   public static String getEdgeFromWeightLabel(final String weightLabel) {
+      return weightLabel.replace(LABEL_WEIGHT_SUFFIX, "");
+   }
+
+   public static String createGuardLabelId(final String containerId) {
+      return containerId + LABEL_GUARD_SUFFIX;
+   }
+
+   public static String createWeightLabelId(final String containerId) {
+      return containerId + LABEL_WEIGHT_SUFFIX;
+   }
+
+   //STATEMACHINE
+   public static String createLabelGuardId(final String containerId) {
+      return containerId + LABEL_STATE_GUARD_SUFFIX;
+   }
+
+   public static String getElementIdFromLabelGuard(final String labelNameId) {
+      return labelNameId.replace(LABEL_STATE_GUARD_SUFFIX, "");
+   }
+
+   public static String createLabelEffectId(final String containerId) {
+      return containerId + LABEL_EFFECT_SUFFIX;
+   }
+
+   public static String getElementIdFromLabelEffect(final String labelNameId) {
+      return labelNameId.replace(LABEL_EFFECT_SUFFIX, "");
+   }
+
+   public static String createLabelTriggerId(final String containerId) {
+      return containerId + LABEL_TRIGGER_SUFFIX;
+   }
+
+   public static String getElementIdFromLabelTrigger(final String labelNameId) {
+      return labelNameId.replace(LABEL_TRIGGER_SUFFIX, "");
    }
 
 }

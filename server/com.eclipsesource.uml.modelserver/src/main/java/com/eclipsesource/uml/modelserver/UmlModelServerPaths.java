@@ -15,6 +15,7 @@ import org.eclipse.emfcloud.modelserver.common.ModelServerPathsV1;
 public interface UmlModelServerPaths extends ModelServerPathsV1 {
 
    String UML_TYPES = "uml/types";
+   String UML_BEHAVIORS = "uml/behaviors";
    String UML_CREATE = "uml/create";
 
 }

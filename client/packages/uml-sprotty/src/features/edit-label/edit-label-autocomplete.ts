@@ -14,7 +14,7 @@ import { EditLabelUI, getAbsoluteClientBounds, getZoom, isSizeable, SModelRoot }
 import { matchesKeystroke } from "sprotty/lib/utils/keyboard";
 
 import { UmlTypes } from "../../utils";
-import { GetTypesAction, ReturnTypesAction } from "./action-definitions";
+import { CallBehaviorsAction, GetBehaviorsAction } from "./action-definitions";
 
 @injectable()
 export class EditLabelUIAutocomplete extends EditLabelUI {
@@ -88,12 +88,12 @@ export class EditLabelUIAutocomplete extends EditLabelUI {
 
     protected createAutocomplete(): void {
         const input: string = this.inputElement.value;
-        let val = "";
-        if (input.includes(":")) {
+        const val = input.trim();
+        /* if (input.includes(":")) {
             val = input.split(":")[1].trim();
         } else {
             return;
-        }
+        } */
 
         this.closeAllLists();
         this.currentFocus = -1;
@@ -113,11 +113,12 @@ export class EditLabelUIAutocomplete extends EditLabelUI {
                 element.innerHTML += "<input type='hidden' value='" + this.types[i] + "'>";
                 element.addEventListener("click", e => {
                     // change the type of the label
-                    let name: string = this.inputElement.value;
+                    /* let name: string = this.inputElement.value;
                     if (name.includes(":")) {
                         name = name.split(":")[0];
                     }
-                    this.inputElement.value = name + ": " + element.getElementsByTagName("input")[0].value;
+                    this.inputElement.value = name + ": " + element.getElementsByTagName("input")[0].value; */
+                    this.inputElement.value = (e.target as HTMLElement).innerText;
                     this.closeAllLists();
                 });
                 this.listContainer.appendChild(element);
@@ -170,10 +171,16 @@ export class EditLabelUIAutocomplete extends EditLabelUI {
         super.onBeforeShow(containerElement, root, ...contextElementIds);
 
         // request possible element types
-        this.actionDispatcher.requestUntil(new GetTypesAction()).then(response => {
+        /* this.actionDispatcher.requestUntil(new GetTypesAction()).then(response => {
             if (response) {
                 const action: ReturnTypesAction = response as ReturnTypesAction;
                 this.types = action.types;
+            }
+        }); */
+        this.actionDispatcher.requestUntil(new GetBehaviorsAction()).then(response => {
+            if (response) {
+                const action: CallBehaviorsAction = response as CallBehaviorsAction;
+                this.types = action.behaviors;
             }
         });
     }
@@ -209,7 +216,7 @@ export class EditLabelUIAutocomplete extends EditLabelUI {
 
     protected isAutoCompleteEnabled(): boolean {
         if (this.label) {
-            return this.label.type === UmlTypes.PROPERTY && this.showAutocomplete;
+            return this.label.type === UmlTypes.CALL_REF && this.showAutocomplete;
         }
         return false;
     }

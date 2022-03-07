@@ -16,5 +16,6 @@ import org.eclipse.emfcloud.modelserver.edit.command.BasicCommandContribution;
 public abstract class UmlCompoundCommandContribution extends BasicCommandContribution<CompoundCommand> {
 
    public static final String SEMANTIC_URI_FRAGMENT = "semanticUriFragment";
+   public static final String PARENT_SEMANTIC_URI_FRAGMENT = "parentSemanticUriFragment";
 
 }

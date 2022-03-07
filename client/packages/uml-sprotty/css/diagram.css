@@ -111,3 +111,54 @@ svg {
 .sprotty-popup-body>p {
     margin-bottom: 2px;
 }
+/* ACTIVITY */
+.uml-activity-condition {
+    font-size: 0.7em;
+}
+
+/* OBJECT */
+.uml-underline {
+    text-decoration: underline;
+}
+
+
+/* USECASE */
+.uml-edge-dotted {
+    stroke-dasharray: 2, 4;
+}
+
+/*.uml-edge-dashed {
+    stroke-dasharray: 7, 7;
+}*/
+
+.uml-edge-dashed {
+    stroke-dasharray: 15 10;
+}
+
+.uml-edge-directed-end {
+    marker-end: url("#triangle");
+}
+
+.uml-edge-directed-start {
+    marker-start: url("#triangle");
+}
+
+.uml-edge-directed-end-tent {
+    marker-end: url("#tent");
+}
+
+.uml-edge-directed-start-tent {
+    marker-start: url("#tent");
+}
+
+.uml-edge-directed-end-empty {
+    marker-end: url("#triangle-empty");
+}
+
+.uml-edge-directed-start-empty {
+    marker-start: url("#triangle-empty");
+}
+
+#tent path, #triangle path, #triangle-empty path {
+    stroke-dasharray: none;
+}

@@ -15,7 +15,7 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 
-import com.eclipsesource.uml.modelserver.commands.commons.util.UmlNotationCommandUtil;
+import com.eclipsesource.uml.modelserver.commands.util.UmlNotationCommandUtil;
 import com.eclipsesource.uml.modelserver.unotation.Diagram;
 
 public abstract class UmlNotationElementCommand extends RecordingCommand {

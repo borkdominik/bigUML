@@ -36,6 +36,8 @@ public final class UmlNotationUtil {
             return Representation.STATEMACHINE;
          case "usecase":
             return Representation.USECASE;
+         case "object":
+            return Representation.OBJECT;
       }
       return Representation.CLASS;
    }

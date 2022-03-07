@@ -9,6 +9,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
 import { ModelServerClient } from "@eclipse-emfcloud/modelserver-theia/lib/common";
+import { Args, MaybePromise } from "@eclipse-glsp/client";
 import { BaseGLSPClientContribution } from "@eclipse-glsp/theia-integration/lib/browser";
 import { inject, injectable } from "inversify";
 
@@ -24,17 +25,13 @@ export class UmlGLSPClientContribution extends BaseGLSPClientContribution {
 
     @inject(ModelServerClient) protected readonly modelServerClient: ModelServerClient;
 
-    readonly fileExtensions = [UmlLanguage.FileExtension];
-    readonly id = UmlLanguage.Id;
-    readonly name = UmlLanguage.Name;
+    readonly id = UmlLanguage.contributionId;
+    readonly fileExtensions = UmlLanguage.fileExtensions;
 
-    protected async createInitializeOptions(): Promise<UmlInitializeOptions> {
-        // #TODO FIXME: using the launchoptions of the modelserverclient leads to an error, although the values seem to be correct...
-        // const options = await this.modelServerClient.getLaunchOptions();
-
+    protected createInitializeOptions(): MaybePromise<Args | undefined> {
         return {
-            timestamp: new Date(),
-            modelServerURL: "http://localhost:8081/api/v1/"
+            ["timestamp"]: new Date().toString(),
+            ["modelServerURL"]: "http://localhost:8081/api/v1/"
         };
     }
 

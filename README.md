@@ -1,77 +1,117 @@
-# UML Editor based on GLSP
+# bigUML Editor - Server Development
 
-Uml GLSP provides a web-based editor for UML Models (including Diagrams), integrated with Eclipse Theia. It contains three components: one [Model Server](https://github.com/eclipse-emfcloud/emfcloud-modelserver) (Server-side, written in Java), one [GLSP](https://github.com/eclipse-glsp/glsp) language server (Server-side, written in Java), and one [GLSP client](https://github.com/eclipse-glsp/glsp-client) extension to actually present the diagrams (using [Sprotty](https://github.com/eclipse/sprotty-theia)). 
+## Current progress of adding elements
+C -> Class Diagram //
+A -> Activity Diagram //
+U -> UseCase Diagram //
+S -> StateMachine Diagram //
+D -> Deployment Diagram //
+O -> Object Diagram
 
-Uml GLSP can display an existing UML model as a class diagram. The diagram layout will be persisted in an `.unotation` file next to the `.uml` file. The diagram editor also supports creation of new elements (Classes, Properties and Associations), as well as partial support for editing existing elements (Renaming, deleting...).
+|Element | Modelserver| GLSP  | Client  | Works as intended  |
+|---|---|---|---|---|
+| Class (C) | ✅  | ✅  | ✅  | ✅  |
+| Property (C) | ✅  | ✅  | ✅  | ✅  |
+| Association (C) | ✅  | ✅  | ✅  | ✅  |
+| Activity (A) | ✅  | ✅  | ✅  | ✅  |
+| Interruptible Region (A) | ✅  | ✅  | ✅  | ✅  |
+| Partition (A) | ✅  | ✅  | ✅  | ✅  |
+| Action (A) | ✅  | ✅  | ✅  | (✅)  |
+| Call (A) | ✅  | ✅  | ✅  | ❌ |
+| TimeEvent (A) | ✅  | ✅  | ✅  | (✅) |
+| Event (A) | ✅  | ✅  | ✅  | (✅) |
+| Signal (A) | ✅  | ✅  | ✅  | (✅) |
+| Condition (A) | ✅  | ✅  | ✅  | (✅)  |
+| ControlNode (A) | ✅  | ✅  | ✅  | (✅)  |
+| Pin (A) | ✅  | ✅  | ✅  | ❌  |
+| DataNode (A) | ✅  | ✅  | ✅  | ❌  |
+| Exceptionhandler (A) | ✅  | ✅  | ✅  | ✅  |
+| Controlflow (A) | ✅  | ✅  | ✅  | ✅  |
+| Partition (A) | ✅  | ✅  | ✅  | ✅  |
+| UseCase (U) | ✅  | ✅  | ✅  | ✅  |
+| Extensionpoint (U) | ✅  | ✅  | ✅  | ✅  |
+| Package (U) | ✅  | ✅  | ✅  | ✅  |
+| Actor (U) | ✅  | ✅  | ✅  | ✅  |
+| Component (U) | ✅  | ✅  | ✅  | ✅  |
+| Generalization (U) | ✅  | ✅  | ✅  | ✅  |
+| Include (U) | ✅  | ✅  | ✅  | ✅  |
+| Extend (U) | ✅  | ✅  | ✅  | ✅  |
+| StateMachine (S) | ✅  | ✅  | ✅  | ✅  |
+| Region within Statemachine (S) | (✅)  | ✅  | (✅)  | (✅)  |
+| Ports (In- & Out) (S) | (✅)  | ✅ | ✅  | ✅  |
+| State (S) | ✅  | ✅  | ✅  | ✅  |
+| Pseudo States (S) | ✅  | ✅  | ✅  | ✅  |
+| Final State (S) | ✅  | ✅  | ✅  | ✅  |
+| State Behaviour (S) | ✅  | ✅  | ✅  | ✅  |
+| Transition (S) | ✅  | ✅  | ✅  | ✅  |
+| Artifact (D) | ✅  | ✅  | ✅  | ✅  |
+| CommunicationPath (D) | ✅  | ✅  | ✅  | ✅  |
+| Deployment Node (D) | ✅  | ✅  | ✅  | ✅  |
+| Deployment Specification Node (D) | ✅  | ✅  | ✅  | ✅  |
+| Deployment Relationship (D) | ✅  | ✅  | ✅  | ✅  |
+| Device (D) | ✅  | ✅  | ✅  | ✅  |
+| ExecutionEnvironment (D) | ✅  | ✅  | ✅  | ✅  |
+| Comment Edge (General) | ✅  | ✅  | ✅  | ❌  |
+| Comment Node (General) | ✅  | ✅  | ✅  | ❌  |
+| Object Node (O)| ✅  | ✅  | ✅  | ✅  |
+| Attribute Node (O)| ✅  | ✅  | ✅  | ✅  |
+| Object Link Edge (O)| ✅  | ✅  | ✅  | ✅  |
+
+## General TODOs
+DONE: ✅, DOING: 👨🏼‍💻, NOT STARTED: ❌
+- write unit tests! ❌ 
+- edges are not working anymore!!!! ‍✅
+- create validation! (when all elements are working) 👨🏼‍💻
+- rework UseCase edges to fit other diagram types! 👨🏼‍💻
+- put icon files into diagram type specific directories ‍✅
+- export tool as test to check the possible VSCode dependencies ❌
+- add comment node as general element ✅
+- add comment edge as general element ✅
+- enable a flexible folder structure (user can define it) ❌
+- do not display unotation files for client ❌
+- make the different diagram types easier to differentiate (icons and model tabs on client side) ❌
+- clean up the diagram types! 👨🏼‍💻
+- check if the child node creation works for state machine diagram ❌
+- test if the inegrated vertex factory is working as intended ❌
+- add students to README as contributors ✅ and to the repo in general ❌
 
 
-![animated course class diagram](./documentation/uml-glsp-animated-classdiagram.gif)
+### Contributors during the class Advanced Model Engineering summer term 2021
+- Felix Winterleitner
+- Kristof Meixner
+- Felix Rinker
+- Andreas Fend
+- Zohreh Gorji
+- Johannes Buechele
+- Lukas ...
+- Dominik ...
+- Dejana Stefanowic
+- plus two more where their names were not visible on github
+## Getting started with the Eclipse IDE
+
+- Please make sure your Eclipse workspace uses a JRE of Java 11.
+- We use the [Eclipse Modeling Tools](https://www.eclipse.org/downloads/packages/release/2020-12/r/eclipse-modeling-tools)
+- The following Eclipse plugins are required:
+    - The M2Eclipse (Maven Integration for Eclipse) plugin:
+        - Update site location: http://download.eclipse.org/technology/m2e/releases/
+        - Install *Maven Integration for Eclipse*
+- Import all maven projects via `File > Import... > Maven > Existing Maven Projects > Root directory: $REPO_LOCATION`.
+    - You may skip the parent modules (i.e. `com.eclipsesource.uml.parent`, `com.eclipsesource.uml.glsp.app` and `com.eclipsesource.uml.modelserver.app`)
+    - You need to set the active target platform once to be able to resolve all necessary plugins. To do so, open `r2020-09.target` (located in the module `targetplatform`) and hit `Set Active Target Platform` in the Target Editor. After the target platform is set, you can simple reload the target platform on demand.
 
 
-## Prerequisites
+## Build
 
-The following libraries/frameworks need to be installed on your system:
+To build the model server as standalone JAR and execute all component tests execute the following maven goal in the root directory:
+```bash
+mvn clean install
+```
 
-| | |
-|-|-|
-|[Node.js](https://nodejs.org/en/)|`>= 12.14.1 AND < 13`|
-|[Yarn](https://classic.yarnpkg.com/en/docs/install#debian-stable)|`>=1.7.0`|
-|[Java](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html)|`11`|
-|[Maven](https://maven.apache.org/)|`>=3.6.0`|
-|[Git](https://git-scm.com/downloads)|`>= 2.11.0`|
+## Running/Debugging
 
-<br/>
+### Execute from IDE
+To start both server instances within the Eclipse IDE, run or debug the Launch Group configuration `UML-GLSP App.launch` (located in module `com.eclipsesource.uml.modelserver.product`).
 
-The editor is heavily interweaved with Eclipse Theia, so please also check the [prerequisites of Theia](https://github.com/eclipse-theia/theia/blob/master/doc/Developing.md#prerequisites).
-
-The web-based/client part of the editor has been developed using [Visual Studio Code](https://code.visualstudio.com/) and the server/java part has been developed with the [Eclipse IDE](https://www.eclipse.org/ide/).
-Settings for codestyle are provided for both IDEs, however, it's of course also possible to use any other IDE or text editor.
-
-## Getting started
-
-Clone the uml-glsp editor:
-
-    git clone https://github.com/eclipsesource/uml-glsp.git
-
-### Build
-The server components have to be built using Maven, the client component has to be built using yarn. This can be done via CLI:
-
-    cd server && mvn clean install && cd ..
-    cd client && yarn && cd ..
-
-#### Resolving build issues under Windows/MacOS
-
-- Missing build tools result in following error: <br/>
-  `gyp err! stack error: could not find any visual studio installation to use`
-  - Windows: <br/>
-    - Install via `npm install --global --vs2015 windows-build-tools`
-    - Check that `npm config get msvs_version` returns `2015`
-  - Mac OS: <br/>
-    - Install [Xcode](https://developer.apple.com/xcode/) developer tools
-
-### Run
-
-    cd client && yarn start
-
-Start your browser on [http://localhost:3000](http://localhost:3000).
-
-<br/>
-
-#### Open diagrams (`*.uml`)
-- Add/Delete/Rename support for the following UML Elements: `Class`, `Property`, `Association`
-
-#### Create new diagrams
-- via menu entry `File -> New UML Class Diagram`
-- via explorer context menu entry `New UML Class Diagram`
-- via command palette `File: New UML Class Diagram`
-
-<br/>
-
-For detailed information on running and debugging the [server](./server/README.md) and [client](./client/README.md) components, please see their respective READMEs.
-
-<br/>
-
-## More information
-
-For more information, please visit the [EMF.cloud Website](https://www.eclipse.org/emfcloud/). If you have questions, contact us on our [spectrum chat](https://spectrum.chat/emfcloud/) and have a look at our [communication and support options](https://www.eclipse.org/emfcloud/contact/).
-
+To start the instances separately, run or debug the following launch configs as Eclipse products:
+- `com.eclipsesource.uml.modelserver.product.launch` located in module `com.eclipsesource.uml.modelserver.product`
+- `com.eclipsesource.uml.glsp.product.launch` located in module `com.eclipsesource.uml.glsp.product`

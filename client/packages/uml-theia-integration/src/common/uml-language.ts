@@ -8,10 +8,12 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-export namespace UmlLanguage {
-    export const Id = "uml";
-    export const Name = "UML";
-    export const Label = "UML diagram";
-    export const DiagramType = "umldiagram";
-    export const FileExtension = ".uml";
-}
+import { GLSPDiagramLanguage } from "@eclipse-glsp/theia-integration";
+
+export const UmlLanguage: GLSPDiagramLanguage = {
+    contributionId: "uml",
+    label: "UML diagram",
+    diagramType: "umldiagram",
+    iconClass: "codicon codicon-type-hierarchy-sub",
+    fileExtensions: [".uml"]
+};

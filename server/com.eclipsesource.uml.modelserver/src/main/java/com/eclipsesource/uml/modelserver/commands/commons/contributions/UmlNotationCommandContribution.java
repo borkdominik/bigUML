@@ -19,6 +19,5 @@ public abstract class UmlNotationCommandContribution extends BasicCommandContrib
    public static final String POSITION_X = "positionX";
    public static final String POSITION_Y = "positionY";
    public static final String HEIGHT = "height";
-   public static final String WIDTH = "weight";
-
+   public static final String WIDTH = "width";
 }

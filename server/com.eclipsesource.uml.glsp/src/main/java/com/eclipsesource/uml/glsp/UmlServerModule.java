@@ -13,8 +13,6 @@ package com.eclipsesource.uml.glsp;
 import org.eclipse.glsp.server.di.ServerModule;
 import org.eclipse.glsp.server.protocol.GLSPServer;
 
-import java.util.Date;
-
 public class UmlServerModule extends ServerModule {
 
    @Override

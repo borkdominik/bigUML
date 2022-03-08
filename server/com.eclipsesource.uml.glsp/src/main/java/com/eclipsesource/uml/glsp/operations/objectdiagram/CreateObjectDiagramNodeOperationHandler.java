@@ -4,7 +4,6 @@ import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.util.UmlConfig.*;
 import com.google.common.collect.Lists;
-import org.apache.log4j.Logger;
 import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSBasicCreateOperationHandler;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.operations.Operation;
@@ -18,8 +17,6 @@ public class CreateObjectDiagramNodeOperationHandler
     public CreateObjectDiagramNodeOperationHandler() {
         super(handledElmentTypeIds);
     }
-
-    private static Logger LOGGER = Logger.getLogger(CreateObjectDiagramNodeOperationHandler.class);
 
     private static final List<String> handledElmentTypeIds = Lists.newArrayList(
             Types.OBJECT

@@ -41,7 +41,8 @@ public class AddActionCommand extends UmlSemanticElementCommand {
             a.createTrigger(className);
             this.action = a;
          } else {
-            Class<? extends Action> clazz = (Class<? extends Action>) Class.forName(className);
+            Class<? extends Action> clazz;
+            clazz = Class.forName(className).asSubclass(Action.class);
             if (OpaqueAction.class.equals(clazz)) {
                this.action = UMLFactory.eINSTANCE.createOpaqueAction();
             } else if (SendSignalAction.class.equals(clazz)) {

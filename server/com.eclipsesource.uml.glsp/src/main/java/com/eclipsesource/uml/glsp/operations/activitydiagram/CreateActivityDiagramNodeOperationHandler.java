@@ -1,4 +1,4 @@
-package com.eclipsesource.uml.glsp.operations.activtiydiagram;
+package com.eclipsesource.uml.glsp.operations.activitydiagram;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;

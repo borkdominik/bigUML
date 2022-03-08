@@ -21,6 +21,7 @@ public class StateMachineDiagramVertexFactory extends AbstractGModelFactory<Vert
         super(modelState);
     }
 
+    @Override
     public GNode create(final Vertex vertex) {
         if (vertex instanceof State) {
             System.out.println("reaches state creation");

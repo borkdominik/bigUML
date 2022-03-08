@@ -5,7 +5,6 @@ import com.eclipsesource.uml.modelserver.commands.util.UmlNotationCommandUtil;
 import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
 import com.eclipsesource.uml.modelserver.unotation.Edge;
 import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.*;
@@ -18,8 +17,6 @@ public class RemoveExtensionPointCompoundCommand extends CompoundCommand {
         Model umlModel = UmlSemanticCommandUtil.getModel(modelUri, domain);
         ExtensionPoint extensionPointToRemove = UmlSemanticCommandUtil.getElement(umlModel, semanticUriFragment,
                 ExtensionPoint.class);
-        EList<Relationship> list = extensionPointToRemove.getRelationships();
-        EList<DirectedRelationship> list2 = extensionPointToRemove.getTargetDirectedRelationships();
 
         for (Relationship r : extensionPointToRemove.getRelationships()) {
             if (r instanceof Extend) {

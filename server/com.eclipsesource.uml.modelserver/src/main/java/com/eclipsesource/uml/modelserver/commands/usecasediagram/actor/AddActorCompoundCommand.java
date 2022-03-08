@@ -1,6 +1,5 @@
 package com.eclipsesource.uml.modelserver.commands.usecasediagram.actor;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -10,8 +9,6 @@ import org.eclipse.uml2.uml.Actor;
 import java.util.function.Supplier;
 
 public class AddActorCompoundCommand extends CompoundCommand {
-
-    private static Logger LOGGER = Logger.getLogger(AddActorCompoundCommand.class);
 
     public AddActorCompoundCommand(final EditingDomain domain, final URI modelUri, final GPoint position) {
         AddActorCommand command = new AddActorCommand(domain, modelUri);

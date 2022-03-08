@@ -9,7 +9,6 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.uml2.uml.FinalState;
-import org.eclipse.uml2.uml.PackageableElement;
 
 import java.util.function.Supplier;
 
@@ -49,7 +48,7 @@ public class AddFinalStateShapeCommand extends UmlNotationElementCommand {
         if (semanticProxyUri != null) {
             proxy.setUri(semanticProxyUri);
         } else {
-            proxy.setUri(UmlNotationCommandUtil.getSemanticProxyUri((PackageableElement) finalStateSupplier.get()));
+            proxy.setUri(UmlNotationCommandUtil.getSemanticProxyUri(finalStateSupplier.get()));
         }
         newShape.setSemanticElement(proxy);
         umlDiagram.getElements().add(newShape);

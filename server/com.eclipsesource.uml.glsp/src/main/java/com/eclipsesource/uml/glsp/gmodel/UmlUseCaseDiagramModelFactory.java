@@ -113,7 +113,7 @@ public class UmlUseCaseDiagramModelFactory extends DiagramFactory {
 
          // ArrayList<PackageableElement> packagedElements = new ArrayList<>(useCaseModel.getPackagedElements());
 
-         TreeIterator iterator = useCaseModel.eAllContents();
+         TreeIterator<EObject> iterator = useCaseModel.eAllContents();
          while (iterator.hasNext()) {
             Object next = iterator.next();
             if (next instanceof Relationship) {

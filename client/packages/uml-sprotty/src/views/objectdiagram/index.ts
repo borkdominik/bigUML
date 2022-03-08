@@ -9,4 +9,4 @@
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
 
-export * from "./ObjectNodeView";
+export * from "./object-node-view";

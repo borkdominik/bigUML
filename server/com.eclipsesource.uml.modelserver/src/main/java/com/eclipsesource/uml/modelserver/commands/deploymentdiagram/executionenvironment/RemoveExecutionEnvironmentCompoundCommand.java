@@ -3,9 +3,6 @@ package com.eclipsesource.uml.modelserver.commands.deploymentdiagram.executionen
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.ExecutionEnvironment;
-import org.eclipse.uml2.uml.Model;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
 
 public class RemoveExecutionEnvironmentCompoundCommand extends CompoundCommand {
 
@@ -14,9 +11,9 @@ public class RemoveExecutionEnvironmentCompoundCommand extends CompoundCommand {
         this.append(new RemoveExecutionEnvironmentCommand(domain, modelUri, semanticUriFragment, parentSemanticUri));
         this.append(new RemoveExecutionEnvironmentShapeCommand(domain, modelUri, semanticUriFragment));
 
-        Model umlModel = UmlSemanticCommandUtil.getModel(modelUri, domain);
+        /*Model umlModel = UmlSemanticCommandUtil.getModel(modelUri, domain);
         ExecutionEnvironment executionEnvironmentToRemove = UmlSemanticCommandUtil.getElement(umlModel,
-                semanticUriFragment, ExecutionEnvironment.class);
+                semanticUriFragment, ExecutionEnvironment.class);*/
 
         //TODO: check if this is needed at later stage
         /*

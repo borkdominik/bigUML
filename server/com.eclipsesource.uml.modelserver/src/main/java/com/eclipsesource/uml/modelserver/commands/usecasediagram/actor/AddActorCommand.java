@@ -2,7 +2,6 @@ package com.eclipsesource.uml.modelserver.commands.usecasediagram.actor;
 
 import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
 import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Actor;
@@ -11,8 +10,6 @@ import org.eclipse.uml2.uml.UMLFactory;
 
 
 public class AddActorCommand extends UmlSemanticElementCommand {
-
-    private static Logger LOGGER = Logger.getLogger(AddActorCommand.class);
 
     protected final Actor newActor;
     protected final String parentSemanticUriFragment;

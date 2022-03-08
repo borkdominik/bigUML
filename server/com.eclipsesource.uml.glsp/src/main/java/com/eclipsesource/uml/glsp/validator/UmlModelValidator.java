@@ -10,24 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.validator;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.glsp.graph.GModelElement;
-import org.eclipse.glsp.server.features.validation.Marker;
-import org.eclipse.glsp.server.features.validation.MarkerKind;
-import org.eclipse.glsp.server.features.validation.ModelValidator;
-import org.eclipse.glsp.server.model.GModelState;
-import org.eclipse.uml2.uml.*;
-
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.util.ActivityUtil;
-import org.eclipse.uml2.uml.Class;
-
+//TODO
 public class UmlModelValidator {/*implements ModelValidator {
 
    @Override

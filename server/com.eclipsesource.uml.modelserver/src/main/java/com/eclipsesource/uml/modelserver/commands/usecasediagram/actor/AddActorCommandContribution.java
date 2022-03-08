@@ -3,7 +3,6 @@ package com.eclipsesource.uml.modelserver.commands.usecasediagram.actor;
 import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlCompoundCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlNotationCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.util.UmlNotationCommandUtil;
-import org.apache.log4j.Logger;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -13,11 +12,8 @@ import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
 import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
 import org.eclipse.glsp.graph.GPoint;
 
-import static com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlSemanticCommandContribution.PARENT_SEMANTIC_URI_FRAGMENT;
 
 public class AddActorCommandContribution extends UmlCompoundCommandContribution {
-
-    private static Logger LOGGER = Logger.getLogger(AddActorCommandContribution.class);
 
     public static final String TYPE = "addActorContribution";
 

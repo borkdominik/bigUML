@@ -8,21 +8,17 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.operations.activtiydiagram;
+package com.eclipsesource.uml.glsp.operations.activitydiagram;
 
 import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
 
 import java.util.List;
 
-import com.eclipsesource.uml.glsp.operations.usecasediagram.CreateUseCaseDiagramNodeOperationHandler;
-import org.apache.log4j.Logger;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSBasicCreateOperationHandler;
 import org.eclipse.glsp.graph.GDimension;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.impl.GDimensionImpl;
 import org.eclipse.glsp.graph.util.GraphUtil;
-import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.operations.Operation;
 import org.eclipse.glsp.server.types.GLSPServerException;
@@ -40,8 +36,6 @@ public class CreateActivityDiagramChildNodeOperationHandler
    public CreateActivityDiagramChildNodeOperationHandler() {
       super(handledElementTypeIds);
    }
-
-   private static Logger LOGGER = Logger.getLogger(CreateUseCaseDiagramNodeOperationHandler.class);
 
    private static List<String> handledElementTypeIds = Lists.newArrayList(
            Types.ACTION, Types.ACCEPTEVENT, Types.TIMEEVENT,

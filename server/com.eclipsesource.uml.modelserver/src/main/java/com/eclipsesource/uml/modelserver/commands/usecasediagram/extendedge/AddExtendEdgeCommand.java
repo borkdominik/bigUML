@@ -7,10 +7,7 @@ import com.eclipsesource.uml.modelserver.unotation.SemanticProxy;
 import com.eclipsesource.uml.modelserver.unotation.UnotationFactory;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Extend;
-import org.eclipse.uml2.uml.PackageableElement;
-import org.eclipse.uml2.uml.Relationship;
 
 import java.util.function.Supplier;
 

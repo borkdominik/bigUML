@@ -17,20 +17,17 @@ import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.uml2.uml.*;
 
-import java.lang.Class;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class StateMachineDiagramNodeFactory extends AbstractGModelFactory<Classifier, GNode> {
 
-    private final LabelFactory labelFactory;
     private final DiagramFactory parentFactory;
 
     public StateMachineDiagramNodeFactory(final UmlModelState modelState, final LabelFactory labelFactory,
                                  final DiagramFactory parentFactory) {
         super(modelState);
-        this.labelFactory = labelFactory;
         this.parentFactory = parentFactory;
     }
 

@@ -24,13 +24,10 @@ import java.util.stream.Collectors;
 public class ObjectDiagramNodeFactory extends AbstractGModelFactory<Classifier, GNode> {
 
     private final LabelFactory labelFactory;
-    private final DiagramFactory parentFactory;
 
-    public ObjectDiagramNodeFactory(final UmlModelState modelState, final LabelFactory labelFactory,
-                                    final DiagramFactory parentFactory) {
+    public ObjectDiagramNodeFactory(final UmlModelState modelState, final LabelFactory labelFactory) {
         super(modelState);
         this.labelFactory = labelFactory;
-        this.parentFactory = parentFactory;
     }
 
     @Override

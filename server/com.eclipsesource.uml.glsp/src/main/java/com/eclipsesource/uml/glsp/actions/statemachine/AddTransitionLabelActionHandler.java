@@ -5,9 +5,8 @@ import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emfcloud.modelserver.glsp.actions.handlers.EMSBasicActionHandler;
 import org.eclipse.glsp.server.actions.Action;
-import org.eclipse.glsp.server.actions.BasicActionHandler;
-import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.types.GLSPServerException;
 import org.eclipse.uml2.uml.Transition;
 
@@ -17,12 +16,12 @@ import java.util.List;
 import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
 
 
-public class AddTransitionLabelActionHandler extends BasicActionHandler<AddTransitionLabelAction> {
+public class AddTransitionLabelActionHandler extends EMSBasicActionHandler<AddTransitionLabelAction, UmlModelServerAccess> {
 
     private static Logger logger = Logger.getLogger(UmlGetTypesActionHandler.class.getSimpleName());
 
     @Override
-    protected List<Action> executeAction(final AddTransitionLabelAction actualAction, final GModelState gModelState) {
+    public List<Action> executeAction(AddTransitionLabelAction actualAction, UmlModelServerAccess modelServerAccess) {
         logger.info("Received add transition label action");
 
         UmlModelState modelState = UmlModelState.getModelState(gModelState);
@@ -31,7 +30,7 @@ public class AddTransitionLabelActionHandler extends BasicActionHandler<AddTrans
                 "Could not find element for id '" + actualAction.getElementTypeId()
                         + "', no add transition label action executed");
 
-        UmlModelServerAccess modelServerAccess = UmlModelState.getModelServerAccess(gModelState);
+        //UmlModelServerAccess modelServerAccess = UmlModelState.getModelServerAccess(gModelState);
         modelServerAccess.addTransitionLabel(modelState, (Transition) semanticElement, "transition label")
                 .thenAccept(response -> {
                     if (!response.body()) {
@@ -39,6 +38,5 @@ public class AddTransitionLabelActionHandler extends BasicActionHandler<AddTrans
                                 "Could not execute add transition label on Transition: " + semanticElement.toString());
                     }
                 });
-        return new ArrayList<>();
-    }
+        return new ArrayList<>();    }
 }

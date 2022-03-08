@@ -31,7 +31,7 @@ public class UmlObjectDiagramModelFactory extends DiagramFactory {
                     .filter(Class.class::isInstance)
                     .map(Class.class::cast)
                     //.map(objectDiagramNodeFactory::create)
-                    .map(umlObject -> objectDiagramNodeFactory.create((Classifier) umlObject))
+                    .map(objectDiagramNodeFactory::create)
                     .collect(Collectors.toList());
             graph.getChildren().addAll(objectNodes);
 

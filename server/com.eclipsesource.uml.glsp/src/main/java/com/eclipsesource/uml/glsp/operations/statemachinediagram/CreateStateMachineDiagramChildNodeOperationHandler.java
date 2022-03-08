@@ -105,7 +105,7 @@ public class CreateStateMachineDiagramChildNodeOperationHandler
 
         x = Math.max(0, x - containerShape.getPosition().getX());
         y = Math.max(0, y - containerShape.getPosition().getY() - 43);
-        GPoint location = GraphUtil.point(x, y);
+        //GPoint location = GraphUtil.point(x, y);
 
         /*x = Math.max(0, x - containerShape.getPosition().getX());
         y = Math.max(0, y - containerShape.getPosition().getY() - 43);

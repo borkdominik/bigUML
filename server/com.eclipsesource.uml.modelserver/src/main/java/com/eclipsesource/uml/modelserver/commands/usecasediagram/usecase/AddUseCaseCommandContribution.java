@@ -15,8 +15,6 @@ import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
 import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
 import org.eclipse.glsp.graph.GPoint;
 
-import static com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlSemanticCommandContribution.PARENT_SEMANTIC_URI_FRAGMENT;
-
 public class AddUseCaseCommandContribution extends UmlCompoundCommandContribution {
 
     public static final String TYPE = "addUseCaseContribution";

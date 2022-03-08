@@ -6,9 +6,9 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Component;
+import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.Package;
 import org.eclipse.uml2.uml.UseCase;
-import org.eclipse.uml2.uml.internal.impl.ModelImpl;
 
 public class RemoveUseCaseCommand extends UmlSemanticElementCommand {
 
@@ -26,7 +26,7 @@ public class RemoveUseCaseCommand extends UmlSemanticElementCommand {
             return;
         }
         EObject container = useCaseToRemove.eContainer();
-        if (container == null || container instanceof ModelImpl) {
+        if (container == null || container instanceof Model) {
             umlModel.getPackagedElements().remove(useCaseToRemove);
         } else if (container instanceof Package) {
             ((Package) container).getPackagedElements().remove(useCaseToRemove);

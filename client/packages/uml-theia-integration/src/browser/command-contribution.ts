@@ -49,7 +49,7 @@ export class UmlModelContribution implements CommandContribution, MenuContributi
 
                     this.showInput("Enter Name of UML Diagram", "Diagram name").then(nameOfUmlModel => {
                         if (nameOfUmlModel) {
-                            this.showInput("Enter UML Diagram Type", "activity | class | component | deployment | object | package | sequence | statemachine | usecase").then(
+                            this.showInput("Enter UML Diagram Type", "activity | class | deployment | object | statemachine | usecase").then(
                                 diagramType => {
                                     if (diagramType) {
                                         this.createUmlDiagram(nameOfUmlModel, workspaceUri, diagramType);

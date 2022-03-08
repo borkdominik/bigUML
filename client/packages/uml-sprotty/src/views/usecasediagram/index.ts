@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-export * from "./UseCaseNodeView";
-export * from "./ActorNodeView";
-export * from "./PackageNodeView";
-export * from "./DirectedEdgeView";
+export * from "./use-case-node-view";
+export * from "./actor-node-view";
+export * from "./package-node-view";
+export * from "./directed-edge-view";

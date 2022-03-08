@@ -3,9 +3,6 @@ package com.eclipsesource.uml.modelserver.commands.deploymentdiagram.deployments
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.DeploymentSpecification;
-import org.eclipse.uml2.uml.Model;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
 
 public class RemoveDeploymentSpecificationCompoundCommand extends CompoundCommand {
 
@@ -14,11 +11,11 @@ public class RemoveDeploymentSpecificationCompoundCommand extends CompoundComman
         this.append(new RemoveDeploymentSpecificationCommand(domain, modelUri, semanticUriFragment, parentSemanticUri));
         this.append(new RemoveDeploymentSpecificationShapeCommand(domain, modelUri, semanticUriFragment));
 
-        Model umlModel = UmlSemanticCommandUtil.getModel(modelUri, domain);
+        //TODO!
+        /*Model umlModel = UmlSemanticCommandUtil.getModel(modelUri, domain);
         DeploymentSpecification deploymentSpecificationToRemove = UmlSemanticCommandUtil.getElement(umlModel,
-                semanticUriFragment, DeploymentSpecification.class);
+                semanticUriFragment, DeploymentSpecification.class);*/
 
-        // TODO: check later again if this is needed somehow
         /*
          * Remove children
          * Collection<Setting> usagesNode = UsageCrossReferencer.find(nodeToRemove, umlModel.eResource());

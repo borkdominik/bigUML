@@ -17,9 +17,9 @@ import com.eclipsesource.uml.glsp.actions.statemachine.AddTransitionTriggerActio
 import com.eclipsesource.uml.glsp.model.UmlModelSourceLoader;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.operations.*;
-import com.eclipsesource.uml.glsp.operations.activtiydiagram.CreateActivityDiagramEdgeOperationHandler;
-import com.eclipsesource.uml.glsp.operations.activtiydiagram.CreateActivityDiagramChildNodeOperationHandler;
-import com.eclipsesource.uml.glsp.operations.activtiydiagram.CreateActivityDiagramNodeOperationHandler;
+import com.eclipsesource.uml.glsp.operations.activitydiagram.CreateActivityDiagramEdgeOperationHandler;
+import com.eclipsesource.uml.glsp.operations.activitydiagram.CreateActivityDiagramChildNodeOperationHandler;
+import com.eclipsesource.uml.glsp.operations.activitydiagram.CreateActivityDiagramNodeOperationHandler;
 import com.eclipsesource.uml.glsp.operations.classdiagram.CreateClassDiagramEdgeOperationHandler;
 import com.eclipsesource.uml.glsp.operations.classdiagram.CreateClassDiagramChildNodeOperationHandler;
 import com.eclipsesource.uml.glsp.operations.classdiagram.CreateClassDiagramNodeOperationHandler;
@@ -33,22 +33,14 @@ import com.eclipsesource.uml.glsp.operations.statemachinediagram.*;
 //import com.eclipsesource.uml.glsp.operations.usecasediagram.CreateUseCaseDiagramChildNodeOperationHandler;
 import com.eclipsesource.uml.glsp.operations.usecasediagram.CreateUseCaseDiagramEdgeOperationHandler;
 import com.eclipsesource.uml.glsp.operations.usecasediagram.CreateUseCaseDiagramNodeOperationHandler;
-import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlCompoundCommandContribution;
 import org.eclipse.emfcloud.modelserver.glsp.model.EMSModelState;
 import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.ActionHandler;
-//import org.eclipse.glsp.server.actions.DisposeClientSessionActionHandler;
-//import org.eclipse.glsp.server.di.DefaultGLSPModule;
 import org.eclipse.glsp.server.diagram.DiagramConfiguration;
-import org.eclipse.glsp.server.features.contextactions.ContextActionsProvider;
-//import org.eclipse.glsp.server.features.core.model.ModelFactory;
 import org.eclipse.glsp.server.features.core.model.GModelFactory;
 import org.eclipse.glsp.server.features.core.model.ModelSourceLoader;
 import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperationHandler;
 import org.eclipse.glsp.server.features.toolpalette.ToolPaletteItemProvider;
-/*import org.eclipse.glsp.server.layout.ILayoutEngine;
-import org.eclipse.glsp.server.layout.ServerLayoutConfiguration;
-import org.eclipse.glsp.server.model.ModelStateProvider;*/
 import org.eclipse.glsp.server.layout.LayoutEngine;
 import org.eclipse.glsp.server.operations.OperationHandler;
 import org.eclipse.glsp.server.operations.OperationHandlerRegistry;
@@ -76,11 +68,6 @@ public class UmlGLSPModule extends EMSNotationGLSPModule {
    protected void configureActionHandlers(final MultiBinding<ActionHandler> bindings) {
       super.configureActionHandlers(bindings);
       bindings.add(UmlGetTypesActionHandler.class);
-      /*bindings.add(UmlGetBehaviorsActionHandler.class);
-      bindings.rebind(SaveModelActionHandler.class, UmlSaveModelActionHandler.class);
-      bindings.rebind(OperationActionHandler.class, UmlOperationActionHandler.class);
-      bindings.rebind(UndoRedoActionHandler.class, UmlUndoRedoActionHandler.class);
-      bindings.rebind(DisposeClientSessionActionHandler.class, UmlDisposeClientSessionActionHandler.class);*/
       bindings.add(CreateGuardActionHandler.class);
       bindings.add(CreateWeightActionHandler.class);
       bindings.add(AddTransitionEffectActionHandler.class);
@@ -153,6 +140,7 @@ public class UmlGLSPModule extends EMSNotationGLSPModule {
       // USECASE
       bindings.add(CreateUseCaseDiagramNodeOperationHandler.class);
       bindings.add(CreateUseCaseDiagramEdgeOperationHandler.class);
+      //TODO!
       //bindings.add(CreateUseCaseDiagramChildNodeOperationHandler.class);
       // DEPLOYMENT
       bindings.add(CreateDeploymentDiagramNodeOperationHandler.class);
@@ -169,11 +157,9 @@ public class UmlGLSPModule extends EMSNotationGLSPModule {
       return UmlDiagramConfiguration.class;
    }
 
-
-   //TODO: add later again!!
+   //TODO!
    /*@Override
    protected Class<? extends ModelValidator> bindModelValidator() {
-
       return UmlModelValidator.class;
    }*/
 

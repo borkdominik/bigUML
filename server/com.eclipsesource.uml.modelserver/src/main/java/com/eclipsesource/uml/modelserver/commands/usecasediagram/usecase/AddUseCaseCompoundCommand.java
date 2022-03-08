@@ -1,6 +1,5 @@
 package com.eclipsesource.uml.modelserver.commands.usecasediagram.usecase;
 
-import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -11,13 +10,6 @@ import java.util.function.Supplier;
 
 public class AddUseCaseCompoundCommand extends CompoundCommand {
 
-
-    /**
-     * Add UseCase to model
-     * @param domain
-     * @param modelUri
-     * @param position
-     */
     public AddUseCaseCompoundCommand(final EditingDomain domain, final URI modelUri, final GPoint position) {
 
 
@@ -27,12 +19,6 @@ public class AddUseCaseCompoundCommand extends CompoundCommand {
         this.append(new AddUseCaseShapeCommand(domain, modelUri, position, semanticResultSupplier));
     }
 
-    /**
-     * Add UseCase to another element
-     * @param domain
-     * @param modelUri
-     * @param position
-     */
     public AddUseCaseCompoundCommand(final EditingDomain domain, final URI modelUri, final GPoint position,
                                      final String parentSemanticUri) {
 

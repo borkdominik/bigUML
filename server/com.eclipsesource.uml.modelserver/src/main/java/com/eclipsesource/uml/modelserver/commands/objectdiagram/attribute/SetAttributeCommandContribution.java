@@ -1,6 +1,5 @@
 package com.eclipsesource.uml.modelserver.commands.objectdiagram.attribute;
 
-import com.eclipsesource.uml.modelserver.commands.classdiagram.property.SetPropertyCommand;
 import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlSemanticCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
 import org.eclipse.emf.common.command.Command;

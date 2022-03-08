@@ -19,6 +19,7 @@ import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSBasicCreateO
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.operations.Operation;
 import org.eclipse.glsp.server.types.GLSPServerException;
+import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.PackageableElement;
 
 import java.util.List;
@@ -87,7 +88,7 @@ public class CreateUseCaseDiagramNodeOperationHandler
             } catch (GLSPServerException ex) {
                LOGGER.error("Could not find container", ex);
             }
-            if (container != null && container instanceof org.eclipse.uml2.uml.internal.impl.ModelImpl) {
+            if (container != null && container instanceof Model) {
                modelAccess.addComponent(UmlModelState.getModelState(modelState), operation.getLocation())
                   .thenAccept(response -> {
                      if (!response.body()) {
@@ -115,7 +116,7 @@ public class CreateUseCaseDiagramNodeOperationHandler
             } catch (GLSPServerException ex) {
                LOGGER.error("Could not find container", ex);
             }
-            if (container != null && container instanceof org.eclipse.uml2.uml.internal.impl.ModelImpl) {
+            if (container != null && container instanceof Model) {
                modelAccess.addActor(UmlModelState.getModelState(modelState), operation.getLocation())
                   .thenAccept(response -> {
                      if (!response.body()) {
@@ -145,7 +146,7 @@ public class CreateUseCaseDiagramNodeOperationHandler
             } catch (GLSPServerException ex) {
                LOGGER.error("Could not find container", ex);
             }
-            if (container != null && container instanceof org.eclipse.uml2.uml.internal.impl.ModelImpl) {
+            if (container != null && container instanceof Model) {
                modelAccess.addUseCase(UmlModelState.getModelState(modelState), operation.getLocation())
                   .thenAccept(response -> {
                      if (!response.body()) {

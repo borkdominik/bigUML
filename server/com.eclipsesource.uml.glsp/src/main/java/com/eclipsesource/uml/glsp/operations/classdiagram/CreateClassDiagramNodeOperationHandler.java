@@ -13,7 +13,6 @@ package com.eclipsesource.uml.glsp.operations.classdiagram;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSBasicCreateOperationHandler;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.operations.Operation;
@@ -30,10 +29,6 @@ public class CreateClassDiagramNodeOperationHandler
    public CreateClassDiagramNodeOperationHandler() {
       super(handledElementTypeIds);
    }
-
-   // private static List<String> handledElementTypeIds = Lists.newArrayList(Types.CLASS);
-
-   private static Logger LOGGER = Logger.getLogger(CreateClassDiagramNodeOperationHandler.class);
 
    private static final List<String> handledElementTypeIds = Lists.newArrayList(
            Types.CLASS

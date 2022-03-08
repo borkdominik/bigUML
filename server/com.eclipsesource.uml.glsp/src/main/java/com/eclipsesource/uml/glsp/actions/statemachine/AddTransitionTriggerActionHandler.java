@@ -5,9 +5,8 @@ import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emfcloud.modelserver.glsp.actions.handlers.EMSBasicActionHandler;
 import org.eclipse.glsp.server.actions.Action;
-import org.eclipse.glsp.server.actions.BasicActionHandler;
-import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.types.GLSPServerException;
 import org.eclipse.uml2.uml.Transition;
 
@@ -17,21 +16,20 @@ import java.util.List;
 import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
 
 
-public class AddTransitionTriggerActionHandler extends BasicActionHandler<AddTransitionTriggerAction> {
+public class AddTransitionTriggerActionHandler extends EMSBasicActionHandler<AddTransitionTriggerAction, UmlModelServerAccess> {
 
     private static Logger logger = Logger.getLogger(UmlGetTypesActionHandler.class.getSimpleName());
 
     @Override
-    protected List<Action> executeAction(final AddTransitionTriggerAction actualAction, final GModelState gModelState) {
+    public List<Action> executeAction(AddTransitionTriggerAction addTransitionTriggerAction, UmlModelServerAccess modelServerAccess) {
         logger.info("Received add transition trigger action");
 
         UmlModelState modelState = UmlModelState.getModelState(gModelState);
-        EObject semanticElement = getOrThrow(modelState.getIndex().getSemantic(actualAction.getElementTypeId()),
+        EObject semanticElement = getOrThrow(modelState.getIndex().getSemantic(addTransitionTriggerAction.getElementTypeId()),
                 EObject.class,
-                "Could not find element for id '" + actualAction.getElementTypeId()
+                "Could not find element for id '" + addTransitionTriggerAction.getElementTypeId()
                         + "', no add transition trigger action executed");
 
-        UmlModelServerAccess modelServerAccess = UmlModelState.getModelServerAccess(gModelState);
         modelServerAccess.addTransitionTrigger(modelState, (Transition) semanticElement, "transition trigger")
                 .thenAccept(response -> {
                     if (!response.body()) {

@@ -10,23 +10,12 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.activitydiagram.flow;
 
+import java.util.ArrayList;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Activity;
-import org.eclipse.uml2.uml.ActivityNode;
-import org.eclipse.uml2.uml.CallAction;
-import org.eclipse.uml2.uml.DecisionNode;
-import org.eclipse.uml2.uml.Element;
-import org.eclipse.uml2.uml.ForkNode;
-import org.eclipse.uml2.uml.InputPin;
-import org.eclipse.uml2.uml.JoinNode;
-import org.eclipse.uml2.uml.MergeNode;
-import org.eclipse.uml2.uml.OpaqueAction;
-import org.eclipse.uml2.uml.OutputPin;
-import org.eclipse.uml2.uml.UMLFactory;
+import org.eclipse.uml2.uml.*;
 
 import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
 import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
@@ -61,7 +50,7 @@ public class ConvertConnectedFlowElementTypeCommand extends UmlSemanticElementCo
          InputPin inputPin = (InputPin) oldElem;
          OutputPin outputPin = UMLFactory.eINSTANCE.createOutputPin();
          outputPin.setName(inputPin.getName());
-         inputPin.getOutgoings().stream().collect(Collectors.toList()).forEach(ie -> {
+         new ArrayList<>(inputPin.getOutgoings()).forEach(ie -> {
             ie.setSource(outputPin);
          });
 
@@ -70,11 +59,10 @@ public class ConvertConnectedFlowElementTypeCommand extends UmlSemanticElementCo
             OpaqueAction action = (OpaqueAction) owner;
             action.getInputValues().clear();
             action.getOutputValues().add(outputPin);
-         } else if (owner instanceof CallAction) {
+         } /*else if (owner instanceof CallAction) {
             CallAction action = (CallAction) owner;
             // action.getArguments().clear();
-            // TODO: ???
-         }
+         }*/
 
          newElem = outputPin;
       } else if (oldElem instanceof OutputPin) {
@@ -82,7 +70,7 @@ public class ConvertConnectedFlowElementTypeCommand extends UmlSemanticElementCo
          OutputPin outputPin = (OutputPin) oldElem;
          InputPin inputPin = UMLFactory.eINSTANCE.createInputPin();
          inputPin.setName(outputPin.getName());
-         outputPin.getIncomings().stream().collect(Collectors.toList()).forEach(oe -> {
+         new ArrayList<>(outputPin.getIncomings()).forEach(oe -> {
             oe.setTarget(inputPin);
          });
 
@@ -99,10 +87,10 @@ public class ConvertConnectedFlowElementTypeCommand extends UmlSemanticElementCo
          Activity owner = decisionNode.getActivity();
          MergeNode mergeNode = UMLFactory.eINSTANCE.createMergeNode();
 
-         oldElem.getIncomings().stream().collect(Collectors.toList()).forEach(ie -> {
+         new ArrayList<>(oldElem.getIncomings()).forEach(ie -> {
             ie.setTarget(mergeNode);
          });
-         oldElem.getOutgoings().stream().collect(Collectors.toList()).forEach(ie -> {
+         new ArrayList<>(oldElem.getOutgoings()).forEach(ie -> {
             ie.setSource(mergeNode);
          });
 
@@ -118,10 +106,10 @@ public class ConvertConnectedFlowElementTypeCommand extends UmlSemanticElementCo
          Activity owner = mergeNode.getActivity();
          DecisionNode decisionNode = UMLFactory.eINSTANCE.createDecisionNode();
 
-         oldElem.getIncomings().stream().collect(Collectors.toList()).forEach(ie -> {
+         new ArrayList<>(oldElem.getIncomings()).forEach(ie -> {
             ie.setTarget(decisionNode);
          });
-         oldElem.getOutgoings().stream().collect(Collectors.toList()).forEach(ie -> {
+         new ArrayList<>(oldElem.getOutgoings()).forEach(ie -> {
             ie.setSource(decisionNode);
          });
 
@@ -137,10 +125,10 @@ public class ConvertConnectedFlowElementTypeCommand extends UmlSemanticElementCo
          Activity owner = forkNode.getActivity();
          JoinNode joinNode = UMLFactory.eINSTANCE.createJoinNode();
 
-         oldElem.getIncomings().stream().collect(Collectors.toList()).forEach(ie -> {
+         new ArrayList<>(oldElem.getIncomings()).forEach(ie -> {
             ie.setTarget(joinNode);
          });
-         oldElem.getOutgoings().stream().collect(Collectors.toList()).forEach(ie -> {
+         new ArrayList<>(oldElem.getOutgoings()).forEach(ie -> {
             ie.setSource(joinNode);
          });
 
@@ -156,10 +144,10 @@ public class ConvertConnectedFlowElementTypeCommand extends UmlSemanticElementCo
          Activity owner = joinNode.getActivity();
          ForkNode forkNode = UMLFactory.eINSTANCE.createForkNode();
 
-         oldElem.getIncomings().stream().collect(Collectors.toList()).forEach(ie -> {
+         new ArrayList<>(oldElem.getIncomings()).forEach(ie -> {
             ie.setTarget(forkNode);
          });
-         oldElem.getOutgoings().stream().collect(Collectors.toList()).forEach(ie -> {
+         new ArrayList<>(oldElem.getOutgoings()).forEach(ie -> {
             ie.setSource(forkNode);
          });
 

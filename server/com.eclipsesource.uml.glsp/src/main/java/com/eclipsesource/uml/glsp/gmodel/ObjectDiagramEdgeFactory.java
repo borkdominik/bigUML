@@ -33,9 +33,7 @@ public class ObjectDiagramEdgeFactory extends AbstractGModelFactory<Relationship
 
         EList<Property> memberEnds = link.getMemberEnds();
         Property source = memberEnds.get(0);
-        String sourceId = toId(source);
         Property target = memberEnds.get(1);
-        String targetId = toId(target);
 
         GEdgeBuilder builder = new GEdgeBuilder(Types.LINK)
                 .id(toId(link))

@@ -21,7 +21,6 @@ import org.eclipse.glsp.graph.GDimension;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.uml2.uml.Element;
-import org.eclipse.uml2.uml.PackageableElement;
 
 import com.eclipsesource.uml.modelserver.UmlNotationUtil;
 import com.eclipsesource.uml.modelserver.unotation.Diagram;
@@ -49,7 +48,6 @@ public final class UmlNotationCommandUtil {
       Resource notationResource = domain.getResourceSet()
          .getResource(modelUri.trimFileExtension().appendFileExtension(UmlNotationUtil.NOTATION_EXTENSION), false);
       EObject notationRoot = notationResource.getContents().get(0);
-      if (!(notationRoot instanceof Diagram)) {}
       return (Diagram) notationRoot;
    }
 
@@ -57,6 +55,7 @@ public final class UmlNotationCommandUtil {
       return EcoreUtil.getURI(element).fragment();
    }
 
+   @SuppressWarnings("unchecked")
    public static <C extends NotationElement> C getNotationElement(final URI modelUri, final EditingDomain domain,
       final String semanticUri) {
       Optional<NotationElement> notationElement = getDiagram(modelUri, domain).getElements().stream()

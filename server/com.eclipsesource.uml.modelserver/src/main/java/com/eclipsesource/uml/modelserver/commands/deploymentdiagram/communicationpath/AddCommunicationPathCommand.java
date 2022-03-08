@@ -6,7 +6,6 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.CommunicationPath;
-import org.eclipse.uml2.uml.Node;
 import org.eclipse.uml2.uml.UMLFactory;
 
 public class AddCommunicationPathCommand extends UmlSemanticElementCommand {

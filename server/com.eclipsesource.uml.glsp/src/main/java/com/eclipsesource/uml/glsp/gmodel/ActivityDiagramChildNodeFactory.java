@@ -31,11 +31,8 @@ import com.eclipsesource.uml.modelserver.unotation.Shape;
 
 public class ActivityDiagramChildNodeFactory extends AbstractGModelFactory<ActivityNode, GNode> {
 
-   private final DiagramFactory parentFactory;
-
-   public ActivityDiagramChildNodeFactory(final UmlModelState modelState, final DiagramFactory parentFactory) {
+   public ActivityDiagramChildNodeFactory(final UmlModelState modelState) {
       super(modelState);
-      this.parentFactory = parentFactory;
    }
 
    @Override
@@ -148,7 +145,7 @@ public class ActivityDiagramChildNodeFactory extends AbstractGModelFactory<Activ
       if (node instanceof DataStoreNode) {
          type = Types.DATASTORE;
          header = "<<datastore>>";
-      } else if (node instanceof CentralBufferNode) {
+      } else if (node != null) {
          type = Types.CENTRALBUFFER;
          header = "<<centralBuffer>>";
       } else {

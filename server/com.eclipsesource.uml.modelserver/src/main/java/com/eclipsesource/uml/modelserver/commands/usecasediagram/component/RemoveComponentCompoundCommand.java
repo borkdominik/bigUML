@@ -1,7 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.usecasediagram.component;
 
 import com.eclipsesource.uml.modelserver.commands.usecasediagram.usecase.RemoveUseCaseCompoundCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlNotationCommandUtil;
 import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.URI;
@@ -19,15 +18,9 @@ public class RemoveComponentCompoundCommand extends CompoundCommand {
         Model umlModel = UmlSemanticCommandUtil.getModel(modelUri, domain);
         Component componentToRemove = UmlSemanticCommandUtil.getElement(umlModel, semanticUriFragment, Component.class);
 
-        // TODO: add later again when comments are ready
-        /*for (RemoveCommentEdgeCommand c : UmlCommentEdgeRemoveUtil.removeIncomingCommentEdge(modelUri, domain,
-                semanticUriFragment)) {
-            this.append(c);
-        }*/
-
         for (PackageableElement elem : componentToRemove.getPackagedElements()) {
             if (elem instanceof UseCase) {
-                String uri = UmlNotationCommandUtil.getSemanticProxyUri(elem);
+                //String uri = UmlNotationCommandUtil.getSemanticProxyUri(elem);
                 this.append(new RemoveUseCaseCompoundCommand(domain, modelUri, semanticUriFragment));
             }
         }

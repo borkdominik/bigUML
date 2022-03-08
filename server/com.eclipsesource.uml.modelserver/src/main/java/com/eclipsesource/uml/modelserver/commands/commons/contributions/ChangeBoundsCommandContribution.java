@@ -10,10 +10,8 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.commons.contributions;
 
-import com.eclipsesource.uml.modelserver.unotation.Shape;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.emfcloud.modelserver.command.CCommandFactory;

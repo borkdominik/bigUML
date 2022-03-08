@@ -15,25 +15,17 @@ import java.util.Map;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;
-import com.eclipsesource.uml.modelserver.UmlNotationUtil;
-import com.eclipsesource.uml.modelserver.unotation.Diagram;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import org.apache.log4j.Logger;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emfcloud.modelserver.glsp.EMSModelServerAccess;
-import org.eclipse.emfcloud.modelserver.glsp.model.EMSModelState;
 import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSBasicOperationHandler;
 import org.eclipse.glsp.server.actions.TriggerEdgeCreationAction;
 import org.eclipse.glsp.server.actions.TriggerNodeCreationAction;
 import org.eclipse.glsp.server.features.toolpalette.PaletteItem;
 import org.eclipse.glsp.server.features.toolpalette.ToolPaletteItemProvider;
-import org.eclipse.glsp.server.model.GModelState;
 
 import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
 import com.google.common.collect.Lists;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
-import org.eclipse.glsp.server.types.GLSPServerException;
-import org.eclipse.uml2.uml.Model;
 
 public class UmlToolPaletteItemProvider extends EMSBasicOperationHandler<CreateNodeOperation, UmlModelServerAccess>
         implements ToolPaletteItemProvider {
@@ -245,7 +237,7 @@ public class UmlToolPaletteItemProvider extends EMSBasicOperationHandler<CreateN
       PaletteItem createJoin = node(Types.JOIN, "Join", "umljoin");
       PaletteItem createJunction = node(Types.JUNCTION, "Junction", "umljunction");
       PaletteItem createChoice = node(Types.CHOICE, "Choice", "umlchoice");
-      // FIXME: weirdly the rendering for entry and exit point are interchanged
+      // FIXME: entry and exit renders are changed!
       PaletteItem createEntryPoint = node(Types.EXIT_POINT, "Entry Point", "umlentrypoint");
       PaletteItem createExitPoint = node(Types.ENTRY_POINT, "Exit Point", "umlexitpoint");
 

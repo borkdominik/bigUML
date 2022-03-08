@@ -17,22 +17,19 @@ import java.util.concurrent.ExecutionException;
 
 import org.apache.log4j.Logger;
 import org.eclipse.emfcloud.modelserver.client.Response;
+import org.eclipse.emfcloud.modelserver.glsp.actions.handlers.EMSBasicActionHandler;
 import org.eclipse.glsp.server.actions.Action;
-import org.eclipse.glsp.server.actions.BasicActionHandler;
-import org.eclipse.glsp.server.model.GModelState;
 
 import com.eclipsesource.uml.glsp.actions.UmlGetTypesActionHandler;
-import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;
 
-public class UmlGetBehaviorsActionHandler extends BasicActionHandler<GetBehaviorsAction> {
+public class GetBehaviorsActionHandler extends EMSBasicActionHandler<GetBehaviorsAction, UmlModelServerAccess> {
 
    private static Logger LOGGER = Logger.getLogger(UmlGetTypesActionHandler.class.getSimpleName());
 
    @Override
-   protected List<Action> executeAction(final GetBehaviorsAction actualAction, final GModelState gModelState) {
+   public List<Action> executeAction(GetBehaviorsAction getBehaviorsAction, UmlModelServerAccess modelServerAccess) {
       LOGGER.info("Behaviors suggestion activated");
-      UmlModelServerAccess modelServerAccess = UmlModelState.getModelServerAccess(gModelState);
       List<String> behaviors = new ArrayList<>();
       try {
          Response<List<String>> response = modelServerAccess.getUmlBehaviors().get();
@@ -41,7 +38,5 @@ public class UmlGetBehaviorsActionHandler extends BasicActionHandler<GetBehavior
       } catch (InterruptedException | ExecutionException e) {
          e.printStackTrace();
       }
-      return List.of(new CallBehaviorsAction(behaviors));
-   }
-
+      return List.of(new CallBehaviorsAction(behaviors));   }
 }

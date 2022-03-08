@@ -88,12 +88,12 @@ export class EditLabelUIAutocomplete extends EditLabelUI {
 
     protected createAutocomplete(): void {
         const input: string = this.inputElement.value;
-        const val = input.trim();
-        /* if (input.includes(":")) {
+        let val = input.trim();
+        if (input.includes(":")) {
             val = input.split(":")[1].trim();
         } else {
             return;
-        } */
+        }
 
         this.closeAllLists();
         this.currentFocus = -1;

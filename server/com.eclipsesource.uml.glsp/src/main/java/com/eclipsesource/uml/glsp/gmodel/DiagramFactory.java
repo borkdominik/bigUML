@@ -34,6 +34,7 @@ public abstract class DiagramFactory extends AbstractGModelFactory<EObject, GMod
 
    protected final UseCaseDiagramNodeFactory useCaseNodeFactory;
    protected final UseCaseDiagramEdgeFactory useCaseEdgeFactory;
+   //TODO
    //protected final UseCaseDiagramChildNodeFactory useCaseDiagramChildNodeFactory;
 
    protected final StateMachineDiagramNodeFactory stateMachineNodeFactory;
@@ -48,27 +49,20 @@ public abstract class DiagramFactory extends AbstractGModelFactory<EObject, GMod
    protected final ObjectDiagramNodeFactory objectDiagramNodeFactory;
    protected final ObjectDiagramEdgeFactory objectDiagramEdgeFactory;
 
-   /*protected final VertexNodeFactory vertexNodeFactory;
-   protected final StateMachineTransitionEdgeFactory stateMachineTransitionFactory;*/
-   //protected final ConnectionPointPortFactory connectionPointPortFactory;
-
 
    public DiagramFactory(final UmlModelState modelState) {
       super(modelState);
-      /*vertexNodeFactory = new VertexNodeFactory(modelState);
-      stateMachineTransitionFactory = new StateMachineTransitionEdgeFactory(modelState);*/
-      //connectionPointPortFactory = new ConnectionPointPortFactory(modelState);
       // COMMONS
       labelFactory = new LabelFactory(modelState);
       commentFactory = new CommentFactory(modelState);
       // CLASS
-      classDiagramNodeFactory = new ClassDiagramNodeFactory(modelState, labelFactory, this);
+      classDiagramNodeFactory = new ClassDiagramNodeFactory(modelState, labelFactory);
       classDiagramEdgeFactory = new ClassDiagramEdgeFactory(modelState);
       //OBJECT
-      objectDiagramNodeFactory = new ObjectDiagramNodeFactory(modelState, labelFactory, this);
+      objectDiagramNodeFactory = new ObjectDiagramNodeFactory(modelState, labelFactory);
       objectDiagramEdgeFactory = new ObjectDiagramEdgeFactory(modelState);
       // ACTIVITY
-      activityChildNodeFactory = new ActivityDiagramChildNodeFactory(modelState, this);
+      activityChildNodeFactory = new ActivityDiagramChildNodeFactory(modelState);
       activityNodeFactory = new ActivityDiagramNodeFactory(modelState, this);
       activityDiagramEdgeFactory = new ActivityDiagramEdgeFactory(modelState);
       activityGroupNodeFactory = new ActivityDiagramGroupNodeFactory(modelState, this);

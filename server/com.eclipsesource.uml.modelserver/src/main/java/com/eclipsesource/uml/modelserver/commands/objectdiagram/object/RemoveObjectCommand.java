@@ -4,7 +4,6 @@ import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticEl
 import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.InstanceSpecification;
 import org.eclipse.uml2.uml.Class;
 
 public class RemoveObjectCommand extends UmlSemanticElementCommand {

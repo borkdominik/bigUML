@@ -1,7 +1,5 @@
 package com.eclipsesource.uml.modelserver.commands.objectdiagram.link;
 
-import com.eclipsesource.uml.modelserver.commands.objectdiagram.link.AddLinkCommand;
-import com.eclipsesource.uml.modelserver.commands.classdiagram.association.AddAssociationEdgeCommand;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;

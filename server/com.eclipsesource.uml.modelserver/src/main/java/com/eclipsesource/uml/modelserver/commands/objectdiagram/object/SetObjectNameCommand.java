@@ -5,7 +5,6 @@ import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Class;
-import org.eclipse.uml2.uml.InstanceSpecification;
 
 public class SetObjectNameCommand extends UmlSemanticElementCommand {
 

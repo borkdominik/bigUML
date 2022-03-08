@@ -15,7 +15,6 @@ import org.eclipse.elk.alg.layered.options.LayeredOptions;
 import org.eclipse.elk.core.options.EdgeLabelPlacement;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.glsp.graph.DefaultTypes;
-import org.eclipse.glsp.graph.GArgumentable;
 import org.eclipse.glsp.graph.GGraph;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.layout.ElkLayoutEngine;
@@ -38,19 +37,5 @@ public class UmlLayoutEngine extends ElkLayoutEngine {
       }
       return newRoot;
    }
-
-   /*@Override
-   protected boolean shouldInclude(final GModelElement element, final GModelElement parent,
-      final ElkGraphElement elkParent,
-      final LayoutContext context) {
-
-      if (element.getType().equals("label:icon")) {
-         return false;
-      }
-      // } else if (element instanceof GLabel && parent instanceof GEdge) {
-      // return false;
-      // }
-      return super.shouldInclude(element, parent, elkParent, context);
-   }*/
 
 }

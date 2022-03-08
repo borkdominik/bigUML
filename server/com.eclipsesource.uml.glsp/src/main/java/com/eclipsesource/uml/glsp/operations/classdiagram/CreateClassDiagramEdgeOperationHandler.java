@@ -10,23 +10,13 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.operations.classdiagram;
 
-//import static org.eclipse.glsp.server.protocol.GLSPServerException.getOrThrow;
-
 import java.util.List;
 
 import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSBasicCreateOperationHandler;
-import org.eclipse.glsp.graph.GModelElement;
-import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 import org.eclipse.glsp.server.operations.Operation;
-//import org.eclipse.glsp.server.protocol.GLSPServerException;
 import org.eclipse.glsp.server.types.GLSPServerException;
-import org.eclipse.uml2.uml.ActivityNode;
 import org.eclipse.uml2.uml.Class;
-import org.eclipse.uml2.uml.Comment;
-import org.eclipse.uml2.uml.Element;
-import org.eclipse.uml2.uml.ExecutableNode;
-import org.eclipse.uml2.uml.Pin;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;
@@ -80,7 +70,6 @@ public class CreateClassDiagramEdgeOperationHandler
       } else {
          System.out.println("Association could not be created!");
       }
-
    }
 
    @Override

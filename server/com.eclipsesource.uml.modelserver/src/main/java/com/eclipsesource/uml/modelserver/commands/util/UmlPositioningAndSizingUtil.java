@@ -17,9 +17,8 @@ public class UmlPositioningAndSizingUtil {
         if (parentHasHeader) {
             return GraphUtil.point(clickLocation.getX() - parentPosition.getX(),
                     clickLocation.getY() - parentPosition.getY() - HEADER_HEIGHT);
-        } else {
-            return GraphUtil.point(clickLocation.getX() - parentPosition.getX(),
-                    clickLocation.getY() - parentPosition.getY());
         }
+        return GraphUtil.point(clickLocation.getX() - parentPosition.getX(),
+                clickLocation.getY() - parentPosition.getY());
     }
 }

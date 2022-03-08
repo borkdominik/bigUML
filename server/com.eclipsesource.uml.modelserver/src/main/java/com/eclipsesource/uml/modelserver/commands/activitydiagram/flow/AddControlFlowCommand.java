@@ -18,7 +18,6 @@ import org.eclipse.uml2.uml.Action;
 import org.eclipse.uml2.uml.Activity;
 import org.eclipse.uml2.uml.ActivityEdge;
 import org.eclipse.uml2.uml.ActivityNode;
-import org.eclipse.uml2.uml.ActivityParameterNode;
 import org.eclipse.uml2.uml.CentralBufferNode;
 import org.eclipse.uml2.uml.DecisionNode;
 import org.eclipse.uml2.uml.ForkNode;
@@ -42,14 +41,9 @@ public class AddControlFlowCommand extends UmlSemanticElementCommand implements 
    protected ActivityNode target;
    protected Activity activity;
 
-   private final EditingDomain domain;
-   private final URI modelUri;
-
    public AddControlFlowCommand(final EditingDomain domain, final URI modelUri,
       final String sourceClassUriFragment, final String targetClassUriFragment) {
       super(domain, modelUri);
-      this.domain = domain;
-      this.modelUri = modelUri;
 
       source = UmlSemanticCommandUtil.getElement(umlModel, sourceClassUriFragment, ActivityNode.class);
       target = UmlSemanticCommandUtil.getElement(umlModel, targetClassUriFragment, ActivityNode.class);
@@ -95,12 +89,12 @@ public class AddControlFlowCommand extends UmlSemanticElementCommand implements 
       weight.setValue("");
       activity.getEdges().add(edge);
 
-      if (source instanceof ActivityParameterNode) {
+      /*if (source instanceof ActivityParameterNode) {
          adjustParameterTypes((ActivityParameterNode) source);
       }
       if (target instanceof ActivityParameterNode) {
          adjustParameterTypes((ActivityParameterNode) target);
-      }
+      }*/
    }
 
    @Override
@@ -108,12 +102,7 @@ public class AddControlFlowCommand extends UmlSemanticElementCommand implements 
       return edge;
    }
 
-   /**
-    * Set the correct ParameterDirection of the parameter.
-    *
-    * @param param
-    */
-   private void adjustParameterTypes(final ActivityParameterNode param) {
+   //private void adjustParameterTypes(final ActivityParameterNode param) {
       /*
        * if (!param.getIncomings().isEmpty() && !param.getOutgoings().isEmpty()) {
        * param.getParameter().setDirection(ParameterDirectionKind.INOUT_LITERAL);
@@ -123,7 +112,7 @@ public class AddControlFlowCommand extends UmlSemanticElementCommand implements 
        * param.getParameter().setDirection(ParameterDirectionKind.OUT_LITERAL);
        * }
        */
-   }
+   //}
 
    private boolean validate() {
 

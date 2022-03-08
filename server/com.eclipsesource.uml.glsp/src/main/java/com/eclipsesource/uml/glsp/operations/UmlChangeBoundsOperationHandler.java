@@ -14,7 +14,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSBasicOperationHandler;
-import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.operations.ChangeBoundsOperation;
 import org.eclipse.glsp.server.types.ElementAndBounds;
 

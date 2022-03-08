@@ -9,9 +9,9 @@
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
 
-export * from "./ArtifactNodeView";
-export * from "./DeviceNodeView";
-export * from "./ExecutionEnvironmentNodeView";
-export * from "./DeploymentNodeNodeView";
-export * from "./DeploymentSpecificationNodeView";
-export * from "./DeploymentEdgeView";
+export * from "./artifact-node-view";
+export * from "./device-node-view";
+export * from "./execution-environment-node-view";
+export * from "./deployment-node-node-view";
+export * from "./deployment-specification-node-view";
+export * from "./deployment-edge-view";

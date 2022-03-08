@@ -18,7 +18,6 @@ import java.util.regex.Pattern;
 import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSBasicOperationHandler;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperation;
-import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.types.GLSPServerException;
 import org.eclipse.uml2.uml.*;
 

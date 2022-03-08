@@ -39,7 +39,8 @@ public class AddControlNodeCommand extends UmlSemanticElementCommand {
       super(domain, modelUri);
 
       try {
-         Class<? extends ControlNode> clazz = (Class<? extends ControlNode>) Class.forName(className);
+         Class<? extends ControlNode> clazz;
+         clazz = Class.forName(className).asSubclass(ControlNode.class);
          if (InitialNode.class.equals(clazz)) {
             node = UMLFactory.eINSTANCE.createInitialNode();
          } else if (FinalNode.class.equals(clazz)) {

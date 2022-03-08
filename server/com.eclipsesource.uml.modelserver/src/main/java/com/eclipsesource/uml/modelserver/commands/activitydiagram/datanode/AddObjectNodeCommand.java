@@ -35,7 +35,8 @@ public class AddObjectNodeCommand extends UmlSemanticElementCommand implements S
       super(domain, modelUri);
 
       try {
-         Class<? extends ObjectNode> clazz = (Class<? extends ObjectNode>) Class.forName(className);
+         Class<? extends ObjectNode> clazz;
+         clazz = Class.forName(className).asSubclass(ObjectNode.class);
          if (CentralBufferNode.class.equals(clazz)) {
             node = UMLFactory.eINSTANCE.createCentralBufferNode();
          } else if (DataStoreNode.class.equals(clazz)) {

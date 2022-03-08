@@ -12,12 +12,10 @@ package com.eclipsesource.uml.glsp.operations;
 
 
 import com.eclipsesource.uml.glsp.util.UmlIDUtil;
-import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSBasicOperationHandler;
 import org.eclipse.glsp.graph.GEdge;
 import org.eclipse.glsp.graph.GModelElement;
-import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.operations.DeleteOperation;
 import org.eclipse.glsp.server.types.GLSPServerException;
 import org.eclipse.uml2.uml.*;
@@ -28,13 +26,10 @@ import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
 import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Package;
 
-import javax.naming.ldap.Control;
 
 import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
 
 public class UmlDeleteOperationHandler extends EMSBasicOperationHandler<DeleteOperation, UmlModelServerAccess> {
-
-   static Logger LOGGER = Logger.getLogger(UmlDeleteOperationHandler.class.getSimpleName());
 
    protected UmlModelState getUmlModelState() { return (UmlModelState) getEMSModelState(); }
 

@@ -10,14 +10,19 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.statemachinediagram.state;
 
+import com.eclipsesource.uml.modelserver.commands.statemachinediagram.transition.RemoveTransitionCompoundCommand;
 import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.util.EcoreUtil.UsageCrossReferencer;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.State;
 import org.eclipse.uml2.uml.Transition;
+
+import java.util.Collection;
 
 public class RemoveStateCompoundCommand extends CompoundCommand {
 
@@ -26,19 +31,19 @@ public class RemoveStateCompoundCommand extends CompoundCommand {
       this.append(new RemoveStateCommand(domain, modelUri, parentSemanticUriFragment, semanticUriFragment));
       this.append(new RemoveStateShapeCommand(domain, modelUri, semanticUriFragment));
 
-      var umlModel = UmlSemanticCommandUtil.getModel(modelUri, domain);
-      var stateToRemove = UmlSemanticCommandUtil.getElement(umlModel, semanticUriFragment, State.class);
+      Model umlModel = UmlSemanticCommandUtil.getModel(modelUri, domain);
+      State stateToRemove = UmlSemanticCommandUtil.getElement(umlModel, semanticUriFragment, State.class);
 
-      var usagesStateMachine = UsageCrossReferencer.find(stateToRemove, umlModel.eResource());
+      Collection<Setting> usagesStateMachine = UsageCrossReferencer.find(stateToRemove, umlModel.eResource());
       for (Setting setting : usagesStateMachine) {
-         var eObject = setting.getEObject();
+         EObject eObject = setting.getEObject();
 
-         //TODO
-         /*if (eObject instanceof Transition) {
-            var transitionUri = UmlSemanticCommandUtil.getSemanticUriFragment((Transition) eObject);
+
+         if (eObject instanceof Transition) {
+            String transitionUri = UmlSemanticCommandUtil.getSemanticUriFragment((Transition) eObject);
             this.append(
                new RemoveTransitionCompoundCommand(domain, modelUri, parentSemanticUriFragment, transitionUri));
-         }*/
+         }
       }
    }
 

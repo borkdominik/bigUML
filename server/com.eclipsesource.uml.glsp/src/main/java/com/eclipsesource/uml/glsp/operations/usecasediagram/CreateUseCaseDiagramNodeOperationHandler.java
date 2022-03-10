@@ -16,13 +16,17 @@ import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
 import com.google.common.collect.Lists;
 import org.apache.log4j.Logger;
 import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSBasicCreateOperationHandler;
+import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.operations.Operation;
 import org.eclipse.glsp.server.types.GLSPServerException;
+import org.eclipse.uml2.uml.Component;
 import org.eclipse.uml2.uml.Model;
+import org.eclipse.uml2.uml.Package;
 import org.eclipse.uml2.uml.PackageableElement;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
 
@@ -61,15 +65,6 @@ public class CreateUseCaseDiagramNodeOperationHandler
       UmlModelState modelState = getUmlModelState();
 
       switch (operation.getElementTypeId()) {
-         case Types.CLASS: {
-            modelAccess.addClass(UmlModelState.getModelState(modelState), operation.getLocation())
-               .thenAccept(response -> {
-                  if (!response.body()) {
-                     throw new GLSPServerException("Could not execute create operation on new Class node");
-                  }
-               });
-            break;
-         }
          case Types.PACKAGE: {
             modelAccess.addPackage(UmlModelState.getModelState(modelState), operation.getLocation())
                .thenAccept(response -> {
@@ -88,23 +83,23 @@ public class CreateUseCaseDiagramNodeOperationHandler
             } catch (GLSPServerException ex) {
                LOGGER.error("Could not find container", ex);
             }
-            if (container != null && container instanceof Model) {
+            if (container instanceof Model) {
                modelAccess.addComponent(UmlModelState.getModelState(modelState), operation.getLocation())
                   .thenAccept(response -> {
                      if (!response.body()) {
                         throw new GLSPServerException("Could not execute create operation on new Component node");
                      }
                   });
-            } /*else if (container instanceof Package) {
+            } else if (container instanceof Package) {
                modelAccess
-                  .addComponentInPackage(UmlModelState.getModelState(modelState), (Package) container,
+                  .addComponent(UmlModelState.getModelState(modelState), (Package) container,
                      operation.getLocation())
                   .thenAccept(response -> {
                      if (!response.body()) {
                         throw new GLSPServerException("Could not execute create operation on new Component node");
                      }
                   });
-            }*/
+            }
             break;
          }
          case Types.ACTOR: {
@@ -134,7 +129,6 @@ public class CreateUseCaseDiagramNodeOperationHandler
                   });
             }*/
 
-            /* WHY ALSO TRUE FOR ModelImpl??? if (container != null && container instanceof Package) */
             break;
          }
          case Types.USECASE: {
@@ -146,23 +140,23 @@ public class CreateUseCaseDiagramNodeOperationHandler
             } catch (GLSPServerException ex) {
                LOGGER.error("Could not find container", ex);
             }
-            if (container != null && container instanceof Model) {
+            if (container instanceof Model) {
                modelAccess.addUseCase(UmlModelState.getModelState(modelState), operation.getLocation())
                   .thenAccept(response -> {
                      if (!response.body()) {
                         throw new GLSPServerException("Could not execute create operation on new Usecase node");
                      }
                   });
-            } /*else if (container instanceof Package || container instanceof Component) {
+            } else if (container instanceof Package || container instanceof Component) {
                modelAccess
-                  .addUseCaseInParent(UmlModelState.getModelState(modelState), container,
+                  .addUseCase(UmlModelState.getModelState(modelState), container,
                      operation.getLocation())
                   .thenAccept(response -> {
                      if (!response.body()) {
                         throw new GLSPServerException("Could not execute create operation on new nested Usecase node");
                      }
                   });
-            }*/
+            }
             break;
          }
       }

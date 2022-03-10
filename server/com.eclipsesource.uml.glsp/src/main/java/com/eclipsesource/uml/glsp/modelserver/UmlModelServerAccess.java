@@ -593,13 +593,12 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
       return this.edit(addUseCaseCompoundCommand);
    }
 
-   public CompletableFuture<Response<Boolean>> addUseCaseInParent(final UmlModelState modelState, final EObject parent,
-                                                                  final GPoint newPosition) throws Exception {
-      if (!(parent instanceof Package || parent instanceof Component)) {
+   public CompletableFuture<Response<Boolean>> addUseCase(final UmlModelState modelState, final EObject parent,
+                                                                  final Optional<GPoint> newPosition) {
+      /*if (!(parent instanceof Package || parent instanceof Component)) {
          throw new Exception("Element not valid as a parent for usecase");
-      }
-      System.out.println("reaching use case in parent");
-      CCommand addUseCaseCompoundCommand = AddUseCaseCommandContribution.create(newPosition,
+      }*/
+      CCommand addUseCaseCompoundCommand = AddUseCaseCommandContribution.create(newPosition.orElse(GraphUtil.point(0, 0)),
               getSemanticUriFragment(parent));
       return this.edit(addUseCaseCompoundCommand);
    }
@@ -668,12 +667,12 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
       return this.edit(addComponentCompoundCommand);
    }
 
-   public CompletableFuture<Response<Boolean>> addComponentInPackage(final UmlModelState modelState,
+   public CompletableFuture<Response<Boolean>> addComponent(final UmlModelState modelState,
                                                                      final Package parent,
-                                                                     final GPoint newPosition) {
+                                                                     final Optional<GPoint> newPosition) {
 
       CCompoundCommand addComponentCompoundCommand = AddComponentCommandContribution
-              .create(newPosition, getSemanticUriFragment(parent));
+              .create(newPosition.orElse(GraphUtil.point(0, 0)), getSemanticUriFragment(parent));
       return this.edit(addComponentCompoundCommand);
    }
 

@@ -60,144 +60,155 @@ public class CreateActivityDiagramChildNodeOperationHandler
     @Override
     public void executeOperation(final CreateNodeOperation operation, final UmlModelServerAccess modelAccess) {
 
-      UmlModelState modelState = getUmlModelState();
+        UmlModelState modelState = getUmlModelState();
 
-      String containerId = operation.getContainerId();
+        String containerId = operation.getContainerId();
 
-      Element container = getOrThrow(modelState.getIndex().getSemantic(containerId), Element.class,
+        Element container = getOrThrow(modelState.getIndex().getSemantic(containerId), Element.class,
          "No valid activity container with id " + containerId + " found");
-      String elementTypeId = operation.getElementTypeId();
-      GPoint location = getPosition(modelState, container, operation.getLocation().orElse(GraphUtil.point(0, 0)));
+        String elementTypeId = operation.getElementTypeId();
+        GPoint location = getPosition(modelState, container, operation.getLocation().orElse(GraphUtil.point(0, 0)));
 
-      switch (elementTypeId) {
-         case (Types.ACTION): {
-            modelAccess.addAction(UmlModelState.getModelState(modelState), location, container, OpaqueAction.class)
-                    .thenAccept(response -> {
-                       if (!response.body()) {
-                          throw new GLSPServerException("Could not execute create operation on new Action node");
-                       }
-                    });
-            break;
-         }
-         case (Types.SENDSIGNAL): {
-            modelAccess.addAction(UmlModelState.getModelState(modelState), location, container, SendSignalAction.class)
-                    .thenAccept(response -> {
-                       if (!response.body()) {
-                          throw new GLSPServerException("Could not execute create operation on new Action node");
-                       }
-                    });
-            break;
-         }
-         case (Types.CALL): {
-            modelAccess.addAction(UmlModelState.getModelState(modelState), location, container, CallAction.class)
-                    .thenAccept(response -> {
-                       if (!response.body()) {
-                          throw new GLSPServerException("Could not execute create operation on new Action node");
-                       }
-                    });
-            break;
-         }
-         case (Types.ACCEPTEVENT): {
-            modelAccess.addEventAction(UmlModelState.getModelState(modelState), location, container, false)
-                    .thenAccept(response -> {
-                       if (!response.body()) {
-                          throw new GLSPServerException("Could not execute create operation on new Action node");
-                       }
-                    });
-            break;
-         }
-         case (Types.TIMEEVENT): {
-            modelAccess.addEventAction(UmlModelState.getModelState(modelState), location, container, true)
-                    .thenAccept(response -> {
-                       if (!response.body()) {
-                          throw new GLSPServerException("Could not execute create operation on new Action node");
-                       }
-                    });
-            break;
-         }
-         case (Types.PARAMETER): {
-            modelAccess.addParameter(UmlModelState.getModelState(modelState), (Activity) container)
-                    .thenAccept(response -> {
-                       if (!response.body()) {
-                          throw new GLSPServerException("Could not execute create operation on new Action node");
-                       }
-                    });
-            break;
-         }
-         case (Types.CONDITION): {
-            modelAccess.addCondition(UmlModelState.getModelState(modelState), (Activity) container, true)
-                 .thenAccept(response -> {
-                    if (!response.body()) {
-                       throw new GLSPServerException("Could not execute create operation on new Action node");
-                    }
-                 });
-            break;}
-         case (Types.CENTRALBUFFER): {
-            modelAccess.addObjectNode(UmlModelState.getModelState(modelState), location, container, CentralBufferNode.class)
-                    .thenAccept(response -> {
-                       if (!response.body()) {
-                          throw new GLSPServerException("Could not execute create operation on new Action node");
-                       }
-                    });
-            break;
-         }
-         case (Types.DATASTORE): {
-            modelAccess.addObjectNode(UmlModelState.getModelState(modelState), location, container, DataStoreNode.class)
-                    .thenAccept(response -> {
-                       if (!response.body()) {
-                          throw new GLSPServerException("Could not execute create operation on new Action node");
-                       }
-                    });
-            break;
-         }
-         case (Types.INITIALNODE): {
-              modelAccess.addControlNode(UmlModelState.getModelState(modelState), location, container, InitialNode.class)
+        switch (elementTypeId) {
+            case (Types.ACTION): {
+                modelAccess.addAction(UmlModelState.getModelState(modelState), location, container, OpaqueAction.class)
+                        .thenAccept(response -> {
+                           if (!response.body()) {
+                              throw new GLSPServerException("Could not execute create operation on new Action node");
+                           }
+                        });
+                break;
+            }
+            case (Types.SENDSIGNAL): {
+                modelAccess.addAction(UmlModelState.getModelState(modelState), location, container, SendSignalAction.class)
+                        .thenAccept(response -> {
+                           if (!response.body()) {
+                              throw new GLSPServerException("Could not execute create operation on new Action node");
+                           }
+                        });
+                break;
+            }
+            case (Types.CALL): {
+                modelAccess.addAction(UmlModelState.getModelState(modelState), location, container, CallBehaviorAction.class)
+                        .thenAccept(response -> {
+                           if (!response.body()) {
+                              throw new GLSPServerException("Could not execute create operation on new Action node");
+                           }
+                        });
+                break;
+            }
+            case (Types.ACCEPTEVENT): {
+                modelAccess.addEventAction(UmlModelState.getModelState(modelState), location, container, false)
+                        .thenAccept(response -> {
+                           if (!response.body()) {
+                              throw new GLSPServerException("Could not execute create operation on new Action node");
+                           }
+                        });
+                break;
+            }
+            case (Types.TIMEEVENT): {
+                modelAccess.addEventAction(UmlModelState.getModelState(modelState), location, container, true)
+                        .thenAccept(response -> {
+                           if (!response.body()) {
+                              throw new GLSPServerException("Could not execute create operation on new Action node");
+                           }
+                        });
+                break;
+            }
+            case (Types.PARAMETER): {
+                modelAccess.addParameter(UmlModelState.getModelState(modelState), (Activity) container)
+                        .thenAccept(response -> {
+                           if (!response.body()) {
+                              throw new GLSPServerException("Could not execute create operation on new Action node");
+                           }
+                        });
+                break;
+            }
+            case (Types.CONDITION): {
+                modelAccess.addCondition(UmlModelState.getModelState(modelState), (Activity) container, true)
+                     .thenAccept(response -> {
+                        if (!response.body()) {
+                           throw new GLSPServerException("Could not execute create operation on new Action node");
+                        }
+                     });
+                break;
+            }
+            case (Types.CENTRALBUFFER): {
+                modelAccess.addObjectNode(UmlModelState.getModelState(modelState), location, container, CentralBufferNode.class)
+                        .thenAccept(response -> {
+                           if (!response.body()) {
+                              throw new GLSPServerException("Could not execute create operation on new Action node");
+                           }
+                        });
+                break;
+            }
+            case (Types.DATASTORE): {
+                modelAccess.addObjectNode(UmlModelState.getModelState(modelState), location, container, DataStoreNode.class)
+                        .thenAccept(response -> {
+                           if (!response.body()) {
+                              throw new GLSPServerException("Could not execute create operation on new Action node");
+                           }
+                        });
+                break;
+            }
+            case (Types.INITIALNODE): {
+                modelAccess.addControlNode(UmlModelState.getModelState(modelState), location, container, InitialNode.class)
                       .thenAccept(response -> {
                           if (!response.body()) {
                               throw new GLSPServerException("Could not execute create operation on new Action node");
                           }
                       });
-              break;
-         }
-         case (Types.FINALNODE): {
-              modelAccess.addControlNode(UmlModelState.getModelState(modelState), location, container, FinalNode.class)
+                break;
+            }
+            case (Types.FINALNODE): {
+                modelAccess.addControlNode(UmlModelState.getModelState(modelState), location, container, FinalNode.class)
                       .thenAccept(response -> {
                           if (!response.body()) {
                               throw new GLSPServerException("Could not execute create operation on new Action node");
                           }
                       });
-              break;
-         }
-         case (Types.FLOWFINALNODE): {
-              modelAccess.addControlNode(UmlModelState.getModelState(modelState), location, container, FlowFinalNode.class)
+                break;
+            }
+            case (Types.FLOWFINALNODE): {
+                modelAccess.addControlNode(UmlModelState.getModelState(modelState), location, container, FlowFinalNode.class)
                       .thenAccept(response -> {
                           if (!response.body()) {
                               throw new GLSPServerException("Could not execute create operation on new Action node");
                           }
                       });
-              break;
-         }
-         case (Types.DECISIONMERGENODE): {
-              modelAccess.addControlNode(UmlModelState.getModelState(modelState), location, container, DecisionNode.class)
+                break;
+            }
+            case (Types.DECISIONMERGENODE): {
+                modelAccess.addControlNode(UmlModelState.getModelState(modelState), location, container, DecisionNode.class)
                       .thenAccept(response -> {
                           if (!response.body()) {
                               throw new GLSPServerException("Could not execute create operation on new Action node");
                           }
                       });
-              break;
-         }
-         case (Types.FORKJOINNODE): {
-              modelAccess.addControlNode(UmlModelState.getModelState(modelState), location, container, ForkNode.class)
+                break;
+            }
+            case (Types.FORKJOINNODE): {
+                modelAccess.addControlNode(UmlModelState.getModelState(modelState), location, container, ForkNode.class)
                       .thenAccept(response -> {
                           if (!response.body()) {
                               throw new GLSPServerException("Could not execute create operation on new Action node");
                           }
                       });
-              break;
-         }
-         default:
+                break;
+            }
+            case (Types.PIN): {
+                System.out.println("goes into pin handler");
+                modelAccess.addPin(UmlModelState.getModelState(modelState), (Action) container)
+                        .thenAccept(response -> {
+                            if (!response.body()) {
+                                throw new GLSPServerException("Could not execute create operation on new Pin node");
+                            }
+                        });
+                break;
+            }
+            default:
             break;
-      }
+        }
    }
 
 
@@ -217,12 +228,12 @@ public class CreateActivityDiagramChildNodeOperationHandler
             System.out.println("Height " + newShape.getHeight() + " Width new" + newShape.getWidth());
             containerShape.setSize(newShape);
             System.out.println("Height " + containerShape.getSize().getHeight() + " Width " + containerShape.getSize().getWidth());
-           return GraphUtil.point(x - 150, y - 50);
+            return GraphUtil.point(x - 150, y - 50);
         } else if (container instanceof ActivityPartition) {
-           return getPosition(modelState, container.getOwner(), location);
+            return getPosition(modelState, container.getOwner(), location);
         }
         return GraphUtil.point(0, 0);
-   }
+    }
 
    @Override
    public String getLabel() { return "Create uml classifier"; }

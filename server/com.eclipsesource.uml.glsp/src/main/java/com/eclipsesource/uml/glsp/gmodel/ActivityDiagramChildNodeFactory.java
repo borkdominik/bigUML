@@ -37,6 +37,7 @@ public class ActivityDiagramChildNodeFactory extends AbstractGModelFactory<Activ
 
    @Override
    public GNode create(final ActivityNode activityNode) {
+      // FIXME: call node not working at all
       if (activityNode instanceof Action) {
          return create((Action) activityNode);
       } else if (activityNode instanceof ControlNode) {
@@ -45,6 +46,9 @@ public class ActivityDiagramChildNodeFactory extends AbstractGModelFactory<Activ
          return create((CentralBufferNode) activityNode);
       } else if (activityNode instanceof ActivityParameterNode) {
          return create((ActivityParameterNode) activityNode);
+      } else if (activityNode instanceof Pin) {
+         System.out.println("goes into pin factory if");
+         return create((Pin) activityNode);
       }
       return null;
    }
@@ -55,7 +59,7 @@ public class ActivityDiagramChildNodeFactory extends AbstractGModelFactory<Activ
          type = Types.ACTION;
       } else if (action instanceof SendSignalAction) {
          type = Types.SENDSIGNAL;
-      } else if (action instanceof CallAction) {
+      } else if (action instanceof CallBehaviorAction) {
          type = Types.CALL;
       } else if (action instanceof AcceptEventAction) {
          if (((AcceptEventAction) action).getTriggers().stream().anyMatch(t -> "timeEvent".equals(t.getName()))) {
@@ -73,27 +77,29 @@ public class ActivityDiagramChildNodeFactory extends AbstractGModelFactory<Activ
          .addCssClass(CSS.NODE) //
          .add(buildHeader(action));
 
-      // TODO!!!
-      /*if (action instanceof OpaqueAction) {
-         // b.add(buildPins(action, ((OpaqueAction) action).getInputValues(), "input"));
-         // b.add(buildPins(action, ((OpaqueAction) action).getOutputValues(), "output"));
+      if (action instanceof OpaqueAction) {
+         b.add(buildPins(action, ((OpaqueAction) action).getInputValues(), "input"));
+         b.add(buildPins(action, ((OpaqueAction) action).getOutputValues(), "output"));
 
          b.addAll(
-            ((OpaqueAction) action).getInputValues().stream().map(this::create).collect(Collectors.toList()));
+                 ((OpaqueAction) action).getInputValues().stream().map(pin -> create(pin)).collect(Collectors.toList()));
          b.addAll(
-            ((OpaqueAction) action).getOutputValues().stream().map(this::create).collect(Collectors.toList()));
-      }*/
-      /*if (action instanceof InvocationAction) {
-         // b.add(buildPins(action, ((InvocationAction) action).getArguments(), "input"));
+                 ((OpaqueAction) action).getOutputValues().stream().map(pin -> create(pin)).collect(Collectors.toList()));
       }
-      if (action instanceof CallAction) {
-         // b.add(buildPins(action, ((CallAction) action).getResults(), "output"));
-      }
-      if (action instanceof AcceptEventAction) {
-         // b.add(buildPins(action, ((AcceptEventAction) action).getResults(), "output"));
-      }*/
 
       applyShapeData(action, b);
+      return b.build();
+   }
+
+   protected GNode create(final CallAction callAction) {
+      System.out.println("goes into call action factory");
+      GNodeBuilder b = new GNodeBuilder(Types.CALL) //
+              .id(toId(callAction)) //
+              .layout(GConstants.Layout.VBOX) //
+              .addCssClass(CSS.NODE) //
+              .add(buildHeader(callAction));
+
+      applyShapeData(callAction, b);
       return b.build();
    }
 
@@ -172,6 +178,7 @@ public class ActivityDiagramChildNodeFactory extends AbstractGModelFactory<Activ
    }
 
    protected GNode create(final Pin pin) {
+      System.out.println("GOES INTO Pin CREATE");
       GNodeBuilder b = new GNodeBuilder(Types.PIN) //
          .id(toId(pin)) //
          .layout(GConstants.Layout.VBOX) //

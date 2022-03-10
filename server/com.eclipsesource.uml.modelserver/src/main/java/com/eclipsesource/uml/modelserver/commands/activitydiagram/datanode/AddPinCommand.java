@@ -44,8 +44,6 @@ public class AddPinCommand extends UmlSemanticElementCommand implements Supplier
       } else if (action instanceof InvocationAction) {
          ((InvocationAction) action).getArguments().size();
          ((InvocationAction) action).getArguments().add((InputPin) pin);
-      } else {
-         // TODO: Invalid action type (AcceptEventAction)
       }
       pin.setName("NewPin" + count);
    }

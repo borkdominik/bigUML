@@ -95,6 +95,7 @@ public class ActivityDiagramEdgeFactory extends AbstractGModelFactory<ActivityEd
       GEdgeBuilder builder = new GEdgeBuilder(Types.EXCEPTIONHANDLER) //
          .id(toId(handler)) //
          .addCssClass(CSS.EDGE) //
+         .addCssClass(CSS.EDGE_DIRECTED_END_TENT) //
          .sourceId(sourceId) //
          .targetId(targetId) //
          .routerKind(GConstants.RouterKind.POLYLINE);

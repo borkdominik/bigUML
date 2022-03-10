@@ -87,7 +87,7 @@ public class UmlDiagramConfiguration extends BaseDiagramConfiguration {
             case Types.EXCEPTIONHANDLER:
                 return new EdgeTypeHint(elementId, false, true, false,
                         List.of(Types.ACTION, Types.CALL, Types.ACCEPTEVENT),
-                        List.of(Types.PIN_PORT, Types.ACTIVITY));
+                        List.of(Types.PIN_PORT));
             // USECASE DIAGRAM
             case Types.EXTEND:
                 allowed = Lists.newArrayList(Types.USECASE, Types.EXTENSIONPOINT);
@@ -96,9 +96,8 @@ public class UmlDiagramConfiguration extends BaseDiagramConfiguration {
                 allowed = Lists.newArrayList(Types.USECASE);
                 return new EdgeTypeHint(elementId, true, true, true, allowed, allowed);
             case Types.GENERALIZATION:
-                from = Lists.newArrayList(Types.ACTOR);
-                to = Lists.newArrayList(Types.USECASE);
-                return new EdgeTypeHint(elementId, true, true, true, from, to);
+                allowed = Lists.newArrayList(Types.ACTOR, Types.USECASE);
+                return new EdgeTypeHint(elementId, true, true, true, allowed, allowed);
             // DEPLOYMENT DIAGRAM
             case Types.COMMUNICATION_PATH:
                 from = Lists.newArrayList(Types.DEPLOYMENT_NODE, Types.EXECUTION_ENVIRONMENT, Types.DEVICE);

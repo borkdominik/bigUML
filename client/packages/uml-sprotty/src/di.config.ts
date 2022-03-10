@@ -40,6 +40,7 @@ import { EditLabelUIAutocomplete } from "./features/edit-label";
 import umlToolPaletteModule from "./features/tool-palette/di.config";
 import { LabelSelectionFeedback } from "./feedback";
 import {
+    ConnectableEdge,
     // ConnectableEdge,
     ConnectableEditableLabel,
     ConnectionPoint,
@@ -68,7 +69,7 @@ import {
     ActionNodeView,
     ActivityNodeView,
     CallNodeView,
-    ExceptionHandlerEdgeView,
+    // ExceptionHandlerEdgeView,
     FinalNodeView,
     FlowEdgeView,
     FlowFinalNodeView,
@@ -130,18 +131,9 @@ export default function createContainer(widgetId: string): Container {
         rebind(TYPES.ILogger).to(ConsoleLogger).inSingletonScope();
         rebind(TYPES.LogLevel).toConstantValue(LogLevel.info);
         rebind(EditLabelUI).to(EditLabelUIAutocomplete);
-        // bind(TYPES.IContextMenuItemProvider).to(DeleteElementContextMenuItemProvider);
-
-        // TODO: Add this later again when reworking the context menu
-        /* bind(TYPES.IContextMenuItemProvider).to(RemoveGuardElementContextMenuItemProvider);
-        bind(TYPES.IContextMenuItemProvider).to(RemoveWeightElementContextMenuItemProvider);
-        bind(TYPES.IContextMenuItemProvider).to(CreateGuardElementContextMenuItemProvider);
-        bind(TYPES.IContextMenuItemProvider).to(CreateWeightElementContextMenuItemProvider);*/
 
         const context = { bind, unbind, isBound, rebind };
         bind(TYPES.IVNodePostprocessor).to(LabelSelectionFeedback);
-        // configureModelElement(context, BaseTypes.GRAPH, GLSPGraph, SGraphView);
-        // configureModelElement(context, BaseTypes.HTML, HtmlRoot, HtmlRootView);
         configureDefaultModelElements(context);
         configureModelElement(context, UmlTypes.LABEL_NAME, SEditableLabel, SLabelView);
         configureModelElement(context, UmlTypes.LABEL_EDGE_NAME, SEditableLabel, SLabelView);
@@ -191,7 +183,7 @@ export default function createContainer(widgetId: string): Container {
         configureModelElement(context, UmlTypes.COMMENT_LINK, SEdge, CommentLinkEdgeView);
         configureModelElement(context, UmlTypes.LABEL_FLOW_GUARD, SEditableLabel, SLabelView);
         configureModelElement(context, UmlTypes.LABEL_FLOW_WEIGHT, SEditableLabel, SLabelView);
-        configureModelElement(context, UmlTypes.EXCEPTIONHANDLER, SEdge, ExceptionHandlerEdgeView);
+        configureModelElement(context, UmlTypes.EXCEPTIONHANDLER, SEdge, PolylineEdgeView);
         configureModelElement(context, UmlTypes.INTERRUPTIBLEREGION, LabeledNode, InterruptibleRegionNodeView);
         configureModelElement(context, UmlTypes.CONDITION, LabeledNode, ConditionNodeView);
 
@@ -204,9 +196,9 @@ export default function createContainer(widgetId: string): Container {
         configureModelElement(context, UmlTypes.PACKAGE, LabeledNode, PackageNodeView);
         configureModelElement(context, UmlTypes.COMPONENT, LabeledNode, PackageNodeView);
         configureModelElement(context, UmlTypes.EXTENSIONPOINT, ConnectableEditableLabel, SLabelView);
-        configureModelElement(context, UmlTypes.EXTEND, SEdge, DirectedEdgeView);
-        configureModelElement(context, UmlTypes.INCLUDE, SEdge, DirectedEdgeView);
-        configureModelElement(context, UmlTypes.GENERALIZATION, SEdge, FlowEdgeView);
+        configureModelElement(context, UmlTypes.EXTEND, ConnectableEdge, DirectedEdgeView);
+        configureModelElement(context, UmlTypes.INCLUDE, ConnectableEdge, DirectedEdgeView);
+        configureModelElement(context, UmlTypes.GENERALIZATION, ConnectableEdge, DirectedEdgeView);
         configureModelElement(context, UmlTypes.CONNECTIONPOINT, ConnectionPoint, SLabelView);
 
         // DEPLOYMENT DIAGRAM

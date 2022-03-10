@@ -13,7 +13,10 @@ package com.eclipsesource.uml.glsp.gmodel;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.util.UmlConfig.CSS;
 import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.eclipsesource.uml.glsp.util.UmlIDUtil;
+import com.eclipsesource.uml.glsp.util.UmlLabelUtil;
 import com.eclipsesource.uml.modelserver.unotation.Edge;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.glsp.graph.GEdge;
 import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.GPoint;
@@ -41,6 +44,8 @@ public class UseCaseDiagramEdgeFactory extends AbstractGModelFactory<Relationshi
          return createIncludeEdge((Include) element);
       } else if (element instanceof Generalization) {
          return createGeneralizationEdge((Generalization) element);
+      } else if (element instanceof Association) {
+         return createAssociationEdge((Association) element);
       }
       return null;
    }
@@ -151,6 +156,28 @@ public class UseCaseDiagramEdgeFactory extends AbstractGModelFactory<Relationshi
          .routerKind(GConstants.RouterKind.MANHATTAN);
 
       modelState.getIndex().getNotation(generalization, Edge.class).ifPresent(edge -> {
+         if (edge.getBendPoints() != null) {
+            ArrayList<GPoint> bendPoints = new ArrayList<>();
+            edge.getBendPoints().forEach(p -> bendPoints.add(GraphUtil.copy(p)));
+            builder.addRoutingPoints(bendPoints);
+         }
+      });
+      return builder.build();
+   }
+
+   protected GEdge createAssociationEdge(final Association association) {
+      EList<Property> memberEnds = association.getMemberEnds();
+      Property source = memberEnds.get(0);
+      Property target = memberEnds.get(1);
+
+      GEdgeBuilder builder = new GEdgeBuilder(Types.USECASE_ASSOCIATION)
+              .id(toId(association))
+              .addCssClass(CSS.EDGE)
+              .sourceId(toId(source.getType()))
+              .targetId(toId(target.getType()))
+              .routerKind(GConstants.RouterKind.MANHATTAN);
+
+      modelState.getIndex().getNotation(association, Edge.class).ifPresent(edge -> {
          if (edge.getBendPoints() != null) {
             ArrayList<GPoint> bendPoints = new ArrayList<>();
             edge.getBendPoints().forEach(p -> bendPoints.add(GraphUtil.copy(p)));

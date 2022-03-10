@@ -200,6 +200,7 @@ export default function createContainer(widgetId: string): Container {
         configureModelElement(context, UmlTypes.INCLUDE, ConnectableEdge, DirectedEdgeView);
         configureModelElement(context, UmlTypes.GENERALIZATION, ConnectableEdge, DirectedEdgeView);
         configureModelElement(context, UmlTypes.CONNECTIONPOINT, ConnectionPoint, SLabelView);
+        configureModelElement(context, UmlTypes.USECASE_ASSOCIATION, SEdge, PolylineEdgeView);
 
         // DEPLOYMENT DIAGRAM
         configureModelElement(context, UmlTypes.ICON_ARTIFACT, IconArtifact, IconView);

@@ -111,8 +111,6 @@ public class UmlUseCaseDiagramModelFactory extends DiagramFactory {
             .map(this::create)//
             .collect(Collectors.toList()));
 
-         // ArrayList<PackageableElement> packagedElements = new ArrayList<>(useCaseModel.getPackagedElements());
-
          TreeIterator<EObject> iterator = useCaseModel.eAllContents();
          while (iterator.hasNext()) {
             Object next = iterator.next();

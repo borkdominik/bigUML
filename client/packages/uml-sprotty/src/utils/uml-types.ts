@@ -75,6 +75,7 @@ export namespace UmlTypes {
     export const INCLUDE = `${BaseTypes.EDGE}:include`;
     export const GENERALIZATION = `${BaseTypes.EDGE}:generalization`;
     export const CONNECTIONPOINT = `${BaseTypes.EDGE}:connectionpoint`;
+    export const USECASE_ASSOCIATION = `${BaseTypes.EDGE}:usecase-association`;
 
     // DEPLOYMENT DIAGRAM
     export const ICON_DEPLOYMENT_NODE = `${BaseTypes.ICON}:node`;

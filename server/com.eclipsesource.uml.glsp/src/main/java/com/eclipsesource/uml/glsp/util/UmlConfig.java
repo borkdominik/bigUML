@@ -90,6 +90,7 @@ public final class UmlConfig {
       public static final String INCLUDE = EDGE + "include";
       public static final String GENERALIZATION = EDGE + "generalization";
       public static final String CONNECTIONPOINT = LABEL + "connectionpoint";
+      public static final String USECASE_ASSOCIATION = EDGE + "usecase-association";
 
       //DEPLOYMENT DIAGRAM
       public static final String ICON_DEPLOYMENT_NODE = ICON + "node";

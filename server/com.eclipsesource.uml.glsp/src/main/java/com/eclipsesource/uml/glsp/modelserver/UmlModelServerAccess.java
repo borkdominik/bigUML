@@ -64,6 +64,8 @@ import com.eclipsesource.uml.modelserver.commands.statemachinediagram.transition
 import com.eclipsesource.uml.modelserver.commands.usecasediagram.actor.AddActorCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.usecasediagram.actor.RemoveActorCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.usecasediagram.actor.SetActorNameCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.usecasediagram.association.AddUseCaseAssociationCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.usecasediagram.association.RemoveUseCaseAssociationCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.usecasediagram.component.AddComponentCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.usecasediagram.component.RemoveComponentCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.usecasediagram.extendedge.AddExtendCommandContribution;
@@ -770,6 +772,23 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
 
       String semanticProxyUri = getSemanticUriFragment(generalizationToRemove);
       CCompoundCommand compoundCommand = RemoveGeneralizationCommandContribution.create(semanticProxyUri);
+      return this.edit(compoundCommand);
+   }
+
+   // USECASE ASSOCIATION
+   public CompletableFuture<Response<Boolean>> addUseCaseAssociation(final UmlModelState modelState,
+                                                                 final Classifier generalClassifier, final Classifier specificClassifier) {
+
+      CCompoundCommand addGeneralizationCompoundCommand = AddUseCaseAssociationCommandContribution
+              .create(getSemanticUriFragment(generalClassifier), getSemanticUriFragment(specificClassifier));
+      return this.edit(addGeneralizationCompoundCommand);
+   }
+
+   public CompletableFuture<Response<Boolean>> removeUseCaseAssociation(final UmlModelState modelState,
+                                                                    final Association associationToRemove) {
+
+      String semanticProxyUri = getSemanticUriFragment(associationToRemove);
+      CCompoundCommand compoundCommand = RemoveUseCaseAssociationCommandContribution.create(semanticProxyUri);
       return this.edit(compoundCommand);
    }
 

@@ -46,6 +46,7 @@ public class UmlDiagramConfiguration extends BaseDiagramConfiguration {
                 createDefaultEdgeTypeHint(Types.EXTEND),
                 createDefaultEdgeTypeHint(Types.INCLUDE),
                 createDefaultEdgeTypeHint(Types.GENERALIZATION),
+                createDefaultEdgeTypeHint(Types.USECASE_ASSOCIATION),
                 // DEPLOYMENT DIAGRAM
                 createDefaultEdgeTypeHint(Types.COMMUNICATION_PATH),
                 createDefaultEdgeTypeHint(Types.DEPLOYMENT),
@@ -98,6 +99,10 @@ public class UmlDiagramConfiguration extends BaseDiagramConfiguration {
             case Types.GENERALIZATION:
                 allowed = Lists.newArrayList(Types.ACTOR, Types.USECASE);
                 return new EdgeTypeHint(elementId, true, true, true, allowed, allowed);
+            case Types.USECASE_ASSOCIATION:
+                from = Lists.newArrayList(Types.ACTOR, Types.USECASE);
+                to = Lists.newArrayList(Types.USECASE, Types.ACTOR);
+                return new EdgeTypeHint(elementId, true, true, true, from, to);
             // DEPLOYMENT DIAGRAM
             case Types.COMMUNICATION_PATH:
                 from = Lists.newArrayList(Types.DEPLOYMENT_NODE, Types.EXECUTION_ENVIRONMENT, Types.DEVICE);

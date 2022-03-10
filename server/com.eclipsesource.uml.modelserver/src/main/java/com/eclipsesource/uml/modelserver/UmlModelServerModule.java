@@ -39,11 +39,8 @@ import com.eclipsesource.uml.modelserver.commands.objectdiagram.object.RemoveObj
 import com.eclipsesource.uml.modelserver.commands.objectdiagram.object.SetObjectNameCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.statemachinediagram.finalstate.AddFinalStateCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.statemachinediagram.finalstate.RemoveFinalStateCommandContribution;
-//import com.eclipsesource.uml.modelserver.commands.statemachinediagram.pseudostate.AddPseudoStateCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.statemachinediagram.pseudostate.AddPseudoStateCommandContribution;
-//import com.eclipsesource.uml.modelserver.commands.statemachinediagram.pseudostate.RemovePseudoStateCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.statemachinediagram.pseudostate.RemovePseudoStateCommandContribution;
-//import com.eclipsesource.uml.modelserver.commands.statemachinediagram.pseudostate.SetPseudoStateNameCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.statemachinediagram.pseudostate.SetPseudostateNameCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.statemachinediagram.state.AddStateCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.statemachinediagram.state.RemoveStateCommandContribution;
@@ -63,6 +60,8 @@ import com.eclipsesource.uml.modelserver.commands.statemachinediagram.transition
 import com.eclipsesource.uml.modelserver.commands.usecasediagram.actor.AddActorCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.usecasediagram.actor.RemoveActorCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.usecasediagram.actor.SetActorNameCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.usecasediagram.association.AddUseCaseAssociationCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.usecasediagram.association.RemoveUseCaseAssociationCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.usecasediagram.component.AddComponentCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.usecasediagram.component.RemoveComponentCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.usecasediagram.component.SetComponentNameCommandContribution;
@@ -231,6 +230,9 @@ public class UmlModelServerModule extends DefaultModelServerModule {
       // Generalization
       binding.put(AddGeneralizationCommandContribution.TYPE, AddGeneralizationCommandContribution.class);
       binding.put(RemoveGeneralizationCommandContribution.TYPE, RemoveGeneralizationCommandContribution.class);
+      // Association
+      binding.put(AddUseCaseAssociationCommandContribution.TYPE, AddUseCaseAssociationCommandContribution.class);
+      binding.put(RemoveUseCaseAssociationCommandContribution.TYPE, RemoveUseCaseAssociationCommandContribution.class);
 
       // STATEMACHINE DIAGRAM
       // StateMachine

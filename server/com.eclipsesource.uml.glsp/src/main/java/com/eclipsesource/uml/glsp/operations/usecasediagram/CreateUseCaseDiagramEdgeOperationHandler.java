@@ -37,7 +37,7 @@ public class CreateUseCaseDiagramEdgeOperationHandler
     * The Types specified in this list will be processed by this file.
     * If a type is not mentioned here, the request for that type will not be redirected here.
     */
-   private static List<String> handledElementTypeIds = Lists.newArrayList(Types.ASSOCIATION, Types.EXTEND,
+   private static List<String> handledElementTypeIds = Lists.newArrayList(Types.USECASE_ASSOCIATION, Types.EXTEND,
       Types.INCLUDE, Types.GENERALIZATION);
 
    @Override
@@ -111,6 +111,14 @@ public class CreateUseCaseDiagramEdgeOperationHandler
                        .thenAccept(response -> {
                            if (!response.body()) {
                                throw new GLSPServerException("Could not execute create operation on new UCD Generalization edge");
+                           }
+                       });
+               break;
+           case Types.USECASE_ASSOCIATION:
+               modelAccess.addUseCaseAssociation(modelState, (Classifier) targetClassifier, (Classifier) sourceClassifier)
+                       .thenAccept(response -> {
+                           if (!response.body()) {
+                               throw new GLSPServerException("Could not execute create operation on new Association edge");
                            }
                        });
                break;

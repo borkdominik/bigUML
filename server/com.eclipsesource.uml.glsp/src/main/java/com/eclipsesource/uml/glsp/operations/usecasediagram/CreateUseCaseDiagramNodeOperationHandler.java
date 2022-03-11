@@ -39,10 +39,6 @@ public class CreateUseCaseDiagramNodeOperationHandler
       super(handledElementTypeIds);
    }
 
-   /**
-    * The Types specified in this list will be processed by this file.
-    * If a type is not mentioned here, the request for that type will not be redirected here.
-    */
    private static List<String> handledElementTypeIds = Lists.newArrayList(Types.COMPONENT, Types.PACKAGE, Types.ACTOR,
       Types.USECASE, Types.COMMENT);
 
@@ -111,23 +107,23 @@ public class CreateUseCaseDiagramNodeOperationHandler
             } catch (GLSPServerException ex) {
                LOGGER.error("Could not find container", ex);
             }
-            if (container != null && container instanceof Model) {
+            if (container instanceof Model) {
                modelAccess.addActor(UmlModelState.getModelState(modelState), operation.getLocation())
                   .thenAccept(response -> {
                      if (!response.body()) {
                         throw new GLSPServerException("Could not execute create operation on new Actor node");
                      }
                   });
-            } /*else {
+            } else {
                modelAccess
-                  .addActorInPackage(UmlModelState.getModelState(modelState), (Package) container,
+                  .addActor(UmlModelState.getModelState(modelState), (Package) container,
                      operation.getLocation())
                   .thenAccept(response -> {
                      if (!response.body()) {
                         throw new GLSPServerException("Could not execute create operation on new nested Actor node");
                      }
                   });
-            }*/
+            }
 
             break;
          }

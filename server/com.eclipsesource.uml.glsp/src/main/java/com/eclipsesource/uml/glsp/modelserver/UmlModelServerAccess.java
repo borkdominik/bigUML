@@ -691,9 +691,11 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
       return this.edit(addActorCompoundCommand);
    }
 
-   public CompletableFuture<Response<Boolean>> addActorInPackage(final UmlModelState modelState,
-                                                                 final Package parent, final GPoint newPosition) {
-      CCommand addActorCompoundCommand = AddActorCommandContribution.create(newPosition,
+   public CompletableFuture<Response<Boolean>> addActor(final UmlModelState modelState,
+                                                                 final Package parent,
+                                                        final Optional<GPoint> newPosition) {
+      CCommand addActorCompoundCommand = AddActorCommandContribution
+              .create(newPosition.orElse(GraphUtil.point(0, 0)),
               getSemanticUriFragment(parent));
       return this.edit(addActorCompoundCommand);
    }
@@ -742,8 +744,6 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
    // INCLUDE
    public CompletableFuture<Response<Boolean>> addInclude(final UmlModelState modelState,
                                                           final UseCase includingUseCase, final UseCase includedUseCase) {
-      System.out.println("ADD INCLUDE MODEL SERVER ACCESS COMMAND");
-      //FIXME: SOMETHING IS WRONG ON MODELSERVER SIDE!!!
       CCompoundCommand addIncludeCompoundCommand = AddIncludeCommandContribution
               .create(getSemanticUriFragment(includingUseCase), getSemanticUriFragment(includedUseCase));
       return this.edit(addIncludeCompoundCommand);

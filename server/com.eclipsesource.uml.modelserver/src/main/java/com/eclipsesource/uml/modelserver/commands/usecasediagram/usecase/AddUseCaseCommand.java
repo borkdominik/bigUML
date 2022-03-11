@@ -32,15 +32,15 @@ public class AddUseCaseCommand extends UmlSemanticElementCommand {
         newUseCase.setName(UmlSemanticCommandUtil.getNewUseCaseName(umlModel));
         umlModel.getPackagedElements().add(newUseCase);
 
-        EObject parentObject = UmlSemanticCommandUtil.getElement(umlModel, parentSemanticUriFragment);
-        if (parentObject instanceof Package) {
-            Package packageNode = UmlSemanticCommandUtil.getElement(umlModel, parentSemanticUriFragment, Package.class);
-            packageNode.getPackagedElements().add(newUseCase);
-        } else if (parentObject instanceof Component) {
-            Component componentNode = UmlSemanticCommandUtil.getElement(umlModel, parentSemanticUriFragment, Component.class);
-            componentNode.getPackagedElements().add(newUseCase);
-        } else {
+        if (parentSemanticUriFragment == null) {
             umlModel.getPackagedElements().add(newUseCase);
+        } else {
+            EObject parentObject = UmlSemanticCommandUtil.getElement(umlModel, parentSemanticUriFragment);
+            if (parentObject instanceof Package) {
+                ((Package) parentObject).getPackagedElements().add(newUseCase);
+            } else if (parentObject instanceof Component) {
+                ((Component) parentObject).getPackagedElements().add(newUseCase);
+            }
         }
     }
 

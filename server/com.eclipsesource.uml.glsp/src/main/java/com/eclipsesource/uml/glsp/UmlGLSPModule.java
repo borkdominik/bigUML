@@ -33,6 +33,7 @@ import com.eclipsesource.uml.glsp.operations.statemachinediagram.*;
 //import com.eclipsesource.uml.glsp.operations.usecasediagram.CreateUseCaseDiagramChildNodeOperationHandler;
 import com.eclipsesource.uml.glsp.operations.usecasediagram.CreateUseCaseDiagramEdgeOperationHandler;
 import com.eclipsesource.uml.glsp.operations.usecasediagram.CreateUseCaseDiagramNodeOperationHandler;
+import org.eclipse.emfcloud.modelserver.glsp.EMSGLSPModule;
 import org.eclipse.emfcloud.modelserver.glsp.model.EMSModelState;
 import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.ActionHandler;
@@ -62,7 +63,7 @@ import com.eclipsesource.uml.glsp.layout.UmlLayoutEngine;
 import com.eclipsesource.uml.glsp.model.UmlModelFactory;
 import com.eclipsesource.uml.glsp.palette.UmlToolPaletteItemProvider;
 
-public class UmlGLSPModule extends EMSNotationGLSPModule {
+public class UmlGLSPModule extends EMSGLSPModule {
 
    @Override
    protected void configureActionHandlers(final MultiBinding<ActionHandler> bindings) {
@@ -140,8 +141,6 @@ public class UmlGLSPModule extends EMSNotationGLSPModule {
       // USECASE
       bindings.add(CreateUseCaseDiagramNodeOperationHandler.class);
       bindings.add(CreateUseCaseDiagramEdgeOperationHandler.class);
-      //TODO!
-      //bindings.add(CreateUseCaseDiagramChildNodeOperationHandler.class);
       // DEPLOYMENT
       bindings.add(CreateDeploymentDiagramNodeOperationHandler.class);
       bindings.add(CreateDeploymentDiagramEdgeOperationHandler.class);

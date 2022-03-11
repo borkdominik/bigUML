@@ -113,7 +113,7 @@ public class ObjectDiagramNodeFactory extends AbstractGModelFactory<Classifier, 
         objectAttributeBuilder.layoutOptions(layoutOptions);
 
         List<GModelElement> attributeLabels = attributes.stream()
-                .map(labelFactory::createPropertyLabel)
+                .map(labelFactory::createAttributeLabel)
                 .collect(Collectors.toList());
         objectAttributeBuilder.addAll(attributeLabels);
 

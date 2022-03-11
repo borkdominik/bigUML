@@ -43,15 +43,10 @@ public class LabelFactory extends AbstractGModelFactory<NamedElement, GLabel> {
          .build();
    }
 
-   protected GLabel createAttributeLabel(final Slot attribute) {
-      /*String label = attribute.getDefiningFeature()
-              .getName()
-              .concat(UmlLabelUtil.getTypeName(attribute))
-              .concat(UmlLabelUtil.getMultiplicity(attribute));*/
-
+   protected GLabel createAttributeLabel(final Property attribute) {
       return new GLabelBuilder(Types.ATTRIBUTE)
               .id(toId(attribute))
-              .text("attribute test")
+              .text("NewAttribute" + UmlLabelUtil.getMultiplicity(attribute))
               .build();
    }
 

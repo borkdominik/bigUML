@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2021 EclipseSource and others.
+ * Copyright (c) 2021-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,13 +15,21 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver;
 
+import org.eclipse.emfcloud.modelserver.emf.launch.CLIBasedModelServerLauncher;
+import org.eclipse.emfcloud.modelserver.emf.launch.CLIParser;
 import org.eclipse.emfcloud.modelserver.emf.launch.ModelServerLauncher;
 
 public class UmlModelServerLauncher {
 
-	public static void main(String[] args) {
-		final ModelServerLauncher launcher = new ModelServerLauncher(new UmlModelServerModule());
+	public static void main(final String[] args) {
+		final ModelServerLauncher launcher = new CLIBasedModelServerLauncher(createCLIParser(args),
+				new UmlModelServerModule());
 		launcher.run();
+	}
+
+	protected static CLIParser createCLIParser(final String[] args) {
+		CLIParser parser = new CLIParser(args, CLIParser.getDefaultCLIOptions(), "", 8081);
+		return parser;
 	}
 
 }

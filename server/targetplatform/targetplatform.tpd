@@ -1,11 +1,11 @@
-target "Uml GLSP Editor Targetplatform 2021-09" with requirements, source
+target "Uml GLSP Editor Targetplatform 2022-03" with requirements, source
 
 // Target platform for the Uml GLSP Editor
 
-location "https://download.eclipse.org/glsp/server/p2/releases/0.9.0/" {
-	org.eclipse.glsp.feature.feature.group [0.9.0,0.10.0)
-	org.eclipse.glsp.layout [0.9.0,0.10.0)
-	org.eclipse.glsp.graph [0.9.0,0.10.0)
+location "https://download.eclipse.org/glsp/server/p2/nightly/0.10/0.10.0.202203070850" {
+	org.eclipse.glsp.feature.feature.group [0.10.0,0.11.0)
+	org.eclipse.glsp.layout [0.10.0,0.11.0)
+	org.eclipse.glsp.graph [0.10.0,0.11.0)
 }
 
 location "https://download.eclipse.org/elk/updates/releases/0.7.1/" {
@@ -15,7 +15,7 @@ location "https://download.eclipse.org/elk/updates/releases/0.7.1/" {
 	org.eclipse.elk.alg.layered [0.7.1,1.0.0)
 }
 
-location "http://download.eclipse.org/releases/2021-09" {
+location "http://download.eclipse.org/releases/2022-03" {
 	// Transitive dependencies + Eclipse Product
 	org.eclipse.emf.edit [2.16.0,3.0.0)
 	org.eclipse.equinox.executable.feature.group [3.8.1300,3.9.0)
@@ -23,12 +23,13 @@ location "http://download.eclipse.org/releases/2021-09" {
 	org.eclipse.uml2.uml [5.5.0,6.0.0)
 	org.eclipse.uml2.uml.resources [5.5.0,6.0.0)
 	org.eclipse.emf.transaction.feature.group [1.12.0,2.0.0)
-	org.eclipse.emf.sdk.feature.group [2.27.0,2.27.1)
+	org.eclipse.emf.sdk.feature.group [2.29.0,3.0.0)
 }
 
-location "https://download.eclipse.org/tools/orbit/downloads/drops/R20210602031627/repository/" {
+location "https://download.eclipse.org/tools/orbit/downloads/drops/R20220302172233/repository/" {
 	// Transitive dependencies
 	org.apache.log4j [1.2.15,2.0.0)
+	org.apache.logging.log4j [2.17.1,3.0.0)
 	com.google.gson [2.8.6,2.9.0)
 	com.google.inject [5.0.1,5.1.0)
 	com.google.guava [30.1.0,30.1.1)
@@ -43,18 +44,18 @@ location "https://download.eclipse.org/tools/orbit/downloads/drops/R202106020316
 	javax.servlet [3.1.0,4.0.0)
 }
 
-location "https://download.eclipse.org/emfcloud/modelserver/p2/nightly/0.7/0.7.0.202201070845/" {
+location "https://download.eclipse.org/emfcloud/modelserver/p2/nightly/0.7/0.7.0.202203111558/" {
 	org.eclipse.emfcloud.modelserver.feature.feature.group [0.7.0,0.8.0)
 }
 
-location "https://download.eclipse.org/emfcloud/modelserver-glsp-integration/p2/nightly/0.7/0.7.0.202201101227/" {
+location "https://download.eclipse.org/emfcloud/modelserver-glsp-integration/p2/nightly/0.7/0.7.0.202203100842/" {
 	org.eclipse.emfcloud.modelserver.glsp.feature.feature.group [0.7.0,0.8.0)
 	org.eclipse.emfcloud.modelserver.glsp.notation.model [0.7.0,0.8.0)
 	org.eclipse.emfcloud.modelserver.glsp.notation.commands [0.7.0,0.8.0)
 }
 
-location "https://download.eclipse.org/emfcloud/emfjson-jackson/p2/nightly/1.3/1.3.1.202109010859/" {
-	org.eclipse.emfcloud.emfjson-jackson [1.3.1,2.0.0)
+location "https://download.eclipse.org/emfcloud/emfjson-jackson/p2/releases/2.0.0/" {
+	org.eclipse.emfcloud.emfjson-jackson [2.0.0,3.0.0)
 }
 
 location "https://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.4.44.v20210927/" {

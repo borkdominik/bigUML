@@ -10,12 +10,42 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.modelserver;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-
+import com.eclipsesource.uml.glsp.model.UmlModelState;
+import com.eclipsesource.uml.modelserver.UmlModelServerClient;
+import com.eclipsesource.uml.modelserver.UmlNotationUtil;
+import com.eclipsesource.uml.modelserver.commands.activitydiagram.action.AddActionCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.activitydiagram.action.SetBehaviorCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.activitydiagram.activity.AddActivityCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.activitydiagram.activity.RemoveActivityCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.activitydiagram.comment.*;
+import com.eclipsesource.uml.modelserver.commands.activitydiagram.condition.AddConditionCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.activitydiagram.controlnode.AddControlNodeCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.activitydiagram.datanode.AddObjectNodeCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.activitydiagram.datanode.AddParameterCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.activitydiagram.datanode.AddPinCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.activitydiagram.exceptionhandler.AddExceptionHandlerCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.activitydiagram.exceptionhandler.RemoveExceptionHandlerCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.activitydiagram.flow.AddControlFLowCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.activitydiagram.flow.RemoveActivityEdgeCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.activitydiagram.flow.SetGuardCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.activitydiagram.flow.SetWeightCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.activitydiagram.general.RemoveActivityNodeCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.activitydiagram.interruptibleregion.AddInterruptibleRegionCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.activitydiagram.partition.AddPartitionCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.activitydiagram.partition.RemovePartitionCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.classdiagram.association.AddAssociationCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.classdiagram.association.RemoveAssociationCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.classdiagram.association.SetAssociationEndMultiplicityCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.classdiagram.association.SetAssociationEndNameCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.classdiagram.clazz.AddClassCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.classdiagram.clazz.RemoveClassCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.classdiagram.clazz.SetClassNameCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.classdiagram.property.AddPropertyCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.classdiagram.property.RemovePropertyCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.classdiagram.property.SetPropertyCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.commons.contributions.ChangeBoundsCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.commons.contributions.ChangeRoutingPointsCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.commons.contributions.RenameElementCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.deploymentdiagram.artifact.AddArtifactCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.deploymentdiagram.artifact.RemoveArtifactCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.deploymentdiagram.artifact.SetArtifactNameCommandContribution;
@@ -82,6 +112,9 @@ import com.eclipsesource.uml.modelserver.commands.usecasediagram.usecase.SetUseC
 import com.eclipsesource.uml.modelserver.commands.usecasediagram.usecasepackage.AddPackageCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.usecasediagram.usecasepackage.RemovePackageCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.usecasediagram.usecasepackage.SetPackageNameCommandContribution;
+import com.eclipsesource.uml.modelserver.unotation.Edge;
+import com.eclipsesource.uml.modelserver.unotation.Shape;
+import com.google.common.base.Preconditions;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -95,54 +128,16 @@ import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.glsp.server.types.ElementAndBounds;
 import org.eclipse.glsp.server.types.ElementAndRoutingPoints;
 import org.eclipse.glsp.server.types.GLSPServerException;
-import org.eclipse.uml2.uml.*;
 import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Package;
+import org.eclipse.uml2.uml.*;
 import org.eclipse.uml2.uml.resource.UMLResource;
 
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.modelserver.UmlModelServerClient;
-import com.eclipsesource.uml.modelserver.UmlNotationUtil;
-import com.eclipsesource.uml.modelserver.commands.activitydiagram.action.AddActionCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.activitydiagram.action.SetBehaviorCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.activitydiagram.activity.AddActivityCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.activitydiagram.activity.RemoveActivityCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.activitydiagram.comment.AddCommentCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.activitydiagram.comment.LinkCommentCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.activitydiagram.comment.RemoveCommentCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.activitydiagram.comment.SetBodyCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.activitydiagram.comment.UnlinkCommentCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.activitydiagram.condition.AddConditionCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.activitydiagram.controlnode.AddControlNodeCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.activitydiagram.datanode.AddObjectNodeCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.activitydiagram.datanode.AddParameterCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.activitydiagram.datanode.AddPinCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.activitydiagram.exceptionhandler.AddExceptionHandlerCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.activitydiagram.interruptibleregion.AddInterruptibleRegionCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.activitydiagram.exceptionhandler.RemoveExceptionHandlerCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.activitydiagram.flow.AddControlFLowCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.activitydiagram.flow.RemoveActivityEdgeCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.activitydiagram.flow.SetGuardCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.activitydiagram.flow.SetWeightCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.activitydiagram.general.RemoveActivityNodeCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.activitydiagram.partition.AddPartitionCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.activitydiagram.partition.RemovePartitionCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.classdiagram.association.AddAssociationCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.classdiagram.clazz.AddClassCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.classdiagram.property.AddPropertyCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.classdiagram.association.RemoveAssociationCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.classdiagram.clazz.RemoveClassCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.classdiagram.property.RemovePropertyCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.classdiagram.association.SetAssociationEndMultiplicityCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.classdiagram.association.SetAssociationEndNameCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.classdiagram.clazz.SetClassNameCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.classdiagram.property.SetPropertyCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.commons.contributions.ChangeBoundsCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.commons.contributions.ChangeRoutingPointsCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.commons.contributions.RenameElementCommandContribution;
-import com.eclipsesource.uml.modelserver.unotation.Edge;
-import com.eclipsesource.uml.modelserver.unotation.Shape;
-import com.google.common.base.Preconditions;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 public class UmlModelServerAccess extends EMSModelServerAccess {
 
@@ -191,8 +186,10 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
       return this.modelServerClient.getUmlTypes(getSemanticURI());
    }
 
+   //FIXME
    public CompletableFuture<Response<List<String>>> getUmlBehaviors() {
-      return this.modelServerClient.getUmlBehaviors(getSemanticURI());
+      //return this.modelServerClient.getUmlBehaviors(getSemanticURI());
+      return null;
    }
 
    /*

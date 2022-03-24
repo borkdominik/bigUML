@@ -10,8 +10,7 @@
   "typescriptHero.imports.insertSemicolons": true,
   "typescriptHero.imports.multiLineTrailingComma": false,
   "typescriptHero.imports.ignoredFromRemoval": [
-    "react",
-    "snabbdom-jsx"
+    "react"
   ],
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {

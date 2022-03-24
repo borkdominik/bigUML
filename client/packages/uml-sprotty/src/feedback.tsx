@@ -8,13 +8,17 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-/** @jsx svg */
 import { injectable } from "inversify";
-import { svg } from "snabbdom-jsx";
-import { VNode } from "snabbdom/vnode";
-import { IVNodePostprocessor, SModelElement } from "sprotty";
+import { VNode } from "snabbdom";
+import { IVNodePostprocessor, SModelElement, svg } from "sprotty";
 
 import { SLabelNode } from "./model";
+
+/* eslint-disable react/react-in-jsx-scope */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const JSX = {
+    createElement: svg
+};
 
 /**
  * A NodeDecorator to install visual feedback on selected NodeLabels
@@ -26,7 +30,7 @@ export class LabelSelectionFeedback implements IVNodePostprocessor {
             const vPadding = 1;
             const hPadding = 5;
 
-            const feedback: VNode = (
+            const feedback: any = (
                 <rect
                     x={-hPadding}
                     y={-element.bounds.height / 2 - vPadding}

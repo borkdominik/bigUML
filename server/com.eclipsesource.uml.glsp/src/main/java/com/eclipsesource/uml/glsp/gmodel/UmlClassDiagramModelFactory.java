@@ -23,7 +23,7 @@ import org.eclipse.uml2.uml.Model;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.modelserver.unotation.Diagram;
 
-public class UmlClassDiagramModelFactory extends GModelFactory {
+public class UmlClassDiagramModelFactory extends DiagramFactory {
 
    public UmlClassDiagramModelFactory(final UmlModelState modelState) {
       super(modelState);
@@ -42,7 +42,7 @@ public class UmlClassDiagramModelFactory extends GModelFactory {
          List<GModelElement> classNodes = umlModel.getPackagedElements().stream()
             .filter(Class.class::isInstance)
             .map(Class.class::cast)
-            .map(umlClass -> classifierNodeFactory.create(umlClass))
+            .map(classDiagramNodeFactory::create)
             .collect(Collectors.toList());
          graph.getChildren().addAll(classNodes);
 
@@ -50,7 +50,7 @@ public class UmlClassDiagramModelFactory extends GModelFactory {
          List<GModelElement> associationEdges = umlModel.getPackagedElements().stream()
             .filter(Association.class::isInstance)
             .map(Association.class::cast)
-            .map(association -> relationshipEdgeFactory.create(association))
+            .map(classDiagramEdgeFactory::create)
             .collect(Collectors.toList());
          graph.getChildren().addAll(associationEdges);
 
@@ -58,9 +58,14 @@ public class UmlClassDiagramModelFactory extends GModelFactory {
          List<GModelElement> enumerationNodes = umlModel.getPackagedElements().stream()
             .filter(Enumeration.class::isInstance)
             .map(Enumeration.class::cast)
-            .map(umlEnumeration -> classifierNodeFactory.create(umlEnumeration))
+            .map(classDiagramNodeFactory::create)
             .collect(Collectors.toList());
          graph.getChildren().addAll(enumerationNodes);
+
+         // Add comments
+         graph.getChildren().addAll(umlModel.getOwnedComments().stream()
+                 .flatMap(c -> commentFactory.create(c).stream())
+                 .collect(Collectors.toList()));
       }
       return graph;
 

@@ -10,21 +10,12 @@
  ********************************************************************************/
 import { LaunchOptions, ModelServerClient } from "@eclipse-emfcloud/modelserver-theia";
 import { GLSPServerContribution } from "@eclipse-glsp/theia-integration/lib/node";
-import { BackendApplicationContribution } from "@theia/core/lib/node";
 import { ContainerModule, injectable } from "inversify";
 import { join, resolve } from "path";
 
 import { findEquinoxLauncher } from "./equinox";
-import { GLSPLaunchOptions, GLSPServerLauncher } from "./glsp-server-launcher";
 import { UmlModelServerClientImpl } from "./model-server-client";
 import { UmlGLSPServerContribution } from "./uml-glsp-server-contribution";
-
-@injectable()
-export class UmlGlspLaunchOptions implements GLSPLaunchOptions {
-    hostname = "localhost";
-    jarPath = findEquinoxLauncher(join(__dirname, "..", "..", "build", "com.eclipsesource.uml.glsp.product-0.1.0"));
-    serverPort = 5007;
-}
 
 @injectable()
 export class UmlModelServerLaunchOptions implements LaunchOptions {
@@ -45,10 +36,7 @@ export default new ContainerModule((bind, _unbind, isBound, rebind) => {
         bind(LaunchOptions).to(UmlModelServerLaunchOptions).inSingletonScope();
     }
 
-    bind(GLSPLaunchOptions).to(UmlGlspLaunchOptions).inSingletonScope();
-    bind(GLSPServerContribution).to(UmlGLSPServerContribution).inSingletonScope();
-
-    bind(BackendApplicationContribution).to(GLSPServerLauncher);
-
     rebind(ModelServerClient).to(UmlModelServerClientImpl).inSingletonScope();
+
+    bind(GLSPServerContribution).to(UmlGLSPServerContribution).inSingletonScope();
 });

@@ -13,7 +13,7 @@ package com.eclipsesource.uml.glsp.operations;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.glsp.server.model.GModelState;
+import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSBasicOperationHandler;
 import org.eclipse.glsp.server.operations.ChangeRoutingPointsOperation;
 import org.eclipse.glsp.server.types.ElementAndRoutingPoints;
 
@@ -22,12 +22,13 @@ import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;
 import com.eclipsesource.uml.modelserver.unotation.Edge;
 
 public class UmlChangeRoutingPointsOperationHandler
-   extends ModelServerAwareBasicOperationHandler<ChangeRoutingPointsOperation> {
+   extends EMSBasicOperationHandler<ChangeRoutingPointsOperation, UmlModelServerAccess> {
+
+   protected UmlModelState getUmlModelState() { return (UmlModelState) getEMSModelState(); }
 
    @Override
-   public void executeOperation(final ChangeRoutingPointsOperation operation, final GModelState graphicalModelState,
-      final UmlModelServerAccess modelServerAccess) throws Exception {
-      UmlModelState modelState = UmlModelState.getModelState(graphicalModelState);
+   public void executeOperation(final ChangeRoutingPointsOperation operation, final UmlModelServerAccess modelServerAccess) {
+      UmlModelState modelState = getUmlModelState();
       Map<Edge, ElementAndRoutingPoints> changeRoutingPointsMap = new HashMap<>();
       for (ElementAndRoutingPoints element : operation.getNewRoutingPoints()) {
          modelState.getIndex().getNotation(element.getElementId(), Edge.class)

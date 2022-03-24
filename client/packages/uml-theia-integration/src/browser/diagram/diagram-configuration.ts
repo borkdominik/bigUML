@@ -8,33 +8,26 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-import { TYPES } from "@eclipse-glsp/client/lib";
 import {
-    connectTheiaContextMenuService,
-    TheiaContextMenuService,
-    TheiaContextMenuServiceFactory
+    configureDiagramServer,
+    GLSPDiagramConfiguration,
+    TheiaDiagramServer
 } from "@eclipse-glsp/theia-integration/lib/browser";
 import { createUmlDiagramContainer } from "@eclipsesource/uml-sprotty/lib";
-import { SelectionService } from "@theia/core";
-import { Container, inject, injectable } from "inversify";
-import { DiagramConfiguration, TheiaDiagramServer } from "sprotty-theia/lib";
+import { Container, injectable } from "inversify";
 
 import { UmlLanguage } from "../../common/uml-language";
 import { UmlGLSPTheiaDiagramServer } from "./diagram-server";
 
 @injectable()
-export class UmlDiagramConfiguration implements DiagramConfiguration {
+export class UmlDiagramConfiguration extends GLSPDiagramConfiguration {
 
-    @inject(SelectionService) protected selectionService: SelectionService;
-    @inject(TheiaContextMenuServiceFactory) protected contextMenuServiceFactory: () => TheiaContextMenuService;
+    diagramType: string = UmlLanguage.diagramType;
 
-    diagramType: string = UmlLanguage.DiagramType;
-
-    createContainer(widgetId: string): Container {
+    doCreateContainer(widgetId: string): Container {
         const container = createUmlDiagramContainer(widgetId);
-        container.bind(TYPES.ModelSource).to(UmlGLSPTheiaDiagramServer).inSingletonScope();
+        configureDiagramServer(container, UmlGLSPTheiaDiagramServer);
         container.bind(TheiaDiagramServer).toService(UmlGLSPTheiaDiagramServer);
-        connectTheiaContextMenuService(container, this.contextMenuServiceFactory);
         return container;
     }
 }

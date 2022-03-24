@@ -11,9 +11,13 @@
 import { SChildElement } from "@eclipse-glsp/client";
 import {
     boundsFeature,
+    Connectable,
+    connectableFeature,
     deletableFeature,
+    DiamondNode,
     EditableLabel,
     editLabelFeature,
+    editFeature,
     fadeFeature,
     hoverFeedbackFeature,
     isEditableLabel,
@@ -24,7 +28,9 @@ import {
     popupFeature,
     RectangularNode,
     selectFeature,
+    SEdge,
     SLabel,
+    SRoutableElement,
     SShapeElement,
     WithEditableLabel,
     withEditLabelFeature
@@ -68,16 +74,75 @@ export class Icon extends SShapeElement {
     }
 }
 
+// CLASS
 export class IconClass extends Icon {
     iconImageName = "Class.svg";
 }
 
+// ACTIVITY
 export class IconActivity extends Icon {
     iconImageName = "Activity.svg";
 }
 
 export class IconAction extends Icon {
     iconImageName = "OpaqueAction.gif";
+}
+
+// USECASE
+export class IconUseCase extends Icon {
+    iconImageName = "UseCase.gif";
+}
+
+export class IconActor extends Icon {
+    iconImageName = "Actor.gif";
+}
+
+export class IconPackage extends Icon {
+    iconImageName = "Package.gif";
+}
+
+// STATE MACHINE
+export class IconState extends Icon {
+    iconImageName = "State.svg";
+}
+
+export class IconStateMachine extends Icon {
+    // TODO: set StateMachine.svg
+    iconImageName = "Class.svg";
+}
+
+// DEPLOYMENT
+export class IconArtifact extends Icon {
+    iconImageName = "Artifact.svg";
+}
+
+export class IconDevice extends Icon {
+    iconImageName = "Device.svg";
+}
+
+export class IconExecutionEnvironment extends Icon {
+    iconImageName = "ExecutionEnvironment.svg";
+}
+
+export class IconDeploymentNode extends Icon {
+    iconImageName = "DeploymentNode.svg";
+}
+
+export class IconDeploymentSpecification extends Icon {
+    iconImageName = "DeploymentSpecification.svg";
+}
+
+// OBJECT
+export class IconObject extends Icon {
+    iconImageName = "Object.svg";
+}
+
+export class ControlNode extends DiamondNode {
+    size = {
+        width: 32,
+        height: 32
+    };
+    strokeWidth = 1;
 }
 
 export class SLabelNode extends SLabel implements EditableLabel {
@@ -92,4 +157,43 @@ export class SLabelNode extends SLabel implements EditableLabel {
 
 export class SLabelNodeProperty extends SLabelNode {
     imageName = "Property.svg";
+}
+
+export class ConnectableEditableLabel extends SLabel implements EditableLabel, Connectable {
+    constructor() {
+        super();
+        ConnectableEditableLabel.DEFAULT_FEATURES.push(connectableFeature);
+    }
+    canConnect(routable: SRoutableElement, role: "source" | "target"): boolean {
+        return true;
+        // TODO: If neccessary return false under some conditions
+    }
+
+    hasFeature(feature: symbol): boolean {
+        return feature === editLabelFeature || super.hasFeature(feature);
+    }
+}
+
+export class ConnectableEdge extends SEdge implements Connectable {
+    canConnect(routable: SRoutableElement, role: "source" | "target"): boolean {
+        return true;
+        // TODO: If neccessary return false under some conditions
+    }
+
+    static readonly DEFAULT_FEATURES = [editFeature, deletableFeature, selectFeature, fadeFeature,
+        hoverFeedbackFeature, connectableFeature];
+
+    selected = false;
+    hoverFeedback = true;
+    opacity = 1;
+}
+
+export class ConnectionPoint extends SLabel implements Connectable {
+    canConnect(routable: SRoutableElement, role: "source" | "target"): boolean {
+        return true;
+        // TODO: If neccessary return false under some conditions
+    }
+    selected = false;
+    hoverFeedback = false;
+    opacity = 1;
 }

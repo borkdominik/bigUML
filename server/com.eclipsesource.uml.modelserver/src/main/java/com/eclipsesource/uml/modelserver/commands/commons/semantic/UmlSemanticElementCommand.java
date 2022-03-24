@@ -16,7 +16,7 @@ import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.uml2.uml.Model;
 
-import com.eclipsesource.uml.modelserver.commands.commons.util.UmlSemanticCommandUtil;
+import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
 
 public abstract class UmlSemanticElementCommand extends RecordingCommand {
 

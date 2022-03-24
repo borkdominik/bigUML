@@ -19,7 +19,8 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.eclipse.glsp.server.internal.di.DIOperationHandlerRegistry;
+//import org.eclipse.glsp.server.internal.di.DIOperationHandlerRegistry;
+import org.eclipse.glsp.server.internal.operations.DefaultOperationHandlerRegistry;
 import org.eclipse.glsp.server.internal.util.ReflectionUtil;
 import org.eclipse.glsp.server.operations.Operation;
 import org.eclipse.glsp.server.operations.OperationHandler;
@@ -33,7 +34,7 @@ import com.google.inject.Inject;
  * https://github.com/eclipse-glsp/glsp/issues/21 is fixed.
  * </p>
  * <p>
- * The GLSP version {@link DIOperationHandlerRegistry} has special handling for
+ * The GLSP version {@link DefaultOperationHandlerRegistry} has special handling for
  * CreateOperations that requires 1 CreateOperationHandler per element type,
  * which doesn't match the current Ecore GLSP structure.
  * </p>

@@ -40,7 +40,7 @@
 								<groupId>com.eclipsesource.uml</groupId>
 								<artifactId>targetplatform</artifactId>
 								<version>0.1.0</version>
-								<classifier>r2020-09</classifier>
+								<classifier>targetplatform</classifier>
 							</artifact>
 						</target>
 						<environments>

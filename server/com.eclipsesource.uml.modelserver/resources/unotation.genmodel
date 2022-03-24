@@ -21,6 +21,7 @@
       <genEnumLiterals ecoreEnumLiteral="unotation.ecore#//Representation/USECASE"/>
       <genEnumLiterals ecoreEnumLiteral="unotation.ecore#//Representation/DEPLOYMENT"/>
       <genEnumLiterals ecoreEnumLiteral="unotation.ecore#//Representation/COMPONENT"/>
+      <genEnumLiterals ecoreEnumLiteral="unotation.ecore#//Representation/OBJECT"/>
     </genEnums>
     <genClasses ecoreClass="unotation.ecore#//Shape">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference unotation.ecore#//Shape/position"/>

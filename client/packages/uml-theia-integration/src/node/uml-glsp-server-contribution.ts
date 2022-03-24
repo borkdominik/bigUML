@@ -8,42 +8,71 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-import { BaseGLSPServerContribution } from "@eclipse-glsp/theia-integration/lib/node";
-import { IConnection } from "@theia/languages/lib/node";
-import { inject, injectable, optional } from "inversify";
-import * as net from "net";
-import { createSocketConnection } from "vscode-ws-jsonrpc/lib/server";
+import { getPort } from "@eclipse-glsp/protocol";
+import {
+    JavaSocketServerContribution,
+    JavaSocketServerLaunchOptions,
+    START_UP_COMPLETE_MSG
+} from "@eclipse-glsp/theia-integration/lib/node";
+import { ILogger } from "@theia/core";
+import { existsSync } from "fs";
+import { inject, injectable } from "inversify";
+import { join } from "path";
 
 import { UmlLanguage } from "../common/uml-language";
-import { GLSPLaunchOptions } from "./glsp-server-launcher";
+import { findEquinoxLauncher } from "./equinox";
+
+export const PORT_ARG_KEY = "UML_GLSP";
+export const SERVER_DIR = join(__dirname, "..", "..", "build");
+export const JAR_FILE = join(SERVER_DIR, "com.eclipsesource.uml.glsp.product-0.1.0");
 
 @injectable()
-export class UmlGLSPServerContribution extends BaseGLSPServerContribution {
+export class UmlGLSPServerContribution extends JavaSocketServerContribution {
 
-    readonly id = UmlLanguage.Id;
-    readonly name = UmlLanguage.Name;
-    serverStarted = false;
-    readonly description = {
-        id: "uml",
-        name: "UML",
-        documentSelector: ["uml"],
-        fileEvents: [
-            "**/*.umldiagram"
-        ]
-    };
-    @inject(GLSPLaunchOptions) @optional() protected readonly launchOptions: GLSPLaunchOptions;
+    @inject(ILogger) private readonly logger: ILogger;
 
-    start(clientConnection: IConnection): void {
-        const socketPort = this.launchOptions.serverPort;
-        if (socketPort) {
-            const socket = new net.Socket();
-            const serverConnection = createSocketConnection(socket, socket, () => {
-                socket.destroy();
-            });
-            this.forward(clientConnection, serverConnection);
-            socket.connect(socketPort);
-        } else {
-            console.error("Error when trying to connect to UML GLSP server");
+    readonly id = UmlLanguage.contributionId;
+
+    createLaunchOptions(): Partial<JavaSocketServerLaunchOptions> {
+        return {
+            jarPath: JAR_FILE,
+            additionalArgs: ["--consoleLog", "true"],
+            socketConnectionOptions: {
+                port: getPort(PORT_ARG_KEY)
+            }
+        };
+    }
+
+    async launch(): Promise<void> {
+        if (!existsSync(this.launchOptions.jarPath)) {
+            throw new Error(`Could not launch GLSP server. The given jar path is not valid: ${this.launchOptions.jarPath}`);
+        }
+        if (isNaN(this.launchOptions.socketConnectionOptions.port)) {
+            throw new Error(`Could not launch GLSP Server. The given server port is not a number: ${this.launchOptions.socketConnectionOptions.port}`);
+        }
+        let args = ["-jar", findEquinoxLauncher(this.launchOptions.jarPath), "--port", `${this.launchOptions.socketConnectionOptions.port}`];
+        if (this.launchOptions.additionalArgs) {
+            args = [...args, ...this.launchOptions.additionalArgs];
+        }
+
+        await this.spawnProcessAsync("java", args, undefined);
+        return this.onReady;
+    }
+
+    protected processLogInfo(data: string | Buffer): void {
+        if (data) {
+            const message = data.toString();
+            if (message.startsWith(START_UP_COMPLETE_MSG)) {
+                this.resolveReady();
+            }
+            this.logger.info(`UmlGLSPServerContribution: ${data}`);
         }
     }
+
+    protected processLogError(data: string | Buffer): void {
+        if (data) {
+            this.logger.error(`UmlGLSPServerContribution: ${data}`);
+        }
+    }
+
 }

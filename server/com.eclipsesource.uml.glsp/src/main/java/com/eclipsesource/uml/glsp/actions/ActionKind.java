@@ -16,4 +16,16 @@ public class ActionKind {
    public static final String GET_TYPES = "getTypes";
    public static final String RETURN_TYPES = "returnTypes";
 
+   // ACTIVITY
+   public static final String GET_BEHAVIORS = "getBehaviors";
+   public static final String CALL_BEHAVIORS = "callBehaviors";
+   public static final String GUARD_CREATE = "createGuard";
+   public static final String WEIGHT_CREATE = "createWeight";
+
+   // STATE MACHINE
+   public static final String ADD_TRANSITION_LABEL = "addTransitionLabel";
+   public static final String ADD_TRANSITION_GUARD = "addTransitionGuard";
+   public static final String ADD_TRANSITION_EFFECT = "addTransitionEffect";
+   public static final String ADD_TRANSITION_TRIGGER = "addTransitionTrigger";
+
 }

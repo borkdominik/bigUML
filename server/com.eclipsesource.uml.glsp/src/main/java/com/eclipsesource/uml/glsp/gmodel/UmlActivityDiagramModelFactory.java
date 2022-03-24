@@ -1,56 +1,81 @@
+/********************************************************************************
+ * Copyright (c) 2021 EclipseSource and others.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v. 2.0 which is available at
+ * https://www.eclipse.org/legal/epl-2.0, or the MIT License which is
+ * available at https://opensource.org/licenses/MIT.
+ *
+ * SPDX-License-Identifier: EPL-2.0 OR MIT
+ ********************************************************************************/
 package com.eclipsesource.uml.glsp.gmodel;
 
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.modelserver.unotation.Diagram;
+import java.util.stream.Collectors;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.graph.GGraph;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.uml2.uml.Activity;
+import org.eclipse.uml2.uml.ActivityEdge;
+import org.eclipse.uml2.uml.ActivityGroup;
 import org.eclipse.uml2.uml.ActivityNode;
+import org.eclipse.uml2.uml.ExceptionHandler;
 import org.eclipse.uml2.uml.Model;
 
-import java.util.stream.Collectors;
+import com.eclipsesource.uml.glsp.model.UmlModelState;
+import com.eclipsesource.uml.modelserver.unotation.Diagram;
 
-public class UmlActivityDiagramModelFactory extends GModelFactory {
+public class UmlActivityDiagramModelFactory extends DiagramFactory {
 
-    public UmlActivityDiagramModelFactory(final UmlModelState modelState) {
-        super(modelState);
-    }
+   public UmlActivityDiagramModelFactory(final UmlModelState modelState) {
+      super(modelState);
+   }
 
-    @Override
-    public GModelElement create(final EObject semanticElement) {
-        GModelElement result = null;
-        if (semanticElement instanceof Model) {
-            result = create(semanticElement);
-        } else if (semanticElement instanceof Activity) {
-            result = classifierNodeFactory.create((Activity) semanticElement);
-        } /*else if (semanticElement instanceof ActivityNode) {
-            result = activityNodeFactory.create((ActivityNode) semanticElement);
-        }*/
-        return result;
-    }
+   @Override
+   public GModelElement create(final EObject semanticElement) {
+      GModelElement result = null;
+      if (semanticElement instanceof Model) {
+         result = create(semanticElement);
+      } else if (semanticElement instanceof Activity) {
+         result = activityNodeFactory.create((Activity) semanticElement);
+      } else if (semanticElement instanceof ActivityNode) {
+         result = activityChildNodeFactory.create((ActivityNode) semanticElement);
+      } else if (semanticElement instanceof ActivityEdge) {
+         result = activityDiagramEdgeFactory.create((ActivityEdge) semanticElement);
+      } else if (semanticElement instanceof ActivityGroup) {
+         result = activityGroupNodeFactory.create((ActivityGroup) semanticElement);
+      } else if (semanticElement instanceof ExceptionHandler) {
+         result = activityDiagramEdgeFactory.create((ExceptionHandler) semanticElement);
+      }
 
-    @Override
-    public GGraph create(final Diagram umlDiagram) {
-        GGraph graph = getOrCreateRoot();
+      if (result == null) {
+         throw createFailed(semanticElement);
+      }
+      return result;
+   }
 
-        if (umlDiagram.getSemanticElement().getResolvedElement() != null) {
-            Model umlModel = (Model) umlDiagram.getSemanticElement().getResolvedElement();
+   @Override
+   public GGraph create(final Diagram umlDiagram) {
+      GGraph graph = getOrCreateRoot();
 
-            graph.setId(toId(umlModel));
+      if (umlDiagram.getSemanticElement().getResolvedElement() != null) {
+         Model umlModel = (Model) umlDiagram.getSemanticElement().getResolvedElement();
 
-            graph.getChildren().addAll(umlModel.getPackagedElements().stream()
-                    .filter(Activity.class::isInstance)
-                    .map(Activity.class::cast)
-                    .map(this::create)
-                    .collect(Collectors.toSet()));
+         graph.setId(toId(umlModel));
 
-            //TODO: uncomment when comment is ready
-            /*graph.getChildren().addAll(umlModel.getOwnedComments().stream()
-                    .flatMap(c -> commentFactory.create(c).stream())
-                    .collect(Collectors.toList()));*/
-        }
-        return graph;
-    }
+         graph.getChildren().addAll(umlModel.getPackagedElements().stream()
+            .filter(Activity.class::isInstance)
+            .map(Activity.class::cast)
+            .map(this::create)
+            .collect(Collectors.toSet()));
+
+         graph.getChildren().addAll(umlModel.getOwnedComments().stream()
+            .flatMap(c -> commentFactory.create(c).stream())
+            .collect(Collectors.toList()));
+
+      }
+      return graph;
+
+   }
 
 }

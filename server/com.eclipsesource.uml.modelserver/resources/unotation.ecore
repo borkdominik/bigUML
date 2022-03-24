@@ -39,6 +39,7 @@
     <eLiterals name="STATEMACHINE" value="4"/>
     <eLiterals name="USECASE" value="5"/>
     <eLiterals name="DEPLOYMENT" value="6"/>
-    <eLiterals name="COMPONENT" value="7"/>
+    <eLiterals name="OBJECT" value="7"/>
+    <eLiterals name="COMPONENT" value="8"/>
   </eClassifiers>
 </ecore:EPackage>

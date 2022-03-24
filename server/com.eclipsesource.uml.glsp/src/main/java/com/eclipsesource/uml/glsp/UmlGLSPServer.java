@@ -10,45 +10,37 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp;
 
+import java.net.MalformedURLException;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
-import org.apache.log4j.Logger;
-import org.eclipse.emfcloud.modelserver.client.Response;
-import org.eclipse.glsp.server.jsonrpc.DefaultGLSPServer;
+import org.eclipse.emfcloud.modelserver.client.ModelServerClient;
+import org.eclipse.emfcloud.modelserver.glsp.EMSGLSPServer;
+import org.eclipse.glsp.server.protocol.DisposeClientSessionParameters;
+import org.eclipse.glsp.server.types.GLSPServerException;
+import org.eclipse.glsp.server.utils.ClientOptionsUtil;
+import org.eclipse.uml2.uml.resource.UMLResource;
 
-import com.eclipsesource.uml.glsp.modelserver.ModelServerClientProvider;
 import com.eclipsesource.uml.modelserver.UmlModelServerClient;
-import com.google.inject.Inject;
+import com.eclipsesource.uml.modelserver.UmlNotationUtil;
 
-public class UmlGLSPServer extends DefaultGLSPServer<UmlGLSPServerInitializeOptions> {
+public class UmlGLSPServer extends EMSGLSPServer {
 
-   static Logger LOGGER = Logger.getLogger(UmlGLSPServer.class.getSimpleName());
-
-   @Inject
-   private ModelServerClientProvider modelServerClientProvider;
-
-   public UmlGLSPServer() {
-      super(UmlGLSPServerInitializeOptions.class);
+   @Override
+   protected ModelServerClient createModelServerClient(final String modelServerURL) throws MalformedURLException {
+      return new UmlModelServerClient(modelServerURL);
    }
 
    @Override
-   public CompletableFuture<Boolean> handleOptions(final UmlGLSPServerInitializeOptions options) {
-      if (options != null) {
-         LOGGER.debug(String.format("[%s] Pinging modelserver", options.getTimestamp()));
-
-         try {
-            UmlModelServerClient client = new UmlModelServerClient(options.getModelServerURL());
-            boolean alive = client.ping().thenApply(Response<Boolean>::body).get();
-            if (alive) {
-               modelServerClientProvider.setModelServerClient(client);
-               return CompletableFuture.completedFuture(true);
-            }
-
-         } catch (Exception e) {
-            LOGGER.error("Error during initialization of modelserver connection", e);
-         }
+   public CompletableFuture<Void> disposeClientSession(final DisposeClientSessionParameters params) {
+      Optional<ModelServerClient> modelServerClient = modelServerClientProvider.get();
+      if (modelServerClient.isPresent()) {
+         String sourceURI = ClientOptionsUtil.getSourceUri(params.getArgs())
+                 .orElseThrow(() -> new GLSPServerException("No source URI given to dispose client session!"));
+         modelServerClient.get()
+                 .unsubscribe(sourceURI.replace(UmlNotationUtil.NOTATION_EXTENSION, UMLResource.FILE_EXTENSION));
       }
-      return CompletableFuture.completedFuture(true);
+      return super.disposeClientSession(params);
    }
 
 }

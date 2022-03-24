@@ -35,7 +35,6 @@
     <requires>
         <import plugin="org.eclipse.equinox.app" version="1.4.0" match="greaterOrEqual"/>
         <import plugin="com.eclipsesource.uml.modelserver" version="0.1.0" match="greaterOrEqual"/>
-        <import plugin="org.apache.log4j" version="1.2.15" match="compatible"/>
         <import plugin="org.apache.commons.io" version="2.6.0" match="compatible"/>
         <import plugin="com.google.inject" version="3.0.0" match="greaterOrEqual"/>
         <import plugin="com.google.guava"/>
@@ -46,7 +45,6 @@
         <import plugin="org.eclipse.emfcloud.modelserver.edit" version="0.7.0" match="greaterOrEqual"/>
         <import plugin="org.eclipse.emfcloud.modelserver.emf" version="0.7.0" match="greaterOrEqual"/>
         <import plugin="org.eclipse.emfcloud.modelserver.lib" version="0.7.0" match="greaterOrEqual"/>
-        <import plugin="org.slf4j.api" version="1.7.30" match="greaterOrEqual"/>
         <import plugin="org.eclipse.glsp.graph" version="0.8.0" match="greaterOrEqual"/>
         <import plugin="org.eclipse.uml2.common" version="2.5.0" match="greaterOrEqual"/>
         <import plugin="org.eclipse.uml2.types" version="2.5.0" match="greaterOrEqual"/>
@@ -61,6 +59,7 @@
         <import plugin="org.eclipse.emf.edit.source"/>
         <import plugin="javax.inject"/>
         <import plugin="org.eclipse.equinox.event"/>
+        <import plugin="org.apache.logging.log4j" version="2.17.1" match="greaterOrEqual"/>
     </requires>
 
     <plugin

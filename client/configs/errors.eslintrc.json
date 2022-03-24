@@ -13,12 +13,6 @@
     "guard-for-in": "error",
     "no-caller": "error",
     "no-eval": "error",
-    "no-redeclare": [
-      "error",
-      {
-        "builtinGlobals": false
-      }
-    ],
     "no-restricted-imports": [
       "error",
       "..",
@@ -27,6 +21,7 @@
       "../../index"
     ],
     "no-sequences": "error",
+    "no-shadow": "off",
     "no-throw-literal": "error",
     "no-unused-expressions": [
       "error",
@@ -82,11 +77,17 @@
       }
     ],
     // @typescript-eslint/eslint-plugin
-    "@typescript-eslint/class-name-casing": "error",
     "@typescript-eslint/consistent-type-definitions": "error",
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-misused-new": "error",
     "@typescript-eslint/no-namespace": "off",
+    "@typescript-eslint/no-var-requires": "off",
+    "@typescript-eslint/no-shadow": [
+      "error",
+      {
+        "hoist": "all"
+      }
+    ],
     "@typescript-eslint/no-use-before-define": "off",
     "@typescript-eslint/no-unused-vars": [
       "error",

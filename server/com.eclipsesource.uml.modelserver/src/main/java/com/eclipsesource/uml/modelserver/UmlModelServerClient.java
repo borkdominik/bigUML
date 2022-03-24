@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2021 EclipseSource and others.
+ * Copyright (c) 2021-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -10,100 +10,55 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver;
 
+import okhttp3.Request;
+import org.eclipse.emfcloud.modelserver.client.Response;
+import org.eclipse.emfcloud.modelserver.client.v1.ModelServerClientV1;
+import org.eclipse.emfcloud.modelserver.common.ModelServerPathParametersV1;
+import org.eclipse.emfcloud.modelserver.common.codecs.Codec;
+import org.eclipse.emfcloud.modelserver.common.codecs.DefaultJsonCodec;
+import org.eclipse.emfcloud.modelserver.common.codecs.XmiCodec;
+import org.eclipse.emfcloud.modelserver.emf.configuration.EPackageConfiguration;
+import org.eclipse.emfcloud.modelserver.jsonschema.Json;
+import org.eclipse.uml2.uml.resource.UMLResource;
+
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
 
-import org.apache.log4j.Logger;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emfcloud.modelserver.client.ModelServerClient;
-import org.eclipse.emfcloud.modelserver.client.Response;
-import org.eclipse.emfcloud.modelserver.common.ModelServerPathParameters;
-import org.eclipse.emfcloud.modelserver.common.ModelServerPathParametersV1;
-import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
-import org.eclipse.emfcloud.modelserver.common.codecs.DefaultJsonCodec;
-import org.eclipse.emfcloud.modelserver.common.codecs.XmiCodec;
-import org.eclipse.emfcloud.modelserver.jsonschema.Json;
-import org.eclipse.uml2.uml.resource.UMLResource;
+public class UmlModelServerClient extends ModelServerClientV1 {
 
-import com.google.common.collect.ImmutableSet;
+   private static final Map<String, Codec> SUPPORTED_UML_FORMATS = Map.of(
+           ModelServerPathParametersV1.FORMAT_JSON, new DefaultJsonCodec(),
+           ModelServerPathParametersV1.FORMAT_XMI, new XmiCodec(),
+           UMLResource.FILE_EXTENSION, new UmlCodec());
 
-import okhttp3.Request;
-
-public class UmlModelServerClient extends ModelServerClient {
-
-   private static final Set<String> DEFAULT_SUPPORTED_FORMATS = ImmutableSet.of(ModelServerPathParameters.FORMAT_JSON,
-      ModelServerPathParameters.FORMAT_XMI, UMLResource.FILE_EXTENSION);
-
-   private static Logger LOGGER = Logger.getLogger(UmlModelServerClient.class.getSimpleName());
-
-   public UmlModelServerClient(final String baseUrl) throws MalformedURLException {
-      super(baseUrl);
-   }
-
-   @Override
-   protected boolean isSupportedFormat(final String format) {
-      return DEFAULT_SUPPORTED_FORMATS.contains(format);
-   }
-
-   @Override
-   public Optional<EObject> decode(final String payload, final String format) {
-      try {
-         if (format.equals(UMLResource.FILE_EXTENSION)) {
-            return new UmlCodec().decode(payload);
-         } else if (format.equals(ModelServerPathParametersV1.FORMAT_XMI)) {
-            return new XmiCodec().decode(payload);
-         }
-         return new DefaultJsonCodec().decode(payload);
-      } catch (DecodingException e) {
-         LOGGER.error("Decoding of " + payload + " with " + format + " format failed");
-      }
-      return Optional.empty();
+   public UmlModelServerClient(final String baseUrl, final EPackageConfiguration... configurations)
+           throws MalformedURLException {
+      super(baseUrl, SUPPORTED_UML_FORMATS, configurations);
    }
 
    public CompletableFuture<Response<List<String>>> getUmlTypes(final String modelUri) {
       final Request request = new Request.Builder()
-         .url(
-            createHttpUrlBuilder(baseUrl + UmlModelServerPaths.UML_TYPES)
-               .addQueryParameter(ModelServerPathParametersV1.MODEL_URI, modelUri)
-               .build())
-         .build();
+              .url(
+                      createHttpUrlBuilder(getBaseUrl() + UmlModelServerPaths.UML_TYPES)
+                              .addQueryParameter(ModelServerPathParametersV1.MODEL_URI, modelUri)
+                              .build())
+              .build();
 
       return makeCallAndGetDataBody(request)
-         .thenApply(response -> response.mapBody(body -> {
-            List<String> uris = new ArrayList<>();
-            try {
-               Json.parse(body).forEach(uri -> uris.add(uri.textValue()));
-               return uris;
-            } catch (IOException e) {
-               throw new CompletionException(e);
-            }
-         }));
-   }
-
-   public CompletableFuture<Response<List<String>>> getUmlBehaviors(final String modelUri) {
-      final Request request = new Request.Builder()
-         .url(
-            createHttpUrlBuilder(baseUrl + UmlModelServerPaths.UML_BEHAVIORS)
-               .addQueryParameter(ModelServerPathParametersV1.MODEL_URI, modelUri)
-               .build())
-         .build();
-
-      return makeCallAndGetDataBody(request)
-         .thenApply(response -> response.mapBody(body -> {
-            List<String> uris = new ArrayList<>();
-            try {
-               Json.parse(body).forEach(uri -> uris.add(uri.textValue()));
-               return uris;
-            } catch (IOException e) {
-               throw new CompletionException(e);
-            }
-         }));
+              .thenApply(response -> response.mapBody(body -> {
+                 List<String> uris = new ArrayList<>();
+                 try {
+                    Json.parse(body).forEach(uri -> uris.add(uri.textValue()));
+                    return uris;
+                 } catch (IOException e) {
+                    throw new CompletionException(e);
+                 }
+              }));
    }
 
 }

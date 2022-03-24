@@ -8,14 +8,17 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-import { UriSelection } from "@theia/core";
-import { LabelProviderContribution } from "@theia/core/lib/browser";
+// eslint-disable-next-line header/header
+import {UriSelection} from "@theia/core";
+import {LabelProviderContribution} from "@theia/core/lib/browser";
 import URI from "@theia/core/lib/common/uri";
-import { FileStat } from "@theia/filesystem/lib/common";
-import { injectable } from "inversify";
+import {FileStat} from "@theia/filesystem/lib/common";
+import {injectable} from "inversify";
 
 @injectable()
 export class UmlTreeLabelProviderContribution implements LabelProviderContribution {
+    // FIXME
+    // eslint-disable-next-line @typescript-eslint/ban-types
     canHandle(uri: object): number {
         let toCheck: any = uri;
         if (FileStat.is(toCheck)) {

@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2021 EclipseSource and others.
+ * Copyright (c) 2021-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -10,13 +10,9 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.util.Map;
-import java.util.Optional;
-
-import org.apache.log4j.Logger;
+import com.fasterxml.jackson.databind.JsonNode;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -29,11 +25,15 @@ import org.eclipse.emfcloud.modelserver.common.codecs.EncodingException;
 import org.eclipse.emfcloud.modelserver.jsonschema.Json;
 import org.eclipse.uml2.uml.resource.UMLResource;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.Map;
+import java.util.Optional;
 
 public class UmlCodec implements Codec {
 
-   private static Logger LOGGER = Logger.getLogger(UmlCodec.class.getSimpleName());
+   private static Logger LOGGER = LogManager.getLogger(UmlCodec.class.getSimpleName());
 
    @Override
    public JsonNode encode(final EObject eObject) throws EncodingException {
@@ -45,8 +45,8 @@ public class UmlCodec implements Codec {
       ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
       try {
          eObject.eResource().save(outputStream,
-            Map.of(XMLResource.OPTION_KEEP_DEFAULT_CONTENT, Boolean.TRUE,
-               XMLResource.OPTION_PROCESS_DANGLING_HREF, XMLResource.OPTION_PROCESS_DANGLING_HREF_DISCARD));
+                 Map.of(XMLResource.OPTION_KEEP_DEFAULT_CONTENT, Boolean.TRUE,
+                         XMLResource.OPTION_PROCESS_DANGLING_HREF, XMLResource.OPTION_PROCESS_DANGLING_HREF_DISCARD));
       } catch (IOException e) {
          throw new EncodingException(e);
       }
@@ -69,8 +69,8 @@ public class UmlCodec implements Codec {
    }
 
    public Optional<Resource> decode(final ResourceSet resourceSet, final String modelURI, final URI workspaceURI,
-      final String payload)
-      throws DecodingException {
+                                    final String payload)
+           throws DecodingException {
 
       URI uri = URI.createURI(modelURI);
       if (workspaceURI != null) {

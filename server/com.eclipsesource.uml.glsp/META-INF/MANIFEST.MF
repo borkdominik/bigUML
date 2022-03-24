@@ -30,9 +30,9 @@ Export-Package: com.eclipsesource.uml.glsp,
  com.eclipsesource.uml.glsp.validator
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.23.0,4.0.0)",
  org.eclipse.emf.ecore;bundle-version="[2.25.0,3.0.0)";visibility:=reexport,
- org.eclipse.glsp.graph;bundle-version="[0.9.0,0.10.0)",
- org.eclipse.glsp.layout;bundle-version="[0.9.0,0.10.0)",
- org.eclipse.glsp.server;bundle-version="[0.9.0,0.10.0)",
+ org.eclipse.glsp.graph;bundle-version="[0.10.0,0.11.0)",
+ org.eclipse.glsp.layout;bundle-version="[0.10.0,0.11.0)",
+ org.eclipse.glsp.server;bundle-version="[0.10.0,0.11.0)",
  org.eclipse.elk.core;bundle-version="[0.7.1,0.8.0)",
  org.eclipse.elk.graph;bundle-version="[0.7.1,0.8.0)",
  org.eclipse.elk.alg.layered;bundle-version="[0.7.1,0.8.0)",
@@ -49,6 +49,6 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.23.0,4.0.0)",
  org.eclipse.emfcloud.modelserver.glsp.integration;bundle-version="0.7.0",
  org.eclipse.emfcloud.modelserver.glsp.notation.commands;bundle-version="0.7.0",
  org.eclipse.emfcloud.modelserver.glsp.notation.model;bundle-version="0.7.0",
- org.apache.log4j;bundle-version="1.2.15"
+ org.apache.log4j;bundle-version="1.2.19"
 Bundle-ActivationPolicy: lazy
 Import-Package: javax.inject;version="1.0.0"

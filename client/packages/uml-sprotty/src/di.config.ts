@@ -33,15 +33,14 @@ import {
     TYPES
 } from "@eclipse-glsp/client/lib";
 import toolPaletteModule from "@eclipse-glsp/client/lib/features/tool-palette/di.config";
-import { Container, ContainerModule } from "inversify";
-import { DiamondNodeView, EditLabelUI } from "sprotty/lib";
+import {Container, ContainerModule} from "inversify";
+import {DiamondNodeView, EditLabelUI} from "sprotty/lib";
 
-import { EditLabelUIAutocomplete } from "./features/edit-label";
+import {EditLabelUIAutocomplete} from "./features/edit-label";
 import umlToolPaletteModule from "./features/tool-palette/di.config";
-import { LabelSelectionFeedback } from "./feedback";
+import {LabelSelectionFeedback} from "./feedback";
 import {
     ConnectableEdge,
-    // ConnectableEdge,
     ConnectableEditableLabel,
     ConnectionPoint,
     ControlNode,
@@ -53,7 +52,8 @@ import {
     IconDeploymentNode,
     IconDeploymentSpecification,
     IconDevice,
-    IconExecutionEnvironment, IconObject,
+    IconExecutionEnvironment,
+    IconObject,
     IconPackage,
     IconState,
     IconStateMachine,
@@ -62,14 +62,14 @@ import {
     SEditableLabel,
     SLabelNodeProperty
 } from "./model";
-import { BaseTypes, UmlTypes } from "./utils";
+import {BaseTypes, UmlTypes} from "./utils";
 import {
     AcceptEventNodeView,
     AcceptTimeEventNodeView,
     ActionNodeView,
     ActivityNodeView,
     CallNodeView,
-    // ExceptionHandlerEdgeView,
+    ConditionNodeView,
     FinalNodeView,
     FlowEdgeView,
     FlowFinalNodeView,
@@ -81,49 +81,36 @@ import {
     PartitionNodeView,
     PinNodeView,
     PinPortView,
-    SendSignalNodeView,
-    ConditionNodeView
+    SendSignalNodeView
 } from "./views/activitydiagram";
+import {ClassNodeView} from "./views/classdiagram";
+import {ActorNodeView, DirectedEdgeView, PackageNodeView, UseCaseNodeView} from "./views/usecasediagram";
+import {CommentLinkEdgeView, CommentNodeView, IconView, LabelNodeView} from "./views/commons";
 import {
-    ClassNodeView
-} from "./views/classdiagram";
-import {
-    ActorNodeView,
-    DirectedEdgeView,
-    PackageNodeView,
-    UseCaseNodeView
-} from "./views/usecasediagram";
-import {
-    IconView,
-    LabelNodeView,
-    CommentLinkEdgeView,
-    CommentNodeView
-} from "./views/commons";
-import {
-    FinalStateNodeView, StateActivityNodeView,
+    ChoiceNodeView,
+    DeepHistoryNodeView,
+    EntryPointNodeView,
+    ExitPointNodeView,
+    FinalStateNodeView,
+    ForkNodeView,
+    InitialStateNodeView,
+    JoinNodeView,
+    JunctionNodeView,
+    ShallowHistoryNodeView,
+    StateActivityNodeView,
     StateMachineNodeView,
     StateNodeView,
     TransitionEdgeView,
     TransitionEffectView,
-    TransitionGuardView,
-    InitialStateNodeView,
-    DeepHistoryNodeView,
-    ShallowHistoryNodeView,
-    ForkNodeView,
-    JoinNodeView,
-    JunctionNodeView,
-    ChoiceNodeView,
-    EntryPointNodeView,
-    ExitPointNodeView
+    TransitionGuardView
 } from "./views/statemachinediagram";
 
 import {
     ArtifactNodeView,
     DeploymentNodeNodeView,
-    DeviceNodeView,
-    ExecutionEnvironmentNodeView,
     DeploymentSpecificationNodeView,
-    // DeploymentEdgeView
+    DeviceNodeView,
+    ExecutionEnvironmentNodeView
 } from "./views/deploymentdiagram";
 
 export default function createContainer(widgetId: string): Container {

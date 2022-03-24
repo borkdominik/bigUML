@@ -16,7 +16,6 @@ import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
 import com.google.common.collect.Lists;
 import org.apache.log4j.Logger;
 import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSBasicCreateOperationHandler;
-import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.operations.Operation;
 import org.eclipse.glsp.server.types.GLSPServerException;
@@ -26,7 +25,6 @@ import org.eclipse.uml2.uml.Package;
 import org.eclipse.uml2.uml.PackageableElement;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
 

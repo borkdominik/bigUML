@@ -10,18 +10,26 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp;
 
+import com.eclipsesource.uml.glsp.actions.ReturnTypesAction;
+import com.eclipsesource.uml.glsp.actions.UmlGetTypesActionHandler;
+import com.eclipsesource.uml.glsp.actions.activity.behavior.CallBehaviorsAction;
+import com.eclipsesource.uml.glsp.actions.activity.edgelabels.CreateGuardActionHandler;
+import com.eclipsesource.uml.glsp.actions.activity.edgelabels.CreateWeightActionHandler;
 import com.eclipsesource.uml.glsp.actions.statemachine.AddTransitionEffectActionHandler;
 import com.eclipsesource.uml.glsp.actions.statemachine.AddTransitionGuardActionHandler;
 import com.eclipsesource.uml.glsp.actions.statemachine.AddTransitionLabelActionHandler;
 import com.eclipsesource.uml.glsp.actions.statemachine.AddTransitionTriggerActionHandler;
+import com.eclipsesource.uml.glsp.diagram.UmlDiagramConfiguration;
+import com.eclipsesource.uml.glsp.layout.UmlLayoutEngine;
+import com.eclipsesource.uml.glsp.model.UmlModelFactory;
 import com.eclipsesource.uml.glsp.model.UmlModelSourceLoader;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.operations.*;
-import com.eclipsesource.uml.glsp.operations.activitydiagram.CreateActivityDiagramEdgeOperationHandler;
 import com.eclipsesource.uml.glsp.operations.activitydiagram.CreateActivityDiagramChildNodeOperationHandler;
+import com.eclipsesource.uml.glsp.operations.activitydiagram.CreateActivityDiagramEdgeOperationHandler;
 import com.eclipsesource.uml.glsp.operations.activitydiagram.CreateActivityDiagramNodeOperationHandler;
-import com.eclipsesource.uml.glsp.operations.classdiagram.CreateClassDiagramEdgeOperationHandler;
 import com.eclipsesource.uml.glsp.operations.classdiagram.CreateClassDiagramChildNodeOperationHandler;
+import com.eclipsesource.uml.glsp.operations.classdiagram.CreateClassDiagramEdgeOperationHandler;
 import com.eclipsesource.uml.glsp.operations.classdiagram.CreateClassDiagramNodeOperationHandler;
 import com.eclipsesource.uml.glsp.operations.common.CreateCommentNodeOperationHandler;
 import com.eclipsesource.uml.glsp.operations.deploymentdiagram.CreateDeploymentDiagramEdgeOperationHandler;
@@ -29,14 +37,18 @@ import com.eclipsesource.uml.glsp.operations.deploymentdiagram.CreateDeploymentD
 import com.eclipsesource.uml.glsp.operations.objectdiagram.CreateObjectDiagramChildNodeOperationHandler;
 import com.eclipsesource.uml.glsp.operations.objectdiagram.CreateObjectDiagramEdgeOperationHandler;
 import com.eclipsesource.uml.glsp.operations.objectdiagram.CreateObjectDiagramNodeOperationHandler;
-import com.eclipsesource.uml.glsp.operations.statemachinediagram.*;
-//import com.eclipsesource.uml.glsp.operations.usecasediagram.CreateUseCaseDiagramChildNodeOperationHandler;
+import com.eclipsesource.uml.glsp.operations.statemachinediagram.CreateStateMachineDiagramChildNodeOperationHandler;
+import com.eclipsesource.uml.glsp.operations.statemachinediagram.CreateStateMachineDiagramEdgeOperationHandler;
+import com.eclipsesource.uml.glsp.operations.statemachinediagram.CreateStateMachineDiagramNodeOperationHandler;
+import com.eclipsesource.uml.glsp.operations.statemachinediagram.CreateStateMachineDiagramStateChildNodeOperationHandler;
 import com.eclipsesource.uml.glsp.operations.usecasediagram.CreateUseCaseDiagramEdgeOperationHandler;
 import com.eclipsesource.uml.glsp.operations.usecasediagram.CreateUseCaseDiagramNodeOperationHandler;
+import com.eclipsesource.uml.glsp.palette.UmlToolPaletteItemProvider;
 import org.eclipse.emfcloud.modelserver.glsp.EMSGLSPModule;
 import org.eclipse.emfcloud.modelserver.glsp.model.EMSModelState;
 import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.ActionHandler;
+import org.eclipse.glsp.server.di.MultiBinding;
 import org.eclipse.glsp.server.diagram.DiagramConfiguration;
 import org.eclipse.glsp.server.features.core.model.GModelFactory;
 import org.eclipse.glsp.server.features.core.model.ModelSourceLoader;
@@ -45,23 +57,8 @@ import org.eclipse.glsp.server.features.toolpalette.ToolPaletteItemProvider;
 import org.eclipse.glsp.server.layout.LayoutEngine;
 import org.eclipse.glsp.server.operations.OperationHandler;
 import org.eclipse.glsp.server.operations.OperationHandlerRegistry;
-import org.eclipse.glsp.server.operations.gmodel.ChangeBoundsOperationHandler;
-import org.eclipse.glsp.server.operations.gmodel.ChangeRoutingPointsHandler;
-import org.eclipse.glsp.server.operations.gmodel.CompoundOperationHandler;
-import org.eclipse.glsp.server.operations.gmodel.DeleteOperationHandler;
-import org.eclipse.glsp.server.operations.gmodel.LayoutOperationHandler;
-import org.eclipse.emfcloud.modelserver.glsp.notation.integration.EMSNotationGLSPModule;
-import org.eclipse.glsp.server.di.MultiBinding;
+import org.eclipse.glsp.server.operations.gmodel.*;
 
-import com.eclipsesource.uml.glsp.actions.ReturnTypesAction;
-import com.eclipsesource.uml.glsp.actions.UmlGetTypesActionHandler;
-import com.eclipsesource.uml.glsp.actions.activity.behavior.CallBehaviorsAction;
-import com.eclipsesource.uml.glsp.actions.activity.edgelabels.CreateGuardActionHandler;
-import com.eclipsesource.uml.glsp.actions.activity.edgelabels.CreateWeightActionHandler;
-import com.eclipsesource.uml.glsp.diagram.UmlDiagramConfiguration;
-import com.eclipsesource.uml.glsp.layout.UmlLayoutEngine;
-import com.eclipsesource.uml.glsp.model.UmlModelFactory;
-import com.eclipsesource.uml.glsp.palette.UmlToolPaletteItemProvider;
 
 public class UmlGLSPModule extends EMSGLSPModule {
 

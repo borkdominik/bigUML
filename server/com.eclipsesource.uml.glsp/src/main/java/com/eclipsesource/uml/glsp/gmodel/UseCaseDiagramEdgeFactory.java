@@ -13,8 +13,6 @@ package com.eclipsesource.uml.glsp.gmodel;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.util.UmlConfig.CSS;
 import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
-import com.eclipsesource.uml.glsp.util.UmlIDUtil;
-import com.eclipsesource.uml.glsp.util.UmlLabelUtil;
 import com.eclipsesource.uml.modelserver.unotation.Edge;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.glsp.graph.GEdge;

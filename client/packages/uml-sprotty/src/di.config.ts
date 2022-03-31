@@ -54,7 +54,6 @@ import {
     IconDevice,
     IconExecutionEnvironment,
     IconLabelCompartment,
-    IconObject,
     IconPackage,
     IconProperty,
     IconState,
@@ -129,7 +128,7 @@ export default function createContainer(widgetId: string): Container {
         configureModelElement(context, UmlTypes.LABEL_EDGE_NAME, SEditableLabel, SLabelView);
         configureModelElement(context, UmlTypes.LABEL_EDGE_MULTIPLICITY, SEditableLabel, SLabelView);
         configureModelElement(context, UmlTypes.LABEL_TEXT, SLabel, SLabelView);
-        configureModelElement(context, UmlTypes.LABEL_ICON, SLabel, SLabelView);
+        // configureModelElement(context, UmlTypes.LABEL_ICON, SLabel, SLabelView);
         configureModelElement(context, BaseTypes.COMPARTMENT, SCompartment, SCompartmentView);
         configureModelElement(context, BaseTypes.COMPARTMENT_HEADER, SCompartment, SCompartmentView);
         configureModelElement(context, BaseTypes.ROUTING_POINT, SRoutingHandle, SRoutingHandleView);
@@ -147,7 +146,7 @@ export default function createContainer(widgetId: string): Container {
         configureModelElement(context, UmlTypes.LABEL_PROPERTY_MULTIPLICITY, SEditableLabel, SLabelView);
 
         // OBJECT DIAGRAM
-        configureModelElement(context, UmlTypes.ICON_OBJECT, IconObject, IconView);
+        // configureModelElement(context, UmlTypes.ICON_OBJECT, IconObject, IconView);
         configureModelElement(context, UmlTypes.OBJECT, LabeledNode, ObjectNodeView);
         configureModelElement(context, UmlTypes.LINK, SEdge, PolylineEdgeView);
         configureModelElement(context, UmlTypes.ATTRIBUTE, SLabelNodeProperty, LabelNodeView);

@@ -14,28 +14,23 @@ import org.eclipse.uml2.uml.Property;
 
 public final class UmlLabelUtil {
 
-   private UmlLabelUtil() {}
+   private UmlLabelUtil() {
+   }
 
    public static String getTypeName(final Property property) {
       if (property.getType() != null) {
-         String typeName = property.getType().getName();
-         return String.format(" : %s", typeName);
+         return property.getType().getName();
+         /*String typeName = property.getType().getName();
+         return String.format(" : %s", typeName);*/
       }
       return "";
    }
 
    public static String getMultiplicity(final Property property) {
       if (property.getLower() == property.getUpper()) {
-         return String.format(" [%s]", property.getUpper() == -1 ? "*" : property.getUpper());
+         return String.format("%s", property.getUpper() == -1 ? "*" : property.getUpper());
       }
-      return String.format(" [%s..%s]", property.getLower(), property.getUpper() == -1 ? "*" : property.getUpper());
+      return String.format("%s..%s", property.getLower(), property.getUpper() == -1 ? "*" : property.getUpper());
    }
-
-   /*public static String getMultiplicity(final Slot property) {
-      if (property.getLower() == property.getUpper()) {
-         return String.format(" [%s]", property.getUpper() == -1 ? "*" : property.getUpper());
-      }
-      return String.format(" [%s..%s]", property.getLower(), property.getUpper() == -1 ? "*" : property.getUpper());
-   }*/
 
 }

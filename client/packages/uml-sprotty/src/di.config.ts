@@ -38,7 +38,7 @@ import {DiamondNodeView, EditLabelUI} from "sprotty/lib";
 
 import {EditLabelUIAutocomplete} from "./features/edit-label";
 import umlToolPaletteModule from "./features/tool-palette/di.config";
-import {LabelSelectionFeedback} from "./feedback";
+import {IconLabelCompartmentSelectionFeedback} from "./feedback";
 import {
     ConnectableEdge,
     ConnectableEditableLabel,
@@ -53,8 +53,10 @@ import {
     IconDeploymentSpecification,
     IconDevice,
     IconExecutionEnvironment,
+    IconLabelCompartment,
     IconObject,
     IconPackage,
+    IconProperty,
     IconState,
     IconStateMachine,
     IconUseCase,
@@ -118,9 +120,10 @@ export default function createContainer(widgetId: string): Container {
         rebind(TYPES.ILogger).to(ConsoleLogger).inSingletonScope();
         rebind(TYPES.LogLevel).toConstantValue(LogLevel.info);
         rebind(EditLabelUI).to(EditLabelUIAutocomplete);
+        bind(TYPES.IVNodePostprocessor).to(IconLabelCompartmentSelectionFeedback);
 
-        const context = { bind, unbind, isBound, rebind };
-        bind(TYPES.IVNodePostprocessor).to(LabelSelectionFeedback);
+        const context = {bind, unbind, isBound, rebind};
+        // bind(TYPES.IVNodePostprocessor).to(LabelSelectionFeedback);
         configureDefaultModelElements(context);
         configureModelElement(context, UmlTypes.LABEL_NAME, SEditableLabel, SLabelView);
         configureModelElement(context, UmlTypes.LABEL_EDGE_NAME, SEditableLabel, SLabelView);
@@ -136,7 +139,12 @@ export default function createContainer(widgetId: string): Container {
         configureModelElement(context, UmlTypes.ICON_CLASS, IconClass, IconView);
         configureModelElement(context, UmlTypes.CLASS, LabeledNode, ClassNodeView);
         configureModelElement(context, UmlTypes.ASSOCIATION, SEdge, PolylineEdgeView);
-        configureModelElement(context, UmlTypes.PROPERTY, SLabelNodeProperty, LabelNodeView);
+        // configureModelElement(context, UmlTypes.PROPERTY, SLabelNodeProperty, LabelNodeView);
+        configureModelElement(context, UmlTypes.PROPERTY, IconLabelCompartment, SCompartmentView);
+        configureModelElement(context, UmlTypes.ICON_PROPERTY, IconProperty, IconView);
+        configureModelElement(context, UmlTypes.LABEL_PROPERTY_NAME, SEditableLabel, SLabelView);
+        configureModelElement(context, UmlTypes.LABEL_PROPERTY_TYPE, SEditableLabel, SLabelView);
+        configureModelElement(context, UmlTypes.LABEL_PROPERTY_MULTIPLICITY, SEditableLabel, SLabelView);
 
         // OBJECT DIAGRAM
         configureModelElement(context, UmlTypes.ICON_OBJECT, IconObject, IconView);

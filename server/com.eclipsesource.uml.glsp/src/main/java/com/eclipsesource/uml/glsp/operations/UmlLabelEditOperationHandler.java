@@ -10,316 +10,361 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.operations;
 
-import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSBasicOperationHandler;
-import org.eclipse.glsp.graph.GModelElement;
-import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperation;
-import org.eclipse.glsp.server.types.GLSPServerException;
-import org.eclipse.uml2.uml.*;
-
 import com.eclipsesource.uml.glsp.model.UmlModelIndex;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
 import com.eclipsesource.uml.glsp.util.UmlIDUtil;
+import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSBasicOperationHandler;
+import org.eclipse.glsp.graph.GModelElement;
+import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperation;
+import org.eclipse.glsp.server.types.GLSPServerException;
 import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Package;
+import org.eclipse.uml2.uml.*;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
 
 public class UmlLabelEditOperationHandler extends EMSBasicOperationHandler<ApplyLabelEditOperation, UmlModelServerAccess> {
 
-    protected UmlModelState getUmlModelState() { return (UmlModelState) getEMSModelState(); }
+   protected UmlModelState getUmlModelState() {
+      return (UmlModelState) getEMSModelState();
+   }
 
-    @Override
-    public void executeOperation(final ApplyLabelEditOperation editLabelOperation, final UmlModelServerAccess modelAccess) {
-        UmlModelState modelState = getUmlModelState();
-        UmlModelIndex modelIndex = modelState.getIndex();
+   @Override
+   public void executeOperation(final ApplyLabelEditOperation editLabelOperation, final UmlModelServerAccess modelAccess) {
+      UmlModelState modelState = getUmlModelState();
+      UmlModelIndex modelIndex = modelState.getIndex();
 
-        String inputText = editLabelOperation.getText().trim();
-        String graphicalElementId = editLabelOperation.getLabelId();
+      String inputText = editLabelOperation.getText().trim();
+      String graphicalElementId = editLabelOperation.getLabelId();
 
-        GModelElement label = getOrThrow(modelIndex.findElementByClass(graphicalElementId, GModelElement.class),
-         GModelElement.class, "Element not found.");
+      GModelElement label = getOrThrow(modelIndex.findElementByClass(graphicalElementId, GModelElement.class),
+            GModelElement.class, "Element not found.");
 
-        switch (label.getType()) {
+      switch (label.getType()) {
          case Types.CALL_REF: {
 
             CallBehaviorAction cba = getOrThrow(
-               modelIndex.getSemantic(UmlIDUtil.getElementIdFromHeaderLabel(graphicalElementId)),
-               CallBehaviorAction.class, "No valid container with id " + graphicalElementId + " found");
+                  modelIndex.getSemantic(UmlIDUtil.getElementIdFromHeaderLabel(graphicalElementId)),
+                  CallBehaviorAction.class, "No valid container with id " + graphicalElementId + " found");
             modelAccess.setBehavior(modelState, cba, inputText)
-               .thenAccept(response -> {
-                  if (!response.body()) {
-                     throw new GLSPServerException("Could not change Property to: " + inputText);
-                  }
-               });
+                  .thenAccept(response -> {
+                     if (!response.body()) {
+                        throw new GLSPServerException("Could not change Property to: " + inputText);
+                     }
+                  });
             break;
          }
 
          case Types.LABEL_NAME:
             String containerElementId = UmlIDUtil.getElementIdFromHeaderLabel(graphicalElementId);
             Element semanticElement = getOrThrow(modelIndex.getSemantic(containerElementId),
-               Element.class, "No valid container with id " + graphicalElementId + " found");
+                  Element.class, "No valid container with id " + graphicalElementId + " found");
 
             if (semanticElement instanceof Comment) {
                modelAccess.setCommentBody(modelState, (Comment) semanticElement, inputText)
-                  .thenAccept(response -> {
-                     if (!response.body()) {
-                        throw new GLSPServerException("Could not change Property to: " + inputText);
-                     }
-                  });
+                     .thenAccept(response -> {
+                        if (!response.body()) {
+                           throw new GLSPServerException("Could not change Property to: " + inputText);
+                        }
+                     });
             } else if (semanticElement instanceof Constraint) {
                modelAccess.setConditionBody(modelState, (Constraint) semanticElement, inputText)
-                  .thenAccept(response -> {
-                     if (!response.body()) {
-                        throw new GLSPServerException("Could not change Property to: " + inputText);
-                     }
-                  });
+                     .thenAccept(response -> {
+                        if (!response.body()) {
+                           throw new GLSPServerException("Could not change Property to: " + inputText);
+                        }
+                     });
             } else if (semanticElement instanceof Package) {
                modelAccess.setPackageName(modelState, (Package) semanticElement, inputText)
-                       .thenAccept(response -> {
-                          if (!response.body()) {
-                             throw new GLSPServerException("Could not rename Package to: " + inputText);
-                          }
-                       });
+                     .thenAccept(response -> {
+                        if (!response.body()) {
+                           throw new GLSPServerException("Could not rename Package to: " + inputText);
+                        }
+                     });
             } else if (semanticElement instanceof Actor) {
                modelAccess.setActorName(modelState, (Actor) semanticElement, inputText)
-                       .thenAccept(response -> {
-                          if (!response.body()) {
-                             throw new GLSPServerException("Could not rename Actor to: " + inputText);
-                          }
-                       });
+                     .thenAccept(response -> {
+                        if (!response.body()) {
+                           throw new GLSPServerException("Could not rename Actor to: " + inputText);
+                        }
+                     });
             } else if (semanticElement instanceof UseCase) {
                modelAccess.setUseCaseName(modelState, (UseCase) semanticElement, inputText)
-                       .thenAccept(response -> {
-                          if (!response.body()) {
-                             throw new GLSPServerException("Could not rename UseCase to: " + inputText);
-                          }
-                       });
+                     .thenAccept(response -> {
+                        if (!response.body()) {
+                           throw new GLSPServerException("Could not rename UseCase to: " + inputText);
+                        }
+                     });
             } else if (semanticElement instanceof DeploymentSpecification) {
-                modelAccess.setDeploymentSpecificationName(modelState, (DeploymentSpecification) semanticElement, inputText)
-                        .thenAccept(response -> {
-                            if (!response.body()) {
-                                throw new GLSPServerException("Could not rename Deployment Specification to: " + inputText);
-                            }
-                        });
+               modelAccess.setDeploymentSpecificationName(modelState, (DeploymentSpecification) semanticElement, inputText)
+                     .thenAccept(response -> {
+                        if (!response.body()) {
+                           throw new GLSPServerException("Could not rename Deployment Specification to: " + inputText);
+                        }
+                     });
             } else if (semanticElement instanceof Artifact) {
                modelAccess.setArtifactName(modelState, (Artifact) semanticElement, inputText)
-                       .thenAccept(response -> {
-                          if (!response.body()) {
-                             throw new GLSPServerException("Could not rename Artifact to: " + inputText);
-                          }
-                       });
+                     .thenAccept(response -> {
+                        if (!response.body()) {
+                           throw new GLSPServerException("Could not rename Artifact to: " + inputText);
+                        }
+                     });
             } else if (semanticElement instanceof Device) {
-                modelAccess.setDeviceName(modelState, (Device) semanticElement, inputText)
-                        .thenAccept(response -> {
-                            if (!response.body()) {
-                                throw new GLSPServerException("Could not rename Device to: " + inputText);
-                            }
-                        });
+               modelAccess.setDeviceName(modelState, (Device) semanticElement, inputText)
+                     .thenAccept(response -> {
+                        if (!response.body()) {
+                           throw new GLSPServerException("Could not rename Device to: " + inputText);
+                        }
+                     });
             } else if (semanticElement instanceof ExecutionEnvironment) {
-                modelAccess.setExecutionEnvironmentName(modelState, (ExecutionEnvironment) semanticElement, inputText)
-                        .thenAccept(response -> {
-                            if (!response.body()) {
-                                throw new GLSPServerException("Could not rename Execution Environment to: " + inputText);
-                            }
-                        });
+               modelAccess.setExecutionEnvironmentName(modelState, (ExecutionEnvironment) semanticElement, inputText)
+                     .thenAccept(response -> {
+                        if (!response.body()) {
+                           throw new GLSPServerException("Could not rename Execution Environment to: " + inputText);
+                        }
+                     });
             } else if (semanticElement instanceof CommunicationPath) {
-                modelAccess.setCommunicationPathEndName(modelState, (CommunicationPath) semanticElement, inputText)
-                        .thenAccept(response -> {
-                            if (!response.body()) {
-                                throw new GLSPServerException("Could not rename Communication Path to: " + inputText);
-                            }
-                        });
+               modelAccess.setCommunicationPathEndName(modelState, (CommunicationPath) semanticElement, inputText)
+                     .thenAccept(response -> {
+                        if (!response.body()) {
+                           throw new GLSPServerException("Could not rename Communication Path to: " + inputText);
+                        }
+                     });
             } else if (semanticElement instanceof Node) {
                modelAccess.setNodeName(modelState, (Node) semanticElement, inputText)
-                       .thenAccept(response -> {
-                          if (!response.body()) {
-                             throw new GLSPServerException("Could not rename UseCase to: " + inputText);
-                          }
-                       });
+                     .thenAccept(response -> {
+                        if (!response.body()) {
+                           throw new GLSPServerException("Could not rename UseCase to: " + inputText);
+                        }
+                     });
             } else if (semanticElement instanceof StateMachine) {
-                modelAccess.setStateMachineName(modelState, (StateMachine) semanticElement, inputText)
-                        .thenAccept(response -> {
-                            if (!response.body()) {
-                                throw new GLSPServerException("Could not rename State Machine to: " + inputText);
-                            }
-                        });
+               modelAccess.setStateMachineName(modelState, (StateMachine) semanticElement, inputText)
+                     .thenAccept(response -> {
+                        if (!response.body()) {
+                           throw new GLSPServerException("Could not rename State Machine to: " + inputText);
+                        }
+                     });
             } else if (semanticElement instanceof State) {
-                modelAccess.setStateName(modelState, (State) semanticElement, inputText)
-                        .thenAccept(response -> {
-                            if (!response.body()) {
-                                throw new GLSPServerException("Could not rename State to: " + inputText);
-                            }
-                        });
+               modelAccess.setStateName(modelState, (State) semanticElement, inputText)
+                     .thenAccept(response -> {
+                        if (!response.body()) {
+                           throw new GLSPServerException("Could not rename State to: " + inputText);
+                        }
+                     });
             } else if (semanticElement instanceof Pseudostate) {
-                modelAccess.setPseudostateName(modelState, (Pseudostate) semanticElement, inputText)
-                        .thenAccept(response -> {
-                            if (!response.body()) {
-                                throw new GLSPServerException("Could not rename Pseudo State to: " + inputText);
-                            }
-                        });
+               modelAccess.setPseudostateName(modelState, (Pseudostate) semanticElement, inputText)
+                     .thenAccept(response -> {
+                        if (!response.body()) {
+                           throw new GLSPServerException("Could not rename Pseudo State to: " + inputText);
+                        }
+                     });
             } else if (semanticElement instanceof Class) {
                modelAccess.setClassName(modelState, (Class) semanticElement, inputText)
-                       .thenAccept(response -> {
-                          if (!response.body()) {
-                             throw new GLSPServerException("Could not rename Class to: " + inputText);
-                          }
-                       });
+                     .thenAccept(response -> {
+                        if (!response.body()) {
+                           throw new GLSPServerException("Could not rename Class to: " + inputText);
+                        }
+                     });
             } else if (semanticElement instanceof InstanceSpecification) {
-                modelAccess.setObjectName(modelState, (InstanceSpecification) semanticElement, inputText)
-                        .thenAccept(response -> {
-                            if (!response.body()) {
-                                throw new GLSPServerException("Could not rename Object to: " + inputText);
-                            }
-                        });
+               modelAccess.setObjectName(modelState, (InstanceSpecification) semanticElement, inputText)
+                     .thenAccept(response -> {
+                        if (!response.body()) {
+                           throw new GLSPServerException("Could not rename Object to: " + inputText);
+                        }
+                     });
             } else if (semanticElement instanceof NamedElement) {
                modelAccess.renameElement(modelState, (NamedElement) semanticElement, inputText)
-                  .thenAccept(response -> {
-                     if (!response.body()) {
-                        throw new GLSPServerException("Could not change Property to: " + inputText);
-                     }
-                  });
+                     .thenAccept(response -> {
+                        if (!response.body()) {
+                           throw new GLSPServerException("Could not change Property to: " + inputText);
+                        }
+                     });
             }
             break;
 
-         case Types.PROPERTY:
+         /*case Types.PROPERTY:
             Property classProperty = getOrThrow(modelIndex.getSemantic(graphicalElementId),
-               Property.class, "No valid container with id " + graphicalElementId + " found");
+                  Property.class, "No valid container with id " + graphicalElementId + " found");
 
             String propertyName = getNameFromInput(inputText);
             String propertyType = getTypeFromInput(inputText);
             String propertyBounds = getBoundsFromInput(inputText);
 
             modelAccess.setProperty(modelState, classProperty, propertyName, propertyType, propertyBounds)
-               .thenAccept(response -> {
-                  if (!response.body()) {
-                     throw new GLSPServerException("Could not change Property to: " + inputText);
-                  }
-               });
+                  .thenAccept(response -> {
+                     if (!response.body()) {
+                        throw new GLSPServerException("Could not change Property to: " + inputText);
+                     }
+                  });
+
+            break;*/
+
+         case Types.LABEL_PROPERTY_NAME:
+            containerElementId = UmlIDUtil.getElementIdFromPropertyLabelName(graphicalElementId);
+            Property property = getOrThrow(modelIndex.getSemantic(containerElementId),
+                  Property.class, "No valid container with id " + graphicalElementId + " found");
+
+            modelAccess.setPropertyName(modelState, property, inputText)
+                  .thenAccept(response -> {
+                     if (!response.body()) {
+                        throw new GLSPServerException("Could not change Property type to: " + inputText);
+                     }
+                  });
 
             break;
 
-          case Types.ATTRIBUTE:
-              Property objectAttribute = getOrThrow(modelIndex.getSemantic(graphicalElementId),
-                      Property.class, "No valid container with id " + graphicalElementId + " found");
+         case Types.LABEL_PROPERTY_TYPE:
+            containerElementId = UmlIDUtil.getElementIdFromPropertyLabelType(graphicalElementId);
+            property = getOrThrow(modelIndex.getSemantic(containerElementId),
+                  Property.class, "No valid container with id " + graphicalElementId + " found");
 
-              String attributeName = getNameFromInput(inputText);
-              String attributeType = getTypeFromInput(inputText);
-              String attributeBounds = getBoundsFromInput(inputText);
+            modelAccess.setPropertyType(modelState, property, inputText)
+                  .thenAccept(response -> {
+                     if (!response.body()) {
+                        throw new GLSPServerException("Could not change Property type to: " + inputText);
+                     }
+                  });
 
-              modelAccess.setAttribute(modelState, objectAttribute, attributeName, attributeType, attributeBounds)
-                      .thenAccept(response -> {
-                          if (!response.body()) {
-                              throw new GLSPServerException("Could not change Attribute to: " + inputText);
-                          }
-                      });
+            break;
 
-              break;
+         case Types.LABEL_PROPERTY_MULTIPLICITY:
+            containerElementId = UmlIDUtil.getElementIdFromPropertyLabelMultiplicity(graphicalElementId);
+            property = getOrThrow(modelIndex.getSemantic(containerElementId),
+                  Property.class, "No valid container with id " + graphicalElementId + " found");
+
+            modelAccess.setPropertyBounds(modelState, property, inputText)
+                  .thenAccept(response -> {
+                     if (!response.body()) {
+                        throw new GLSPServerException("Could not change Property bounds to: " + inputText);
+                     }
+                  });
+
+            break;
+
+         case Types.ATTRIBUTE:
+            Property objectAttribute = getOrThrow(modelIndex.getSemantic(graphicalElementId),
+                  Property.class, "No valid container with id " + graphicalElementId + " found");
+
+            String attributeName = getNameFromInput(inputText);
+            String attributeType = getTypeFromInput(inputText);
+            String attributeBounds = getBoundsFromInput(inputText);
+
+            modelAccess.setAttribute(modelState, objectAttribute, attributeName, attributeType, attributeBounds)
+                  .thenAccept(response -> {
+                     if (!response.body()) {
+                        throw new GLSPServerException("Could not change Attribute to: " + inputText);
+                     }
+                  });
+
+            break;
 
          case Types.EXTENSIONPOINT:
             ExtensionPoint ep = getOrThrow(modelIndex.getSemantic(graphicalElementId),
-                    ExtensionPoint.class, "No valid container with id " + graphicalElementId + " found");
+                  ExtensionPoint.class, "No valid container with id " + graphicalElementId + " found");
 
             modelAccess.setExtensionPointName(modelState, ep, inputText)
-                    .thenAccept(response -> {
-                       if (!response.body()) {
-                          throw new GLSPServerException("Could not change ExtensionPoint Name to: " + inputText);
-                       }
-                    });
+                  .thenAccept(response -> {
+                     if (!response.body()) {
+                        throw new GLSPServerException("Could not change ExtensionPoint Name to: " + inputText);
+                     }
+                  });
 
             break;
 
          case Types.LABEL_EDGE_NAME:
             containerElementId = UmlIDUtil.getElementIdFromLabelName(graphicalElementId);
             Property associationEnd = getOrThrow(modelIndex.getSemantic(containerElementId),
-               Property.class, "No valid container with id " + graphicalElementId + " found");
+                  Property.class, "No valid container with id " + graphicalElementId + " found");
 
             modelAccess.setAssociationEndName(modelState, associationEnd, inputText)
-               .thenAccept(response -> {
-                  if (!response.body()) {
-                     throw new GLSPServerException("Could not change Association End Name to: " + inputText);
-                  }
-               });
+                  .thenAccept(response -> {
+                     if (!response.body()) {
+                        throw new GLSPServerException("Could not change Association End Name to: " + inputText);
+                     }
+                  });
             break;
 
          case Types.LABEL_EDGE_MULTIPLICITY:
             containerElementId = UmlIDUtil.getElementIdFromLabelMultiplicity(graphicalElementId);
             associationEnd = getOrThrow(modelIndex.getSemantic(containerElementId),
-               Property.class, "No valid container with id " + graphicalElementId + " found");
+                  Property.class, "No valid container with id " + graphicalElementId + " found");
 
             modelAccess.setAssociationEndMultiplicity(modelState, associationEnd, getBoundsFromInput(inputText))
-               .thenAccept(response -> {
-                  if (!response.body()) {
-                     throw new GLSPServerException("Could not change Association End Name to: " + inputText);
-                  }
-               });
+                  .thenAccept(response -> {
+                     if (!response.body()) {
+                        throw new GLSPServerException("Could not change Association End Name to: " + inputText);
+                     }
+                  });
             break;
 
          case Types.LABEL_GUARD:
             containerElementId = UmlIDUtil.getEdgeIdFromGuardLabel(graphicalElementId);
             ControlFlow flow = getOrThrow(modelIndex.getSemantic(containerElementId),
-               ControlFlow.class, "No valid controlFlow with id " + containerElementId + " found");
+                  ControlFlow.class, "No valid controlFlow with id " + containerElementId + " found");
             modelAccess.setGuard(modelState, flow, inputText);
             break;
 
          case Types.LABEL_WEIGHT:
             containerElementId = UmlIDUtil.getEdgeFromWeightLabel(graphicalElementId);
             flow = getOrThrow(modelIndex.getSemantic(containerElementId),
-               ControlFlow.class, "No valid controlFlow with id " + containerElementId + " found");
+                  ControlFlow.class, "No valid controlFlow with id " + containerElementId + " found");
             modelAccess.setWeight(modelState, flow, inputText);
             break;
 
-        case Types.STATE_ENTRY_ACTIVITY:
-        containerElementId = UmlIDUtil.getElementIdFromHeaderLabel(graphicalElementId);
-        Behavior behavior = getOrThrow(modelIndex.getSemantic(containerElementId),
-              Behavior.class, "No valid container with id " + graphicalElementId + " found");
+         case Types.STATE_ENTRY_ACTIVITY:
+            containerElementId = UmlIDUtil.getElementIdFromHeaderLabel(graphicalElementId);
+            Behavior behavior = getOrThrow(modelIndex.getSemantic(containerElementId),
+                  Behavior.class, "No valid container with id " + graphicalElementId + " found");
 
-        modelAccess.setBehaviorInState(modelState, behavior, Types.STATE_ENTRY_ACTIVITY, inputText)
-              .thenAccept(response -> {
-                  if (!response.body()) {
-                      throw new GLSPServerException("Could not change Behavior to: " + inputText);
-                  }
-              });
+            modelAccess.setBehaviorInState(modelState, behavior, Types.STATE_ENTRY_ACTIVITY, inputText)
+                  .thenAccept(response -> {
+                     if (!response.body()) {
+                        throw new GLSPServerException("Could not change Behavior to: " + inputText);
+                     }
+                  });
 
-        break;
+            break;
 
-        case Types.STATE_DO_ACTIVITY:
-        containerElementId = UmlIDUtil.getElementIdFromHeaderLabel(graphicalElementId);
-        behavior = getOrThrow(modelIndex.getSemantic(containerElementId),
-              Behavior.class, "No valid container with id " + graphicalElementId + " found");
+         case Types.STATE_DO_ACTIVITY:
+            containerElementId = UmlIDUtil.getElementIdFromHeaderLabel(graphicalElementId);
+            behavior = getOrThrow(modelIndex.getSemantic(containerElementId),
+                  Behavior.class, "No valid container with id " + graphicalElementId + " found");
 
-        modelAccess.setBehaviorInState(modelState, behavior, Types.STATE_DO_ACTIVITY, inputText)
-              .thenAccept(response -> {
-                  if (!response.body()) {
-                      throw new GLSPServerException("Could not change Behavior to: " + inputText);
-                  }
-              });
+            modelAccess.setBehaviorInState(modelState, behavior, Types.STATE_DO_ACTIVITY, inputText)
+                  .thenAccept(response -> {
+                     if (!response.body()) {
+                        throw new GLSPServerException("Could not change Behavior to: " + inputText);
+                     }
+                  });
 
-        break;
+            break;
 
-        case Types.STATE_EXIT_ACTIVITY:
-        containerElementId = UmlIDUtil.getElementIdFromHeaderLabel(graphicalElementId);
-        behavior = getOrThrow(modelIndex.getSemantic(containerElementId),
-              Behavior.class, "No valid container with id " + graphicalElementId + " found");
+         case Types.STATE_EXIT_ACTIVITY:
+            containerElementId = UmlIDUtil.getElementIdFromHeaderLabel(graphicalElementId);
+            behavior = getOrThrow(modelIndex.getSemantic(containerElementId),
+                  Behavior.class, "No valid container with id " + graphicalElementId + " found");
 
-        modelAccess.setBehaviorInState(modelState, behavior, Types.STATE_EXIT_ACTIVITY, inputText)
-              .thenAccept(response -> {
-                  if (!response.body()) {
-                      throw new GLSPServerException("Could not change Behavior to: " + inputText);
-                  }
-              });
+            modelAccess.setBehaviorInState(modelState, behavior, Types.STATE_EXIT_ACTIVITY, inputText)
+                  .thenAccept(response -> {
+                     if (!response.body()) {
+                        throw new GLSPServerException("Could not change Behavior to: " + inputText);
+                     }
+                  });
 
-        break;
-        }
+            break;
+      }
 
-    }
+   }
 
    @Override
-   public String getLabel() { return "Apply label"; }
+   public String getLabel() {
+      return "Apply label";
+   }
 
    private String typeRegex() {
       return "\\:";

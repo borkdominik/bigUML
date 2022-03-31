@@ -38,30 +38,22 @@ svg {
     stroke: var(--uml-border);
 }
 
-.sprotty-label-node>.sprotty-label {
-    dominant-baseline: middle;
-}
-
-.sprotty-label-node>.selection-feedback {
-    fill: transparent;
-    stroke: transparent;
-}
-
-.sprotty-label-node.selected>.selection-feedback {
-    stroke: var(--uml-border);
-    stroke-width: 1;
-}
-
-.sprotty-label-node.mouseover:not(.selected) {
-    text-decoration: underline;
-}
-
-.sprotty-label, .sprotty-label-node.selected {
-    stroke-width: 0;
-    width: inherit;
+.sprotty-label {
     fill: var(--uml-label);
     font-weight: inherit;
     font-size: 100%;
+}
+
+.selection-feedback {
+    fill: none;
+}
+
+.selection-feedback.hover {
+    stroke-width: 0.75;
+}
+
+.selection-feedback.selected {
+    stroke-width: 1.5;
 }
 
 .uml-comp-separator {
@@ -77,13 +69,15 @@ svg {
 
 .uml-edge.mouseover:not(.selected) {
     stroke-width: 2;
+    opacity: 1;
 }
 
 .uml-edge.selected {
     stroke-width: 3;
+    stroke-dasharray: none;
 }
 
-.uml-edge>.sprotty-routing-handle {
+.uml-edge > .sprotty-routing-handle {
     r: 4;
     fill: var(--uml-edge);
     stroke: var(--uml-edge);
@@ -91,7 +85,7 @@ svg {
     z-index: 1000;
 }
 
-.uml-edge>.sprotty-routing-handle.mouseover {
+.uml-edge > .sprotty-routing-handle.mouseover {
     stroke-width: 3;
 }
 
@@ -108,9 +102,10 @@ svg {
     margin-bottom: 10px;
 }
 
-.sprotty-popup-body>p {
+.sprotty-popup-body > p {
     margin-bottom: 2px;
 }
+
 /* ACTIVITY */
 .uml-activity-condition {
     font-size: 0.7em;

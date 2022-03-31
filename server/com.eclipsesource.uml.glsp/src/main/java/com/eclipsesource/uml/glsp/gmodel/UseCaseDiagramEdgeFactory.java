@@ -14,7 +14,6 @@ import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.util.UmlConfig.CSS;
 import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
 import com.eclipsesource.uml.modelserver.unotation.Edge;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.glsp.graph.GEdge;
 import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.GPoint;
@@ -42,9 +41,9 @@ public class UseCaseDiagramEdgeFactory extends AbstractGModelFactory<Relationshi
          return createIncludeEdge((Include) element);
       } else if (element instanceof Generalization) {
          return createGeneralizationEdge((Generalization) element);
-      } else if (element instanceof Association) {
+      } /*else if (element instanceof Association) {
          return createAssociationEdge((Association) element);
-      }
+      }*/
       return null;
    }
 
@@ -62,17 +61,17 @@ public class UseCaseDiagramEdgeFactory extends AbstractGModelFactory<Relationshi
       String targetId = toId(target);
 
       GEdgeBuilder builder = new GEdgeBuilder(Types.EXTEND)
-         .id(toId(extend))
-         .addCssClass(CSS.EDGE)
-         .addCssClass(CSS.EDGE_DOTTED)
-         .addCssClass(CSS.EDGE_DIRECTED_END_TENT)
-         .sourceId(sourceId)
-         .targetId(targetId)
-         .routerKind(GConstants.RouterKind.MANHATTAN);
+            .id(toId(extend))
+            .addCssClass(CSS.EDGE)
+            .addCssClass(CSS.EDGE_DOTTED)
+            .addCssClass(CSS.EDGE_DIRECTED_END_TENT)
+            .sourceId(sourceId)
+            .targetId(targetId)
+            .routerKind(GConstants.RouterKind.MANHATTAN);
 
       GLabel extendLable = createEdgeLabel("<<extends>>", 0.5d,
-         targetId + "_" + sourceId + "_" + toId(extend) + "_label", Types.LABEL_TEXT,
-         EdgeSide.TOP);
+            targetId + "_" + sourceId + "_" + toId(extend) + "_label", Types.LABEL_TEXT,
+            EdgeSide.TOP);
       builder.add(extendLable);
 
       // TODO: check if we need this for anything else
@@ -110,17 +109,17 @@ public class UseCaseDiagramEdgeFactory extends AbstractGModelFactory<Relationshi
       String targetId = toId(target);
 
       GEdgeBuilder builder = new GEdgeBuilder(Types.INCLUDE)
-         .id(toId(include))
-         .addCssClass(CSS.EDGE)
-         .addCssClass(CSS.EDGE_DASHED)
-         .addCssClass(CSS.EDGE_DIRECTED_END_TENT)
-         .sourceId(sourceId)
-         .targetId(targetId)
-         .routerKind(GConstants.RouterKind.MANHATTAN);
+            .id(toId(include))
+            .addCssClass(CSS.EDGE)
+            .addCssClass(CSS.EDGE_DASHED)
+            .addCssClass(CSS.EDGE_DIRECTED_END_TENT)
+            .sourceId(sourceId)
+            .targetId(targetId)
+            .routerKind(GConstants.RouterKind.MANHATTAN);
 
       GLabel includeLabel = createEdgeLabel("<<includes>>", 0.5d,
-         targetId + "_" + sourceId + "_" + toId(include) + "_label", Types.LABEL_TEXT,
-         EdgeSide.TOP);
+            targetId + "_" + sourceId + "_" + toId(include) + "_label", Types.LABEL_TEXT,
+            EdgeSide.TOP);
       builder.add(includeLabel);
 
       modelState.getIndex().getNotation(include, Edge.class).ifPresent(edge -> {
@@ -146,12 +145,12 @@ public class UseCaseDiagramEdgeFactory extends AbstractGModelFactory<Relationshi
       String targetId = toId(target);
 
       GEdgeBuilder builder = new GEdgeBuilder(Types.GENERALIZATION)
-         .id(toId(generalization))
-         .addCssClass(CSS.EDGE)
-         .addCssClass(CSS.EDGE_DIRECTED_END_EMPTY)
-         .sourceId(sourceId)
-         .targetId(targetId)
-         .routerKind(GConstants.RouterKind.MANHATTAN);
+            .id(toId(generalization))
+            .addCssClass(CSS.EDGE)
+            .addCssClass(CSS.EDGE_DIRECTED_END_EMPTY)
+            .sourceId(sourceId)
+            .targetId(targetId)
+            .routerKind(GConstants.RouterKind.MANHATTAN);
 
       modelState.getIndex().getNotation(generalization, Edge.class).ifPresent(edge -> {
          if (edge.getBendPoints() != null) {
@@ -163,7 +162,7 @@ public class UseCaseDiagramEdgeFactory extends AbstractGModelFactory<Relationshi
       return builder.build();
    }
 
-   protected GEdge createAssociationEdge(final Association association) {
+   /*protected GEdge createAssociationEdge(final Association association) {
       EList<Property> memberEnds = association.getMemberEnds();
       Property source = memberEnds.get(0);
       Property target = memberEnds.get(1);
@@ -183,11 +182,7 @@ public class UseCaseDiagramEdgeFactory extends AbstractGModelFactory<Relationshi
          }
       });
       return builder.build();
-   }
-
-   // end region
-
-   // region HELPERS
+   }*/
 
    /**
     * Creates a GLabel for the multiplicity of a Relationship
@@ -224,16 +219,16 @@ public class UseCaseDiagramEdgeFactory extends AbstractGModelFactory<Relationshi
     * @return A GLabel that can be added to the graph.
     */
    protected GLabel createEdgeLabel(final String name, final double position, final String id, final String type,
-      final String side) {
+                                    final String side) {
       return new GLabelBuilder(type)
-         .edgePlacement(new GEdgePlacementBuilder()
-            .side(side)
-            .position(position)
-            .offset(2d)
-            .rotate(false)
-            .build())
-         .id(id)
-         .text(name).build();
+            .edgePlacement(new GEdgePlacementBuilder()
+                  .side(side)
+                  .position(position)
+                  .offset(2d)
+                  .rotate(false)
+                  .build())
+            .id(id)
+            .text(name).build();
    }
 
    // endregion

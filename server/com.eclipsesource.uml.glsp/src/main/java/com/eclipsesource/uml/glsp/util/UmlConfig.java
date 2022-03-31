@@ -17,6 +17,16 @@ public final class UmlConfig {
 
    public static final class Types {
 
+      // NEW LABELS
+      public static final String LABEL_COMP = "comp:label";
+      public static final String COMPARTMENT = "comp";
+      public static final String COMPARTMENT_HEADER = "comp:header";
+      public static final String PROPERTY = "comp:property";
+      public static final String ICON_PROPERTY = "icon:property";
+      public static final String LABEL_PROPERTY_NAME = "label:property:name";
+      public static final String LABEL_PROPERTY_TYPE = "label:property:type";
+      public static final String LABEL_PROPERTY_MULTIPLICITY = "label:property:multiplicity";
+
       // PREFIXES
       public static final String NODE = "node:";
       public static final String EDGE = "edge:";
@@ -30,13 +40,13 @@ public final class UmlConfig {
       public static final String LABEL_EDGE_NAME = LABEL + "edge-name";
       public static final String LABEL_EDGE_MULTIPLICITY = LABEL + "edge-multiplicity";
       public static final String COMP = COMP_BASE + "comp";
-      public static final String COMP_HEADER = COMP_BASE + "header";
+      // public static final String COMP_HEADER = COMP_BASE + "header";
       public static final String LABEL_ICON = LABEL + "icon";
 
       // CLASS DIAGRAM
       public static final String ICON_CLASS = ICON + "class";
       public static final String CLASS = NODE + "class";
-      public static final String PROPERTY = NODE + "property";
+      //public static final String PROPERTY = NODE + "property";
       public static final String ASSOCIATION = EDGE + "association";
 
       // OBJECT DIAGRAM
@@ -67,7 +77,7 @@ public final class UmlConfig {
       public static final String DECISIONMERGENODE = NODE + "decisionnode";
       public static final String FORKJOINNODE = NODE + "forknode";
       public static final List<String> CONTROL_NODES = List.of(INITIALNODE, FINALNODE, FLOWFINALNODE, DECISIONMERGENODE,
-         FORKJOINNODE);
+            FORKJOINNODE);
       public static final String PARAMETER = NODE + "parameter";
       public static final String PIN = NODE + "pin";
       public static final String PIN_PORT = NODE + "pinport";
@@ -109,7 +119,7 @@ public final class UmlConfig {
       //STATE MACHINE
       public static final String ICON_STATE_MACHINE = ICON + "state-machine";
       public static final String STATE_MACHINE = NODE + "state-machine";
-      public static final String REGION = COMP_BASE  + "region";
+      public static final String REGION = COMP_BASE + "region";
       public static final String ICON_STATE = ICON + "state";
       public static final String STATE = NODE + "state";
       public static final String FINAL_STATE = NODE + "final-state";
@@ -136,20 +146,21 @@ public final class UmlConfig {
       public static final String LABEL_TRANSITION_EFFECT = LABEL + "transition-effect";
       public static final String LABEL_TRANSITION_TRIGGER = LABEL + "transition-trigger";
       public static final List<String> PSEUDOSTATES = Arrays.asList(INITIAL_STATE, DEEP_HISTORY, SHALLOW_HISTORY, JOIN,
-              FORK, JUNCTION, CHOICE, ENTRY_POINT, EXIT_POINT, TERMINATE);
+            FORK, JUNCTION, CHOICE, ENTRY_POINT, EXIT_POINT, TERMINATE);
 
       // COMMENT
       public static final String COMMENT = NODE + "comment";
       public static final String COMMENT_EDGE = EDGE + "commentlink";
       public static final List<String> LINKS_TO_COMMENT = Arrays.asList(COMMENT, ENTRY_POINT, EXIT_POINT, TERMINATE,
-              CHOICE, JUNCTION, FORK, JOIN, SHALLOW_HISTORY, DEEP_HISTORY, INITIAL_STATE, STATE_DO_ACTIVITY,
-              STATE_ENTRY_ACTIVITY, STATE_EXIT_ACTIVITY, FINAL_STATE, STATE, STATE_MACHINE, DEVICE, ARTIFACT,
-              EXECUTION_ENVIRONMENT, DEPLOYMENT_NODE, ACTOR, COMPONENT, PACKAGE, EXTENSIONPOINT, USECASE,
-              INTERRUPTIBLEREGION, DATASTORE, CENTRALBUFFER, PIN, PIN_PORT, PARAMETER, INITIALNODE, FINALNODE, FORKJOINNODE,
-              FLOWFINALNODE, DECISIONMERGENODE, CALL, TIMEEVENT, ACCEPTEVENT, SENDSIGNAL, ACTION,
-              CONDITION, ACTIVITY, PARTITION, CLASS, PROPERTY);
+            CHOICE, JUNCTION, FORK, JOIN, SHALLOW_HISTORY, DEEP_HISTORY, INITIAL_STATE, STATE_DO_ACTIVITY,
+            STATE_ENTRY_ACTIVITY, STATE_EXIT_ACTIVITY, FINAL_STATE, STATE, STATE_MACHINE, DEVICE, ARTIFACT,
+            EXECUTION_ENVIRONMENT, DEPLOYMENT_NODE, ACTOR, COMPONENT, PACKAGE, EXTENSIONPOINT, USECASE,
+            INTERRUPTIBLEREGION, DATASTORE, CENTRALBUFFER, PIN, PIN_PORT, PARAMETER, INITIALNODE, FINALNODE, FORKJOINNODE,
+            FLOWFINALNODE, DECISIONMERGENODE, CALL, TIMEEVENT, ACCEPTEVENT, SENDSIGNAL, ACTION,
+            CONDITION, ACTIVITY, PARTITION, CLASS, PROPERTY);
 
-      private Types() {}
+      private Types() {
+      }
    }
 
    public static final class CSS {
@@ -178,8 +189,10 @@ public final class UmlConfig {
       // STATE MACHINE
       public static final String BORDER_ELEMENT = "uml-border-element";
 
-      private CSS() {}
+      private CSS() {
+      }
    }
 
-   private UmlConfig() {}
+   private UmlConfig() {
+   }
 }

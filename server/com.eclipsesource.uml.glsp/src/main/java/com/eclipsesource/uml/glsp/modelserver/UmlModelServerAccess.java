@@ -40,9 +40,7 @@ import com.eclipsesource.uml.modelserver.commands.classdiagram.association.SetAs
 import com.eclipsesource.uml.modelserver.commands.classdiagram.clazz.AddClassCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.classdiagram.clazz.RemoveClassCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.classdiagram.clazz.SetClassNameCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.classdiagram.property.AddPropertyCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.classdiagram.property.RemovePropertyCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.classdiagram.property.SetPropertyCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.classdiagram.property.*;
 import com.eclipsesource.uml.modelserver.commands.commons.contributions.ChangeBoundsCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.commons.contributions.ChangeRoutingPointsCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.commons.contributions.RenameElementCommandContribution;
@@ -196,15 +194,15 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
     * Class
     */
    public CompletableFuture<Response<Boolean>> addClass(final UmlModelState modelState,
-      final Optional<GPoint> newPosition) {
+                                                        final Optional<GPoint> newPosition) {
 
       CCompoundCommand addClassCompoundCommand = AddClassCommandContribution
-         .create(newPosition.orElse(GraphUtil.point(0, 0)));
+            .create(newPosition.orElse(GraphUtil.point(0, 0)));
       return this.edit(addClassCompoundCommand);
    }
 
    public CompletableFuture<Response<Boolean>> removeClass(final UmlModelState modelState,
-      final Class classToRemove) {
+                                                           final Class classToRemove) {
 
       String semanticProxyUri = getSemanticUriFragment(classToRemove);
       CCompoundCommand compoundCommand = RemoveClassCommandContribution.create(semanticProxyUri);
@@ -212,10 +210,10 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
    }
 
    public CompletableFuture<Response<Boolean>> setClassName(final UmlModelState modelState,
-      final Class classToRename, final String newName) {
+                                                            final Class classToRename, final String newName) {
 
       CCommand setClassNameCommand = SetClassNameCommandContribution.create(getSemanticUriFragment(classToRename),
-         newName);
+            newName);
       return this.edit(setClassNameCommand);
    }
 
@@ -223,26 +221,50 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
     * Property
     */
    public CompletableFuture<Response<Boolean>> addProperty(final UmlModelState modelState,
-      final Class parentClass) {
+                                                           final Class parentClass) {
 
       CCommand addPropertyCommand = AddPropertyCommandContribution.create(getSemanticUriFragment(parentClass));
       return this.edit(addPropertyCommand);
    }
 
    public CompletableFuture<Response<Boolean>> removeProperty(final UmlModelState modelState,
-      final Property propertyToRemove) {
+                                                              final Property propertyToRemove) {
 
       Class parentClass = (Class) propertyToRemove.eContainer();
       CCommand removePropertyCommand = RemovePropertyCommandContribution
-         .create(getSemanticUriFragment(parentClass), getSemanticUriFragment(propertyToRemove));
+            .create(getSemanticUriFragment(parentClass), getSemanticUriFragment(propertyToRemove));
       return this.edit(removePropertyCommand);
    }
 
-   public CompletableFuture<Response<Boolean>> setProperty(final UmlModelState modelState,
-      final Property propertyToRename, final String newName, final String newType, final String newBounds) {
+   /*public CompletableFuture<Response<Boolean>> setProperty(final UmlModelState modelState,
+                                                           final Property propertyToRename, final String newName, final String newType, final String newBounds) {
 
-      CCommand setPropertyNameCommand = SetPropertyCommandContribution
-         .create(getSemanticUriFragment(propertyToRename), newName, newType, newBounds);
+      CCommand setPropertyNameCommand = SetPropertyBoundsCommandContribution
+            .create(getSemanticUriFragment(propertyToRename), newName, newType, newBounds);
+      return this.edit(setPropertyNameCommand);
+   }*/
+
+   public CompletableFuture<Response<Boolean>> setPropertyName(final UmlModelState modelState,
+                                                               final Property propertyToRename, final String newName) {
+
+      CCommand setPropertyNameCommand = SetPropertyNameCommandContribution
+            .create(getSemanticUriFragment(propertyToRename), newName);
+      return this.edit(setPropertyNameCommand);
+   }
+
+   public CompletableFuture<Response<Boolean>> setPropertyType(final UmlModelState modelState,
+                                                               final Property propertyToRename, final String newType) {
+
+      CCommand setPropertyNameCommand = SetPropertyTypeCommandContribution
+            .create(getSemanticUriFragment(propertyToRename), newType);
+      return this.edit(setPropertyNameCommand);
+   }
+
+   public CompletableFuture<Response<Boolean>> setPropertyBounds(final UmlModelState modelState,
+                                                                 final Property propertyToRename, final String newBounds) {
+
+      CCommand setPropertyNameCommand = SetPropertyBoundsCommandContribution
+            .create(getSemanticUriFragment(propertyToRename), newBounds);
       return this.edit(setPropertyNameCommand);
    }
 
@@ -250,14 +272,14 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
     * Association
     */
    public CompletableFuture<Response<Boolean>> addAssociation(final UmlModelState modelState,
-      final Class sourceClass, final Class targetClass) {
+                                                              final Class sourceClass, final Class targetClass) {
       CCompoundCommand addAssociationCompoundCommand = AddAssociationCommandContribution
-         .create(getSemanticUriFragment(sourceClass), getSemanticUriFragment(targetClass));
+            .create(getSemanticUriFragment(sourceClass), getSemanticUriFragment(targetClass));
       return this.edit(addAssociationCompoundCommand);
    }
 
    public CompletableFuture<Response<Boolean>> removeAssociation(final UmlModelState modelState,
-      final Association associationToRemove) {
+                                                                 final Association associationToRemove) {
 
       String semanticProxyUri = getSemanticUriFragment(associationToRemove);
       CCompoundCommand compoundCommand = RemoveAssociationCommandContribution.create(semanticProxyUri);
@@ -265,18 +287,18 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
    }
 
    public CompletableFuture<Response<Boolean>> setAssociationEndName(final UmlModelState modelState,
-      final Property associationEnd, final String newName) {
+                                                                     final Property associationEnd, final String newName) {
 
       CCommand setClassNameCommand = SetAssociationEndNameCommandContribution.create(
-         getSemanticUriFragment(associationEnd), newName);
+            getSemanticUriFragment(associationEnd), newName);
       return this.edit(setClassNameCommand);
    }
 
    public CompletableFuture<Response<Boolean>> setAssociationEndMultiplicity(final UmlModelState modelState,
-      final Property associationEnd, final String newBounds) {
+                                                                             final Property associationEnd, final String newBounds) {
 
       CCommand setClassNameCommand = SetAssociationEndMultiplicityCommandContribution.create(
-         getSemanticUriFragment(associationEnd), newBounds);
+            getSemanticUriFragment(associationEnd), newBounds);
       return this.edit(setClassNameCommand);
    }
 
@@ -286,12 +308,12 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
    public CompletableFuture<Response<Boolean>> addObject(final UmlModelState modelState,
                                                          final Optional<GPoint> newPosition) {
       CCompoundCommand addObjectCompoundCommand = AddObjectCommandContribution
-              .create(newPosition.orElse(GraphUtil.point(0, 0)));
+            .create(newPosition.orElse(GraphUtil.point(0, 0)));
       return this.edit(addObjectCompoundCommand);
    }
 
    public CompletableFuture<Response<Boolean>> removeObject(final UmlModelState modelState,
-                                                           final NamedElement objectToRemove) {
+                                                            final NamedElement objectToRemove) {
 
       String semanticProxyUri = getSemanticUriFragment(objectToRemove);
       CCompoundCommand compoundCommand = RemoveClassCommandContribution.create(semanticProxyUri);
@@ -299,10 +321,10 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
    }
 
    public CompletableFuture<Response<Boolean>> setObjectName(final UmlModelState modelState,
-                                                            final InstanceSpecification objectToRename, final String newName) {
+                                                             final InstanceSpecification objectToRename, final String newName) {
 
       CCommand setObjectNameCommand = SetObjectNameCommandContribution.create(getSemanticUriFragment(objectToRename),
-              newName);
+            newName);
       return this.edit(setObjectNameCommand);
    }
 
@@ -310,16 +332,17 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
     * ATTRIBUTE
     */
    public CompletableFuture<Response<Boolean>> addAttribute(final UmlModelState modelState,
-                                                           final Class parentClass) {
+                                                            final Class parentClass) {
 
       CCommand addAttributeCommand = AddAttributeCommandContribution.create(getSemanticUriFragment(parentClass));
       return this.edit(addAttributeCommand);
    }
+
    public CompletableFuture<Response<Boolean>> setAttribute(final UmlModelState modelState,
-                                                           final Property attributeToRename, final String newName, final String newType, final String newBounds) {
+                                                            final Property attributeToRename, final String newName, final String newType, final String newBounds) {
 
       CCommand setPropertyNameCommand = SetAttributeCommandContribution
-              .create(getSemanticUriFragment(attributeToRename), newName, newType, newBounds);
+            .create(getSemanticUriFragment(attributeToRename), newName, newType, newBounds);
       return this.edit(setPropertyNameCommand);
    }
 
@@ -327,9 +350,9 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
     * LINK
     */
    public CompletableFuture<Response<Boolean>> addLink(final UmlModelState modelState,
-                                                              final Class sourceClass, final Class targetClass) {
+                                                       final Class sourceClass, final Class targetClass) {
       CCompoundCommand addLinkCompoundCommand = AddLinkCommandContribution
-              .create(getSemanticUriFragment(sourceClass), getSemanticUriFragment(targetClass));
+            .create(getSemanticUriFragment(sourceClass), getSemanticUriFragment(targetClass));
       return this.edit(addLinkCompoundCommand);
    }
 
@@ -337,17 +360,17 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
     * ACTIVITY
     */
    public CompletableFuture<Response<Boolean>> addActivity(final UmlModelState modelState,
-      final Optional<GPoint> newPosition) {
+                                                           final Optional<GPoint> newPosition) {
 
       CCompoundCommand addActivityCompoundCommand = AddActivityCommandContribution
-         .create(newPosition.orElse(GraphUtil.point(0, 0)));
+            .create(newPosition.orElse(GraphUtil.point(0, 0)));
       return this.edit(addActivityCompoundCommand);
    }
 
    public CompletableFuture<Response<Boolean>> removeActivity(final UmlModelState modelState,
-      final Activity activity) {
+                                                              final Activity activity) {
       CCommand removePropertyCommand = RemoveActivityCommandContribution
-         .create(getSemanticUriFragment(activity));
+            .create(getSemanticUriFragment(activity));
       return this.edit(removePropertyCommand);
    }
 
@@ -355,17 +378,17 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
     * Partition
     */
    public CompletableFuture<Response<Boolean>> addPartition(final UmlModelState modelState,
-      final GPoint position, final EObject parent) {
+                                                            final GPoint position, final EObject parent) {
 
       CCompoundCommand addPartitionCompoundCommand = AddPartitionCommandContribution
-         .create(position, getSemanticUriFragment(parent));
+            .create(position, getSemanticUriFragment(parent));
       return this.edit(addPartitionCompoundCommand);
    }
 
    public CompletableFuture<Response<Boolean>> removeActivityGroup(final UmlModelState modelState,
-      final ActivityGroup group) {
+                                                                   final ActivityGroup group) {
       CCommand removePropertyCommand = RemovePartitionCommandContribution
-         .create(getSemanticUriFragment(group.getOwner()), getSemanticUriFragment(group));
+            .create(getSemanticUriFragment(group.getOwner()), getSemanticUriFragment(group));
       return this.edit(removePropertyCommand);
    }
 
@@ -373,18 +396,18 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
     * Renaming
     */
    public CompletableFuture<Response<Boolean>> renameElement(final UmlModelState modelState,
-      final NamedElement element, final String name) {
+                                                             final NamedElement element, final String name) {
 
       CCommand renameameCommand = RenameElementCommandContribution.create(getSemanticUriFragment(element),
-         name);
+            name);
       return this.edit(renameameCommand);
    }
 
    public CompletableFuture<Response<Boolean>> setBehavior(final UmlModelState modelState,
-      final CallBehaviorAction cba, final String behavior) {
+                                                           final CallBehaviorAction cba, final String behavior) {
 
       CCommand renameameCommand = SetBehaviorCommandContribution.create(getSemanticUriFragment(cba),
-         behavior);
+            behavior);
       return this.edit(renameameCommand);
    }
 
@@ -392,27 +415,27 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
     * UML Action
     */
    public CompletableFuture<Response<Boolean>> addAction(final UmlModelState modelState,
-      final GPoint newPosition, final EObject parent, final java.lang.Class<? extends Action> clazz) {
+                                                         final GPoint newPosition, final EObject parent, final java.lang.Class<? extends Action> clazz) {
 
       CCompoundCommand addActivityCompoundCommand = AddActionCommandContribution
-         .create(newPosition, getSemanticUriFragment(parent), clazz);
+            .create(newPosition, getSemanticUriFragment(parent), clazz);
       return this.edit(addActivityCompoundCommand);
    }
 
    public CompletableFuture<Response<Boolean>> addEventAction(final UmlModelState modelState,
-      final GPoint newPosition, final EObject parent, final boolean isTimeEvent) {
+                                                              final GPoint newPosition, final EObject parent, final boolean isTimeEvent) {
 
       CCompoundCommand addActivityCompoundCommand = AddActionCommandContribution
-         .create(newPosition, getSemanticUriFragment(parent), isTimeEvent);
+            .create(newPosition, getSemanticUriFragment(parent), isTimeEvent);
       return this.edit(addActivityCompoundCommand);
    }
 
    public CompletableFuture<Response<Boolean>> removeActivityNode(final UmlModelState modelState,
-      final ActivityNode node) {
+                                                                  final ActivityNode node) {
       Activity activity = node.getActivity();
 
       CCommand removePropertyCommand = RemoveActivityNodeCommandContribution
-         .create(getSemanticUriFragment(activity), getSemanticUriFragment(node));
+            .create(getSemanticUriFragment(activity), getSemanticUriFragment(node));
       return this.edit(removePropertyCommand);
    }
 
@@ -420,10 +443,10 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
     * Control Nodes
     */
    public CompletableFuture<Response<Boolean>> addControlNode(final UmlModelState modelState,
-      final GPoint newPosition, final EObject parent, final java.lang.Class<? extends ControlNode> clazz) {
+                                                              final GPoint newPosition, final EObject parent, final java.lang.Class<? extends ControlNode> clazz) {
 
       CCompoundCommand addActivityCompoundCommand = AddControlNodeCommandContribution
-         .create(newPosition, getSemanticUriFragment(parent), clazz);
+            .create(newPosition, getSemanticUriFragment(parent), clazz);
       return this.edit(addActivityCompoundCommand);
    }
 
@@ -431,24 +454,24 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
     * UML ControlFlow
     */
    public CompletableFuture<Response<Boolean>> addControlflow(final UmlModelState modelState,
-      final ActivityNode source, final ActivityNode target) {
+                                                              final ActivityNode source, final ActivityNode target) {
 
       CCompoundCommand addControlflowCompoundCommand = AddControlFLowCommandContribution
-         .create(getSemanticUriFragment(source), getSemanticUriFragment(target));
+            .create(getSemanticUriFragment(source), getSemanticUriFragment(target));
       return this.edit(addControlflowCompoundCommand);
    }
 
    public CompletableFuture<Response<Boolean>> removeActivityEdge(final UmlModelState modelState,
-      final ActivityEdge edge) {
+                                                                  final ActivityEdge edge) {
       Activity activity = edge.getActivity();
 
       CCommand removePropertyCommand = RemoveActivityEdgeCommandContribution
-         .create(getSemanticUriFragment(activity), getSemanticUriFragment(edge));
+            .create(getSemanticUriFragment(activity), getSemanticUriFragment(edge));
       return this.edit(removePropertyCommand);
    }
 
    public CompletableFuture<Response<Boolean>> setGuard(final UmlModelState modelState,
-      final ControlFlow controlFlow, final String newValue) {
+                                                        final ControlFlow controlFlow, final String newValue) {
 
       CCommand setGuardCommand = SetGuardCommandContribution.create(getSemanticUriFragment(controlFlow), newValue);
       return this.edit(setGuardCommand);
@@ -456,7 +479,7 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
    }
 
    public CompletableFuture<Response<Boolean>> setWeight(final UmlModelState modelState,
-      final ControlFlow controlFlow, final String newValue) {
+                                                         final ControlFlow controlFlow, final String newValue) {
 
       CCommand setGuardCommand = SetWeightCommandContribution.create(getSemanticUriFragment(controlFlow), newValue);
       return this.edit(setGuardCommand);
@@ -467,25 +490,25 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
     * UML ExceptionHandler
     */
    public CompletableFuture<Response<Boolean>> addExceptionHandler(final UmlModelState modelState,
-      final ExecutableNode source, final Pin target) {
+                                                                   final ExecutableNode source, final Pin target) {
 
       CCompoundCommand addControlflowCompoundCommand = AddExceptionHandlerCommandContribution
-         .create(getSemanticUriFragment(source), getSemanticUriFragment(target));
+            .create(getSemanticUriFragment(source), getSemanticUriFragment(target));
       return this.edit(addControlflowCompoundCommand);
    }
 
    public CompletableFuture<Response<Boolean>> removeExceptionHandler(final UmlModelState modelState,
-      final ExceptionHandler handler) {
+                                                                      final ExceptionHandler handler) {
       CCommand removePropertyCommand = RemoveExceptionHandlerCommandContribution
-         .create(getSemanticUriFragment(handler));
+            .create(getSemanticUriFragment(handler));
       return this.edit(removePropertyCommand);
    }
 
    public CompletableFuture<Response<Boolean>> addInterruptibleRegion(final UmlModelState modelState,
-      final GPoint position, final EObject parent) {
+                                                                      final GPoint position, final EObject parent) {
 
       CCompoundCommand addPartitionCompoundCommand = AddInterruptibleRegionCommandContribution
-         .create(position, getSemanticUriFragment(parent));
+            .create(position, getSemanticUriFragment(parent));
       return this.edit(addPartitionCompoundCommand);
    }
 
@@ -502,20 +525,20 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
     */
    public CompletableFuture<Response<Boolean>> addParameter(final UmlModelState modelState, final Activity activity) {
       CCompoundCommand addPartitionCompoundCommand = AddParameterCommandContribution
-         .create(getSemanticUriFragment(activity));
+            .create(getSemanticUriFragment(activity));
       return this.edit(addPartitionCompoundCommand);
    }
 
    public CompletableFuture<Response<Boolean>> addPin(final UmlModelState modelState, final Action action) {
       CCompoundCommand addPartitionCompoundCommand = AddPinCommandContribution
-         .create(getSemanticUriFragment(action));
+            .create(getSemanticUriFragment(action));
       return this.edit(addPartitionCompoundCommand);
    }
 
    public CompletableFuture<Response<Boolean>> addObjectNode(final UmlModelState modelState, final GPoint newPosition,
-      final Element parent, final java.lang.Class<? extends ObjectNode> clazz) {
+                                                             final Element parent, final java.lang.Class<? extends ObjectNode> clazz) {
       CCompoundCommand addActivityCompoundCommand = AddObjectNodeCommandContribution
-         .create(newPosition, getSemanticUriFragment(parent), clazz);
+            .create(newPosition, getSemanticUriFragment(parent), clazz);
       return this.edit(addActivityCompoundCommand);
    }
 
@@ -523,17 +546,17 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
     * UML Constraint
     */
    public CompletableFuture<Response<Boolean>> addCondition(final UmlModelState modelState, final Activity parent,
-      final boolean isPrecondition) {
+                                                            final boolean isPrecondition) {
       CCompoundCommand addActivityCompoundCommand = AddConditionCommandContribution
-         .create(getSemanticUriFragment(parent), isPrecondition);
+            .create(getSemanticUriFragment(parent), isPrecondition);
       return this.edit(addActivityCompoundCommand);
    }
 
    public CompletableFuture<Response<Boolean>> setConditionBody(final UmlModelState modelState,
-      final Constraint constraint, final String body) {
+                                                                final Constraint constraint, final String body) {
 
       CCommand renameameCommand = SetBodyCommandContribution.create(getSemanticUriFragment(constraint),
-         body);
+            body);
       return this.edit(renameameCommand);
    }
 
@@ -541,41 +564,41 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
     * UML Comment
     */
    public CompletableFuture<Response<Boolean>> addComment(final UmlModelState modelState,
-      final GPoint position, final EObject object) {
+                                                          final GPoint position, final EObject object) {
 
       CCompoundCommand addPartitionCompoundCommand = AddCommentCommandContribution
-         .create(position, getSemanticUriFragment(object));
+            .create(position, getSemanticUriFragment(object));
       return this.edit(addPartitionCompoundCommand);
    }
 
    public CompletableFuture<Response<Boolean>> setCommentBody(final UmlModelState modelState,
-      final Comment comment, final String name) {
+                                                              final Comment comment, final String name) {
 
       CCommand renameameCommand = SetBodyCommandContribution.create(getSemanticUriFragment(comment),
-         name);
+            name);
       return this.edit(renameameCommand);
    }
 
    public CompletableFuture<Response<Boolean>> removeComment(final UmlModelState modelState,
-      final Comment comment) {
+                                                             final Comment comment) {
       CCommand removePropertyCommand = RemoveCommentCommandContribution
-         .create(getSemanticUriFragment(comment));
+            .create(getSemanticUriFragment(comment));
       return this.edit(removePropertyCommand);
    }
 
    public CompletableFuture<Response<Boolean>> linkComment(final UmlModelState modelState,
-      final Comment comment, final Element element) {
+                                                           final Comment comment, final Element element) {
 
       CCommand renameameCommand = LinkCommentCommandContribution.create(getSemanticUriFragment(comment),
-         getSemanticUriFragment(element));
+            getSemanticUriFragment(element));
       return this.edit(renameameCommand);
    }
 
    public CompletableFuture<Response<Boolean>> unlinkComment(final UmlModelState modelState,
-      final Comment comment, final Element element) {
+                                                             final Comment comment, final Element element) {
 
       CCommand renameameCommand = UnlinkCommentCommandContribution.create(getSemanticUriFragment(comment),
-         getSemanticUriFragment(element));
+            getSemanticUriFragment(element));
       return this.edit(renameameCommand);
    }
 
@@ -586,17 +609,17 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
    public CompletableFuture<Response<Boolean>> addUseCase(final UmlModelState modelState,
                                                           final Optional<GPoint> newPosition) {
       CCompoundCommand addUseCaseCompoundCommand = AddUseCaseCommandContribution
-              .create(newPosition.orElse(GraphUtil.point(0, 0)));
+            .create(newPosition.orElse(GraphUtil.point(0, 0)));
       return this.edit(addUseCaseCompoundCommand);
    }
 
    public CompletableFuture<Response<Boolean>> addUseCase(final UmlModelState modelState, final EObject parent,
-                                                                  final Optional<GPoint> newPosition) {
+                                                          final Optional<GPoint> newPosition) {
       /*if (!(parent instanceof Package || parent instanceof Component)) {
          throw new Exception("Element not valid as a parent for usecase");
       }*/
       CCommand addUseCaseCompoundCommand = AddUseCaseCommandContribution.create(newPosition.orElse(GraphUtil.point(0, 0)),
-              getSemanticUriFragment(parent));
+            getSemanticUriFragment(parent));
       return this.edit(addUseCaseCompoundCommand);
    }
 
@@ -612,7 +635,7 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
                                                               final UseCase useCaseToRename, final String newName) {
 
       CCommand setUsecaseNameCommand = SetUseCaseNameCommandContribution.create(getSemanticUriFragment(useCaseToRename),
-              newName);
+            newName);
       return this.edit(setUsecaseNameCommand);
    }
 
@@ -628,30 +651,30 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
                                                                      final ExtensionPoint epToRename, final String newName) {
 
       CCommand setExtensionPointNameCommand = SetExtensionPointNameCommandContribution.create(
-              getSemanticUriFragment(epToRename),
-              newName);
+            getSemanticUriFragment(epToRename),
+            newName);
       return this.edit(setExtensionPointNameCommand);
    }
 
    // PACKAGE
    public CompletableFuture<Response<Boolean>> addPackage(final UmlModelState modelState,
-                                                final Optional<GPoint> newPosition) {
+                                                          final Optional<GPoint> newPosition) {
       CCompoundCommand addPackageCompoundCommand = AddPackageCommandContribution
-              .create(newPosition.orElse(GraphUtil.point(0,0)));
+            .create(newPosition.orElse(GraphUtil.point(0, 0)));
       return this.edit(addPackageCompoundCommand);
    }
 
    public CompletableFuture<Response<Boolean>> removePackage(final UmlModelState modelState,
-                                                   final Package packageToRemove) {
+                                                             final Package packageToRemove) {
       String semanticProxyUri = getSemanticUriFragment(packageToRemove);
       CCompoundCommand compoundCommand = RemovePackageCommandContribution.create(semanticProxyUri);
       return this.edit(compoundCommand);
    }
 
    public CompletableFuture<Response<Boolean>> setPackageName(final UmlModelState modelState,
-                                                final Package packageToRename, final String newName) {
+                                                              final Package packageToRename, final String newName) {
       CCommand setPackageNameCommand = SetPackageNameCommandContribution
-              .create(getSemanticUriFragment(packageToRename), newName);
+            .create(getSemanticUriFragment(packageToRename), newName);
       return this.edit(setPackageNameCommand);
    }
 
@@ -660,16 +683,16 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
                                                             final Optional<GPoint> newPosition) {
 
       CCompoundCommand addComponentCompoundCommand = AddComponentCommandContribution
-              .create(newPosition.orElse(GraphUtil.point(0, 0)));
+            .create(newPosition.orElse(GraphUtil.point(0, 0)));
       return this.edit(addComponentCompoundCommand);
    }
 
    public CompletableFuture<Response<Boolean>> addComponent(final UmlModelState modelState,
-                                                                     final Package parent,
-                                                                     final Optional<GPoint> newPosition) {
+                                                            final Package parent,
+                                                            final Optional<GPoint> newPosition) {
 
       CCompoundCommand addComponentCompoundCommand = AddComponentCommandContribution
-              .create(newPosition.orElse(GraphUtil.point(0, 0)), getSemanticUriFragment(parent));
+            .create(newPosition.orElse(GraphUtil.point(0, 0)), getSemanticUriFragment(parent));
       return this.edit(addComponentCompoundCommand);
    }
 
@@ -684,16 +707,16 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
    public CompletableFuture<Response<Boolean>> addActor(final UmlModelState modelState,
                                                         final Optional<GPoint> newPosition) {
       CCompoundCommand addActorCompoundCommand = AddActorCommandContribution
-              .create(newPosition.orElse(GraphUtil.point(0, 0)));
+            .create(newPosition.orElse(GraphUtil.point(0, 0)));
       return this.edit(addActorCompoundCommand);
    }
 
    public CompletableFuture<Response<Boolean>> addActor(final UmlModelState modelState,
-                                                                 final Package parent,
+                                                        final Package parent,
                                                         final Optional<GPoint> newPosition) {
       CCommand addActorCompoundCommand = AddActorCommandContribution
-              .create(newPosition.orElse(GraphUtil.point(0, 0)),
-              getSemanticUriFragment(parent));
+            .create(newPosition.orElse(GraphUtil.point(0, 0)),
+                  getSemanticUriFragment(parent));
       return this.edit(addActorCompoundCommand);
    }
 
@@ -709,7 +732,7 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
                                                             final Actor actorToRename, final String newName) {
 
       CCommand setActorNameCommand = SetActorNameCommandContribution.create(getSemanticUriFragment(actorToRename),
-              newName);
+            newName);
       return this.edit(setActorNameCommand);
    }
 
@@ -718,7 +741,7 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
                                                          final UseCase extendingUseCase, final UseCase extendedUseCase) {
 
       CCompoundCommand addExtensionCompoundCommand = AddExtendCommandContribution
-              .create(getSemanticUriFragment(extendingUseCase), getSemanticUriFragment(extendedUseCase));
+            .create(getSemanticUriFragment(extendingUseCase), getSemanticUriFragment(extendedUseCase));
       return this.edit(addExtensionCompoundCommand);
    }
 
@@ -726,7 +749,7 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
                                                          final UseCase extendingUseCase, final ExtensionPoint extendedUseCase) {
 
       CCompoundCommand addExtensionCompoundCommand = AddExtendCommandContribution
-              .create(getSemanticUriFragment(extendingUseCase), getSemanticUriFragment(extendedUseCase));
+            .create(getSemanticUriFragment(extendingUseCase), getSemanticUriFragment(extendedUseCase));
       return this.edit(addExtensionCompoundCommand);
    }
 
@@ -742,7 +765,7 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
    public CompletableFuture<Response<Boolean>> addInclude(final UmlModelState modelState,
                                                           final UseCase includingUseCase, final UseCase includedUseCase) {
       CCompoundCommand addIncludeCompoundCommand = AddIncludeCommandContribution
-              .create(getSemanticUriFragment(includingUseCase), getSemanticUriFragment(includedUseCase));
+            .create(getSemanticUriFragment(includingUseCase), getSemanticUriFragment(includedUseCase));
       return this.edit(addIncludeCompoundCommand);
    }
 
@@ -759,7 +782,7 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
                                                                  final Classifier generalClassifier, final Classifier specificClassifier) {
 
       CCompoundCommand addGeneralizationCompoundCommand = AddGeneralizationCommandContribution
-              .create(getSemanticUriFragment(generalClassifier), getSemanticUriFragment(specificClassifier));
+            .create(getSemanticUriFragment(generalClassifier), getSemanticUriFragment(specificClassifier));
       return this.edit(addGeneralizationCompoundCommand);
    }
 
@@ -773,15 +796,15 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
 
    // USECASE ASSOCIATION
    public CompletableFuture<Response<Boolean>> addUseCaseAssociation(final UmlModelState modelState,
-                                                                 final Classifier generalClassifier, final Classifier specificClassifier) {
+                                                                     final Classifier generalClassifier, final Classifier specificClassifier) {
 
       CCompoundCommand addGeneralizationCompoundCommand = AddUseCaseAssociationCommandContribution
-              .create(getSemanticUriFragment(generalClassifier), getSemanticUriFragment(specificClassifier));
+            .create(getSemanticUriFragment(generalClassifier), getSemanticUriFragment(specificClassifier));
       return this.edit(addGeneralizationCompoundCommand);
    }
 
    public CompletableFuture<Response<Boolean>> removeUseCaseAssociation(final UmlModelState modelState,
-                                                                    final Association associationToRemove) {
+                                                                        final Association associationToRemove) {
 
       String semanticProxyUri = getSemanticUriFragment(associationToRemove);
       CCompoundCommand compoundCommand = RemoveUseCaseAssociationCommandContribution.create(semanticProxyUri);
@@ -796,7 +819,7 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
                                                        final Optional<GPoint> newPosition, final NamedElement parent) {
 
       CCompoundCommand addNodeCompoundCommand = AddNodeCommandContribution
-              .create(newPosition.orElse(GraphUtil.point(0, 0)), getSemanticUriFragment(parent));
+            .create(newPosition.orElse(GraphUtil.point(0, 0)), getSemanticUriFragment(parent));
       return this.edit(addNodeCompoundCommand);
    }
 
@@ -816,7 +839,7 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
                                                            final Node nodeToRename, final String newName) {
 
       CCommand setNodeNameCommand = SetNodeNameCommandContribution.create(getSemanticUriFragment(nodeToRename),
-              newName);
+            newName);
       return this.edit(setNodeNameCommand);
    }
 
@@ -825,7 +848,7 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
                                                            final Optional<GPoint> newPosition, final NamedElement parent) {
 
       CCompoundCommand addArtifactCompoundCommand = AddArtifactCommandContribution
-              .create(newPosition.orElse(GraphUtil.point(0, 0)), getSemanticUriFragment(parent));
+            .create(newPosition.orElse(GraphUtil.point(0, 0)), getSemanticUriFragment(parent));
       return this.edit(addArtifactCompoundCommand);
    }
 
@@ -844,8 +867,8 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
                                                                final Artifact artifactToRename, final String newName) {
 
       CCommand setArtifactNameCommand = SetArtifactNameCommandContribution.create(
-              getSemanticUriFragment(artifactToRename),
-              newName);
+            getSemanticUriFragment(artifactToRename),
+            newName);
       return this.edit(setArtifactNameCommand);
    }
 
@@ -854,7 +877,7 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
                                                          final Optional<GPoint> newPosition, final NamedElement parent) {
 
       CCompoundCommand addDeviceCompoundCommand = AddDeviceCommandContribution
-              .create(newPosition.orElse(GraphUtil.point(0, 0)), getSemanticUriFragment(parent));
+            .create(newPosition.orElse(GraphUtil.point(0, 0)), getSemanticUriFragment(parent));
       return this.edit(addDeviceCompoundCommand);
    }
 
@@ -865,7 +888,7 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
 
       String semanticProxyUri = getSemanticUriFragment(deviceToRemove);
       CCompoundCommand compoundCommand = RemoveDeviceCommandContribution.create(semanticProxyUri,
-              parentUri);
+            parentUri);
       return this.edit(compoundCommand);
    }
 
@@ -873,8 +896,8 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
                                                              final Device deviceToRename, final String newName) {
 
       CCommand setDeviceNameCommand = SetDeviceNameCommandContribution.create(
-              getSemanticUriFragment(deviceToRename),
-              newName);
+            getSemanticUriFragment(deviceToRename),
+            newName);
       return this.edit(setDeviceNameCommand);
    }
 
@@ -883,7 +906,7 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
                                                                        final Optional<GPoint> newPosition, final NamedElement parent) {
 
       CCompoundCommand addExecutionEnvironmentCompoundCommand = AddExecutionEnvironmentCommandContribution
-              .create(newPosition.orElse(GraphUtil.point(0, 0)), getSemanticUriFragment(parent));
+            .create(newPosition.orElse(GraphUtil.point(0, 0)), getSemanticUriFragment(parent));
       return this.edit(addExecutionEnvironmentCompoundCommand);
    }
 
@@ -895,7 +918,7 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
 
       String semanticProxyUri = getSemanticUriFragment(executionEnvironmentToRemove);
       CCompoundCommand compoundCommand = RemoveExecutionEnvironmentCommandContribution.create(semanticProxyUri,
-              parentUri);
+            parentUri);
 
       return this.edit(compoundCommand);
    }
@@ -904,8 +927,8 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
                                                                            final ExecutionEnvironment executionEnvironmentToRename, final String newName) {
 
       CCommand setExecutionEnvironmentNameCommand = SetExecutionEnvironmentNameCommandContribution.create(
-              getSemanticUriFragment(executionEnvironmentToRename),
-              newName);
+            getSemanticUriFragment(executionEnvironmentToRename),
+            newName);
       return this.edit(setExecutionEnvironmentNameCommand);
    }
 
@@ -914,7 +937,7 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
                                                                     final Classifier sourceNode, final Classifier targetNode) {
 
       CCompoundCommand addCommunicationPathCompoundCommand = AddCommunicationPathCommandContribution
-              .create(getSemanticUriFragment(sourceNode), getSemanticUriFragment(targetNode));
+            .create(getSemanticUriFragment(sourceNode), getSemanticUriFragment(targetNode));
       return this.edit(addCommunicationPathCompoundCommand);
    }
 
@@ -929,7 +952,7 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
    public CompletableFuture<Response<Boolean>> setCommunicationPathEndName(final UmlModelState modelState,
                                                                            final CommunicationPath communicationPathEnd, final String newName) {
       CCommand setCommunicationPathCommand = SetCommunicationPathEndNameCommandContribution.create(
-              getSemanticUriFragment(communicationPathEnd), newName);
+            getSemanticUriFragment(communicationPathEnd), newName);
       return this.edit(setCommunicationPathCommand);
    }
 
@@ -938,7 +961,7 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
                                                              final Artifact sourceArtifact, final Node targetNode) {
 
       CCompoundCommand addDeploymentCompoundCommand = AddDeploymentCommandContribution
-              .create(getSemanticUriFragment(sourceArtifact), getSemanticUriFragment(targetNode));
+            .create(getSemanticUriFragment(sourceArtifact), getSemanticUriFragment(targetNode));
       return this.edit(addDeploymentCompoundCommand);
    }
 
@@ -948,7 +971,7 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
       String semanticProxyUri = getSemanticUriFragment(deploymentToRemove);
       String semanticSourceProxyUri = getSemanticUriFragment(sourceNode);
       CCompoundCommand compoundCommand = RemoveDeploymentCommandContribution.create(semanticProxyUri,
-              semanticSourceProxyUri);
+            semanticSourceProxyUri);
       return this.edit(compoundCommand);
    }
 
@@ -957,7 +980,7 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
                                                                           final Optional<GPoint> newPosition, final NamedElement parent) {
 
       CCompoundCommand addDeploymentSpecificationCompoundCommand = AddDeploymentSpecificationCommandContribution
-              .create(newPosition.orElse(GraphUtil.point(0, 0)), getSemanticUriFragment(parent));
+            .create(newPosition.orElse(GraphUtil.point(0, 0)), getSemanticUriFragment(parent));
       return this.edit(addDeploymentSpecificationCompoundCommand);
    }
 
@@ -968,7 +991,7 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
 
       String semanticProxyUri = getSemanticUriFragment(deploymentSpecificationToRemove);
       CCompoundCommand compoundCommand = RemoveDeploymentSpecificationCommandContribution.create(semanticProxyUri,
-              parentUri);
+            parentUri);
 
       return this.edit(compoundCommand);
    }
@@ -977,8 +1000,8 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
                                                                               final DeploymentSpecification deploymentSpecificationToRename, final String newName) {
 
       CCommand setDeploymentSpecificationNameCommand = SetDeploymentSpecificationNameCommandContribution.create(
-              getSemanticUriFragment(deploymentSpecificationToRename),
-              newName);
+            getSemanticUriFragment(deploymentSpecificationToRename),
+            newName);
       return this.edit(setDeploymentSpecificationNameCommand);
    }
 
@@ -990,7 +1013,7 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
                                                                final Optional<GPoint> newPosition) {
 
       CCompoundCommand addStateMachineCompoundCommand = AddStateMachineCommandContribution
-              .create(newPosition.orElse(GraphUtil.point(0, 0)));
+            .create(newPosition.orElse(GraphUtil.point(0, 0)));
       return this.edit(addStateMachineCompoundCommand);
    }
 
@@ -1006,16 +1029,17 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
                                                                    final Class classToRename, final String newName) {
 
       CCommand setStateMachineNameCommand = SetStateMachineNameCommandContribution.create(
-              getSemanticUriFragment(classToRename),
-              newName);
+            getSemanticUriFragment(classToRename),
+            newName);
       return this.edit(setStateMachineNameCommand);
    }
+
    // STATE
    public CompletableFuture<Response<Boolean>> addState(final UmlModelState modelState,
                                                         final Region parentRegion, final GPoint newPosition) {
 
       CCommand addStateCompoundCommand = AddStateCommandContribution.create(getSemanticUriFragment(parentRegion),
-              newPosition);
+            newPosition);
       return this.edit(addStateCompoundCommand);
    }
 
@@ -1024,14 +1048,14 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
 
       Region parentRegion = (Region) stateToRemove.eContainer();
       CCompoundCommand compoundCommand = RemoveStateCommandContribution.create(getSemanticUriFragment(parentRegion),
-              getSemanticUriFragment(stateToRemove));
+            getSemanticUriFragment(stateToRemove));
       return this.edit(compoundCommand);
    }
 
    public CompletableFuture<Response<Boolean>> setStateName(final UmlModelState modelState,
                                                             final State stateToRename, final String newName) {
       CCommand setStateNameCommand = SetStateNameCommandContribution.create(getSemanticUriFragment(stateToRename),
-              newName);
+            newName);
       return this.edit(setStateNameCommand);
    }
 
@@ -1040,7 +1064,7 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
                                                               final Region parentRegion, final PseudostateKind pseudostateKind, final GPoint newPosition) {
 
       CCommand addPseudostateCompoundCommand = AddPseudoStateCommandContribution
-              .create(getSemanticUriFragment(parentRegion), pseudostateKind, newPosition);
+            .create(getSemanticUriFragment(parentRegion), pseudostateKind, newPosition);
       return this.edit(addPseudostateCompoundCommand);
    }
 
@@ -1049,8 +1073,8 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
 
       NamedElement parentContainer = (NamedElement) pseudostateToRemove.eContainer();
       CCompoundCommand compoundCommand = RemovePseudoStateCommandContribution.create(
-              getSemanticUriFragment(parentContainer),
-              getSemanticUriFragment(pseudostateToRemove));
+            getSemanticUriFragment(parentContainer),
+            getSemanticUriFragment(pseudostateToRemove));
       return this.edit(compoundCommand);
    }
 
@@ -1058,7 +1082,7 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
                                                                   final Pseudostate pseudostateToRename, final String newName) {
 
       CCommand setPseudostateNameCommand = SetPseudostateNameCommandContribution
-              .create(getSemanticUriFragment(pseudostateToRename), newName);
+            .create(getSemanticUriFragment(pseudostateToRename), newName);
 
       return this.edit(setPseudostateNameCommand);
    }
@@ -1068,7 +1092,7 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
                                                              final Region parentRegion, final GPoint newPosition) {
 
       CCompoundCommand addFinalStateCompoundCommand = AddFinalStateCommandContribution
-              .create(getSemanticUriFragment(parentRegion), newPosition);
+            .create(getSemanticUriFragment(parentRegion), newPosition);
 
       return this.edit(addFinalStateCompoundCommand);
    }
@@ -1078,7 +1102,7 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
 
       NamedElement containerRegion = (Region) finalStateToRemove.eContainer();
       CCompoundCommand compoundCommand = RemoveFinalStateCommandContribution.create(getSemanticUriFragment(containerRegion),
-              getSemanticUriFragment(finalStateToRemove));
+            getSemanticUriFragment(finalStateToRemove));
 
       return this.edit(compoundCommand);
    }
@@ -1088,7 +1112,7 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
                                                                   final State parentState, final String activityType) {
 
       CCommand addBehaviorToStateCompoundCommand = AddBehaviorToStateCommandContribution
-              .create(getSemanticUriFragment(parentState), activityType);
+            .create(getSemanticUriFragment(parentState), activityType);
       return this.edit(addBehaviorToStateCompoundCommand);
    }
 
@@ -1096,7 +1120,7 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
                                                                   final Behavior behaviorToRename, final String behaviorType, final String newName) {
 
       CCommand setBehaviorInStateCommand = SetBehaviorInStateCommandContribution
-              .create(getSemanticUriFragment(behaviorToRename), behaviorType, newName);
+            .create(getSemanticUriFragment(behaviorToRename), behaviorType, newName);
       return this.edit(setBehaviorInStateCommand);
    }
 
@@ -1105,7 +1129,7 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
 
       State parentState = (State) behaviorToRemove.eContainer();
       CCommand removeBehaviorFromStateCommand = RemoveBehaviorFromStateCommandContribution
-              .create(getSemanticUriFragment(parentState), getSemanticUriFragment(behaviorToRemove));
+            .create(getSemanticUriFragment(parentState), getSemanticUriFragment(behaviorToRemove));
       return this.edit(removeBehaviorFromStateCommand);
    }
 
@@ -1115,7 +1139,7 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
 
       Region parentRegion = (Region) source.eContainer();
       CCompoundCommand addTransitionCompoundCommand = AddTransitionCommandContribution
-              .create(getSemanticUriFragment(parentRegion), getSemanticUriFragment(source), getSemanticUriFragment(target));
+            .create(getSemanticUriFragment(parentRegion), getSemanticUriFragment(source), getSemanticUriFragment(target));
 
       return this.edit(addTransitionCompoundCommand);
    }
@@ -1125,7 +1149,7 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
 
       Region parentRegion = (Region) transition.eContainer();
       CCommand removeTransitionCommand = RemoveTransitionCommandContribution
-              .create(getSemanticUriFragment(parentRegion), getSemanticUriFragment(transition));
+            .create(getSemanticUriFragment(parentRegion), getSemanticUriFragment(transition));
 
       return this.edit(removeTransitionCommand);
    }
@@ -1134,7 +1158,7 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
                                                                   final Transition transition, final String newValue) {
 
       CCommand addTransitionLabelCommand = AddTransitionLabelCommandContribution.create(getSemanticUriFragment(transition),
-              newValue);
+            newValue);
 
       return this.edit(addTransitionLabelCommand);
 
@@ -1144,7 +1168,7 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
                                                                   final Transition transition, final String newValue) {
 
       CCommand addTransitionGuardCommand = AddTransitionGuardCommandContribution.create(getSemanticUriFragment(transition),
-              newValue);
+            newValue);
 
       return this.edit(addTransitionGuardCommand);
 
@@ -1154,7 +1178,7 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
                                                                    final Transition transition, final String newValue) {
 
       CCommand addTransitionEffectCommand = AddTransitionEffectCommandContribution.create(getSemanticUriFragment(transition),
-              newValue);
+            newValue);
 
       return this.edit(addTransitionEffectCommand);
 
@@ -1164,8 +1188,8 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
                                                                     final Transition transition, final String newValue) {
 
       CCommand addTransitionTriggerCommand = AddTransitionTriggerCommandContribution.create(
-              getSemanticUriFragment(transition),
-              newValue);
+            getSemanticUriFragment(transition),
+            newValue);
 
       return this.edit(addTransitionTriggerCommand);
 
@@ -1180,7 +1204,7 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
       compoundCommand.setType(ChangeBoundsCommandContribution.TYPE);
       changeBoundsMap.forEach((shape, elementAndBounds) -> {
          CCommand changeBoundsCommand = ChangeBoundsCommandContribution.create(shape.getSemanticElement().getUri(),
-            elementAndBounds.getNewPosition(), elementAndBounds.getNewSize());
+               elementAndBounds.getNewPosition(), elementAndBounds.getNewSize());
          compoundCommand.getCommands().add(changeBoundsCommand);
       });
       return this.edit(compoundCommand);
@@ -1188,13 +1212,13 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
 
    // Change Routing Points
    public CompletableFuture<Response<Boolean>> changeRoutingPoints(
-      final Map<Edge, ElementAndRoutingPoints> changeBendPointsMap) {
+         final Map<Edge, ElementAndRoutingPoints> changeBendPointsMap) {
       CCompoundCommand compoundCommand = CCommandFactory.eINSTANCE.createCompoundCommand();
       compoundCommand.setType(ChangeRoutingPointsCommandContribution.TYPE);
 
       changeBendPointsMap.forEach((edge, elementAndRoutingPoints) -> {
          CCommand changeRoutingPointsCommand = ChangeRoutingPointsCommandContribution.create(
-            edge.getSemanticElement().getUri(), elementAndRoutingPoints.getNewRoutingPoints());
+               edge.getSemanticElement().getUri(), elementAndRoutingPoints.getNewRoutingPoints());
          compoundCommand.getCommands().add(changeRoutingPointsCommand);
       });
       return this.edit(compoundCommand);

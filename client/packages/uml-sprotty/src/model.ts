@@ -8,17 +8,19 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-import { SChildElement } from "@eclipse-glsp/client";
+import {SChildElement, selectFeature} from "@eclipse-glsp/client";
 import {
     boundsFeature,
     Connectable,
     connectableFeature,
+    Deletable,
     deletableFeature,
     DiamondNode,
     EditableLabel,
-    editLabelFeature,
     editFeature,
+    editLabelFeature,
     fadeFeature,
+    Hoverable,
     hoverFeedbackFeature,
     isEditableLabel,
     layoutableChildFeature,
@@ -27,8 +29,9 @@ import {
     nameFeature,
     popupFeature,
     RectangularNode,
-    selectFeature,
+    SCompartment,
     SEdge,
+    Selectable,
     SLabel,
     SRoutableElement,
     SShapeElement,
@@ -55,6 +58,7 @@ export class LabeledNode extends RectangularNode implements WithEditableLabel, N
         }
         return this.id;
     }
+
     hasFeature(feature: symbol): boolean {
         return super.hasFeature(feature) || feature === nameFeature || feature === withEditLabelFeature;
     }
@@ -72,6 +76,19 @@ export class Icon extends SShapeElement {
     hasFeature(feature: symbol): boolean {
         return feature === boundsFeature || feature === layoutContainerFeature || feature === layoutableChildFeature || feature === fadeFeature;
     }
+}
+
+export class IconLabelCompartment extends SCompartment implements Selectable, Deletable, Hoverable {
+    selected = false;
+    hoverFeedback = false;
+
+    hasFeature(feature: symbol): boolean {
+        return super.hasFeature(feature) || feature === selectFeature || feature === deletableFeature || feature === hoverFeedbackFeature;
+    }
+}
+
+export class IconProperty extends Icon {
+    iconImageName = "Property.svg";
 }
 
 // CLASS
@@ -164,6 +181,7 @@ export class ConnectableEditableLabel extends SLabel implements EditableLabel, C
         super();
         ConnectableEditableLabel.DEFAULT_FEATURES.push(connectableFeature);
     }
+
     canConnect(routable: SRoutableElement, role: "source" | "target"): boolean {
         return true;
         // TODO: If neccessary return false under some conditions
@@ -193,6 +211,7 @@ export class ConnectionPoint extends SLabel implements Connectable {
         return true;
         // TODO: If neccessary return false under some conditions
     }
+
     selected = false;
     hoverFeedback = false;
     opacity = 1;

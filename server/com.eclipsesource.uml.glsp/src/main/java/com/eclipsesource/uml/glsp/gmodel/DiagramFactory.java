@@ -23,6 +23,7 @@ public abstract class DiagramFactory extends AbstractGModelFactory<EObject, GMod
 
    protected final CommentFactory commentFactory;
    protected final LabelFactory labelFactory;
+   protected final CompartmentLabelFactory compartmentLabelFactory;
 
    protected final ClassDiagramNodeFactory classDiagramNodeFactory;
    protected final ClassDiagramEdgeFactory classDiagramEdgeFactory;
@@ -55,8 +56,9 @@ public abstract class DiagramFactory extends AbstractGModelFactory<EObject, GMod
       // COMMONS
       labelFactory = new LabelFactory(modelState);
       commentFactory = new CommentFactory(modelState);
+      compartmentLabelFactory = new CompartmentLabelFactory(modelState);
       // CLASS
-      classDiagramNodeFactory = new ClassDiagramNodeFactory(modelState, labelFactory);
+      classDiagramNodeFactory = new ClassDiagramNodeFactory(modelState, compartmentLabelFactory);
       classDiagramEdgeFactory = new ClassDiagramEdgeFactory(modelState);
       //OBJECT
       objectDiagramNodeFactory = new ObjectDiagramNodeFactory(modelState, labelFactory);
@@ -71,7 +73,7 @@ public abstract class DiagramFactory extends AbstractGModelFactory<EObject, GMod
       useCaseEdgeFactory = new UseCaseDiagramEdgeFactory(modelState);
       //useCaseDiagramChildNodeFactory = new UseCaseDiagramChildNodeFactory(modelState, labelFactory, this);
       // STATEMACHINE
-      stateMachineNodeFactory = new StateMachineDiagramNodeFactory(modelState,labelFactory, this);
+      stateMachineNodeFactory = new StateMachineDiagramNodeFactory(modelState, labelFactory, this);
       stateMachineDiagramVertexFactory = new StateMachineDiagramVertexFactory(modelState);
       stateMachineEdgeFactory = new StateMachineDiagramEdgeFactory(modelState);
       regionCompartmentFactory = new RegionCompartmentFactory(modelState, this);
@@ -97,7 +99,7 @@ public abstract class DiagramFactory extends AbstractGModelFactory<EObject, GMod
 
    public static GLSPServerException createFailed(final EObject semanticElement) {
       return new GLSPServerException("Error during model initialization!", new Throwable(
-         "No matching GModelElement found for the semanticElement of type: " + semanticElement.getClass()));
+            "No matching GModelElement found for the semanticElement of type: " + semanticElement.getClass()));
    }
 
    protected GGraph getOrCreateRoot() {

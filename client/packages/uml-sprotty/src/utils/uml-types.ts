@@ -8,22 +8,38 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-import { BaseTypes } from "./base-types";
+import {BaseTypes} from "./base-types";
+import {DefaultTypes} from "@eclipse-glsp/protocol";
 
 export namespace UmlTypes {
 
+    // NEW LABELS
+    export const ICON = "icon";
+    export const LABEL_NAME = `${DefaultTypes.LABEL}:name`;
+    export const LABEL_TEXT = `${DefaultTypes.LABEL}:text`;
+    export const LABEL_EDGE_NAME = `${DefaultTypes.LABEL}:edge-name`;
+    export const LABEL_EDGE_MULTIPLICITY = `${DefaultTypes.LABEL}:edge-multiplicity`;
+    export const ICON_CLASS = `${ICON}:class`;
+    export const CLASS = `${DefaultTypes.NODE}:class`;
+    export const ASSOCIATION = `${DefaultTypes.EDGE}:association`;
+    export const PROPERTY = `${DefaultTypes.COMPARTMENT}:property`;
+    export const ICON_PROPERTY = `${ICON}:property`;
+    export const LABEL_PROPERTY_NAME = `${DefaultTypes.LABEL}:property:name`;
+    export const LABEL_PROPERTY_TYPE = `${DefaultTypes.LABEL}:property:type`;
+    export const LABEL_PROPERTY_MULTIPLICITY = `${DefaultTypes.LABEL}:property:multiplicity`;
+
     // COMMONS
-    export const LABEL_NAME = `${BaseTypes.LABEL}:name`;
+    /* export const LABEL_NAME = `${BaseTypes.LABEL}:name`;
     export const LABEL_TEXT = `${BaseTypes.LABEL}:text`;
     export const LABEL_EDGE_NAME = `${BaseTypes.LABEL}:edge-name`;
-    export const LABEL_EDGE_MULTIPLICITY = `${BaseTypes.LABEL}:edge-multiplicity`;
+    export const LABEL_EDGE_MULTIPLICITY = `${BaseTypes.LABEL}:edge-multiplicity`;*/
     export const LABEL_ICON = `${BaseTypes.LABEL}:${BaseTypes.ICON}`;
 
     // CLASS DIAGRAM
-    export const ICON_CLASS = `${BaseTypes.ICON}:class`;
+    /* export const ICON_CLASS = `${BaseTypes.ICON}:class`;
     export const CLASS = `${BaseTypes.NODE}:class`;
     export const ASSOCIATION = `${BaseTypes.EDGE}:association`;
-    export const PROPERTY = `${BaseTypes.NODE}:property`;
+    export const PROPERTY = `${BaseTypes.NODE}:property`;*/
 
     // OBJECT DIAGRAM
     export const ICON_OBJECT = `${BaseTypes.ICON}:object`;
@@ -56,7 +72,7 @@ export namespace UmlTypes {
     export const PIN_PORT = `${BaseTypes.NODE}:pinport`;
     export const CENTRALBUFFER = `${BaseTypes.NODE}:centralbuffer`;
     export const DATASTORE = `${BaseTypes.NODE}:datastore`;
-    export const EXCEPTIONHANDLER =`${BaseTypes.EDGE}:exceptionhandler`;
+    export const EXCEPTIONHANDLER = `${BaseTypes.EDGE}:exceptionhandler`;
     export const INTERRUPTIBLEREGION = `${BaseTypes.NODE}:interruptibleregion`;
     export const CONDITION = `${BaseTypes.NODE}:condition`;
     export const COMMENT = `${BaseTypes.NODE}:comment`;

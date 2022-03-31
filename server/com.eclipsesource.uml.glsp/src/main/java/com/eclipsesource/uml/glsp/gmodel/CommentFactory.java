@@ -10,11 +10,10 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.gmodel;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
-
+import com.eclipsesource.uml.glsp.model.UmlModelState;
+import com.eclipsesource.uml.glsp.util.UmlConfig.CSS;
+import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.eclipsesource.uml.modelserver.unotation.Shape;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.graph.GCompartment;
 import org.eclipse.glsp.graph.GEdge;
@@ -29,10 +28,10 @@ import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.uml2.uml.Comment;
 import org.eclipse.uml2.uml.Element;
 
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.util.UmlConfig.CSS;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
-import com.eclipsesource.uml.modelserver.unotation.Shape;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class CommentFactory {
 
@@ -46,16 +45,16 @@ public class CommentFactory {
       List<GModelElement> result = new ArrayList<>();
       result.add(createCommentNode(comment));
       result
-         .addAll(comment.getAnnotatedElements().stream().map(e -> createCommentEdge(comment, e)).collect(Collectors.toList()));
+            .addAll(comment.getAnnotatedElements().stream().map(e -> createCommentEdge(comment, e)).collect(Collectors.toList()));
       return result;
    }
 
    private GNode createCommentNode(final Comment comment) {
       GNodeBuilder b = new GNodeBuilder(Types.COMMENT) //
-         .id(toId(comment)) //
-         .layout(GConstants.Layout.VBOX) //
-         .addCssClass(CSS.NODE) //
-         .add(buildHeader(comment));
+            .id(toId(comment)) //
+            .layout(GConstants.Layout.VBOX) //
+            .addCssClass(CSS.NODE) //
+            .add(buildHeader(comment));
 
       applyShapeData(comment, b);
       return b.build();
@@ -73,13 +72,13 @@ public class CommentFactory {
    }
 
    protected GCompartment buildHeader(final Comment comment) {
-      return new GCompartmentBuilder(Types.COMP_HEADER) //
-         .layout("hbox") //
-         .id(toId(comment) + "_header")
-         .add(new GLabelBuilder(Types.LABEL_NAME) //
-            .id(toId(comment) + "_header_label").text(comment.getBody()) //
-            .build()) //
-         .build();
+      return new GCompartmentBuilder(Types.COMPARTMENT_HEADER) //
+            .layout("hbox") //
+            .id(toId(comment) + "_header")
+            .add(new GLabelBuilder(Types.LABEL_NAME) //
+                  .id(toId(comment) + "_header_label").text(comment.getBody()) //
+                  .build()) //
+            .build();
    }
 
    private GEdge createCommentEdge(final Comment comment, final Element target) {
@@ -87,11 +86,11 @@ public class CommentFactory {
       String targetId = toId(target);
 
       GEdgeBuilder builder = new GEdgeBuilder(Types.COMMENT_EDGE) //
-         .id(toId(comment) + "_link_" + toId(target)) //
-         .addCssClass(CSS.EDGE) //
-         .sourceId(sourceId) //
-         .targetId(targetId) //
-         .routerKind(GConstants.RouterKind.POLYLINE);
+            .id(toId(comment) + "_link_" + toId(target)) //
+            .addCssClass(CSS.EDGE) //
+            .sourceId(sourceId) //
+            .targetId(targetId) //
+            .routerKind(GConstants.RouterKind.POLYLINE);
 
       return builder.build();
    }

@@ -12,7 +12,8 @@ package com.eclipsesource.uml.glsp.util;
 
 public final class UmlIDUtil {
 
-   private UmlIDUtil() {}
+   private UmlIDUtil() {
+   }
 
    public static String LABEL_NAME_SUFFIX = "_label_name";
    public static String LABEL_MULTIIPLICITY_SUFFIX = "_label_multiplicity";
@@ -20,6 +21,13 @@ public final class UmlIDUtil {
    public static String HEADER_ICON_SUFFIX = "_header_icon";
    public static String HEADER_LABEL_SUFFIX = "_header_label";
    public static String CHILD_COMPARTMENT_SUFFIX = "_childCompartment";
+
+   // NEW LABELS
+   public static String PROPERTY_SUFFIX = "_property";
+   public static String PROPERTY_ICON_SUFFIX = "_property_icon";
+   public static String PROPERTY_LABEL_NAME_SUFFIX = "_property_label_name";
+   public static String PROPERTY_LABEL_TYPE_SUFFIX = "_property_label_type";
+   public static String PROPERTY_LABEL_MULTIPLICITY_SUFFIX = "_property_label_multiplicity";
 
    // ACTIVITY
    public static String LABEL_GUARD_SUFFIX = "_guard";
@@ -117,6 +125,46 @@ public final class UmlIDUtil {
 
    public static String getElementIdFromLabelTrigger(final String labelNameId) {
       return labelNameId.replace(LABEL_TRIGGER_SUFFIX, "");
+   }
+
+   public static String createPropertyId(final String containerId) {
+      return containerId + PROPERTY_SUFFIX;
+   }
+
+   public static String getElementIdFromProperty(final String propertyId) {
+      return propertyId.replace(PROPERTY_SUFFIX, "");
+   }
+
+   public static String createPropertyIconId(final String containerId) {
+      return containerId + PROPERTY_ICON_SUFFIX;
+   }
+
+   public static String getElementIdFromPropertyIcon(final String propertyIconId) {
+      return propertyIconId.replace(PROPERTY_ICON_SUFFIX, "");
+   }
+
+   public static String createPropertyLabelNameId(final String containerId) {
+      return containerId + PROPERTY_LABEL_NAME_SUFFIX;
+   }
+
+   public static String getElementIdFromPropertyLabelName(final String propertyLabelId) {
+      return propertyLabelId.replace(PROPERTY_LABEL_NAME_SUFFIX, "");
+   }
+
+   public static String createPropertyLabelTypeId(final String containerId) {
+      return containerId + PROPERTY_LABEL_TYPE_SUFFIX;
+   }
+
+   public static String getElementIdFromPropertyLabelType(final String propertyLabelId) {
+      return propertyLabelId.replace(PROPERTY_LABEL_TYPE_SUFFIX, "");
+   }
+
+   public static String createPropertyLabelMultiplicityId(final String containerId) {
+      return containerId + PROPERTY_LABEL_MULTIPLICITY_SUFFIX;
+   }
+
+   public static String getElementIdFromPropertyLabelMultiplicity(final String propertyLabelId) {
+      return propertyLabelId.replace(PROPERTY_LABEL_MULTIPLICITY_SUFFIX, "");
    }
 
 }

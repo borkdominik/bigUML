@@ -37,9 +37,7 @@ import com.eclipsesource.uml.modelserver.commands.classdiagram.association.SetAs
 import com.eclipsesource.uml.modelserver.commands.classdiagram.clazz.AddClassCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.classdiagram.clazz.RemoveClassCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.classdiagram.clazz.SetClassNameCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.classdiagram.property.AddPropertyCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.classdiagram.property.RemovePropertyCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.classdiagram.property.SetPropertyCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.classdiagram.property.*;
 import com.eclipsesource.uml.modelserver.commands.commons.contributions.ChangeBoundsCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.commons.contributions.ChangeRoutingPointsCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.commons.contributions.RenameElementCommandContribution;
@@ -93,8 +91,6 @@ import com.eclipsesource.uml.modelserver.commands.statemachinediagram.transition
 import com.eclipsesource.uml.modelserver.commands.usecasediagram.actor.AddActorCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.usecasediagram.actor.RemoveActorCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.usecasediagram.actor.SetActorNameCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.usecasediagram.association.AddUseCaseAssociationCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.usecasediagram.association.RemoveUseCaseAssociationCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.usecasediagram.component.AddComponentCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.usecasediagram.component.RemoveComponentCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.usecasediagram.component.SetComponentNameCommandContribution;
@@ -160,13 +156,16 @@ public class UmlModelServerModule extends DefaultModelServerModule {
       // Property
       binding.put(AddPropertyCommandContribution.TYPE, AddPropertyCommandContribution.class);
       binding.put(RemovePropertyCommandContribution.TYPE, RemovePropertyCommandContribution.class);
-      binding.put(SetPropertyCommandContribution.TYPE, SetPropertyCommandContribution.class);
+      //binding.put(SetPropertyCommandContribution.TYPE, SetPropertyCommandContribution.class);
+      binding.put(SetPropertyNameCommandContribution.TYPE, SetPropertyNameCommandContribution.class);
+      binding.put(SetPropertyTypeCommandContribution.TYPE, SetPropertyTypeCommandContribution.class);
+      binding.put(SetPropertyBoundsCommandContribution.TYPE, SetPropertyBoundsCommandContribution.class);
       // Association
       binding.put(AddAssociationCommandContribution.TYPE, AddAssociationCommandContribution.class);
       binding.put(RemoveAssociationCommandContribution.TYPE, RemoveAssociationCommandContribution.class);
       binding.put(SetAssociationEndNameCommandContribution.TYPE, SetAssociationEndNameCommandContribution.class);
       binding.put(SetAssociationEndMultiplicityCommandContribution.TYPE,
-         SetAssociationEndMultiplicityCommandContribution.class);
+            SetAssociationEndMultiplicityCommandContribution.class);
 
       // ACTIVITY DIAGRAM
       binding.put(RenameElementCommandContribution.TYPE, RenameElementCommandContribution.class);
@@ -227,8 +226,8 @@ public class UmlModelServerModule extends DefaultModelServerModule {
       binding.put(AddGeneralizationCommandContribution.TYPE, AddGeneralizationCommandContribution.class);
       binding.put(RemoveGeneralizationCommandContribution.TYPE, RemoveGeneralizationCommandContribution.class);
       // Association
-      binding.put(AddUseCaseAssociationCommandContribution.TYPE, AddUseCaseAssociationCommandContribution.class);
-      binding.put(RemoveUseCaseAssociationCommandContribution.TYPE, RemoveUseCaseAssociationCommandContribution.class);
+      /*binding.put(AddUseCaseAssociationCommandContribution.TYPE, AddUseCaseAssociationCommandContribution.class);
+      binding.put(RemoveUseCaseAssociationCommandContribution.TYPE, RemoveUseCaseAssociationCommandContribution.class);*/
 
       // STATEMACHINE DIAGRAM
       // StateMachine

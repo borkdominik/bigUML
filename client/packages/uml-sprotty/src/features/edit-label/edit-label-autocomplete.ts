@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2021 EclipseSource and others.
+ * Copyright (c) 2021-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -8,13 +8,13 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-import { GLSPActionDispatcher, TYPES } from "@eclipse-glsp/client/lib";
-import { inject, injectable } from "inversify";
-import { EditLabelUI, getAbsoluteClientBounds, getZoom, isSizeable, SModelRoot } from "sprotty/lib";
-import { matchesKeystroke } from "sprotty/lib/utils/keyboard";
+import {GLSPActionDispatcher, TYPES} from "@eclipse-glsp/client/lib";
+import {inject, injectable} from "inversify";
+import {EditLabelUI, SModelRoot} from "sprotty/lib";
+import {matchesKeystroke} from "sprotty/lib/utils/keyboard";
 
-import { UmlTypes } from "../../utils";
-import { CallBehaviorsAction, GetBehaviorsAction } from "./action-definitions";
+import {UmlTypes} from "../../utils";
+import {GetTypesAction, ReturnTypesAction} from "./action-definitions";
 
 @injectable()
 export class EditLabelUIAutocomplete extends EditLabelUI {
@@ -52,8 +52,7 @@ export class EditLabelUIAutocomplete extends EditLabelUI {
     }
 
     protected handleBlur(): void {
-        // TODO - is endsWith too strict?
-        if (this.editControl.value && !this.editControl.value.trim().endsWith(":")) {
+        if (this.editControl.value) {
             window.setTimeout(() => this.applyLabelEdit(), 200);
         } else {
             this.hide();
@@ -87,13 +86,7 @@ export class EditLabelUIAutocomplete extends EditLabelUI {
     }
 
     protected createAutocomplete(): void {
-        const input: string = this.inputElement.value;
-        let val = input.trim();
-        if (input.includes(":")) {
-            val = input.split(":")[1].trim();
-        } else {
-            return;
-        }
+        const input = this.inputElement.value;
 
         this.closeAllLists();
         this.currentFocus = -1;
@@ -103,22 +96,17 @@ export class EditLabelUIAutocomplete extends EditLabelUI {
         this.listContainer.setAttribute("class", "autocomplete-items");
         this.outerDiv.appendChild(this.listContainer);
 
-        // create autocomlete items starting with input
+        // create autocomplete items starting with input
         for (let i = 0; i < this.types.length; i++) {
-            if (this.types[i].substr(0, val.length).toLowerCase() === val.toLowerCase()) {
+            if (this.types[i].substring(0, input.length).toLowerCase() === input.toLowerCase()) {
                 const element = document.createElement("div");
                 element.setAttribute("class", "autocomplete-item");
-                element.innerHTML = "<strong>" + this.types[i].substr(0, val.length) + "</strong>";
-                element.innerHTML += this.types[i].substr(val.length);
+                element.innerHTML = "<strong>" + this.types[i].substring(0, input.length) + "</strong>";
+                element.innerHTML += this.types[i].substring(input.length);
                 element.innerHTML += "<input type='hidden' value='" + this.types[i] + "'>";
-                element.addEventListener("click", e => {
+                element.addEventListener("click", () => {
                     // change the type of the label
-                    /* let name: string = this.inputElement.value;
-                    if (name.includes(":")) {
-                        name = name.split(":")[0];
-                    }
-                    this.inputElement.value = name + ": " + element.getElementsByTagName("input")[0].value; */
-                    this.inputElement.value = (e.target as HTMLElement).innerText;
+                    this.inputElement.value = element.getElementsByTagName("input")[0].value;
                     this.closeAllLists();
                 });
                 this.listContainer.appendChild(element);
@@ -171,52 +159,17 @@ export class EditLabelUIAutocomplete extends EditLabelUI {
         super.onBeforeShow(containerElement, root, ...contextElementIds);
 
         // request possible element types
-        /* this.actionDispatcher.requestUntil(new GetTypesAction()).then(response => {
+        this.actionDispatcher.requestUntil(new GetTypesAction()).then(response => {
             if (response) {
                 const action: ReturnTypesAction = response as ReturnTypesAction;
                 this.types = action.types;
             }
-        }); */
-        this.actionDispatcher.requestUntil(new GetBehaviorsAction()).then(response => {
-            if (response) {
-                const action: CallBehaviorsAction = response as CallBehaviorsAction;
-                this.types = action.behaviors;
-            }
         });
-    }
-
-    // Override the default behavior. Let the edit control completely overlap
-    // the label node, when the label has a defined size (rather than using
-    // an arbitrary fixed width).
-    // FIXME Move to Sprotty?
-    protected setPosition(containerElement: HTMLElement): void {
-        let x = 0;
-        let y = 0;
-        let width = 100;
-        let height = 20;
-
-        if (this.label) {
-            const zoom = getZoom(this.label);
-            const bounds = getAbsoluteClientBounds(this.label, this.domHelper, this.viewerOptions);
-            x = bounds.x + (this.label.editControlPositionCorrection ? this.label.editControlPositionCorrection.x : 0) * zoom;
-            y = bounds.y + (this.label.editControlPositionCorrection ? this.label.editControlPositionCorrection.y : 0) * zoom;
-            height = (this.label.editControlDimension ? this.label.editControlDimension.height :
-                (isSizeable(this.label) ? this.label.bounds.height : height)) * zoom;
-            width = (this.label.editControlDimension ? this.label.editControlDimension.width :
-                (isSizeable(this.label) ? this.label.bounds.width : width)) * zoom;
-        }
-
-        containerElement.style.left = `${x}px`;
-        containerElement.style.top = `${y}px`;
-        containerElement.style.width = `${width}px`;
-        this.editControl.style.width = `${width}px`;
-        containerElement.style.height = `${height}px`;
-        this.editControl.style.height = `${height}px`;
     }
 
     protected isAutoCompleteEnabled(): boolean {
         if (this.label) {
-            return this.label.type === UmlTypes.CALL_REF && this.showAutocomplete;
+            return this.label.type === UmlTypes.LABEL_PROPERTY_TYPE && this.showAutocomplete;
         }
         return false;
     }

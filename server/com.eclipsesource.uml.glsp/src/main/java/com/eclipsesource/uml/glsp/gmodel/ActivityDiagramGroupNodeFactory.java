@@ -10,11 +10,10 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.gmodel;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
-
+import com.eclipsesource.uml.glsp.model.UmlModelState;
+import com.eclipsesource.uml.glsp.util.UmlConfig.CSS;
+import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.eclipsesource.uml.modelserver.unotation.Shape;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.graph.GCompartment;
 import org.eclipse.glsp.graph.GNode;
@@ -28,10 +27,10 @@ import org.eclipse.uml2.uml.ActivityGroup;
 import org.eclipse.uml2.uml.ActivityPartition;
 import org.eclipse.uml2.uml.InterruptibleActivityRegion;
 
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.util.UmlConfig.CSS;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
-import com.eclipsesource.uml.modelserver.unotation.Shape;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ActivityDiagramGroupNodeFactory extends AbstractGModelFactory<ActivityGroup, GNode> {
 
@@ -57,11 +56,11 @@ public class ActivityDiagramGroupNodeFactory extends AbstractGModelFactory<Activ
       children.addAll(partition.getNodes());
 
       GNodeBuilder b = new GNodeBuilder(Types.PARTITION) //
-         .id(toId(partition)) //
-         .layout(GConstants.Layout.VBOX) //
-         .addCssClass(CSS.NODE) //
-         .add(buildHeader(partition))
-         .add(createLabeledChildrenCompartment(children, partition));
+            .id(toId(partition)) //
+            .layout(GConstants.Layout.VBOX) //
+            .addCssClass(CSS.NODE) //
+            .add(buildHeader(partition))
+            .add(createLabeledChildrenCompartment(children, partition));
 
       applyShapeData(partition, b);
       return b.build();
@@ -72,23 +71,23 @@ public class ActivityDiagramGroupNodeFactory extends AbstractGModelFactory<Activ
       children.addAll(region.getNodes());
 
       GNodeBuilder b = new GNodeBuilder(Types.INTERRUPTIBLEREGION) //
-         .id(toId(region)) //
-         .layout(GConstants.Layout.VBOX) //
-         .addCssClass(CSS.NODE)
-         .add(createLabeledChildrenCompartment(children, region));
+            .id(toId(region)) //
+            .layout(GConstants.Layout.VBOX) //
+            .addCssClass(CSS.NODE)
+            .add(createLabeledChildrenCompartment(children, region));
 
       applyShapeData(region, b);
       return b.build();
    }
 
    protected GCompartment buildHeader(final ActivityGroup activityGroup) {
-      return new GCompartmentBuilder(Types.COMP_HEADER) //
-         .layout("hbox") //
-         .id(toId(activityGroup) + "_header") //
-         .add(new GLabelBuilder(Types.LABEL_NAME) //
-            .id(toId(activityGroup) + "_header_label").text(activityGroup.getName()) //
-            .build()) //
-         .build();
+      return new GCompartmentBuilder(Types.COMPARTMENT_HEADER) //
+            .layout("hbox") //
+            .id(toId(activityGroup) + "_header") //
+            .add(new GLabelBuilder(Types.LABEL_NAME) //
+                  .id(toId(activityGroup) + "_header_label").text(activityGroup.getName()) //
+                  .build()) //
+            .build();
    }
 
    protected void applyShapeData(final ActivityGroup activityGroup, final GNodeBuilder builder) {
@@ -103,15 +102,15 @@ public class ActivityDiagramGroupNodeFactory extends AbstractGModelFactory<Activ
    }
 
    protected GCompartment createLabeledChildrenCompartment(final Collection<? extends EObject> children,
-      final ActivityGroup parent) {
+                                                           final ActivityGroup parent) {
       return new GCompartmentBuilder(Types.COMP) //
-         .id(toId(parent) + "_childCompartment").layout(GConstants.Layout.VBOX) //
-         .layoutOptions(new GLayoutOptions() //
-            .hAlign(GConstants.HAlign.LEFT) //
-            .resizeContainer(true)) //
-         .addAll(children.stream() //
-            .map(parentFactory::create)
-            .collect(Collectors.toList()))
-         .build();
+            .id(toId(parent) + "_childCompartment").layout(GConstants.Layout.VBOX) //
+            .layoutOptions(new GLayoutOptions() //
+                  .hAlign(GConstants.HAlign.LEFT) //
+                  .resizeContainer(true)) //
+            .addAll(children.stream() //
+                  .map(parentFactory::create)
+                  .collect(Collectors.toList()))
+            .build();
    }
 }

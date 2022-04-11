@@ -10,25 +10,24 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.palette;
 
-import java.util.List;
-import java.util.Map;
-
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;
+import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.common.collect.Lists;
 import org.apache.log4j.Logger;
 import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSBasicOperationHandler;
 import org.eclipse.glsp.server.actions.TriggerEdgeCreationAction;
 import org.eclipse.glsp.server.actions.TriggerNodeCreationAction;
 import org.eclipse.glsp.server.features.toolpalette.PaletteItem;
 import org.eclipse.glsp.server.features.toolpalette.ToolPaletteItemProvider;
-
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
-import com.google.common.collect.Lists;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 
+import java.util.List;
+import java.util.Map;
+
 public class UmlToolPaletteItemProvider extends EMSBasicOperationHandler<CreateNodeOperation, UmlModelServerAccess>
-        implements ToolPaletteItemProvider {
+      implements ToolPaletteItemProvider {
 
    private static Logger LOGGER = Logger.getLogger(UmlToolPaletteItemProvider.class.getSimpleName());
 
@@ -43,7 +42,7 @@ public class UmlToolPaletteItemProvider extends EMSBasicOperationHandler<CreateN
       System.out.println("------- CURRENT DIAGRAM TYPE: " + diagramType + " ----------");
 
       List<PaletteItem> activityDiagram = Lists.newArrayList(classifiersActivity(), featuresActivity(),
-              relationsActivity(), controlNodesActivity(), dataActivity(), annotations(), comment());
+            relationsActivity(), controlNodesActivity(), dataActivity(), annotations(), comment());
 
       List<PaletteItem> classDiagram = Lists.newArrayList(classifiersClass(), relationsClass(), featuresClass(), comment());
 
@@ -54,7 +53,7 @@ public class UmlToolPaletteItemProvider extends EMSBasicOperationHandler<CreateN
       List<PaletteItem> useCaseDiagram = Lists.newArrayList(classifiersUseCase(), relationsUseCase(), comment());
 
       List<PaletteItem> stateMachineDiagram = Lists.newArrayList(classifiersStateMachine(), behaviourStateMachine(),
-              relationsStateMachine(), comment());
+            relationsStateMachine(), comment());
 
       LOGGER.info("Create palette");
 
@@ -142,7 +141,7 @@ public class UmlToolPaletteItemProvider extends EMSBasicOperationHandler<CreateN
       PaletteItem createCall = node(Types.CALL, "Call", "umlcall");
 
       List<PaletteItem> features = Lists.newArrayList(createOpaque, createAcceptEvent, createTimeEvent,
-         createSendSignal, createCall);
+            createSendSignal, createCall);
 
       return PaletteItem.createPaletteGroup("uml.feature", "Actions", features, "symbol-property");
    }
@@ -171,11 +170,11 @@ public class UmlToolPaletteItemProvider extends EMSBasicOperationHandler<CreateN
    private PaletteItem controlNodesActivity() {
 
       List<PaletteItem> controlNodes = Lists.newArrayList(
-         node(Types.INITIALNODE, "Initial", "umlinitial"),
-         node(Types.FINALNODE, "Final", "umlfinal"),
-         node(Types.FLOWFINALNODE, "Flow Final", "umlflowfinal"),
-         node(Types.DECISIONMERGENODE, "Decision/Merge", "umldecision"),
-         node(Types.FORKJOINNODE, "Fork/Join", "umlfork"));
+            node(Types.INITIALNODE, "Initial", "umlinitial"),
+            node(Types.FINALNODE, "Final", "umlfinal"),
+            node(Types.FLOWFINALNODE, "Flow Final", "umlflowfinal"),
+            node(Types.DECISIONMERGENODE, "Decision/Merge", "umldecision"),
+            node(Types.FORKJOINNODE, "Fork/Join", "umlfork"));
 
       return PaletteItem.createPaletteGroup("uml.feature", "Control Nodes", controlNodes, "symbol-property");
    }
@@ -205,20 +204,21 @@ public class UmlToolPaletteItemProvider extends EMSBasicOperationHandler<CreateN
       PaletteItem createArtifact = node(Types.ARTIFACT, "Artifact", "umlartifact");
       PaletteItem createDevice = node(Types.DEVICE, "Device", "umldevice");
       PaletteItem createExecutionEnvironment = node(Types.EXECUTION_ENVIRONMENT, "Execution Environment",
-              "umlexecutionenvironment");
+            "umlexecutionenvironment");
       PaletteItem createDeploymentSpecification = node(Types.DEPLOYMENT_SPECIFICATION, "Deployment Specification",
-              "umldeploymentspecification");
+            "umldeploymentspecification");
+      PaletteItem createComponent = node(Types.DEPLOYMENT_COMPONENT, "Component", "umlcomponent");
 
       List<PaletteItem> classifiers = Lists.newArrayList(
-              createDeploymentNode, createArtifact, createDevice, createExecutionEnvironment,
-              createDeploymentSpecification
+            createDeploymentNode, createArtifact, createDevice, createExecutionEnvironment,
+            createDeploymentSpecification, createComponent
       );
       return PaletteItem.createPaletteGroup("uml.classifier", "Container", classifiers, "symbol-property");
    }
 
    private PaletteItem relationsDeployment() {
       PaletteItem createCommunicationPath = edge(Types.COMMUNICATION_PATH, "Communication Path",
-              "umlcommunicationpath");
+            "umlcommunicationpath");
       PaletteItem createDeployment = edge(Types.DEPLOYMENT, "Deployment", "umldeployment");
 
       List<PaletteItem> relations = Lists.newArrayList(createCommunicationPath, createDeployment);
@@ -243,22 +243,22 @@ public class UmlToolPaletteItemProvider extends EMSBasicOperationHandler<CreateN
       PaletteItem createExitPoint = node(Types.ENTRY_POINT, "Exit Point", "umlexitpoint");
 
       List<PaletteItem> classifiers = Lists.newArrayList(
-              createStateMachine, createState, createFinalState, createChoice, createFork, createInitialState,
-              createJoin, createJunction, createDeepHistory, createShallowHistory, createEntryPoint, createExitPoint
+            createStateMachine, createState, createFinalState, createChoice, createFork, createInitialState,
+            createJoin, createJunction, createDeepHistory, createShallowHistory, createEntryPoint, createExitPoint
       );
       return PaletteItem.createPaletteGroup("uml.classifier", "Container", classifiers, "symbol-property");
    }
 
    private PaletteItem behaviourStateMachine() {
       PaletteItem createEntryActivity = node(Types.STATE_ENTRY_ACTIVITY, "State Entry Activity",
-              "umlstateactivity");
+            "umlstateactivity");
       PaletteItem createDoActivity = node(Types.STATE_DO_ACTIVITY, "State Do Activity",
-              "umlstateactivity");
+            "umlstateactivity");
       PaletteItem createExitActivity = node(Types.STATE_EXIT_ACTIVITY, "State Exit Activity",
-              "umlstateactivity");
+            "umlstateactivity");
 
       List<PaletteItem> behaviour = Lists.newArrayList(
-              createEntryActivity, createDoActivity, createExitActivity
+            createEntryActivity, createDoActivity, createExitActivity
       );
       return PaletteItem.createPaletteGroup("uml.feature", "Behaviour", behaviour, "symbol-property");
    }
@@ -288,6 +288,7 @@ public class UmlToolPaletteItemProvider extends EMSBasicOperationHandler<CreateN
 
    // just part of the workaround which was used to get the current diagram type
    @Override
-   public void executeOperation(CreateNodeOperation createNodeOperation, UmlModelServerAccess modelServerAccess) {}
+   public void executeOperation(CreateNodeOperation createNodeOperation, UmlModelServerAccess modelServerAccess) {
+   }
 
 }

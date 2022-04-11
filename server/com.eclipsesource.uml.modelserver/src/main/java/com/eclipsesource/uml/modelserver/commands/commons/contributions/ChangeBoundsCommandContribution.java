@@ -10,6 +10,8 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.commons.contributions;
 
+import com.eclipsesource.uml.modelserver.commands.commons.notation.ChangeBoundsCommand;
+import com.eclipsesource.uml.modelserver.commands.util.UmlNotationCommandUtil;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -19,9 +21,6 @@ import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
 import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
 import org.eclipse.glsp.graph.GDimension;
 import org.eclipse.glsp.graph.GPoint;
-
-import com.eclipsesource.uml.modelserver.commands.commons.notation.ChangeBoundsCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlNotationCommandUtil;
 
 public class ChangeBoundsCommandContribution extends UmlNotationCommandContribution {
 
@@ -33,29 +32,29 @@ public class ChangeBoundsCommandContribution extends UmlNotationCommandContribut
       changeBoundsCommand.getProperties().put(SEMANTIC_PROXI_URI, semanticUri);
       changeBoundsCommand.getProperties().put(POSITION_X, String.valueOf(position.getX()));
       changeBoundsCommand.getProperties().put(POSITION_Y, String.valueOf(position.getY()));
-      changeBoundsCommand.getProperties().put(WIDTH, String.valueOf(size.getWidth()));
-      changeBoundsCommand.getProperties().put(HEIGHT, String.valueOf(size.getHeight()));
+      // FIXME: height and weight are interchanged!!!
+      changeBoundsCommand.getProperties().put(WIDTH, String.valueOf(size.getWidth() * 0.50));
+      changeBoundsCommand.getProperties().put(HEIGHT, String.valueOf(size.getHeight() * 4));
       return changeBoundsCommand;
    }
 
    @Override
    protected CompoundCommand toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
-      throws DecodingException {
+         throws DecodingException {
 
       CompoundCommand changeBoundsCommand = new CompoundCommand();
 
       if (command instanceof CCompoundCommand) {
 
          ((CCompoundCommand) command).getCommands().forEach(cmd -> {
+            // parent element
             String semanticProxyUri = cmd.getProperties().get(SEMANTIC_PROXI_URI);
-            System.out.println("PROXY: " + semanticProxyUri);
             GPoint elementPosition = UmlNotationCommandUtil.getGPoint(
-               cmd.getProperties().get(POSITION_X), cmd.getProperties().get(POSITION_Y));
+                  cmd.getProperties().get(POSITION_X), cmd.getProperties().get(POSITION_Y));
             GDimension elementSize = UmlNotationCommandUtil.getGDimension(cmd.getProperties().get(HEIGHT),
-               cmd.getProperties().get(WIDTH));
-
+                  cmd.getProperties().get(WIDTH));
             changeBoundsCommand
-               .append(new ChangeBoundsCommand(domain, modelUri, semanticProxyUri, elementPosition, elementSize));
+                  .append(new ChangeBoundsCommand(domain, modelUri, semanticProxyUri, elementPosition, elementSize));
          });
       }
       return changeBoundsCommand;

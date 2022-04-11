@@ -115,6 +115,7 @@ public final class UmlConfig {
       public static final String DEVICE = NODE + "device";
       public static final String ICON_DEPLOYMENT_SPECIFICATION = ICON + "deploymentspecification";
       public static final String DEPLOYMENT_SPECIFICATION = NODE + "deploymentspecification";
+      public static final String DEPLOYMENT_COMPONENT = NODE + "deploymentcomponent";
 
       //STATE MACHINE
       public static final String ICON_STATE_MACHINE = ICON + "state-machine";

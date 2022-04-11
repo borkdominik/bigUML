@@ -47,6 +47,9 @@ import com.eclipsesource.uml.modelserver.commands.deploymentdiagram.artifact.Set
 import com.eclipsesource.uml.modelserver.commands.deploymentdiagram.communicationpath.AddCommunicationPathCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.deploymentdiagram.communicationpath.RemoveCommunicationPathCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.deploymentdiagram.communicationpath.SetCommunicationPathEndNameCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.deploymentdiagram.component.AddDeploymentComponentCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.deploymentdiagram.component.RemoveDeploymentComponentCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.deploymentdiagram.component.SetDeploymentComponentNameCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.deploymentdiagram.deploymentedge.AddDeploymentCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.deploymentdiagram.deploymentedge.RemoveDeploymentCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.deploymentdiagram.deploymentspecification.AddDeploymentSpecificationCommandContribution;
@@ -285,6 +288,10 @@ public class UmlModelServerModule extends DefaultModelServerModule {
       binding.put(AddExecutionEnvironmentCommandContribution.TYPE, AddExecutionEnvironmentCommandContribution.class);
       binding.put(RemoveExecutionEnvironmentCommandContribution.TYPE, RemoveExecutionEnvironmentCommandContribution.class);
       binding.put(SetExecutionEnvironmentNameCommandContribution.TYPE, SetExecutionEnvironmentNameCommandContribution.class);
+      // Component
+      binding.put(AddDeploymentComponentCommandContribution.TYPE, AddDeploymentComponentCommandContribution.class);
+      binding.put(RemoveDeploymentComponentCommandContribution.TYPE, RemoveDeploymentComponentCommandContribution.class);
+      binding.put(SetDeploymentComponentNameCommandContribution.TYPE, SetDeploymentComponentNameCommandContribution.class);
 
       // OBJECT DIAGRAM
       // Object

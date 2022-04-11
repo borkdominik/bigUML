@@ -45,6 +45,7 @@ public abstract class DiagramFactory extends AbstractGModelFactory<EObject, GMod
    protected final StateMachineDiagramPortFactory stateMachinePortFactory;
 
    protected final DeploymentDiagramNodeFactory deploymentNodeFactory;
+   protected final DeploymentDiagramChildNodeFactory deploymentChildNodeFactory;
    protected final DeploymentDiagramEdgeFactory deploymentEdgeFactory;
 
    protected final ObjectDiagramNodeFactory objectDiagramNodeFactory;
@@ -80,6 +81,7 @@ public abstract class DiagramFactory extends AbstractGModelFactory<EObject, GMod
       stateMachinePortFactory = new StateMachineDiagramPortFactory(modelState);
       // DEPLOYMENT
       deploymentNodeFactory = new DeploymentDiagramNodeFactory(modelState, this);
+      deploymentChildNodeFactory = new DeploymentDiagramChildNodeFactory(modelState);
       deploymentEdgeFactory = new DeploymentDiagramEdgeFactory(modelState);
 
       getOrCreateRoot();

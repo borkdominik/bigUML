@@ -137,6 +137,7 @@ export default function createContainer(widgetId: string): Container {
         // CLASS DIAGRAM
         configureModelElement(context, UmlTypes.ICON_CLASS, IconClass, IconView);
         configureModelElement(context, UmlTypes.CLASS, LabeledNode, ClassNodeView);
+        configureModelElement(context, UmlTypes.INTERFACE, LabeledNode, ClassNodeView);
         configureModelElement(context, UmlTypes.ASSOCIATION, SEdge, PolylineEdgeView);
         configureModelElement(context, UmlTypes.CLASS_GENERALIZATION, SEdge, PolylineEdgeView);
         // configureModelElement(context, UmlTypes.PROPERTY, SLabelNodeProperty, LabelNodeView);

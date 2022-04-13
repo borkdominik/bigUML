@@ -26,9 +26,7 @@ import org.eclipse.glsp.graph.builder.impl.GNodeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.uml2.uml.Class;
-import org.eclipse.uml2.uml.Classifier;
-import org.eclipse.uml2.uml.Element;
-import org.eclipse.uml2.uml.Property;
+import org.eclipse.uml2.uml.*;
 
 import java.util.Collection;
 import java.util.List;
@@ -48,6 +46,8 @@ public class ClassDiagramNodeFactory extends AbstractGModelFactory<Classifier, G
    public GNode create(final Classifier classifier) {
       if (classifier instanceof Class) {
          return createClassNode((Class) classifier);
+      } else if (classifier instanceof Interface) {
+         return createInterfaceNode((Interface) classifier);
       }
       return null;
    }
@@ -73,7 +73,7 @@ public class ClassDiagramNodeFactory extends AbstractGModelFactory<Classifier, G
       });
    }
 
-   // CLASS DIAGRAM
+   // CLASS
    protected GNode createClassNode(final Class umlClass) {
       GNodeBuilder b = new GNodeBuilder(Types.CLASS)
             .id(toId(umlClass))
@@ -84,6 +84,37 @@ public class ClassDiagramNodeFactory extends AbstractGModelFactory<Classifier, G
 
       applyShapeData(umlClass, b);
       return b.build();
+   }
+
+   // INTERFACE
+   protected GNode createInterfaceNode(final Interface umlInterface) {
+      GNodeBuilder b = new GNodeBuilder(Types.INTERFACE)
+            .id(toId(umlInterface))
+            .layout(GConstants.Layout.VBOX)
+            .addCssClass(CSS.NODE)
+            .add(buildInterfaceHeader(umlInterface));
+      applyShapeData(umlInterface, b);
+      return b.build();
+   }
+
+
+   protected GCompartment buildInterfaceHeader(final Interface umlInterface) {
+      GCompartmentBuilder interfaceHeaderBuilder = new GCompartmentBuilder(Types.COMPARTMENT_HEADER)
+            .layout(GConstants.Layout.VBOX)
+            .id(UmlIDUtil.createHeaderId(toId(umlInterface)));
+
+      GLabel typeLabel = new GLabelBuilder(Types.LABEL_NAME)
+            .id(UmlIDUtil.createHeaderLabelId(toId(umlInterface)) + "_type_header")
+            .text("«interface»")
+            .build();
+      interfaceHeaderBuilder.add(typeLabel);
+
+      GLabel interfaceHeaderLabel = new GLabelBuilder(Types.LABEL_NAME)
+            .id(UmlIDUtil.createHeaderLabelId(toId(umlInterface)))
+            .text(umlInterface.getName())
+            .build();
+      interfaceHeaderBuilder.add(interfaceHeaderLabel);
+      return interfaceHeaderBuilder.build();
    }
 
    protected GCompartment buildClassHeader(final Class umlClass) {

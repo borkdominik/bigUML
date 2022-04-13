@@ -34,6 +34,7 @@ import com.eclipsesource.uml.modelserver.commands.classdiagram.association.AddAs
 import com.eclipsesource.uml.modelserver.commands.classdiagram.association.RemoveAssociationCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.classdiagram.association.SetAssociationEndMultiplicityCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.classdiagram.association.SetAssociationEndNameCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.classdiagram.classinterface.AddInterfaceCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.classdiagram.clazz.AddClassCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.classdiagram.clazz.RemoveClassCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.classdiagram.clazz.SetClassNameCommandContribution;
@@ -172,6 +173,8 @@ public class UmlModelServerModule extends DefaultModelServerModule {
             SetAssociationEndMultiplicityCommandContribution.class);
       // Generalisation
       binding.put(AddClassGeneralizationCommandContribution.TYPE, AddClassGeneralizationCommandContribution.class);
+      // Interface
+      binding.put(AddInterfaceCommandContribution.TYPE, AddInterfaceCommandContribution.class);
 
       // ACTIVITY DIAGRAM
       binding.put(RenameElementCommandContribution.TYPE, RenameElementCommandContribution.class);

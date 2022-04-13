@@ -44,6 +44,14 @@ public class UmlClassDiagramModelFactory extends DiagramFactory {
                .collect(Collectors.toList());
          graph.getChildren().addAll(classNodes);
 
+         // Add Interfaces
+         List<GModelElement> interfaceNodes = umlModel.getPackagedElements().stream()
+               .filter(Interface.class::isInstance)
+               .map(Interface.class::cast)
+               .map(classDiagramNodeFactory::create)
+               .collect(Collectors.toList());
+         graph.getChildren().addAll(interfaceNodes);
+
          // Add Generalisations
          List<GModelElement> generalisationEdges = umlModel.getPackagedElements().stream()
                .filter(Generalization.class::isInstance)

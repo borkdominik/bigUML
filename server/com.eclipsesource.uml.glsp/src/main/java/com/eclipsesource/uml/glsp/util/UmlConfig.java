@@ -46,6 +46,7 @@ public final class UmlConfig {
       // CLASS DIAGRAM
       public static final String ICON_CLASS = ICON + "class";
       public static final String CLASS = NODE + "class";
+      public static final String INTERFACE = NODE + "interface";
       //public static final String PROPERTY = NODE + "property";
       public static final String ASSOCIATION = EDGE + "association";
       public static final String CLASS_GENERALIZATION = EDGE + "class-generalization";

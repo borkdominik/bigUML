@@ -37,6 +37,7 @@ import com.eclipsesource.uml.modelserver.commands.classdiagram.association.AddAs
 import com.eclipsesource.uml.modelserver.commands.classdiagram.association.RemoveAssociationCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.classdiagram.association.SetAssociationEndMultiplicityCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.classdiagram.association.SetAssociationEndNameCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.classdiagram.classinterface.AddInterfaceCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.classdiagram.clazz.AddClassCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.classdiagram.clazz.RemoveClassCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.classdiagram.clazz.SetClassNameCommandContribution;
@@ -218,6 +219,17 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
       CCommand setClassNameCommand = SetClassNameCommandContribution.create(getSemanticUriFragment(classToRename),
             newName);
       return this.edit(setClassNameCommand);
+   }
+
+   /*
+    * Interface
+    */
+   public CompletableFuture<Response<Boolean>> addInterface(final UmlModelState modelState,
+                                                            final Optional<GPoint> newPosition) {
+
+      CCompoundCommand adddInterfaceCompoundCommand = AddInterfaceCommandContribution
+            .create(newPosition.orElse(GraphUtil.point(0, 0)));
+      return this.edit(adddInterfaceCompoundCommand);
    }
 
    /*

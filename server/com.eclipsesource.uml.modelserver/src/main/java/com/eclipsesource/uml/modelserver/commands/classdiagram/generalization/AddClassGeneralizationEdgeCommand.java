@@ -1,4 +1,4 @@
-package com.eclipsesource.uml.modelserver.commands.usecasediagram.generalization;
+package com.eclipsesource.uml.modelserver.commands.classdiagram.generalization;
 
 import com.eclipsesource.uml.modelserver.commands.commons.notation.UmlNotationElementCommand;
 import com.eclipsesource.uml.modelserver.commands.util.UmlNotationCommandUtil;
@@ -11,24 +11,24 @@ import org.eclipse.uml2.uml.Generalization;
 
 import java.util.function.Supplier;
 
-public class AddGeneralizationEdgeCommand extends UmlNotationElementCommand {
+public class AddClassGeneralizationEdgeCommand extends UmlNotationElementCommand {
 
    protected String semanticProxyUri;
    protected Supplier<Generalization> generalizationSupplier;
 
-   private AddGeneralizationEdgeCommand(final EditingDomain domain, final URI modelUri) {
+   private AddClassGeneralizationEdgeCommand(final EditingDomain domain, final URI modelUri) {
       super(domain, modelUri);
       this.generalizationSupplier = null;
       this.semanticProxyUri = null;
    }
 
-   public AddGeneralizationEdgeCommand(final EditingDomain domain, final URI modelUri, final String semanticProxyUri) {
+   public AddClassGeneralizationEdgeCommand(final EditingDomain domain, final URI modelUri, final String semanticProxyUri) {
       this(domain, modelUri);
       this.semanticProxyUri = semanticProxyUri;
    }
 
-   public AddGeneralizationEdgeCommand(final EditingDomain domain, final URI modelUri,
-                                       final Supplier<Generalization> generalizationSupplier) {
+   public AddClassGeneralizationEdgeCommand(final EditingDomain domain, final URI modelUri,
+                                            final Supplier<Generalization> generalizationSupplier) {
       this(domain, modelUri);
       this.generalizationSupplier = generalizationSupplier;
    }

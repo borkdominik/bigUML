@@ -38,6 +38,7 @@ public class UmlDiagramConfiguration extends BaseDiagramConfiguration {
             createDefaultEdgeTypeHint(Types.COMMENT_EDGE),
             // CLASS DIAGRAM
             createDefaultEdgeTypeHint(Types.ASSOCIATION),
+            createDefaultEdgeTypeHint(Types.CLASS_GENERALIZATION),
             // OBJECT DIAGRAM
             createDefaultEdgeTypeHint(Types.LINK),
             // ACTIVITY DIAGRAM
@@ -63,6 +64,7 @@ public class UmlDiagramConfiguration extends BaseDiagramConfiguration {
       switch (elementId) {
          // CLASS DIAGRAM
          case Types.ASSOCIATION:
+         case Types.CLASS_GENERALIZATION:
             allowed = Lists.newArrayList(Types.CLASS);
             return new EdgeTypeHint(elementId, true, true, true, allowed, allowed);
          // ACTIVITY DIAGRAM

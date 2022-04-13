@@ -10,8 +10,12 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.gmodel;
 
-import java.util.ArrayList;
-
+import com.eclipsesource.uml.glsp.model.UmlModelState;
+import com.eclipsesource.uml.glsp.util.UmlConfig.CSS;
+import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.eclipsesource.uml.glsp.util.UmlIDUtil;
+import com.eclipsesource.uml.glsp.util.UmlLabelUtil;
+import com.eclipsesource.uml.modelserver.unotation.Edge;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.glsp.graph.GEdge;
 import org.eclipse.glsp.graph.GLabel;
@@ -21,16 +25,10 @@ import org.eclipse.glsp.graph.builder.impl.GEdgePlacementBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.glsp.graph.util.GraphUtil;
-import org.eclipse.uml2.uml.Association;
-import org.eclipse.uml2.uml.Property;
-import org.eclipse.uml2.uml.Relationship;
+import org.eclipse.uml2.uml.Class;
+import org.eclipse.uml2.uml.*;
 
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.util.UmlConfig.CSS;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
-import com.eclipsesource.uml.glsp.util.UmlIDUtil;
-import com.eclipsesource.uml.glsp.util.UmlLabelUtil;
-import com.eclipsesource.uml.modelserver.unotation.Edge;
+import java.util.ArrayList;
 
 public class ClassDiagramEdgeFactory extends AbstractGModelFactory<Relationship, GEdge> {
 
@@ -42,6 +40,9 @@ public class ClassDiagramEdgeFactory extends AbstractGModelFactory<Relationship,
    public GEdge create(final Relationship element) {
       if (element instanceof Association) {
          return createAssociationEdge((Association) element);
+      } else if (element instanceof Generalization) {
+         System.out.println("REACHES EDGE FACTORY");
+         return createGeneralizationEdge((Generalization) element);
       }
       return null;
    }
@@ -54,27 +55,52 @@ public class ClassDiagramEdgeFactory extends AbstractGModelFactory<Relationship,
       String targetId = toId(target);
 
       GEdgeBuilder builder = new GEdgeBuilder(Types.ASSOCIATION)
-         .id(toId(association))
-         .addCssClass(CSS.EDGE)
-         .sourceId(toId(source.getType()))
-         .targetId(toId(target.getType()))
-         .routerKind(GConstants.RouterKind.MANHATTAN);
+            .id(toId(association))
+            .addCssClass(CSS.EDGE)
+            .sourceId(toId(source.getType()))
+            .targetId(toId(target.getType()))
+            .routerKind(GConstants.RouterKind.MANHATTAN);
 
       GLabel sourceNameLabel = createEdgeNameLabel(source.getName(), UmlIDUtil.createLabelNameId(sourceId), 0.1d);
       builder.add(sourceNameLabel);
 
       GLabel sourceMultiplicityLabel = createEdgeMultiplicityLabel(UmlLabelUtil.getMultiplicity(source),
-         UmlIDUtil.createLabelMultiplicityId(sourceId), 0.1d);
+            UmlIDUtil.createLabelMultiplicityId(sourceId), 0.1d);
       builder.add(sourceMultiplicityLabel);
 
       GLabel targetNameLabel = createEdgeNameLabel(target.getName(), UmlIDUtil.createLabelNameId(targetId), 0.9d);
       builder.add(targetNameLabel);
 
       GLabel targetMultiplicityLabel = createEdgeMultiplicityLabel(UmlLabelUtil.getMultiplicity(target),
-         UmlIDUtil.createLabelMultiplicityId(targetId), 0.9d);
+            UmlIDUtil.createLabelMultiplicityId(targetId), 0.9d);
       builder.add(targetMultiplicityLabel);
 
       modelState.getIndex().getNotation(association, Edge.class).ifPresent(edge -> {
+         if (edge.getBendPoints() != null) {
+            ArrayList<GPoint> bendPoints = new ArrayList<>();
+            edge.getBendPoints().forEach(p -> bendPoints.add(GraphUtil.copy(p)));
+            builder.addRoutingPoints(bendPoints);
+         }
+      });
+      return builder.build();
+   }
+
+   protected GEdge createGeneralizationEdge(final Generalization generalization) {
+      System.out.println("GOES IN CREATE METHOD");
+      Class source = (Class) generalization.eContainer();
+      String sourceId = toId(source);
+      Class target = (Class) generalization.getGeneral();
+      String targetId = toId(target);
+
+      GEdgeBuilder builder = new GEdgeBuilder(Types.CLASS_GENERALIZATION)
+            .id(toId(generalization))
+            .addCssClass(CSS.EDGE)
+            .addCssClass(CSS.EDGE_DIRECTED_END_EMPTY)
+            .sourceId(sourceId)
+            .targetId(targetId)
+            .routerKind(GConstants.RouterKind.MANHATTAN);
+
+      modelState.getIndex().getNotation(generalization, Edge.class).ifPresent(edge -> {
          if (edge.getBendPoints() != null) {
             ArrayList<GPoint> bendPoints = new ArrayList<>();
             edge.getBendPoints().forEach(p -> bendPoints.add(GraphUtil.copy(p)));
@@ -93,15 +119,15 @@ public class ClassDiagramEdgeFactory extends AbstractGModelFactory<Relationship,
    }
 
    protected GLabel createEdgeLabel(final String name, final double position, final String id, final String type,
-      final String side) {
+                                    final String side) {
       return new GLabelBuilder(type)
-         .edgePlacement(new GEdgePlacementBuilder()
-            .side(side)
-            .position(position)
-            .offset(2d)
-            .rotate(false)
-            .build())
-         .id(id)
-         .text(name).build();
+            .edgePlacement(new GEdgePlacementBuilder()
+                  .side(side)
+                  .position(position)
+                  .offset(2d)
+                  .rotate(false)
+                  .build())
+            .id(id)
+            .text(name).build();
    }
 }

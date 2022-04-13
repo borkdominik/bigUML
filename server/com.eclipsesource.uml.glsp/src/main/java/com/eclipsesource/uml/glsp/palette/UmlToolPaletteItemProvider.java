@@ -83,8 +83,9 @@ public class UmlToolPaletteItemProvider extends EMSBasicOperationHandler<CreateN
 
    private PaletteItem relationsClass() {
       PaletteItem createAssociation = edge(Types.ASSOCIATION, "Association", "umlassociation");
+      PaletteItem createGeneralisation = edge(Types.CLASS_GENERALIZATION, "Generalization", "umlgeneralization");
 
-      List<PaletteItem> relations = Lists.newArrayList(createAssociation);
+      List<PaletteItem> relations = Lists.newArrayList(createAssociation, createGeneralisation);
       return PaletteItem.createPaletteGroup("uml.classifier", "Relation", relations, "symbol-property");
    }
 

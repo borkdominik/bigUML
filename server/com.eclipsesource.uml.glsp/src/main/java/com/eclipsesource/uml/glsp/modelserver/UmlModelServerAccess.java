@@ -40,6 +40,7 @@ import com.eclipsesource.uml.modelserver.commands.classdiagram.association.SetAs
 import com.eclipsesource.uml.modelserver.commands.classdiagram.clazz.AddClassCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.classdiagram.clazz.RemoveClassCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.classdiagram.clazz.SetClassNameCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.classdiagram.generalization.AddClassGeneralizationCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.classdiagram.property.*;
 import com.eclipsesource.uml.modelserver.commands.commons.contributions.ChangeBoundsCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.commons.contributions.ChangeRoutingPointsCommandContribution;
@@ -302,6 +303,18 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
       CCommand setClassNameCommand = SetAssociationEndMultiplicityCommandContribution.create(
             getSemanticUriFragment(associationEnd), newBounds);
       return this.edit(setClassNameCommand);
+   }
+
+   /*
+    * Class Generalization
+    */
+   public CompletableFuture<Response<Boolean>> addClassGeneralization(final UmlModelState modelState,
+                                                                      final Classifier sourceClass, final Classifier targetClass) {
+      System.out.println("REACHES MODELSERVER ACCESS");
+      CCompoundCommand addClassGeneralizationCommand = AddClassGeneralizationCommandContribution
+            .create(getSemanticUriFragment(sourceClass), getSemanticUriFragment(targetClass));
+      System.out.println("SEMANTIC URI FRAGMENTS  source: " + getSemanticUriFragment(sourceClass) + " target: " + getSemanticUriFragment(targetClass));
+      return this.edit(addClassGeneralizationCommand);
    }
 
    /*

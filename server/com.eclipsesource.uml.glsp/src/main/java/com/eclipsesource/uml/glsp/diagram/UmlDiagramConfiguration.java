@@ -143,7 +143,7 @@ public class UmlDiagramConfiguration extends BaseDiagramConfiguration {
       //GRAPH
       hints.add(new ShapeTypeHint(DefaultTypes.GRAPH, false, false, false, false,
             List.of(Types.COMMENT, Types.CLASS, Types.ACTIVITY, Types.USECASE, Types.ACTOR, Types.PACKAGE, Types.COMPONENT,
-                  Types.STATE_MACHINE, Types.DEPLOYMENT_NODE, Types.DEVICE, Types.ARTIFACT,
+                  Types.STATE_MACHINE, Types.DEPLOYMENT_NODE, Types.DEVICE, Types.ARTIFACT, Types.ENUMERATION,
                   Types.EXECUTION_ENVIRONMENT, Types.OBJECT, Types.DEPLOYMENT_COMPONENT, Types.INTERFACE
             ))
       );
@@ -155,6 +155,7 @@ public class UmlDiagramConfiguration extends BaseDiagramConfiguration {
             List.of(Types.PROPERTY, Types.COMMENT)));
       hints.add(new ShapeTypeHint(Types.PROPERTY, false, true, false, true,
             List.of(Types.COMMENT)));
+      hints.add(new ShapeTypeHint(Types.PROPERTY, true, true, false, false));
 
       // OBJECT DIAGRAM
       hints.add(new ShapeTypeHint(Types.OBJECT, true, true, false, false,
@@ -286,6 +287,8 @@ public class UmlDiagramConfiguration extends BaseDiagramConfiguration {
       // CLASS DIAGRAM
       mappings.put(Types.ICON_CLASS, GraphPackage.Literals.GCOMPARTMENT);
       mappings.put(Types.CLASS, GraphPackage.Literals.GNODE);
+      mappings.put(Types.ICON_ENUMERATION, GraphPackage.Literals.GCOMPARTMENT);
+      mappings.put(Types.ENUMERATION, GraphPackage.Literals.GNODE);
       mappings.put(Types.INTERFACE, GraphPackage.Literals.GNODE);
       // mappings.put(Types.PROPERTY, GraphPackage.Literals.GLABEL);
       mappings.put(Types.ASSOCIATION, GraphPackage.Literals.GEDGE);

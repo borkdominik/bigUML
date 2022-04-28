@@ -10,3 +10,4 @@
  ********************************************************************************/
 
 export * from "./class-node-view";
+export * from "./enumeration-node-view";

@@ -52,6 +52,14 @@ public class UmlClassDiagramModelFactory extends DiagramFactory {
                .collect(Collectors.toList());
          graph.getChildren().addAll(interfaceNodes);
 
+         // Add Enumerations
+         List<GModelElement> enumerationNodes = umlModel.getPackagedElements().stream()
+               .filter(Enumeration.class::isInstance)
+               .map(Enumeration.class::cast)
+               .map(classDiagramNodeFactory::create)
+               .collect(Collectors.toList());
+         graph.getChildren().addAll(enumerationNodes);
+
          // Add Generalisations
          List<GModelElement> generalisationEdges = umlModel.getPackagedElements().stream()
                .filter(Generalization.class::isInstance)
@@ -67,14 +75,6 @@ public class UmlClassDiagramModelFactory extends DiagramFactory {
                .map(classDiagramEdgeFactory::create)
                .collect(Collectors.toList());
          graph.getChildren().addAll(associationEdges);
-
-         // Add Enumerations
-         List<GModelElement> enumerationNodes = umlModel.getPackagedElements().stream()
-               .filter(Enumeration.class::isInstance)
-               .map(Enumeration.class::cast)
-               .map(classDiagramNodeFactory::create)
-               .collect(Collectors.toList());
-         graph.getChildren().addAll(enumerationNodes);
 
          // Add comments
          graph.getChildren().addAll(umlModel.getOwnedComments().stream()

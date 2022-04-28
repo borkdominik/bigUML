@@ -50,12 +50,16 @@
     background-image: var(--uml-icon-property);
 }
 
+.umlenumeration {
+    background-image: var(--uml-icon-enumeration);
+}
+
 /* OBJECT */
 .umlobject {
     background-image: var(--uml-icon-object);
 }
 
-/* ACTIVITY */ 
+/* ACTIVITY */
 .umlactivity {
     background-image: var(--uml-icon-activity);
 }

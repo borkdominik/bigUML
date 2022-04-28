@@ -22,6 +22,8 @@ export namespace UmlTypes {
     // CLASS DIAGRAM
     export const ICON_CLASS = `${ICON}:class`;
     export const CLASS = `${DefaultTypes.NODE}:class`;
+    export const ICON_ENUMERATION = `${ICON}:enumeration`;
+    export const ENUMERATION = `${DefaultTypes.NODE}:enumeration`;
     export const INTERFACE = `${DefaultTypes.NODE}:interface`;
     export const ASSOCIATION = `${DefaultTypes.EDGE}:association`;
     export const CLASS_GENERALIZATION = `${DefaultTypes.EDGE}:class-generalization`;

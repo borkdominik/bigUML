@@ -8,6 +8,7 @@
     --uml-icon-class: url(../../../resources/icons/light/class/Class.gif);
     --uml-icon-association: url(../../../resources/icons/light/class/Association.gif);
     --uml-icon-property: url(../../../resources/icons/light/class/Property.gif);
+    --uml-icon-enumeration: url(../../../resources/icons/light/class/Enumeration.gif);
 
     /* OBJECT DIAGRAM */
     --uml-icon-object: url(../../../resources/icons/light/object/Class.gif);

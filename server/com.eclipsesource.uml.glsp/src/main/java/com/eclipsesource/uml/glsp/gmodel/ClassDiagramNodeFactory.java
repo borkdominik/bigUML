@@ -48,6 +48,8 @@ public class ClassDiagramNodeFactory extends AbstractGModelFactory<Classifier, G
          return createClassNode((Class) classifier);
       } else if (classifier instanceof Interface) {
          return createInterfaceNode((Interface) classifier);
+      } else if (classifier instanceof Enumeration) {
+         return createEnumerationNode((Enumeration) classifier);
       }
       return null;
    }
@@ -97,6 +99,17 @@ public class ClassDiagramNodeFactory extends AbstractGModelFactory<Classifier, G
       return b.build();
    }
 
+   // ENUMERATION
+   protected GNode createEnumerationNode(final Enumeration umlEnumeration) {
+      GNodeBuilder b = new GNodeBuilder(Types.ENUMERATION)
+            .id(toId(umlEnumeration))
+            .layout(GConstants.Layout.VBOX)
+            .addCssClass(CSS.NODE)
+            .add(buildEnumerationHeader(umlEnumeration));
+      applyShapeData(umlEnumeration, b);
+      return b.build();
+   }
+
 
    protected GCompartment buildInterfaceHeader(final Interface umlInterface) {
       GCompartmentBuilder interfaceHeaderBuilder = new GCompartmentBuilder(Types.COMPARTMENT_HEADER)
@@ -132,6 +145,34 @@ public class ClassDiagramNodeFactory extends AbstractGModelFactory<Classifier, G
       classHeaderBuilder.add(classHeaderLabel);
 
       return classHeaderBuilder.build();
+   }
+
+   protected GCompartment buildEnumerationHeader(final Enumeration umlEnumeration) {
+      GCompartmentBuilder outerEnumHeaderBuilder = new GCompartmentBuilder(Types.COMPARTMENT_HEADER)
+            .layout(GConstants.Layout.VBOX)
+            .id(UmlIDUtil.createOuterHeaderId(toId(umlEnumeration)));
+
+      GLabel headerTypeLabel = new GLabelBuilder(Types.LABEL_TEXT)
+            .id(UmlIDUtil.createTypeHeaderId(toId(umlEnumeration)))
+            .text("<<" + Enumeration.class.getSimpleName() + ">>").build();
+      outerEnumHeaderBuilder.add(headerTypeLabel);
+
+      GCompartmentBuilder headerCompartmentBuilder = new GCompartmentBuilder(Types.COMPARTMENT_HEADER)
+            .layout(GConstants.Layout.HBOX)
+            .id(UmlIDUtil.createHeaderId(toId(umlEnumeration)));
+
+      GCompartment enumHeaderIcon = new GCompartmentBuilder(Types.ICON_ENUMERATION)
+            .id(UmlIDUtil.createHeaderIconId(toId(umlEnumeration))).build();
+      headerCompartmentBuilder.add(enumHeaderIcon);
+
+      GLabel enumHeaderLabel = new GLabelBuilder(Types.LABEL_NAME)
+            .id(UmlIDUtil.createHeaderLabelId(toId(umlEnumeration))).text(umlEnumeration.getName()).build();
+      headerCompartmentBuilder.add(enumHeaderLabel);
+
+      GCompartment enumHeaderCompartment = headerCompartmentBuilder.build();
+      outerEnumHeaderBuilder.add(enumHeaderCompartment);
+
+      return outerEnumHeaderBuilder.build();
    }
 
    protected static String getType(final Classifier classifier) {

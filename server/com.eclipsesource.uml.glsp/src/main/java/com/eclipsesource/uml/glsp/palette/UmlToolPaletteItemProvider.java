@@ -78,8 +78,9 @@ public class UmlToolPaletteItemProvider extends EMSBasicOperationHandler<CreateN
       PaletteItem createClass = node(Types.CLASS, "Class", "umlclass");
       // TODO: change icon
       PaletteItem createInterface = node(Types.INTERFACE, "Interface", "umlclass");
+      PaletteItem createEnumeration = node(Types.ENUMERATION, "Enumeration", "umlenumeration");
 
-      List<PaletteItem> classifiers = Lists.newArrayList(createClass, createInterface);
+      List<PaletteItem> classifiers = Lists.newArrayList(createClass, createInterface, createEnumeration);
       return PaletteItem.createPaletteGroup("uml.classifier", "Container", classifiers, "symbol-property");
    }
 

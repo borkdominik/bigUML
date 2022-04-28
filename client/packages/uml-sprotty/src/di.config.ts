@@ -84,7 +84,7 @@ import {
     PinPortView,
     SendSignalNodeView
 } from "./views/activitydiagram";
-import {ClassNodeView} from "./views/classdiagram";
+import {ClassNodeView, EnumerationNodeView} from "./views/classdiagram";
 import {ActorNodeView, DirectedEdgeView, PackageNodeView, UseCaseNodeView} from "./views/usecasediagram";
 import {CommentLinkEdgeView, CommentNodeView, IconView, LabelNodeView} from "./views/commons";
 import {
@@ -137,6 +137,8 @@ export default function createContainer(widgetId: string): Container {
         // CLASS DIAGRAM
         configureModelElement(context, UmlTypes.ICON_CLASS, IconClass, IconView);
         configureModelElement(context, UmlTypes.CLASS, LabeledNode, ClassNodeView);
+        configureModelElement(context, UmlTypes.ICON_ENUMERATION, IconClass, IconView);
+        configureModelElement(context, UmlTypes.ENUMERATION, LabeledNode, EnumerationNodeView);
         configureModelElement(context, UmlTypes.INTERFACE, LabeledNode, ClassNodeView);
         configureModelElement(context, UmlTypes.ASSOCIATION, SEdge, PolylineEdgeView);
         configureModelElement(context, UmlTypes.CLASS_GENERALIZATION, SEdge, PolylineEdgeView);

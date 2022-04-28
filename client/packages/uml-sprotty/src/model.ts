@@ -87,13 +87,17 @@ export class IconLabelCompartment extends SCompartment implements Selectable, De
     }
 }
 
+// CLASS
 export class IconProperty extends Icon {
     iconImageName = "Property.svg";
 }
 
-// CLASS
 export class IconClass extends Icon {
     iconImageName = "Class.svg";
+}
+
+export class IconEnumeration extends Icon {
+    iconImageName = "Enumeration.svg";
 }
 
 // ACTIVITY

@@ -30,7 +30,7 @@ public class CreateClassDiagramNodeOperationHandler
    }
 
    private static final List<String> handledElementTypeIds = Lists.newArrayList(
-         Types.CLASS, Types.INTERFACE
+         Types.CLASS, Types.INTERFACE, Types.ENUMERATION
    );
 
    @Override
@@ -50,17 +50,24 @@ public class CreateClassDiagramNodeOperationHandler
    public void executeOperation(final CreateNodeOperation operation, final UmlModelServerAccess modelAccess) {
 
       if (Types.CLASS.equals(operation.getElementTypeId())) {
-         modelAccess.addClass(UmlModelState.getModelState(getUmlModelState()), operation.getLocation())
+         modelAccess.addClass(getUmlModelState(), operation.getLocation())
                .thenAccept(response -> {
                   if (!response.body()) {
                      throw new GLSPServerException("Could not execute create operation on new Class node");
                   }
                });
       } else if (Types.INTERFACE.equals(operation.getElementTypeId())) {
-         modelAccess.addInterface(UmlModelState.getModelState(getUmlModelState()), operation.getLocation())
+         modelAccess.addInterface(getUmlModelState(), operation.getLocation())
                .thenAccept(response -> {
                   if (!response.body()) {
                      throw new GLSPServerException("Could not execute create operation on new Interface node");
+                  }
+               });
+      } else if (Types.ENUMERATION.equals(operation.getElementTypeId())) {
+         modelAccess.addEnumeration(getUmlModelState(), operation.getLocation())
+               .thenAccept(response -> {
+                  if (!response.body()) {
+                     throw new GLSPServerException("Could not execute create operation on new Enumeration node");
                   }
                });
       }

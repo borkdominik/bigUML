@@ -38,6 +38,9 @@ import com.eclipsesource.uml.modelserver.commands.classdiagram.classinterface.Ad
 import com.eclipsesource.uml.modelserver.commands.classdiagram.clazz.AddClassCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.classdiagram.clazz.RemoveClassCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.classdiagram.clazz.SetClassNameCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.classdiagram.enumeration.AddEnumerationCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.classdiagram.enumeration.RemoveEnumerationCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.classdiagram.enumeration.SetEnumerationNameCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.classdiagram.generalization.AddClassGeneralizationCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.classdiagram.property.*;
 import com.eclipsesource.uml.modelserver.commands.commons.contributions.ChangeBoundsCommandContribution;
@@ -175,6 +178,10 @@ public class UmlModelServerModule extends DefaultModelServerModule {
       binding.put(AddClassGeneralizationCommandContribution.TYPE, AddClassGeneralizationCommandContribution.class);
       // Interface
       binding.put(AddInterfaceCommandContribution.TYPE, AddInterfaceCommandContribution.class);
+      // Enumeration
+      binding.put(AddEnumerationCommandContribution.TYPE, AddEnumerationCommandContribution.class);
+      binding.put(RemoveEnumerationCommandContribution.TYPE, RemoveEnumerationCommandContribution.class);
+      binding.put(SetEnumerationNameCommandContribution.TYPE, SetEnumerationNameCommandContribution.class);
 
       // ACTIVITY DIAGRAM
       binding.put(RenameElementCommandContribution.TYPE, RenameElementCommandContribution.class);

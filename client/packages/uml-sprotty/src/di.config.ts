@@ -30,7 +30,8 @@ import {
     SLabelView,
     SRoutingHandle,
     SRoutingHandleView,
-    TYPES
+    TYPES,
+    validationModule
 } from "@eclipse-glsp/client/lib";
 import toolPaletteModule from "@eclipse-glsp/client/lib/features/tool-palette/di.config";
 import {Container, ContainerModule} from "inversify";
@@ -247,7 +248,8 @@ export default function createContainer(widgetId: string): Container {
         });
     });
 
-    const container = createClientContainer(classDiagramModule, umlToolPaletteModule, saveModule, copyPasteContextMenuModule);
+    const container = createClientContainer(classDiagramModule, umlToolPaletteModule, saveModule, copyPasteContextMenuModule,
+        validationModule);
     container.unload(toolPaletteModule);
     overrideViewerOptions(container, {
         baseDiv: widgetId,

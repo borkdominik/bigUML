@@ -45,6 +45,7 @@ import com.eclipsesource.uml.glsp.operations.statemachinediagram.CreateStateMach
 import com.eclipsesource.uml.glsp.operations.usecasediagram.CreateUseCaseDiagramEdgeOperationHandler;
 import com.eclipsesource.uml.glsp.operations.usecasediagram.CreateUseCaseDiagramNodeOperationHandler;
 import com.eclipsesource.uml.glsp.palette.UmlToolPaletteItemProvider;
+import com.eclipsesource.uml.glsp.validator.UmlDiagramModelValidator;
 import org.eclipse.emfcloud.modelserver.glsp.EMSGLSPModule;
 import org.eclipse.emfcloud.modelserver.glsp.model.EMSModelState;
 import org.eclipse.glsp.server.actions.Action;
@@ -55,6 +56,7 @@ import org.eclipse.glsp.server.features.core.model.GModelFactory;
 import org.eclipse.glsp.server.features.core.model.ModelSourceLoader;
 import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperationHandler;
 import org.eclipse.glsp.server.features.toolpalette.ToolPaletteItemProvider;
+import org.eclipse.glsp.server.features.validation.ModelValidator;
 import org.eclipse.glsp.server.layout.LayoutEngine;
 import org.eclipse.glsp.server.operations.OperationHandler;
 import org.eclipse.glsp.server.operations.OperationHandlerRegistry;
@@ -154,11 +156,10 @@ public class UmlGLSPModule extends EMSGLSPModule {
       return UmlDiagramConfiguration.class;
    }
 
-   //TODO!
-   /*@Override
+   @Override
    protected Class<? extends ModelValidator> bindModelValidator() {
-      return UmlModelValidator.class;
-   }*/
+      return UmlDiagramModelValidator.class;
+   }
 
    // TODO!
    /*@Override

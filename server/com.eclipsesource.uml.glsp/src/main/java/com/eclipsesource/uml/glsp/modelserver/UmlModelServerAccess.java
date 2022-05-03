@@ -45,6 +45,7 @@ import com.eclipsesource.uml.modelserver.commands.classdiagram.enumeration.AddEn
 import com.eclipsesource.uml.modelserver.commands.classdiagram.enumeration.RemoveEnumerationCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.classdiagram.enumeration.SetEnumerationNameCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.classdiagram.generalization.AddClassGeneralizationCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.classdiagram.generalization.RemoveClassGeneralizationCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.classdiagram.property.*;
 import com.eclipsesource.uml.modelserver.commands.commons.contributions.ChangeBoundsCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.commons.contributions.ChangeRoutingPointsCommandContribution;
@@ -235,6 +236,22 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
       return this.edit(adddInterfaceCompoundCommand);
    }
 
+   public CompletableFuture<Response<Boolean>> removeInterface(final UmlModelState modelState,
+                                                               final Interface interfaceToRemove) {
+
+      String semanticProxyUri = getSemanticUriFragment(interfaceToRemove);
+      CCompoundCommand compoundCommand = RemoveClassCommandContribution.create(semanticProxyUri);
+      return this.edit(compoundCommand);
+   }
+
+   public CompletableFuture<Response<Boolean>> setInterfaceName(final UmlModelState modelState,
+                                                                final Interface interfaceToRename, final String newName) {
+
+      CCommand setInterfaceNameCommand = SetClassNameCommandContribution.create(getSemanticUriFragment(interfaceToRename),
+            newName);
+      return this.edit(setInterfaceNameCommand);
+   }
+
    /*
     * Enumeration
     */
@@ -357,6 +374,14 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
             .create(getSemanticUriFragment(sourceClass), getSemanticUriFragment(targetClass));
       System.out.println("SEMANTIC URI FRAGMENTS  source: " + getSemanticUriFragment(sourceClass) + " target: " + getSemanticUriFragment(targetClass));
       return this.edit(addClassGeneralizationCommand);
+   }
+
+   public CompletableFuture<Response<Boolean>> removeClassGeneralization(final UmlModelState modelState,
+                                                                         final Generalization generalizationToRemove) {
+
+      String semanticProxyUri = getSemanticUriFragment(generalizationToRemove);
+      CCompoundCommand compoundCommand = RemoveClassGeneralizationCommandContribution.create(semanticProxyUri);
+      return this.edit(compoundCommand);
    }
 
    /*

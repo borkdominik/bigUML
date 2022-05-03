@@ -336,6 +336,13 @@ public class UmlDeleteOperationHandler extends EMSBasicOperationHandler<DeleteOp
                         "Could not execute delete operation on Class: " + semanticElement.toString());
                }
             });
+         } else if (semanticElement instanceof Interface) {
+            modelAccess.removeInterface(modelState, (Interface) semanticElement).thenAccept(response -> {
+               if (!response.body()) {
+                  throw new GLSPServerException(
+                        "Could not execute delete operation on Interface: " + semanticElement.toString());
+               }
+            });
          } else if (semanticElement instanceof Enumeration) {
             modelAccess.removeEnumeration(modelState, (Enumeration) semanticElement).thenAccept(response -> {
                if (!response.body()) {

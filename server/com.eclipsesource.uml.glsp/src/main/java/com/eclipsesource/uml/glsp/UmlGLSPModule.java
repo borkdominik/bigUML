@@ -19,6 +19,7 @@ import com.eclipsesource.uml.glsp.actions.statemachine.AddTransitionEffectAction
 import com.eclipsesource.uml.glsp.actions.statemachine.AddTransitionGuardActionHandler;
 import com.eclipsesource.uml.glsp.actions.statemachine.AddTransitionLabelActionHandler;
 import com.eclipsesource.uml.glsp.actions.statemachine.AddTransitionTriggerActionHandler;
+import com.eclipsesource.uml.glsp.contextmenu.UmlContextMenuItemProvider;
 import com.eclipsesource.uml.glsp.diagram.UmlDiagramConfiguration;
 import com.eclipsesource.uml.glsp.layout.UmlLayoutEngine;
 import com.eclipsesource.uml.glsp.model.UmlModelFactory;
@@ -52,6 +53,7 @@ import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.ActionHandler;
 import org.eclipse.glsp.server.di.MultiBinding;
 import org.eclipse.glsp.server.diagram.DiagramConfiguration;
+import org.eclipse.glsp.server.features.contextmenu.ContextMenuItemProvider;
 import org.eclipse.glsp.server.features.core.model.GModelFactory;
 import org.eclipse.glsp.server.features.core.model.ModelSourceLoader;
 import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperationHandler;
@@ -161,11 +163,11 @@ public class UmlGLSPModule extends EMSGLSPModule {
       return UmlDiagramModelValidator.class;
    }
 
-   // TODO!
-   /*@Override
+
+   @Override
    protected Class<? extends ContextMenuItemProvider> bindContextMenuItemProvider() {
       return UmlContextMenuItemProvider.class;
-   }*/
+   }
 
    @Override
    public String getDiagramType() {

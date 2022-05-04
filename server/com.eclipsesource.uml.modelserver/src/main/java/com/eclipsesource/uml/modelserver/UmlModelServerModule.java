@@ -34,9 +34,17 @@ import com.eclipsesource.uml.modelserver.commands.classdiagram.association.AddAs
 import com.eclipsesource.uml.modelserver.commands.classdiagram.association.RemoveAssociationCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.classdiagram.association.SetAssociationEndMultiplicityCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.classdiagram.association.SetAssociationEndNameCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.classdiagram.classinterface.AddInterfaceCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.classdiagram.classinterface.RemoveInterfaceCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.classdiagram.classinterface.SetInterfaceNameCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.classdiagram.clazz.AddClassCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.classdiagram.clazz.RemoveClassCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.classdiagram.clazz.SetClassNameCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.classdiagram.enumeration.AddEnumerationCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.classdiagram.enumeration.RemoveEnumerationCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.classdiagram.enumeration.SetEnumerationNameCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.classdiagram.generalization.AddClassGeneralizationCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.classdiagram.generalization.RemoveClassGeneralizationCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.classdiagram.property.*;
 import com.eclipsesource.uml.modelserver.commands.commons.contributions.ChangeBoundsCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.commons.contributions.ChangeRoutingPointsCommandContribution;
@@ -169,6 +177,17 @@ public class UmlModelServerModule extends DefaultModelServerModule {
       binding.put(SetAssociationEndNameCommandContribution.TYPE, SetAssociationEndNameCommandContribution.class);
       binding.put(SetAssociationEndMultiplicityCommandContribution.TYPE,
             SetAssociationEndMultiplicityCommandContribution.class);
+      // Generalisation
+      binding.put(AddClassGeneralizationCommandContribution.TYPE, AddClassGeneralizationCommandContribution.class);
+      binding.put(RemoveClassGeneralizationCommandContribution.TYPE, RemoveClassGeneralizationCommandContribution.class);
+      // Interface
+      binding.put(AddInterfaceCommandContribution.TYPE, AddInterfaceCommandContribution.class);
+      binding.put(RemoveInterfaceCommandContribution.TYPE, RemoveInterfaceCommandContribution.class);
+      binding.put(SetInterfaceNameCommandContribution.TYPE, SetInterfaceNameCommandContribution.class);
+      // Enumeration
+      binding.put(AddEnumerationCommandContribution.TYPE, AddEnumerationCommandContribution.class);
+      binding.put(RemoveEnumerationCommandContribution.TYPE, RemoveEnumerationCommandContribution.class);
+      binding.put(SetEnumerationNameCommandContribution.TYPE, SetEnumerationNameCommandContribution.class);
 
       // ACTIVITY DIAGRAM
       binding.put(RenameElementCommandContribution.TYPE, RenameElementCommandContribution.class);

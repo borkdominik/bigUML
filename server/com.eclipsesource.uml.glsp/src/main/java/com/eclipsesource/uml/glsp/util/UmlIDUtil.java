@@ -18,6 +18,8 @@ public final class UmlIDUtil {
    public static String LABEL_NAME_SUFFIX = "_label_name";
    public static String LABEL_MULTIIPLICITY_SUFFIX = "_label_multiplicity";
    public static String HEADER_SUFFIX = "_header";
+   public static String OUTER_HEADER_SUFFIX = "_header_outer";
+   public static String TYPE_HEADER_SUFFIX = "_header_type";
    public static String HEADER_ICON_SUFFIX = "_header_icon";
    public static String HEADER_LABEL_SUFFIX = "_header_label";
    public static String CHILD_COMPARTMENT_SUFFIX = "_childCompartment";
@@ -68,6 +70,22 @@ public final class UmlIDUtil {
 
    public static String getElementIdFromHeaderIcon(final String headerIconId) {
       return headerIconId.replace(HEADER_ICON_SUFFIX, "");
+   }
+
+   public static String createOuterHeaderId(final String containerId) {
+      return containerId + OUTER_HEADER_SUFFIX;
+   }
+
+   public static String getElementIdFromOuterHeader(final String headerId) {
+      return headerId.replace(OUTER_HEADER_SUFFIX, "");
+   }
+
+   public static String createTypeHeaderId(final String containerId) {
+      return containerId + TYPE_HEADER_SUFFIX;
+   }
+
+   public static String getElementIdFromTypeHeader(final String headerId) {
+      return headerId.replace(TYPE_HEADER_SUFFIX, "");
    }
 
    public static String createHeaderLabelId(final String containerId) {

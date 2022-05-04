@@ -37,9 +37,15 @@ import com.eclipsesource.uml.modelserver.commands.classdiagram.association.AddAs
 import com.eclipsesource.uml.modelserver.commands.classdiagram.association.RemoveAssociationCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.classdiagram.association.SetAssociationEndMultiplicityCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.classdiagram.association.SetAssociationEndNameCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.classdiagram.classinterface.AddInterfaceCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.classdiagram.clazz.AddClassCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.classdiagram.clazz.RemoveClassCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.classdiagram.clazz.SetClassNameCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.classdiagram.enumeration.AddEnumerationCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.classdiagram.enumeration.RemoveEnumerationCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.classdiagram.enumeration.SetEnumerationNameCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.classdiagram.generalization.AddClassGeneralizationCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.classdiagram.generalization.RemoveClassGeneralizationCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.classdiagram.property.*;
 import com.eclipsesource.uml.modelserver.commands.commons.contributions.ChangeBoundsCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.commons.contributions.ChangeRoutingPointsCommandContribution;
@@ -220,6 +226,60 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
    }
 
    /*
+    * Interface
+    */
+   public CompletableFuture<Response<Boolean>> addInterface(final UmlModelState modelState,
+                                                            final Optional<GPoint> newPosition) {
+
+      CCompoundCommand adddInterfaceCompoundCommand = AddInterfaceCommandContribution
+            .create(newPosition.orElse(GraphUtil.point(0, 0)));
+      return this.edit(adddInterfaceCompoundCommand);
+   }
+
+   public CompletableFuture<Response<Boolean>> removeInterface(final UmlModelState modelState,
+                                                               final Interface interfaceToRemove) {
+
+      String semanticProxyUri = getSemanticUriFragment(interfaceToRemove);
+      CCompoundCommand compoundCommand = RemoveClassCommandContribution.create(semanticProxyUri);
+      return this.edit(compoundCommand);
+   }
+
+   public CompletableFuture<Response<Boolean>> setInterfaceName(final UmlModelState modelState,
+                                                                final Interface interfaceToRename, final String newName) {
+
+      CCommand setInterfaceNameCommand = SetClassNameCommandContribution.create(getSemanticUriFragment(interfaceToRename),
+            newName);
+      return this.edit(setInterfaceNameCommand);
+   }
+
+   /*
+    * Enumeration
+    */
+   public CompletableFuture<Response<Boolean>> addEnumeration(final UmlModelState modelState,
+                                                              final Optional<GPoint> newPosition) {
+
+      CCompoundCommand addEnumerationCompoundCommand = AddEnumerationCommandContribution
+            .create(newPosition.orElse(GraphUtil.point(0, 0)));
+      return this.edit(addEnumerationCompoundCommand);
+   }
+
+   public CompletableFuture<Response<Boolean>> removeEnumeration(final UmlModelState modelState,
+                                                                 final Enumeration enumerationToRemove) {
+
+      String semanticProxyUri = getSemanticUriFragment(enumerationToRemove);
+      CCompoundCommand compoundCommand = RemoveEnumerationCommandContribution.create(semanticProxyUri);
+      return this.edit(compoundCommand);
+   }
+
+   public CompletableFuture<Response<Boolean>> setEnumerationName(final UmlModelState modelState,
+                                                                  final Enumeration enumerationToRename, final String newName) {
+
+      CCommand setEnumerationNameCommand = SetEnumerationNameCommandContribution.create(
+            getSemanticUriFragment(enumerationToRename), newName);
+      return this.edit(setEnumerationNameCommand);
+   }
+
+   /*
     * Property
     */
    public CompletableFuture<Response<Boolean>> addProperty(final UmlModelState modelState,
@@ -302,6 +362,26 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
       CCommand setClassNameCommand = SetAssociationEndMultiplicityCommandContribution.create(
             getSemanticUriFragment(associationEnd), newBounds);
       return this.edit(setClassNameCommand);
+   }
+
+   /*
+    * Class Generalization
+    */
+   public CompletableFuture<Response<Boolean>> addClassGeneralization(final UmlModelState modelState,
+                                                                      final Classifier sourceClass, final Classifier targetClass) {
+      System.out.println("REACHES MODELSERVER ACCESS");
+      CCompoundCommand addClassGeneralizationCommand = AddClassGeneralizationCommandContribution
+            .create(getSemanticUriFragment(sourceClass), getSemanticUriFragment(targetClass));
+      System.out.println("SEMANTIC URI FRAGMENTS  source: " + getSemanticUriFragment(sourceClass) + " target: " + getSemanticUriFragment(targetClass));
+      return this.edit(addClassGeneralizationCommand);
+   }
+
+   public CompletableFuture<Response<Boolean>> removeClassGeneralization(final UmlModelState modelState,
+                                                                         final Generalization generalizationToRemove) {
+
+      String semanticProxyUri = getSemanticUriFragment(generalizationToRemove);
+      CCompoundCommand compoundCommand = RemoveClassGeneralizationCommandContribution.create(semanticProxyUri);
+      return this.edit(compoundCommand);
    }
 
    /*

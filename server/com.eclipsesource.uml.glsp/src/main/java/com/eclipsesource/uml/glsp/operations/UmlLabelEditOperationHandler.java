@@ -177,11 +177,25 @@ public class UmlLabelEditOperationHandler extends EMSBasicOperationHandler<Apply
                            throw new GLSPServerException("Could not rename Class to: " + inputText);
                         }
                      });
+            } else if (semanticElement instanceof Interface) {
+               modelAccess.setInterfaceName(modelState, (Interface) semanticElement, inputText)
+                     .thenAccept(response -> {
+                        if (!response.body()) {
+                           throw new GLSPServerException("Could not rename Interface to: " + inputText);
+                        }
+                     });
             } else if (semanticElement instanceof InstanceSpecification) {
                modelAccess.setObjectName(modelState, (InstanceSpecification) semanticElement, inputText)
                      .thenAccept(response -> {
                         if (!response.body()) {
                            throw new GLSPServerException("Could not rename Object to: " + inputText);
+                        }
+                     });
+            } else if (semanticElement instanceof Enumeration) {
+               modelAccess.setEnumerationName(modelState, (Enumeration) semanticElement, inputText)
+                     .thenAccept(response -> {
+                        if (!response.body()) {
+                           throw new GLSPServerException("Could not rename Enumeration to: " + inputText);
                         }
                      });
             } else if (semanticElement instanceof NamedElement) {

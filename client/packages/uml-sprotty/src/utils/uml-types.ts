@@ -22,7 +22,11 @@ export namespace UmlTypes {
     // CLASS DIAGRAM
     export const ICON_CLASS = `${ICON}:class`;
     export const CLASS = `${DefaultTypes.NODE}:class`;
+    export const ICON_ENUMERATION = `${ICON}:enumeration`;
+    export const ENUMERATION = `${DefaultTypes.NODE}:enumeration`;
+    export const INTERFACE = `${DefaultTypes.NODE}:interface`;
     export const ASSOCIATION = `${DefaultTypes.EDGE}:association`;
+    export const CLASS_GENERALIZATION = `${DefaultTypes.EDGE}:class-generalization`;
     export const PROPERTY = `${DefaultTypes.COMPARTMENT}:property`;
     export const ICON_PROPERTY = `${ICON}:property`;
     export const LABEL_PROPERTY_NAME = `${DefaultTypes.LABEL}:property:name`;

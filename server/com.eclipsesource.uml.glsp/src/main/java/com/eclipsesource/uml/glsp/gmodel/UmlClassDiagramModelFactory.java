@@ -10,18 +10,15 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.gmodel;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.eclipse.glsp.graph.GGraph;
-import org.eclipse.glsp.graph.GModelElement;
-import org.eclipse.uml2.uml.Association;
-import org.eclipse.uml2.uml.Class;
-import org.eclipse.uml2.uml.Enumeration;
-import org.eclipse.uml2.uml.Model;
-
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.modelserver.unotation.Diagram;
+import org.eclipse.glsp.graph.GGraph;
+import org.eclipse.glsp.graph.GModelElement;
+import org.eclipse.uml2.uml.Class;
+import org.eclipse.uml2.uml.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class UmlClassDiagramModelFactory extends DiagramFactory {
 
@@ -34,38 +31,55 @@ public class UmlClassDiagramModelFactory extends DiagramFactory {
       GGraph graph = getOrCreateRoot();
 
       if (umlDiagram.getSemanticElement().getResolvedElement() != null) {
+         System.out.println("REACHES MODEL FACTORY");
          Model umlModel = (Model) umlDiagram.getSemanticElement().getResolvedElement();
 
          graph.setId(toId(umlModel));
 
          // Add Classes
          List<GModelElement> classNodes = umlModel.getPackagedElements().stream()
-            .filter(Class.class::isInstance)
-            .map(Class.class::cast)
-            .map(classDiagramNodeFactory::create)
-            .collect(Collectors.toList());
+               .filter(Class.class::isInstance)
+               .map(Class.class::cast)
+               .map(classDiagramNodeFactory::create)
+               .collect(Collectors.toList());
          graph.getChildren().addAll(classNodes);
 
-         // Add Associations
-         List<GModelElement> associationEdges = umlModel.getPackagedElements().stream()
-            .filter(Association.class::isInstance)
-            .map(Association.class::cast)
-            .map(classDiagramEdgeFactory::create)
-            .collect(Collectors.toList());
-         graph.getChildren().addAll(associationEdges);
+         // Add Interfaces
+         List<GModelElement> interfaceNodes = umlModel.getPackagedElements().stream()
+               .filter(Interface.class::isInstance)
+               .map(Interface.class::cast)
+               .map(classDiagramNodeFactory::create)
+               .collect(Collectors.toList());
+         graph.getChildren().addAll(interfaceNodes);
 
          // Add Enumerations
          List<GModelElement> enumerationNodes = umlModel.getPackagedElements().stream()
-            .filter(Enumeration.class::isInstance)
-            .map(Enumeration.class::cast)
-            .map(classDiagramNodeFactory::create)
-            .collect(Collectors.toList());
+               .filter(Enumeration.class::isInstance)
+               .map(Enumeration.class::cast)
+               .map(classDiagramNodeFactory::create)
+               .collect(Collectors.toList());
          graph.getChildren().addAll(enumerationNodes);
+
+         // Add Generalisations
+         List<GModelElement> generalisationEdges = umlModel.getPackagedElements().stream()
+               .filter(Generalization.class::isInstance)
+               .map(Generalization.class::cast)
+               .map(classDiagramEdgeFactory::create)
+               .collect(Collectors.toList());
+         graph.getChildren().addAll(generalisationEdges);
+
+         // Add Associations
+         List<GModelElement> associationEdges = umlModel.getPackagedElements().stream()
+               .filter(Association.class::isInstance)
+               .map(Association.class::cast)
+               .map(classDiagramEdgeFactory::create)
+               .collect(Collectors.toList());
+         graph.getChildren().addAll(associationEdges);
 
          // Add comments
          graph.getChildren().addAll(umlModel.getOwnedComments().stream()
-                 .flatMap(c -> commentFactory.create(c).stream())
-                 .collect(Collectors.toList()));
+               .flatMap(c -> commentFactory.create(c).stream())
+               .collect(Collectors.toList()));
       }
       return graph;
 

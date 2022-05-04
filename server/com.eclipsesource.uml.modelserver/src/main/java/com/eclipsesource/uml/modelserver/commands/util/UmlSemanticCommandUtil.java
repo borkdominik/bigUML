@@ -10,11 +10,6 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.util;
 
-import java.util.function.Function;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
@@ -22,14 +17,20 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.*;
 import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Package;
+import org.eclipse.uml2.uml.*;
 import org.eclipse.uml2.uml.resource.UMLResource;
+
+import java.util.function.Function;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public final class UmlSemanticCommandUtil {
 
-   private UmlSemanticCommandUtil() {}
+   private UmlSemanticCommandUtil() {
+   }
 
    public static String getSemanticUriFragment(final Element element) {
       return EcoreUtil.getURI(element).fragment();
@@ -40,16 +41,17 @@ public final class UmlSemanticCommandUtil {
    }
 
    public static <C extends Element> C getElement(final Model umlModel, final String semanticUriFragment,
-      final java.lang.Class<C> clazz) {
+                                                  final java.lang.Class<C> clazz) {
       EObject element = getElement(umlModel, semanticUriFragment);
       return clazz.cast(element);
    }
 
    public static Model getModel(final URI modelUri, final EditingDomain domain) {
       Resource semanticResource = domain.getResourceSet()
-         .getResource(modelUri.trimFileExtension().appendFileExtension(UMLResource.FILE_EXTENSION), false);
+            .getResource(modelUri.trimFileExtension().appendFileExtension(UMLResource.FILE_EXTENSION), false);
       EObject semanticRoot = semanticResource.getContents().get(0);
-      if (!(semanticRoot instanceof Model)) {}
+      if (!(semanticRoot instanceof Model)) {
+      }
       return (Model) semanticRoot;
    }
 
@@ -67,12 +69,12 @@ public final class UmlSemanticCommandUtil {
    }
 
    private static String getNewStructuralFeatureName(
-      final java.lang.Class<? extends StructuralFeature> umlStructuralFeature, final Class parentClass) {
+         final java.lang.Class<? extends StructuralFeature> umlStructuralFeature, final Class parentClass) {
 
       Function<Integer, String> nameProvider = i -> "new" + umlStructuralFeature.getSimpleName() + i;
 
       int attributeCounter = parentClass.getOwnedAttributes().stream().filter(umlStructuralFeature::isInstance)
-         .collect(Collectors.toList()).size();
+            .collect(Collectors.toList()).size();
 
       return nameProvider.apply(attributeCounter);
    }
@@ -91,10 +93,15 @@ public final class UmlSemanticCommandUtil {
       return UmlSemanticCommandUtil.getNewStructuralFeatureName(Property.class, parentClass);
    }
 
+   public static String getNewEnumerationName(final Model umlModel) {
+      return UmlSemanticCommandUtil.getNewPackageableElementName(Enumeration.class, umlModel);
+   }
+
    // OBJECT DIAGRAM
    public static String getNewObjectName(final Model umlModel) {
       return UmlSemanticCommandUtil.getNewPackageableElementName(InstanceSpecification.class, umlModel);
    }
+
    public static String getNewAttributeName(final Class parentClass) {
       //TODO: add later again!
       /*Function<Integer, String> nameProvider = i -> "NewAttribute" + i + ":VALUE";
@@ -172,16 +179,16 @@ public final class UmlSemanticCommandUtil {
    }
 
    public static String getNewPackageableElementName(final Model umlModel,
-      final java.lang.Class<? extends PackageableElement> clazz) {
+                                                     final java.lang.Class<? extends PackageableElement> clazz) {
       return UmlSemanticCommandUtil.getNewPackageableElementName(clazz, umlModel);
    }
 
    private static String getNewPackageableElementName(final java.lang.Class<? extends PackageableElement> umlClassifier,
-      final Model umlModel) {
+                                                      final Model umlModel) {
       Function<Integer, String> nameProvider = i -> "New" + umlClassifier.getSimpleName() + i;
 
       int classifierCounter = umlModel.getPackagedElements().stream().filter(umlClassifier::isInstance)
-         .collect(Collectors.toList()).size();
+            .collect(Collectors.toList()).size();
 
       return nameProvider.apply(classifierCounter);
    }

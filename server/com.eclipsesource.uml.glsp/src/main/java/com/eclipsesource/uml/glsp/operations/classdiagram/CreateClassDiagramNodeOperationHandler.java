@@ -11,27 +11,26 @@
 package com.eclipsesource.uml.glsp.operations.classdiagram;
 
 
-import java.util.List;
-
-import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSBasicCreateOperationHandler;
-import org.eclipse.glsp.server.operations.CreateNodeOperation;
-import org.eclipse.glsp.server.operations.Operation;
-
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
 import com.google.common.collect.Lists;
+import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSBasicCreateOperationHandler;
+import org.eclipse.glsp.server.operations.CreateNodeOperation;
+import org.eclipse.glsp.server.operations.Operation;
 import org.eclipse.glsp.server.types.GLSPServerException;
 
+import java.util.List;
+
 public class CreateClassDiagramNodeOperationHandler
-   extends EMSBasicCreateOperationHandler<CreateNodeOperation, UmlModelServerAccess> {
+      extends EMSBasicCreateOperationHandler<CreateNodeOperation, UmlModelServerAccess> {
 
    public CreateClassDiagramNodeOperationHandler() {
       super(handledElementTypeIds);
    }
 
    private static final List<String> handledElementTypeIds = Lists.newArrayList(
-           Types.CLASS
+         Types.CLASS, Types.INTERFACE, Types.ENUMERATION
    );
 
    @Override
@@ -51,17 +50,32 @@ public class CreateClassDiagramNodeOperationHandler
    public void executeOperation(final CreateNodeOperation operation, final UmlModelServerAccess modelAccess) {
 
       if (Types.CLASS.equals(operation.getElementTypeId())) {
-         System.out.println("REACHES CLASS SWITCH");
-         modelAccess.addClass(UmlModelState.getModelState(getUmlModelState()), operation.getLocation())
-                 .thenAccept(response -> {
-                    if (!response.body()) {
-                       throw new GLSPServerException("Could not execute create operation on new Class node");
-                    }
-                 });
+         modelAccess.addClass(getUmlModelState(), operation.getLocation())
+               .thenAccept(response -> {
+                  if (!response.body()) {
+                     throw new GLSPServerException("Could not execute create operation on new Class node");
+                  }
+               });
+      } else if (Types.INTERFACE.equals(operation.getElementTypeId())) {
+         modelAccess.addInterface(getUmlModelState(), operation.getLocation())
+               .thenAccept(response -> {
+                  if (!response.body()) {
+                     throw new GLSPServerException("Could not execute create operation on new Interface node");
+                  }
+               });
+      } else if (Types.ENUMERATION.equals(operation.getElementTypeId())) {
+         modelAccess.addEnumeration(getUmlModelState(), operation.getLocation())
+               .thenAccept(response -> {
+                  if (!response.body()) {
+                     throw new GLSPServerException("Could not execute create operation on new Enumeration node");
+                  }
+               });
       }
    }
 
    @Override
-   public String getLabel() { return "Create uml classifier"; }
+   public String getLabel() {
+      return "Create uml classifier";
+   }
 
 }

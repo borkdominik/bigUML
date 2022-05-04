@@ -30,7 +30,8 @@ import {
     SLabelView,
     SRoutingHandle,
     SRoutingHandleView,
-    TYPES
+    TYPES,
+    validationModule
 } from "@eclipse-glsp/client/lib";
 import toolPaletteModule from "@eclipse-glsp/client/lib/features/tool-palette/di.config";
 import {Container, ContainerModule} from "inversify";
@@ -84,7 +85,7 @@ import {
     PinPortView,
     SendSignalNodeView
 } from "./views/activitydiagram";
-import {ClassNodeView} from "./views/classdiagram";
+import {ClassNodeView, EnumerationNodeView} from "./views/classdiagram";
 import {ActorNodeView, DirectedEdgeView, PackageNodeView, UseCaseNodeView} from "./views/usecasediagram";
 import {CommentLinkEdgeView, CommentNodeView, IconView, LabelNodeView} from "./views/commons";
 import {
@@ -137,7 +138,11 @@ export default function createContainer(widgetId: string): Container {
         // CLASS DIAGRAM
         configureModelElement(context, UmlTypes.ICON_CLASS, IconClass, IconView);
         configureModelElement(context, UmlTypes.CLASS, LabeledNode, ClassNodeView);
+        configureModelElement(context, UmlTypes.ICON_ENUMERATION, IconClass, IconView);
+        configureModelElement(context, UmlTypes.ENUMERATION, LabeledNode, EnumerationNodeView);
+        configureModelElement(context, UmlTypes.INTERFACE, LabeledNode, ClassNodeView);
         configureModelElement(context, UmlTypes.ASSOCIATION, SEdge, PolylineEdgeView);
+        configureModelElement(context, UmlTypes.CLASS_GENERALIZATION, SEdge, PolylineEdgeView);
         // configureModelElement(context, UmlTypes.PROPERTY, SLabelNodeProperty, LabelNodeView);
         configureModelElement(context, UmlTypes.PROPERTY, IconLabelCompartment, SCompartmentView);
         configureModelElement(context, UmlTypes.ICON_PROPERTY, IconProperty, IconView);
@@ -243,7 +248,8 @@ export default function createContainer(widgetId: string): Container {
         });
     });
 
-    const container = createClientContainer(classDiagramModule, umlToolPaletteModule, saveModule, copyPasteContextMenuModule);
+    const container = createClientContainer(classDiagramModule, umlToolPaletteModule, saveModule, copyPasteContextMenuModule,
+        validationModule);
     container.unload(toolPaletteModule);
     overrideViewerOptions(container, {
         baseDiv: widgetId,

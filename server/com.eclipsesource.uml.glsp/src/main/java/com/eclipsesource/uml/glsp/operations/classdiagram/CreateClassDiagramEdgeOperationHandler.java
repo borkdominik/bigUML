@@ -10,29 +10,29 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.operations.classdiagram;
 
-import java.util.List;
-
+import com.eclipsesource.uml.glsp.model.UmlModelState;
+import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;
+import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.google.common.collect.Lists;
 import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSBasicCreateOperationHandler;
 import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 import org.eclipse.glsp.server.operations.Operation;
 import org.eclipse.glsp.server.types.GLSPServerException;
 import org.eclipse.uml2.uml.Class;
 
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
-import com.google.common.collect.Lists;
+import java.util.List;
 
 import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
 
 public class CreateClassDiagramEdgeOperationHandler
-        extends EMSBasicCreateOperationHandler<CreateEdgeOperation, UmlModelServerAccess> {
+      extends EMSBasicCreateOperationHandler<CreateEdgeOperation, UmlModelServerAccess> {
 
    public CreateClassDiagramEdgeOperationHandler() {
       super(handledElementTypeIds);
    }
 
-   private static List<String> handledElementTypeIds = Lists.newArrayList(Types.ASSOCIATION);
+   private static List<String> handledElementTypeIds = Lists.newArrayList(Types.ASSOCIATION,
+         Types.CLASS_GENERALIZATION);
 
    @Override
    public boolean handles(final Operation execAction) {
@@ -56,23 +56,34 @@ public class CreateClassDiagramEdgeOperationHandler
       String targetId = operation.getTargetElementId();
 
       Class source = getOrThrow(modelState.getIndex().getSemantic(sourceId), Class.class,
-              "No valid source comment with id " + sourceId + " found");
+            "No valid source comment with id " + sourceId + " found");
       Class target = getOrThrow(modelState.getIndex().getSemantic(targetId), Class.class,
-              "No valid target element with id " + targetId + " found");
+            "No valid target element with id " + targetId + " found");
 
+      System.out.println("ELEMENT TYPE ID " + operation.getElementTypeId());
       if (Types.ASSOCIATION.equals(operation.getElementTypeId())) {
          modelAccess.addAssociation(modelState, source, target)
-                 .thenAccept(response -> {
-                    if (!response.body()) {
-                       throw new GLSPServerException("Could not execute create operation on new Association edge");
-                    }
-                 });
+               .thenAccept(response -> {
+                  if (!response.body()) {
+                     throw new GLSPServerException("Could not execute create operation on new Association edge");
+                  }
+               });
+      } else if (Types.CLASS_GENERALIZATION.equals(operation.getElementTypeId())) {
+         System.out.println("REACHES EDGE HANDLER");
+         modelAccess.addClassGeneralization(modelState, source, target)
+               .thenAccept(response -> {
+                  if (!response.body()) {
+                     throw new GLSPServerException("Could not execute create operation on new Generalisation edge");
+                  }
+               });
       } else {
          System.out.println("Association could not be created!");
       }
    }
 
    @Override
-   public String getLabel() { return "Create uml edge"; }
+   public String getLabel() {
+      return "Create uml edge";
+   }
 
 }

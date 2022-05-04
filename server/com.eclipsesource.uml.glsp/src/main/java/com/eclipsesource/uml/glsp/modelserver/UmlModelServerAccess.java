@@ -50,6 +50,8 @@ import com.eclipsesource.uml.modelserver.commands.deploymentdiagram.artifact.Set
 import com.eclipsesource.uml.modelserver.commands.deploymentdiagram.communicationpath.AddCommunicationPathCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.deploymentdiagram.communicationpath.RemoveCommunicationPathCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.deploymentdiagram.communicationpath.SetCommunicationPathEndNameCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.deploymentdiagram.component.AddDeploymentComponentCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.deploymentdiagram.component.SetDeploymentComponentNameCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.deploymentdiagram.deploymentedge.AddDeploymentCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.deploymentdiagram.deploymentedge.RemoveDeploymentCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.deploymentdiagram.deploymentspecification.AddDeploymentSpecificationCommandContribution;
@@ -1003,6 +1005,33 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
             getSemanticUriFragment(deploymentSpecificationToRename),
             newName);
       return this.edit(setDeploymentSpecificationNameCommand);
+   }
+
+   // DEPLOYMENT COMPONENT
+   public CompletableFuture<Response<Boolean>> addDeploymentComponent(final UmlModelState modelState,
+                                                                      final GPoint position, final NamedElement parent) {
+
+      CCommand addComponentCompoundCommand = AddDeploymentComponentCommandContribution
+            .create(position, getSemanticUriFragment(parent));
+      return this.edit(addComponentCompoundCommand);
+   }
+
+   /*public CompletableFuture<Response<Boolean>> removeDeploymentComponent(final UmlModelState modelState,
+                                                               final Component componentToRemove) {
+
+      String semanticProxyUri = getSemanticUriFragment(componentToRemove);
+      CCompoundCommand compoundCommand = RemoveComponentCommandContribution.create(semanticProxyUri);
+      return this.edit(compoundCommand);
+   }*/
+
+   public CompletableFuture<Response<Boolean>> setDeploymentComponentName(final UmlModelState modelState,
+                                                                          final Component componentToRename,
+                                                                          final String newName) {
+
+      CCommand setDeploymentComponentNameCommand = SetDeploymentComponentNameCommandContribution.create(
+            getSemanticUriFragment(componentToRename),
+            newName);
+      return this.edit(setDeploymentComponentNameCommand);
    }
 
    /*

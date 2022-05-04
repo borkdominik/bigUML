@@ -32,6 +32,7 @@ import com.eclipsesource.uml.glsp.operations.classdiagram.CreateClassDiagramChil
 import com.eclipsesource.uml.glsp.operations.classdiagram.CreateClassDiagramEdgeOperationHandler;
 import com.eclipsesource.uml.glsp.operations.classdiagram.CreateClassDiagramNodeOperationHandler;
 import com.eclipsesource.uml.glsp.operations.common.CreateCommentNodeOperationHandler;
+import com.eclipsesource.uml.glsp.operations.deploymentdiagram.CreateDeploymentDiagramChildNodeOperationHandler;
 import com.eclipsesource.uml.glsp.operations.deploymentdiagram.CreateDeploymentDiagramEdgeOperationHandler;
 import com.eclipsesource.uml.glsp.operations.deploymentdiagram.CreateDeploymentDiagramNodeOperationHandler;
 import com.eclipsesource.uml.glsp.operations.objectdiagram.CreateObjectDiagramChildNodeOperationHandler;
@@ -125,7 +126,6 @@ public class UmlGLSPModule extends EMSGLSPModule {
       bindings.add(CreateClassDiagramNodeOperationHandler.class);
       bindings.add(CreateClassDiagramChildNodeOperationHandler.class);
       bindings.add(CreateClassDiagramEdgeOperationHandler.class);
-
       // OBJECT
       bindings.add(CreateObjectDiagramNodeOperationHandler.class);
       bindings.add(CreateObjectDiagramChildNodeOperationHandler.class);
@@ -140,6 +140,7 @@ public class UmlGLSPModule extends EMSGLSPModule {
       bindings.add(CreateUseCaseDiagramEdgeOperationHandler.class);
       // DEPLOYMENT
       bindings.add(CreateDeploymentDiagramNodeOperationHandler.class);
+      bindings.add(CreateDeploymentDiagramChildNodeOperationHandler.class);
       bindings.add(CreateDeploymentDiagramEdgeOperationHandler.class);
       // STATEMACHINE
       bindings.add(CreateStateMachineDiagramNodeOperationHandler.class);
@@ -166,5 +167,7 @@ public class UmlGLSPModule extends EMSGLSPModule {
    }*/
 
    @Override
-   public String getDiagramType() { return "umldiagram"; }
+   public String getDiagramType() {
+      return "umldiagram";
+   }
 }

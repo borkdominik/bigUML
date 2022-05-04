@@ -93,6 +93,7 @@ export namespace UmlTypes {
     export const DEVICE = `${DefaultTypes.NODE}:device`;
     export const ICON_DEPLOYMENT_SPECIFICATION = `${ICON}:deploymentspecification`;
     export const DEPLOYMENT_SPECIFICATION = `${DefaultTypes.NODE}:deploymentspecification`;
+    export const DEPLOYMENT_COMPONENT = `${DefaultTypes.NODE}:deploymentcomponent`;
 
     // STATE MACHINE DIAGRAM
     export const ICON_STATE_MACHINE = `${ICON}:state-machine`;

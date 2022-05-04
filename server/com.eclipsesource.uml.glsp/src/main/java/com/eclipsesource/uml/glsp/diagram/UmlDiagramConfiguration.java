@@ -142,7 +142,7 @@ public class UmlDiagramConfiguration extends BaseDiagramConfiguration {
       hints.add(new ShapeTypeHint(DefaultTypes.GRAPH, false, false, false, false,
             List.of(Types.COMMENT, Types.CLASS, Types.ACTIVITY, Types.USECASE, Types.ACTOR, Types.PACKAGE, Types.COMPONENT,
                   Types.STATE_MACHINE, Types.DEPLOYMENT_NODE, Types.DEVICE, Types.ARTIFACT,
-                  Types.EXECUTION_ENVIRONMENT, Types.OBJECT
+                  Types.EXECUTION_ENVIRONMENT, Types.OBJECT, Types.DEPLOYMENT_COMPONENT
             ))
       );
 
@@ -170,7 +170,7 @@ public class UmlDiagramConfiguration extends BaseDiagramConfiguration {
 
       // DEPLOYMENT DIAGRAM
       hints.add(new ShapeTypeHint(Types.DEPLOYMENT_NODE, true, true, true, true,
-            List.of(Types.DEPLOYMENT_NODE, Types.ARTIFACT, Types.DEVICE,
+            List.of(Types.DEPLOYMENT_NODE, Types.ARTIFACT, Types.DEVICE, Types.DEPLOYMENT_COMPONENT,
                   Types.EXECUTION_ENVIRONMENT, Types.DEPLOYMENT_SPECIFICATION, Types.COMMENT)));
       hints.add(new ShapeTypeHint(Types.ARTIFACT, true, true, true, true,
             List.of(Types.DEPLOYMENT_SPECIFICATION, Types.COMMENT)));
@@ -178,10 +178,11 @@ public class UmlDiagramConfiguration extends BaseDiagramConfiguration {
             List.of(Types.DEPLOYMENT_NODE, Types.ARTIFACT, Types.DEVICE,
                   Types.EXECUTION_ENVIRONMENT, Types.DEPLOYMENT_SPECIFICATION, Types.COMMENT)));
       hints.add(new ShapeTypeHint(Types.DEVICE, true, true, true, true,
-            List.of(Types.DEPLOYMENT_NODE, Types.ARTIFACT, Types.DEVICE,
+            List.of(Types.DEPLOYMENT_NODE, Types.ARTIFACT, Types.DEVICE, Types.DEPLOYMENT_COMPONENT,
                   Types.EXECUTION_ENVIRONMENT, Types.DEPLOYMENT_SPECIFICATION, Types.COMMENT)));
       hints.add(new ShapeTypeHint(Types.DEPLOYMENT_SPECIFICATION, true, true, true, true,
             List.of(Types.COMMENT)));
+      hints.add(new ShapeTypeHint(Types.DEPLOYMENT_COMPONENT, true, true, true, true));
 
       // STATE MACHINE DIAGRAM
       hints.add(new ShapeTypeHint(Types.STATE_MACHINE, true, true, false, false,
@@ -335,6 +336,7 @@ public class UmlDiagramConfiguration extends BaseDiagramConfiguration {
       mappings.put(Types.DEVICE, GraphPackage.Literals.GNODE);
       mappings.put(Types.COMMUNICATION_PATH, GraphPackage.Literals.GEDGE);
       mappings.put(Types.DEPLOYMENT, GraphPackage.Literals.GEDGE);
+      mappings.put(Types.DEPLOYMENT_COMPONENT, GraphPackage.Literals.GNODE);
 
       // STATE MACHINE DIAGRAM
       mappings.put(Types.ICON_STATE_MACHINE, GraphPackage.Literals.GCOMPARTMENT);

@@ -209,6 +209,8 @@ export default function createContainer(widgetId: string): Container {
         configureModelElement(context, UmlTypes.ICON_DEPLOYMENT_SPECIFICATION, IconDeploymentSpecification, IconView);
         configureModelElement(context, UmlTypes.COMMUNICATION_PATH, SEdge, PolylineEdgeView);
         configureModelElement(context, UmlTypes.DEPLOYMENT, SEdge, DirectedEdgeView);
+        // ClassNodeView just used as placeholder
+        configureModelElement(context, UmlTypes.DEPLOYMENT_COMPONENT, LabeledNode, ClassNodeView);
 
         // STATEMACHINE DIAGRAM
         configureModelElement(context, UmlTypes.ICON_STATE_MACHINE, IconStateMachine, IconView);

@@ -163,6 +163,13 @@ public class UmlLabelEditOperationHandler extends EMSBasicOperationHandler<Apply
                            throw new GLSPServerException("Could not rename Pseudo State to: " + inputText);
                         }
                      });
+            } else if (semanticElement instanceof Component) {
+               modelAccess.setDeploymentComponentName(modelState, (Component) semanticElement, inputText)
+                     .thenAccept(response -> {
+                        if (!response.body()) {
+                           throw new GLSPServerException("Could not rename Object to: " + inputText);
+                        }
+                     });
             } else if (semanticElement instanceof Class) {
                modelAccess.setClassName(modelState, (Class) semanticElement, inputText)
                      .thenAccept(response -> {

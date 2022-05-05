@@ -9,6 +9,7 @@ import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.features.contextmenu.ContextMenuItemProvider;
 import org.eclipse.glsp.server.features.contextmenu.MenuItem;
+import org.eclipse.glsp.server.features.validation.RequestMarkersAction;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
@@ -31,9 +32,14 @@ public class UmlContextMenuItemProvider implements ContextMenuItemProvider {
       Representation diagramType = UmlModelState.getModelState(umlModelState).getNotationModel().getDiagramType();
 
       List<MenuItem> contextMenu = Lists.newArrayList();
+
       switch (diagramType) {
          case CLASS:
-            contextMenu.addAll(classDiagramNodes(position));
+            // if no element is selected the user can add new nodes
+            if (selectedElementIds.size() == 0) {
+               contextMenu.addAll(classDiagramNodes(position));
+            }
+            // if one node is selected the user can add child nodes
             if (selectedElementIds.size() == 1) {
                contextMenu.addAll(classDiagramChildNodes(selectedElementIds.get(0), umlModelState));
             }
@@ -41,6 +47,10 @@ public class UmlContextMenuItemProvider implements ContextMenuItemProvider {
             if (selectedElementIds.size() == 2) {
                contextMenu.addAll(classDiagramEdges(selectedElementIds.get(0), selectedElementIds.get(1)));
             }
+            // adding validation as permanent option to the context menu
+            MenuItem validate = new MenuItem("validate", "Validation",
+                  List.of(new RequestMarkersAction(selectedElementIds)), true);
+            contextMenu.add(validate);
             return contextMenu;
          //TODO
          case ACTIVITY:

@@ -163,7 +163,6 @@ public class UmlGLSPModule extends EMSGLSPModule {
       return UmlDiagramModelValidator.class;
    }
 
-
    @Override
    protected Class<? extends ContextMenuItemProvider> bindContextMenuItemProvider() {
       return UmlContextMenuItemProvider.class;

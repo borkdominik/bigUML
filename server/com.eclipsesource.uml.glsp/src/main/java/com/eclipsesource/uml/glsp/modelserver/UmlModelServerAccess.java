@@ -11,6 +11,7 @@
 package com.eclipsesource.uml.glsp.modelserver;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
+import com.eclipsesource.uml.glsp.util.UmlConfig;
 import com.eclipsesource.uml.modelserver.UmlModelServerClient;
 import com.eclipsesource.uml.modelserver.UmlNotationUtil;
 import com.eclipsesource.uml.modelserver.commands.activitydiagram.action.AddActionCommandContribution;
@@ -202,10 +203,11 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
     * Class
     */
    public CompletableFuture<Response<Boolean>> addClass(final UmlModelState modelState,
-                                                        final Optional<GPoint> newPosition) {
+                                                        final Optional<GPoint> newPosition,
+                                                        final Optional<String> elementTypeId) {
 
       CCompoundCommand addClassCompoundCommand = AddClassCommandContribution
-            .create(newPosition.orElse(GraphUtil.point(0, 0)));
+            .create(newPosition.orElse(GraphUtil.point(0, 0)), elementTypeId.orElse(UmlConfig.Types.CLASS));
       return this.edit(addClassCompoundCommand);
    }
 

@@ -46,6 +46,7 @@ public final class UmlConfig {
       // CLASS DIAGRAM
       public static final String ICON_CLASS = ICON + "class";
       public static final String CLASS = NODE + "class";
+      public static final String ABSTRACT_CLASS = NODE + "abstract-class";
       public static final String ENUMERATION = NODE + "enumeration";
       public static final String ICON_ENUMERATION = ICON + "enumeration";
       public static final String INTERFACE = NODE + "interface";

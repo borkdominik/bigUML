@@ -10,6 +10,9 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.classdiagram.clazz;
 
+import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlCompoundCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlNotationCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.util.UmlNotationCommandUtil;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -19,32 +22,31 @@ import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
 import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
 import org.eclipse.glsp.graph.GPoint;
 
-import com.eclipsesource.uml.modelserver.commands.classdiagram.clazz.AddClassCompoundCommand;
-import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlCompoundCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlNotationCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.util.UmlNotationCommandUtil;
-
 public class AddClassCommandContribution extends UmlCompoundCommandContribution {
 
    public static final String TYPE = "addClassContributuion";
+   public static final String CLASS_TYPE = "classType";
 
-   public static CCompoundCommand create(final GPoint position) {
+   public static CCompoundCommand create(final GPoint position, final String elementTypeId) {
       CCompoundCommand addClassCommand = CCommandFactory.eINSTANCE.createCompoundCommand();
       addClassCommand.setType(TYPE);
       addClassCommand.getProperties().put(UmlNotationCommandContribution.POSITION_X, String.valueOf(position.getX()));
       addClassCommand.getProperties().put(UmlNotationCommandContribution.POSITION_Y, String.valueOf(position.getY()));
+      addClassCommand.getProperties().put(CLASS_TYPE, elementTypeId);
       return addClassCommand;
    }
 
    @Override
    protected CompoundCommand toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
-      throws DecodingException {
+         throws DecodingException {
 
       GPoint classPosition = UmlNotationCommandUtil.getGPoint(
-         command.getProperties().get(UmlNotationCommandContribution.POSITION_X),
-         command.getProperties().get(UmlNotationCommandContribution.POSITION_Y));
+            command.getProperties().get(UmlNotationCommandContribution.POSITION_X),
+            command.getProperties().get(UmlNotationCommandContribution.POSITION_Y));
 
-      return new AddClassCompoundCommand(domain, modelUri, classPosition);
+      String elementTypeId = command.getProperties().get(CLASS_TYPE);
+
+      return new AddClassCompoundCommand(domain, modelUri, classPosition, elementTypeId);
    }
 
 }

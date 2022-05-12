@@ -1309,6 +1309,7 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
     */
    // Change Bounds
    public CompletableFuture<Response<Boolean>> changeBounds(final Map<Shape, ElementAndBounds> changeBoundsMap) {
+      System.out.println("MODELSERVER ACCESS CHANGE BOUNDS");
       CCompoundCommand compoundCommand = CCommandFactory.eINSTANCE.createCompoundCommand();
       compoundCommand.setType(ChangeBoundsCommandContribution.TYPE);
       changeBoundsMap.forEach((shape, elementAndBounds) -> {

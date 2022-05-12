@@ -37,7 +37,7 @@ public class UmlDiagramModelValidator implements ModelValidator {
       return markers;
    }
 
-   public static List<Marker> validateClassNode(final Class semanticElement) {
+   private static List<Marker> validateClassNode(final Class semanticElement) {
       List<Marker> markers = new ArrayList<>();
       classNodeIsConnected(semanticElement).ifPresent(markers::add);
       return markers;

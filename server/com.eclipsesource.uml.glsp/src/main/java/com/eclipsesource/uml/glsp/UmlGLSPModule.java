@@ -77,6 +77,7 @@ public class UmlGLSPModule extends EMSGLSPModule {
       bindings.add(AddTransitionGuardActionHandler.class);
       bindings.add(AddTransitionLabelActionHandler.class);
       bindings.add(AddTransitionTriggerActionHandler.class);
+      //bindings.add(UmlDiagramRequestMarkersHandler.class);
    }
 
    @Override

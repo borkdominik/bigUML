@@ -10,6 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp;
 
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.eclipse.elk.alg.layered.options.LayeredMetaDataProvider;
 import org.eclipse.emfcloud.modelserver.command.CCommandPackage;
@@ -17,6 +18,9 @@ import org.eclipse.glsp.layout.ElkLayoutEngine;
 import org.eclipse.glsp.server.di.ServerModule;
 import org.eclipse.glsp.server.launch.GLSPServerLauncher;
 import org.eclipse.glsp.server.launch.SocketGLSPServerLauncher;
+import org.eclipse.glsp.server.utils.LaunchUtil;
+
+import java.io.IOException;
 
 public class UmlGLSPServerLauncher {
 
@@ -31,6 +35,11 @@ public class UmlGLSPServerLauncher {
       module.configureDiagramModule(new UmlGLSPModule());
       GLSPServerLauncher launcher = new SocketGLSPServerLauncher(module);
       CCommandPackage.eINSTANCE.eClass();
+      try {
+         LaunchUtil.configureLogger(true, Level.DEBUG);
+      } catch (IOException e) {
+         e.printStackTrace();
+      }
       launcher.start("localhost", port);
    }
 

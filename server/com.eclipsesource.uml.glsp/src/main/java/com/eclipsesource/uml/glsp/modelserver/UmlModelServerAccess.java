@@ -862,7 +862,7 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
    // GENERALIZATION
    public CompletableFuture<Response<Boolean>> addGeneralization(final UmlModelState modelState,
                                                                  final Classifier generalClassifier, final Classifier specificClassifier) {
-
+      System.out.println("MODELSERVER ACCESS");
       CCompoundCommand addGeneralizationCompoundCommand = AddGeneralizationCommandContribution
             .create(getSemanticUriFragment(generalClassifier), getSemanticUriFragment(specificClassifier));
       return this.edit(addGeneralizationCompoundCommand);

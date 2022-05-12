@@ -142,7 +142,7 @@ export default function createContainer(widgetId: string): Container {
         configureModelElement(context, UmlTypes.ENUMERATION, LabeledNode, EnumerationNodeView);
         configureModelElement(context, UmlTypes.INTERFACE, LabeledNode, ClassNodeView);
         configureModelElement(context, UmlTypes.ASSOCIATION, SEdge, PolylineEdgeView);
-        configureModelElement(context, UmlTypes.CLASS_GENERALIZATION, SEdge, PolylineEdgeView);
+        configureModelElement(context, UmlTypes.CLASS_GENERALIZATION, SEdge, DirectedEdgeView);
         // configureModelElement(context, UmlTypes.PROPERTY, SLabelNodeProperty, LabelNodeView);
         configureModelElement(context, UmlTypes.PROPERTY, IconLabelCompartment, SCompartmentView);
         configureModelElement(context, UmlTypes.ICON_PROPERTY, IconProperty, IconView);
@@ -214,7 +214,7 @@ export default function createContainer(widgetId: string): Container {
         configureModelElement(context, UmlTypes.ICON_DEPLOYMENT_SPECIFICATION, IconDeploymentSpecification, IconView);
         configureModelElement(context, UmlTypes.COMMUNICATION_PATH, SEdge, PolylineEdgeView);
         configureModelElement(context, UmlTypes.DEPLOYMENT, SEdge, DirectedEdgeView);
-        // ClassNodeView just used as placeholder
+        // TODO: ClassNodeView just used as placeholder
         configureModelElement(context, UmlTypes.DEPLOYMENT_COMPONENT, LabeledNode, ClassNodeView);
 
         // STATEMACHINE DIAGRAM

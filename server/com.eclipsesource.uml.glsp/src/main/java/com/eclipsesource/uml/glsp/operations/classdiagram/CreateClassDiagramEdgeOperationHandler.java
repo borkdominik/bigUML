@@ -70,7 +70,8 @@ public class CreateClassDiagramEdgeOperationHandler
                });
       } else if (Types.CLASS_GENERALIZATION.equals(operation.getElementTypeId())) {
          System.out.println("REACHES EDGE HANDLER");
-         modelAccess.addClassGeneralization(modelState, source, target)
+         System.out.println("source: " + source + " target: " + target);
+         modelAccess.addGeneralization(modelState, source, target)
                .thenAccept(response -> {
                   if (!response.body()) {
                      throw new GLSPServerException("Could not execute create operation on new Generalisation edge");

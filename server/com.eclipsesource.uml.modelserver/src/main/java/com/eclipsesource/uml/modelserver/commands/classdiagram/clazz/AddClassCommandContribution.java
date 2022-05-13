@@ -27,12 +27,12 @@ public class AddClassCommandContribution extends UmlCompoundCommandContribution 
    public static final String TYPE = "addClassContributuion";
    public static final String CLASS_TYPE = "classType";
 
-   public static CCompoundCommand create(final GPoint position, final String elementTypeId) {
+   public static CCompoundCommand create(final GPoint position, final Boolean isAbstract) {
       CCompoundCommand addClassCommand = CCommandFactory.eINSTANCE.createCompoundCommand();
       addClassCommand.setType(TYPE);
       addClassCommand.getProperties().put(UmlNotationCommandContribution.POSITION_X, String.valueOf(position.getX()));
       addClassCommand.getProperties().put(UmlNotationCommandContribution.POSITION_Y, String.valueOf(position.getY()));
-      addClassCommand.getProperties().put(CLASS_TYPE, elementTypeId);
+      addClassCommand.getProperties().put(CLASS_TYPE, isAbstract.toString());
       return addClassCommand;
    }
 
@@ -44,9 +44,9 @@ public class AddClassCommandContribution extends UmlCompoundCommandContribution 
             command.getProperties().get(UmlNotationCommandContribution.POSITION_X),
             command.getProperties().get(UmlNotationCommandContribution.POSITION_Y));
 
-      String elementTypeId = command.getProperties().get(CLASS_TYPE);
+      Boolean isAbstract = Boolean.parseBoolean(command.getProperties().get(CLASS_TYPE));
 
-      return new AddClassCompoundCommand(domain, modelUri, classPosition, elementTypeId);
+      return new AddClassCompoundCommand(domain, modelUri, classPosition, isAbstract);
    }
 
 }

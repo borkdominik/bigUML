@@ -77,11 +77,7 @@ public class ClassDiagramNodeFactory extends AbstractGModelFactory<Classifier, G
 
    // CLASS
    protected GNode createClassNode(final Class umlClass) {
-
-      System.out.println("NAME: " + umlClass.getName() + " ABSTRACT: " + umlClass.isAbstract());
-      // only directly after creation the name is relevant for rendering
-      if (umlClass.getName().contains("Abstract-") || umlClass.isAbstract()) {
-         umlClass.setIsAbstract(true);
+      if (umlClass.isAbstract()) {
          GNodeBuilder b = new GNodeBuilder(Types.ABSTRACT_CLASS)
                .id(toId(umlClass))
                .layout(GConstants.Layout.VBOX)
@@ -90,17 +86,15 @@ public class ClassDiagramNodeFactory extends AbstractGModelFactory<Classifier, G
                .add(buildClassPropertiesCompartment(umlClass.getAttributes(), umlClass));
          applyShapeData(umlClass, b);
          return b.build();
-      } else {
-         umlClass.setIsAbstract(false);
-         GNodeBuilder b = new GNodeBuilder(Types.CLASS)
-               .id(toId(umlClass))
-               .layout(GConstants.Layout.VBOX)
-               .addCssClass(CSS.NODE)
-               .add(buildClassHeader(umlClass))
-               .add(buildClassPropertiesCompartment(umlClass.getAttributes(), umlClass));
-         applyShapeData(umlClass, b);
-         return b.build();
       }
+      GNodeBuilder b = new GNodeBuilder(Types.CLASS)
+            .id(toId(umlClass))
+            .layout(GConstants.Layout.VBOX)
+            .addCssClass(CSS.NODE)
+            .add(buildClassHeader(umlClass))
+            .add(buildClassPropertiesCompartment(umlClass.getAttributes(), umlClass));
+      applyShapeData(umlClass, b);
+      return b.build();
    }
 
    // INTERFACE

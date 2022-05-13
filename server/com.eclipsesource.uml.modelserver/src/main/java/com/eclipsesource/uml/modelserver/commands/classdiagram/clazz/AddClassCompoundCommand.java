@@ -21,10 +21,10 @@ import java.util.function.Supplier;
 public class AddClassCompoundCommand extends CompoundCommand {
 
    public AddClassCompoundCommand(final EditingDomain domain, final URI modelUri, final GPoint classPosition,
-                                  final String elementTypeId) {
+                                  final Boolean isAbstract) {
 
       // Chain semantic and notation command
-      AddClassCommand command = new AddClassCommand(domain, modelUri, elementTypeId);
+      AddClassCommand command = new AddClassCommand(domain, modelUri, isAbstract);
       this.append(command);
       Supplier<Class> semanticResultSupplier = command::getNewClass;
       this.append(new AddClassShapeCommand(domain, modelUri, classPosition, semanticResultSupplier));

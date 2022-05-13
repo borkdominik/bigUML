@@ -17,27 +17,21 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.UMLFactory;
 
-import java.util.Objects;
-
 public class AddClassCommand extends UmlSemanticElementCommand {
 
    protected final Class newClass;
-   protected final String elementType;
+   protected final Boolean isAbstract;
 
-   public AddClassCommand(final EditingDomain domain, final URI modelUri, final String elementTypeId) {
+   public AddClassCommand(final EditingDomain domain, final URI modelUri, final Boolean isAbstract) {
       super(domain, modelUri);
       this.newClass = UMLFactory.eINSTANCE.createClass();
-      this.elementType = elementTypeId;
+      this.isAbstract = isAbstract;
    }
 
    @Override
    protected void doExecute() {
-      System.out.println("ELEMENT TYPE: " + elementType);
-      if (Objects.equals(elementType, "node:abstract-class")) {
-         newClass.setName("Abstract-" + UmlSemanticCommandUtil.getNewClassName(umlModel));
-      } else {
-         newClass.setName(UmlSemanticCommandUtil.getNewClassName(umlModel));
-      }
+      newClass.setIsAbstract(isAbstract);
+      newClass.setName(UmlSemanticCommandUtil.getNewClassName(umlModel));
       umlModel.getPackagedElements().add(newClass);
    }
 

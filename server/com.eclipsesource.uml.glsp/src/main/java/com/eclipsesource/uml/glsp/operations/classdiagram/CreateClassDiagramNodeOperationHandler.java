@@ -30,7 +30,7 @@ public class CreateClassDiagramNodeOperationHandler
    }
 
    private static final List<String> handledElementTypeIds = Lists.newArrayList(
-         Types.CLASS, Types.INTERFACE, Types.ENUMERATION
+         Types.CLASS, Types.INTERFACE, Types.ENUMERATION, Types.ABSTRACT_CLASS
    );
 
    @Override
@@ -48,9 +48,13 @@ public class CreateClassDiagramNodeOperationHandler
 
    @Override
    public void executeOperation(final CreateNodeOperation operation, final UmlModelServerAccess modelAccess) {
+      boolean isAbstract = false;
+      if (Types.CLASS.equals(operation.getElementTypeId()) || Types.ABSTRACT_CLASS.equals(operation.getElementTypeId())) {
 
-      if (Types.CLASS.equals(operation.getElementTypeId())) {
-         modelAccess.addClass(getUmlModelState(), operation.getLocation())
+         if (Types.ABSTRACT_CLASS.equals(operation.getElementTypeId())) {
+            isAbstract = true;
+         }
+         modelAccess.addClass(getUmlModelState(), operation.getLocation(), isAbstract)
                .thenAccept(response -> {
                   if (!response.body()) {
                      throw new GLSPServerException("Could not execute create operation on new Class node");

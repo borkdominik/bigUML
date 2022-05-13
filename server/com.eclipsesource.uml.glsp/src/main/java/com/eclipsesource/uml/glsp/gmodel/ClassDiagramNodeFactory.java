@@ -77,13 +77,22 @@ public class ClassDiagramNodeFactory extends AbstractGModelFactory<Classifier, G
 
    // CLASS
    protected GNode createClassNode(final Class umlClass) {
+      if (umlClass.isAbstract()) {
+         GNodeBuilder b = new GNodeBuilder(Types.ABSTRACT_CLASS)
+               .id(toId(umlClass))
+               .layout(GConstants.Layout.VBOX)
+               .addCssClass(CSS.NODE)
+               .add(buildClassHeader(umlClass))
+               .add(buildClassPropertiesCompartment(umlClass.getAttributes(), umlClass));
+         applyShapeData(umlClass, b);
+         return b.build();
+      }
       GNodeBuilder b = new GNodeBuilder(Types.CLASS)
             .id(toId(umlClass))
             .layout(GConstants.Layout.VBOX)
             .addCssClass(CSS.NODE)
             .add(buildClassHeader(umlClass))
             .add(buildClassPropertiesCompartment(umlClass.getAttributes(), umlClass));
-
       applyShapeData(umlClass, b);
       return b.build();
    }
@@ -131,13 +140,29 @@ public class ClassDiagramNodeFactory extends AbstractGModelFactory<Classifier, G
    }
 
    protected GCompartment buildClassHeader(final Class umlClass) {
-      GCompartmentBuilder classHeaderBuilder = new GCompartmentBuilder(Types.COMPARTMENT_HEADER)
-            .layout(GConstants.Layout.HBOX)
-            .id(UmlIDUtil.createHeaderId(toId(umlClass)));
 
-      GCompartment classHeaderIcon = new GCompartmentBuilder(getType(umlClass))
-            .id(UmlIDUtil.createHeaderIconId(toId(umlClass))).build();
-      classHeaderBuilder.add(classHeaderIcon);
+      GCompartmentBuilder classHeaderBuilder = new GCompartmentBuilder(Types.COMPARTMENT_HEADER);
+
+      if (umlClass.isAbstract()) {
+         classHeaderBuilder
+               .layout(GConstants.Layout.VBOX)
+               .id(UmlIDUtil.createHeaderId(toId(umlClass)));
+
+         GLabel typeLabel = new GLabelBuilder(Types.LABEL_NAME)
+               .id(UmlIDUtil.createHeaderLabelId(toId(umlClass)) + "_type_header")
+               .text("«abstract»")
+               .build();
+         classHeaderBuilder.add(typeLabel);
+
+      } else {
+         classHeaderBuilder
+               .layout(GConstants.Layout.HBOX)
+               .id(UmlIDUtil.createHeaderId(toId(umlClass)));
+
+         GCompartment classHeaderIcon = new GCompartmentBuilder(getType(umlClass))
+               .id(UmlIDUtil.createHeaderIconId(toId(umlClass))).build();
+         classHeaderBuilder.add(classHeaderIcon);
+      }
 
       GLabel classHeaderLabel = new GLabelBuilder(Types.LABEL_NAME)
             .id(UmlIDUtil.createHeaderLabelId(toId(umlClass)))

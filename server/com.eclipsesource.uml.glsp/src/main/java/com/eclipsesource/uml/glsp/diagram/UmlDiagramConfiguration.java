@@ -144,12 +144,14 @@ public class UmlDiagramConfiguration extends BaseDiagramConfiguration {
       hints.add(new ShapeTypeHint(DefaultTypes.GRAPH, false, false, false, false,
             List.of(Types.COMMENT, Types.CLASS, Types.ACTIVITY, Types.USECASE, Types.ACTOR, Types.PACKAGE, Types.COMPONENT,
                   Types.STATE_MACHINE, Types.DEPLOYMENT_NODE, Types.DEVICE, Types.ARTIFACT, Types.ENUMERATION,
-                  Types.EXECUTION_ENVIRONMENT, Types.OBJECT, Types.DEPLOYMENT_COMPONENT, Types.INTERFACE
+                  Types.EXECUTION_ENVIRONMENT, Types.OBJECT, Types.DEPLOYMENT_COMPONENT, Types.INTERFACE, Types.ABSTRACT_CLASS
             ))
       );
 
       // CLASS DIAGRAM
       hints.add(new ShapeTypeHint(Types.CLASS, true, true, false, false,
+            List.of(Types.PROPERTY, Types.COMMENT)));
+      hints.add(new ShapeTypeHint(Types.ABSTRACT_CLASS, true, true, false, false,
             List.of(Types.PROPERTY, Types.COMMENT)));
       hints.add(new ShapeTypeHint(Types.INTERFACE, true, true, false, false,
             List.of(Types.PROPERTY, Types.COMMENT)));

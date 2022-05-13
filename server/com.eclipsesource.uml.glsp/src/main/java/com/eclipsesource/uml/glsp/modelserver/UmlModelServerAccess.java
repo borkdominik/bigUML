@@ -202,10 +202,11 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
     * Class
     */
    public CompletableFuture<Response<Boolean>> addClass(final UmlModelState modelState,
-                                                        final Optional<GPoint> newPosition) {
+                                                        final Optional<GPoint> newPosition,
+                                                        final Boolean isAbstract) {
 
       CCompoundCommand addClassCompoundCommand = AddClassCommandContribution
-            .create(newPosition.orElse(GraphUtil.point(0, 0)));
+            .create(newPosition.orElse(GraphUtil.point(0, 0)), isAbstract);
       return this.edit(addClassCompoundCommand);
    }
 

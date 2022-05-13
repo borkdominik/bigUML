@@ -138,6 +138,7 @@ export default function createContainer(widgetId: string): Container {
         // CLASS DIAGRAM
         configureModelElement(context, UmlTypes.ICON_CLASS, IconClass, IconView);
         configureModelElement(context, UmlTypes.CLASS, LabeledNode, ClassNodeView);
+        configureModelElement(context, UmlTypes.ABSTRACT_CLASS, LabeledNode, ClassNodeView);
         configureModelElement(context, UmlTypes.ICON_ENUMERATION, IconClass, IconView);
         configureModelElement(context, UmlTypes.ENUMERATION, LabeledNode, EnumerationNodeView);
         configureModelElement(context, UmlTypes.INTERFACE, LabeledNode, ClassNodeView);

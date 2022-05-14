@@ -10,6 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.classdiagram.association;
 
+import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlCompoundCommandContribution;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -18,31 +19,33 @@ import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
 import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
 import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
 
-import com.eclipsesource.uml.modelserver.commands.classdiagram.association.AddAssociationCompoundCommand;
-import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlCompoundCommandContribution;
-
 public class AddAssociationCommandContribution extends UmlCompoundCommandContribution {
 
    public static final String TYPE = "addAssociationContributuion";
    public static final String SOURCE_CLASS_URI_FRAGMENT = "sourceClassUriFragment";
    public static final String TARGET_CLASS_URI_FRAGMENT = "targetClassUriFragment";
+   public static final String TYPE_KEYWORD = "typeKeyword";
 
-   public static CCompoundCommand create(final String sourceClassUriFragment, final String targetClassUriFragment) {
+   public static CCompoundCommand create(final String sourceClassUriFragment, final String targetClassUriFragment,
+                                         final String keyword) {
       CCompoundCommand addAssociationCommand = CCommandFactory.eINSTANCE.createCompoundCommand();
       addAssociationCommand.setType(TYPE);
       addAssociationCommand.getProperties().put(SOURCE_CLASS_URI_FRAGMENT, sourceClassUriFragment);
       addAssociationCommand.getProperties().put(TARGET_CLASS_URI_FRAGMENT, targetClassUriFragment);
+      addAssociationCommand.getProperties().put(TYPE_KEYWORD, keyword);
       return addAssociationCommand;
    }
 
    @Override
    protected CompoundCommand toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
-      throws DecodingException {
+         throws DecodingException {
 
       String sourceClassUriFragment = command.getProperties().get(SOURCE_CLASS_URI_FRAGMENT);
       String targetClassUriFragment = command.getProperties().get(TARGET_CLASS_URI_FRAGMENT);
 
-      return new AddAssociationCompoundCommand(domain, modelUri, sourceClassUriFragment, targetClassUriFragment);
+      String type = command.getProperties().get(TYPE_KEYWORD);
+
+      return new AddAssociationCompoundCommand(domain, modelUri, sourceClassUriFragment, targetClassUriFragment, type);
    }
 
 }

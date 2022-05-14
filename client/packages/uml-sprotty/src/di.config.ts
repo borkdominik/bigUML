@@ -143,6 +143,8 @@ export default function createContainer(widgetId: string): Container {
         configureModelElement(context, UmlTypes.ENUMERATION, LabeledNode, EnumerationNodeView);
         configureModelElement(context, UmlTypes.INTERFACE, LabeledNode, ClassNodeView);
         configureModelElement(context, UmlTypes.ASSOCIATION, SEdge, PolylineEdgeView);
+        configureModelElement(context, UmlTypes.AGGREGATION, SEdge, DirectedEdgeView);
+        configureModelElement(context, UmlTypes.COMPOSITION, SEdge, DirectedEdgeView);
         configureModelElement(context, UmlTypes.CLASS_GENERALIZATION, SEdge, DirectedEdgeView);
         // configureModelElement(context, UmlTypes.PROPERTY, SLabelNodeProperty, LabelNodeView);
         configureModelElement(context, UmlTypes.PROPERTY, IconLabelCompartment, SCompartmentView);

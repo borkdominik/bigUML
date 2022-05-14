@@ -27,6 +27,8 @@ export namespace UmlTypes {
     export const ENUMERATION = `${DefaultTypes.NODE}:enumeration`;
     export const INTERFACE = `${DefaultTypes.NODE}:interface`;
     export const ASSOCIATION = `${DefaultTypes.EDGE}:association`;
+    export const AGGREGATION = `${DefaultTypes.EDGE}:aggregation`;
+    export const COMPOSITION = `${DefaultTypes.EDGE}:composition`;
     export const CLASS_GENERALIZATION = `${DefaultTypes.EDGE}:class-generalization`;
     export const PROPERTY = `${DefaultTypes.COMPARTMENT}:property`;
     export const ICON_PROPERTY = `${ICON}:property`;

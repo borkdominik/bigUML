@@ -335,9 +335,10 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
     * Association
     */
    public CompletableFuture<Response<Boolean>> addAssociation(final UmlModelState modelState,
-                                                              final Class sourceClass, final Class targetClass) {
+                                                              final Class sourceClass, final Class targetClass,
+                                                              final String keyword) {
       CCompoundCommand addAssociationCompoundCommand = AddAssociationCommandContribution
-            .create(getSemanticUriFragment(sourceClass), getSemanticUriFragment(targetClass));
+            .create(getSemanticUriFragment(sourceClass), getSemanticUriFragment(targetClass), keyword);
       return this.edit(addAssociationCompoundCommand);
    }
 

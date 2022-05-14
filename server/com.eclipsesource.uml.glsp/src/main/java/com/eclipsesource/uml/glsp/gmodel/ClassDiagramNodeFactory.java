@@ -150,7 +150,7 @@ public class ClassDiagramNodeFactory extends AbstractGModelFactory<Classifier, G
 
          GLabel typeLabel = new GLabelBuilder(Types.LABEL_NAME)
                .id(UmlIDUtil.createHeaderLabelId(toId(umlClass)) + "_type_header")
-               .text("«abstract»")
+               .text("{abstract}")
                .build();
          classHeaderBuilder.add(typeLabel);
 

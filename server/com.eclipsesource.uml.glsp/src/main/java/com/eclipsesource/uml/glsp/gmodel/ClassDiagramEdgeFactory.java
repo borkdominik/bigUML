@@ -54,35 +54,74 @@ public class ClassDiagramEdgeFactory extends AbstractGModelFactory<Relationship,
       Property target = memberEnds.get(1);
       String targetId = toId(target);
 
-      GEdgeBuilder builder = new GEdgeBuilder(Types.ASSOCIATION)
-            .id(toId(association))
-            .addCssClass(CSS.EDGE)
-            .sourceId(toId(source.getType()))
-            .targetId(toId(target.getType()))
-            .routerKind(GConstants.RouterKind.MANHATTAN);
+      System.out.println("KEYWORD " + association.getKeywords().get(0));
+      if (association.getKeywords().get(0).equals("composition")) {
+         GEdgeBuilder builder = new GEdgeBuilder(Types.COMPOSITION)
+               .id(toId(association))
+               .addCssClass(CSS.EDGE)
+               .addCssClass(CSS.EDGE_DIRECTED_END_EMPTY)
+               .sourceId(toId(source.getType()))
+               .targetId(toId(target.getType()))
+               .routerKind(GConstants.RouterKind.MANHATTAN);
 
-      GLabel sourceNameLabel = createEdgeNameLabel(source.getName(), UmlIDUtil.createLabelNameId(sourceId), 0.1d);
-      builder.add(sourceNameLabel);
+         modelState.getIndex().getNotation(association, Edge.class).ifPresent(edge -> {
+            if (edge.getBendPoints() != null) {
+               ArrayList<GPoint> bendPoints = new ArrayList<>();
+               edge.getBendPoints().forEach(p -> bendPoints.add(GraphUtil.copy(p)));
+               builder.addRoutingPoints(bendPoints);
+            }
+         });
+         return builder.build();
+      } else if (association.getKeywords().get(0).equals("aggregation")) {
+         
+         GEdgeBuilder builder = new GEdgeBuilder(Types.COMPOSITION)
+               .id(toId(association))
+               .addCssClass(CSS.EDGE)
+               .addCssClass(CSS.EDGE_DOTTED)
+               .sourceId(toId(source.getType()))
+               .targetId(toId(target.getType()))
+               .routerKind(GConstants.RouterKind.MANHATTAN);
 
-      GLabel sourceMultiplicityLabel = createEdgeMultiplicityLabel(UmlLabelUtil.getMultiplicity(source),
-            UmlIDUtil.createLabelMultiplicityId(sourceId), 0.1d);
-      builder.add(sourceMultiplicityLabel);
+         modelState.getIndex().getNotation(association, Edge.class).ifPresent(edge -> {
+            if (edge.getBendPoints() != null) {
+               ArrayList<GPoint> bendPoints = new ArrayList<>();
+               edge.getBendPoints().forEach(p -> bendPoints.add(GraphUtil.copy(p)));
+               builder.addRoutingPoints(bendPoints);
+            }
+         });
+         return builder.build();
+      } else {
+         GEdgeBuilder builder = new GEdgeBuilder(Types.ASSOCIATION)
+               .id(toId(association))
+               .addCssClass(CSS.EDGE)
+               .sourceId(toId(source.getType()))
+               .targetId(toId(target.getType()))
+               .routerKind(GConstants.RouterKind.MANHATTAN);
 
-      GLabel targetNameLabel = createEdgeNameLabel(target.getName(), UmlIDUtil.createLabelNameId(targetId), 0.9d);
-      builder.add(targetNameLabel);
+         GLabel sourceNameLabel = createEdgeNameLabel(source.getName(), UmlIDUtil.createLabelNameId(sourceId), 0.1d);
+         builder.add(sourceNameLabel);
 
-      GLabel targetMultiplicityLabel = createEdgeMultiplicityLabel(UmlLabelUtil.getMultiplicity(target),
-            UmlIDUtil.createLabelMultiplicityId(targetId), 0.9d);
-      builder.add(targetMultiplicityLabel);
+         GLabel sourceMultiplicityLabel = createEdgeMultiplicityLabel(UmlLabelUtil.getMultiplicity(source),
+               UmlIDUtil.createLabelMultiplicityId(sourceId), 0.1d);
+         builder.add(sourceMultiplicityLabel);
 
-      modelState.getIndex().getNotation(association, Edge.class).ifPresent(edge -> {
-         if (edge.getBendPoints() != null) {
-            ArrayList<GPoint> bendPoints = new ArrayList<>();
-            edge.getBendPoints().forEach(p -> bendPoints.add(GraphUtil.copy(p)));
-            builder.addRoutingPoints(bendPoints);
-         }
-      });
-      return builder.build();
+         GLabel targetNameLabel = createEdgeNameLabel(target.getName(), UmlIDUtil.createLabelNameId(targetId), 0.9d);
+         builder.add(targetNameLabel);
+
+         GLabel targetMultiplicityLabel = createEdgeMultiplicityLabel(UmlLabelUtil.getMultiplicity(target),
+               UmlIDUtil.createLabelMultiplicityId(targetId), 0.9d);
+         builder.add(targetMultiplicityLabel);
+
+         modelState.getIndex().getNotation(association, Edge.class).ifPresent(edge -> {
+            if (edge.getBendPoints() != null) {
+               ArrayList<GPoint> bendPoints = new ArrayList<>();
+               edge.getBendPoints().forEach(p -> bendPoints.add(GraphUtil.copy(p)));
+               builder.addRoutingPoints(bendPoints);
+            }
+         });
+         return builder.build();
+      }
+
    }
 
    protected GEdge createGeneralizationEdge(final Generalization generalization) {

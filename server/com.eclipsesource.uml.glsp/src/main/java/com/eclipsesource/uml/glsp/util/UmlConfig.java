@@ -52,6 +52,8 @@ public final class UmlConfig {
       public static final String INTERFACE = NODE + "interface";
       //public static final String PROPERTY = NODE + "property";
       public static final String ASSOCIATION = EDGE + "association";
+      public static final String COMPOSITION = EDGE + "composition";
+      public static final String AGGREGATION = EDGE + "aggregation";
       public static final String CLASS_GENERALIZATION = EDGE + "class-generalization";
 
 

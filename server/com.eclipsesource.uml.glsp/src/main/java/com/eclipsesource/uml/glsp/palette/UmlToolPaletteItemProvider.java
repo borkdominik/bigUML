@@ -39,7 +39,7 @@ public class UmlToolPaletteItemProvider extends EMSBasicOperationHandler<CreateN
    public List<PaletteItem> getItems(final Map<String, String> args) {
 
       Representation diagramType = UmlModelState.getModelState(getUmlModelState()).getNotationModel().getDiagramType();
-      System.out.println("------- CURRENT DIAGRAM TYPE: " + diagramType + " ----------");
+      LOGGER.info("------- CURRENT DIAGRAM TYPE: " + diagramType + " ----------");
 
       List<PaletteItem> activityDiagram = Lists.newArrayList(classifiersActivity(), featuresActivity(),
             relationsActivity(), controlNodesActivity(), dataActivity(), annotations(), comment());
@@ -88,8 +88,11 @@ public class UmlToolPaletteItemProvider extends EMSBasicOperationHandler<CreateN
    private PaletteItem relationsClass() {
       PaletteItem createAssociation = edge(Types.ASSOCIATION, "Association", "umlassociation");
       PaletteItem createGeneralisation = edge(Types.CLASS_GENERALIZATION, "Generalization", "umlgeneralization");
+      PaletteItem createComposition = edge(Types.COMPOSITION, "Composition", "umlassociation");
+      PaletteItem createAggregation = edge(Types.AGGREGATION, "Aggregation", "umlassociation");
 
-      List<PaletteItem> relations = Lists.newArrayList(createAssociation, createGeneralisation);
+      List<PaletteItem> relations = Lists.newArrayList(createAssociation, createGeneralisation, createComposition,
+            createAggregation);
       return PaletteItem.createPaletteGroup("uml.classifier", "Relation", relations, "symbol-property");
    }
 

@@ -38,6 +38,8 @@ public class UmlDiagramConfiguration extends BaseDiagramConfiguration {
             createDefaultEdgeTypeHint(Types.COMMENT_EDGE),
             // CLASS DIAGRAM
             createDefaultEdgeTypeHint(Types.ASSOCIATION),
+            createDefaultEdgeTypeHint(Types.AGGREGATION),
+            createDefaultEdgeTypeHint(Types.COMPOSITION),
             createDefaultEdgeTypeHint(Types.CLASS_GENERALIZATION),
             // OBJECT DIAGRAM
             createDefaultEdgeTypeHint(Types.LINK),
@@ -66,6 +68,10 @@ public class UmlDiagramConfiguration extends BaseDiagramConfiguration {
          case Types.ASSOCIATION:
          case Types.CLASS_GENERALIZATION:
             allowed = Lists.newArrayList(Types.CLASS, Types.INTERFACE);
+            return new EdgeTypeHint(elementId, true, true, true, allowed, allowed);
+         case Types.COMPOSITION:
+         case Types.AGGREGATION:
+            allowed = Lists.newArrayList(Types.CLASS);
             return new EdgeTypeHint(elementId, true, true, true, allowed, allowed);
          // ACTIVITY DIAGRAM
          case Types.CONTROLFLOW:
@@ -294,6 +300,8 @@ public class UmlDiagramConfiguration extends BaseDiagramConfiguration {
       mappings.put(Types.INTERFACE, GraphPackage.Literals.GNODE);
       // mappings.put(Types.PROPERTY, GraphPackage.Literals.GLABEL);
       mappings.put(Types.ASSOCIATION, GraphPackage.Literals.GEDGE);
+      mappings.put(Types.AGGREGATION, GraphPackage.Literals.GEDGE);
+      mappings.put(Types.COMPOSITION, GraphPackage.Literals.GEDGE);
       mappings.put(Types.CLASS_GENERALIZATION, GraphPackage.Literals.GEDGE);
       mappings.put(Types.PROPERTY, GraphPackage.Literals.GCOMPARTMENT);
       mappings.put(Types.ICON_PROPERTY, GraphPackage.Literals.GCOMPARTMENT);

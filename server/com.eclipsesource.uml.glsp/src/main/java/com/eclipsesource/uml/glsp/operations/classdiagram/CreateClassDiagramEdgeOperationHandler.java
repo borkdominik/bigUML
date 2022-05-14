@@ -32,7 +32,7 @@ public class CreateClassDiagramEdgeOperationHandler
    }
 
    private static List<String> handledElementTypeIds = Lists.newArrayList(Types.ASSOCIATION,
-         Types.CLASS_GENERALIZATION);
+         Types.AGGREGATION, Types.COMPOSITION, Types.CLASS_GENERALIZATION);
 
    @Override
    public boolean handles(final Operation execAction) {
@@ -61,8 +61,18 @@ public class CreateClassDiagramEdgeOperationHandler
             "No valid target element with id " + targetId + " found");
 
       System.out.println("ELEMENT TYPE ID " + operation.getElementTypeId());
-      if (Types.ASSOCIATION.equals(operation.getElementTypeId())) {
-         modelAccess.addAssociation(modelState, source, target)
+      if (Types.ASSOCIATION.equals(operation.getElementTypeId()) ||
+            Types.COMPOSITION.equals(operation.getElementTypeId()) ||
+            Types.AGGREGATION.equals(operation.getElementTypeId())) {
+         String keyword;
+         if (Types.COMPOSITION.equals(operation.getElementTypeId())) {
+            keyword = "composition";
+         } else if (Types.AGGREGATION.equals(operation.getElementTypeId())) {
+            keyword = "aggregation";
+         } else {
+            keyword = "association";
+         }
+         modelAccess.addAssociation(modelState, source, target, keyword)
                .thenAccept(response -> {
                   if (!response.body()) {
                      throw new GLSPServerException("Could not execute create operation on new Association edge");

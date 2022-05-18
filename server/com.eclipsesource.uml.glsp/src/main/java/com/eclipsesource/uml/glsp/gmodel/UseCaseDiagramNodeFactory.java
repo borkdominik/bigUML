@@ -163,13 +163,38 @@ public class UseCaseDiagramNodeFactory extends AbstractGModelFactory<Packageable
       // create structure compartment
       GCompartment structureCompartment = createStructureCompartment(umlPackage);
 
-      // add all nested packages into structure compartment
+      // add nested packages
       List<GModelElement> childPackages = umlPackage.getPackagedElements().stream()
             .filter(Package.class::isInstance)
             .map(Package.class::cast)
             .map(this::createPackage)
             .collect(Collectors.toList());
       structureCompartment.getChildren().addAll(childPackages);
+
+      // add nested actors
+      List<GModelElement> childActors = umlPackage.getPackagedElements().stream()
+            .filter(Actor.class::isInstance)
+            .map(Actor.class::cast)
+            .map(this::createActor)
+            .collect(Collectors.toList());
+      structureCompartment.getChildren().addAll(childActors);
+
+      // add nested usecases
+      List<GModelElement> childUseCases = umlPackage.getPackagedElements().stream()
+            .filter(UseCase.class::isInstance)
+            .map(UseCase.class::cast)
+            .map(this::createUseCase)
+            .collect(Collectors.toList());
+      structureCompartment.getChildren().addAll(childUseCases);
+
+      // add nested components
+      // FIXME: not working yet
+      List<GModelElement> childComponent = umlPackage.getPackagedElements().stream()
+            .filter(Component.class::isInstance)
+            .map(Component.class::cast)
+            .map(this::createComponent)
+            .collect(Collectors.toList());
+      structureCompartment.getChildren().addAll(childComponent);
 
       packageNode.getChildren().add(structureCompartment);
 

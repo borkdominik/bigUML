@@ -143,6 +143,20 @@ public class CreateUseCaseDiagramNodeOperationHandler
                            throw new GLSPServerException("Could not execute create operation on new Actor node");
                         }
                      });
+            } else if (container instanceof Package) {
+               // If the container is a Package node, find its structure compartment to compute the relative position
+               Optional<GModelElement> containerNew = modelIndex.get(operation.getContainerId());
+               Optional<GModelElement> structCompartment = containerNew.filter(GNode.class::isInstance)
+                     .map(GNode.class::cast)
+                     .flatMap(this::getStructureCompartment);
+               Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(),
+                     structCompartment);
+               modelAccess.addActor(getUmlModelState(), Package.class.cast(container), relativeLocation)
+                     .thenAccept(response -> {
+                        if (!response.body()) {
+                           throw new GLSPServerException("Could not execute create operation on new Package node");
+                        }
+                     });
             } else {
                modelAccess
                      .addActor(UmlModelState.getModelState(modelState), (Package) container,
@@ -153,7 +167,6 @@ public class CreateUseCaseDiagramNodeOperationHandler
                         }
                      });
             }
-
             break;
          }
          case Types.USECASE: {
@@ -185,6 +198,7 @@ public class CreateUseCaseDiagramNodeOperationHandler
             break;
          }
       }
+
    }
 
 

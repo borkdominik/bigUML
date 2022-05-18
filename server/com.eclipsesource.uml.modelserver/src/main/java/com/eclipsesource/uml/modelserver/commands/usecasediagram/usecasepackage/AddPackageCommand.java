@@ -21,16 +21,12 @@ public class AddPackageCommand extends UmlSemanticElementCommand {
 
    @Override
    protected void doExecute() {
-      // Model is a subclass of Package; for this showcase we allow adding packages to Models, ususally this would not
-      // be valid!
-      // For the showcase of nestable elements we need to distinguish between adding it to the root (Model) or to
-      // another nestable element (Package)
       Package parentContainer = UmlSemanticCommandUtil.getElement(umlModel, parentSemanticUri, Package.class);
       newPackage.setName(UmlSemanticCommandUtil.getNewPackageName(parentContainer));
       if (parentContainer instanceof Model) {
-         Model.class.cast(parentContainer).getPackagedElements().add(newPackage);
+         parentContainer.getPackagedElements().add(newPackage);
       } else if (parentContainer instanceof Package) {
-         Package.class.cast(parentContainer).getPackagedElements().add(newPackage);
+         parentContainer.getPackagedElements().add(newPackage);
       }
    }
 

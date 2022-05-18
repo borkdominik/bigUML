@@ -35,6 +35,7 @@ public final class UmlConfig {
       public static final String ICON = "icon:";
 
       // COMMONS
+      public static final String STRUCTURE = "struct";
       public static final String LABEL_NAME = LABEL + "name";
       public static final String LABEL_TEXT = LABEL + "text";
       public static final String LABEL_EDGE_NAME = LABEL + "edge-name";
@@ -100,6 +101,7 @@ public final class UmlConfig {
       public static final String EXTENSIONPOINT = NODE + "extensionpoint";
       public static final String ICON_PACKAGE = ICON + "package";
       public static final String PACKAGE = NODE + "package";
+      public static final String LABEL_PACKAGE_NAME = LABEL + "package:name";
       public static final String ICON_ACTOR = ICON + "actor";
       public static final String ACTOR = NODE + "actor";
       public static final String ICON_COMPONENT = ICON + "component";
@@ -113,6 +115,7 @@ public final class UmlConfig {
       //DEPLOYMENT DIAGRAM
       public static final String ICON_DEPLOYMENT_NODE = ICON + "node";
       public static final String DEPLOYMENT_NODE = NODE + "node";
+      public static final String LABEL_NODE_NAME = LABEL + "node:name";
       public static final String ICON_ARTIFACT = ICON + "artifact";
       public static final String ARTIFACT = NODE + "artifact";
       public static final String COMMUNICATION_PATH = EDGE + "communicationpath";
@@ -177,11 +180,16 @@ public final class UmlConfig {
       public static final String NODE = "uml-node";
       public static final String EDGE = "uml-edge";
 
+      // CLASS
+      public static final String EDGE_DIAMOND = "uml-edge-directed-diamond";
+      public static final String EDGE_DIAMOND_EMPTY = "uml-edge-directed-diamond-empty";
+
       // OBJECT
       public static final String UNDERLINE = "uml-underline";
 
       //USECASE
       public static final String ELLIPSE = "uml-ellipse";
+      public static final String PACKAGE_NODE = "uml-package";
       public static final String EDGE_DOTTED = "uml-edge-dotted";
       public static final String EDGE_DASHED = "uml-edge-dashed";
       public static final String EDGE_DIRECTED_START = "uml-edge-directed-start";
@@ -197,6 +205,9 @@ public final class UmlConfig {
 
       // STATE MACHINE
       public static final String BORDER_ELEMENT = "uml-border-element";
+
+      // DEPLOYMENT
+      public static final String DEPLOYMENT_NODE = "uml-node";
 
       private CSS() {
       }

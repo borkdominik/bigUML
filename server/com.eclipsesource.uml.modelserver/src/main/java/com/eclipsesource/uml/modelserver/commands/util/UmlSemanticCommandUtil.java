@@ -120,8 +120,12 @@ public final class UmlSemanticCommandUtil {
       return UmlSemanticCommandUtil.getNewPackageableElementName(Actor.class, umlModel);
    }
 
-   public static String getNewPackageName(final Model umlModel) {
+   /*public static String getNewPackageName(final Model umlModel) {
       return UmlSemanticCommandUtil.getNewPackageableElementName(Package.class, umlModel);
+   }*/
+
+   public static String getNewPackageName(final Package container) {
+      return UmlSemanticCommandUtil.getNewPackageableElementName(Package.class, container);
    }
 
    public static String getNewComponentName(final Model umlModel) {
@@ -183,11 +187,21 @@ public final class UmlSemanticCommandUtil {
       return UmlSemanticCommandUtil.getNewPackageableElementName(clazz, umlModel);
    }
 
-   private static String getNewPackageableElementName(final java.lang.Class<? extends PackageableElement> umlClassifier,
+   /*private static String getNewPackageableElementName(final java.lang.Class<? extends PackageableElement> umlClassifier,
                                                       final Model umlModel) {
       Function<Integer, String> nameProvider = i -> "New" + umlClassifier.getSimpleName() + i;
 
       int classifierCounter = umlModel.getPackagedElements().stream().filter(umlClassifier::isInstance)
+            .collect(Collectors.toList()).size();
+
+      return nameProvider.apply(classifierCounter);
+   }*/
+
+   private static String getNewPackageableElementName(final java.lang.Class<? extends PackageableElement> umlClassifier,
+                                                      final Package container) {
+      Function<Integer, String> nameProvider = i -> "New" + umlClassifier.getSimpleName() + i;
+
+      int classifierCounter = container.getPackagedElements().stream().filter(umlClassifier::isInstance)
             .collect(Collectors.toList()).size();
 
       return nameProvider.apply(classifierCounter);

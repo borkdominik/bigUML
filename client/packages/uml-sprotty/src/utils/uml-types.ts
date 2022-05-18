@@ -18,6 +18,7 @@ export namespace UmlTypes {
     export const LABEL_TEXT = `${DefaultTypes.LABEL}:text`;
     export const LABEL_EDGE_NAME = `${DefaultTypes.LABEL}:edge-name`;
     export const LABEL_EDGE_MULTIPLICITY = `${DefaultTypes.LABEL}:edge-multiplicity`;
+    export const STRUCTURE = "struct";
 
     // CLASS DIAGRAM
     export const ICON_CLASS = `${ICON}:class`;
@@ -78,6 +79,7 @@ export namespace UmlTypes {
     export const ACTOR = `${DefaultTypes.NODE}:actor`;
     export const ICON_ACTOR = `${ICON}:actor`;
     export const PACKAGE = `${DefaultTypes.NODE}:package`;
+    export const LABEL_PACKAGE_NAME = `${DefaultTypes.LABEL}:package:name`;
     export const ICON_PACKAGE = `${ICON}:package`;
     export const COMPONENT = `${DefaultTypes.NODE}:component`;
     export const EXTENSIONPOINT = `${DefaultTypes.NODE}:extensionpoint`;

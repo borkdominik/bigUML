@@ -182,7 +182,7 @@ public class UmlDiagramConfiguration extends BaseDiagramConfiguration {
             List.of(Types.COMMENT)));
 
       // DEPLOYMENT DIAGRAM
-      hints.add(new ShapeTypeHint(Types.DEPLOYMENT_NODE, true, true, true, true,
+      hints.add(new ShapeTypeHint(Types.DEPLOYMENT_NODE, true, true, true, false,
             List.of(Types.DEPLOYMENT_NODE, Types.ARTIFACT, Types.DEVICE, Types.DEPLOYMENT_COMPONENT,
                   Types.EXECUTION_ENVIRONMENT, Types.DEPLOYMENT_SPECIFICATION, Types.COMMENT)));
       hints.add(new ShapeTypeHint(Types.ARTIFACT, true, true, true, true,
@@ -332,6 +332,7 @@ public class UmlDiagramConfiguration extends BaseDiagramConfiguration {
       // USECASE DIAGRAM
       mappings.put(Types.ICON_PACKAGE, GraphPackage.Literals.GCOMPARTMENT);
       mappings.put(Types.PACKAGE, GraphPackage.Literals.GNODE);
+      mappings.put(Types.LABEL_PACKAGE_NAME, GraphPackage.Literals.GLABEL);
       mappings.put(Types.ICON_USECASE, GraphPackage.Literals.GCOMPARTMENT);
       mappings.put(Types.USECASE, GraphPackage.Literals.GNODE);
       mappings.put(Types.ICON_COMPONENT, GraphPackage.Literals.GCOMPARTMENT);
@@ -345,6 +346,8 @@ public class UmlDiagramConfiguration extends BaseDiagramConfiguration {
       // DEPLOYMENT DIAGRAM
       mappings.put(Types.ICON_DEPLOYMENT_NODE, GraphPackage.Literals.GCOMPARTMENT);
       mappings.put(Types.DEPLOYMENT_NODE, GraphPackage.Literals.GNODE);
+      mappings.put(Types.STRUCTURE, GraphPackage.Literals.GCOMPARTMENT);
+      mappings.put(Types.LABEL_NODE_NAME, GraphPackage.Literals.GLABEL);
       mappings.put(Types.ICON_ARTIFACT, GraphPackage.Literals.GCOMPARTMENT);
       mappings.put(Types.ARTIFACT, GraphPackage.Literals.GNODE);
       mappings.put(Types.ICON_DEPLOYMENT_SPECIFICATION, GraphPackage.Literals.GCOMPARTMENT);

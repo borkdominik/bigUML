@@ -742,9 +742,10 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
 
    // PACKAGE
    public CompletableFuture<Response<Boolean>> addPackage(final UmlModelState modelState,
-                                                          final Optional<GPoint> newPosition) {
+                                                          final Optional<GPoint> newPosition,
+                                                          final NamedElement parentContainer) {
       CCompoundCommand addPackageCompoundCommand = AddPackageCommandContribution
-            .create(newPosition.orElse(GraphUtil.point(0, 0)));
+            .create(getSemanticUriFragment(parentContainer), newPosition.orElse(GraphUtil.point(0, 0)));
       return this.edit(addPackageCompoundCommand);
    }
 
@@ -1311,7 +1312,6 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
     */
    // Change Bounds
    public CompletableFuture<Response<Boolean>> changeBounds(final Map<Shape, ElementAndBounds> changeBoundsMap) {
-      System.out.println("MODELSERVER ACCESS CHANGE BOUNDS");
       CCompoundCommand compoundCommand = CCommandFactory.eINSTANCE.createCompoundCommand();
       compoundCommand.setType(ChangeBoundsCommandContribution.TYPE);
       changeBoundsMap.forEach((shape, elementAndBounds) -> {

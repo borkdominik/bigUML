@@ -32,9 +32,8 @@ public class ChangeBoundsCommandContribution extends UmlNotationCommandContribut
       changeBoundsCommand.getProperties().put(SEMANTIC_PROXI_URI, semanticUri);
       changeBoundsCommand.getProperties().put(POSITION_X, String.valueOf(position.getX()));
       changeBoundsCommand.getProperties().put(POSITION_Y, String.valueOf(position.getY()));
-      // FIXME: height and weight are interchanged!!!
-      changeBoundsCommand.getProperties().put(WIDTH, String.valueOf(size.getWidth() * 0.50));
-      changeBoundsCommand.getProperties().put(HEIGHT, String.valueOf(size.getHeight() * 4));
+      changeBoundsCommand.getProperties().put(WIDTH, String.valueOf(size.getHeight()));
+      changeBoundsCommand.getProperties().put(HEIGHT, String.valueOf(size.getWidth()));
       return changeBoundsCommand;
    }
 

@@ -154,6 +154,23 @@ svg {
     marker-start: url("#triangle-empty");
 }
 
-#tent path, #triangle path, #triangle-empty path {
+.uml-edge-directed-diamond {
+    marker-start: url("#diamond");
+}
+
+.uml-edge-directed-diamond-empty {
+    marker-start: url("#diamond-empty");
+}
+
+#tent path, #triangle path, #triangle-empty path, #diamond path, #diamond-empty path {
     stroke-dasharray: none;
+}
+
+/*.uml-package > .sprotty-node {
+    fill: #88bd5c80;
+}*/
+
+.uml-package > .struct {
+    fill: none;
+    stroke: none;
 }

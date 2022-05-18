@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-import {SChildElement, selectFeature} from "@eclipse-glsp/client";
+import {moveFeature, SChildElement, selectFeature} from "@eclipse-glsp/client";
 import {
     boundsFeature,
     Connectable,
@@ -38,6 +38,7 @@ import {
     WithEditableLabel,
     withEditLabelFeature
 } from "sprotty/lib";
+import {UmlTypes} from "./utils";
 
 export class LabeledNode extends RectangularNode implements WithEditableLabel, Nameable {
 
@@ -219,4 +220,29 @@ export class ConnectionPoint extends SLabel implements Connectable {
     selected = false;
     hoverFeedback = false;
     opacity = 1;
+}
+
+export class PackageNode extends RectangularNode implements Nameable, WithEditableLabel {
+    static override readonly DEFAULT_FEATURES = [
+        deletableFeature,
+        selectFeature,
+        boundsFeature,
+        moveFeature,
+        layoutContainerFeature,
+        fadeFeature,
+        hoverFeedbackFeature,
+        popupFeature,
+        nameFeature,
+        withEditLabelFeature
+    ];
+
+    name = "";
+
+    get editableLabel(): (SChildElement & EditableLabel) | undefined {
+        const label = this.children.find(element => element.type === UmlTypes.LABEL_PACKAGE_NAME);
+        if (label && isEditableLabel(label)) {
+            return label;
+        }
+        return undefined;
+    }
 }

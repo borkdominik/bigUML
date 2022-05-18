@@ -30,6 +30,7 @@ import {
     SLabelView,
     SRoutingHandle,
     SRoutingHandleView,
+    StructureCompartmentView,
     TYPES,
     validationModule
 } from "@eclipse-glsp/client/lib";
@@ -61,6 +62,7 @@ import {
     IconStateMachine,
     IconUseCase,
     LabeledNode,
+    PackageNode,
     SEditableLabel,
     SLabelNodeProperty
 } from "./model";
@@ -134,6 +136,7 @@ export default function createContainer(widgetId: string): Container {
         configureModelElement(context, BaseTypes.COMPARTMENT_HEADER, SCompartment, SCompartmentView);
         configureModelElement(context, BaseTypes.ROUTING_POINT, SRoutingHandle, SRoutingHandleView);
         configureModelElement(context, BaseTypes.VOLATILE_ROUTING_POINT, SRoutingHandle, SRoutingHandleView);
+        configureModelElement(context, UmlTypes.STRUCTURE, SCompartment, StructureCompartmentView);
 
         // CLASS DIAGRAM
         configureModelElement(context, UmlTypes.ICON_CLASS, IconClass, IconView);
@@ -143,9 +146,9 @@ export default function createContainer(widgetId: string): Container {
         configureModelElement(context, UmlTypes.ENUMERATION, LabeledNode, EnumerationNodeView);
         configureModelElement(context, UmlTypes.INTERFACE, LabeledNode, ClassNodeView);
         configureModelElement(context, UmlTypes.ASSOCIATION, SEdge, PolylineEdgeView);
-        configureModelElement(context, UmlTypes.AGGREGATION, SEdge, DirectedEdgeView);
-        configureModelElement(context, UmlTypes.COMPOSITION, SEdge, DirectedEdgeView);
-        configureModelElement(context, UmlTypes.CLASS_GENERALIZATION, SEdge, DirectedEdgeView);
+        configureModelElement(context, UmlTypes.AGGREGATION, ConnectableEdge, DirectedEdgeView);
+        configureModelElement(context, UmlTypes.COMPOSITION, ConnectableEdge, DirectedEdgeView);
+        configureModelElement(context, UmlTypes.CLASS_GENERALIZATION, ConnectableEdge, DirectedEdgeView);
         // configureModelElement(context, UmlTypes.PROPERTY, SLabelNodeProperty, LabelNodeView);
         configureModelElement(context, UmlTypes.PROPERTY, IconLabelCompartment, SCompartmentView);
         configureModelElement(context, UmlTypes.ICON_PROPERTY, IconProperty, IconView);
@@ -195,7 +198,8 @@ export default function createContainer(widgetId: string): Container {
         configureModelElement(context, UmlTypes.ICON_ACTOR, IconActor, IconView);
         configureModelElement(context, UmlTypes.ACTOR, LabeledNode, ActorNodeView);
         configureModelElement(context, UmlTypes.ICON_PACKAGE, IconPackage, IconView);
-        configureModelElement(context, UmlTypes.PACKAGE, LabeledNode, PackageNodeView);
+        configureModelElement(context, UmlTypes.PACKAGE, PackageNode, PackageNodeView);
+        configureModelElement(context, UmlTypes.LABEL_PACKAGE_NAME, SEditableLabel, SLabelView);
         configureModelElement(context, UmlTypes.COMPONENT, LabeledNode, PackageNodeView);
         configureModelElement(context, UmlTypes.EXTENSIONPOINT, ConnectableEditableLabel, SLabelView);
         configureModelElement(context, UmlTypes.EXTEND, ConnectableEdge, DirectedEdgeView);

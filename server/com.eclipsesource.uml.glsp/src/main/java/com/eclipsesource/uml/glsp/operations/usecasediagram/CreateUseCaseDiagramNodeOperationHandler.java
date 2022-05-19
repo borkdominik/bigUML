@@ -64,13 +64,6 @@ public class CreateUseCaseDiagramNodeOperationHandler
 
       switch (operation.getElementTypeId()) {
          case Types.PACKAGE: {
-            /*modelAccess.addPackage(UmlModelState.getModelState(modelState), operation.getLocation())
-               .thenAccept(response -> {
-                  if (!response.body()) {
-                     throw new GLSPServerException("Could not execute create operation on new Package node");
-                  }
-               });
-            break;*/
             NamedElement parentContainer = getOrThrow(
                   modelIndex.getSemantic(operation.getContainerId(), NamedElement.class),
                   "No semantic container object found for source element with id " + operation.getContainerId());
@@ -100,28 +93,39 @@ public class CreateUseCaseDiagramNodeOperationHandler
             break;
          }
          case Types.COMPONENT: {
-            PackageableElement container = null;
+            /*PackageableElement container = null;
             try {
                container = getOrThrow(
                      UmlModelState.getModelState(modelState).getIndex().getSemantic(operation.getContainerId()),
                      PackageableElement.class, "No valid container with id " + operation.getContainerId() + " found");
             } catch (GLSPServerException ex) {
                LOGGER.error("Could not find container", ex);
-            }
+            }*/
+            NamedElement container = getOrThrow(
+                  modelIndex.getSemantic(operation.getContainerId(), NamedElement.class),
+                  "No semantic container object found for source element with id " + operation.getContainerId());
             if (container instanceof Model) {
-               modelAccess.addComponent(UmlModelState.getModelState(modelState), operation.getLocation())
+               System.out.println("HAS NO PARENT");
+               modelAccess.addComponent(UmlModelState.getModelState(modelState), (Model) container,
+                           operation.getLocation())
                      .thenAccept(response -> {
                         if (!response.body()) {
                            throw new GLSPServerException("Could not execute create operation on new Component node");
                         }
                      });
             } else if (container instanceof Package) {
-               modelAccess
-                     .addComponent(UmlModelState.getModelState(modelState), (Package) container,
-                           operation.getLocation())
+               System.out.println("IS INSTANCE OF PACKAGE");
+               // If the container is a Package node, find its structure compartment to compute the relative position
+               Optional<GModelElement> containerNew = modelIndex.get(operation.getContainerId());
+               Optional<GModelElement> structCompartment = containerNew.filter(GNode.class::isInstance)
+                     .map(GNode.class::cast)
+                     .flatMap(this::getStructureCompartment);
+               Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(),
+                     structCompartment);
+               modelAccess.addComponent(getUmlModelState(), Package.class.cast(container), relativeLocation)
                      .thenAccept(response -> {
                         if (!response.body()) {
-                           throw new GLSPServerException("Could not execute create operation on new Component node");
+                           throw new GLSPServerException("Could not execute create operation on new Package node");
                         }
                      });
             }

@@ -26,7 +26,10 @@ import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.uml2.uml.Package;
 import org.eclipse.uml2.uml.*;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -80,33 +83,34 @@ public class UseCaseDiagramNodeFactory extends AbstractGModelFactory<Packageable
     * @return The GNode that can be added to the graph in the ModelFactory.
     */
    protected GNode createComponent(final Component umlComponent) {
-      GNodeBuilder b = new GNodeBuilder(Types.COMPONENT)
+      Map<String, Object> layoutOptions = new HashMap<>();
+      layoutOptions.put(H_ALIGN, GConstants.HAlign.CENTER);
+      layoutOptions.put(H_GRAB, false);
+      layoutOptions.put(V_GRAB, false);
+
+      GNodeBuilder componentNodeBuilder = new GNodeBuilder(Types.COMPONENT)
             .id(toId(umlComponent))
             .layout(GConstants.Layout.VBOX)
-            .addCssClass(CSS.NODE);
+            .addCssClass(CSS.NODE)
+            .addCssClass(CSS.PACKAGEABLE_NODE);
 
-      GCompartment classHeader = buildHeaderWithoutIcon(umlComponent);
-      b.add(classHeader);
+      applyShapeData(umlComponent, componentNodeBuilder);
 
-      ArrayList<Element> childElements = new ArrayList<>();
+      GNode componentNode = componentNodeBuilder.build();
+      componentNode.getChildren().add(buildHeaderWithoutIcon(umlComponent));
 
-      childElements.addAll(umlComponent.getPackagedElements().stream()
-            .filter(pe -> (pe instanceof UseCase))
-            .map(Classifier.class::cast)
-            .collect(Collectors.toList()));
+      GCompartment structureCompartment = createComponentStructureCompartment(umlComponent);
 
-      childElements.addAll(umlComponent.getOwnedComments());
+      // add nested usecases
+      List<GModelElement> childUseCases = umlComponent.getPackagedElements().stream()
+            .filter(UseCase.class::isInstance)
+            .map(UseCase.class::cast)
+            .map(this::createUseCase)
+            .collect(Collectors.toList());
+      structureCompartment.getChildren().addAll(childUseCases);
 
-      GCompartment componentChildCompartment = buildPackageOrComponentChildCompartment(childElements, umlComponent);
-      b.add(componentChildCompartment);
-
-      modelState.getIndex().getNotation(umlComponent, Shape.class).ifPresent(shape -> {
-         if (shape.getPosition() != null) {
-            b.position(GraphUtil.copy(shape.getPosition()));
-         }
-      });
-
-      return b.build();
+      componentNode.getChildren().add(structureCompartment);
+      return componentNode;
    }
 
    /**
@@ -116,30 +120,6 @@ public class UseCaseDiagramNodeFactory extends AbstractGModelFactory<Packageable
     * @return The GNode that can be added to the graph in the ModelFactory.
     */
    protected GNode createPackage(final Package umlPackage) {
-      /*GNodeBuilder b = new GNodeBuilder(Types.PACKAGE)
-            .id(toId(umlPackage))
-            .layout(GConstants.Layout.VBOX)
-            .addCssClass(CSS.NODE);
-
-      GCompartment classHeader = buildHeaderWithoutIcon(umlPackage);
-      b.add(classHeader);
-
-      ArrayList<Element> childElements = new ArrayList<>();
-
-      childElements.addAll(umlPackage.getPackagedElements().stream()
-            .filter(
-                  pe -> (pe instanceof Actor || pe instanceof UseCase || pe instanceof Component || pe instanceof Package))
-            .map(Classifier.class::cast)
-            .collect(Collectors.toList()));
-
-      childElements.addAll(umlPackage.getOwnedComments());
-
-      GCompartment packageChildCompartment = buildPackageOrComponentChildCompartment(childElements, umlPackage);
-      b.add(packageChildCompartment);
-
-      applyShapeData(umlPackage, b);
-
-      return b.build();*/
       Map<String, Object> layoutOptions = new HashMap<>();
       layoutOptions.put(H_ALIGN, GConstants.HAlign.CENTER);
       layoutOptions.put(H_GRAB, false);
@@ -150,7 +130,7 @@ public class UseCaseDiagramNodeFactory extends AbstractGModelFactory<Packageable
             .layout(GConstants.Layout.VBOX)
             .layoutOptions(layoutOptions)
             .addCssClass(CSS.NODE)
-            .addCssClass(CSS.PACKAGE_NODE);
+            .addCssClass(CSS.PACKAGEABLE_NODE);
 
       applyShapeData(umlPackage, packageNodeBuilder);
 
@@ -188,7 +168,7 @@ public class UseCaseDiagramNodeFactory extends AbstractGModelFactory<Packageable
       structureCompartment.getChildren().addAll(childUseCases);
 
       // add nested components
-      // FIXME: not working yet
+      // FIXME: is not placed within the package node
       List<GModelElement> childComponent = umlPackage.getPackagedElements().stream()
             .filter(Component.class::isInstance)
             .map(Component.class::cast)
@@ -199,38 +179,6 @@ public class UseCaseDiagramNodeFactory extends AbstractGModelFactory<Packageable
       packageNode.getChildren().add(structureCompartment);
 
       return packageNode;
-   }
-
-   private GCompartment createPackageHeader(final Package umlPackage, final GNodeBuilder packageNodeBuilder) {
-
-      GLabel packageHeaderLabel = new GLabelBuilder(Types.LABEL_PACKAGE_NAME)
-            .id(UmlIDUtil.createLabelNameId(toId(umlPackage)))
-            .text(umlPackage.getName())
-            .build();
-
-      Map<String, Object> layoutOptions = new HashMap<>();
-      GCompartment packageHeader = new GCompartmentBuilder(Types.COMPARTMENT_HEADER)
-            .id(UmlIDUtil.createHeaderLabelId(toId(umlPackage)))
-            .layout(GConstants.Layout.HBOX)
-            .layoutOptions(layoutOptions)
-            .add(packageHeaderLabel)
-            .build();
-
-      return packageHeader;
-   }
-
-   private GCompartment createStructureCompartment(final Package umlPackage) {
-      Map<String, Object> layoutOptions = new HashMap<>();
-      layoutOptions.put(H_ALIGN, GConstants.HAlign.LEFT);
-      layoutOptions.put(H_GRAB, true);
-      layoutOptions.put(V_GRAB, true);
-      GCompartment structCompartment = new GCompartmentBuilder(Types.STRUCTURE)
-            .id(toId(umlPackage) + "_struct")
-            .layout(GConstants.Layout.FREEFORM)
-            .layoutOptions(layoutOptions)
-            .addCssClass("struct")
-            .build();
-      return structCompartment;
    }
 
    /**
@@ -269,7 +217,6 @@ public class UseCaseDiagramNodeFactory extends AbstractGModelFactory<Packageable
             .layout(GConstants.Layout.VBOX) //
             .addCssClass(CSS.NODE) //
             .add(buildHeaderWithoutIcon(umlActor));
-
       applyShapeData(umlActor, b);
       return b.build();
    }
@@ -278,8 +225,13 @@ public class UseCaseDiagramNodeFactory extends AbstractGModelFactory<Packageable
       modelState.getIndex().getNotation(element, Shape.class).ifPresent(shape -> {
          if (shape.getPosition() != null) {
             builder.position(GraphUtil.copy(shape.getPosition()));
-         } else if (shape.getSize() != null) {
-            builder.size(GraphUtil.copy(shape.getSize()));
+         }
+         if (shape.getSize() != null) {
+            GDimension size = GraphUtil.copy(shape.getSize());
+            builder.size(size);
+            builder.layoutOptions(Map.of(
+                  GLayoutOptions.KEY_PREF_WIDTH, size.getWidth(),
+                  GLayoutOptions.KEY_PREF_HEIGHT, size.getHeight()));
          }
       });
    }
@@ -307,15 +259,22 @@ public class UseCaseDiagramNodeFactory extends AbstractGModelFactory<Packageable
     * @return
     */
    protected GCompartment buildHeaderWithoutIcon(final NamedElement classifier) {
-      GCompartmentBuilder classHeaderBuilder = new GCompartmentBuilder(Types.COMPARTMENT_HEADER)
-            .layout(GConstants.Layout.HBOX)
-            .id(UmlIDUtil.createHeaderId(toId(classifier)));
+      GCompartmentBuilder classHeaderBuilder = new GCompartmentBuilder(Types.COMPARTMENT_HEADER);
+
 
       if (classifier instanceof Component) {
+         classHeaderBuilder
+               .layout(GConstants.Layout.VBOX)
+               .id(UmlIDUtil.createHeaderId(toId(classifier)));
+
          GLabel classHeaderLabel = new GLabelBuilder(Types.LABEL_TEXT)
                .id(UmlIDUtil.createHeaderLabelId(toId(classifier)) + "_prep")
                .text("<<SubSystem>> ").build();
          classHeaderBuilder.add(classHeaderLabel);
+      } else {
+         classHeaderBuilder
+               .layout(GConstants.Layout.HBOX)
+               .id(UmlIDUtil.createHeaderId(toId(classifier)));
       }
       GLabel classHeaderLabel = new GLabelBuilder(Types.LABEL_NAME)
             .id(UmlIDUtil.createHeaderLabelId(toId(classifier)))
@@ -379,6 +338,52 @@ public class UseCaseDiagramNodeFactory extends AbstractGModelFactory<Packageable
       extensionPointBuilder.addAll(extensionPointsLabel);
 
       return extensionPointBuilder.build();
+   }
+
+   private GCompartment createPackageHeader(final Package umlPackage, final GNodeBuilder packageNodeBuilder) {
+
+      GLabel packageHeaderLabel = new GLabelBuilder(Types.LABEL_PACKAGE_NAME)
+            .id(UmlIDUtil.createLabelNameId(toId(umlPackage)))
+            .text(umlPackage.getName())
+            .build();
+
+      Map<String, Object> layoutOptions = new HashMap<>();
+      GCompartment packageHeader = new GCompartmentBuilder(Types.COMPARTMENT_HEADER)
+            .id(UmlIDUtil.createHeaderLabelId(toId(umlPackage)))
+            .layout(GConstants.Layout.HBOX)
+            .layoutOptions(layoutOptions)
+            .add(packageHeaderLabel)
+            .build();
+
+      return packageHeader;
+   }
+
+   private GCompartment createStructureCompartment(final Package umlPackage) {
+      Map<String, Object> layoutOptions = new HashMap<>();
+      layoutOptions.put(H_ALIGN, GConstants.HAlign.LEFT);
+      layoutOptions.put(H_GRAB, true);
+      layoutOptions.put(V_GRAB, true);
+      GCompartment structCompartment = new GCompartmentBuilder(Types.STRUCTURE)
+            .id(toId(umlPackage) + "_struct")
+            .layout(GConstants.Layout.FREEFORM)
+            .layoutOptions(layoutOptions)
+            .addCssClass("struct")
+            .build();
+      return structCompartment;
+   }
+
+   private GCompartment createComponentStructureCompartment(final Component umlPackage) {
+      Map<String, Object> layoutOptions = new HashMap<>();
+      layoutOptions.put(H_ALIGN, GConstants.HAlign.LEFT);
+      layoutOptions.put(H_GRAB, true);
+      layoutOptions.put(V_GRAB, true);
+      GCompartment structCompartment = new GCompartmentBuilder(Types.STRUCTURE)
+            .id(toId(umlPackage) + "_struct")
+            .layout(GConstants.Layout.FREEFORM)
+            .layoutOptions(layoutOptions)
+            .addCssClass("struct")
+            .build();
+      return structCompartment;
    }
 
 }

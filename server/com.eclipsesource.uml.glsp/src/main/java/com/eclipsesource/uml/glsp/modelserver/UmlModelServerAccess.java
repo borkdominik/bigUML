@@ -764,20 +764,20 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
    }
 
    // CONTAINER
-   public CompletableFuture<Response<Boolean>> addComponent(final UmlModelState modelState,
+   /*public CompletableFuture<Response<Boolean>> addComponent(final UmlModelState modelState,
                                                             final Optional<GPoint> newPosition) {
 
       CCompoundCommand addComponentCompoundCommand = AddComponentCommandContribution
             .create(newPosition.orElse(GraphUtil.point(0, 0)));
       return this.edit(addComponentCompoundCommand);
-   }
+   }*/
 
    public CompletableFuture<Response<Boolean>> addComponent(final UmlModelState modelState,
                                                             final Package parent,
                                                             final Optional<GPoint> newPosition) {
 
       CCompoundCommand addComponentCompoundCommand = AddComponentCommandContribution
-            .create(newPosition.orElse(GraphUtil.point(0, 0)), getSemanticUriFragment(parent));
+            .create(getSemanticUriFragment(parent), newPosition.orElse(GraphUtil.point(0, 0)));
       return this.edit(addComponentCompoundCommand);
    }
 

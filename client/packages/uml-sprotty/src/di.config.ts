@@ -200,7 +200,7 @@ export default function createContainer(widgetId: string): Container {
         configureModelElement(context, UmlTypes.ICON_PACKAGE, IconPackage, IconView);
         configureModelElement(context, UmlTypes.PACKAGE, PackageNode, PackageNodeView);
         configureModelElement(context, UmlTypes.LABEL_PACKAGE_NAME, SEditableLabel, SLabelView);
-        configureModelElement(context, UmlTypes.COMPONENT, LabeledNode, PackageNodeView);
+        configureModelElement(context, UmlTypes.COMPONENT, PackageNode, PackageNodeView);
         configureModelElement(context, UmlTypes.EXTENSIONPOINT, ConnectableEditableLabel, SLabelView);
         configureModelElement(context, UmlTypes.EXTEND, ConnectableEdge, DirectedEdgeView);
         configureModelElement(context, UmlTypes.INCLUDE, ConnectableEdge, DirectedEdgeView);

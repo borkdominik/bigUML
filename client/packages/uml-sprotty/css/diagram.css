@@ -170,7 +170,7 @@ svg {
     fill: #88bd5c80;
 }*/
 
-.uml-package > .struct {
+.uml-packageable-node > .struct {
     fill: none;
     stroke: none;
 }

@@ -189,7 +189,7 @@ public final class UmlConfig {
 
       //USECASE
       public static final String ELLIPSE = "uml-ellipse";
-      public static final String PACKAGE_NODE = "uml-package";
+      public static final String PACKAGEABLE_NODE = "uml-packageable-node";
       public static final String EDGE_DOTTED = "uml-edge-dotted";
       public static final String EDGE_DASHED = "uml-edge-dashed";
       public static final String EDGE_DIRECTED_START = "uml-edge-directed-start";

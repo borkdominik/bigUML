@@ -25,7 +25,7 @@ public class AddPackageCommand extends UmlSemanticElementCommand {
       newPackage.setName(UmlSemanticCommandUtil.getNewPackageName(parentContainer));
       if (parentContainer instanceof Model) {
          parentContainer.getPackagedElements().add(newPackage);
-      } else if (parentContainer instanceof Package) {
+      } else if (parentContainer != null) {
          parentContainer.getPackagedElements().add(newPackage);
       }
    }

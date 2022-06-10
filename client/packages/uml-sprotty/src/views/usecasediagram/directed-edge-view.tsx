@@ -9,46 +9,37 @@
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
 /* eslint-disable react/jsx-key */
-import { injectable } from "inversify";
-import { VNode } from "snabbdom";
-import {
-    Connectable,
-    Point,
-    PolylineEdgeView,
-    RenderingContext,
-    SEdge,
-    Selectable,
-    svg
-} from "sprotty/lib";
+import {injectable} from "inversify";
+import {VNode} from "snabbdom";
+import {Connectable, Point, PolylineEdgeView, RenderingContext, SEdge, Selectable, svg} from "sprotty/lib";
 
 /* eslint-disable react/react-in-jsx-scope */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const JSX = { createElement: svg };
+const JSX = {createElement: svg};
 
 @injectable()
 export class DirectedEdgeView extends PolylineEdgeView {
     protected renderAdditionals(edge: SEdge, segments: Point[], context: RenderingContext): VNode[] {
         const directedEdgeAdds: any = ([<defs>
-            <marker id="triangle" viewBox="0 0 10 10"
-                refX="10" refY="5"
-                markerUnits="strokeWidth"
-                markerWidth="10" markerHeight="10"
-                orient="auto">
-                <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--uml-edge)" />
+            <marker id="triangle" viewBox="0 0 10 10" refX="10" refY="5" markerUnits="strokeWidth" markerWidth="10"
+                    markerHeight="10" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--uml-edge)"/>
             </marker>
-            <marker id="tent" viewBox="0 0 10 10"
-                refX="10" refY="5"
-                markerUnits="strokeWidth"
-                markerWidth="10" markerHeight="10"
-                orient="auto">
-                <path d="M 0 0 L 10 5 L 0 10" stroke="var(--uml-edge)" fill="var(--theia-editor-background)" />
+            <marker id="tent" viewBox="0 0 10 10" refX="10" refY="5" markerUnits="strokeWidth" markerWidth="10"
+                    markerHeight="10" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10" stroke="var(--uml-edge)" fill="var(--theia-editor-background)"/>
             </marker>
-            <marker id="triangle-empty" viewBox="0 0 20 20"
-                refX="20" refY="10"
-                markerUnits="strokeWidth"
-                markerWidth="20" markerHeight="20"
-                orient="auto">
-                <path d="M 0 0 L 20 10 L 0 20 z" stroke="var(--uml-edge)" fill="var(--theia-editor-background)" />
+            <marker id="triangle-empty" viewBox="0 0 20 20" refX="20" refY="10" markerUnits="strokeWidth"
+                    markerWidth="20" markerHeight="20" orient="auto">
+                <path d="M 0 0 L 100 100 L 40 20 z" stroke="var(--uml-edge)" fill="var(--theia-editor-background)"/>
+            </marker>
+            <marker id="diamond" viewBox="20 20 20 20" refX="20" refY="10" markerUnits="strokeWidth" markerWidth="20"
+                    markerHeight="20" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10" stroke="var(--uml-edge)" fill="var(--theia-editor-background)"/>
+            </marker>
+            <marker id="diamond-empty" viewBox="20 10 20 10" refX="20" refY="10" markerUnits="strokeWidth"
+                    markerWidth="10" markerHeight="20" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10" stroke="var(--uml-edge)" fill="var(--theia-editor-background)"/>
             </marker>
         </defs>]);
         return directedEdgeAdds;
@@ -61,9 +52,10 @@ export class DirectedEdgeView extends PolylineEdgeView {
             const p = segments[i];
             path += ` L ${p.x},${p.y}`;
         }
-        const renderLine: any = (<path d={path} />);
+        const renderLine: any = (<path d={path}/>);
         return renderLine;
     }
+
     render(edge: Readonly<SEdge & Connectable & Selectable>, context: RenderingContext): VNode | undefined {
         const router = this.edgeRouterRegistry.get(edge.routerKind);
         const route = router.route(edge);
@@ -77,7 +69,7 @@ export class DirectedEdgeView extends PolylineEdgeView {
             }
             // The children of an edge are not necessarily inside the bounding box of the route,
             // so we need to render a group to ensure the children have a chance to be rendered.
-            const edgeChildren: any = (<g>{context.renderChildren(edge, { route })}</g>);
+            const edgeChildren: any = (<g>{context.renderChildren(edge, {route})}</g>);
             return edgeChildren;
         }
 
@@ -85,7 +77,7 @@ export class DirectedEdgeView extends PolylineEdgeView {
 
             {this.renderAdditionals(edge, route, context)}
             {this.renderLine(edge, route, context)}
-            {context.renderChildren(edge, { route })}
+            {context.renderChildren(edge, {route})}
         </g>);
         return directedEdge;
     }

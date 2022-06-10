@@ -212,7 +212,7 @@ export default function createContainer(widgetId: string): Container {
         configureModelElement(context, UmlTypes.ICON_ARTIFACT, IconArtifact, IconView);
         configureModelElement(context, UmlTypes.ARTIFACT, LabeledNode, ArtifactNodeView);
         configureModelElement(context, UmlTypes.ICON_DEVICE, IconDevice, IconView);
-        configureModelElement(context, UmlTypes.DEVICE, LabeledNode, DeviceNodeView);
+        configureModelElement(context, UmlTypes.DEVICE, PackageNode, DeviceNodeView);
         configureModelElement(context, UmlTypes.EXECUTION_ENVIRONMENT, LabeledNode, ExecutionEnvironmentNodeView);
         configureModelElement(context, UmlTypes.ICON_EXECUTION_ENVIRONMENT, IconExecutionEnvironment, IconView);
         configureModelElement(context, UmlTypes.DEPLOYMENT_NODE, LabeledNode, DeploymentNodeNodeView);

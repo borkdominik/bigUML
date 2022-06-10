@@ -54,12 +54,11 @@ public class ClassDiagramEdgeFactory extends AbstractGModelFactory<Relationship,
       Property target = memberEnds.get(1);
       String targetId = toId(target);
 
-      System.out.println("KEYWORD " + association.getKeywords().get(0));
       if (association.getKeywords().get(0).equals("composition")) {
          GEdgeBuilder builder = new GEdgeBuilder(Types.COMPOSITION)
                .id(toId(association))
                .addCssClass(CSS.EDGE)
-               .addCssClass(CSS.EDGE_DIRECTED_END_EMPTY)
+               .addCssClass(CSS.EDGE_DIRECTED_END_TENT)
                .sourceId(toId(source.getType()))
                .targetId(toId(target.getType()))
                .routerKind(GConstants.RouterKind.MANHATTAN);
@@ -73,11 +72,11 @@ public class ClassDiagramEdgeFactory extends AbstractGModelFactory<Relationship,
          });
          return builder.build();
       } else if (association.getKeywords().get(0).equals("aggregation")) {
-         
+
          GEdgeBuilder builder = new GEdgeBuilder(Types.COMPOSITION)
                .id(toId(association))
                .addCssClass(CSS.EDGE)
-               .addCssClass(CSS.EDGE_DOTTED)
+               .addCssClass(CSS.EDGE_DIAMOND_EMPTY)
                .sourceId(toId(source.getType()))
                .targetId(toId(target.getType()))
                .routerKind(GConstants.RouterKind.MANHATTAN);

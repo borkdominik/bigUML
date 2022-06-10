@@ -19,7 +19,10 @@ import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.*;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class DeploymentDiagramNodeFactory extends AbstractGModelFactory<Classifier, GNode> {
@@ -134,7 +137,37 @@ public class DeploymentDiagramNodeFactory extends AbstractGModelFactory<Classifi
    }
 
    protected GNode createArtifact(final Artifact artifact) {
-      List<EObject> artifactChildren = new ArrayList<>(artifact.getNestedArtifacts());
+      Map<String, Object> layoutOptions = new HashMap<>();
+      layoutOptions.put(H_ALIGN, GConstants.HAlign.CENTER);
+      layoutOptions.put(H_GRAB, false);
+      layoutOptions.put(V_GRAB, false);
+
+      GNodeBuilder builder = new GNodeBuilder(Types.ARTIFACT)
+            .id(toId(artifact))
+            .layout(GConstants.Layout.VBOX)
+            .layoutOptions(layoutOptions)
+            .add(buildHeader(artifact))
+            .addCssClass(CSS.NODE)
+            .addCssClass(CSS.PACKAGEABLE_NODE);
+
+      applyShapeData(artifact, builder);
+
+      GNode artifactNode = builder.build();
+
+      GCompartment structureCompartment = createStructureCompartment(artifact);
+
+      List<GModelElement> childDeploymentSpecifications = artifact.getOwnedMembers().stream()
+            .filter(DeploymentSpecification.class::isInstance)
+            .map(DeploymentSpecification.class::cast)
+            .map(this::createDeploymentSpecification)
+            .collect(Collectors.toList());
+      structureCompartment.getChildren().addAll(childDeploymentSpecifications);
+
+      artifactNode.getChildren().add(structureCompartment);
+      return artifactNode;
+
+
+      /*List<EObject> artifactChildren = new ArrayList<>(artifact.getNestedArtifacts());
 
       GNodeBuilder b = new GNodeBuilder(Types.ARTIFACT)
             .id(toId(artifact))
@@ -150,7 +183,7 @@ public class DeploymentDiagramNodeFactory extends AbstractGModelFactory<Classifi
             .collect(Collectors.toList()));
 
       applyShapeData(artifact, b);
-      return b.build();
+      return b.build();*/
    }
 
    protected GNode createDevice(final Device device) {
@@ -223,10 +256,68 @@ public class DeploymentDiagramNodeFactory extends AbstractGModelFactory<Classifi
       return deviceNode;
    }
 
+   // FIXME: also creates a device node somehow!!! check later again
    protected GNode createExecutionEnvironment(final ExecutionEnvironment executionEnvironment) {
-      List<EObject> executionEnvironmentChildren = new ArrayList<>(executionEnvironment.getOwnedElements());
+      Map<String, Object> layoutOptions = new HashMap<>();
+      layoutOptions.put(H_ALIGN, GConstants.HAlign.CENTER);
+      layoutOptions.put(H_GRAB, false);
+      layoutOptions.put(V_GRAB, false);
 
-      //TODO: fix header as it has artifact in it!!! & why is it type device?!??!
+      GNodeBuilder builder = new GNodeBuilder(Types.EXECUTION_ENVIRONMENT)
+            .id(toId(executionEnvironment))
+            .layout(GConstants.Layout.VBOX)
+            .layoutOptions(layoutOptions)
+            .add(buildHeader(executionEnvironment))
+            .addCssClass(CSS.NODE)
+            .addCssClass(CSS.PACKAGEABLE_NODE);
+
+      applyShapeData(executionEnvironment, builder);
+
+      GNode executionEnvironmentNode = builder.build();
+
+      GCompartment structureCompartment = createStructureCompartment(executionEnvironment);
+
+
+      List<GModelElement> childNodes = executionEnvironment.getNestedClassifiers().stream()
+            .filter(Node.class::isInstance)
+            .map(Node.class::cast)
+            .map(this::createNode)
+            .collect(Collectors.toList());
+      structureCompartment.getChildren().addAll(childNodes);
+
+      List<GModelElement> childDevices = executionEnvironment.getNestedClassifiers().stream()
+            .filter(Device.class::isInstance)
+            .map(Device.class::cast)
+            .map(this::createDevice)
+            .collect(Collectors.toList());
+      structureCompartment.getChildren().addAll(childDevices);
+
+      List<GModelElement> childExecutionEnvironments = executionEnvironment.getNestedClassifiers().stream()
+            .filter(ExecutionEnvironment.class::isInstance)
+            .map(ExecutionEnvironment.class::cast)
+            .map(this::createExecutionEnvironment)
+            .collect(Collectors.toList());
+      structureCompartment.getChildren().addAll(childExecutionEnvironments);
+
+      List<GModelElement> childDeploymentSpecifications = executionEnvironment.getNestedClassifiers().stream()
+            .filter(DeploymentSpecification.class::isInstance)
+            .map(DeploymentSpecification.class::cast)
+            .map(this::createDeploymentSpecification)
+            .collect(Collectors.toList());
+      structureCompartment.getChildren().addAll(childDeploymentSpecifications);
+
+      List<GModelElement> childArtifacts = executionEnvironment.getNestedClassifiers().stream()
+            .filter(Artifact.class::isInstance)
+            .map(Artifact.class::cast)
+            .map(this::createArtifact)
+            .collect(Collectors.toList());
+      structureCompartment.getChildren().addAll(childArtifacts);
+
+      executionEnvironmentNode.getChildren().add(structureCompartment);
+      return executionEnvironmentNode;
+
+      /*List<EObject> executionEnvironmentChildren = new ArrayList<>(executionEnvironment.getOwnedElements());
+
       GNodeBuilder b = new GNodeBuilder(Types.EXECUTION_ENVIRONMENT)
             .id(toId(executionEnvironment))
             .layout(GConstants.Layout.VBOX)
@@ -235,7 +326,7 @@ public class DeploymentDiagramNodeFactory extends AbstractGModelFactory<Classifi
             .add(createLabeledChildCompartment(executionEnvironmentChildren, executionEnvironment));
 
       applyShapeData(executionEnvironment, b);
-      return b.build();
+      return b.build();*/
    }
 
    protected void applyShapeData(final Classifier classifier, final GNodeBuilder builder) {

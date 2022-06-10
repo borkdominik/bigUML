@@ -1,32 +1,38 @@
 package com.eclipsesource.uml.modelserver.commands.deploymentdiagram.executionenvironment;
 
 import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Device;
-import org.eclipse.uml2.uml.ExecutionEnvironment;
-import org.eclipse.uml2.uml.Node;
-import org.eclipse.uml2.uml.UMLFactory;
 import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.uml2.uml.*;
 
 public class AddExecutionEnvironmentCommand extends UmlSemanticElementCommand {
 
-    protected final ExecutionEnvironment newExecutionEnvironment;
-    protected final String parentSemanticUriFragment;
+   protected final ExecutionEnvironment newExecutionEnvironment;
+   protected final String parentSemanticUriFragment;
 
-    public AddExecutionEnvironmentCommand(final EditingDomain domain, final URI modelUri,
-                                          final String parentSemanticUri) {
-        super(domain, modelUri);
-        this.newExecutionEnvironment = UMLFactory.eINSTANCE.createExecutionEnvironment();
-        this.parentSemanticUriFragment = parentSemanticUri;
-    }
+   public AddExecutionEnvironmentCommand(final EditingDomain domain, final URI modelUri,
+                                         final String parentSemanticUri) {
+      super(domain, modelUri);
+      this.newExecutionEnvironment = UMLFactory.eINSTANCE.createExecutionEnvironment();
+      this.parentSemanticUriFragment = parentSemanticUri;
+   }
 
-    @Override
-    protected void doExecute() {
-        newExecutionEnvironment.setName(UmlSemanticCommandUtil.getNewExecutionEnvironmentName(umlModel));
+   @Override
+   protected void doExecute() {
+      newExecutionEnvironment.setName(UmlSemanticCommandUtil.getNewExecutionEnvironmentName(umlModel));
+      NamedElement parentContainer = UmlSemanticCommandUtil.getElement(umlModel, parentSemanticUriFragment, NamedElement.class);
+      if (parentContainer instanceof Model) {
+         ((Model) parentContainer).getPackagedElements().add(newExecutionEnvironment);
+      } else if (parentContainer instanceof ExecutionEnvironment) {
+         ((ExecutionEnvironment) parentContainer).getNestedClassifiers().add(newExecutionEnvironment);
+      } else if (parentContainer instanceof Device) {
+         ((Device) parentContainer).getNestedClassifiers().add(newExecutionEnvironment);
+      } else if (parentContainer instanceof Node) {
+         ((Node) parentContainer).getNestedClassifiers().add(newExecutionEnvironment);
+      }
 
-        EObject parentObject = UmlSemanticCommandUtil.getElement(umlModel, parentSemanticUriFragment);
+        /*EObject parentObject = UmlSemanticCommandUtil.getElement(umlModel, parentSemanticUriFragment);
         if (parentObject instanceof Device) {
             Device parentDevice = UmlSemanticCommandUtil.getElement(umlModel, parentSemanticUriFragment, Device.class);
             parentDevice.getNestedNodes().add(newExecutionEnvironment);
@@ -39,10 +45,10 @@ public class AddExecutionEnvironmentCommand extends UmlSemanticElementCommand {
             parentNode.getNestedNodes().add(newExecutionEnvironment);
         } else {
             umlModel.getPackagedElements().add(newExecutionEnvironment);
-        }
-    }
+        }*/
+   }
 
-    public ExecutionEnvironment getNewExecutionEnvironment() {
-        return newExecutionEnvironment;
-    }
+   public ExecutionEnvironment getNewExecutionEnvironment() {
+      return newExecutionEnvironment;
+   }
 }

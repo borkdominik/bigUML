@@ -3,6 +3,7 @@ package com.eclipsesource.uml.modelserver.commands.deploymentdiagram.executionen
 import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlCompoundCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlNotationCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlSemanticCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.util.UmlNotationCommandUtil;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -11,36 +12,36 @@ import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
 import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
 import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
 import org.eclipse.glsp.graph.GPoint;
-import com.eclipsesource.uml.modelserver.commands.util.UmlNotationCommandUtil;
 
 public class AddExecutionEnvironmentCommandContribution extends UmlCompoundCommandContribution {
 
-    public static final String TYPE = "addExecutionEnvironmentContributuion";
+   public static final String TYPE = "addExecutionEnvironmentContributuion";
+   public static final String PARENT_SEMANTIC_URI_FRAGMENT = "semanticProxyUri";
 
-    public static CCompoundCommand create(final GPoint position, final String parentSemanticUri) {
-        CCompoundCommand addExecutionEnvironmentCommand = CCommandFactory.eINSTANCE.createCompoundCommand();
-        addExecutionEnvironmentCommand.setType(TYPE);
-        addExecutionEnvironmentCommand.getProperties().put(UmlNotationCommandContribution.POSITION_X,
-                String.valueOf(position.getX()));
-        addExecutionEnvironmentCommand.getProperties().put(UmlNotationCommandContribution.POSITION_Y,
-                String.valueOf(position.getY()));
-        addExecutionEnvironmentCommand.getProperties().put(UmlSemanticCommandContribution.PARENT_SEMANTIC_URI_FRAGMENT,
-                parentSemanticUri);
-        return addExecutionEnvironmentCommand;
-    }
+   public static CCompoundCommand create(final GPoint position, final String parentSemanticUri) {
+      CCompoundCommand addExecutionEnvironmentCommand = CCommandFactory.eINSTANCE.createCompoundCommand();
+      addExecutionEnvironmentCommand.setType(TYPE);
+      addExecutionEnvironmentCommand.getProperties().put(UmlNotationCommandContribution.POSITION_X,
+            String.valueOf(position.getX()));
+      addExecutionEnvironmentCommand.getProperties().put(UmlNotationCommandContribution.POSITION_Y,
+            String.valueOf(position.getY()));
+      addExecutionEnvironmentCommand.getProperties().put(UmlSemanticCommandContribution.PARENT_SEMANTIC_URI_FRAGMENT,
+            parentSemanticUri);
+      return addExecutionEnvironmentCommand;
+   }
 
-    @Override
-    protected CompoundCommand toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
-            throws DecodingException {
-        GPoint executionEnvironmentPosition = UmlNotationCommandUtil.getGPoint(
-                command.getProperties().get(UmlNotationCommandContribution.POSITION_X),
-                command.getProperties().get(UmlNotationCommandContribution.POSITION_Y));
+   @Override
+   protected CompoundCommand toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
+         throws DecodingException {
+      GPoint executionEnvironmentPosition = UmlNotationCommandUtil.getGPoint(
+            command.getProperties().get(UmlNotationCommandContribution.POSITION_X),
+            command.getProperties().get(UmlNotationCommandContribution.POSITION_Y));
 
-        String parentSemanticUriFragment = command.getProperties()
-                .get(UmlSemanticCommandContribution.PARENT_SEMANTIC_URI_FRAGMENT);
+      String parentSemanticUriFragment = command.getProperties()
+            .get(UmlSemanticCommandContribution.PARENT_SEMANTIC_URI_FRAGMENT);
 
-        return new AddExecutionEnvironmentCompoundCommand(domain, modelUri, executionEnvironmentPosition,
-                parentSemanticUriFragment);
-    }
+      return new AddExecutionEnvironmentCompoundCommand(domain, modelUri, executionEnvironmentPosition,
+            parentSemanticUriFragment);
+   }
 
 }

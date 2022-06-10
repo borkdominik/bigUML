@@ -61,19 +61,6 @@ public class CreateDeploymentDiagramNodeOperationHandler
 
       switch (operation.getElementTypeId()) {
          case Types.DEPLOYMENT_NODE: {
-            /*String containerId = operation.getContainerId();
-
-            PackageableElement container = getOrThrow(modelState.getIndex().getSemantic(containerId),
-                  PackageableElement.class, "No valid container with id " + operation.getContainerId() + " found");
-
-            Optional<GPoint> location = getNodePosition(modelState, container,
-                  operation.getLocation().orElse(GraphUtil.point(0, 0)));
-
-            modelAccess.addNode(UmlModelState.getModelState(modelState), location, container).thenAccept(response -> {
-               if (!response.body()) {
-                  throw new GLSPServerException("Could not execute create operation on new Node node");
-               }
-            });*/
             NamedElement parentContainer = getOrThrow(
                   modelIndex.getSemantic(operation.getContainerId(), NamedElement.class),
                   "No parent container found!");
@@ -101,7 +88,31 @@ public class CreateDeploymentDiagramNodeOperationHandler
             break;
          }
          case Types.ARTIFACT: {
-            String containerId = operation.getContainerId();
+            NamedElement parentContainer = getOrThrow(
+                  modelIndex.getSemantic(operation.getContainerId(), NamedElement.class),
+                  "No parent container found!");
+            if (parentContainer instanceof Model) {
+               modelAccess.addArtifact(getUmlModelState(), operation.getLocation(), Model.class.cast(parentContainer))
+                     .thenAccept(response -> {
+                        if (!response.body()) {
+                           throw new GLSPServerException("Could not execute create operation on new deployment node");
+                        }
+                     });
+            } else {
+               Optional<GModelElement> container = modelIndex.get(operation.getContainerId());
+               Optional<GModelElement> structCompartment = container
+                     .filter(GNode.class::isInstance)
+                     .map(GNode.class::cast)
+                     .flatMap(this::getStructureCompartment);
+               Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(), structCompartment);
+               modelAccess.addArtifact(getUmlModelState(), relativeLocation, Artifact.class.cast(parentContainer))
+                     .thenAccept(response -> {
+                        if (!response.body()) {
+                           throw new GLSPServerException("Could not execute create operation on new execution environment node");
+                        }
+                     });
+            }
+            /*String containerId = operation.getContainerId();
 
             PackageableElement container = getOrThrow(modelState.getIndex().getSemantic(containerId),
                   PackageableElement.class, "No valid container with id " + operation.getContainerId() + " found");
@@ -114,26 +125,35 @@ public class CreateDeploymentDiagramNodeOperationHandler
                      if (!response.body()) {
                         throw new GLSPServerException("Could not execute create operation on new Artifact node");
                      }
-                  });
+                  });*/
             break;
          }
          case Types.EXECUTION_ENVIRONMENT: {
-            String containerId = operation.getContainerId();
+            NamedElement parentContainer = getOrThrow(
+                  modelIndex.getSemantic(operation.getContainerId(), NamedElement.class),
+                  "No container object was found");
 
-            PackageableElement container = getOrThrow(modelState.getIndex().getSemantic(containerId),
-                  PackageableElement.class, "No valid container with id " + operation.getContainerId() + " found");
-
-            Optional<GPoint> location = getExecutionEnvironmentPosition(modelState, container,
-                  operation.getLocation().orElse(GraphUtil.point(0, 0)));
-
-            modelAccess
-                  .addExecutionEnvironment(modelState, location, container)
-                  .thenAccept(response -> {
-                     if (!response.body()) {
-                        throw new GLSPServerException(
-                              "Could not execute create operation on new ExecutionEnvironment node");
-                     }
-                  });
+            if (parentContainer instanceof Model) {
+               modelAccess.addExecutionEnvironment(getUmlModelState(), operation.getLocation(), Model.class.cast(parentContainer))
+                     .thenAccept(response -> {
+                        if (!response.body()) {
+                           throw new GLSPServerException("Could not execute create operation on new execution environment node");
+                        }
+                     });
+            } else {
+               Optional<GModelElement> container = modelIndex.get(operation.getContainerId());
+               Optional<GModelElement> structCompartment = container
+                     .filter(GNode.class::isInstance)
+                     .map(GNode.class::cast)
+                     .flatMap(this::getStructureCompartment);
+               Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(), structCompartment);
+               modelAccess.addExecutionEnvironment(getUmlModelState(), relativeLocation, ExecutionEnvironment.class.cast(parentContainer))
+                     .thenAccept(response -> {
+                        if (!response.body()) {
+                           throw new GLSPServerException("Could not execute create operation on new execution environment node");
+                        }
+                     });
+            }
             break;
          }
          case Types.DEVICE: {
@@ -148,7 +168,7 @@ public class CreateDeploymentDiagramNodeOperationHandler
                            throw new GLSPServerException("Could not execute create operation on new device node");
                         }
                      });
-            } else if (parentContainer instanceof Device) {
+            } else if (parentContainer instanceof Device || parentContainer instanceof Node) {
                Optional<GModelElement> container = modelIndex.get(operation.getContainerId());
                Optional<GModelElement> structCompartment = container.filter(GNode.class::isInstance)
                      .map(GNode.class::cast)

@@ -210,10 +210,10 @@ export default function createContainer(widgetId: string): Container {
 
         // DEPLOYMENT DIAGRAM
         configureModelElement(context, UmlTypes.ICON_ARTIFACT, IconArtifact, IconView);
-        configureModelElement(context, UmlTypes.ARTIFACT, LabeledNode, ArtifactNodeView);
+        configureModelElement(context, UmlTypes.ARTIFACT, PackageNode, ArtifactNodeView);
         configureModelElement(context, UmlTypes.ICON_DEVICE, IconDevice, IconView);
         configureModelElement(context, UmlTypes.DEVICE, PackageNode, DeviceNodeView);
-        configureModelElement(context, UmlTypes.EXECUTION_ENVIRONMENT, LabeledNode, ExecutionEnvironmentNodeView);
+        configureModelElement(context, UmlTypes.EXECUTION_ENVIRONMENT, PackageNode, ExecutionEnvironmentNodeView);
         configureModelElement(context, UmlTypes.ICON_EXECUTION_ENVIRONMENT, IconExecutionEnvironment, IconView);
         configureModelElement(context, UmlTypes.DEPLOYMENT_NODE, PackageNode, DeploymentNodeNodeView);
         configureModelElement(context, UmlTypes.ICON_DEPLOYMENT_NODE, IconDeploymentNode, IconView);

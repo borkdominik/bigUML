@@ -63,7 +63,64 @@ public class DeploymentDiagramNodeFactory extends AbstractGModelFactory<Classifi
    }
 
    protected GNode createNode(final Node umlNode) {
-      List<EObject> nodeChildren = new ArrayList<>(umlNode.getOwnedElements());
+      Map<String, Object> layoutOptions = new HashMap<>();
+      layoutOptions.put(H_ALIGN, GConstants.HAlign.CENTER);
+      layoutOptions.put(H_GRAB, false);
+      layoutOptions.put(V_GRAB, false);
+
+      GNodeBuilder builder = new GNodeBuilder(Types.DEPLOYMENT_NODE)
+            .id(toId(umlNode))
+            .layout(GConstants.Layout.VBOX)
+            .layoutOptions(layoutOptions)
+            .add(buildHeader(umlNode))
+            .addCssClass(CSS.NODE)
+            .addCssClass(CSS.PACKAGEABLE_NODE);
+
+      applyShapeData(umlNode, builder);
+
+      GNode deploymentNodeNode = builder.build();
+
+      GCompartment structureCompartment = createStructureCompartment(umlNode);
+
+      List<GModelElement> childNodes = umlNode.getNestedClassifiers().stream()
+            .filter(Node.class::isInstance)
+            .map(Node.class::cast)
+            .map(this::createNode)
+            .collect(Collectors.toList());
+      structureCompartment.getChildren().addAll(childNodes);
+
+      List<GModelElement> childDevices = umlNode.getNestedClassifiers().stream()
+            .filter(Device.class::isInstance)
+            .map(Device.class::cast)
+            .map(this::createDevice)
+            .collect(Collectors.toList());
+      structureCompartment.getChildren().addAll(childDevices);
+
+      List<GModelElement> childExecutionEnvironments = umlNode.getNestedClassifiers().stream()
+            .filter(ExecutionEnvironment.class::isInstance)
+            .map(ExecutionEnvironment.class::cast)
+            .map(this::createExecutionEnvironment)
+            .collect(Collectors.toList());
+      structureCompartment.getChildren().addAll(childExecutionEnvironments);
+
+      List<GModelElement> childDeploymentSpecifications = umlNode.getNestedClassifiers().stream()
+            .filter(DeploymentSpecification.class::isInstance)
+            .map(DeploymentSpecification.class::cast)
+            .map(this::createDeploymentSpecification)
+            .collect(Collectors.toList());
+      structureCompartment.getChildren().addAll(childDeploymentSpecifications);
+
+      List<GModelElement> childArtifacts = umlNode.getNestedClassifiers().stream()
+            .filter(Artifact.class::isInstance)
+            .map(Artifact.class::cast)
+            .map(this::createArtifact)
+            .collect(Collectors.toList());
+      structureCompartment.getChildren().addAll(childArtifacts);
+
+      deploymentNodeNode.getChildren().add(structureCompartment);
+      return deploymentNodeNode;
+
+      /*List<EObject> nodeChildren = new ArrayList<>(umlNode.getOwnedElements());
 
       GNodeBuilder b = new GNodeBuilder(Types.DEPLOYMENT_NODE)
             .id(toId(umlNode))
@@ -73,7 +130,7 @@ public class DeploymentDiagramNodeFactory extends AbstractGModelFactory<Classifi
             .add(createLabeledChildCompartment(nodeChildren, umlNode));
 
       applyShapeData(umlNode, b);
-      return b.build();
+      return b.build();*/
    }
 
    protected GNode createArtifact(final Artifact artifact) {
@@ -342,13 +399,13 @@ public class DeploymentDiagramNodeFactory extends AbstractGModelFactory<Classifi
             .build();
    }
 
-   private GCompartment createStructureCompartment(final Device umlDevice) {
+   private GCompartment createStructureCompartment(final NamedElement namedElement) {
       Map<String, Object> layoutOptions = new HashMap<>();
       layoutOptions.put(H_ALIGN, GConstants.HAlign.LEFT);
       layoutOptions.put(H_GRAB, true);
       layoutOptions.put(V_GRAB, true);
       GCompartment structCompartment = new GCompartmentBuilder(Types.STRUCTURE)
-            .id(toId(umlDevice) + "_struct")
+            .id(toId(namedElement) + "_struct")
             .layout(GConstants.Layout.FREEFORM)
             .layoutOptions(layoutOptions)
             .addCssClass("struct")

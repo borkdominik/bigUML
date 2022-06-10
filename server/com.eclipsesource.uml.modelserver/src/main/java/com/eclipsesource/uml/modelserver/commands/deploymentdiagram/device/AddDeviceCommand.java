@@ -31,21 +31,6 @@ public class AddDeviceCommand extends UmlSemanticElementCommand {
       } else if (parentContainer instanceof Node) {
          ((Node) parentContainer).getNestedClassifiers().add(newDevice);
       }
-
-        /*EObject parentObject = UmlSemanticCommandUtil.getElement(umlModel, parentSemanticUriFragment);
-        if (parentObject instanceof Device) {
-            Device parentDevice = UmlSemanticCommandUtil.getElement(umlModel, parentSemanticUriFragment, Device.class);
-            parentDevice.getNestedNodes().add(newDevice);
-        } else if (parentObject instanceof ExecutionEnvironment) {
-            ExecutionEnvironment parentExecutionEnvironment = UmlSemanticCommandUtil.getElement(umlModel,
-                    parentSemanticUriFragment, ExecutionEnvironment.class);
-            parentExecutionEnvironment.getNestedClassifiers().add(newDevice);
-        } else if (parentObject instanceof Node) {
-            Node parentNode = UmlSemanticCommandUtil.getElement(umlModel, parentSemanticUriFragment, Node.class);
-            parentNode.getNestedNodes().add(newDevice);
-        } else {
-            umlModel.getPackagedElements().add(newDevice);
-        }*/
    }
 
    public Device getNewDevice() {

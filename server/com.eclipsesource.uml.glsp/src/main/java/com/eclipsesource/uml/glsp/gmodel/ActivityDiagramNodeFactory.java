@@ -75,26 +75,29 @@ public class ActivityDiagramNodeFactory extends AbstractGModelFactory<Classifier
             .collect(Collectors.toList());
       structureCompartment.getChildren().addAll(childActions);
 
+      List<GModelElement> childSendSignalActions = umlActivity.getOwnedNodes().stream()
+            .filter(SendSignalAction.class::isInstance)
+            .map(SendSignalAction.class::cast)
+            .map(activityDiagramChildNodeFactory::create)
+            .collect(Collectors.toList());
+      structureCompartment.getChildren().addAll(childSendSignalActions);
+
+      List<GModelElement> childCallActions = umlActivity.getOwnedNodes().stream()
+            .filter(CallBehaviorAction.class::isInstance)
+            .map(CallBehaviorAction.class::cast)
+            .map(activityDiagramChildNodeFactory::create)
+            .collect(Collectors.toList());
+      structureCompartment.getChildren().addAll(childCallActions);
+
+      List<GModelElement> childEvents = umlActivity.getOwnedNodes().stream()
+            .filter(AcceptEventAction.class::isInstance)
+            .map(AcceptEventAction.class::cast)
+            .map(activityDiagramChildNodeFactory::create)
+            .collect(Collectors.toList());
+      structureCompartment.getChildren().addAll(childEvents);
+
       activityNode.getChildren().add(structureCompartment);
       return activityNode;
-
-      /*Collection<EObject> children = umlActivity.getOwnedNodes().stream()
-            .filter(node -> node.getInPartitions().isEmpty() && node.getInGroups().isEmpty())
-            .collect(Collectors.toList());
-      children.addAll(umlActivity.getOwnedGroups());
-      children.addAll(umlActivity.getEdges());
-      children.addAll(ActivityUtil.getAllExceptionHandlers(umlActivity));
-
-      GNodeBuilder b = new GNodeBuilder(Types.ACTIVITY) //
-            .id(toId(umlActivity)) //
-            .layout(GConstants.Layout.VBOX) //
-            .addCssClass(CSS.NODE) //
-            .add(buildActivityHeader(umlActivity))//
-            .add(createConditionCompartment(umlActivity))
-            .add(createActivityChildrenCompartment(children, umlActivity));
-
-      applyShapeData(umlActivity, b);
-      return b.build();*/
    }
 
    protected void applyShapeData(final Classifier classifier, final GNodeBuilder builder) {

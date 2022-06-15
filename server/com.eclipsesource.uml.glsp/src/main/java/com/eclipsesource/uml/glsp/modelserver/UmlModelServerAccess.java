@@ -509,10 +509,11 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
    }
 
    public CompletableFuture<Response<Boolean>> addEventAction(final UmlModelState modelState,
-                                                              final GPoint newPosition, final EObject parent, final boolean isTimeEvent) {
+                                                              final Optional<GPoint> newPosition,
+                                                              final EObject parent, final boolean isTimeEvent) {
 
       CCompoundCommand addActivityCompoundCommand = AddActionCommandContribution
-            .create(newPosition, getSemanticUriFragment(parent), isTimeEvent);
+            .create(newPosition.orElse(GraphUtil.point(0, 0)), getSemanticUriFragment(parent), isTimeEvent);
       return this.edit(addActivityCompoundCommand);
    }
 

@@ -64,24 +64,18 @@ public class CreateActivityDiagramChildNodeOperationHandler
       UmlModelState modelState = getUmlModelState();
       UmlModelIndex modelIndex = modelState.getIndex();
 
-      String containerId = operation.getContainerId();
-
-      Element container = getOrThrow(modelState.getIndex().getSemantic(containerId), Element.class,
-            "No valid activity container with id " + containerId + " found");
       String elementTypeId = operation.getElementTypeId();
-      GPoint location = getPosition(modelState, container, operation.getLocation().orElse(GraphUtil.point(0, 0)));
 
+      //String containerId = operation.getContainerId();
+      /*Element container = getOrThrow(modelState.getIndex().getSemantic(containerId), Element.class,
+            "No valid activity container with id " + containerId + " found");*/
+      //GPoint location = getPosition(modelState, container, operation.getLocation().orElse(GraphUtil.point(0, 0)));
+
+      NamedElement parentContainer = getOrThrow(
+            modelIndex.getSemantic(operation.getContainerId(), NamedElement.class),
+            "No parent container found!");
       switch (elementTypeId) {
          case (Types.ACTION): {
-                /*modelAccess.addAction(UmlModelState.getModelState(modelState), location, container, OpaqueAction.class)
-                        .thenAccept(response -> {
-                           if (!response.body()) {
-                              throw new GLSPServerException("Could not execute create operation on new Action node");
-                           }
-                        });*/
-            NamedElement parentContainer = getOrThrow(
-                  modelIndex.getSemantic(operation.getContainerId(), NamedElement.class),
-                  "No parent container found!");
             if (parentContainer instanceof Activity) {
                Optional<GModelElement> containerActivity = modelIndex.get(operation.getContainerId());
                Optional<GModelElement> structCompartment = containerActivity
@@ -98,42 +92,74 @@ public class CreateActivityDiagramChildNodeOperationHandler
             }
             break;
          }
-         /*case (Types.SENDSIGNAL): {
-            modelAccess.addAction(UmlModelState.getModelState(modelState), location, container, SendSignalAction.class)
-                  .thenAccept(response -> {
-                     if (!response.body()) {
-                        throw new GLSPServerException("Could not execute create operation on new Action node");
-                     }
-                  });
+         case (Types.SENDSIGNAL): {
+            if (parentContainer instanceof Activity) {
+               Optional<GModelElement> containerActivity = modelIndex.get(operation.getContainerId());
+               Optional<GModelElement> structCompartment = containerActivity
+                     .filter(GNode.class::isInstance)
+                     .map(GNode.class::cast)
+                     .flatMap(this::getStructureCompartment);
+               Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(), structCompartment);
+               modelAccess.addAction(getUmlModelState(), relativeLocation, parentContainer, SendSignalAction.class)
+                     .thenAccept(response -> {
+                        if (!response.body()) {
+                           throw new GLSPServerException("Could not create operation on new Action node");
+                        }
+                     });
+            }
             break;
          }
          case (Types.CALL): {
-            modelAccess.addAction(UmlModelState.getModelState(modelState), location, container, CallBehaviorAction.class)
-                  .thenAccept(response -> {
-                     if (!response.body()) {
-                        throw new GLSPServerException("Could not execute create operation on new Action node");
-                     }
-                  });
-            break;
-         }*/
+            if (parentContainer instanceof Activity) {
+               Optional<GModelElement> containerActivity = modelIndex.get(operation.getContainerId());
+               Optional<GModelElement> structCompartment = containerActivity
+                     .filter(GNode.class::isInstance)
+                     .map(GNode.class::cast)
+                     .flatMap(this::getStructureCompartment);
+               Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(), structCompartment);
+               modelAccess.addAction(getUmlModelState(), relativeLocation, parentContainer, CallBehaviorAction.class)
+                     .thenAccept(response -> {
+                        if (!response.body()) {
+                           throw new GLSPServerException("Could not create operation on new Action node");
+                        }
+                     });
+            }
+         }
          case (Types.ACCEPTEVENT): {
-            modelAccess.addEventAction(UmlModelState.getModelState(modelState), location, container, false)
-                  .thenAccept(response -> {
-                     if (!response.body()) {
-                        throw new GLSPServerException("Could not execute create operation on new Action node");
-                     }
-                  });
+            if (parentContainer instanceof Activity) {
+               Optional<GModelElement> containerActivity = modelIndex.get(operation.getContainerId());
+               Optional<GModelElement> structCompartment = containerActivity
+                     .filter(GNode.class::isInstance)
+                     .map(GNode.class::cast)
+                     .flatMap(this::getStructureCompartment);
+               Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(), structCompartment);
+               modelAccess.addEventAction(getUmlModelState(), relativeLocation, parentContainer, false)
+                     .thenAccept(response -> {
+                        if (!response.body()) {
+                           throw new GLSPServerException("Could not create operation on new Action node");
+                        }
+                     });
+            }
             break;
          }
          case (Types.TIMEEVENT): {
-            modelAccess.addEventAction(UmlModelState.getModelState(modelState), location, container, true)
-                  .thenAccept(response -> {
-                     if (!response.body()) {
-                        throw new GLSPServerException("Could not execute create operation on new Action node");
-                     }
-                  });
+            if (parentContainer instanceof Activity) {
+               Optional<GModelElement> containerActivity = modelIndex.get(operation.getContainerId());
+               Optional<GModelElement> structCompartment = containerActivity
+                     .filter(GNode.class::isInstance)
+                     .map(GNode.class::cast)
+                     .flatMap(this::getStructureCompartment);
+               Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(), structCompartment);
+               modelAccess.addEventAction(getUmlModelState(), relativeLocation, parentContainer, true)
+                     .thenAccept(response -> {
+                        if (!response.body()) {
+                           throw new GLSPServerException("Could not create operation on new Action node");
+                        }
+                     });
+            }
             break;
          }
+         /*
          case (Types.PARAMETER): {
             modelAccess.addParameter(UmlModelState.getModelState(modelState), (Activity) container)
                   .thenAccept(response -> {
@@ -226,7 +252,7 @@ public class CreateActivityDiagramChildNodeOperationHandler
             break;
          }
          default:
-            break;
+            break;*/
       }
    }
 

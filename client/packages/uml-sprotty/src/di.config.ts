@@ -163,7 +163,7 @@ export default function createContainer(widgetId: string): Container {
         configureModelElement(context, UmlTypes.ATTRIBUTE, SLabelNodeProperty, LabelNodeView);
 
         // ACTIVITY DIAGRAM
-        configureModelElement(context, UmlTypes.ACTIVITY, LabeledNode, ActivityNodeView);
+        configureModelElement(context, UmlTypes.ACTIVITY, PackageNode, ActivityNodeView);
         configureModelElement(context, UmlTypes.ICON_ACTIVITY, IconActivity, IconView);
         configureModelElement(context, UmlTypes.PARTITION, LabeledNode, PartitionNodeView);
         configureModelElement(context, UmlTypes.ACTION, LabeledNode, ActionNodeView);

@@ -1,7 +1,6 @@
 package com.eclipsesource.uml.glsp.gmodel;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.util.ActivityUtil;
 import com.eclipsesource.uml.glsp.util.UmlConfig.CSS;
 import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
 import com.eclipsesource.uml.glsp.util.UmlIDUtil;
@@ -9,6 +8,7 @@ import com.eclipsesource.uml.modelserver.unotation.Shape;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.graph.GCompartment;
 import org.eclipse.glsp.graph.GLabel;
+import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.builder.impl.GCompartmentBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
@@ -16,21 +16,27 @@ import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.builder.impl.GNodeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.glsp.graph.util.GraphUtil;
-import org.eclipse.uml2.uml.Activity;
-import org.eclipse.uml2.uml.Classifier;
-import org.eclipse.uml2.uml.Constraint;
-import org.eclipse.uml2.uml.OpaqueExpression;
+import org.eclipse.uml2.uml.*;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ActivityDiagramNodeFactory extends AbstractGModelFactory<Classifier, GNode> {
 
    private final DiagramFactory parentFactory;
+   private final ActivityDiagramChildNodeFactory activityDiagramChildNodeFactory;
 
-   public ActivityDiagramNodeFactory(final UmlModelState modelState, final DiagramFactory parentFactory) {
+   private static final String V_GRAB = "vGrab";
+   private static final String H_GRAB = "hGrab";
+   private static final String H_ALIGN = "hAlign";
+
+   public ActivityDiagramNodeFactory(final UmlModelState modelState, final DiagramFactory parentFactory, ActivityDiagramChildNodeFactory activityDiagramChildNodeFactory) {
       super(modelState);
       this.parentFactory = parentFactory;
+      this.activityDiagramChildNodeFactory = activityDiagramChildNodeFactory;
    }
 
    @Override
@@ -43,7 +49,36 @@ public class ActivityDiagramNodeFactory extends AbstractGModelFactory<Classifier
 
    // ACTIVITY
    protected GNode create(final Activity umlActivity) {
-      Collection<EObject> children = umlActivity.getOwnedNodes().stream()
+      Map<String, Object> layoutOptions = new HashMap<>();
+      layoutOptions.put(H_ALIGN, GConstants.HAlign.CENTER);
+      layoutOptions.put(H_GRAB, false);
+      layoutOptions.put(V_GRAB, false);
+
+      GNodeBuilder builder = new GNodeBuilder(Types.ACTIVITY)
+            .id(toId(umlActivity))
+            .layout(GConstants.Layout.VBOX)
+            .layoutOptions(layoutOptions)
+            .add(buildActivityHeader(umlActivity))
+            .addCssClass(CSS.NODE)
+            .addCssClass(CSS.PACKAGEABLE_NODE);
+
+      applyShapeData(umlActivity, builder);
+
+      GNode activityNode = builder.build();
+
+      GCompartment structureCompartment = createStructureCompartment(umlActivity);
+
+      List<GModelElement> childActions = umlActivity.getOwnedNodes().stream()
+            .filter(OpaqueAction.class::isInstance)
+            .map(OpaqueAction.class::cast)
+            .map(activityDiagramChildNodeFactory::create)
+            .collect(Collectors.toList());
+      structureCompartment.getChildren().addAll(childActions);
+
+      activityNode.getChildren().add(structureCompartment);
+      return activityNode;
+
+      /*Collection<EObject> children = umlActivity.getOwnedNodes().stream()
             .filter(node -> node.getInPartitions().isEmpty() && node.getInGroups().isEmpty())
             .collect(Collectors.toList());
       children.addAll(umlActivity.getOwnedGroups());
@@ -59,7 +94,7 @@ public class ActivityDiagramNodeFactory extends AbstractGModelFactory<Classifier
             .add(createActivityChildrenCompartment(children, umlActivity));
 
       applyShapeData(umlActivity, b);
-      return b.build();
+      return b.build();*/
    }
 
    protected void applyShapeData(final Classifier classifier, final GNodeBuilder builder) {
@@ -127,6 +162,20 @@ public class ActivityDiagramNodeFactory extends AbstractGModelFactory<Classifier
             .text(((OpaqueExpression) constraint.getSpecification()).getBodies().get(0)).build();
 
       return label;
+   }
+
+   private GCompartment createStructureCompartment(final NamedElement namedElement) {
+      Map<String, Object> layoutOptions = new HashMap<>();
+      layoutOptions.put(H_ALIGN, GConstants.HAlign.LEFT);
+      layoutOptions.put(H_GRAB, true);
+      layoutOptions.put(V_GRAB, true);
+      GCompartment structCompartment = new GCompartmentBuilder(Types.STRUCTURE)
+            .id(toId(namedElement) + "_struct")
+            .layout(GConstants.Layout.FREEFORM)
+            .layoutOptions(layoutOptions)
+            .addCssClass("struct")
+            .build();
+      return structCompartment;
    }
 
    protected static String getType(final Classifier classifier) {

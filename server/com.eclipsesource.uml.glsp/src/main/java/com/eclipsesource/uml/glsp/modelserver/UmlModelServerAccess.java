@@ -499,10 +499,12 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
     * UML Action
     */
    public CompletableFuture<Response<Boolean>> addAction(final UmlModelState modelState,
-                                                         final GPoint newPosition, final EObject parent, final java.lang.Class<? extends Action> clazz) {
+                                                         final Optional<GPoint> newPosition,
+                                                         final EObject parent,
+                                                         final java.lang.Class<? extends Action> clazz) {
 
       CCompoundCommand addActivityCompoundCommand = AddActionCommandContribution
-            .create(newPosition, getSemanticUriFragment(parent), clazz);
+            .create(newPosition.orElse(GraphUtil.point(0, 0)), getSemanticUriFragment(parent), clazz);
       return this.edit(addActivityCompoundCommand);
    }
 

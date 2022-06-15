@@ -66,7 +66,7 @@ public abstract class DiagramFactory extends AbstractGModelFactory<EObject, GMod
       objectDiagramEdgeFactory = new ObjectDiagramEdgeFactory(modelState);
       // ACTIVITY
       activityChildNodeFactory = new ActivityDiagramChildNodeFactory(modelState);
-      activityNodeFactory = new ActivityDiagramNodeFactory(modelState, this);
+      activityNodeFactory = new ActivityDiagramNodeFactory(modelState, this, activityChildNodeFactory);
       activityDiagramEdgeFactory = new ActivityDiagramEdgeFactory(modelState);
       activityGroupNodeFactory = new ActivityDiagramGroupNodeFactory(modelState, this);
       // USECASE

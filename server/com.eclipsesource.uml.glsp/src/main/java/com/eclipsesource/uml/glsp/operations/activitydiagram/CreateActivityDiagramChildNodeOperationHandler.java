@@ -184,10 +184,39 @@ public class CreateActivityDiagramChildNodeOperationHandler
             }
             break;
          }
+         // FIXME: NDOE IS NOT RENDERED AND MAYBE NOT A CLASSIC CHILD NODE AS THE OTHERS!!!
          case (Types.CONDITION): {
+            if (parentContainer instanceof Activity) {
+               Optional<GModelElement> containerActivity = modelIndex.get(operation.getContainerId());
+               Optional<GModelElement> structCompartment = containerActivity
+                     .filter(GNode.class::isInstance)
+                     .map(GNode.class::cast)
+                     .flatMap(this::getStructureCompartment);
+               Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(), structCompartment);
+               modelAccess.addCondition(getUmlModelState(), relativeLocation, (Activity) parentContainer, true)
+                     .thenAccept(response -> {
+                        if (!response.body()) {
+                           throw new GLSPServerException("Could not create operation on new Action node");
+                        }
+                     });
+            }
             break;
          }
          case (Types.CENTRALBUFFER): {
+            if (parentContainer instanceof Activity) {
+               Optional<GModelElement> containerActivity = modelIndex.get(operation.getContainerId());
+               Optional<GModelElement> structCompartment = containerActivity
+                     .filter(GNode.class::isInstance)
+                     .map(GNode.class::cast)
+                     .flatMap(this::getStructureCompartment);
+               Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(), structCompartment);
+               modelAccess.addObjectNode(getUmlModelState(), relativeLocation, (Activity) parentContainer, CentralBufferNode.class)
+                     .thenAccept(response -> {
+                        if (!response.body()) {
+                           throw new GLSPServerException("Could not create operation on new Action node");
+                        }
+                     });
+            }
             break;
          }
          case (Types.DATASTORE): {

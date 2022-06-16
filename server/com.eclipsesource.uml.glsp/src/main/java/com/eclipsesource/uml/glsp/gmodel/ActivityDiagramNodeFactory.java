@@ -103,6 +103,20 @@ public class ActivityDiagramNodeFactory extends AbstractGModelFactory<Classifier
             .collect(Collectors.toList());
       structureCompartment.getChildren().addAll(childParameters);
 
+      List<GModelElement> childConditions = umlActivity.getOwnedNodes().stream()
+            .filter(Constraint.class::isInstance)
+            .map(Constraint.class::cast)
+            .map(this::createConditionNode)
+            .collect(Collectors.toList());
+      structureCompartment.getChildren().addAll(childConditions);
+
+      List<GModelElement> childCentralBufferNodes = umlActivity.getOwnedNodes().stream()
+            .filter(CentralBufferNode.class::isInstance)
+            .map(CentralBufferNode.class::cast)
+            .map(activityDiagramChildNodeFactory::create)
+            .collect(Collectors.toList());
+      structureCompartment.getChildren().addAll(childCentralBufferNodes);
+
       activityNode.getChildren().add(structureCompartment);
       return activityNode;
    }

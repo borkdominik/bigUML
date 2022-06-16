@@ -624,17 +624,21 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
       return this.edit(addPartitionCompoundCommand);
    }
 
-   public CompletableFuture<Response<Boolean>> addObjectNode(final UmlModelState modelState, final GPoint newPosition,
-                                                             final Element parent, final java.lang.Class<? extends ObjectNode> clazz) {
+   public CompletableFuture<Response<Boolean>> addObjectNode(final UmlModelState modelState,
+                                                             final Optional<GPoint> newPosition,
+                                                             final Element parent,
+                                                             final java.lang.Class<? extends ObjectNode> clazz) {
       CCompoundCommand addActivityCompoundCommand = AddObjectNodeCommandContribution
-            .create(newPosition, getSemanticUriFragment(parent), clazz);
+            .create(newPosition.orElse(GraphUtil.point(0, 0)), getSemanticUriFragment(parent), clazz);
       return this.edit(addActivityCompoundCommand);
    }
 
    /*
     * UML Constraint
     */
-   public CompletableFuture<Response<Boolean>> addCondition(final UmlModelState modelState, final Activity parent,
+   public CompletableFuture<Response<Boolean>> addCondition(final UmlModelState modelState,
+                                                            final Optional<GPoint> newPosition,
+                                                            final Activity parent,
                                                             final boolean isPrecondition) {
       CCompoundCommand addActivityCompoundCommand = AddConditionCommandContribution
             .create(getSemanticUriFragment(parent), isPrecondition);

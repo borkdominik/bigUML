@@ -117,6 +117,48 @@ public class ActivityDiagramNodeFactory extends AbstractGModelFactory<Classifier
             .collect(Collectors.toList());
       structureCompartment.getChildren().addAll(childCentralBufferNodes);
 
+      List<GModelElement> childDataStoreNodes = umlActivity.getOwnedNodes().stream()
+            .filter(DataStoreNode.class::isInstance)
+            .map(DataStoreNode.class::cast)
+            .map(activityDiagramChildNodeFactory::create)
+            .collect(Collectors.toList());
+      structureCompartment.getChildren().addAll(childDataStoreNodes);
+
+      List<GModelElement> childInitialNodes = umlActivity.getOwnedNodes().stream()
+            .filter(InitialNode.class::isInstance)
+            .map(InitialNode.class::cast)
+            .map(activityDiagramChildNodeFactory::create)
+            .collect(Collectors.toList());
+      structureCompartment.getChildren().addAll(childInitialNodes);
+
+      List<GModelElement> childFinalNodes = umlActivity.getOwnedNodes().stream()
+            .filter(FinalNode.class::isInstance)
+            .map(FinalNode.class::cast)
+            .map(activityDiagramChildNodeFactory::create)
+            .collect(Collectors.toList());
+      structureCompartment.getChildren().addAll(childFinalNodes);
+
+      List<GModelElement> childFlowFinalNodes = umlActivity.getOwnedNodes().stream()
+            .filter(FlowFinalNode.class::isInstance)
+            .map(FlowFinalNode.class::cast)
+            .map(activityDiagramChildNodeFactory::create)
+            .collect(Collectors.toList());
+      structureCompartment.getChildren().addAll(childFlowFinalNodes);
+
+      List<GModelElement> childDecisionMergeNodes = umlActivity.getOwnedNodes().stream()
+            .filter(DecisionNode.class::isInstance)
+            .map(DecisionNode.class::cast)
+            .map(activityDiagramChildNodeFactory::create)
+            .collect(Collectors.toList());
+      structureCompartment.getChildren().addAll(childDecisionMergeNodes);
+
+      List<GModelElement> childForkNodes = umlActivity.getOwnedNodes().stream()
+            .filter(ForkNode.class::isInstance)
+            .map(ForkNode.class::cast)
+            .map(activityDiagramChildNodeFactory::create)
+            .collect(Collectors.toList());
+      structureCompartment.getChildren().addAll(childForkNodes);
+
       activityNode.getChildren().add(structureCompartment);
       return activityNode;
    }

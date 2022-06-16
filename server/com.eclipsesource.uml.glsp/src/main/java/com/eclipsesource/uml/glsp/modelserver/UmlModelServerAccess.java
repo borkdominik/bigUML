@@ -530,10 +530,12 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
     * Control Nodes
     */
    public CompletableFuture<Response<Boolean>> addControlNode(final UmlModelState modelState,
-                                                              final GPoint newPosition, final EObject parent, final java.lang.Class<? extends ControlNode> clazz) {
+                                                              final Optional<GPoint> newPosition,
+                                                              final EObject parent,
+                                                              final java.lang.Class<? extends ControlNode> clazz) {
 
       CCompoundCommand addActivityCompoundCommand = AddControlNodeCommandContribution
-            .create(newPosition, getSemanticUriFragment(parent), clazz);
+            .create(newPosition.orElse(GraphUtil.point(0, 0)), getSemanticUriFragment(parent), clazz);
       return this.edit(addActivityCompoundCommand);
    }
 

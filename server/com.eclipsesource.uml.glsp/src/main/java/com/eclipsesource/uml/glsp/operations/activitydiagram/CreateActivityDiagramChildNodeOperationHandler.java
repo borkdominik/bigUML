@@ -219,22 +219,108 @@ public class CreateActivityDiagramChildNodeOperationHandler
             }
             break;
          }
+         // FIXME: duplicate ID in model
          case (Types.DATASTORE): {
+            if (parentContainer instanceof Activity) {
+               Optional<GModelElement> containerActivity = modelIndex.get(operation.getContainerId());
+               Optional<GModelElement> structCompartment = containerActivity
+                     .filter(GNode.class::isInstance)
+                     .map(GNode.class::cast)
+                     .flatMap(this::getStructureCompartment);
+               Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(), structCompartment);
+               modelAccess.addObjectNode(getUmlModelState(), relativeLocation, (Activity) parentContainer, DataStoreNode.class)
+                     .thenAccept(response -> {
+                        if (!response.body()) {
+                           throw new GLSPServerException("Could not create operation on new Action node");
+                        }
+                     });
+            }
             break;
          }
          case (Types.INITIALNODE): {
+            if (parentContainer instanceof Activity) {
+               Optional<GModelElement> containerActivity = modelIndex.get(operation.getContainerId());
+               Optional<GModelElement> structCompartment = containerActivity
+                     .filter(GNode.class::isInstance)
+                     .map(GNode.class::cast)
+                     .flatMap(this::getStructureCompartment);
+               Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(), structCompartment);
+               modelAccess.addControlNode(getUmlModelState(), relativeLocation, parentContainer, InitialNode.class)
+                     .thenAccept(response -> {
+                        if (!response.body()) {
+                           throw new GLSPServerException("Could not create operation on new Action node");
+                        }
+                     });
+            }
             break;
          }
          case (Types.FINALNODE): {
+            if (parentContainer instanceof Activity) {
+               Optional<GModelElement> containerActivity = modelIndex.get(operation.getContainerId());
+               Optional<GModelElement> structCompartment = containerActivity
+                     .filter(GNode.class::isInstance)
+                     .map(GNode.class::cast)
+                     .flatMap(this::getStructureCompartment);
+               Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(), structCompartment);
+               modelAccess.addControlNode(getUmlModelState(), relativeLocation, parentContainer, FinalNode.class)
+                     .thenAccept(response -> {
+                        if (!response.body()) {
+                           throw new GLSPServerException("Could not create operation on new Action node");
+                        }
+                     });
+            }
             break;
          }
+         // FIXME: duplicate id in model
          case (Types.FLOWFINALNODE): {
+            if (parentContainer instanceof Activity) {
+               Optional<GModelElement> containerActivity = modelIndex.get(operation.getContainerId());
+               Optional<GModelElement> structCompartment = containerActivity
+                     .filter(GNode.class::isInstance)
+                     .map(GNode.class::cast)
+                     .flatMap(this::getStructureCompartment);
+               Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(), structCompartment);
+               modelAccess.addControlNode(getUmlModelState(), relativeLocation, parentContainer, FlowFinalNode.class)
+                     .thenAccept(response -> {
+                        if (!response.body()) {
+                           throw new GLSPServerException("Could not create operation on new Action node");
+                        }
+                     });
+            }
             break;
          }
          case (Types.DECISIONMERGENODE): {
+            if (parentContainer instanceof Activity) {
+               Optional<GModelElement> containerActivity = modelIndex.get(operation.getContainerId());
+               Optional<GModelElement> structCompartment = containerActivity
+                     .filter(GNode.class::isInstance)
+                     .map(GNode.class::cast)
+                     .flatMap(this::getStructureCompartment);
+               Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(), structCompartment);
+               modelAccess.addControlNode(getUmlModelState(), relativeLocation, parentContainer, DecisionNode.class)
+                     .thenAccept(response -> {
+                        if (!response.body()) {
+                           throw new GLSPServerException("Could not create operation on new Action node");
+                        }
+                     });
+            }
             break;
          }
          case (Types.FORKJOINNODE): {
+            if (parentContainer instanceof Activity) {
+               Optional<GModelElement> containerActivity = modelIndex.get(operation.getContainerId());
+               Optional<GModelElement> structCompartment = containerActivity
+                     .filter(GNode.class::isInstance)
+                     .map(GNode.class::cast)
+                     .flatMap(this::getStructureCompartment);
+               Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(), structCompartment);
+               modelAccess.addControlNode(getUmlModelState(), relativeLocation, parentContainer, ForkNode.class)
+                     .thenAccept(response -> {
+                        if (!response.body()) {
+                           throw new GLSPServerException("Could not create operation on new Action node");
+                        }
+                     });
+            }
             break;
          }
          case (Types.PIN): {

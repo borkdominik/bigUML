@@ -76,7 +76,9 @@ public class CreateActivityDiagramChildNodeOperationHandler
             "No parent container found!");
       switch (elementTypeId) {
          case (Types.ACTION): {
-            if (parentContainer instanceof Activity) {
+            if (parentContainer instanceof Activity
+                  || parentContainer instanceof ActivityPartition
+                  || parentContainer instanceof InterruptibleActivityRegion) {
                Optional<GModelElement> containerActivity = modelIndex.get(operation.getContainerId());
                Optional<GModelElement> structCompartment = containerActivity
                      .filter(GNode.class::isInstance)
@@ -110,7 +112,9 @@ public class CreateActivityDiagramChildNodeOperationHandler
             break;
          }
          case (Types.CALL): {
-            if (parentContainer instanceof Activity) {
+            if (parentContainer instanceof Activity
+                  || parentContainer instanceof ActivityPartition
+                  || parentContainer instanceof InterruptibleActivityRegion) {
                Optional<GModelElement> containerActivity = modelIndex.get(operation.getContainerId());
                Optional<GModelElement> structCompartment = containerActivity
                      .filter(GNode.class::isInstance)
@@ -126,7 +130,9 @@ public class CreateActivityDiagramChildNodeOperationHandler
             }
          }
          case (Types.ACCEPTEVENT): {
-            if (parentContainer instanceof Activity) {
+            if (parentContainer instanceof Activity
+                  || parentContainer instanceof ActivityPartition
+                  || parentContainer instanceof InterruptibleActivityRegion) {
                Optional<GModelElement> containerActivity = modelIndex.get(operation.getContainerId());
                Optional<GModelElement> structCompartment = containerActivity
                      .filter(GNode.class::isInstance)
@@ -143,7 +149,9 @@ public class CreateActivityDiagramChildNodeOperationHandler
             break;
          }
          case (Types.TIMEEVENT): {
-            if (parentContainer instanceof Activity) {
+            if (parentContainer instanceof Activity
+                  || parentContainer instanceof ActivityPartition
+                  || parentContainer instanceof InterruptibleActivityRegion) {
                Optional<GModelElement> containerActivity = modelIndex.get(operation.getContainerId());
                Optional<GModelElement> structCompartment = containerActivity
                      .filter(GNode.class::isInstance)
@@ -159,6 +167,51 @@ public class CreateActivityDiagramChildNodeOperationHandler
             }
             break;
          }
+         case (Types.PARAMETER): {
+            if (parentContainer instanceof Activity) {
+               Optional<GModelElement> containerActivity = modelIndex.get(operation.getContainerId());
+               Optional<GModelElement> structCompartment = containerActivity
+                     .filter(GNode.class::isInstance)
+                     .map(GNode.class::cast)
+                     .flatMap(this::getStructureCompartment);
+               Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(), structCompartment);
+               modelAccess.addParameter(getUmlModelState(), relativeLocation, (Activity) parentContainer)
+                     .thenAccept(response -> {
+                        if (!response.body()) {
+                           throw new GLSPServerException("Could not create operation on new Action node");
+                        }
+                     });
+            }
+            break;
+         }
+         case (Types.CONDITION): {
+            break;
+         }
+         case (Types.CENTRALBUFFER): {
+            break;
+         }
+         case (Types.DATASTORE): {
+            break;
+         }
+         case (Types.INITIALNODE): {
+            break;
+         }
+         case (Types.FINALNODE): {
+            break;
+         }
+         case (Types.FLOWFINALNODE): {
+            break;
+         }
+         case (Types.DECISIONMERGENODE): {
+            break;
+         }
+         case (Types.FORKJOINNODE): {
+            break;
+         }
+         case (Types.PIN): {
+            break;
+         }
+
          /*
          case (Types.PARAMETER): {
             modelAccess.addParameter(UmlModelState.getModelState(modelState), (Activity) container)

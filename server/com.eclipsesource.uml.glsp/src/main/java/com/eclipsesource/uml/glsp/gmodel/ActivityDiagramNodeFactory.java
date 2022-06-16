@@ -96,6 +96,13 @@ public class ActivityDiagramNodeFactory extends AbstractGModelFactory<Classifier
             .collect(Collectors.toList());
       structureCompartment.getChildren().addAll(childEvents);
 
+      List<GModelElement> childParameters = umlActivity.getOwnedNodes().stream()
+            .filter(ActivityParameterNode.class::isInstance)
+            .map(ActivityParameterNode.class::cast)
+            .map(activityDiagramChildNodeFactory::create)
+            .collect(Collectors.toList());
+      structureCompartment.getChildren().addAll(childParameters);
+
       activityNode.getChildren().add(structureCompartment);
       return activityNode;
    }

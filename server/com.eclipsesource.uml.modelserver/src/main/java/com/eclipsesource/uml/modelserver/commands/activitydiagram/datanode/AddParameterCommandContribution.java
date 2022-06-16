@@ -10,6 +10,9 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.activitydiagram.datanode;
 
+import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlCompoundCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlNotationCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.util.UmlNotationCommandUtil;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -17,27 +20,34 @@ import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
 import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
 import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
-
-import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlCompoundCommandContribution;
+import org.eclipse.glsp.graph.GPoint;
 
 public class AddParameterCommandContribution extends UmlCompoundCommandContribution {
 
    public static final String TYPE = "addParameter";
    private static final String PARENT_URI = "parentUri";
 
-   public static CCompoundCommand create(final String activityUri) {
+   public static CCompoundCommand create(final GPoint position, final String activityUri) {
       CCompoundCommand addPartitionCommand = CCommandFactory.eINSTANCE.createCompoundCommand();
       addPartitionCommand.setType(TYPE);
+      addPartitionCommand.getProperties().put(UmlNotationCommandContribution.POSITION_X,
+            String.valueOf(position.getX()));
+      addPartitionCommand.getProperties().put(UmlNotationCommandContribution.POSITION_Y,
+            String.valueOf(position.getY()));
       addPartitionCommand.getProperties().put(PARENT_URI, activityUri);
       return addPartitionCommand;
    }
 
    @Override
    protected CompoundCommand toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
-      throws DecodingException {
+         throws DecodingException {
+
+      GPoint parameterPosition = UmlNotationCommandUtil.getGPoint(
+            command.getProperties().get(UmlNotationCommandContribution.POSITION_X),
+            command.getProperties().get(UmlNotationCommandContribution.POSITION_Y));
 
       final String activityUri = command.getProperties().get(PARENT_URI);
-      return new AddParameterCompoundCommand(domain, modelUri, activityUri);
+      return new AddParameterCompoundCommand(domain, modelUri, parameterPosition, activityUri);
    }
 
 }

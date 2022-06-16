@@ -610,9 +610,11 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
    /*
     * UML Data Flow
     */
-   public CompletableFuture<Response<Boolean>> addParameter(final UmlModelState modelState, final Activity activity) {
+   public CompletableFuture<Response<Boolean>> addParameter(final UmlModelState modelState,
+                                                            final Optional<GPoint> newPosition,
+                                                            final Activity activity) {
       CCompoundCommand addPartitionCompoundCommand = AddParameterCommandContribution
-            .create(getSemanticUriFragment(activity));
+            .create(newPosition.orElse(GraphUtil.point(0, 0)), getSemanticUriFragment(activity));
       return this.edit(addPartitionCompoundCommand);
    }
 

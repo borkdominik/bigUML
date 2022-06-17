@@ -16,24 +16,32 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Activity;
 import org.eclipse.uml2.uml.ActivityPartition;
-import org.eclipse.uml2.uml.Element;
+import org.eclipse.uml2.uml.NamedElement;
+import org.eclipse.uml2.uml.UMLFactory;
 
-import java.util.function.Supplier;
+public class AddPartitionCommand extends UmlSemanticElementCommand {
 
-public class AddPartitionCommand extends UmlSemanticElementCommand implements Supplier<ActivityPartition> {
-
-   private ActivityPartition partition;
-   private final Element container;
+   protected ActivityPartition newPartition;
+   protected final String parentSemanticUriFragment;
 
    public AddPartitionCommand(final EditingDomain domain, final URI modelUri, final String parentUri) {
       super(domain, modelUri);
-      container = UmlSemanticCommandUtil.getElement(umlModel, parentUri, Element.class);
+      //container = UmlSemanticCommandUtil.getElement(umlModel, parentUri, Element.class);
+      this.newPartition = UMLFactory.eINSTANCE.createActivityPartition();
+      this.parentSemanticUriFragment = parentUri;
 
    }
 
    @Override
    protected void doExecute() {
-      if (container instanceof Activity) {
+      //newPartition.setName(UmlSemanticCommandUtil.getNewPartitionName(umlModel));
+      NamedElement parentContainer = UmlSemanticCommandUtil.getElement(umlModel, parentSemanticUriFragment, NamedElement.class);
+
+      if (parentContainer instanceof Activity) {
+         String name = "NewPartition" + ((Activity) parentContainer).getPartitions().size();
+         newPartition = ((Activity) parentContainer).createPartition(name);
+      }
+      /*if (container instanceof Activity) {
          Activity activity = (Activity) container;
          String name = "NewPartition" + activity.getPartitions().size();
          partition = activity.createPartition(name);
@@ -43,12 +51,11 @@ public class AddPartitionCommand extends UmlSemanticElementCommand implements Su
          partition = parent.createSubpartition(name);
       } else {
          throw new RuntimeException("Invalid partition container type: " + container.getClass().getSimpleName());
-      }
+      }*/
    }
 
-   @Override
-   public ActivityPartition get() {
-      return partition;
+   public ActivityPartition getNewPartition() {
+      return newPartition;
    }
 
 }

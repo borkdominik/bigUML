@@ -43,7 +43,9 @@ public class ActivityDiagramGroupNodeFactory extends AbstractGModelFactory<Activ
 
    @Override
    public GNode create(final ActivityGroup activityGroup) {
+      System.out.println("REACHES IF");
       if (activityGroup instanceof ActivityPartition) {
+         System.out.println("GOES INTO IF");
          return create((ActivityPartition) activityGroup);
       } else if (activityGroup instanceof InterruptibleActivityRegion) {
          return create((InterruptibleActivityRegion) activityGroup);
@@ -52,6 +54,7 @@ public class ActivityDiagramGroupNodeFactory extends AbstractGModelFactory<Activ
    }
 
    protected GNode create(final ActivityPartition partition) {
+      System.out.println("ENTERS CREATE FACTORY");
       List<EObject> children = new ArrayList<>(partition.getOwnedElements());
       children.addAll(partition.getNodes());
 
@@ -59,14 +62,15 @@ public class ActivityDiagramGroupNodeFactory extends AbstractGModelFactory<Activ
             .id(toId(partition)) //
             .layout(GConstants.Layout.VBOX) //
             .addCssClass(CSS.NODE) //
-            .add(buildHeader(partition))
-            .add(createLabeledChildrenCompartment(children, partition));
+            .add(buildHeader(partition));
+      //.add(createLabeledChildrenCompartment(children, partition));
 
       applyShapeData(partition, b);
       return b.build();
    }
 
    protected GNode create(final InterruptibleActivityRegion region) {
+      System.out.println("ENTERS CREATE FACTORY FOR INTERRUPTIBLE REGION");
       List<EObject> children = new ArrayList<>(region.getOwnedElements());
       children.addAll(region.getNodes());
 

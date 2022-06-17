@@ -14,18 +14,21 @@ import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.glsp.graph.GPoint;
+import org.eclipse.uml2.uml.ActivityPartition;
 
-import com.eclipsesource.uml.modelserver.commands.commons.notation.AddGenericShapeCommand;
+import java.util.function.Supplier;
 
 public class AddPartitionCompoundCommand extends CompoundCommand {
 
    public AddPartitionCompoundCommand(final EditingDomain domain, final URI modelUri, final GPoint position,
-      final String parentUri) {
+                                      final String parentUri) {
 
       // Chain semantic and notation command
       AddPartitionCommand command = new AddPartitionCommand(domain, modelUri, parentUri);
       this.append(command);
-      this.append(new AddGenericShapeCommand(domain, modelUri, position, command));
+      Supplier<ActivityPartition> semanticResultSupplier = command::getNewPartition;
+      this.append(new AddPartitionShapeCommand(domain, modelUri, position, semanticResultSupplier));
+      //this.append(new AddGenericShapeCommand(domain, modelUri, position, command));
    }
 
 }

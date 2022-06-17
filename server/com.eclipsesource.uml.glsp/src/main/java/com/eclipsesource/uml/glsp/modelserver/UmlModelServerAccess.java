@@ -594,10 +594,11 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
    }
 
    public CompletableFuture<Response<Boolean>> addInterruptibleRegion(final UmlModelState modelState,
-                                                                      final GPoint position, final EObject parent) {
+                                                                      final Optional<GPoint> position,
+                                                                      final EObject parent) {
 
       CCompoundCommand addPartitionCompoundCommand = AddInterruptibleRegionCommandContribution
-            .create(position, getSemanticUriFragment(parent));
+            .create(position.orElse(GraphUtil.point(0, 0)), getSemanticUriFragment(parent));
       return this.edit(addPartitionCompoundCommand);
    }
 

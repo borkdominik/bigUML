@@ -28,15 +28,20 @@ public class ActivityDiagramNodeFactory extends AbstractGModelFactory<Classifier
 
    private final DiagramFactory parentFactory;
    private final ActivityDiagramChildNodeFactory activityDiagramChildNodeFactory;
+   private final ActivityDiagramGroupNodeFactory activityDiagramGroupNodeFactory;
 
    private static final String V_GRAB = "vGrab";
    private static final String H_GRAB = "hGrab";
    private static final String H_ALIGN = "hAlign";
 
-   public ActivityDiagramNodeFactory(final UmlModelState modelState, final DiagramFactory parentFactory, ActivityDiagramChildNodeFactory activityDiagramChildNodeFactory) {
+   public ActivityDiagramNodeFactory(final UmlModelState modelState,
+                                     final DiagramFactory parentFactory,
+                                     final ActivityDiagramChildNodeFactory activityDiagramChildNodeFactory,
+                                     final ActivityDiagramGroupNodeFactory activityDiagramGroupNodeFactory) {
       super(modelState);
       this.parentFactory = parentFactory;
       this.activityDiagramChildNodeFactory = activityDiagramChildNodeFactory;
+      this.activityDiagramGroupNodeFactory = activityDiagramGroupNodeFactory;
    }
 
    @Override
@@ -67,6 +72,20 @@ public class ActivityDiagramNodeFactory extends AbstractGModelFactory<Classifier
       GNode activityNode = builder.build();
 
       GCompartment structureCompartment = createStructureCompartment(umlActivity);
+
+      List<GModelElement> childPartitions = umlActivity.getOwnedNodes().stream()
+            .filter(ActivityPartition.class::isInstance)
+            .map(ActivityPartition.class::cast)
+            .map(activityDiagramGroupNodeFactory::create)
+            .collect(Collectors.toList());
+      structureCompartment.getChildren().addAll(childPartitions);
+
+      List<GModelElement> childInterruptibleRegion = umlActivity.getOwnedNodes().stream()
+            .filter(InterruptibleActivityRegion.class::isInstance)
+            .map(InterruptibleActivityRegion.class::cast)
+            .map(activityDiagramGroupNodeFactory::create)
+            .collect(Collectors.toList());
+      structureCompartment.getChildren().addAll(childInterruptibleRegion);
 
       List<GModelElement> childActions = umlActivity.getOwnedNodes().stream()
             .filter(OpaqueAction.class::isInstance)

@@ -73,11 +73,7 @@ public class CreateDeploymentDiagramNodeOperationHandler
                      });
             } else if (parentContainer instanceof Device || parentContainer instanceof ExecutionEnvironment || parentContainer instanceof Node) {
                Optional<GModelElement> container = modelIndex.get(operation.getContainerId());
-               Optional<GModelElement> structCompartment = container
-                     .filter(GNode.class::isInstance)
-                     .map(GNode.class::cast)
-                     .flatMap(this::getStructureCompartment);
-               Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(), structCompartment);
+               Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(), getStructureCompartmentGModelElement(container));
                modelAccess.addNode(getUmlModelState(), relativeLocation, Node.class.cast(parentContainer))
                      .thenAccept(response -> {
                         if (!response.body()) {
@@ -100,11 +96,7 @@ public class CreateDeploymentDiagramNodeOperationHandler
                      });
             } else {
                Optional<GModelElement> container = modelIndex.get(operation.getContainerId());
-               Optional<GModelElement> structCompartment = container
-                     .filter(GNode.class::isInstance)
-                     .map(GNode.class::cast)
-                     .flatMap(this::getStructureCompartment);
-               Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(), structCompartment);
+               Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(), getStructureCompartmentGModelElement(container));
                modelAccess.addArtifact(getUmlModelState(), relativeLocation, Artifact.class.cast(parentContainer))
                      .thenAccept(response -> {
                         if (!response.body()) {
@@ -128,11 +120,7 @@ public class CreateDeploymentDiagramNodeOperationHandler
                      });
             } else {
                Optional<GModelElement> container = modelIndex.get(operation.getContainerId());
-               Optional<GModelElement> structCompartment = container
-                     .filter(GNode.class::isInstance)
-                     .map(GNode.class::cast)
-                     .flatMap(this::getStructureCompartment);
-               Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(), structCompartment);
+               Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(), getStructureCompartmentGModelElement(container));
                modelAccess.addExecutionEnvironment(getUmlModelState(), relativeLocation, ExecutionEnvironment.class.cast(parentContainer))
                      .thenAccept(response -> {
                         if (!response.body()) {
@@ -156,10 +144,7 @@ public class CreateDeploymentDiagramNodeOperationHandler
                      });
             } else if (parentContainer instanceof Device || parentContainer instanceof Node) {
                Optional<GModelElement> container = modelIndex.get(operation.getContainerId());
-               Optional<GModelElement> structCompartment = container.filter(GNode.class::isInstance)
-                     .map(GNode.class::cast)
-                     .flatMap(this::getStructureCompartment);
-               Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(), structCompartment);
+               Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(), getStructureCompartmentGModelElement(container));
                modelAccess.addDevice(getUmlModelState(), relativeLocation, Device.class.cast(parentContainer))
                      .thenAccept(response -> {
                         if (!response.body()) {
@@ -187,6 +172,12 @@ public class CreateDeploymentDiagramNodeOperationHandler
             break;
          }
       }
+   }
+
+   protected Optional<GModelElement> getStructureCompartmentGModelElement(final Optional<GModelElement> container) {
+      return container.filter(GNode.class::isInstance)
+            .map(GNode.class::cast)
+            .flatMap(this::getStructureCompartment);
    }
 
    protected Optional<GCompartment> getStructureCompartment(final GNode packageable) {

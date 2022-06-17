@@ -64,9 +64,10 @@ public class CreateActivityDiagramNodeOperationHandler
                   });
             break;
          }
-
+         // TODO: NOT RENDERED!!!!!
          case Types.PARTITION: {
             if (parentContainer instanceof Activity) {
+               System.out.println("REACHES HANDLER");
                Optional<GModelElement> container = modelIndex.get(operation.getContainerId());
                Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(), getStructureCompartmentGModelElement(container));
                modelAccess.addPartition(UmlModelState.getModelState(modelState), relativeLocation, parentContainer)
@@ -95,13 +96,25 @@ public class CreateActivityDiagramNodeOperationHandler
                   });
             break;*/
          }
-
+         // TODO: NOT RENDERED!!!!!
          case Types.INTERRUPTIBLEREGION: {
+            if (parentContainer instanceof Activity) {
+               Optional<GModelElement> container = modelIndex.get(operation.getContainerId());
+               Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(), getStructureCompartmentGModelElement(container));
+               modelAccess.addInterruptibleRegion(UmlModelState.getModelState(modelState), relativeLocation, parentContainer)
+                     .thenAccept(response -> {
+                        if (!response.body()) {
+                           throw new GLSPServerException("Could not execute create operation on new Activity node");
+                        }
+                     });
+            }
+            break;
+
             /*String containerId = operation.getContainerId();
             Shape containerShape = getOrThrow(modelState.getIndex().getNotation(containerId, Shape.class),
                   "No valid Shape container with id " + containerId + " found");
             EObject container = getOrThrow(modelState.getIndex().getSemantic(containerId),
-                  "No valid partition container with id " + containerId + " found");
+                  "No valid partition container with id " + containerId + " found");*/
 
 
                 /*GDimension newSize = new GDimensionImpl();
@@ -121,8 +134,8 @@ public class CreateActivityDiagramNodeOperationHandler
                      if (!response.body()) {
                         throw new GLSPServerException("Could not execute create operation on new Activity node");
                      }
-                  });*/
-            break;
+                  });
+            break;*/
          }
       }
    }

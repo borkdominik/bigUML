@@ -79,6 +79,11 @@ public final class UmlSemanticCommandUtil {
       return nameProvider.apply(attributeCounter);
    }
 
+   // ACTIVITY DIAGRAM
+   public static String getNewPartitionName(final Model umlModel) {
+      return UmlSemanticCommandUtil.getNewPackageableElementName((java.lang.Class<? extends PackageableElement>) ActivityPartition.class, umlModel);
+   }
+
    //CLASS DIAGRAM
    public static String getNewClassName(final Model umlModel) {
       return UmlSemanticCommandUtil.getNewPackageableElementName(org.eclipse.uml2.uml.Class.class, umlModel);
@@ -186,16 +191,6 @@ public final class UmlSemanticCommandUtil {
                                                      final java.lang.Class<? extends PackageableElement> clazz) {
       return UmlSemanticCommandUtil.getNewPackageableElementName(clazz, umlModel);
    }
-
-   /*private static String getNewPackageableElementName(final java.lang.Class<? extends PackageableElement> umlClassifier,
-                                                      final Model umlModel) {
-      Function<Integer, String> nameProvider = i -> "New" + umlClassifier.getSimpleName() + i;
-
-      int classifierCounter = umlModel.getPackagedElements().stream().filter(umlClassifier::isInstance)
-            .collect(Collectors.toList()).size();
-
-      return nameProvider.apply(classifierCounter);
-   }*/
 
    private static String getNewPackageableElementName(final java.lang.Class<? extends PackageableElement> umlClassifier,
                                                       final Package container) {

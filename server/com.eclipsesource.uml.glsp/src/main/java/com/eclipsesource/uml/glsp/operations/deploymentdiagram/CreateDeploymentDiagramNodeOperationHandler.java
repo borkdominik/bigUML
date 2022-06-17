@@ -112,20 +112,6 @@ public class CreateDeploymentDiagramNodeOperationHandler
                         }
                      });
             }
-            /*String containerId = operation.getContainerId();
-
-            PackageableElement container = getOrThrow(modelState.getIndex().getSemantic(containerId),
-                  PackageableElement.class, "No valid container with id " + operation.getContainerId() + " found");
-
-            Optional<GPoint> location = getArtifactPosition(modelState, container,
-                  operation.getLocation().orElse(GraphUtil.point(0, 0)));
-
-            modelAccess.addArtifact(modelState, location, container)
-                  .thenAccept(response -> {
-                     if (!response.body()) {
-                        throw new GLSPServerException("Could not execute create operation on new Artifact node");
-                     }
-                  });*/
             break;
          }
          case Types.EXECUTION_ENVIRONMENT: {
@@ -235,71 +221,6 @@ public class CreateDeploymentDiagramNodeOperationHandler
                                                                final PackageableElement container, final GPoint position) {
 
       if (container instanceof Artifact || container instanceof Node) {
-         Shape containerShape = modelState.getIndex().getNotation(container, Shape.class).get();
-         double x = position.getX();
-         double y = position.getY();
-
-         x = Math.max(0, x - containerShape.getPosition().getX());
-         y = Math.max(0, y - containerShape.getPosition().getY() - 43);
-
-         return Optional.of(GraphUtil.point(x - 16, y - 8));
-      }
-      return Optional.of(position);
-   }
-
-   private Optional<GPoint> getNodePosition(final UmlModelState modelState, final PackageableElement container,
-                                            final GPoint position) {
-
-      if (container instanceof Node) {
-         Shape containerShape = modelState.getIndex().getNotation(container, Shape.class).get();
-         double x = position.getX();
-         double y = position.getY();
-
-         x = Math.max(0, x - containerShape.getPosition().getX());
-         y = Math.max(0, y - containerShape.getPosition().getY() - 43);
-
-         return Optional.of(GraphUtil.point(x - 16, y - 8));
-      }
-      return Optional.of(position);
-   }
-
-   private Optional<GPoint> getArtifactPosition(final UmlModelState modelState, final PackageableElement container,
-                                                final GPoint position) {
-
-      if (container instanceof Node) {
-         Shape containerShape = modelState.getIndex().getNotation(container, Shape.class).get();
-         double x = position.getX();
-         double y = position.getY();
-
-         x = Math.max(0, x - containerShape.getPosition().getX());
-         y = Math.max(0, y - containerShape.getPosition().getY() - 43);
-
-         return Optional.of(GraphUtil.point(x - 16, y - 8));
-      }
-      return Optional.of(position);
-   }
-
-   private Optional<GPoint> getDevicePosition(final UmlModelState modelState, final PackageableElement container,
-                                              final GPoint position) {
-
-      if (container instanceof Node) {
-         Shape containerShape = modelState.getIndex().getNotation(container, Shape.class).get();
-         double x = position.getX();
-         double y = position.getY();
-
-         x = Math.max(0, x - containerShape.getPosition().getX());
-         y = Math.max(0, y - containerShape.getPosition().getY() - 43);
-
-         return Optional.of(GraphUtil.point(x - 16, y - 8));
-      }
-      return Optional.of(position);
-   }
-
-   private Optional<GPoint> getExecutionEnvironmentPosition(final UmlModelState modelState,
-                                                            final PackageableElement container,
-                                                            final GPoint position) {
-
-      if (container instanceof Node) {
          Shape containerShape = modelState.getIndex().getNotation(container, Shape.class).get();
          double x = position.getX();
          double y = position.getY();

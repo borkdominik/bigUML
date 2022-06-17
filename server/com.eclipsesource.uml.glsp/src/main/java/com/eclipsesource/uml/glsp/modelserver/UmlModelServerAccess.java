@@ -462,10 +462,10 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
     * Partition
     */
    public CompletableFuture<Response<Boolean>> addPartition(final UmlModelState modelState,
-                                                            final GPoint position, final EObject parent) {
-
+                                                            final Optional<GPoint> position,
+                                                            final NamedElement parent) {
       CCompoundCommand addPartitionCompoundCommand = AddPartitionCommandContribution
-            .create(position, getSemanticUriFragment(parent));
+            .create(position.orElse(GraphUtil.point(0, 0)), getSemanticUriFragment(parent));
       return this.edit(addPartitionCompoundCommand);
    }
 

@@ -10,16 +10,15 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.activitydiagram.partition;
 
-import java.util.function.Supplier;
-
+import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
+import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Activity;
 import org.eclipse.uml2.uml.ActivityPartition;
 import org.eclipse.uml2.uml.Element;
 
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
+import java.util.function.Supplier;
 
 public class AddPartitionCommand extends UmlSemanticElementCommand implements Supplier<ActivityPartition> {
 

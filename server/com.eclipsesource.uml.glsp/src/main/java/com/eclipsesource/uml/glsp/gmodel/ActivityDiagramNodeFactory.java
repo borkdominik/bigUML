@@ -73,10 +73,17 @@ public class ActivityDiagramNodeFactory extends AbstractGModelFactory<Classifier
 
       GCompartment structureCompartment = createStructureCompartment(umlActivity);
 
-      List<GModelElement> childPartitions = umlActivity.getOwnedNodes().stream()
+      /*List<GModelElement> childPartitions = umlActivity.getOwnedNodes().stream()
             .filter(ActivityPartition.class::isInstance)
             .map(ActivityPartition.class::cast)
-            .map(activityDiagramGroupNodeFactory::create)
+            .map(activityDiagramGroupNodeFactory::createPartition)
+            .collect(Collectors.toList());
+      structureCompartment.getChildren().addAll(childPartitions);*/
+
+      List<GModelElement> childPartitions = umlActivity.getPartitions().stream()
+            .filter(ActivityGroup.class::isInstance)
+            .map(ActivityPartition.class::cast)
+            .map(activityDiagramGroupNodeFactory::createPartition)
             .collect(Collectors.toList());
       structureCompartment.getChildren().addAll(childPartitions);
 
@@ -177,6 +184,8 @@ public class ActivityDiagramNodeFactory extends AbstractGModelFactory<Classifier
             .map(activityDiagramChildNodeFactory::create)
             .collect(Collectors.toList());
       structureCompartment.getChildren().addAll(childForkNodes);
+
+      System.out.println("CHILDREN" + structureCompartment.getChildren());
 
       activityNode.getChildren().add(structureCompartment);
       return activityNode;

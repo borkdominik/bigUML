@@ -46,14 +46,14 @@ public class ActivityDiagramGroupNodeFactory extends AbstractGModelFactory<Activ
       System.out.println("REACHES IF");
       if (activityGroup instanceof ActivityPartition) {
          System.out.println("GOES INTO IF");
-         return create((ActivityPartition) activityGroup);
+         return createPartition((ActivityPartition) activityGroup);
       } else if (activityGroup instanceof InterruptibleActivityRegion) {
          return create((InterruptibleActivityRegion) activityGroup);
       }
       return null;
    }
 
-   protected GNode create(final ActivityPartition partition) {
+   protected GNode createPartition(final ActivityPartition partition) {
       System.out.println("ENTERS CREATE FACTORY");
       List<EObject> children = new ArrayList<>(partition.getOwnedElements());
       children.addAll(partition.getNodes());

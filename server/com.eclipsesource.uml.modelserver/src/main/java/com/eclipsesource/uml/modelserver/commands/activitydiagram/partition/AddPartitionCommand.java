@@ -39,7 +39,9 @@ public class AddPartitionCommand extends UmlSemanticElementCommand {
 
       if (parentContainer instanceof Activity) {
          String name = "NewPartition" + ((Activity) parentContainer).getPartitions().size();
-         newPartition = ((Activity) parentContainer).createPartition(name);
+         System.out.println("NAME: " + name);
+         //newPartition = ((Activity) parentContainer).createPartition(name);
+         ((Activity) parentContainer).createPartition(name);
       }
       /*if (container instanceof Activity) {
          Activity activity = (Activity) container;

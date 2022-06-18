@@ -64,7 +64,7 @@ public class CreateActivityDiagramNodeOperationHandler
                   });
             break;
          }
-         // TODO: NOT RENDERED!!!!!
+         // FIXME: NOT RENDERED!!!!!
          case Types.PARTITION: {
             if (parentContainer instanceof Activity) {
                System.out.println("REACHES HANDLER");
@@ -96,7 +96,7 @@ public class CreateActivityDiagramNodeOperationHandler
                   });
             break;*/
          }
-         // TODO: NOT RENDERED!!!!!
+         // FIXME: NOT RENDERED!!!!!
          case Types.INTERRUPTIBLEREGION: {
             if (parentContainer instanceof Activity) {
                Optional<GModelElement> container = modelIndex.get(operation.getContainerId());

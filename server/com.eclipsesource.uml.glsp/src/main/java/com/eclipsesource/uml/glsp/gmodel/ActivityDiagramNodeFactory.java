@@ -46,8 +46,12 @@ public class ActivityDiagramNodeFactory extends AbstractGModelFactory<Classifier
 
    @Override
    public GNode create(final Classifier classifier) {
+      System.out.println("GOES IN IF");
       if (classifier instanceof Activity) {
          return create((Activity) classifier);
+      } else if (classifier instanceof ActivityPartition) {
+         System.out.println("GOES IN IF - PARTITION");
+         return create((ActivityPartition) classifier);
       }
       return null;
    }
@@ -73,19 +77,20 @@ public class ActivityDiagramNodeFactory extends AbstractGModelFactory<Classifier
 
       GCompartment structureCompartment = createStructureCompartment(umlActivity);
 
-      /*List<GModelElement> childPartitions = umlActivity.getOwnedNodes().stream()
+      List<GModelElement> childPartitions = umlActivity.getOwnedNodes().stream()
             .filter(ActivityPartition.class::isInstance)
+            .map(ActivityPartition.class::cast)
+            .map(this::create)
+            .collect(Collectors.toList());
+      System.out.println("CHILD PARTITIONS " + childPartitions);
+      structureCompartment.getChildren().addAll(childPartitions);
+
+      /*List<GModelElement> childPartitions = umlActivity.getPartitions().stream()
+            .filter(Objects::nonNull)
             .map(ActivityPartition.class::cast)
             .map(activityDiagramGroupNodeFactory::createPartition)
             .collect(Collectors.toList());
       structureCompartment.getChildren().addAll(childPartitions);*/
-
-      List<GModelElement> childPartitions = umlActivity.getPartitions().stream()
-            .filter(ActivityGroup.class::isInstance)
-            .map(ActivityPartition.class::cast)
-            .map(activityDiagramGroupNodeFactory::createPartition)
-            .collect(Collectors.toList());
-      structureCompartment.getChildren().addAll(childPartitions);
 
       List<GModelElement> childInterruptibleRegion = umlActivity.getOwnedNodes().stream()
             .filter(InterruptibleActivityRegion.class::isInstance)
@@ -189,6 +194,27 @@ public class ActivityDiagramNodeFactory extends AbstractGModelFactory<Classifier
 
       activityNode.getChildren().add(structureCompartment);
       return activityNode;
+   }
+
+   protected GNode create(ActivityPartition umlPartition) {
+      System.out.println("GOES IN CREATE");
+      Map<String, Object> layoutOptions = new HashMap<>();
+      layoutOptions.put(H_ALIGN, GConstants.HAlign.CENTER);
+      layoutOptions.put(H_GRAB, false);
+      layoutOptions.put(V_GRAB, false);
+
+      GNodeBuilder builder = new GNodeBuilder(Types.PARTITION)
+            .id(toId(umlPartition))
+            .layout(GConstants.Layout.VBOX)
+            .layoutOptions(layoutOptions)
+            .addCssClass(CSS.NODE)
+            .addCssClass(CSS.PACKAGEABLE_NODE);
+
+      applyShapeData((Classifier) umlPartition, builder);
+
+      GNode partitionNode = builder.build();
+
+      return partitionNode;
    }
 
    protected void applyShapeData(final Classifier classifier, final GNodeBuilder builder) {

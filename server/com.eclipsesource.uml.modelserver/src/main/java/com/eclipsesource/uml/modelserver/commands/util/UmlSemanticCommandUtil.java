@@ -148,10 +148,13 @@ public final class UmlSemanticCommandUtil {
       return nameProvider.apply(subVerticesCounter);
    }
 
-   public static String getNewRegionName(final StateMachine stateMachine) {
-      Function<Integer, String> nameProvider = i -> stateMachine.getName() + "NewRegion_" + i;
+   // TODO: check on this later again!
+   //public static String getNewRegionName(final StateMachine stateMachine) {
+   public static String getNewRegionName(final Model umlModel) {
+      return UmlSemanticCommandUtil.getNewPackageableElementName((java.lang.Class<? extends PackageableElement>) Region.class, umlModel);
+      /*Function<Integer, String> nameProvider = i -> stateMachine.getName() + "NewRegion_" + i;
       int subVerticesCounter = stateMachine.getRegions().size();
-      return nameProvider.apply(subVerticesCounter);
+      return nameProvider.apply(subVerticesCounter);*/
    }
 
    public static String getNewVertexName(final Region containerRegion) {

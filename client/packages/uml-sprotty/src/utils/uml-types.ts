@@ -107,6 +107,7 @@ export namespace UmlTypes {
     // STATE MACHINE DIAGRAM
     export const ICON_STATE_MACHINE = `${ICON}:state-machine`;
     export const STATE_MACHINE = `${DefaultTypes.NODE}:state-machine`;
+    export const REGION = `${DefaultTypes.NODE}:region`;
     export const ICON_STATE = `${ICON}:state`;
     export const STATE = `${DefaultTypes.NODE}:state`;
     export const LABEL_VERTEX_NAME = `${DefaultTypes.LABEL}:vertex-name`;

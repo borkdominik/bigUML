@@ -227,6 +227,7 @@ export default function createContainer(widgetId: string): Container {
         // STATEMACHINE DIAGRAM
         configureModelElement(context, UmlTypes.ICON_STATE_MACHINE, IconStateMachine, IconView);
         configureModelElement(context, UmlTypes.STATE_MACHINE, LabeledNode, StateMachineNodeView);
+        configureModelElement(context, UmlTypes.REGION, LabeledNode, InterruptibleRegionNodeView);
         configureModelElement(context, UmlTypes.ICON_STATE, IconState, IconView);
         configureModelElement(context, UmlTypes.STATE, LabeledNode, StateNodeView);
         configureModelElement(context, UmlTypes.LABEL_VERTEX_NAME, SEditableLabel, SLabelView);

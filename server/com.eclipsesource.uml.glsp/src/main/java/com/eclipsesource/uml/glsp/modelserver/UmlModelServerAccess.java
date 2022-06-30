@@ -82,6 +82,7 @@ import com.eclipsesource.uml.modelserver.commands.statemachinediagram.finalstate
 import com.eclipsesource.uml.modelserver.commands.statemachinediagram.pseudostate.AddPseudoStateCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.statemachinediagram.pseudostate.RemovePseudoStateCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.statemachinediagram.pseudostate.SetPseudostateNameCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.statemachinediagram.region.AddRegionCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.statemachinediagram.state.AddStateCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.statemachinediagram.state.RemoveStateCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.statemachinediagram.state.SetStateNameCommandContribution;
@@ -1156,6 +1157,14 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
             getSemanticUriFragment(classToRename),
             newName);
       return this.edit(setStateMachineNameCommand);
+   }
+
+   // REGION
+   public CompletableFuture<Response<Boolean>> addRegion(final UmlModelState modelState,
+                                                         final StateMachine parentStateMachine, final GPoint newPosition) {
+
+      CCommand addRegionCompoundCommand = AddRegionCommandContribution.create(newPosition, getSemanticUriFragment(parentStateMachine));
+      return this.edit(addRegionCompoundCommand);
    }
 
    // STATE

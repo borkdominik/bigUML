@@ -82,6 +82,7 @@ import com.eclipsesource.uml.modelserver.commands.statemachinediagram.finalstate
 import com.eclipsesource.uml.modelserver.commands.statemachinediagram.pseudostate.AddPseudoStateCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.statemachinediagram.pseudostate.RemovePseudoStateCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.statemachinediagram.pseudostate.SetPseudostateNameCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.statemachinediagram.region.AddRegionCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.statemachinediagram.state.AddStateCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.statemachinediagram.state.RemoveStateCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.statemachinediagram.state.SetStateNameCommandContribution;
@@ -254,6 +255,8 @@ public class UmlModelServerModule extends DefaultModelServerModule {
       binding.put(AddStateMachineCommandContribution.TYPE, AddStateMachineCommandContribution.class);
       binding.put(RemoveStateMachineCommandContribution.TYPE, RemoveStateMachineCommandContribution.class);
       binding.put(SetStateMachineNameCommandContribution.TYPE, SetStateMachineNameCommandContribution.class);
+      // Region
+      binding.put(AddRegionCommandContribution.TYPE, AddRegionCommandContribution.class);
       // State
       binding.put(AddStateCommandContribution.TYPE, AddStateCommandContribution.class);
       binding.put(RemoveStateCommandContribution.TYPE, RemoveStateCommandContribution.class);

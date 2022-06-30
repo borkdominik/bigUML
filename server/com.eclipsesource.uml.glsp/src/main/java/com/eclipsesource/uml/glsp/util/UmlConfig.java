@@ -131,7 +131,8 @@ public final class UmlConfig {
       //STATE MACHINE
       public static final String ICON_STATE_MACHINE = ICON + "state-machine";
       public static final String STATE_MACHINE = NODE + "state-machine";
-      public static final String REGION = COMP_BASE + "region";
+      //public static final String REGION = COMP_BASE + "region";
+      public static final String REGION = NODE + "region";
       public static final String ICON_STATE = ICON + "state";
       public static final String STATE = NODE + "state";
       public static final String FINAL_STATE = NODE + "final-state";

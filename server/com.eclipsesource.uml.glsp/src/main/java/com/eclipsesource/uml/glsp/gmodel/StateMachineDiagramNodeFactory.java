@@ -37,6 +37,8 @@ public class StateMachineDiagramNodeFactory extends AbstractGModelFactory<Classi
    public GNode create(final Classifier classifier) {
       if (classifier instanceof StateMachine) {
          return createStateMachineNode((StateMachine) classifier);
+      } else if (classifier instanceof Region) {
+         return createRegionNode((Region) classifier);
       }
       return null;
    }
@@ -63,9 +65,9 @@ public class StateMachineDiagramNodeFactory extends AbstractGModelFactory<Classi
       GCompartment stateMachineHeader = buildStateMachineHeader(umlStateMachine);
       stateMachineNodeBuilder.add(stateMachineHeader);
 
-      GCompartment stateMachineRegionCompartment = buildStateMachineRegionCompartment(umlStateMachine.getRegions(),
+      /*GCompartment stateMachineRegionCompartment = buildStateMachineRegionCompartment(umlStateMachine.getRegions(),
             umlStateMachine);
-      stateMachineNodeBuilder.add(stateMachineRegionCompartment);
+      stateMachineNodeBuilder.add(stateMachineRegionCompartment);*/
 
       List<GModelElement> ports = umlStateMachine.getConnectionPoints().stream()
             .map(parentFactory::create)
@@ -73,6 +75,17 @@ public class StateMachineDiagramNodeFactory extends AbstractGModelFactory<Classi
       stateMachineNodeBuilder.addAll(ports);
 
       return stateMachineNodeBuilder.build();
+   }
+
+   protected GNode createRegionNode(final Region umlRegion) {
+      GNodeBuilder builder = new GNodeBuilder(Types.STATE_MACHINE)
+            .id(toId(umlRegion))
+            .layout(GConstants.Layout.VBOX)
+            .addCssClass(CSS.NODE);
+      
+      applyShapeData((Classifier) umlRegion, builder);
+
+      return builder.build();
    }
 
 

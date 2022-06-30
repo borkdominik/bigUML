@@ -235,6 +235,7 @@ public class UmlToolPaletteItemProvider extends EMSBasicOperationHandler<CreateN
 
    private PaletteItem classifiersStateMachine() {
       PaletteItem createStateMachine = node(Types.STATE_MACHINE, "State Machine", "umlstatemachine");
+      PaletteItem createRegion = node(Types.REGION, "Region", "umlregion");
       PaletteItem createState = node(Types.STATE, "State", "umlstate");
       PaletteItem createFinalState = node(Types.FINAL_STATE, "Final State", "umlfinalstate");
 
@@ -252,7 +253,8 @@ public class UmlToolPaletteItemProvider extends EMSBasicOperationHandler<CreateN
 
       List<PaletteItem> classifiers = Lists.newArrayList(
             createStateMachine, createState, createFinalState, createChoice, createFork, createInitialState,
-            createJoin, createJunction, createDeepHistory, createShallowHistory, createEntryPoint, createExitPoint
+            createJoin, createJunction, createDeepHistory, createShallowHistory, createEntryPoint, createExitPoint,
+            createRegion
       );
       return PaletteItem.createPaletteGroup("uml.classifier", "Container", classifiers, "symbol-property");
    }

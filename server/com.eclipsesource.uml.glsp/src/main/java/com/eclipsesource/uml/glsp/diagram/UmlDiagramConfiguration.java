@@ -199,6 +199,10 @@ public class UmlDiagramConfiguration extends BaseDiagramConfiguration {
 
       // STATE MACHINE DIAGRAM
       hints.add(new ShapeTypeHint(Types.STATE_MACHINE, true, true, false, false,
+            List.of(Types.REGION, Types.STATE, Types.INITIAL_STATE, Types.DEEP_HISTORY, Types.SHALLOW_HISTORY, Types.FORK, Types.JOIN,
+                  Types.JUNCTION, Types.CHOICE, Types.ENTRY_POINT, Types.EXIT_POINT, Types.TERMINATE, Types.FINAL_STATE,
+                  Types.COMMENT)));
+      hints.add(new ShapeTypeHint(Types.REGION, true, true, true, true,
             List.of(Types.STATE, Types.INITIAL_STATE, Types.DEEP_HISTORY, Types.SHALLOW_HISTORY, Types.FORK, Types.JOIN,
                   Types.JUNCTION, Types.CHOICE, Types.ENTRY_POINT, Types.EXIT_POINT, Types.TERMINATE, Types.FINAL_STATE,
                   Types.COMMENT)));
@@ -363,6 +367,7 @@ public class UmlDiagramConfiguration extends BaseDiagramConfiguration {
       // STATE MACHINE DIAGRAM
       mappings.put(Types.ICON_STATE_MACHINE, GraphPackage.Literals.GCOMPARTMENT);
       mappings.put(Types.STATE_MACHINE, GraphPackage.Literals.GNODE);
+      mappings.put(Types.REGION, GraphPackage.Literals.GNODE);
       mappings.put(Types.ICON_STATE, GraphPackage.Literals.GCOMPARTMENT);
       mappings.put(Types.STATE, GraphPackage.Literals.GNODE);
       mappings.put(Types.LABEL_VERTEX_NAME, GraphPackage.Literals.GLABEL);

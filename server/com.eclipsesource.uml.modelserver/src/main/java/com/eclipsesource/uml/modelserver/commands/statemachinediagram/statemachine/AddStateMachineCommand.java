@@ -14,7 +14,6 @@ import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticEl
 import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Region;
 import org.eclipse.uml2.uml.StateMachine;
 import org.eclipse.uml2.uml.UMLFactory;
 
@@ -32,12 +31,14 @@ public class AddStateMachineCommand extends UmlSemanticElementCommand {
       newStateMachine.setName(UmlSemanticCommandUtil.getNewStateMachineName(umlModel));
       // TODO:
       // region is created automatically, maybe this should be done user-driven
-      Region region = UMLFactory.eINSTANCE.createRegion();
+      /*Region region = UMLFactory.eINSTANCE.createRegion();
       region.setName(UmlSemanticCommandUtil.getNewRegionName(newStateMachine));
-      newStateMachine.getRegions().add(region);
+      newStateMachine.getRegions().add(region);*/
       umlModel.getPackagedElements().add(newStateMachine);
    }
 
-   public StateMachine getNewStateMachine() { return newStateMachine; }
+   public StateMachine getNewStateMachine() {
+      return newStateMachine;
+   }
 
 }

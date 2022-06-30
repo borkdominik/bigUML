@@ -19,13 +19,16 @@ import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.Region;
 import org.eclipse.uml2.uml.StateMachine;
 
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class StateMachineDiagramNodeFactory extends AbstractGModelFactory<Classifier, GNode> {
 
    private final DiagramFactory parentFactory;
+
+   private static final String V_GRAB = "vGrab";
+   private static final String H_GRAB = "hGrab";
+   private static final String H_ALIGN = "hAlign";
 
    public StateMachineDiagramNodeFactory(final UmlModelState modelState, final LabelFactory labelFactory,
                                          final DiagramFactory parentFactory) {
@@ -38,6 +41,7 @@ public class StateMachineDiagramNodeFactory extends AbstractGModelFactory<Classi
       if (classifier instanceof StateMachine) {
          return createStateMachineNode((StateMachine) classifier);
       } else if (classifier instanceof Region) {
+         System.out.println("CREATE FACTORY");
          return createRegionNode((Region) classifier);
       }
       return null;
@@ -53,9 +57,49 @@ public class StateMachineDiagramNodeFactory extends AbstractGModelFactory<Classi
       });
    }
 
+   protected void applyShapeData(final Region region, final GNodeBuilder builder) {
+      modelState.getIndex().getNotation(region, Shape.class).ifPresent(shape -> {
+         if (shape.getPosition() != null) {
+            builder.position(GraphUtil.copy(shape.getPosition()));
+         } else if (shape.getSize() != null) {
+            builder.size(GraphUtil.copy(shape.getSize()));
+         }
+      });
+   }
+
 
    protected GNode createStateMachineNode(final StateMachine umlStateMachine) {
-      GNodeBuilder stateMachineNodeBuilder = new GNodeBuilder(Types.STATE_MACHINE)
+
+      Map<String, Object> layoutOptions = new HashMap<>();
+      layoutOptions.put(H_ALIGN, GConstants.HAlign.CENTER);
+      layoutOptions.put(H_GRAB, false);
+      layoutOptions.put(V_GRAB, false);
+
+      GNodeBuilder builder = new GNodeBuilder(Types.STATE_MACHINE)
+            .id(toId(umlStateMachine))
+            .layout(GConstants.Layout.VBOX)
+            .layoutOptions(layoutOptions)
+            .add(buildStateMachineHeader(umlStateMachine))
+            .addCssClass(CSS.NODE)
+            .addCssClass(CSS.PACKAGEABLE_NODE);
+
+      applyShapeData(umlStateMachine, builder);
+
+      GNode stateMachineNode = builder.build();
+
+      GCompartment structureCompartment = createStructureCompartment(umlStateMachine);
+
+      // CHILDREN
+      List<GModelElement> childRegions = umlStateMachine.getRegions().stream()
+            .filter(Objects::nonNull)
+            .map(Region.class::cast)
+            .map(this::createRegionNode)
+            .collect(Collectors.toList());
+      structureCompartment.getChildren().addAll(childRegions);
+
+      stateMachineNode.getChildren().add(structureCompartment);
+      return stateMachineNode;
+      /*GNodeBuilder stateMachineNodeBuilder = new GNodeBuilder(Types.STATE_MACHINE)
             .id(toId(umlStateMachine))
             .layout(GConstants.Layout.VBOX)
             .addCssClass(CSS.NODE);
@@ -63,18 +107,20 @@ public class StateMachineDiagramNodeFactory extends AbstractGModelFactory<Classi
       applyShapeData(umlStateMachine, stateMachineNodeBuilder);
 
       GCompartment stateMachineHeader = buildStateMachineHeader(umlStateMachine);
-      stateMachineNodeBuilder.add(stateMachineHeader);
+      stateMachineNodeBuilder.add(stateMachineHeader);*/
+
+
 
       /*GCompartment stateMachineRegionCompartment = buildStateMachineRegionCompartment(umlStateMachine.getRegions(),
             umlStateMachine);
       stateMachineNodeBuilder.add(stateMachineRegionCompartment);*/
 
-      List<GModelElement> ports = umlStateMachine.getConnectionPoints().stream()
+      /*List<GModelElement> ports = umlStateMachine.getConnectionPoints().stream()
             .map(parentFactory::create)
             .collect(Collectors.toList());
-      stateMachineNodeBuilder.addAll(ports);
+      stateMachineNodeBuilder.addAll(ports);*/
 
-      return stateMachineNodeBuilder.build();
+      //return stateMachineNodeBuilder.build();
    }
 
    protected GNode createRegionNode(final Region umlRegion) {
@@ -82,10 +128,25 @@ public class StateMachineDiagramNodeFactory extends AbstractGModelFactory<Classi
             .id(toId(umlRegion))
             .layout(GConstants.Layout.VBOX)
             .addCssClass(CSS.NODE);
-      
-      applyShapeData((Classifier) umlRegion, builder);
+
+      applyShapeData(umlRegion, builder);
 
       return builder.build();
+   }
+
+
+   private GCompartment createStructureCompartment(final StateMachine umlStateMachine) {
+      Map<String, Object> layoutOptions = new HashMap<>();
+      layoutOptions.put(H_ALIGN, GConstants.HAlign.LEFT);
+      layoutOptions.put(H_GRAB, true);
+      layoutOptions.put(V_GRAB, true);
+      GCompartment structCompartment = new GCompartmentBuilder(Types.STRUCTURE)
+            .id(toId(umlStateMachine) + "_struct")
+            .layout(GConstants.Layout.FREEFORM)
+            .layoutOptions(layoutOptions)
+            .addCssClass("struct")
+            .build();
+      return structCompartment;
    }
 
 

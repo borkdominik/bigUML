@@ -1161,9 +1161,11 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
 
    // REGION
    public CompletableFuture<Response<Boolean>> addRegion(final UmlModelState modelState,
-                                                         final StateMachine parentStateMachine, final GPoint newPosition) {
-
-      CCommand addRegionCompoundCommand = AddRegionCommandContribution.create(newPosition, getSemanticUriFragment(parentStateMachine));
+                                                         final StateMachine parentStateMachine,
+                                                         final Optional<GPoint> newPosition) {
+      System.out.println("MODELSERVER ACCESS");
+      CCommand addRegionCompoundCommand = AddRegionCommandContribution.create(newPosition.orElse(GraphUtil.point(0, 0)),
+            getSemanticUriFragment(parentStateMachine));
       return this.edit(addRegionCompoundCommand);
    }
 

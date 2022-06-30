@@ -23,7 +23,6 @@ public class AddRegionCommand extends UmlSemanticElementCommand {
    protected void doExecute() {
       newRegion.setName(UmlSemanticCommandUtil.getNewRegionName(umlModel));
       StateMachine parentContainer = UmlSemanticCommandUtil.getElement(umlModel, parentSemanticUriFragment, StateMachine.class);
-
       if (parentContainer != null) {
          parentContainer.getRegions().add(newRegion);
       }

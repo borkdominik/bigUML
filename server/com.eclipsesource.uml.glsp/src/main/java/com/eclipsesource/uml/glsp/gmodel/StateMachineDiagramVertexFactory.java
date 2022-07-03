@@ -15,6 +15,8 @@ import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.uml2.uml.*;
 
+import java.util.Random;
+
 public class StateMachineDiagramVertexFactory extends AbstractGModelFactory<Vertex, GNode> {
 
    public StateMachineDiagramVertexFactory(final UmlModelState modelState) {
@@ -56,13 +58,18 @@ public class StateMachineDiagramVertexFactory extends AbstractGModelFactory<Vert
             return createChoice(umlPseudostate);
          case PseudostateKind.TERMINATE:
             return createTerminate(umlPseudostate);
+         case PseudostateKind.ENTRY_POINT:
+            return createEntryPoint(umlPseudostate);
+         case PseudostateKind.EXIT_POINT:
+            return createExitPoint(umlPseudostate);
       }
       return null;
    }
 
    protected GNode createFinalState(final FinalState umlFinalState) {
+      Random rand = new Random();
       GNodeBuilder b = new GNodeBuilder(Types.FINAL_STATE)
-            .id(toId(umlFinalState))
+            .id(toId(umlFinalState) + rand.nextInt(1000))
             .layout(GConstants.Layout.VBOX)
             .addCssClass(CSS.NODE)
             .size(30, 30);
@@ -168,6 +175,30 @@ public class StateMachineDiagramVertexFactory extends AbstractGModelFactory<Vert
             .addCssClass(CSS.NODE);
 
       applyShapeData(terminate, b);
+      return b.build();
+   }
+
+   protected GNode createEntryPoint(final Pseudostate entry) {
+      System.out.println("REACHES ENTRY");
+      GNodeBuilder b = new GNodeBuilder(Types.ENTRY_POINT)
+            .id(toId(entry))
+            .layout(GConstants.Layout.VBOX)
+            .size(30, 30)
+            .addCssClass(CSS.NODE);
+
+      applyShapeData(entry, b);
+      return b.build();
+   }
+
+   protected GNode createExitPoint(final Pseudostate exit) {
+      System.out.println("REACHES EXIT");
+      GNodeBuilder b = new GNodeBuilder(Types.EXIT_POINT)
+            .id(toId(exit))
+            .layout(GConstants.Layout.VBOX)
+            .size(30, 30)
+            .addCssClass(CSS.NODE);
+
+      applyShapeData(exit, b);
       return b.build();
    }
 

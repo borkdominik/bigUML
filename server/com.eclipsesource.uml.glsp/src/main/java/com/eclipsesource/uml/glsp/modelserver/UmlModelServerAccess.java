@@ -1197,10 +1197,12 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
 
    // PSEUDOSTATE
    public CompletableFuture<Response<Boolean>> addPseudostate(final UmlModelState modelState,
-                                                              final Region parentRegion, final PseudostateKind pseudostateKind, final GPoint newPosition) {
+                                                              final Region parentRegion,
+                                                              final PseudostateKind pseudostateKind,
+                                                              final Optional<GPoint> newPosition) {
 
       CCommand addPseudostateCompoundCommand = AddPseudoStateCommandContribution
-            .create(getSemanticUriFragment(parentRegion), pseudostateKind, newPosition);
+            .create(getSemanticUriFragment(parentRegion), pseudostateKind, newPosition.orElse(GraphUtil.point(0, 0)));
       return this.edit(addPseudostateCompoundCommand);
    }
 
@@ -1225,10 +1227,11 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
 
    // FINAL STATE
    public CompletableFuture<Response<Boolean>> addFinalState(final UmlModelState modelState,
-                                                             final Region parentRegion, final GPoint newPosition) {
+                                                             final Region parentRegion,
+                                                             final Optional<GPoint> newPosition) {
 
       CCompoundCommand addFinalStateCompoundCommand = AddFinalStateCommandContribution
-            .create(getSemanticUriFragment(parentRegion), newPosition);
+            .create(getSemanticUriFragment(parentRegion), newPosition.orElse(GraphUtil.point(0, 0)));
 
       return this.edit(addFinalStateCompoundCommand);
    }

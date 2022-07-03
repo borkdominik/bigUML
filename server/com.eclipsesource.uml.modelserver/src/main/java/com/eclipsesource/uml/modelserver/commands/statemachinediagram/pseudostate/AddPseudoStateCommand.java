@@ -39,8 +39,9 @@ public class AddPseudoStateCommand extends UmlSemanticElementCommand {
    protected void doExecute() {
       newPseudostate.setName(UmlSemanticCommandUtil.getNewVertexName(containerRegion));
       newPseudostate.setKind(this.pseudoStateKind);
+      System.out.println("KIND MS " + newPseudostate.getKind());
       if (List.of(PseudostateKind.ENTRY_POINT_LITERAL, PseudostateKind.EXIT_POINT_LITERAL)
-         .contains(newPseudostate.getKind())) {
+            .contains(newPseudostate.getKind())) {
          EObject container = containerRegion.eContainer();
          if (container instanceof State) {
             ((State) container).getConnectionPoints().add(newPseudostate);
@@ -52,6 +53,8 @@ public class AddPseudoStateCommand extends UmlSemanticElementCommand {
       }
    }
 
-   public Pseudostate getNewPseudostate() { return newPseudostate; }
+   public Pseudostate getNewPseudostate() {
+      return newPseudostate;
+   }
 
 }

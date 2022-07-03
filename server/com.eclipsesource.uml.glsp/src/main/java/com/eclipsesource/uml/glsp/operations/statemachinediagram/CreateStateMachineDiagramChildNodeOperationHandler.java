@@ -65,10 +65,9 @@ public class CreateStateMachineDiagramChildNodeOperationHandler
       } else if (containerElement instanceof Region) {
          region = (Region) containerElement;
       }
-      
+
 
       if (Types.STATE.equals(elementTypeId)) {
-         System.out.println("CONTAINER" + operation.getContainerId());
          Optional<GModelElement> container = modelIndex.get(operation.getContainerId());
          Optional<GModelElement> structCompartment = container.filter(GNode.class::isInstance)
                .map(GNode.class::cast)
@@ -80,23 +79,32 @@ public class CreateStateMachineDiagramChildNodeOperationHandler
                      throw new GLSPServerException("Could not execute create operation on new State node");
                   }
                });
-      } /*else if (Types.PSEUDOSTATES.contains(elementTypeId)) {
-         modelAccess
-               .addPseudostate(UmlModelState.getModelState(modelState), region, getPseudostateKind(elementTypeId),
-                     createPosition)
+      } else if (Types.PSEUDOSTATES.contains(elementTypeId)) {
+         System.out.println("PSEUDO KIND " + getPseudostateKind(elementTypeId));
+         Optional<GModelElement> container = modelIndex.get(operation.getContainerId());
+         Optional<GModelElement> structCompartment = container.filter(GNode.class::isInstance)
+               .map(GNode.class::cast)
+               .flatMap(this::getStructureCompartment);
+         Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(), structCompartment);
+         modelAccess.addPseudostate(UmlModelState.getModelState(modelState), region, getPseudostateKind(elementTypeId), relativeLocation)
                .thenAccept(response -> {
                   if (!response.body()) {
-                     throw new GLSPServerException("Could not execute create operation on new Pseudostate node");
+                     throw new GLSPServerException("Could not execute create operation on new State node");
                   }
                });
       } else if (Types.FINAL_STATE.equals(elementTypeId)) {
-         modelAccess.addFinalState(UmlModelState.getModelState(modelState), region, createPosition)
+         Optional<GModelElement> container = modelIndex.get(operation.getContainerId());
+         Optional<GModelElement> structCompartment = container.filter(GNode.class::isInstance)
+               .map(GNode.class::cast)
+               .flatMap(this::getStructureCompartment);
+         Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(), structCompartment);
+         modelAccess.addFinalState(UmlModelState.getModelState(modelState), region, relativeLocation)
                .thenAccept(response -> {
                   if (!response.body()) {
-                     throw new GLSPServerException("Could not execute create operation on new Final State node");
+                     throw new GLSPServerException("Could not execute create operation on new State node");
                   }
                });
-      }*/
+      }
    }
 
 

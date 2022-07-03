@@ -15,10 +15,7 @@ import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.builder.impl.GNodeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.glsp.graph.util.GraphUtil;
-import org.eclipse.uml2.uml.Classifier;
-import org.eclipse.uml2.uml.Region;
-import org.eclipse.uml2.uml.State;
-import org.eclipse.uml2.uml.StateMachine;
+import org.eclipse.uml2.uml.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -97,39 +94,9 @@ public class StateMachineDiagramNodeFactory extends AbstractGModelFactory<Classi
             .collect(Collectors.toList());
       structureCompartment.getChildren().addAll(childRegions);
 
-      /*List<GModelElement> childStates = umlStateMachine.getSubmachineStates().stream()
-            .filter(Objects::nonNull)
-            .map(State.class::cast)
-            .map(stateMachineDiagramVertexFactory::createState)
-            .collect(Collectors.toList());
-      structureCompartment.getChildren().addAll(childStates);*/
-
-      System.out.println("CHILDREN " + structureCompartment.getChildren());
-
       stateMachineNode.getChildren().add(structureCompartment);
+
       return stateMachineNode;
-      /*GNodeBuilder stateMachineNodeBuilder = new GNodeBuilder(Types.STATE_MACHINE)
-            .id(toId(umlStateMachine))
-            .layout(GConstants.Layout.VBOX)
-            .addCssClass(CSS.NODE);
-
-      applyShapeData(umlStateMachine, stateMachineNodeBuilder);
-
-      GCompartment stateMachineHeader = buildStateMachineHeader(umlStateMachine);
-      stateMachineNodeBuilder.add(stateMachineHeader);*/
-
-
-
-      /*GCompartment stateMachineRegionCompartment = buildStateMachineRegionCompartment(umlStateMachine.getRegions(),
-            umlStateMachine);
-      stateMachineNodeBuilder.add(stateMachineRegionCompartment);*/
-
-      /*List<GModelElement> ports = umlStateMachine.getConnectionPoints().stream()
-            .map(parentFactory::create)
-            .collect(Collectors.toList());
-      stateMachineNodeBuilder.addAll(ports);*/
-
-      //return stateMachineNodeBuilder.build();
    }
 
    protected GNode createRegionNode(final Region umlRegion) {
@@ -152,22 +119,27 @@ public class StateMachineDiagramNodeFactory extends AbstractGModelFactory<Classi
       GCompartment structureCompartment = createRegionStructureCompartment(umlRegion);
 
       // CHILDREN
-      /*List<GModelElement> childStates = umlRegion.getStateMachine().getSubmachineStates().stream()
-            .filter(Objects::nonNull)
-            .map(State.class::cast)
-            .map(parentFactory::create)
-            .collect(Collectors.toList());
-      structureCompartment.getChildren().addAll(childStates);*/
-
       List<GModelElement> childStates = umlRegion.getSubvertices().stream()
             .filter(State.class::isInstance)
             .map(State.class::cast)
-            //.map(stateMachineDiagramVertexFactory::createState)
             .map(parentFactory::create)
             .collect(Collectors.toList());
       structureCompartment.getChildren().addAll(childStates);
 
-      System.out.println("REGION CHILDREN " + structureCompartment.getChildren());
+      List<GModelElement> childPseudoStates = umlRegion.getSubvertices().stream()
+            .filter(Pseudostate.class::isInstance)
+            .map(Pseudostate.class::cast)
+            .map(parentFactory::create)
+            .collect(Collectors.toList());
+      structureCompartment.getChildren().addAll(childPseudoStates);
+
+      List<GModelElement> childFinalStates = umlRegion.getSubvertices().stream()
+            .filter(FinalState.class::isInstance)
+            .map(FinalState.class::cast)
+            .map(parentFactory::create)
+            .collect(Collectors.toList());
+      structureCompartment.getChildren().addAll(childFinalStates);
+
 
       regionNode.getChildren().add(structureCompartment);
       return regionNode;

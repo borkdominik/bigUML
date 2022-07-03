@@ -15,9 +15,10 @@ import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.*;
-
-import java.util.List;
+import org.eclipse.uml2.uml.Pseudostate;
+import org.eclipse.uml2.uml.PseudostateKind;
+import org.eclipse.uml2.uml.Region;
+import org.eclipse.uml2.uml.UMLFactory;
 
 public class AddPseudoStateCommand extends UmlSemanticElementCommand {
 
@@ -39,10 +40,29 @@ public class AddPseudoStateCommand extends UmlSemanticElementCommand {
    protected void doExecute() {
       newPseudostate.setName(UmlSemanticCommandUtil.getNewVertexName(containerRegion));
       newPseudostate.setKind(this.pseudoStateKind);
-      System.out.println("KIND MS " + newPseudostate.getKind());
-      if (List.of(PseudostateKind.ENTRY_POINT_LITERAL, PseudostateKind.EXIT_POINT_LITERAL)
+      containerRegion.getSubvertices().add(newPseudostate);
+
+      EObject container = containerRegion.eContainer();
+
+      // TODO: check if this distinction is even needed!
+      /*if (newPseudostate.getKind() == PseudostateKind.ENTRY_POINT_LITERAL || newPseudostate.getKind() == PseudostateKind.EXIT_POINT_LITERAL) {
+         if (container instanceof State) {
+            ((State) container).getConnectionPoints().add(newPseudostate);
+         } else {
+            //((StateMachine) container).getConnectionPoints().add(newPseudostate);
+            containerRegion.getSubvertices().add(newPseudostate);
+         }
+      } else {
+         containerRegion.getSubvertices().add(newPseudostate);
+      }*/
+
+
+      //if (newPseudostate.getKind() == PseudostateKind.ENTRY_POINT_LITERAL || newPseudostate.getKind() == PseudostateKind.EXIT_POINT_LITERAL) {
+      //}
+      /*if (List.of(PseudostateKind.ENTRY_POINT_LITERAL, PseudostateKind.EXIT_POINT_LITERAL)
             .contains(newPseudostate.getKind())) {
          EObject container = containerRegion.eContainer();
+         System.out.println("CONTAINER " + container.getClass());
          if (container instanceof State) {
             ((State) container).getConnectionPoints().add(newPseudostate);
          } else if (container instanceof StateMachine) {
@@ -50,7 +70,7 @@ public class AddPseudoStateCommand extends UmlSemanticElementCommand {
          }
       } else {
          containerRegion.getSubvertices().add(newPseudostate);
-      }
+      }*/
    }
 
    public Pseudostate getNewPseudostate() {

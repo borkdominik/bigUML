@@ -76,7 +76,7 @@ public abstract class DiagramFactory extends AbstractGModelFactory<EObject, GMod
       //useCaseDiagramChildNodeFactory = new UseCaseDiagramChildNodeFactory(modelState, labelFactory, this);
       // STATEMACHINE
       stateMachineNodeFactory = new StateMachineDiagramNodeFactory(modelState, labelFactory, this);
-      stateMachineDiagramVertexFactory = new StateMachineDiagramVertexFactory(modelState);
+      stateMachineDiagramVertexFactory = new StateMachineDiagramVertexFactory(modelState, stateMachineNodeFactory);
       stateMachineEdgeFactory = new StateMachineDiagramEdgeFactory(modelState);
       regionCompartmentFactory = new RegionCompartmentFactory(modelState, this);
       stateMachinePortFactory = new StateMachineDiagramPortFactory(modelState);

@@ -4,9 +4,7 @@ import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticEl
 import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Region;
-import org.eclipse.uml2.uml.StateMachine;
-import org.eclipse.uml2.uml.UMLFactory;
+import org.eclipse.uml2.uml.*;
 
 public class AddRegionCommand extends UmlSemanticElementCommand {
 
@@ -22,9 +20,14 @@ public class AddRegionCommand extends UmlSemanticElementCommand {
    @Override
    protected void doExecute() {
       newRegion.setName(UmlSemanticCommandUtil.getNewRegionName(umlModel));
-      StateMachine parentContainer = UmlSemanticCommandUtil.getElement(umlModel, parentSemanticUriFragment, StateMachine.class);
-      if (parentContainer != null) {
+      NamedElement parentContainer = UmlSemanticCommandUtil.getElement(umlModel, parentSemanticUriFragment, NamedElement.class);
+      /*if (parentContainer != null) {
          parentContainer.getRegions().add(newRegion);
+      }*/
+      if (parentContainer instanceof StateMachine) {
+         ((StateMachine) parentContainer).getRegions().add(newRegion);
+      } else if (parentContainer instanceof State) {
+         ((State) parentContainer).getRegions().add(newRegion);
       }
    }
 

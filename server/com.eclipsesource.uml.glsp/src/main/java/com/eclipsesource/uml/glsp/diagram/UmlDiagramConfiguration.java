@@ -207,7 +207,8 @@ public class UmlDiagramConfiguration extends BaseDiagramConfiguration {
                   Types.JUNCTION, Types.CHOICE, Types.ENTRY_POINT, Types.EXIT_POINT, Types.TERMINATE, Types.FINAL_STATE,
                   Types.COMMENT)));
       hints.add(new ShapeTypeHint(Types.STATE, true, true, true, false,
-            List.of(Types.STATE_ENTRY_ACTIVITY, Types.STATE_DO_ACTIVITY, Types.STATE_EXIT_ACTIVITY, Types.COMMENT)));
+            List.of(Types.ENTRY_POINT, Types.EXIT_POINT, Types.STATE_ENTRY_ACTIVITY, Types.STATE_DO_ACTIVITY,
+                  Types.STATE_EXIT_ACTIVITY, Types.COMMENT, Types.REGION)));
       hints.add(new ShapeTypeHint(Types.INITIAL_STATE, true, true, true, false,
             List.of(Types.COMMENT)));
       hints.add(new ShapeTypeHint(Types.DEEP_HISTORY, true, true, true, false,

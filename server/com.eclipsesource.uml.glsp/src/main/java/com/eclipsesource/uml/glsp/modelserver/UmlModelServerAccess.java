@@ -1161,11 +1161,11 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
 
    // REGION
    public CompletableFuture<Response<Boolean>> addRegion(final UmlModelState modelState,
-                                                         final StateMachine parentStateMachine,
+                                                         final NamedElement parent,
                                                          final Optional<GPoint> newPosition) {
       System.out.println("MODELSERVER ACCESS");
       CCommand addRegionCompoundCommand = AddRegionCommandContribution.create(newPosition.orElse(GraphUtil.point(0, 0)),
-            getSemanticUriFragment(parentStateMachine));
+            getSemanticUriFragment(parent));
       return this.edit(addRegionCompoundCommand);
    }
 
@@ -1200,7 +1200,6 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
                                                               final Region parentRegion,
                                                               final PseudostateKind pseudostateKind,
                                                               final Optional<GPoint> newPosition) {
-
       CCommand addPseudostateCompoundCommand = AddPseudoStateCommandContribution
             .create(getSemanticUriFragment(parentRegion), pseudostateKind, newPosition.orElse(GraphUtil.point(0, 0)));
       return this.edit(addPseudostateCompoundCommand);

@@ -248,8 +248,8 @@ public class UmlToolPaletteItemProvider extends EMSBasicOperationHandler<CreateN
       PaletteItem createJunction = node(Types.JUNCTION, "Junction", "umljunction");
       PaletteItem createChoice = node(Types.CHOICE, "Choice", "umlchoice");
       // FIXME: entry and exit renders are changed!
-      PaletteItem createEntryPoint = node(Types.EXIT_POINT, "Entry Point", "umlentrypoint");
-      PaletteItem createExitPoint = node(Types.ENTRY_POINT, "Exit Point", "umlexitpoint");
+      PaletteItem createEntryPoint = node(Types.ENTRY_POINT, "Entry Point", "umlentrypoint");
+      PaletteItem createExitPoint = node(Types.EXIT_POINT, "Exit Point", "umlexitpoint");
 
       List<PaletteItem> classifiers = Lists.newArrayList(
             createStateMachine, createState, createFinalState, createChoice, createFork, createInitialState,

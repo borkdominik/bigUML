@@ -6,6 +6,7 @@ import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
 import com.eclipsesource.uml.modelserver.unotation.Shape;
 import org.eclipse.glsp.graph.GCompartment;
 import org.eclipse.glsp.graph.GLabel;
+import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.builder.impl.GCompartmentBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
@@ -15,12 +16,22 @@ import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.uml2.uml.*;
 
-import java.util.Random;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class StateMachineDiagramVertexFactory extends AbstractGModelFactory<Vertex, GNode> {
 
-   public StateMachineDiagramVertexFactory(final UmlModelState modelState) {
+   private final StateMachineDiagramNodeFactory stateMachineDiagramNodeFactory;
+
+   private static final String V_GRAB = "vGrab";
+   private static final String H_GRAB = "hGrab";
+   private static final String H_ALIGN = "hAlign";
+
+
+   public StateMachineDiagramVertexFactory(final UmlModelState modelState,
+                                           final StateMachineDiagramNodeFactory stateMachineDiagramNodeFactory) {
       super(modelState);
+      this.stateMachineDiagramNodeFactory = stateMachineDiagramNodeFactory;
    }
 
    @Override
@@ -79,15 +90,37 @@ public class StateMachineDiagramVertexFactory extends AbstractGModelFactory<Vert
    }
 
    protected GNode createState(final State umlState) {
+      Map<String, Object> layoutOptions = new HashMap<>();
+      layoutOptions.put(H_ALIGN, GConstants.HAlign.CENTER);
+      layoutOptions.put(H_GRAB, false);
+      layoutOptions.put(V_GRAB, false);
+
       GNodeBuilder b = new GNodeBuilder(Types.STATE)
             .id(toId(umlState))
             .layout(GConstants.Layout.VBOX)
+            .layoutOptions(layoutOptions)
             .addCssClass(CSS.NODE)
             .add(buildHeader(umlState))
             .add(createLabeledStateChildrenCompartment(umlState));
 
       applyShapeData(umlState, b);
-      return b.build();
+
+      GNode stateNode = b.build();
+
+      GCompartment structureCompartment = createStructureCompartment(umlState);
+
+      // CHILDREN
+      List<GModelElement> childRegions = umlState.getRegions().stream()
+            .filter(Objects::nonNull)
+            .map(Region.class::cast)
+            .map(stateMachineDiagramNodeFactory::createRegionNode)
+            .collect(Collectors.toList());
+      structureCompartment.getChildren().addAll(childRegions);
+
+      stateNode.getChildren().add(structureCompartment);
+
+      return stateNode;
+
    }
 
    protected GNode createInitialState(final Pseudostate umlInitialState) {
@@ -281,6 +314,20 @@ public class StateMachineDiagramVertexFactory extends AbstractGModelFactory<Vert
       }
 
       return "Vertex not found";
+   }
+
+   private GCompartment createStructureCompartment(final State umlState) {
+      Map<String, Object> layoutOptions = new HashMap<>();
+      layoutOptions.put(H_ALIGN, GConstants.HAlign.LEFT);
+      layoutOptions.put(H_GRAB, true);
+      layoutOptions.put(V_GRAB, true);
+      GCompartment structCompartment = new GCompartmentBuilder(Types.STRUCTURE)
+            .id(toId(umlState) + "_struct")
+            .layout(GConstants.Layout.FREEFORM)
+            .layoutOptions(layoutOptions)
+            .addCssClass("struct")
+            .build();
+      return structCompartment;
    }
 
 

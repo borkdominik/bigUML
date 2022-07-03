@@ -94,6 +94,13 @@ public class StateMachineDiagramNodeFactory extends AbstractGModelFactory<Classi
             .collect(Collectors.toList());
       structureCompartment.getChildren().addAll(childRegions);
 
+      List<GModelElement> childPseudoStates = umlStateMachine.getRegions().stream()
+            .filter(Pseudostate.class::isInstance)
+            .map(Pseudostate.class::cast)
+            .map(parentFactory::create)
+            .collect(Collectors.toList());
+      structureCompartment.getChildren().addAll(childPseudoStates);
+
       stateMachineNode.getChildren().add(structureCompartment);
 
       return stateMachineNode;

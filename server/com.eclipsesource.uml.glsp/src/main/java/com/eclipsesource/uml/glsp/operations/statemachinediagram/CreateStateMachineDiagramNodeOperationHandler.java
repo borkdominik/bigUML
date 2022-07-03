@@ -12,7 +12,7 @@ import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.operations.Operation;
 import org.eclipse.glsp.server.types.GLSPServerException;
 import org.eclipse.glsp.server.utils.GeometryUtil;
-import org.eclipse.uml2.uml.StateMachine;
+import org.eclipse.uml2.uml.NamedElement;
 
 import java.util.List;
 import java.util.Optional;
@@ -49,6 +49,8 @@ public class CreateStateMachineDiagramNodeOperationHandler
       UmlModelState modelState = getUmlModelState();
       UmlModelIndex modelIndex = modelState.getIndex();
 
+      System.out.println("CONTAINER " + operation.getContainerId());
+
       switch (operation.getElementTypeId()) {
          case Types.STATE_MACHINE:
             modelAccess.addStateMachine(UmlModelState.getModelState(modelState), operation.getLocation())
@@ -59,8 +61,8 @@ public class CreateStateMachineDiagramNodeOperationHandler
                   });
             break;
          case Types.REGION:
-            StateMachine parentContainer = getOrThrow(
-                  modelIndex.getSemantic(operation.getContainerId(), StateMachine.class),
+            NamedElement parentContainer = getOrThrow(
+                  modelIndex.getSemantic(operation.getContainerId(), NamedElement.class),
                   "No semantic container object found for source element with id " + operation.getContainerId());
             if (parentContainer != null) {
                Optional<GModelElement> container = modelIndex.get(operation.getContainerId());

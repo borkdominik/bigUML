@@ -36,6 +36,8 @@ public class AddStateCommand extends UmlSemanticElementCommand {
       containerRegion.getSubvertices().add(newState);
    }
 
-   public State getNewState() { return newState; }
+   public State getNewState() {
+      return newState;
+   }
 
 }

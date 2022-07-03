@@ -198,7 +198,7 @@ public class UmlDiagramConfiguration extends BaseDiagramConfiguration {
       hints.add(new ShapeTypeHint(Types.DEPLOYMENT_COMPONENT, true, true, true, true));
 
       // STATE MACHINE DIAGRAM
-      hints.add(new ShapeTypeHint(Types.STATE_MACHINE, true, true, false, false,
+      hints.add(new ShapeTypeHint(Types.STATE_MACHINE, true, true, true, false,
             List.of(Types.REGION, Types.STATE, Types.INITIAL_STATE, Types.DEEP_HISTORY, Types.SHALLOW_HISTORY, Types.FORK, Types.JOIN,
                   Types.JUNCTION, Types.CHOICE, Types.ENTRY_POINT, Types.EXIT_POINT, Types.TERMINATE, Types.FINAL_STATE,
                   Types.COMMENT)));

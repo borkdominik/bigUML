@@ -17,6 +17,7 @@ import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.Region;
+import org.eclipse.uml2.uml.State;
 import org.eclipse.uml2.uml.StateMachine;
 
 import java.util.*;
@@ -41,7 +42,6 @@ public class StateMachineDiagramNodeFactory extends AbstractGModelFactory<Classi
       if (classifier instanceof StateMachine) {
          return createStateMachineNode((StateMachine) classifier);
       } else if (classifier instanceof Region) {
-         System.out.println("CREATE FACTORY");
          return createRegionNode((Region) classifier);
       }
       return null;
@@ -97,6 +97,15 @@ public class StateMachineDiagramNodeFactory extends AbstractGModelFactory<Classi
             .collect(Collectors.toList());
       structureCompartment.getChildren().addAll(childRegions);
 
+      /*List<GModelElement> childStates = umlStateMachine.getSubmachineStates().stream()
+            .filter(Objects::nonNull)
+            .map(State.class::cast)
+            .map(stateMachineDiagramVertexFactory::createState)
+            .collect(Collectors.toList());
+      structureCompartment.getChildren().addAll(childStates);*/
+
+      System.out.println("CHILDREN " + structureCompartment.getChildren());
+
       stateMachineNode.getChildren().add(structureCompartment);
       return stateMachineNode;
       /*GNodeBuilder stateMachineNodeBuilder = new GNodeBuilder(Types.STATE_MACHINE)
@@ -124,14 +133,44 @@ public class StateMachineDiagramNodeFactory extends AbstractGModelFactory<Classi
    }
 
    protected GNode createRegionNode(final Region umlRegion) {
-      GNodeBuilder builder = new GNodeBuilder(Types.STATE_MACHINE)
+      Map<String, Object> layoutOptions = new HashMap<>();
+      layoutOptions.put(H_ALIGN, GConstants.HAlign.CENTER);
+      layoutOptions.put(H_GRAB, false);
+      layoutOptions.put(V_GRAB, false);
+
+      GNodeBuilder builder = new GNodeBuilder(Types.REGION)
             .id(toId(umlRegion))
             .layout(GConstants.Layout.VBOX)
-            .addCssClass(CSS.NODE);
+            .layoutOptions(layoutOptions)
+            .addCssClass(CSS.NODE)
+            .addCssClass(CSS.PACKAGEABLE_NODE);
 
       applyShapeData(umlRegion, builder);
 
-      return builder.build();
+      GNode regionNode = builder.build();
+
+      GCompartment structureCompartment = createRegionStructureCompartment(umlRegion);
+
+      // CHILDREN
+      /*List<GModelElement> childStates = umlRegion.getStateMachine().getSubmachineStates().stream()
+            .filter(Objects::nonNull)
+            .map(State.class::cast)
+            .map(parentFactory::create)
+            .collect(Collectors.toList());
+      structureCompartment.getChildren().addAll(childStates);*/
+
+      List<GModelElement> childStates = umlRegion.getSubvertices().stream()
+            .filter(State.class::isInstance)
+            .map(State.class::cast)
+            //.map(stateMachineDiagramVertexFactory::createState)
+            .map(parentFactory::create)
+            .collect(Collectors.toList());
+      structureCompartment.getChildren().addAll(childStates);
+
+      System.out.println("REGION CHILDREN " + structureCompartment.getChildren());
+
+      regionNode.getChildren().add(structureCompartment);
+      return regionNode;
    }
 
 
@@ -142,6 +181,20 @@ public class StateMachineDiagramNodeFactory extends AbstractGModelFactory<Classi
       layoutOptions.put(V_GRAB, true);
       GCompartment structCompartment = new GCompartmentBuilder(Types.STRUCTURE)
             .id(toId(umlStateMachine) + "_struct")
+            .layout(GConstants.Layout.FREEFORM)
+            .layoutOptions(layoutOptions)
+            .addCssClass("struct")
+            .build();
+      return structCompartment;
+   }
+
+   private GCompartment createRegionStructureCompartment(final Region umlRegion) {
+      Map<String, Object> layoutOptions = new HashMap<>();
+      layoutOptions.put(H_ALIGN, GConstants.HAlign.LEFT);
+      layoutOptions.put(H_GRAB, true);
+      layoutOptions.put(V_GRAB, true);
+      GCompartment structCompartment = new GCompartmentBuilder(Types.STRUCTURE)
+            .id(toId(umlRegion) + "_struct")
             .layout(GConstants.Layout.FREEFORM)
             .layoutOptions(layoutOptions)
             .addCssClass("struct")

@@ -70,7 +70,6 @@ public class ActivityDiagramGroupNodeFactory extends AbstractGModelFactory<Activ
    }
 
    protected GNode create(final InterruptibleActivityRegion region) {
-      System.out.println("ENTERS CREATE FACTORY FOR INTERRUPTIBLE REGION");
       List<EObject> children = new ArrayList<>(region.getOwnedElements());
       children.addAll(region.getNodes());
 

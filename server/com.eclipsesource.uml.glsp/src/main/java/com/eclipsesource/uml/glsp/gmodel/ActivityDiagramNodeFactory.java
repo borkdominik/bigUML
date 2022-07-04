@@ -18,10 +18,7 @@ import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.uml2.uml.*;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ActivityDiagramNodeFactory extends AbstractGModelFactory<Classifier, GNode> {
@@ -46,12 +43,8 @@ public class ActivityDiagramNodeFactory extends AbstractGModelFactory<Classifier
 
    @Override
    public GNode create(final Classifier classifier) {
-      System.out.println("GOES IN IF");
       if (classifier instanceof Activity) {
          return create((Activity) classifier);
-      } else if (classifier instanceof ActivityPartition) {
-         System.out.println("GOES IN IF - PARTITION");
-         return create((ActivityPartition) classifier);
       }
       return null;
    }
@@ -77,22 +70,21 @@ public class ActivityDiagramNodeFactory extends AbstractGModelFactory<Classifier
 
       GCompartment structureCompartment = createStructureCompartment(umlActivity);
 
-      List<GModelElement> childPartitions = umlActivity.getOwnedNodes().stream()
+      /*List<GModelElement> childPartitions = umlActivity.getGroups().stream()
             .filter(ActivityPartition.class::isInstance)
             .map(ActivityPartition.class::cast)
-            .map(this::create)
+            .map(activityDiagramGroupNodeFactory::create)
             .collect(Collectors.toList());
-      System.out.println("CHILD PARTITIONS " + childPartitions);
-      structureCompartment.getChildren().addAll(childPartitions);
+      structureCompartment.getChildren().addAll(childPartitions);*/
 
-      /*List<GModelElement> childPartitions = umlActivity.getPartitions().stream()
+      List<GModelElement> childPartitions = umlActivity.getPartitions().stream()
             .filter(Objects::nonNull)
             .map(ActivityPartition.class::cast)
             .map(activityDiagramGroupNodeFactory::createPartition)
             .collect(Collectors.toList());
-      structureCompartment.getChildren().addAll(childPartitions);*/
+      structureCompartment.getChildren().addAll(childPartitions);
 
-      List<GModelElement> childInterruptibleRegion = umlActivity.getOwnedNodes().stream()
+      List<GModelElement> childInterruptibleRegion = umlActivity.getGroups().stream()
             .filter(InterruptibleActivityRegion.class::isInstance)
             .map(InterruptibleActivityRegion.class::cast)
             .map(activityDiagramGroupNodeFactory::create)
@@ -196,8 +188,7 @@ public class ActivityDiagramNodeFactory extends AbstractGModelFactory<Classifier
       return activityNode;
    }
 
-   protected GNode create(ActivityPartition umlPartition) {
-      System.out.println("GOES IN CREATE");
+   /*protected GNode create(ActivityPartition umlPartition) {
       Map<String, Object> layoutOptions = new HashMap<>();
       layoutOptions.put(H_ALIGN, GConstants.HAlign.CENTER);
       layoutOptions.put(H_GRAB, false);
@@ -215,7 +206,7 @@ public class ActivityDiagramNodeFactory extends AbstractGModelFactory<Classifier
       GNode partitionNode = builder.build();
 
       return partitionNode;
-   }
+   }*/
 
    protected void applyShapeData(final Classifier classifier, final GNodeBuilder builder) {
       modelState.getIndex().getNotation(classifier, Shape.class).ifPresent(shape -> {

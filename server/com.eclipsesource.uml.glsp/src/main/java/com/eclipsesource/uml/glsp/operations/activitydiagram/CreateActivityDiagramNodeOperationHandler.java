@@ -67,7 +67,6 @@ public class CreateActivityDiagramNodeOperationHandler
          // FIXME: NOT RENDERED!!!!!
          case Types.PARTITION: {
             if (parentContainer instanceof Activity) {
-               System.out.println("REACHES HANDLER");
                Optional<GModelElement> container = modelIndex.get(operation.getContainerId());
                Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(), getStructureCompartmentGModelElement(container));
                modelAccess.addPartition(UmlModelState.getModelState(modelState), relativeLocation, parentContainer)
@@ -96,7 +95,6 @@ public class CreateActivityDiagramNodeOperationHandler
                   });
             break;*/
          }
-         // FIXME: NOT RENDERED!!!!!
          case Types.INTERRUPTIBLEREGION: {
             if (parentContainer instanceof Activity) {
                Optional<GModelElement> container = modelIndex.get(operation.getContainerId());

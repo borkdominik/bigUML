@@ -59,8 +59,10 @@ public class ActivityDiagramChildNodeFactory extends AbstractGModelFactory<Activ
       } else if (action instanceof SendSignalAction) {
          type = Types.SENDSIGNAL;
       } else if (action instanceof CallBehaviorAction) {
+         System.out.println("CALL");
          type = Types.CALL;
       } else if (action instanceof AcceptEventAction) {
+         System.out.println("EVENT");
          if (((AcceptEventAction) action).getTriggers().stream().anyMatch(t -> "timeEvent".equals(t.getName()))) {
             type = Types.TIMEEVENT;
          } else {

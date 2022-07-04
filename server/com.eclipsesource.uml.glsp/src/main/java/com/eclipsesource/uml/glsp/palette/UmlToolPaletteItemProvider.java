@@ -41,8 +41,8 @@ public class UmlToolPaletteItemProvider extends EMSBasicOperationHandler<CreateN
       Representation diagramType = UmlModelState.getModelState(getUmlModelState()).getNotationModel().getDiagramType();
       LOGGER.info("------- CURRENT DIAGRAM TYPE: " + diagramType + " ----------");
 
-      List<PaletteItem> activityDiagram = Lists.newArrayList(classifiersActivity(), featuresActivity(),
-            relationsActivity(), controlNodesActivity(), dataActivity(), annotations(), comment());
+      List<PaletteItem> activityDiagram = Lists.newArrayList(classifiersActivity(), actionsActivity(),
+            relationsActivity(), controlNodesActivity(), dataActivity(), annotationsActivity(), comment());
 
       List<PaletteItem> classDiagram = Lists.newArrayList(classifiersClass(), relationsClass(), featuresClass(), comment());
 
@@ -141,7 +141,7 @@ public class UmlToolPaletteItemProvider extends EMSBasicOperationHandler<CreateN
       return PaletteItem.createPaletteGroup("uml.relation", "Flow", edges, "symbol-property");
    }
 
-   private PaletteItem featuresActivity() {
+   private PaletteItem actionsActivity() {
       PaletteItem createOpaque = node(Types.ACTION, "Action", "umlaction");
       PaletteItem createAcceptEvent = node(Types.ACCEPTEVENT, "Event", "umlevent");
       PaletteItem createTimeEvent = node(Types.TIMEEVENT, "Time Event", "umltime");
@@ -154,7 +154,7 @@ public class UmlToolPaletteItemProvider extends EMSBasicOperationHandler<CreateN
       return PaletteItem.createPaletteGroup("uml.feature", "Actions", features, "symbol-property");
    }
 
-   private PaletteItem annotations() {
+   private PaletteItem annotationsActivity() {
       // ACTIVITY
       PaletteItem precondition = node(Types.CONDITION, "Condition", "umlcondition");
 
@@ -235,7 +235,7 @@ public class UmlToolPaletteItemProvider extends EMSBasicOperationHandler<CreateN
 
    private PaletteItem classifiersStateMachine() {
       PaletteItem createStateMachine = node(Types.STATE_MACHINE, "State Machine", "umlstatemachine");
-      PaletteItem createRegion = node(Types.REGION, "Region", "umlregion");
+      PaletteItem createRegion = node(Types.REGION, "Region", "umlinterruptibleregion");
       PaletteItem createState = node(Types.STATE, "State", "umlstate");
       PaletteItem createFinalState = node(Types.FINAL_STATE, "Final State", "umlfinalstate");
 
@@ -247,7 +247,6 @@ public class UmlToolPaletteItemProvider extends EMSBasicOperationHandler<CreateN
       PaletteItem createJoin = node(Types.JOIN, "Join", "umljoin");
       PaletteItem createJunction = node(Types.JUNCTION, "Junction", "umljunction");
       PaletteItem createChoice = node(Types.CHOICE, "Choice", "umlchoice");
-      // FIXME: entry and exit renders are changed!
       PaletteItem createEntryPoint = node(Types.ENTRY_POINT, "Entry Point", "umlentrypoint");
       PaletteItem createExitPoint = node(Types.EXIT_POINT, "Exit Point", "umlexitpoint");
 

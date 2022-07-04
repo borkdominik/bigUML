@@ -100,6 +100,7 @@ public class StateMachineDiagramVertexFactory extends AbstractGModelFactory<Vert
             .layout(GConstants.Layout.VBOX)
             .layoutOptions(layoutOptions)
             .addCssClass(CSS.NODE)
+            .addCssClass(CSS.PACKAGEABLE_NODE)
             .add(buildHeader(umlState))
             .add(createLabeledStateChildrenCompartment(umlState));
 

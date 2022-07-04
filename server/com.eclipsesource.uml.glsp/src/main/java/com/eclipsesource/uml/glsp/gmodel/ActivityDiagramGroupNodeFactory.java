@@ -54,7 +54,7 @@ public class ActivityDiagramGroupNodeFactory extends AbstractGModelFactory<Activ
    }
 
    protected GNode createPartition(final ActivityPartition partition) {
-      System.out.println("ENTERS CREATE FACTORY");
+      System.out.println("ENTERS CREATE FACTORY - PARTITION");
       List<EObject> children = new ArrayList<>(partition.getOwnedElements());
       children.addAll(partition.getNodes());
 

@@ -72,7 +72,7 @@ public class CreateActivityDiagramNodeOperationHandler
                modelAccess.addPartition(UmlModelState.getModelState(modelState), relativeLocation, parentContainer)
                      .thenAccept(response -> {
                         if (!response.body()) {
-                           throw new GLSPServerException("Could not execute create operation on new Activity node");
+                           throw new GLSPServerException("Could not execute create operation on new Partition node");
                         }
                      });
             }
@@ -90,7 +90,7 @@ public class CreateActivityDiagramNodeOperationHandler
             modelAccess.addPartition(UmlModelState.getModelState(modelState), location, container)
                   .thenAccept(response -> {
                      if (!response.body()) {
-                        throw new GLSPServerException("Could not execute create operation on new Activity node");
+                        throw new GLSPServerException("Could not execute create operation on new Partition node");
                      }
                   });
             break;*/

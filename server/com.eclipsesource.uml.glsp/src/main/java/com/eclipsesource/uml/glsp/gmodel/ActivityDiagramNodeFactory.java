@@ -18,7 +18,10 @@ import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.uml2.uml.*;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ActivityDiagramNodeFactory extends AbstractGModelFactory<Classifier, GNode> {
@@ -70,19 +73,19 @@ public class ActivityDiagramNodeFactory extends AbstractGModelFactory<Classifier
 
       GCompartment structureCompartment = createStructureCompartment(umlActivity);
 
-      /*List<GModelElement> childPartitions = umlActivity.getGroups().stream()
+      List<GModelElement> childPartitions = umlActivity.getGroups().stream()
             .filter(ActivityPartition.class::isInstance)
-            .map(ActivityPartition.class::cast)
-            .map(activityDiagramGroupNodeFactory::create)
-            .collect(Collectors.toList());
-      structureCompartment.getChildren().addAll(childPartitions);*/
-
-      List<GModelElement> childPartitions = umlActivity.getPartitions().stream()
-            .filter(Objects::nonNull)
             .map(ActivityPartition.class::cast)
             .map(activityDiagramGroupNodeFactory::createPartition)
             .collect(Collectors.toList());
       structureCompartment.getChildren().addAll(childPartitions);
+
+      /*List<GModelElement> childPartitions = umlActivity.getPartitions().stream()
+            .filter(ActivityPartition.class::isInstance)
+            .map(ActivityPartition.class::cast)
+            .map(activityDiagramGroupNodeFactory::createPartition)
+            .collect(Collectors.toList());
+      structureCompartment.getChildren().addAll(childPartitions);*/
 
       List<GModelElement> childInterruptibleRegion = umlActivity.getGroups().stream()
             .filter(InterruptibleActivityRegion.class::isInstance)

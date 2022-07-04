@@ -34,26 +34,26 @@ public class AddPartitionCommand extends UmlSemanticElementCommand {
 
    @Override
    protected void doExecute() {
-      //newPartition.setName(UmlSemanticCommandUtil.getNewPartitionName(umlModel));
+      newPartition.setName(UmlSemanticCommandUtil.getNewPartitionName(umlModel));
       NamedElement parentContainer = UmlSemanticCommandUtil.getElement(umlModel, parentSemanticUriFragment, NamedElement.class);
 
-      if (parentContainer instanceof Activity) {
+      /*if (parentContainer instanceof Activity) {
          String name = "NewPartition" + ((Activity) parentContainer).getPartitions().size();
          System.out.println("NAME: " + name);
          //newPartition = ((Activity) parentContainer).createPartition(name);
          ((Activity) parentContainer).createPartition(name);
-      }
-      /*if (container instanceof Activity) {
-         Activity activity = (Activity) container;
-         String name = "NewPartition" + activity.getPartitions().size();
-         partition = activity.createPartition(name);
-      } else if (container instanceof ActivityPartition) {
-         ActivityPartition parent = (ActivityPartition) container;
-         String name = "NewPartition" + parent.getSubpartitions().size();
-         partition = parent.createSubpartition(name);
-      } else {
-         throw new RuntimeException("Invalid partition container type: " + container.getClass().getSimpleName());
       }*/
+      if (parentContainer instanceof Activity) {
+         Activity activity = (Activity) parentContainer;
+         String name = "NewPartition" + activity.getPartitions().size();
+         newPartition = activity.createPartition(name);
+      } else if (parentContainer instanceof ActivityPartition) {
+         ActivityPartition parent = (ActivityPartition) parentContainer;
+         String name = "NewPartition" + parent.getSubpartitions().size();
+         newPartition = parent.createSubpartition(name);
+      } else {
+         throw new RuntimeException("Invalid partition container type: " + parentContainer.getClass().getSimpleName());
+      }
    }
 
    public ActivityPartition getNewPartition() {

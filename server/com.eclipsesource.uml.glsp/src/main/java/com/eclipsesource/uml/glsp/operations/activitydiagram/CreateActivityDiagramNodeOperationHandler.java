@@ -13,6 +13,8 @@ import org.eclipse.glsp.server.operations.Operation;
 import org.eclipse.glsp.server.types.GLSPServerException;
 import org.eclipse.glsp.server.utils.GeometryUtil;
 import org.eclipse.uml2.uml.Activity;
+import org.eclipse.uml2.uml.ActivityPartition;
+import org.eclipse.uml2.uml.InterruptibleActivityRegion;
 import org.eclipse.uml2.uml.NamedElement;
 
 import java.util.List;
@@ -64,9 +66,11 @@ public class CreateActivityDiagramNodeOperationHandler
                   });
             break;
          }
-         // FIXME: NOT RENDERED!!!!!
          case Types.PARTITION: {
-            if (parentContainer instanceof Activity) {
+            // TODO: Check if the parenting is semantically correct
+            if (parentContainer instanceof Activity ||
+                  parentContainer instanceof ActivityPartition ||
+                  parentContainer instanceof InterruptibleActivityRegion) {
                Optional<GModelElement> container = modelIndex.get(operation.getContainerId());
                Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(), getStructureCompartmentGModelElement(container));
                modelAccess.addPartition(UmlModelState.getModelState(modelState), relativeLocation, parentContainer)
@@ -77,26 +81,12 @@ public class CreateActivityDiagramNodeOperationHandler
                      });
             }
             break;
-            /*String containerId = operation.getContainerId();
-            Shape containerShape = getOrThrow(modelState.getIndex().getNotation(containerId, Shape.class),
-                  "No valid Shape container with id " + containerId + " found");
-            EObject container = getOrThrow(modelState.getIndex().getSemantic(containerId),
-                  "No valid partition container with id " + containerId + " found");
-            double x = operation.getLocation().orElse(GraphUtil.point(0, 0)).getX();
-            double y = operation.getLocation().orElse(GraphUtil.point(0, 0)).getY();
-            x = Math.max(0, x - containerShape.getPosition().getX() - 72.5);
-            y = Math.max(0, y - containerShape.getPosition().getY() - 32);
-            GPoint location = GraphUtil.point(x, y);
-            modelAccess.addPartition(UmlModelState.getModelState(modelState), location, container)
-                  .thenAccept(response -> {
-                     if (!response.body()) {
-                        throw new GLSPServerException("Could not execute create operation on new Partition node");
-                     }
-                  });
-            break;*/
          }
          case Types.INTERRUPTIBLEREGION: {
-            if (parentContainer instanceof Activity) {
+            // TODO: Check if the parenting is semantically correct
+            if (parentContainer instanceof Activity ||
+                  parentContainer instanceof ActivityPartition ||
+                  parentContainer instanceof InterruptibleActivityRegion) {
                Optional<GModelElement> container = modelIndex.get(operation.getContainerId());
                Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(), getStructureCompartmentGModelElement(container));
                modelAccess.addInterruptibleRegion(UmlModelState.getModelState(modelState), relativeLocation, parentContainer)
@@ -107,33 +97,6 @@ public class CreateActivityDiagramNodeOperationHandler
                      });
             }
             break;
-
-            /*String containerId = operation.getContainerId();
-            Shape containerShape = getOrThrow(modelState.getIndex().getNotation(containerId, Shape.class),
-                  "No valid Shape container with id " + containerId + " found");
-            EObject container = getOrThrow(modelState.getIndex().getSemantic(containerId),
-                  "No valid partition container with id " + containerId + " found");*/
-
-
-                /*GDimension newSize = new GDimensionImpl();
-                newSize.setHeight(containerShape.getSize().getHeight() * 2);
-                newSize.setWidth(containerShape.getSize().getWidth() * 2);
-                containerShape.setSize(newSize);*/
-
-            /*double x = operation.getLocation().orElse(GraphUtil.point(0, 0)).getX();
-            double y = operation.getLocation().orElse(GraphUtil.point(0, 0)).getY();
-            x = Math.max(0, x - containerShape.getPosition().getX() - 64);
-            y = Math.max(0, y - containerShape.getPosition().getY() - 64);
-            GPoint location = GraphUtil.point(x, y);
-
-
-            modelAccess.addInterruptibleRegion(UmlModelState.getModelState(modelState), location, container)
-                  .thenAccept(response -> {
-                     if (!response.body()) {
-                        throw new GLSPServerException("Could not execute create operation on new Activity node");
-                     }
-                  });
-            break;*/
          }
       }
    }

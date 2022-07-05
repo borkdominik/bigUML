@@ -82,7 +82,6 @@ import {
     InterruptibleRegionNodeView,
     ObjectNodeView,
     ParameterNodeView,
-    PartitionNodeView,
     PinNodeView,
     PinPortView,
     SendSignalNodeView
@@ -165,7 +164,8 @@ export default function createContainer(widgetId: string): Container {
         // ACTIVITY DIAGRAM
         configureModelElement(context, UmlTypes.ACTIVITY, PackageNode, ActivityNodeView);
         configureModelElement(context, UmlTypes.ICON_ACTIVITY, IconActivity, IconView);
-        configureModelElement(context, UmlTypes.PARTITION, LabeledNode, PartitionNodeView);
+        // configureModelElement(context, UmlTypes.PARTITION, LabeledNode, PartitionNodeView);
+        configureModelElement(context, UmlTypes.PARTITION, LabeledNode, PackageNodeView);
         configureModelElement(context, UmlTypes.ACTION, LabeledNode, ActionNodeView);
         configureModelElement(context, UmlTypes.ICON_ACTION, IconAction, IconView);
         configureModelElement(context, UmlTypes.ACCEPTEVENT, LabeledNode, AcceptEventNodeView);

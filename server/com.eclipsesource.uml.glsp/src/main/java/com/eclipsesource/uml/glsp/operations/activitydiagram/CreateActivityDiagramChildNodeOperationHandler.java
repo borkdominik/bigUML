@@ -61,15 +61,14 @@ public class CreateActivityDiagramChildNodeOperationHandler
 
       UmlModelState modelState = getUmlModelState();
       UmlModelIndex modelIndex = modelState.getIndex();
-
-      String elementTypeId = operation.getElementTypeId();
-
-
+      
       NamedElement parentContainer = getOrThrow(
             modelIndex.getSemantic(operation.getContainerId(), NamedElement.class),
             "No parent container found!");
 
-      switch (elementTypeId) {
+      System.out.println("PARENT " + parentContainer.getClass());
+
+      switch (operation.getElementTypeId()) {
          case (Types.ACTION): {
             if (parentContainer instanceof Activity
                   || parentContainer instanceof ActivityPartition
@@ -182,7 +181,6 @@ public class CreateActivityDiagramChildNodeOperationHandler
             }
             break;
          }
-         // FIXME: duplicate ID in model
          case (Types.DATASTORE): {
             if (parentContainer instanceof Activity) {
                Optional<GModelElement> containerActivity = modelIndex.get(operation.getContainerId());
@@ -226,7 +224,6 @@ public class CreateActivityDiagramChildNodeOperationHandler
             }
             break;
          }
-         // FIXME: duplicate id in model
          case (Types.FLOWFINALNODE): {
             if (parentContainer instanceof Activity
                   || parentContainer instanceof ActivityPartition

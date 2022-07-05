@@ -10,34 +10,24 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.activitydiagram.controlnode;
 
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Activity;
-import org.eclipse.uml2.uml.ActivityPartition;
-import org.eclipse.uml2.uml.ControlNode;
-import org.eclipse.uml2.uml.DecisionNode;
-import org.eclipse.uml2.uml.Element;
-import org.eclipse.uml2.uml.FinalNode;
-import org.eclipse.uml2.uml.FlowFinalNode;
-import org.eclipse.uml2.uml.ForkNode;
-import org.eclipse.uml2.uml.InitialNode;
-import org.eclipse.uml2.uml.InterruptibleActivityRegion;
-import org.eclipse.uml2.uml.JoinNode;
-import org.eclipse.uml2.uml.MergeNode;
-import org.eclipse.uml2.uml.UMLFactory;
-
 import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
 import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.uml2.uml.*;
+
+import java.lang.Class;
 
 public class AddControlNodeCommand extends UmlSemanticElementCommand {
 
    protected final ControlNode node;
    protected final Element parent;
+   protected final String parentSemanticUri;
 
    public AddControlNodeCommand(final EditingDomain domain, final URI modelUri, final String parentUri,
-      final String className) {
+                                final String className) {
       super(domain, modelUri);
-
+      this.parentSemanticUri = parentUri;
       try {
          Class<? extends ControlNode> clazz;
          clazz = Class.forName(className).asSubclass(ControlNode.class);
@@ -66,11 +56,19 @@ public class AddControlNodeCommand extends UmlSemanticElementCommand {
 
    @Override
    protected void doExecute() {
+      NamedElement parentContainer = UmlSemanticCommandUtil.getElement(umlModel, parentSemanticUri, NamedElement.class);
 
-      Activity activity = null;
-      if (parent instanceof Activity) {
-         activity = (Activity) parent;
-      } else if (parent instanceof ActivityPartition) {
+      if (parentContainer instanceof InterruptibleActivityRegion) {
+         ((InterruptibleActivityRegion) parentContainer).getNodes().add(node);
+      } else if (parentContainer instanceof ActivityPartition) {
+         ((ActivityPartition) parentContainer).getNodes().add(node);
+      } else if (parentContainer instanceof Activity) {
+         ((Activity) parentContainer).getNodes().add(node);
+      }
+
+      /*Activity activity = null;
+      System.out.println("PARENT " + parent.getClass());
+      if (parent instanceof ActivityPartition) {
          ActivityPartition partition = ((ActivityPartition) parent);
          activity = partition.containingActivity();
          partition.getNodes().add(node);
@@ -78,13 +76,17 @@ public class AddControlNodeCommand extends UmlSemanticElementCommand {
          InterruptibleActivityRegion region = ((InterruptibleActivityRegion) parent);
          activity = region.containingActivity();
          region.getNodes().add(node);
+      } else if (parent instanceof Activity) {
+         activity = (Activity) parent;
       } else {
          throw new RuntimeException("Invalid action conatainer type: " + parent.getClass().getSimpleName());
       }
 
-      activity.getOwnedNodes().add(node);
+      activity.getOwnedNodes().add(node);*/
    }
 
-   public ControlNode getNewControlNode() { return node; }
+   public ControlNode getNewControlNode() {
+      return node;
+   }
 
 }

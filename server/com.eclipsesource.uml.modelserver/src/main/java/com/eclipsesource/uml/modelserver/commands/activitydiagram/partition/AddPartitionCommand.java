@@ -36,6 +36,7 @@ public class AddPartitionCommand extends UmlSemanticElementCommand {
    protected void doExecute() {
       newPartition.setName(UmlSemanticCommandUtil.getNewPartitionName(umlModel));
       NamedElement parentContainer = UmlSemanticCommandUtil.getElement(umlModel, parentSemanticUriFragment, NamedElement.class);
+      System.out.println("PARENT " + parentContainer.getName());
 
       /*if (parentContainer instanceof Activity) {
          String name = "NewPartition" + ((Activity) parentContainer).getPartitions().size();
@@ -48,6 +49,7 @@ public class AddPartitionCommand extends UmlSemanticElementCommand {
          String name = "NewPartition" + activity.getPartitions().size();
          newPartition = activity.createPartition(name);
       } else if (parentContainer instanceof ActivityPartition) {
+         System.out.println("MS IN PARTITION!!!");
          ActivityPartition parent = (ActivityPartition) parentContainer;
          String name = "NewPartition" + parent.getSubpartitions().size();
          newPartition = parent.createSubpartition(name);

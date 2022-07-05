@@ -10,33 +10,28 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.activitydiagram.action;
 
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.AcceptEventAction;
-import org.eclipse.uml2.uml.Action;
-import org.eclipse.uml2.uml.Activity;
-import org.eclipse.uml2.uml.ActivityPartition;
-import org.eclipse.uml2.uml.CallBehaviorAction;
-import org.eclipse.uml2.uml.Element;
-import org.eclipse.uml2.uml.InterruptibleActivityRegion;
-import org.eclipse.uml2.uml.OpaqueAction;
-import org.eclipse.uml2.uml.SendSignalAction;
-import org.eclipse.uml2.uml.UMLFactory;
-
 import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
 import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.uml2.uml.*;
+
+import java.lang.Class;
+import java.util.Random;
 
 public class AddActionCommand extends UmlSemanticElementCommand {
 
    protected final Action action;
    protected final Element parent;
+   protected final String parentSemanticUri;
 
    public AddActionCommand(final EditingDomain domain, final URI modelUri, final String parentUri,
-      final String className) {
+                           final String className) {
       super(domain, modelUri);
+      this.parentSemanticUri = parentUri;
       try {
          if (AddActionCommandContribution.SIGNAL_EVENT.equals(className)
-            || AddActionCommandContribution.TIME_EVENT.equals(className)) {
+               || AddActionCommandContribution.TIME_EVENT.equals(className)) {
             AcceptEventAction a = UMLFactory.eINSTANCE.createAcceptEventAction();
             a.createTrigger(className);
             this.action = a;
@@ -48,8 +43,7 @@ public class AddActionCommand extends UmlSemanticElementCommand {
             } else if (SendSignalAction.class.equals(clazz)) {
                this.action = UMLFactory.eINSTANCE.createSendSignalAction();
             } else if (CallBehaviorAction.class.equals(clazz)) {
-               CallBehaviorAction cba = UMLFactory.eINSTANCE.createCallBehaviorAction();
-               action = cba;
+               this.action = UMLFactory.eINSTANCE.createCallBehaviorAction();
             } else {
                throw new RuntimeException("Invalid Action class: " + className);
             }
@@ -62,11 +56,19 @@ public class AddActionCommand extends UmlSemanticElementCommand {
 
    @Override
    protected void doExecute() {
+      Random rand = new Random();
+      NamedElement parentContainer = UmlSemanticCommandUtil.getElement(umlModel, parentSemanticUri, NamedElement.class);
+      action.setName("NewAction_" + rand.nextInt(1000));
+      if (parentContainer instanceof ActivityPartition) {
+         ((ActivityPartition) parentContainer).getNodes().add(action);
+      } else if (parentContainer instanceof Activity) {
+         ((Activity) parentContainer).getNodes().add(action);
+      } else if (parentContainer instanceof InterruptibleActivityRegion) {
+         ((InterruptibleActivityRegion) parentContainer).getNodes().add(action);
+      }
 
-      Activity activity = null;
-      if (parent instanceof Activity) {
-         activity = (Activity) parent;
-      } else if (parent instanceof ActivityPartition) {
+      /*Activity activity = null;
+      if (parent instanceof ActivityPartition) {
          ActivityPartition partition = ((ActivityPartition) parent);
          activity = partition.containingActivity();
          partition.getNodes().add(action);
@@ -74,9 +76,14 @@ public class AddActionCommand extends UmlSemanticElementCommand {
          InterruptibleActivityRegion region = ((InterruptibleActivityRegion) parent);
          activity = region.containingActivity();
          region.getNodes().add(action);
+      } else if (parent instanceof Activity) {
+         activity = (Activity) parent;
+         //activity.getOwnedNodes().add(action);
       } else {
          throw new RuntimeException("Invalid action conatainer type: " + parent.getClass().getSimpleName());
       }
+
+      //System.out.println();
 
       if (action instanceof OpaqueAction) {
          long id = activity.getOwnedNodes().stream().filter(Action.class::isInstance).count();
@@ -88,10 +95,12 @@ public class AddActionCommand extends UmlSemanticElementCommand {
          long id = activity.getOwnedNodes().stream().filter(SendSignalAction.class::isInstance).count();
          action.setName("NewSignal" + id);
       }
-
-      activity.getOwnedNodes().add(action);
+      // FIXME: THIS LEADS TO DUPLICATES AND DOES NOT WORK WITHOUT IT ATM!!!!
+      activity.getOwnedNodes().add(action);*/
    }
 
-   public Action getNewAction() { return action; }
+   public Action getNewAction() {
+      return action;
+   }
 
 }

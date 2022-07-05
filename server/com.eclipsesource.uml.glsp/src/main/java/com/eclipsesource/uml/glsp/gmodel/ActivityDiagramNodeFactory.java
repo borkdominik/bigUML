@@ -28,7 +28,6 @@ public class ActivityDiagramNodeFactory extends AbstractGModelFactory<Classifier
 
    private final DiagramFactory parentFactory;
    private final ActivityDiagramChildNodeFactory activityDiagramChildNodeFactory;
-   private final ActivityDiagramGroupNodeFactory activityDiagramGroupNodeFactory;
 
    private static final String V_GRAB = "vGrab";
    private static final String H_GRAB = "hGrab";
@@ -36,12 +35,10 @@ public class ActivityDiagramNodeFactory extends AbstractGModelFactory<Classifier
 
    public ActivityDiagramNodeFactory(final UmlModelState modelState,
                                      final DiagramFactory parentFactory,
-                                     final ActivityDiagramChildNodeFactory activityDiagramChildNodeFactory,
-                                     final ActivityDiagramGroupNodeFactory activityDiagramGroupNodeFactory) {
+                                     final ActivityDiagramChildNodeFactory activityDiagramChildNodeFactory) {
       super(modelState);
       this.parentFactory = parentFactory;
       this.activityDiagramChildNodeFactory = activityDiagramChildNodeFactory;
-      this.activityDiagramGroupNodeFactory = activityDiagramGroupNodeFactory;
    }
 
    @Override
@@ -56,8 +53,8 @@ public class ActivityDiagramNodeFactory extends AbstractGModelFactory<Classifier
    protected GNode create(final Activity umlActivity) {
       Map<String, Object> layoutOptions = new HashMap<>();
       layoutOptions.put(H_ALIGN, GConstants.HAlign.CENTER);
-      layoutOptions.put(H_GRAB, false);
-      layoutOptions.put(V_GRAB, false);
+      layoutOptions.put(H_GRAB, true);
+      layoutOptions.put(V_GRAB, true);
 
       GNodeBuilder builder = new GNodeBuilder(Types.ACTIVITY)
             .id(toId(umlActivity))
@@ -76,21 +73,14 @@ public class ActivityDiagramNodeFactory extends AbstractGModelFactory<Classifier
       List<GModelElement> childPartitions = umlActivity.getGroups().stream()
             .filter(ActivityPartition.class::isInstance)
             .map(ActivityPartition.class::cast)
-            .map(activityDiagramGroupNodeFactory::createPartition)
+            .map(parentFactory::create)
             .collect(Collectors.toList());
       structureCompartment.getChildren().addAll(childPartitions);
-
-      /*List<GModelElement> childPartitions = umlActivity.getPartitions().stream()
-            .filter(ActivityPartition.class::isInstance)
-            .map(ActivityPartition.class::cast)
-            .map(activityDiagramGroupNodeFactory::createPartition)
-            .collect(Collectors.toList());
-      structureCompartment.getChildren().addAll(childPartitions);*/
 
       List<GModelElement> childInterruptibleRegion = umlActivity.getGroups().stream()
             .filter(InterruptibleActivityRegion.class::isInstance)
             .map(InterruptibleActivityRegion.class::cast)
-            .map(activityDiagramGroupNodeFactory::create)
+            .map(parentFactory::create)
             .collect(Collectors.toList());
       structureCompartment.getChildren().addAll(childInterruptibleRegion);
 
@@ -185,31 +175,11 @@ public class ActivityDiagramNodeFactory extends AbstractGModelFactory<Classifier
             .collect(Collectors.toList());
       structureCompartment.getChildren().addAll(childForkNodes);
 
-      System.out.println("CHILDREN" + structureCompartment.getChildren());
+      System.out.println("ACTIVITY CHILDREN " + structureCompartment.getChildren());
 
       activityNode.getChildren().add(structureCompartment);
       return activityNode;
    }
-
-   /*protected GNode create(ActivityPartition umlPartition) {
-      Map<String, Object> layoutOptions = new HashMap<>();
-      layoutOptions.put(H_ALIGN, GConstants.HAlign.CENTER);
-      layoutOptions.put(H_GRAB, false);
-      layoutOptions.put(V_GRAB, false);
-
-      GNodeBuilder builder = new GNodeBuilder(Types.PARTITION)
-            .id(toId(umlPartition))
-            .layout(GConstants.Layout.VBOX)
-            .layoutOptions(layoutOptions)
-            .addCssClass(CSS.NODE)
-            .addCssClass(CSS.PACKAGEABLE_NODE);
-
-      applyShapeData((Classifier) umlPartition, builder);
-
-      GNode partitionNode = builder.build();
-
-      return partitionNode;
-   }*/
 
    protected void applyShapeData(final Classifier classifier, final GNodeBuilder builder) {
       modelState.getIndex().getNotation(classifier, Shape.class).ifPresent(shape -> {

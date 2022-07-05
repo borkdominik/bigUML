@@ -26,6 +26,7 @@ import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.uml2.uml.*;
 
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 public class ActivityDiagramChildNodeFactory extends AbstractGModelFactory<ActivityNode, GNode> {
@@ -36,24 +37,22 @@ public class ActivityDiagramChildNodeFactory extends AbstractGModelFactory<Activ
 
    @Override
    public GNode create(final ActivityNode activityNode) {
-      // FIXME: call node not working at all
       if (activityNode instanceof Action) {
-         return create((Action) activityNode);
+         return createAction((Action) activityNode);
       } else if (activityNode instanceof ControlNode) {
-         return create((ControlNode) activityNode);
+         return createControlNode((ControlNode) activityNode);
       } else if (activityNode instanceof CentralBufferNode) {
-         return create((CentralBufferNode) activityNode);
+         return createCentralBuffer((CentralBufferNode) activityNode);
       } else if (activityNode instanceof ActivityParameterNode) {
-         return create((ActivityParameterNode) activityNode);
+         return createParameter((ActivityParameterNode) activityNode);
       } else if (activityNode instanceof Pin) {
-         System.out.println("goes into pin factory if");
-         return create((Pin) activityNode);
+         return createPin((Pin) activityNode);
       }
       return null;
    }
 
-   protected GNode create(final Action action) {
-      String type = null;
+   protected GNode createAction(final Action action) {
+      String type;
       if (action instanceof OpaqueAction) {
          type = Types.ACTION;
       } else if (action instanceof SendSignalAction) {
@@ -71,7 +70,6 @@ public class ActivityDiagramChildNodeFactory extends AbstractGModelFactory<Activ
       } else {
          return null;
       }
-
       GNodeBuilder b = new GNodeBuilder(type) //
             .id(toId(action)) //
             .layout(GConstants.Layout.VBOX) //
@@ -83,16 +81,16 @@ public class ActivityDiagramChildNodeFactory extends AbstractGModelFactory<Activ
          b.add(buildPins(action, ((OpaqueAction) action).getOutputValues(), "output"));
 
          b.addAll(
-               ((OpaqueAction) action).getInputValues().stream().map(pin -> create(pin)).collect(Collectors.toList()));
+               ((OpaqueAction) action).getInputValues().stream().map(this::createPin).collect(Collectors.toList()));
          b.addAll(
-               ((OpaqueAction) action).getOutputValues().stream().map(pin -> create(pin)).collect(Collectors.toList()));
+               ((OpaqueAction) action).getOutputValues().stream().map(this::createPin).collect(Collectors.toList()));
       }
 
       applyShapeData(action, b);
       return b.build();
    }
 
-   protected GNode create(final CallAction callAction) {
+   protected GNode createCall(final CallAction callAction) {
       System.out.println("goes into call action factory");
       GNodeBuilder b = new GNodeBuilder(Types.CALL) //
             .id(toId(callAction)) //
@@ -104,8 +102,8 @@ public class ActivityDiagramChildNodeFactory extends AbstractGModelFactory<Activ
       return b.build();
    }
 
-   protected GNode create(final ControlNode node) {
-      String type = null;
+   protected GNode createControlNode(final ControlNode node) {
+      String type;
       if (node instanceof InitialNode) {
          type = Types.INITIALNODE;
       } else if (node instanceof ActivityFinalNode) {
@@ -119,8 +117,9 @@ public class ActivityDiagramChildNodeFactory extends AbstractGModelFactory<Activ
       } else {
          return null;
       }
+      Random rand = new Random();
       GNodeBuilder b = new GNodeBuilder(type) //
-            .id(toId(node)) //
+            .id(toId(node) + rand.nextInt(1000)) //
             .layout(GConstants.Layout.VBOX) //
             .addCssClass(CSS.NODE);
 
@@ -128,7 +127,7 @@ public class ActivityDiagramChildNodeFactory extends AbstractGModelFactory<Activ
       return b.build();
    }
 
-   protected GNode create(final ActivityParameterNode node) {
+   protected GNode createParameter(final ActivityParameterNode node) {
       GNodeBuilder b = new GNodeBuilder(Types.PARAMETER) //
             .id(toId(node)) //
             .layout(GConstants.Layout.VBOX) //
@@ -146,9 +145,8 @@ public class ActivityDiagramChildNodeFactory extends AbstractGModelFactory<Activ
       return b.build();
    }
 
-   protected GNode create(final CentralBufferNode node) {
-      String type = null;
-      String header = null;
+   protected GNode createCentralBuffer(final CentralBufferNode node) {
+      String type, header;
       if (node instanceof DataStoreNode) {
          type = Types.DATASTORE;
          header = "<<datastore>>";
@@ -158,8 +156,9 @@ public class ActivityDiagramChildNodeFactory extends AbstractGModelFactory<Activ
       } else {
          return null;
       }
+      Random rand = new Random();
       GNodeBuilder b = new GNodeBuilder(type) //
-            .id(toId(node)) //
+            .id(toId(node) + rand.nextInt(1000)) //
             .layout(GConstants.Layout.VBOX) //
             .addCssClass(CSS.NODE)
             .add(new GCompartmentBuilder(Types.COMPARTMENT_HEADER) //
@@ -178,7 +177,7 @@ public class ActivityDiagramChildNodeFactory extends AbstractGModelFactory<Activ
       return b.build();
    }
 
-   protected GNode create(final Pin pin) {
+   protected GNode createPin(final Pin pin) {
       System.out.println("GOES INTO Pin CREATE");
       GNodeBuilder b = new GNodeBuilder(Types.PIN) //
             .id(toId(pin)) //
@@ -221,11 +220,12 @@ public class ActivityDiagramChildNodeFactory extends AbstractGModelFactory<Activ
          text = cba.getBehavior() != null ? cba.getBehavior().getName() : "<NoRef>";
          labelType = Types.CALL_REF;
       }
+      Random rand = new Random();
       return new GCompartmentBuilder(Types.COMPARTMENT_HEADER) //
             .layout("hbox") //
-            .id(UmlIDUtil.createHeaderId(toId(action)))
+            .id(UmlIDUtil.createHeaderId(toId(action) + rand.nextInt(1000)))
             .add(new GLabelBuilder(labelType) //
-                  .id(UmlIDUtil.createHeaderLabelId(toId(action))).text(text) //
+                  .id(UmlIDUtil.createHeaderLabelId(toId(action) + rand.nextInt(1000))).text(text) //
                   .build()) //
             .build();
    }
@@ -248,7 +248,7 @@ public class ActivityDiagramChildNodeFactory extends AbstractGModelFactory<Activ
                   .hAlign(GConstants.HAlign.LEFT) //
                   .resizeContainer(true)) //
             .addAll(pins.stream() //
-                  .map(pin -> create(pin))
+                  .map(this::createPin)
                   .collect(Collectors.toList()))
             .build();
    }

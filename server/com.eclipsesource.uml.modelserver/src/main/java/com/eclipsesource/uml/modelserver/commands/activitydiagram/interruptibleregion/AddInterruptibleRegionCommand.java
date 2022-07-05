@@ -10,21 +10,16 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.activitydiagram.interruptibleregion;
 
-import java.util.function.Supplier;
-
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Activity;
-import org.eclipse.uml2.uml.ActivityPartition;
-import org.eclipse.uml2.uml.Element;
-import org.eclipse.uml2.uml.InterruptibleActivityRegion;
-import org.eclipse.uml2.uml.UMLFactory;
-
 import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
 import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.uml2.uml.*;
+
+import java.util.function.Supplier;
 
 public class AddInterruptibleRegionCommand extends UmlSemanticElementCommand
-   implements Supplier<InterruptibleActivityRegion> {
+      implements Supplier<InterruptibleActivityRegion> {
 
    private InterruptibleActivityRegion region;
    private final Element container;

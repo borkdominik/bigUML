@@ -22,11 +22,11 @@ import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.PackageableElement;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;
+import com.eclipsesource.uml.glsp.uml.class_diagram.ClassModelServerAccess;
 import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
 
 public class CreateClassDiagramChildNodeOperationHandler
-   extends EMSBasicCreateOperationHandler<CreateNodeOperation, UmlModelServerAccess> {
+   extends EMSBasicCreateOperationHandler<CreateNodeOperation, ClassModelServerAccess> {
 
    public CreateClassDiagramChildNodeOperationHandler() {
       super(handledElementTypeIds);
@@ -43,12 +43,10 @@ public class CreateClassDiagramChildNodeOperationHandler
       return false;
    }
 
-   protected UmlModelState getUmlModelState() {
-      return (UmlModelState) getEMSModelState();
-   }
+   protected UmlModelState getUmlModelState() { return (UmlModelState) getEMSModelState(); }
 
    @Override
-   public void executeOperation(final CreateNodeOperation operation, final UmlModelServerAccess modelAccess) {
+   public void executeOperation(final CreateNodeOperation operation, final ClassModelServerAccess modelAccess) {
       UmlModelState modelState = getUmlModelState();
 
       String containerId = operation.getContainerId();

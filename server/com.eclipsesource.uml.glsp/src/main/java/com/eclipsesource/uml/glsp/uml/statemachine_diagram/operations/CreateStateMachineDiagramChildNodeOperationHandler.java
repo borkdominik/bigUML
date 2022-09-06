@@ -1,11 +1,17 @@
 package com.eclipsesource.uml.glsp.uml.statemachine_diagram.operations;
 
-import com.eclipsesource.uml.glsp.model.UmlModelIndex;
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
+
+import java.util.List;
+import java.util.Optional;
+
 import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSBasicCreateOperationHandler;
-import org.eclipse.glsp.graph.*;
+import org.eclipse.glsp.graph.GBoundsAware;
+import org.eclipse.glsp.graph.GCompartment;
+import org.eclipse.glsp.graph.GGraph;
+import org.eclipse.glsp.graph.GModelElement;
+import org.eclipse.glsp.graph.GNode;
+import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.operations.Operation;
@@ -16,21 +22,21 @@ import org.eclipse.uml2.uml.PseudostateKind;
 import org.eclipse.uml2.uml.Region;
 import org.eclipse.uml2.uml.StateMachine;
 
-import java.util.List;
-import java.util.Optional;
-
-import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
+import com.eclipsesource.uml.glsp.model.UmlModelIndex;
+import com.eclipsesource.uml.glsp.model.UmlModelState;
+import com.eclipsesource.uml.glsp.uml.statemachine_diagram.StateMachineModelServerAccess;
+import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
 
 public class CreateStateMachineDiagramChildNodeOperationHandler
-      extends EMSBasicCreateOperationHandler<CreateNodeOperation, UmlModelServerAccess> {
+   extends EMSBasicCreateOperationHandler<CreateNodeOperation, StateMachineModelServerAccess> {
 
    public CreateStateMachineDiagramChildNodeOperationHandler() {
       super(handledElementTypeIds);
    }
 
    private static List<String> handledElementTypeIds = List.of(Types.STATE, Types.INITIAL_STATE, Types.DEEP_HISTORY,
-         Types.SHALLOW_HISTORY, Types.JOIN, Types.FORK, Types.JUNCTION, Types.CHOICE, Types.ENTRY_POINT,
-         Types.EXIT_POINT, Types.TERMINATE, Types.FINAL_STATE);
+      Types.SHALLOW_HISTORY, Types.JOIN, Types.FORK, Types.JUNCTION, Types.CHOICE, Types.ENTRY_POINT,
+      Types.EXIT_POINT, Types.TERMINATE, Types.FINAL_STATE);
 
    @Override
    public boolean handles(final Operation execAction) {
@@ -41,23 +47,23 @@ public class CreateStateMachineDiagramChildNodeOperationHandler
       return false;
    }
 
-   protected UmlModelState getUmlModelState() {
-      return (UmlModelState) getEMSModelState();
-   }
+   protected UmlModelState getUmlModelState() { return (UmlModelState) getEMSModelState(); }
 
    @Override
-   public void executeOperation(final CreateNodeOperation operation, final UmlModelServerAccess modelAccess) {
+   public void executeOperation(final CreateNodeOperation operation, final StateMachineModelServerAccess modelAccess) {
 
       UmlModelState modelState = getUmlModelState();
       UmlModelIndex modelIndex = modelState.getIndex();
       String containerId = operation.getContainerId();
       String elementTypeId = operation.getElementTypeId();
 
-      /*StateMachine containerStateMachine = getOrThrow(modelIndex.getSemantic(containerId), StateMachine.class,
-            "No valid State Machine container with id " + operation.getContainerId() + " found");*/
+      /*
+       * StateMachine containerStateMachine = getOrThrow(modelIndex.getSemantic(containerId), StateMachine.class,
+       * "No valid State Machine container with id " + operation.getContainerId() + " found");
+       */
 
       NamedElement containerElement = getOrThrow(modelIndex.getSemantic(containerId), NamedElement.class,
-            "No valid container element with id " + operation.getContainerId() + " found");
+         "No valid container element with id " + operation.getContainerId() + " found");
 
       Region region = null;
       if (containerElement instanceof StateMachine) {
@@ -66,55 +72,55 @@ public class CreateStateMachineDiagramChildNodeOperationHandler
          region = (Region) containerElement;
       }
 
-
       if (Types.STATE.equals(elementTypeId)) {
          Optional<GModelElement> container = modelIndex.get(operation.getContainerId());
          Optional<GModelElement> structCompartment = container.filter(GNode.class::isInstance)
-               .map(GNode.class::cast)
-               .flatMap(this::getStructureCompartment);
+            .map(GNode.class::cast)
+            .flatMap(this::getStructureCompartment);
          Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(), structCompartment);
          modelAccess.addState(UmlModelState.getModelState(modelState), region, relativeLocation)
-               .thenAccept(response -> {
-                  if (!response.body()) {
-                     throw new GLSPServerException("Could not execute create operation on new State node");
-                  }
-               });
+            .thenAccept(response -> {
+               if (!response.body()) {
+                  throw new GLSPServerException("Could not execute create operation on new State node");
+               }
+            });
       } else if (Types.PSEUDOSTATES.contains(elementTypeId)) {
          System.out.println("PSEUDO KIND " + getPseudostateKind(elementTypeId));
          Optional<GModelElement> container = modelIndex.get(operation.getContainerId());
          Optional<GModelElement> structCompartment = container.filter(GNode.class::isInstance)
-               .map(GNode.class::cast)
-               .flatMap(this::getStructureCompartment);
+            .map(GNode.class::cast)
+            .flatMap(this::getStructureCompartment);
          Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(), structCompartment);
-         modelAccess.addPseudostate(UmlModelState.getModelState(modelState), region, getPseudostateKind(elementTypeId), relativeLocation)
-               .thenAccept(response -> {
-                  if (!response.body()) {
-                     throw new GLSPServerException("Could not execute create operation on new State node");
-                  }
-               });
+         modelAccess
+            .addPseudostate(UmlModelState.getModelState(modelState), region, getPseudostateKind(elementTypeId),
+               relativeLocation)
+            .thenAccept(response -> {
+               if (!response.body()) {
+                  throw new GLSPServerException("Could not execute create operation on new State node");
+               }
+            });
       } else if (Types.FINAL_STATE.equals(elementTypeId)) {
          Optional<GModelElement> container = modelIndex.get(operation.getContainerId());
          Optional<GModelElement> structCompartment = container.filter(GNode.class::isInstance)
-               .map(GNode.class::cast)
-               .flatMap(this::getStructureCompartment);
+            .map(GNode.class::cast)
+            .flatMap(this::getStructureCompartment);
          Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(), structCompartment);
          modelAccess.addFinalState(UmlModelState.getModelState(modelState), region, relativeLocation)
-               .thenAccept(response -> {
-                  if (!response.body()) {
-                     throw new GLSPServerException("Could not execute create operation on new State node");
-                  }
-               });
+            .thenAccept(response -> {
+               if (!response.body()) {
+                  throw new GLSPServerException("Could not execute create operation on new State node");
+               }
+            });
       }
    }
 
-
    protected Optional<GCompartment> getStructureCompartment(final GNode packageable) {
       return packageable.getChildren().stream().filter(GCompartment.class::isInstance).map(GCompartment.class::cast)
-            .filter(comp -> Types.STRUCTURE.equals(comp.getType())).findFirst();
+         .filter(comp -> Types.STRUCTURE.equals(comp.getType())).findFirst();
    }
 
    protected Optional<GPoint> getRelativeLocation(final CreateNodeOperation operation,
-                                                  final Optional<GPoint> absoluteLocation, final Optional<GModelElement> container) {
+      final Optional<GPoint> absoluteLocation, final Optional<GModelElement> container) {
       if (absoluteLocation.isPresent() && container.isPresent()) {
          // When creating elements on a parent node (other than the root Graph),
          // prevent the node from using negative coordinates
@@ -123,10 +129,10 @@ public class CreateStateMachineDiagramChildNodeOperationHandler
          if (modelElement instanceof GBoundsAware) {
             try {
                GPoint relativePosition = GeometryUtil.absoluteToRelative(absoluteLocation.get(),
-                     (GBoundsAware) modelElement);
+                  (GBoundsAware) modelElement);
                GPoint relativeLocation = allowNegativeCoordinates
-                     ? relativePosition
-                     : GraphUtil.point(Math.max(0, relativePosition.getX()), Math.max(0, relativePosition.getY()));
+                  ? relativePosition
+                  : GraphUtil.point(Math.max(0, relativePosition.getX()), Math.max(0, relativePosition.getY()));
                return Optional.of(relativeLocation);
             } catch (IllegalArgumentException ex) {
                return absoluteLocation;
@@ -164,7 +170,5 @@ public class CreateStateMachineDiagramChildNodeOperationHandler
    }
 
    @Override
-   public String getLabel() {
-      return "Create Classifier child node";
-   }
+   public String getLabel() { return "Create Classifier child node"; }
 }

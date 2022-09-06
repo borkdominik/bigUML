@@ -21,14 +21,15 @@ import org.eclipse.emfcloud.modelserver.glsp.actions.handlers.EMSBasicActionHand
 import org.eclipse.glsp.server.actions.Action;
 
 import com.eclipsesource.uml.glsp.actions.UmlGetTypesActionHandler;
-import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;
+import com.eclipsesource.uml.glsp.uml.activity_diagram.ActivityModelServerAccess;
 
-public class GetBehaviorsActionHandler extends EMSBasicActionHandler<GetBehaviorsAction, UmlModelServerAccess> {
+public class GetBehaviorsActionHandler extends EMSBasicActionHandler<GetBehaviorsAction, ActivityModelServerAccess> {
 
    private static Logger LOGGER = Logger.getLogger(UmlGetTypesActionHandler.class.getSimpleName());
 
    @Override
-   public List<Action> executeAction(GetBehaviorsAction getBehaviorsAction, UmlModelServerAccess modelServerAccess) {
+   public List<Action> executeAction(final GetBehaviorsAction getBehaviorsAction,
+      final ActivityModelServerAccess modelServerAccess) {
       LOGGER.info("Behaviors suggestion activated");
       List<String> behaviors = new ArrayList<>();
       try {
@@ -38,5 +39,6 @@ public class GetBehaviorsActionHandler extends EMSBasicActionHandler<GetBehavior
       } catch (InterruptedException | ExecutionException e) {
          e.printStackTrace();
       }
-      return List.of(new CallBehaviorsAction(behaviors));   }
+      return List.of(new CallBehaviorsAction(behaviors));
+   }
 }

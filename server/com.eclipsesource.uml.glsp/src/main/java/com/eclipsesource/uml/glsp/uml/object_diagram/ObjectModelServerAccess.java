@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.modelserver;
+package com.eclipsesource.uml.glsp.uml.object_diagram;
 
 import java.util.List;
 import java.util.Map;
@@ -25,14 +25,18 @@ import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
 import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
 import org.eclipse.emfcloud.modelserver.glsp.EMSModelServerAccess;
 import org.eclipse.glsp.graph.GPoint;
+import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.glsp.server.types.ElementAndBounds;
 import org.eclipse.glsp.server.types.ElementAndRoutingPoints;
 import org.eclipse.glsp.server.types.GLSPServerException;
 import org.eclipse.uml2.uml.Activity;
+import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Comment;
 import org.eclipse.uml2.uml.Constraint;
 import org.eclipse.uml2.uml.Element;
+import org.eclipse.uml2.uml.InstanceSpecification;
 import org.eclipse.uml2.uml.NamedElement;
+import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.resource.UMLResource;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
@@ -44,20 +48,26 @@ import com.eclipsesource.uml.modelserver.commands.activitydiagram.comment.Remove
 import com.eclipsesource.uml.modelserver.commands.activitydiagram.comment.SetBodyCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.activitydiagram.comment.UnlinkCommentCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.activitydiagram.condition.AddConditionCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.classdiagram.clazz.RemoveClassCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.commons.contributions.ChangeBoundsCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.commons.contributions.ChangeRoutingPointsCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.commons.contributions.RenameElementCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.objectdiagram.attribute.AddAttributeCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.objectdiagram.attribute.SetAttributeCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.objectdiagram.link.AddLinkCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.objectdiagram.object.AddObjectCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.objectdiagram.object.SetObjectNameCommandContribution;
 import com.eclipsesource.uml.modelserver.unotation.Edge;
 import com.eclipsesource.uml.modelserver.unotation.Shape;
 import com.google.common.base.Preconditions;
 
-public class UmlModelServerAccess extends EMSModelServerAccess {
+public class ObjectModelServerAccess extends EMSModelServerAccess {
 
-   private static final Logger LOGGER = Logger.getLogger(UmlModelServerAccess.class);
+   private static final Logger LOGGER = Logger.getLogger(ObjectModelServerAccess.class);
    private final UmlModelServerClient modelServerClient;
    protected String notationFileExtension;
 
-   public UmlModelServerAccess(final String sourceURI, final UmlModelServerClient modelServerClient) {
+   public ObjectModelServerAccess(final String sourceURI, final UmlModelServerClient modelServerClient) {
       super(sourceURI, modelServerClient, UMLResource.FILE_EXTENSION);
       Preconditions.checkNotNull(modelServerClient);
       this.notationFileExtension = UmlNotationUtil.NOTATION_EXTENSION;
@@ -101,25 +111,7 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
       // return this.modelServerClient.getUmlBehaviors(getSemanticURI());
       return null;
    }
-   /*
-    * public CompletableFuture<Response<Boolean>> removeInterruptibleRegion(final UmlModelState modelState,
-    * final InterruptibleActivityRegion region) {
-    * CCommand removePropertyCommand = RemoveInterruptibleRegionCommandContribution
-    * .create(getSemanticUriFragment(region));
-    * return this.edit(removePropertyCommand);
-    * }
-    */
-
-   /*
-    * Renaming
-    */
-   public CompletableFuture<Response<Boolean>> renameElement(final UmlModelState modelState,
-      final NamedElement element, final String name) {
-
-      CCommand renameameCommand = RenameElementCommandContribution.create(getSemanticUriFragment(element),
-         name);
-      return this.edit(renameameCommand);
-   }
+   // ======= COMMON ========
 
    /*
     * UML Constraint
@@ -183,9 +175,6 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
       return this.edit(renameameCommand);
    }
 
-   /*
-    * COMMONS
-    */
    // Change Bounds
    public CompletableFuture<Response<Boolean>> changeBounds(final Map<Shape, ElementAndBounds> changeBoundsMap) {
       CCompoundCommand compoundCommand = CCommandFactory.eINSTANCE.createCompoundCommand();
@@ -210,6 +199,73 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
          compoundCommand.getCommands().add(changeRoutingPointsCommand);
       });
       return this.edit(compoundCommand);
+   }
+
+   /*
+    * Renaming
+    */
+   public CompletableFuture<Response<Boolean>> renameElement(final UmlModelState modelState,
+      final NamedElement element, final String name) {
+
+      CCommand renameameCommand = RenameElementCommandContribution.create(getSemanticUriFragment(element),
+         name);
+      return this.edit(renameameCommand);
+   }
+
+   // ================== CONTENT =================
+
+   /*
+    * OBJECT
+    */
+   public CompletableFuture<Response<Boolean>> addObject(final UmlModelState modelState,
+      final Optional<GPoint> newPosition) {
+      CCompoundCommand addObjectCompoundCommand = AddObjectCommandContribution
+         .create(newPosition.orElse(GraphUtil.point(0, 0)));
+      return this.edit(addObjectCompoundCommand);
+   }
+
+   public CompletableFuture<Response<Boolean>> removeObject(final UmlModelState modelState,
+      final NamedElement objectToRemove) {
+
+      String semanticProxyUri = getSemanticUriFragment(objectToRemove);
+      CCompoundCommand compoundCommand = RemoveClassCommandContribution.create(semanticProxyUri);
+      return this.edit(compoundCommand);
+   }
+
+   public CompletableFuture<Response<Boolean>> setObjectName(final UmlModelState modelState,
+      final InstanceSpecification objectToRename, final String newName) {
+
+      CCommand setObjectNameCommand = SetObjectNameCommandContribution.create(getSemanticUriFragment(objectToRename),
+         newName);
+      return this.edit(setObjectNameCommand);
+   }
+
+   /*
+    * ATTRIBUTE
+    */
+   public CompletableFuture<Response<Boolean>> addAttribute(final UmlModelState modelState,
+      final Class parentClass) {
+
+      CCommand addAttributeCommand = AddAttributeCommandContribution.create(getSemanticUriFragment(parentClass));
+      return this.edit(addAttributeCommand);
+   }
+
+   public CompletableFuture<Response<Boolean>> setAttribute(final UmlModelState modelState,
+      final Property attributeToRename, final String newName, final String newType, final String newBounds) {
+
+      CCommand setPropertyNameCommand = SetAttributeCommandContribution
+         .create(getSemanticUriFragment(attributeToRename), newName, newType, newBounds);
+      return this.edit(setPropertyNameCommand);
+   }
+
+   /*
+    * LINK
+    */
+   public CompletableFuture<Response<Boolean>> addLink(final UmlModelState modelState,
+      final Class sourceClass, final Class targetClass) {
+      CCompoundCommand addLinkCompoundCommand = AddLinkCommandContribution
+         .create(getSemanticUriFragment(sourceClass), getSemanticUriFragment(targetClass));
+      return this.edit(addLinkCompoundCommand);
    }
 
 }

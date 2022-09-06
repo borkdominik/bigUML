@@ -10,11 +10,10 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.deployment_diagram.operations;
 
-import com.eclipsesource.uml.glsp.model.UmlModelIndex;
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
-import com.google.common.collect.Lists;
+import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
+
+import java.util.List;
+
 import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSBasicCreateOperationHandler;
 import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 import org.eclipse.glsp.server.operations.Operation;
@@ -23,12 +22,14 @@ import org.eclipse.uml2.uml.Artifact;
 import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.Node;
 
-import java.util.List;
-
-import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
+import com.eclipsesource.uml.glsp.model.UmlModelIndex;
+import com.eclipsesource.uml.glsp.model.UmlModelState;
+import com.eclipsesource.uml.glsp.uml.deployment_diagram.DeploymentModelServerAccess;
+import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.google.common.collect.Lists;
 
 public class CreateDeploymentDiagramEdgeOperationHandler
-        extends EMSBasicCreateOperationHandler<CreateEdgeOperation, UmlModelServerAccess> {
+   extends EMSBasicCreateOperationHandler<CreateEdgeOperation, DeploymentModelServerAccess> {
 
    public CreateDeploymentDiagramEdgeOperationHandler() {
       super(handledElementTypeIds);
@@ -47,12 +48,10 @@ public class CreateDeploymentDiagramEdgeOperationHandler
       return false;
    }
 
-   protected UmlModelState getUmlModelState() {
-      return (UmlModelState) getEMSModelState();
-   }
+   protected UmlModelState getUmlModelState() { return (UmlModelState) getEMSModelState(); }
 
    @Override
-   public void executeOperation(final CreateEdgeOperation operation, final UmlModelServerAccess modelAccess) {
+   public void executeOperation(final CreateEdgeOperation operation, final DeploymentModelServerAccess modelAccess) {
 
       UmlModelState modelState = getUmlModelState();
       String elementTypeId = operation.getElementTypeId();

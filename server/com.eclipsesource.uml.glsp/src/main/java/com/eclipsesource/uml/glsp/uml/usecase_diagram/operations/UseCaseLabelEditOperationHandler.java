@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.operations;
+package com.eclipsesource.uml.glsp.uml.usecase_diagram.operations;
 
 import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
 
@@ -16,25 +16,29 @@ import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSBasicOperati
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperation;
 import org.eclipse.glsp.server.types.GLSPServerException;
+import org.eclipse.uml2.uml.Actor;
 import org.eclipse.uml2.uml.Comment;
 import org.eclipse.uml2.uml.Constraint;
 import org.eclipse.uml2.uml.Element;
+import org.eclipse.uml2.uml.ExtensionPoint;
 import org.eclipse.uml2.uml.NamedElement;
+import org.eclipse.uml2.uml.Package;
+import org.eclipse.uml2.uml.UseCase;
 
 import com.eclipsesource.uml.glsp.model.UmlModelIndex;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;
+import com.eclipsesource.uml.glsp.uml.usecase_diagram.UseCaseModelServerAccess;
 import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
 import com.eclipsesource.uml.glsp.util.UmlIDUtil;
 
-public class UmlLabelEditOperationHandler
-   extends EMSBasicOperationHandler<ApplyLabelEditOperation, UmlModelServerAccess> {
+public class UseCaseLabelEditOperationHandler
+   extends EMSBasicOperationHandler<ApplyLabelEditOperation, UseCaseModelServerAccess> {
 
    protected UmlModelState getUmlModelState() { return (UmlModelState) getEMSModelState(); }
 
    @Override
    public void executeOperation(final ApplyLabelEditOperation editLabelOperation,
-      final UmlModelServerAccess modelAccess) {
+      final UseCaseModelServerAccess modelAccess) {
       UmlModelState modelState = getUmlModelState();
       UmlModelIndex modelIndex = modelState.getIndex();
 
@@ -64,6 +68,27 @@ public class UmlLabelEditOperationHandler
                         throw new GLSPServerException("Could not change Property to: " + inputText);
                      }
                   });
+            } else if (semanticElement instanceof Package) {
+               modelAccess.setPackageName(modelState, (Package) semanticElement, inputText)
+                  .thenAccept(response -> {
+                     if (!response.body()) {
+                        throw new GLSPServerException("Could not rename Package to: " + inputText);
+                     }
+                  });
+            } else if (semanticElement instanceof Actor) {
+               modelAccess.setActorName(modelState, (Actor) semanticElement, inputText)
+                  .thenAccept(response -> {
+                     if (!response.body()) {
+                        throw new GLSPServerException("Could not rename Actor to: " + inputText);
+                     }
+                  });
+            } else if (semanticElement instanceof UseCase) {
+               modelAccess.setUseCaseName(modelState, (UseCase) semanticElement, inputText)
+                  .thenAccept(response -> {
+                     if (!response.body()) {
+                        throw new GLSPServerException("Could not rename UseCase to: " + inputText);
+                     }
+                  });
             } else if (semanticElement instanceof NamedElement) {
                modelAccess.renameElement(modelState, (NamedElement) semanticElement, inputText)
                   .thenAccept(response -> {
@@ -72,6 +97,19 @@ public class UmlLabelEditOperationHandler
                      }
                   });
             }
+            break;
+
+         case Types.EXTENSIONPOINT:
+            ExtensionPoint ep = getOrThrow(modelIndex.getSemantic(graphicalElementId),
+               ExtensionPoint.class, "No valid container with id " + graphicalElementId + " found");
+
+            modelAccess.setExtensionPointName(modelState, ep, inputText)
+               .thenAccept(response -> {
+                  if (!response.body()) {
+                     throw new GLSPServerException("Could not change ExtensionPoint Name to: " + inputText);
+                  }
+               });
+
             break;
       }
 

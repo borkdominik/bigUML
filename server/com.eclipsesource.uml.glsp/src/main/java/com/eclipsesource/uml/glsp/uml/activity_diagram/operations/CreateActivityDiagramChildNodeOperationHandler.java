@@ -10,38 +10,57 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.activity_diagram.operations;
 
-import com.eclipsesource.uml.glsp.model.UmlModelIndex;
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
-import com.google.common.collect.Lists;
+import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
+
+import java.util.List;
+import java.util.Optional;
+
 import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSBasicCreateOperationHandler;
-import org.eclipse.glsp.graph.*;
+import org.eclipse.glsp.graph.GBoundsAware;
+import org.eclipse.glsp.graph.GCompartment;
+import org.eclipse.glsp.graph.GGraph;
+import org.eclipse.glsp.graph.GModelElement;
+import org.eclipse.glsp.graph.GNode;
+import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.operations.Operation;
 import org.eclipse.glsp.server.types.GLSPServerException;
 import org.eclipse.glsp.server.utils.GeometryUtil;
-import org.eclipse.uml2.uml.*;
+import org.eclipse.uml2.uml.Action;
+import org.eclipse.uml2.uml.Activity;
+import org.eclipse.uml2.uml.ActivityPartition;
+import org.eclipse.uml2.uml.CallBehaviorAction;
+import org.eclipse.uml2.uml.CentralBufferNode;
+import org.eclipse.uml2.uml.DataStoreNode;
+import org.eclipse.uml2.uml.DecisionNode;
+import org.eclipse.uml2.uml.FinalNode;
+import org.eclipse.uml2.uml.FlowFinalNode;
+import org.eclipse.uml2.uml.ForkNode;
+import org.eclipse.uml2.uml.InitialNode;
+import org.eclipse.uml2.uml.InterruptibleActivityRegion;
+import org.eclipse.uml2.uml.NamedElement;
+import org.eclipse.uml2.uml.OpaqueAction;
+import org.eclipse.uml2.uml.SendSignalAction;
 
-import java.util.List;
-import java.util.Optional;
-
-import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
+import com.eclipsesource.uml.glsp.model.UmlModelIndex;
+import com.eclipsesource.uml.glsp.model.UmlModelState;
+import com.eclipsesource.uml.glsp.uml.activity_diagram.ActivityModelServerAccess;
+import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.google.common.collect.Lists;
 
 public class CreateActivityDiagramChildNodeOperationHandler
-      extends EMSBasicCreateOperationHandler<CreateNodeOperation, UmlModelServerAccess> {
+   extends EMSBasicCreateOperationHandler<CreateNodeOperation, ActivityModelServerAccess> {
 
    public CreateActivityDiagramChildNodeOperationHandler() {
       super(handledElementTypeIds);
    }
 
    private static List<String> handledElementTypeIds = Lists.newArrayList(
-         Types.ACTION, Types.ACCEPTEVENT, Types.TIMEEVENT,
-         Types.SENDSIGNAL, Types.CALL, Types.INITIALNODE, Types.FINALNODE, Types.FLOWFINALNODE,
-         Types.DECISIONMERGENODE, Types.FORKJOINNODE, Types.PARAMETER, Types.CENTRALBUFFER, Types.DATASTORE,
-         Types.CONDITION
-   );
+      Types.ACTION, Types.ACCEPTEVENT, Types.TIMEEVENT,
+      Types.SENDSIGNAL, Types.CALL, Types.INITIALNODE, Types.FINALNODE, Types.FLOWFINALNODE,
+      Types.DECISIONMERGENODE, Types.FORKJOINNODE, Types.PARAMETER, Types.CENTRALBUFFER, Types.DATASTORE,
+      Types.CONDITION);
 
    @Override
    public boolean handles(final Operation execAction) {
@@ -52,105 +71,109 @@ public class CreateActivityDiagramChildNodeOperationHandler
       return false;
    }
 
-   protected UmlModelState getUmlModelState() {
-      return (UmlModelState) getEMSModelState();
-   }
+   protected UmlModelState getUmlModelState() { return (UmlModelState) getEMSModelState(); }
 
    @Override
-   public void executeOperation(final CreateNodeOperation operation, final UmlModelServerAccess modelAccess) {
+   public void executeOperation(final CreateNodeOperation operation, final ActivityModelServerAccess modelAccess) {
 
       UmlModelState modelState = getUmlModelState();
       UmlModelIndex modelIndex = modelState.getIndex();
-      
+
       NamedElement parentContainer = getOrThrow(
-            modelIndex.getSemantic(operation.getContainerId(), NamedElement.class),
-            "No parent container found!");
+         modelIndex.getSemantic(operation.getContainerId(), NamedElement.class),
+         "No parent container found!");
 
       System.out.println("PARENT " + parentContainer.getClass());
 
       switch (operation.getElementTypeId()) {
          case (Types.ACTION): {
             if (parentContainer instanceof Activity
-                  || parentContainer instanceof ActivityPartition
-                  || parentContainer instanceof InterruptibleActivityRegion) {
+               || parentContainer instanceof ActivityPartition
+               || parentContainer instanceof InterruptibleActivityRegion) {
                Optional<GModelElement> containerActivity = modelIndex.get(operation.getContainerId());
-               Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(), getStructureCompartmentGModelElement(containerActivity));
+               Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(),
+                  getStructureCompartmentGModelElement(containerActivity));
                modelAccess.addAction(getUmlModelState(), relativeLocation, parentContainer, OpaqueAction.class)
-                     .thenAccept(response -> {
-                        if (!response.body()) {
-                           throw new GLSPServerException("Could not create operation on new Action node");
-                        }
-                     });
+                  .thenAccept(response -> {
+                     if (!response.body()) {
+                        throw new GLSPServerException("Could not create operation on new Action node");
+                     }
+                  });
             }
             break;
          }
          case (Types.SENDSIGNAL): {
             if (parentContainer instanceof Activity) {
                Optional<GModelElement> containerActivity = modelIndex.get(operation.getContainerId());
-               Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(), getStructureCompartmentGModelElement(containerActivity));
+               Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(),
+                  getStructureCompartmentGModelElement(containerActivity));
                modelAccess.addAction(getUmlModelState(), relativeLocation, parentContainer, SendSignalAction.class)
-                     .thenAccept(response -> {
-                        if (!response.body()) {
-                           throw new GLSPServerException("Could not create operation on new Action node");
-                        }
-                     });
+                  .thenAccept(response -> {
+                     if (!response.body()) {
+                        throw new GLSPServerException("Could not create operation on new Action node");
+                     }
+                  });
             }
             break;
          }
          case (Types.CALL): {
             if (parentContainer instanceof Activity
-                  || parentContainer instanceof ActivityPartition
-                  || parentContainer instanceof InterruptibleActivityRegion) {
+               || parentContainer instanceof ActivityPartition
+               || parentContainer instanceof InterruptibleActivityRegion) {
                Optional<GModelElement> containerActivity = modelIndex.get(operation.getContainerId());
-               Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(), getStructureCompartmentGModelElement(containerActivity));
+               Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(),
+                  getStructureCompartmentGModelElement(containerActivity));
                modelAccess.addAction(getUmlModelState(), relativeLocation, parentContainer, CallBehaviorAction.class)
-                     .thenAccept(response -> {
-                        if (!response.body()) {
-                           throw new GLSPServerException("Could not create operation on new Action node");
-                        }
-                     });
+                  .thenAccept(response -> {
+                     if (!response.body()) {
+                        throw new GLSPServerException("Could not create operation on new Action node");
+                     }
+                  });
             }
          }
          case (Types.ACCEPTEVENT): {
             if (parentContainer instanceof Activity
-                  || parentContainer instanceof ActivityPartition
-                  || parentContainer instanceof InterruptibleActivityRegion) {
+               || parentContainer instanceof ActivityPartition
+               || parentContainer instanceof InterruptibleActivityRegion) {
                Optional<GModelElement> containerActivity = modelIndex.get(operation.getContainerId());
-               Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(), getStructureCompartmentGModelElement(containerActivity));
+               Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(),
+                  getStructureCompartmentGModelElement(containerActivity));
                modelAccess.addEventAction(getUmlModelState(), relativeLocation, parentContainer, false)
-                     .thenAccept(response -> {
-                        if (!response.body()) {
-                           throw new GLSPServerException("Could not create operation on new Action node");
-                        }
-                     });
+                  .thenAccept(response -> {
+                     if (!response.body()) {
+                        throw new GLSPServerException("Could not create operation on new Action node");
+                     }
+                  });
             }
             break;
          }
          case (Types.TIMEEVENT): {
             if (parentContainer instanceof Activity
-                  || parentContainer instanceof ActivityPartition
-                  || parentContainer instanceof InterruptibleActivityRegion) {
+               || parentContainer instanceof ActivityPartition
+               || parentContainer instanceof InterruptibleActivityRegion) {
                Optional<GModelElement> containerActivity = modelIndex.get(operation.getContainerId());
-               Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(), getStructureCompartmentGModelElement(containerActivity));
+               Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(),
+                  getStructureCompartmentGModelElement(containerActivity));
                modelAccess.addEventAction(getUmlModelState(), relativeLocation, parentContainer, true)
-                     .thenAccept(response -> {
-                        if (!response.body()) {
-                           throw new GLSPServerException("Could not create operation on new Action node");
-                        }
-                     });
+                  .thenAccept(response -> {
+                     if (!response.body()) {
+                        throw new GLSPServerException("Could not create operation on new Action node");
+                     }
+                  });
             }
             break;
          }
          case (Types.PARAMETER): {
             if (parentContainer instanceof Activity) {
                Optional<GModelElement> containerActivity = modelIndex.get(operation.getContainerId());
-               Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(), getStructureCompartmentGModelElement(containerActivity));
+               Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(),
+                  getStructureCompartmentGModelElement(containerActivity));
                modelAccess.addParameter(getUmlModelState(), relativeLocation, (Activity) parentContainer)
-                     .thenAccept(response -> {
-                        if (!response.body()) {
-                           throw new GLSPServerException("Could not create operation on new Action node");
-                        }
-                     });
+                  .thenAccept(response -> {
+                     if (!response.body()) {
+                        throw new GLSPServerException("Could not create operation on new Action node");
+                     }
+                  });
             }
             break;
          }
@@ -158,125 +181,136 @@ public class CreateActivityDiagramChildNodeOperationHandler
          case (Types.CONDITION): {
             if (parentContainer instanceof Activity) {
                Optional<GModelElement> containerActivity = modelIndex.get(operation.getContainerId());
-               Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(), getStructureCompartmentGModelElement(containerActivity));
+               Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(),
+                  getStructureCompartmentGModelElement(containerActivity));
                modelAccess.addCondition(getUmlModelState(), relativeLocation, (Activity) parentContainer, true)
-                     .thenAccept(response -> {
-                        if (!response.body()) {
-                           throw new GLSPServerException("Could not create operation on new Action node");
-                        }
-                     });
+                  .thenAccept(response -> {
+                     if (!response.body()) {
+                        throw new GLSPServerException("Could not create operation on new Action node");
+                     }
+                  });
             }
             break;
          }
          case (Types.CENTRALBUFFER): {
             if (parentContainer instanceof Activity) {
                Optional<GModelElement> containerActivity = modelIndex.get(operation.getContainerId());
-               Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(), getStructureCompartmentGModelElement(containerActivity));
-               modelAccess.addObjectNode(getUmlModelState(), relativeLocation, (Activity) parentContainer, CentralBufferNode.class)
-                     .thenAccept(response -> {
-                        if (!response.body()) {
-                           throw new GLSPServerException("Could not create operation on new Action node");
-                        }
-                     });
+               Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(),
+                  getStructureCompartmentGModelElement(containerActivity));
+               modelAccess
+                  .addObjectNode(getUmlModelState(), relativeLocation, (Activity) parentContainer,
+                     CentralBufferNode.class)
+                  .thenAccept(response -> {
+                     if (!response.body()) {
+                        throw new GLSPServerException("Could not create operation on new Action node");
+                     }
+                  });
             }
             break;
          }
          case (Types.DATASTORE): {
             if (parentContainer instanceof Activity) {
                Optional<GModelElement> containerActivity = modelIndex.get(operation.getContainerId());
-               Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(), getStructureCompartmentGModelElement(containerActivity));
-               modelAccess.addObjectNode(getUmlModelState(), relativeLocation, (Activity) parentContainer, DataStoreNode.class)
-                     .thenAccept(response -> {
-                        if (!response.body()) {
-                           throw new GLSPServerException("Could not create operation on new Action node");
-                        }
-                     });
+               Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(),
+                  getStructureCompartmentGModelElement(containerActivity));
+               modelAccess
+                  .addObjectNode(getUmlModelState(), relativeLocation, (Activity) parentContainer, DataStoreNode.class)
+                  .thenAccept(response -> {
+                     if (!response.body()) {
+                        throw new GLSPServerException("Could not create operation on new Action node");
+                     }
+                  });
             }
             break;
          }
          case (Types.INITIALNODE): {
             if (parentContainer instanceof Activity
-                  || parentContainer instanceof ActivityPartition
-                  || parentContainer instanceof InterruptibleActivityRegion) {
+               || parentContainer instanceof ActivityPartition
+               || parentContainer instanceof InterruptibleActivityRegion) {
                Optional<GModelElement> containerActivity = modelIndex.get(operation.getContainerId());
-               Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(), getStructureCompartmentGModelElement(containerActivity));
+               Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(),
+                  getStructureCompartmentGModelElement(containerActivity));
                modelAccess.addControlNode(getUmlModelState(), relativeLocation, parentContainer, InitialNode.class)
-                     .thenAccept(response -> {
-                        if (!response.body()) {
-                           throw new GLSPServerException("Could not create operation on new Action node");
-                        }
-                     });
+                  .thenAccept(response -> {
+                     if (!response.body()) {
+                        throw new GLSPServerException("Could not create operation on new Action node");
+                     }
+                  });
             }
             break;
          }
          case (Types.FINALNODE): {
             if (parentContainer instanceof Activity
-                  || parentContainer instanceof ActivityPartition
-                  || parentContainer instanceof InterruptibleActivityRegion) {
+               || parentContainer instanceof ActivityPartition
+               || parentContainer instanceof InterruptibleActivityRegion) {
                Optional<GModelElement> containerActivity = modelIndex.get(operation.getContainerId());
-               Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(), getStructureCompartmentGModelElement(containerActivity));
+               Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(),
+                  getStructureCompartmentGModelElement(containerActivity));
                modelAccess.addControlNode(getUmlModelState(), relativeLocation, parentContainer, FinalNode.class)
-                     .thenAccept(response -> {
-                        if (!response.body()) {
-                           throw new GLSPServerException("Could not create operation on new Action node");
-                        }
-                     });
+                  .thenAccept(response -> {
+                     if (!response.body()) {
+                        throw new GLSPServerException("Could not create operation on new Action node");
+                     }
+                  });
             }
             break;
          }
          case (Types.FLOWFINALNODE): {
             if (parentContainer instanceof Activity
-                  || parentContainer instanceof ActivityPartition
-                  || parentContainer instanceof InterruptibleActivityRegion) {
+               || parentContainer instanceof ActivityPartition
+               || parentContainer instanceof InterruptibleActivityRegion) {
                Optional<GModelElement> containerActivity = modelIndex.get(operation.getContainerId());
-               Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(), getStructureCompartmentGModelElement(containerActivity));
+               Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(),
+                  getStructureCompartmentGModelElement(containerActivity));
                modelAccess.addControlNode(getUmlModelState(), relativeLocation, parentContainer, FlowFinalNode.class)
-                     .thenAccept(response -> {
-                        if (!response.body()) {
-                           throw new GLSPServerException("Could not create operation on new Action node");
-                        }
-                     });
+                  .thenAccept(response -> {
+                     if (!response.body()) {
+                        throw new GLSPServerException("Could not create operation on new Action node");
+                     }
+                  });
             }
             break;
          }
          case (Types.DECISIONMERGENODE): {
             if (parentContainer instanceof Activity
-                  || parentContainer instanceof ActivityPartition
-                  || parentContainer instanceof InterruptibleActivityRegion) {
+               || parentContainer instanceof ActivityPartition
+               || parentContainer instanceof InterruptibleActivityRegion) {
                Optional<GModelElement> containerActivity = modelIndex.get(operation.getContainerId());
-               Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(), getStructureCompartmentGModelElement(containerActivity));
+               Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(),
+                  getStructureCompartmentGModelElement(containerActivity));
                modelAccess.addControlNode(getUmlModelState(), relativeLocation, parentContainer, DecisionNode.class)
-                     .thenAccept(response -> {
-                        if (!response.body()) {
-                           throw new GLSPServerException("Could not create operation on new Action node");
-                        }
-                     });
+                  .thenAccept(response -> {
+                     if (!response.body()) {
+                        throw new GLSPServerException("Could not create operation on new Action node");
+                     }
+                  });
             }
             break;
          }
          case (Types.FORKJOINNODE): {
             if (parentContainer instanceof Activity
-                  || parentContainer instanceof ActivityPartition
-                  || parentContainer instanceof InterruptibleActivityRegion) {
+               || parentContainer instanceof ActivityPartition
+               || parentContainer instanceof InterruptibleActivityRegion) {
                Optional<GModelElement> containerActivity = modelIndex.get(operation.getContainerId());
-               Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(), getStructureCompartmentGModelElement(containerActivity));
+               Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(),
+                  getStructureCompartmentGModelElement(containerActivity));
                modelAccess.addControlNode(getUmlModelState(), relativeLocation, parentContainer, ForkNode.class)
-                     .thenAccept(response -> {
-                        if (!response.body()) {
-                           throw new GLSPServerException("Could not create operation on new Action node");
-                        }
-                     });
+                  .thenAccept(response -> {
+                     if (!response.body()) {
+                        throw new GLSPServerException("Could not create operation on new Action node");
+                     }
+                  });
             }
             break;
          }
          // TODO: check how to set the pin always to the same position within the activity node
          case (Types.PIN): {
             modelAccess.addPin(UmlModelState.getModelState(modelState), (Action) parentContainer)
-                  .thenAccept(response -> {
-                     if (!response.body()) {
-                        throw new GLSPServerException("Could not execute create operation on new Pin node");
-                     }
-                  });
+               .thenAccept(response -> {
+                  if (!response.body()) {
+                     throw new GLSPServerException("Could not execute create operation on new Pin node");
+                  }
+               });
             break;
          }
       }
@@ -284,29 +318,28 @@ public class CreateActivityDiagramChildNodeOperationHandler
 
    protected Optional<GModelElement> getStructureCompartmentGModelElement(final Optional<GModelElement> container) {
       return container.filter(GNode.class::isInstance)
-            .map(GNode.class::cast)
-            .flatMap(this::getStructureCompartment);
+         .map(GNode.class::cast)
+         .flatMap(this::getStructureCompartment);
    }
-
 
    protected Optional<GCompartment> getStructureCompartment(final GNode packageable) {
       return packageable.getChildren().stream().filter(GCompartment.class::isInstance).map(GCompartment.class::cast)
-            .filter(comp -> Types.STRUCTURE.equals(comp.getType())).findFirst();
+         .filter(comp -> Types.STRUCTURE.equals(comp.getType())).findFirst();
    }
 
    protected Optional<GPoint> getRelativeLocation(final CreateNodeOperation operation,
-                                                  final Optional<GPoint> absoluteLocation,
-                                                  final Optional<GModelElement> container) {
+      final Optional<GPoint> absoluteLocation,
+      final Optional<GModelElement> container) {
       if (absoluteLocation.isPresent() && container.isPresent()) {
          boolean allowNegativeCoordinates = container.get() instanceof GGraph;
          GModelElement modelElement = container.get();
          if (modelElement instanceof GBoundsAware) {
             try {
                GPoint relativePosition = GeometryUtil.absoluteToRelative(absoluteLocation.get(),
-                     (GBoundsAware) modelElement);
+                  (GBoundsAware) modelElement);
                GPoint relativeLocation = allowNegativeCoordinates
-                     ? relativePosition
-                     : GraphUtil.point(Math.max(0, relativePosition.getX()), Math.max(0, relativePosition.getY()));
+                  ? relativePosition
+                  : GraphUtil.point(Math.max(0, relativePosition.getX()), Math.max(0, relativePosition.getY()));
                return Optional.of(relativeLocation);
             } catch (IllegalArgumentException ex) {
                return absoluteLocation;
@@ -317,8 +350,6 @@ public class CreateActivityDiagramChildNodeOperationHandler
    }
 
    @Override
-   public String getLabel() {
-      return "Create uml classifier";
-   }
+   public String getLabel() { return "Create uml classifier"; }
 
 }

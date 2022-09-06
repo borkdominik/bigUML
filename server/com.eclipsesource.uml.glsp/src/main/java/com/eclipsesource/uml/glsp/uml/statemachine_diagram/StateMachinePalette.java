@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2021 EclipseSource and others.
+ * Copyright (c) 2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -8,39 +8,42 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.palette;
+package com.eclipsesource.uml.glsp.uml.statemachine_diagram;
 
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
-import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSBasicOperationHandler;
 import org.eclipse.glsp.server.actions.TriggerEdgeCreationAction;
 import org.eclipse.glsp.server.actions.TriggerNodeCreationAction;
 import org.eclipse.glsp.server.features.toolpalette.PaletteItem;
-import org.eclipse.glsp.server.features.toolpalette.ToolPaletteItemProvider;
-import org.eclipse.glsp.server.operations.CreateNodeOperation;
 
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
-import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.common.collect.Lists;
 
-public class UmlToolPaletteItemProvider extends EMSBasicOperationHandler<CreateNodeOperation, UmlModelServerAccess>
-   implements ToolPaletteItemProvider {
-
-   private static Logger LOGGER = Logger.getLogger(UmlToolPaletteItemProvider.class.getSimpleName());
-
-   protected UmlModelState getUmlModelState() { return (UmlModelState) getEMSModelState(); }
-
-   @Override
+public class StateMachinePalette {
    public List<PaletteItem> getItems(final Map<String, String> args) {
+      return Lists.newArrayList(classifiersUseCase(), relationsUseCase(), comment());
+   }
 
-      Representation diagramType = UmlModelState.getModelState(getUmlModelState()).getNotationModel().getDiagramType();
-      LOGGER.info("------- CURRENT DIAGRAM TYPE: " + diagramType + " ----------");
+   private PaletteItem classifiersUseCase() {
+      PaletteItem createUseCase = node(Types.USECASE, "Use Case", "umlusecase");
+      PaletteItem createPackage = node(Types.PACKAGE, "Package", "umlpackage");
+      PaletteItem createComponent = node(Types.COMPONENT, "Component", "umlcomponent");
+      PaletteItem createActor = node(Types.ACTOR, "Actor", "umlactor");
 
-      return List.of();
+      List<PaletteItem> classifiers = Lists.newArrayList(createUseCase, createPackage, createComponent, createActor);
+      return PaletteItem.createPaletteGroup("uml.classifier", "Container", classifiers, "symbol-property");
+   }
+
+   private PaletteItem relationsUseCase() {
+      PaletteItem createExtend = edge(Types.EXTEND, "Extend", "umlextend");
+      PaletteItem createInclude = edge(Types.INCLUDE, "Include", "umlinclude");
+      PaletteItem createGeneralization = edge(Types.GENERALIZATION, "Generalization", "umlgeneralization");
+      PaletteItem createAssociation = edge(Types.USECASE_ASSOCIATION, "Association", "umlassociation");
+
+      List<PaletteItem> relations = Lists.newArrayList(createExtend, createInclude, createGeneralization,
+         createAssociation);
+      return PaletteItem.createPaletteGroup("uml.relation", "Relations", relations, "symbol-property");
    }
 
    private PaletteItem comment() {
@@ -58,10 +61,5 @@ public class UmlToolPaletteItemProvider extends EMSBasicOperationHandler<CreateN
    private PaletteItem edge(final String elementTypeId, final String label, final String icon) {
       return new PaletteItem(elementTypeId, label, new TriggerEdgeCreationAction(elementTypeId), icon);
    }
-
-   // just part of the workaround which was used to get the current diagram type
-   @Override
-   public void executeOperation(final CreateNodeOperation createNodeOperation,
-      final UmlModelServerAccess modelServerAccess) {}
 
 }

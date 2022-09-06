@@ -1,4 +1,4 @@
-package com.eclipsesource.uml.glsp.uml.statemachinediagram.operations;
+package com.eclipsesource.uml.glsp.uml.statemachine_diagram.operations;
 
 import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
 

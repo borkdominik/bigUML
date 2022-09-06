@@ -1,4 +1,4 @@
-package com.eclipsesource.uml.glsp.uml.statemachinediagram.operations;
+package com.eclipsesource.uml.glsp.uml.statemachine_diagram.operations;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;

@@ -40,10 +40,10 @@ import com.eclipsesource.uml.glsp.uml.statemachine_diagram.actions.AddTransition
 import com.eclipsesource.uml.glsp.uml.statemachine_diagram.actions.AddTransitionGuardActionHandler;
 import com.eclipsesource.uml.glsp.uml.statemachine_diagram.actions.AddTransitionLabelActionHandler;
 import com.eclipsesource.uml.glsp.uml.statemachine_diagram.actions.AddTransitionTriggerActionHandler;
-import com.eclipsesource.uml.glsp.uml.statemachinediagram.operations.CreateStateMachineDiagramChildNodeOperationHandler;
-import com.eclipsesource.uml.glsp.uml.statemachinediagram.operations.CreateStateMachineDiagramEdgeOperationHandler;
-import com.eclipsesource.uml.glsp.uml.statemachinediagram.operations.CreateStateMachineDiagramNodeOperationHandler;
-import com.eclipsesource.uml.glsp.uml.statemachinediagram.operations.CreateStateMachineDiagramStateChildNodeOperationHandler;
+import com.eclipsesource.uml.glsp.uml.statemachine_diagram.operations.CreateStateMachineDiagramChildNodeOperationHandler;
+import com.eclipsesource.uml.glsp.uml.statemachine_diagram.operations.CreateStateMachineDiagramEdgeOperationHandler;
+import com.eclipsesource.uml.glsp.uml.statemachine_diagram.operations.CreateStateMachineDiagramNodeOperationHandler;
+import com.eclipsesource.uml.glsp.uml.statemachine_diagram.operations.CreateStateMachineDiagramStateChildNodeOperationHandler;
 import com.eclipsesource.uml.glsp.uml.usecase_diagram.operations.CreateUseCaseDiagramEdgeOperationHandler;
 import com.eclipsesource.uml.glsp.uml.usecase_diagram.operations.CreateUseCaseDiagramNodeOperationHandler;
 import com.eclipsesource.uml.glsp.validator.UmlDiagramModelValidator;

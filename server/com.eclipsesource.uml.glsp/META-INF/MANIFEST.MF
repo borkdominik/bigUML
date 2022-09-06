@@ -24,7 +24,7 @@ Export-Package: com.eclipsesource.uml.glsp,
  com.eclipsesource.uml.glsp.uml.class_diagram.operations,
  com.eclipsesource.uml.glsp.uml.deployment_diagram.operations,
  com.eclipsesource.uml.glsp.uml.statemachine_diagram.actions,
- com.eclipsesource.uml.glsp.uml.statemachinediagram.operations,
+ com.eclipsesource.uml.glsp.uml.statemachine_diagram.operations,
  com.eclipsesource.uml.glsp.uml.usecase_diagram.operations,
  com.eclipsesource.uml.glsp.util,
  com.eclipsesource.uml.glsp.validator

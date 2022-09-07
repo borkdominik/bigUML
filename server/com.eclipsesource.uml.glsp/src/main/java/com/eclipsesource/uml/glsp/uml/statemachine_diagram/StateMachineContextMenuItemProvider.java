@@ -1,4 +1,4 @@
-package com.eclipsesource.uml.glsp.contextmenu;
+package com.eclipsesource.uml.glsp.uml.statemachine_diagram;
 
 import java.util.Collections;
 import java.util.List;
@@ -14,7 +14,7 @@ import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 
-public class UmlContextMenuItemProvider implements ContextMenuItemProvider {
+public class StateMachineContextMenuItemProvider implements ContextMenuItemProvider {
 
    @Inject
    protected GModelState modelState;

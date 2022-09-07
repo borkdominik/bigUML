@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp;
+package com.eclipsesource.uml.glsp.uml.activity_diagram;
 
 import org.eclipse.emfcloud.modelserver.glsp.EMSGLSPModule;
 import org.eclipse.emfcloud.modelserver.glsp.model.EMSModelState;
@@ -31,6 +31,7 @@ import org.eclipse.glsp.server.operations.gmodel.CompoundOperationHandler;
 import org.eclipse.glsp.server.operations.gmodel.DeleteOperationHandler;
 import org.eclipse.glsp.server.operations.gmodel.LayoutOperationHandler;
 
+import com.eclipsesource.uml.glsp.UmlDIOperationHandlerRegistry;
 import com.eclipsesource.uml.glsp.actions.ReturnTypesAction;
 import com.eclipsesource.uml.glsp.actions.UmlGetTypesActionHandler;
 import com.eclipsesource.uml.glsp.contextmenu.UmlContextMenuItemProvider;
@@ -44,15 +45,24 @@ import com.eclipsesource.uml.glsp.operations.UmlChangeRoutingPointsOperationHand
 import com.eclipsesource.uml.glsp.operations.UmlCompoundOperationHandler;
 import com.eclipsesource.uml.glsp.operations.UmlDeleteOperationHandler;
 import com.eclipsesource.uml.glsp.operations.UmlLabelEditOperationHandler;
+import com.eclipsesource.uml.glsp.operations.common.CreateCommentNodeOperationHandler;
 import com.eclipsesource.uml.glsp.palette.UmlToolPaletteItemProvider;
+import com.eclipsesource.uml.glsp.uml.activity_diagram.actions.behavior.CallBehaviorsAction;
+import com.eclipsesource.uml.glsp.uml.activity_diagram.actions.edgelabels.CreateGuardActionHandler;
+import com.eclipsesource.uml.glsp.uml.activity_diagram.actions.edgelabels.CreateWeightActionHandler;
+import com.eclipsesource.uml.glsp.uml.activity_diagram.operations.CreateActivityDiagramChildNodeOperationHandler;
+import com.eclipsesource.uml.glsp.uml.activity_diagram.operations.CreateActivityDiagramEdgeOperationHandler;
+import com.eclipsesource.uml.glsp.uml.activity_diagram.operations.CreateActivityDiagramNodeOperationHandler;
 import com.eclipsesource.uml.glsp.validator.UmlDiagramModelValidator;
 
-public class UmlGLSPModule extends EMSGLSPModule {
+public class ActivityGLSPModule extends EMSGLSPModule {
 
    @Override
    protected void configureActionHandlers(final MultiBinding<ActionHandler> bindings) {
       super.configureActionHandlers(bindings);
       bindings.add(UmlGetTypesActionHandler.class);
+      bindings.add(CreateGuardActionHandler.class);
+      bindings.add(CreateWeightActionHandler.class);
    }
 
    @Override
@@ -89,6 +99,7 @@ public class UmlGLSPModule extends EMSGLSPModule {
    protected void configureClientActions(final MultiBinding<Action> bindings) {
       super.configureClientActions(bindings);
       bindings.add(ReturnTypesAction.class);
+      bindings.add(CallBehaviorsAction.class);
    }
 
    @Override
@@ -100,6 +111,12 @@ public class UmlGLSPModule extends EMSGLSPModule {
       bindings.rebind(ChangeRoutingPointsHandler.class, UmlChangeRoutingPointsOperationHandler.class);
       bindings.rebind(DeleteOperationHandler.class, UmlDeleteOperationHandler.class);
       bindings.add(LayoutOperationHandler.class);
+
+      // ACTIVITY
+      bindings.add(CreateActivityDiagramNodeOperationHandler.class);
+      bindings.add(CreateActivityDiagramChildNodeOperationHandler.class);
+      bindings.add(CreateActivityDiagramEdgeOperationHandler.class);
+      bindings.add(CreateCommentNodeOperationHandler.class);
    }
 
    @Override

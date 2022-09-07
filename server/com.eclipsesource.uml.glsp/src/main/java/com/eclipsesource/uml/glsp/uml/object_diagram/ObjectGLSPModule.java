@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp;
+package com.eclipsesource.uml.glsp.uml.object_diagram;
 
 import org.eclipse.emfcloud.modelserver.glsp.EMSGLSPModule;
 import org.eclipse.emfcloud.modelserver.glsp.model.EMSModelState;
@@ -31,6 +31,7 @@ import org.eclipse.glsp.server.operations.gmodel.CompoundOperationHandler;
 import org.eclipse.glsp.server.operations.gmodel.DeleteOperationHandler;
 import org.eclipse.glsp.server.operations.gmodel.LayoutOperationHandler;
 
+import com.eclipsesource.uml.glsp.UmlDIOperationHandlerRegistry;
 import com.eclipsesource.uml.glsp.actions.ReturnTypesAction;
 import com.eclipsesource.uml.glsp.actions.UmlGetTypesActionHandler;
 import com.eclipsesource.uml.glsp.contextmenu.UmlContextMenuItemProvider;
@@ -45,9 +46,12 @@ import com.eclipsesource.uml.glsp.operations.UmlCompoundOperationHandler;
 import com.eclipsesource.uml.glsp.operations.UmlDeleteOperationHandler;
 import com.eclipsesource.uml.glsp.operations.UmlLabelEditOperationHandler;
 import com.eclipsesource.uml.glsp.palette.UmlToolPaletteItemProvider;
+import com.eclipsesource.uml.glsp.uml.object_diagram.operations.CreateObjectDiagramChildNodeOperationHandler;
+import com.eclipsesource.uml.glsp.uml.object_diagram.operations.CreateObjectDiagramEdgeOperationHandler;
+import com.eclipsesource.uml.glsp.uml.object_diagram.operations.CreateObjectDiagramNodeOperationHandler;
 import com.eclipsesource.uml.glsp.validator.UmlDiagramModelValidator;
 
-public class UmlGLSPModule extends EMSGLSPModule {
+public class ObjectGLSPModule extends EMSGLSPModule {
 
    @Override
    protected void configureActionHandlers(final MultiBinding<ActionHandler> bindings) {
@@ -100,6 +104,11 @@ public class UmlGLSPModule extends EMSGLSPModule {
       bindings.rebind(ChangeRoutingPointsHandler.class, UmlChangeRoutingPointsOperationHandler.class);
       bindings.rebind(DeleteOperationHandler.class, UmlDeleteOperationHandler.class);
       bindings.add(LayoutOperationHandler.class);
+
+      // OBJECT
+      bindings.add(CreateObjectDiagramNodeOperationHandler.class);
+      bindings.add(CreateObjectDiagramChildNodeOperationHandler.class);
+      bindings.add(CreateObjectDiagramEdgeOperationHandler.class);
    }
 
    @Override

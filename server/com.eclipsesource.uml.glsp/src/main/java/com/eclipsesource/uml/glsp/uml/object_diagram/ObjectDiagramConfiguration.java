@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.diagram;
+package com.eclipsesource.uml.glsp.uml.object_diagram;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +25,7 @@ import org.eclipse.glsp.server.types.ShapeTypeHint;
 import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
 import com.google.common.collect.Lists;
 
-public class UmlDiagramConfiguration extends BaseDiagramConfiguration {
+public class ObjectDiagramConfiguration extends BaseDiagramConfiguration {
 
    @Override
    public String getDiagramType() { return "umldiagram"; }
@@ -34,7 +34,9 @@ public class UmlDiagramConfiguration extends BaseDiagramConfiguration {
    public List<EdgeTypeHint> getEdgeTypeHints() {
       return Lists.newArrayList(
          // COMMONS
-         createDefaultEdgeTypeHint(Types.COMMENT_EDGE));
+         createDefaultEdgeTypeHint(Types.COMMENT_EDGE),
+         // OBJECT DIAGRAM
+         createDefaultEdgeTypeHint(Types.LINK));
    }
 
    @Override
@@ -45,6 +47,10 @@ public class UmlDiagramConfiguration extends BaseDiagramConfiguration {
       ArrayList<String> to;
 
       switch (elementId) {
+         // OBJECT DIAGRAM
+         case Types.LINK:
+            allowed = Lists.newArrayList(Types.OBJECT, Types.CLASS);
+            return new EdgeTypeHint(elementId, true, true, true, allowed, allowed);
          // COMMENT
          case Types.COMMENT_EDGE:
             allowed = Lists.newArrayList();
@@ -66,6 +72,11 @@ public class UmlDiagramConfiguration extends BaseDiagramConfiguration {
             Types.STATE_MACHINE, Types.DEPLOYMENT_NODE, Types.DEVICE, Types.ARTIFACT, Types.ENUMERATION,
             Types.EXECUTION_ENVIRONMENT, Types.OBJECT, Types.DEPLOYMENT_COMPONENT, Types.INTERFACE,
             Types.ABSTRACT_CLASS)));
+
+      // OBJECT DIAGRAM
+      hints.add(new ShapeTypeHint(Types.OBJECT, true, true, false, false,
+         List.of(Types.ATTRIBUTE)));
+      hints.add(new ShapeTypeHint(Types.ATTRIBUTE, false, true, false, true));
 
       // Comment
       hints.add(new ShapeTypeHint(Types.COMMENT, true, true, false, false));
@@ -89,6 +100,12 @@ public class UmlDiagramConfiguration extends BaseDiagramConfiguration {
       mappings.put(Types.COMMENT_EDGE, GraphPackage.Literals.GEDGE);
       mappings.put(Types.COMPARTMENT, GraphPackage.Literals.GCOMPARTMENT);
       mappings.put(Types.COMPARTMENT_HEADER, GraphPackage.Literals.GCOMPARTMENT);
+
+      // OBJECT DIAGRAM
+      mappings.put(Types.ICON_OBJECT, GraphPackage.Literals.GCOMPARTMENT);
+      mappings.put(Types.OBJECT, GraphPackage.Literals.GNODE);
+      mappings.put(Types.LINK, GraphPackage.Literals.GEDGE);
+      mappings.put(Types.ATTRIBUTE, GraphPackage.Literals.GLABEL);
 
       return mappings;
    }

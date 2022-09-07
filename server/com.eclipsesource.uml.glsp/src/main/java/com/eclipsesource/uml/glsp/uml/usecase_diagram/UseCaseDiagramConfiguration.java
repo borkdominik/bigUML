@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.diagram;
+package com.eclipsesource.uml.glsp.uml.usecase_diagram;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +25,7 @@ import org.eclipse.glsp.server.types.ShapeTypeHint;
 import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
 import com.google.common.collect.Lists;
 
-public class UmlDiagramConfiguration extends BaseDiagramConfiguration {
+public class UseCaseDiagramConfiguration extends BaseDiagramConfiguration {
 
    @Override
    public String getDiagramType() { return "umldiagram"; }
@@ -34,7 +34,12 @@ public class UmlDiagramConfiguration extends BaseDiagramConfiguration {
    public List<EdgeTypeHint> getEdgeTypeHints() {
       return Lists.newArrayList(
          // COMMONS
-         createDefaultEdgeTypeHint(Types.COMMENT_EDGE));
+         createDefaultEdgeTypeHint(Types.COMMENT_EDGE),
+         // USECASE DIAGRAM
+         createDefaultEdgeTypeHint(Types.EXTEND),
+         createDefaultEdgeTypeHint(Types.INCLUDE),
+         createDefaultEdgeTypeHint(Types.GENERALIZATION),
+         createDefaultEdgeTypeHint(Types.USECASE_ASSOCIATION));
    }
 
    @Override
@@ -45,6 +50,20 @@ public class UmlDiagramConfiguration extends BaseDiagramConfiguration {
       ArrayList<String> to;
 
       switch (elementId) {
+         // USECASE DIAGRAM
+         case Types.EXTEND:
+            allowed = Lists.newArrayList(Types.USECASE, Types.EXTENSIONPOINT);
+            return new EdgeTypeHint(elementId, true, true, true, allowed, allowed);
+         case Types.INCLUDE:
+            allowed = Lists.newArrayList(Types.USECASE);
+            return new EdgeTypeHint(elementId, true, true, true, allowed, allowed);
+         case Types.GENERALIZATION:
+            allowed = Lists.newArrayList(Types.ACTOR, Types.USECASE);
+            return new EdgeTypeHint(elementId, true, true, true, allowed, allowed);
+         case Types.USECASE_ASSOCIATION:
+            from = Lists.newArrayList(Types.ACTOR, Types.USECASE);
+            to = Lists.newArrayList(Types.USECASE, Types.ACTOR);
+            return new EdgeTypeHint(elementId, true, true, true, from, to);
          // COMMENT
          case Types.COMMENT_EDGE:
             allowed = Lists.newArrayList();
@@ -66,6 +85,17 @@ public class UmlDiagramConfiguration extends BaseDiagramConfiguration {
             Types.STATE_MACHINE, Types.DEPLOYMENT_NODE, Types.DEVICE, Types.ARTIFACT, Types.ENUMERATION,
             Types.EXECUTION_ENVIRONMENT, Types.OBJECT, Types.DEPLOYMENT_COMPONENT, Types.INTERFACE,
             Types.ABSTRACT_CLASS)));
+
+      // USECASE DIAGRAM
+      hints.add(new ShapeTypeHint(Types.PACKAGE, true, true, true, false,
+         List.of(Types.ACTOR, Types.USECASE, Types.PACKAGE, Types.COMPONENT, Types.COMMENT)));
+      hints.add(new ShapeTypeHint(Types.COMPONENT, true, true, true, false,
+         List.of(Types.USECASE, Types.COMMENT)));
+      hints.add(new ShapeTypeHint(Types.USECASE, true, true, false, false,
+         List.of(Types.COMMENT)));
+      hints.add(new ShapeTypeHint(Types.EXTENSIONPOINT, false, true, false, false));
+      hints.add(new ShapeTypeHint(Types.ACTOR, true, true, false, false,
+         List.of(Types.COMMENT)));
 
       // Comment
       hints.add(new ShapeTypeHint(Types.COMMENT, true, true, false, false));
@@ -89,6 +119,20 @@ public class UmlDiagramConfiguration extends BaseDiagramConfiguration {
       mappings.put(Types.COMMENT_EDGE, GraphPackage.Literals.GEDGE);
       mappings.put(Types.COMPARTMENT, GraphPackage.Literals.GCOMPARTMENT);
       mappings.put(Types.COMPARTMENT_HEADER, GraphPackage.Literals.GCOMPARTMENT);
+
+      // USECASE DIAGRAM
+      mappings.put(Types.ICON_PACKAGE, GraphPackage.Literals.GCOMPARTMENT);
+      mappings.put(Types.PACKAGE, GraphPackage.Literals.GNODE);
+      mappings.put(Types.LABEL_PACKAGE_NAME, GraphPackage.Literals.GLABEL);
+      mappings.put(Types.ICON_USECASE, GraphPackage.Literals.GCOMPARTMENT);
+      mappings.put(Types.USECASE, GraphPackage.Literals.GNODE);
+      mappings.put(Types.ICON_COMPONENT, GraphPackage.Literals.GCOMPARTMENT);
+      mappings.put(Types.COMPONENT, GraphPackage.Literals.GNODE);
+      mappings.put(Types.ICON_ACTOR, GraphPackage.Literals.GCOMPARTMENT);
+      mappings.put(Types.ACTOR, GraphPackage.Literals.GNODE);
+      mappings.put(Types.EXTEND, GraphPackage.Literals.GEDGE);
+      mappings.put(Types.INCLUDE, GraphPackage.Literals.GEDGE);
+      mappings.put(Types.GENERALIZATION, GraphPackage.Literals.GEDGE);
 
       return mappings;
    }

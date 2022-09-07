@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.diagram;
+package com.eclipsesource.uml.glsp.uml.deployment_diagram;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +25,7 @@ import org.eclipse.glsp.server.types.ShapeTypeHint;
 import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
 import com.google.common.collect.Lists;
 
-public class UmlDiagramConfiguration extends BaseDiagramConfiguration {
+public class DeploymentDiagramConfiguration extends BaseDiagramConfiguration {
 
    @Override
    public String getDiagramType() { return "umldiagram"; }
@@ -34,7 +34,10 @@ public class UmlDiagramConfiguration extends BaseDiagramConfiguration {
    public List<EdgeTypeHint> getEdgeTypeHints() {
       return Lists.newArrayList(
          // COMMONS
-         createDefaultEdgeTypeHint(Types.COMMENT_EDGE));
+         createDefaultEdgeTypeHint(Types.COMMENT_EDGE),
+         // DEPLOYMENT DIAGRAM
+         createDefaultEdgeTypeHint(Types.COMMUNICATION_PATH),
+         createDefaultEdgeTypeHint(Types.DEPLOYMENT));
    }
 
    @Override
@@ -45,6 +48,16 @@ public class UmlDiagramConfiguration extends BaseDiagramConfiguration {
       ArrayList<String> to;
 
       switch (elementId) {
+         // DEPLOYMENT DIAGRAM
+         case Types.COMMUNICATION_PATH:
+            from = Lists.newArrayList(Types.DEPLOYMENT_NODE, Types.EXECUTION_ENVIRONMENT, Types.DEVICE);
+            to = Lists.newArrayList(Types.DEPLOYMENT_NODE, Types.EXECUTION_ENVIRONMENT, Types.DEVICE, Types.ARTIFACT,
+               Types.DEPLOYMENT_SPECIFICATION);
+            return new EdgeTypeHint(elementId, true, true, true, from, to);
+         case Types.DEPLOYMENT:
+            from = Lists.newArrayList(Types.ARTIFACT, Types.DEPLOYMENT_SPECIFICATION);
+            to = Lists.newArrayList(Types.DEPLOYMENT_NODE, Types.DEVICE, Types.EXECUTION_ENVIRONMENT);
+            return new EdgeTypeHint(elementId, true, true, true, from, to);
          // COMMENT
          case Types.COMMENT_EDGE:
             allowed = Lists.newArrayList();
@@ -66,6 +79,22 @@ public class UmlDiagramConfiguration extends BaseDiagramConfiguration {
             Types.STATE_MACHINE, Types.DEPLOYMENT_NODE, Types.DEVICE, Types.ARTIFACT, Types.ENUMERATION,
             Types.EXECUTION_ENVIRONMENT, Types.OBJECT, Types.DEPLOYMENT_COMPONENT, Types.INTERFACE,
             Types.ABSTRACT_CLASS)));
+
+      // DEPLOYMENT DIAGRAM
+      hints.add(new ShapeTypeHint(Types.DEPLOYMENT_NODE, true, true, true, false,
+         List.of(Types.DEPLOYMENT_NODE, Types.ARTIFACT, Types.DEVICE, Types.DEPLOYMENT_COMPONENT,
+            Types.EXECUTION_ENVIRONMENT, Types.DEPLOYMENT_SPECIFICATION, Types.COMMENT)));
+      hints.add(new ShapeTypeHint(Types.ARTIFACT, true, true, true, true,
+         List.of(Types.DEPLOYMENT_SPECIFICATION, Types.COMMENT)));
+      hints.add(new ShapeTypeHint(Types.EXECUTION_ENVIRONMENT, true, true, true, true,
+         List.of(Types.DEPLOYMENT_NODE, Types.ARTIFACT, Types.DEVICE,
+            Types.EXECUTION_ENVIRONMENT, Types.DEPLOYMENT_SPECIFICATION, Types.COMMENT)));
+      hints.add(new ShapeTypeHint(Types.DEVICE, true, true, true, true,
+         List.of(Types.DEPLOYMENT_NODE, Types.ARTIFACT, Types.DEVICE, Types.DEPLOYMENT_COMPONENT,
+            Types.EXECUTION_ENVIRONMENT, Types.DEPLOYMENT_SPECIFICATION, Types.COMMENT)));
+      hints.add(new ShapeTypeHint(Types.DEPLOYMENT_SPECIFICATION, true, true, true, true,
+         List.of(Types.COMMENT)));
+      hints.add(new ShapeTypeHint(Types.DEPLOYMENT_COMPONENT, true, true, true, true));
 
       // Comment
       hints.add(new ShapeTypeHint(Types.COMMENT, true, true, false, false));
@@ -89,6 +118,23 @@ public class UmlDiagramConfiguration extends BaseDiagramConfiguration {
       mappings.put(Types.COMMENT_EDGE, GraphPackage.Literals.GEDGE);
       mappings.put(Types.COMPARTMENT, GraphPackage.Literals.GCOMPARTMENT);
       mappings.put(Types.COMPARTMENT_HEADER, GraphPackage.Literals.GCOMPARTMENT);
+
+      // DEPLOYMENT DIAGRAM
+      mappings.put(Types.ICON_DEPLOYMENT_NODE, GraphPackage.Literals.GCOMPARTMENT);
+      mappings.put(Types.DEPLOYMENT_NODE, GraphPackage.Literals.GNODE);
+      mappings.put(Types.STRUCTURE, GraphPackage.Literals.GCOMPARTMENT);
+      mappings.put(Types.LABEL_NODE_NAME, GraphPackage.Literals.GLABEL);
+      mappings.put(Types.ICON_ARTIFACT, GraphPackage.Literals.GCOMPARTMENT);
+      mappings.put(Types.ARTIFACT, GraphPackage.Literals.GNODE);
+      mappings.put(Types.ICON_DEPLOYMENT_SPECIFICATION, GraphPackage.Literals.GCOMPARTMENT);
+      mappings.put(Types.DEPLOYMENT_SPECIFICATION, GraphPackage.Literals.GNODE);
+      mappings.put(Types.ICON_EXECUTION_ENVIRONMENT, GraphPackage.Literals.GCOMPARTMENT);
+      mappings.put(Types.EXECUTION_ENVIRONMENT, GraphPackage.Literals.GNODE);
+      mappings.put(Types.ICON_DEVICE, GraphPackage.Literals.GCOMPARTMENT);
+      mappings.put(Types.DEVICE, GraphPackage.Literals.GNODE);
+      mappings.put(Types.COMMUNICATION_PATH, GraphPackage.Literals.GEDGE);
+      mappings.put(Types.DEPLOYMENT, GraphPackage.Literals.GEDGE);
+      mappings.put(Types.DEPLOYMENT_COMPONENT, GraphPackage.Literals.GNODE);
 
       return mappings;
    }

@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.diagram;
+package com.eclipsesource.uml.glsp.uml.class_diagram;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +25,7 @@ import org.eclipse.glsp.server.types.ShapeTypeHint;
 import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
 import com.google.common.collect.Lists;
 
-public class UmlDiagramConfiguration extends BaseDiagramConfiguration {
+public class ClassDiagramConfiguration extends BaseDiagramConfiguration {
 
    @Override
    public String getDiagramType() { return "umldiagram"; }
@@ -34,7 +34,12 @@ public class UmlDiagramConfiguration extends BaseDiagramConfiguration {
    public List<EdgeTypeHint> getEdgeTypeHints() {
       return Lists.newArrayList(
          // COMMONS
-         createDefaultEdgeTypeHint(Types.COMMENT_EDGE));
+         createDefaultEdgeTypeHint(Types.COMMENT_EDGE),
+         // CLASS DIAGRAM
+         createDefaultEdgeTypeHint(Types.ASSOCIATION),
+         createDefaultEdgeTypeHint(Types.AGGREGATION),
+         createDefaultEdgeTypeHint(Types.COMPOSITION),
+         createDefaultEdgeTypeHint(Types.CLASS_GENERALIZATION));
    }
 
    @Override
@@ -45,6 +50,15 @@ public class UmlDiagramConfiguration extends BaseDiagramConfiguration {
       ArrayList<String> to;
 
       switch (elementId) {
+         // CLASS DIAGRAM
+         case Types.ASSOCIATION:
+         case Types.CLASS_GENERALIZATION:
+            allowed = Lists.newArrayList(Types.CLASS, Types.INTERFACE);
+            return new EdgeTypeHint(elementId, true, true, true, allowed, allowed);
+         case Types.COMPOSITION:
+         case Types.AGGREGATION:
+            allowed = Lists.newArrayList(Types.CLASS);
+            return new EdgeTypeHint(elementId, true, true, true, allowed, allowed);
          // COMMENT
          case Types.COMMENT_EDGE:
             allowed = Lists.newArrayList();
@@ -66,6 +80,17 @@ public class UmlDiagramConfiguration extends BaseDiagramConfiguration {
             Types.STATE_MACHINE, Types.DEPLOYMENT_NODE, Types.DEVICE, Types.ARTIFACT, Types.ENUMERATION,
             Types.EXECUTION_ENVIRONMENT, Types.OBJECT, Types.DEPLOYMENT_COMPONENT, Types.INTERFACE,
             Types.ABSTRACT_CLASS)));
+
+      // CLASS DIAGRAM
+      hints.add(new ShapeTypeHint(Types.CLASS, true, true, false, false,
+         List.of(Types.PROPERTY, Types.COMMENT)));
+      hints.add(new ShapeTypeHint(Types.ABSTRACT_CLASS, true, true, false, false,
+         List.of(Types.PROPERTY, Types.COMMENT)));
+      hints.add(new ShapeTypeHint(Types.INTERFACE, true, true, false, false,
+         List.of(Types.PROPERTY, Types.COMMENT)));
+      hints.add(new ShapeTypeHint(Types.PROPERTY, false, true, false, true,
+         List.of(Types.COMMENT)));
+      hints.add(new ShapeTypeHint(Types.PROPERTY, true, true, false, false));
 
       // Comment
       hints.add(new ShapeTypeHint(Types.COMMENT, true, true, false, false));
@@ -89,6 +114,23 @@ public class UmlDiagramConfiguration extends BaseDiagramConfiguration {
       mappings.put(Types.COMMENT_EDGE, GraphPackage.Literals.GEDGE);
       mappings.put(Types.COMPARTMENT, GraphPackage.Literals.GCOMPARTMENT);
       mappings.put(Types.COMPARTMENT_HEADER, GraphPackage.Literals.GCOMPARTMENT);
+
+      // CLASS DIAGRAM
+      mappings.put(Types.ICON_CLASS, GraphPackage.Literals.GCOMPARTMENT);
+      mappings.put(Types.CLASS, GraphPackage.Literals.GNODE);
+      mappings.put(Types.ICON_ENUMERATION, GraphPackage.Literals.GCOMPARTMENT);
+      mappings.put(Types.ENUMERATION, GraphPackage.Literals.GNODE);
+      mappings.put(Types.INTERFACE, GraphPackage.Literals.GNODE);
+      // mappings.put(Types.PROPERTY, GraphPackage.Literals.GLABEL);
+      mappings.put(Types.ASSOCIATION, GraphPackage.Literals.GEDGE);
+      mappings.put(Types.AGGREGATION, GraphPackage.Literals.GEDGE);
+      mappings.put(Types.COMPOSITION, GraphPackage.Literals.GEDGE);
+      mappings.put(Types.CLASS_GENERALIZATION, GraphPackage.Literals.GEDGE);
+      mappings.put(Types.PROPERTY, GraphPackage.Literals.GCOMPARTMENT);
+      mappings.put(Types.ICON_PROPERTY, GraphPackage.Literals.GCOMPARTMENT);
+      mappings.put(Types.LABEL_PROPERTY_NAME, GraphPackage.Literals.GLABEL);
+      mappings.put(Types.LABEL_PROPERTY_TYPE, GraphPackage.Literals.GLABEL);
+      mappings.put(Types.LABEL_PROPERTY_MULTIPLICITY, GraphPackage.Literals.GLABEL);
 
       return mappings;
    }

@@ -1,0 +1,29 @@
+
+/* USECASE */
+.umlusecase {
+    background-image: var(--uml-icon-usecase);
+}
+
+.umlactor {
+    background-image: var(--uml-icon-actor);
+}
+
+.umlpackage {
+    background-image: var(--uml-icon-package);
+}
+
+.umlcomponent {
+    background-image: var(--uml-icon-component);
+}
+
+.umlextend {
+    background-image: var(--uml-icon-extend);
+}
+
+.umlinclude {
+    background-image: var(--uml-icon-include);
+}
+
+.umlgeneralization {
+    background-image: var(--uml-icon-generalization);
+}

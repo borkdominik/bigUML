@@ -1,0 +1,59 @@
+
+/* STATEMACHINE */
+
+.umlstatemachine {
+    background-image: var(--uml-icon-state-machine);
+}
+
+.umlstate {
+    background-image: var(--uml-icon-state);
+}
+
+.umlinitialstate {
+    background-image: var(--uml-icon-initial-state);
+}
+
+.umldeephistory {
+    background-image: var(--uml-icon-deep-history);
+}
+
+.umlshallowhistory {
+    background-image: var(--uml-icon-shallow-history);
+}
+
+.umlfork {
+    background-image: var(--uml-icon-join-fork);
+}
+
+.umljoin {
+    background-image: var(--uml-icon-join-fork);
+}
+
+/* TODO: change icon here to something unique!!!!*/
+.umljunction {
+    background-image: var(--uml-icon-initial-state);
+}
+
+.umlchoice {
+    background-image: var(--uml-icon-choice);
+}
+
+.umltransition {
+    background-image: var(--uml-icon-transition);
+}
+
+.umlfinalstate {
+    background-image: var(--uml-icon-final-state);
+}
+
+.umlentrypoint {
+    background-image: var(--uml-icon-entry-point);
+}
+
+.umlexitpoint {
+    background-image: var(--uml-icon-exit-point);
+}
+
+.umlstateactivity {
+    background-image: var(--uml-icon-state-activity);
+}

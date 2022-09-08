@@ -10,7 +10,7 @@
  ********************************************************************************/
 // eslint-disable-next-line header/header
 import "../../src/browser/style/common.css";
-import "../../src/browser/style/uml-colors.css";
+import "../../src/browser/style/uml/uml-colors.css";
 
 import {FrontendApplicationContribution, LabelProviderContribution} from "@theia/core/lib/browser";
 import {ContainerModule} from "inversify";

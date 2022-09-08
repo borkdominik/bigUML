@@ -1,0 +1,4 @@
+/* USECASE */
+.uml-edge-dotted {
+    stroke-dasharray: 2, 4;
+}

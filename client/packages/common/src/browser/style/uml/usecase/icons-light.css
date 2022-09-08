@@ -1,0 +1,12 @@
+:root {
+
+    /* USECASE DIAGRAM */
+    --uml-icon-usecase: url(../../../resources/icons/light/usecase/UseCase.gif);
+    --uml-icon-actor: url(../../../resources/icons/light/usecase/Actor.gif);
+    --uml-icon-package: url(../../../resources/icons/light/usecase/Package.gif);
+    --uml-icon-component: url(../../../resources/icons/light/usecase/Component.gif);
+    --uml-icon-include: url(../../../resources/icons/light/usecase/Include.gif);
+    --uml-icon-extend: url(../../../resources/icons/light/usecase/Extend.gif);
+    --uml-icon-generalization: url(../../../resources/icons/light/usecase/Generalization.gif);
+
+}

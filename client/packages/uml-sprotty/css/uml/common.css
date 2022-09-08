@@ -1,0 +1,104 @@
+.uml-node {
+    fill: var(--uml-node);
+    filter: url(#dropShadow);
+    stroke-width: 1;
+    stroke: var(--uml-border);
+}
+
+.uml-node.mouseover:not(.selected) {
+    stroke-width: 2;
+}
+
+.uml-node.selected {
+    stroke-width: 3;
+}
+
+.uml-node .sprotty-node {
+    fill: inherit;
+    stroke: var(--uml-border);
+}
+
+.uml-comp-separator {
+    stroke-width: 1;
+    stroke: var(--uml-edge);
+}
+
+.uml-edge {
+    fill: none;
+    stroke-width: 1;
+    stroke: var(--uml-edge) !important;
+}
+
+.uml-edge.mouseover:not(.selected) {
+    stroke-width: 2;
+    opacity: 1;
+}
+
+.uml-edge.selected {
+    stroke-width: 3;
+    stroke-dasharray: none;
+}
+
+.uml-edge>.sprotty-routing-handle {
+    r: 4;
+    fill: var(--uml-edge);
+    stroke: var(--uml-edge);
+    stroke-width: 2;
+    z-index: 1000;
+}
+
+.uml-edge>.sprotty-routing-handle.mouseover {
+    stroke-width: 3;
+}
+
+
+
+/*.uml-edge-dashed {
+    stroke-dasharray: 7, 7;
+}*/
+
+.uml-edge-dashed {
+    stroke-dasharray: 15 10;
+}
+
+.uml-edge-directed-end {
+    marker-end: url("#triangle");
+}
+
+.uml-edge-directed-start {
+    marker-start: url("#triangle");
+}
+
+.uml-edge-directed-end-tent {
+    marker-end: url("#tent");
+}
+
+.uml-edge-directed-start-tent {
+    marker-start: url("#tent");
+}
+
+.uml-edge-directed-end-empty {
+    marker-end: url("#triangle-empty");
+}
+
+.uml-edge-directed-start-empty {
+    marker-start: url("#triangle-empty");
+}
+
+.uml-edge-directed-diamond {
+    marker-start: url("#diamond");
+}
+
+.uml-edge-directed-diamond-empty {
+    marker-start: url("#diamond-empty");
+}
+
+
+/*.uml-package > .sprotty-node {
+    fill: #88bd5c80;
+}*/
+
+.uml-packageable-node>.struct {
+    fill: none;
+    stroke: none;
+}

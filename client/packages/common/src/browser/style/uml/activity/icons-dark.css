@@ -1,0 +1,25 @@
+:root {
+    /* ACTIVITY DIAGRAM */
+    --uml-icon-activity: url(../../../resources/icons/dark/activity/Activity.gif);
+    --uml-icon-partition: url(../../../resources/icons/dark/activity/Partition.gif);
+    --uml-icon-controlflow: url(../../../resources/icons/dark/activity/ControlFlow.gif);
+    --uml-icon-action: url(../../../resources/icons/dark/activity/Action.gif);
+    --uml-icon-event: url(../../../resources/icons/dark/activity/Event.gif);
+    --uml-icon-time: url(../../../resources/icons/dark/activity/Time.gif);
+    --uml-icon-signal: url(../../../resources/icons/dark/activity/Signal.gif);
+    --uml-icon-call: url(../../../resources/icons/dark/activity/Call.gif);
+    --uml-icon-initial: url(../../../resources/icons/dark/activity/Initial.gif);
+    --uml-icon-final: url(../../../resources/icons/dark/activity/Final.gif);
+    --uml-icon-flowfinal: url(../../../resources/icons/dark/activity/FlowFinal.gif);
+    --uml-icon-decision: url(../../../resources/icons/dark/activity/Decision.gif);
+    --uml-icon-merge: url(../../../resources/icons/dark/activity/Merge.gif);
+    --uml-icon-fork: url(../../../resources/icons/dark/activity/Fork.gif);
+    --uml-icon-join: url(../../../resources/icons/dark/activity/Join.gif);
+    --uml-icon-parameter: url(../../../resources/icons/dark/activity/Parameter.gif);
+    --uml-icon-pin: url(../../../resources/icons/dark/activity/Pin.gif);
+    --uml-icon-centralbuffer: url(../../../resources/icons/dark/activity/CentralBuffer.gif);
+    --uml-icon-datastore: url(../../../resources/icons/dark/activity/DataStore.gif);
+    --uml-icon-exceptionhandler: url(../../../resources/icons/dark/activity/Flash.gif);
+    --uml-icon-interruptibleregion: url(../../../resources/icons/dark/activity/Region.gif);
+    --uml-icon-condition: url(../../../resources/icons/dark/activity/Condition.gif);    
+}

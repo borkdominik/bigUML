@@ -8,14 +8,25 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-import "../css/diagram.css";
-import "../css/edit-label.css";
-import "../css/tool-palette.css";
-import "reflect-metadata";
+import { DiamondNode } from "@eclipse-glsp/client";
 
-import createUmlDiagramContainer from "./di.config";
+import { Icon } from "../../model";
 
-export * from "./model";
-export * from "./views/commons";
-export * from "./features/edit-label";
-export { createUmlDiagramContainer };
+// ACTIVITY
+export class IconActivity extends Icon {
+    iconImageName = "activity/Activity.svg";
+}
+
+// TODO: Missing?
+export class IconAction extends Icon {
+    iconImageName = "OpaqueAction.gif";
+}
+
+export class ControlNode extends DiamondNode {
+    size = {
+        width: 32,
+        height: 32
+    };
+    strokeWidth = 1;
+}
+

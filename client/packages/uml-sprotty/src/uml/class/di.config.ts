@@ -20,9 +20,11 @@ import {
     createClientContainer,
     LogLevel,
     overrideViewerOptions,
+    PolylineEdgeView,
     saveModule,
     SCompartment,
     SCompartmentView,
+    SEdge,
     SLabel,
     SLabelView,
     SRoutingHandle,
@@ -35,11 +37,15 @@ import toolPaletteModule from "@eclipse-glsp/client/lib/features/tool-palette/di
 import { Container, ContainerModule } from "inversify";
 import { EditLabelUI } from "sprotty/lib";
 
-import { EditLabelUIAutocomplete } from "./features/edit-label";
-import umlToolPaletteModule from "./features/tool-palette/di.config";
-import { IconLabelCompartmentSelectionFeedback } from "./feedback";
-import { SEditableLabel } from "./model";
-import { BaseTypes, UmlTypes } from "./utils";
+import { EditLabelUIAutocomplete } from "../../features/edit-label";
+import umlToolPaletteModule from "../../features/tool-palette/di.config";
+import { IconLabelCompartmentSelectionFeedback } from "../../feedback";
+import { ConnectableEdge, IconLabelCompartment, LabeledNode, SEditableLabel } from "../../model";
+import { BaseTypes, UmlTypes } from "../../utils";
+import { IconView } from "../../views/commons";
+import { DirectedEdgeView } from "../usecase/views";
+import { IconClass, IconProperty } from "./model";
+import { ClassNodeView, EnumerationNodeView } from "./views";
 
 export default function createContainer(widgetId: string): Container {
     const classDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
@@ -61,6 +67,24 @@ export default function createContainer(widgetId: string): Container {
         configureModelElement(context, BaseTypes.ROUTING_POINT, SRoutingHandle, SRoutingHandleView);
         configureModelElement(context, BaseTypes.VOLATILE_ROUTING_POINT, SRoutingHandle, SRoutingHandleView);
         configureModelElement(context, UmlTypes.STRUCTURE, SCompartment, StructureCompartmentView);
+
+        // CLASS DIAGRAM
+        configureModelElement(context, UmlTypes.ICON_CLASS, IconClass, IconView);
+        configureModelElement(context, UmlTypes.CLASS, LabeledNode, ClassNodeView);
+        configureModelElement(context, UmlTypes.ABSTRACT_CLASS, LabeledNode, ClassNodeView);
+        configureModelElement(context, UmlTypes.ICON_ENUMERATION, IconClass, IconView);
+        configureModelElement(context, UmlTypes.ENUMERATION, LabeledNode, EnumerationNodeView);
+        configureModelElement(context, UmlTypes.INTERFACE, LabeledNode, ClassNodeView);
+        configureModelElement(context, UmlTypes.ASSOCIATION, SEdge, PolylineEdgeView);
+        configureModelElement(context, UmlTypes.AGGREGATION, ConnectableEdge, DirectedEdgeView);
+        configureModelElement(context, UmlTypes.COMPOSITION, ConnectableEdge, DirectedEdgeView);
+        configureModelElement(context, UmlTypes.CLASS_GENERALIZATION, ConnectableEdge, DirectedEdgeView);
+        // configureModelElement(context, UmlTypes.PROPERTY, SLabelNodeProperty, LabelNodeView);
+        configureModelElement(context, UmlTypes.PROPERTY, IconLabelCompartment, SCompartmentView);
+        configureModelElement(context, UmlTypes.ICON_PROPERTY, IconProperty, IconView);
+        configureModelElement(context, UmlTypes.LABEL_PROPERTY_NAME, SEditableLabel, SLabelView);
+        configureModelElement(context, UmlTypes.LABEL_PROPERTY_TYPE, SEditableLabel, SLabelView);
+        configureModelElement(context, UmlTypes.LABEL_PROPERTY_MULTIPLICITY, SEditableLabel, SLabelView);
 
         configureViewerOptions(context, {
             needsClientLayout: true,

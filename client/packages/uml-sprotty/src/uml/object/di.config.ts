@@ -20,9 +20,11 @@ import {
     createClientContainer,
     LogLevel,
     overrideViewerOptions,
+    PolylineEdgeView,
     saveModule,
     SCompartment,
     SCompartmentView,
+    SEdge,
     SLabel,
     SLabelView,
     SRoutingHandle,
@@ -35,11 +37,13 @@ import toolPaletteModule from "@eclipse-glsp/client/lib/features/tool-palette/di
 import { Container, ContainerModule } from "inversify";
 import { EditLabelUI } from "sprotty/lib";
 
-import { EditLabelUIAutocomplete } from "./features/edit-label";
-import umlToolPaletteModule from "./features/tool-palette/di.config";
-import { IconLabelCompartmentSelectionFeedback } from "./feedback";
-import { SEditableLabel } from "./model";
-import { BaseTypes, UmlTypes } from "./utils";
+import { EditLabelUIAutocomplete } from "../../features/edit-label";
+import umlToolPaletteModule from "../../features/tool-palette/di.config";
+import { IconLabelCompartmentSelectionFeedback } from "../../feedback";
+import { LabeledNode, SEditableLabel, SLabelNodeProperty } from "../../model";
+import { BaseTypes, UmlTypes } from "../../utils";
+import { LabelNodeView } from "../../views/commons";
+import { ObjectNodeView } from "./views";
 
 export default function createContainer(widgetId: string): Container {
     const classDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
@@ -61,6 +65,12 @@ export default function createContainer(widgetId: string): Container {
         configureModelElement(context, BaseTypes.ROUTING_POINT, SRoutingHandle, SRoutingHandleView);
         configureModelElement(context, BaseTypes.VOLATILE_ROUTING_POINT, SRoutingHandle, SRoutingHandleView);
         configureModelElement(context, UmlTypes.STRUCTURE, SCompartment, StructureCompartmentView);
+
+        // OBJECT DIAGRAM
+        // configureModelElement(context, UmlTypes.ICON_OBJECT, IconObject, IconView);
+        configureModelElement(context, UmlTypes.OBJECT, LabeledNode, ObjectNodeView);
+        configureModelElement(context, UmlTypes.LINK, SEdge, PolylineEdgeView);
+        configureModelElement(context, UmlTypes.ATTRIBUTE, SLabelNodeProperty, LabelNodeView);
 
         configureViewerOptions(context, {
             needsClientLayout: true,

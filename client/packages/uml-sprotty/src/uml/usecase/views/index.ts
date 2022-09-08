@@ -8,14 +8,6 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-import "../css/diagram.css";
-import "../css/edit-label.css";
-import "../css/tool-palette.css";
-import "reflect-metadata";
-
-import createUmlDiagramContainer from "./di.config";
-
-export * from "./model";
-export * from "./views/commons";
-export * from "./features/edit-label";
-export { createUmlDiagramContainer };
+export * from "./use-case-node-view";
+export * from "./actor-node-view";
+export * from "./directed-edge-view";

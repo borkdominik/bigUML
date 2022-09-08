@@ -8,14 +8,9 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-import "../css/diagram.css";
-import "../css/edit-label.css";
-import "../css/tool-palette.css";
-import "reflect-metadata";
+import { Icon } from "../../model";
 
-import createUmlDiagramContainer from "./di.config";
-
-export * from "./model";
-export * from "./views/commons";
-export * from "./features/edit-label";
-export { createUmlDiagramContainer };
+// OBJECT
+export class IconObject extends Icon {
+    iconImageName = "object/Object.svg";
+}

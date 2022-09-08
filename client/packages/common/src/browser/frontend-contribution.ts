@@ -18,10 +18,10 @@ export class UmlFrontendContribution implements FrontendApplicationContribution 
 
     @inject(ThemeService) protected readonly themeService: ThemeService;
 
-    static readonly darkColorsCss = require("../../src/browser/style/uml-colors-dark.useable.css");
+    static readonly darkColorsCss = require("../../src/browser/style/uml/uml-colors-dark.useable.css");
     static readonly darkIconsCss = require("../../src/browser/style/icons-dark.useable.css");
 
-    static readonly lightColorsCss = require("../../src/browser/style/uml-colors-light.useable.css");
+    static readonly lightColorsCss = require("../../src/browser/style/uml/uml-colors-light.useable.css");
     static readonly lightIconsCss = require("../../src/browser/style/icons-light.useable.css");
 
     onStart(): void {

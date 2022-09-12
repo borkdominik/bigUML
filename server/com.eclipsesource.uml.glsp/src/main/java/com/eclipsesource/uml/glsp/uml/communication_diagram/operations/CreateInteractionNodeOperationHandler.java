@@ -8,9 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.operations.communication;
-
-import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
+package com.eclipsesource.uml.glsp.uml.communication_diagram.operations;
 
 import java.util.List;
 
@@ -18,22 +16,20 @@ import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSBasicCreateO
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.operations.Operation;
 import org.eclipse.glsp.server.types.GLSPServerException;
-import org.eclipse.uml2.uml.Interaction;
-import org.eclipse.uml2.uml.PackageableElement;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;
+import com.eclipsesource.uml.glsp.uml.communication_diagram.CommunicationModelServerAccess;
 import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
 import com.google.common.collect.Lists;
 
-public class CreateLifelineNodeOperationHandler
-   extends EMSBasicCreateOperationHandler<CreateNodeOperation, UmlModelServerAccess> {
+public class CreateInteractionNodeOperationHandler
+   extends EMSBasicCreateOperationHandler<CreateNodeOperation, CommunicationModelServerAccess> {
 
-   public CreateLifelineNodeOperationHandler() {
+   public CreateInteractionNodeOperationHandler() {
       super(handledElementTypeIds);
    }
 
-   private static List<String> handledElementTypeIds = Lists.newArrayList(Types.LIFELINE);
+   private static List<String> handledElementTypeIds = Lists.newArrayList(Types.INTERACTION);
 
    @Override
    public boolean handles(final Operation execAction) {
@@ -47,21 +43,14 @@ public class CreateLifelineNodeOperationHandler
    protected UmlModelState getUmlModelState() { return (UmlModelState) getEMSModelState(); }
 
    @Override
-   public void executeOperation(final CreateNodeOperation operation, final UmlModelServerAccess modelAccess) {
-      UmlModelState modelState = getUmlModelState();
+   public void executeOperation(final CreateNodeOperation operation, final CommunicationModelServerAccess modelAccess) {
 
-      String containerId = operation.getContainerId();
-      String elementTypeId = operation.getElementTypeId();
-
-      PackageableElement container = getOrThrow(modelState.getIndex().getSemantic(containerId),
-         PackageableElement.class, "No valid container with id " + operation.getContainerId() + " found");
-
-      switch (elementTypeId) {
-         case Types.LIFELINE: {
-            modelAccess.addLifeline(getUmlModelState(), (Interaction) container, operation.getLocation())
+      switch (operation.getElementTypeId()) {
+         case Types.INTERACTION: {
+            modelAccess.addInteraction(getUmlModelState(), operation.getLocation())
                .thenAccept(response -> {
                   if (!response.body()) {
-                     throw new GLSPServerException("Could not execute create operation on new Lifeline node");
+                     throw new GLSPServerException("Could not execute create operation on new Interaction node");
                   }
                });
             break;
@@ -70,6 +59,6 @@ public class CreateLifelineNodeOperationHandler
    }
 
    @Override
-   public String getLabel() { return "Create uml element"; }
+   public String getLabel() { return "Create uml interaction"; }
 
 }

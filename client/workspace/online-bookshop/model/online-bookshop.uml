@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_VMjIwPS3EeyWkaR_ubGN2A" name="online-bookshop">
+  <packagedElement xmi:type="uml:Interaction" xmi:id="_VrBNcPS3EeyWkaR_ubGN2A" name="Online Bookshop">
+    <lifeline xmi:id="_d0MUAPS3EeyWkaR_ubGN2A" name="anInventory:Inventory" coveredBy="_s0i4UPS4EeyWkaR_ubGN2A _xV9OAPS4EeyWkaR_ubGN2A"/>
+    <lifeline xmi:id="_r4ZOkPS3EeyWkaR_ubGN2A" name="aBS:OnlineBookShop" coveredBy="__hgjMPS3EeyWkaR_ubGN2A _QAF1gvS4EeyWkaR_ubGN2A _eb9pMfS4EeyWkaR_ubGN2A _s0iRQfS4EeyWkaR_ubGN2A _xV8m8fS4EeyWkaR_ubGN2A _4dkJ4PS4EeyWkaR_ubGN2A _9P6ekfS4EeyWkaR_ubGN2A"/>
+    <lifeline xmi:id="_zGZGUPS3EeyWkaR_ubGN2A" name="aOrder:Order" coveredBy="__hhKQPS3EeyWkaR_ubGN2A"/>
+    <lifeline xmi:id="_1SZq4PS3EeyWkaR_ubGN2A" name="aBook:Book" coveredBy="_4dkw8PS4EeyWkaR_ubGN2A"/>
+    <lifeline xmi:id="_3nZMUPS3EeyWkaR_ubGN2A" name="sc[customer]:ShoppingCart" coveredBy="_9P7FoPS4EeyWkaR_ubGN2A"/>
+    <lifeline xmi:id="_KhCL0PS4EeyWkaR_ubGN2A" name="aPerson:Person" coveredBy="_QAF1gfS4EeyWkaR_ubGN2A _eb9pMPS4EeyWkaR_ubGN2A"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="__hgjMPS3EeyWkaR_ubGN2A" name="2.2 [not empty(cart)]:make_order() - SendEvent" covered="_r4ZOkPS3EeyWkaR_ubGN2A" message="__hf8IPS3EeyWkaR_ubGN2A"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="__hhKQPS3EeyWkaR_ubGN2A" name="2.2 [not empty(cart)]:make_order() - ReceiveEvent" covered="_zGZGUPS3EeyWkaR_ubGN2A" message="__hf8IPS3EeyWkaR_ubGN2A"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_QAF1gfS4EeyWkaR_ubGN2A" name="1 *: find_books() - SendEvent" covered="_KhCL0PS4EeyWkaR_ubGN2A" message="_QAF1gPS4EeyWkaR_ubGN2A"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_QAF1gvS4EeyWkaR_ubGN2A" name="1 *: find_books() - ReceiveEvent" covered="_r4ZOkPS3EeyWkaR_ubGN2A" message="_QAF1gPS4EeyWkaR_ubGN2A"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_eb9pMPS4EeyWkaR_ubGN2A" name="2: checkout() - SendEvent" covered="_KhCL0PS4EeyWkaR_ubGN2A" message="_eb9CIPS4EeyWkaR_ubGN2A"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_eb9pMfS4EeyWkaR_ubGN2A" name="2: checkout() - ReceiveEvent" covered="_r4ZOkPS3EeyWkaR_ubGN2A" message="_eb9CIPS4EeyWkaR_ubGN2A"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_s0iRQfS4EeyWkaR_ubGN2A" name="1.1: search() - SendEvent" covered="_r4ZOkPS3EeyWkaR_ubGN2A" message="_s0iRQPS4EeyWkaR_ubGN2A"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_s0i4UPS4EeyWkaR_ubGN2A" name="1.1: search() - ReceiveEvent" covered="_d0MUAPS3EeyWkaR_ubGN2A" message="_s0iRQPS4EeyWkaR_ubGN2A"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_xV8m8fS4EeyWkaR_ubGN2A" name="2.3 [order complete]: update_inventory() - SendEvent" covered="_r4ZOkPS3EeyWkaR_ubGN2A" message="_xV8m8PS4EeyWkaR_ubGN2A"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_xV9OAPS4EeyWkaR_ubGN2A" name="2.3 [order complete]: update_inventory() - ReceiveEvent" covered="_d0MUAPS3EeyWkaR_ubGN2A" message="_xV8m8PS4EeyWkaR_ubGN2A"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_4dkJ4PS4EeyWkaR_ubGN2A" name="1.2[interested]: view_book() - SendEvent" covered="_r4ZOkPS3EeyWkaR_ubGN2A" message="_4dji0PS4EeyWkaR_ubGN2A"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_4dkw8PS4EeyWkaR_ubGN2A" name="1.2[interested]: view_book() - ReceiveEvent" covered="_1SZq4PS3EeyWkaR_ubGN2A" message="_4dji0PS4EeyWkaR_ubGN2A"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_9P6ekfS4EeyWkaR_ubGN2A" name="1.3 [decided to buy]: add_to_cart() - SendEvent" covered="_r4ZOkPS3EeyWkaR_ubGN2A" message="_9P6ekPS4EeyWkaR_ubGN2A"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_9P7FoPS4EeyWkaR_ubGN2A" name="1.3 [decided to buy]: add_to_cart() - ReceiveEvent" covered="_3nZMUPS3EeyWkaR_ubGN2A" message="_9P6ekPS4EeyWkaR_ubGN2A"/>
+    <message xmi:id="__hf8IPS3EeyWkaR_ubGN2A" name="2.2 [not empty(cart)]:make_order()" receiveEvent="__hhKQPS3EeyWkaR_ubGN2A" sendEvent="__hgjMPS3EeyWkaR_ubGN2A"/>
+    <message xmi:id="_QAF1gPS4EeyWkaR_ubGN2A" name="1 *: find_books()" receiveEvent="_QAF1gvS4EeyWkaR_ubGN2A" sendEvent="_QAF1gfS4EeyWkaR_ubGN2A"/>
+    <message xmi:id="_eb9CIPS4EeyWkaR_ubGN2A" name="2: checkout()" receiveEvent="_eb9pMfS4EeyWkaR_ubGN2A" sendEvent="_eb9pMPS4EeyWkaR_ubGN2A"/>
+    <message xmi:id="_s0iRQPS4EeyWkaR_ubGN2A" name="1.1: search()" receiveEvent="_s0i4UPS4EeyWkaR_ubGN2A" sendEvent="_s0iRQfS4EeyWkaR_ubGN2A"/>
+    <message xmi:id="_xV8m8PS4EeyWkaR_ubGN2A" name="2.3 [order complete]: update_inventory()" receiveEvent="_xV9OAPS4EeyWkaR_ubGN2A" sendEvent="_xV8m8fS4EeyWkaR_ubGN2A"/>
+    <message xmi:id="_4dji0PS4EeyWkaR_ubGN2A" name="1.2[interested]: view_book()" receiveEvent="_4dkw8PS4EeyWkaR_ubGN2A" sendEvent="_4dkJ4PS4EeyWkaR_ubGN2A"/>
+    <message xmi:id="_9P6ekPS4EeyWkaR_ubGN2A" name="1.3 [decided to buy]: add_to_cart()" receiveEvent="_9P7FoPS4EeyWkaR_ubGN2A" sendEvent="_9P6ekfS4EeyWkaR_ubGN2A"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Interaction" xmi:id="_OkLfoPVREeyNj7aaTFsTUA" name="Test">
+    <lifeline xmi:id="_PWGEwPVREeyNj7aaTFsTUA" name="NewLifeline1"/>
+  </packagedElement>
+</uml:Model>

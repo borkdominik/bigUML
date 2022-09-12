@@ -42,8 +42,6 @@ import { EditLabelUIAutocomplete } from "./features/edit-label";
 import umlToolPaletteModule from "./features/tool-palette/di.config";
 import { IconLabelCompartmentSelectionFeedback } from "./feedback";
 import { LabeledNode, SEditableLabel } from "./model";
-import { BaseTypes, UmlTypes } from "./utils";
-import { IconView } from "./views";
 import {
     IconInteraction,
     IconLifeline,
@@ -51,7 +49,9 @@ import {
     LifelineNodeView,
     MessageArrowLabelView,
     MessageEdgeView
-} from "./views/communication";
+} from "./uml/communication/views";
+import { BaseTypes, UmlTypes } from "./utils";
+import { IconView } from "./views/commons";
 
 export default function createContainer(widgetId: string): Container {
     const classDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {

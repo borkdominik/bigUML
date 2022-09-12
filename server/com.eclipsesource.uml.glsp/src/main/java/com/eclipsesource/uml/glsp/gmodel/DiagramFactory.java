@@ -17,9 +17,6 @@ import org.eclipse.glsp.graph.GModelRoot;
 import org.eclipse.glsp.graph.builder.impl.GGraphBuilder;
 import org.eclipse.glsp.server.types.GLSPServerException;
 
-import com.eclipsesource.uml.glsp.gmodel.communication.CommunicationInteractionNodeFactory;
-import com.eclipsesource.uml.glsp.gmodel.communication.CommunicationLifelineNodeFactory;
-import com.eclipsesource.uml.glsp.gmodel.communication.CommunicationMessageEdgeFactory;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.uml.activity_diagram.gmodel.ActivityDiagramChildNodeFactory;
 import com.eclipsesource.uml.glsp.uml.activity_diagram.gmodel.ActivityDiagramEdgeFactory;
@@ -27,6 +24,9 @@ import com.eclipsesource.uml.glsp.uml.activity_diagram.gmodel.ActivityDiagramGro
 import com.eclipsesource.uml.glsp.uml.activity_diagram.gmodel.ActivityDiagramNodeFactory;
 import com.eclipsesource.uml.glsp.uml.class_diagram.gmodel.ClassDiagramEdgeFactory;
 import com.eclipsesource.uml.glsp.uml.class_diagram.gmodel.ClassDiagramNodeFactory;
+import com.eclipsesource.uml.glsp.uml.communication_diagram.gmodel.CommunicationInteractionNodeFactory;
+import com.eclipsesource.uml.glsp.uml.communication_diagram.gmodel.CommunicationLifelineNodeFactory;
+import com.eclipsesource.uml.glsp.uml.communication_diagram.gmodel.CommunicationMessageEdgeFactory;
 import com.eclipsesource.uml.glsp.uml.deployment_diagram.gmodel.DeploymentDiagramChildNodeFactory;
 import com.eclipsesource.uml.glsp.uml.deployment_diagram.gmodel.DeploymentDiagramEdgeFactory;
 import com.eclipsesource.uml.glsp.uml.deployment_diagram.gmodel.DeploymentDiagramNodeFactory;

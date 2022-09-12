@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2021-2022 EclipseSource and others.
+ * Copyright (c) 2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.diagram;
+package com.eclipsesource.uml.glsp.uml.communication_diagram;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +25,7 @@ import org.eclipse.glsp.server.types.ShapeTypeHint;
 import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
 import com.google.common.collect.Lists;
 
-public class UmlDiagramConfiguration extends BaseDiagramConfiguration {
+public class CommunicationDiagramConfiguration extends BaseDiagramConfiguration {
 
    @Override
    public String getDiagramType() { return "umldiagram"; }
@@ -34,7 +34,10 @@ public class UmlDiagramConfiguration extends BaseDiagramConfiguration {
    public List<EdgeTypeHint> getEdgeTypeHints() {
       return Lists.newArrayList(
          // COMMONS
-         createDefaultEdgeTypeHint(Types.COMMENT_EDGE));
+         createDefaultEdgeTypeHint(Types.COMMENT_EDGE),
+
+         // COMMUNICATION DIAGRAM
+         new EdgeTypeHint(Types.MESSAGE, true, true, true, List.of(Types.LIFELINE), List.of(Types.LIFELINE)));
    }
 
    @Override
@@ -60,11 +63,19 @@ public class UmlDiagramConfiguration extends BaseDiagramConfiguration {
    @Override
    public List<ShapeTypeHint> getShapeTypeHints() {
       List<ShapeTypeHint> hints = new ArrayList<>();
-      hints.add(
-         new ShapeTypeHint(DefaultTypes.GRAPH, false, false, false, false,
-            List.of(Types.INTERACTION)));
+      // GRAPH
+      hints.add(new ShapeTypeHint(DefaultTypes.GRAPH, false, false, false, false,
+         List.of(Types.COMMENT, Types.CLASS, Types.ACTIVITY, Types.USECASE, Types.ACTOR, Types.PACKAGE, Types.COMPONENT,
+            Types.STATE_MACHINE, Types.DEPLOYMENT_NODE, Types.DEVICE, Types.ARTIFACT, Types.ENUMERATION,
+            Types.EXECUTION_ENVIRONMENT, Types.OBJECT, Types.DEPLOYMENT_COMPONENT, Types.INTERFACE,
+            Types.ABSTRACT_CLASS)));
+
       // Comment
       hints.add(new ShapeTypeHint(Types.COMMENT, true, true, false, false));
+
+      // Communication
+      hints.add(new ShapeTypeHint(Types.INTERACTION, true, true, true, false, List.of(Types.LIFELINE)));
+      hints.add(new ShapeTypeHint(Types.LIFELINE, true, true, false, false));
 
       return hints;
    }
@@ -85,6 +96,14 @@ public class UmlDiagramConfiguration extends BaseDiagramConfiguration {
       mappings.put(Types.COMMENT_EDGE, GraphPackage.Literals.GEDGE);
       mappings.put(Types.COMPARTMENT, GraphPackage.Literals.GCOMPARTMENT);
       mappings.put(Types.COMPARTMENT_HEADER, GraphPackage.Literals.GCOMPARTMENT);
+
+      // UML Communication
+      mappings.put(Types.INTERACTION, GraphPackage.Literals.GNODE);
+      mappings.put(Types.ICON_INTERACTION, GraphPackage.Literals.GCOMPARTMENT);
+      mappings.put(Types.LIFELINE, GraphPackage.Literals.GNODE);
+      mappings.put(Types.ICON_LIFELINE, GraphPackage.Literals.GCOMPARTMENT);
+      mappings.put(Types.MESSAGE, GraphPackage.Literals.GEDGE);
+      mappings.put(Types.MESSAGE_LABEL_ARROW_EDGE_NAME, GraphPackage.Literals.GLABEL);
 
       return mappings;
    }

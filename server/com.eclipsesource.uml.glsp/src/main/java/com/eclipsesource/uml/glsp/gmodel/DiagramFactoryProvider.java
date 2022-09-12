@@ -10,10 +10,10 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.gmodel;
 
-import com.eclipsesource.uml.glsp.gmodel.communication.UmlCommunicationDiagramModelFactory;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.uml.activity_diagram.gmodel.UmlActivityDiagramModelFactory;
 import com.eclipsesource.uml.glsp.uml.class_diagram.gmodel.UmlClassDiagramModelFactory;
+import com.eclipsesource.uml.glsp.uml.communication_diagram.gmodel.UmlCommunicationDiagramModelFactory;
 import com.eclipsesource.uml.glsp.uml.deployment_diagram.gmodel.UmlDeploymentDiagramModelFactory;
 import com.eclipsesource.uml.glsp.uml.object_diagram.gmodel.UmlObjectDiagramModelFactory;
 import com.eclipsesource.uml.glsp.uml.statemachine_diagram.gmodel.UmlStateMachineDiagramModelFactory;

@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.operations.communication;
+package com.eclipsesource.uml.glsp.uml.communication_diagram.operations;
 
 import static org.eclipse.glsp.server.utils.GeometryUtil.shift;
 
@@ -32,10 +32,10 @@ import org.eclipse.uml2.uml.Interaction;
 
 import com.eclipsesource.uml.glsp.actions.UmlRequestClipboardDataActionHandler;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.property.InteractionPropertiesFactory;
 import com.eclipsesource.uml.glsp.property.LifelinePropertiesFactory;
 import com.eclipsesource.uml.glsp.property.MessagePropertiesFactory;
+import com.eclipsesource.uml.glsp.uml.communication_diagram.CommunicationModelServerAccess;
 import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
 import com.eclipsesource.uml.glsp.util.UmlGModelUtil;
 import com.eclipsesource.uml.modelserver.commands.communication.interaction.InteractionCopyableProperties;
@@ -46,7 +46,7 @@ import com.google.gson.GsonBuilder;
 import com.google.inject.Inject;
 
 public class UmlPasteOperationHandler
-   extends EMSBasicOperationHandler<PasteOperation, UmlModelServerAccess> {
+   extends EMSBasicOperationHandler<PasteOperation, CommunicationModelServerAccess> {
    private final static String ARG_LAST_CONTAINABLE_ID = "lastContainableId";
    private static final int DEFAULT_OFFSET = 20;
 
@@ -65,7 +65,8 @@ public class UmlPasteOperationHandler
    }
 
    @Override
-   public void executeOperation(final PasteOperation operation, final UmlModelServerAccess modelServerAccess) {
+   public void executeOperation(final PasteOperation operation,
+      final CommunicationModelServerAccess modelServerAccess) {
       var selectedElements = getCopiedElements(
          operation.getClipboardData().get(UmlRequestClipboardDataActionHandler.CLIPBOARD_SELECTED_ELEMENTS));
       var interactionElements = UmlGModelUtil.filterByType(selectedElements, Types.INTERACTION, GModelElement.class)

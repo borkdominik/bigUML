@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.operations.communication;
+package com.eclipsesource.uml.glsp.uml.communication_diagram.operations;
 
 import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
 
@@ -27,12 +27,12 @@ import org.eclipse.uml2.uml.Lifeline;
 
 import com.eclipsesource.uml.glsp.model.UmlModelIndex;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;
+import com.eclipsesource.uml.glsp.uml.communication_diagram.CommunicationModelServerAccess;
 import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
 import com.google.common.collect.Lists;
 
 public class CreateMessageEdgeOperationHandler
-   extends EMSBasicCreateOperationHandler<CreateEdgeOperation, UmlModelServerAccess> {
+   extends EMSBasicCreateOperationHandler<CreateEdgeOperation, CommunicationModelServerAccess> {
 
    @Inject
    private ActionDispatcher actionDispatcher;
@@ -55,7 +55,7 @@ public class CreateMessageEdgeOperationHandler
    protected UmlModelState getUmlModelState() { return (UmlModelState) getEMSModelState(); }
 
    @Override
-   public void executeOperation(final CreateEdgeOperation operation, final UmlModelServerAccess modelAccess) {
+   public void executeOperation(final CreateEdgeOperation operation, final CommunicationModelServerAccess modelAccess) {
       String elementTypeId = operation.getElementTypeId();
 
       UmlModelState modelState = getUmlModelState();

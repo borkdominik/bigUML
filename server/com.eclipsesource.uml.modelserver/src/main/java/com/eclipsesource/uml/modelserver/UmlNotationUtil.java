@@ -14,7 +14,8 @@ import com.eclipsesource.uml.modelserver.unotation.Representation;
 
 public final class UmlNotationUtil {
 
-   private UmlNotationUtil() {}
+   private UmlNotationUtil() {
+   }
 
    public static final String NOTATION_EXTENSION = "unotation";
 
@@ -38,6 +39,8 @@ public final class UmlNotationUtil {
             return Representation.USECASE;
          case "object":
             return Representation.OBJECT;
+         case "communication":
+            return Representation.COMMUNICATION;
       }
       return Representation.CLASS;
    }

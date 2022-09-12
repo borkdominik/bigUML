@@ -21,15 +21,15 @@ import org.eclipse.emfcloud.modelserver.emf.launch.ModelServerLauncher;
 
 public class UmlModelServerLauncher {
 
-	public static void main(final String[] args) {
-		final ModelServerLauncher launcher = new CLIBasedModelServerLauncher(createCLIParser(args),
-				new UmlModelServerModule());
-		launcher.run();
-	}
+   public static void main(final String[] args) {
+      final ModelServerLauncher launcher = new CLIBasedModelServerLauncher(createCLIParser(args),
+         new UmlModelServerModule());
+      launcher.run();
+   }
 
-	protected static CLIParser createCLIParser(final String[] args) {
-		CLIParser parser = new CLIParser(args, CLIParser.getDefaultCLIOptions(), "", 8081);
-		return parser;
-	}
+   protected static CLIParser createCLIParser(final String[] args) {
+      CLIParser parser = new CLIParser(args, CLIParser.getDefaultCLIOptions(), "", 8081);
+      return parser;
+   }
 
 }

@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2021 EclipseSource and others.
+ * Copyright (c) 2021-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -10,11 +10,26 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver;
 
+import org.eclipse.emfcloud.modelserver.common.Routing;
+import org.eclipse.emfcloud.modelserver.common.codecs.Codec;
+import org.eclipse.emfcloud.modelserver.common.utils.MapBinding;
+import org.eclipse.emfcloud.modelserver.common.utils.MultiBinding;
+import org.eclipse.emfcloud.modelserver.edit.CommandContribution;
+import org.eclipse.emfcloud.modelserver.emf.common.ModelResourceManager;
+import org.eclipse.emfcloud.modelserver.emf.common.ResourceSetFactory;
+import org.eclipse.emfcloud.modelserver.emf.configuration.EPackageConfiguration;
+import org.eclipse.emfcloud.modelserver.emf.di.DefaultModelServerModule;
+import org.eclipse.uml2.uml.resource.UMLResource;
+
 import com.eclipsesource.uml.modelserver.commands.activitydiagram.action.AddActionCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.activitydiagram.action.SetBehaviorCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.activitydiagram.activity.AddActivityCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.activitydiagram.activity.RemoveActivityCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.activitydiagram.comment.*;
+import com.eclipsesource.uml.modelserver.commands.activitydiagram.comment.AddCommentCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.activitydiagram.comment.LinkCommentCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.activitydiagram.comment.RemoveCommentCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.activitydiagram.comment.SetBodyCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.activitydiagram.comment.UnlinkCommentCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.activitydiagram.condition.AddConditionCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.activitydiagram.controlnode.AddControlNodeCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.activitydiagram.datanode.AddObjectNodeCommandContribution;
@@ -43,10 +58,25 @@ import com.eclipsesource.uml.modelserver.commands.classdiagram.clazz.SetClassNam
 import com.eclipsesource.uml.modelserver.commands.classdiagram.enumeration.AddEnumerationCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.classdiagram.enumeration.RemoveEnumerationCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.classdiagram.enumeration.SetEnumerationNameCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.classdiagram.property.*;
+import com.eclipsesource.uml.modelserver.commands.classdiagram.property.AddPropertyCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.classdiagram.property.RemovePropertyCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.classdiagram.property.SetPropertyBoundsCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.classdiagram.property.SetPropertyNameCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.classdiagram.property.SetPropertyTypeCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.commons.contributions.ChangeBoundsCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.commons.contributions.ChangeRoutingPointsCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.commons.contributions.RenameElementCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.communication.interaction.AddInteractionCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.communication.interaction.CopyInteractionCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.communication.interaction.RemoveInteractionCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.communication.interaction.SetInteractionNameCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.communication.lifeline.AddLifelineCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.communication.lifeline.CopyLifelineWithMessagesCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.communication.lifeline.RemoveLifelineCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.communication.lifeline.SetLifelineNameCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.communication.message.AddMessageCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.communication.message.RemoveMessageCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.communication.message.SetMessageNameCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.deploymentdiagram.artifact.AddArtifactCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.deploymentdiagram.artifact.RemoveArtifactCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.deploymentdiagram.artifact.SetArtifactNameCommandContribution;
@@ -118,16 +148,6 @@ import com.eclipsesource.uml.modelserver.commands.usecasediagram.usecase.SetUseC
 import com.eclipsesource.uml.modelserver.commands.usecasediagram.usecasepackage.AddPackageCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.usecasediagram.usecasepackage.RemovePackageCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.usecasediagram.usecasepackage.SetPackageNameCommandContribution;
-import org.eclipse.emfcloud.modelserver.common.Routing;
-import org.eclipse.emfcloud.modelserver.common.codecs.Codec;
-import org.eclipse.emfcloud.modelserver.common.utils.MapBinding;
-import org.eclipse.emfcloud.modelserver.common.utils.MultiBinding;
-import org.eclipse.emfcloud.modelserver.edit.CommandContribution;
-import org.eclipse.emfcloud.modelserver.emf.common.ModelResourceManager;
-import org.eclipse.emfcloud.modelserver.emf.common.ResourceSetFactory;
-import org.eclipse.emfcloud.modelserver.emf.configuration.EPackageConfiguration;
-import org.eclipse.emfcloud.modelserver.emf.di.DefaultModelServerModule;
-import org.eclipse.uml2.uml.resource.UMLResource;
 
 public class UmlModelServerModule extends DefaultModelServerModule {
 
@@ -166,7 +186,8 @@ public class UmlModelServerModule extends DefaultModelServerModule {
       // Property
       binding.put(AddPropertyCommandContribution.TYPE, AddPropertyCommandContribution.class);
       binding.put(RemovePropertyCommandContribution.TYPE, RemovePropertyCommandContribution.class);
-      //binding.put(SetPropertyCommandContribution.TYPE, SetPropertyCommandContribution.class);
+      // binding.put(SetPropertyCommandContribution.TYPE,
+      // SetPropertyCommandContribution.class);
       binding.put(SetPropertyNameCommandContribution.TYPE, SetPropertyNameCommandContribution.class);
       binding.put(SetPropertyTypeCommandContribution.TYPE, SetPropertyTypeCommandContribution.class);
       binding.put(SetPropertyBoundsCommandContribution.TYPE, SetPropertyBoundsCommandContribution.class);
@@ -175,10 +196,14 @@ public class UmlModelServerModule extends DefaultModelServerModule {
       binding.put(RemoveAssociationCommandContribution.TYPE, RemoveAssociationCommandContribution.class);
       binding.put(SetAssociationEndNameCommandContribution.TYPE, SetAssociationEndNameCommandContribution.class);
       binding.put(SetAssociationEndMultiplicityCommandContribution.TYPE,
-            SetAssociationEndMultiplicityCommandContribution.class);
+         SetAssociationEndMultiplicityCommandContribution.class);
       // Generalisation
-      /*binding.put(AddClassGeneralizationCommandContribution.TYPE, AddClassGeneralizationCommandContribution.class);
-      binding.put(RemoveClassGeneralizationCommandContribution.TYPE, RemoveClassGeneralizationCommandContribution.class);*/
+      /*
+       * binding.put(AddClassGeneralizationCommandContribution.TYPE,
+       * AddClassGeneralizationCommandContribution.class);
+       * binding.put(RemoveClassGeneralizationCommandContribution.TYPE,
+       * RemoveClassGeneralizationCommandContribution.class);
+       */
       // Interface
       binding.put(AddInterfaceCommandContribution.TYPE, AddInterfaceCommandContribution.class);
       binding.put(RemoveInterfaceCommandContribution.TYPE, RemoveInterfaceCommandContribution.class);
@@ -247,8 +272,12 @@ public class UmlModelServerModule extends DefaultModelServerModule {
       binding.put(AddGeneralizationCommandContribution.TYPE, AddGeneralizationCommandContribution.class);
       binding.put(RemoveGeneralizationCommandContribution.TYPE, RemoveGeneralizationCommandContribution.class);
       // Association
-      /*binding.put(AddUseCaseAssociationCommandContribution.TYPE, AddUseCaseAssociationCommandContribution.class);
-      binding.put(RemoveUseCaseAssociationCommandContribution.TYPE, RemoveUseCaseAssociationCommandContribution.class);*/
+      /*
+       * binding.put(AddUseCaseAssociationCommandContribution.TYPE,
+       * AddUseCaseAssociationCommandContribution.class);
+       * binding.put(RemoveUseCaseAssociationCommandContribution.TYPE,
+       * RemoveUseCaseAssociationCommandContribution.class);
+       */
 
       // STATEMACHINE DIAGRAM
       // StateMachine
@@ -292,7 +321,8 @@ public class UmlModelServerModule extends DefaultModelServerModule {
       // CommunicationPath
       binding.put(AddCommunicationPathCommandContribution.TYPE, AddCommunicationPathCommandContribution.class);
       binding.put(RemoveCommunicationPathCommandContribution.TYPE, RemoveCommunicationPathCommandContribution.class);
-      binding.put(SetCommunicationPathEndNameCommandContribution.TYPE, SetCommunicationPathEndNameCommandContribution.class);
+      binding.put(SetCommunicationPathEndNameCommandContribution.TYPE,
+         SetCommunicationPathEndNameCommandContribution.class);
       // Device
       binding.put(AddDeviceCommandContribution.TYPE, AddDeviceCommandContribution.class);
       binding.put(RemoveDeviceCommandContribution.TYPE, RemoveDeviceCommandContribution.class);
@@ -301,17 +331,24 @@ public class UmlModelServerModule extends DefaultModelServerModule {
       binding.put(AddDeploymentCommandContribution.TYPE, AddDeploymentCommandContribution.class);
       binding.put(RemoveDeploymentCommandContribution.TYPE, RemoveDeploymentCommandContribution.class);
       // DeploymentSpecification
-      binding.put(AddDeploymentSpecificationCommandContribution.TYPE, AddDeploymentSpecificationCommandContribution.class);
-      binding.put(RemoveDeploymentSpecificationCommandContribution.TYPE, RemoveDeploymentSpecificationCommandContribution.class);
-      binding.put(SetDeploymentSpecificationNameCommandContribution.TYPE, SetDeploymentSpecificationNameCommandContribution.class);
+      binding.put(AddDeploymentSpecificationCommandContribution.TYPE,
+         AddDeploymentSpecificationCommandContribution.class);
+      binding.put(RemoveDeploymentSpecificationCommandContribution.TYPE,
+         RemoveDeploymentSpecificationCommandContribution.class);
+      binding.put(SetDeploymentSpecificationNameCommandContribution.TYPE,
+         SetDeploymentSpecificationNameCommandContribution.class);
       // ExecutionEnvironment
       binding.put(AddExecutionEnvironmentCommandContribution.TYPE, AddExecutionEnvironmentCommandContribution.class);
-      binding.put(RemoveExecutionEnvironmentCommandContribution.TYPE, RemoveExecutionEnvironmentCommandContribution.class);
-      binding.put(SetExecutionEnvironmentNameCommandContribution.TYPE, SetExecutionEnvironmentNameCommandContribution.class);
+      binding.put(RemoveExecutionEnvironmentCommandContribution.TYPE,
+         RemoveExecutionEnvironmentCommandContribution.class);
+      binding.put(SetExecutionEnvironmentNameCommandContribution.TYPE,
+         SetExecutionEnvironmentNameCommandContribution.class);
       // Component
       binding.put(AddDeploymentComponentCommandContribution.TYPE, AddDeploymentComponentCommandContribution.class);
-      binding.put(RemoveDeploymentComponentCommandContribution.TYPE, RemoveDeploymentComponentCommandContribution.class);
-      binding.put(SetDeploymentComponentNameCommandContribution.TYPE, SetDeploymentComponentNameCommandContribution.class);
+      binding.put(RemoveDeploymentComponentCommandContribution.TYPE,
+         RemoveDeploymentComponentCommandContribution.class);
+      binding.put(SetDeploymentComponentNameCommandContribution.TYPE,
+         SetDeploymentComponentNameCommandContribution.class);
 
       // OBJECT DIAGRAM
       // Object
@@ -324,6 +361,20 @@ public class UmlModelServerModule extends DefaultModelServerModule {
       binding.put(AddAttributeCommandContribution.TYPE, AddAttributeCommandContribution.class);
       binding.put(RemoveAttributeCommandContribution.TYPE, RemoveAttributeCommandContribution.class);
       binding.put(SetAttributeCommandContribution.TYPE, SetAttributeCommandContribution.class);
+
+      // UML Communication
+      binding.put(AddInteractionCommandContribution.TYPE, AddInteractionCommandContribution.class);
+      binding.put(SetInteractionNameCommandContribution.TYPE, SetInteractionNameCommandContribution.class);
+      binding.put(RemoveInteractionCommandContribution.TYPE, RemoveInteractionCommandContribution.class);
+      binding.put(AddLifelineCommandContribution.TYPE, AddLifelineCommandContribution.class);
+      binding.put(RemoveLifelineCommandContribution.TYPE, RemoveLifelineCommandContribution.class);
+      binding.put(SetLifelineNameCommandContribution.TYPE, SetLifelineNameCommandContribution.class);
+      binding.put(AddMessageCommandContribution.TYPE, AddMessageCommandContribution.class);
+      binding.put(RemoveMessageCommandContribution.TYPE, RemoveMessageCommandContribution.class);
+      binding.put(SetMessageNameCommandContribution.TYPE, SetMessageNameCommandContribution.class);
+      binding.put(CopyInteractionCommandContribution.TYPE, CopyInteractionCommandContribution.class);
+      binding.put(CopyLifelineWithMessagesCommandContribution.TYPE, CopyLifelineWithMessagesCommandContribution.class);
+
    }
 
    @Override

@@ -8,15 +8,16 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp;
+package com.eclipsesource.uml.glsp.actions;
 
-import org.eclipse.glsp.server.di.ServerModule;
-import org.eclipse.glsp.server.protocol.GLSPServer;
+import org.eclipse.glsp.server.actions.RequestAction;
 
-public class UmlServerModule extends ServerModule {
+public class RequestOutlineAction extends RequestAction<SetOutlineAction> {
+   public static final String KIND = "requestOutlineView";
 
-   @Override
-   protected Class<? extends GLSPServer> bindGLSPServer() {
-      return UmlGLSPServer.class;
+   public RequestOutlineAction() {
+      super(KIND);
+
    }
+
 }

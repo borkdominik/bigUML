@@ -8,15 +8,16 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp;
+package com.eclipsesource.uml.glsp.validation.validators;
 
-import org.eclipse.glsp.server.di.ServerModule;
-import org.eclipse.glsp.server.protocol.GLSPServer;
+import java.util.List;
 
-public class UmlServerModule extends ServerModule {
+import org.eclipse.uml2.uml.Element;
 
-   @Override
-   protected Class<? extends GLSPServer> bindGLSPServer() {
-      return UmlGLSPServer.class;
-   }
+public interface Validator<T extends Element> {
+   ValidatorResult validateName(String elementId, String name);
+
+   ValidatorResult validate(T element);
+
+   List<ValidatorResult> validateWithChildren(T element);
 }

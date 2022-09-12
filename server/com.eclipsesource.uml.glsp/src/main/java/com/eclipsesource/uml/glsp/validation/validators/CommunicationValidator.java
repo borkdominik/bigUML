@@ -8,15 +8,19 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp;
+package com.eclipsesource.uml.glsp.validation.validators;
 
-import org.eclipse.glsp.server.di.ServerModule;
-import org.eclipse.glsp.server.protocol.GLSPServer;
+import static java.lang.annotation.ElementType.FIELD;
+import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.ElementType.PARAMETER;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-public class UmlServerModule extends ServerModule {
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
 
-   @Override
-   protected Class<? extends GLSPServer> bindGLSPServer() {
-      return UmlGLSPServer.class;
-   }
-}
+import javax.inject.Qualifier;
+
+@Qualifier
+@Target({ FIELD, PARAMETER, METHOD })
+@Retention(RUNTIME)
+public @interface CommunicationValidator {}

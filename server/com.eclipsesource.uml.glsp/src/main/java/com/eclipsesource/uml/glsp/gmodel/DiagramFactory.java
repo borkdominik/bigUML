@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2021 EclipseSource and others.
+ * Copyright (c) 2021-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -17,6 +17,9 @@ import org.eclipse.glsp.graph.GModelRoot;
 import org.eclipse.glsp.graph.builder.impl.GGraphBuilder;
 import org.eclipse.glsp.server.types.GLSPServerException;
 
+import com.eclipsesource.uml.glsp.gmodel.communication.CommunicationInteractionNodeFactory;
+import com.eclipsesource.uml.glsp.gmodel.communication.CommunicationLifelineNodeFactory;
+import com.eclipsesource.uml.glsp.gmodel.communication.CommunicationMessageEdgeFactory;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.uml.activity_diagram.gmodel.ActivityDiagramChildNodeFactory;
 import com.eclipsesource.uml.glsp.uml.activity_diagram.gmodel.ActivityDiagramEdgeFactory;
@@ -55,7 +58,8 @@ public abstract class DiagramFactory extends AbstractGModelFactory<EObject, GMod
    public final UseCaseDiagramNodeFactory useCaseNodeFactory;
    public final UseCaseDiagramEdgeFactory useCaseEdgeFactory;
    // TODO
-   // protected final UseCaseDiagramChildNodeFactory useCaseDiagramChildNodeFactory;
+   // protected final UseCaseDiagramChildNodeFactory
+   // useCaseDiagramChildNodeFactory;
 
    public final StateMachineDiagramNodeFactory stateMachineNodeFactory;
    public final StateMachineDiagramVertexFactory stateMachineDiagramVertexFactory;
@@ -69,6 +73,10 @@ public abstract class DiagramFactory extends AbstractGModelFactory<EObject, GMod
 
    public final ObjectDiagramNodeFactory objectDiagramNodeFactory;
    public final ObjectDiagramEdgeFactory objectDiagramEdgeFactory;
+
+   public final CommunicationInteractionNodeFactory interactionNodeFactory;
+   public final CommunicationLifelineNodeFactory lifelineNodeFactory;
+   public final CommunicationMessageEdgeFactory messageEdgeFactory;
 
    public DiagramFactory(final UmlModelState modelState) {
       super(modelState);
@@ -92,7 +100,8 @@ public abstract class DiagramFactory extends AbstractGModelFactory<EObject, GMod
       // USECASE
       useCaseNodeFactory = new UseCaseDiagramNodeFactory(modelState, labelFactory);
       useCaseEdgeFactory = new UseCaseDiagramEdgeFactory(modelState);
-      // useCaseDiagramChildNodeFactory = new UseCaseDiagramChildNodeFactory(modelState, labelFactory, this);
+      // useCaseDiagramChildNodeFactory = new
+      // UseCaseDiagramChildNodeFactory(modelState, labelFactory, this);
       // STATEMACHINE
       stateMachineNodeFactory = new StateMachineDiagramNodeFactory(modelState, labelFactory, this);
       stateMachineDiagramVertexFactory = new StateMachineDiagramVertexFactory(modelState, stateMachineNodeFactory);
@@ -104,6 +113,10 @@ public abstract class DiagramFactory extends AbstractGModelFactory<EObject, GMod
       deploymentChildNodeFactory = new DeploymentDiagramChildNodeFactory(modelState);
       deploymentEdgeFactory = new DeploymentDiagramEdgeFactory(modelState);
 
+      // Communication
+      interactionNodeFactory = new CommunicationInteractionNodeFactory(modelState, this);
+      lifelineNodeFactory = new CommunicationLifelineNodeFactory(modelState, compartmentLabelFactory);
+      messageEdgeFactory = new CommunicationMessageEdgeFactory(modelState);
       getOrCreateRoot();
    }
 

@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2021 EclipseSource and others.
+ * Copyright (c) 2021-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -14,14 +14,11 @@ import org.eclipse.uml2.uml.Property;
 
 public final class UmlLabelUtil {
 
-   private UmlLabelUtil() {
-   }
+   private UmlLabelUtil() {}
 
    public static String getTypeName(final Property property) {
       if (property.getType() != null) {
          return property.getType().getName();
-         /*String typeName = property.getType().getName();
-         return String.format(" : %s", typeName);*/
       }
       return "";
    }

@@ -70,7 +70,7 @@ public class UmlModelFactory implements GModelFactory {
          createDiagram(umlModel);
       }
       findUnresolvedElements(diagram, umlModel)
-              .forEach(e -> e.setSemanticElement(resolved(e.getSemanticElement(), umlModel)));
+         .forEach(e -> e.setSemanticElement(resolved(e.getSemanticElement(), umlModel)));
       modelIndex.indexNotation(diagram);
       return diagram;
    }
@@ -82,17 +82,17 @@ public class UmlModelFactory implements GModelFactory {
    }
 
    public Diagram initialize(final GModelRoot gRoot, final UmlModelIndex modelIndex, final Model umlModel,
-                             final Diagram diagram) {
+      final Diagram diagram) {
       Preconditions.checkArgument(diagram.getSemanticElement().getResolvedElement() == umlModel);
       gRoot.getChildren().forEach(child -> {
          modelIndex.getNotation(child).ifPresentOrElse(n -> updateNotationElement(n, child),
-                 () -> initializeNotationElement(child, modelIndex).ifPresent(diagram.getElements()::add));
+            () -> initializeNotationElement(child, modelIndex).ifPresent(diagram.getElements()::add));
       });
       return diagram;
    }
 
    private Optional<? extends NotationElement> initializeNotationElement(final GModelElement gModelElement,
-                                                                         final UmlModelIndex modelIndex) {
+      final UmlModelIndex modelIndex) {
       Optional<? extends NotationElement> result = Optional.empty();
       if (gModelElement instanceof GNode) {
          result = initializeShape((GNode) gModelElement, modelIndex);
@@ -106,24 +106,25 @@ public class UmlModelFactory implements GModelFactory {
       List<NotationElement> unresolved = new ArrayList<>();
 
       if (diagram.getSemanticElement() == null
-              || resolved(diagram.getSemanticElement(), umlModel).getResolvedElement() == null) {
+         || resolved(diagram.getSemanticElement(), umlModel).getResolvedElement() == null) {
          unresolved.add(diagram);
       }
 
       unresolved.addAll(diagram.getElements().stream()
-              .filter(element -> element.getSemanticElement() != null && resolved(element.getSemanticElement(), umlModel).getResolvedElement() == null)
-              .collect(Collectors.toList()));
+         .filter(element -> element.getSemanticElement() == null ? false
+            : resolved(element.getSemanticElement(), umlModel).getResolvedElement() == null)
+         .collect(Collectors.toList()));
 
       return unresolved;
    }
 
    private Optional<Shape> initializeShape(final GShapeElement shapeElement, final UmlModelIndex modelIndex) {
       return modelIndex.getSemantic(shapeElement)
-              .map(semanticElement -> initializeShape(semanticElement, shapeElement, modelIndex));
+         .map(semanticElement -> initializeShape(semanticElement, shapeElement, modelIndex));
    }
 
    private Shape initializeShape(final EObject semanticElement, final GShapeElement shapeElement,
-                                 final UmlModelIndex modelIndex) {
+      final UmlModelIndex modelIndex) {
       Shape shape = UnotationFactory.eINSTANCE.createShape();
       shape.setSemanticElement(createProxy(semanticElement));
       if (shapeElement != null) {

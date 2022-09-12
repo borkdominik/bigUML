@@ -19,7 +19,6 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-//import org.eclipse.glsp.server.internal.di.DIOperationHandlerRegistry;
 import org.eclipse.glsp.server.internal.operations.DefaultOperationHandlerRegistry;
 import org.eclipse.glsp.server.internal.util.ReflectionUtil;
 import org.eclipse.glsp.server.operations.Operation;
@@ -34,7 +33,8 @@ import com.google.inject.Inject;
  * https://github.com/eclipse-glsp/glsp/issues/21 is fixed.
  * </p>
  * <p>
- * The GLSP version {@link DefaultOperationHandlerRegistry} has special handling for
+ * The GLSP version {@link DefaultOperationHandlerRegistry} has special handling
+ * for
  * CreateOperations that requires 1 CreateOperationHandler per element type,
  * which doesn't match the current Ecore GLSP structure.
  * </p>
@@ -49,7 +49,7 @@ public class UmlDIOperationHandlerRegistry implements OperationHandlerRegistry {
       internalRegistry = new HashMap<>();
       handlers.forEach(handler -> {
          ReflectionUtil.construct(handler.getHandledOperationType())
-            .ifPresent(operation -> register(operation, handler));
+               .ifPresent(operation -> register(operation, handler));
       });
    }
 
@@ -83,7 +83,7 @@ public class UmlDIOperationHandlerRegistry implements OperationHandlerRegistry {
    @Override
    public Optional<OperationHandler> get(final Operation key) {
       return Optional.ofNullable(internalRegistry.get(deriveKey(key)))
-         .flatMap(list -> list.stream().filter(handler -> handler.handles(key)).findFirst());
+            .flatMap(list -> list.stream().filter(handler -> handler.handles(key)).findFirst());
    }
 
    @Override

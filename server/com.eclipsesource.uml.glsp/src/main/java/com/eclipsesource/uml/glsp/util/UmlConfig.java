@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2021 EclipseSource and others.
+ * Copyright (c) 2021-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -17,7 +17,6 @@ public final class UmlConfig {
 
    public static final class Types {
 
-      // NEW LABELS
       public static final String LABEL_COMP = "comp:label";
       public static final String COMPARTMENT = "comp";
       public static final String COMPARTMENT_HEADER = "comp:header";
@@ -44,6 +43,15 @@ public final class UmlConfig {
       // public static final String COMP_HEADER = COMP_BASE + "header";
       public static final String LABEL_ICON = LABEL + "icon";
 
+      // COMMUNICATION DIAGRAM
+      public static final String INTERACTION = "node:interaction";
+      public static final String LIFELINE = "node:lifeline";
+      public static final String MESSAGE = "edge:message";
+      public static final String MESSAGE_LABEL_ARROW_EDGE_NAME = "label:message-arrow-edge-name";
+      public static final String ICON_INTERACTION = "icon:interaction";
+      public static final String ICON_MESSAGE = "icon:message";
+      public static final String ICON_LIFELINE = "icon:lifeline";
+
       // CLASS DIAGRAM
       public static final String ICON_CLASS = ICON + "class";
       public static final String CLASS = NODE + "class";
@@ -51,12 +59,11 @@ public final class UmlConfig {
       public static final String ENUMERATION = NODE + "enumeration";
       public static final String ICON_ENUMERATION = ICON + "enumeration";
       public static final String INTERFACE = NODE + "interface";
-      //public static final String PROPERTY = NODE + "property";
+      // public static final String PROPERTY = NODE + "property";
       public static final String ASSOCIATION = EDGE + "association";
       public static final String COMPOSITION = EDGE + "composition";
       public static final String AGGREGATION = EDGE + "aggregation";
       public static final String CLASS_GENERALIZATION = EDGE + "class-generalization";
-
 
       // OBJECT DIAGRAM
       public static final String ICON_OBJECT = ICON + "object";
@@ -86,7 +93,7 @@ public final class UmlConfig {
       public static final String DECISIONMERGENODE = NODE + "decisionnode";
       public static final String FORKJOINNODE = NODE + "forknode";
       public static final List<String> CONTROL_NODES = List.of(INITIALNODE, FINALNODE, FLOWFINALNODE, DECISIONMERGENODE,
-            FORKJOINNODE);
+         FORKJOINNODE);
       public static final String PARAMETER = NODE + "parameter";
       public static final String PIN = NODE + "pin";
       public static final String PIN_PORT = NODE + "pinport";
@@ -112,7 +119,7 @@ public final class UmlConfig {
       public static final String CONNECTIONPOINT = LABEL + "connectionpoint";
       public static final String USECASE_ASSOCIATION = EDGE + "usecase-association";
 
-      //DEPLOYMENT DIAGRAM
+      // DEPLOYMENT DIAGRAM
       public static final String ICON_DEPLOYMENT_NODE = ICON + "node";
       public static final String DEPLOYMENT_NODE = NODE + "node";
       public static final String LABEL_NODE_NAME = LABEL + "node:name";
@@ -128,10 +135,10 @@ public final class UmlConfig {
       public static final String DEPLOYMENT_SPECIFICATION = NODE + "deploymentspecification";
       public static final String DEPLOYMENT_COMPONENT = NODE + "deploymentcomponent";
 
-      //STATE MACHINE
+      // STATE MACHINE
       public static final String ICON_STATE_MACHINE = ICON + "state-machine";
       public static final String STATE_MACHINE = NODE + "state-machine";
-      //public static final String REGION = COMP_BASE + "region";
+      // public static final String REGION = COMP_BASE + "region";
       public static final String REGION = NODE + "region";
       public static final String ICON_STATE = ICON + "state";
       public static final String STATE = NODE + "state";
@@ -159,21 +166,21 @@ public final class UmlConfig {
       public static final String LABEL_TRANSITION_EFFECT = LABEL + "transition-effect";
       public static final String LABEL_TRANSITION_TRIGGER = LABEL + "transition-trigger";
       public static final List<String> PSEUDOSTATES = Arrays.asList(INITIAL_STATE, DEEP_HISTORY, SHALLOW_HISTORY, JOIN,
-            FORK, JUNCTION, CHOICE, ENTRY_POINT, EXIT_POINT, TERMINATE);
+         FORK, JUNCTION, CHOICE, ENTRY_POINT, EXIT_POINT, TERMINATE);
 
       // COMMENT
       public static final String COMMENT = NODE + "comment";
       public static final String COMMENT_EDGE = EDGE + "commentlink";
       public static final List<String> LINKS_TO_COMMENT = Arrays.asList(COMMENT, ENTRY_POINT, EXIT_POINT, TERMINATE,
-            CHOICE, JUNCTION, FORK, JOIN, SHALLOW_HISTORY, DEEP_HISTORY, INITIAL_STATE, STATE_DO_ACTIVITY,
-            STATE_ENTRY_ACTIVITY, STATE_EXIT_ACTIVITY, FINAL_STATE, STATE, STATE_MACHINE, DEVICE, ARTIFACT,
-            EXECUTION_ENVIRONMENT, DEPLOYMENT_NODE, ACTOR, COMPONENT, PACKAGE, EXTENSIONPOINT, USECASE,
-            INTERRUPTIBLEREGION, DATASTORE, CENTRALBUFFER, PIN, PIN_PORT, PARAMETER, INITIALNODE, FINALNODE, FORKJOINNODE,
-            FLOWFINALNODE, DECISIONMERGENODE, CALL, TIMEEVENT, ACCEPTEVENT, SENDSIGNAL, ACTION,
-            CONDITION, ACTIVITY, PARTITION, CLASS, PROPERTY);
+         CHOICE, JUNCTION, FORK, JOIN, SHALLOW_HISTORY, DEEP_HISTORY, INITIAL_STATE, STATE_DO_ACTIVITY,
+         STATE_ENTRY_ACTIVITY, STATE_EXIT_ACTIVITY, FINAL_STATE, STATE, STATE_MACHINE, DEVICE, ARTIFACT,
+         EXECUTION_ENVIRONMENT, DEPLOYMENT_NODE, ACTOR, COMPONENT, PACKAGE, EXTENSIONPOINT, USECASE,
+         INTERRUPTIBLEREGION, DATASTORE, CENTRALBUFFER, PIN, PIN_PORT, PARAMETER, INITIALNODE, FINALNODE,
+         FORKJOINNODE,
+         FLOWFINALNODE, DECISIONMERGENODE, CALL, TIMEEVENT, ACCEPTEVENT, SENDSIGNAL, ACTION,
+         CONDITION, ACTIVITY, PARTITION, CLASS, PROPERTY);
 
-      private Types() {
-      }
+      private Types() {}
    }
 
    public static final class CSS {
@@ -188,7 +195,7 @@ public final class UmlConfig {
       // OBJECT
       public static final String UNDERLINE = "uml-underline";
 
-      //USECASE
+      // USECASE
       public static final String ELLIPSE = "uml-ellipse";
       public static final String PACKAGEABLE_NODE = "uml-packageable-node";
       public static final String EDGE_DOTTED = "uml-edge-dotted";
@@ -210,10 +217,8 @@ public final class UmlConfig {
       // DEPLOYMENT
       public static final String DEPLOYMENT_NODE = "uml-node";
 
-      private CSS() {
-      }
+      private CSS() {}
    }
 
-   private UmlConfig() {
-   }
+   private UmlConfig() {}
 }

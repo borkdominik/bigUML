@@ -27,7 +27,8 @@ public class UmlChangeRoutingPointsOperationHandler
    protected UmlModelState getUmlModelState() { return (UmlModelState) getEMSModelState(); }
 
    @Override
-   public void executeOperation(final ChangeRoutingPointsOperation operation, final UmlModelServerAccess modelServerAccess) {
+   public void executeOperation(final ChangeRoutingPointsOperation operation,
+      final UmlModelServerAccess modelServerAccess) {
       UmlModelState modelState = getUmlModelState();
       Map<Edge, ElementAndRoutingPoints> changeRoutingPointsMap = new HashMap<>();
       for (ElementAndRoutingPoints element : operation.getNewRoutingPoints()) {

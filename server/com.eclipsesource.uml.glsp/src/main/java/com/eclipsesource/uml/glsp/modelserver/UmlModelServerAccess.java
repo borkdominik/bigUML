@@ -25,6 +25,7 @@ import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
 import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
 import org.eclipse.emfcloud.modelserver.glsp.EMSModelServerAccess;
 import org.eclipse.glsp.graph.GPoint;
+import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.glsp.server.types.ElementAndBounds;
 import org.eclipse.glsp.server.types.ElementAndRoutingPoints;
 import org.eclipse.glsp.server.types.GLSPServerException;
@@ -32,6 +33,9 @@ import org.eclipse.uml2.uml.Activity;
 import org.eclipse.uml2.uml.Comment;
 import org.eclipse.uml2.uml.Constraint;
 import org.eclipse.uml2.uml.Element;
+import org.eclipse.uml2.uml.Interaction;
+import org.eclipse.uml2.uml.Lifeline;
+import org.eclipse.uml2.uml.Message;
 import org.eclipse.uml2.uml.NamedElement;
 import org.eclipse.uml2.uml.resource.UMLResource;
 
@@ -47,6 +51,20 @@ import com.eclipsesource.uml.modelserver.commands.activitydiagram.condition.AddC
 import com.eclipsesource.uml.modelserver.commands.commons.contributions.ChangeBoundsCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.commons.contributions.ChangeRoutingPointsCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.commons.contributions.RenameElementCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.communication.interaction.AddInteractionCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.communication.interaction.CopyInteractionCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.communication.interaction.InteractionCopyableProperties;
+import com.eclipsesource.uml.modelserver.commands.communication.interaction.RemoveInteractionCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.communication.interaction.SetInteractionNameCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.communication.lifeline.AddLifelineCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.communication.lifeline.CopyLifelineWithMessagesCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.communication.lifeline.LifelineCopyableProperties;
+import com.eclipsesource.uml.modelserver.commands.communication.lifeline.RemoveLifelineCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.communication.lifeline.SetLifelineNameCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.communication.message.AddMessageCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.communication.message.MessageCopyableProperties;
+import com.eclipsesource.uml.modelserver.commands.communication.message.RemoveMessageCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.communication.message.SetMessageNameCommandContribution;
 import com.eclipsesource.uml.modelserver.unotation.Edge;
 import com.eclipsesource.uml.modelserver.unotation.Shape;
 import com.google.common.base.Preconditions;
@@ -209,6 +227,99 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
             edge.getSemanticElement().getUri(), elementAndRoutingPoints.getNewRoutingPoints());
          compoundCommand.getCommands().add(changeRoutingPointsCommand);
       });
+      return this.edit(compoundCommand);
+   }
+
+   // ========= DIAGRAMS =========== //
+
+   /*
+    * UML Communication
+    */
+   public CompletableFuture<Response<Boolean>> addInteraction(final UmlModelState modelState,
+      final Optional<GPoint> newPosition) {
+
+      CCompoundCommand addInteractionCompoundCommand = AddInteractionCommandContribution
+         .create(newPosition.orElse(GraphUtil.point(0, 0)));
+      return this.edit(addInteractionCompoundCommand);
+   }
+
+   public CompletableFuture<Response<Boolean>> setInteractionName(final UmlModelState modelState,
+      final Interaction interactionToRename, final String newName) {
+
+      CCommand setInteractionNameCommand = SetInteractionNameCommandContribution.create(
+         getSemanticUriFragment(interactionToRename),
+         newName);
+      return this.edit(setInteractionNameCommand);
+   }
+
+   public CompletableFuture<Response<Boolean>> removeInteraction(final UmlModelState modelState,
+      final Interaction interactionToRemove) {
+      String semanticProxyUri = getSemanticUriFragment(interactionToRemove);
+      CCompoundCommand compoundCommand = RemoveInteractionCommandContribution.create(semanticProxyUri);
+      return this.edit(compoundCommand);
+
+   }
+
+   public CompletableFuture<Response<Boolean>> addLifeline(final UmlModelState modelState,
+      final Interaction parentInteraction, final Optional<GPoint> newPosition) {
+
+      CCompoundCommand addLifelineCompoundCommand = AddLifelineCommandContribution
+         .create(getSemanticUriFragment(parentInteraction), newPosition.orElse(GraphUtil.point(0, 0)));
+      return this.edit(addLifelineCompoundCommand);
+   }
+
+   public CompletableFuture<Response<Boolean>> removeLifeline(final UmlModelState modelState,
+      final Lifeline lifelineToRemove) {
+      String semanticProxyUri = getSemanticUriFragment(lifelineToRemove);
+
+      CCompoundCommand compoundCommand = RemoveLifelineCommandContribution.create(semanticProxyUri);
+      return this.edit(compoundCommand);
+   }
+
+   public CompletableFuture<Response<Boolean>> setLifelineName(final UmlModelState modelState,
+      final Lifeline lifelineToRename, final String newName) {
+
+      CCommand setLifelineNameCommand = SetLifelineNameCommandContribution.create(
+         getSemanticUriFragment(lifelineToRename),
+         newName);
+      return this.edit(setLifelineNameCommand);
+   }
+
+   public CompletableFuture<Response<Boolean>> addMessage(final UmlModelState modelState,
+      final Lifeline sourceLifeline, final Lifeline targetLifeline) {
+
+      CCompoundCommand addMessageCompoundCommand = AddMessageCommandContribution
+         .create(getSemanticUriFragment(sourceLifeline), getSemanticUriFragment(targetLifeline));
+      return this.edit(addMessageCompoundCommand);
+   }
+
+   public CompletableFuture<Response<Boolean>> removeMessage(final UmlModelState modelState,
+      final Message messageToRemove) {
+      String semanticProxyUri = getSemanticUriFragment(messageToRemove);
+
+      CCompoundCommand compoundCommand = RemoveMessageCommandContribution.create(semanticProxyUri);
+      return this.edit(compoundCommand);
+   }
+
+   public CompletableFuture<Response<Boolean>> setMessageName(final UmlModelState modelState,
+      final Message message, final String newName) {
+
+      CCommand setMessageNameCommand = SetMessageNameCommandContribution.create(
+         getSemanticUriFragment(message), newName);
+      return this.edit(setMessageNameCommand);
+   }
+
+   public CompletableFuture<Response<Boolean>> copyInteraction(final List<InteractionCopyableProperties> properties) {
+      var compoundCommand = CopyInteractionCommandContribution
+         .create(properties);
+      return this.edit(compoundCommand);
+   }
+
+   public CompletableFuture<Response<Boolean>> copyLifelineWithMessages(
+      final List<LifelineCopyableProperties> lifelineProperties,
+      final List<MessageCopyableProperties> messageProperties, final Interaction parentInteraction) {
+      var compoundCommand = CopyLifelineWithMessagesCommandContribution
+         .create(lifelineProperties, messageProperties, parentInteraction);
       return this.edit(compoundCommand);
    }
 

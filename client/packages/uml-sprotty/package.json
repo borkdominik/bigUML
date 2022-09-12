@@ -20,7 +20,8 @@
   "dependencies": {
     "@eclipsesource/uml-glsp-common": "0.1.0",
     "@eclipse-glsp/client": "next",
-    "reflect-metadata": "^0.1.10"
+    "reflect-metadata": "^0.1.10",
+    "balloon-css": "^0.5.0"
   },
   "devDependencies": {
     "rimraf": "^2.6.1",

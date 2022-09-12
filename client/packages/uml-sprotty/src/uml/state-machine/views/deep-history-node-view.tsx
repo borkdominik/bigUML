@@ -11,12 +11,7 @@
 /* eslint-disable react/jsx-key */
 import { injectable } from "inversify";
 import { VNode } from "snabbdom";
-import {
-    IView,
-    CircularNode,
-    RenderingContext,
-    svg
-} from "sprotty/lib";
+import { CircularNode, IView, RenderingContext, svg } from "sprotty/lib";
 
 /* eslint-disable react/react-in-jsx-scope */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2021 EclipseSource and others.
+ * Copyright (c) 2021-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -8,14 +8,14 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-import {LaunchOptions, ModelServerClient} from "@eclipse-emfcloud/modelserver-theia";
-import {GLSPServerContribution} from "@eclipse-glsp/theia-integration/lib/node";
-import {ContainerModule, injectable} from "inversify";
-import {join, resolve} from "path";
+import { LaunchOptions, ModelServerClient } from "@eclipse-emfcloud/modelserver-theia";
+import { GLSPServerContribution } from "@eclipse-glsp/theia-integration/lib/node";
+import { ContainerModule, injectable } from "inversify";
+import { join, resolve } from "path";
 
-import {findEquinoxLauncher} from "./equinox";
-import {UmlModelServerClientImpl} from "./model-server-client";
-import {UmlGLSPServerContribution} from "./uml-glsp-server-contribution";
+import { findEquinoxLauncher } from "./equinox";
+import { UmlModelServerClientImpl } from "./model-server-client";
+import { UmlGLSPServerContribution } from "./uml-glsp-server-contribution";
 
 @injectable()
 export class UmlModelServerLaunchOptions implements LaunchOptions {
@@ -34,8 +34,6 @@ export default new ContainerModule((bind, _unbind, isBound, rebind) => {
     } else {
         bind(LaunchOptions).to(UmlModelServerLaunchOptions).inSingletonScope();
     }
-
     rebind(ModelServerClient).to(UmlModelServerClientImpl).inSingletonScope();
-
     bind(GLSPServerContribution).to(UmlGLSPServerContribution).inSingletonScope();
 });

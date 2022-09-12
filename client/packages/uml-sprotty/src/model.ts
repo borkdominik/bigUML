@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2021 EclipseSource and others.
+ * Copyright (c) 2021-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -94,10 +94,6 @@ export class SLabelNode extends SLabel implements EditableLabel {
         return (feature === selectFeature || feature === editLabelFeature || feature === popupFeature || feature === deletableFeature ||
             feature === hoverFeedbackFeature || super.hasFeature(feature));
     }
-}
-
-export class SLabelNodeProperty extends SLabelNode {
-    imageName = "Property.svg";
 }
 
 export class ConnectableEditableLabel extends SLabel implements EditableLabel, Connectable {

@@ -1405,7 +1405,7 @@
     "@theia/workspace" "1.23.0"
     minimatch "^3.0.4"
 
-"@theia/outline-view@1.23.0":
+"@theia/outline-view@1.23.0", "@theia/outline-view@^1.0.0":
   version "1.23.0"
   resolved "https://registry.yarnpkg.com/@theia/outline-view/-/outline-view-1.23.0.tgz#d39991d203c0edb914b11ed6a024920495b6a2bc"
   dependencies:
@@ -2590,6 +2590,11 @@ backo2@~1.0.2:
 balanced-match@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.2.tgz#e83e3a7e3f300b34cb9d87f615fa0cbf357690ee"
+
+balloon-css@^0.5.0:
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/balloon-css/-/balloon-css-0.5.2.tgz#9e2163565a136c9d4aa20e8400772ce3b738d3ff"
+  integrity sha512-zheJpzwyNrG4t39vusA67v3BYg1HTVXOF8cErPEHzWK88PEOFwgo6Ea9VHOgOWNMgeuOtFVtB73NE2NWl9uDyQ==
 
 base64-js@^1.3.1:
   version "1.5.1"

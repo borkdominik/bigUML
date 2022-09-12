@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2021 EclipseSource and others.
+ * Copyright (c) 2021-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-import {DefaultTypes} from "@eclipse-glsp/protocol";
+import { DefaultTypes } from "@eclipse-glsp/protocol";
 
 export namespace UmlTypes {
 
@@ -130,4 +130,12 @@ export namespace UmlTypes {
     export const LABEL_TRANSITION_GUARD = `${DefaultTypes.LABEL}:transition-guard`;
     export const LABEL_TRANSITION_EFFECT = `${DefaultTypes.LABEL}:transition-effect`;
     export const LABEL_TRANSITION_TRIGGER = `${DefaultTypes.LABEL}:transition-trigger`;
+
+    // COMMUNICATION DIAGRAM
+    export const ICON_INTERACTION = `${ICON}:interaction`;
+    export const ICON_LIFELINE = `${ICON}:lifeline`;
+    export const INTERACTION = `${DefaultTypes.NODE}:interaction`;
+    export const LIFELINE = `${DefaultTypes.NODE}:lifeline`;
+    export const MESSAGE = `${DefaultTypes.EDGE}:message`;
+    export const MESSAGE_LABEL_ARROW_EDGE_NAME = `${DefaultTypes.LABEL}:message-arrow-edge-name`;
 }

@@ -40,9 +40,10 @@ import { EditLabelUI } from "sprotty/lib";
 import { EditLabelUIAutocomplete } from "../../features/edit-label";
 import umlToolPaletteModule from "../../features/tool-palette/di.config";
 import { IconLabelCompartmentSelectionFeedback } from "../../feedback";
-import { LabeledNode, SEditableLabel, SLabelNodeProperty } from "../../model";
+import { LabeledNode, SEditableLabel } from "../../model";
 import { BaseTypes, UmlTypes } from "../../utils";
 import { LabelNodeView } from "../../views/commons";
+import { SLabelNodeProperty } from "../class/model";
 import { ObjectNodeView } from "./views";
 
 export default function createContainer(widgetId: string): Container {

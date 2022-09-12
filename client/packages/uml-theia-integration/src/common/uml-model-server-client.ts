@@ -20,7 +20,8 @@ export enum UmlDiagramType {
     SEQUENCE = "SEQUENCE",
     STATEMACHINE = "STATEMACHINE",
     USECASE = "USECASE",
-    OBJECT = "OBJECT"
+    OBJECT = "OBJECT",
+    COMMUNICATION = "COMMUNICATION"
 }
 
 export const UmlModelServerClient = Symbol("UmlModelServerClient");

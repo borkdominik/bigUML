@@ -75,7 +75,7 @@ public class UmlDeleteOperationHandler extends EMSBasicOperationHandler<DeleteOp
          }
 
          deleteOperationHandler
-            .orElseThrow(() -> new GLSPServerException("No handler found for " + elementId))
+            .orElseThrow(() -> new GLSPServerException("No handler found for diagram " + diagramType))
             .delete(semanticElement, modelAccess);
       });
    }

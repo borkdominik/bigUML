@@ -20,8 +20,10 @@ import com.eclipsesource.uml.glsp.actions.SetOutlineAction;
 import com.eclipsesource.uml.glsp.actions.UmlRequestOutlineHandler;
 import com.eclipsesource.uml.glsp.diagram.UmlDiagramConfigurationProvider;
 import com.eclipsesource.uml.glsp.operations.UmlDiagramDeleteOperationHandler;
+import com.eclipsesource.uml.glsp.operations.UmlDiagramLabelEditOperationHandler;
 import com.eclipsesource.uml.glsp.palette.UmlDiagramPaletteItemProvider;
 import com.eclipsesource.uml.glsp.uml.communication_diagram.operations.CommunicationDeleteOperationHandler;
+import com.eclipsesource.uml.glsp.uml.communication_diagram.operations.CommunicationLabelEditOperationHandler;
 import com.eclipsesource.uml.glsp.uml.communication_diagram.operations.CreateInteractionNodeOperationHandler;
 import com.eclipsesource.uml.glsp.uml.communication_diagram.operations.CreateLifelineNodeOperationHandler;
 import com.eclipsesource.uml.glsp.uml.communication_diagram.operations.CreateMessageEdgeOperationHandler;
@@ -42,6 +44,9 @@ public class CommunicationGLSPModule extends GLSPModule {
 
       var deleteOperationProvider = Multibinder.newSetBinder(binder(), UmlDiagramDeleteOperationHandler.class);
       deleteOperationProvider.addBinding().to(CommunicationDeleteOperationHandler.class);
+
+      var editLabelOperationProvider = Multibinder.newSetBinder(binder(), UmlDiagramLabelEditOperationHandler.class);
+      editLabelOperationProvider.addBinding().to(CommunicationLabelEditOperationHandler.class);
    }
 
    public void configureClientActions(final MultiBinding<Action> bindings) {

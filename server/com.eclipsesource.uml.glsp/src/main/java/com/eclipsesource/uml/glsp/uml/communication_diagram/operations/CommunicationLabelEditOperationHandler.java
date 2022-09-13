@@ -12,36 +12,38 @@ package com.eclipsesource.uml.glsp.uml.communication_diagram.operations;
 
 import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
 
-import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSBasicOperationHandler;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperation;
 import org.eclipse.glsp.server.types.GLSPServerException;
-import org.eclipse.uml2.uml.Comment;
-import org.eclipse.uml2.uml.Constraint;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Interaction;
 import org.eclipse.uml2.uml.Lifeline;
 import org.eclipse.uml2.uml.Message;
-import org.eclipse.uml2.uml.NamedElement;
 
 import com.eclipsesource.uml.glsp.model.UmlModelIndex;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;
+import com.eclipsesource.uml.glsp.operations.UmlDiagramLabelEditOperationHandler;
 import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
 import com.eclipsesource.uml.glsp.util.UmlIDUtil;
 import com.eclipsesource.uml.modelserver.commands.communication.interaction.SetInteractionNameCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.communication.lifeline.SetLifelineNameCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.communication.message.SetMessageNameCommandContribution;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.inject.Inject;
 
-public class CommunicationLabelEditOperationHandler
-   extends EMSBasicOperationHandler<ApplyLabelEditOperation, UmlModelServerAccess> {
+public class CommunicationLabelEditOperationHandler implements UmlDiagramLabelEditOperationHandler {
 
-   protected UmlModelState getUmlModelState() { return (UmlModelState) getEMSModelState(); }
+   @Inject
+   protected UmlModelState modelState;
 
    @Override
-   public void executeOperation(final ApplyLabelEditOperation editLabelOperation,
-      final UmlModelServerAccess modelAccess) {
-      UmlModelState modelState = getUmlModelState();
+   public boolean supports(final Representation representation) {
+      return representation == Representation.COMMUNICATION;
+   }
+
+   @Override
+   public void edit(final ApplyLabelEditOperation editLabelOperation, final UmlModelServerAccess modelAccess) {
       UmlModelIndex modelIndex = modelState.getIndex();
 
       String inputText = editLabelOperation.getText().trim();
@@ -57,28 +59,7 @@ public class CommunicationLabelEditOperationHandler
             Element semanticElement = getOrThrow(modelIndex.getSemantic(containerElementId),
                Element.class, "No valid container with id " + graphicalElementId + " found");
 
-            if (semanticElement instanceof Comment) {
-               modelAccess.setCommentBody(modelState, (Comment) semanticElement, inputText)
-                  .thenAccept(response -> {
-                     if (!response.body()) {
-                        throw new GLSPServerException("Could not change Property to: " + inputText);
-                     }
-                  });
-            } else if (semanticElement instanceof Constraint) {
-               modelAccess.setConditionBody(modelState, (Constraint) semanticElement, inputText)
-                  .thenAccept(response -> {
-                     if (!response.body()) {
-                        throw new GLSPServerException("Could not change Property to: " + inputText);
-                     }
-                  });
-            } else if (semanticElement instanceof NamedElement) {
-               modelAccess.renameElement(modelState, (NamedElement) semanticElement, inputText)
-                  .thenAccept(response -> {
-                     if (!response.body()) {
-                        throw new GLSPServerException("Could not change Property to: " + inputText);
-                     }
-                  });
-            } else if (semanticElement instanceof Lifeline) {
+            if (semanticElement instanceof Lifeline) {
                modelAccess
                   .exec(SetLifelineNameCommandContribution.create(
                      (Lifeline) semanticElement,
@@ -86,14 +67,6 @@ public class CommunicationLabelEditOperationHandler
                   .thenAccept(response -> {
                      if (!response.body()) {
                         throw new GLSPServerException("Could not rename Lifeline to: " + inputText);
-                     }
-                  });
-            } else if (semanticElement instanceof Interaction) {
-               modelAccess
-                  .exec(SetInteractionNameCommandContribution.create((Interaction) semanticElement, inputText))
-                  .thenAccept(response -> {
-                     if (!response.body()) {
-                        throw new GLSPServerException("Could not rename Interaction to: " + inputText);
                      }
                   });
             } else if (semanticElement instanceof Interaction) {
@@ -121,9 +94,5 @@ public class CommunicationLabelEditOperationHandler
             }
             break;
       }
-
    }
-
-   @Override
-   public String getLabel() { return "Apply label"; }
 }

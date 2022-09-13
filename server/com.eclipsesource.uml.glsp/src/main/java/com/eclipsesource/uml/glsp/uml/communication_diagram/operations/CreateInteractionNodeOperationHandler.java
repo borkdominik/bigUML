@@ -13,17 +13,19 @@ package com.eclipsesource.uml.glsp.uml.communication_diagram.operations;
 import java.util.List;
 
 import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSBasicCreateOperationHandler;
+import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.operations.Operation;
 import org.eclipse.glsp.server.types.GLSPServerException;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.uml.communication_diagram.CommunicationModelServerAccess;
+import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.eclipsesource.uml.modelserver.commands.communication.interaction.AddInteractionCommandContribution;
 import com.google.common.collect.Lists;
 
 public class CreateInteractionNodeOperationHandler
-   extends EMSBasicCreateOperationHandler<CreateNodeOperation, CommunicationModelServerAccess> {
+   extends EMSBasicCreateOperationHandler<CreateNodeOperation, UmlModelServerAccess> {
 
    public CreateInteractionNodeOperationHandler() {
       super(handledElementTypeIds);
@@ -43,11 +45,12 @@ public class CreateInteractionNodeOperationHandler
    protected UmlModelState getUmlModelState() { return (UmlModelState) getEMSModelState(); }
 
    @Override
-   public void executeOperation(final CreateNodeOperation operation, final CommunicationModelServerAccess modelAccess) {
+   public void executeOperation(final CreateNodeOperation operation, final UmlModelServerAccess modelAccess) {
 
       switch (operation.getElementTypeId()) {
          case Types.INTERACTION: {
-            modelAccess.addInteraction(getUmlModelState(), operation.getLocation())
+            modelAccess
+               .exec(AddInteractionCommandContribution.create(operation.getLocation().orElse(GraphUtil.point(0, 0))))
                .thenAccept(response -> {
                   if (!response.body()) {
                      throw new GLSPServerException("Could not execute create operation on new Interaction node");

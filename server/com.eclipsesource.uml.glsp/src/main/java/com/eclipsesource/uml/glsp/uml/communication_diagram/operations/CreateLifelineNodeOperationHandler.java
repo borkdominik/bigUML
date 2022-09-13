@@ -15,6 +15,7 @@ import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
 import java.util.List;
 
 import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSBasicCreateOperationHandler;
+import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.operations.Operation;
 import org.eclipse.glsp.server.types.GLSPServerException;
@@ -22,12 +23,13 @@ import org.eclipse.uml2.uml.Interaction;
 import org.eclipse.uml2.uml.PackageableElement;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.uml.communication_diagram.CommunicationModelServerAccess;
+import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.eclipsesource.uml.modelserver.commands.communication.lifeline.AddLifelineCommandContribution;
 import com.google.common.collect.Lists;
 
 public class CreateLifelineNodeOperationHandler
-   extends EMSBasicCreateOperationHandler<CreateNodeOperation, CommunicationModelServerAccess> {
+   extends EMSBasicCreateOperationHandler<CreateNodeOperation, UmlModelServerAccess> {
 
    public CreateLifelineNodeOperationHandler() {
       super(handledElementTypeIds);
@@ -47,7 +49,7 @@ public class CreateLifelineNodeOperationHandler
    protected UmlModelState getUmlModelState() { return (UmlModelState) getEMSModelState(); }
 
    @Override
-   public void executeOperation(final CreateNodeOperation operation, final CommunicationModelServerAccess modelAccess) {
+   public void executeOperation(final CreateNodeOperation operation, final UmlModelServerAccess modelAccess) {
       UmlModelState modelState = getUmlModelState();
 
       String containerId = operation.getContainerId();
@@ -58,7 +60,10 @@ public class CreateLifelineNodeOperationHandler
 
       switch (elementTypeId) {
          case Types.LIFELINE: {
-            modelAccess.addLifeline(getUmlModelState(), (Interaction) container, operation.getLocation())
+            modelAccess
+               .exec(AddLifelineCommandContribution.create(
+                  (Interaction) container,
+                  operation.getLocation().orElse(GraphUtil.point(0, 0))))
                .thenAccept(response -> {
                   if (!response.body()) {
                      throw new GLSPServerException("Could not execute create operation on new Lifeline node");

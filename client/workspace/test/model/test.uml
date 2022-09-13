@@ -37,4 +37,5 @@
     <message xmi:id="_84KO8NFjEey82fn8NtK68g" name="1.1.1.2.1:setConfirmation()" receiveEvent="_84K2AdFjEey82fn8NtK68g" sendEvent="_84K2ANFjEey82fn8NtK68g"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Interaction" xmi:id="_0_OR0NIpEeyxCufTNXqqbw" name="Destination"/>
+  <packagedElement xmi:type="uml:Interaction" xmi:id="_tntnQDNZEe2M4PxXjQ3v0w" name="NewInteraction3"/>
 </uml:Model>

@@ -43,6 +43,6 @@ export class InteractionNodeView extends RectangularNodeView {
     }
 }
 export class IconInteraction extends Icon {
-    iconImageName = "Interaction.gif";
+    iconImageName = "communication/Interaction.gif";
 }
 

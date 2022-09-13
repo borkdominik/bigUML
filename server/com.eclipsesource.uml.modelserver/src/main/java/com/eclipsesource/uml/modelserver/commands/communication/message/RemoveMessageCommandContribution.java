@@ -17,17 +17,20 @@ import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
 import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
 import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
+import org.eclipse.uml2.uml.Message;
 
 import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlCompoundCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
 
 public class RemoveMessageCommandContribution extends UmlCompoundCommandContribution {
 
    public static final String TYPE = "removeMessage";
 
-   public static CCompoundCommand create(final String semanticUri) {
+   public static CCompoundCommand create(final Message message) {
       CCompoundCommand removeMessageCommand = CCommandFactory.eINSTANCE.createCompoundCommand();
       removeMessageCommand.setType(TYPE);
-      removeMessageCommand.getProperties().put(SEMANTIC_URI_FRAGMENT, semanticUri);
+      removeMessageCommand.getProperties().put(SEMANTIC_URI_FRAGMENT,
+         UmlSemanticCommandUtil.getSemanticUriFragment(message));
 
       return removeMessageCommand;
    }

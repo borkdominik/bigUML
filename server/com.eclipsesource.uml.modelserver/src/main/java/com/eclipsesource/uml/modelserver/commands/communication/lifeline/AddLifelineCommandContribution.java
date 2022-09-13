@@ -18,26 +18,27 @@ import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
 import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
 import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
 import org.eclipse.glsp.graph.GPoint;
+import org.eclipse.uml2.uml.Interaction;
 
 import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlCompoundCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlNotationCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlSemanticCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.util.UmlNotationCommandUtil;
+import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
 
 public class AddLifelineCommandContribution extends UmlCompoundCommandContribution {
 
    public static final String TYPE = "addLifelineContribution";
 
-   public static CCompoundCommand create(final String parentSemanticUri, final GPoint position) {
+   public static CCompoundCommand create(final Interaction interaction, final GPoint position) {
       CCompoundCommand addLifelineCommand = CCommandFactory.eINSTANCE.createCompoundCommand();
       addLifelineCommand.setType(TYPE);
       addLifelineCommand.getProperties().put(UmlNotationCommandContribution.POSITION_X,
          String.valueOf(position.getX()));
       addLifelineCommand.getProperties().put(UmlNotationCommandContribution.POSITION_Y,
          String.valueOf(position.getY()));
-
       addLifelineCommand.getProperties().put(UmlSemanticCommandContribution.PARENT_SEMANTIC_URI_FRAGMENT,
-         parentSemanticUri);
+         UmlSemanticCommandUtil.getSemanticUriFragment(interaction));
 
       return addLifelineCommand;
    }

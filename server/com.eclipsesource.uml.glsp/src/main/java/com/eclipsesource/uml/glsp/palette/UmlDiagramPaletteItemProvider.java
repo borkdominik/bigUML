@@ -10,21 +10,15 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.palette;
 
-import org.eclipse.glsp.server.features.toolpalette.ToolPaletteItemProvider;
+import java.util.List;
+import java.util.Map;
 
-import com.eclipsesource.uml.glsp.model.UmlModelState;
+import org.eclipse.glsp.server.features.toolpalette.PaletteItem;
+
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 
-public class ToolPaletteItemProviderProvider {
-   private ToolPaletteItemProviderProvider() {}
+public interface UmlDiagramPaletteItemProvider {
+   boolean supports(Representation representation);
 
-   public static ToolPaletteItemProvider get(final UmlModelState modelState) {
-      Representation diagramType = modelState.getNotationModel().getDiagramType();
-      switch (diagramType) {
-         case COMMUNICATION: {
-            return new UmlCommunicationToolPaletteItemProvider();
-         }
-      }
-      return null;
-   }
+   List<PaletteItem> getItems(Map<String, String> args);
 }

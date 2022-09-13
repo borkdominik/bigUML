@@ -16,27 +16,27 @@ import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSBasicOperati
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperation;
 import org.eclipse.glsp.server.types.GLSPServerException;
+import org.eclipse.uml2.uml.CallBehaviorAction;
 import org.eclipse.uml2.uml.Comment;
 import org.eclipse.uml2.uml.Constraint;
+import org.eclipse.uml2.uml.ControlFlow;
 import org.eclipse.uml2.uml.Element;
-import org.eclipse.uml2.uml.Interaction;
-import org.eclipse.uml2.uml.Lifeline;
 import org.eclipse.uml2.uml.NamedElement;
 
 import com.eclipsesource.uml.glsp.model.UmlModelIndex;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.uml.communication_diagram.CommunicationModelServerAccess;
+import com.eclipsesource.uml.glsp.uml.activity_diagram.ActivityModelServerAccess;
 import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
 import com.eclipsesource.uml.glsp.util.UmlIDUtil;
 
 public class ActivityLabelEditOperationHandler
-   extends EMSBasicOperationHandler<ApplyLabelEditOperation, CommunicationModelServerAccess> {
+   extends EMSBasicOperationHandler<ApplyLabelEditOperation, ActivityModelServerAccess> {
 
    protected UmlModelState getUmlModelState() { return (UmlModelState) getEMSModelState(); }
 
    @Override
    public void executeOperation(final ApplyLabelEditOperation editLabelOperation,
-      final CommunicationModelServerAccess modelAccess) {
+      final ActivityModelServerAccess modelAccess) {
       UmlModelState modelState = getUmlModelState();
       UmlModelIndex modelIndex = modelState.getIndex();
 
@@ -47,6 +47,19 @@ public class ActivityLabelEditOperationHandler
          GModelElement.class, "Element not found.");
 
       switch (label.getType()) {
+         case Types.CALL_REF: {
+
+            CallBehaviorAction cba = getOrThrow(
+               modelIndex.getSemantic(UmlIDUtil.getElementIdFromHeaderLabel(graphicalElementId)),
+               CallBehaviorAction.class, "No valid container with id " + graphicalElementId + " found");
+            modelAccess.setBehavior(modelState, cba, inputText)
+               .thenAccept(response -> {
+                  if (!response.body()) {
+                     throw new GLSPServerException("Could not change Property to: " + inputText);
+                  }
+               });
+            break;
+         }
 
          case Types.LABEL_NAME:
             String containerElementId = UmlIDUtil.getElementIdFromHeaderLabel(graphicalElementId);
@@ -74,22 +87,23 @@ public class ActivityLabelEditOperationHandler
                         throw new GLSPServerException("Could not change Property to: " + inputText);
                      }
                   });
-            } else if (semanticElement instanceof Lifeline) {
-               modelAccess.setLifelineName(modelState, (Lifeline) semanticElement, inputText)
-                  .thenAccept(response -> {
-                     if (!response.body()) {
-                        throw new GLSPServerException("Could not rename Lifeline to: " + inputText);
-                     }
-                  });
-            } else if (semanticElement instanceof Interaction) {
-               modelAccess.setInteractionName(modelState, (Interaction) semanticElement, inputText)
-                  .thenAccept(response -> {
-                     if (!response.body()) {
-                        throw new GLSPServerException("Could not rename Interaction to: " + inputText);
-                     }
-                  });
             }
             break;
+
+         case Types.LABEL_GUARD:
+            containerElementId = UmlIDUtil.getEdgeIdFromGuardLabel(graphicalElementId);
+            ControlFlow flow = getOrThrow(modelIndex.getSemantic(containerElementId),
+               ControlFlow.class, "No valid controlFlow with id " + containerElementId + " found");
+            modelAccess.setGuard(modelState, flow, inputText);
+            break;
+
+         case Types.LABEL_WEIGHT:
+            containerElementId = UmlIDUtil.getEdgeFromWeightLabel(graphicalElementId);
+            flow = getOrThrow(modelIndex.getSemantic(containerElementId),
+               ControlFlow.class, "No valid controlFlow with id " + containerElementId + " found");
+            modelAccess.setWeight(modelState, flow, inputText);
+            break;
+
       }
 
    }

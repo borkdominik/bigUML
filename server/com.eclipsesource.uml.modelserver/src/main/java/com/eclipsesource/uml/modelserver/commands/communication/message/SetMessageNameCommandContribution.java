@@ -16,18 +16,21 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
 import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
+import org.eclipse.uml2.uml.Message;
 
 import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlSemanticCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
 
 public class SetMessageNameCommandContribution extends UmlSemanticCommandContribution {
 
    public static final String TYPE = "setMessageName";
    public static final String NEW_NAME = "newName";
 
-   public static CCommand create(final String semanticUri, final String newName) {
+   public static CCommand create(final Message message, final String newName) {
       CCommand setMessageNameCommand = CCommandFactory.eINSTANCE.createCommand();
       setMessageNameCommand.setType(TYPE);
-      setMessageNameCommand.getProperties().put(SEMANTIC_URI_FRAGMENT, semanticUri);
+      setMessageNameCommand.getProperties().put(SEMANTIC_URI_FRAGMENT,
+         UmlSemanticCommandUtil.getSemanticUriFragment(message));
       setMessageNameCommand.getProperties().put(NEW_NAME, newName);
       return setMessageNameCommand;
    }

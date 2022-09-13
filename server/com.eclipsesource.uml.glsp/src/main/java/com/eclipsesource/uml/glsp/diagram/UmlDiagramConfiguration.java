@@ -13,6 +13,8 @@ package com.eclipsesource.uml.glsp.diagram;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.glsp.graph.DefaultTypes;
@@ -24,17 +26,27 @@ import org.eclipse.glsp.server.types.ShapeTypeHint;
 
 import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
 import com.google.common.collect.Lists;
+import com.google.inject.Inject;
 
 public class UmlDiagramConfiguration extends BaseDiagramConfiguration {
+
+   @Inject
+   private Set<UmlDiagramConfigurationProvider> diagramConfigurationProviders;
 
    @Override
    public String getDiagramType() { return "umldiagram"; }
 
    @Override
    public List<EdgeTypeHint> getEdgeTypeHints() {
-      return Lists.newArrayList(
+      var hints = Lists.newArrayList(
          // COMMONS
          createDefaultEdgeTypeHint(Types.COMMENT_EDGE));
+
+      hints.addAll(diagramConfigurationProviders.stream()
+         .flatMap(provider -> provider.getEdgeTypeHints().stream())
+         .collect(Collectors.toList()));
+
+      return hints;
    }
 
    @Override
@@ -60,11 +72,19 @@ public class UmlDiagramConfiguration extends BaseDiagramConfiguration {
    @Override
    public List<ShapeTypeHint> getShapeTypeHints() {
       List<ShapeTypeHint> hints = new ArrayList<>();
+
+      var graphContainableElements = diagramConfigurationProviders.stream()
+         .flatMap(provider -> provider.getGraphContainableElements().stream())
+         .collect(Collectors.toList());
+
       hints.add(
          new ShapeTypeHint(DefaultTypes.GRAPH, false, false, false, false,
-            List.of(Types.INTERACTION)));
-      // Comment
+            graphContainableElements));
       hints.add(new ShapeTypeHint(Types.COMMENT, true, true, false, false));
+
+      hints.addAll(diagramConfigurationProviders.stream()
+         .flatMap(provider -> provider.getShapeTypeHints().stream())
+         .collect(Collectors.toList()));
 
       return hints;
    }
@@ -86,6 +106,9 @@ public class UmlDiagramConfiguration extends BaseDiagramConfiguration {
       mappings.put(Types.COMPARTMENT, GraphPackage.Literals.GCOMPARTMENT);
       mappings.put(Types.COMPARTMENT_HEADER, GraphPackage.Literals.GCOMPARTMENT);
 
+      diagramConfigurationProviders.stream().map(provider -> provider.getTypeMappings()).forEach(typeMappings -> {
+         mappings.putAll(typeMappings);
+      });
       return mappings;
    }
 

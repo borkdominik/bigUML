@@ -17,63 +17,28 @@ import java.util.Map;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.glsp.graph.DefaultTypes;
 import org.eclipse.glsp.graph.GraphPackage;
-import org.eclipse.glsp.server.diagram.BaseDiagramConfiguration;
-import org.eclipse.glsp.server.layout.ServerLayoutKind;
 import org.eclipse.glsp.server.types.EdgeTypeHint;
 import org.eclipse.glsp.server.types.ShapeTypeHint;
 
+import com.eclipsesource.uml.glsp.diagram.UmlDiagramConfigurationProvider;
 import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
 import com.google.common.collect.Lists;
 
-public class CommunicationDiagramConfiguration extends BaseDiagramConfiguration {
-
-   @Override
-   public String getDiagramType() { return "umldiagram"; }
+public class CommunicationDiagramConfiguration implements UmlDiagramConfigurationProvider {
 
    @Override
    public List<EdgeTypeHint> getEdgeTypeHints() {
       return Lists.newArrayList(
-         // COMMONS
-         createDefaultEdgeTypeHint(Types.COMMENT_EDGE),
-
-         // COMMUNICATION DIAGRAM
          new EdgeTypeHint(Types.MESSAGE, true, true, true, List.of(Types.LIFELINE), List.of(Types.LIFELINE)));
    }
 
    @Override
-   public EdgeTypeHint createDefaultEdgeTypeHint(final String elementId) {
-      List<String> allowed;
-
-      ArrayList<String> from;
-      ArrayList<String> to;
-
-      switch (elementId) {
-         // COMMENT
-         case Types.COMMENT_EDGE:
-            allowed = Lists.newArrayList();
-            allowed.addAll(Types.LINKS_TO_COMMENT);
-            return new EdgeTypeHint(elementId, true, true, true, List.of(Types.COMMENT),
-               allowed);
-         default:
-            break;
-      }
-      return new EdgeTypeHint(elementId, true, true, true, List.of(), List.of());
-   }
+   public List<String> getGraphContainableElements() { return List.of(Types.INTERACTION); }
 
    @Override
    public List<ShapeTypeHint> getShapeTypeHints() {
       List<ShapeTypeHint> hints = new ArrayList<>();
-      // GRAPH
-      hints.add(new ShapeTypeHint(DefaultTypes.GRAPH, false, false, false, false,
-         List.of(Types.COMMENT, Types.CLASS, Types.ACTIVITY, Types.USECASE, Types.ACTOR, Types.PACKAGE, Types.COMPONENT,
-            Types.STATE_MACHINE, Types.DEPLOYMENT_NODE, Types.DEVICE, Types.ARTIFACT, Types.ENUMERATION,
-            Types.EXECUTION_ENVIRONMENT, Types.OBJECT, Types.DEPLOYMENT_COMPONENT, Types.INTERFACE,
-            Types.ABSTRACT_CLASS)));
 
-      // Comment
-      hints.add(new ShapeTypeHint(Types.COMMENT, true, true, false, false));
-
-      // Communication
       hints.add(new ShapeTypeHint(Types.INTERACTION, true, true, true, false, List.of(Types.LIFELINE)));
       hints.add(new ShapeTypeHint(Types.LIFELINE, true, true, false, false));
 
@@ -107,8 +72,4 @@ public class CommunicationDiagramConfiguration extends BaseDiagramConfiguration 
 
       return mappings;
    }
-
-   @Override
-   public ServerLayoutKind getLayoutKind() { return ServerLayoutKind.MANUAL; }
-
 }

@@ -24,7 +24,6 @@ import {
     saveModule,
     SCompartment,
     SCompartmentView,
-    SEdge,
     SLabel,
     SLabelView,
     SRoutingHandle,
@@ -41,22 +40,14 @@ import diagramOutlineViewModule from "./features/diagram-outline-view/di.config"
 import { EditLabelUIAutocomplete } from "./features/edit-label";
 import umlToolPaletteModule from "./features/tool-palette/di.config";
 import { IconLabelCompartmentSelectionFeedback } from "./feedback";
-import { LabeledNode, SEditableLabel } from "./model";
-import {
-    IconInteraction,
-    IconLifeline,
-    InteractionNodeView,
-    LifelineNodeView,
-    MessageArrowLabelView,
-    MessageEdgeView
-} from "./uml/communication/views";
+import { SEditableLabel } from "./model";
+import createCommunicationModule from "./uml/communication/di.config";
 import { BaseTypes, UmlTypes } from "./utils";
-import { IconView } from "./views/commons";
 
 export default function createContainer(widgetId: string): Container {
-    const classDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
+    const commonDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
         rebind(TYPES.ILogger).to(ConsoleLogger).inSingletonScope();
-        rebind(TYPES.LogLevel).toConstantValue(LogLevel.warn);
+        rebind(TYPES.LogLevel).toConstantValue(LogLevel.info);
         rebind(EditLabelUI).to(EditLabelUIAutocomplete);
         bind(TYPES.IVNodePostprocessor).to(IconLabelCompartmentSelectionFeedback);
 
@@ -73,21 +64,14 @@ export default function createContainer(widgetId: string): Container {
         configureModelElement(context, BaseTypes.VOLATILE_ROUTING_POINT, SRoutingHandle, SRoutingHandleView);
         configureModelElement(context, UmlTypes.STRUCTURE, SCompartment, StructureCompartmentView);
 
-        // UML Communication
-        configureModelElement(context, UmlTypes.ICON_LIFELINE, IconLifeline, IconView);
-        configureModelElement(context, UmlTypes.ICON_INTERACTION, IconInteraction, IconView);
-        configureModelElement(context, UmlTypes.INTERACTION, LabeledNode, InteractionNodeView);
-        configureModelElement(context, UmlTypes.LIFELINE, LabeledNode, LifelineNodeView);
-        configureModelElement(context, UmlTypes.MESSAGE, SEdge, MessageEdgeView);
-        configureModelElement(context, UmlTypes.MESSAGE_LABEL_ARROW_EDGE_NAME, SEditableLabel, MessageArrowLabelView);
-
         configureViewerOptions(context, {
             needsClientLayout: true,
             baseDiv: widgetId
         });
     });
+    const communicationModule = createCommunicationModule();
 
-    const container = createClientContainer(classDiagramModule, umlToolPaletteModule, saveModule, diagramOutlineViewModule);
+    const container = createClientContainer(commonDiagramModule, communicationModule, umlToolPaletteModule, saveModule, diagramOutlineViewModule);
     container.unload(toolPaletteModule);
     container.bind(LastContainableElementTracker).toSelf().inSingletonScope();
     container.bind(TYPES.MouseListener).toService(LastContainableElementTracker);

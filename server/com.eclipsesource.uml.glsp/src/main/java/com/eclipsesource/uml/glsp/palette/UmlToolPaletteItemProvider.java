@@ -10,8 +10,10 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.palette;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSBasicOperationHandler;
@@ -26,13 +28,15 @@ import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.common.collect.Lists;
+import com.google.inject.Inject;
 
 public class UmlToolPaletteItemProvider extends EMSBasicOperationHandler<CreateNodeOperation, UmlModelServerAccess>
    implements ToolPaletteItemProvider {
 
    private static Logger LOGGER = Logger.getLogger(UmlToolPaletteItemProvider.class.getSimpleName());
 
-   protected UmlModelState getUmlModelState() { return (UmlModelState) getEMSModelState(); }
+   @Inject
+   private Set<UmlDiagramPaletteItemProvider> diagramPaletteItemProviders;
 
    @Override
    public List<PaletteItem> getItems(final Map<String, String> args) {
@@ -40,7 +44,14 @@ public class UmlToolPaletteItemProvider extends EMSBasicOperationHandler<CreateN
       Representation diagramType = UmlModelState.getModelState(getUmlModelState()).getNotationModel().getDiagramType();
       LOGGER.info("------- CURRENT DIAGRAM TYPE: " + diagramType + " ----------");
 
-      return List.of();
+      var items = new ArrayList<PaletteItem>();
+
+      diagramPaletteItemProviders.stream().filter(provider -> provider.supports(diagramType))
+         .forEachOrdered(provider -> {
+            items.addAll(provider.getItems(args));
+         });
+
+      return items;
    }
 
    private PaletteItem comment() {
@@ -64,4 +75,5 @@ public class UmlToolPaletteItemProvider extends EMSBasicOperationHandler<CreateN
    public void executeOperation(final CreateNodeOperation createNodeOperation,
       final UmlModelServerAccess modelServerAccess) {}
 
+   protected UmlModelState getUmlModelState() { return (UmlModelState) getEMSModelState(); }
 }

@@ -16,19 +16,22 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
 import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
+import org.eclipse.uml2.uml.Interaction;
 
-import com.eclipsesource.uml.modelserver.commands.communication.lifeline.SetLifelineNameCommand;
 import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlSemanticCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.communication.lifeline.SetLifelineNameCommand;
+import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
 
 public class SetInteractionNameCommandContribution extends UmlSemanticCommandContribution {
 
    public static final String TYPE = "setInteractionName";
    public static final String NEW_NAME = "newName";
 
-   public static CCommand create(final String semanticUri, final String newName) {
+   public static CCommand create(final Interaction interaction, final String newName) {
       CCommand setInteractionNameCommand = CCommandFactory.eINSTANCE.createCommand();
       setInteractionNameCommand.setType(TYPE);
-      setInteractionNameCommand.getProperties().put(SEMANTIC_URI_FRAGMENT, semanticUri);
+      setInteractionNameCommand.getProperties().put(SEMANTIC_URI_FRAGMENT,
+         UmlSemanticCommandUtil.getSemanticUriFragment(interaction));
       setInteractionNameCommand.getProperties().put(NEW_NAME, newName);
       return setInteractionNameCommand;
    }

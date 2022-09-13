@@ -17,17 +17,20 @@ import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
 import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
 import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
+import org.eclipse.uml2.uml.Lifeline;
 
 import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlCompoundCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.util.UmlNotationCommandUtil;
 
 public class RemoveLifelineCommandContribution extends UmlCompoundCommandContribution {
 
    public static final String TYPE = "removeLifeline";
 
-   public static CCompoundCommand create(final String semanticUri) {
+   public static CCompoundCommand create(final Lifeline lifeline) {
       CCompoundCommand removeLifelineCommand = CCommandFactory.eINSTANCE.createCompoundCommand();
       removeLifelineCommand.setType(TYPE);
-      removeLifelineCommand.getProperties().put(SEMANTIC_URI_FRAGMENT, semanticUri);
+      removeLifelineCommand.getProperties().put(SEMANTIC_URI_FRAGMENT,
+         UmlNotationCommandUtil.getSemanticProxyUri(lifeline));
 
       return removeLifelineCommand;
    }

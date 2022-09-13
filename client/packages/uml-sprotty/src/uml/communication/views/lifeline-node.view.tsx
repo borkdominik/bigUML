@@ -40,6 +40,6 @@ export class LifelineNodeView extends RectangularNodeView {
     }
 }
 export class IconLifeline extends Icon {
-    iconImageName = "Lifeline.gif";
+    iconImageName = "communication/Lifeline.gif";
 }
 

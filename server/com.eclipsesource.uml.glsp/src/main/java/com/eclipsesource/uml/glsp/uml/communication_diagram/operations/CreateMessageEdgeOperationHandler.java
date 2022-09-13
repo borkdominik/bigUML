@@ -27,12 +27,13 @@ import org.eclipse.uml2.uml.Lifeline;
 
 import com.eclipsesource.uml.glsp.model.UmlModelIndex;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.uml.communication_diagram.CommunicationModelServerAccess;
+import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.eclipsesource.uml.modelserver.commands.communication.message.AddMessageCommandContribution;
 import com.google.common.collect.Lists;
 
 public class CreateMessageEdgeOperationHandler
-   extends EMSBasicCreateOperationHandler<CreateEdgeOperation, CommunicationModelServerAccess> {
+   extends EMSBasicCreateOperationHandler<CreateEdgeOperation, UmlModelServerAccess> {
 
    @Inject
    private ActionDispatcher actionDispatcher;
@@ -55,7 +56,7 @@ public class CreateMessageEdgeOperationHandler
    protected UmlModelState getUmlModelState() { return (UmlModelState) getEMSModelState(); }
 
    @Override
-   public void executeOperation(final CreateEdgeOperation operation, final CommunicationModelServerAccess modelAccess) {
+   public void executeOperation(final CreateEdgeOperation operation, final UmlModelServerAccess modelAccess) {
       String elementTypeId = operation.getElementTypeId();
 
       UmlModelState modelState = getUmlModelState();
@@ -74,7 +75,10 @@ public class CreateMessageEdgeOperationHandler
       }
 
       if (elementTypeId.equals(Types.MESSAGE)) {
-         modelAccess.addMessage(modelState, sourceLifeline, targetLifeline)
+         modelAccess
+            .exec(AddMessageCommandContribution.create(
+               sourceLifeline,
+               targetLifeline))
             .thenAccept(response -> {
                if (!response.body()) {
                   throw new GLSPServerException("Could not execute create operation on new Message edge");

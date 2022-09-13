@@ -3,3 +3,5 @@
     --uml-icon-comment: url(../../../resources/icons/dark/comment/Comment.gif);
     --uml-icon-comment-edge: url(../../../resources/icons/dark/comment/CommentEdge.gif);
 }
+
+@import "uml/communication/icons-dark.css";

@@ -17,11 +17,14 @@ import org.eclipse.glsp.server.actions.TriggerEdgeCreationAction;
 import org.eclipse.glsp.server.actions.TriggerNodeCreationAction;
 import org.eclipse.glsp.server.features.toolpalette.PaletteItem;
 
+import com.eclipsesource.uml.glsp.palette.UmlDiagramPaletteItemProvider;
 import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.common.collect.Lists;
 
-public class CommunicationPalette {
+public class CommunicationPalette implements UmlDiagramPaletteItemProvider {
 
+   @Override
    public List<PaletteItem> getItems(final Map<String, String> args) {
       return Lists.newArrayList(classifiers(), relations());
    }
@@ -47,6 +50,11 @@ public class CommunicationPalette {
 
    private PaletteItem edge(final String elementTypeId, final String label, final String icon) {
       return new PaletteItem(elementTypeId, label, new TriggerEdgeCreationAction(elementTypeId), icon);
+   }
+
+   @Override
+   public boolean supports(final Representation representation) {
+      return representation == Representation.COMMUNICATION;
    }
 
 }

@@ -32,13 +32,15 @@ import org.eclipse.uml2.uml.Interaction;
 
 import com.eclipsesource.uml.glsp.actions.UmlRequestClipboardDataActionHandler;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
+import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.property.InteractionPropertiesFactory;
 import com.eclipsesource.uml.glsp.property.LifelinePropertiesFactory;
 import com.eclipsesource.uml.glsp.property.MessagePropertiesFactory;
-import com.eclipsesource.uml.glsp.uml.communication_diagram.CommunicationModelServerAccess;
 import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
 import com.eclipsesource.uml.glsp.util.UmlGModelUtil;
+import com.eclipsesource.uml.modelserver.commands.communication.interaction.CopyInteractionCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.communication.interaction.InteractionCopyableProperties;
+import com.eclipsesource.uml.modelserver.commands.communication.lifeline.CopyLifelineWithMessagesCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.communication.lifeline.LifelineCopyableProperties;
 import com.eclipsesource.uml.modelserver.commands.communication.message.MessageCopyableProperties;
 import com.google.gson.Gson;
@@ -46,7 +48,7 @@ import com.google.gson.GsonBuilder;
 import com.google.inject.Inject;
 
 public class UmlPasteOperationHandler
-   extends EMSBasicOperationHandler<PasteOperation, CommunicationModelServerAccess> {
+   extends EMSBasicOperationHandler<PasteOperation, UmlModelServerAccess> {
    private final static String ARG_LAST_CONTAINABLE_ID = "lastContainableId";
    private static final int DEFAULT_OFFSET = 20;
 
@@ -66,7 +68,7 @@ public class UmlPasteOperationHandler
 
    @Override
    public void executeOperation(final PasteOperation operation,
-      final CommunicationModelServerAccess modelServerAccess) {
+      final UmlModelServerAccess modelServerAccess) {
       var selectedElements = getCopiedElements(
          operation.getClipboardData().get(UmlRequestClipboardDataActionHandler.CLIPBOARD_SELECTED_ELEMENTS));
       var interactionElements = UmlGModelUtil.filterByType(selectedElements, Types.INTERACTION, GModelElement.class)
@@ -77,7 +79,7 @@ public class UmlPasteOperationHandler
             computeOffset(interactionElements, operation.getEditorContext().getLastMousePosition()));
          var interactionProperties = getInteractionProperties(interactionElements);
 
-         modelServerAccess.copyInteraction(interactionProperties);
+         modelServerAccess.exec(CopyInteractionCommandContribution.create(interactionProperties));
       } else {
          var parentInteraction = modelState.getIndex()
             .getSemantic(operation.getEditorContext().getArgs().get(ARG_LAST_CONTAINABLE_ID), Interaction.class);
@@ -91,7 +93,11 @@ public class UmlPasteOperationHandler
             var lifelineProperties = getLifelineProperties(lifelineElements);
             var messageProperties = getMessageProperties(lifelineElements, root);
 
-            modelServerAccess.copyLifelineWithMessages(lifelineProperties, messageProperties, parentInteraction.get());
+            modelServerAccess
+               .exec(CopyLifelineWithMessagesCommandContribution.create(
+                  lifelineProperties,
+                  messageProperties,
+                  parentInteraction.get()));
          }
       }
    }

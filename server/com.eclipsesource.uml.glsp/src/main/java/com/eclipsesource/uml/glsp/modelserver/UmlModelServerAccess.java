@@ -214,4 +214,7 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
 
    // ========= DIAGRAMS =========== //
 
+   public CompletableFuture<Response<Boolean>> exec(final CCommand command) {
+      return super.edit(command);
+   }
 }

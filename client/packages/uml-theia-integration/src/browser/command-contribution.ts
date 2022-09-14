@@ -9,11 +9,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
 import { MenuContribution, MenuModelRegistry } from "@theia/core";
-import {
-    CommonMenus,
-    OpenerService,
-    QuickInputService
-} from "@theia/core/lib/browser";
+import { CommonMenus, OpenerService, QuickInputService } from "@theia/core/lib/browser";
 import { Command, CommandContribution, CommandRegistry, CommandService } from "@theia/core/lib/common/command";
 import URI from "@theia/core/lib/common/uri";
 import { FileService } from "@theia/filesystem/lib/browser/file-service";
@@ -49,12 +45,15 @@ export class UmlModelContribution implements CommandContribution, MenuContributi
 
                     this.showInput("Enter Name of UML Diagram", "Diagram name").then(nameOfUmlModel => {
                         if (nameOfUmlModel) {
-                            this.showInput("Enter UML Diagram Type", "activity | class | deployment | object | statemachine | usecase").then(
-                                diagramType => {
-                                    if (diagramType) {
-                                        this.createUmlDiagram(nameOfUmlModel, workspaceUri, diagramType);
-                                    }
-                                });
+                            this.showInput(
+                                "Enter UML Diagram Type",
+                                "activity | class | component | deployment | package | sequence | statemachine | usecase | object | communication")
+                                .then(
+                                    diagramType => {
+                                        if (diagramType) {
+                                            this.createUmlDiagram(nameOfUmlModel, workspaceUri, diagramType);
+                                        }
+                                    });
                         }
                     });
                 }
@@ -101,6 +100,7 @@ export class UmlModelContribution implements CommandContribution, MenuContributi
             case ("statemachine"): return UmlDiagramType.STATEMACHINE;
             case ("usecase"): return UmlDiagramType.USECASE;
             case ("object"): return UmlDiagramType.OBJECT;
+            case ("communication"): return UmlDiagramType.COMMUNICATION;
         }
         return UmlDiagramType.NONE;
     }

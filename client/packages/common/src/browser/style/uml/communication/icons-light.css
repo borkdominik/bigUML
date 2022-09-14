@@ -1,0 +1,5 @@
+:root {
+    --uml-icon-interaction: url(../../../../../resources/icons/dark/communication/Interaction.gif);
+    --uml-icon-message: url(../../../../../resources/icons/dark/communication/Message.gif);
+    --uml-icon-lifeline: url(../../../../../resources/icons/dark/communication/Lifeline.gif);
+}

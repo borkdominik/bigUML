@@ -24,6 +24,7 @@ import com.eclipsesource.uml.modelserver.unotation.Diagram;
 public class UmlModelState extends EMSModelState {
 
    protected UmlModelServerAccess modelServerAccess;
+
    protected Model semanticModel;
    protected Diagram notationModel;
 
@@ -72,4 +73,5 @@ public class UmlModelState extends EMSModelState {
       }
       this.notationModel = (Diagram) notationRoot;
    }
+
 }

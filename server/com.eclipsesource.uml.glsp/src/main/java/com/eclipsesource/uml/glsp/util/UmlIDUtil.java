@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2021 EclipseSource and others.
+ * Copyright (c) 2021-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -12,8 +12,7 @@ package com.eclipsesource.uml.glsp.util;
 
 public final class UmlIDUtil {
 
-   private UmlIDUtil() {
-   }
+   private UmlIDUtil() {}
 
    public static String LABEL_NAME_SUFFIX = "_label_name";
    public static String LABEL_MULTIIPLICITY_SUFFIX = "_label_multiplicity";
@@ -30,6 +29,14 @@ public final class UmlIDUtil {
    public static String PROPERTY_LABEL_NAME_SUFFIX = "_property_label_name";
    public static String PROPERTY_LABEL_TYPE_SUFFIX = "_property_label_type";
    public static String PROPERTY_LABEL_MULTIPLICITY_SUFFIX = "_property_label_multiplicity";
+
+   public static String createChildCompartmentId(final String containerId) {
+      return containerId + CHILD_COMPARTMENT_SUFFIX;
+   }
+
+   public static String getElementIdFromChildCompartment(final String childCompartmentId) {
+      return childCompartmentId.replace(CHILD_COMPARTMENT_SUFFIX, "");
+   }
 
    // ACTIVITY
    public static String LABEL_GUARD_SUFFIX = "_guard";
@@ -96,14 +103,6 @@ public final class UmlIDUtil {
       return headerLabelId.replace(HEADER_LABEL_SUFFIX, "");
    }
 
-   public static String createChildCompartmentId(final String containerId) {
-      return containerId + CHILD_COMPARTMENT_SUFFIX;
-   }
-
-   public static String getElementIdFromChildCompartment(final String childCompartmentId) {
-      return childCompartmentId.replace(CHILD_COMPARTMENT_SUFFIX, "");
-   }
-
    public static String getEdgeIdFromGuardLabel(final String guardLabel) {
       return guardLabel.replace(LABEL_GUARD_SUFFIX, "");
    }
@@ -120,7 +119,7 @@ public final class UmlIDUtil {
       return containerId + LABEL_WEIGHT_SUFFIX;
    }
 
-   //STATEMACHINE
+   // STATEMACHINE
    public static String createLabelGuardId(final String containerId) {
       return containerId + LABEL_STATE_GUARD_SUFFIX;
    }

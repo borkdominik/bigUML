@@ -8,10 +8,9 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-// eslint-disable-next-line header/header
-import {FrontendApplicationContribution} from "@theia/core/lib/browser/frontend-application";
-import {ThemeService, ThemeType} from "@theia/core/lib/browser/theming";
-import {inject, injectable} from "inversify";
+import { FrontendApplicationContribution } from "@theia/core/lib/browser/frontend-application";
+import { ThemeService, ThemeType } from "@theia/core/lib/browser/theming";
+import { inject, injectable } from "inversify";
 
 @injectable()
 export class UmlFrontendContribution implements FrontendApplicationContribution {

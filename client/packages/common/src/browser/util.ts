@@ -13,7 +13,6 @@
  * an should be avoided. It's recommended to use Record instead to describe the
  * type meaning of "any object";
  */
-// eslint-disable-next-line header/header
 export type AnyObject = Record<PropertyKey, unknown>;
 
 export namespace AnyObject {

@@ -25,62 +25,62 @@ import java.util.Optional;
 
 public class UmlModelSourceLoader extends EMSModelSourceLoader {
 
-    private static Logger LOGGER = Logger.getLogger(EMSModelSourceLoader.class);
+   private static Logger LOGGER = Logger.getLogger(EMSModelSourceLoader.class);
 
-    @Override
-    public void loadSourceModel(final RequestModelAction action) {
-        String sourceURI = getSourceURI(action.getOptions());
-        if (sourceURI.isEmpty()) {
-            LOGGER.error("No source URI given to load source models");
-            return;
-        }
-        Optional<ModelServerClientV1> modelServerClient = modelServerClientProvider.get();
-        if (modelServerClient.isEmpty()) {
-            LOGGER.error("Connection to modelserver could not be initialized");
-            return;
-        }
-        if (!(modelServerClient.get() instanceof UmlModelServerClient)) {
-            LOGGER.error("ModelServerClient is not an instance of UmlModelServerClient!");
-            return;
-        }
+   @Override
+   public void loadSourceModel(final RequestModelAction action) {
+      String sourceURI = getSourceURI(action.getOptions());
+      if (sourceURI.isEmpty()) {
+         LOGGER.error("No source URI given to load source models");
+         return;
+      }
+      Optional<ModelServerClientV1> modelServerClient = modelServerClientProvider.get();
+      if (modelServerClient.isEmpty()) {
+         LOGGER.error("Connection to modelserver could not be initialized");
+         return;
+      }
+      if (!(modelServerClient.get() instanceof UmlModelServerClient)) {
+         LOGGER.error("ModelServerClient is not an instance of UmlModelServerClient!");
+         return;
+      }
 
-        UmlModelServerAccess modelServerAccess = createModelServerAccess(sourceURI, modelServerClient.get());
+      UmlModelServerAccess modelServerAccess = createModelServerAccess(sourceURI, modelServerClient.get());
 
-        UmlModelState modelState = createModelState(gModelState);
-        modelState.initialize(action.getOptions(), modelServerAccess);
+      UmlModelState modelState = createModelState(gModelState);
+      modelState.initialize(action.getOptions(), modelServerAccess);
 
-        try {
-            modelState.loadSourceModels();
-        } catch (GLSPServerException e) {
-            LOGGER.error("Error during source model loading");
-            e.printStackTrace();
-            return;
-        }
+      try {
+         modelState.loadSourceModels();
+      } catch (GLSPServerException e) {
+         LOGGER.error("Error during source model loading");
+         e.printStackTrace();
+         return;
+      }
 
-        modelServerAccess.subscribe(createSubscriptionListener(modelState, actionDispatcher, submissionHandler));
-    }
+      modelServerAccess.subscribe(createSubscriptionListener(modelState, actionDispatcher, submissionHandler));
+   }
 
-    @Override
-    public UmlModelServerAccess createModelServerAccess(final String sourceURI,
-                                                        final ModelServerClientV1 modelServerClient) {
-        if (!(modelServerClient instanceof UmlModelServerClient)) {
-            LOGGER.error("ModelServerClient is not an instance of UmlModelServerClient!");
-        }
-        return new UmlModelServerAccess(sourceURI, ((UmlModelServerClient) modelServerClient));
-    }
+   @Override
+   public UmlModelServerAccess createModelServerAccess(final String sourceURI,
+         final ModelServerClientV1 modelServerClient) {
+      if (!(modelServerClient instanceof UmlModelServerClient)) {
+         LOGGER.error("ModelServerClient is not an instance of UmlModelServerClient!");
+      }
+      return new UmlModelServerAccess(sourceURI, ((UmlModelServerClient) modelServerClient));
+   }
 
-    @Override
-    public UmlModelState createModelState(final GModelState modelState) {
-        return UmlModelState.getModelState(modelState);
-    }
+   @Override
+   public UmlModelState createModelState(final GModelState modelState) {
+      return UmlModelState.getModelState(modelState);
+   }
 
-    @Override
-    protected String getSourceURI(final Map<String, String> clientOptions) {
-        // We want to use the absolute sourceUri instead of the relative one from the
-        // super class
-        String sourceURI = ClientOptionsUtil.getSourceUri(clientOptions)
-                .orElseThrow(() -> new GLSPServerException("No source URI given to load model!"));
-        return sourceURI;
-    }
+   @Override
+   protected String getSourceURI(final Map<String, String> clientOptions) {
+      // We want to use the absolute sourceUri instead of the relative one from the
+      // super class
+      String sourceURI = ClientOptionsUtil.getSourceUri(clientOptions)
+            .orElseThrow(() -> new GLSPServerException("No source URI given to load model!"));
+      return sourceURI;
+   }
 
 }

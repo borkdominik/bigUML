@@ -11,17 +11,20 @@
 package com.eclipsesource.uml.glsp;
 
 import org.eclipse.emfcloud.modelserver.glsp.EMSGLSPModule;
+import org.eclipse.emfcloud.modelserver.glsp.actions.handlers.EMSOperationActionHandler;
 import org.eclipse.emfcloud.modelserver.glsp.model.EMSModelState;
 import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.ActionHandler;
 import org.eclipse.glsp.server.di.MultiBinding;
 import org.eclipse.glsp.server.diagram.DiagramConfiguration;
+import org.eclipse.glsp.server.features.clipboard.RequestClipboardDataActionHandler;
 import org.eclipse.glsp.server.features.contextmenu.ContextMenuItemProvider;
 import org.eclipse.glsp.server.features.core.model.GModelFactory;
 import org.eclipse.glsp.server.features.core.model.ModelSourceLoader;
 import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperationHandler;
 import org.eclipse.glsp.server.features.toolpalette.ToolPaletteItemProvider;
 import org.eclipse.glsp.server.features.validation.ModelValidator;
+import org.eclipse.glsp.server.features.validation.RequestMarkersHandler;
 import org.eclipse.glsp.server.layout.LayoutEngine;
 import org.eclipse.glsp.server.operations.OperationHandler;
 import org.eclipse.glsp.server.operations.OperationHandlerRegistry;
@@ -33,6 +36,9 @@ import org.eclipse.glsp.server.operations.gmodel.LayoutOperationHandler;
 
 import com.eclipsesource.uml.glsp.actions.ReturnTypesAction;
 import com.eclipsesource.uml.glsp.actions.UmlGetTypesActionHandler;
+import com.eclipsesource.uml.glsp.actions.UmlOperationActionHandler;
+import com.eclipsesource.uml.glsp.actions.UmlRequestClipboardDataActionHandler;
+import com.eclipsesource.uml.glsp.actions.UmlRequestMarkersHandler;
 import com.eclipsesource.uml.glsp.contextmenu.UmlContextMenuItemProvider;
 import com.eclipsesource.uml.glsp.diagram.UmlDiagramConfiguration;
 import com.eclipsesource.uml.glsp.layout.UmlLayoutEngine;
@@ -45,15 +51,10 @@ import com.eclipsesource.uml.glsp.operations.UmlCompoundOperationHandler;
 import com.eclipsesource.uml.glsp.operations.UmlDeleteOperationHandler;
 import com.eclipsesource.uml.glsp.operations.UmlLabelEditOperationHandler;
 import com.eclipsesource.uml.glsp.palette.UmlToolPaletteItemProvider;
+import com.eclipsesource.uml.glsp.uml.communication_diagram.CommunicationGLSPModule;
 import com.eclipsesource.uml.glsp.validator.UmlDiagramModelValidator;
 
 public class UmlGLSPModule extends EMSGLSPModule {
-
-   @Override
-   protected void configureActionHandlers(final MultiBinding<ActionHandler> bindings) {
-      super.configureActionHandlers(bindings);
-      bindings.add(UmlGetTypesActionHandler.class);
-   }
 
    @Override
    protected Class<? extends OperationHandlerRegistry> bindOperationHandlerRegistry() {
@@ -86,23 +87,6 @@ public class UmlGLSPModule extends EMSGLSPModule {
    }
 
    @Override
-   protected void configureClientActions(final MultiBinding<Action> bindings) {
-      super.configureClientActions(bindings);
-      bindings.add(ReturnTypesAction.class);
-   }
-
-   @Override
-   protected void configureOperationHandlers(final MultiBinding<OperationHandler> bindings) {
-      super.configureOperationHandlers(bindings);
-      bindings.rebind(CompoundOperationHandler.class, UmlCompoundOperationHandler.class);
-      bindings.rebind(ApplyLabelEditOperationHandler.class, UmlLabelEditOperationHandler.class);
-      bindings.rebind(ChangeBoundsOperationHandler.class, UmlChangeBoundsOperationHandler.class);
-      bindings.rebind(ChangeRoutingPointsHandler.class, UmlChangeRoutingPointsOperationHandler.class);
-      bindings.rebind(DeleteOperationHandler.class, UmlDeleteOperationHandler.class);
-      bindings.add(LayoutOperationHandler.class);
-   }
-
-   @Override
    protected Class<? extends DiagramConfiguration> bindDiagramConfiguration() {
       return UmlDiagramConfiguration.class;
    }
@@ -119,4 +103,37 @@ public class UmlGLSPModule extends EMSGLSPModule {
 
    @Override
    public String getDiagramType() { return "umldiagram"; }
+
+   @Override
+   protected void configureClientActions(final MultiBinding<Action> bindings) {
+      super.configureClientActions(bindings);
+      bindings.add(ReturnTypesAction.class);
+   }
+
+   @Override
+   protected void configureActionHandlers(final MultiBinding<ActionHandler> bindings) {
+      super.configureActionHandlers(bindings);
+      bindings.rebind(RequestClipboardDataActionHandler.class, UmlRequestClipboardDataActionHandler.class);
+      bindings.rebind(EMSOperationActionHandler.class, UmlOperationActionHandler.class);
+      bindings.rebind(RequestMarkersHandler.class, UmlRequestMarkersHandler.class);
+      bindings.add(UmlGetTypesActionHandler.class);
+   }
+
+   @Override
+   protected void configureOperationHandlers(final MultiBinding<OperationHandler> bindings) {
+      super.configureOperationHandlers(bindings);
+      bindings.rebind(CompoundOperationHandler.class, UmlCompoundOperationHandler.class);
+      bindings.rebind(ApplyLabelEditOperationHandler.class, UmlLabelEditOperationHandler.class);
+      bindings.rebind(ChangeBoundsOperationHandler.class, UmlChangeBoundsOperationHandler.class);
+      bindings.rebind(ChangeRoutingPointsHandler.class, UmlChangeRoutingPointsOperationHandler.class);
+      bindings.rebind(DeleteOperationHandler.class, UmlDeleteOperationHandler.class);
+      bindings.add(LayoutOperationHandler.class);
+   }
+
+   @Override
+   protected void configureAdditionals() {
+      super.configureAdditionals();
+      install(new CommunicationGLSPModule());
+   }
+
 }

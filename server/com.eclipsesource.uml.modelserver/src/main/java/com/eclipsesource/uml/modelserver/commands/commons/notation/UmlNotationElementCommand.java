@@ -14,17 +14,27 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
+import org.eclipse.uml2.uml.Model;
 
 import com.eclipsesource.uml.modelserver.commands.util.UmlNotationCommandUtil;
+import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
 import com.eclipsesource.uml.modelserver.unotation.Diagram;
 
 public abstract class UmlNotationElementCommand extends RecordingCommand {
 
    protected final Diagram umlDiagram;
+   protected final Model umlModel;
+
+   protected final EditingDomain domain;
+   protected final URI modelUri;
 
    public UmlNotationElementCommand(final EditingDomain domain, final URI modelUri) {
       super((TransactionalEditingDomain) domain);
+      this.domain = domain;
+      this.modelUri = modelUri;
+
       this.umlDiagram = UmlNotationCommandUtil.getDiagram(modelUri, domain);
+      this.umlModel = UmlSemanticCommandUtil.getModel(modelUri, domain);
    }
 
 }

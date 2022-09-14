@@ -10,7 +10,12 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.Map;
+import java.util.Optional;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.emf.common.util.URI;
@@ -25,11 +30,7 @@ import org.eclipse.emfcloud.modelserver.common.codecs.EncodingException;
 import org.eclipse.emfcloud.modelserver.jsonschema.Json;
 import org.eclipse.uml2.uml.resource.UMLResource;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.util.Map;
-import java.util.Optional;
+import com.fasterxml.jackson.databind.JsonNode;
 
 public class UmlCodec implements Codec {
 
@@ -45,8 +46,8 @@ public class UmlCodec implements Codec {
       ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
       try {
          eObject.eResource().save(outputStream,
-                 Map.of(XMLResource.OPTION_KEEP_DEFAULT_CONTENT, Boolean.TRUE,
-                         XMLResource.OPTION_PROCESS_DANGLING_HREF, XMLResource.OPTION_PROCESS_DANGLING_HREF_DISCARD));
+            Map.of(XMLResource.OPTION_KEEP_DEFAULT_CONTENT, Boolean.TRUE,
+               XMLResource.OPTION_PROCESS_DANGLING_HREF, XMLResource.OPTION_PROCESS_DANGLING_HREF_DISCARD));
       } catch (IOException e) {
          throw new EncodingException(e);
       }
@@ -69,8 +70,8 @@ public class UmlCodec implements Codec {
    }
 
    public Optional<Resource> decode(final ResourceSet resourceSet, final String modelURI, final URI workspaceURI,
-                                    final String payload)
-           throws DecodingException {
+      final String payload)
+      throws DecodingException {
 
       URI uri = URI.createURI(modelURI);
       if (workspaceURI != null) {

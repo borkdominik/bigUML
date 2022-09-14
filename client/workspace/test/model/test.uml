@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_gB9CQLNfEey5ItGUbyY0Tw" name="test">
+  <packagedElement xmi:type="uml:Interaction" xmi:id="_Yzv8oNFPEeyIfsn6v8XMUQ" name="asd">
+    <lifeline xmi:id="_YzwjsNFPEeyIfsn6v8XMUQ" name="s" coveredBy="_Yzxx0dFPEeyIfsn6v8XMUQ _YzyY4dFPEeyIfsn6v8XMUQ"/>
+    <lifeline xmi:id="_YzwjsdFPEeyIfsn6v8XMUQ" name="NewLifeline0" coveredBy="_YzxKw9FPEeyIfsn6v8XMUQ _Yzxx0tFPEeyIfsn6v8XMUQ _YzyY4tFPEeyIfsn6v8XMUQ"/>
+    <lifeline xmi:id="_YzxKwNFPEeyIfsn6v8XMUQ" name="a[a]" coveredBy="_YzxKwtFPEeyIfsn6v8XMUQ"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_YzxKwtFPEeyIfsn6v8XMUQ" name="1.1 *: asdasd spend() - SendEvent" covered="_YzxKwNFPEeyIfsn6v8XMUQ" message="_YzxKwdFPEeyIfsn6v8XMUQ"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_YzxKw9FPEeyIfsn6v8XMUQ" name="1.1 *: asdasd spend() - ReceiveEvent" covered="_YzwjsdFPEeyIfsn6v8XMUQ" message="_YzxKwdFPEeyIfsn6v8XMUQ"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_Yzxx0dFPEeyIfsn6v8XMUQ" name="1 : a - SendEvent" covered="_YzwjsNFPEeyIfsn6v8XMUQ" message="_Yzxx0NFPEeyIfsn6v8XMUQ"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_Yzxx0tFPEeyIfsn6v8XMUQ" name="1 : a - ReceiveEvent" covered="_YzwjsdFPEeyIfsn6v8XMUQ" message="_Yzxx0NFPEeyIfsn6v8XMUQ"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_YzyY4dFPEeyIfsn6v8XMUQ" name="NewMessage3 - SendEvent" covered="_YzwjsNFPEeyIfsn6v8XMUQ" message="_YzyY4NFPEeyIfsn6v8XMUQ"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_YzyY4tFPEeyIfsn6v8XMUQ" name="NewMessage3 - ReceiveEvent" covered="_YzwjsdFPEeyIfsn6v8XMUQ" message="_YzyY4NFPEeyIfsn6v8XMUQ"/>
+    <message xmi:id="_YzxKwdFPEeyIfsn6v8XMUQ" name="1.1 *: asdasd spend()" receiveEvent="_YzxKw9FPEeyIfsn6v8XMUQ" sendEvent="_YzxKwtFPEeyIfsn6v8XMUQ"/>
+    <message xmi:id="_Yzxx0NFPEeyIfsn6v8XMUQ" name="1 : a" receiveEvent="_Yzxx0tFPEeyIfsn6v8XMUQ" sendEvent="_Yzxx0dFPEeyIfsn6v8XMUQ"/>
+    <message xmi:id="_YzyY4NFPEeyIfsn6v8XMUQ" name="NewMessage3" receiveEvent="_YzyY4tFPEeyIfsn6v8XMUQ" sendEvent="_YzyY4dFPEeyIfsn6v8XMUQ"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Interaction" xmi:id="_9EzZQNFiEey82fn8NtK68g" name="Hotel Reservation">
+    <lifeline xmi:id="_CBptwNFjEey82fn8NtK68g" name="window:UserInterface" coveredBy="_a4KUUNFjEey82fn8NtK68g"/>
+    <lifeline xmi:id="_IymdINFjEey82fn8NtK68g" name="aChain:HotelChain" coveredBy="_a4K7YNFjEey82fn8NtK68g _kJrjAdFjEey82fn8NtK68g"/>
+    <lifeline xmi:id="_MYZfINFjEey82fn8NtK68g" name="aHotel:Hotel" coveredBy="_kJsKENFjEey82fn8NtK68g _skDuUNFjEey82fn8NtK68g _skEVYNFjEey82fn8NtK68g _3zjsoNFjEey82fn8NtK68g"/>
+    <lifeline xmi:id="_NreQkNFjEey82fn8NtK68g" name="aReservation:Reservation" coveredBy="_3zkTsNFjEey82fn8NtK68g _84K2ANFjEey82fn8NtK68g"/>
+    <lifeline xmi:id="_SvBC8NFjEey82fn8NtK68g" name="asdasd" coveredBy="_84K2AdFjEey82fn8NtK68g"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_a4KUUNFjEey82fn8NtK68g" name="1.1:makeReservation() - SendEvent" covered="_CBptwNFjEey82fn8NtK68g" message="_a4JGMNFjEey82fn8NtK68g"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_a4K7YNFjEey82fn8NtK68g" name="1.1:makeReservation() - ReceiveEvent" covered="_IymdINFjEey82fn8NtK68g" message="_a4JGMNFjEey82fn8NtK68g"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_kJrjAdFjEey82fn8NtK68g" name="1.1.1:makeReservation() - SendEvent" covered="_IymdINFjEey82fn8NtK68g" message="_kJrjANFjEey82fn8NtK68g"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_kJsKENFjEey82fn8NtK68g" name="1.1.1:makeReservation() - ReceiveEvent" covered="_MYZfINFjEey82fn8NtK68g" message="_kJrjANFjEey82fn8NtK68g"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_skDuUNFjEey82fn8NtK68g" name="1.1.1.1:*[for each day] isRoom :=available():boolean - SendEvent" covered="_MYZfINFjEey82fn8NtK68g" message="_skCgMNFjEey82fn8NtK68g"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_skEVYNFjEey82fn8NtK68g" name="1.1.1.1:*[for each day] isRoom :=available():boolean - ReceiveEvent" covered="_MYZfINFjEey82fn8NtK68g" message="_skCgMNFjEey82fn8NtK68g"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_3zjsoNFjEey82fn8NtK68g" name="1.1.1.2:isRoom() - SendEvent" covered="_MYZfINFjEey82fn8NtK68g" message="_3zjFkNFjEey82fn8NtK68g"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_3zkTsNFjEey82fn8NtK68g" name="1.1.1.2:isRoom() - ReceiveEvent" covered="_NreQkNFjEey82fn8NtK68g" message="_3zjFkNFjEey82fn8NtK68g"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_84K2ANFjEey82fn8NtK68g" name="1.1.1.2.1:setConfirmation() - SendEvent" covered="_NreQkNFjEey82fn8NtK68g" message="_84KO8NFjEey82fn8NtK68g"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_84K2AdFjEey82fn8NtK68g" name="1.1.1.2.1:setConfirmation() - ReceiveEvent" covered="_SvBC8NFjEey82fn8NtK68g" message="_84KO8NFjEey82fn8NtK68g"/>
+    <message xmi:id="_a4JGMNFjEey82fn8NtK68g" name="1.1:makeReservation()" receiveEvent="_a4K7YNFjEey82fn8NtK68g" sendEvent="_a4KUUNFjEey82fn8NtK68g"/>
+    <message xmi:id="_kJrjANFjEey82fn8NtK68g" name="1.1.1:makeReservation()" receiveEvent="_kJsKENFjEey82fn8NtK68g" sendEvent="_kJrjAdFjEey82fn8NtK68g"/>
+    <message xmi:id="_skCgMNFjEey82fn8NtK68g" name="1.1.1.1:*[for each day] isRoom :=available():boolean" receiveEvent="_skEVYNFjEey82fn8NtK68g" sendEvent="_skDuUNFjEey82fn8NtK68g"/>
+    <message xmi:id="_3zjFkNFjEey82fn8NtK68g" name="1.1.1.2:isRoom()" receiveEvent="_3zkTsNFjEey82fn8NtK68g" sendEvent="_3zjsoNFjEey82fn8NtK68g"/>
+    <message xmi:id="_84KO8NFjEey82fn8NtK68g" name="1.1.1.2.1:setConfirmation()" receiveEvent="_84K2AdFjEey82fn8NtK68g" sendEvent="_84K2ANFjEey82fn8NtK68g"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Interaction" xmi:id="_0_OR0NIpEeyxCufTNXqqbw" name="Destination"/>
+  <packagedElement xmi:type="uml:Interaction" xmi:id="_U3uT4DNjEe2x-o70ILXK9g" name="asd"/>
+</uml:Model>

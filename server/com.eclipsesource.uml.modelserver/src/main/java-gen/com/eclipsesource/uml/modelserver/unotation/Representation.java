@@ -93,6 +93,14 @@ public enum Representation implements Enumerator {
     * @ordered
     */
    DEPLOYMENT(6, "DEPLOYMENT", "DEPLOYMENT"), /**
+    * The '<em><b>OBJECT</b></em>' literal object.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @see #OBJECT_VALUE
+    * @generated
+    * @ordered
+    */
+   OBJECT(7, "OBJECT", "OBJECT"), /**
     * The '<em><b>COMPONENT</b></em>' literal object.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
@@ -101,14 +109,14 @@ public enum Representation implements Enumerator {
     * @ordered
     */
    COMPONENT(8, "COMPONENT", "COMPONENT"), /**
-    * The '<em><b>OBJECT</b></em>' literal object.
+    * The '<em><b>COMMUNICATION</b></em>' literal object.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @see #COMPONENT_VALUE
+    * @see #COMMUNICATION_VALUE
     * @generated
     * @ordered
     */
-   OBJECT(7, "OBJECT", "OBJECT");
+   COMMUNICATION(9, "COMMUNICATION", "COMMUNICATION");
 
 
    /**
@@ -189,6 +197,17 @@ public enum Representation implements Enumerator {
    public static final int DEPLOYMENT_VALUE = 6;
 
    /**
+    * The '<em><b>OBJECT</b></em>' literal value.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @see #OBJECT
+    * @model
+    * @generated
+    * @ordered
+    */
+   public static final int OBJECT_VALUE = 7;
+
+   /**
     * The '<em><b>COMPONENT</b></em>' literal value.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
@@ -200,15 +219,15 @@ public enum Representation implements Enumerator {
    public static final int COMPONENT_VALUE = 8;
 
    /**
-    * The '<em><b>OBJECT</b></em>' literal value.
+    * The '<em><b>COMMUNICATION</b></em>' literal value.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @see #COMPONENT
+    * @see #COMMUNICATION
     * @model
     * @generated
     * @ordered
     */
-   public static final int OBJECT_VALUE = 7;
+   public static final int COMMUNICATION_VALUE = 9;
 
    /**
     * An array of all the '<em><b>Representation</b></em>' enumerators.
@@ -227,6 +246,7 @@ public enum Representation implements Enumerator {
          DEPLOYMENT,
          OBJECT,
          COMPONENT,
+         COMMUNICATION,
       };
 
    /**
@@ -290,8 +310,9 @@ public enum Representation implements Enumerator {
          case STATEMACHINE_VALUE: return STATEMACHINE;
          case USECASE_VALUE: return USECASE;
          case DEPLOYMENT_VALUE: return DEPLOYMENT;
-         case COMPONENT_VALUE: return COMPONENT;
          case OBJECT_VALUE: return OBJECT;
+         case COMPONENT_VALUE: return COMPONENT;
+         case COMMUNICATION_VALUE: return COMMUNICATION;
       }
       return null;
    }

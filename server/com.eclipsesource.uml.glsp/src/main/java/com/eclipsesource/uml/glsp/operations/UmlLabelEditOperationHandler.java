@@ -12,6 +12,8 @@ package com.eclipsesource.uml.glsp.operations;
 
 import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
 
+import java.util.Set;
+
 import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSBasicOperationHandler;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperation;
@@ -26,20 +28,24 @@ import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
 import com.eclipsesource.uml.glsp.util.UmlIDUtil;
+import com.google.inject.Inject;
 
 public class UmlLabelEditOperationHandler
    extends EMSBasicOperationHandler<ApplyLabelEditOperation, UmlModelServerAccess> {
 
+   @Inject
+   private Set<UmlDiagramLabelEditOperationHandler> editLabelOperationHandlers;
+
    protected UmlModelState getUmlModelState() { return (UmlModelState) getEMSModelState(); }
 
    @Override
-   public void executeOperation(final ApplyLabelEditOperation editLabelOperation,
+   public void executeOperation(final ApplyLabelEditOperation operation,
       final UmlModelServerAccess modelAccess) {
       UmlModelState modelState = getUmlModelState();
       UmlModelIndex modelIndex = modelState.getIndex();
 
-      String inputText = editLabelOperation.getText().trim();
-      String graphicalElementId = editLabelOperation.getLabelId();
+      String inputText = operation.getText().trim();
+      String graphicalElementId = operation.getLabelId();
 
       GModelElement label = getOrThrow(modelIndex.findElementByClass(graphicalElementId, GModelElement.class),
          GModelElement.class, "Element not found.");
@@ -75,6 +81,13 @@ public class UmlLabelEditOperationHandler
             break;
       }
 
+      var diagramType = UmlModelState.getModelState(modelState).getNotationModel().getDiagramType();
+      var editLabelHandler = editLabelOperationHandlers.stream().filter(handler -> handler.supports(diagramType))
+         .findFirst();
+
+      editLabelHandler
+         .orElseThrow(() -> new GLSPServerException("No handler found for diagram " + diagramType))
+         .edit(operation, modelAccess);
    }
 
    @Override

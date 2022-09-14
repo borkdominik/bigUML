@@ -21,11 +21,13 @@
   },
   "dependencies": {
     "@eclipse-emfcloud/modelserver-theia": "next",
+    "@eclipse-glsp/client": "next",
     "@eclipse-glsp/theia-integration": "next",
     "@eclipsesource/uml-glsp-common": "0.1.0",
     "@eclipsesource/uml-sprotty": "0.1.0",
     "@theia/core": "^1.0.0",
-    "@theia/navigator": "^1.0.0"
+    "@theia/navigator": "^1.0.0",
+    "@theia/outline-view": "^1.0.0"
   },
   "devDependencies": {
     "eslint": "^6.8.0",

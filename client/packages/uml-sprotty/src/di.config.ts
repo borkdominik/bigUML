@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2021 EclipseSource and others.
+ * Copyright (c) 2021-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -9,6 +9,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
 import "@eclipse-glsp/client/css/glsp-sprotty.css";
+import "balloon-css/balloon.min.css";
 import "sprotty/css/edit-label.css";
 
 import {
@@ -16,8 +17,8 @@ import {
     configureModelElement,
     configureViewerOptions,
     ConsoleLogger,
-    copyPasteContextMenuModule,
     createClientContainer,
+    GLSP_TYPES,
     LogLevel,
     overrideViewerOptions,
     saveModule,
@@ -28,33 +29,34 @@ import {
     SRoutingHandle,
     SRoutingHandleView,
     StructureCompartmentView,
-    TYPES,
-    validationModule
+    TYPES
 } from "@eclipse-glsp/client/lib";
 import toolPaletteModule from "@eclipse-glsp/client/lib/features/tool-palette/di.config";
 import { Container, ContainerModule } from "inversify";
 import { EditLabelUI } from "sprotty/lib";
 
+import { CustomCopyPasteHandler, LastContainableElementTracker } from "./features/copy-paste/copy-paste";
+import diagramOutlineViewModule from "./features/diagram-outline-view/di.config";
 import { EditLabelUIAutocomplete } from "./features/edit-label";
 import umlToolPaletteModule from "./features/tool-palette/di.config";
 import { IconLabelCompartmentSelectionFeedback } from "./feedback";
 import { SEditableLabel } from "./model";
+import createCommunicationModule from "./uml/communication/di.config";
 import { BaseTypes, UmlTypes } from "./utils";
 
 export default function createContainer(widgetId: string): Container {
-    const classDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
+    const commonDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
         rebind(TYPES.ILogger).to(ConsoleLogger).inSingletonScope();
         rebind(TYPES.LogLevel).toConstantValue(LogLevel.info);
         rebind(EditLabelUI).to(EditLabelUIAutocomplete);
         bind(TYPES.IVNodePostprocessor).to(IconLabelCompartmentSelectionFeedback);
 
         const context = { bind, unbind, isBound, rebind };
-        // bind(TYPES.IVNodePostprocessor).to(LabelSelectionFeedback);
         configureDefaultModelElements(context);
         configureModelElement(context, UmlTypes.LABEL_NAME, SEditableLabel, SLabelView);
         configureModelElement(context, UmlTypes.LABEL_EDGE_NAME, SEditableLabel, SLabelView);
-        configureModelElement(context, UmlTypes.LABEL_EDGE_MULTIPLICITY, SEditableLabel, SLabelView);
         configureModelElement(context, UmlTypes.LABEL_TEXT, SLabel, SLabelView);
+
         // configureModelElement(context, UmlTypes.LABEL_ICON, SLabel, SLabelView);
         configureModelElement(context, BaseTypes.COMPARTMENT, SCompartment, SCompartmentView);
         configureModelElement(context, BaseTypes.COMPARTMENT_HEADER, SCompartment, SCompartmentView);
@@ -67,15 +69,18 @@ export default function createContainer(widgetId: string): Container {
             baseDiv: widgetId
         });
     });
+    const communicationModule = createCommunicationModule();
 
-    const container = createClientContainer(classDiagramModule, umlToolPaletteModule, saveModule, copyPasteContextMenuModule,
-        validationModule);
+    const container = createClientContainer(commonDiagramModule, communicationModule, umlToolPaletteModule, saveModule, diagramOutlineViewModule);
     container.unload(toolPaletteModule);
+    container.bind(LastContainableElementTracker).toSelf().inSingletonScope();
+    container.bind(TYPES.MouseListener).toService(LastContainableElementTracker);
+    container.rebind(GLSP_TYPES.ICopyPasteHandler).to(CustomCopyPasteHandler);
+
     overrideViewerOptions(container, {
         baseDiv: widgetId,
         hiddenDiv: widgetId + "_hidden"
     });
-
     return container;
-
 }
+

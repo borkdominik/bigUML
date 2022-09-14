@@ -40,3 +40,5 @@
 .stroked {
     stroke-dasharray: 4;
 }
+
+@import "uml/communication/diagram.css";

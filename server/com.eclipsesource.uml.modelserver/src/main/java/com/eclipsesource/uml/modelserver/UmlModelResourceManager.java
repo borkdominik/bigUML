@@ -10,11 +10,11 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver;
 
-import com.eclipsesource.uml.modelserver.unotation.Diagram;
-import com.eclipsesource.uml.modelserver.unotation.SemanticProxy;
-import com.eclipsesource.uml.modelserver.unotation.UnotationFactory;
-import com.google.inject.Inject;
-import com.google.inject.Provider;
+import java.io.File;
+import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.EList;
@@ -34,17 +34,19 @@ import org.eclipse.uml2.uml.NamedElement;
 import org.eclipse.uml2.uml.UMLFactory;
 import org.eclipse.uml2.uml.resource.UMLResource;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
+import com.eclipsesource.uml.modelserver.unotation.Diagram;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.eclipsesource.uml.modelserver.unotation.SemanticProxy;
+import com.eclipsesource.uml.modelserver.unotation.UnotationFactory;
+import com.google.inject.Inject;
+import com.google.inject.Provider;
 
 public class UmlModelResourceManager extends RecordingModelResourceManager {
 
    @Inject
    public UmlModelResourceManager(final Set<EPackageConfiguration> configurations, final AdapterFactory adapterFactory,
-                                  final ServerConfiguration serverConfiguration, final ModelWatchersManager watchersManager,
-                                  final Provider<JsonPatchHelper> jsonPatchHelper) {
+         final ServerConfiguration serverConfiguration, final ModelWatchersManager watchersManager,
+         final Provider<JsonPatchHelper> jsonPatchHelper) {
       super(configurations, adapterFactory, serverConfiguration, watchersManager, jsonPatchHelper);
    }
 
@@ -119,7 +121,7 @@ public class UmlModelResourceManager extends RecordingModelResourceManager {
          umlResource.save(null);
 
          final Resource umlNotationResource = resourceSet
-                 .createResource(umlModelUri.trimFileExtension().appendFileExtension(UmlNotationUtil.NOTATION_EXTENSION));
+               .createResource(umlModelUri.trimFileExtension().appendFileExtension(UmlNotationUtil.NOTATION_EXTENSION));
          resourceSet.getResources().add(umlNotationResource);
          umlNotationResource.getContents().add(createNewDiagram(umlModel, diagramType));
          umlNotationResource.save(null);

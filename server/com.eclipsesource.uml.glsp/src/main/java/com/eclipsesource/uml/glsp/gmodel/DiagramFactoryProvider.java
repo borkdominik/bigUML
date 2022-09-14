@@ -13,6 +13,7 @@ package com.eclipsesource.uml.glsp.gmodel;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.uml.activity_diagram.gmodel.UmlActivityDiagramModelFactory;
 import com.eclipsesource.uml.glsp.uml.class_diagram.gmodel.UmlClassDiagramModelFactory;
+import com.eclipsesource.uml.glsp.uml.communication_diagram.gmodel.UmlCommunicationDiagramModelFactory;
 import com.eclipsesource.uml.glsp.uml.deployment_diagram.gmodel.UmlDeploymentDiagramModelFactory;
 import com.eclipsesource.uml.glsp.uml.object_diagram.gmodel.UmlObjectDiagramModelFactory;
 import com.eclipsesource.uml.glsp.uml.statemachine_diagram.gmodel.UmlStateMachineDiagramModelFactory;
@@ -22,7 +23,6 @@ import com.eclipsesource.uml.modelserver.unotation.Representation;
 public class DiagramFactoryProvider {
 
    public static DiagramFactory get(final UmlModelState modelState) {
-      //Representation diagramType = modelState.getUmlFacade().getDiagram().getDiagramType();
       Representation diagramType = modelState.getNotationModel().getDiagramType();
       switch (diagramType) {
          case CLASS: {
@@ -43,8 +43,10 @@ public class DiagramFactoryProvider {
          case OBJECT: {
             return new UmlObjectDiagramModelFactory(modelState);
          }
+         case COMMUNICATION: {
+            return new UmlCommunicationDiagramModelFactory(modelState);
+         }
       }
       return null;
    }
-
 }

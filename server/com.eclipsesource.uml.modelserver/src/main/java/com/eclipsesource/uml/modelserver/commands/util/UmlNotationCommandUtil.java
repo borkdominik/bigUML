@@ -10,6 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.util;
 
+import java.awt.geom.Point2D;
 import java.util.Optional;
 
 import org.eclipse.emf.common.util.URI;
@@ -21,6 +22,7 @@ import org.eclipse.glsp.graph.GDimension;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.uml2.uml.Element;
+import org.eclipse.uml2.uml.PackageableElement;
 
 import com.eclipsesource.uml.modelserver.UmlNotationUtil;
 import com.eclipsesource.uml.modelserver.unotation.Diagram;
@@ -29,6 +31,10 @@ import com.eclipsesource.uml.modelserver.unotation.NotationElement;
 public final class UmlNotationCommandUtil {
 
    private UmlNotationCommandUtil() {}
+
+   public static GPoint getGPoint(final Point2D.Double position) {
+      return GraphUtil.point(position.x, position.y);
+   }
 
    public static GPoint getGPoint(final String propertyX, final String propertyY) {
       GPoint gPoint = GraphUtil.point(
@@ -48,15 +54,32 @@ public final class UmlNotationCommandUtil {
       Resource notationResource = domain.getResourceSet()
          .getResource(modelUri.trimFileExtension().appendFileExtension(UmlNotationUtil.NOTATION_EXTENSION), false);
       EObject notationRoot = notationResource.getContents().get(0);
+      if (!(notationRoot instanceof Diagram)) {}
       return (Diagram) notationRoot;
+   }
+
+   public static String getSemanticProxyUri(final PackageableElement element) {
+      return EcoreUtil.getURI(element).fragment();
    }
 
    public static String getSemanticProxyUri(final Element element) {
       return EcoreUtil.getURI(element).fragment();
    }
 
+   public static String getSemanticProxyUriElement(final Element element) {
+      return EcoreUtil.getURI(element).fragment();
+   }
+
+   public static NotationElement getNotationElement(final URI modelUri, final EditingDomain domain,
+      final String semanticUri) {
+      Optional<NotationElement> notationElement = getDiagram(modelUri, domain).getElements().stream()
+         .filter(el -> el.getSemanticElement().getUri().equals(semanticUri)).findFirst();
+      return notationElement.orElse(null);
+   }
+
    @SuppressWarnings("unchecked")
-   public static <C extends NotationElement> C getNotationElement(final URI modelUri, final EditingDomain domain,
+   public static <C extends NotationElement> C getNotationElementUnchecked(final URI modelUri,
+      final EditingDomain domain,
       final String semanticUri) {
       Optional<NotationElement> notationElement = getDiagram(modelUri, domain).getElements().stream()
          .filter(el -> el.getSemanticElement().getUri().equals(semanticUri)).findFirst();

@@ -41,5 +41,6 @@
     <eLiterals name="DEPLOYMENT" value="6"/>
     <eLiterals name="OBJECT" value="7"/>
     <eLiterals name="COMPONENT" value="8"/>
+    <eLiterals name="COMMUNICATION" value="9" literal="COMMUNICATION"/>
   </eClassifiers>
 </ecore:EPackage>

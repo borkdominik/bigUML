@@ -10,7 +10,12 @@
  ********************************************************************************/
 import { ActionHandlerRegistry } from "@eclipse-glsp/client/lib";
 import { GLSPTheiaDiagramServer } from "@eclipse-glsp/theia-integration/lib/browser";
-import { CallBehaviorsAction, GetBehaviorsAction, GetTypesAction, ReturnTypesAction } from "@eclipsesource/uml-sprotty/lib/features/edit-label";
+import {
+    CallBehaviorsAction,
+    GetBehaviorsAction,
+    GetTypesAction,
+    ReturnTypesAction
+} from "@eclipsesource/uml-sprotty/lib/features/edit-label";
 import { injectable } from "inversify";
 
 @injectable()

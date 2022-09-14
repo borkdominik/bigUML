@@ -12,6 +12,8 @@ package com.eclipsesource.uml.glsp.operations;
 
 import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
 
+import java.util.Set;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSBasicOperationHandler;
 import org.eclipse.glsp.graph.GEdge;
@@ -25,8 +27,12 @@ import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.inject.Inject;
 
 public class UmlDeleteOperationHandler extends EMSBasicOperationHandler<DeleteOperation, UmlModelServerAccess> {
+
+   @Inject
+   private Set<UmlDiagramDeleteOperationHandler> deleteOperationHandlers;
 
    protected UmlModelState getUmlModelState() { return (UmlModelState) getEMSModelState(); }
 
@@ -35,6 +41,8 @@ public class UmlDeleteOperationHandler extends EMSBasicOperationHandler<DeleteOp
       UmlModelState modelState = getUmlModelState();
 
       Representation diagramType = UmlModelState.getModelState(modelState).getNotationModel().getDiagramType();
+      var deleteOperationHandler = deleteOperationHandlers.stream().filter(handler -> handler.supports(diagramType))
+         .findFirst();
 
       operation.getElementIds().forEach(elementId -> {
          GModelElement gElem = modelState.getIndex().get(elementId).get();
@@ -63,7 +71,12 @@ public class UmlDeleteOperationHandler extends EMSBasicOperationHandler<DeleteOp
                      "Could not execute delete operation on Activity: " + semanticElement.toString());
                }
             });
+            return;
          }
+
+         deleteOperationHandler
+            .orElseThrow(() -> new GLSPServerException("No handler found for diagram " + diagramType))
+            .delete(semanticElement, modelAccess);
       });
    }
 

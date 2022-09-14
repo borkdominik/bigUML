@@ -49,20 +49,6 @@ public class CommunicationDiagramConfiguration implements UmlDiagramConfiguratio
    public Map<String, EClass> getTypeMappings() {
       Map<String, EClass> mappings = DefaultTypes.getDefaultTypeMappings();
 
-      // COMMONS
-      mappings.put(Types.LABEL_NAME, GraphPackage.Literals.GLABEL);
-      mappings.put(Types.LABEL_TEXT, GraphPackage.Literals.GLABEL);
-      mappings.put(Types.LABEL_EDGE_NAME, GraphPackage.Literals.GLABEL);
-      mappings.put(Types.LABEL_EDGE_MULTIPLICITY, GraphPackage.Literals.GLABEL);
-      mappings.put(Types.COMP, GraphPackage.Literals.GCOMPARTMENT);
-      // mappings.put(Types.COMP_HEADER, GraphPackage.Literals.GCOMPARTMENT);
-      mappings.put(Types.LABEL_ICON, GraphPackage.Literals.GCOMPARTMENT);
-      mappings.put(Types.COMMENT, GraphPackage.Literals.GNODE);
-      mappings.put(Types.COMMENT_EDGE, GraphPackage.Literals.GEDGE);
-      mappings.put(Types.COMPARTMENT, GraphPackage.Literals.GCOMPARTMENT);
-      mappings.put(Types.COMPARTMENT_HEADER, GraphPackage.Literals.GCOMPARTMENT);
-
-      // UML Communication
       mappings.put(Types.INTERACTION, GraphPackage.Literals.GNODE);
       mappings.put(Types.ICON_INTERACTION, GraphPackage.Literals.GCOMPARTMENT);
       mappings.put(Types.LIFELINE, GraphPackage.Literals.GNODE);

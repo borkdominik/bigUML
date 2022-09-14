@@ -61,8 +61,8 @@
   </elements>
   <elements xsi:type="unotation:Shape">
     <semanticElement uri="_SvBC8NFjEey82fn8NtK68g"/>
-    <position x="614.1778207804132" y="157.00384003385045"/>
-    <size width="227.75" height="42.0"/>
+    <position x="717.8201708203397" y="83.89179465684794"/>
+    <size width="105.5" height="42.0"/>
   </elements>
   <elements xsi:type="unotation:Edge">
     <semanticElement uri="_a4JGMNFjEey82fn8NtK68g"/>
@@ -95,7 +95,6 @@
     <bendPoints x="686.5488348620939" y="360.0329357628428"/>
     <bendPoints x="888.0707419760666" y="360.0329357628428"/>
     <bendPoints x="888.0707419760666" y="102.14713870855145"/>
-    <bendPoints x="728.0528207804132" y="102.14713870855145"/>
   </elements>
   <elements xsi:type="unotation:Shape">
     <semanticElement uri="_0_OR0NIpEeyxCufTNXqqbw"/>
@@ -105,6 +104,6 @@
   <elements xsi:type="unotation:Shape">
     <semanticElement uri="_U3uT4DNjEe2x-o70ILXK9g"/>
     <position x="1628.8539190161687" y="1088.3515998444204"/>
-    <size width="100.0" height="100.0"/>
+    <size width="141.34707169811526" height="164.77707899371393"/>
   </elements>
 </unotation:Diagram>

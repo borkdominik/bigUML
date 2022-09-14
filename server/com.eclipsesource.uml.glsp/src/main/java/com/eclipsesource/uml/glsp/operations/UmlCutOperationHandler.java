@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.uml.communication_diagram.operations;
+package com.eclipsesource.uml.glsp.operations;
 
 import java.util.List;
 import java.util.stream.Collectors;

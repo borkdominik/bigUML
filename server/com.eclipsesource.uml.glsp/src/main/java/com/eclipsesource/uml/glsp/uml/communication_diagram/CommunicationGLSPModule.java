@@ -21,6 +21,8 @@ import com.eclipsesource.uml.glsp.actions.UmlRequestOutlineHandler;
 import com.eclipsesource.uml.glsp.diagram.UmlDiagramConfigurationProvider;
 import com.eclipsesource.uml.glsp.operations.UmlDiagramDeleteOperationHandler;
 import com.eclipsesource.uml.glsp.operations.UmlDiagramLabelEditOperationHandler;
+import com.eclipsesource.uml.glsp.outline.CommunicationOutlineGenerator;
+import com.eclipsesource.uml.glsp.outline.DefaultOutlineGenerator;
 import com.eclipsesource.uml.glsp.palette.UmlDiagramPaletteItemProvider;
 import com.eclipsesource.uml.glsp.uml.communication_diagram.operations.CommunicationDeleteOperationHandler;
 import com.eclipsesource.uml.glsp.uml.communication_diagram.operations.CommunicationLabelEditOperationHandler;
@@ -65,6 +67,9 @@ public class CommunicationGLSPModule extends GLSPModule {
 
    @Override
    public void configureAdditionals() {
+      bind(DefaultOutlineGenerator.class);
+      bind(CommunicationOutlineGenerator.class);
+
       /*
        * TODO: Enable for validation
        * bind(ModelValidator.class).annotatedWith(CommunicationValidator.class)
@@ -77,8 +82,6 @@ public class CommunicationGLSPModule extends GLSPModule {
        * .to(LifelineValidator.class);
        * bind(new TypeLiteral<Validator<Message>>() {}).annotatedWith(CommunicationValidator.class)
        * .to(MessageValidator.class);
-       * bind(DefaultOutlineGenerator.class);
-       * bind(CommunicationOutlineGenerator.class);
        */
    }
 }

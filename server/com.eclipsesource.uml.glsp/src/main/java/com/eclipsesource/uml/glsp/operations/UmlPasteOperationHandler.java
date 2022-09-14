@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.uml.communication_diagram.operations;
+package com.eclipsesource.uml.glsp.operations;
 
 import static org.eclipse.glsp.server.utils.GeometryUtil.shift;
 

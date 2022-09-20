@@ -36,6 +36,7 @@ import com.eclipsesource.uml.glsp.actions.ReturnTypesAction;
 import com.eclipsesource.uml.glsp.actions.UmlGetTypesActionHandler;
 import com.eclipsesource.uml.glsp.contextmenu.UmlContextMenuItemProvider;
 import com.eclipsesource.uml.glsp.diagram.UmlToolDiagramConfiguration;
+import com.eclipsesource.uml.glsp.features.validation.UmlDiagramModelValidator;
 import com.eclipsesource.uml.glsp.layout.UmlLayoutEngine;
 import com.eclipsesource.uml.glsp.model.UmlModelFactory;
 import com.eclipsesource.uml.glsp.model.UmlModelSourceLoader;
@@ -49,7 +50,6 @@ import com.eclipsesource.uml.glsp.palette.UmlToolPaletteItemProvider;
 import com.eclipsesource.uml.glsp.uml.class_diagram.operations.CreateClassDiagramChildNodeOperationHandler;
 import com.eclipsesource.uml.glsp.uml.class_diagram.operations.CreateClassDiagramEdgeOperationHandler;
 import com.eclipsesource.uml.glsp.uml.class_diagram.operations.CreateClassDiagramNodeOperationHandler;
-import com.eclipsesource.uml.glsp.validator.UmlDiagramModelValidator;
 
 public class ClassGLSPModule extends EMSGLSPModule {
 

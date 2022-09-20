@@ -1,4 +1,4 @@
-package com.eclipsesource.uml.glsp.validator;
+package com.eclipsesource.uml.glsp.features.validation;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.google.inject.Inject;

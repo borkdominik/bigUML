@@ -88,6 +88,6 @@ public class CreateMessageEdgeOperationHandler
    }
 
    @Override
-   public String getLabel() { return "Create uml edge"; }
+   public String getLabel() { return "Create communication message edge handler"; }
 
 }

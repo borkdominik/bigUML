@@ -23,6 +23,8 @@ import com.eclipsesource.uml.glsp.manifest.contributions.OperationHandlerContrib
 import com.eclipsesource.uml.glsp.operations.DiagramDeleteOperationHandler;
 import com.eclipsesource.uml.glsp.operations.DiagramEditLabelOperationHandler;
 import com.eclipsesource.uml.glsp.palette.DiagramPalette;
+import com.eclipsesource.uml.glsp.uml.common_diagram.configuration.CommonDiagramConfiguration;
+import com.eclipsesource.uml.glsp.uml.common_diagram.manifest.contributions.CommonDiagramConfigurationContribution;
 import com.eclipsesource.uml.glsp.uml.communication_diagram.diagram.CommunicationConfiguration;
 import com.eclipsesource.uml.glsp.uml.communication_diagram.features.outline.CommunicationOutlineGenerator;
 import com.eclipsesource.uml.glsp.uml.communication_diagram.operations.CommunicationDeleteOperationHandler;
@@ -31,12 +33,14 @@ import com.eclipsesource.uml.glsp.uml.communication_diagram.operations.CreateInt
 import com.eclipsesource.uml.glsp.uml.communication_diagram.operations.CreateLifelineNodeOperationHandler;
 import com.eclipsesource.uml.glsp.uml.communication_diagram.operations.CreateMessageEdgeOperationHandler;
 import com.eclipsesource.uml.glsp.uml.communication_diagram.palette.CommunicationPalette;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.AbstractModule;
 import com.google.inject.multibindings.Multibinder;
 
 public class CommunicationUmlManifest extends AbstractModule
    implements DiagramConfigurationContribution, DiagramPaletteContribution, OperationHandlerContribution,
-   DeleteOperationHandlerContribution, EditLabelOperationHandlerContribution, OutlineGeneratorContribution {
+   DeleteOperationHandlerContribution, EditLabelOperationHandlerContribution, OutlineGeneratorContribution,
+   CommonDiagramConfigurationContribution {
 
    @Override
    protected void configure() {
@@ -46,8 +50,7 @@ public class CommunicationUmlManifest extends AbstractModule
       contributeDeleteOperationHandler(binder());
       contributeEditLabelOperationHandler(binder());
       contributeOutlineGenerator(binder());
-
-      bind(CommunicationOutlineGenerator.class);
+      contributeCommonDiagramConfiguration(binder());
    }
 
    public void configureAdditionals() {
@@ -96,5 +99,10 @@ public class CommunicationUmlManifest extends AbstractModule
    @Override
    public void contributeOutlineGenerator(final Multibinder<DiagramOutlineGenerator> multibinder) {
       multibinder.addBinding().to(CommunicationOutlineGenerator.class);
+   }
+
+   @Override
+   public void contributeCommonDiagramConfiguration(final Multibinder<CommonDiagramConfiguration> multibinder) {
+      multibinder.addBinding().toInstance(new CommonDiagramConfiguration(Representation.COMMUNICATION));
    }
 }

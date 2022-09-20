@@ -17,7 +17,6 @@ import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperation;
 import org.eclipse.glsp.server.types.GLSPServerException;
 import org.eclipse.uml2.uml.Artifact;
-import org.eclipse.uml2.uml.Comment;
 import org.eclipse.uml2.uml.CommunicationPath;
 import org.eclipse.uml2.uml.Component;
 import org.eclipse.uml2.uml.Constraint;
@@ -57,14 +56,7 @@ public class DeploymentLabelEditOperationHandler
             Element semanticElement = getOrThrow(modelIndex.getSemantic(containerElementId),
                Element.class, "No valid container with id " + graphicalElementId + " found");
 
-            if (semanticElement instanceof Comment) {
-               modelAccess.setCommentBody(modelState, (Comment) semanticElement, inputText)
-                  .thenAccept(response -> {
-                     if (!response.body()) {
-                        throw new GLSPServerException("Could not change Property to: " + inputText);
-                     }
-                  });
-            } else if (semanticElement instanceof Constraint) {
+            if (semanticElement instanceof Constraint) {
                modelAccess.setConditionBody(modelState, (Constraint) semanticElement, inputText)
                   .thenAccept(response -> {
                      if (!response.body()) {

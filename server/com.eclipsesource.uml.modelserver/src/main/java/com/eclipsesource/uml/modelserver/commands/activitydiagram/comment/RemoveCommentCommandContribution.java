@@ -16,17 +16,20 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
 import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
+import org.eclipse.uml2.uml.Comment;
 
 import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlSemanticCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
 
 public class RemoveCommentCommandContribution extends UmlSemanticCommandContribution {
 
    public static final String TYPE = "removeComment";
 
-   public static CCommand create(final String semanticUri) {
+   public static CCommand create(final Comment comment) {
       CCommand removePropertyCommand = CCommandFactory.eINSTANCE.createCommand();
       removePropertyCommand.setType(TYPE);
-      removePropertyCommand.getProperties().put(SEMANTIC_URI_FRAGMENT, semanticUri);
+      removePropertyCommand.getProperties().put(SEMANTIC_URI_FRAGMENT,
+         UmlSemanticCommandUtil.getSemanticUriFragment(comment));
       return removePropertyCommand;
    }
 

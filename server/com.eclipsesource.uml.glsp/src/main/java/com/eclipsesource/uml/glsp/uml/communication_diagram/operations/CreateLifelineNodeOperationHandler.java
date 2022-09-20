@@ -75,6 +75,6 @@ public class CreateLifelineNodeOperationHandler
    }
 
    @Override
-   public String getLabel() { return "Create uml element"; }
+   public String getLabel() { return "Create communication lifeline edge handler"; }
 
 }

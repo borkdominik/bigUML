@@ -36,6 +36,7 @@ import com.eclipsesource.uml.glsp.actions.ReturnTypesAction;
 import com.eclipsesource.uml.glsp.actions.UmlGetTypesActionHandler;
 import com.eclipsesource.uml.glsp.contextmenu.UmlContextMenuItemProvider;
 import com.eclipsesource.uml.glsp.diagram.UmlToolDiagramConfiguration;
+import com.eclipsesource.uml.glsp.features.validation.UmlDiagramModelValidator;
 import com.eclipsesource.uml.glsp.layout.UmlLayoutEngine;
 import com.eclipsesource.uml.glsp.model.UmlModelFactory;
 import com.eclipsesource.uml.glsp.model.UmlModelSourceLoader;
@@ -54,7 +55,6 @@ import com.eclipsesource.uml.glsp.uml.statemachine_diagram.operations.CreateStat
 import com.eclipsesource.uml.glsp.uml.statemachine_diagram.operations.CreateStateMachineDiagramEdgeOperationHandler;
 import com.eclipsesource.uml.glsp.uml.statemachine_diagram.operations.CreateStateMachineDiagramNodeOperationHandler;
 import com.eclipsesource.uml.glsp.uml.statemachine_diagram.operations.CreateStateMachineDiagramStateChildNodeOperationHandler;
-import com.eclipsesource.uml.glsp.validator.UmlDiagramModelValidator;
 
 public class StateMachineGLSPModule extends EMSGLSPModule {
 

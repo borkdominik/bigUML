@@ -33,7 +33,6 @@ package "operations" {
 
 package "features" {
     package "features.outline" {
-        package "features.outline.actions" {}
         package "features.outline.generator" {
             interface DiagramOutlineGenerator
             interface DefaultOutlineGenerator implements DiagramOutlineGenerator
@@ -45,7 +44,7 @@ package "features" {
             }
             class OutlineManifest
         }
-        package "features.outline.model" {}
+        package "features.outline.others.." {}
     }
 }
 
@@ -60,11 +59,27 @@ package "manifest.contributions" {
 }
 
 package "uml" {
+    package "uml.common" {
+        package "uml.common.manifest" {
+            package "uml.common.manifest.contributions" {
+                interface CommonDiagramConfigurationContribution
+            }
+            class CommonUmlManifest
+        }
+        package "uml.common.configuration" {
+            class CommonCommonConfigurationAccessor
+            class CommonDiagramConfiguration
+        }
+
+        package "uml.common.others.." {}
+    }
+
     package "uml.communication" {
         package "uml.communication.manifest" {
             class CommunicationManifest
 
             CommunicationManifest ..> "manifest.contributions"
+            CommunicationManifest ..> "uml.common.manifest.contributions"
         }
         
         package "uml.communication.operations" {
@@ -78,7 +93,6 @@ package "uml" {
             class CommunicationOutlineGenerator implements DiagramOutlineGenerator
         }
 
-        uml.communication.operations -[hidden]> uml.communication.features.outline
     }
 }
 

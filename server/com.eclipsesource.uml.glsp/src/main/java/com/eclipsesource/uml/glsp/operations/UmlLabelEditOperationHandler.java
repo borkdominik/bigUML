@@ -18,7 +18,6 @@ import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSBasicOperati
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperation;
 import org.eclipse.glsp.server.types.GLSPServerException;
-import org.eclipse.uml2.uml.Comment;
 import org.eclipse.uml2.uml.Constraint;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.NamedElement;
@@ -56,25 +55,18 @@ public class UmlLabelEditOperationHandler
             Element semanticElement = getOrThrow(modelIndex.getSemantic(containerElementId),
                Element.class, "No valid container with id " + graphicalElementId + " found");
 
-            if (semanticElement instanceof Comment) {
-               modelAccess.setCommentBody(modelState, (Comment) semanticElement, inputText)
-                  .thenAccept(response -> {
-                     if (!response.body()) {
-                        throw new GLSPServerException("Could not change Property to: " + inputText);
-                     }
-                  });
-            } else if (semanticElement instanceof Constraint) {
+            if (semanticElement instanceof Constraint) {
                modelAccess.setConditionBody(modelState, (Constraint) semanticElement, inputText)
                   .thenAccept(response -> {
                      if (!response.body()) {
-                        throw new GLSPServerException("Could not change Property to: " + inputText);
+                        throw new GLSPServerException("Could not change constraint to: " + inputText);
                      }
                   });
             } else if (semanticElement instanceof NamedElement) {
                modelAccess.renameElement(modelState, (NamedElement) semanticElement, inputText)
                   .thenAccept(response -> {
                      if (!response.body()) {
-                        throw new GLSPServerException("Could not change Property to: " + inputText);
+                        throw new GLSPServerException("Could not change named element to: " + inputText);
                      }
                   });
             }

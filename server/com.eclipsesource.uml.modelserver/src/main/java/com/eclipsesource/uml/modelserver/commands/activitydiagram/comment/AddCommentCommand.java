@@ -49,6 +49,9 @@ public class AddCommentCommand extends UmlSemanticElementCommand implements Supp
          Model model = object.getModel();
          comment = model.createOwnedComment();
          comment.setBody(((Activity) object).getName());
+      } else if (object instanceof Model) {
+         comment = object.createOwnedComment();
+         comment.setBody("New Comment");
       } else {
          throw new RuntimeException("Invalid element type to create a comment: " + object.getClass().getSimpleName());
       }

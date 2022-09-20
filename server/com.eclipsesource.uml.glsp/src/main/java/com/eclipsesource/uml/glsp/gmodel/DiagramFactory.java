@@ -24,6 +24,7 @@ import com.eclipsesource.uml.glsp.uml.activity_diagram.gmodel.ActivityDiagramGro
 import com.eclipsesource.uml.glsp.uml.activity_diagram.gmodel.ActivityDiagramNodeFactory;
 import com.eclipsesource.uml.glsp.uml.class_diagram.gmodel.ClassDiagramEdgeFactory;
 import com.eclipsesource.uml.glsp.uml.class_diagram.gmodel.ClassDiagramNodeFactory;
+import com.eclipsesource.uml.glsp.uml.common_diagram.gmodel.CommentFactory;
 import com.eclipsesource.uml.glsp.uml.communication_diagram.gmodel.CommunicationInteractionNodeFactory;
 import com.eclipsesource.uml.glsp.uml.communication_diagram.gmodel.CommunicationLifelineNodeFactory;
 import com.eclipsesource.uml.glsp.uml.communication_diagram.gmodel.CommunicationMessageEdgeFactory;

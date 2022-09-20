@@ -25,7 +25,6 @@ import org.eclipse.glsp.server.types.EdgeTypeHint;
 import org.eclipse.glsp.server.types.ShapeTypeHint;
 
 import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
-import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 
 public class UmlToolDiagramConfiguration extends BaseDiagramConfiguration {
@@ -38,35 +37,11 @@ public class UmlToolDiagramConfiguration extends BaseDiagramConfiguration {
 
    @Override
    public List<EdgeTypeHint> getEdgeTypeHints() {
-      var hints = Lists.newArrayList(
-         // COMMONS
-         createDefaultEdgeTypeHint(Types.COMMENT_EDGE));
-
-      hints.addAll(diagramConfigurationProviders.stream()
+      var hints = diagramConfigurationProviders.stream()
          .flatMap(contribution -> contribution.getEdgeTypeHints().stream())
-         .collect(Collectors.toList()));
+         .collect(Collectors.toList());
 
       return hints;
-   }
-
-   @Override
-   public EdgeTypeHint createDefaultEdgeTypeHint(final String elementId) {
-      List<String> allowed;
-
-      ArrayList<String> from;
-      ArrayList<String> to;
-
-      switch (elementId) {
-         // COMMENT
-         case Types.COMMENT_EDGE:
-            allowed = Lists.newArrayList();
-            allowed.addAll(Types.LINKS_TO_COMMENT);
-            return new EdgeTypeHint(elementId, true, true, true, List.of(Types.COMMENT),
-               allowed);
-         default:
-            break;
-      }
-      return new EdgeTypeHint(elementId, true, true, true, List.of(), List.of());
    }
 
    @Override
@@ -80,7 +55,6 @@ public class UmlToolDiagramConfiguration extends BaseDiagramConfiguration {
       hints.add(
          new ShapeTypeHint(DefaultTypes.GRAPH, false, false, false, false,
             graphContainableElements));
-      hints.add(new ShapeTypeHint(Types.COMMENT, true, true, false, false));
 
       hints.addAll(diagramConfigurationProviders.stream()
          .flatMap(contribution -> contribution.getShapeTypeHints().stream())
@@ -101,8 +75,6 @@ public class UmlToolDiagramConfiguration extends BaseDiagramConfiguration {
       mappings.put(Types.COMP, GraphPackage.Literals.GCOMPARTMENT);
       // mappings.put(Types.COMP_HEADER, GraphPackage.Literals.GCOMPARTMENT);
       mappings.put(Types.LABEL_ICON, GraphPackage.Literals.GCOMPARTMENT);
-      mappings.put(Types.COMMENT, GraphPackage.Literals.GNODE);
-      mappings.put(Types.COMMENT_EDGE, GraphPackage.Literals.GEDGE);
       mappings.put(Types.COMPARTMENT, GraphPackage.Literals.GCOMPARTMENT);
       mappings.put(Types.COMPARTMENT_HEADER, GraphPackage.Literals.GCOMPARTMENT);
 

@@ -42,6 +42,7 @@ import com.eclipsesource.uml.glsp.actions.UmlRequestMarkersHandler;
 import com.eclipsesource.uml.glsp.contextmenu.UmlContextMenuItemProvider;
 import com.eclipsesource.uml.glsp.diagram.UmlToolDiagramConfiguration;
 import com.eclipsesource.uml.glsp.features.outline.manifest.OutlineManifest;
+import com.eclipsesource.uml.glsp.features.validation.UmlDiagramModelValidator;
 import com.eclipsesource.uml.glsp.layout.UmlLayoutEngine;
 import com.eclipsesource.uml.glsp.model.UmlModelFactory;
 import com.eclipsesource.uml.glsp.model.UmlModelSourceLoader;
@@ -52,8 +53,8 @@ import com.eclipsesource.uml.glsp.operations.UmlCompoundOperationHandler;
 import com.eclipsesource.uml.glsp.operations.UmlDeleteOperationHandler;
 import com.eclipsesource.uml.glsp.operations.UmlLabelEditOperationHandler;
 import com.eclipsesource.uml.glsp.palette.UmlToolPaletteItemProvider;
+import com.eclipsesource.uml.glsp.uml.common_diagram.manifest.CommonUmlManifest;
 import com.eclipsesource.uml.glsp.uml.communication_diagram.manifest.CommunicationUmlManifest;
-import com.eclipsesource.uml.glsp.validator.UmlDiagramModelValidator;
 
 public class UmlGLSPModule extends EMSGLSPModule {
 
@@ -136,6 +137,7 @@ public class UmlGLSPModule extends EMSGLSPModule {
       super.configureAdditionals();
 
       install(new OutlineManifest());
+      install(new CommonUmlManifest());
       install(new CommunicationUmlManifest());
    }
 

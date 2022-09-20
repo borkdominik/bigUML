@@ -36,6 +36,7 @@ import com.eclipsesource.uml.glsp.actions.ReturnTypesAction;
 import com.eclipsesource.uml.glsp.actions.UmlGetTypesActionHandler;
 import com.eclipsesource.uml.glsp.contextmenu.UmlContextMenuItemProvider;
 import com.eclipsesource.uml.glsp.diagram.UmlToolDiagramConfiguration;
+import com.eclipsesource.uml.glsp.features.validation.UmlDiagramModelValidator;
 import com.eclipsesource.uml.glsp.layout.UmlLayoutEngine;
 import com.eclipsesource.uml.glsp.model.UmlModelFactory;
 import com.eclipsesource.uml.glsp.model.UmlModelSourceLoader;
@@ -45,7 +46,6 @@ import com.eclipsesource.uml.glsp.operations.UmlChangeRoutingPointsOperationHand
 import com.eclipsesource.uml.glsp.operations.UmlCompoundOperationHandler;
 import com.eclipsesource.uml.glsp.operations.UmlDeleteOperationHandler;
 import com.eclipsesource.uml.glsp.operations.UmlLabelEditOperationHandler;
-import com.eclipsesource.uml.glsp.operations.common.CreateCommentNodeOperationHandler;
 import com.eclipsesource.uml.glsp.palette.UmlToolPaletteItemProvider;
 import com.eclipsesource.uml.glsp.uml.activity_diagram.actions.behavior.CallBehaviorsAction;
 import com.eclipsesource.uml.glsp.uml.activity_diagram.actions.edgelabels.CreateGuardActionHandler;
@@ -53,7 +53,7 @@ import com.eclipsesource.uml.glsp.uml.activity_diagram.actions.edgelabels.Create
 import com.eclipsesource.uml.glsp.uml.activity_diagram.operations.CreateActivityDiagramChildNodeOperationHandler;
 import com.eclipsesource.uml.glsp.uml.activity_diagram.operations.CreateActivityDiagramEdgeOperationHandler;
 import com.eclipsesource.uml.glsp.uml.activity_diagram.operations.CreateActivityDiagramNodeOperationHandler;
-import com.eclipsesource.uml.glsp.validator.UmlDiagramModelValidator;
+import com.eclipsesource.uml.glsp.uml.common_diagram.operations.CreateCommentNodeOperationHandler;
 
 public class ActivityGLSPModule extends EMSGLSPModule {
 

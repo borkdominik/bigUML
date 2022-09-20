@@ -24,6 +24,7 @@ import {
     saveModule,
     SCompartment,
     SCompartmentView,
+    SEdge,
     SLabel,
     SLabelView,
     SRoutingHandle,
@@ -40,9 +41,10 @@ import diagramOutlineViewModule from "./features/diagram-outline-view/di.config"
 import { EditLabelUIAutocomplete } from "./features/edit-label";
 import umlToolPaletteModule from "./features/tool-palette/di.config";
 import { IconLabelCompartmentSelectionFeedback } from "./feedback";
-import { SEditableLabel } from "./model";
+import { LabeledNode, SEditableLabel } from "./model";
 import createCommunicationModule from "./uml/communication/di.config";
 import { BaseTypes, UmlTypes } from "./utils";
+import { CommentLinkEdgeView, CommentNodeView } from "./views/commons";
 
 export default function createContainer(widgetId: string): Container {
     const commonDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
@@ -63,6 +65,9 @@ export default function createContainer(widgetId: string): Container {
         configureModelElement(context, BaseTypes.ROUTING_POINT, SRoutingHandle, SRoutingHandleView);
         configureModelElement(context, BaseTypes.VOLATILE_ROUTING_POINT, SRoutingHandle, SRoutingHandleView);
         configureModelElement(context, UmlTypes.STRUCTURE, SCompartment, StructureCompartmentView);
+
+        configureModelElement(context, UmlTypes.COMMENT, LabeledNode, CommentNodeView);
+        configureModelElement(context, UmlTypes.COMMENT_LINK, SEdge, CommentLinkEdgeView);
 
         configureViewerOptions(context, {
             needsClientLayout: true,

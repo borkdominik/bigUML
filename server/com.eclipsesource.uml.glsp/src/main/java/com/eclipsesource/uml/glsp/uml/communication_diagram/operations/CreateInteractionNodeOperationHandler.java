@@ -62,6 +62,6 @@ public class CreateInteractionNodeOperationHandler
    }
 
    @Override
-   public String getLabel() { return "Create uml interaction"; }
+   public String getLabel() { return "Create communication interaction edge handler"; }
 
 }

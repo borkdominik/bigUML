@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_gB9CQLNfEey5ItGUbyY0Tw" name="test">
+  <ownedComment xmi:id="_k9_-MDjlEe29-odchCqsJw" annotatedElement="_gB9CQLNfEey5ItGUbyY0Tw">
+    <body>New Comment</body>
+  </ownedComment>
   <packagedElement xmi:type="uml:Interaction" xmi:id="_Yzv8oNFPEeyIfsn6v8XMUQ" name="asd">
     <lifeline xmi:id="_YzwjsNFPEeyIfsn6v8XMUQ" name="s" coveredBy="_Yzxx0dFPEeyIfsn6v8XMUQ _YzyY4dFPEeyIfsn6v8XMUQ"/>
     <lifeline xmi:id="_YzwjsdFPEeyIfsn6v8XMUQ" name="NewLifeline0" coveredBy="_YzxKw9FPEeyIfsn6v8XMUQ _Yzxx0tFPEeyIfsn6v8XMUQ _YzyY4tFPEeyIfsn6v8XMUQ"/>

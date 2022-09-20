@@ -23,7 +23,7 @@ import org.eclipse.uml2.uml.Message;
 import com.eclipsesource.uml.glsp.model.UmlModelIndex;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;
-import com.eclipsesource.uml.glsp.operations.UmlDiagramLabelEditOperationHandler;
+import com.eclipsesource.uml.glsp.operations.DiagramEditLabelOperationHandler;
 import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
 import com.eclipsesource.uml.glsp.util.UmlIDUtil;
 import com.eclipsesource.uml.modelserver.commands.communication.interaction.SetInteractionNameCommandContribution;
@@ -32,7 +32,7 @@ import com.eclipsesource.uml.modelserver.commands.communication.message.SetMessa
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 
-public class CommunicationLabelEditOperationHandler implements UmlDiagramLabelEditOperationHandler {
+public class CommunicationLabelEditOperationHandler implements DiagramEditLabelOperationHandler {
 
    @Inject
    protected UmlModelState modelState;

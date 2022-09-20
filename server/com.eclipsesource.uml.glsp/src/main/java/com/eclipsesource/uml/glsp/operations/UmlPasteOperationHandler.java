@@ -31,11 +31,11 @@ import org.eclipse.glsp.server.operations.PasteOperation;
 import org.eclipse.uml2.uml.Interaction;
 
 import com.eclipsesource.uml.glsp.actions.UmlRequestClipboardDataActionHandler;
+import com.eclipsesource.uml.glsp.features.copy_paste.property.InteractionPropertiesFactory;
+import com.eclipsesource.uml.glsp.features.copy_paste.property.LifelinePropertiesFactory;
+import com.eclipsesource.uml.glsp.features.copy_paste.property.MessagePropertiesFactory;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;
-import com.eclipsesource.uml.glsp.property.InteractionPropertiesFactory;
-import com.eclipsesource.uml.glsp.property.LifelinePropertiesFactory;
-import com.eclipsesource.uml.glsp.property.MessagePropertiesFactory;
 import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
 import com.eclipsesource.uml.glsp.util.UmlGModelUtil;
 import com.eclipsesource.uml.modelserver.commands.communication.interaction.CopyInteractionCommandContribution;

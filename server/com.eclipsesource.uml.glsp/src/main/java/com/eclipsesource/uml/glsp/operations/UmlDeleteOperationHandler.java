@@ -32,7 +32,7 @@ import com.google.inject.Inject;
 public class UmlDeleteOperationHandler extends EMSBasicOperationHandler<DeleteOperation, UmlModelServerAccess> {
 
    @Inject
-   private Set<UmlDiagramDeleteOperationHandler> deleteOperationHandlers;
+   private Set<DiagramDeleteOperationHandler> deleteOperationHandlers;
 
    protected UmlModelState getUmlModelState() { return (UmlModelState) getEMSModelState(); }
 

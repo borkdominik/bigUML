@@ -17,13 +17,13 @@ import org.eclipse.uml2.uml.Lifeline;
 import org.eclipse.uml2.uml.Message;
 
 import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;
-import com.eclipsesource.uml.glsp.operations.UmlDiagramDeleteOperationHandler;
+import com.eclipsesource.uml.glsp.operations.DiagramDeleteOperationHandler;
 import com.eclipsesource.uml.modelserver.commands.communication.interaction.RemoveInteractionCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.communication.lifeline.RemoveLifelineCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.communication.message.RemoveMessageCommandContribution;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 
-public class CommunicationDeleteOperationHandler implements UmlDiagramDeleteOperationHandler {
+public class CommunicationDeleteOperationHandler implements DiagramDeleteOperationHandler {
 
    @Override
    public boolean supports(final Representation representation) {

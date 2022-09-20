@@ -36,7 +36,7 @@ public class UmlToolPaletteItemProvider extends EMSBasicOperationHandler<CreateN
    private static Logger LOGGER = Logger.getLogger(UmlToolPaletteItemProvider.class.getSimpleName());
 
    @Inject
-   private Set<UmlDiagramPaletteItemProvider> diagramPaletteItemProviders;
+   private Set<DiagramPalette> diagramPaletteItemProviders;
 
    @Override
    public List<PaletteItem> getItems(final Map<String, String> args) {
@@ -46,9 +46,9 @@ public class UmlToolPaletteItemProvider extends EMSBasicOperationHandler<CreateN
 
       var items = new ArrayList<PaletteItem>();
 
-      diagramPaletteItemProviders.stream().filter(provider -> provider.supports(diagramType))
-         .forEachOrdered(provider -> {
-            items.addAll(provider.getItems(args));
+      diagramPaletteItemProviders.stream().filter(contribution -> contribution.supports(diagramType))
+         .forEachOrdered(contribution -> {
+            items.addAll(contribution.getItems(args));
          });
 
       return items;

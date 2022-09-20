@@ -1,0 +1,91 @@
+@startuml bigUML
+/'
+Todo: 
+1) Module dependencies e.g. Communication -> Common
+2) OperationHandlers
+3) GModel
+
+Probleme:
+1) Kein Rebinding mehr möglich
+'/
+skinparam groupInheritance 2
+
+class UmlGLSPModule
+
+
+package "diagram" {
+    interface DiagramConfiguration
+    class UmlDiagramConfiguration
+}
+
+package "palette" {
+    interface DiagramPalette
+    class UmlToolPaletteItem
+}
+
+package "operations" {
+    interface DiagramDeleteOperationHandler
+    interface DiagramLabelEditOperationHandler
+    class UmlLabelEditOperationHandler
+    class UmlDeleteOperationHandler
+}
+
+
+package "features" {
+    package "features.outline" {
+        package "features.outline.actions" {}
+        package "features.outline.generator" {
+            interface DiagramOutlineGenerator
+            interface DefaultOutlineGenerator implements DiagramOutlineGenerator
+            class DefaultOutlineGeneratorImpl implements DefaultOutlineGenerator
+        }
+        package "features.outline.manifest" {
+            package "features.outline.manifest.contributions" {
+                interface OutlineGeneratorContribution
+            }
+            class OutlineManifest
+        }
+        package "features.outline.model" {}
+    }
+}
+
+package "manifest.contributions" {
+    interface DiagramPaletteContribution
+    interface DiagramConfigurationContribution
+    interface ClientActionsContribution
+    interface ActionsHandlerContribution
+    interface OperationHandlerContribution
+    interface DeleteOperationHandlerContribution
+    interface EditLabelOperationHandlerContribution
+}
+
+package "uml" {
+    package "uml.communication" {
+        package "uml.communication.manifest" {
+            class CommunicationManifest
+
+            CommunicationManifest ..> "manifest.contributions"
+        }
+        
+        package "uml.communication.operations" {
+            class CommunicationDeleteOperationHandler implements DiagramDeleteOperationHandler
+            class CommunicationLabelEditOperationHandler implements DiagramLabelEditOperationHandler
+            class Create*NodeOperationHandler
+            class Create*EdgeOperationHandler
+        }
+
+        package "uml.communication.features.outline" {
+            class CommunicationOutlineGenerator implements DiagramOutlineGenerator
+        }
+
+        uml.communication.operations -[hidden]> uml.communication.features.outline
+    }
+}
+
+
+UmlGLSPModule *-- CommunicationManifest
+UmlGLSPModule *-- OutlineManifest
+uml.communication -[hidden]> diagram
+operations -[hidden]-> uml.communication 
+
+@enduml

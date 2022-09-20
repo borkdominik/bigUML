@@ -34,7 +34,7 @@ public class UmlLabelEditOperationHandler
    extends EMSBasicOperationHandler<ApplyLabelEditOperation, UmlModelServerAccess> {
 
    @Inject
-   private Set<UmlDiagramLabelEditOperationHandler> editLabelOperationHandlers;
+   private Set<DiagramEditLabelOperationHandler> editLabelOperationHandlers;
 
    protected UmlModelState getUmlModelState() { return (UmlModelState) getEMSModelState(); }
 

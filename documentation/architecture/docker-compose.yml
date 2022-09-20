@@ -1,0 +1,6 @@
+version: "3.9"
+services:
+  plantuml:
+    image: plantuml/plantuml-server:latest
+    ports:
+      - "9091:8080"

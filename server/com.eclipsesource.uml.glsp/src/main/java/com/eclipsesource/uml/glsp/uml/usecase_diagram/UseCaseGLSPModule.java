@@ -35,7 +35,7 @@ import com.eclipsesource.uml.glsp.UmlDIOperationHandlerRegistry;
 import com.eclipsesource.uml.glsp.actions.ReturnTypesAction;
 import com.eclipsesource.uml.glsp.actions.UmlGetTypesActionHandler;
 import com.eclipsesource.uml.glsp.contextmenu.UmlContextMenuItemProvider;
-import com.eclipsesource.uml.glsp.diagram.UmlDiagramConfiguration;
+import com.eclipsesource.uml.glsp.diagram.UmlToolDiagramConfiguration;
 import com.eclipsesource.uml.glsp.layout.UmlLayoutEngine;
 import com.eclipsesource.uml.glsp.model.UmlModelFactory;
 import com.eclipsesource.uml.glsp.model.UmlModelSourceLoader;
@@ -111,7 +111,7 @@ public class UseCaseGLSPModule extends EMSGLSPModule {
 
    @Override
    protected Class<? extends DiagramConfiguration> bindDiagramConfiguration() {
-      return UmlDiagramConfiguration.class;
+      return UmlToolDiagramConfiguration.class;
    }
 
    @Override

@@ -78,9 +78,10 @@ package "uml" {
         package "uml.communication.manifest" {
             class CommunicationManifest
 
-            CommunicationManifest ..> "manifest.contributions"
-            CommunicationManifest ..> "uml.common.manifest.contributions"
-        }
+            CommunicationManifest ..|> "manifest.contributions"
+            CommunicationManifest ..|> "uml.common.manifest.contributions"
+            CommunicationManifest ..|> "features.outline.manifest.contributions"
+        } 
         
         package "uml.communication.operations" {
             class CommunicationDeleteOperationHandler implements DiagramDeleteOperationHandler

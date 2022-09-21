@@ -33,7 +33,6 @@ import com.eclipsesource.uml.glsp.uml.communication_diagram.operations.CreateInt
 import com.eclipsesource.uml.glsp.uml.communication_diagram.operations.CreateLifelineNodeOperationHandler;
 import com.eclipsesource.uml.glsp.uml.communication_diagram.operations.CreateMessageEdgeOperationHandler;
 import com.eclipsesource.uml.glsp.uml.communication_diagram.palette.CommunicationPalette;
-import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.AbstractModule;
 import com.google.inject.multibindings.Multibinder;
 
@@ -103,6 +102,6 @@ public class CommunicationUmlManifest extends AbstractModule
 
    @Override
    public void contributeCommonDiagramConfiguration(final Multibinder<CommonDiagramConfiguration> multibinder) {
-      multibinder.addBinding().toInstance(new CommonDiagramConfiguration(Representation.COMMUNICATION));
+      // multibinder.addBinding().toInstance(new CommonDiagramConfiguration(Representation.COMMUNICATION));
    }
 }

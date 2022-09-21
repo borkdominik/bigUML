@@ -27,7 +27,6 @@ import org.eclipse.glsp.server.features.validation.ModelValidator;
 import org.eclipse.glsp.server.features.validation.RequestMarkersHandler;
 import org.eclipse.glsp.server.layout.LayoutEngine;
 import org.eclipse.glsp.server.operations.OperationHandler;
-import org.eclipse.glsp.server.operations.OperationHandlerRegistry;
 import org.eclipse.glsp.server.operations.gmodel.ChangeBoundsOperationHandler;
 import org.eclipse.glsp.server.operations.gmodel.ChangeRoutingPointsHandler;
 import org.eclipse.glsp.server.operations.gmodel.CompoundOperationHandler;
@@ -53,15 +52,9 @@ import com.eclipsesource.uml.glsp.operations.UmlCompoundOperationHandler;
 import com.eclipsesource.uml.glsp.operations.UmlDeleteOperationHandler;
 import com.eclipsesource.uml.glsp.operations.UmlLabelEditOperationHandler;
 import com.eclipsesource.uml.glsp.palette.UmlToolPaletteItemProvider;
-import com.eclipsesource.uml.glsp.uml.common_diagram.manifest.CommonUmlManifest;
 import com.eclipsesource.uml.glsp.uml.communication_diagram.manifest.CommunicationUmlManifest;
 
 public class UmlGLSPModule extends EMSGLSPModule {
-
-   @Override
-   protected Class<? extends OperationHandlerRegistry> bindOperationHandlerRegistry() {
-      return UmlDIOperationHandlerRegistry.class;
-   }
 
    @Override
    protected Class<? extends EMSModelState> bindGModelState() {
@@ -137,7 +130,7 @@ public class UmlGLSPModule extends EMSGLSPModule {
       super.configureAdditionals();
 
       install(new OutlineManifest());
-      install(new CommonUmlManifest());
+      // install(new CommonUmlManifest());
       install(new CommunicationUmlManifest());
    }
 

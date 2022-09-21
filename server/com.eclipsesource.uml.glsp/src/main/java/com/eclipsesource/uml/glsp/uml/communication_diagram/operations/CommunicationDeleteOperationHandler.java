@@ -32,6 +32,7 @@ public class CommunicationDeleteOperationHandler implements DiagramDeleteOperati
 
    @Override
    public void delete(final EObject semanticElement, final UmlModelServerAccess modelAccess) {
+      System.out.println("==== DELETE ====");
       if (semanticElement instanceof Interaction) {
          modelAccess.exec(RemoveInteractionCommandContribution.create((Interaction) semanticElement))
             .thenAccept(response -> {

@@ -25,8 +25,6 @@ public class UmlOperationActionHandler extends OperationActionHandler {
 
    @Override
    public List<Action> executeAction(final Operation operation) {
-      // Disable the special handling for CreateOperation, as we don't register
-      // one handler per element type to create.
       Optional<? extends OperationHandler> operationHandler = operationHandlerRegistry.get(operation);
       if (operationHandler.isPresent()) {
          return executeHandler(operation, operationHandler.get());

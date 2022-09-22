@@ -8,24 +8,36 @@ Todo:
 Probleme:
 1) Kein Rebinding mehr möglich
 '/
-skinparam groupInheritance 2
+hide stereotype
+<style>
+.contributionPoint {
+    BackgroundColor LightBlue
+}
+.injectionInterface {
+    BackgroundColor LightCyan
+}
+.manifest {
+    BackgroundColor Green
+    FontColor White
+}
+</style>
 
 class UmlGLSPModule
 
 
 package "diagram" {
-    interface DiagramConfiguration
+    interface DiagramConfiguration <<injectionInterface>>
     class UmlDiagramConfiguration
 }
 
 package "palette" {
-    interface DiagramPalette
+    interface DiagramPalette <<injectionInterface>>
     class UmlToolPaletteItem
 }
 
 package "operations" {
-    interface DiagramDeleteOperationHandler
-    interface DiagramLabelEditOperationHandler
+    interface DiagramDeleteOperationHandler <<injectionInterface>>
+    interface DiagramLabelEditOperationHandler <<injectionInterface>>
     class UmlLabelEditOperationHandler
     class UmlDeleteOperationHandler
 }
@@ -34,37 +46,51 @@ package "operations" {
 package "features" {
     package "features.outline" {
         package "features.outline.generator" {
-            interface DiagramOutlineGenerator
+            interface DiagramOutlineGenerator <<injectionInterface>>
             interface DefaultOutlineGenerator implements DiagramOutlineGenerator
             class DefaultOutlineGeneratorImpl implements DefaultOutlineGenerator
         }
         package "features.outline.manifest" {
             package "features.outline.manifest.contributions" {
-                interface OutlineGeneratorContribution
+                interface OutlineGeneratorContribution <<contributionPoint>>
             }
-            class OutlineManifest
+            class OutlineManifest <<manifest>>
+            OutlineManifest ..|> "manifest.contributions"
+        }
+        package "features.outline.actions" {
+            class RequestOutlineAction
+            class RequestOutlineHandler
+
+            RequestOutlineHandler ..> RequestOutlineAction : handles
+            RequestOutlineHandler ..> DiagramOutlineGenerator : uses
+
         }
         package "features.outline.others.." {}
+
     }
 }
 
-package "manifest.contributions" {
-    interface DiagramPaletteContribution
-    interface DiagramConfigurationContribution
-    interface ClientActionsContribution
-    interface ActionsHandlerContribution
-    interface OperationHandlerContribution
-    interface DeleteOperationHandlerContribution
-    interface EditLabelOperationHandlerContribution
+package "manifest" {
+    package "manifest.contributions" {
+        interface DiagramPaletteContribution <<contributionPoint>>
+        interface DiagramConfigurationContribution <<contributionPoint>>
+        interface ClientActionsContribution <<contributionPoint>>
+        interface ActionsHandlerContribution <<contributionPoint>>
+        interface OperationHandlerContribution <<contributionPoint>>
+        interface DeleteOperationHandlerContribution <<contributionPoint>>
+        interface EditLabelOperationHandlerContribution <<contributionPoint>>
+    }
 }
 
 package "uml" {
     package "uml.common" {
         package "uml.common.manifest" {
             package "uml.common.manifest.contributions" {
-                interface CommonDiagramConfigurationContribution
+                interface CommonDiagramConfigurationContribution <<contributionPoint>>
             }
-            class CommonUmlManifest
+            class CommonUmlManifest <<manifest>>
+            CommonUmlManifest ..|> "manifest.contributions"
+
         }
         package "uml.common.configuration" {
             class CommonCommonConfigurationAccessor
@@ -76,11 +102,11 @@ package "uml" {
 
     package "uml.communication" {
         package "uml.communication.manifest" {
-            class CommunicationManifest
+            class CommunicationUmlManifest <<manifest>>
 
-            CommunicationManifest ..|> "manifest.contributions"
-            CommunicationManifest ..|> "uml.common.manifest.contributions"
-            CommunicationManifest ..|> "features.outline.manifest.contributions"
+            CommunicationUmlManifest ..|> "manifest.contributions"
+            CommunicationUmlManifest ..|> "uml.common.manifest.contributions"
+            CommunicationUmlManifest ..|> "features.outline.manifest.contributions"
         } 
         
         package "uml.communication.operations" {
@@ -94,13 +120,16 @@ package "uml" {
             class CommunicationOutlineGenerator implements DiagramOutlineGenerator
         }
 
+        package "uml.communication.others.." {
+
+        }
+
     }
 }
 
 
-UmlGLSPModule *-- CommunicationManifest
+UmlGLSPModule *-- CommunicationUmlManifest
 UmlGLSPModule *-- OutlineManifest
-uml.communication -[hidden]> diagram
-operations -[hidden]-> uml.communication 
+UmlGLSPModule *-- CommonUmlManifest
 
 @enduml

@@ -28,8 +28,7 @@ import org.eclipse.glsp.server.features.core.model.GModelFactory;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.uml2.uml.Model;
 
-import com.eclipsesource.uml.glsp.gmodel.DiagramFactory;
-import com.eclipsesource.uml.glsp.gmodel.DiagramFactoryProvider;
+import com.eclipsesource.uml.glsp.gmodel.UmlDiagramMapper;
 import com.eclipsesource.uml.modelserver.unotation.Diagram;
 import com.eclipsesource.uml.modelserver.unotation.Edge;
 import com.eclipsesource.uml.modelserver.unotation.NotationElement;
@@ -44,12 +43,14 @@ public class UmlModelFactory implements GModelFactory {
    @Inject
    protected GModelState gModelState;
 
+   @Inject
+   protected UmlDiagramMapper diagramMapper;
+
    @Override
    public void createGModel() {
       UmlModelState modelState = UmlModelState.getModelState(gModelState);
-      DiagramFactory gModelFactory = DiagramFactoryProvider.get(modelState);
 
-      GModelRoot gmodelRoot = gModelFactory.createRoot(modelState);
+      var gmodelRoot = diagramMapper.createRoot(modelState);
 
       UmlModelIndex modelIndex = modelState.getIndex();
       modelIndex.clear();
@@ -59,7 +60,7 @@ public class UmlModelFactory implements GModelFactory {
       Diagram diagram = modelState.getNotationModel();
       getOrCreateDiagram(diagram, semanticModel, modelIndex);
 
-      gmodelRoot = gModelFactory.create();
+      gmodelRoot = diagramMapper.reloadRoot(diagram);
       initialize(gmodelRoot, modelIndex, semanticModel, diagram);
 
       modelState.setRoot(gmodelRoot);

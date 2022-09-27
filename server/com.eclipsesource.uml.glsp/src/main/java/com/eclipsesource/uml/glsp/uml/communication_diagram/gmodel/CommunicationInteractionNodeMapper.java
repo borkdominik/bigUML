@@ -29,29 +29,29 @@ import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.Interaction;
 
-import com.eclipsesource.uml.glsp.gmodel.AbstractGModelFactory;
-import com.eclipsesource.uml.glsp.gmodel.DiagramFactory;
+import com.eclipsesource.uml.glsp.gmodel.UmlGModelMapHandler;
+import com.eclipsesource.uml.glsp.gmodel.UmlGModelMapper;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.util.UmlConfig.CSS;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.eclipsesource.uml.glsp.uml.communication_diagram.constants.CommunicationConfig;
+import com.eclipsesource.uml.glsp.util.UmlConfig;
 import com.eclipsesource.uml.glsp.util.UmlIDUtil;
 import com.eclipsesource.uml.modelserver.unotation.Shape;
+import com.google.inject.Inject;
 
-public class CommunicationInteractionNodeFactory extends AbstractGModelFactory<Interaction, GNode> {
+public class CommunicationInteractionNodeMapper implements UmlGModelMapper<Interaction, GNode> {
 
-   private final DiagramFactory parentFactory;
    private static final String V_GRAB = "vGrab";
    private static final String H_GRAB = "hGrab";
    private static final String H_ALIGN = "hAlign";
 
-   public CommunicationInteractionNodeFactory(final UmlModelState modelState,
-      final DiagramFactory parentFactory) {
-      super(modelState);
-      this.parentFactory = parentFactory;
-   }
+   @Inject
+   private UmlModelState modelState;
+
+   @Inject
+   private UmlGModelMapHandler mapHandler;
 
    @Override
-   public GNode create(final Interaction interaction) {
+   public GNode map(final Interaction interaction) {
       Map<String, Object> layoutOptions = new HashMap<>();
       layoutOptions.put(H_ALIGN, GConstants.HAlign.CENTER);
       layoutOptions.put(H_GRAB, false);
@@ -61,11 +61,11 @@ public class CommunicationInteractionNodeFactory extends AbstractGModelFactory<I
       children.addAll(interaction.getLifelines());
       children.addAll(interaction.getMessages());
 
-      GNodeBuilder builder = new GNodeBuilder(Types.INTERACTION)
-         .id(toId(interaction))
+      GNodeBuilder builder = new GNodeBuilder(CommunicationConfig.Types.INTERACTION)
+         .id(UmlIDUtil.toId(modelState, interaction))
          .layout(GConstants.Layout.VBOX)
          .layoutOptions(layoutOptions)
-         .addCssClass(CSS.NODE)
+         .addCssClass(UmlConfig.CSS.NODE)
          .add(buildInteractionHeader(interaction))
          .add(createInteractionChildrenCompartment(interaction, children));
 
@@ -89,13 +89,13 @@ public class CommunicationInteractionNodeFactory extends AbstractGModelFactory<I
    }
 
    protected GCompartment buildInteractionHeader(final Interaction umlInteraction) {
-      return new GCompartmentBuilder(Types.COMPARTMENT_HEADER)
+      return new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER)
          .layout(GConstants.Layout.HBOX)
-         .id(UmlIDUtil.createHeaderId(toId(umlInteraction)))
-         .add(new GCompartmentBuilder(Types.ICON_INTERACTION)
-            .id(UmlIDUtil.createHeaderIconId(toId(umlInteraction))).build())
-         .add(new GLabelBuilder(Types.LABEL_NAME)
-            .id(UmlIDUtil.createHeaderLabelId(toId(umlInteraction)))
+         .id(UmlIDUtil.createHeaderId(UmlIDUtil.toId(modelState, umlInteraction)))
+         .add(new GCompartmentBuilder(CommunicationConfig.Types.ICON_INTERACTION)
+            .id(UmlIDUtil.createHeaderIconId(UmlIDUtil.toId(modelState, umlInteraction))).build())
+         .add(new GLabelBuilder(UmlConfig.Types.LABEL_NAME)
+            .id(UmlIDUtil.createHeaderLabelId(UmlIDUtil.toId(modelState, umlInteraction)))
             .text(umlInteraction.getName()).build())
          .build();
    }
@@ -107,12 +107,12 @@ public class CommunicationInteractionNodeFactory extends AbstractGModelFactory<I
       layoutOptions.put(H_GRAB, true);
       layoutOptions.put(V_GRAB, true);
 
-      return new GCompartmentBuilder(Types.COMPARTMENT)
-         .id(UmlIDUtil.createChildCompartmentId(toId(interaction)))
+      return new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT)
+         .id(UmlIDUtil.createChildCompartmentId(UmlIDUtil.toId(modelState, interaction)))
          .layout(GConstants.Layout.FREEFORM)
          .layoutOptions(layoutOptions)
          .addAll(children.stream()
-            .map(parentFactory::create)
+            .map(mapHandler::handle)
             .collect(Collectors.toList()))
          .build();
    }

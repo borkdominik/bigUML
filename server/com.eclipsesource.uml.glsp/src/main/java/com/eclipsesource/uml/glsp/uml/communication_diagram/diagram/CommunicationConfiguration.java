@@ -21,7 +21,7 @@ import org.eclipse.glsp.server.types.EdgeTypeHint;
 import org.eclipse.glsp.server.types.ShapeTypeHint;
 
 import com.eclipsesource.uml.glsp.diagram.DiagramConfiguration;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.eclipsesource.uml.glsp.uml.communication_diagram.constants.CommunicationConfig.Types;
 import com.google.common.collect.Lists;
 
 public class CommunicationConfiguration implements DiagramConfiguration {

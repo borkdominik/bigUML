@@ -12,7 +12,6 @@ package com.eclipsesource.uml.glsp.uml.activity_diagram.gmodel;
 
 import java.util.ArrayList;
 
-import com.eclipsesource.uml.glsp.gmodel.AbstractGModelFactory;
 import org.eclipse.glsp.graph.GEdge;
 import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.GPoint;
@@ -30,10 +29,11 @@ import org.eclipse.uml2.uml.ObjectNode;
 import org.eclipse.uml2.uml.Pin;
 import org.eclipse.uml2.uml.ValueSpecification;
 
+import com.eclipsesource.uml.glsp.gmodel.AbstractGModelFactory;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
+import com.eclipsesource.uml.glsp.uml.activity_diagram.ActivityIdUtil;
 import com.eclipsesource.uml.glsp.util.UmlConfig.CSS;
 import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
-import com.eclipsesource.uml.glsp.util.UmlIDUtil;
 import com.eclipsesource.uml.modelserver.unotation.Edge;
 
 public class ActivityDiagramEdgeFactory extends AbstractGModelFactory<ActivityEdge, GEdge> {
@@ -66,12 +66,12 @@ public class ActivityDiagramEdgeFactory extends AbstractGModelFactory<ActivityEd
 
       if (edge.getGuard() != null) {
          builder
-            .add(createGuardLabel(getLiteralStringValue(edge.getGuard()), UmlIDUtil.createGuardLabelId(toId(edge)),
+            .add(createGuardLabel(getLiteralStringValue(edge.getGuard()), ActivityIdUtil.createGuardLabelId(toId(edge)),
                0.5d));
       }
       if (edge.getWeight() != null) {
          builder.add(
-            createWeightLabel(getLiteralStringValue(edge.getWeight()), UmlIDUtil.createWeightLabelId(toId(edge)),
+            createWeightLabel(getLiteralStringValue(edge.getWeight()), ActivityIdUtil.createWeightLabelId(toId(edge)),
                0.5d));
       }
 

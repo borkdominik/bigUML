@@ -24,6 +24,7 @@ import org.eclipse.uml2.uml.StateMachine;
 import org.eclipse.uml2.uml.Transition;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
+import com.eclipsesource.uml.glsp.uml.statemachine_diagram.StateMachineIdUtil;
 import com.eclipsesource.uml.glsp.uml.statemachine_diagram.StateMachineModelServerAccess;
 import com.eclipsesource.uml.glsp.util.UmlIDUtil;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
@@ -47,15 +48,15 @@ public class StateMachineDeleteOperationHandler
 
          if (elementId.endsWith(UmlIDUtil.PROPERTY_SUFFIX)) {
             elementId = UmlIDUtil.getElementIdFromProperty(elementId);
-         } else if (elementId.startsWith(UmlIDUtil.LABEL_GUARD_SUFFIX)) {
+         } else if (elementId.startsWith(StateMachineIdUtil.LABEL_GUARD_SUFFIX)) {
             removeTransitionGuard = true;
-            elementId = UmlIDUtil.getElementIdFromLabelGuard(elementId);
-         } else if (elementId.startsWith(UmlIDUtil.LABEL_EFFECT_SUFFIX)) {
+            elementId = StateMachineIdUtil.getElementIdFromLabelGuard(elementId);
+         } else if (elementId.startsWith(StateMachineIdUtil.LABEL_EFFECT_SUFFIX)) {
             removeTransitionEffect = true;
-            elementId = UmlIDUtil.getElementIdFromLabelEffect(elementId);
-         } else if (elementId.startsWith(UmlIDUtil.LABEL_TRIGGER_SUFFIX)) {
+            elementId = StateMachineIdUtil.getElementIdFromLabelEffect(elementId);
+         } else if (elementId.startsWith(StateMachineIdUtil.LABEL_TRIGGER_SUFFIX)) {
             removeTransitionTrigger = true;
-            elementId = UmlIDUtil.getElementIdFromLabelTrigger(elementId);
+            elementId = StateMachineIdUtil.getElementIdFromLabelTrigger(elementId);
          }
 
          EObject semanticElement = getOrThrow(modelState.getIndex().getSemantic(elementId),

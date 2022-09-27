@@ -10,6 +10,11 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.util;
 
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+
+import com.eclipsesource.uml.glsp.model.UmlModelState;
+
 public final class UmlIDUtil {
 
    private UmlIDUtil() {}
@@ -38,14 +43,45 @@ public final class UmlIDUtil {
       return childCompartmentId.replace(CHILD_COMPARTMENT_SUFFIX, "");
    }
 
-   // ACTIVITY
-   public static String LABEL_GUARD_SUFFIX = "_guard";
-   public static String LABEL_WEIGHT_SUFFIX = "_weight";
+   public static String createPropertyId(final String containerId) {
+      return containerId + PROPERTY_SUFFIX;
+   }
 
-   // STATEMACHINE
-   public static String LABEL_STATE_GUARD_SUFFIX = "_label_guard";
-   public static String LABEL_EFFECT_SUFFIX = "_label_effect";
-   public static String LABEL_TRIGGER_SUFFIX = "_label_trigger";
+   public static String getElementIdFromProperty(final String propertyId) {
+      return propertyId.replace(PROPERTY_SUFFIX, "");
+   }
+
+   public static String createPropertyIconId(final String containerId) {
+      return containerId + PROPERTY_ICON_SUFFIX;
+   }
+
+   public static String getElementIdFromPropertyIcon(final String propertyIconId) {
+      return propertyIconId.replace(PROPERTY_ICON_SUFFIX, "");
+   }
+
+   public static String createPropertyLabelNameId(final String containerId) {
+      return containerId + PROPERTY_LABEL_NAME_SUFFIX;
+   }
+
+   public static String getElementIdFromPropertyLabelName(final String propertyLabelId) {
+      return propertyLabelId.replace(PROPERTY_LABEL_NAME_SUFFIX, "");
+   }
+
+   public static String createPropertyLabelTypeId(final String containerId) {
+      return containerId + PROPERTY_LABEL_TYPE_SUFFIX;
+   }
+
+   public static String getElementIdFromPropertyLabelType(final String propertyLabelId) {
+      return propertyLabelId.replace(PROPERTY_LABEL_TYPE_SUFFIX, "");
+   }
+
+   public static String createPropertyLabelMultiplicityId(final String containerId) {
+      return containerId + PROPERTY_LABEL_MULTIPLICITY_SUFFIX;
+   }
+
+   public static String getElementIdFromPropertyLabelMultiplicity(final String propertyLabelId) {
+      return propertyLabelId.replace(PROPERTY_LABEL_MULTIPLICITY_SUFFIX, "");
+   }
 
    public static String createLabelNameId(final String containerId) {
       return containerId + LABEL_NAME_SUFFIX;
@@ -103,85 +139,12 @@ public final class UmlIDUtil {
       return headerLabelId.replace(HEADER_LABEL_SUFFIX, "");
    }
 
-   public static String getEdgeIdFromGuardLabel(final String guardLabel) {
-      return guardLabel.replace(LABEL_GUARD_SUFFIX, "");
+   public static String toId(final UmlModelState modelState, final EObject semanticElement) {
+      String id = modelState.getIndex().getSemanticId(semanticElement).orElse(null);
+      if (id == null) {
+         id = EcoreUtil.getURI(semanticElement).fragment();
+         modelState.getIndex().indexSemantic(id, semanticElement);
+      }
+      return id;
    }
-
-   public static String getEdgeFromWeightLabel(final String weightLabel) {
-      return weightLabel.replace(LABEL_WEIGHT_SUFFIX, "");
-   }
-
-   public static String createGuardLabelId(final String containerId) {
-      return containerId + LABEL_GUARD_SUFFIX;
-   }
-
-   public static String createWeightLabelId(final String containerId) {
-      return containerId + LABEL_WEIGHT_SUFFIX;
-   }
-
-   // STATEMACHINE
-   public static String createLabelGuardId(final String containerId) {
-      return containerId + LABEL_STATE_GUARD_SUFFIX;
-   }
-
-   public static String getElementIdFromLabelGuard(final String labelNameId) {
-      return labelNameId.replace(LABEL_STATE_GUARD_SUFFIX, "");
-   }
-
-   public static String createLabelEffectId(final String containerId) {
-      return containerId + LABEL_EFFECT_SUFFIX;
-   }
-
-   public static String getElementIdFromLabelEffect(final String labelNameId) {
-      return labelNameId.replace(LABEL_EFFECT_SUFFIX, "");
-   }
-
-   public static String createLabelTriggerId(final String containerId) {
-      return containerId + LABEL_TRIGGER_SUFFIX;
-   }
-
-   public static String getElementIdFromLabelTrigger(final String labelNameId) {
-      return labelNameId.replace(LABEL_TRIGGER_SUFFIX, "");
-   }
-
-   public static String createPropertyId(final String containerId) {
-      return containerId + PROPERTY_SUFFIX;
-   }
-
-   public static String getElementIdFromProperty(final String propertyId) {
-      return propertyId.replace(PROPERTY_SUFFIX, "");
-   }
-
-   public static String createPropertyIconId(final String containerId) {
-      return containerId + PROPERTY_ICON_SUFFIX;
-   }
-
-   public static String getElementIdFromPropertyIcon(final String propertyIconId) {
-      return propertyIconId.replace(PROPERTY_ICON_SUFFIX, "");
-   }
-
-   public static String createPropertyLabelNameId(final String containerId) {
-      return containerId + PROPERTY_LABEL_NAME_SUFFIX;
-   }
-
-   public static String getElementIdFromPropertyLabelName(final String propertyLabelId) {
-      return propertyLabelId.replace(PROPERTY_LABEL_NAME_SUFFIX, "");
-   }
-
-   public static String createPropertyLabelTypeId(final String containerId) {
-      return containerId + PROPERTY_LABEL_TYPE_SUFFIX;
-   }
-
-   public static String getElementIdFromPropertyLabelType(final String propertyLabelId) {
-      return propertyLabelId.replace(PROPERTY_LABEL_TYPE_SUFFIX, "");
-   }
-
-   public static String createPropertyLabelMultiplicityId(final String containerId) {
-      return containerId + PROPERTY_LABEL_MULTIPLICITY_SUFFIX;
-   }
-
-   public static String getElementIdFromPropertyLabelMultiplicity(final String propertyLabelId) {
-      return propertyLabelId.replace(PROPERTY_LABEL_MULTIPLICITY_SUFFIX, "");
-   }
-
 }

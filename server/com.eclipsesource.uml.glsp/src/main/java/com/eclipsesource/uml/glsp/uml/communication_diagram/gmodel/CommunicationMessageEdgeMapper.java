@@ -23,35 +23,36 @@ import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.uml2.uml.Message;
 import org.eclipse.uml2.uml.MessageOccurrenceSpecification;
 
-import com.eclipsesource.uml.glsp.gmodel.AbstractGModelFactory;
+import com.eclipsesource.uml.glsp.gmodel.UmlGModelMapper;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.util.UmlConfig.CSS;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.eclipsesource.uml.glsp.uml.communication_diagram.constants.CommunicationConfig;
+import com.eclipsesource.uml.glsp.util.UmlConfig;
 import com.eclipsesource.uml.glsp.util.UmlIDUtil;
 import com.eclipsesource.uml.modelserver.unotation.Edge;
+import com.google.inject.Inject;
 
-public class CommunicationMessageEdgeFactory extends AbstractGModelFactory<Message, GEdge> {
+public class CommunicationMessageEdgeMapper implements UmlGModelMapper<Message, GEdge> {
 
-   public CommunicationMessageEdgeFactory(final UmlModelState modelState) {
-      super(modelState);
-   }
+   @Inject
+   private UmlModelState modelState;
 
    @Override
-   public GEdge create(final Message message) {
+   public GEdge map(final Message message) {
       var sendEvent = (MessageOccurrenceSpecification) message.getSendEvent();
       var receiveEvent = (MessageOccurrenceSpecification) message.getReceiveEvent();
 
       var source = sendEvent.getCovered();
       var target = receiveEvent.getCovered();
 
-      GEdgeBuilder builder = new GEdgeBuilder(Types.MESSAGE)
-         .id(toId(message))
-         .addCssClass(CSS.EDGE)
-         .sourceId(toId(source))
-         .targetId(toId(target))
+      GEdgeBuilder builder = new GEdgeBuilder(CommunicationConfig.Types.MESSAGE)
+         .id(UmlIDUtil.toId(modelState, message))
+         .addCssClass(UmlConfig.CSS.EDGE)
+         .sourceId(UmlIDUtil.toId(modelState, source))
+         .targetId(UmlIDUtil.toId(modelState, target))
          .routerKind(GConstants.RouterKind.MANHATTAN);
 
-      GLabel nameLabel = createEdgeNameLabel(message.getName(), UmlIDUtil.createLabelNameId(toId(message)), 0.6d);
+      GLabel nameLabel = createEdgeNameLabel(message.getName(),
+         UmlIDUtil.createLabelNameId(UmlIDUtil.toId(modelState, message)), 0.6d);
       builder.add(nameLabel);
 
       modelState.getIndex().getNotation(message, Edge.class).ifPresent(edge -> {
@@ -65,7 +66,8 @@ public class CommunicationMessageEdgeFactory extends AbstractGModelFactory<Messa
    }
 
    protected GLabel createEdgeNameLabel(final String name, final String id, final double position) {
-      return createEdgeLabel(name, position, id, Types.MESSAGE_LABEL_ARROW_EDGE_NAME, GConstants.EdgeSide.TOP);
+      return createEdgeLabel(name, position, id, CommunicationConfig.Types.MESSAGE_LABEL_ARROW_EDGE_NAME,
+         GConstants.EdgeSide.TOP);
    }
 
    protected GLabel createEdgeLabel(final String name, final double position, final String id, final String type,
@@ -79,5 +81,4 @@ public class CommunicationMessageEdgeFactory extends AbstractGModelFactory<Messa
          .id(id)
          .text(name).build();
    }
-
 }

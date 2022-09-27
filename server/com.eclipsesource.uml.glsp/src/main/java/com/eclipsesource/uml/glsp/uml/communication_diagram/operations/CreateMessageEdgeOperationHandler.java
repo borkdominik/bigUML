@@ -28,7 +28,7 @@ import org.eclipse.uml2.uml.Lifeline;
 import com.eclipsesource.uml.glsp.model.UmlModelIndex;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.eclipsesource.uml.glsp.uml.communication_diagram.constants.CommunicationConfig;
 import com.eclipsesource.uml.modelserver.commands.communication.message.AddMessageCommandContribution;
 import com.google.common.collect.Lists;
 
@@ -42,7 +42,7 @@ public class CreateMessageEdgeOperationHandler
       super(handledElementTypeIds);
    }
 
-   private static List<String> handledElementTypeIds = Lists.newArrayList(Types.MESSAGE);
+   private static List<String> handledElementTypeIds = Lists.newArrayList(CommunicationConfig.Types.MESSAGE);
 
    @Override
    public boolean handles(final Operation execAction) {
@@ -74,7 +74,7 @@ public class CreateMessageEdgeOperationHandler
          return;
       }
 
-      if (elementTypeId.equals(Types.MESSAGE)) {
+      if (elementTypeId.equals(CommunicationConfig.Types.MESSAGE)) {
          modelAccess
             .exec(AddMessageCommandContribution.create(
                sourceLifeline,

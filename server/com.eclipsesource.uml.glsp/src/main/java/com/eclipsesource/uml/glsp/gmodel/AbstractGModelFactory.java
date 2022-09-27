@@ -39,6 +39,5 @@ public abstract class AbstractGModelFactory<T extends EObject, E extends GModelE
          modelState.getIndex().indexSemantic(id, semanticElement);
       }
       return id;
-
    }
 }

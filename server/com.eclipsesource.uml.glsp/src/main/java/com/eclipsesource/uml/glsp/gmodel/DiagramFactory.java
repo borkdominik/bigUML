@@ -25,9 +25,6 @@ import com.eclipsesource.uml.glsp.uml.activity_diagram.gmodel.ActivityDiagramNod
 import com.eclipsesource.uml.glsp.uml.class_diagram.gmodel.ClassDiagramEdgeFactory;
 import com.eclipsesource.uml.glsp.uml.class_diagram.gmodel.ClassDiagramNodeFactory;
 import com.eclipsesource.uml.glsp.uml.common_diagram.gmodel.CommentFactory;
-import com.eclipsesource.uml.glsp.uml.communication_diagram.gmodel.CommunicationInteractionNodeFactory;
-import com.eclipsesource.uml.glsp.uml.communication_diagram.gmodel.CommunicationLifelineNodeFactory;
-import com.eclipsesource.uml.glsp.uml.communication_diagram.gmodel.CommunicationMessageEdgeFactory;
 import com.eclipsesource.uml.glsp.uml.deployment_diagram.gmodel.DeploymentDiagramChildNodeFactory;
 import com.eclipsesource.uml.glsp.uml.deployment_diagram.gmodel.DeploymentDiagramEdgeFactory;
 import com.eclipsesource.uml.glsp.uml.deployment_diagram.gmodel.DeploymentDiagramNodeFactory;
@@ -75,10 +72,6 @@ public abstract class DiagramFactory extends AbstractGModelFactory<EObject, GMod
    public final ObjectDiagramNodeFactory objectDiagramNodeFactory;
    public final ObjectDiagramEdgeFactory objectDiagramEdgeFactory;
 
-   public final CommunicationInteractionNodeFactory interactionNodeFactory;
-   public final CommunicationLifelineNodeFactory lifelineNodeFactory;
-   public final CommunicationMessageEdgeFactory messageEdgeFactory;
-
    public DiagramFactory(final UmlModelState modelState) {
       super(modelState);
       // COMMONS
@@ -114,10 +107,6 @@ public abstract class DiagramFactory extends AbstractGModelFactory<EObject, GMod
       deploymentChildNodeFactory = new DeploymentDiagramChildNodeFactory(modelState);
       deploymentEdgeFactory = new DeploymentDiagramEdgeFactory(modelState);
 
-      // Communication
-      interactionNodeFactory = new CommunicationInteractionNodeFactory(modelState, this);
-      lifelineNodeFactory = new CommunicationLifelineNodeFactory(modelState, compartmentLabelFactory);
-      messageEdgeFactory = new CommunicationMessageEdgeFactory(modelState);
       getOrCreateRoot();
    }
 

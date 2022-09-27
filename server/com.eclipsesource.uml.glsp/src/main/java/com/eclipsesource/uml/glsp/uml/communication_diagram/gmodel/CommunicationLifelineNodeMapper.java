@@ -21,24 +21,32 @@ import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Lifeline;
 
-import com.eclipsesource.uml.glsp.gmodel.AbstractGModelFactory;
-import com.eclipsesource.uml.glsp.gmodel.CompartmentLabelFactory;
+import com.eclipsesource.uml.glsp.gmodel.UmlGModelMapper;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.util.UmlConfig.CSS;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.eclipsesource.uml.glsp.uml.communication_diagram.constants.CommunicationConfig;
+import com.eclipsesource.uml.glsp.util.UmlConfig;
 import com.eclipsesource.uml.glsp.util.UmlIDUtil;
 import com.eclipsesource.uml.modelserver.unotation.Shape;
+import com.google.inject.Inject;
 
-public class CommunicationLifelineNodeFactory extends AbstractGModelFactory<Lifeline, GNode> {
+public class CommunicationLifelineNodeMapper implements UmlGModelMapper<Lifeline, GNode> {
 
-   public CommunicationLifelineNodeFactory(final UmlModelState modelState,
-      final CompartmentLabelFactory compartmentLabelFactory) {
-      super(modelState);
-   }
+   @Inject
+   private UmlModelState modelState;
 
    @Override
-   public GNode create(final Lifeline lifeline) {
-      return createLifelineNode(lifeline);
+   public GNode map(final Lifeline lifeline) {
+      GNodeBuilder lifelineNodeBuilder = new GNodeBuilder(CommunicationConfig.Types.LIFELINE)
+         .id(UmlIDUtil.toId(modelState, lifeline))
+         .layout(GConstants.Layout.VBOX)
+         .addCssClass(UmlConfig.CSS.NODE);
+
+      applyShapeData(lifeline, lifelineNodeBuilder);
+
+      GCompartment classHeader = buildClassHeader(lifeline);
+      lifelineNodeBuilder.add(classHeader);
+
+      return lifelineNodeBuilder.build();
    }
 
    protected void applyShapeData(final Element element, final GNodeBuilder builder) {
@@ -52,31 +60,17 @@ public class CommunicationLifelineNodeFactory extends AbstractGModelFactory<Life
       });
    }
 
-   protected GNode createLifelineNode(final Lifeline umlLifeline) {
-      GNodeBuilder lifelineNodeBuilder = new GNodeBuilder(Types.LIFELINE)
-         .id(toId(umlLifeline))
-         .layout(GConstants.Layout.VBOX)
-         .addCssClass(CSS.NODE);
-
-      applyShapeData(umlLifeline, lifelineNodeBuilder);
-
-      GCompartment classHeader = buildClassHeader(umlLifeline);
-      lifelineNodeBuilder.add(classHeader);
-
-      return lifelineNodeBuilder.build();
-   }
-
    protected GCompartment buildClassHeader(final Lifeline umlLifeline) {
-      GCompartmentBuilder classHeaderBuilder = new GCompartmentBuilder(Types.COMPARTMENT_HEADER)
+      GCompartmentBuilder classHeaderBuilder = new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER)
          .layout(GConstants.Layout.HBOX)
-         .id(UmlIDUtil.createHeaderId(toId(umlLifeline)));
+         .id(UmlIDUtil.createHeaderId(UmlIDUtil.toId(modelState, umlLifeline)));
 
-      GCompartment classHeaderIcon = new GCompartmentBuilder(Types.ICON_LIFELINE)
-         .id(UmlIDUtil.createHeaderIconId(toId(umlLifeline))).build();
+      GCompartment classHeaderIcon = new GCompartmentBuilder(CommunicationConfig.Types.ICON_LIFELINE)
+         .id(UmlIDUtil.createHeaderIconId(UmlIDUtil.toId(modelState, umlLifeline))).build();
       classHeaderBuilder.add(classHeaderIcon);
 
-      GLabel classHeaderLabel = new GLabelBuilder(Types.LABEL_NAME)
-         .id(UmlIDUtil.createHeaderLabelId(toId(umlLifeline)))
+      GLabel classHeaderLabel = new GLabelBuilder(UmlConfig.Types.LABEL_NAME)
+         .id(UmlIDUtil.createHeaderLabelId(UmlIDUtil.toId(modelState, umlLifeline)))
          .text(umlLifeline.getName()).build();
       classHeaderBuilder.add(classHeaderLabel);
 

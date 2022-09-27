@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.operations;
+package com.eclipsesource.uml.glsp.features.copy_paste.operations;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,13 +21,13 @@ import org.eclipse.glsp.server.operations.DeleteOperation;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.eclipsesource.uml.glsp.uml.communication_diagram.constants.CommunicationConfig;
 import com.eclipsesource.uml.glsp.util.UmlGModelUtil;
 import com.google.inject.Inject;
 
 public class UmlCutOperationHandler
    extends EMSBasicOperationHandler<CutOperation, UmlModelServerAccess> {
-   private final List<String> ignoreList = List.of(Types.MESSAGE);
+   private final List<String> ignoreList = List.of(CommunicationConfig.Types.MESSAGE);
 
    @Inject
    protected ActionDispatcher actionDispatcher;
@@ -48,7 +48,8 @@ public class UmlCutOperationHandler
       var index = modelState.getIndex();
       var selectedElements = index.getAll(elementIds);
 
-      var interactionIds = UmlGModelUtil.filterByType(selectedElements, Types.INTERACTION, GModelElement.class)
+      var interactionIds = UmlGModelUtil
+         .filterByType(selectedElements, CommunicationConfig.Types.INTERACTION, GModelElement.class)
          .map(element -> element.getId())
          .collect(Collectors.toUnmodifiableList());
 

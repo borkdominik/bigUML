@@ -20,7 +20,7 @@ import org.eclipse.glsp.server.types.GLSPServerException;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.eclipsesource.uml.glsp.uml.communication_diagram.constants.CommunicationConfig;
 import com.eclipsesource.uml.modelserver.commands.communication.interaction.AddInteractionCommandContribution;
 import com.google.common.collect.Lists;
 
@@ -31,7 +31,7 @@ public class CreateInteractionNodeOperationHandler
       super(handledElementTypeIds);
    }
 
-   private static List<String> handledElementTypeIds = Lists.newArrayList(Types.INTERACTION);
+   private static List<String> handledElementTypeIds = Lists.newArrayList(CommunicationConfig.Types.INTERACTION);
 
    @Override
    public boolean handles(final Operation execAction) {
@@ -48,7 +48,7 @@ public class CreateInteractionNodeOperationHandler
    public void executeOperation(final CreateNodeOperation operation, final UmlModelServerAccess modelAccess) {
 
       switch (operation.getElementTypeId()) {
-         case Types.INTERACTION: {
+         case CommunicationConfig.Types.INTERACTION: {
             modelAccess
                .exec(AddInteractionCommandContribution.create(operation.getLocation().orElse(GraphUtil.point(0, 0))))
                .thenAccept(response -> {

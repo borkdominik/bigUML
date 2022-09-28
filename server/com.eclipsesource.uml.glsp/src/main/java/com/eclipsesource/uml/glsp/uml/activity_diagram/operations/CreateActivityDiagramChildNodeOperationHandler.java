@@ -46,7 +46,7 @@ import org.eclipse.uml2.uml.SendSignalAction;
 import com.eclipsesource.uml.glsp.model.UmlModelIndex;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.uml.activity_diagram.ActivityModelServerAccess;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.eclipsesource.uml.glsp.uml.activity_diagram.constants.ActivityTypes;
 import com.google.common.collect.Lists;
 
 public class CreateActivityDiagramChildNodeOperationHandler
@@ -57,10 +57,12 @@ public class CreateActivityDiagramChildNodeOperationHandler
    }
 
    private static List<String> handledElementTypeIds = Lists.newArrayList(
-      Types.ACTION, Types.ACCEPTEVENT, Types.TIMEEVENT,
-      Types.SENDSIGNAL, Types.CALL, Types.INITIALNODE, Types.FINALNODE, Types.FLOWFINALNODE,
-      Types.DECISIONMERGENODE, Types.FORKJOINNODE, Types.PARAMETER, Types.CENTRALBUFFER, Types.DATASTORE,
-      Types.CONDITION);
+      ActivityTypes.ACTION, ActivityTypes.ACCEPTEVENT, ActivityTypes.TIMEEVENT,
+      ActivityTypes.SENDSIGNAL, ActivityTypes.CALL, ActivityTypes.INITIALNODE, ActivityTypes.FINALNODE,
+      ActivityTypes.FLOWFINALNODE,
+      ActivityTypes.DECISIONMERGENODE, ActivityTypes.FORKJOINNODE, ActivityTypes.PARAMETER, ActivityTypes.CENTRALBUFFER,
+      ActivityTypes.DATASTORE,
+      ActivityTypes.CONDITION);
 
    @Override
    public boolean handles(final Operation execAction) {
@@ -86,7 +88,7 @@ public class CreateActivityDiagramChildNodeOperationHandler
       System.out.println("PARENT " + parentContainer.getClass());
 
       switch (operation.getElementTypeId()) {
-         case (Types.ACTION): {
+         case (ActivityTypes.ACTION): {
             if (parentContainer instanceof Activity
                || parentContainer instanceof ActivityPartition
                || parentContainer instanceof InterruptibleActivityRegion) {
@@ -102,7 +104,7 @@ public class CreateActivityDiagramChildNodeOperationHandler
             }
             break;
          }
-         case (Types.SENDSIGNAL): {
+         case (ActivityTypes.SENDSIGNAL): {
             if (parentContainer instanceof Activity) {
                Optional<GModelElement> containerActivity = modelIndex.get(operation.getContainerId());
                Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(),
@@ -116,7 +118,7 @@ public class CreateActivityDiagramChildNodeOperationHandler
             }
             break;
          }
-         case (Types.CALL): {
+         case (ActivityTypes.CALL): {
             if (parentContainer instanceof Activity
                || parentContainer instanceof ActivityPartition
                || parentContainer instanceof InterruptibleActivityRegion) {
@@ -131,7 +133,7 @@ public class CreateActivityDiagramChildNodeOperationHandler
                   });
             }
          }
-         case (Types.ACCEPTEVENT): {
+         case (ActivityTypes.ACCEPTEVENT): {
             if (parentContainer instanceof Activity
                || parentContainer instanceof ActivityPartition
                || parentContainer instanceof InterruptibleActivityRegion) {
@@ -147,7 +149,7 @@ public class CreateActivityDiagramChildNodeOperationHandler
             }
             break;
          }
-         case (Types.TIMEEVENT): {
+         case (ActivityTypes.TIMEEVENT): {
             if (parentContainer instanceof Activity
                || parentContainer instanceof ActivityPartition
                || parentContainer instanceof InterruptibleActivityRegion) {
@@ -163,7 +165,7 @@ public class CreateActivityDiagramChildNodeOperationHandler
             }
             break;
          }
-         case (Types.PARAMETER): {
+         case (ActivityTypes.PARAMETER): {
             if (parentContainer instanceof Activity) {
                Optional<GModelElement> containerActivity = modelIndex.get(operation.getContainerId());
                Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(),
@@ -178,7 +180,7 @@ public class CreateActivityDiagramChildNodeOperationHandler
             break;
          }
          // FIXME: NDOE IS NOT RENDERED AND MAYBE NOT A CLASSIC CHILD NODE AS THE OTHERS!!!
-         case (Types.CONDITION): {
+         case (ActivityTypes.CONDITION): {
             if (parentContainer instanceof Activity) {
                Optional<GModelElement> containerActivity = modelIndex.get(operation.getContainerId());
                Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(),
@@ -192,13 +194,13 @@ public class CreateActivityDiagramChildNodeOperationHandler
             }
             break;
          }
-         case (Types.CENTRALBUFFER): {
+         case (ActivityTypes.CENTRALBUFFER): {
             if (parentContainer instanceof Activity) {
                Optional<GModelElement> containerActivity = modelIndex.get(operation.getContainerId());
                Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(),
                   getStructureCompartmentGModelElement(containerActivity));
                modelAccess
-                  .addObjectNode(getUmlModelState(), relativeLocation, (Activity) parentContainer,
+                  .addObjectNode(getUmlModelState(), relativeLocation, parentContainer,
                      CentralBufferNode.class)
                   .thenAccept(response -> {
                      if (!response.body()) {
@@ -208,13 +210,13 @@ public class CreateActivityDiagramChildNodeOperationHandler
             }
             break;
          }
-         case (Types.DATASTORE): {
+         case (ActivityTypes.DATASTORE): {
             if (parentContainer instanceof Activity) {
                Optional<GModelElement> containerActivity = modelIndex.get(operation.getContainerId());
                Optional<GPoint> relativeLocation = getRelativeLocation(operation, operation.getLocation(),
                   getStructureCompartmentGModelElement(containerActivity));
                modelAccess
-                  .addObjectNode(getUmlModelState(), relativeLocation, (Activity) parentContainer, DataStoreNode.class)
+                  .addObjectNode(getUmlModelState(), relativeLocation, parentContainer, DataStoreNode.class)
                   .thenAccept(response -> {
                      if (!response.body()) {
                         throw new GLSPServerException("Could not create operation on new Action node");
@@ -223,7 +225,7 @@ public class CreateActivityDiagramChildNodeOperationHandler
             }
             break;
          }
-         case (Types.INITIALNODE): {
+         case (ActivityTypes.INITIALNODE): {
             if (parentContainer instanceof Activity
                || parentContainer instanceof ActivityPartition
                || parentContainer instanceof InterruptibleActivityRegion) {
@@ -239,7 +241,7 @@ public class CreateActivityDiagramChildNodeOperationHandler
             }
             break;
          }
-         case (Types.FINALNODE): {
+         case (ActivityTypes.FINALNODE): {
             if (parentContainer instanceof Activity
                || parentContainer instanceof ActivityPartition
                || parentContainer instanceof InterruptibleActivityRegion) {
@@ -255,7 +257,7 @@ public class CreateActivityDiagramChildNodeOperationHandler
             }
             break;
          }
-         case (Types.FLOWFINALNODE): {
+         case (ActivityTypes.FLOWFINALNODE): {
             if (parentContainer instanceof Activity
                || parentContainer instanceof ActivityPartition
                || parentContainer instanceof InterruptibleActivityRegion) {
@@ -271,7 +273,7 @@ public class CreateActivityDiagramChildNodeOperationHandler
             }
             break;
          }
-         case (Types.DECISIONMERGENODE): {
+         case (ActivityTypes.DECISIONMERGENODE): {
             if (parentContainer instanceof Activity
                || parentContainer instanceof ActivityPartition
                || parentContainer instanceof InterruptibleActivityRegion) {
@@ -287,7 +289,7 @@ public class CreateActivityDiagramChildNodeOperationHandler
             }
             break;
          }
-         case (Types.FORKJOINNODE): {
+         case (ActivityTypes.FORKJOINNODE): {
             if (parentContainer instanceof Activity
                || parentContainer instanceof ActivityPartition
                || parentContainer instanceof InterruptibleActivityRegion) {
@@ -304,7 +306,7 @@ public class CreateActivityDiagramChildNodeOperationHandler
             break;
          }
          // TODO: check how to set the pin always to the same position within the activity node
-         case (Types.PIN): {
+         case (ActivityTypes.PIN): {
             modelAccess.addPin(UmlModelState.getModelState(modelState), (Action) parentContainer)
                .thenAccept(response -> {
                   if (!response.body()) {
@@ -324,7 +326,7 @@ public class CreateActivityDiagramChildNodeOperationHandler
 
    protected Optional<GCompartment> getStructureCompartment(final GNode packageable) {
       return packageable.getChildren().stream().filter(GCompartment.class::isInstance).map(GCompartment.class::cast)
-         .filter(comp -> Types.STRUCTURE.equals(comp.getType())).findFirst();
+         .filter(comp -> ActivityTypes.STRUCTURE.equals(comp.getType())).findFirst();
    }
 
    protected Optional<GPoint> getRelativeLocation(final CreateNodeOperation operation,

@@ -13,7 +13,7 @@ package com.eclipsesource.uml.glsp.gmodel;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.graph.GModelElement;
 
-import com.eclipsesource.uml.glsp.util.GenericsUtil;
+import com.eclipsesource.uml.glsp.utils.reflection.GenericsUtil;
 
 public interface UmlGModelMapper<T extends EObject, E extends GModelElement> {
    E map(T object);

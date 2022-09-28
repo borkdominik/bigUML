@@ -21,13 +21,13 @@ import org.eclipse.uml2.uml.Lifeline;
 import org.eclipse.uml2.uml.Message;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.uml.communication_diagram.constants.CommunicationConfig;
+import com.eclipsesource.uml.glsp.uml.communication_diagram.constants.CommunicationTypes;
 import com.google.inject.Inject;
 
 public class CommunicationLabelEditValidator implements LabelEditValidator {
    private static Logger LOGGER = Logger.getLogger(CommunicationLabelEditValidator.class.getSimpleName());
-   private static Set<String> supportedElements = Set.of(CommunicationConfig.Types.LIFELINE,
-      CommunicationConfig.Types.INTERACTION, CommunicationConfig.Types.MESSAGE);
+   private static Set<String> supportedElements = Set.of(CommunicationTypes.LIFELINE,
+      CommunicationTypes.INTERACTION, CommunicationTypes.MESSAGE);
 
    @Inject
    protected UmlModelState modelState;
@@ -51,11 +51,11 @@ public class CommunicationLabelEditValidator implements LabelEditValidator {
          return ValidationStatus.ok();
       }
 
-      if (container.getType().equals(CommunicationConfig.Types.INTERACTION)) {
+      if (container.getType().equals(CommunicationTypes.INTERACTION)) {
          return ValidatorResultMapper.toValidationResult(interactionValidator.validateName(element.getId(), label));
-      } else if (container.getType().equals(CommunicationConfig.Types.LIFELINE)) {
+      } else if (container.getType().equals(CommunicationTypes.LIFELINE)) {
          return ValidatorResultMapper.toValidationResult(lifelineValidator.validateName(element.getId(), label));
-      } else if (container.getType().equals(CommunicationConfig.Types.MESSAGE)) {
+      } else if (container.getType().equals(CommunicationTypes.MESSAGE)) {
          return ValidatorResultMapper.toValidationResult(messageValidator.validateName(element.getId(), label));
       }
 

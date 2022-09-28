@@ -8,14 +8,14 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.util;
+package com.eclipsesource.uml.glsp.palette;
 
 import org.eclipse.glsp.server.actions.TriggerEdgeCreationAction;
 import org.eclipse.glsp.server.actions.TriggerNodeCreationAction;
 import org.eclipse.glsp.server.features.toolpalette.PaletteItem;
 
-public class UmlPaletteUtil {
-   private UmlPaletteUtil() {}
+public final class PaletteItemUtil {
+   private PaletteItemUtil() {}
 
    public static PaletteItem node(final String elementTypeId, final String label, final String icon) {
       return new PaletteItem(elementTypeId, label, new TriggerNodeCreationAction(elementTypeId), icon);

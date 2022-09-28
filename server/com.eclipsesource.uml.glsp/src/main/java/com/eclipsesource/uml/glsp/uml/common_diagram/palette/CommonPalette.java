@@ -19,7 +19,7 @@ import org.eclipse.glsp.server.features.toolpalette.PaletteItem;
 
 import com.eclipsesource.uml.glsp.palette.DiagramPalette;
 import com.eclipsesource.uml.glsp.uml.common_diagram.configuration.CommonCommonConfigurationAccessor;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.eclipsesource.uml.glsp.uml.common_diagram.constants.CommonTypes;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
@@ -38,7 +38,7 @@ public class CommonPalette implements DiagramPalette {
    }
 
    private PaletteItem comment() {
-      PaletteItem createCommentNode = node(Types.COMMENT, "Comment", "umlcomment");
+      PaletteItem createCommentNode = node(CommonTypes.COMMENT, "Comment", "umlcomment");
       // PaletteItem createCommentEdge = node(Types.COMMENT_EDGE, "Comment Edge", "umlcommentedge");
 
       List<PaletteItem> comment = Lists.newArrayList(createCommentNode);

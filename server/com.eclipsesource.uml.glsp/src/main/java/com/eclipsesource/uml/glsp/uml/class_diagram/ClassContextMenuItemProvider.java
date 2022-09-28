@@ -17,7 +17,7 @@ import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.eclipsesource.uml.glsp.uml.class_diagram.constants.ClassTypes;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
@@ -64,12 +64,12 @@ public class ClassContextMenuItemProvider implements ContextMenuItemProvider {
 
    // CLASS DIAGRAM
    public List<MenuItem> classDiagramNodes(final GPoint position) {
-      MenuItem createClass = new MenuItem(Types.CLASS, "Class",
-         List.of(new CreateNodeOperation(Types.CLASS, position)), true);
-      MenuItem createEnumeration = new MenuItem(Types.ENUMERATION, "Enumeration",
-         List.of(new CreateNodeOperation(Types.ENUMERATION, position)), true);
-      MenuItem createInterface = new MenuItem(Types.INTERFACE, "Interface",
-         List.of(new CreateNodeOperation(Types.INTERFACE, position)), true);
+      MenuItem createClass = new MenuItem(ClassTypes.CLASS, "Class",
+         List.of(new CreateNodeOperation(ClassTypes.CLASS, position)), true);
+      MenuItem createEnumeration = new MenuItem(ClassTypes.ENUMERATION, "Enumeration",
+         List.of(new CreateNodeOperation(ClassTypes.ENUMERATION, position)), true);
+      MenuItem createInterface = new MenuItem(ClassTypes.INTERFACE, "Interface",
+         List.of(new CreateNodeOperation(ClassTypes.INTERFACE, position)), true);
 
       MenuItem classDiagramNodes = new MenuItem("classDiagramNodes", "Nodes",
          Arrays.asList(createClass, createEnumeration, createInterface), "classDiagramNodes");
@@ -80,9 +80,9 @@ public class ClassContextMenuItemProvider implements ContextMenuItemProvider {
       Optional<GModelElement> element = umlModelState.getIndex().get(elementId);
       String type = element.get().getType();
 
-      if (Objects.equals(type, Types.CLASS)) {
-         MenuItem createProperty = new MenuItem(Types.PROPERTY, "Property",
-            List.of(new CreateNodeOperation(Types.PROPERTY, elementId)), true);
+      if (Objects.equals(type, ClassTypes.CLASS)) {
+         MenuItem createProperty = new MenuItem(ClassTypes.PROPERTY, "Property",
+            List.of(new CreateNodeOperation(ClassTypes.PROPERTY, elementId)), true);
 
          MenuItem childNodes = new MenuItem("classDiagramChildNodes", "Child Nodes",
             List.of(createProperty), "classDiagramChildNodes");
@@ -92,10 +92,10 @@ public class ClassContextMenuItemProvider implements ContextMenuItemProvider {
    }
 
    public List<MenuItem> classDiagramEdges(final String sourceElementId, final String targetElementId) {
-      MenuItem createAssociation = new MenuItem(Types.ASSOCIATION, "Association",
-         List.of(new CreateEdgeOperation(Types.ASSOCIATION, sourceElementId, targetElementId)), true);
-      MenuItem createGeneralization = new MenuItem(Types.CLASS_GENERALIZATION, "Generalization",
-         List.of(new CreateEdgeOperation(Types.CLASS_GENERALIZATION, sourceElementId, targetElementId)), true);
+      MenuItem createAssociation = new MenuItem(ClassTypes.ASSOCIATION, "Association",
+         List.of(new CreateEdgeOperation(ClassTypes.ASSOCIATION, sourceElementId, targetElementId)), true);
+      MenuItem createGeneralization = new MenuItem(ClassTypes.CLASS_GENERALIZATION, "Generalization",
+         List.of(new CreateEdgeOperation(ClassTypes.CLASS_GENERALIZATION, sourceElementId, targetElementId)), true);
 
       MenuItem classDiagramEdges = new MenuItem("classDiagramEdges", "Edges",
          Arrays.asList(createAssociation, createGeneralization), "classDiagramEdges");

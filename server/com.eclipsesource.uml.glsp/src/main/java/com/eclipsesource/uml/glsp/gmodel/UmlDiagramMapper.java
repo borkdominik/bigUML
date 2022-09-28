@@ -18,7 +18,7 @@ import org.eclipse.glsp.graph.builder.impl.GGraphBuilder;
 import org.eclipse.uml2.uml.Model;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.util.UmlIDUtil;
+import com.eclipsesource.uml.glsp.utils.UmlIDUtil;
 import com.eclipsesource.uml.modelserver.unotation.Diagram;
 import com.google.inject.Inject;
 
@@ -47,6 +47,12 @@ public class UmlDiagramMapper {
       return map(graph, diagram);
    }
 
+   /**
+    * Creates and assigns the new root (graph) to the model state
+    *
+    * @param modelState
+    * @return the assigned graph
+    */
    public GGraph createRoot(final UmlModelState modelState) {
       GGraph graph = new GGraphBuilder().build();
       modelState.setRoot(graph);

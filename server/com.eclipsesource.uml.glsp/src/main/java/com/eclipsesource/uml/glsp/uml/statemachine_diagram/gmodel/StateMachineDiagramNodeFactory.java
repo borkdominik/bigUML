@@ -25,9 +25,10 @@ import org.eclipse.uml2.uml.State;
 import org.eclipse.uml2.uml.StateMachine;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.util.UmlConfig.CSS;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
-import com.eclipsesource.uml.glsp.util.UmlIDUtil;
+import com.eclipsesource.uml.glsp.uml.statemachine_diagram.constants.StateMachineTypes;
+import com.eclipsesource.uml.glsp.utils.UmlConfig;
+import com.eclipsesource.uml.glsp.utils.UmlConfig.CSS;
+import com.eclipsesource.uml.glsp.utils.UmlIDUtil;
 import com.eclipsesource.uml.modelserver.unotation.Shape;
 
 public class StateMachineDiagramNodeFactory extends StateMachineAbstractGModelFactory<Classifier, GNode> {
@@ -82,7 +83,7 @@ public class StateMachineDiagramNodeFactory extends StateMachineAbstractGModelFa
       layoutOptions.put(H_GRAB, false);
       layoutOptions.put(V_GRAB, false);
 
-      GNodeBuilder builder = new GNodeBuilder(Types.STATE_MACHINE)
+      GNodeBuilder builder = new GNodeBuilder(StateMachineTypes.STATE_MACHINE)
          .id(toId(umlStateMachine))
          .layout(GConstants.Layout.VBOX)
          .layoutOptions(layoutOptions)
@@ -122,7 +123,7 @@ public class StateMachineDiagramNodeFactory extends StateMachineAbstractGModelFa
       layoutOptions.put(H_GRAB, false);
       layoutOptions.put(V_GRAB, false);
 
-      GNodeBuilder builder = new GNodeBuilder(Types.REGION)
+      GNodeBuilder builder = new GNodeBuilder(StateMachineTypes.REGION)
          .id(toId(umlRegion))
          .layout(GConstants.Layout.VBOX)
          .layoutOptions(layoutOptions)
@@ -166,7 +167,7 @@ public class StateMachineDiagramNodeFactory extends StateMachineAbstractGModelFa
       layoutOptions.put(H_ALIGN, GConstants.HAlign.LEFT);
       layoutOptions.put(H_GRAB, true);
       layoutOptions.put(V_GRAB, true);
-      GCompartment structCompartment = new GCompartmentBuilder(Types.STRUCTURE)
+      GCompartment structCompartment = new GCompartmentBuilder(StateMachineTypes.STRUCTURE)
          .id(toId(umlStateMachine) + "_struct")
          .layout(GConstants.Layout.FREEFORM)
          .layoutOptions(layoutOptions)
@@ -180,7 +181,7 @@ public class StateMachineDiagramNodeFactory extends StateMachineAbstractGModelFa
       layoutOptions.put(H_ALIGN, GConstants.HAlign.LEFT);
       layoutOptions.put(H_GRAB, true);
       layoutOptions.put(V_GRAB, true);
-      GCompartment structCompartment = new GCompartmentBuilder(Types.STRUCTURE)
+      GCompartment structCompartment = new GCompartmentBuilder(StateMachineTypes.STRUCTURE)
          .id(toId(umlRegion) + "_struct")
          .layout(GConstants.Layout.FREEFORM)
          .layoutOptions(layoutOptions)
@@ -190,15 +191,15 @@ public class StateMachineDiagramNodeFactory extends StateMachineAbstractGModelFa
    }
 
    protected GCompartment buildStateMachineHeader(final StateMachine umlStateMachine) {
-      GCompartmentBuilder stateMachineHeaderBuilder = new GCompartmentBuilder(Types.COMPARTMENT_HEADER)
+      GCompartmentBuilder stateMachineHeaderBuilder = new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER)
          .layout(GConstants.Layout.HBOX)
          .id(UmlIDUtil.createHeaderId(toId(umlStateMachine)));
 
-      GCompartment stateMachineHeaderIcon = new GCompartmentBuilder(Types.ICON_STATE_MACHINE)
+      GCompartment stateMachineHeaderIcon = new GCompartmentBuilder(StateMachineTypes.ICON_STATE_MACHINE)
          .id(UmlIDUtil.createHeaderIconId(toId(umlStateMachine))).build();
       stateMachineHeaderBuilder.add(stateMachineHeaderIcon);
 
-      GLabel stateMachineHeaderLabel = new GLabelBuilder(Types.LABEL_NAME)
+      GLabel stateMachineHeaderLabel = new GLabelBuilder(UmlConfig.Types.LABEL_NAME)
          .id(UmlIDUtil.createHeaderLabelId(toId(umlStateMachine)))
          .text(umlStateMachine.getName()).build();
       stateMachineHeaderBuilder.add(stateMachineHeaderLabel);
@@ -208,7 +209,7 @@ public class StateMachineDiagramNodeFactory extends StateMachineAbstractGModelFa
 
    protected GCompartment buildStateMachineRegionCompartment(final Collection<Region> children,
       final Classifier parent) {
-      GCompartmentBuilder stateMachineRegionsBuilder = new GCompartmentBuilder(Types.COMP)
+      GCompartmentBuilder stateMachineRegionsBuilder = new GCompartmentBuilder(UmlConfig.Types.COMP)
          .id(UmlIDUtil.createChildCompartmentId(toId(parent))).layout(GConstants.Layout.VBOX);
 
       GLayoutOptions layoutOptions = new GLayoutOptions()

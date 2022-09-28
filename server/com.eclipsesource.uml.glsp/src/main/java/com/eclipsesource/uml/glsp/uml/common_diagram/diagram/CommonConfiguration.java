@@ -21,7 +21,7 @@ import org.eclipse.glsp.server.types.EdgeTypeHint;
 import org.eclipse.glsp.server.types.ShapeTypeHint;
 
 import com.eclipsesource.uml.glsp.diagram.DiagramConfiguration;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.eclipsesource.uml.glsp.uml.common_diagram.constants.CommonTypes;
 import com.google.common.collect.Lists;
 
 public class CommonConfiguration implements DiagramConfiguration {
@@ -29,7 +29,7 @@ public class CommonConfiguration implements DiagramConfiguration {
    @Override
    public List<EdgeTypeHint> getEdgeTypeHints() {
       return Lists.newArrayList(
-         createDefaultEdgeTypeHint(Types.COMMENT_EDGE));
+         createDefaultEdgeTypeHint(CommonTypes.COMMENT_EDGE));
    }
 
    public EdgeTypeHint createDefaultEdgeTypeHint(final String elementId) {
@@ -40,10 +40,10 @@ public class CommonConfiguration implements DiagramConfiguration {
 
       switch (elementId) {
          // COMMENT
-         case Types.COMMENT_EDGE:
+         case CommonTypes.COMMENT_EDGE:
             allowed = Lists.newArrayList();
-            allowed.addAll(Types.LINKS_TO_COMMENT);
-            return new EdgeTypeHint(elementId, true, true, true, List.of(Types.COMMENT),
+            allowed.addAll(CommonTypes.LINKS_TO_COMMENT);
+            return new EdgeTypeHint(elementId, true, true, true, List.of(CommonTypes.COMMENT),
                allowed);
          default:
             break;
@@ -52,13 +52,13 @@ public class CommonConfiguration implements DiagramConfiguration {
    }
 
    @Override
-   public List<String> getGraphContainableElements() { return List.of(Types.COMMENT); }
+   public List<String> getGraphContainableElements() { return List.of(CommonTypes.COMMENT); }
 
    @Override
    public List<ShapeTypeHint> getShapeTypeHints() {
       List<ShapeTypeHint> hints = new ArrayList<>();
 
-      hints.add(new ShapeTypeHint(Types.COMMENT, true, true, false, false));
+      hints.add(new ShapeTypeHint(CommonTypes.COMMENT, true, true, false, false));
 
       return hints;
    }
@@ -67,8 +67,8 @@ public class CommonConfiguration implements DiagramConfiguration {
    public Map<String, EClass> getTypeMappings() {
       Map<String, EClass> mappings = DefaultTypes.getDefaultTypeMappings();
 
-      mappings.put(Types.COMMENT, GraphPackage.Literals.GNODE);
-      mappings.put(Types.COMMENT_EDGE, GraphPackage.Literals.GEDGE);
+      mappings.put(CommonTypes.COMMENT, GraphPackage.Literals.GNODE);
+      mappings.put(CommonTypes.COMMENT_EDGE, GraphPackage.Literals.GEDGE);
 
       return mappings;
    }

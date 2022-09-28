@@ -45,9 +45,10 @@ import org.eclipse.uml2.uml.Pin;
 import org.eclipse.uml2.uml.SendSignalAction;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.util.UmlConfig.CSS;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
-import com.eclipsesource.uml.glsp.util.UmlIDUtil;
+import com.eclipsesource.uml.glsp.uml.activity_diagram.constants.ActivityTypes;
+import com.eclipsesource.uml.glsp.utils.UmlConfig;
+import com.eclipsesource.uml.glsp.utils.UmlConfig.CSS;
+import com.eclipsesource.uml.glsp.utils.UmlIDUtil;
 import com.eclipsesource.uml.modelserver.unotation.Shape;
 
 public class ActivityDiagramChildNodeFactory extends ActivityAbstractGModelFactory<ActivityNode, GNode> {
@@ -75,18 +76,18 @@ public class ActivityDiagramChildNodeFactory extends ActivityAbstractGModelFacto
    protected GNode createAction(final Action action) {
       String type;
       if (action instanceof OpaqueAction) {
-         type = Types.ACTION;
+         type = ActivityTypes.ACTION;
       } else if (action instanceof SendSignalAction) {
-         type = Types.SENDSIGNAL;
+         type = ActivityTypes.SENDSIGNAL;
       } else if (action instanceof CallBehaviorAction) {
          System.out.println("CALL");
-         type = Types.CALL;
+         type = ActivityTypes.CALL;
       } else if (action instanceof AcceptEventAction) {
          System.out.println("EVENT");
          if (((AcceptEventAction) action).getTriggers().stream().anyMatch(t -> "timeEvent".equals(t.getName()))) {
-            type = Types.TIMEEVENT;
+            type = ActivityTypes.TIMEEVENT;
          } else {
-            type = Types.ACCEPTEVENT;
+            type = ActivityTypes.ACCEPTEVENT;
          }
       } else {
          return null;
@@ -113,7 +114,7 @@ public class ActivityDiagramChildNodeFactory extends ActivityAbstractGModelFacto
 
    protected GNode createCall(final CallAction callAction) {
       System.out.println("goes into call action factory");
-      GNodeBuilder b = new GNodeBuilder(Types.CALL) //
+      GNodeBuilder b = new GNodeBuilder(ActivityTypes.CALL) //
          .id(toId(callAction)) //
          .layout(GConstants.Layout.VBOX) //
          .addCssClass(CSS.NODE) //
@@ -126,15 +127,15 @@ public class ActivityDiagramChildNodeFactory extends ActivityAbstractGModelFacto
    protected GNode createControlNode(final ControlNode node) {
       String type;
       if (node instanceof InitialNode) {
-         type = Types.INITIALNODE;
+         type = ActivityTypes.INITIALNODE;
       } else if (node instanceof ActivityFinalNode) {
-         type = Types.FINALNODE;
+         type = ActivityTypes.FINALNODE;
       } else if (node instanceof FlowFinalNode) {
-         type = Types.FLOWFINALNODE;
+         type = ActivityTypes.FLOWFINALNODE;
       } else if (node instanceof DecisionNode || node instanceof MergeNode) {
-         type = Types.DECISIONMERGENODE;
+         type = ActivityTypes.DECISIONMERGENODE;
       } else if (node instanceof ForkNode || node instanceof JoinNode) {
-         type = Types.FORKJOINNODE;
+         type = ActivityTypes.FORKJOINNODE;
       } else {
          return null;
       }
@@ -149,14 +150,14 @@ public class ActivityDiagramChildNodeFactory extends ActivityAbstractGModelFacto
    }
 
    protected GNode createParameter(final ActivityParameterNode node) {
-      GNodeBuilder b = new GNodeBuilder(Types.PARAMETER) //
+      GNodeBuilder b = new GNodeBuilder(ActivityTypes.PARAMETER) //
          .id(toId(node)) //
          .layout(GConstants.Layout.VBOX) //
          .addCssClass(CSS.NODE)
-         .add(new GCompartmentBuilder(Types.COMPARTMENT_HEADER) //
+         .add(new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER) //
             .layout(GConstants.Layout.VBOX) //
             .id(toId(node) + "_header")
-            .add(new GLabelBuilder(Types.LABEL_NAME) //
+            .add(new GLabelBuilder(UmlConfig.Types.LABEL_NAME) //
                .id(UmlIDUtil.createHeaderLabelId(toId(node)))
                .text(node.getName()) //
                .build()) //
@@ -169,10 +170,10 @@ public class ActivityDiagramChildNodeFactory extends ActivityAbstractGModelFacto
    protected GNode createCentralBuffer(final CentralBufferNode node) {
       String type, header;
       if (node instanceof DataStoreNode) {
-         type = Types.DATASTORE;
+         type = ActivityTypes.DATASTORE;
          header = "<<datastore>>";
       } else if (node != null) {
-         type = Types.CENTRALBUFFER;
+         type = ActivityTypes.CENTRALBUFFER;
          header = "<<centralBuffer>>";
       } else {
          return null;
@@ -182,13 +183,13 @@ public class ActivityDiagramChildNodeFactory extends ActivityAbstractGModelFacto
          .id(toId(node) + rand.nextInt(1000)) //
          .layout(GConstants.Layout.VBOX) //
          .addCssClass(CSS.NODE)
-         .add(new GCompartmentBuilder(Types.COMPARTMENT_HEADER) //
+         .add(new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER) //
             .layout(GConstants.Layout.VBOX) //
             .id(UmlIDUtil.createHeaderId(toId(node)))
-            .add(new GLabelBuilder(Types.LABEL_TEXT) //
+            .add(new GLabelBuilder(UmlConfig.Types.LABEL_TEXT) //
                .id(toId(node) + "_header_labeltype").text(header) //
                .build()) //
-            .add(new GLabelBuilder(Types.LABEL_NAME) //
+            .add(new GLabelBuilder(UmlConfig.Types.LABEL_NAME) //
                .id(UmlIDUtil.createHeaderLabelId(toId(node)))
                .text(node.getName())
                .build()) //
@@ -200,12 +201,12 @@ public class ActivityDiagramChildNodeFactory extends ActivityAbstractGModelFacto
 
    protected GNode createPin(final Pin pin) {
       System.out.println("GOES INTO Pin CREATE");
-      GNodeBuilder b = new GNodeBuilder(Types.PIN) //
+      GNodeBuilder b = new GNodeBuilder(ActivityTypes.PIN) //
          .id(toId(pin)) //
          .layout(GConstants.Layout.VBOX) //
          .addCssClass(CSS.NODE)
          .add(buildHeader(pin))
-         .add(new GNodeBuilder(Types.PIN_PORT).id(toId(pin) + "_port").size(10, 10).build());
+         .add(new GNodeBuilder(ActivityTypes.PIN_PORT).id(toId(pin) + "_port").size(10, 10).build());
 
       applyShapeData(pin, b);
       return b.build();
@@ -235,14 +236,14 @@ public class ActivityDiagramChildNodeFactory extends ActivityAbstractGModelFacto
 
    protected GCompartment buildHeader(final Action action) {
       String text = action.getName();
-      String labelType = Types.LABEL_NAME;
+      String labelType = UmlConfig.Types.LABEL_NAME;
       if (action instanceof CallBehaviorAction) {
          CallBehaviorAction cba = (CallBehaviorAction) action;
          text = cba.getBehavior() != null ? cba.getBehavior().getName() : "<NoRef>";
-         labelType = Types.CALL_REF;
+         labelType = ActivityTypes.CALL_REF;
       }
       Random rand = new Random();
-      return new GCompartmentBuilder(Types.COMPARTMENT_HEADER) //
+      return new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER) //
          .layout("hbox") //
          .id(UmlIDUtil.createHeaderId(toId(action) + rand.nextInt(1000)))
          .add(new GLabelBuilder(labelType) //
@@ -252,10 +253,10 @@ public class ActivityDiagramChildNodeFactory extends ActivityAbstractGModelFacto
    }
 
    protected GCompartment buildHeader(final ObjectNode node) {
-      return new GCompartmentBuilder(Types.COMPARTMENT_HEADER) //
+      return new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER) //
          .layout("hbox") //
          .id(UmlIDUtil.createHeaderId(toId(node)))
-         .add(new GLabelBuilder(Types.LABEL_NAME) //
+         .add(new GLabelBuilder(UmlConfig.Types.LABEL_NAME) //
             .id(UmlIDUtil.createHeaderLabelId(toId(node))).text(node.getName()) //
             .build()) //
          .build();
@@ -263,7 +264,7 @@ public class ActivityDiagramChildNodeFactory extends ActivityAbstractGModelFacto
 
    protected GCompartment buildPins(final Action action, final List<? extends Pin> pins, final String type) {
 
-      return new GCompartmentBuilder(Types.COMP) //
+      return new GCompartmentBuilder(UmlConfig.Types.COMP) //
          .id(toId(action) + "_childCompartment" + type).layout(GConstants.Layout.VBOX) //
          .layoutOptions(new GLayoutOptions() //
             .hAlign(GConstants.HAlign.LEFT) //

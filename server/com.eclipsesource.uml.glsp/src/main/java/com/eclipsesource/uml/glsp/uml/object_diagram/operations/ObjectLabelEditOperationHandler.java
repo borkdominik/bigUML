@@ -28,8 +28,9 @@ import org.eclipse.uml2.uml.Property;
 import com.eclipsesource.uml.glsp.model.UmlModelIndex;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.uml.object_diagram.ObjectModelServerAccess;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
-import com.eclipsesource.uml.glsp.util.UmlIDUtil;
+import com.eclipsesource.uml.glsp.uml.object_diagram.constants.ObjectTypes;
+import com.eclipsesource.uml.glsp.utils.UmlConfig.Types;
+import com.eclipsesource.uml.glsp.utils.UmlIDUtil;
 
 public class ObjectLabelEditOperationHandler
    extends EMSBasicOperationHandler<ApplyLabelEditOperation, ObjectModelServerAccess> {
@@ -78,7 +79,7 @@ public class ObjectLabelEditOperationHandler
             }
             break;
 
-         case Types.ATTRIBUTE:
+         case ObjectTypes.ATTRIBUTE:
             Property objectAttribute = getOrThrow(modelIndex.getSemantic(graphicalElementId),
                Property.class, "No valid container with id " + graphicalElementId + " found");
 

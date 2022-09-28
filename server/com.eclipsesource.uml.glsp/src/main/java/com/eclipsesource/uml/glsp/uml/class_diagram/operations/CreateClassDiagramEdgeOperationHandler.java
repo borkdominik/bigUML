@@ -22,7 +22,7 @@ import org.eclipse.uml2.uml.Class;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.uml.class_diagram.ClassModelServerAccess;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.eclipsesource.uml.glsp.uml.class_diagram.constants.ClassTypes;
 import com.google.common.collect.Lists;
 
 public class CreateClassDiagramEdgeOperationHandler
@@ -32,8 +32,8 @@ public class CreateClassDiagramEdgeOperationHandler
       super(handledElementTypeIds);
    }
 
-   private static List<String> handledElementTypeIds = Lists.newArrayList(Types.ASSOCIATION,
-      Types.AGGREGATION, Types.COMPOSITION, Types.CLASS_GENERALIZATION);
+   private static List<String> handledElementTypeIds = Lists.newArrayList(ClassTypes.ASSOCIATION,
+      ClassTypes.AGGREGATION, ClassTypes.COMPOSITION, ClassTypes.CLASS_GENERALIZATION);
 
    @Override
    public boolean handles(final Operation execAction) {
@@ -60,13 +60,13 @@ public class CreateClassDiagramEdgeOperationHandler
          "No valid target element with id " + targetId + " found");
 
       System.out.println("ELEMENT TYPE ID " + operation.getElementTypeId());
-      if (Types.ASSOCIATION.equals(operation.getElementTypeId()) ||
-         Types.COMPOSITION.equals(operation.getElementTypeId()) ||
-         Types.AGGREGATION.equals(operation.getElementTypeId())) {
+      if (ClassTypes.ASSOCIATION.equals(operation.getElementTypeId()) ||
+         ClassTypes.COMPOSITION.equals(operation.getElementTypeId()) ||
+         ClassTypes.AGGREGATION.equals(operation.getElementTypeId())) {
          String keyword;
-         if (Types.COMPOSITION.equals(operation.getElementTypeId())) {
+         if (ClassTypes.COMPOSITION.equals(operation.getElementTypeId())) {
             keyword = "composition";
-         } else if (Types.AGGREGATION.equals(operation.getElementTypeId())) {
+         } else if (ClassTypes.AGGREGATION.equals(operation.getElementTypeId())) {
             keyword = "aggregation";
          } else {
             keyword = "association";
@@ -77,7 +77,7 @@ public class CreateClassDiagramEdgeOperationHandler
                   throw new GLSPServerException("Could not execute create operation on new Association edge");
                }
             });
-      } else if (Types.CLASS_GENERALIZATION.equals(operation.getElementTypeId())) {
+      } else if (ClassTypes.CLASS_GENERALIZATION.equals(operation.getElementTypeId())) {
          System.out.println("REACHES EDGE HANDLER");
          System.out.println("source: " + source + " target: " + target);
          modelAccess.addClassGeneralization(modelState, source, target)

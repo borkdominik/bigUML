@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2021 EclipseSource and others.
+ * Copyright (c) 2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -8,16 +8,8 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.util;
+package com.eclipsesource.uml.glsp.uml.deployment_diagram.constants;
 
-import org.eclipse.emf.ecore.EReference;
-
-public final class UmlEdgeUtil {
-
-   private UmlEdgeUtil() {}
-
-   public static String getStringId(final EReference reference) {
-      return Integer.toString(reference.hashCode());
-   }
-
+public final class DeploymentCSS {
+   private DeploymentCSS() {}
 }

@@ -23,7 +23,7 @@ import org.eclipse.uml2.uml.PackageableElement;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.uml.class_diagram.ClassModelServerAccess;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.eclipsesource.uml.glsp.uml.class_diagram.constants.ClassTypes;
 
 public class CreateClassDiagramChildNodeOperationHandler
    extends EMSBasicCreateOperationHandler<CreateNodeOperation, ClassModelServerAccess> {
@@ -32,7 +32,7 @@ public class CreateClassDiagramChildNodeOperationHandler
       super(handledElementTypeIds);
    }
 
-   private static List<String> handledElementTypeIds = List.of(Types.PROPERTY);
+   private static List<String> handledElementTypeIds = List.of(ClassTypes.PROPERTY);
 
    @Override
    public boolean handles(final Operation execAction) {
@@ -55,7 +55,7 @@ public class CreateClassDiagramChildNodeOperationHandler
       PackageableElement container = getOrThrow(modelState.getIndex().getSemantic(containerId),
          PackageableElement.class, "No valid container with id " + operation.getContainerId() + " found");
 
-      if (elementTypeId.equals(Types.PROPERTY) && container instanceof Class) {
+      if (elementTypeId.equals(ClassTypes.PROPERTY) && container instanceof Class) {
          modelAccess.addProperty(UmlModelState.getModelState(modelState), (Class) container)
             .thenAccept(response -> {
                if (!response.body()) {

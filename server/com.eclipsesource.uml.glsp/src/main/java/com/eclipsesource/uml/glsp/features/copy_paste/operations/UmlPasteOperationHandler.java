@@ -36,8 +36,8 @@ import com.eclipsesource.uml.glsp.features.copy_paste.property.LifelinePropertie
 import com.eclipsesource.uml.glsp.features.copy_paste.property.MessagePropertiesFactory;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;
-import com.eclipsesource.uml.glsp.uml.communication_diagram.constants.CommunicationConfig;
-import com.eclipsesource.uml.glsp.util.UmlGModelUtil;
+import com.eclipsesource.uml.glsp.uml.communication_diagram.constants.CommunicationTypes;
+import com.eclipsesource.uml.glsp.utils.gmodel.GModelFilterUtil;
 import com.eclipsesource.uml.modelserver.commands.communication.interaction.CopyInteractionCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.communication.interaction.InteractionCopyableProperties;
 import com.eclipsesource.uml.modelserver.commands.communication.lifeline.CopyLifelineWithMessagesCommandContribution;
@@ -71,8 +71,8 @@ public class UmlPasteOperationHandler
       final UmlModelServerAccess modelServerAccess) {
       var selectedElements = getCopiedElements(
          operation.getClipboardData().get(UmlRequestClipboardDataActionHandler.CLIPBOARD_SELECTED_ELEMENTS));
-      var interactionElements = UmlGModelUtil
-         .filterByType(selectedElements, CommunicationConfig.Types.INTERACTION, GModelElement.class)
+      var interactionElements = GModelFilterUtil
+         .filterByType(selectedElements, CommunicationTypes.INTERACTION, GModelElement.class)
          .collect(Collectors.toUnmodifiableList());
 
       if (interactionElements.size() > 0) {
@@ -88,8 +88,8 @@ public class UmlPasteOperationHandler
          if (parentInteraction.isPresent()) {
             var root = getCopiedElement(
                operation.getClipboardData().get(UmlRequestClipboardDataActionHandler.CLIPBOARD_ROOT));
-            var lifelineElements = UmlGModelUtil
-               .filterByType(selectedElements, CommunicationConfig.Types.LIFELINE, GModelElement.class)
+            var lifelineElements = GModelFilterUtil
+               .filterByType(selectedElements, CommunicationTypes.LIFELINE, GModelElement.class)
                .collect(Collectors.toUnmodifiableList());
 
             var lifelineProperties = getLifelineProperties(lifelineElements);
@@ -113,23 +113,23 @@ public class UmlPasteOperationHandler
    }
 
    protected List<InteractionCopyableProperties> getInteractionProperties(final List<GModelElement> elements) {
-      return UmlGModelUtil.filterByType(elements, CommunicationConfig.Types.INTERACTION, GNode.class)
+      return GModelFilterUtil.filterByType(elements, CommunicationTypes.INTERACTION, GNode.class)
          .map(interaction -> InteractionPropertiesFactory.from(interaction))
          .collect(Collectors.toUnmodifiableList());
    }
 
    protected List<LifelineCopyableProperties> getLifelineProperties(final List<GModelElement> elements) {
-      return UmlGModelUtil.filterByType(elements, CommunicationConfig.Types.LIFELINE, GNode.class)
+      return GModelFilterUtil.filterByType(elements, CommunicationTypes.LIFELINE, GNode.class)
          .map(lifeline -> LifelinePropertiesFactory.from(lifeline))
          .collect(Collectors.toUnmodifiableList());
    }
 
    protected List<MessageCopyableProperties> getMessageProperties(final List<GModelElement> elements,
       final GModelElement root) {
-      var lifelineMappings = UmlGModelUtil.filterByType(elements, CommunicationConfig.Types.LIFELINE, GNode.class)
+      var lifelineMappings = GModelFilterUtil.filterByType(elements, CommunicationTypes.LIFELINE, GNode.class)
          .collect(Collectors.toUnmodifiableMap(value -> value.getId(), value -> value));
 
-      return UmlGModelUtil.flatFilterByType(root, CommunicationConfig.Types.MESSAGE, GEdge.class)
+      return GModelFilterUtil.flatFilterByType(root, CommunicationTypes.MESSAGE, GEdge.class)
          .filter(edge -> lifelineMappings.containsKey(edge.getSourceId())
             && lifelineMappings.containsKey(edge.getTargetId()))
          .map(message -> MessagePropertiesFactory.from(message))

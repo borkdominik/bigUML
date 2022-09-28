@@ -30,8 +30,8 @@ import org.eclipse.uml2.uml.Node;
 import com.eclipsesource.uml.glsp.model.UmlModelIndex;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.uml.deployment_diagram.DeploymentModelServerAccess;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
-import com.eclipsesource.uml.glsp.util.UmlIDUtil;
+import com.eclipsesource.uml.glsp.utils.UmlIDUtil;
+import com.eclipsesource.uml.glsp.utils.UmlConfig.Types;
 
 public class DeploymentLabelEditOperationHandler
    extends EMSBasicOperationHandler<ApplyLabelEditOperation, DeploymentModelServerAccess> {

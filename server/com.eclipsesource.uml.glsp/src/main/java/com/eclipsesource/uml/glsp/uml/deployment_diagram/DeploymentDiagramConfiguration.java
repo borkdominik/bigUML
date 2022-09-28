@@ -22,7 +22,7 @@ import org.eclipse.glsp.server.layout.ServerLayoutKind;
 import org.eclipse.glsp.server.types.EdgeTypeHint;
 import org.eclipse.glsp.server.types.ShapeTypeHint;
 
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.eclipsesource.uml.glsp.uml.deployment_diagram.constants.DeploymentTypes;
 import com.google.common.collect.Lists;
 
 public class DeploymentDiagramConfiguration extends BaseDiagramConfiguration {
@@ -33,11 +33,9 @@ public class DeploymentDiagramConfiguration extends BaseDiagramConfiguration {
    @Override
    public List<EdgeTypeHint> getEdgeTypeHints() {
       return Lists.newArrayList(
-         // COMMONS
-         createDefaultEdgeTypeHint(Types.COMMENT_EDGE),
          // DEPLOYMENT DIAGRAM
-         createDefaultEdgeTypeHint(Types.COMMUNICATION_PATH),
-         createDefaultEdgeTypeHint(Types.DEPLOYMENT));
+         createDefaultEdgeTypeHint(DeploymentTypes.COMMUNICATION_PATH),
+         createDefaultEdgeTypeHint(DeploymentTypes.DEPLOYMENT));
    }
 
    @Override
@@ -49,21 +47,18 @@ public class DeploymentDiagramConfiguration extends BaseDiagramConfiguration {
 
       switch (elementId) {
          // DEPLOYMENT DIAGRAM
-         case Types.COMMUNICATION_PATH:
-            from = Lists.newArrayList(Types.DEPLOYMENT_NODE, Types.EXECUTION_ENVIRONMENT, Types.DEVICE);
-            to = Lists.newArrayList(Types.DEPLOYMENT_NODE, Types.EXECUTION_ENVIRONMENT, Types.DEVICE, Types.ARTIFACT,
-               Types.DEPLOYMENT_SPECIFICATION);
+         case DeploymentTypes.COMMUNICATION_PATH:
+            from = Lists.newArrayList(DeploymentTypes.DEPLOYMENT_NODE, DeploymentTypes.EXECUTION_ENVIRONMENT,
+               DeploymentTypes.DEVICE);
+            to = Lists.newArrayList(DeploymentTypes.DEPLOYMENT_NODE, DeploymentTypes.EXECUTION_ENVIRONMENT,
+               DeploymentTypes.DEVICE, DeploymentTypes.ARTIFACT,
+               DeploymentTypes.DEPLOYMENT_SPECIFICATION);
             return new EdgeTypeHint(elementId, true, true, true, from, to);
-         case Types.DEPLOYMENT:
-            from = Lists.newArrayList(Types.ARTIFACT, Types.DEPLOYMENT_SPECIFICATION);
-            to = Lists.newArrayList(Types.DEPLOYMENT_NODE, Types.DEVICE, Types.EXECUTION_ENVIRONMENT);
+         case DeploymentTypes.DEPLOYMENT:
+            from = Lists.newArrayList(DeploymentTypes.ARTIFACT, DeploymentTypes.DEPLOYMENT_SPECIFICATION);
+            to = Lists.newArrayList(DeploymentTypes.DEPLOYMENT_NODE, DeploymentTypes.DEVICE,
+               DeploymentTypes.EXECUTION_ENVIRONMENT);
             return new EdgeTypeHint(elementId, true, true, true, from, to);
-         // COMMENT
-         case Types.COMMENT_EDGE:
-            allowed = Lists.newArrayList();
-            allowed.addAll(Types.LINKS_TO_COMMENT);
-            return new EdgeTypeHint(elementId, true, true, true, List.of(Types.COMMENT),
-               allowed);
          default:
             break;
       }
@@ -75,29 +70,27 @@ public class DeploymentDiagramConfiguration extends BaseDiagramConfiguration {
       List<ShapeTypeHint> hints = new ArrayList<>();
       // GRAPH
       hints.add(new ShapeTypeHint(DefaultTypes.GRAPH, false, false, false, false,
-         List.of(Types.COMMENT, Types.CLASS, Types.ACTIVITY, Types.USECASE, Types.ACTOR, Types.PACKAGE, Types.COMPONENT,
-            Types.STATE_MACHINE, Types.DEPLOYMENT_NODE, Types.DEVICE, Types.ARTIFACT, Types.ENUMERATION,
-            Types.EXECUTION_ENVIRONMENT, Types.OBJECT, Types.DEPLOYMENT_COMPONENT, Types.INTERFACE,
-            Types.ABSTRACT_CLASS)));
+         List.of(DeploymentTypes.DEPLOYMENT_NODE, DeploymentTypes.DEVICE,
+            DeploymentTypes.ARTIFACT,
+            DeploymentTypes.EXECUTION_ENVIRONMENT, DeploymentTypes.DEPLOYMENT_COMPONENT)));
 
       // DEPLOYMENT DIAGRAM
-      hints.add(new ShapeTypeHint(Types.DEPLOYMENT_NODE, true, true, true, false,
-         List.of(Types.DEPLOYMENT_NODE, Types.ARTIFACT, Types.DEVICE, Types.DEPLOYMENT_COMPONENT,
-            Types.EXECUTION_ENVIRONMENT, Types.DEPLOYMENT_SPECIFICATION, Types.COMMENT)));
-      hints.add(new ShapeTypeHint(Types.ARTIFACT, true, true, true, true,
-         List.of(Types.DEPLOYMENT_SPECIFICATION, Types.COMMENT)));
-      hints.add(new ShapeTypeHint(Types.EXECUTION_ENVIRONMENT, true, true, true, true,
-         List.of(Types.DEPLOYMENT_NODE, Types.ARTIFACT, Types.DEVICE,
-            Types.EXECUTION_ENVIRONMENT, Types.DEPLOYMENT_SPECIFICATION, Types.COMMENT)));
-      hints.add(new ShapeTypeHint(Types.DEVICE, true, true, true, true,
-         List.of(Types.DEPLOYMENT_NODE, Types.ARTIFACT, Types.DEVICE, Types.DEPLOYMENT_COMPONENT,
-            Types.EXECUTION_ENVIRONMENT, Types.DEPLOYMENT_SPECIFICATION, Types.COMMENT)));
-      hints.add(new ShapeTypeHint(Types.DEPLOYMENT_SPECIFICATION, true, true, true, true,
-         List.of(Types.COMMENT)));
-      hints.add(new ShapeTypeHint(Types.DEPLOYMENT_COMPONENT, true, true, true, true));
-
-      // Comment
-      hints.add(new ShapeTypeHint(Types.COMMENT, true, true, false, false));
+      hints.add(new ShapeTypeHint(DeploymentTypes.DEPLOYMENT_NODE, true, true, true, false,
+         List.of(DeploymentTypes.DEPLOYMENT_NODE, DeploymentTypes.ARTIFACT, DeploymentTypes.DEVICE,
+            DeploymentTypes.DEPLOYMENT_COMPONENT,
+            DeploymentTypes.EXECUTION_ENVIRONMENT, DeploymentTypes.DEPLOYMENT_SPECIFICATION)));
+      hints.add(new ShapeTypeHint(DeploymentTypes.ARTIFACT, true, true, true, true,
+         List.of(DeploymentTypes.DEPLOYMENT_SPECIFICATION)));
+      hints.add(new ShapeTypeHint(DeploymentTypes.EXECUTION_ENVIRONMENT, true, true, true, true,
+         List.of(DeploymentTypes.DEPLOYMENT_NODE, DeploymentTypes.ARTIFACT, DeploymentTypes.DEVICE,
+            DeploymentTypes.EXECUTION_ENVIRONMENT, DeploymentTypes.DEPLOYMENT_SPECIFICATION)));
+      hints.add(new ShapeTypeHint(DeploymentTypes.DEVICE, true, true, true, true,
+         List.of(DeploymentTypes.DEPLOYMENT_NODE, DeploymentTypes.ARTIFACT, DeploymentTypes.DEVICE,
+            DeploymentTypes.DEPLOYMENT_COMPONENT,
+            DeploymentTypes.EXECUTION_ENVIRONMENT, DeploymentTypes.DEPLOYMENT_SPECIFICATION)));
+      hints.add(new ShapeTypeHint(DeploymentTypes.DEPLOYMENT_SPECIFICATION, true, true, true, true,
+         List.of()));
+      hints.add(new ShapeTypeHint(DeploymentTypes.DEPLOYMENT_COMPONENT, true, true, true, true));
 
       return hints;
    }
@@ -106,35 +99,28 @@ public class DeploymentDiagramConfiguration extends BaseDiagramConfiguration {
    public Map<String, EClass> getTypeMappings() {
       Map<String, EClass> mappings = DefaultTypes.getDefaultTypeMappings();
 
-      // COMMONS
-      mappings.put(Types.LABEL_NAME, GraphPackage.Literals.GLABEL);
-      mappings.put(Types.LABEL_TEXT, GraphPackage.Literals.GLABEL);
-      mappings.put(Types.LABEL_EDGE_NAME, GraphPackage.Literals.GLABEL);
-      mappings.put(Types.LABEL_EDGE_MULTIPLICITY, GraphPackage.Literals.GLABEL);
-      mappings.put(Types.COMP, GraphPackage.Literals.GCOMPARTMENT);
-      // mappings.put(Types.COMP_HEADER, GraphPackage.Literals.GCOMPARTMENT);
-      mappings.put(Types.LABEL_ICON, GraphPackage.Literals.GCOMPARTMENT);
-      mappings.put(Types.COMMENT, GraphPackage.Literals.GNODE);
-      mappings.put(Types.COMMENT_EDGE, GraphPackage.Literals.GEDGE);
-      mappings.put(Types.COMPARTMENT, GraphPackage.Literals.GCOMPARTMENT);
-      mappings.put(Types.COMPARTMENT_HEADER, GraphPackage.Literals.GCOMPARTMENT);
-
       // DEPLOYMENT DIAGRAM
-      mappings.put(Types.ICON_DEPLOYMENT_NODE, GraphPackage.Literals.GCOMPARTMENT);
-      mappings.put(Types.DEPLOYMENT_NODE, GraphPackage.Literals.GNODE);
-      mappings.put(Types.STRUCTURE, GraphPackage.Literals.GCOMPARTMENT);
-      mappings.put(Types.LABEL_NODE_NAME, GraphPackage.Literals.GLABEL);
-      mappings.put(Types.ICON_ARTIFACT, GraphPackage.Literals.GCOMPARTMENT);
-      mappings.put(Types.ARTIFACT, GraphPackage.Literals.GNODE);
-      mappings.put(Types.ICON_DEPLOYMENT_SPECIFICATION, GraphPackage.Literals.GCOMPARTMENT);
-      mappings.put(Types.DEPLOYMENT_SPECIFICATION, GraphPackage.Literals.GNODE);
-      mappings.put(Types.ICON_EXECUTION_ENVIRONMENT, GraphPackage.Literals.GCOMPARTMENT);
-      mappings.put(Types.EXECUTION_ENVIRONMENT, GraphPackage.Literals.GNODE);
-      mappings.put(Types.ICON_DEVICE, GraphPackage.Literals.GCOMPARTMENT);
-      mappings.put(Types.DEVICE, GraphPackage.Literals.GNODE);
-      mappings.put(Types.COMMUNICATION_PATH, GraphPackage.Literals.GEDGE);
-      mappings.put(Types.DEPLOYMENT, GraphPackage.Literals.GEDGE);
-      mappings.put(Types.DEPLOYMENT_COMPONENT, GraphPackage.Literals.GNODE);
+      mappings.put(DeploymentTypes.ICON_DEPLOYMENT_NODE, GraphPackage.Literals.GCOMPARTMENT);
+      mappings.put(DeploymentTypes.DEPLOYMENT_NODE, GraphPackage.Literals.GNODE);
+      mappings.put(DeploymentTypes.STRUCTURE, GraphPackage.Literals.GCOMPARTMENT);
+      mappings.put(DeploymentTypes.LABEL_NODE_NAME, GraphPackage.Literals.GLABEL);
+      mappings.put(DeploymentTypes.ICON_ARTIFACT, GraphPackage.Literals.GCOMPARTMENT);
+      mappings.put(DeploymentTypes.ARTIFACT, GraphPackage.Literals.GNODE);
+      mappings.put(DeploymentTypes.ICON_DEPLOYMENT_SPECIFICATION, GraphPackage.Literals.GCOMPARTMENT);
+      mappings.put(DeploymentTypes.DEPLOYMENT_SPECIFICATION, GraphPackage.Literals.GNODE);
+      mappings.put(DeploymentTypes.ICON_EXECUTION_ENVIRONMENT, GraphPackage.Literals.GCOMPARTMENT);
+      mappings.put(DeploymentTypes.EXECUTION_ENVIRONMENT, GraphPackage.Literals.GNODE);
+      mappings.put(DeploymentTypes.ICON_DEVICE, GraphPackage.Literals.GCOMPARTMENT);
+      mappings.put(DeploymentTypes.DEVICE, GraphPackage.Literals.GNODE);
+      mappings.put(DeploymentTypes.COMMUNICATION_PATH, GraphPackage.Literals.GEDGE);
+      mappings.put(DeploymentTypes.DEPLOYMENT, GraphPackage.Literals.GEDGE);
+      mappings.put(DeploymentTypes.DEPLOYMENT_COMPONENT, GraphPackage.Literals.GNODE);
+
+      // COMMON CANDIDATE
+      mappings.put(DeploymentTypes.STRUCTURE, GraphPackage.Literals.GCOMPARTMENT);
+
+      // SHARED WITH CLASS AND USECASE
+      mappings.put(DeploymentTypes.LABEL_EDGE_MULTIPLICITY, GraphPackage.Literals.GLABEL);
 
       return mappings;
    }

@@ -8,13 +8,13 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.util;
+package com.eclipsesource.uml.glsp.uml.utils.property;
 
 import org.eclipse.uml2.uml.Property;
 
-public final class UmlLabelUtil {
+public final class PropertyUtil {
 
-   private UmlLabelUtil() {}
+   private PropertyUtil() {}
 
    public static String getTypeName(final Property property) {
       if (property.getType() != null) {

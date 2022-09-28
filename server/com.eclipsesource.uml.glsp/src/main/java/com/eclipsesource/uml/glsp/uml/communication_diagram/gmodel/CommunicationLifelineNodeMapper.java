@@ -23,9 +23,9 @@ import org.eclipse.uml2.uml.Lifeline;
 
 import com.eclipsesource.uml.glsp.gmodel.UmlGModelMapper;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.uml.communication_diagram.constants.CommunicationConfig;
-import com.eclipsesource.uml.glsp.util.UmlConfig;
-import com.eclipsesource.uml.glsp.util.UmlIDUtil;
+import com.eclipsesource.uml.glsp.uml.communication_diagram.constants.CommunicationTypes;
+import com.eclipsesource.uml.glsp.utils.UmlConfig;
+import com.eclipsesource.uml.glsp.utils.UmlIDUtil;
 import com.eclipsesource.uml.modelserver.unotation.Shape;
 import com.google.inject.Inject;
 
@@ -36,7 +36,7 @@ public class CommunicationLifelineNodeMapper implements UmlGModelMapper<Lifeline
 
    @Override
    public GNode map(final Lifeline lifeline) {
-      GNodeBuilder lifelineNodeBuilder = new GNodeBuilder(CommunicationConfig.Types.LIFELINE)
+      GNodeBuilder lifelineNodeBuilder = new GNodeBuilder(CommunicationTypes.LIFELINE)
          .id(UmlIDUtil.toId(modelState, lifeline))
          .layout(GConstants.Layout.VBOX)
          .addCssClass(UmlConfig.CSS.NODE);
@@ -65,7 +65,7 @@ public class CommunicationLifelineNodeMapper implements UmlGModelMapper<Lifeline
          .layout(GConstants.Layout.HBOX)
          .id(UmlIDUtil.createHeaderId(UmlIDUtil.toId(modelState, umlLifeline)));
 
-      GCompartment classHeaderIcon = new GCompartmentBuilder(CommunicationConfig.Types.ICON_LIFELINE)
+      GCompartment classHeaderIcon = new GCompartmentBuilder(CommunicationTypes.ICON_LIFELINE)
          .id(UmlIDUtil.createHeaderIconId(UmlIDUtil.toId(modelState, umlLifeline))).build();
       classHeaderBuilder.add(classHeaderIcon);
 

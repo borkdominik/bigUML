@@ -18,8 +18,9 @@ import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Relationship;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.util.UmlConfig.CSS;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.eclipsesource.uml.glsp.uml.deployment_diagram.constants.DeploymentTypes;
+import com.eclipsesource.uml.glsp.utils.UmlConfig;
+import com.eclipsesource.uml.glsp.utils.UmlConfig.CSS;
 import com.eclipsesource.uml.modelserver.unotation.Edge;
 
 public class DeploymentDiagramEdgeFactory extends DeploymentAbstractGModelFactory<Relationship, GEdge> {
@@ -46,7 +47,7 @@ public class DeploymentDiagramEdgeFactory extends DeploymentAbstractGModelFactor
       Property target = memberEnds.get(1);
       String targetId = toId(target);
 
-      GEdgeBuilder b = new GEdgeBuilder(Types.COMMUNICATION_PATH)
+      GEdgeBuilder b = new GEdgeBuilder(DeploymentTypes.COMMUNICATION_PATH)
          .id(toId(communicationPath))
          .addCssClass(CSS.EDGE)
          .sourceId(toId(source.getType()))
@@ -64,7 +65,7 @@ public class DeploymentDiagramEdgeFactory extends DeploymentAbstractGModelFactor
       NamedElement target = deployment.getDeployedArtifacts().get(0);
       String targetId = toId(target);
 
-      GEdgeBuilder b = new GEdgeBuilder(Types.COMMUNICATION_PATH)
+      GEdgeBuilder b = new GEdgeBuilder(DeploymentTypes.COMMUNICATION_PATH)
          .id(toId(deployment))
          .addCssClass(CSS.EDGE)
          .addCssClass(CSS.EDGE_DOTTED)
@@ -90,11 +91,11 @@ public class DeploymentDiagramEdgeFactory extends DeploymentAbstractGModelFactor
    }
 
    protected GLabel createEdgeMultiplicityLabel(final String value, final String id, final double position) {
-      return createEdgeLabel(value, position, id, Types.LABEL_EDGE_MULTIPLICITY, GConstants.EdgeSide.BOTTOM);
+      return createEdgeLabel(value, position, id, DeploymentTypes.LABEL_EDGE_MULTIPLICITY, GConstants.EdgeSide.BOTTOM);
    }
 
    protected GLabel createEdgeNameLabel(final String name, final String id, final double position) {
-      return createEdgeLabel(name, position, id, Types.LABEL_EDGE_NAME, GConstants.EdgeSide.TOP);
+      return createEdgeLabel(name, position, id, UmlConfig.Types.LABEL_EDGE_NAME, GConstants.EdgeSide.TOP);
    }
 
    protected GLabel createEdgeLabel(final String name, final double position, final String id, final String type,

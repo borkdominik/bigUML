@@ -15,8 +15,8 @@ import java.awt.geom.Point2D;
 import org.eclipse.glsp.graph.GEdge;
 import org.eclipse.glsp.graph.GLabel;
 
-import com.eclipsesource.uml.glsp.util.UmlGModelUtil;
-import com.eclipsesource.uml.glsp.util.UmlIDUtil;
+import com.eclipsesource.uml.glsp.utils.UmlIDUtil;
+import com.eclipsesource.uml.glsp.utils.gmodel.GModelFilterUtil;
 import com.eclipsesource.uml.modelserver.commands.communication.message.MessageCopyableProperties;
 
 public class MessagePropertiesFactory {
@@ -28,7 +28,7 @@ public class MessagePropertiesFactory {
    public static MessageCopyableProperties from(final GEdge element) {
       var semantic = new MessageCopyableProperties.Semantic();
       semantic.id = element.getId();
-      UmlGModelUtil.flatFilterById(element, UmlIDUtil.createLabelNameId(element.getId()), GLabel.class).findFirst()
+      GModelFilterUtil.flatFilterById(element, UmlIDUtil.createLabelNameId(element.getId()), GLabel.class).findFirst()
          .ifPresent(label -> semantic.name = label.getText());
       semantic.sourceId = element.getSourceId();
       semantic.targetId = element.getTargetId();

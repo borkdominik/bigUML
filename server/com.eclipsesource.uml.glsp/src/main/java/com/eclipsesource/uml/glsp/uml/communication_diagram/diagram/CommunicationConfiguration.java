@@ -21,7 +21,7 @@ import org.eclipse.glsp.server.types.EdgeTypeHint;
 import org.eclipse.glsp.server.types.ShapeTypeHint;
 
 import com.eclipsesource.uml.glsp.diagram.DiagramConfiguration;
-import com.eclipsesource.uml.glsp.uml.communication_diagram.constants.CommunicationConfig.Types;
+import com.eclipsesource.uml.glsp.uml.communication_diagram.constants.CommunicationTypes;
 import com.google.common.collect.Lists;
 
 public class CommunicationConfiguration implements DiagramConfiguration {
@@ -29,18 +29,20 @@ public class CommunicationConfiguration implements DiagramConfiguration {
    @Override
    public List<EdgeTypeHint> getEdgeTypeHints() {
       return Lists.newArrayList(
-         new EdgeTypeHint(Types.MESSAGE, true, true, true, List.of(Types.LIFELINE), List.of(Types.LIFELINE)));
+         new EdgeTypeHint(CommunicationTypes.MESSAGE, true, true, true, List.of(CommunicationTypes.LIFELINE),
+            List.of(CommunicationTypes.LIFELINE)));
    }
 
    @Override
-   public List<String> getGraphContainableElements() { return List.of(Types.INTERACTION); }
+   public List<String> getGraphContainableElements() { return List.of(CommunicationTypes.INTERACTION); }
 
    @Override
    public List<ShapeTypeHint> getShapeTypeHints() {
       List<ShapeTypeHint> hints = new ArrayList<>();
 
-      hints.add(new ShapeTypeHint(Types.INTERACTION, true, true, true, false, List.of(Types.LIFELINE)));
-      hints.add(new ShapeTypeHint(Types.LIFELINE, true, true, false, false));
+      hints.add(new ShapeTypeHint(CommunicationTypes.INTERACTION, true, true, true, false,
+         List.of(CommunicationTypes.LIFELINE)));
+      hints.add(new ShapeTypeHint(CommunicationTypes.LIFELINE, true, true, false, false));
 
       return hints;
    }
@@ -49,12 +51,12 @@ public class CommunicationConfiguration implements DiagramConfiguration {
    public Map<String, EClass> getTypeMappings() {
       Map<String, EClass> mappings = DefaultTypes.getDefaultTypeMappings();
 
-      mappings.put(Types.INTERACTION, GraphPackage.Literals.GNODE);
-      mappings.put(Types.ICON_INTERACTION, GraphPackage.Literals.GCOMPARTMENT);
-      mappings.put(Types.LIFELINE, GraphPackage.Literals.GNODE);
-      mappings.put(Types.ICON_LIFELINE, GraphPackage.Literals.GCOMPARTMENT);
-      mappings.put(Types.MESSAGE, GraphPackage.Literals.GEDGE);
-      mappings.put(Types.MESSAGE_LABEL_ARROW_EDGE_NAME, GraphPackage.Literals.GLABEL);
+      mappings.put(CommunicationTypes.INTERACTION, GraphPackage.Literals.GNODE);
+      mappings.put(CommunicationTypes.ICON_INTERACTION, GraphPackage.Literals.GCOMPARTMENT);
+      mappings.put(CommunicationTypes.LIFELINE, GraphPackage.Literals.GNODE);
+      mappings.put(CommunicationTypes.ICON_LIFELINE, GraphPackage.Literals.GCOMPARTMENT);
+      mappings.put(CommunicationTypes.MESSAGE, GraphPackage.Literals.GEDGE);
+      mappings.put(CommunicationTypes.MESSAGE_LABEL_ARROW_EDGE_NAME, GraphPackage.Literals.GLABEL);
 
       return mappings;
    }

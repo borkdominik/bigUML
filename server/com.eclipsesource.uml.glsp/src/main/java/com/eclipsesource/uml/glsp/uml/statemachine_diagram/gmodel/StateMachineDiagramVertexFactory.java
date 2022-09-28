@@ -26,8 +26,9 @@ import org.eclipse.uml2.uml.State;
 import org.eclipse.uml2.uml.Vertex;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.util.UmlConfig.CSS;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.eclipsesource.uml.glsp.uml.statemachine_diagram.constants.StateMachineTypes;
+import com.eclipsesource.uml.glsp.utils.UmlConfig;
+import com.eclipsesource.uml.glsp.utils.UmlConfig.CSS;
 import com.eclipsesource.uml.modelserver.unotation.Shape;
 
 public class StateMachineDiagramVertexFactory extends StateMachineAbstractGModelFactory<Vertex, GNode> {
@@ -89,7 +90,7 @@ public class StateMachineDiagramVertexFactory extends StateMachineAbstractGModel
 
    protected GNode createFinalState(final FinalState umlFinalState) {
       Random rand = new Random();
-      GNodeBuilder b = new GNodeBuilder(Types.FINAL_STATE)
+      GNodeBuilder b = new GNodeBuilder(StateMachineTypes.FINAL_STATE)
          .id(toId(umlFinalState) + rand.nextInt(1000))
          .layout(GConstants.Layout.VBOX)
          .addCssClass(CSS.NODE)
@@ -105,7 +106,7 @@ public class StateMachineDiagramVertexFactory extends StateMachineAbstractGModel
       layoutOptions.put(H_GRAB, false);
       layoutOptions.put(V_GRAB, false);
 
-      GNodeBuilder b = new GNodeBuilder(Types.STATE)
+      GNodeBuilder b = new GNodeBuilder(StateMachineTypes.STATE)
          .id(toId(umlState))
          .layout(GConstants.Layout.VBOX)
          .layoutOptions(layoutOptions)
@@ -135,7 +136,7 @@ public class StateMachineDiagramVertexFactory extends StateMachineAbstractGModel
    }
 
    protected GNode createInitialState(final Pseudostate umlInitialState) {
-      GNodeBuilder b = new GNodeBuilder(Types.INITIAL_STATE)
+      GNodeBuilder b = new GNodeBuilder(StateMachineTypes.INITIAL_STATE)
          .id(toId(umlInitialState))
          .layout(GConstants.Layout.VBOX)
          .addCssClass(CSS.NODE)
@@ -146,7 +147,7 @@ public class StateMachineDiagramVertexFactory extends StateMachineAbstractGModel
    }
 
    protected GNode createDeepHistory(final Pseudostate deepHistory) {
-      GNodeBuilder b = new GNodeBuilder(Types.DEEP_HISTORY)
+      GNodeBuilder b = new GNodeBuilder(StateMachineTypes.DEEP_HISTORY)
          .id(toId(deepHistory))
          .layout(GConstants.Layout.VBOX)
          .size(30, 30)
@@ -157,7 +158,7 @@ public class StateMachineDiagramVertexFactory extends StateMachineAbstractGModel
    }
 
    protected GNode createShallowHistory(final Pseudostate shallowHistory) {
-      GNodeBuilder b = new GNodeBuilder(Types.SHALLOW_HISTORY)
+      GNodeBuilder b = new GNodeBuilder(StateMachineTypes.SHALLOW_HISTORY)
          .id(toId(shallowHistory))
          .layout(GConstants.Layout.VBOX)
          .size(30, 30)
@@ -168,7 +169,7 @@ public class StateMachineDiagramVertexFactory extends StateMachineAbstractGModel
    }
 
    protected GNode createFork(final Pseudostate fork) {
-      GNodeBuilder b = new GNodeBuilder(Types.FORK)
+      GNodeBuilder b = new GNodeBuilder(StateMachineTypes.FORK)
          .id(toId(fork))
          .layout(GConstants.Layout.VBOX)
          .size(5, 100)
@@ -179,7 +180,7 @@ public class StateMachineDiagramVertexFactory extends StateMachineAbstractGModel
    }
 
    protected GNode createJoin(final Pseudostate join) {
-      GNodeBuilder b = new GNodeBuilder(Types.JOIN)
+      GNodeBuilder b = new GNodeBuilder(StateMachineTypes.JOIN)
          .id(toId(join))
          .layout(GConstants.Layout.VBOX)
          .size(5, 100)
@@ -190,7 +191,7 @@ public class StateMachineDiagramVertexFactory extends StateMachineAbstractGModel
    }
 
    protected GNode createJunction(final Pseudostate junction) {
-      GNodeBuilder b = new GNodeBuilder(Types.JUNCTION)
+      GNodeBuilder b = new GNodeBuilder(StateMachineTypes.JUNCTION)
          .id(toId(junction))
          .layout(GConstants.Layout.VBOX)
          .size(50, 50)
@@ -201,7 +202,7 @@ public class StateMachineDiagramVertexFactory extends StateMachineAbstractGModel
    }
 
    protected GNode createChoice(final Pseudostate choice) {
-      GNodeBuilder b = new GNodeBuilder(Types.CHOICE)
+      GNodeBuilder b = new GNodeBuilder(StateMachineTypes.CHOICE)
          .id(toId(choice))
          .layout(GConstants.Layout.VBOX)
          .size(50, 50)
@@ -212,7 +213,7 @@ public class StateMachineDiagramVertexFactory extends StateMachineAbstractGModel
    }
 
    protected GNode createTerminate(final Pseudostate terminate) {
-      GNodeBuilder b = new GNodeBuilder(Types.TERMINATE)
+      GNodeBuilder b = new GNodeBuilder(StateMachineTypes.TERMINATE)
          .id(toId(terminate))
          .layout(GConstants.Layout.VBOX)
          .size(30, 30)
@@ -224,7 +225,7 @@ public class StateMachineDiagramVertexFactory extends StateMachineAbstractGModel
 
    protected GNode createEntryPoint(final Pseudostate entry) {
       System.out.println("REACHES ENTRY");
-      GNodeBuilder b = new GNodeBuilder(Types.ENTRY_POINT)
+      GNodeBuilder b = new GNodeBuilder(StateMachineTypes.ENTRY_POINT)
          .id(toId(entry))
          .layout(GConstants.Layout.VBOX)
          .size(30, 30)
@@ -236,7 +237,7 @@ public class StateMachineDiagramVertexFactory extends StateMachineAbstractGModel
 
    protected GNode createExitPoint(final Pseudostate exit) {
       System.out.println("REACHES EXIT");
-      GNodeBuilder b = new GNodeBuilder(Types.EXIT_POINT)
+      GNodeBuilder b = new GNodeBuilder(StateMachineTypes.EXIT_POINT)
          .id(toId(exit))
          .layout(GConstants.Layout.VBOX)
          .size(30, 30)
@@ -257,54 +258,54 @@ public class StateMachineDiagramVertexFactory extends StateMachineAbstractGModel
    }
 
    protected GCompartment buildHeader(final Vertex vertex) {
-      return new GCompartmentBuilder(Types.COMPARTMENT_HEADER)
+      return new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER)
          .layout("hbox")
          .id(toId(vertex) + "_header")
          .add(new GCompartmentBuilder(getType(vertex))
             .id(toId(vertex) + "_header_icon").build())
-         .add(new GLabelBuilder(Types.LABEL_VERTEX_NAME)
+         .add(new GLabelBuilder(StateMachineTypes.LABEL_VERTEX_NAME)
             .id(toId(vertex) + "_header_label").text(vertex.getName())
             .build())
          .build();
    }
 
    protected GCompartment buildHeader(final Pseudostate vertex) {
-      return new GCompartmentBuilder(Types.COMPARTMENT_HEADER)
+      return new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER)
          .layout("hbox")
          .id(toId(vertex) + "_header")
-         .add(new GLabelBuilder(Types.LABEL_VERTEX_NAME)
+         .add(new GLabelBuilder(StateMachineTypes.LABEL_VERTEX_NAME)
             .id(toId(vertex) + "_header_label").text(vertex.getName())
             .build())
          .build();
    }
 
    protected GCompartment buildHeader(final State vertex) {
-      return new GCompartmentBuilder(Types.COMPARTMENT_HEADER)
+      return new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER)
          .layout("hbox")
          .id(toId(vertex) + "_header")
-         .add(new GLabelBuilder(Types.LABEL_VERTEX_NAME)
+         .add(new GLabelBuilder(StateMachineTypes.LABEL_VERTEX_NAME)
             .id(toId(vertex) + "_header_label").text(vertex.getName())
             .build())
          .build();
    }
 
    protected GCompartment createLabeledStateChildrenCompartment(final State parent) {
-      GCompartmentBuilder builder = new GCompartmentBuilder(Types.COMP)
+      GCompartmentBuilder builder = new GCompartmentBuilder(UmlConfig.Types.COMP)
          .id(toId(parent) + "_childCompartment").layout(GConstants.Layout.VBOX)
          .layoutOptions(new GLayoutOptions()
             .hAlign(GConstants.HAlign.LEFT)
             .resizeContainer(true));
 
       if (parent.getEntry() != null) {
-         builder.add(createBehaviorLabel(parent.getEntry(), Types.STATE_ENTRY_ACTIVITY));
+         builder.add(createBehaviorLabel(parent.getEntry(), StateMachineTypes.STATE_ENTRY_ACTIVITY));
       }
 
       if (parent.getDoActivity() != null) {
-         builder.add(createBehaviorLabel(parent.getDoActivity(), Types.STATE_DO_ACTIVITY));
+         builder.add(createBehaviorLabel(parent.getDoActivity(), StateMachineTypes.STATE_DO_ACTIVITY));
       }
 
       if (parent.getExit() != null) {
-         builder.add(createBehaviorLabel(parent.getExit(), Types.STATE_EXIT_ACTIVITY));
+         builder.add(createBehaviorLabel(parent.getExit(), StateMachineTypes.STATE_EXIT_ACTIVITY));
       }
 
       return builder.build();
@@ -321,7 +322,7 @@ public class StateMachineDiagramVertexFactory extends StateMachineAbstractGModel
 
    protected static String getType(final Vertex vertex) {
       if (vertex instanceof State) {
-         return Types.ICON_STATE;
+         return StateMachineTypes.ICON_STATE;
       }
 
       return "Vertex not found";
@@ -332,7 +333,7 @@ public class StateMachineDiagramVertexFactory extends StateMachineAbstractGModel
       layoutOptions.put(H_ALIGN, GConstants.HAlign.LEFT);
       layoutOptions.put(H_GRAB, true);
       layoutOptions.put(V_GRAB, true);
-      GCompartment structCompartment = new GCompartmentBuilder(Types.STRUCTURE)
+      GCompartment structCompartment = new GCompartmentBuilder(StateMachineTypes.STRUCTURE)
          .id(toId(umlState) + "_struct")
          .layout(GConstants.Layout.FREEFORM)
          .layoutOptions(layoutOptions)

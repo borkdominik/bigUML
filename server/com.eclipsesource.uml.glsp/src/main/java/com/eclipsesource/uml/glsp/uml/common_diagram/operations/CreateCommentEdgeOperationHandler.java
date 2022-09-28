@@ -13,7 +13,7 @@ import org.eclipse.uml2.uml.Element;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.eclipsesource.uml.glsp.uml.common_diagram.constants.CommonTypes;
 import com.eclipsesource.uml.modelserver.commands.activitydiagram.comment.LinkCommentCommandContribution;
 import com.google.common.collect.Lists;
 
@@ -24,7 +24,7 @@ public class CreateCommentEdgeOperationHandler
       super(handledElementTypeIds);
    }
 
-   public static List<String> handledElementTypeIds = Lists.newArrayList(Types.COMMENT_EDGE);
+   public static List<String> handledElementTypeIds = Lists.newArrayList(CommonTypes.COMMENT_EDGE);
 
    @Override
    public boolean handles(final Operation execAction) {
@@ -45,7 +45,7 @@ public class CreateCommentEdgeOperationHandler
       String sourceId = operation.getSourceElementId();
       String targetId = operation.getTargetElementId();
 
-      if (Types.COMMENT_EDGE.equals(operation.getElementTypeId())) {
+      if (CommonTypes.COMMENT_EDGE.equals(operation.getElementTypeId())) {
          Comment source = getOrThrow(modelState.getIndex().getSemantic(sourceId), Comment.class,
             "No valid source comment with id " + sourceId + " found");
          Element target = getOrThrow(modelState.getIndex().getSemantic(targetId), Element.class,

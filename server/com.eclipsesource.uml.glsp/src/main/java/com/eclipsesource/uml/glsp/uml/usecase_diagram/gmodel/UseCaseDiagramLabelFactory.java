@@ -17,7 +17,8 @@ import org.eclipse.uml2.uml.NamedElement;
 import org.eclipse.uml2.uml.UseCase;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.eclipsesource.uml.glsp.uml.usecase_diagram.constants.UseCaseTypes;
+import com.eclipsesource.uml.glsp.utils.UmlConfig;
 
 public class UseCaseDiagramLabelFactory extends UseCaseAbstractGModelFactory<NamedElement, GLabel> {
 
@@ -34,7 +35,7 @@ public class UseCaseDiagramLabelFactory extends UseCaseAbstractGModelFactory<Nam
    public GLabel createUseCaseExtensionPointsHeading(final UseCase useCase) {
       String label = "extension points";
 
-      return new GLabelBuilder(Types.LABEL_TEXT)
+      return new GLabelBuilder(UmlConfig.Types.LABEL_TEXT)
          .id(toId(useCase) + "_epheading")
          .text(label)
          .addCssClass("bold")
@@ -44,7 +45,7 @@ public class UseCaseDiagramLabelFactory extends UseCaseAbstractGModelFactory<Nam
    public GLabel createUseCaseExtensionPointsLabel(final ExtensionPoint extensionPoint) {
       String label = extensionPoint.getName();
 
-      return new GLabelBuilder(Types.EXTENSIONPOINT)
+      return new GLabelBuilder(UseCaseTypes.EXTENSIONPOINT)
          .id(toId(extensionPoint))
          .text(label)
          .build();

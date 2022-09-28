@@ -24,7 +24,7 @@ import org.eclipse.glsp.server.layout.ServerLayoutKind;
 import org.eclipse.glsp.server.types.EdgeTypeHint;
 import org.eclipse.glsp.server.types.ShapeTypeHint;
 
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.eclipsesource.uml.glsp.utils.UmlConfig.Types;
 import com.google.inject.Inject;
 
 public class UmlToolDiagramConfiguration extends BaseDiagramConfiguration {
@@ -71,7 +71,6 @@ public class UmlToolDiagramConfiguration extends BaseDiagramConfiguration {
       mappings.put(Types.LABEL_NAME, GraphPackage.Literals.GLABEL);
       mappings.put(Types.LABEL_TEXT, GraphPackage.Literals.GLABEL);
       mappings.put(Types.LABEL_EDGE_NAME, GraphPackage.Literals.GLABEL);
-      mappings.put(Types.LABEL_EDGE_MULTIPLICITY, GraphPackage.Literals.GLABEL);
       mappings.put(Types.COMP, GraphPackage.Literals.GCOMPARTMENT);
       // mappings.put(Types.COMP_HEADER, GraphPackage.Literals.GCOMPARTMENT);
       mappings.put(Types.LABEL_ICON, GraphPackage.Literals.GCOMPARTMENT);

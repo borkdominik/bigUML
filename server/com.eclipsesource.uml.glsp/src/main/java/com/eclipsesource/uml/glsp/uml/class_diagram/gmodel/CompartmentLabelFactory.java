@@ -20,9 +20,10 @@ import org.eclipse.uml2.uml.NamedElement;
 import org.eclipse.uml2.uml.Property;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
-import com.eclipsesource.uml.glsp.util.UmlIDUtil;
-import com.eclipsesource.uml.glsp.util.UmlLabelUtil;
+import com.eclipsesource.uml.glsp.uml.class_diagram.constants.ClassTypes;
+import com.eclipsesource.uml.glsp.uml.utils.property.PropertyIdUtil;
+import com.eclipsesource.uml.glsp.uml.utils.property.PropertyUtil;
+import com.eclipsesource.uml.glsp.utils.UmlConfig.Types;
 
 public class CompartmentLabelFactory extends ClassAbstractGModelFactory<NamedElement, GCompartment> {
 
@@ -39,13 +40,13 @@ public class CompartmentLabelFactory extends ClassAbstractGModelFactory<NamedEle
    }
 
    public GCompartment createPropertyLabel(final Property property) {
-      GCompartmentBuilder propertyBuilder = new GCompartmentBuilder(Types.PROPERTY)
+      GCompartmentBuilder propertyBuilder = new GCompartmentBuilder(ClassTypes.PROPERTY)
          .layout(GConstants.Layout.HBOX)
-         .id(UmlIDUtil.createPropertyId(toId(property)));
+         .id(PropertyIdUtil.createPropertyId(toId(property)));
 
       // property icon
-      GCompartment propertyIcon = new GCompartmentBuilder(Types.ICON_PROPERTY)
-         .id(UmlIDUtil.createPropertyIconId(toId(property))).build();
+      GCompartment propertyIcon = new GCompartmentBuilder(ClassTypes.ICON_PROPERTY)
+         .id(PropertyIdUtil.createPropertyIconId(toId(property))).build();
       propertyBuilder.add(propertyIcon);
 
       GLayoutOptions layoutOptions = new GLayoutOptions()
@@ -54,8 +55,8 @@ public class CompartmentLabelFactory extends ClassAbstractGModelFactory<NamedEle
       propertyBuilder.layoutOptions(layoutOptions);
 
       // property name
-      GLabel propertyNameLabel = new GLabelBuilder(Types.LABEL_PROPERTY_NAME)
-         .id(UmlIDUtil.createPropertyLabelNameId(toId(property)))
+      GLabel propertyNameLabel = new GLabelBuilder(ClassTypes.LABEL_PROPERTY_NAME)
+         .id(PropertyIdUtil.createPropertyLabelNameId(toId(property)))
          .text(property.getName())
          .build();
       propertyBuilder.add(propertyNameLabel);
@@ -67,20 +68,20 @@ public class CompartmentLabelFactory extends ClassAbstractGModelFactory<NamedEle
       propertyBuilder.add(separatorLabel);
 
       // property type
-      String propertyType = UmlLabelUtil.getTypeName(property);
+      String propertyType = PropertyUtil.getTypeName(property);
       if (!propertyType.isBlank()) {
-         GLabel propertyTypeLabel = new GLabelBuilder(Types.LABEL_PROPERTY_TYPE)
-            .id(UmlIDUtil.createPropertyLabelTypeId(toId(property)))
+         GLabel propertyTypeLabel = new GLabelBuilder(ClassTypes.LABEL_PROPERTY_TYPE)
+            .id(PropertyIdUtil.createPropertyLabelTypeId(toId(property)))
             .text(propertyType)
             .build();
          propertyBuilder.add(propertyTypeLabel);
       }
 
       // property multiplicity
-      String propertyMultiplicity = UmlLabelUtil.getMultiplicity(property);
+      String propertyMultiplicity = PropertyUtil.getMultiplicity(property);
       if (!propertyMultiplicity.isBlank()) {
-         GLabel propertyMultiplicityLabel = new GLabelBuilder(Types.LABEL_PROPERTY_MULTIPLICITY)
-            .id(UmlIDUtil.createPropertyLabelMultiplicityId(toId(property)))
+         GLabel propertyMultiplicityLabel = new GLabelBuilder(ClassTypes.LABEL_PROPERTY_MULTIPLICITY)
+            .id(PropertyIdUtil.createPropertyLabelMultiplicityId(toId(property)))
             .text(propertyMultiplicity)
             .build();
          propertyBuilder.add(new GLabelBuilder(Types.LABEL_TEXT).text("[").build());

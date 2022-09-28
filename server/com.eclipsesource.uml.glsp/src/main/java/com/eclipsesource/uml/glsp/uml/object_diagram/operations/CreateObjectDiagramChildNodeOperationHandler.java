@@ -13,7 +13,7 @@ import org.eclipse.uml2.uml.PackageableElement;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.uml.object_diagram.ObjectModelServerAccess;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.eclipsesource.uml.glsp.uml.object_diagram.constants.ObjectTypes;
 
 public class CreateObjectDiagramChildNodeOperationHandler
    extends EMSBasicCreateOperationHandler<CreateNodeOperation, ObjectModelServerAccess> {
@@ -22,7 +22,7 @@ public class CreateObjectDiagramChildNodeOperationHandler
       super(handledElementTypeIds);
    }
 
-   private static List<String> handledElementTypeIds = List.of(Types.ATTRIBUTE);
+   private static List<String> handledElementTypeIds = List.of(ObjectTypes.ATTRIBUTE);
 
    @Override
    public boolean handles(final Operation execAction) {
@@ -46,7 +46,7 @@ public class CreateObjectDiagramChildNodeOperationHandler
       PackageableElement container = getOrThrow(modelState.getIndex().getSemantic(containerId),
          PackageableElement.class, "No valid container with id " + operation.getContainerId() + " found");
 
-      if (elementTypeId.equals(Types.ATTRIBUTE) && container instanceof Class) {
+      if (elementTypeId.equals(ObjectTypes.ATTRIBUTE) && container instanceof Class) {
          modelAccess.addAttribute(UmlModelState.getModelState(modelState), (Class) container)
             .thenAccept(response -> {
                if (!response.body()) {

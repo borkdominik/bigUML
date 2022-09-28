@@ -7,8 +7,8 @@ import org.eclipse.uml2.uml.Pseudostate;
 import org.eclipse.uml2.uml.PseudostateKind;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.util.UmlConfig.CSS;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.eclipsesource.uml.glsp.uml.statemachine_diagram.constants.StateMachineTypes;
+import com.eclipsesource.uml.glsp.utils.UmlConfig.CSS;
 import com.eclipsesource.uml.modelserver.unotation.Shape;
 
 public class StateMachineDiagramPortFactory extends StateMachineAbstractGModelFactory<Pseudostate, GPort> {
@@ -29,7 +29,7 @@ public class StateMachineDiagramPortFactory extends StateMachineAbstractGModelFa
    }
 
    protected GPort createEntryPoint(final Pseudostate entryPoint) {
-      GPortBuilder b = new GPortBuilder(Types.ENTRY_POINT)
+      GPortBuilder b = new GPortBuilder(StateMachineTypes.ENTRY_POINT)
          .id(toId(entryPoint))
          .size(30, 30)
          .addCssClass(CSS.NODE);
@@ -39,7 +39,7 @@ public class StateMachineDiagramPortFactory extends StateMachineAbstractGModelFa
    }
 
    protected GPort createExitPoint(final Pseudostate exitPoint) {
-      GPortBuilder b = new GPortBuilder(Types.EXIT_POINT)
+      GPortBuilder b = new GPortBuilder(StateMachineTypes.EXIT_POINT)
          .id(toId(exitPoint))
          .size(30, 30)
          .addCssClass(CSS.NODE);

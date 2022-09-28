@@ -16,8 +16,8 @@ import org.eclipse.uml2.uml.NamedElement;
 import org.eclipse.uml2.uml.Property;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
-import com.eclipsesource.uml.glsp.util.UmlLabelUtil;
+import com.eclipsesource.uml.glsp.uml.object_diagram.constants.ObjectTypes;
+import com.eclipsesource.uml.glsp.uml.utils.property.PropertyUtil;
 
 public class ObjectDiagramLabelFactory extends ObjectAbstractGModelFactory<NamedElement, GLabel> {
 
@@ -35,10 +35,10 @@ public class ObjectDiagramLabelFactory extends ObjectAbstractGModelFactory<Named
 
    public GLabel createPropertyLabel(final Property property) {
       String label = property.getName()
-         .concat(UmlLabelUtil.getTypeName(property))
-         .concat(UmlLabelUtil.getMultiplicity(property));
+         .concat(PropertyUtil.getTypeName(property))
+         .concat(PropertyUtil.getMultiplicity(property));
 
-      return new GLabelBuilder(Types.PROPERTY)
+      return new GLabelBuilder(ObjectTypes.PROPERTY)
          .id(toId(property))
          .text(label)
          .build();

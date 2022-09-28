@@ -12,7 +12,7 @@ import org.eclipse.uml2.uml.Vertex;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.uml.statemachine_diagram.StateMachineModelServerAccess;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.eclipsesource.uml.glsp.uml.statemachine_diagram.constants.StateMachineTypes;
 import com.google.common.collect.Lists;
 
 public class CreateStateMachineDiagramEdgeOperationHandler
@@ -22,7 +22,7 @@ public class CreateStateMachineDiagramEdgeOperationHandler
       super(handledElementTypeIds);
    }
 
-   private static List<String> handledElementTypeIds = Lists.newArrayList(Types.TRANSITION);
+   private static List<String> handledElementTypeIds = Lists.newArrayList(StateMachineTypes.TRANSITION);
 
    @Override
    public boolean handles(final Operation execAction) {
@@ -49,7 +49,7 @@ public class CreateStateMachineDiagramEdgeOperationHandler
       Vertex target = getOrThrow(modelState.getIndex().getSemantic(targetId), Vertex.class,
          "No valid target vertex with id " + targetId + " found!");
 
-      if (elementTypeId.equals(Types.TRANSITION)) {
+      if (elementTypeId.equals(StateMachineTypes.TRANSITION)) {
          modelAccess.addTransition(UmlModelState.getModelState(modelState), source, target)
             .thenAccept(response -> {
                if (!response.body()) {

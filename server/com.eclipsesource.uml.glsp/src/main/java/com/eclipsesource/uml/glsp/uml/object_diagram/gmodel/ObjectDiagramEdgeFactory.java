@@ -13,8 +13,8 @@ import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Relationship;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.util.UmlConfig.CSS;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.eclipsesource.uml.glsp.uml.object_diagram.constants.ObjectTypes;
+import com.eclipsesource.uml.glsp.utils.UmlConfig.CSS;
 import com.eclipsesource.uml.modelserver.unotation.Edge;
 
 public class ObjectDiagramEdgeFactory extends ObjectAbstractGModelFactory<Relationship, GEdge> {
@@ -37,7 +37,7 @@ public class ObjectDiagramEdgeFactory extends ObjectAbstractGModelFactory<Relati
       Property source = memberEnds.get(0);
       Property target = memberEnds.get(1);
 
-      GEdgeBuilder builder = new GEdgeBuilder(Types.LINK)
+      GEdgeBuilder builder = new GEdgeBuilder(ObjectTypes.LINK)
          .id(toId(link))
          .addCssClass(CSS.EDGE)
          .sourceId(toId(source.getType()))

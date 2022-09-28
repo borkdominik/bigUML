@@ -38,9 +38,11 @@ import org.eclipse.uml2.uml.OpaqueExpression;
 import org.eclipse.uml2.uml.SendSignalAction;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.util.UmlConfig.CSS;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
-import com.eclipsesource.uml.glsp.util.UmlIDUtil;
+import com.eclipsesource.uml.glsp.uml.activity_diagram.constants.ActivityCSS;
+import com.eclipsesource.uml.glsp.uml.activity_diagram.constants.ActivityTypes;
+import com.eclipsesource.uml.glsp.utils.UmlConfig.CSS;
+import com.eclipsesource.uml.glsp.utils.UmlConfig.Types;
+import com.eclipsesource.uml.glsp.utils.UmlIDUtil;
 import com.eclipsesource.uml.modelserver.unotation.Shape;
 
 public class ActivityDiagramNodeFactory extends ActivityAbstractGModelFactory<Classifier, GNode> {
@@ -75,7 +77,7 @@ public class ActivityDiagramNodeFactory extends ActivityAbstractGModelFactory<Cl
       layoutOptions.put(H_GRAB, true);
       layoutOptions.put(V_GRAB, true);
 
-      GNodeBuilder builder = new GNodeBuilder(Types.ACTIVITY)
+      GNodeBuilder builder = new GNodeBuilder(ActivityTypes.ACTIVITY)
          .id(toId(umlActivity))
          .layout(GConstants.Layout.VBOX)
          .layoutOptions(layoutOptions)
@@ -249,7 +251,7 @@ public class ActivityDiagramNodeFactory extends ActivityAbstractGModelFactory<Cl
       return new GCompartmentBuilder(Types.COMP) //
          .id(toId(activity) + "_conditionCompartment")
          .layout(GConstants.Layout.VBOX)
-         .addCssClass(CSS.ACTIVITY_CONDITION)
+         .addCssClass(ActivityCSS.ACTIVITY_CONDITION)
          .layoutOptions(new GLayoutOptions() //
             .hAlign(GConstants.HAlign.LEFT) //
             .resizeContainer(true)) //
@@ -272,7 +274,7 @@ public class ActivityDiagramNodeFactory extends ActivityAbstractGModelFactory<Cl
       layoutOptions.put(H_ALIGN, GConstants.HAlign.LEFT);
       layoutOptions.put(H_GRAB, true);
       layoutOptions.put(V_GRAB, true);
-      GCompartment structCompartment = new GCompartmentBuilder(Types.STRUCTURE)
+      GCompartment structCompartment = new GCompartmentBuilder(ActivityTypes.STRUCTURE)
          .id(toId(namedElement) + "_struct")
          .layout(GConstants.Layout.FREEFORM)
          .layoutOptions(layoutOptions)
@@ -283,7 +285,7 @@ public class ActivityDiagramNodeFactory extends ActivityAbstractGModelFactory<Cl
 
    protected static String getType(final Classifier classifier) {
       if (classifier instanceof Activity) {
-         return Types.ICON_ACTIVITY;
+         return ActivityTypes.ICON_ACTIVITY;
       }
       return "Classifier not found";
    }

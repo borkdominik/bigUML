@@ -21,13 +21,13 @@ import org.eclipse.glsp.server.operations.DeleteOperation;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;
-import com.eclipsesource.uml.glsp.uml.communication_diagram.constants.CommunicationConfig;
-import com.eclipsesource.uml.glsp.util.UmlGModelUtil;
+import com.eclipsesource.uml.glsp.uml.communication_diagram.constants.CommunicationTypes;
+import com.eclipsesource.uml.glsp.utils.gmodel.GModelFilterUtil;
 import com.google.inject.Inject;
 
 public class UmlCutOperationHandler
    extends EMSBasicOperationHandler<CutOperation, UmlModelServerAccess> {
-   private final List<String> ignoreList = List.of(CommunicationConfig.Types.MESSAGE);
+   private final List<String> ignoreList = List.of(CommunicationTypes.MESSAGE);
 
    @Inject
    protected ActionDispatcher actionDispatcher;
@@ -48,8 +48,8 @@ public class UmlCutOperationHandler
       var index = modelState.getIndex();
       var selectedElements = index.getAll(elementIds);
 
-      var interactionIds = UmlGModelUtil
-         .filterByType(selectedElements, CommunicationConfig.Types.INTERACTION, GModelElement.class)
+      var interactionIds = GModelFilterUtil
+         .filterByType(selectedElements, CommunicationTypes.INTERACTION, GModelElement.class)
          .map(element -> element.getId())
          .collect(Collectors.toUnmodifiableList());
 

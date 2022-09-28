@@ -23,7 +23,7 @@ import org.eclipse.uml2.uml.Transition;
 import org.eclipse.uml2.uml.Vertex;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.eclipsesource.uml.glsp.utils.UmlConfig.Types;
 import com.eclipsesource.uml.modelserver.unotation.Shape;
 
 public class RegionCompartmentFactory extends StateMachineAbstractGModelFactory<Region, GCompartment> {

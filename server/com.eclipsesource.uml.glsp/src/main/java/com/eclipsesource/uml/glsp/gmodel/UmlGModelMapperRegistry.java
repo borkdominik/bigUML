@@ -21,7 +21,7 @@ import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.server.internal.registry.MapRegistry;
 import org.eclipse.glsp.server.registry.Registry;
 
-import com.eclipsesource.uml.glsp.util.ReflectionUtil;
+import com.eclipsesource.uml.glsp.utils.reflection.ReflectionUtil;
 import com.google.inject.Inject;
 
 public class UmlGModelMapperRegistry

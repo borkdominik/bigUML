@@ -30,8 +30,11 @@ import org.eclipse.uml2.uml.Property;
 import com.eclipsesource.uml.glsp.model.UmlModelIndex;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.uml.class_diagram.ClassModelServerAccess;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
-import com.eclipsesource.uml.glsp.util.UmlIDUtil;
+import com.eclipsesource.uml.glsp.uml.class_diagram.constants.ClassTypes;
+import com.eclipsesource.uml.glsp.uml.utils.edge.EdgeMultiplicityIdUtil;
+import com.eclipsesource.uml.glsp.uml.utils.property.PropertyIdUtil;
+import com.eclipsesource.uml.glsp.utils.UmlConfig.Types;
+import com.eclipsesource.uml.glsp.utils.UmlIDUtil;
 
 public class ClassLabelEditOperationHandler
    extends EMSBasicOperationHandler<ApplyLabelEditOperation, ClassModelServerAccess> {
@@ -94,8 +97,8 @@ public class ClassLabelEditOperationHandler
             }
             break;
 
-         case Types.LABEL_PROPERTY_NAME:
-            containerElementId = UmlIDUtil.getElementIdFromPropertyLabelName(graphicalElementId);
+         case ClassTypes.LABEL_PROPERTY_NAME:
+            containerElementId = PropertyIdUtil.getElementIdFromPropertyLabelName(graphicalElementId);
             Property property = getOrThrow(modelIndex.getSemantic(containerElementId),
                Property.class, "No valid container with id " + graphicalElementId + " found");
 
@@ -108,8 +111,8 @@ public class ClassLabelEditOperationHandler
 
             break;
 
-         case Types.LABEL_PROPERTY_TYPE:
-            containerElementId = UmlIDUtil.getElementIdFromPropertyLabelType(graphicalElementId);
+         case ClassTypes.LABEL_PROPERTY_TYPE:
+            containerElementId = PropertyIdUtil.getElementIdFromPropertyLabelType(graphicalElementId);
             property = getOrThrow(modelIndex.getSemantic(containerElementId),
                Property.class, "No valid container with id " + graphicalElementId + " found");
 
@@ -122,8 +125,8 @@ public class ClassLabelEditOperationHandler
 
             break;
 
-         case Types.LABEL_PROPERTY_MULTIPLICITY:
-            containerElementId = UmlIDUtil.getElementIdFromPropertyLabelMultiplicity(graphicalElementId);
+         case ClassTypes.LABEL_PROPERTY_MULTIPLICITY:
+            containerElementId = PropertyIdUtil.getElementIdFromPropertyLabelMultiplicity(graphicalElementId);
             property = getOrThrow(modelIndex.getSemantic(containerElementId),
                Property.class, "No valid container with id " + graphicalElementId + " found");
 
@@ -136,7 +139,7 @@ public class ClassLabelEditOperationHandler
 
             break;
 
-         case Types.ATTRIBUTE:
+         case ClassTypes.ATTRIBUTE:
             Property objectAttribute = getOrThrow(modelIndex.getSemantic(graphicalElementId),
                Property.class, "No valid container with id " + graphicalElementId + " found");
 
@@ -166,8 +169,8 @@ public class ClassLabelEditOperationHandler
                });
             break;
 
-         case Types.LABEL_EDGE_MULTIPLICITY:
-            containerElementId = UmlIDUtil.getElementIdFromLabelMultiplicity(graphicalElementId);
+         case ClassTypes.LABEL_EDGE_MULTIPLICITY:
+            containerElementId = EdgeMultiplicityIdUtil.getElementIdFromEdgeLabelMultiplicity(graphicalElementId);
             associationEnd = getOrThrow(modelIndex.getSemantic(containerElementId),
                Property.class, "No valid container with id " + graphicalElementId + " found");
 

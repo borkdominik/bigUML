@@ -17,65 +17,33 @@ import org.eclipse.glsp.server.actions.TriggerEdgeCreationAction;
 import org.eclipse.glsp.server.actions.TriggerNodeCreationAction;
 import org.eclipse.glsp.server.features.toolpalette.PaletteItem;
 
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.eclipsesource.uml.glsp.uml.usecase_diagram.constants.UseCaseTypes;
 import com.google.common.collect.Lists;
 
 public class UseCasePalette {
    public List<PaletteItem> getItems(final Map<String, String> args) {
-      return Lists.newArrayList(classifiersStateMachine(), behaviourStateMachine(),
-         relationsStateMachine(), comment());
+      return Lists.newArrayList(classifiersUseCase(), relationsUseCase());
    }
 
-   private PaletteItem classifiersStateMachine() {
-      PaletteItem createStateMachine = node(Types.STATE_MACHINE, "State Machine", "umlstatemachine");
-      PaletteItem createRegion = node(Types.REGION, "Region", "umlinterruptibleregion");
-      PaletteItem createState = node(Types.STATE, "State", "umlstate");
-      PaletteItem createFinalState = node(Types.FINAL_STATE, "Final State", "umlfinalstate");
+   private PaletteItem classifiersUseCase() {
+      PaletteItem createUseCase = node(UseCaseTypes.USECASE, "Use Case", "umlusecase");
+      PaletteItem createPackage = node(UseCaseTypes.PACKAGE, "Package", "umlpackage");
+      PaletteItem createComponent = node(UseCaseTypes.COMPONENT, "Component", "umlcomponent");
+      PaletteItem createActor = node(UseCaseTypes.ACTOR, "Actor", "umlactor");
 
-      // Pseudo States
-      PaletteItem createInitialState = node(Types.INITIAL_STATE, "Initial", "umlinitialstate");
-      PaletteItem createDeepHistory = node(Types.DEEP_HISTORY, "DeepHistory", "umldeephistory");
-      PaletteItem createShallowHistory = node(Types.SHALLOW_HISTORY, "ShallowHistory", "umlshallowhistory");
-      PaletteItem createFork = node(Types.FORK, "Fork", "umlfork");
-      PaletteItem createJoin = node(Types.JOIN, "Join", "umljoin");
-      PaletteItem createJunction = node(Types.JUNCTION, "Junction", "umljunction");
-      PaletteItem createChoice = node(Types.CHOICE, "Choice", "umlchoice");
-      PaletteItem createEntryPoint = node(Types.ENTRY_POINT, "Entry Point", "umlentrypoint");
-      PaletteItem createExitPoint = node(Types.EXIT_POINT, "Exit Point", "umlexitpoint");
-
-      List<PaletteItem> classifiers = Lists.newArrayList(
-         createStateMachine, createState, createFinalState, createChoice, createFork, createInitialState,
-         createJoin, createJunction, createDeepHistory, createShallowHistory, createEntryPoint, createExitPoint,
-         createRegion);
+      List<PaletteItem> classifiers = Lists.newArrayList(createUseCase, createPackage, createComponent, createActor);
       return PaletteItem.createPaletteGroup("uml.classifier", "Container", classifiers, "symbol-property");
    }
 
-   private PaletteItem behaviourStateMachine() {
-      PaletteItem createEntryActivity = node(Types.STATE_ENTRY_ACTIVITY, "State Entry Activity",
-         "umlstateactivity");
-      PaletteItem createDoActivity = node(Types.STATE_DO_ACTIVITY, "State Do Activity",
-         "umlstateactivity");
-      PaletteItem createExitActivity = node(Types.STATE_EXIT_ACTIVITY, "State Exit Activity",
-         "umlstateactivity");
+   private PaletteItem relationsUseCase() {
+      PaletteItem createExtend = edge(UseCaseTypes.EXTEND, "Extend", "umlextend");
+      PaletteItem createInclude = edge(UseCaseTypes.INCLUDE, "Include", "umlinclude");
+      PaletteItem createGeneralization = edge(UseCaseTypes.GENERALIZATION, "Generalization", "umlgeneralization");
+      PaletteItem createAssociation = edge(UseCaseTypes.USECASE_ASSOCIATION, "Association", "umlassociation");
 
-      List<PaletteItem> behaviour = Lists.newArrayList(
-         createEntryActivity, createDoActivity, createExitActivity);
-      return PaletteItem.createPaletteGroup("uml.feature", "Behaviour", behaviour, "symbol-property");
-   }
-
-   private PaletteItem relationsStateMachine() {
-      PaletteItem createTransition = edge(Types.TRANSITION, "Transition", "umltransition");
-
-      List<PaletteItem> relations = Lists.newArrayList(createTransition);
+      List<PaletteItem> relations = Lists.newArrayList(createExtend, createInclude, createGeneralization,
+         createAssociation);
       return PaletteItem.createPaletteGroup("uml.relation", "Relations", relations, "symbol-property");
-   }
-
-   private PaletteItem comment() {
-      PaletteItem createCommentNode = node(Types.COMMENT, "Comment", "umlcomment");
-      // PaletteItem createCommentEdge = node(Types.COMMENT_EDGE, "Comment Edge", "umlcommentedge");
-
-      List<PaletteItem> comment = Lists.newArrayList(createCommentNode);
-      return PaletteItem.createPaletteGroup("uml.comment", "Comment", comment, "symbol-property");
    }
 
    private PaletteItem node(final String elementTypeId, final String label, final String icon) {

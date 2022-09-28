@@ -29,8 +29,9 @@ import org.eclipse.uml2.uml.Relationship;
 import org.eclipse.uml2.uml.UseCase;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.util.UmlConfig.CSS;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.eclipsesource.uml.glsp.uml.usecase_diagram.constants.UseCaseTypes;
+import com.eclipsesource.uml.glsp.utils.UmlConfig;
+import com.eclipsesource.uml.glsp.utils.UmlConfig.CSS;
 import com.eclipsesource.uml.modelserver.unotation.Edge;
 
 public class UseCaseDiagramEdgeFactory extends UseCaseAbstractGModelFactory<Relationship, GEdge> {
@@ -67,7 +68,7 @@ public class UseCaseDiagramEdgeFactory extends UseCaseAbstractGModelFactory<Rela
       UseCase target = extend.getExtendedCase();
       String targetId = toId(target);
 
-      GEdgeBuilder builder = new GEdgeBuilder(Types.EXTEND)
+      GEdgeBuilder builder = new GEdgeBuilder(UseCaseTypes.EXTEND)
          .id(toId(extend))
          .addCssClass(CSS.EDGE)
          .addCssClass(CSS.EDGE_DOTTED)
@@ -77,13 +78,13 @@ public class UseCaseDiagramEdgeFactory extends UseCaseAbstractGModelFactory<Rela
          .routerKind(GConstants.RouterKind.MANHATTAN);
 
       GLabel extendLable = createEdgeLabel("<<extends>>", 0.5d,
-         targetId + "_" + sourceId + "_" + toId(extend) + "_label", Types.LABEL_TEXT,
+         targetId + "_" + sourceId + "_" + toId(extend) + "_label", UmlConfig.Types.LABEL_TEXT,
          EdgeSide.TOP);
       builder.add(extendLable);
 
       // TODO: check if we need this for anything else
       /*
-       * builder.add(new GLabelBuilder(Types.CONNECTIONPOINT)
+       * builder.add(new GLabelBuilder(UseCaseTypes.CONNECTIONPOINT)
        * .addCssClass(CSS.LABEL_TRANSPARENT)
        * .edgePlacement(new GEdgePlacementBuilder()
        * .side(EdgeSide.TOP)
@@ -117,7 +118,7 @@ public class UseCaseDiagramEdgeFactory extends UseCaseAbstractGModelFactory<Rela
       UseCase target = include.getAddition();
       String targetId = toId(target);
 
-      GEdgeBuilder builder = new GEdgeBuilder(Types.INCLUDE)
+      GEdgeBuilder builder = new GEdgeBuilder(UseCaseTypes.INCLUDE)
          .id(toId(include))
          .addCssClass(CSS.EDGE)
          .addCssClass(CSS.EDGE_DASHED)
@@ -127,7 +128,7 @@ public class UseCaseDiagramEdgeFactory extends UseCaseAbstractGModelFactory<Rela
          .routerKind(GConstants.RouterKind.MANHATTAN);
 
       GLabel includeLabel = createEdgeLabel("<<includes>>", 0.5d,
-         targetId + "_" + sourceId + "_" + toId(include) + "_label", Types.LABEL_TEXT,
+         targetId + "_" + sourceId + "_" + toId(include) + "_label", UmlConfig.Types.LABEL_TEXT,
          EdgeSide.TOP);
       builder.add(includeLabel);
 
@@ -153,7 +154,7 @@ public class UseCaseDiagramEdgeFactory extends UseCaseAbstractGModelFactory<Rela
       Classifier target = generalization.getGeneral();
       String targetId = toId(target);
 
-      GEdgeBuilder builder = new GEdgeBuilder(Types.GENERALIZATION)
+      GEdgeBuilder builder = new GEdgeBuilder(UseCaseTypes.GENERALIZATION)
          .id(toId(generalization))
          .addCssClass(CSS.EDGE)
          .addCssClass(CSS.EDGE_DIRECTED_END_EMPTY)
@@ -176,7 +177,7 @@ public class UseCaseDiagramEdgeFactory extends UseCaseAbstractGModelFactory<Rela
     * EList<Property> memberEnds = association.getMemberEnds();
     * Property source = memberEnds.get(0);
     * Property target = memberEnds.get(1);
-    * GEdgeBuilder builder = new GEdgeBuilder(Types.USECASE_ASSOCIATION)
+    * GEdgeBuilder builder = new GEdgeBuilder(UseCaseTypes.USECASE_ASSOCIATION)
     * .id(toId(association))
     * .addCssClass(CSS.EDGE)
     * .sourceId(toId(source.getType()))
@@ -202,7 +203,7 @@ public class UseCaseDiagramEdgeFactory extends UseCaseAbstractGModelFactory<Rela
     * @return The GLabel that can be added to the graph.
     */
    protected GLabel createEdgeMultiplicityLabel(final String value, final String id, final double position) {
-      return createEdgeLabel(value, position, id, Types.LABEL_EDGE_MULTIPLICITY, EdgeSide.BOTTOM);
+      return createEdgeLabel(value, position, id, UseCaseTypes.LABEL_EDGE_MULTIPLICITY, EdgeSide.BOTTOM);
    }
 
    /**
@@ -214,7 +215,7 @@ public class UseCaseDiagramEdgeFactory extends UseCaseAbstractGModelFactory<Rela
     * @return The GLabel that can be added to the graph.
     */
    protected GLabel createEdgeNameLabel(final String name, final String id, final double position) {
-      return createEdgeLabel(name, position, id, Types.LABEL_EDGE_NAME, EdgeSide.TOP);
+      return createEdgeLabel(name, position, id, UmlConfig.Types.LABEL_EDGE_NAME, EdgeSide.TOP);
    }
 
    /**

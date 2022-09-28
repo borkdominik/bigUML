@@ -9,7 +9,7 @@ import org.eclipse.glsp.server.types.GLSPServerException;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.uml.object_diagram.ObjectModelServerAccess;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.eclipsesource.uml.glsp.uml.object_diagram.constants.ObjectTypes;
 import com.google.common.collect.Lists;
 
 public class CreateObjectDiagramNodeOperationHandler
@@ -20,7 +20,7 @@ public class CreateObjectDiagramNodeOperationHandler
    }
 
    private static final List<String> handledElmentTypeIds = Lists.newArrayList(
-      Types.OBJECT);
+      ObjectTypes.OBJECT);
 
    @Override
    public boolean handles(final Operation execAction) {
@@ -38,7 +38,7 @@ public class CreateObjectDiagramNodeOperationHandler
 
       UmlModelState modelState = getUmlModelState();
 
-      if (Types.OBJECT.equals(operation.getElementTypeId())) {
+      if (ObjectTypes.OBJECT.equals(operation.getElementTypeId())) {
          System.out.println("in object handler");
          modelAccess.addObject(UmlModelState.getModelState(modelState), operation.getLocation())
             .thenAccept(response -> {

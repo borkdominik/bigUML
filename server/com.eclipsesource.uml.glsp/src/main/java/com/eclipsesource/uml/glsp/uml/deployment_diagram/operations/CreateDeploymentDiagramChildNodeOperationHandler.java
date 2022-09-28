@@ -16,8 +16,7 @@ import org.eclipse.uml2.uml.NamedElement;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.uml.deployment_diagram.DeploymentModelServerAccess;
-import com.eclipsesource.uml.glsp.util.UmlConfig;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.eclipsesource.uml.glsp.uml.deployment_diagram.constants.DeploymentTypes;
 import com.eclipsesource.uml.modelserver.unotation.Shape;
 import com.google.common.collect.Lists;
 
@@ -29,7 +28,7 @@ public class CreateDeploymentDiagramChildNodeOperationHandler
    }
 
    private static List<String> handledElementTypeIds = Lists.newArrayList(
-      UmlConfig.Types.DEPLOYMENT_COMPONENT);
+      DeploymentTypes.DEPLOYMENT_COMPONENT);
 
    @Override
    public boolean handles(final Operation execAction) {
@@ -54,7 +53,7 @@ public class CreateDeploymentDiagramChildNodeOperationHandler
       // GPoint location = getPosition(modelState, container, operation.getLocation().orElse(GraphUtil.point(0, 0)));
       GPoint location = getPosition(modelState, container, GraphUtil.point(0, 0));
 
-      if (Types.DEPLOYMENT_COMPONENT.equals(elementTypeId)) {
+      if (DeploymentTypes.DEPLOYMENT_COMPONENT.equals(elementTypeId)) {
          modelAccess.addDeploymentComponent(modelState, location, container)
             .thenAccept(response -> {
                if (!response.body()) {

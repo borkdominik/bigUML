@@ -25,7 +25,7 @@ import org.eclipse.glsp.server.types.GLSPServerException;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.eclipsesource.uml.glsp.uml.common_diagram.constants.CommonTypes;
 import com.eclipsesource.uml.modelserver.commands.activitydiagram.comment.AddCommentCommandContribution;
 import com.google.common.collect.Lists;
 
@@ -36,7 +36,7 @@ public class CreateCommentNodeOperationHandler
       super(handledElementTypeIds);
    }
 
-   private static List<String> handledElementTypeIds = Lists.newArrayList(Types.COMMENT);
+   private static List<String> handledElementTypeIds = Lists.newArrayList(CommonTypes.COMMENT);
 
    @Override
    public boolean handles(final Operation execAction) {
@@ -54,7 +54,7 @@ public class CreateCommentNodeOperationHandler
 
       UmlModelState modelState = getUmlModelState();
 
-      if (!Types.COMMENT.equals(operation.getElementTypeId())) {
+      if (!CommonTypes.COMMENT.equals(operation.getElementTypeId())) {
          throw new GLSPServerException("Unknown operation type for");
       }
 

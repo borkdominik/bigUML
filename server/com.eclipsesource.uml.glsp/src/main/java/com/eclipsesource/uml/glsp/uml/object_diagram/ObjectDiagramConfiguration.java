@@ -22,7 +22,8 @@ import org.eclipse.glsp.server.layout.ServerLayoutKind;
 import org.eclipse.glsp.server.types.EdgeTypeHint;
 import org.eclipse.glsp.server.types.ShapeTypeHint;
 
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.eclipsesource.uml.glsp.uml.class_diagram.constants.ClassTypes;
+import com.eclipsesource.uml.glsp.uml.object_diagram.constants.ObjectTypes;
 import com.google.common.collect.Lists;
 
 public class ObjectDiagramConfiguration extends BaseDiagramConfiguration {
@@ -33,10 +34,8 @@ public class ObjectDiagramConfiguration extends BaseDiagramConfiguration {
    @Override
    public List<EdgeTypeHint> getEdgeTypeHints() {
       return Lists.newArrayList(
-         // COMMONS
-         createDefaultEdgeTypeHint(Types.COMMENT_EDGE),
          // OBJECT DIAGRAM
-         createDefaultEdgeTypeHint(Types.LINK));
+         createDefaultEdgeTypeHint(ObjectTypes.LINK));
    }
 
    @Override
@@ -48,15 +47,9 @@ public class ObjectDiagramConfiguration extends BaseDiagramConfiguration {
 
       switch (elementId) {
          // OBJECT DIAGRAM
-         case Types.LINK:
-            allowed = Lists.newArrayList(Types.OBJECT, Types.CLASS);
+         case ObjectTypes.LINK:
+            allowed = Lists.newArrayList(ObjectTypes.OBJECT, ClassTypes.CLASS);
             return new EdgeTypeHint(elementId, true, true, true, allowed, allowed);
-         // COMMENT
-         case Types.COMMENT_EDGE:
-            allowed = Lists.newArrayList();
-            allowed.addAll(Types.LINKS_TO_COMMENT);
-            return new EdgeTypeHint(elementId, true, true, true, List.of(Types.COMMENT),
-               allowed);
          default:
             break;
       }
@@ -68,18 +61,12 @@ public class ObjectDiagramConfiguration extends BaseDiagramConfiguration {
       List<ShapeTypeHint> hints = new ArrayList<>();
       // GRAPH
       hints.add(new ShapeTypeHint(DefaultTypes.GRAPH, false, false, false, false,
-         List.of(Types.COMMENT, Types.CLASS, Types.ACTIVITY, Types.USECASE, Types.ACTOR, Types.PACKAGE, Types.COMPONENT,
-            Types.STATE_MACHINE, Types.DEPLOYMENT_NODE, Types.DEVICE, Types.ARTIFACT, Types.ENUMERATION,
-            Types.EXECUTION_ENVIRONMENT, Types.OBJECT, Types.DEPLOYMENT_COMPONENT, Types.INTERFACE,
-            Types.ABSTRACT_CLASS)));
+         List.of(ObjectTypes.OBJECT)));
 
       // OBJECT DIAGRAM
-      hints.add(new ShapeTypeHint(Types.OBJECT, true, true, false, false,
-         List.of(Types.ATTRIBUTE)));
-      hints.add(new ShapeTypeHint(Types.ATTRIBUTE, false, true, false, true));
-
-      // Comment
-      hints.add(new ShapeTypeHint(Types.COMMENT, true, true, false, false));
+      hints.add(new ShapeTypeHint(ObjectTypes.OBJECT, true, true, false, false,
+         List.of(ObjectTypes.ATTRIBUTE)));
+      hints.add(new ShapeTypeHint(ObjectTypes.ATTRIBUTE, false, true, false, true));
 
       return hints;
    }
@@ -88,24 +75,15 @@ public class ObjectDiagramConfiguration extends BaseDiagramConfiguration {
    public Map<String, EClass> getTypeMappings() {
       Map<String, EClass> mappings = DefaultTypes.getDefaultTypeMappings();
 
-      // COMMONS
-      mappings.put(Types.LABEL_NAME, GraphPackage.Literals.GLABEL);
-      mappings.put(Types.LABEL_TEXT, GraphPackage.Literals.GLABEL);
-      mappings.put(Types.LABEL_EDGE_NAME, GraphPackage.Literals.GLABEL);
-      mappings.put(Types.LABEL_EDGE_MULTIPLICITY, GraphPackage.Literals.GLABEL);
-      mappings.put(Types.COMP, GraphPackage.Literals.GCOMPARTMENT);
-      // mappings.put(Types.COMP_HEADER, GraphPackage.Literals.GCOMPARTMENT);
-      mappings.put(Types.LABEL_ICON, GraphPackage.Literals.GCOMPARTMENT);
-      mappings.put(Types.COMMENT, GraphPackage.Literals.GNODE);
-      mappings.put(Types.COMMENT_EDGE, GraphPackage.Literals.GEDGE);
-      mappings.put(Types.COMPARTMENT, GraphPackage.Literals.GCOMPARTMENT);
-      mappings.put(Types.COMPARTMENT_HEADER, GraphPackage.Literals.GCOMPARTMENT);
-
       // OBJECT DIAGRAM
-      mappings.put(Types.ICON_OBJECT, GraphPackage.Literals.GCOMPARTMENT);
-      mappings.put(Types.OBJECT, GraphPackage.Literals.GNODE);
-      mappings.put(Types.LINK, GraphPackage.Literals.GEDGE);
-      mappings.put(Types.ATTRIBUTE, GraphPackage.Literals.GLABEL);
+      mappings.put(ObjectTypes.ICON_OBJECT, GraphPackage.Literals.GCOMPARTMENT);
+      mappings.put(ObjectTypes.OBJECT, GraphPackage.Literals.GNODE);
+      mappings.put(ObjectTypes.LINK, GraphPackage.Literals.GEDGE);
+      mappings.put(ObjectTypes.ATTRIBUTE, GraphPackage.Literals.GLABEL);
+
+      // SHARED WITH OBJECT DIAGRAM
+      mappings.put(ObjectTypes.ATTRIBUTE, GraphPackage.Literals.GLABEL);
+      mappings.put(ObjectTypes.PROPERTY, GraphPackage.Literals.GCOMPARTMENT);
 
       return mappings;
    }

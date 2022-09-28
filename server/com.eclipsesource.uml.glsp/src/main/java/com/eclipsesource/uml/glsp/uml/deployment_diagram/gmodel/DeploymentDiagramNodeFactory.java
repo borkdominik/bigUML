@@ -18,7 +18,6 @@ import org.eclipse.glsp.graph.builder.impl.GNodeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.uml2.uml.Artifact;
-import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.DeploymentSpecification;
 import org.eclipse.uml2.uml.Device;
@@ -27,9 +26,10 @@ import org.eclipse.uml2.uml.NamedElement;
 import org.eclipse.uml2.uml.Node;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.util.UmlConfig.CSS;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
-import com.eclipsesource.uml.glsp.util.UmlIDUtil;
+import com.eclipsesource.uml.glsp.uml.deployment_diagram.constants.DeploymentTypes;
+import com.eclipsesource.uml.glsp.utils.UmlConfig;
+import com.eclipsesource.uml.glsp.utils.UmlConfig.CSS;
+import com.eclipsesource.uml.glsp.utils.UmlIDUtil;
 import com.eclipsesource.uml.modelserver.unotation.Shape;
 
 public class DeploymentDiagramNodeFactory extends DeploymentAbstractGModelFactory<Classifier, GNode> {
@@ -62,7 +62,7 @@ public class DeploymentDiagramNodeFactory extends DeploymentAbstractGModelFactor
    }
 
    protected GNode createDeploymentSpecification(final DeploymentSpecification deploymentSpecification) {
-      GNodeBuilder b = new GNodeBuilder(Types.DEPLOYMENT_SPECIFICATION)
+      GNodeBuilder b = new GNodeBuilder(DeploymentTypes.DEPLOYMENT_SPECIFICATION)
          .id(toId(deploymentSpecification))
          .layout(GConstants.Layout.VBOX)
          .addCssClass(CSS.NODE)
@@ -78,7 +78,7 @@ public class DeploymentDiagramNodeFactory extends DeploymentAbstractGModelFactor
       layoutOptions.put(H_GRAB, false);
       layoutOptions.put(V_GRAB, false);
 
-      GNodeBuilder builder = new GNodeBuilder(Types.DEPLOYMENT_NODE)
+      GNodeBuilder builder = new GNodeBuilder(DeploymentTypes.DEPLOYMENT_NODE)
          .id(toId(umlNode))
          .layout(GConstants.Layout.VBOX)
          .layoutOptions(layoutOptions)
@@ -132,7 +132,7 @@ public class DeploymentDiagramNodeFactory extends DeploymentAbstractGModelFactor
 
       /*
        * List<EObject> nodeChildren = new ArrayList<>(umlNode.getOwnedElements());
-       * GNodeBuilder b = new GNodeBuilder(Types.DEPLOYMENT_NODE)
+       * GNodeBuilder b = new GNodeBuilder(DeploymentTypes.DEPLOYMENT_NODE)
        * .id(toId(umlNode))
        * .layout(GConstants.Layout.VBOX)
        * .addCssClass(CSS.NODE)
@@ -149,7 +149,7 @@ public class DeploymentDiagramNodeFactory extends DeploymentAbstractGModelFactor
       layoutOptions.put(H_GRAB, false);
       layoutOptions.put(V_GRAB, false);
 
-      GNodeBuilder builder = new GNodeBuilder(Types.ARTIFACT)
+      GNodeBuilder builder = new GNodeBuilder(DeploymentTypes.ARTIFACT)
          .id(toId(artifact))
          .layout(GConstants.Layout.VBOX)
          .layoutOptions(layoutOptions)
@@ -175,7 +175,7 @@ public class DeploymentDiagramNodeFactory extends DeploymentAbstractGModelFactor
 
       /*
        * List<EObject> artifactChildren = new ArrayList<>(artifact.getNestedArtifacts());
-       * GNodeBuilder b = new GNodeBuilder(Types.ARTIFACT)
+       * GNodeBuilder b = new GNodeBuilder(DeploymentTypes.ARTIFACT)
        * .id(toId(artifact))
        * .layout(GConstants.Layout.VBOX)
        * .addCssClass(CSS.NODE)
@@ -197,7 +197,7 @@ public class DeploymentDiagramNodeFactory extends DeploymentAbstractGModelFactor
       layoutOptions.put(H_GRAB, false);
       layoutOptions.put(V_GRAB, false);
 
-      GNodeBuilder builder = new GNodeBuilder(Types.DEVICE)
+      GNodeBuilder builder = new GNodeBuilder(DeploymentTypes.DEVICE)
          .id(toId(device))
          .layout(GConstants.Layout.VBOX)
          .layoutOptions(layoutOptions)
@@ -271,7 +271,7 @@ public class DeploymentDiagramNodeFactory extends DeploymentAbstractGModelFactor
       layoutOptions.put(H_GRAB, false);
       layoutOptions.put(V_GRAB, false);
 
-      GNodeBuilder builder = new GNodeBuilder(Types.EXECUTION_ENVIRONMENT)
+      GNodeBuilder builder = new GNodeBuilder(DeploymentTypes.EXECUTION_ENVIRONMENT)
          .id(toId(executionEnvironment))
          .layout(GConstants.Layout.VBOX)
          .layoutOptions(layoutOptions)
@@ -325,7 +325,7 @@ public class DeploymentDiagramNodeFactory extends DeploymentAbstractGModelFactor
 
       /*
        * List<EObject> executionEnvironmentChildren = new ArrayList<>(executionEnvironment.getOwnedElements());
-       * GNodeBuilder b = new GNodeBuilder(Types.EXECUTION_ENVIRONMENT)
+       * GNodeBuilder b = new GNodeBuilder(DeploymentTypes.EXECUTION_ENVIRONMENT)
        * .id(toId(executionEnvironment))
        * .layout(GConstants.Layout.VBOX)
        * .addCssClass(CSS.NODE)
@@ -348,19 +348,19 @@ public class DeploymentDiagramNodeFactory extends DeploymentAbstractGModelFactor
    }
 
    protected GCompartment buildDeploymentSpecificationHeader(final DeploymentSpecification umlDeploymentSpecification) {
-      return new GCompartmentBuilder(Types.COMPARTMENT_HEADER)
+      return new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER)
          .layout("vbox")
          .id(toId(umlDeploymentSpecification) + "_header")
-         .add(new GLabelBuilder(Types.LABEL_TEXT)
+         .add(new GLabelBuilder(UmlConfig.Types.LABEL_TEXT)
             .id(toId(umlDeploymentSpecification) + "_header_text")
             .text("«deployment_spec»")
             .build())
-         .add(new GCompartmentBuilder(Types.COMPARTMENT_HEADER) //
+         .add(new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER) //
             .layout("hbox") //
             /*
              * .add(new GCompartmentBuilder(getType(umlDeploymentSpecification)) //
              * .id(toId(umlDeploymentSpecification) + "_header_icon").build()) //
-             * .add(new GLabelBuilder(Types.LABEL_NAME) //
+             * .add(new GLabelBuilder(UmlConfig.Types.LABEL_NAME) //
              * .id(toId(umlDeploymentSpecification) + "_header_label").text(umlDeploymentSpecification.getName()) //
              * .build())
              */ //
@@ -369,13 +369,13 @@ public class DeploymentDiagramNodeFactory extends DeploymentAbstractGModelFactor
    }
 
    protected GCompartment buildHeader(final Node umlNode) {
-      return new GCompartmentBuilder(Types.COMPARTMENT_HEADER) //
+      return new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER) //
          .layout("hbox") //
          .id(toId(umlNode) + "_header")
          .add(new GCompartmentBuilder(getType(umlNode)) //
             // .id(toId(umlNode) + "_header_icon")
             .build()) //
-         .add(new GLabelBuilder(Types.LABEL_NAME) //
+         .add(new GLabelBuilder(UmlConfig.Types.LABEL_NAME) //
             .id(toId(umlNode) + "_header_label").text(umlNode.getName()) //
             .build()) //
          .build();
@@ -383,17 +383,17 @@ public class DeploymentDiagramNodeFactory extends DeploymentAbstractGModelFactor
 
    protected GCompartment buildHeader(final Artifact umlArtifact) {
 
-      GCompartmentBuilder artifactHeader = new GCompartmentBuilder(Types.COMPARTMENT_HEADER)
+      GCompartmentBuilder artifactHeader = new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER)
          .layout(GConstants.Layout.VBOX)
          .id(UmlIDUtil.createHeaderId(toId(umlArtifact)));
 
-      GLabel typeLabel = new GLabelBuilder(Types.LABEL_NAME)
+      GLabel typeLabel = new GLabelBuilder(UmlConfig.Types.LABEL_NAME)
          .id(UmlIDUtil.createHeaderLabelId(toId(umlArtifact)) + "_type_header")
          .text("«artifact»")
          .build();
       artifactHeader.add(typeLabel);
 
-      GLabel artifactLabel = new GLabelBuilder(Types.LABEL_NAME)
+      GLabel artifactLabel = new GLabelBuilder(UmlConfig.Types.LABEL_NAME)
          .id(UmlIDUtil.createHeaderLabelId(toId(umlArtifact)))
          .text(umlArtifact.getName())
          .build();
@@ -403,17 +403,17 @@ public class DeploymentDiagramNodeFactory extends DeploymentAbstractGModelFactor
    }
 
    protected GCompartment buildHeader(final ExecutionEnvironment umlExecutionEnvironment) {
-      GCompartmentBuilder executionEnvironmentHeader = new GCompartmentBuilder(Types.COMPARTMENT_HEADER)
+      GCompartmentBuilder executionEnvironmentHeader = new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER)
          .layout(GConstants.Layout.VBOX)
          .id(UmlIDUtil.createHeaderId(toId(umlExecutionEnvironment)));
 
-      GLabel typeLabel = new GLabelBuilder(Types.LABEL_NAME)
+      GLabel typeLabel = new GLabelBuilder(UmlConfig.Types.LABEL_NAME)
          .id(UmlIDUtil.createHeaderLabelId(toId(umlExecutionEnvironment)) + "_type_header")
          .text("«execution_environment»")
          .build();
       executionEnvironmentHeader.add(typeLabel);
 
-      GLabel executionEnvironmentLabel = new GLabelBuilder(Types.LABEL_NAME)
+      GLabel executionEnvironmentLabel = new GLabelBuilder(UmlConfig.Types.LABEL_NAME)
          .id(UmlIDUtil.createHeaderLabelId(toId(umlExecutionEnvironment)))
          .text(umlExecutionEnvironment.getName())
          .build();
@@ -423,7 +423,7 @@ public class DeploymentDiagramNodeFactory extends DeploymentAbstractGModelFactor
    }
 
    protected GCompartment buildHeader(final Device umlDevice) {
-      GCompartmentBuilder deviceHeader = new GCompartmentBuilder(Types.COMPARTMENT_HEADER)
+      GCompartmentBuilder deviceHeader = new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER)
          .layout(GConstants.Layout.VBOX)
          .id(UmlIDUtil.createHeaderId(toId(umlDevice)));
 
@@ -434,13 +434,13 @@ public class DeploymentDiagramNodeFactory extends DeploymentAbstractGModelFactor
        * deviceHeader.add(deviceIcon);
        */
 
-      GLabel typeLabel = new GLabelBuilder(Types.LABEL_NAME)
+      GLabel typeLabel = new GLabelBuilder(UmlConfig.Types.LABEL_NAME)
          .id(UmlIDUtil.createHeaderLabelId(toId(umlDevice)) + "_type_header")
          .text("«device»")
          .build();
       deviceHeader.add(typeLabel);
 
-      GLabel deviceLabel = new GLabelBuilder(Types.LABEL_NAME)
+      GLabel deviceLabel = new GLabelBuilder(UmlConfig.Types.LABEL_NAME)
          .id(UmlIDUtil.createHeaderLabelId(toId(umlDevice)))
          .text(umlDevice.getName())
          .build();
@@ -451,7 +451,7 @@ public class DeploymentDiagramNodeFactory extends DeploymentAbstractGModelFactor
 
    protected GCompartment createLabeledChildCompartment(final Collection<? extends EObject> children,
       final Node parent) {
-      return new GCompartmentBuilder(Types.COMP) //
+      return new GCompartmentBuilder(UmlConfig.Types.COMP) //
          .id(toId(parent) + "_childCompartment").layout(GConstants.Layout.VBOX) //
          .layoutOptions(new GLayoutOptions() //
             .hAlign(GConstants.HAlign.CENTER) //
@@ -464,7 +464,7 @@ public class DeploymentDiagramNodeFactory extends DeploymentAbstractGModelFactor
 
    protected GCompartment createLabeledChildCompartment(final Collection<? extends EObject> children,
       final Artifact parent) {
-      return new GCompartmentBuilder(Types.COMP) //
+      return new GCompartmentBuilder(UmlConfig.Types.COMP) //
          .id(toId(parent) + "_childCompartment").layout(GConstants.Layout.VBOX) //
          .layoutOptions(new GLayoutOptions() //
             .hAlign(GConstants.HAlign.CENTER) //
@@ -477,7 +477,7 @@ public class DeploymentDiagramNodeFactory extends DeploymentAbstractGModelFactor
 
    protected GCompartment createLabeledChildCompartment(final Collection<? extends EObject> children,
       final Device parent) {
-      return new GCompartmentBuilder(Types.COMP) //
+      return new GCompartmentBuilder(UmlConfig.Types.COMP) //
          .id(toId(parent) + "_childCompartment").layout(GConstants.Layout.VBOX) //
          .layoutOptions(new GLayoutOptions() //
             .hAlign(GConstants.HAlign.CENTER) //
@@ -490,7 +490,7 @@ public class DeploymentDiagramNodeFactory extends DeploymentAbstractGModelFactor
 
    protected GCompartment createLabeledChildCompartment(final Collection<? extends EObject> children,
       final ExecutionEnvironment parent) {
-      return new GCompartmentBuilder(Types.COMP) //
+      return new GCompartmentBuilder(UmlConfig.Types.COMP) //
          .id(toId(parent) + "_childCompartment").layout(GConstants.Layout.VBOX) //
          .layoutOptions(new GLayoutOptions() //
             .hAlign(GConstants.HAlign.CENTER) //
@@ -506,7 +506,7 @@ public class DeploymentDiagramNodeFactory extends DeploymentAbstractGModelFactor
       layoutOptions.put(H_ALIGN, GConstants.HAlign.LEFT);
       layoutOptions.put(H_GRAB, true);
       layoutOptions.put(V_GRAB, true);
-      GCompartment structCompartment = new GCompartmentBuilder(Types.STRUCTURE)
+      GCompartment structCompartment = new GCompartmentBuilder(DeploymentTypes.STRUCTURE)
          .id(toId(namedElement) + "_struct")
          .layout(GConstants.Layout.FREEFORM)
          .layoutOptions(layoutOptions)
@@ -517,22 +517,19 @@ public class DeploymentDiagramNodeFactory extends DeploymentAbstractGModelFactor
 
    protected static String getType(final Classifier classifier) {
       if (classifier instanceof DeploymentSpecification) {
-         return Types.ICON_DEPLOYMENT_SPECIFICATION;
+         return DeploymentTypes.ICON_DEPLOYMENT_SPECIFICATION;
       }
       if (classifier instanceof Artifact) {
-         return Types.ICON_ARTIFACT;
+         return DeploymentTypes.ICON_ARTIFACT;
       }
       if (classifier instanceof ExecutionEnvironment) {
-         return Types.ICON_EXECUTION_ENVIRONMENT;
+         return DeploymentTypes.ICON_EXECUTION_ENVIRONMENT;
       }
       if (classifier instanceof Device) {
-         return Types.ICON_DEVICE;
+         return DeploymentTypes.ICON_DEVICE;
       }
       if (classifier instanceof Node) {
-         return Types.ICON_DEPLOYMENT_NODE;
-      }
-      if (classifier instanceof Class) {
-         return Types.ICON_CLASS;
+         return DeploymentTypes.ICON_DEPLOYMENT_NODE;
       }
 
       return "Classifier not found";

@@ -17,21 +17,20 @@ import org.eclipse.glsp.server.actions.TriggerEdgeCreationAction;
 import org.eclipse.glsp.server.actions.TriggerNodeCreationAction;
 import org.eclipse.glsp.server.features.toolpalette.PaletteItem;
 
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.eclipsesource.uml.glsp.uml.class_diagram.constants.ClassTypes;
 import com.google.common.collect.Lists;
 
 public class ClassPalette {
    public List<PaletteItem> getItems(final Map<String, String> args) {
-      return Lists.newArrayList(classifiersClass(), relationsClass(), featuresClass(),
-         comment());
+      return Lists.newArrayList(classifiersClass(), relationsClass(), featuresClass());
    }
 
    private PaletteItem classifiersClass() {
-      PaletteItem createClass = node(Types.CLASS, "Class", "umlclass");
-      PaletteItem createAbstractClass = node(Types.ABSTRACT_CLASS, "Abstract Class", "umlclass");
+      PaletteItem createClass = node(ClassTypes.CLASS, "Class", "umlclass");
+      PaletteItem createAbstractClass = node(ClassTypes.ABSTRACT_CLASS, "Abstract Class", "umlclass");
       // TODO: change icon
-      PaletteItem createInterface = node(Types.INTERFACE, "Interface", "umlclass");
-      PaletteItem createEnumeration = node(Types.ENUMERATION, "Enumeration", "umlenumeration");
+      PaletteItem createInterface = node(ClassTypes.INTERFACE, "Interface", "umlclass");
+      PaletteItem createEnumeration = node(ClassTypes.ENUMERATION, "Enumeration", "umlenumeration");
 
       List<PaletteItem> classifiers = Lists.newArrayList(createClass, createAbstractClass, createInterface,
          createEnumeration);
@@ -39,10 +38,10 @@ public class ClassPalette {
    }
 
    private PaletteItem relationsClass() {
-      PaletteItem createAssociation = edge(Types.ASSOCIATION, "Association", "umlassociation");
-      PaletteItem createGeneralisation = edge(Types.CLASS_GENERALIZATION, "Generalization", "umlgeneralization");
-      PaletteItem createComposition = edge(Types.COMPOSITION, "Composition", "umlassociation");
-      PaletteItem createAggregation = edge(Types.AGGREGATION, "Aggregation", "umlassociation");
+      PaletteItem createAssociation = edge(ClassTypes.ASSOCIATION, "Association", "umlassociation");
+      PaletteItem createGeneralisation = edge(ClassTypes.CLASS_GENERALIZATION, "Generalization", "umlgeneralization");
+      PaletteItem createComposition = edge(ClassTypes.COMPOSITION, "Composition", "umlassociation");
+      PaletteItem createAggregation = edge(ClassTypes.AGGREGATION, "Aggregation", "umlassociation");
 
       List<PaletteItem> relations = Lists.newArrayList(createAssociation, createGeneralisation, createComposition,
          createAggregation);
@@ -50,18 +49,10 @@ public class ClassPalette {
    }
 
    private PaletteItem featuresClass() {
-      PaletteItem createProperty = node(Types.PROPERTY, "Property", "umlproperty");
+      PaletteItem createProperty = node(ClassTypes.PROPERTY, "Property", "umlproperty");
 
       List<PaletteItem> features = Lists.newArrayList(createProperty);
       return PaletteItem.createPaletteGroup("uml.classifier", "Feature", features, "symbol-property");
-   }
-
-   private PaletteItem comment() {
-      PaletteItem createCommentNode = node(Types.COMMENT, "Comment", "umlcomment");
-      // PaletteItem createCommentEdge = node(Types.COMMENT_EDGE, "Comment Edge", "umlcommentedge");
-
-      List<PaletteItem> comment = Lists.newArrayList(createCommentNode);
-      return PaletteItem.createPaletteGroup("uml.comment", "Comment", comment, "symbol-property");
    }
 
    private PaletteItem node(final String elementTypeId, final String label, final String icon) {

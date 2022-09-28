@@ -32,9 +32,9 @@ import org.eclipse.uml2.uml.Interaction;
 import com.eclipsesource.uml.glsp.gmodel.UmlGModelMapHandler;
 import com.eclipsesource.uml.glsp.gmodel.UmlGModelMapper;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.uml.communication_diagram.constants.CommunicationConfig;
-import com.eclipsesource.uml.glsp.util.UmlConfig;
-import com.eclipsesource.uml.glsp.util.UmlIDUtil;
+import com.eclipsesource.uml.glsp.uml.communication_diagram.constants.CommunicationTypes;
+import com.eclipsesource.uml.glsp.utils.UmlConfig;
+import com.eclipsesource.uml.glsp.utils.UmlIDUtil;
 import com.eclipsesource.uml.modelserver.unotation.Shape;
 import com.google.inject.Inject;
 
@@ -61,7 +61,7 @@ public class CommunicationInteractionNodeMapper implements UmlGModelMapper<Inter
       children.addAll(interaction.getLifelines());
       children.addAll(interaction.getMessages());
 
-      GNodeBuilder builder = new GNodeBuilder(CommunicationConfig.Types.INTERACTION)
+      GNodeBuilder builder = new GNodeBuilder(CommunicationTypes.INTERACTION)
          .id(UmlIDUtil.toId(modelState, interaction))
          .layout(GConstants.Layout.VBOX)
          .layoutOptions(layoutOptions)
@@ -92,7 +92,7 @@ public class CommunicationInteractionNodeMapper implements UmlGModelMapper<Inter
       return new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER)
          .layout(GConstants.Layout.HBOX)
          .id(UmlIDUtil.createHeaderId(UmlIDUtil.toId(modelState, umlInteraction)))
-         .add(new GCompartmentBuilder(CommunicationConfig.Types.ICON_INTERACTION)
+         .add(new GCompartmentBuilder(CommunicationTypes.ICON_INTERACTION)
             .id(UmlIDUtil.createHeaderIconId(UmlIDUtil.toId(modelState, umlInteraction))).build())
          .add(new GLabelBuilder(UmlConfig.Types.LABEL_NAME)
             .id(UmlIDUtil.createHeaderLabelId(UmlIDUtil.toId(modelState, umlInteraction)))

@@ -27,8 +27,9 @@ import org.eclipse.uml2.uml.UseCase;
 import com.eclipsesource.uml.glsp.model.UmlModelIndex;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.uml.usecase_diagram.UseCaseModelServerAccess;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
-import com.eclipsesource.uml.glsp.util.UmlIDUtil;
+import com.eclipsesource.uml.glsp.uml.usecase_diagram.constants.UseCaseTypes;
+import com.eclipsesource.uml.glsp.utils.UmlConfig.Types;
+import com.eclipsesource.uml.glsp.utils.UmlIDUtil;
 
 public class UseCaseLabelEditOperationHandler
    extends EMSBasicOperationHandler<ApplyLabelEditOperation, UseCaseModelServerAccess> {
@@ -91,7 +92,7 @@ public class UseCaseLabelEditOperationHandler
             }
             break;
 
-         case Types.EXTENSIONPOINT:
+         case UseCaseTypes.EXTENSIONPOINT:
             ExtensionPoint ep = getOrThrow(modelIndex.getSemantic(graphicalElementId),
                ExtensionPoint.class, "No valid container with id " + graphicalElementId + " found");
 

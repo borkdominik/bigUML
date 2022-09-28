@@ -28,10 +28,13 @@ import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Relationship;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.util.UmlConfig.CSS;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
-import com.eclipsesource.uml.glsp.util.UmlIDUtil;
-import com.eclipsesource.uml.glsp.util.UmlLabelUtil;
+import com.eclipsesource.uml.glsp.uml.class_diagram.constants.ClassCSS;
+import com.eclipsesource.uml.glsp.uml.class_diagram.constants.ClassTypes;
+import com.eclipsesource.uml.glsp.uml.utils.edge.EdgeMultiplicityIdUtil;
+import com.eclipsesource.uml.glsp.uml.utils.property.PropertyUtil;
+import com.eclipsesource.uml.glsp.utils.UmlConfig;
+import com.eclipsesource.uml.glsp.utils.UmlConfig.CSS;
+import com.eclipsesource.uml.glsp.utils.UmlIDUtil;
 import com.eclipsesource.uml.modelserver.unotation.Edge;
 
 public class ClassDiagramEdgeFactory extends ClassAbstractGModelFactory<Relationship, GEdge> {
@@ -59,7 +62,7 @@ public class ClassDiagramEdgeFactory extends ClassAbstractGModelFactory<Relation
       String targetId = toId(target);
 
       if (association.getKeywords().get(0).equals("composition")) {
-         GEdgeBuilder builder = new GEdgeBuilder(Types.COMPOSITION)
+         GEdgeBuilder builder = new GEdgeBuilder(ClassTypes.COMPOSITION)
             .id(toId(association))
             .addCssClass(CSS.EDGE)
             .addCssClass(CSS.EDGE_DIRECTED_END_TENT)
@@ -77,10 +80,10 @@ public class ClassDiagramEdgeFactory extends ClassAbstractGModelFactory<Relation
          return builder.build();
       } else if (association.getKeywords().get(0).equals("aggregation")) {
 
-         GEdgeBuilder builder = new GEdgeBuilder(Types.COMPOSITION)
+         GEdgeBuilder builder = new GEdgeBuilder(ClassTypes.COMPOSITION)
             .id(toId(association))
             .addCssClass(CSS.EDGE)
-            .addCssClass(CSS.EDGE_DIAMOND_EMPTY)
+            .addCssClass(ClassCSS.EDGE_DIAMOND_EMPTY)
             .sourceId(toId(source.getType()))
             .targetId(toId(target.getType()))
             .routerKind(GConstants.RouterKind.MANHATTAN);
@@ -94,7 +97,7 @@ public class ClassDiagramEdgeFactory extends ClassAbstractGModelFactory<Relation
          });
          return builder.build();
       } else {
-         GEdgeBuilder builder = new GEdgeBuilder(Types.ASSOCIATION)
+         GEdgeBuilder builder = new GEdgeBuilder(ClassTypes.ASSOCIATION)
             .id(toId(association))
             .addCssClass(CSS.EDGE)
             .sourceId(toId(source.getType()))
@@ -104,15 +107,15 @@ public class ClassDiagramEdgeFactory extends ClassAbstractGModelFactory<Relation
          GLabel sourceNameLabel = createEdgeNameLabel(source.getName(), UmlIDUtil.createLabelNameId(sourceId), 0.1d);
          builder.add(sourceNameLabel);
 
-         GLabel sourceMultiplicityLabel = createEdgeMultiplicityLabel(UmlLabelUtil.getMultiplicity(source),
-            UmlIDUtil.createLabelMultiplicityId(sourceId), 0.1d);
+         GLabel sourceMultiplicityLabel = createEdgeMultiplicityLabel(PropertyUtil.getMultiplicity(source),
+            EdgeMultiplicityIdUtil.createEdgeLabelMultiplicityId(sourceId), 0.1d);
          builder.add(sourceMultiplicityLabel);
 
          GLabel targetNameLabel = createEdgeNameLabel(target.getName(), UmlIDUtil.createLabelNameId(targetId), 0.9d);
          builder.add(targetNameLabel);
 
-         GLabel targetMultiplicityLabel = createEdgeMultiplicityLabel(UmlLabelUtil.getMultiplicity(target),
-            UmlIDUtil.createLabelMultiplicityId(targetId), 0.9d);
+         GLabel targetMultiplicityLabel = createEdgeMultiplicityLabel(PropertyUtil.getMultiplicity(target),
+            EdgeMultiplicityIdUtil.createEdgeLabelMultiplicityId(targetId), 0.9d);
          builder.add(targetMultiplicityLabel);
 
          modelState.getIndex().getNotation(association, Edge.class).ifPresent(edge -> {
@@ -134,7 +137,7 @@ public class ClassDiagramEdgeFactory extends ClassAbstractGModelFactory<Relation
       Class target = (Class) generalization.getGeneral();
       String targetId = toId(target);
 
-      GEdgeBuilder builder = new GEdgeBuilder(Types.CLASS_GENERALIZATION)
+      GEdgeBuilder builder = new GEdgeBuilder(ClassTypes.CLASS_GENERALIZATION)
          .id(toId(generalization))
          .addCssClass(CSS.EDGE)
          .addCssClass(CSS.EDGE_DIRECTED_END_EMPTY)
@@ -153,11 +156,11 @@ public class ClassDiagramEdgeFactory extends ClassAbstractGModelFactory<Relation
    }
 
    protected GLabel createEdgeMultiplicityLabel(final String value, final String id, final double position) {
-      return createEdgeLabel(value, position, id, Types.LABEL_EDGE_MULTIPLICITY, GConstants.EdgeSide.BOTTOM);
+      return createEdgeLabel(value, position, id, ClassTypes.LABEL_EDGE_MULTIPLICITY, GConstants.EdgeSide.BOTTOM);
    }
 
    protected GLabel createEdgeNameLabel(final String name, final String id, final double position) {
-      return createEdgeLabel(name, position, id, Types.LABEL_EDGE_NAME, GConstants.EdgeSide.TOP);
+      return createEdgeLabel(name, position, id, UmlConfig.Types.LABEL_EDGE_NAME, GConstants.EdgeSide.TOP);
    }
 
    protected GLabel createEdgeLabel(final String name, final double position, final String id, final String type,

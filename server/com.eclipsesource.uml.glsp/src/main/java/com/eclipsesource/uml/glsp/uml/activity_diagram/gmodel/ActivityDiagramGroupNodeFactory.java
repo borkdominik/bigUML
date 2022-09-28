@@ -42,8 +42,9 @@ import org.eclipse.uml2.uml.OpaqueAction;
 import org.eclipse.uml2.uml.SendSignalAction;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.util.UmlConfig.CSS;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.eclipsesource.uml.glsp.uml.activity_diagram.constants.ActivityTypes;
+import com.eclipsesource.uml.glsp.utils.UmlConfig;
+import com.eclipsesource.uml.glsp.utils.UmlConfig.CSS;
 import com.eclipsesource.uml.modelserver.unotation.Shape;
 
 public class ActivityDiagramGroupNodeFactory extends ActivityAbstractGModelFactory<ActivityGroup, GNode> {
@@ -78,7 +79,7 @@ public class ActivityDiagramGroupNodeFactory extends ActivityAbstractGModelFacto
       layoutOptions.put(H_GRAB, false);
       layoutOptions.put(V_GRAB, false);
 
-      GNodeBuilder b = new GNodeBuilder(Types.PARTITION) //
+      GNodeBuilder b = new GNodeBuilder(ActivityTypes.PARTITION) //
          .id(toId(partition)) //
          .layout(GConstants.Layout.VBOX) //
          .layoutOptions(layoutOptions)
@@ -176,7 +177,7 @@ public class ActivityDiagramGroupNodeFactory extends ActivityAbstractGModelFacto
       layoutOptions.put(H_GRAB, false);
       layoutOptions.put(V_GRAB, false);
 
-      GNodeBuilder b = new GNodeBuilder(Types.INTERRUPTIBLEREGION) //
+      GNodeBuilder b = new GNodeBuilder(ActivityTypes.INTERRUPTIBLEREGION) //
          .id(toId(region)) //
          .layout(GConstants.Layout.VBOX) //
          .layoutOptions(layoutOptions)
@@ -217,7 +218,7 @@ public class ActivityDiagramGroupNodeFactory extends ActivityAbstractGModelFacto
       /*
        * List<EObject> children = new ArrayList<>(region.getOwnedElements());
        * children.addAll(region.getNodes());
-       * GNodeBuilder b = new GNodeBuilder(Types.INTERRUPTIBLEREGION) //
+       * GNodeBuilder b = new GNodeBuilder(ActivityTypes.INTERRUPTIBLEREGION) //
        * .id(toId(region)) //
        * .layout(GConstants.Layout.VBOX) //
        * .addCssClass(CSS.NODE)
@@ -229,10 +230,10 @@ public class ActivityDiagramGroupNodeFactory extends ActivityAbstractGModelFacto
    }
 
    protected GCompartment buildHeader(final ActivityGroup activityGroup) {
-      return new GCompartmentBuilder(Types.COMPARTMENT_HEADER) //
+      return new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER) //
          .layout("hbox") //
          .id(toId(activityGroup) + "_header") //
-         .add(new GLabelBuilder(Types.LABEL_NAME) //
+         .add(new GLabelBuilder(UmlConfig.Types.LABEL_NAME) //
             .id(toId(activityGroup) + "_header_label").text(activityGroup.getName()) //
             .build()) //
          .build();
@@ -251,7 +252,7 @@ public class ActivityDiagramGroupNodeFactory extends ActivityAbstractGModelFacto
 
    protected GCompartment createLabeledChildrenCompartment(final Collection<? extends EObject> children,
       final ActivityGroup parent) {
-      return new GCompartmentBuilder(Types.COMP) //
+      return new GCompartmentBuilder(UmlConfig.Types.COMP) //
          .id(toId(parent) + "_childCompartment").layout(GConstants.Layout.VBOX) //
          .layoutOptions(new GLayoutOptions() //
             .hAlign(GConstants.HAlign.LEFT) //
@@ -267,7 +268,7 @@ public class ActivityDiagramGroupNodeFactory extends ActivityAbstractGModelFacto
       layoutOptions.put(H_ALIGN, GConstants.HAlign.LEFT);
       layoutOptions.put(H_GRAB, true);
       layoutOptions.put(V_GRAB, true);
-      GCompartment structCompartment = new GCompartmentBuilder(Types.STRUCTURE)
+      GCompartment structCompartment = new GCompartmentBuilder(ActivityTypes.STRUCTURE)
          .id(toId(namedElement) + "_struct")
          .layout(GConstants.Layout.FREEFORM)
          .layoutOptions(layoutOptions)

@@ -26,7 +26,6 @@ import org.eclipse.uml2.uml.Transition;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.uml.statemachine_diagram.StateMachineIdUtil;
 import com.eclipsesource.uml.glsp.uml.statemachine_diagram.StateMachineModelServerAccess;
-import com.eclipsesource.uml.glsp.util.UmlIDUtil;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 
 public class StateMachineDeleteOperationHandler
@@ -46,9 +45,7 @@ public class StateMachineDeleteOperationHandler
          boolean removeTransitionEffect = false;
          boolean removeTransitionTrigger = false;
 
-         if (elementId.endsWith(UmlIDUtil.PROPERTY_SUFFIX)) {
-            elementId = UmlIDUtil.getElementIdFromProperty(elementId);
-         } else if (elementId.startsWith(StateMachineIdUtil.LABEL_GUARD_SUFFIX)) {
+         if (elementId.startsWith(StateMachineIdUtil.LABEL_GUARD_SUFFIX)) {
             removeTransitionGuard = true;
             elementId = StateMachineIdUtil.getElementIdFromLabelGuard(elementId);
          } else if (elementId.startsWith(StateMachineIdUtil.LABEL_EFFECT_SUFFIX)) {

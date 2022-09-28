@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.util;
+package com.eclipsesource.uml.glsp.utils.gmodel;
 
 import java.util.Collection;
 import java.util.LinkedList;
@@ -18,8 +18,8 @@ import java.util.stream.Stream;
 
 import org.eclipse.glsp.graph.GModelElement;
 
-public class UmlGModelUtil {
-   private UmlGModelUtil() {}
+public final class GModelFilterUtil {
+   private GModelFilterUtil() {}
 
    public static <T> Stream<T> filterByType(final Collection<GModelElement> elements, final String type,
       final Class<T> clazz) {

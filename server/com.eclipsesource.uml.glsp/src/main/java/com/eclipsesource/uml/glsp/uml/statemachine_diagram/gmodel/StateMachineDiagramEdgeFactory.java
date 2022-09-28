@@ -19,9 +19,9 @@ import org.eclipse.uml2.uml.Vertex;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.uml.statemachine_diagram.StateMachineIdUtil;
-import com.eclipsesource.uml.glsp.util.UmlConfig.CSS;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
-import com.eclipsesource.uml.glsp.util.UmlIDUtil;
+import com.eclipsesource.uml.glsp.uml.statemachine_diagram.constants.StateMachineTypes;
+import com.eclipsesource.uml.glsp.utils.UmlConfig.CSS;
+import com.eclipsesource.uml.glsp.utils.UmlIDUtil;
 import com.eclipsesource.uml.modelserver.unotation.Edge;
 
 public class StateMachineDiagramEdgeFactory extends StateMachineAbstractGModelFactory<Transition, GEdge> {
@@ -39,7 +39,7 @@ public class StateMachineDiagramEdgeFactory extends StateMachineAbstractGModelFa
       String sourceId = toId(source);
       String targetId = toId(target);
 
-      GEdgeBuilder b = new GEdgeBuilder(Types.TRANSITION)
+      GEdgeBuilder b = new GEdgeBuilder(StateMachineTypes.TRANSITION)
          .id(toId(element))
          .addCssClass(CSS.EDGE)
          .sourceId(sourceId)
@@ -74,23 +74,24 @@ public class StateMachineDiagramEdgeFactory extends StateMachineAbstractGModelFa
    }
 
    protected GLabel createTransitionLabel(final String name, final String id, final double position) {
-      return createEdgeLabel(name, position, id, Types.LABEL_TRANSITION_NAME, GConstants.EdgeSide.BOTTOM);
+      return createEdgeLabel(name, position, id, StateMachineTypes.LABEL_TRANSITION_NAME, GConstants.EdgeSide.BOTTOM);
    }
 
    protected GLabel createTransitionGuardLabel(final Constraint contstraint, final String id, final double position) {
       String name = contstraint.getName();
-      return createEdgeLabel(name, position, id, Types.LABEL_TRANSITION_GUARD, GConstants.EdgeSide.TOP);
+      return createEdgeLabel(name, position, id, StateMachineTypes.LABEL_TRANSITION_GUARD, GConstants.EdgeSide.TOP);
    }
 
    protected GLabel createTransitionEffectLabel(final Behavior effect, final String id, final double position) {
       String name = effect.getName();
-      return createEdgeLabel(name, position, id, Types.LABEL_TRANSITION_EFFECT, GConstants.EdgeSide.TOP);
+      return createEdgeLabel(name, position, id, StateMachineTypes.LABEL_TRANSITION_EFFECT, GConstants.EdgeSide.TOP);
    }
 
    protected GLabel createTransitionTriggerLabel(final List<Trigger> triggers, final String id,
       final double position) {
       String name = triggers.get(0).getName();
-      return createEdgeLabel(name, position, id, Types.LABEL_TRANSITION_TRIGGER, GConstants.EdgeSide.BOTTOM);
+      return createEdgeLabel(name, position, id, StateMachineTypes.LABEL_TRANSITION_TRIGGER,
+         GConstants.EdgeSide.BOTTOM);
    }
 
    protected GLabel createEdgeLabel(final String name, final double position, final String id, final String type,

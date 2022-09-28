@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.util;
+package com.eclipsesource.uml.glsp.utils.reflection;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;

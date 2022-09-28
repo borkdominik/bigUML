@@ -15,8 +15,8 @@ import java.awt.geom.Point2D;
 import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.GNode;
 
-import com.eclipsesource.uml.glsp.util.UmlGModelUtil;
-import com.eclipsesource.uml.glsp.util.UmlIDUtil;
+import com.eclipsesource.uml.glsp.utils.UmlIDUtil;
+import com.eclipsesource.uml.glsp.utils.gmodel.GModelFilterUtil;
 import com.eclipsesource.uml.modelserver.commands.communication.lifeline.LifelineCopyableProperties;
 
 public class LifelinePropertiesFactory {
@@ -28,7 +28,7 @@ public class LifelinePropertiesFactory {
    public static LifelineCopyableProperties from(final GNode element) {
       var semantic = new LifelineCopyableProperties.Semantic();
       semantic.id = element.getId();
-      UmlGModelUtil.flatFilterById(element, UmlIDUtil.createHeaderLabelId(element.getId()), GLabel.class).findFirst()
+      GModelFilterUtil.flatFilterById(element, UmlIDUtil.createHeaderLabelId(element.getId()), GLabel.class).findFirst()
          .ifPresent(label -> semantic.name = label.getText());
 
       var notation = new LifelineCopyableProperties.Notation();

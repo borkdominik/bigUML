@@ -1,57 +1,59 @@
 package com.eclipsesource.uml.glsp.uml.object_diagram.gmodel;
 
-import com.eclipsesource.uml.glsp.gmodel.DiagramFactory;
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.modelserver.unotation.Diagram;
-import org.eclipse.glsp.graph.GGraph;
-import org.eclipse.glsp.graph.GModelElement;
-import org.eclipse.uml2.uml.*;
-import org.eclipse.uml2.uml.Class;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class UmlObjectDiagramModelFactory extends DiagramFactory {
+import org.eclipse.glsp.graph.GGraph;
+import org.eclipse.glsp.graph.GModelElement;
+import org.eclipse.uml2.uml.Association;
+import org.eclipse.uml2.uml.Class;
+import org.eclipse.uml2.uml.Enumeration;
+import org.eclipse.uml2.uml.Model;
 
-    public UmlObjectDiagramModelFactory(final UmlModelState modelState) {
-        super(modelState);
-    }
+import com.eclipsesource.uml.glsp.model.UmlModelState;
+import com.eclipsesource.uml.modelserver.unotation.Diagram;
 
-    @Override
-    public GGraph create(final Diagram umlDiagram) {
-        GGraph graph = getOrCreateRoot();
+public class UmlObjectDiagramModelFactory extends ObjectDiagramFactory {
 
-        System.out.println("in model factory");
+   public UmlObjectDiagramModelFactory(final UmlModelState modelState) {
+      super(modelState);
+   }
 
-        if (umlDiagram.getSemanticElement().getResolvedElement() != null) {
-            Model umlModel = (Model) umlDiagram.getSemanticElement().getResolvedElement();
-            graph.setId(toId(umlModel));
+   @Override
+   public GGraph create(final Diagram umlDiagram) {
+      GGraph graph = getOrCreateRoot();
 
-            // Add Object Node
-            List<GModelElement> objectNodes = umlModel.getPackagedElements().stream()
-                    .filter(Class.class::isInstance)
-                    .map(Class.class::cast)
-                    //.map(objectDiagramNodeFactory::create)
-                    .map(objectDiagramNodeFactory::create)
-                    .collect(Collectors.toList());
-            graph.getChildren().addAll(objectNodes);
+      System.out.println("in model factory");
 
-            // Add Links
-            List<GModelElement> linkEdges = umlModel.getPackagedElements().stream()
-                    .filter(Association.class::isInstance)
-                    .map(Association.class::cast)
-                    .map(objectDiagramEdgeFactory::create)
-                    .collect(Collectors.toList());
-            graph.getChildren().addAll(linkEdges);
+      if (umlDiagram.getSemanticElement().getResolvedElement() != null) {
+         Model umlModel = (Model) umlDiagram.getSemanticElement().getResolvedElement();
+         graph.setId(toId(umlModel));
 
-            // Add Enumerations
-            List<GModelElement> enumerationNodes = umlModel.getPackagedElements().stream()
-                    .filter(Enumeration.class::isInstance)
-                    .map(Enumeration.class::cast)
-                    .map(objectDiagramNodeFactory::create)
-                    .collect(Collectors.toList());
-            graph.getChildren().addAll(enumerationNodes);
-        }
-        return graph;
-    }
+         // Add Object Node
+         List<GModelElement> objectNodes = umlModel.getPackagedElements().stream()
+            .filter(Class.class::isInstance)
+            .map(Class.class::cast)
+            // .map(objectDiagramNodeFactory::create)
+            .map(objectDiagramNodeFactory::create)
+            .collect(Collectors.toList());
+         graph.getChildren().addAll(objectNodes);
+
+         // Add Links
+         List<GModelElement> linkEdges = umlModel.getPackagedElements().stream()
+            .filter(Association.class::isInstance)
+            .map(Association.class::cast)
+            .map(objectDiagramEdgeFactory::create)
+            .collect(Collectors.toList());
+         graph.getChildren().addAll(linkEdges);
+
+         // Add Enumerations
+         List<GModelElement> enumerationNodes = umlModel.getPackagedElements().stream()
+            .filter(Enumeration.class::isInstance)
+            .map(Enumeration.class::cast)
+            .map(objectDiagramNodeFactory::create)
+            .collect(Collectors.toList());
+         graph.getChildren().addAll(enumerationNodes);
+      }
+      return graph;
+   }
 }

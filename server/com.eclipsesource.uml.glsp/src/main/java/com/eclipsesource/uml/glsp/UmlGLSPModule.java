@@ -27,7 +27,6 @@ import org.eclipse.glsp.server.features.validation.ModelValidator;
 import org.eclipse.glsp.server.features.validation.RequestMarkersHandler;
 import org.eclipse.glsp.server.layout.LayoutEngine;
 import org.eclipse.glsp.server.operations.OperationHandler;
-import org.eclipse.glsp.server.operations.OperationHandlerRegistry;
 import org.eclipse.glsp.server.operations.gmodel.ChangeBoundsOperationHandler;
 import org.eclipse.glsp.server.operations.gmodel.ChangeRoutingPointsHandler;
 import org.eclipse.glsp.server.operations.gmodel.CompoundOperationHandler;
@@ -40,7 +39,12 @@ import com.eclipsesource.uml.glsp.actions.UmlOperationActionHandler;
 import com.eclipsesource.uml.glsp.actions.UmlRequestClipboardDataActionHandler;
 import com.eclipsesource.uml.glsp.actions.UmlRequestMarkersHandler;
 import com.eclipsesource.uml.glsp.contextmenu.UmlContextMenuItemProvider;
-import com.eclipsesource.uml.glsp.diagram.UmlDiagramConfiguration;
+import com.eclipsesource.uml.glsp.diagram.UmlToolDiagramConfiguration;
+import com.eclipsesource.uml.glsp.features.outline.manifest.OutlineManifest;
+import com.eclipsesource.uml.glsp.features.validation.UmlDiagramModelValidator;
+import com.eclipsesource.uml.glsp.gmodel.UmlDiagramMapper;
+import com.eclipsesource.uml.glsp.gmodel.UmlGModelMapHandler;
+import com.eclipsesource.uml.glsp.gmodel.UmlGModelMapperRegistry;
 import com.eclipsesource.uml.glsp.layout.UmlLayoutEngine;
 import com.eclipsesource.uml.glsp.model.UmlModelFactory;
 import com.eclipsesource.uml.glsp.model.UmlModelSourceLoader;
@@ -51,15 +55,10 @@ import com.eclipsesource.uml.glsp.operations.UmlCompoundOperationHandler;
 import com.eclipsesource.uml.glsp.operations.UmlDeleteOperationHandler;
 import com.eclipsesource.uml.glsp.operations.UmlLabelEditOperationHandler;
 import com.eclipsesource.uml.glsp.palette.UmlToolPaletteItemProvider;
-import com.eclipsesource.uml.glsp.uml.communication_diagram.CommunicationGLSPModule;
-import com.eclipsesource.uml.glsp.validator.UmlDiagramModelValidator;
+import com.eclipsesource.uml.glsp.uml.communication_diagram.manifest.CommunicationUmlManifest;
+import com.google.inject.Singleton;
 
 public class UmlGLSPModule extends EMSGLSPModule {
-
-   @Override
-   protected Class<? extends OperationHandlerRegistry> bindOperationHandlerRegistry() {
-      return UmlDIOperationHandlerRegistry.class;
-   }
 
    @Override
    protected Class<? extends EMSModelState> bindGModelState() {
@@ -88,7 +87,7 @@ public class UmlGLSPModule extends EMSGLSPModule {
 
    @Override
    protected Class<? extends DiagramConfiguration> bindDiagramConfiguration() {
-      return UmlDiagramConfiguration.class;
+      return UmlToolDiagramConfiguration.class;
    }
 
    @Override
@@ -133,7 +132,14 @@ public class UmlGLSPModule extends EMSGLSPModule {
    @Override
    protected void configureAdditionals() {
       super.configureAdditionals();
-      install(new CommunicationGLSPModule());
+
+      bind(UmlDiagramMapper.class).in(Singleton.class);
+      bind(UmlGModelMapHandler.class).in(Singleton.class);
+      bind(UmlGModelMapperRegistry.class).in(Singleton.class);
+
+      install(new OutlineManifest());
+      // install(new CommonUmlManifest());
+      install(new CommunicationUmlManifest());
    }
 
 }

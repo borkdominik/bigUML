@@ -16,18 +16,21 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
 import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
+import org.eclipse.uml2.uml.Comment;
 
 import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlSemanticCommandContribution;
+import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
 
 public class SetBodyCommandContribution extends UmlSemanticCommandContribution {
 
    public static final String TYPE = "setBody";
    public static final String BODY = "body";
 
-   public static CCommand create(final String semanticUri, final String newName) {
+   public static CCommand create(final Comment comment, final String newName) {
       CCommand setClassNameCommand = CCommandFactory.eINSTANCE.createCommand();
       setClassNameCommand.setType(TYPE);
-      setClassNameCommand.getProperties().put(SEMANTIC_URI_FRAGMENT, semanticUri);
+      setClassNameCommand.getProperties().put(SEMANTIC_URI_FRAGMENT,
+         UmlSemanticCommandUtil.getSemanticUriFragment(comment));
       setClassNameCommand.getProperties().put(BODY, newName);
       return setClassNameCommand;
    }

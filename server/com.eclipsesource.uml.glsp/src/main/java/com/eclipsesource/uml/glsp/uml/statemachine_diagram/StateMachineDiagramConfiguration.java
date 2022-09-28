@@ -22,7 +22,7 @@ import org.eclipse.glsp.server.layout.ServerLayoutKind;
 import org.eclipse.glsp.server.types.EdgeTypeHint;
 import org.eclipse.glsp.server.types.ShapeTypeHint;
 
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.eclipsesource.uml.glsp.uml.statemachine_diagram.constants.StateMachineTypes;
 import com.google.common.collect.Lists;
 
 public class StateMachineDiagramConfiguration extends BaseDiagramConfiguration {
@@ -33,10 +33,8 @@ public class StateMachineDiagramConfiguration extends BaseDiagramConfiguration {
    @Override
    public List<EdgeTypeHint> getEdgeTypeHints() {
       return Lists.newArrayList(
-         // COMMONS
-         createDefaultEdgeTypeHint(Types.COMMENT_EDGE),
          // STATE MACHINE DIAGRAM
-         createDefaultEdgeTypeHint(Types.TRANSITION));
+         createDefaultEdgeTypeHint(StateMachineTypes.TRANSITION));
    }
 
    @Override
@@ -48,16 +46,10 @@ public class StateMachineDiagramConfiguration extends BaseDiagramConfiguration {
 
       switch (elementId) {
          // STATE MACHINE DIAGRAM
-         case Types.TRANSITION:
-            allowed = Lists.newArrayList(Types.STATE, Types.FINAL_STATE);
-            allowed.addAll(Types.PSEUDOSTATES);
+         case StateMachineTypes.TRANSITION:
+            allowed = Lists.newArrayList(StateMachineTypes.STATE, StateMachineTypes.FINAL_STATE);
+            allowed.addAll(StateMachineTypes.PSEUDOSTATES);
             return new EdgeTypeHint(elementId, true, true, true, allowed, allowed);
-         // COMMENT
-         case Types.COMMENT_EDGE:
-            allowed = Lists.newArrayList();
-            allowed.addAll(Types.LINKS_TO_COMMENT);
-            return new EdgeTypeHint(elementId, true, true, true, List.of(Types.COMMENT),
-               allowed);
          default:
             break;
       }
@@ -69,55 +61,53 @@ public class StateMachineDiagramConfiguration extends BaseDiagramConfiguration {
       List<ShapeTypeHint> hints = new ArrayList<>();
       // GRAPH
       hints.add(new ShapeTypeHint(DefaultTypes.GRAPH, false, false, false, false,
-         List.of(Types.COMMENT, Types.CLASS, Types.ACTIVITY, Types.USECASE, Types.ACTOR, Types.PACKAGE, Types.COMPONENT,
-            Types.STATE_MACHINE, Types.DEPLOYMENT_NODE, Types.DEVICE, Types.ARTIFACT, Types.ENUMERATION,
-            Types.EXECUTION_ENVIRONMENT, Types.OBJECT, Types.DEPLOYMENT_COMPONENT, Types.INTERFACE,
-            Types.ABSTRACT_CLASS)));
+         List.of(
+            StateMachineTypes.STATE_MACHINE)));
 
       // STATE MACHINE DIAGRAM
-      hints.add(new ShapeTypeHint(Types.STATE_MACHINE, true, true, true, false,
-         List.of(Types.REGION, Types.STATE, Types.INITIAL_STATE, Types.DEEP_HISTORY, Types.SHALLOW_HISTORY, Types.FORK,
-            Types.JOIN,
-            Types.JUNCTION, Types.CHOICE, Types.ENTRY_POINT, Types.EXIT_POINT, Types.TERMINATE, Types.FINAL_STATE,
-            Types.COMMENT)));
-      hints.add(new ShapeTypeHint(Types.REGION, true, true, true, true,
-         List.of(Types.STATE, Types.INITIAL_STATE, Types.DEEP_HISTORY, Types.SHALLOW_HISTORY, Types.FORK, Types.JOIN,
-            Types.JUNCTION, Types.CHOICE, Types.ENTRY_POINT, Types.EXIT_POINT, Types.TERMINATE, Types.FINAL_STATE,
-            Types.COMMENT)));
-      hints.add(new ShapeTypeHint(Types.STATE, true, true, true, false,
-         List.of(Types.ENTRY_POINT, Types.EXIT_POINT, Types.STATE_ENTRY_ACTIVITY, Types.STATE_DO_ACTIVITY,
-            Types.STATE_EXIT_ACTIVITY, Types.COMMENT, Types.REGION)));
-      hints.add(new ShapeTypeHint(Types.INITIAL_STATE, true, true, true, false,
-         List.of(Types.COMMENT)));
-      hints.add(new ShapeTypeHint(Types.DEEP_HISTORY, true, true, true, false,
-         List.of(Types.COMMENT)));
-      hints.add(new ShapeTypeHint(Types.SHALLOW_HISTORY, true, true, true, false,
-         List.of(Types.COMMENT)));
-      hints.add(new ShapeTypeHint(Types.FORK, true, true, true, false,
-         List.of(Types.COMMENT)));
-      hints.add(new ShapeTypeHint(Types.JOIN, true, true, true, false,
-         List.of(Types.COMMENT)));
-      hints.add(new ShapeTypeHint(Types.JUNCTION, true, true, true, false,
-         List.of(Types.COMMENT)));
-      hints.add(new ShapeTypeHint(Types.CHOICE, true, true, true, false,
-         List.of(Types.COMMENT)));
-      hints.add(new ShapeTypeHint(Types.STATE_ENTRY_ACTIVITY, false, true, false, true,
-         List.of(Types.COMMENT)));
-      hints.add(new ShapeTypeHint(Types.STATE_DO_ACTIVITY, false, true, false, true,
-         List.of(Types.COMMENT)));
-      hints.add(new ShapeTypeHint(Types.STATE_EXIT_ACTIVITY, false, true, false, true,
-         List.of(Types.COMMENT)));
-      hints.add(new ShapeTypeHint(Types.FINAL_STATE, true, true, true, false,
-         List.of(Types.COMMENT)));
-      hints.add(new ShapeTypeHint(Types.ENTRY_POINT, true, true, false, false,
-         List.of(Types.COMMENT)));
-      hints.add(new ShapeTypeHint(Types.EXIT_POINT, true, true, false, false,
-         List.of(Types.COMMENT)));
-      hints.add(new ShapeTypeHint(Types.TERMINATE, true, true, true, false,
-         List.of(Types.COMMENT)));
-
-      // Comment
-      hints.add(new ShapeTypeHint(Types.COMMENT, true, true, false, false));
+      hints.add(new ShapeTypeHint(StateMachineTypes.STATE_MACHINE, true, true, true, false,
+         List.of(StateMachineTypes.REGION, StateMachineTypes.STATE, StateMachineTypes.INITIAL_STATE,
+            StateMachineTypes.DEEP_HISTORY, StateMachineTypes.SHALLOW_HISTORY, StateMachineTypes.FORK,
+            StateMachineTypes.JOIN,
+            StateMachineTypes.JUNCTION, StateMachineTypes.CHOICE, StateMachineTypes.ENTRY_POINT,
+            StateMachineTypes.EXIT_POINT, StateMachineTypes.TERMINATE, StateMachineTypes.FINAL_STATE)));
+      hints.add(new ShapeTypeHint(StateMachineTypes.REGION, true, true, true, true,
+         List.of(StateMachineTypes.STATE, StateMachineTypes.INITIAL_STATE, StateMachineTypes.DEEP_HISTORY,
+            StateMachineTypes.SHALLOW_HISTORY, StateMachineTypes.FORK, StateMachineTypes.JOIN,
+            StateMachineTypes.JUNCTION, StateMachineTypes.CHOICE, StateMachineTypes.ENTRY_POINT,
+            StateMachineTypes.EXIT_POINT, StateMachineTypes.TERMINATE, StateMachineTypes.FINAL_STATE)));
+      hints.add(new ShapeTypeHint(StateMachineTypes.STATE, true, true, true, false,
+         List.of(StateMachineTypes.ENTRY_POINT, StateMachineTypes.EXIT_POINT, StateMachineTypes.STATE_ENTRY_ACTIVITY,
+            StateMachineTypes.STATE_DO_ACTIVITY,
+            StateMachineTypes.STATE_EXIT_ACTIVITY, StateMachineTypes.REGION)));
+      hints.add(new ShapeTypeHint(StateMachineTypes.INITIAL_STATE, true, true, true, false,
+         List.of()));
+      hints.add(new ShapeTypeHint(StateMachineTypes.DEEP_HISTORY, true, true, true, false,
+         List.of()));
+      hints.add(new ShapeTypeHint(StateMachineTypes.SHALLOW_HISTORY, true, true, true, false,
+         List.of()));
+      hints.add(new ShapeTypeHint(StateMachineTypes.FORK, true, true, true, false,
+         List.of()));
+      hints.add(new ShapeTypeHint(StateMachineTypes.JOIN, true, true, true, false,
+         List.of()));
+      hints.add(new ShapeTypeHint(StateMachineTypes.JUNCTION, true, true, true, false,
+         List.of()));
+      hints.add(new ShapeTypeHint(StateMachineTypes.CHOICE, true, true, true, false,
+         List.of()));
+      hints.add(new ShapeTypeHint(StateMachineTypes.STATE_ENTRY_ACTIVITY, false, true, false, true,
+         List.of()));
+      hints.add(new ShapeTypeHint(StateMachineTypes.STATE_DO_ACTIVITY, false, true, false, true,
+         List.of()));
+      hints.add(new ShapeTypeHint(StateMachineTypes.STATE_EXIT_ACTIVITY, false, true, false, true,
+         List.of()));
+      hints.add(new ShapeTypeHint(StateMachineTypes.FINAL_STATE, true, true, true, false,
+         List.of()));
+      hints.add(new ShapeTypeHint(StateMachineTypes.ENTRY_POINT, true, true, false, false,
+         List.of()));
+      hints.add(new ShapeTypeHint(StateMachineTypes.EXIT_POINT, true, true, false, false,
+         List.of()));
+      hints.add(new ShapeTypeHint(StateMachineTypes.TERMINATE, true, true, true, false,
+         List.of()));
 
       return hints;
    }
@@ -126,41 +116,30 @@ public class StateMachineDiagramConfiguration extends BaseDiagramConfiguration {
    public Map<String, EClass> getTypeMappings() {
       Map<String, EClass> mappings = DefaultTypes.getDefaultTypeMappings();
 
-      // COMMONS
-      mappings.put(Types.LABEL_NAME, GraphPackage.Literals.GLABEL);
-      mappings.put(Types.LABEL_TEXT, GraphPackage.Literals.GLABEL);
-      mappings.put(Types.LABEL_EDGE_NAME, GraphPackage.Literals.GLABEL);
-      mappings.put(Types.LABEL_EDGE_MULTIPLICITY, GraphPackage.Literals.GLABEL);
-      mappings.put(Types.COMP, GraphPackage.Literals.GCOMPARTMENT);
-      // mappings.put(Types.COMP_HEADER, GraphPackage.Literals.GCOMPARTMENT);
-      mappings.put(Types.LABEL_ICON, GraphPackage.Literals.GCOMPARTMENT);
-      mappings.put(Types.COMMENT, GraphPackage.Literals.GNODE);
-      mappings.put(Types.COMMENT_EDGE, GraphPackage.Literals.GEDGE);
-      mappings.put(Types.COMPARTMENT, GraphPackage.Literals.GCOMPARTMENT);
-      mappings.put(Types.COMPARTMENT_HEADER, GraphPackage.Literals.GCOMPARTMENT);
-
       // STATE MACHINE DIAGRAM
-      mappings.put(Types.ICON_STATE_MACHINE, GraphPackage.Literals.GCOMPARTMENT);
-      mappings.put(Types.STATE_MACHINE, GraphPackage.Literals.GNODE);
-      mappings.put(Types.REGION, GraphPackage.Literals.GNODE);
-      mappings.put(Types.ICON_STATE, GraphPackage.Literals.GCOMPARTMENT);
-      mappings.put(Types.STATE, GraphPackage.Literals.GNODE);
-      mappings.put(Types.LABEL_VERTEX_NAME, GraphPackage.Literals.GLABEL);
-      mappings.put(Types.INITIAL_STATE, GraphPackage.Literals.GNODE);
-      mappings.put(Types.DEEP_HISTORY, GraphPackage.Literals.GNODE);
-      mappings.put(Types.SHALLOW_HISTORY, GraphPackage.Literals.GNODE);
-      mappings.put(Types.JOIN, GraphPackage.Literals.GNODE);
-      mappings.put(Types.FORK, GraphPackage.Literals.GNODE);
-      mappings.put(Types.JUNCTION, GraphPackage.Literals.GNODE);
-      mappings.put(Types.CHOICE, GraphPackage.Literals.GNODE);
-      mappings.put(Types.ENTRY_POINT, GraphPackage.Literals.GNODE);
-      mappings.put(Types.EXIT_POINT, GraphPackage.Literals.GNODE);
-      mappings.put(Types.TERMINATE, GraphPackage.Literals.GNODE);
-      mappings.put(Types.FINAL_STATE, GraphPackage.Literals.GNODE);
-      mappings.put(Types.STATE_ENTRY_ACTIVITY, GraphPackage.Literals.GLABEL);
-      mappings.put(Types.STATE_DO_ACTIVITY, GraphPackage.Literals.GLABEL);
-      mappings.put(Types.STATE_EXIT_ACTIVITY, GraphPackage.Literals.GLABEL);
-      mappings.put(Types.TRANSITION, GraphPackage.Literals.GEDGE);
+      mappings.put(StateMachineTypes.ICON_STATE_MACHINE, GraphPackage.Literals.GCOMPARTMENT);
+      mappings.put(StateMachineTypes.STATE_MACHINE, GraphPackage.Literals.GNODE);
+      mappings.put(StateMachineTypes.REGION, GraphPackage.Literals.GNODE);
+      mappings.put(StateMachineTypes.ICON_STATE, GraphPackage.Literals.GCOMPARTMENT);
+      mappings.put(StateMachineTypes.STATE, GraphPackage.Literals.GNODE);
+      mappings.put(StateMachineTypes.LABEL_VERTEX_NAME, GraphPackage.Literals.GLABEL);
+      mappings.put(StateMachineTypes.INITIAL_STATE, GraphPackage.Literals.GNODE);
+      mappings.put(StateMachineTypes.DEEP_HISTORY, GraphPackage.Literals.GNODE);
+      mappings.put(StateMachineTypes.SHALLOW_HISTORY, GraphPackage.Literals.GNODE);
+      mappings.put(StateMachineTypes.JOIN, GraphPackage.Literals.GNODE);
+      mappings.put(StateMachineTypes.FORK, GraphPackage.Literals.GNODE);
+      mappings.put(StateMachineTypes.JUNCTION, GraphPackage.Literals.GNODE);
+      mappings.put(StateMachineTypes.CHOICE, GraphPackage.Literals.GNODE);
+      mappings.put(StateMachineTypes.ENTRY_POINT, GraphPackage.Literals.GNODE);
+      mappings.put(StateMachineTypes.EXIT_POINT, GraphPackage.Literals.GNODE);
+      mappings.put(StateMachineTypes.TERMINATE, GraphPackage.Literals.GNODE);
+      mappings.put(StateMachineTypes.FINAL_STATE, GraphPackage.Literals.GNODE);
+      mappings.put(StateMachineTypes.STATE_ENTRY_ACTIVITY, GraphPackage.Literals.GLABEL);
+      mappings.put(StateMachineTypes.STATE_DO_ACTIVITY, GraphPackage.Literals.GLABEL);
+      mappings.put(StateMachineTypes.STATE_EXIT_ACTIVITY, GraphPackage.Literals.GLABEL);
+      mappings.put(StateMachineTypes.TRANSITION, GraphPackage.Literals.GEDGE);
+      // COMMON CANDIDATE
+      mappings.put(StateMachineTypes.STRUCTURE, GraphPackage.Literals.GCOMPARTMENT);
 
       return mappings;
    }

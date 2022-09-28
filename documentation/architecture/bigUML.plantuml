@@ -1,0 +1,135 @@
+@startuml bigUML
+/'
+Todo: 
+1) Module dependencies e.g. Communication -> Common
+2) OperationHandlers
+3) GModel
+
+Probleme:
+1) Kein Rebinding mehr möglich
+'/
+hide stereotype
+<style>
+.contributionPoint {
+    BackgroundColor LightBlue
+}
+.injectionInterface {
+    BackgroundColor LightCyan
+}
+.manifest {
+    BackgroundColor Green
+    FontColor White
+}
+</style>
+
+class UmlGLSPModule
+
+
+package "diagram" {
+    interface DiagramConfiguration <<injectionInterface>>
+    class UmlDiagramConfiguration
+}
+
+package "palette" {
+    interface DiagramPalette <<injectionInterface>>
+    class UmlToolPaletteItem
+}
+
+package "operations" {
+    interface DiagramDeleteOperationHandler <<injectionInterface>>
+    interface DiagramLabelEditOperationHandler <<injectionInterface>>
+    class UmlLabelEditOperationHandler
+    class UmlDeleteOperationHandler
+}
+
+
+package "features" {
+    package "features.outline" {
+        package "features.outline.generator" {
+            interface DiagramOutlineGenerator <<injectionInterface>>
+            interface DefaultOutlineGenerator implements DiagramOutlineGenerator
+            class DefaultOutlineGeneratorImpl implements DefaultOutlineGenerator
+        }
+        package "features.outline.manifest" {
+            package "features.outline.manifest.contributions" {
+                interface OutlineGeneratorContribution <<contributionPoint>>
+            }
+            class OutlineManifest <<manifest>>
+            OutlineManifest ..|> "manifest.contributions"
+        }
+        package "features.outline.actions" {
+            class RequestOutlineAction
+            class RequestOutlineHandler
+
+            RequestOutlineHandler ..> RequestOutlineAction : handles
+            RequestOutlineHandler ..> DiagramOutlineGenerator : uses
+
+        }
+        package "features.outline.others.." {}
+
+    }
+}
+
+package "manifest" {
+    package "manifest.contributions" {
+        interface DiagramPaletteContribution <<contributionPoint>>
+        interface DiagramConfigurationContribution <<contributionPoint>>
+        interface ClientActionsContribution <<contributionPoint>>
+        interface ActionsHandlerContribution <<contributionPoint>>
+        interface OperationHandlerContribution <<contributionPoint>>
+        interface DeleteOperationHandlerContribution <<contributionPoint>>
+        interface EditLabelOperationHandlerContribution <<contributionPoint>>
+    }
+}
+
+package "uml" {
+    package "uml.common" {
+        package "uml.common.manifest" {
+            package "uml.common.manifest.contributions" {
+                interface CommonDiagramConfigurationContribution <<contributionPoint>>
+            }
+            class CommonUmlManifest <<manifest>>
+            CommonUmlManifest ..|> "manifest.contributions"
+
+        }
+        package "uml.common.configuration" {
+            class CommonCommonConfigurationAccessor
+            class CommonDiagramConfiguration
+        }
+
+        package "uml.common.others.." {}
+    }
+
+    package "uml.communication" {
+        package "uml.communication.manifest" {
+            class CommunicationUmlManifest <<manifest>>
+
+            CommunicationUmlManifest ..|> "manifest.contributions"
+            CommunicationUmlManifest ..|> "uml.common.manifest.contributions"
+            CommunicationUmlManifest ..|> "features.outline.manifest.contributions"
+        } 
+        
+        package "uml.communication.operations" {
+            class CommunicationDeleteOperationHandler implements DiagramDeleteOperationHandler
+            class CommunicationLabelEditOperationHandler implements DiagramLabelEditOperationHandler
+            class Create*NodeOperationHandler
+            class Create*EdgeOperationHandler
+        }
+
+        package "uml.communication.features.outline" {
+            class CommunicationOutlineGenerator implements DiagramOutlineGenerator
+        }
+
+        package "uml.communication.others.." {
+
+        }
+
+    }
+}
+
+
+UmlGLSPModule *-- CommunicationUmlManifest
+UmlGLSPModule *-- OutlineManifest
+UmlGLSPModule *-- CommonUmlManifest
+
+@enduml

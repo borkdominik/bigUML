@@ -19,19 +19,19 @@ import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Property;
 
-import com.eclipsesource.uml.glsp.gmodel.AbstractGModelFactory;
-import com.eclipsesource.uml.glsp.gmodel.LabelFactory;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.util.UmlConfig.CSS;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
-import com.eclipsesource.uml.glsp.util.UmlIDUtil;
+import com.eclipsesource.uml.glsp.uml.object_diagram.constants.ObjectCSS;
+import com.eclipsesource.uml.glsp.uml.object_diagram.constants.ObjectTypes;
+import com.eclipsesource.uml.glsp.utils.UmlConfig;
+import com.eclipsesource.uml.glsp.utils.UmlConfig.CSS;
+import com.eclipsesource.uml.glsp.utils.UmlIDUtil;
 import com.eclipsesource.uml.modelserver.unotation.Shape;
 
-public class ObjectDiagramNodeFactory extends AbstractGModelFactory<Classifier, GNode> {
+public class ObjectDiagramNodeFactory extends ObjectAbstractGModelFactory<Classifier, GNode> {
 
-   private final LabelFactory labelFactory;
+   private final ObjectDiagramLabelFactory labelFactory;
 
-   public ObjectDiagramNodeFactory(final UmlModelState modelState, final LabelFactory labelFactory) {
+   public ObjectDiagramNodeFactory(final UmlModelState modelState, final ObjectDiagramLabelFactory labelFactory) {
       super(modelState);
       this.labelFactory = labelFactory;
    }
@@ -69,7 +69,7 @@ public class ObjectDiagramNodeFactory extends AbstractGModelFactory<Classifier, 
 
    // protected GNode
    protected GNode createObjectNode(final Class umlObject) {
-      GNodeBuilder b = new GNodeBuilder(Types.OBJECT)
+      GNodeBuilder b = new GNodeBuilder(ObjectTypes.OBJECT)
          .id(toId(umlObject))
          .layout(GConstants.Layout.VBOX)
          .addCssClass(CSS.NODE)
@@ -81,7 +81,7 @@ public class ObjectDiagramNodeFactory extends AbstractGModelFactory<Classifier, 
 
    // protected GCompartment buildObjectHeader(final InstanceSpecification umlObject) {
    protected GCompartment buildObjectHeader(final Class umlObject) {
-      GCompartmentBuilder objectHeaderBuilder = new GCompartmentBuilder(Types.COMPARTMENT_HEADER)
+      GCompartmentBuilder objectHeaderBuilder = new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER)
          .layout(GConstants.Layout.HBOX)
          .id(UmlIDUtil.createHeaderId(toId(umlObject)));
 
@@ -92,9 +92,9 @@ public class ObjectDiagramNodeFactory extends AbstractGModelFactory<Classifier, 
        * objectHeaderBuilder.add(objectHeaderIcon);
        */
 
-      GLabel objectHeaderLabel = new GLabelBuilder(Types.LABEL_NAME)
+      GLabel objectHeaderLabel = new GLabelBuilder(UmlConfig.Types.LABEL_NAME)
          .id(UmlIDUtil.createHeaderLabelId(toId(umlObject)))
-         .addCssClass(CSS.UNDERLINE)
+         .addCssClass(ObjectCSS.UNDERLINE)
          .text(umlObject.getName()).build();
 
       objectHeaderBuilder.add(objectHeaderLabel);
@@ -105,14 +105,14 @@ public class ObjectDiagramNodeFactory extends AbstractGModelFactory<Classifier, 
    protected static String getType(final Classifier classifier) {
       // if (classifier instanceof InstanceSpecification) {
       if (classifier instanceof Class) {
-         return Types.ICON_OBJECT;
+         return ObjectTypes.ICON_OBJECT;
       }
       return "Classifier not found";
    }
 
    protected GCompartment buildObjectAttributeCompartment(final Collection<? extends Property> attributes,
       final Classifier parent) {
-      GCompartmentBuilder objectAttributeBuilder = new GCompartmentBuilder(Types.COMP)
+      GCompartmentBuilder objectAttributeBuilder = new GCompartmentBuilder(UmlConfig.Types.COMP)
          .id(UmlIDUtil.createChildCompartmentId(toId(parent))).layout(GConstants.Layout.VBOX);
 
       GLayoutOptions layoutOptions = new GLayoutOptions()

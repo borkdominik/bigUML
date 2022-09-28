@@ -12,7 +12,6 @@ package com.eclipsesource.uml.glsp.uml.activity_diagram.gmodel;
 
 import java.util.ArrayList;
 
-import com.eclipsesource.uml.glsp.gmodel.AbstractGModelFactory;
 import org.eclipse.glsp.graph.GEdge;
 import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.GPoint;
@@ -31,12 +30,12 @@ import org.eclipse.uml2.uml.Pin;
 import org.eclipse.uml2.uml.ValueSpecification;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.util.UmlConfig.CSS;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
-import com.eclipsesource.uml.glsp.util.UmlIDUtil;
+import com.eclipsesource.uml.glsp.uml.activity_diagram.ActivityIdUtil;
+import com.eclipsesource.uml.glsp.uml.activity_diagram.constants.ActivityTypes;
+import com.eclipsesource.uml.glsp.utils.UmlConfig.CSS;
 import com.eclipsesource.uml.modelserver.unotation.Edge;
 
-public class ActivityDiagramEdgeFactory extends AbstractGModelFactory<ActivityEdge, GEdge> {
+public class ActivityDiagramEdgeFactory extends ActivityAbstractGModelFactory<ActivityEdge, GEdge> {
 
    public ActivityDiagramEdgeFactory(final UmlModelState modelState) {
       super(modelState);
@@ -57,7 +56,7 @@ public class ActivityDiagramEdgeFactory extends AbstractGModelFactory<ActivityEd
          targetId += "_port";
       }
 
-      GEdgeBuilder builder = new GEdgeBuilder(Types.CONTROLFLOW) //
+      GEdgeBuilder builder = new GEdgeBuilder(ActivityTypes.CONTROLFLOW) //
          .id(toId(edge)) //
          .addCssClass(CSS.EDGE) //
          .sourceId(sourceId) //
@@ -66,12 +65,12 @@ public class ActivityDiagramEdgeFactory extends AbstractGModelFactory<ActivityEd
 
       if (edge.getGuard() != null) {
          builder
-            .add(createGuardLabel(getLiteralStringValue(edge.getGuard()), UmlIDUtil.createGuardLabelId(toId(edge)),
+            .add(createGuardLabel(getLiteralStringValue(edge.getGuard()), ActivityIdUtil.createGuardLabelId(toId(edge)),
                0.5d));
       }
       if (edge.getWeight() != null) {
          builder.add(
-            createWeightLabel(getLiteralStringValue(edge.getWeight()), UmlIDUtil.createWeightLabelId(toId(edge)),
+            createWeightLabel(getLiteralStringValue(edge.getWeight()), ActivityIdUtil.createWeightLabelId(toId(edge)),
                0.5d));
       }
 
@@ -92,7 +91,7 @@ public class ActivityDiagramEdgeFactory extends AbstractGModelFactory<ActivityEd
       String sourceId = toId(source);
       String targetId = toId(target) + "_port";
 
-      GEdgeBuilder builder = new GEdgeBuilder(Types.EXCEPTIONHANDLER) //
+      GEdgeBuilder builder = new GEdgeBuilder(ActivityTypes.EXCEPTIONHANDLER) //
          .id(toId(handler)) //
          .addCssClass(CSS.EDGE) //
          .addCssClass(CSS.EDGE_DIRECTED_END_TENT) //
@@ -104,11 +103,11 @@ public class ActivityDiagramEdgeFactory extends AbstractGModelFactory<ActivityEd
    }
 
    protected GLabel createGuardLabel(final String name, final String id, final double position) {
-      return createEdgeLabel(name, position, id, Types.LABEL_GUARD, GConstants.EdgeSide.TOP);
+      return createEdgeLabel(name, position, id, ActivityTypes.LABEL_GUARD, GConstants.EdgeSide.TOP);
    }
 
    protected GLabel createWeightLabel(final String name, final String id, final double position) {
-      return createEdgeLabel(name, position, id, Types.LABEL_WEIGHT, GConstants.EdgeSide.BOTTOM);
+      return createEdgeLabel(name, position, id, ActivityTypes.LABEL_WEIGHT, GConstants.EdgeSide.BOTTOM);
    }
 
    private String getLiteralStringValue(final ValueSpecification vs) {

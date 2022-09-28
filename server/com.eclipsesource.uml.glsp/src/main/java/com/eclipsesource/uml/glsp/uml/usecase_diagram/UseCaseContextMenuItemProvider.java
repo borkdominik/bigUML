@@ -13,7 +13,7 @@ import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.eclipsesource.uml.glsp.uml.usecase_diagram.constants.UseCaseTypes;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
@@ -47,14 +47,14 @@ public class UseCaseContextMenuItemProvider implements ContextMenuItemProvider {
 
    // USECASE DIAGRAM
    public List<MenuItem> useCaseDiagramNodes(final GPoint position) {
-      MenuItem createUseCase = new MenuItem(Types.USECASE, "Usecase",
-         List.of(new CreateNodeOperation(Types.USECASE, position)), true);
-      MenuItem createComponent = new MenuItem(Types.COMPONENT, "Component",
-         List.of(new CreateNodeOperation(Types.COMPONENT, position)), true);
-      MenuItem createActor = new MenuItem(Types.ACTOR, "Actor",
-         List.of(new CreateNodeOperation(Types.ACTOR, position)), true);
-      MenuItem createPackage = new MenuItem(Types.PACKAGE, "Package",
-         List.of(new CreateNodeOperation(Types.PACKAGE, position)), true);
+      MenuItem createUseCase = new MenuItem(UseCaseTypes.USECASE, "Usecase",
+         List.of(new CreateNodeOperation(UseCaseTypes.USECASE, position)), true);
+      MenuItem createComponent = new MenuItem(UseCaseTypes.COMPONENT, "Component",
+         List.of(new CreateNodeOperation(UseCaseTypes.COMPONENT, position)), true);
+      MenuItem createActor = new MenuItem(UseCaseTypes.ACTOR, "Actor",
+         List.of(new CreateNodeOperation(UseCaseTypes.ACTOR, position)), true);
+      MenuItem createPackage = new MenuItem(UseCaseTypes.PACKAGE, "Package",
+         List.of(new CreateNodeOperation(UseCaseTypes.PACKAGE, position)), true);
 
       MenuItem useCaseDiagramNodes = new MenuItem("useCaseDiagramNodes", "Nodes",
          Arrays.asList(createUseCase, createActor, createComponent, createPackage), "useCaseDiagramNodes");
@@ -62,14 +62,14 @@ public class UseCaseContextMenuItemProvider implements ContextMenuItemProvider {
    }
 
    public List<MenuItem> useCaseDiagramEdges(final String sourceElementId, final String targetElementId) {
-      MenuItem createGeneralization = new MenuItem(Types.GENERALIZATION, "Generalization",
-         List.of(new CreateEdgeOperation(Types.GENERALIZATION, sourceElementId, targetElementId)), true);
-      MenuItem createInclude = new MenuItem(Types.INCLUDE, "Include",
-         List.of(new CreateEdgeOperation(Types.INCLUDE, sourceElementId, targetElementId)), true);
-      MenuItem createExtend = new MenuItem(Types.EXTEND, "Extend",
-         List.of(new CreateEdgeOperation(Types.EXTEND, sourceElementId, targetElementId)), true);
-      MenuItem createAssociation = new MenuItem(Types.USECASE_ASSOCIATION, "Association",
-         List.of(new CreateEdgeOperation(Types.USECASE_ASSOCIATION, sourceElementId, targetElementId)), true);
+      MenuItem createGeneralization = new MenuItem(UseCaseTypes.GENERALIZATION, "Generalization",
+         List.of(new CreateEdgeOperation(UseCaseTypes.GENERALIZATION, sourceElementId, targetElementId)), true);
+      MenuItem createInclude = new MenuItem(UseCaseTypes.INCLUDE, "Include",
+         List.of(new CreateEdgeOperation(UseCaseTypes.INCLUDE, sourceElementId, targetElementId)), true);
+      MenuItem createExtend = new MenuItem(UseCaseTypes.EXTEND, "Extend",
+         List.of(new CreateEdgeOperation(UseCaseTypes.EXTEND, sourceElementId, targetElementId)), true);
+      MenuItem createAssociation = new MenuItem(UseCaseTypes.USECASE_ASSOCIATION, "Association",
+         List.of(new CreateEdgeOperation(UseCaseTypes.USECASE_ASSOCIATION, sourceElementId, targetElementId)), true);
 
       MenuItem useCaseDiagramEdges = new MenuItem("useCaseDiagramEdges", "Edges",
          Arrays.asList(createGeneralization, createAssociation, createExtend, createInclude), "useCaseDiagramEdges");

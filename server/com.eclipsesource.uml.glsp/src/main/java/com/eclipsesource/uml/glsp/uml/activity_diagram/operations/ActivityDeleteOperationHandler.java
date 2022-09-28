@@ -25,7 +25,6 @@ import org.eclipse.uml2.uml.ExceptionHandler;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.uml.activity_diagram.ActivityModelServerAccess;
-import com.eclipsesource.uml.glsp.util.UmlIDUtil;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 
 public class ActivityDeleteOperationHandler
@@ -44,9 +43,7 @@ public class ActivityDeleteOperationHandler
          boolean removeGuard = false;
          boolean removeWeight = false;
 
-         if (elementId.endsWith(UmlIDUtil.PROPERTY_SUFFIX)) {
-            elementId = UmlIDUtil.getElementIdFromProperty(elementId);
-         } else if (elementId.startsWith("_weight")) {
+         if (elementId.startsWith("_weight")) {
             removeWeight = true;
             elementId = elementId.replace("_weight", "");
          } else if (elementId.startsWith("_guard")) {

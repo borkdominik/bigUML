@@ -25,7 +25,7 @@ import org.eclipse.uml2.uml.Node;
 import com.eclipsesource.uml.glsp.model.UmlModelIndex;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.uml.deployment_diagram.DeploymentModelServerAccess;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.eclipsesource.uml.glsp.uml.deployment_diagram.constants.DeploymentTypes;
 import com.google.common.collect.Lists;
 
 public class CreateDeploymentDiagramEdgeOperationHandler
@@ -36,8 +36,8 @@ public class CreateDeploymentDiagramEdgeOperationHandler
    }
 
    private static List<String> handledElementTypeIds = Lists.newArrayList(
-      Types.COMMUNICATION_PATH,
-      Types.DEPLOYMENT);
+      DeploymentTypes.COMMUNICATION_PATH,
+      DeploymentTypes.DEPLOYMENT);
 
    @Override
    public boolean handles(final Operation execAction) {
@@ -57,7 +57,7 @@ public class CreateDeploymentDiagramEdgeOperationHandler
       String elementTypeId = operation.getElementTypeId();
 
       UmlModelIndex modelIndex = modelState.getIndex();
-      if (elementTypeId.equals(Types.COMMUNICATION_PATH)) {
+      if (elementTypeId.equals(DeploymentTypes.COMMUNICATION_PATH)) {
          Classifier sourceNode = getOrThrow(modelIndex.getSemantic(operation.getSourceElementId(), Classifier.class),
             "No semantic Node found for source element with id " + operation.getSourceElementId());
          Classifier targetNode = getOrThrow(modelIndex.getSemantic(operation.getTargetElementId(), Classifier.class),
@@ -68,7 +68,7 @@ public class CreateDeploymentDiagramEdgeOperationHandler
                   throw new GLSPServerException("Could not execute create operation on new Association edge");
                }
             });
-      } else if (elementTypeId.equals(Types.DEPLOYMENT)) {
+      } else if (elementTypeId.equals(DeploymentTypes.DEPLOYMENT)) {
          Artifact sourceArtifact = getOrThrow(modelIndex.getSemantic(operation.getSourceElementId(), Artifact.class),
             "No semantic Node found for source element with id " + operation.getSourceElementId());
          Node targetNode = getOrThrow(modelIndex.getSemantic(operation.getTargetElementId(), Node.class),

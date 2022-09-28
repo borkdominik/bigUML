@@ -24,7 +24,7 @@ import org.eclipse.uml2.uml.PackageableElement;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.eclipsesource.uml.glsp.uml.communication_diagram.constants.CommunicationTypes;
 import com.eclipsesource.uml.modelserver.commands.communication.lifeline.AddLifelineCommandContribution;
 import com.google.common.collect.Lists;
 
@@ -35,7 +35,7 @@ public class CreateLifelineNodeOperationHandler
       super(handledElementTypeIds);
    }
 
-   private static List<String> handledElementTypeIds = Lists.newArrayList(Types.LIFELINE);
+   private static List<String> handledElementTypeIds = Lists.newArrayList(CommunicationTypes.LIFELINE);
 
    @Override
    public boolean handles(final Operation execAction) {
@@ -59,7 +59,7 @@ public class CreateLifelineNodeOperationHandler
          PackageableElement.class, "No valid container with id " + operation.getContainerId() + " found");
 
       switch (elementTypeId) {
-         case Types.LIFELINE: {
+         case CommunicationTypes.LIFELINE: {
             modelAccess
                .exec(AddLifelineCommandContribution.create(
                   (Interaction) container,
@@ -75,6 +75,6 @@ public class CreateLifelineNodeOperationHandler
    }
 
    @Override
-   public String getLabel() { return "Create uml element"; }
+   public String getLabel() { return "Create communication lifeline edge handler"; }
 
 }

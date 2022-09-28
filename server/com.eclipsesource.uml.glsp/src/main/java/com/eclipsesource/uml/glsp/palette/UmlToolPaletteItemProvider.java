@@ -17,17 +17,13 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSBasicOperationHandler;
-import org.eclipse.glsp.server.actions.TriggerEdgeCreationAction;
-import org.eclipse.glsp.server.actions.TriggerNodeCreationAction;
 import org.eclipse.glsp.server.features.toolpalette.PaletteItem;
 import org.eclipse.glsp.server.features.toolpalette.ToolPaletteItemProvider;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
-import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 
 public class UmlToolPaletteItemProvider extends EMSBasicOperationHandler<CreateNodeOperation, UmlModelServerAccess>
@@ -36,7 +32,7 @@ public class UmlToolPaletteItemProvider extends EMSBasicOperationHandler<CreateN
    private static Logger LOGGER = Logger.getLogger(UmlToolPaletteItemProvider.class.getSimpleName());
 
    @Inject
-   private Set<UmlDiagramPaletteItemProvider> diagramPaletteItemProviders;
+   private Set<DiagramPalette> diagramPaletteItemProviders;
 
    @Override
    public List<PaletteItem> getItems(final Map<String, String> args) {
@@ -46,28 +42,12 @@ public class UmlToolPaletteItemProvider extends EMSBasicOperationHandler<CreateN
 
       var items = new ArrayList<PaletteItem>();
 
-      diagramPaletteItemProviders.stream().filter(provider -> provider.supports(diagramType))
-         .forEachOrdered(provider -> {
-            items.addAll(provider.getItems(args));
+      diagramPaletteItemProviders.stream().filter(contribution -> contribution.supports(diagramType))
+         .forEachOrdered(contribution -> {
+            items.addAll(contribution.getItems(args));
          });
 
       return items;
-   }
-
-   private PaletteItem comment() {
-      PaletteItem createCommentNode = node(Types.COMMENT, "Comment", "umlcomment");
-      // PaletteItem createCommentEdge = node(Types.COMMENT_EDGE, "Comment Edge", "umlcommentedge");
-
-      List<PaletteItem> comment = Lists.newArrayList(createCommentNode);
-      return PaletteItem.createPaletteGroup("uml.comment", "Comment", comment, "symbol-property");
-   }
-
-   private PaletteItem node(final String elementTypeId, final String label, final String icon) {
-      return new PaletteItem(elementTypeId, label, new TriggerNodeCreationAction(elementTypeId), icon);
-   }
-
-   private PaletteItem edge(final String elementTypeId, final String label, final String icon) {
-      return new PaletteItem(elementTypeId, label, new TriggerEdgeCreationAction(elementTypeId), icon);
    }
 
    // just part of the workaround which was used to get the current diagram type

@@ -25,7 +25,7 @@ import org.eclipse.uml2.uml.StateMachine;
 import com.eclipsesource.uml.glsp.model.UmlModelIndex;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.uml.statemachine_diagram.StateMachineModelServerAccess;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.eclipsesource.uml.glsp.uml.statemachine_diagram.constants.StateMachineTypes;
 
 public class CreateStateMachineDiagramChildNodeOperationHandler
    extends EMSBasicCreateOperationHandler<CreateNodeOperation, StateMachineModelServerAccess> {
@@ -34,9 +34,11 @@ public class CreateStateMachineDiagramChildNodeOperationHandler
       super(handledElementTypeIds);
    }
 
-   private static List<String> handledElementTypeIds = List.of(Types.STATE, Types.INITIAL_STATE, Types.DEEP_HISTORY,
-      Types.SHALLOW_HISTORY, Types.JOIN, Types.FORK, Types.JUNCTION, Types.CHOICE, Types.ENTRY_POINT,
-      Types.EXIT_POINT, Types.TERMINATE, Types.FINAL_STATE);
+   private static List<String> handledElementTypeIds = List.of(StateMachineTypes.STATE, StateMachineTypes.INITIAL_STATE,
+      StateMachineTypes.DEEP_HISTORY,
+      StateMachineTypes.SHALLOW_HISTORY, StateMachineTypes.JOIN, StateMachineTypes.FORK, StateMachineTypes.JUNCTION,
+      StateMachineTypes.CHOICE, StateMachineTypes.ENTRY_POINT,
+      StateMachineTypes.EXIT_POINT, StateMachineTypes.TERMINATE, StateMachineTypes.FINAL_STATE);
 
    @Override
    public boolean handles(final Operation execAction) {
@@ -72,7 +74,7 @@ public class CreateStateMachineDiagramChildNodeOperationHandler
          region = (Region) containerElement;
       }
 
-      if (Types.STATE.equals(elementTypeId)) {
+      if (StateMachineTypes.STATE.equals(elementTypeId)) {
          Optional<GModelElement> container = modelIndex.get(operation.getContainerId());
          Optional<GModelElement> structCompartment = container.filter(GNode.class::isInstance)
             .map(GNode.class::cast)
@@ -84,7 +86,7 @@ public class CreateStateMachineDiagramChildNodeOperationHandler
                   throw new GLSPServerException("Could not execute create operation on new State node");
                }
             });
-      } else if (Types.PSEUDOSTATES.contains(elementTypeId)) {
+      } else if (StateMachineTypes.PSEUDOSTATES.contains(elementTypeId)) {
          System.out.println("PSEUDO KIND " + getPseudostateKind(elementTypeId));
          Optional<GModelElement> container = modelIndex.get(operation.getContainerId());
          Optional<GModelElement> structCompartment = container.filter(GNode.class::isInstance)
@@ -99,7 +101,7 @@ public class CreateStateMachineDiagramChildNodeOperationHandler
                   throw new GLSPServerException("Could not execute create operation on new State node");
                }
             });
-      } else if (Types.FINAL_STATE.equals(elementTypeId)) {
+      } else if (StateMachineTypes.FINAL_STATE.equals(elementTypeId)) {
          Optional<GModelElement> container = modelIndex.get(operation.getContainerId());
          Optional<GModelElement> structCompartment = container.filter(GNode.class::isInstance)
             .map(GNode.class::cast)
@@ -116,7 +118,7 @@ public class CreateStateMachineDiagramChildNodeOperationHandler
 
    protected Optional<GCompartment> getStructureCompartment(final GNode packageable) {
       return packageable.getChildren().stream().filter(GCompartment.class::isInstance).map(GCompartment.class::cast)
-         .filter(comp -> Types.STRUCTURE.equals(comp.getType())).findFirst();
+         .filter(comp -> StateMachineTypes.STRUCTURE.equals(comp.getType())).findFirst();
    }
 
    protected Optional<GPoint> getRelativeLocation(final CreateNodeOperation operation,
@@ -144,25 +146,25 @@ public class CreateStateMachineDiagramChildNodeOperationHandler
 
    private PseudostateKind getPseudostateKind(final String type) {
       switch (type) {
-         case Types.INITIAL_STATE:
+         case StateMachineTypes.INITIAL_STATE:
             return PseudostateKind.INITIAL_LITERAL;
-         case Types.DEEP_HISTORY:
+         case StateMachineTypes.DEEP_HISTORY:
             return PseudostateKind.DEEP_HISTORY_LITERAL;
-         case Types.SHALLOW_HISTORY:
+         case StateMachineTypes.SHALLOW_HISTORY:
             return PseudostateKind.SHALLOW_HISTORY_LITERAL;
-         case Types.JOIN:
+         case StateMachineTypes.JOIN:
             return PseudostateKind.JOIN_LITERAL;
-         case Types.FORK:
+         case StateMachineTypes.FORK:
             return PseudostateKind.FORK_LITERAL;
-         case Types.JUNCTION:
+         case StateMachineTypes.JUNCTION:
             return PseudostateKind.JUNCTION_LITERAL;
-         case Types.CHOICE:
+         case StateMachineTypes.CHOICE:
             return PseudostateKind.CHOICE_LITERAL;
-         case Types.ENTRY_POINT:
+         case StateMachineTypes.ENTRY_POINT:
             return PseudostateKind.ENTRY_POINT_LITERAL;
-         case Types.EXIT_POINT:
+         case StateMachineTypes.EXIT_POINT:
             return PseudostateKind.EXIT_POINT_LITERAL;
-         case Types.TERMINATE:
+         case StateMachineTypes.TERMINATE:
             return PseudostateKind.TERMINATE_LITERAL;
          default:
             return null;

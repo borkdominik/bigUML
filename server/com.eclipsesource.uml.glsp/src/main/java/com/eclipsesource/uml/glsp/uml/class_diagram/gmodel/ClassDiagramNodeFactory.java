@@ -31,15 +31,14 @@ import org.eclipse.uml2.uml.Enumeration;
 import org.eclipse.uml2.uml.Interface;
 import org.eclipse.uml2.uml.Property;
 
-import com.eclipsesource.uml.glsp.gmodel.AbstractGModelFactory;
-import com.eclipsesource.uml.glsp.gmodel.CompartmentLabelFactory;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.util.UmlConfig.CSS;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
-import com.eclipsesource.uml.glsp.util.UmlIDUtil;
+import com.eclipsesource.uml.glsp.uml.class_diagram.constants.ClassTypes;
+import com.eclipsesource.uml.glsp.utils.UmlConfig;
+import com.eclipsesource.uml.glsp.utils.UmlConfig.CSS;
+import com.eclipsesource.uml.glsp.utils.UmlIDUtil;
 import com.eclipsesource.uml.modelserver.unotation.Shape;
 
-public class ClassDiagramNodeFactory extends AbstractGModelFactory<Classifier, GNode> {
+public class ClassDiagramNodeFactory extends ClassAbstractGModelFactory<Classifier, GNode> {
 
    // private final LabelFactory labelFactory;
    private final CompartmentLabelFactory compartmentLabelFactory;
@@ -86,7 +85,7 @@ public class ClassDiagramNodeFactory extends AbstractGModelFactory<Classifier, G
    // CLASS
    protected GNode createClassNode(final Class umlClass) {
       if (umlClass.isAbstract()) {
-         GNodeBuilder b = new GNodeBuilder(Types.ABSTRACT_CLASS)
+         GNodeBuilder b = new GNodeBuilder(ClassTypes.ABSTRACT_CLASS)
             .id(toId(umlClass))
             .layout(GConstants.Layout.VBOX)
             .addCssClass(CSS.NODE)
@@ -95,7 +94,7 @@ public class ClassDiagramNodeFactory extends AbstractGModelFactory<Classifier, G
          applyShapeData(umlClass, b);
          return b.build();
       }
-      GNodeBuilder b = new GNodeBuilder(Types.CLASS)
+      GNodeBuilder b = new GNodeBuilder(ClassTypes.CLASS)
          .id(toId(umlClass))
          .layout(GConstants.Layout.VBOX)
          .addCssClass(CSS.NODE)
@@ -107,7 +106,7 @@ public class ClassDiagramNodeFactory extends AbstractGModelFactory<Classifier, G
 
    // INTERFACE
    protected GNode createInterfaceNode(final Interface umlInterface) {
-      GNodeBuilder b = new GNodeBuilder(Types.INTERFACE)
+      GNodeBuilder b = new GNodeBuilder(ClassTypes.INTERFACE)
          .id(toId(umlInterface))
          .layout(GConstants.Layout.VBOX)
          .addCssClass(CSS.NODE)
@@ -118,7 +117,7 @@ public class ClassDiagramNodeFactory extends AbstractGModelFactory<Classifier, G
 
    // ENUMERATION
    protected GNode createEnumerationNode(final Enumeration umlEnumeration) {
-      GNodeBuilder b = new GNodeBuilder(Types.ENUMERATION)
+      GNodeBuilder b = new GNodeBuilder(ClassTypes.ENUMERATION)
          .id(toId(umlEnumeration))
          .layout(GConstants.Layout.VBOX)
          .addCssClass(CSS.NODE)
@@ -128,17 +127,17 @@ public class ClassDiagramNodeFactory extends AbstractGModelFactory<Classifier, G
    }
 
    protected GCompartment buildInterfaceHeader(final Interface umlInterface) {
-      GCompartmentBuilder interfaceHeaderBuilder = new GCompartmentBuilder(Types.COMPARTMENT_HEADER)
+      GCompartmentBuilder interfaceHeaderBuilder = new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER)
          .layout(GConstants.Layout.VBOX)
          .id(UmlIDUtil.createHeaderId(toId(umlInterface)));
 
-      GLabel typeLabel = new GLabelBuilder(Types.LABEL_NAME)
+      GLabel typeLabel = new GLabelBuilder(UmlConfig.Types.LABEL_NAME)
          .id(UmlIDUtil.createHeaderLabelId(toId(umlInterface)) + "_type_header")
          .text("«interface»")
          .build();
       interfaceHeaderBuilder.add(typeLabel);
 
-      GLabel interfaceHeaderLabel = new GLabelBuilder(Types.LABEL_NAME)
+      GLabel interfaceHeaderLabel = new GLabelBuilder(UmlConfig.Types.LABEL_NAME)
          .id(UmlIDUtil.createHeaderLabelId(toId(umlInterface)))
          .text(umlInterface.getName())
          .build();
@@ -148,14 +147,14 @@ public class ClassDiagramNodeFactory extends AbstractGModelFactory<Classifier, G
 
    protected GCompartment buildClassHeader(final Class umlClass) {
 
-      GCompartmentBuilder classHeaderBuilder = new GCompartmentBuilder(Types.COMPARTMENT_HEADER);
+      GCompartmentBuilder classHeaderBuilder = new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER);
 
       if (umlClass.isAbstract()) {
          classHeaderBuilder
             .layout(GConstants.Layout.VBOX)
             .id(UmlIDUtil.createHeaderId(toId(umlClass)));
 
-         GLabel typeLabel = new GLabelBuilder(Types.LABEL_NAME)
+         GLabel typeLabel = new GLabelBuilder(UmlConfig.Types.LABEL_NAME)
             .id(UmlIDUtil.createHeaderLabelId(toId(umlClass)) + "_type_header")
             .text("{abstract}")
             .build();
@@ -171,7 +170,7 @@ public class ClassDiagramNodeFactory extends AbstractGModelFactory<Classifier, G
          classHeaderBuilder.add(classHeaderIcon);
       }
 
-      GLabel classHeaderLabel = new GLabelBuilder(Types.LABEL_NAME)
+      GLabel classHeaderLabel = new GLabelBuilder(UmlConfig.Types.LABEL_NAME)
          .id(UmlIDUtil.createHeaderLabelId(toId(umlClass)))
          .text(umlClass.getName()).build();
       classHeaderBuilder.add(classHeaderLabel);
@@ -180,24 +179,24 @@ public class ClassDiagramNodeFactory extends AbstractGModelFactory<Classifier, G
    }
 
    protected GCompartment buildEnumerationHeader(final Enumeration umlEnumeration) {
-      GCompartmentBuilder outerEnumHeaderBuilder = new GCompartmentBuilder(Types.COMPARTMENT_HEADER)
+      GCompartmentBuilder outerEnumHeaderBuilder = new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER)
          .layout(GConstants.Layout.VBOX)
          .id(UmlIDUtil.createOuterHeaderId(toId(umlEnumeration)));
 
-      GLabel headerTypeLabel = new GLabelBuilder(Types.LABEL_TEXT)
+      GLabel headerTypeLabel = new GLabelBuilder(UmlConfig.Types.LABEL_TEXT)
          .id(UmlIDUtil.createTypeHeaderId(toId(umlEnumeration)))
          .text("<<" + Enumeration.class.getSimpleName() + ">>").build();
       outerEnumHeaderBuilder.add(headerTypeLabel);
 
-      GCompartmentBuilder headerCompartmentBuilder = new GCompartmentBuilder(Types.COMPARTMENT_HEADER)
+      GCompartmentBuilder headerCompartmentBuilder = new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER)
          .layout(GConstants.Layout.HBOX)
          .id(UmlIDUtil.createHeaderId(toId(umlEnumeration)));
 
-      GCompartment enumHeaderIcon = new GCompartmentBuilder(Types.ICON_ENUMERATION)
+      GCompartment enumHeaderIcon = new GCompartmentBuilder(ClassTypes.ICON_ENUMERATION)
          .id(UmlIDUtil.createHeaderIconId(toId(umlEnumeration))).build();
       headerCompartmentBuilder.add(enumHeaderIcon);
 
-      GLabel enumHeaderLabel = new GLabelBuilder(Types.LABEL_NAME)
+      GLabel enumHeaderLabel = new GLabelBuilder(UmlConfig.Types.LABEL_NAME)
          .id(UmlIDUtil.createHeaderLabelId(toId(umlEnumeration))).text(umlEnumeration.getName()).build();
       headerCompartmentBuilder.add(enumHeaderLabel);
 
@@ -209,7 +208,7 @@ public class ClassDiagramNodeFactory extends AbstractGModelFactory<Classifier, G
 
    protected static String getType(final Classifier classifier) {
       if (classifier instanceof Class) {
-         return Types.ICON_CLASS;
+         return ClassTypes.ICON_CLASS;
       }
       return "Classifier not found";
 
@@ -217,7 +216,7 @@ public class ClassDiagramNodeFactory extends AbstractGModelFactory<Classifier, G
 
    protected GCompartment buildClassPropertiesCompartment(final Collection<? extends Property> properties,
       final Classifier parent) {
-      GCompartmentBuilder classPropertiesBuilder = new GCompartmentBuilder(Types.COMPARTMENT)
+      GCompartmentBuilder classPropertiesBuilder = new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT)
          .id(UmlIDUtil.createChildCompartmentId(toId(parent))).layout(GConstants.Layout.VBOX);
 
       GLayoutOptions layoutOptions = new GLayoutOptions()

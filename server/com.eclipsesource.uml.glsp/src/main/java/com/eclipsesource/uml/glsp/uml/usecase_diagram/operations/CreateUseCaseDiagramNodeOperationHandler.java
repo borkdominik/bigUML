@@ -37,7 +37,7 @@ import org.eclipse.uml2.uml.PackageableElement;
 import com.eclipsesource.uml.glsp.model.UmlModelIndex;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.uml.usecase_diagram.UseCaseModelServerAccess;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.eclipsesource.uml.glsp.uml.usecase_diagram.constants.UseCaseTypes;
 import com.google.common.collect.Lists;
 
 public class CreateUseCaseDiagramNodeOperationHandler
@@ -49,8 +49,9 @@ public class CreateUseCaseDiagramNodeOperationHandler
       super(handledElementTypeIds);
    }
 
-   private static List<String> handledElementTypeIds = Lists.newArrayList(Types.COMPONENT, Types.PACKAGE, Types.ACTOR,
-      Types.USECASE, Types.COMMENT);
+   private static List<String> handledElementTypeIds = Lists.newArrayList(UseCaseTypes.COMPONENT, UseCaseTypes.PACKAGE,
+      UseCaseTypes.ACTOR,
+      UseCaseTypes.USECASE);
 
    @Override
    public boolean handles(final Operation execAction) {
@@ -70,7 +71,7 @@ public class CreateUseCaseDiagramNodeOperationHandler
       UmlModelIndex modelIndex = modelState.getIndex();
 
       switch (operation.getElementTypeId()) {
-         case Types.PACKAGE: {
+         case UseCaseTypes.PACKAGE: {
             NamedElement parentContainer = getOrThrow(
                modelIndex.getSemantic(operation.getContainerId(), NamedElement.class),
                "No semantic container object found for source element with id " + operation.getContainerId());
@@ -99,7 +100,7 @@ public class CreateUseCaseDiagramNodeOperationHandler
             }
             break;
          }
-         case Types.COMPONENT: {
+         case UseCaseTypes.COMPONENT: {
             /*
              * PackageableElement container = null;
              * try {
@@ -140,7 +141,7 @@ public class CreateUseCaseDiagramNodeOperationHandler
             }
             break;
          }
-         case Types.ACTOR: {
+         case UseCaseTypes.ACTOR: {
             PackageableElement container = null;
             try {
                container = getOrThrow(
@@ -182,7 +183,7 @@ public class CreateUseCaseDiagramNodeOperationHandler
             }
             break;
          }
-         case Types.USECASE: {
+         case UseCaseTypes.USECASE: {
             PackageableElement container = null;
             try {
                container = getOrThrow(
@@ -216,7 +217,7 @@ public class CreateUseCaseDiagramNodeOperationHandler
 
    protected Optional<GCompartment> getStructureCompartment(final GNode packageable) {
       return packageable.getChildren().stream().filter(GCompartment.class::isInstance).map(GCompartment.class::cast)
-         .filter(comp -> Types.STRUCTURE.equals(comp.getType())).findFirst();
+         .filter(comp -> UseCaseTypes.STRUCTURE.equals(comp.getType())).findFirst();
    }
 
    protected Optional<GPoint> getRelativeLocation(final CreateNodeOperation operation,

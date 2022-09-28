@@ -17,7 +17,6 @@ import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperation;
 import org.eclipse.glsp.server.types.GLSPServerException;
 import org.eclipse.uml2.uml.CallBehaviorAction;
-import org.eclipse.uml2.uml.Comment;
 import org.eclipse.uml2.uml.Constraint;
 import org.eclipse.uml2.uml.ControlFlow;
 import org.eclipse.uml2.uml.Element;
@@ -25,9 +24,11 @@ import org.eclipse.uml2.uml.NamedElement;
 
 import com.eclipsesource.uml.glsp.model.UmlModelIndex;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
+import com.eclipsesource.uml.glsp.uml.activity_diagram.ActivityIdUtil;
 import com.eclipsesource.uml.glsp.uml.activity_diagram.ActivityModelServerAccess;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
-import com.eclipsesource.uml.glsp.util.UmlIDUtil;
+import com.eclipsesource.uml.glsp.uml.activity_diagram.constants.ActivityTypes;
+import com.eclipsesource.uml.glsp.utils.UmlConfig.Types;
+import com.eclipsesource.uml.glsp.utils.UmlIDUtil;
 
 public class ActivityLabelEditOperationHandler
    extends EMSBasicOperationHandler<ApplyLabelEditOperation, ActivityModelServerAccess> {
@@ -47,7 +48,7 @@ public class ActivityLabelEditOperationHandler
          GModelElement.class, "Element not found.");
 
       switch (label.getType()) {
-         case Types.CALL_REF: {
+         case ActivityTypes.CALL_REF: {
 
             CallBehaviorAction cba = getOrThrow(
                modelIndex.getSemantic(UmlIDUtil.getElementIdFromHeaderLabel(graphicalElementId)),
@@ -66,14 +67,7 @@ public class ActivityLabelEditOperationHandler
             Element semanticElement = getOrThrow(modelIndex.getSemantic(containerElementId),
                Element.class, "No valid container with id " + graphicalElementId + " found");
 
-            if (semanticElement instanceof Comment) {
-               modelAccess.setCommentBody(modelState, (Comment) semanticElement, inputText)
-                  .thenAccept(response -> {
-                     if (!response.body()) {
-                        throw new GLSPServerException("Could not change Property to: " + inputText);
-                     }
-                  });
-            } else if (semanticElement instanceof Constraint) {
+            if (semanticElement instanceof Constraint) {
                modelAccess.setConditionBody(modelState, (Constraint) semanticElement, inputText)
                   .thenAccept(response -> {
                      if (!response.body()) {
@@ -90,15 +84,15 @@ public class ActivityLabelEditOperationHandler
             }
             break;
 
-         case Types.LABEL_GUARD:
-            containerElementId = UmlIDUtil.getEdgeIdFromGuardLabel(graphicalElementId);
+         case ActivityTypes.LABEL_GUARD:
+            containerElementId = ActivityIdUtil.getEdgeIdFromGuardLabel(graphicalElementId);
             ControlFlow flow = getOrThrow(modelIndex.getSemantic(containerElementId),
                ControlFlow.class, "No valid controlFlow with id " + containerElementId + " found");
             modelAccess.setGuard(modelState, flow, inputText);
             break;
 
-         case Types.LABEL_WEIGHT:
-            containerElementId = UmlIDUtil.getEdgeFromWeightLabel(graphicalElementId);
+         case ActivityTypes.LABEL_WEIGHT:
+            containerElementId = ActivityIdUtil.getEdgeFromWeightLabel(graphicalElementId);
             flow = getOrThrow(modelIndex.getSemantic(containerElementId),
                ControlFlow.class, "No valid controlFlow with id " + containerElementId + " found");
             modelAccess.setWeight(modelState, flow, inputText);

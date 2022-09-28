@@ -17,7 +17,6 @@ import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperation;
 import org.eclipse.glsp.server.types.GLSPServerException;
 import org.eclipse.uml2.uml.Actor;
-import org.eclipse.uml2.uml.Comment;
 import org.eclipse.uml2.uml.Constraint;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.ExtensionPoint;
@@ -28,8 +27,9 @@ import org.eclipse.uml2.uml.UseCase;
 import com.eclipsesource.uml.glsp.model.UmlModelIndex;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.uml.usecase_diagram.UseCaseModelServerAccess;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
-import com.eclipsesource.uml.glsp.util.UmlIDUtil;
+import com.eclipsesource.uml.glsp.uml.usecase_diagram.constants.UseCaseTypes;
+import com.eclipsesource.uml.glsp.utils.UmlConfig.Types;
+import com.eclipsesource.uml.glsp.utils.UmlIDUtil;
 
 public class UseCaseLabelEditOperationHandler
    extends EMSBasicOperationHandler<ApplyLabelEditOperation, UseCaseModelServerAccess> {
@@ -54,14 +54,7 @@ public class UseCaseLabelEditOperationHandler
             Element semanticElement = getOrThrow(modelIndex.getSemantic(containerElementId),
                Element.class, "No valid container with id " + graphicalElementId + " found");
 
-            if (semanticElement instanceof Comment) {
-               modelAccess.setCommentBody(modelState, (Comment) semanticElement, inputText)
-                  .thenAccept(response -> {
-                     if (!response.body()) {
-                        throw new GLSPServerException("Could not change Property to: " + inputText);
-                     }
-                  });
-            } else if (semanticElement instanceof Constraint) {
+            if (semanticElement instanceof Constraint) {
                modelAccess.setConditionBody(modelState, (Constraint) semanticElement, inputText)
                   .thenAccept(response -> {
                      if (!response.body()) {
@@ -99,7 +92,7 @@ public class UseCaseLabelEditOperationHandler
             }
             break;
 
-         case Types.EXTENSIONPOINT:
+         case UseCaseTypes.EXTENSIONPOINT:
             ExtensionPoint ep = getOrThrow(modelIndex.getSemantic(graphicalElementId),
                ExtensionPoint.class, "No valid container with id " + graphicalElementId + " found");
 

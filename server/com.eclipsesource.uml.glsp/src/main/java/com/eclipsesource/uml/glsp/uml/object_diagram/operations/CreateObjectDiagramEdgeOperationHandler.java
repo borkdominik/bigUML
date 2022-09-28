@@ -13,7 +13,7 @@ import org.eclipse.uml2.uml.NamedElement;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.uml.object_diagram.ObjectModelServerAccess;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.eclipsesource.uml.glsp.uml.object_diagram.constants.ObjectTypes;
 import com.google.common.collect.Lists;
 
 public class CreateObjectDiagramEdgeOperationHandler
@@ -23,7 +23,7 @@ public class CreateObjectDiagramEdgeOperationHandler
       super(handledElementTypeIds);
    }
 
-   private static List<String> handledElementTypeIds = Lists.newArrayList(Types.LINK);
+   private static List<String> handledElementTypeIds = Lists.newArrayList(ObjectTypes.LINK);
 
    @Override
    public boolean handles(final Operation execAction) {
@@ -49,7 +49,7 @@ public class CreateObjectDiagramEdgeOperationHandler
       NamedElement target = getOrThrow(modelState.getIndex().getSemantic(targetId), NamedElement.class,
          "No valid target element with id " + targetId + " found");
 
-      if (Types.LINK.equals(operation.getElementTypeId())) {
+      if (ObjectTypes.LINK.equals(operation.getElementTypeId())) {
          modelAccess.addLink(modelState, (Class) source, (Class) target)
             .thenAccept(response -> {
                if (!response.body()) {

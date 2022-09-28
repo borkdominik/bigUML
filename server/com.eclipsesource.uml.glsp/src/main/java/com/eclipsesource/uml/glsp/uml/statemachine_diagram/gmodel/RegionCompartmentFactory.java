@@ -10,11 +10,9 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.statemachine_diagram.gmodel;
 
-import com.eclipsesource.uml.glsp.gmodel.AbstractGModelFactory;
-import com.eclipsesource.uml.glsp.gmodel.DiagramFactory;
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
-import com.eclipsesource.uml.modelserver.unotation.Shape;
+import java.util.Collection;
+import java.util.stream.Collectors;
+
 import org.eclipse.glsp.graph.GCompartment;
 import org.eclipse.glsp.graph.builder.impl.GCompartmentBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
@@ -24,14 +22,15 @@ import org.eclipse.uml2.uml.Region;
 import org.eclipse.uml2.uml.Transition;
 import org.eclipse.uml2.uml.Vertex;
 
-import java.util.Collection;
-import java.util.stream.Collectors;
+import com.eclipsesource.uml.glsp.model.UmlModelState;
+import com.eclipsesource.uml.glsp.utils.UmlConfig.Types;
+import com.eclipsesource.uml.modelserver.unotation.Shape;
 
-public class RegionCompartmentFactory extends AbstractGModelFactory<Region, GCompartment> {
+public class RegionCompartmentFactory extends StateMachineAbstractGModelFactory<Region, GCompartment> {
 
-   private final DiagramFactory parentFactory;
+   private final StateMachineDiagramFactory parentFactory;
 
-   public RegionCompartmentFactory(final UmlModelState modelState, final DiagramFactory parentFactory) {
+   public RegionCompartmentFactory(final UmlModelState modelState, final StateMachineDiagramFactory parentFactory) {
       super(modelState);
       this.parentFactory = parentFactory;
    }

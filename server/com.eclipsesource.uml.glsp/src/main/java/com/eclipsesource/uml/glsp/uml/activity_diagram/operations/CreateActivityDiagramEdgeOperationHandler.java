@@ -15,7 +15,7 @@ import org.eclipse.uml2.uml.Pin;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.uml.activity_diagram.ActivityModelServerAccess;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.eclipsesource.uml.glsp.uml.activity_diagram.constants.ActivityTypes;
 import com.google.common.collect.Lists;
 
 public class CreateActivityDiagramEdgeOperationHandler
@@ -26,7 +26,7 @@ public class CreateActivityDiagramEdgeOperationHandler
    }
 
    private static List<String> handledElementTypeIds = Lists.newArrayList(
-      Types.CONTROLFLOW, Types.EXCEPTIONHANDLER);
+      ActivityTypes.CONTROLFLOW, ActivityTypes.EXCEPTIONHANDLER);
 
    @Override
    public boolean handles(final Operation execAction) {
@@ -47,7 +47,7 @@ public class CreateActivityDiagramEdgeOperationHandler
       String targetId = operation.getTargetElementId();
 
       switch (operation.getElementTypeId()) {
-         case Types.EXCEPTIONHANDLER: {
+         case ActivityTypes.EXCEPTIONHANDLER: {
             targetId = targetId.replace("_port", "");
 
             ExecutableNode source = getOrThrow(modelState.getIndex().getSemantic(sourceId),
@@ -63,13 +63,13 @@ public class CreateActivityDiagramEdgeOperationHandler
                });
             break;
          }
-         case Types.CONTROLFLOW: {
+         case ActivityTypes.CONTROLFLOW: {
             GModelElement sourceGElem = modelState.getIndex().get(sourceId).get();
             GModelElement targetGElem = modelState.getIndex().get(targetId).get();
-            if (Types.PIN_PORT.equals(sourceGElem.getType())) {
+            if (ActivityTypes.PIN_PORT.equals(sourceGElem.getType())) {
                sourceId = sourceGElem.getParent().getId();
             }
-            if (Types.PIN_PORT.equals(targetGElem.getType())) {
+            if (ActivityTypes.PIN_PORT.equals(targetGElem.getType())) {
                targetId = targetGElem.getParent().getId();
             }
 

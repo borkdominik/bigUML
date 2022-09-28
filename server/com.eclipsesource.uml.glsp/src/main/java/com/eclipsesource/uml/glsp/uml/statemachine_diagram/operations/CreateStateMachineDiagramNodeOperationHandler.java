@@ -22,7 +22,7 @@ import org.eclipse.uml2.uml.NamedElement;
 import com.eclipsesource.uml.glsp.model.UmlModelIndex;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.uml.statemachine_diagram.StateMachineModelServerAccess;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.eclipsesource.uml.glsp.uml.statemachine_diagram.constants.StateMachineTypes;
 import com.google.common.collect.Lists;
 
 public class CreateStateMachineDiagramNodeOperationHandler
@@ -33,7 +33,7 @@ public class CreateStateMachineDiagramNodeOperationHandler
    }
 
    private static List<String> handledElementTypeIds = Lists.newArrayList(
-      Types.STATE_MACHINE, Types.REGION);
+      StateMachineTypes.STATE_MACHINE, StateMachineTypes.REGION);
 
    @Override
    public boolean handles(final Operation execAction) {
@@ -55,7 +55,7 @@ public class CreateStateMachineDiagramNodeOperationHandler
       System.out.println("CONTAINER " + operation.getContainerId());
 
       switch (operation.getElementTypeId()) {
-         case Types.STATE_MACHINE:
+         case StateMachineTypes.STATE_MACHINE:
             modelAccess.addStateMachine(UmlModelState.getModelState(modelState), operation.getLocation())
                .thenAccept(response -> {
                   if (!response.body()) {
@@ -63,7 +63,7 @@ public class CreateStateMachineDiagramNodeOperationHandler
                   }
                });
             break;
-         case Types.REGION:
+         case StateMachineTypes.REGION:
             NamedElement parentContainer = getOrThrow(
                modelIndex.getSemantic(operation.getContainerId(), NamedElement.class),
                "No semantic container object found for source element with id " + operation.getContainerId());
@@ -88,7 +88,7 @@ public class CreateStateMachineDiagramNodeOperationHandler
 
    protected Optional<GCompartment> getStructureCompartment(final GNode packageable) {
       return packageable.getChildren().stream().filter(GCompartment.class::isInstance).map(GCompartment.class::cast)
-         .filter(comp -> Types.STRUCTURE.equals(comp.getType())).findFirst();
+         .filter(comp -> StateMachineTypes.STRUCTURE.equals(comp.getType())).findFirst();
    }
 
    protected Optional<GPoint> getRelativeLocation(final CreateNodeOperation operation,

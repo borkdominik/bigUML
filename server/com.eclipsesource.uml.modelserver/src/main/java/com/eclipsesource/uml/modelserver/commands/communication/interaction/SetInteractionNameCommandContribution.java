@@ -19,7 +19,6 @@ import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
 import org.eclipse.uml2.uml.Interaction;
 
 import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlSemanticCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.communication.lifeline.SetLifelineNameCommand;
 import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
 
 public class SetInteractionNameCommandContribution extends UmlSemanticCommandContribution {
@@ -43,7 +42,7 @@ public class SetInteractionNameCommandContribution extends UmlSemanticCommandCon
       String semanticUriFragment = command.getProperties().get(SEMANTIC_URI_FRAGMENT);
       String newName = command.getProperties().get(NEW_NAME);
 
-      return new SetLifelineNameCommand(domain, modelUri, semanticUriFragment, newName);
+      return new SetInteractionNameCommand(domain, modelUri, semanticUriFragment, newName);
    }
 
 }

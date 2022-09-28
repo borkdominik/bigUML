@@ -26,7 +26,7 @@ import org.eclipse.uml2.uml.UseCase;
 import com.eclipsesource.uml.glsp.model.UmlModelIndex;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.uml.usecase_diagram.UseCaseModelServerAccess;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.eclipsesource.uml.glsp.uml.usecase_diagram.constants.UseCaseTypes;
 import com.google.common.collect.Lists;
 
 public class CreateUseCaseDiagramEdgeOperationHandler
@@ -40,8 +40,9 @@ public class CreateUseCaseDiagramEdgeOperationHandler
     * The Types specified in this list will be processed by this file.
     * If a type is not mentioned here, the request for that type will not be redirected here.
     */
-   private static List<String> handledElementTypeIds = Lists.newArrayList(Types.USECASE_ASSOCIATION, Types.EXTEND,
-      Types.INCLUDE, Types.GENERALIZATION);
+   private static List<String> handledElementTypeIds = Lists.newArrayList(UseCaseTypes.USECASE_ASSOCIATION,
+      UseCaseTypes.EXTEND,
+      UseCaseTypes.INCLUDE, UseCaseTypes.GENERALIZATION);
 
    @Override
    public boolean handles(final Operation execAction) {
@@ -81,7 +82,7 @@ public class CreateUseCaseDiagramEdgeOperationHandler
          "No semantic Element found for target element with id " + operation.getTargetElementId());
 
       switch (elementTypeId) {
-         case Types.EXTEND:
+         case UseCaseTypes.EXTEND:
             if (targetClassifier instanceof ExtensionPoint) {
                modelAccess.addExtend(modelState, (UseCase) sourceClassifier, (ExtensionPoint) targetClassifier)
                   .thenAccept(response -> {
@@ -98,7 +99,7 @@ public class CreateUseCaseDiagramEdgeOperationHandler
                   });
             }
             break;
-         case Types.INCLUDE:
+         case UseCaseTypes.INCLUDE:
             modelAccess.addInclude(modelState, (UseCase) sourceClassifier, (UseCase) targetClassifier)
                .thenAccept(response -> {
                   if (!response.body()) {
@@ -106,7 +107,7 @@ public class CreateUseCaseDiagramEdgeOperationHandler
                   }
                });
             break;
-         case Types.GENERALIZATION:
+         case UseCaseTypes.GENERALIZATION:
             modelAccess.addGeneralization(modelState, (Classifier) targetClassifier, (Classifier) sourceClassifier)
                .thenAccept(response -> {
                   if (!response.body()) {
@@ -114,7 +115,7 @@ public class CreateUseCaseDiagramEdgeOperationHandler
                   }
                });
             break;
-         case Types.USECASE_ASSOCIATION:
+         case UseCaseTypes.USECASE_ASSOCIATION:
             modelAccess.addUseCaseAssociation(modelState, (Classifier) targetClassifier, (Classifier) sourceClassifier)
                .thenAccept(response -> {
                   if (!response.body()) {

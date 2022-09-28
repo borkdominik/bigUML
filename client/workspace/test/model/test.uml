@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_gB9CQLNfEey5ItGUbyY0Tw" name="test">
+  <ownedComment xmi:id="_k9_-MDjlEe29-odchCqsJw" annotatedElement="_gB9CQLNfEey5ItGUbyY0Tw">
+    <body>New Comment</body>
+  </ownedComment>
   <packagedElement xmi:type="uml:Interaction" xmi:id="_Yzv8oNFPEeyIfsn6v8XMUQ" name="asd">
     <lifeline xmi:id="_YzwjsNFPEeyIfsn6v8XMUQ" name="s" coveredBy="_Yzxx0dFPEeyIfsn6v8XMUQ _YzyY4dFPEeyIfsn6v8XMUQ"/>
     <lifeline xmi:id="_YzwjsdFPEeyIfsn6v8XMUQ" name="NewLifeline0" coveredBy="_YzxKw9FPEeyIfsn6v8XMUQ _Yzxx0tFPEeyIfsn6v8XMUQ _YzyY4tFPEeyIfsn6v8XMUQ"/>
@@ -19,7 +22,7 @@
     <lifeline xmi:id="_IymdINFjEey82fn8NtK68g" name="aChain:HotelChain" coveredBy="_a4K7YNFjEey82fn8NtK68g _kJrjAdFjEey82fn8NtK68g"/>
     <lifeline xmi:id="_MYZfINFjEey82fn8NtK68g" name="aHotel:Hotel" coveredBy="_kJsKENFjEey82fn8NtK68g _skDuUNFjEey82fn8NtK68g _skEVYNFjEey82fn8NtK68g _3zjsoNFjEey82fn8NtK68g"/>
     <lifeline xmi:id="_NreQkNFjEey82fn8NtK68g" name="aReservation:Reservation" coveredBy="_3zkTsNFjEey82fn8NtK68g _84K2ANFjEey82fn8NtK68g"/>
-    <lifeline xmi:id="_SvBC8NFjEey82fn8NtK68g" name="asdasd" coveredBy="_84K2AdFjEey82fn8NtK68g"/>
+    <lifeline xmi:id="_SvBC8NFjEey82fn8NtK68g" name="2" coveredBy="_84K2AdFjEey82fn8NtK68g"/>
     <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_a4KUUNFjEey82fn8NtK68g" name="1.1:makeReservation() - SendEvent" covered="_CBptwNFjEey82fn8NtK68g" message="_a4JGMNFjEey82fn8NtK68g"/>
     <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_a4K7YNFjEey82fn8NtK68g" name="1.1:makeReservation() - ReceiveEvent" covered="_IymdINFjEey82fn8NtK68g" message="_a4JGMNFjEey82fn8NtK68g"/>
     <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_kJrjAdFjEey82fn8NtK68g" name="1.1.1:makeReservation() - SendEvent" covered="_IymdINFjEey82fn8NtK68g" message="_kJrjANFjEey82fn8NtK68g"/>
@@ -37,5 +40,8 @@
     <message xmi:id="_84KO8NFjEey82fn8NtK68g" name="1.1.1.2.1:setConfirmation()" receiveEvent="_84K2AdFjEey82fn8NtK68g" sendEvent="_84K2ANFjEey82fn8NtK68g"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Interaction" xmi:id="_0_OR0NIpEeyxCufTNXqqbw" name="Destination"/>
-  <packagedElement xmi:type="uml:Interaction" xmi:id="_U3uT4DNjEe2x-o70ILXK9g" name="asd"/>
+  <packagedElement xmi:type="uml:Interaction" xmi:id="_U3uT4DNjEe2x-o70ILXK9g" name="2">
+    <lifeline xmi:id="_mLVIID80Ee2fpqOc-pjEBw" name="NewLifeline1"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Interaction" xmi:id="_lloaED80Ee2fpqOc-pjEBw" name="NewInteraction4"/>
 </uml:Model>

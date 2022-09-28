@@ -19,7 +19,7 @@ import org.eclipse.glsp.server.types.GLSPServerException;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.uml.class_diagram.ClassModelServerAccess;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.eclipsesource.uml.glsp.uml.class_diagram.constants.ClassTypes;
 import com.google.common.collect.Lists;
 
 public class CreateClassDiagramNodeOperationHandler
@@ -30,7 +30,7 @@ public class CreateClassDiagramNodeOperationHandler
    }
 
    private static final List<String> handledElementTypeIds = Lists.newArrayList(
-      Types.CLASS, Types.INTERFACE, Types.ENUMERATION, Types.ABSTRACT_CLASS);
+      ClassTypes.CLASS, ClassTypes.INTERFACE, ClassTypes.ENUMERATION, ClassTypes.ABSTRACT_CLASS);
 
    @Override
    public boolean handles(final Operation execAction) {
@@ -46,10 +46,10 @@ public class CreateClassDiagramNodeOperationHandler
    @Override
    public void executeOperation(final CreateNodeOperation operation, final ClassModelServerAccess modelAccess) {
       boolean isAbstract = false;
-      if (Types.CLASS.equals(operation.getElementTypeId())
-         || Types.ABSTRACT_CLASS.equals(operation.getElementTypeId())) {
+      if (ClassTypes.CLASS.equals(operation.getElementTypeId())
+         || ClassTypes.ABSTRACT_CLASS.equals(operation.getElementTypeId())) {
 
-         if (Types.ABSTRACT_CLASS.equals(operation.getElementTypeId())) {
+         if (ClassTypes.ABSTRACT_CLASS.equals(operation.getElementTypeId())) {
             isAbstract = true;
          }
          modelAccess.addClass(getUmlModelState(), operation.getLocation(), isAbstract)
@@ -58,14 +58,14 @@ public class CreateClassDiagramNodeOperationHandler
                   throw new GLSPServerException("Could not execute create operation on new Class node");
                }
             });
-      } else if (Types.INTERFACE.equals(operation.getElementTypeId())) {
+      } else if (ClassTypes.INTERFACE.equals(operation.getElementTypeId())) {
          modelAccess.addInterface(getUmlModelState(), operation.getLocation())
             .thenAccept(response -> {
                if (!response.body()) {
                   throw new GLSPServerException("Could not execute create operation on new Interface node");
                }
             });
-      } else if (Types.ENUMERATION.equals(operation.getElementTypeId())) {
+      } else if (ClassTypes.ENUMERATION.equals(operation.getElementTypeId())) {
          modelAccess.addEnumeration(getUmlModelState(), operation.getLocation())
             .thenAccept(response -> {
                if (!response.body()) {

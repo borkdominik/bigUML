@@ -38,10 +38,6 @@ import org.eclipse.uml2.uml.resource.UMLResource;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.modelserver.UmlModelServerClient;
 import com.eclipsesource.uml.modelserver.UmlNotationUtil;
-import com.eclipsesource.uml.modelserver.commands.activitydiagram.comment.AddCommentCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.activitydiagram.comment.LinkCommentCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.activitydiagram.comment.RemoveCommentCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.activitydiagram.comment.SetBodyCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.activitydiagram.comment.UnlinkCommentCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.activitydiagram.condition.AddConditionCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.commons.contributions.ChangeBoundsCommandContribution;
@@ -135,45 +131,18 @@ public class UmlModelServerAccess extends EMSModelServerAccess {
 
    public CompletableFuture<Response<Boolean>> setConditionBody(final UmlModelState modelState,
       final Constraint constraint, final String body) {
-
-      CCommand renameameCommand = SetBodyCommandContribution.create(getSemanticUriFragment(constraint),
-         body);
-      return this.edit(renameameCommand);
+      // TODO: Invalid command contribution
+      /*
+       * CCommand renameameCommand = SetBodyCommandContribution.create(getSemanticUriFragment(constraint),
+       * body);
+       * return this.edit(renameameCommand);
+       */
+      return null;
    }
 
    /*
     * UML Comment
     */
-   public CompletableFuture<Response<Boolean>> addComment(final UmlModelState modelState,
-      final GPoint position, final EObject object) {
-
-      CCompoundCommand addPartitionCompoundCommand = AddCommentCommandContribution
-         .create(position, getSemanticUriFragment(object));
-      return this.edit(addPartitionCompoundCommand);
-   }
-
-   public CompletableFuture<Response<Boolean>> setCommentBody(final UmlModelState modelState,
-      final Comment comment, final String name) {
-
-      CCommand renameameCommand = SetBodyCommandContribution.create(getSemanticUriFragment(comment),
-         name);
-      return this.edit(renameameCommand);
-   }
-
-   public CompletableFuture<Response<Boolean>> removeComment(final UmlModelState modelState,
-      final Comment comment) {
-      CCommand removePropertyCommand = RemoveCommentCommandContribution
-         .create(getSemanticUriFragment(comment));
-      return this.edit(removePropertyCommand);
-   }
-
-   public CompletableFuture<Response<Boolean>> linkComment(final UmlModelState modelState,
-      final Comment comment, final Element element) {
-
-      CCommand renameameCommand = LinkCommentCommandContribution.create(getSemanticUriFragment(comment),
-         getSemanticUriFragment(element));
-      return this.edit(renameameCommand);
-   }
 
    public CompletableFuture<Response<Boolean>> unlinkComment(final UmlModelState modelState,
       final Comment comment, final Element element) {

@@ -10,130 +10,36 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.activity_diagram;
 
-import org.eclipse.emfcloud.modelserver.glsp.EMSGLSPModule;
-import org.eclipse.emfcloud.modelserver.glsp.model.EMSModelState;
 import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.ActionHandler;
 import org.eclipse.glsp.server.di.MultiBinding;
-import org.eclipse.glsp.server.diagram.DiagramConfiguration;
-import org.eclipse.glsp.server.features.contextmenu.ContextMenuItemProvider;
-import org.eclipse.glsp.server.features.core.model.GModelFactory;
-import org.eclipse.glsp.server.features.core.model.ModelSourceLoader;
-import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperationHandler;
-import org.eclipse.glsp.server.features.toolpalette.ToolPaletteItemProvider;
-import org.eclipse.glsp.server.features.validation.ModelValidator;
-import org.eclipse.glsp.server.layout.LayoutEngine;
 import org.eclipse.glsp.server.operations.OperationHandler;
-import org.eclipse.glsp.server.operations.OperationHandlerRegistry;
-import org.eclipse.glsp.server.operations.gmodel.ChangeBoundsOperationHandler;
-import org.eclipse.glsp.server.operations.gmodel.ChangeRoutingPointsHandler;
-import org.eclipse.glsp.server.operations.gmodel.CompoundOperationHandler;
-import org.eclipse.glsp.server.operations.gmodel.DeleteOperationHandler;
-import org.eclipse.glsp.server.operations.gmodel.LayoutOperationHandler;
 
-import com.eclipsesource.uml.glsp.UmlDIOperationHandlerRegistry;
-import com.eclipsesource.uml.glsp.actions.ReturnTypesAction;
 import com.eclipsesource.uml.glsp.actions.UmlGetTypesActionHandler;
-import com.eclipsesource.uml.glsp.contextmenu.UmlContextMenuItemProvider;
-import com.eclipsesource.uml.glsp.diagram.UmlDiagramConfiguration;
-import com.eclipsesource.uml.glsp.layout.UmlLayoutEngine;
-import com.eclipsesource.uml.glsp.model.UmlModelFactory;
-import com.eclipsesource.uml.glsp.model.UmlModelSourceLoader;
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.operations.UmlChangeBoundsOperationHandler;
-import com.eclipsesource.uml.glsp.operations.UmlChangeRoutingPointsOperationHandler;
-import com.eclipsesource.uml.glsp.operations.UmlCompoundOperationHandler;
-import com.eclipsesource.uml.glsp.operations.UmlDeleteOperationHandler;
-import com.eclipsesource.uml.glsp.operations.UmlLabelEditOperationHandler;
-import com.eclipsesource.uml.glsp.operations.common.CreateCommentNodeOperationHandler;
-import com.eclipsesource.uml.glsp.palette.UmlToolPaletteItemProvider;
 import com.eclipsesource.uml.glsp.uml.activity_diagram.actions.behavior.CallBehaviorsAction;
 import com.eclipsesource.uml.glsp.uml.activity_diagram.actions.edgelabels.CreateGuardActionHandler;
 import com.eclipsesource.uml.glsp.uml.activity_diagram.actions.edgelabels.CreateWeightActionHandler;
 import com.eclipsesource.uml.glsp.uml.activity_diagram.operations.CreateActivityDiagramChildNodeOperationHandler;
 import com.eclipsesource.uml.glsp.uml.activity_diagram.operations.CreateActivityDiagramEdgeOperationHandler;
 import com.eclipsesource.uml.glsp.uml.activity_diagram.operations.CreateActivityDiagramNodeOperationHandler;
-import com.eclipsesource.uml.glsp.validator.UmlDiagramModelValidator;
+import com.eclipsesource.uml.glsp.uml.common_diagram.operations.CreateCommentNodeOperationHandler;
 
-public class ActivityGLSPModule extends EMSGLSPModule {
+public class ActivityGLSPModule {
 
-   @Override
    protected void configureActionHandlers(final MultiBinding<ActionHandler> bindings) {
-      super.configureActionHandlers(bindings);
       bindings.add(UmlGetTypesActionHandler.class);
       bindings.add(CreateGuardActionHandler.class);
       bindings.add(CreateWeightActionHandler.class);
    }
 
-   @Override
-   protected Class<? extends OperationHandlerRegistry> bindOperationHandlerRegistry() {
-      return UmlDIOperationHandlerRegistry.class;
-   }
-
-   @Override
-   protected Class<? extends EMSModelState> bindGModelState() {
-      return UmlModelState.class;
-   }
-
-   @Override
-   public Class<? extends GModelFactory> bindGModelFactory() {
-      return UmlModelFactory.class;
-   }
-
-   @Override
-   protected Class<? extends ModelSourceLoader> bindSourceModelLoader() {
-      return UmlModelSourceLoader.class;
-   }
-
-   @Override
-   protected Class<? extends LayoutEngine> bindLayoutEngine() {
-      return UmlLayoutEngine.class;
-   }
-
-   @Override
-   protected Class<? extends ToolPaletteItemProvider> bindToolPaletteItemProvider() {
-      return UmlToolPaletteItemProvider.class;
-   }
-
-   @Override
    protected void configureClientActions(final MultiBinding<Action> bindings) {
-      super.configureClientActions(bindings);
-      bindings.add(ReturnTypesAction.class);
       bindings.add(CallBehaviorsAction.class);
    }
 
-   @Override
    protected void configureOperationHandlers(final MultiBinding<OperationHandler> bindings) {
-      super.configureOperationHandlers(bindings);
-      bindings.rebind(CompoundOperationHandler.class, UmlCompoundOperationHandler.class);
-      bindings.rebind(ApplyLabelEditOperationHandler.class, UmlLabelEditOperationHandler.class);
-      bindings.rebind(ChangeBoundsOperationHandler.class, UmlChangeBoundsOperationHandler.class);
-      bindings.rebind(ChangeRoutingPointsHandler.class, UmlChangeRoutingPointsOperationHandler.class);
-      bindings.rebind(DeleteOperationHandler.class, UmlDeleteOperationHandler.class);
-      bindings.add(LayoutOperationHandler.class);
-
-      // ACTIVITY
       bindings.add(CreateActivityDiagramNodeOperationHandler.class);
       bindings.add(CreateActivityDiagramChildNodeOperationHandler.class);
       bindings.add(CreateActivityDiagramEdgeOperationHandler.class);
       bindings.add(CreateCommentNodeOperationHandler.class);
    }
-
-   @Override
-   protected Class<? extends DiagramConfiguration> bindDiagramConfiguration() {
-      return UmlDiagramConfiguration.class;
-   }
-
-   @Override
-   protected Class<? extends ModelValidator> bindModelValidator() {
-      return UmlDiagramModelValidator.class;
-   }
-
-   @Override
-   protected Class<? extends ContextMenuItemProvider> bindContextMenuItemProvider() {
-      return UmlContextMenuItemProvider.class;
-   }
-
-   @Override
-   public String getDiagramType() { return "umldiagram"; }
 }

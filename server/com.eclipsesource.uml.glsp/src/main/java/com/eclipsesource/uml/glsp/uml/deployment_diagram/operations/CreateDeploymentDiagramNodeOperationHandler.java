@@ -38,7 +38,7 @@ import org.eclipse.uml2.uml.PackageableElement;
 import com.eclipsesource.uml.glsp.model.UmlModelIndex;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.uml.deployment_diagram.DeploymentModelServerAccess;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.eclipsesource.uml.glsp.uml.deployment_diagram.constants.DeploymentTypes;
 import com.eclipsesource.uml.modelserver.unotation.Shape;
 import com.google.common.collect.Lists;
 
@@ -49,8 +49,9 @@ public class CreateDeploymentDiagramNodeOperationHandler
       super(handledElementTypeIds);
    }
 
-   private static List<String> handledElementTypeIds = Lists.newArrayList(Types.DEPLOYMENT_NODE, Types.ARTIFACT,
-      Types.EXECUTION_ENVIRONMENT, Types.DEVICE, Types.DEPLOYMENT_SPECIFICATION);
+   private static List<String> handledElementTypeIds = Lists.newArrayList(DeploymentTypes.DEPLOYMENT_NODE,
+      DeploymentTypes.ARTIFACT,
+      DeploymentTypes.EXECUTION_ENVIRONMENT, DeploymentTypes.DEVICE, DeploymentTypes.DEPLOYMENT_SPECIFICATION);
 
    @Override
    public boolean handles(final Operation execAction) {
@@ -70,7 +71,7 @@ public class CreateDeploymentDiagramNodeOperationHandler
       UmlModelIndex modelIndex = modelState.getIndex();
 
       switch (operation.getElementTypeId()) {
-         case Types.DEPLOYMENT_NODE: {
+         case DeploymentTypes.DEPLOYMENT_NODE: {
             NamedElement parentContainer = getOrThrow(
                modelIndex.getSemantic(operation.getContainerId(), NamedElement.class),
                "No parent container found!");
@@ -95,7 +96,7 @@ public class CreateDeploymentDiagramNodeOperationHandler
             }
             break;
          }
-         case Types.ARTIFACT: {
+         case DeploymentTypes.ARTIFACT: {
             NamedElement parentContainer = getOrThrow(
                modelIndex.getSemantic(operation.getContainerId(), NamedElement.class),
                "No parent container found!");
@@ -120,7 +121,7 @@ public class CreateDeploymentDiagramNodeOperationHandler
             }
             break;
          }
-         case Types.EXECUTION_ENVIRONMENT: {
+         case DeploymentTypes.EXECUTION_ENVIRONMENT: {
             NamedElement parentContainer = getOrThrow(
                modelIndex.getSemantic(operation.getContainerId(), NamedElement.class),
                "No container object was found");
@@ -151,7 +152,7 @@ public class CreateDeploymentDiagramNodeOperationHandler
             }
             break;
          }
-         case Types.DEVICE: {
+         case DeploymentTypes.DEVICE: {
             NamedElement parentContainer = getOrThrow(
                modelIndex.getSemantic(operation.getContainerId(), NamedElement.class),
                "No container object was found");
@@ -176,7 +177,7 @@ public class CreateDeploymentDiagramNodeOperationHandler
             }
             break;
          }
-         case Types.DEPLOYMENT_SPECIFICATION: {
+         case DeploymentTypes.DEPLOYMENT_SPECIFICATION: {
             String containerId = operation.getContainerId();
 
             PackageableElement container = getOrThrow(modelState.getIndex().getSemantic(containerId),
@@ -204,7 +205,7 @@ public class CreateDeploymentDiagramNodeOperationHandler
 
    protected Optional<GCompartment> getStructureCompartment(final GNode packageable) {
       return packageable.getChildren().stream().filter(GCompartment.class::isInstance).map(GCompartment.class::cast)
-         .filter(comp -> Types.STRUCTURE.equals(comp.getType())).findFirst();
+         .filter(comp -> DeploymentTypes.STRUCTURE.equals(comp.getType())).findFirst();
    }
 
    protected Optional<GPoint> getRelativeLocation(final CreateNodeOperation operation,

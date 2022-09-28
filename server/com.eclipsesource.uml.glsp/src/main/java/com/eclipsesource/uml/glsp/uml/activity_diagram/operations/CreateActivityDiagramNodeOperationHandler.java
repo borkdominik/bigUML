@@ -25,7 +25,7 @@ import org.eclipse.uml2.uml.NamedElement;
 import com.eclipsesource.uml.glsp.model.UmlModelIndex;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.uml.activity_diagram.ActivityModelServerAccess;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.eclipsesource.uml.glsp.uml.activity_diagram.constants.ActivityTypes;
 import com.google.common.collect.Lists;
 
 public class CreateActivityDiagramNodeOperationHandler
@@ -36,7 +36,7 @@ public class CreateActivityDiagramNodeOperationHandler
    }
 
    private static List<String> handledElementTypeIds = Lists.newArrayList(
-      Types.ACTIVITY, Types.INTERRUPTIBLEREGION, Types.PARTITION);
+      ActivityTypes.ACTIVITY, ActivityTypes.INTERRUPTIBLEREGION, ActivityTypes.PARTITION);
 
    @Override
    public boolean handles(final Operation execAction) {
@@ -60,7 +60,7 @@ public class CreateActivityDiagramNodeOperationHandler
          "No parent container found!");
 
       switch (operation.getElementTypeId()) {
-         case Types.ACTIVITY: {
+         case ActivityTypes.ACTIVITY: {
             modelAccess.addActivity(UmlModelState.getModelState(modelState), operation.getLocation())
                .thenAccept(response -> {
                   if (!response.body()) {
@@ -69,7 +69,7 @@ public class CreateActivityDiagramNodeOperationHandler
                });
             break;
          }
-         case Types.PARTITION: {
+         case ActivityTypes.PARTITION: {
             // TODO: Check if the parenting is semantically correct
             if (parentContainer instanceof Activity ||
                parentContainer instanceof ActivityPartition ||
@@ -86,7 +86,7 @@ public class CreateActivityDiagramNodeOperationHandler
             }
             break;
          }
-         case Types.INTERRUPTIBLEREGION: {
+         case ActivityTypes.INTERRUPTIBLEREGION: {
             // TODO: Check if the parenting is semantically correct
             if (parentContainer instanceof Activity ||
                parentContainer instanceof ActivityPartition ||
@@ -115,7 +115,7 @@ public class CreateActivityDiagramNodeOperationHandler
 
    protected Optional<GCompartment> getStructureCompartment(final GNode packageable) {
       return packageable.getChildren().stream().filter(GCompartment.class::isInstance).map(GCompartment.class::cast)
-         .filter(comp -> Types.STRUCTURE.equals(comp.getType())).findFirst();
+         .filter(comp -> ActivityTypes.STRUCTURE.equals(comp.getType())).findFirst();
    }
 
    protected Optional<GPoint> getRelativeLocation(final CreateNodeOperation operation,

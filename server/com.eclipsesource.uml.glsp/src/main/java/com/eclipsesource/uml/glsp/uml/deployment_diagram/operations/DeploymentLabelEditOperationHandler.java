@@ -17,7 +17,6 @@ import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperation;
 import org.eclipse.glsp.server.types.GLSPServerException;
 import org.eclipse.uml2.uml.Artifact;
-import org.eclipse.uml2.uml.Comment;
 import org.eclipse.uml2.uml.CommunicationPath;
 import org.eclipse.uml2.uml.Component;
 import org.eclipse.uml2.uml.Constraint;
@@ -31,8 +30,8 @@ import org.eclipse.uml2.uml.Node;
 import com.eclipsesource.uml.glsp.model.UmlModelIndex;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.uml.deployment_diagram.DeploymentModelServerAccess;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
-import com.eclipsesource.uml.glsp.util.UmlIDUtil;
+import com.eclipsesource.uml.glsp.utils.UmlIDUtil;
+import com.eclipsesource.uml.glsp.utils.UmlConfig.Types;
 
 public class DeploymentLabelEditOperationHandler
    extends EMSBasicOperationHandler<ApplyLabelEditOperation, DeploymentModelServerAccess> {
@@ -57,14 +56,7 @@ public class DeploymentLabelEditOperationHandler
             Element semanticElement = getOrThrow(modelIndex.getSemantic(containerElementId),
                Element.class, "No valid container with id " + graphicalElementId + " found");
 
-            if (semanticElement instanceof Comment) {
-               modelAccess.setCommentBody(modelState, (Comment) semanticElement, inputText)
-                  .thenAccept(response -> {
-                     if (!response.body()) {
-                        throw new GLSPServerException("Could not change Property to: " + inputText);
-                     }
-                  });
-            } else if (semanticElement instanceof Constraint) {
+            if (semanticElement instanceof Constraint) {
                modelAccess.setConditionBody(modelState, (Constraint) semanticElement, inputText)
                   .thenAccept(response -> {
                      if (!response.body()) {

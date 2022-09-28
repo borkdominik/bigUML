@@ -50,6 +50,7 @@ public class UmlModelFactory implements GModelFactory {
    public void createGModel() {
       UmlModelState modelState = UmlModelState.getModelState(gModelState);
 
+      // Necessary for init
       var gmodelRoot = diagramMapper.createRoot(modelState);
 
       UmlModelIndex modelIndex = modelState.getIndex();

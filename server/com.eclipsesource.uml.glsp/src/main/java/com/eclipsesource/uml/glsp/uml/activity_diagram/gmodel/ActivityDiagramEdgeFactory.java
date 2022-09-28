@@ -29,14 +29,13 @@ import org.eclipse.uml2.uml.ObjectNode;
 import org.eclipse.uml2.uml.Pin;
 import org.eclipse.uml2.uml.ValueSpecification;
 
-import com.eclipsesource.uml.glsp.gmodel.AbstractGModelFactory;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.uml.activity_diagram.ActivityIdUtil;
 import com.eclipsesource.uml.glsp.util.UmlConfig.CSS;
 import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
 import com.eclipsesource.uml.modelserver.unotation.Edge;
 
-public class ActivityDiagramEdgeFactory extends AbstractGModelFactory<ActivityEdge, GEdge> {
+public class ActivityDiagramEdgeFactory extends ActivityAbstractGModelFactory<ActivityEdge, GEdge> {
 
    public ActivityDiagramEdgeFactory(final UmlModelState modelState) {
       super(modelState);

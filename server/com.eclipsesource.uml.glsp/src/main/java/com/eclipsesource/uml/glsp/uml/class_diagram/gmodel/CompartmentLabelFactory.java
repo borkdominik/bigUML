@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.gmodel;
+package com.eclipsesource.uml.glsp.uml.class_diagram.gmodel;
 
 import org.eclipse.glsp.graph.GCompartment;
 import org.eclipse.glsp.graph.GLabel;
@@ -24,7 +24,7 @@ import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
 import com.eclipsesource.uml.glsp.util.UmlIDUtil;
 import com.eclipsesource.uml.glsp.util.UmlLabelUtil;
 
-public class CompartmentLabelFactory extends AbstractGModelFactory<NamedElement, GCompartment> {
+public class CompartmentLabelFactory extends ClassAbstractGModelFactory<NamedElement, GCompartment> {
 
    public CompartmentLabelFactory(final UmlModelState modelState) {
       super(modelState);

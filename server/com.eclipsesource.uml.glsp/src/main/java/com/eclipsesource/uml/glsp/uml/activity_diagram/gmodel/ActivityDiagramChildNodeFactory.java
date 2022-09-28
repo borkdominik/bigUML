@@ -10,12 +10,10 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.activity_diagram.gmodel;
 
-import com.eclipsesource.uml.glsp.gmodel.AbstractGModelFactory;
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.util.UmlConfig.CSS;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
-import com.eclipsesource.uml.glsp.util.UmlIDUtil;
-import com.eclipsesource.uml.modelserver.unotation.Shape;
+import java.util.List;
+import java.util.Random;
+import java.util.stream.Collectors;
+
 import org.eclipse.glsp.graph.GCompartment;
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.builder.impl.GCompartmentBuilder;
@@ -24,13 +22,35 @@ import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.builder.impl.GNodeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.glsp.graph.util.GraphUtil;
-import org.eclipse.uml2.uml.*;
+import org.eclipse.uml2.uml.AcceptEventAction;
+import org.eclipse.uml2.uml.Action;
+import org.eclipse.uml2.uml.Activity;
+import org.eclipse.uml2.uml.ActivityFinalNode;
+import org.eclipse.uml2.uml.ActivityNode;
+import org.eclipse.uml2.uml.ActivityParameterNode;
+import org.eclipse.uml2.uml.CallAction;
+import org.eclipse.uml2.uml.CallBehaviorAction;
+import org.eclipse.uml2.uml.CentralBufferNode;
+import org.eclipse.uml2.uml.ControlNode;
+import org.eclipse.uml2.uml.DataStoreNode;
+import org.eclipse.uml2.uml.DecisionNode;
+import org.eclipse.uml2.uml.FlowFinalNode;
+import org.eclipse.uml2.uml.ForkNode;
+import org.eclipse.uml2.uml.InitialNode;
+import org.eclipse.uml2.uml.JoinNode;
+import org.eclipse.uml2.uml.MergeNode;
+import org.eclipse.uml2.uml.ObjectNode;
+import org.eclipse.uml2.uml.OpaqueAction;
+import org.eclipse.uml2.uml.Pin;
+import org.eclipse.uml2.uml.SendSignalAction;
 
-import java.util.List;
-import java.util.Random;
-import java.util.stream.Collectors;
+import com.eclipsesource.uml.glsp.model.UmlModelState;
+import com.eclipsesource.uml.glsp.util.UmlConfig.CSS;
+import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.eclipsesource.uml.glsp.util.UmlIDUtil;
+import com.eclipsesource.uml.modelserver.unotation.Shape;
 
-public class ActivityDiagramChildNodeFactory extends AbstractGModelFactory<ActivityNode, GNode> {
+public class ActivityDiagramChildNodeFactory extends ActivityAbstractGModelFactory<ActivityNode, GNode> {
 
    public ActivityDiagramChildNodeFactory(final UmlModelState modelState) {
       super(modelState);
@@ -72,19 +92,19 @@ public class ActivityDiagramChildNodeFactory extends AbstractGModelFactory<Activ
          return null;
       }
       GNodeBuilder b = new GNodeBuilder(type) //
-            .id(toId(action)) //
-            .layout(GConstants.Layout.VBOX) //
-            .addCssClass(CSS.NODE) //
-            .add(buildHeader(action));
+         .id(toId(action)) //
+         .layout(GConstants.Layout.VBOX) //
+         .addCssClass(CSS.NODE) //
+         .add(buildHeader(action));
 
       if (action instanceof OpaqueAction) {
          b.add(buildPins(action, ((OpaqueAction) action).getInputValues(), "input"));
          b.add(buildPins(action, ((OpaqueAction) action).getOutputValues(), "output"));
 
          b.addAll(
-               ((OpaqueAction) action).getInputValues().stream().map(this::createPin).collect(Collectors.toList()));
+            ((OpaqueAction) action).getInputValues().stream().map(this::createPin).collect(Collectors.toList()));
          b.addAll(
-               ((OpaqueAction) action).getOutputValues().stream().map(this::createPin).collect(Collectors.toList()));
+            ((OpaqueAction) action).getOutputValues().stream().map(this::createPin).collect(Collectors.toList()));
       }
 
       applyShapeData(action, b);
@@ -94,10 +114,10 @@ public class ActivityDiagramChildNodeFactory extends AbstractGModelFactory<Activ
    protected GNode createCall(final CallAction callAction) {
       System.out.println("goes into call action factory");
       GNodeBuilder b = new GNodeBuilder(Types.CALL) //
-            .id(toId(callAction)) //
-            .layout(GConstants.Layout.VBOX) //
-            .addCssClass(CSS.NODE) //
-            .add(buildHeader(callAction));
+         .id(toId(callAction)) //
+         .layout(GConstants.Layout.VBOX) //
+         .addCssClass(CSS.NODE) //
+         .add(buildHeader(callAction));
 
       applyShapeData(callAction, b);
       return b.build();
@@ -120,9 +140,9 @@ public class ActivityDiagramChildNodeFactory extends AbstractGModelFactory<Activ
       }
       Random rand = new Random();
       GNodeBuilder b = new GNodeBuilder(type) //
-            .id(toId(node) + rand.nextInt(1000)) //
-            .layout(GConstants.Layout.VBOX) //
-            .addCssClass(CSS.NODE);
+         .id(toId(node) + rand.nextInt(1000)) //
+         .layout(GConstants.Layout.VBOX) //
+         .addCssClass(CSS.NODE);
 
       applyShapeData(node, b);
       return b.build();
@@ -130,17 +150,17 @@ public class ActivityDiagramChildNodeFactory extends AbstractGModelFactory<Activ
 
    protected GNode createParameter(final ActivityParameterNode node) {
       GNodeBuilder b = new GNodeBuilder(Types.PARAMETER) //
-            .id(toId(node)) //
+         .id(toId(node)) //
+         .layout(GConstants.Layout.VBOX) //
+         .addCssClass(CSS.NODE)
+         .add(new GCompartmentBuilder(Types.COMPARTMENT_HEADER) //
             .layout(GConstants.Layout.VBOX) //
-            .addCssClass(CSS.NODE)
-            .add(new GCompartmentBuilder(Types.COMPARTMENT_HEADER) //
-                  .layout(GConstants.Layout.VBOX) //
-                  .id(toId(node) + "_header")
-                  .add(new GLabelBuilder(Types.LABEL_NAME) //
-                        .id(UmlIDUtil.createHeaderLabelId(toId(node)))
-                        .text(node.getName()) //
-                        .build()) //
-                  .build());
+            .id(toId(node) + "_header")
+            .add(new GLabelBuilder(Types.LABEL_NAME) //
+               .id(UmlIDUtil.createHeaderLabelId(toId(node)))
+               .text(node.getName()) //
+               .build()) //
+            .build());
 
       applyShapeData(node, b);
       return b.build();
@@ -159,20 +179,20 @@ public class ActivityDiagramChildNodeFactory extends AbstractGModelFactory<Activ
       }
       Random rand = new Random();
       GNodeBuilder b = new GNodeBuilder(type) //
-            .id(toId(node) + rand.nextInt(1000)) //
+         .id(toId(node) + rand.nextInt(1000)) //
+         .layout(GConstants.Layout.VBOX) //
+         .addCssClass(CSS.NODE)
+         .add(new GCompartmentBuilder(Types.COMPARTMENT_HEADER) //
             .layout(GConstants.Layout.VBOX) //
-            .addCssClass(CSS.NODE)
-            .add(new GCompartmentBuilder(Types.COMPARTMENT_HEADER) //
-                  .layout(GConstants.Layout.VBOX) //
-                  .id(UmlIDUtil.createHeaderId(toId(node)))
-                  .add(new GLabelBuilder(Types.LABEL_TEXT) //
-                        .id(toId(node) + "_header_labeltype").text(header) //
-                        .build()) //
-                  .add(new GLabelBuilder(Types.LABEL_NAME) //
-                        .id(UmlIDUtil.createHeaderLabelId(toId(node)))
-                        .text(node.getName())
-                        .build()) //
-                  .build());
+            .id(UmlIDUtil.createHeaderId(toId(node)))
+            .add(new GLabelBuilder(Types.LABEL_TEXT) //
+               .id(toId(node) + "_header_labeltype").text(header) //
+               .build()) //
+            .add(new GLabelBuilder(Types.LABEL_NAME) //
+               .id(UmlIDUtil.createHeaderLabelId(toId(node)))
+               .text(node.getName())
+               .build()) //
+            .build());
 
       applyShapeData(node, b);
       return b.build();
@@ -181,11 +201,11 @@ public class ActivityDiagramChildNodeFactory extends AbstractGModelFactory<Activ
    protected GNode createPin(final Pin pin) {
       System.out.println("GOES INTO Pin CREATE");
       GNodeBuilder b = new GNodeBuilder(Types.PIN) //
-            .id(toId(pin)) //
-            .layout(GConstants.Layout.VBOX) //
-            .addCssClass(CSS.NODE)
-            .add(buildHeader(pin))
-            .add(new GNodeBuilder(Types.PIN_PORT).id(toId(pin) + "_port").size(10, 10).build());
+         .id(toId(pin)) //
+         .layout(GConstants.Layout.VBOX) //
+         .addCssClass(CSS.NODE)
+         .add(buildHeader(pin))
+         .add(new GNodeBuilder(Types.PIN_PORT).id(toId(pin) + "_port").size(10, 10).build());
 
       applyShapeData(pin, b);
       return b.build();
@@ -223,35 +243,35 @@ public class ActivityDiagramChildNodeFactory extends AbstractGModelFactory<Activ
       }
       Random rand = new Random();
       return new GCompartmentBuilder(Types.COMPARTMENT_HEADER) //
-            .layout("hbox") //
-            .id(UmlIDUtil.createHeaderId(toId(action) + rand.nextInt(1000)))
-            .add(new GLabelBuilder(labelType) //
-                  .id(UmlIDUtil.createHeaderLabelId(toId(action) + rand.nextInt(1000))).text(text) //
-                  .build()) //
-            .build();
+         .layout("hbox") //
+         .id(UmlIDUtil.createHeaderId(toId(action) + rand.nextInt(1000)))
+         .add(new GLabelBuilder(labelType) //
+            .id(UmlIDUtil.createHeaderLabelId(toId(action) + rand.nextInt(1000))).text(text) //
+            .build()) //
+         .build();
    }
 
    protected GCompartment buildHeader(final ObjectNode node) {
       return new GCompartmentBuilder(Types.COMPARTMENT_HEADER) //
-            .layout("hbox") //
-            .id(UmlIDUtil.createHeaderId(toId(node)))
-            .add(new GLabelBuilder(Types.LABEL_NAME) //
-                  .id(UmlIDUtil.createHeaderLabelId(toId(node))).text(node.getName()) //
-                  .build()) //
-            .build();
+         .layout("hbox") //
+         .id(UmlIDUtil.createHeaderId(toId(node)))
+         .add(new GLabelBuilder(Types.LABEL_NAME) //
+            .id(UmlIDUtil.createHeaderLabelId(toId(node))).text(node.getName()) //
+            .build()) //
+         .build();
    }
 
    protected GCompartment buildPins(final Action action, final List<? extends Pin> pins, final String type) {
 
       return new GCompartmentBuilder(Types.COMP) //
-            .id(toId(action) + "_childCompartment" + type).layout(GConstants.Layout.VBOX) //
-            .layoutOptions(new GLayoutOptions() //
-                  .hAlign(GConstants.HAlign.LEFT) //
-                  .resizeContainer(true)) //
-            .addAll(pins.stream() //
-                  .map(this::createPin)
-                  .collect(Collectors.toList()))
-            .build();
+         .id(toId(action) + "_childCompartment" + type).layout(GConstants.Layout.VBOX) //
+         .layoutOptions(new GLayoutOptions() //
+            .hAlign(GConstants.HAlign.LEFT) //
+            .resizeContainer(true)) //
+         .addAll(pins.stream() //
+            .map(this::createPin)
+            .collect(Collectors.toList()))
+         .build();
    }
 
 }

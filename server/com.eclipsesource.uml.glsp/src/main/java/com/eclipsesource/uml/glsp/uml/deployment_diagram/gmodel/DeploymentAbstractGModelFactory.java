@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.gmodel;
+package com.eclipsesource.uml.glsp.uml.deployment_diagram.gmodel;
 
 import java.util.Optional;
 
@@ -18,11 +18,11 @@ import org.eclipse.glsp.graph.GModelElement;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 
-public abstract class AbstractGModelFactory<T extends EObject, E extends GModelElement> {
+public abstract class DeploymentAbstractGModelFactory<T extends EObject, E extends GModelElement> {
 
    protected UmlModelState modelState;
 
-   public AbstractGModelFactory(final UmlModelState modelState) {
+   public DeploymentAbstractGModelFactory(final UmlModelState modelState) {
       this.modelState = modelState;
    }
 

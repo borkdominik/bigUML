@@ -19,19 +19,17 @@ import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Property;
 
-import com.eclipsesource.uml.glsp.gmodel.AbstractGModelFactory;
-import com.eclipsesource.uml.glsp.gmodel.LabelFactory;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.util.UmlConfig.CSS;
 import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
 import com.eclipsesource.uml.glsp.util.UmlIDUtil;
 import com.eclipsesource.uml.modelserver.unotation.Shape;
 
-public class ObjectDiagramNodeFactory extends AbstractGModelFactory<Classifier, GNode> {
+public class ObjectDiagramNodeFactory extends ObjectAbstractGModelFactory<Classifier, GNode> {
 
-   private final LabelFactory labelFactory;
+   private final ObjectDiagramLabelFactory labelFactory;
 
-   public ObjectDiagramNodeFactory(final UmlModelState modelState, final LabelFactory labelFactory) {
+   public ObjectDiagramNodeFactory(final UmlModelState modelState, final ObjectDiagramLabelFactory labelFactory) {
       super(modelState);
       this.labelFactory = labelFactory;
    }

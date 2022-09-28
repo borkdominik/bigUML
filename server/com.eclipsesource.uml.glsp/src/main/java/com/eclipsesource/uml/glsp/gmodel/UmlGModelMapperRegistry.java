@@ -32,17 +32,10 @@ public class UmlGModelMapperRegistry
 
    @Inject
    public UmlGModelMapperRegistry(final Set<UmlGModelMapper<? extends EObject, ? extends GModelElement>> mappers) {
-      System.out.println("");
-      System.out.println("");
-      mappers.forEach(mapper -> System.out.println("Mapper: " + mapper.getClass().getSimpleName()));
-      System.out.println("");
-      System.out.println("");
-
       mappers.forEach(mapper -> {
          ReflectionUtil.constructUml(mapper.deriveEObjectType())
             .ifPresent(eobject -> register(eobject, (UmlGModelMapper<EObject, GModelElement>) mapper));
       });
-
    }
 
    @Override

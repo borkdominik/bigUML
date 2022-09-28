@@ -22,11 +22,10 @@ import org.eclipse.uml2.uml.ActivityNode;
 import org.eclipse.uml2.uml.ExceptionHandler;
 import org.eclipse.uml2.uml.Model;
 
-import com.eclipsesource.uml.glsp.gmodel.DiagramFactory;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.modelserver.unotation.Diagram;
 
-public class UmlActivityDiagramModelFactory extends DiagramFactory {
+public class UmlActivityDiagramModelFactory extends ActivityDiagramFactory {
 
    public UmlActivityDiagramModelFactory(final UmlModelState modelState) {
       super(modelState);

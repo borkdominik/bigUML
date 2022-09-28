@@ -8,22 +8,20 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.gmodel;
+package com.eclipsesource.uml.glsp.uml.object_diagram.gmodel;
 
 import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
-import org.eclipse.uml2.uml.ExtensionPoint;
 import org.eclipse.uml2.uml.NamedElement;
 import org.eclipse.uml2.uml.Property;
-import org.eclipse.uml2.uml.UseCase;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
 import com.eclipsesource.uml.glsp.util.UmlLabelUtil;
 
-public class LabelFactory extends AbstractGModelFactory<NamedElement, GLabel> {
+public class ObjectDiagramLabelFactory extends ObjectAbstractGModelFactory<NamedElement, GLabel> {
 
-   public LabelFactory(final UmlModelState modelState) {
+   public ObjectDiagramLabelFactory(final UmlModelState modelState) {
       super(modelState);
    }
 
@@ -45,31 +43,4 @@ public class LabelFactory extends AbstractGModelFactory<NamedElement, GLabel> {
          .text(label)
          .build();
    }
-
-   public GLabel createAttributeLabel(final Property attribute) {
-      return new GLabelBuilder(Types.ATTRIBUTE)
-         .id(toId(attribute))
-         .text("NewAttribute" + UmlLabelUtil.getMultiplicity(attribute))
-         .build();
-   }
-
-   public GLabel createUseCaseExtensionPointsHeading(final UseCase useCase) {
-      String label = "extension points";
-
-      return new GLabelBuilder(Types.LABEL_TEXT)
-         .id(toId(useCase) + "_epheading")
-         .text(label)
-         .addCssClass("bold")
-         .build();
-   }
-
-   public GLabel createUseCaseExtensionPointsLabel(final ExtensionPoint extensionPoint) {
-      String label = extensionPoint.getName();
-
-      return new GLabelBuilder(Types.EXTENSIONPOINT)
-         .id(toId(extensionPoint))
-         .text(label)
-         .build();
-   }
-
 }

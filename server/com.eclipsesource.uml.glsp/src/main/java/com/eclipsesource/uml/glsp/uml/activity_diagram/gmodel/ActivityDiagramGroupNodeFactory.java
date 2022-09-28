@@ -10,12 +10,13 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.activity_diagram.gmodel;
 
-import com.eclipsesource.uml.glsp.gmodel.AbstractGModelFactory;
-import com.eclipsesource.uml.glsp.gmodel.DiagramFactory;
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.util.UmlConfig.CSS;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
-import com.eclipsesource.uml.modelserver.unotation.Shape;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.graph.GCompartment;
 import org.eclipse.glsp.graph.GModelElement;
@@ -26,22 +27,36 @@ import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.builder.impl.GNodeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.glsp.graph.util.GraphUtil;
-import org.eclipse.uml2.uml.*;
+import org.eclipse.uml2.uml.AcceptEventAction;
+import org.eclipse.uml2.uml.ActivityGroup;
+import org.eclipse.uml2.uml.ActivityPartition;
+import org.eclipse.uml2.uml.CallBehaviorAction;
+import org.eclipse.uml2.uml.DecisionNode;
+import org.eclipse.uml2.uml.FinalNode;
+import org.eclipse.uml2.uml.FlowFinalNode;
+import org.eclipse.uml2.uml.ForkNode;
+import org.eclipse.uml2.uml.InitialNode;
+import org.eclipse.uml2.uml.InterruptibleActivityRegion;
+import org.eclipse.uml2.uml.NamedElement;
+import org.eclipse.uml2.uml.OpaqueAction;
+import org.eclipse.uml2.uml.SendSignalAction;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import com.eclipsesource.uml.glsp.model.UmlModelState;
+import com.eclipsesource.uml.glsp.util.UmlConfig.CSS;
+import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.eclipsesource.uml.modelserver.unotation.Shape;
 
-public class ActivityDiagramGroupNodeFactory extends AbstractGModelFactory<ActivityGroup, GNode> {
+public class ActivityDiagramGroupNodeFactory extends ActivityAbstractGModelFactory<ActivityGroup, GNode> {
 
-   private final DiagramFactory parentFactory;
+   private final ActivityDiagramFactory parentFactory;
    private final ActivityDiagramChildNodeFactory activityDiagramChildNodeFactory;
 
    private static final String V_GRAB = "vGrab";
    private static final String H_GRAB = "hGrab";
    private static final String H_ALIGN = "hAlign";
 
-   public ActivityDiagramGroupNodeFactory(final UmlModelState modelState, final DiagramFactory parentFactory,
-                                          final ActivityDiagramChildNodeFactory activityDiagramChildNodeFactory) {
+   public ActivityDiagramGroupNodeFactory(final UmlModelState modelState, final ActivityDiagramFactory parentFactory,
+      final ActivityDiagramChildNodeFactory activityDiagramChildNodeFactory) {
       super(modelState);
       this.parentFactory = parentFactory;
       this.activityDiagramChildNodeFactory = activityDiagramChildNodeFactory;
@@ -64,12 +79,12 @@ public class ActivityDiagramGroupNodeFactory extends AbstractGModelFactory<Activ
       layoutOptions.put(V_GRAB, false);
 
       GNodeBuilder b = new GNodeBuilder(Types.PARTITION) //
-            .id(toId(partition)) //
-            .layout(GConstants.Layout.VBOX) //
-            .layoutOptions(layoutOptions)
-            .addCssClass(CSS.NODE) //
-            .addCssClass(CSS.PACKAGEABLE_NODE) //
-            .add(buildHeader(partition));
+         .id(toId(partition)) //
+         .layout(GConstants.Layout.VBOX) //
+         .layoutOptions(layoutOptions)
+         .addCssClass(CSS.NODE) //
+         .addCssClass(CSS.PACKAGEABLE_NODE) //
+         .add(buildHeader(partition));
 
       applyShapeData(partition, b);
 
@@ -78,75 +93,75 @@ public class ActivityDiagramGroupNodeFactory extends AbstractGModelFactory<Activ
       GCompartment structureCompartment = createStructureCompartment(partition);
 
       List<GModelElement> childPartitions = partition.getSubpartitions().stream()
-            .filter(Objects::nonNull)
-            .map(ActivityPartition.class::cast)
-            .map(this::createPartition)
-            .collect(Collectors.toList());
+         .filter(Objects::nonNull)
+         .map(ActivityPartition.class::cast)
+         .map(this::createPartition)
+         .collect(Collectors.toList());
       structureCompartment.getChildren().addAll(childPartitions);
 
       System.out.println("CHILD PARTITIONS " + structureCompartment.getChildren());
 
       List<GModelElement> childActions = partition.getNodes().stream()
-            .filter(OpaqueAction.class::isInstance)
-            .map(OpaqueAction.class::cast)
-            .map(activityDiagramChildNodeFactory::create)
-            .collect(Collectors.toList());
+         .filter(OpaqueAction.class::isInstance)
+         .map(OpaqueAction.class::cast)
+         .map(activityDiagramChildNodeFactory::create)
+         .collect(Collectors.toList());
       structureCompartment.getChildren().addAll(childActions);
 
       List<GModelElement> childCallActions = partition.getNodes().stream()
-            .filter(CallBehaviorAction.class::isInstance)
-            .map(CallBehaviorAction.class::cast)
-            .map(activityDiagramChildNodeFactory::create)
-            .collect(Collectors.toList());
+         .filter(CallBehaviorAction.class::isInstance)
+         .map(CallBehaviorAction.class::cast)
+         .map(activityDiagramChildNodeFactory::create)
+         .collect(Collectors.toList());
       structureCompartment.getChildren().addAll(childCallActions);
 
       List<GModelElement> childInitialNodes = partition.getNodes().stream()
-            .filter(InitialNode.class::isInstance)
-            .map(InitialNode.class::cast)
-            .map(activityDiagramChildNodeFactory::create)
-            .collect(Collectors.toList());
+         .filter(InitialNode.class::isInstance)
+         .map(InitialNode.class::cast)
+         .map(activityDiagramChildNodeFactory::create)
+         .collect(Collectors.toList());
       structureCompartment.getChildren().addAll(childInitialNodes);
 
       List<GModelElement> childFinalNodes = partition.getNodes().stream()
-            .filter(FinalNode.class::isInstance)
-            .map(FinalNode.class::cast)
-            .map(activityDiagramChildNodeFactory::create)
-            .collect(Collectors.toList());
+         .filter(FinalNode.class::isInstance)
+         .map(FinalNode.class::cast)
+         .map(activityDiagramChildNodeFactory::create)
+         .collect(Collectors.toList());
       structureCompartment.getChildren().addAll(childFinalNodes);
 
       List<GModelElement> childFlowFinalNodes = partition.getNodes().stream()
-            .filter(FlowFinalNode.class::isInstance)
-            .map(FlowFinalNode.class::cast)
-            .map(activityDiagramChildNodeFactory::create)
-            .collect(Collectors.toList());
+         .filter(FlowFinalNode.class::isInstance)
+         .map(FlowFinalNode.class::cast)
+         .map(activityDiagramChildNodeFactory::create)
+         .collect(Collectors.toList());
       structureCompartment.getChildren().addAll(childFlowFinalNodes);
 
       List<GModelElement> childDecisionMergeNodes = partition.getNodes().stream()
-            .filter(DecisionNode.class::isInstance)
-            .map(DecisionNode.class::cast)
-            .map(activityDiagramChildNodeFactory::create)
-            .collect(Collectors.toList());
+         .filter(DecisionNode.class::isInstance)
+         .map(DecisionNode.class::cast)
+         .map(activityDiagramChildNodeFactory::create)
+         .collect(Collectors.toList());
       structureCompartment.getChildren().addAll(childDecisionMergeNodes);
 
       List<GModelElement> childForkNodes = partition.getNodes().stream()
-            .filter(ForkNode.class::isInstance)
-            .map(ForkNode.class::cast)
-            .map(activityDiagramChildNodeFactory::create)
-            .collect(Collectors.toList());
+         .filter(ForkNode.class::isInstance)
+         .map(ForkNode.class::cast)
+         .map(activityDiagramChildNodeFactory::create)
+         .collect(Collectors.toList());
       structureCompartment.getChildren().addAll(childForkNodes);
 
       List<GModelElement> childEvents = partition.getNodes().stream()
-            .filter(AcceptEventAction.class::isInstance)
-            .map(AcceptEventAction.class::cast)
-            .map(activityDiagramChildNodeFactory::create)
-            .collect(Collectors.toList());
+         .filter(AcceptEventAction.class::isInstance)
+         .map(AcceptEventAction.class::cast)
+         .map(activityDiagramChildNodeFactory::create)
+         .collect(Collectors.toList());
       structureCompartment.getChildren().addAll(childEvents);
 
       List<GModelElement> childSendSignalActions = partition.getNodes().stream()
-            .filter(SendSignalAction.class::isInstance)
-            .map(SendSignalAction.class::cast)
-            .map(activityDiagramChildNodeFactory::create)
-            .collect(Collectors.toList());
+         .filter(SendSignalAction.class::isInstance)
+         .map(SendSignalAction.class::cast)
+         .map(activityDiagramChildNodeFactory::create)
+         .collect(Collectors.toList());
       structureCompartment.getChildren().addAll(childSendSignalActions);
 
       System.out.println("PARTITION CHILDREN " + structureCompartment.getChildren());
@@ -162,12 +177,12 @@ public class ActivityDiagramGroupNodeFactory extends AbstractGModelFactory<Activ
       layoutOptions.put(V_GRAB, false);
 
       GNodeBuilder b = new GNodeBuilder(Types.INTERRUPTIBLEREGION) //
-            .id(toId(region)) //
-            .layout(GConstants.Layout.VBOX) //
-            .layoutOptions(layoutOptions)
-            .addCssClass(CSS.NODE) //
-            .addCssClass(CSS.PACKAGEABLE_NODE); //
-      //.add(buildHeader(region));
+         .id(toId(region)) //
+         .layout(GConstants.Layout.VBOX) //
+         .layoutOptions(layoutOptions)
+         .addCssClass(CSS.NODE) //
+         .addCssClass(CSS.PACKAGEABLE_NODE); //
+      // .add(buildHeader(region));
 
       applyShapeData(region, b);
 
@@ -176,51 +191,51 @@ public class ActivityDiagramGroupNodeFactory extends AbstractGModelFactory<Activ
       GCompartment structureCompartment = createStructureCompartment(region);
 
       List<GModelElement> childEvents = region.getNodes().stream()
-            .filter(AcceptEventAction.class::isInstance)
-            .map(AcceptEventAction.class::cast)
-            .map(activityDiagramChildNodeFactory::createAction)
-            .collect(Collectors.toList());
+         .filter(AcceptEventAction.class::isInstance)
+         .map(AcceptEventAction.class::cast)
+         .map(activityDiagramChildNodeFactory::createAction)
+         .collect(Collectors.toList());
       structureCompartment.getChildren().addAll(childEvents);
 
       List<GModelElement> childFinalNodes = region.getNodes().stream()
-            .filter(FinalNode.class::isInstance)
-            .map(FinalNode.class::cast)
-            .map(activityDiagramChildNodeFactory::create)
-            .collect(Collectors.toList());
+         .filter(FinalNode.class::isInstance)
+         .map(FinalNode.class::cast)
+         .map(activityDiagramChildNodeFactory::create)
+         .collect(Collectors.toList());
       structureCompartment.getChildren().addAll(childFinalNodes);
 
       List<GModelElement> childFlowFinalNodes = region.getNodes().stream()
-            .filter(FlowFinalNode.class::isInstance)
-            .map(FlowFinalNode.class::cast)
-            .map(activityDiagramChildNodeFactory::create)
-            .collect(Collectors.toList());
+         .filter(FlowFinalNode.class::isInstance)
+         .map(FlowFinalNode.class::cast)
+         .map(activityDiagramChildNodeFactory::create)
+         .collect(Collectors.toList());
       structureCompartment.getChildren().addAll(childFlowFinalNodes);
 
       regionNode.getChildren().add(structureCompartment);
       return regionNode;
 
-      /*List<EObject> children = new ArrayList<>(region.getOwnedElements());
-      children.addAll(region.getNodes());
-
-      GNodeBuilder b = new GNodeBuilder(Types.INTERRUPTIBLEREGION) //
-            .id(toId(region)) //
-            .layout(GConstants.Layout.VBOX) //
-            .addCssClass(CSS.NODE)
-            .addCssClass(CSS.PACKAGEABLE_NODE) //
-            .add(createLabeledChildrenCompartment(children, region));
-
-      applyShapeData(region, b);
-      return b.build();*/
+      /*
+       * List<EObject> children = new ArrayList<>(region.getOwnedElements());
+       * children.addAll(region.getNodes());
+       * GNodeBuilder b = new GNodeBuilder(Types.INTERRUPTIBLEREGION) //
+       * .id(toId(region)) //
+       * .layout(GConstants.Layout.VBOX) //
+       * .addCssClass(CSS.NODE)
+       * .addCssClass(CSS.PACKAGEABLE_NODE) //
+       * .add(createLabeledChildrenCompartment(children, region));
+       * applyShapeData(region, b);
+       * return b.build();
+       */
    }
 
    protected GCompartment buildHeader(final ActivityGroup activityGroup) {
       return new GCompartmentBuilder(Types.COMPARTMENT_HEADER) //
-            .layout("hbox") //
-            .id(toId(activityGroup) + "_header") //
-            .add(new GLabelBuilder(Types.LABEL_NAME) //
-                  .id(toId(activityGroup) + "_header_label").text(activityGroup.getName()) //
-                  .build()) //
-            .build();
+         .layout("hbox") //
+         .id(toId(activityGroup) + "_header") //
+         .add(new GLabelBuilder(Types.LABEL_NAME) //
+            .id(toId(activityGroup) + "_header_label").text(activityGroup.getName()) //
+            .build()) //
+         .build();
    }
 
    protected void applyShapeData(final ActivityGroup activityGroup, final GNodeBuilder builder) {
@@ -235,16 +250,16 @@ public class ActivityDiagramGroupNodeFactory extends AbstractGModelFactory<Activ
    }
 
    protected GCompartment createLabeledChildrenCompartment(final Collection<? extends EObject> children,
-                                                           final ActivityGroup parent) {
+      final ActivityGroup parent) {
       return new GCompartmentBuilder(Types.COMP) //
-            .id(toId(parent) + "_childCompartment").layout(GConstants.Layout.VBOX) //
-            .layoutOptions(new GLayoutOptions() //
-                  .hAlign(GConstants.HAlign.LEFT) //
-                  .resizeContainer(true)) //
-            .addAll(children.stream() //
-                  .map(parentFactory::create)
-                  .collect(Collectors.toList()))
-            .build();
+         .id(toId(parent) + "_childCompartment").layout(GConstants.Layout.VBOX) //
+         .layoutOptions(new GLayoutOptions() //
+            .hAlign(GConstants.HAlign.LEFT) //
+            .resizeContainer(true)) //
+         .addAll(children.stream() //
+            .map(parentFactory::create)
+            .collect(Collectors.toList()))
+         .build();
    }
 
    private GCompartment createStructureCompartment(final NamedElement namedElement) {
@@ -253,11 +268,11 @@ public class ActivityDiagramGroupNodeFactory extends AbstractGModelFactory<Activ
       layoutOptions.put(H_GRAB, true);
       layoutOptions.put(V_GRAB, true);
       GCompartment structCompartment = new GCompartmentBuilder(Types.STRUCTURE)
-            .id(toId(namedElement) + "_struct")
-            .layout(GConstants.Layout.FREEFORM)
-            .layoutOptions(layoutOptions)
-            .addCssClass("struct")
-            .build();
+         .id(toId(namedElement) + "_struct")
+         .layout(GConstants.Layout.FREEFORM)
+         .layoutOptions(layoutOptions)
+         .addCssClass("struct")
+         .build();
       return structCompartment;
    }
 }

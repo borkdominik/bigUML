@@ -17,7 +17,6 @@ import org.eclipse.uml2.uml.Transition;
 import org.eclipse.uml2.uml.Trigger;
 import org.eclipse.uml2.uml.Vertex;
 
-import com.eclipsesource.uml.glsp.gmodel.AbstractGModelFactory;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.uml.statemachine_diagram.StateMachineIdUtil;
 import com.eclipsesource.uml.glsp.util.UmlConfig.CSS;
@@ -25,7 +24,7 @@ import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
 import com.eclipsesource.uml.glsp.util.UmlIDUtil;
 import com.eclipsesource.uml.modelserver.unotation.Edge;
 
-public class StateMachineDiagramEdgeFactory extends AbstractGModelFactory<Transition, GEdge> {
+public class StateMachineDiagramEdgeFactory extends StateMachineAbstractGModelFactory<Transition, GEdge> {
 
    public StateMachineDiagramEdgeFactory(final UmlModelState modelState) {
       super(modelState);

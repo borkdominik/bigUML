@@ -10,18 +10,24 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.usecase_diagram.gmodel;
 
-import com.eclipsesource.uml.glsp.gmodel.DiagramFactory;
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.modelserver.unotation.Diagram;
+import java.util.stream.Collectors;
+
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.graph.GGraph;
 import org.eclipse.glsp.graph.GModelElement;
+import org.eclipse.uml2.uml.Actor;
 import org.eclipse.uml2.uml.Class;
+import org.eclipse.uml2.uml.Comment;
+import org.eclipse.uml2.uml.Component;
+import org.eclipse.uml2.uml.Model;
+import org.eclipse.uml2.uml.NamedElement;
 import org.eclipse.uml2.uml.Package;
-import org.eclipse.uml2.uml.*;
+import org.eclipse.uml2.uml.Relationship;
+import org.eclipse.uml2.uml.UseCase;
 
-import java.util.stream.Collectors;
+import com.eclipsesource.uml.glsp.model.UmlModelState;
+import com.eclipsesource.uml.modelserver.unotation.Diagram;
 
 /**
  * The UmlUseCaseDiagramModelFactory maps all elements that are contained DIRECTLY in the Model.
@@ -30,7 +36,7 @@ import java.util.stream.Collectors;
  * The only exception to that are Relationships, which are deliberately all rendered directly by this class to keep the
  * classifierNodeFactory leaner.
  */
-public class UmlUseCaseDiagramModelFactory extends DiagramFactory {
+public class UmlUseCaseDiagramModelFactory extends UseCaseDiagramFactory {
 
    public UmlUseCaseDiagramModelFactory(final UmlModelState modelState) {
       super(modelState);
@@ -56,9 +62,11 @@ public class UmlUseCaseDiagramModelFactory extends DiagramFactory {
          result = useCaseNodeFactory.create((Class) semanticElement);
       } else if (semanticElement instanceof Relationship) {
          result = useCaseEdgeFactory.create((Relationship) semanticElement);
-      }/* else if (semanticElement instanceof Comment) {
-         result = classifierNodeFactory.createComment((Comment) semanticElement);
-      }*/ else if (semanticElement instanceof NamedElement) {
+      } /*
+         * else if (semanticElement instanceof Comment) {
+         * result = classifierNodeFactory.createComment((Comment) semanticElement);
+         * }
+         */ else if (semanticElement instanceof NamedElement) {
          result = labelFactory.create((NamedElement) semanticElement);
       }
       if (result == null) {

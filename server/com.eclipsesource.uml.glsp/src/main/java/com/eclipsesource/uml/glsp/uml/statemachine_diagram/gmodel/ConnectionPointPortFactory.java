@@ -10,18 +10,18 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.statemachine_diagram.gmodel;
 
-import com.eclipsesource.uml.glsp.gmodel.AbstractGModelFactory;
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.util.UmlConfig.CSS;
-import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
-import com.eclipsesource.uml.modelserver.unotation.Shape;
 import org.eclipse.glsp.graph.GPort;
 import org.eclipse.glsp.graph.builder.impl.GPortBuilder;
 import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.uml2.uml.Pseudostate;
 import org.eclipse.uml2.uml.PseudostateKind;
 
-public class ConnectionPointPortFactory extends AbstractGModelFactory<Pseudostate, GPort> {
+import com.eclipsesource.uml.glsp.model.UmlModelState;
+import com.eclipsesource.uml.glsp.util.UmlConfig.CSS;
+import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.eclipsesource.uml.modelserver.unotation.Shape;
+
+public class ConnectionPointPortFactory extends StateMachineAbstractGModelFactory<Pseudostate, GPort> {
 
    public ConnectionPointPortFactory(final UmlModelState modelState) {
       super(modelState);

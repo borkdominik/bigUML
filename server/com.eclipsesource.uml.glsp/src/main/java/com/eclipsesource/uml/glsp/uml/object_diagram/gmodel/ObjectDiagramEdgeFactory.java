@@ -1,9 +1,7 @@
 package com.eclipsesource.uml.glsp.uml.object_diagram.gmodel;
 
-import com.eclipsesource.uml.glsp.gmodel.AbstractGModelFactory;
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.util.UmlConfig.*;
-import com.eclipsesource.uml.modelserver.unotation.Edge;
+import java.util.ArrayList;
+
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.glsp.graph.GEdge;
 import org.eclipse.glsp.graph.GPoint;
@@ -14,42 +12,45 @@ import org.eclipse.uml2.uml.Association;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Relationship;
 
-import java.util.ArrayList;
+import com.eclipsesource.uml.glsp.model.UmlModelState;
+import com.eclipsesource.uml.glsp.util.UmlConfig.CSS;
+import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
+import com.eclipsesource.uml.modelserver.unotation.Edge;
 
-public class ObjectDiagramEdgeFactory extends AbstractGModelFactory<Relationship, GEdge> {
+public class ObjectDiagramEdgeFactory extends ObjectAbstractGModelFactory<Relationship, GEdge> {
 
-    public ObjectDiagramEdgeFactory(final UmlModelState modelState) {
-        super(modelState);
-    }
+   public ObjectDiagramEdgeFactory(final UmlModelState modelState) {
+      super(modelState);
+   }
 
-    @Override
-    public GEdge create(final Relationship element) {
-        if (element instanceof Association) {
-            return createLinkEdge((Association) element);
-        }
-        return null;
-    }
+   @Override
+   public GEdge create(final Relationship element) {
+      if (element instanceof Association) {
+         return createLinkEdge((Association) element);
+      }
+      return null;
+   }
 
-    protected GEdge createLinkEdge(final Association link) {
+   protected GEdge createLinkEdge(final Association link) {
 
-        EList<Property> memberEnds = link.getMemberEnds();
-        Property source = memberEnds.get(0);
-        Property target = memberEnds.get(1);
+      EList<Property> memberEnds = link.getMemberEnds();
+      Property source = memberEnds.get(0);
+      Property target = memberEnds.get(1);
 
-        GEdgeBuilder builder = new GEdgeBuilder(Types.LINK)
-                .id(toId(link))
-                .addCssClass(CSS.EDGE)
-                .sourceId(toId(source.getType()))
-                .targetId(toId(target.getType()))
-                .routerKind(GConstants.RouterKind.MANHATTAN);
+      GEdgeBuilder builder = new GEdgeBuilder(Types.LINK)
+         .id(toId(link))
+         .addCssClass(CSS.EDGE)
+         .sourceId(toId(source.getType()))
+         .targetId(toId(target.getType()))
+         .routerKind(GConstants.RouterKind.MANHATTAN);
 
-        modelState.getIndex().getNotation(link, Edge.class).ifPresent(edge -> {
-            if (edge.getBendPoints() != null) {
-                ArrayList<GPoint> bendPoints = new ArrayList<>();
-                edge.getBendPoints().forEach(p -> bendPoints.add(GraphUtil.copy(p)));
-                builder.addRoutingPoints(bendPoints);
-            }
-        });
-        return builder.build();
-    }
+      modelState.getIndex().getNotation(link, Edge.class).ifPresent(edge -> {
+         if (edge.getBendPoints() != null) {
+            ArrayList<GPoint> bendPoints = new ArrayList<>();
+            edge.getBendPoints().forEach(p -> bendPoints.add(GraphUtil.copy(p)));
+            builder.addRoutingPoints(bendPoints);
+         }
+      });
+      return builder.build();
+   }
 }

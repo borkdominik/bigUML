@@ -31,15 +31,13 @@ import org.eclipse.uml2.uml.Enumeration;
 import org.eclipse.uml2.uml.Interface;
 import org.eclipse.uml2.uml.Property;
 
-import com.eclipsesource.uml.glsp.gmodel.AbstractGModelFactory;
-import com.eclipsesource.uml.glsp.gmodel.CompartmentLabelFactory;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.util.UmlConfig.CSS;
 import com.eclipsesource.uml.glsp.util.UmlConfig.Types;
 import com.eclipsesource.uml.glsp.util.UmlIDUtil;
 import com.eclipsesource.uml.modelserver.unotation.Shape;
 
-public class ClassDiagramNodeFactory extends AbstractGModelFactory<Classifier, GNode> {
+public class ClassDiagramNodeFactory extends ClassAbstractGModelFactory<Classifier, GNode> {
 
    // private final LabelFactory labelFactory;
    private final CompartmentLabelFactory compartmentLabelFactory;

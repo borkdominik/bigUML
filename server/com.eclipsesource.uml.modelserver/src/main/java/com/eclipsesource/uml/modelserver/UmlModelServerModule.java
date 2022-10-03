@@ -11,15 +11,14 @@
 package com.eclipsesource.uml.modelserver;
 
 import org.eclipse.emfcloud.modelserver.common.Routing;
-import org.eclipse.emfcloud.modelserver.common.codecs.Codec;
 import org.eclipse.emfcloud.modelserver.common.utils.MapBinding;
 import org.eclipse.emfcloud.modelserver.common.utils.MultiBinding;
 import org.eclipse.emfcloud.modelserver.edit.CommandContribution;
 import org.eclipse.emfcloud.modelserver.emf.common.ModelResourceManager;
 import org.eclipse.emfcloud.modelserver.emf.common.ResourceSetFactory;
+import org.eclipse.emfcloud.modelserver.emf.common.codecs.CodecProvider;
 import org.eclipse.emfcloud.modelserver.emf.configuration.EPackageConfiguration;
 import org.eclipse.emfcloud.modelserver.emf.di.DefaultModelServerModule;
-import org.eclipse.uml2.uml.resource.UMLResource;
 
 import com.eclipsesource.uml.modelserver.commands.activitydiagram.action.AddActionCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.activitydiagram.action.SetBehaviorCommandContribution;
@@ -378,9 +377,9 @@ public class UmlModelServerModule extends DefaultModelServerModule {
    }
 
    @Override
-   protected void configureCodecs(final MapBinding<String, Codec> binding) {
+   protected void configureCodecs(final MultiBinding<CodecProvider> binding) {
       super.configureCodecs(binding);
-      binding.put(UMLResource.FILE_EXTENSION, UmlCodec.class);
+      binding.add(UmlCodecProvider.class);
    }
 
    @Override

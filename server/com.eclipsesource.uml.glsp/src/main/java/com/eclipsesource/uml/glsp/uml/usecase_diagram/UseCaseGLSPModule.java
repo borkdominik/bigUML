@@ -10,16 +10,11 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.usecase_diagram;
 
-import org.eclipse.glsp.server.di.MultiBinding;
-import org.eclipse.glsp.server.operations.OperationHandler;
-
-import com.eclipsesource.uml.glsp.uml.usecase_diagram.operations.CreateUseCaseDiagramEdgeOperationHandler;
-import com.eclipsesource.uml.glsp.uml.usecase_diagram.operations.CreateUseCaseDiagramNodeOperationHandler;
-
 public class UseCaseGLSPModule {
-
+   /*-
    protected void configureOperationHandlers(final MultiBinding<OperationHandler> bindings) {
       bindings.add(CreateUseCaseDiagramNodeOperationHandler.class);
       bindings.add(CreateUseCaseDiagramEdgeOperationHandler.class);
    }
+   */
 }

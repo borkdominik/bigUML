@@ -19,7 +19,7 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.glsp.graph.GPoint;
 
 import com.eclipsesource.uml.modelserver.unotation.SemanticProxy;
-import com.eclipsesource.uml.modelserver.unotation.Shape;
+import org.eclipse.glsp.server.emf.model.notation.Shape;
 import com.eclipsesource.uml.modelserver.unotation.UnotationFactory;
 
 public class AddGenericShapeCommand extends UmlNotationElementCommand {

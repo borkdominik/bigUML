@@ -8,7 +8,7 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Deployment;
 
 import com.eclipsesource.uml.modelserver.commands.util.UmlNotationCommandUtil;
-import com.eclipsesource.uml.modelserver.unotation.Edge;
+import org.eclipse.glsp.server.emf.model.notation.Edge;
 import com.eclipsesource.uml.modelserver.unotation.SemanticProxy;
 import com.eclipsesource.uml.modelserver.unotation.UnotationFactory;
 
@@ -24,13 +24,13 @@ public class AddDeploymentEdgeCommand extends UmlNotationElementCommand {
     }
 
     public AddDeploymentEdgeCommand(final EditingDomain domain, final URI modelUri,
-                                    final String semanticProxyUri) {
+        final String semanticProxyUri) {
         this(domain, modelUri);
         this.semanticProxyUri = semanticProxyUri;
     }
 
     public AddDeploymentEdgeCommand(final EditingDomain domain, final URI modelUri,
-                                    final Supplier<Deployment> deploymentSupplier) {
+        final Supplier<Deployment> deploymentSupplier) {
         this(domain, modelUri);
         this.deploymentSupplier = deploymentSupplier;
     }

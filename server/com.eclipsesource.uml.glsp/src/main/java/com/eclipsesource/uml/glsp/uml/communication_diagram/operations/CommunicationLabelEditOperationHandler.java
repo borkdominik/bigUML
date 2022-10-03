@@ -20,12 +20,11 @@ import org.eclipse.uml2.uml.Interaction;
 import org.eclipse.uml2.uml.Lifeline;
 import org.eclipse.uml2.uml.Message;
 
-import com.eclipsesource.uml.glsp.model.UmlModelIndex;
+import com.eclipsesource.uml.glsp.model.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.operations.DiagramEditLabelOperationHandler;
-import com.eclipsesource.uml.glsp.utils.UmlIDUtil;
 import com.eclipsesource.uml.glsp.utils.UmlConfig.Types;
+import com.eclipsesource.uml.glsp.utils.UmlIDUtil;
 import com.eclipsesource.uml.modelserver.commands.communication.interaction.SetInteractionNameCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.communication.lifeline.SetLifelineNameCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.communication.message.SetMessageNameCommandContribution;
@@ -37,14 +36,17 @@ public class CommunicationLabelEditOperationHandler implements DiagramEditLabelO
    @Inject
    protected UmlModelState modelState;
 
+   @Inject
+   private UmlModelServerAccess modelServerAccess;
+
    @Override
    public boolean supports(final Representation representation) {
       return representation == Representation.COMMUNICATION;
    }
 
    @Override
-   public void edit(final ApplyLabelEditOperation editLabelOperation, final UmlModelServerAccess modelAccess) {
-      UmlModelIndex modelIndex = modelState.getIndex();
+   public void edit(final ApplyLabelEditOperation editLabelOperation) {
+      var modelIndex = modelState.getIndex();
 
       String inputText = editLabelOperation.getText().trim();
       String graphicalElementId = editLabelOperation.getLabelId();
@@ -56,24 +58,24 @@ public class CommunicationLabelEditOperationHandler implements DiagramEditLabelO
 
          case Types.LABEL_NAME:
             String containerElementId = UmlIDUtil.getElementIdFromHeaderLabel(graphicalElementId);
-            Element semanticElement = getOrThrow(modelIndex.getSemantic(containerElementId),
+            Element semanticElement = getOrThrow(modelIndex.getEObject(containerElementId),
                Element.class, "No valid container with id " + graphicalElementId + " found");
 
             if (semanticElement instanceof Lifeline) {
-               modelAccess
+               modelServerAccess
                   .exec(SetLifelineNameCommandContribution.create(
                      (Lifeline) semanticElement,
                      inputText))
                   .thenAccept(response -> {
-                     if (!response.body()) {
+                     if (response.body() == null || response.body().isEmpty()) {
                         throw new GLSPServerException("Could not rename Lifeline to: " + inputText);
                      }
                   });
             } else if (semanticElement instanceof Interaction) {
-               modelAccess
+               modelServerAccess
                   .exec(SetInteractionNameCommandContribution.create((Interaction) semanticElement, inputText))
                   .thenAccept(response -> {
-                     if (!response.body()) {
+                     if (response.body() == null || response.body().isEmpty()) {
                         throw new GLSPServerException("Could not rename Interaction to: " + inputText);
                      }
                   });
@@ -81,13 +83,13 @@ public class CommunicationLabelEditOperationHandler implements DiagramEditLabelO
             break;
          case Types.LABEL_EDGE_NAME:
             containerElementId = UmlIDUtil.getElementIdFromLabelName(graphicalElementId);
-            semanticElement = getOrThrow(modelIndex.getSemantic(containerElementId),
+            semanticElement = getOrThrow(modelIndex.getEObject(containerElementId),
                Element.class, "No valid container with id " + graphicalElementId + " found");
 
             if (semanticElement instanceof Message) {
-               modelAccess.exec(SetMessageNameCommandContribution.create((Message) semanticElement, inputText))
+               modelServerAccess.exec(SetMessageNameCommandContribution.create((Message) semanticElement, inputText))
                   .thenAccept(response -> {
-                     if (!response.body()) {
+                     if (response.body() == null || response.body().isEmpty()) {
                         throw new GLSPServerException("Could not change Message Name to: " + inputText);
                      }
                   });

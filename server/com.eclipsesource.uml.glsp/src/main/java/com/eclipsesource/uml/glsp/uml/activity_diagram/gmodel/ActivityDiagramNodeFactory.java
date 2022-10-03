@@ -43,7 +43,7 @@ import com.eclipsesource.uml.glsp.uml.activity_diagram.constants.ActivityTypes;
 import com.eclipsesource.uml.glsp.utils.UmlConfig.CSS;
 import com.eclipsesource.uml.glsp.utils.UmlConfig.Types;
 import com.eclipsesource.uml.glsp.utils.UmlIDUtil;
-import com.eclipsesource.uml.modelserver.unotation.Shape;
+import org.eclipse.glsp.server.emf.model.notation.Shape;
 
 public class ActivityDiagramNodeFactory extends ActivityAbstractGModelFactory<Classifier, GNode> {
 

@@ -15,7 +15,7 @@ import org.eclipse.uml2.uml.Relationship;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.uml.object_diagram.constants.ObjectTypes;
 import com.eclipsesource.uml.glsp.utils.UmlConfig.CSS;
-import com.eclipsesource.uml.modelserver.unotation.Edge;
+import org.eclipse.glsp.server.emf.model.notation.Edge;
 
 public class ObjectDiagramEdgeFactory extends ObjectAbstractGModelFactory<Relationship, GEdge> {
 

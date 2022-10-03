@@ -1,24 +1,6 @@
 package com.eclipsesource.uml.glsp.uml.usecase_diagram;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-
-import org.eclipse.glsp.graph.GPoint;
-import org.eclipse.glsp.server.features.contextmenu.ContextMenuItemProvider;
-import org.eclipse.glsp.server.features.contextmenu.MenuItem;
-import org.eclipse.glsp.server.model.GModelState;
-import org.eclipse.glsp.server.operations.CreateEdgeOperation;
-import org.eclipse.glsp.server.operations.CreateNodeOperation;
-
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.uml.usecase_diagram.constants.UseCaseTypes;
-import com.eclipsesource.uml.modelserver.unotation.Representation;
-import com.google.common.collect.Lists;
-import com.google.inject.Inject;
-
-public class UseCaseContextMenuItemProvider implements ContextMenuItemProvider {
+public class UseCaseContextMenuItemProvider { /*-
 
    @Inject
    protected GModelState modelState;
@@ -75,5 +57,5 @@ public class UseCaseContextMenuItemProvider implements ContextMenuItemProvider {
          Arrays.asList(createGeneralization, createAssociation, createExtend, createInclude), "useCaseDiagramEdges");
       return Lists.newArrayList(useCaseDiagramEdges);
    }
-
+   */
 }

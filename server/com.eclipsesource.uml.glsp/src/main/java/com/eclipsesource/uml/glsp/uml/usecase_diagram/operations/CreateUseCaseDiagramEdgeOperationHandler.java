@@ -10,27 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.usecase_diagram.operations;
 
-import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
-
-import java.util.List;
-
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSBasicCreateOperationHandler;
-import org.eclipse.glsp.server.operations.CreateEdgeOperation;
-import org.eclipse.glsp.server.operations.Operation;
-import org.eclipse.glsp.server.types.GLSPServerException;
-import org.eclipse.uml2.uml.Classifier;
-import org.eclipse.uml2.uml.ExtensionPoint;
-import org.eclipse.uml2.uml.UseCase;
-
-import com.eclipsesource.uml.glsp.model.UmlModelIndex;
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.uml.usecase_diagram.UseCaseModelServerAccess;
-import com.eclipsesource.uml.glsp.uml.usecase_diagram.constants.UseCaseTypes;
-import com.google.common.collect.Lists;
-
-public class CreateUseCaseDiagramEdgeOperationHandler
-   extends EMSBasicCreateOperationHandler<CreateEdgeOperation, UseCaseModelServerAccess> {
+public class CreateUseCaseDiagramEdgeOperationHandler { /*-
 
    public CreateUseCaseDiagramEdgeOperationHandler() {
       super(handledElementTypeIds);
@@ -39,7 +19,7 @@ public class CreateUseCaseDiagramEdgeOperationHandler
    /**
     * The Types specified in this list will be processed by this file.
     * If a type is not mentioned here, the request for that type will not be redirected here.
-    */
+    *
    private static List<String> handledElementTypeIds = Lists.newArrayList(UseCaseTypes.USECASE_ASSOCIATION,
       UseCaseTypes.EXTEND,
       UseCaseTypes.INCLUDE, UseCaseTypes.GENERALIZATION);
@@ -74,11 +54,11 @@ public class CreateUseCaseDiagramEdgeOperationHandler
        * target = m.group(1);
        * }
        * }
-       */
+       *
 
-      EObject sourceClassifier = getOrThrow(modelIndex.getSemantic(operation.getSourceElementId()),
+      EObject sourceClassifier = getOrThrow(modelIndex.getEObject(operation.getSourceElementId()),
          "No semantic Element found for source element with id " + operation.getSourceElementId());
-      EObject targetClassifier = getOrThrow(modelIndex.getSemantic(target),
+      EObject targetClassifier = getOrThrow(modelIndex.getEObject(target),
          "No semantic Element found for target element with id " + operation.getTargetElementId());
 
       switch (elementTypeId) {
@@ -86,14 +66,14 @@ public class CreateUseCaseDiagramEdgeOperationHandler
             if (targetClassifier instanceof ExtensionPoint) {
                modelAccess.addExtend(modelState, (UseCase) sourceClassifier, (ExtensionPoint) targetClassifier)
                   .thenAccept(response -> {
-                     if (!response.body()) {
+                     if (response.body() == null || response.body().isEmpty()) {
                         throw new GLSPServerException("Could not execute create operation on new UCD Extend edge");
                      }
                   });
             } else {
                modelAccess.addExtend(modelState, (UseCase) sourceClassifier, (UseCase) targetClassifier)
                   .thenAccept(response -> {
-                     if (!response.body()) {
+                     if (response.body() == null || response.body().isEmpty()) {
                         throw new GLSPServerException("Could not execute create operation on new UCD Extend edge");
                      }
                   });
@@ -102,7 +82,7 @@ public class CreateUseCaseDiagramEdgeOperationHandler
          case UseCaseTypes.INCLUDE:
             modelAccess.addInclude(modelState, (UseCase) sourceClassifier, (UseCase) targetClassifier)
                .thenAccept(response -> {
-                  if (!response.body()) {
+                  if (response.body() == null || response.body().isEmpty()) {
                      throw new GLSPServerException("Could not execute create operation on new UCD Include edge");
                   }
                });
@@ -110,7 +90,7 @@ public class CreateUseCaseDiagramEdgeOperationHandler
          case UseCaseTypes.GENERALIZATION:
             modelAccess.addGeneralization(modelState, (Classifier) targetClassifier, (Classifier) sourceClassifier)
                .thenAccept(response -> {
-                  if (!response.body()) {
+                  if (response.body() == null || response.body().isEmpty()) {
                      throw new GLSPServerException("Could not execute create operation on new UCD Generalization edge");
                   }
                });
@@ -118,7 +98,7 @@ public class CreateUseCaseDiagramEdgeOperationHandler
          case UseCaseTypes.USECASE_ASSOCIATION:
             modelAccess.addUseCaseAssociation(modelState, (Classifier) targetClassifier, (Classifier) sourceClassifier)
                .thenAccept(response -> {
-                  if (!response.body()) {
+                  if (response.body() == null || response.body().isEmpty()) {
                      throw new GLSPServerException("Could not execute create operation on new Association edge");
                   }
                });
@@ -128,5 +108,5 @@ public class CreateUseCaseDiagramEdgeOperationHandler
 
    @Override
    public String getLabel() { return "Create uml edge"; }
-
+   */
 }

@@ -1,21 +1,6 @@
 package com.eclipsesource.uml.glsp.uml.statemachine_diagram.operations;
 
-import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
-
-import java.util.List;
-
-import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSBasicCreateOperationHandler;
-import org.eclipse.glsp.server.operations.CreateNodeOperation;
-import org.eclipse.glsp.server.operations.Operation;
-import org.eclipse.glsp.server.types.GLSPServerException;
-import org.eclipse.uml2.uml.State;
-
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.uml.statemachine_diagram.StateMachineModelServerAccess;
-import com.eclipsesource.uml.glsp.uml.statemachine_diagram.constants.StateMachineTypes;
-
-public class CreateStateMachineDiagramStateChildNodeOperationHandler
-   extends EMSBasicCreateOperationHandler<CreateNodeOperation, StateMachineModelServerAccess> {
+public class CreateStateMachineDiagramStateChildNodeOperationHandler { /*-
 
    public CreateStateMachineDiagramStateChildNodeOperationHandler() {
       super(handledElementTypeIds);
@@ -44,7 +29,7 @@ public class CreateStateMachineDiagramStateChildNodeOperationHandler
       String containerId = operation.getContainerId();
       String elementTypeId = operation.getElementTypeId();
 
-      State container = getOrThrow(modelState.getIndex().getSemantic(containerId), State.class,
+      State container = getOrThrow(modelState.getIndex().getEObject(containerId), State.class,
          "No valid state container with id " + operation.getContainerId() + " found");
 
       switch (elementTypeId) {
@@ -52,7 +37,7 @@ public class CreateStateMachineDiagramStateChildNodeOperationHandler
             modelAccess
                .addBehaviorToState(modelState, container, StateMachineTypes.STATE_ENTRY_ACTIVITY)
                .thenAccept(response -> {
-                  if (!response.body()) {
+                  if (response.body() == null || response.body().isEmpty()) {
                      throw new GLSPServerException("Could not execute create state entry activity");
                   }
                });
@@ -61,7 +46,7 @@ public class CreateStateMachineDiagramStateChildNodeOperationHandler
             modelAccess
                .addBehaviorToState(modelState, container, StateMachineTypes.STATE_DO_ACTIVITY)
                .thenAccept(response -> {
-                  if (!response.body()) {
+                  if (response.body() == null || response.body().isEmpty()) {
                      throw new GLSPServerException("Could not execute create state do activity");
                   }
                });
@@ -70,7 +55,7 @@ public class CreateStateMachineDiagramStateChildNodeOperationHandler
             modelAccess
                .addBehaviorToState(modelState, container, StateMachineTypes.STATE_EXIT_ACTIVITY)
                .thenAccept(response -> {
-                  if (!response.body()) {
+                  if (response.body() == null || response.body().isEmpty()) {
                      throw new GLSPServerException("Could not execute create state exit activity");
                   }
                });
@@ -80,4 +65,5 @@ public class CreateStateMachineDiagramStateChildNodeOperationHandler
 
    @Override
    public String getLabel() { return "Create state child node"; }
+   */
 }

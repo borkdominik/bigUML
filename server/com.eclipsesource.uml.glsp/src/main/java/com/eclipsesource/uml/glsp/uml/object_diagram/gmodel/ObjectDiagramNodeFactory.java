@@ -25,7 +25,7 @@ import com.eclipsesource.uml.glsp.uml.object_diagram.constants.ObjectTypes;
 import com.eclipsesource.uml.glsp.utils.UmlConfig;
 import com.eclipsesource.uml.glsp.utils.UmlConfig.CSS;
 import com.eclipsesource.uml.glsp.utils.UmlIDUtil;
-import com.eclipsesource.uml.modelserver.unotation.Shape;
+import org.eclipse.glsp.server.emf.model.notation.Shape;
 
 public class ObjectDiagramNodeFactory extends ObjectAbstractGModelFactory<Classifier, GNode> {
 

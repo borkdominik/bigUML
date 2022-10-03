@@ -10,40 +10,9 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.usecase_diagram.operations;
 
-import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
+public class CreateUseCaseDiagramNodeOperationHandler { /*-
 
-import java.util.List;
-import java.util.Optional;
-
-import org.apache.log4j.Logger;
-import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSBasicCreateOperationHandler;
-import org.eclipse.glsp.graph.GBoundsAware;
-import org.eclipse.glsp.graph.GCompartment;
-import org.eclipse.glsp.graph.GGraph;
-import org.eclipse.glsp.graph.GModelElement;
-import org.eclipse.glsp.graph.GNode;
-import org.eclipse.glsp.graph.GPoint;
-import org.eclipse.glsp.graph.util.GraphUtil;
-import org.eclipse.glsp.server.operations.CreateNodeOperation;
-import org.eclipse.glsp.server.operations.Operation;
-import org.eclipse.glsp.server.types.GLSPServerException;
-import org.eclipse.glsp.server.utils.GeometryUtil;
-import org.eclipse.uml2.uml.Component;
-import org.eclipse.uml2.uml.Model;
-import org.eclipse.uml2.uml.NamedElement;
-import org.eclipse.uml2.uml.Package;
-import org.eclipse.uml2.uml.PackageableElement;
-
-import com.eclipsesource.uml.glsp.model.UmlModelIndex;
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.uml.usecase_diagram.UseCaseModelServerAccess;
-import com.eclipsesource.uml.glsp.uml.usecase_diagram.constants.UseCaseTypes;
-import com.google.common.collect.Lists;
-
-public class CreateUseCaseDiagramNodeOperationHandler
-   extends EMSBasicCreateOperationHandler<CreateNodeOperation, UseCaseModelServerAccess> {
-
-   private static Logger LOGGER = Logger.getLogger(CreateUseCaseDiagramNodeOperationHandler.class);
+   private static Logger LOGGER = LogManager.getLogger(CreateUseCaseDiagramNodeOperationHandler.class);
 
    public CreateUseCaseDiagramNodeOperationHandler() {
       super(handledElementTypeIds);
@@ -73,13 +42,13 @@ public class CreateUseCaseDiagramNodeOperationHandler
       switch (operation.getElementTypeId()) {
          case UseCaseTypes.PACKAGE: {
             NamedElement parentContainer = getOrThrow(
-               modelIndex.getSemantic(operation.getContainerId(), NamedElement.class),
+               modelIndex.getEObject(operation.getContainerId(), NamedElement.class),
                "No semantic container object found for source element with id " + operation.getContainerId());
 
             if (parentContainer instanceof Model) {
                modelAccess.addPackage(getUmlModelState(), operation.getLocation(), Model.class.cast(parentContainer))
                   .thenAccept(response -> {
-                     if (!response.body()) {
+                     if (response.body() == null || response.body().isEmpty()) {
                         throw new GLSPServerException("Could not execute create operation on new Package node");
                      }
                   });
@@ -93,7 +62,7 @@ public class CreateUseCaseDiagramNodeOperationHandler
                   structCompartment);
                modelAccess.addPackage(getUmlModelState(), relativeLocation, Package.class.cast(parentContainer))
                   .thenAccept(response -> {
-                     if (!response.body()) {
+                     if (response.body() == null || response.body().isEmpty()) {
                         throw new GLSPServerException("Could not execute create operation on new Package node");
                      }
                   });
@@ -110,16 +79,16 @@ public class CreateUseCaseDiagramNodeOperationHandler
              * } catch (GLSPServerException ex) {
              * LOGGER.error("Could not find container", ex);
              * }
-             */
+             *
             NamedElement container = getOrThrow(
-               modelIndex.getSemantic(operation.getContainerId(), NamedElement.class),
+               modelIndex.getEObject(operation.getContainerId(), NamedElement.class),
                "No semantic container object found for source element with id " + operation.getContainerId());
             if (container instanceof Model) {
                System.out.println("HAS NO PARENT");
                modelAccess.addComponent(UmlModelState.getModelState(modelState), (Model) container,
                   operation.getLocation())
                   .thenAccept(response -> {
-                     if (!response.body()) {
+                     if (response.body() == null || response.body().isEmpty()) {
                         throw new GLSPServerException("Could not execute create operation on new Component node");
                      }
                   });
@@ -134,7 +103,7 @@ public class CreateUseCaseDiagramNodeOperationHandler
                   structCompartment);
                modelAccess.addComponent(getUmlModelState(), Package.class.cast(container), relativeLocation)
                   .thenAccept(response -> {
-                     if (!response.body()) {
+                     if (response.body() == null || response.body().isEmpty()) {
                         throw new GLSPServerException("Could not execute create operation on new Package node");
                      }
                   });
@@ -153,7 +122,7 @@ public class CreateUseCaseDiagramNodeOperationHandler
             if (container instanceof Model) {
                modelAccess.addActor(UmlModelState.getModelState(modelState), operation.getLocation())
                   .thenAccept(response -> {
-                     if (!response.body()) {
+                     if (response.body() == null || response.body().isEmpty()) {
                         throw new GLSPServerException("Could not execute create operation on new Actor node");
                      }
                   });
@@ -167,7 +136,7 @@ public class CreateUseCaseDiagramNodeOperationHandler
                   structCompartment);
                modelAccess.addActor(getUmlModelState(), Package.class.cast(container), relativeLocation)
                   .thenAccept(response -> {
-                     if (!response.body()) {
+                     if (response.body() == null || response.body().isEmpty()) {
                         throw new GLSPServerException("Could not execute create operation on new Package node");
                      }
                   });
@@ -176,7 +145,7 @@ public class CreateUseCaseDiagramNodeOperationHandler
                   .addActor(UmlModelState.getModelState(modelState), (Package) container,
                      operation.getLocation())
                   .thenAccept(response -> {
-                     if (!response.body()) {
+                     if (response.body() == null || response.body().isEmpty()) {
                         throw new GLSPServerException("Could not execute create operation on new nested Actor node");
                      }
                   });
@@ -195,7 +164,7 @@ public class CreateUseCaseDiagramNodeOperationHandler
             if (container instanceof Model) {
                modelAccess.addUseCase(UmlModelState.getModelState(modelState), operation.getLocation())
                   .thenAccept(response -> {
-                     if (!response.body()) {
+                     if (response.body() == null || response.body().isEmpty()) {
                         throw new GLSPServerException("Could not execute create operation on new Usecase node");
                      }
                   });
@@ -204,7 +173,7 @@ public class CreateUseCaseDiagramNodeOperationHandler
                   .addUseCase(UmlModelState.getModelState(modelState), container,
                      operation.getLocation())
                   .thenAccept(response -> {
-                     if (!response.body()) {
+                     if (response.body() == null || response.body().isEmpty()) {
                         throw new GLSPServerException("Could not execute create operation on new nested Usecase node");
                      }
                   });
@@ -245,5 +214,5 @@ public class CreateUseCaseDiagramNodeOperationHandler
 
    @Override
    public String getLabel() { return "Create uml classifier"; }
-
+   */
 }

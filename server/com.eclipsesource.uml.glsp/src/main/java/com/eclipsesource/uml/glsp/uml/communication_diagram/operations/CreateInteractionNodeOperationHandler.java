@@ -12,26 +12,28 @@ package com.eclipsesource.uml.glsp.uml.communication_diagram.operations;
 
 import java.util.List;
 
-import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSBasicCreateOperationHandler;
+import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.AbstractEMSOperationHandler;
 import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.operations.Operation;
 import org.eclipse.glsp.server.types.GLSPServerException;
 
+import com.eclipsesource.uml.glsp.model.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.uml.communication_diagram.constants.CommunicationTypes;
 import com.eclipsesource.uml.modelserver.commands.communication.interaction.AddInteractionCommandContribution;
 import com.google.common.collect.Lists;
+import com.google.inject.Inject;
 
 public class CreateInteractionNodeOperationHandler
-   extends EMSBasicCreateOperationHandler<CreateNodeOperation, UmlModelServerAccess> {
-
-   public CreateInteractionNodeOperationHandler() {
-      super(handledElementTypeIds);
-   }
-
+   extends AbstractEMSOperationHandler<CreateNodeOperation> {
    private static List<String> handledElementTypeIds = Lists.newArrayList(CommunicationTypes.INTERACTION);
+
+   @Inject
+   protected UmlModelState modelState;
+
+   @Inject
+   private UmlModelServerAccess modelServerAccess;
 
    @Override
    public boolean handles(final Operation execAction) {
@@ -42,17 +44,15 @@ public class CreateInteractionNodeOperationHandler
       return false;
    }
 
-   protected UmlModelState getUmlModelState() { return (UmlModelState) getEMSModelState(); }
-
    @Override
-   public void executeOperation(final CreateNodeOperation operation, final UmlModelServerAccess modelAccess) {
+   public void executeOperation(final CreateNodeOperation operation) {
 
       switch (operation.getElementTypeId()) {
          case CommunicationTypes.INTERACTION: {
-            modelAccess
+            modelServerAccess
                .exec(AddInteractionCommandContribution.create(operation.getLocation().orElse(GraphUtil.point(0, 0))))
                .thenAccept(response -> {
-                  if (!response.body()) {
+                  if (response.body() == null || response.body().isEmpty()) {
                      throw new GLSPServerException("Could not execute create operation on new Interaction node");
                   }
                });

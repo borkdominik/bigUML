@@ -19,7 +19,7 @@ import org.eclipse.uml2.uml.PackageableElement;
 
 import com.eclipsesource.uml.modelserver.commands.util.UmlNotationCommandUtil;
 import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-import com.eclipsesource.uml.modelserver.unotation.Shape;
+import org.eclipse.glsp.server.emf.model.notation.Shape;
 
 public class ChangeBoundsImprovedCommand extends UmlNotationElementCommand {
    protected final GPoint shapePosition;

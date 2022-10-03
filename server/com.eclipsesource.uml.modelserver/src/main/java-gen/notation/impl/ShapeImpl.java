@@ -8,10 +8,10 @@
  * 
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  */
-package com.eclipsesource.uml.modelserver.unotation.impl;
+package notation.impl;
 
-import com.eclipsesource.uml.modelserver.unotation.Shape;
-import com.eclipsesource.uml.modelserver.unotation.UnotationPackage;
+import notation.NotationPackage;
+import notation.Shape;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -32,8 +32,8 @@ import org.eclipse.glsp.graph.GPoint;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link com.eclipsesource.uml.modelserver.unotation.impl.ShapeImpl#getPosition <em>Position</em>}</li>
- *   <li>{@link com.eclipsesource.uml.modelserver.unotation.impl.ShapeImpl#getSize <em>Size</em>}</li>
+ *   <li>{@link notation.impl.ShapeImpl#getPosition <em>Position</em>}</li>
+ *   <li>{@link notation.impl.ShapeImpl#getSize <em>Size</em>}</li>
  * </ul>
  *
  * @generated
@@ -75,7 +75,7 @@ public class ShapeImpl extends NotationElementImpl implements Shape {
     */
    @Override
    protected EClass eStaticClass() {
-      return UnotationPackage.Literals.SHAPE;
+      return NotationPackage.Literals.SHAPE;
    }
 
    /**
@@ -97,7 +97,7 @@ public class ShapeImpl extends NotationElementImpl implements Shape {
       GPoint oldPosition = position;
       position = newPosition;
       if (eNotificationRequired()) {
-         ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, UnotationPackage.SHAPE__POSITION, oldPosition, newPosition);
+         ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, NotationPackage.SHAPE__POSITION, oldPosition, newPosition);
          if (msgs == null) msgs = notification; else msgs.add(notification);
       }
       return msgs;
@@ -113,14 +113,14 @@ public class ShapeImpl extends NotationElementImpl implements Shape {
       if (newPosition != position) {
          NotificationChain msgs = null;
          if (position != null)
-            msgs = ((InternalEObject)position).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - UnotationPackage.SHAPE__POSITION, null, msgs);
+            msgs = ((InternalEObject)position).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - NotationPackage.SHAPE__POSITION, null, msgs);
          if (newPosition != null)
-            msgs = ((InternalEObject)newPosition).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - UnotationPackage.SHAPE__POSITION, null, msgs);
+            msgs = ((InternalEObject)newPosition).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - NotationPackage.SHAPE__POSITION, null, msgs);
          msgs = basicSetPosition(newPosition, msgs);
          if (msgs != null) msgs.dispatch();
       }
       else if (eNotificationRequired())
-         eNotify(new ENotificationImpl(this, Notification.SET, UnotationPackage.SHAPE__POSITION, newPosition, newPosition));
+         eNotify(new ENotificationImpl(this, Notification.SET, NotationPackage.SHAPE__POSITION, newPosition, newPosition));
    }
 
    /**
@@ -142,7 +142,7 @@ public class ShapeImpl extends NotationElementImpl implements Shape {
       GDimension oldSize = size;
       size = newSize;
       if (eNotificationRequired()) {
-         ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, UnotationPackage.SHAPE__SIZE, oldSize, newSize);
+         ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, NotationPackage.SHAPE__SIZE, oldSize, newSize);
          if (msgs == null) msgs = notification; else msgs.add(notification);
       }
       return msgs;
@@ -158,14 +158,14 @@ public class ShapeImpl extends NotationElementImpl implements Shape {
       if (newSize != size) {
          NotificationChain msgs = null;
          if (size != null)
-            msgs = ((InternalEObject)size).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - UnotationPackage.SHAPE__SIZE, null, msgs);
+            msgs = ((InternalEObject)size).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - NotationPackage.SHAPE__SIZE, null, msgs);
          if (newSize != null)
-            msgs = ((InternalEObject)newSize).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - UnotationPackage.SHAPE__SIZE, null, msgs);
+            msgs = ((InternalEObject)newSize).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - NotationPackage.SHAPE__SIZE, null, msgs);
          msgs = basicSetSize(newSize, msgs);
          if (msgs != null) msgs.dispatch();
       }
       else if (eNotificationRequired())
-         eNotify(new ENotificationImpl(this, Notification.SET, UnotationPackage.SHAPE__SIZE, newSize, newSize));
+         eNotify(new ENotificationImpl(this, Notification.SET, NotationPackage.SHAPE__SIZE, newSize, newSize));
    }
 
    /**
@@ -176,9 +176,9 @@ public class ShapeImpl extends NotationElementImpl implements Shape {
    @Override
    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
       switch (featureID) {
-         case UnotationPackage.SHAPE__POSITION:
+         case NotationPackage.SHAPE__POSITION:
             return basicSetPosition(null, msgs);
-         case UnotationPackage.SHAPE__SIZE:
+         case NotationPackage.SHAPE__SIZE:
             return basicSetSize(null, msgs);
       }
       return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -192,9 +192,9 @@ public class ShapeImpl extends NotationElementImpl implements Shape {
    @Override
    public Object eGet(int featureID, boolean resolve, boolean coreType) {
       switch (featureID) {
-         case UnotationPackage.SHAPE__POSITION:
+         case NotationPackage.SHAPE__POSITION:
             return getPosition();
-         case UnotationPackage.SHAPE__SIZE:
+         case NotationPackage.SHAPE__SIZE:
             return getSize();
       }
       return super.eGet(featureID, resolve, coreType);
@@ -208,10 +208,10 @@ public class ShapeImpl extends NotationElementImpl implements Shape {
    @Override
    public void eSet(int featureID, Object newValue) {
       switch (featureID) {
-         case UnotationPackage.SHAPE__POSITION:
+         case NotationPackage.SHAPE__POSITION:
             setPosition((GPoint)newValue);
             return;
-         case UnotationPackage.SHAPE__SIZE:
+         case NotationPackage.SHAPE__SIZE:
             setSize((GDimension)newValue);
             return;
       }
@@ -226,10 +226,10 @@ public class ShapeImpl extends NotationElementImpl implements Shape {
    @Override
    public void eUnset(int featureID) {
       switch (featureID) {
-         case UnotationPackage.SHAPE__POSITION:
+         case NotationPackage.SHAPE__POSITION:
             setPosition((GPoint)null);
             return;
-         case UnotationPackage.SHAPE__SIZE:
+         case NotationPackage.SHAPE__SIZE:
             setSize((GDimension)null);
             return;
       }
@@ -244,9 +244,9 @@ public class ShapeImpl extends NotationElementImpl implements Shape {
    @Override
    public boolean eIsSet(int featureID) {
       switch (featureID) {
-         case UnotationPackage.SHAPE__POSITION:
+         case NotationPackage.SHAPE__POSITION:
             return position != null;
-         case UnotationPackage.SHAPE__SIZE:
+         case NotationPackage.SHAPE__SIZE:
             return size != null;
       }
       return super.eIsSet(featureID);

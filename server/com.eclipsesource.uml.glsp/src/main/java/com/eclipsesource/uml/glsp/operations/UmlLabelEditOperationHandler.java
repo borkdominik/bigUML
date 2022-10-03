@@ -12,27 +12,24 @@ package com.eclipsesource.uml.glsp.operations;
 
 import java.util.Set;
 
-import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSBasicOperationHandler;
+import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.AbstractEMSOperationHandler;
 import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperation;
 import org.eclipse.glsp.server.types.GLSPServerException;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;
 import com.google.inject.Inject;
 
 public class UmlLabelEditOperationHandler
-   extends EMSBasicOperationHandler<ApplyLabelEditOperation, UmlModelServerAccess> {
+   extends AbstractEMSOperationHandler<ApplyLabelEditOperation> {
 
    @Inject
    private Set<DiagramEditLabelOperationHandler> editLabelOperationHandlers;
 
-   protected UmlModelState getUmlModelState() { return (UmlModelState) getEMSModelState(); }
+   @Inject
+   private UmlModelState modelState;
 
    @Override
-   public void executeOperation(final ApplyLabelEditOperation operation,
-      final UmlModelServerAccess modelAccess) {
-      UmlModelState modelState = getUmlModelState();
-
+   public void executeOperation(final ApplyLabelEditOperation operation) {
       // TODO: Do not use instanceof etc.
       /*
        * UmlModelIndex modelIndex = modelState.getIndex();
@@ -43,19 +40,19 @@ public class UmlLabelEditOperationHandler
        * switch (label.getType()) {
        * case Types.LABEL_NAME:
        * String containerElementId = UmlIDUtil.getElementIdFromHeaderLabel(graphicalElementId);
-       * Element semanticElement = getOrThrow(modelIndex.getSemantic(containerElementId),
+       * Element semanticElement = getOrThrow(modelIndex.getEObject(containerElementId),
        * Element.class, "No valid container with id " + graphicalElementId + " found");
        * if (semanticElement instanceof Constraint) {
        * modelAccess.setConditionBody(modelState, (Constraint) semanticElement, inputText)
        * .thenAccept(response -> {
-       * if (!response.body()) {
+       * if (response.body() == null || response.body().isEmpty()) {
        * throw new GLSPServerException("Could not change constraint to: " + inputText);
        * }
        * });
        * } else if (semanticElement instanceof NamedElement) {
        * modelAccess.renameElement(modelState, (NamedElement) semanticElement, inputText)
        * .thenAccept(response -> {
-       * if (!response.body()) {
+       * if (response.body() == null || response.body().isEmpty()) {
        * throw new GLSPServerException("Could not change named element to: " + inputText);
        * }
        * });
@@ -64,13 +61,13 @@ public class UmlLabelEditOperationHandler
        * }
        */
 
-      var diagramType = UmlModelState.getModelState(modelState).getNotationModel().getDiagramType();
+      var diagramType = modelState.getUmlNotationModel().getRepresentation();
       var editLabelHandler = editLabelOperationHandlers.stream().filter(handler -> handler.supports(diagramType))
          .findFirst();
 
       editLabelHandler
          .orElseThrow(() -> new GLSPServerException("No handler found for diagram " + diagramType))
-         .edit(operation, modelAccess);
+         .edit(operation);
    }
 
    @Override

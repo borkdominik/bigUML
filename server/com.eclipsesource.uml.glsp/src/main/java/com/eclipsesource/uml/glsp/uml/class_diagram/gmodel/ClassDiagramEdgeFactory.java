@@ -35,7 +35,7 @@ import com.eclipsesource.uml.glsp.uml.utils.property.PropertyUtil;
 import com.eclipsesource.uml.glsp.utils.UmlConfig;
 import com.eclipsesource.uml.glsp.utils.UmlConfig.CSS;
 import com.eclipsesource.uml.glsp.utils.UmlIDUtil;
-import com.eclipsesource.uml.modelserver.unotation.Edge;
+import org.eclipse.glsp.server.emf.model.notation.Edge;
 
 public class ClassDiagramEdgeFactory extends ClassAbstractGModelFactory<Relationship, GEdge> {
 

@@ -13,7 +13,6 @@ package com.eclipsesource.uml.glsp.uml.class_diagram.gmodel;
 import java.util.Optional;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.glsp.graph.GModelElement;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
@@ -33,11 +32,13 @@ public abstract class ClassAbstractGModelFactory<T extends EObject, E extends GM
    }
 
    protected String toId(final EObject semanticElement) {
-      String id = modelState.getIndex().getSemanticId(semanticElement).orElse(null);
-      if (id == null) {
-         id = EcoreUtil.getURI(semanticElement).fragment();
-         modelState.getIndex().indexSemantic(id, semanticElement);
-      }
-      return id;
+      /*
+       * String id = modelState.getIndex().getSemanticId(semanticElement).orElse(null);
+       * if (id == null) {
+       * id = EcoreUtil.getURI(semanticElement).fragment();
+       * modelState.getIndex().indexSemantic(id, semanticElement);
+       * }
+       */
+      return null;
    }
 }

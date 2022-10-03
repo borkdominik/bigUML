@@ -4,27 +4,29 @@ import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
 
 import java.util.List;
 
-import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSBasicCreateOperationHandler;
+import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.AbstractEMSOperationHandler;
 import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 import org.eclipse.glsp.server.operations.Operation;
 import org.eclipse.glsp.server.types.GLSPServerException;
 import org.eclipse.uml2.uml.Comment;
 import org.eclipse.uml2.uml.Element;
 
+import com.eclipsesource.uml.glsp.model.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.uml.common_diagram.constants.CommonTypes;
 import com.eclipsesource.uml.modelserver.commands.activitydiagram.comment.LinkCommentCommandContribution;
 import com.google.common.collect.Lists;
+import com.google.inject.Inject;
 
 public class CreateCommentEdgeOperationHandler
-   extends EMSBasicCreateOperationHandler<CreateEdgeOperation, UmlModelServerAccess> {
-
-   public CreateCommentEdgeOperationHandler() {
-      super(handledElementTypeIds);
-   }
-
+   extends AbstractEMSOperationHandler<CreateEdgeOperation> {
    public static List<String> handledElementTypeIds = Lists.newArrayList(CommonTypes.COMMENT_EDGE);
+
+   @Inject
+   protected UmlModelState modelState;
+
+   @Inject
+   private UmlModelServerAccess modelServerAccess;
 
    @Override
    public boolean handles(final Operation execAction) {
@@ -35,25 +37,21 @@ public class CreateCommentEdgeOperationHandler
       return false;
    }
 
-   protected UmlModelState getUmlModelState() { return (UmlModelState) getEMSModelState(); }
-
    @Override
-   public void executeOperation(final CreateEdgeOperation operation, final UmlModelServerAccess modelAccess) {
-
-      UmlModelState modelState = getUmlModelState();
+   public void executeOperation(final CreateEdgeOperation operation) {
 
       String sourceId = operation.getSourceElementId();
       String targetId = operation.getTargetElementId();
 
       if (CommonTypes.COMMENT_EDGE.equals(operation.getElementTypeId())) {
-         Comment source = getOrThrow(modelState.getIndex().getSemantic(sourceId), Comment.class,
+         Comment source = getOrThrow(modelState.getIndex().getEObject(sourceId), Comment.class,
             "No valid source comment with id " + sourceId + " found");
-         Element target = getOrThrow(modelState.getIndex().getSemantic(targetId), Element.class,
+         Element target = getOrThrow(modelState.getIndex().getEObject(targetId), Element.class,
             "No valid target element with id " + sourceId + " found");
 
-         modelAccess.exec(LinkCommentCommandContribution.create(source, target))
+         modelServerAccess.exec(LinkCommentCommandContribution.create(source, target))
             .thenAccept(response -> {
-               if (!response.body()) {
+               if (response.body() == null || response.body().isEmpty()) {
                   throw new GLSPServerException("Could not execute link comment operation");
                }
             });

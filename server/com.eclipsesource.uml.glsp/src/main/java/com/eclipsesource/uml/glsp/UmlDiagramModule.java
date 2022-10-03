@@ -10,34 +10,26 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp;
 
-import org.eclipse.emfcloud.modelserver.glsp.EMSGLSPModule;
+import org.eclipse.emfcloud.modelserver.glsp.EMSModelState;
 import org.eclipse.emfcloud.modelserver.glsp.actions.handlers.EMSOperationActionHandler;
-import org.eclipse.emfcloud.modelserver.glsp.model.EMSModelState;
+import org.eclipse.emfcloud.modelserver.glsp.notation.integration.EMSGLSPNotationDiagramModule;
+import org.eclipse.emfcloud.modelserver.glsp.notation.integration.EMSNotationModelServerAccess;
+import org.eclipse.glsp.graph.GraphExtension;
 import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.ActionHandler;
 import org.eclipse.glsp.server.di.MultiBinding;
 import org.eclipse.glsp.server.diagram.DiagramConfiguration;
-import org.eclipse.glsp.server.features.clipboard.RequestClipboardDataActionHandler;
 import org.eclipse.glsp.server.features.contextmenu.ContextMenuItemProvider;
 import org.eclipse.glsp.server.features.core.model.GModelFactory;
-import org.eclipse.glsp.server.features.core.model.ModelSourceLoader;
-import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperationHandler;
 import org.eclipse.glsp.server.features.toolpalette.ToolPaletteItemProvider;
 import org.eclipse.glsp.server.features.validation.ModelValidator;
-import org.eclipse.glsp.server.features.validation.RequestMarkersHandler;
 import org.eclipse.glsp.server.layout.LayoutEngine;
+import org.eclipse.glsp.server.operations.LayoutOperationHandler;
 import org.eclipse.glsp.server.operations.OperationHandler;
-import org.eclipse.glsp.server.operations.gmodel.ChangeBoundsOperationHandler;
-import org.eclipse.glsp.server.operations.gmodel.ChangeRoutingPointsHandler;
-import org.eclipse.glsp.server.operations.gmodel.CompoundOperationHandler;
-import org.eclipse.glsp.server.operations.gmodel.DeleteOperationHandler;
-import org.eclipse.glsp.server.operations.gmodel.LayoutOperationHandler;
+import org.eclipse.uml2.uml.UMLPackage;
 
 import com.eclipsesource.uml.glsp.actions.ReturnTypesAction;
-import com.eclipsesource.uml.glsp.actions.UmlGetTypesActionHandler;
 import com.eclipsesource.uml.glsp.actions.UmlOperationActionHandler;
-import com.eclipsesource.uml.glsp.actions.UmlRequestClipboardDataActionHandler;
-import com.eclipsesource.uml.glsp.actions.UmlRequestMarkersHandler;
 import com.eclipsesource.uml.glsp.contextmenu.UmlContextMenuItemProvider;
 import com.eclipsesource.uml.glsp.diagram.UmlToolDiagramConfiguration;
 import com.eclipsesource.uml.glsp.features.outline.manifest.OutlineManifest;
@@ -46,19 +38,22 @@ import com.eclipsesource.uml.glsp.gmodel.UmlDiagramMapper;
 import com.eclipsesource.uml.glsp.gmodel.UmlGModelMapHandler;
 import com.eclipsesource.uml.glsp.gmodel.UmlGModelMapperRegistry;
 import com.eclipsesource.uml.glsp.layout.UmlLayoutEngine;
-import com.eclipsesource.uml.glsp.model.UmlModelFactory;
-import com.eclipsesource.uml.glsp.model.UmlModelSourceLoader;
+import com.eclipsesource.uml.glsp.model.UmlGModelFactory;
+import com.eclipsesource.uml.glsp.model.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.operations.UmlChangeBoundsOperationHandler;
-import com.eclipsesource.uml.glsp.operations.UmlChangeRoutingPointsOperationHandler;
-import com.eclipsesource.uml.glsp.operations.UmlCompoundOperationHandler;
 import com.eclipsesource.uml.glsp.operations.UmlDeleteOperationHandler;
 import com.eclipsesource.uml.glsp.operations.UmlLabelEditOperationHandler;
 import com.eclipsesource.uml.glsp.palette.UmlToolPaletteItemProvider;
 import com.eclipsesource.uml.glsp.uml.communication_diagram.manifest.CommunicationUmlManifest;
 import com.google.inject.Singleton;
 
-public class UmlGLSPModule extends EMSGLSPModule {
+public class UmlDiagramModule extends EMSGLSPNotationDiagramModule {
+
+   @Override
+   protected void registerEPackages() {
+      super.registerEPackages();
+      UMLPackage.eINSTANCE.eClass();
+   }
 
    @Override
    protected Class<? extends EMSModelState> bindGModelState() {
@@ -67,12 +62,17 @@ public class UmlGLSPModule extends EMSGLSPModule {
 
    @Override
    public Class<? extends GModelFactory> bindGModelFactory() {
-      return UmlModelFactory.class;
+      return UmlGModelFactory.class;
    }
 
    @Override
-   protected Class<? extends ModelSourceLoader> bindSourceModelLoader() {
-      return UmlModelSourceLoader.class;
+   protected Class<? extends EMSNotationModelServerAccess> bindModelServerAccess() {
+      return UmlModelServerAccess.class;
+   }
+
+   @Override
+   protected Class<? extends GraphExtension> bindGraphExtension() {
+      return UmlGraphExtension.class;
    }
 
    @Override
@@ -104,6 +104,12 @@ public class UmlGLSPModule extends EMSGLSPModule {
    public String getDiagramType() { return "umldiagram"; }
 
    @Override
+   protected String getSemanticFileExtension() { return "uml"; }
+
+   @Override
+   protected String getNotationFileExtension() { return "unotation"; }
+
+   @Override
    protected void configureClientActions(final MultiBinding<Action> bindings) {
       super.configureClientActions(bindings);
       bindings.add(ReturnTypesAction.class);
@@ -112,20 +118,19 @@ public class UmlGLSPModule extends EMSGLSPModule {
    @Override
    protected void configureActionHandlers(final MultiBinding<ActionHandler> bindings) {
       super.configureActionHandlers(bindings);
-      bindings.rebind(RequestClipboardDataActionHandler.class, UmlRequestClipboardDataActionHandler.class);
+      // TODO: Rebind it
+      // bindings.rebind(RequestClipboardDataActionHandler.class, UmlRequestClipboardDataActionHandler.class);
+      // bindings.rebind(RequestMarkersHandler.class, UmlRequestMarkersHandler.class);
+      // bindings.add(UmlGetTypesActionHandler.class);
+
       bindings.rebind(EMSOperationActionHandler.class, UmlOperationActionHandler.class);
-      bindings.rebind(RequestMarkersHandler.class, UmlRequestMarkersHandler.class);
-      bindings.add(UmlGetTypesActionHandler.class);
    }
 
    @Override
    protected void configureOperationHandlers(final MultiBinding<OperationHandler> bindings) {
       super.configureOperationHandlers(bindings);
-      bindings.rebind(CompoundOperationHandler.class, UmlCompoundOperationHandler.class);
-      bindings.rebind(ApplyLabelEditOperationHandler.class, UmlLabelEditOperationHandler.class);
-      bindings.rebind(ChangeBoundsOperationHandler.class, UmlChangeBoundsOperationHandler.class);
-      bindings.rebind(ChangeRoutingPointsHandler.class, UmlChangeRoutingPointsOperationHandler.class);
-      bindings.rebind(DeleteOperationHandler.class, UmlDeleteOperationHandler.class);
+      bindings.add(UmlLabelEditOperationHandler.class);
+      bindings.add(UmlDeleteOperationHandler.class);
       bindings.add(LayoutOperationHandler.class);
    }
 
@@ -141,5 +146,4 @@ public class UmlGLSPModule extends EMSGLSPModule {
       // install(new CommonUmlManifest());
       install(new CommunicationUmlManifest());
    }
-
 }

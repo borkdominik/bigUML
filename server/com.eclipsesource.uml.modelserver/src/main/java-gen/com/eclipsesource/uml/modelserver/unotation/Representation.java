@@ -84,7 +84,9 @@ public enum Representation implements Enumerator {
     * @generated
     * @ordered
     */
-   USECASE(5, "USECASE", "USECASE"), /**
+   USECASE(5, "USECASE", "USECASE"),
+
+   /**
     * The '<em><b>DEPLOYMENT</b></em>' literal object.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
@@ -92,7 +94,9 @@ public enum Representation implements Enumerator {
     * @generated
     * @ordered
     */
-   DEPLOYMENT(6, "DEPLOYMENT", "DEPLOYMENT"), /**
+   DEPLOYMENT(6, "DEPLOYMENT", "DEPLOYMENT"),
+
+   /**
     * The '<em><b>OBJECT</b></em>' literal object.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
@@ -100,7 +104,9 @@ public enum Representation implements Enumerator {
     * @generated
     * @ordered
     */
-   OBJECT(7, "OBJECT", "OBJECT"), /**
+   OBJECT(7, "OBJECT", "OBJECT"),
+
+   /**
     * The '<em><b>COMPONENT</b></em>' literal object.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
@@ -108,7 +114,9 @@ public enum Representation implements Enumerator {
     * @generated
     * @ordered
     */
-   COMPONENT(8, "COMPONENT", "COMPONENT"), /**
+   COMPONENT(8, "COMPONENT", "COMPONENT"),
+
+   /**
     * The '<em><b>COMMUNICATION</b></em>' literal object.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
@@ -117,7 +125,6 @@ public enum Representation implements Enumerator {
     * @ordered
     */
    COMMUNICATION(9, "COMMUNICATION", "COMMUNICATION");
-
 
    /**
     * The '<em><b>ACTIVITY</b></em>' literal value.

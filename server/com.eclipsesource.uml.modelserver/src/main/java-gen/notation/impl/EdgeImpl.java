@@ -8,13 +8,13 @@
  * 
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  */
-package com.eclipsesource.uml.modelserver.unotation.impl;
-
-import com.eclipsesource.uml.modelserver.unotation.Edge;
-import com.eclipsesource.uml.modelserver.unotation.NotationElement;
-import com.eclipsesource.uml.modelserver.unotation.UnotationPackage;
+package notation.impl;
 
 import java.util.Collection;
+
+import notation.Edge;
+import notation.NotationElement;
+import notation.NotationPackage;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -39,9 +39,9 @@ import org.eclipse.glsp.graph.GPoint;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link com.eclipsesource.uml.modelserver.unotation.impl.EdgeImpl#getBendPoints <em>Bend Points</em>}</li>
- *   <li>{@link com.eclipsesource.uml.modelserver.unotation.impl.EdgeImpl#getSource <em>Source</em>}</li>
- *   <li>{@link com.eclipsesource.uml.modelserver.unotation.impl.EdgeImpl#getTarget <em>Target</em>}</li>
+ *   <li>{@link notation.impl.EdgeImpl#getBendPoints <em>Bend Points</em>}</li>
+ *   <li>{@link notation.impl.EdgeImpl#getSource <em>Source</em>}</li>
+ *   <li>{@link notation.impl.EdgeImpl#getTarget <em>Target</em>}</li>
  * </ul>
  *
  * @generated
@@ -93,7 +93,7 @@ public class EdgeImpl extends NotationElementImpl implements Edge {
     */
    @Override
    protected EClass eStaticClass() {
-      return UnotationPackage.Literals.EDGE;
+      return NotationPackage.Literals.EDGE;
    }
 
    /**
@@ -104,7 +104,7 @@ public class EdgeImpl extends NotationElementImpl implements Edge {
    @Override
    public EList<GPoint> getBendPoints() {
       if (bendPoints == null) {
-         bendPoints = new EObjectContainmentEList<GPoint>(GPoint.class, this, UnotationPackage.EDGE__BEND_POINTS);
+         bendPoints = new EObjectContainmentEList<GPoint>(GPoint.class, this, NotationPackage.EDGE__BEND_POINTS);
       }
       return bendPoints;
    }
@@ -121,7 +121,7 @@ public class EdgeImpl extends NotationElementImpl implements Edge {
          source = (NotationElement)eResolveProxy(oldSource);
          if (source != oldSource) {
             if (eNotificationRequired())
-               eNotify(new ENotificationImpl(this, Notification.RESOLVE, UnotationPackage.EDGE__SOURCE, oldSource, source));
+               eNotify(new ENotificationImpl(this, Notification.RESOLVE, NotationPackage.EDGE__SOURCE, oldSource, source));
          }
       }
       return source;
@@ -146,7 +146,7 @@ public class EdgeImpl extends NotationElementImpl implements Edge {
       NotationElement oldSource = source;
       source = newSource;
       if (eNotificationRequired())
-         eNotify(new ENotificationImpl(this, Notification.SET, UnotationPackage.EDGE__SOURCE, oldSource, source));
+         eNotify(new ENotificationImpl(this, Notification.SET, NotationPackage.EDGE__SOURCE, oldSource, source));
    }
 
    /**
@@ -161,7 +161,7 @@ public class EdgeImpl extends NotationElementImpl implements Edge {
          target = (NotationElement)eResolveProxy(oldTarget);
          if (target != oldTarget) {
             if (eNotificationRequired())
-               eNotify(new ENotificationImpl(this, Notification.RESOLVE, UnotationPackage.EDGE__TARGET, oldTarget, target));
+               eNotify(new ENotificationImpl(this, Notification.RESOLVE, NotationPackage.EDGE__TARGET, oldTarget, target));
          }
       }
       return target;
@@ -186,7 +186,7 @@ public class EdgeImpl extends NotationElementImpl implements Edge {
       NotationElement oldTarget = target;
       target = newTarget;
       if (eNotificationRequired())
-         eNotify(new ENotificationImpl(this, Notification.SET, UnotationPackage.EDGE__TARGET, oldTarget, target));
+         eNotify(new ENotificationImpl(this, Notification.SET, NotationPackage.EDGE__TARGET, oldTarget, target));
    }
 
    /**
@@ -197,7 +197,7 @@ public class EdgeImpl extends NotationElementImpl implements Edge {
    @Override
    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
       switch (featureID) {
-         case UnotationPackage.EDGE__BEND_POINTS:
+         case NotationPackage.EDGE__BEND_POINTS:
             return ((InternalEList<?>)getBendPoints()).basicRemove(otherEnd, msgs);
       }
       return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -211,12 +211,12 @@ public class EdgeImpl extends NotationElementImpl implements Edge {
    @Override
    public Object eGet(int featureID, boolean resolve, boolean coreType) {
       switch (featureID) {
-         case UnotationPackage.EDGE__BEND_POINTS:
+         case NotationPackage.EDGE__BEND_POINTS:
             return getBendPoints();
-         case UnotationPackage.EDGE__SOURCE:
+         case NotationPackage.EDGE__SOURCE:
             if (resolve) return getSource();
             return basicGetSource();
-         case UnotationPackage.EDGE__TARGET:
+         case NotationPackage.EDGE__TARGET:
             if (resolve) return getTarget();
             return basicGetTarget();
       }
@@ -232,14 +232,14 @@ public class EdgeImpl extends NotationElementImpl implements Edge {
    @Override
    public void eSet(int featureID, Object newValue) {
       switch (featureID) {
-         case UnotationPackage.EDGE__BEND_POINTS:
+         case NotationPackage.EDGE__BEND_POINTS:
             getBendPoints().clear();
             getBendPoints().addAll((Collection<? extends GPoint>)newValue);
             return;
-         case UnotationPackage.EDGE__SOURCE:
+         case NotationPackage.EDGE__SOURCE:
             setSource((NotationElement)newValue);
             return;
-         case UnotationPackage.EDGE__TARGET:
+         case NotationPackage.EDGE__TARGET:
             setTarget((NotationElement)newValue);
             return;
       }
@@ -254,13 +254,13 @@ public class EdgeImpl extends NotationElementImpl implements Edge {
    @Override
    public void eUnset(int featureID) {
       switch (featureID) {
-         case UnotationPackage.EDGE__BEND_POINTS:
+         case NotationPackage.EDGE__BEND_POINTS:
             getBendPoints().clear();
             return;
-         case UnotationPackage.EDGE__SOURCE:
+         case NotationPackage.EDGE__SOURCE:
             setSource((NotationElement)null);
             return;
-         case UnotationPackage.EDGE__TARGET:
+         case NotationPackage.EDGE__TARGET:
             setTarget((NotationElement)null);
             return;
       }
@@ -275,11 +275,11 @@ public class EdgeImpl extends NotationElementImpl implements Edge {
    @Override
    public boolean eIsSet(int featureID) {
       switch (featureID) {
-         case UnotationPackage.EDGE__BEND_POINTS:
+         case NotationPackage.EDGE__BEND_POINTS:
             return bendPoints != null && !bendPoints.isEmpty();
-         case UnotationPackage.EDGE__SOURCE:
+         case NotationPackage.EDGE__SOURCE:
             return source != null;
-         case UnotationPackage.EDGE__TARGET:
+         case NotationPackage.EDGE__TARGET:
             return target != null;
       }
       return super.eIsSet(featureID);

@@ -10,29 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.statemachine_diagram.operations;
 
-import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
-
-import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSBasicOperationHandler;
-import org.eclipse.glsp.graph.GModelElement;
-import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperation;
-import org.eclipse.glsp.server.types.GLSPServerException;
-import org.eclipse.uml2.uml.Behavior;
-import org.eclipse.uml2.uml.Constraint;
-import org.eclipse.uml2.uml.Element;
-import org.eclipse.uml2.uml.NamedElement;
-import org.eclipse.uml2.uml.Pseudostate;
-import org.eclipse.uml2.uml.State;
-import org.eclipse.uml2.uml.StateMachine;
-
-import com.eclipsesource.uml.glsp.model.UmlModelIndex;
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.uml.statemachine_diagram.StateMachineModelServerAccess;
-import com.eclipsesource.uml.glsp.uml.statemachine_diagram.constants.StateMachineTypes;
-import com.eclipsesource.uml.glsp.utils.UmlConfig;
-import com.eclipsesource.uml.glsp.utils.UmlIDUtil;
-
-public class StateMachineLabelEditOperationHandler
-   extends EMSBasicOperationHandler<ApplyLabelEditOperation, StateMachineModelServerAccess> {
+public class StateMachineLabelEditOperationHandler { /*-
 
    protected UmlModelState getUmlModelState() { return (UmlModelState) getEMSModelState(); }
 
@@ -51,40 +29,40 @@ public class StateMachineLabelEditOperationHandler
       switch (label.getType()) {
          case UmlConfig.Types.LABEL_NAME:
             String containerElementId = UmlIDUtil.getElementIdFromHeaderLabel(graphicalElementId);
-            Element semanticElement = getOrThrow(modelIndex.getSemantic(containerElementId),
+            Element semanticElement = getOrThrow(modelIndex.getEObject(containerElementId),
                Element.class, "No valid container with id " + graphicalElementId + " found");
             if (semanticElement instanceof Constraint) {
                modelAccess.setConditionBody(modelState, (Constraint) semanticElement, inputText)
                   .thenAccept(response -> {
-                     if (!response.body()) {
+                     if (response.body() == null || response.body().isEmpty()) {
                         throw new GLSPServerException("Could not change Property to: " + inputText);
                      }
                   });
             } else if (semanticElement instanceof StateMachine) {
                modelAccess.setStateMachineName(modelState, (StateMachine) semanticElement, inputText)
                   .thenAccept(response -> {
-                     if (!response.body()) {
+                     if (response.body() == null || response.body().isEmpty()) {
                         throw new GLSPServerException("Could not rename State Machine to: " + inputText);
                      }
                   });
             } else if (semanticElement instanceof State) {
                modelAccess.setStateName(modelState, (State) semanticElement, inputText)
                   .thenAccept(response -> {
-                     if (!response.body()) {
+                     if (response.body() == null || response.body().isEmpty()) {
                         throw new GLSPServerException("Could not rename State to: " + inputText);
                      }
                   });
             } else if (semanticElement instanceof Pseudostate) {
                modelAccess.setPseudostateName(modelState, (Pseudostate) semanticElement, inputText)
                   .thenAccept(response -> {
-                     if (!response.body()) {
+                     if (response.body() == null || response.body().isEmpty()) {
                         throw new GLSPServerException("Could not rename Pseudo State to: " + inputText);
                      }
                   });
             } else if (semanticElement instanceof NamedElement) {
                modelAccess.renameElement(modelState, (NamedElement) semanticElement, inputText)
                   .thenAccept(response -> {
-                     if (!response.body()) {
+                     if (response.body() == null || response.body().isEmpty()) {
                         throw new GLSPServerException("Could not change Property to: " + inputText);
                      }
                   });
@@ -93,12 +71,12 @@ public class StateMachineLabelEditOperationHandler
 
          case StateMachineTypes.STATE_ENTRY_ACTIVITY:
             containerElementId = UmlIDUtil.getElementIdFromHeaderLabel(graphicalElementId);
-            Behavior behavior = getOrThrow(modelIndex.getSemantic(containerElementId),
+            Behavior behavior = getOrThrow(modelIndex.getEObject(containerElementId),
                Behavior.class, "No valid container with id " + graphicalElementId + " found");
 
             modelAccess.setBehaviorInState(modelState, behavior, StateMachineTypes.STATE_ENTRY_ACTIVITY, inputText)
                .thenAccept(response -> {
-                  if (!response.body()) {
+                  if (response.body() == null || response.body().isEmpty()) {
                      throw new GLSPServerException("Could not change Behavior to: " + inputText);
                   }
                });
@@ -107,12 +85,12 @@ public class StateMachineLabelEditOperationHandler
 
          case StateMachineTypes.STATE_DO_ACTIVITY:
             containerElementId = UmlIDUtil.getElementIdFromHeaderLabel(graphicalElementId);
-            behavior = getOrThrow(modelIndex.getSemantic(containerElementId),
+            behavior = getOrThrow(modelIndex.getEObject(containerElementId),
                Behavior.class, "No valid container with id " + graphicalElementId + " found");
 
             modelAccess.setBehaviorInState(modelState, behavior, StateMachineTypes.STATE_DO_ACTIVITY, inputText)
                .thenAccept(response -> {
-                  if (!response.body()) {
+                  if (response.body() == null || response.body().isEmpty()) {
                      throw new GLSPServerException("Could not change Behavior to: " + inputText);
                   }
                });
@@ -121,12 +99,12 @@ public class StateMachineLabelEditOperationHandler
 
          case StateMachineTypes.STATE_EXIT_ACTIVITY:
             containerElementId = UmlIDUtil.getElementIdFromHeaderLabel(graphicalElementId);
-            behavior = getOrThrow(modelIndex.getSemantic(containerElementId),
+            behavior = getOrThrow(modelIndex.getEObject(containerElementId),
                Behavior.class, "No valid container with id " + graphicalElementId + " found");
 
             modelAccess.setBehaviorInState(modelState, behavior, StateMachineTypes.STATE_EXIT_ACTIVITY, inputText)
                .thenAccept(response -> {
-                  if (!response.body()) {
+                  if (response.body() == null || response.body().isEmpty()) {
                      throw new GLSPServerException("Could not change Behavior to: " + inputText);
                   }
                });
@@ -138,4 +116,5 @@ public class StateMachineLabelEditOperationHandler
 
    @Override
    public String getLabel() { return "Apply label"; }
+   */
 }

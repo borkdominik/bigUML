@@ -13,7 +13,8 @@ package com.eclipsesource.uml.glsp.actions;
 import java.util.List;
 import java.util.Optional;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSOperationHandler;
 import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.operations.Operation;
@@ -21,7 +22,7 @@ import org.eclipse.glsp.server.operations.OperationActionHandler;
 import org.eclipse.glsp.server.operations.OperationHandler;
 
 public class UmlOperationActionHandler extends OperationActionHandler {
-   private static Logger LOGGER = Logger.getLogger(UmlOperationActionHandler.class.getSimpleName());
+   private static Logger LOGGER = LogManager.getLogger(UmlOperationActionHandler.class.getSimpleName());
 
    @Override
    public List<Action> executeAction(final Operation operation) {

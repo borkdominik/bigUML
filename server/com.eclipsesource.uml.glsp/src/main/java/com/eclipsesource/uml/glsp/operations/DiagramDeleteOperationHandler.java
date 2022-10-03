@@ -12,11 +12,10 @@ package com.eclipsesource.uml.glsp.operations;
 
 import org.eclipse.emf.ecore.EObject;
 
-import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 
 public interface DiagramDeleteOperationHandler {
    boolean supports(Representation representation);
 
-   void delete(EObject semanticElement, UmlModelServerAccess modelAccess);
+   void delete(EObject semanticElement);
 }

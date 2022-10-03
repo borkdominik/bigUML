@@ -22,7 +22,7 @@ import com.eclipsesource.uml.glsp.uml.statemachine_diagram.StateMachineIdUtil;
 import com.eclipsesource.uml.glsp.uml.statemachine_diagram.constants.StateMachineTypes;
 import com.eclipsesource.uml.glsp.utils.UmlConfig.CSS;
 import com.eclipsesource.uml.glsp.utils.UmlIDUtil;
-import com.eclipsesource.uml.modelserver.unotation.Edge;
+import org.eclipse.glsp.server.emf.model.notation.Edge;
 
 public class StateMachineDiagramEdgeFactory extends StateMachineAbstractGModelFactory<Transition, GEdge> {
 

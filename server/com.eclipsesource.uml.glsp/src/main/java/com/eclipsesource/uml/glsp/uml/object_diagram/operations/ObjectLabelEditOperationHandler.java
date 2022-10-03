@@ -10,30 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.object_diagram.operations;
 
-import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSBasicOperationHandler;
-import org.eclipse.glsp.graph.GModelElement;
-import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperation;
-import org.eclipse.glsp.server.types.GLSPServerException;
-import org.eclipse.uml2.uml.Constraint;
-import org.eclipse.uml2.uml.Element;
-import org.eclipse.uml2.uml.InstanceSpecification;
-import org.eclipse.uml2.uml.NamedElement;
-import org.eclipse.uml2.uml.Property;
-
-import com.eclipsesource.uml.glsp.model.UmlModelIndex;
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.uml.object_diagram.ObjectModelServerAccess;
-import com.eclipsesource.uml.glsp.uml.object_diagram.constants.ObjectTypes;
-import com.eclipsesource.uml.glsp.utils.UmlConfig.Types;
-import com.eclipsesource.uml.glsp.utils.UmlIDUtil;
-
-public class ObjectLabelEditOperationHandler
-   extends EMSBasicOperationHandler<ApplyLabelEditOperation, ObjectModelServerAccess> {
+public class ObjectLabelEditOperationHandler { /*-
 
    protected UmlModelState getUmlModelState() { return (UmlModelState) getEMSModelState(); }
 
@@ -52,27 +29,27 @@ public class ObjectLabelEditOperationHandler
       switch (label.getType()) {
          case Types.LABEL_NAME:
             String containerElementId = UmlIDUtil.getElementIdFromHeaderLabel(graphicalElementId);
-            Element semanticElement = getOrThrow(modelIndex.getSemantic(containerElementId),
+            Element semanticElement = getOrThrow(modelIndex.getEObject(containerElementId),
                Element.class, "No valid container with id " + graphicalElementId + " found");
 
             if (semanticElement instanceof Constraint) {
                modelAccess.setConditionBody(modelState, (Constraint) semanticElement, inputText)
                   .thenAccept(response -> {
-                     if (!response.body()) {
+                     if (response.body() == null || response.body().isEmpty()) {
                         throw new GLSPServerException("Could not change Property to: " + inputText);
                      }
                   });
             } else if (semanticElement instanceof InstanceSpecification) {
                modelAccess.setObjectName(modelState, (InstanceSpecification) semanticElement, inputText)
                   .thenAccept(response -> {
-                     if (!response.body()) {
+                     if (response.body() == null || response.body().isEmpty()) {
                         throw new GLSPServerException("Could not rename Object to: " + inputText);
                      }
                   });
             } else if (semanticElement instanceof NamedElement) {
                modelAccess.renameElement(modelState, (NamedElement) semanticElement, inputText)
                   .thenAccept(response -> {
-                     if (!response.body()) {
+                     if (response.body() == null || response.body().isEmpty()) {
                         throw new GLSPServerException("Could not change Property to: " + inputText);
                      }
                   });
@@ -80,7 +57,7 @@ public class ObjectLabelEditOperationHandler
             break;
 
          case ObjectTypes.ATTRIBUTE:
-            Property objectAttribute = getOrThrow(modelIndex.getSemantic(graphicalElementId),
+            Property objectAttribute = getOrThrow(modelIndex.getEObject(graphicalElementId),
                Property.class, "No valid container with id " + graphicalElementId + " found");
 
             String attributeName = getNameFromInput(inputText);
@@ -89,7 +66,7 @@ public class ObjectLabelEditOperationHandler
 
             modelAccess.setAttribute(modelState, objectAttribute, attributeName, attributeType, attributeBounds)
                .thenAccept(response -> {
-                  if (!response.body()) {
+                  if (response.body() == null || response.body().isEmpty()) {
                      throw new GLSPServerException("Could not change Attribute to: " + inputText);
                   }
                });
@@ -138,5 +115,5 @@ public class ObjectLabelEditOperationHandler
       }
       return bounds.trim();
    }
-
+   */
 }

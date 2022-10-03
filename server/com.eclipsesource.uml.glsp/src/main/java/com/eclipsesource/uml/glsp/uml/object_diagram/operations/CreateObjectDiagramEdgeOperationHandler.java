@@ -1,23 +1,6 @@
 package com.eclipsesource.uml.glsp.uml.object_diagram.operations;
 
-import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
-
-import java.util.List;
-
-import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSBasicCreateOperationHandler;
-import org.eclipse.glsp.server.operations.CreateEdgeOperation;
-import org.eclipse.glsp.server.operations.Operation;
-import org.eclipse.glsp.server.types.GLSPServerException;
-import org.eclipse.uml2.uml.Class;
-import org.eclipse.uml2.uml.NamedElement;
-
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.uml.object_diagram.ObjectModelServerAccess;
-import com.eclipsesource.uml.glsp.uml.object_diagram.constants.ObjectTypes;
-import com.google.common.collect.Lists;
-
-public class CreateObjectDiagramEdgeOperationHandler
-   extends EMSBasicCreateOperationHandler<CreateEdgeOperation, ObjectModelServerAccess> {
+public class CreateObjectDiagramEdgeOperationHandler { /*-
 
    public CreateObjectDiagramEdgeOperationHandler() {
       super(handledElementTypeIds);
@@ -44,15 +27,15 @@ public class CreateObjectDiagramEdgeOperationHandler
       String sourceId = operation.getSourceElementId();
       String targetId = operation.getTargetElementId();
 
-      NamedElement source = getOrThrow(modelState.getIndex().getSemantic(sourceId), NamedElement.class,
+      NamedElement source = getOrThrow(modelState.getIndex().getEObject(sourceId), NamedElement.class,
          "No valid source element with id " + sourceId + " found");
-      NamedElement target = getOrThrow(modelState.getIndex().getSemantic(targetId), NamedElement.class,
+      NamedElement target = getOrThrow(modelState.getIndex().getEObject(targetId), NamedElement.class,
          "No valid target element with id " + targetId + " found");
 
       if (ObjectTypes.LINK.equals(operation.getElementTypeId())) {
          modelAccess.addLink(modelState, (Class) source, (Class) target)
             .thenAccept(response -> {
-               if (!response.body()) {
+               if (response.body() == null || response.body().isEmpty()) {
                   throw new GLSPServerException("Could not execute create operation on new Association edge");
                }
             });
@@ -63,4 +46,5 @@ public class CreateObjectDiagramEdgeOperationHandler
 
    @Override
    public String getLabel() { return "create uml edge"; }
+   */
 }

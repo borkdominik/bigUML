@@ -8,24 +8,24 @@
  * 
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  */
-package com.eclipsesource.uml.modelserver.unotation;
+package notation;
 
 import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Notation Element</b></em>'.
+ * A representation of the model object '<em><b>Element</b></em>'.
  * <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link com.eclipsesource.uml.modelserver.unotation.NotationElement#getSemanticElement <em>Semantic Element</em>}</li>
- *   <li>{@link com.eclipsesource.uml.modelserver.unotation.NotationElement#getType <em>Type</em>}</li>
+ *   <li>{@link notation.NotationElement#getSemanticElement <em>Semantic Element</em>}</li>
+ *   <li>{@link notation.NotationElement#getType <em>Type</em>}</li>
  * </ul>
  *
- * @see com.eclipsesource.uml.modelserver.unotation.UnotationPackage#getNotationElement()
+ * @see notation.NotationPackage#getNotationElement()
  * @model abstract="true"
  * @generated
  */
@@ -35,22 +35,22 @@ public interface NotationElement extends EObject {
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @return the value of the '<em>Semantic Element</em>' containment reference.
-    * @see #setSemanticElement(SemanticProxy)
-    * @see com.eclipsesource.uml.modelserver.unotation.UnotationPackage#getNotationElement_SemanticElement()
+    * @see #setSemanticElement(SemanticElementReference)
+    * @see notation.NotationPackage#getNotationElement_SemanticElement()
     * @model containment="true"
     * @generated
     */
-   SemanticProxy getSemanticElement();
+   SemanticElementReference getSemanticElement();
 
    /**
-    * Sets the value of the '{@link com.eclipsesource.uml.modelserver.unotation.NotationElement#getSemanticElement <em>Semantic Element</em>}' containment reference.
+    * Sets the value of the '{@link notation.NotationElement#getSemanticElement <em>Semantic Element</em>}' containment reference.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @param value the new value of the '<em>Semantic Element</em>' containment reference.
     * @see #getSemanticElement()
     * @generated
     */
-   void setSemanticElement(SemanticProxy value);
+   void setSemanticElement(SemanticElementReference value);
 
    /**
     * Returns the value of the '<em><b>Type</b></em>' attribute.
@@ -58,14 +58,14 @@ public interface NotationElement extends EObject {
     * <!-- end-user-doc -->
     * @return the value of the '<em>Type</em>' attribute.
     * @see #setType(String)
-    * @see com.eclipsesource.uml.modelserver.unotation.UnotationPackage#getNotationElement_Type()
+    * @see notation.NotationPackage#getNotationElement_Type()
     * @model
     * @generated
     */
    String getType();
 
    /**
-    * Sets the value of the '{@link com.eclipsesource.uml.modelserver.unotation.NotationElement#getType <em>Type</em>}' attribute.
+    * Sets the value of the '{@link notation.NotationElement#getType <em>Type</em>}' attribute.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @param value the new value of the '<em>Type</em>' attribute.

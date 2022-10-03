@@ -11,10 +11,8 @@
 package com.eclipsesource.uml.glsp.uml.statemachine_diagram.gmodel;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.glsp.graph.GGraph;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.Pseudostate;
@@ -25,7 +23,6 @@ import org.eclipse.uml2.uml.Transition;
 import org.eclipse.uml2.uml.Vertex;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.modelserver.unotation.Diagram;
 
 public class UmlStateMachineDiagramModelFactory extends StateMachineDiagramFactory {
 
@@ -59,31 +56,24 @@ public class UmlStateMachineDiagramModelFactory extends StateMachineDiagramFacto
          result = stateMachineEdgeFactory.create((Transition) semanticElement);
       }
 
-      if (result == null) {
-         throw createFailed(semanticElement);
-      }
       return result;
    }
 
-   @Override
-   public GGraph create(final Diagram umlDiagram) {
-      GGraph graph = getOrCreateRoot();
-
-      if (umlDiagram.getSemanticElement().getResolvedElement() != null) {
-         Model umlModel = (Model) umlDiagram.getSemanticElement().getResolvedElement();
-
-         graph.setId(toId(umlModel));
-
-         // just StateMachine Elements are allowed on the first level under root (Model)
-         graph.getChildren().addAll(umlModel.getPackagedElements().stream()
-            .filter(StateMachine.class::isInstance)
-            .map(StateMachine.class::cast)
-            .map(this::create)
-            .collect(Collectors.toList()));
-
-      }
-      return graph;
-
-   }
-
+   /*
+    * @Override
+    * public GGraph create(final Diagram umlDiagram) {
+    * GGraph graph = getOrCreateRoot();
+    * if (umlDiagram.getSemanticElement().getResolvedElement() != null) {
+    * Model umlModel = (Model) umlDiagram.getSemanticElement().getResolvedElement();
+    * graph.setId(toId(umlModel));
+    * // just StateMachine Elements are allowed on the first level under root (Model)
+    * graph.getChildren().addAll(umlModel.getPackagedElements().stream()
+    * .filter(StateMachine.class::isInstance)
+    * .map(StateMachine.class::cast)
+    * .map(this::create)
+    * .collect(Collectors.toList()));
+    * }
+    * return graph;
+    * }
+    */
 }

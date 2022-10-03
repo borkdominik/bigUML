@@ -19,22 +19,18 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
 
 import org.eclipse.emfcloud.modelserver.client.Response;
-import org.eclipse.emfcloud.modelserver.client.v1.ModelServerClientV1;
+import org.eclipse.emfcloud.modelserver.client.v2.ModelServerClientV2;
 import org.eclipse.emfcloud.modelserver.common.ModelServerPathParametersV1;
 import org.eclipse.emfcloud.modelserver.common.codecs.Codec;
-import org.eclipse.emfcloud.modelserver.common.codecs.DefaultJsonCodec;
-import org.eclipse.emfcloud.modelserver.common.codecs.XmiCodec;
 import org.eclipse.emfcloud.modelserver.emf.configuration.EPackageConfiguration;
 import org.eclipse.emfcloud.modelserver.jsonschema.Json;
 import org.eclipse.uml2.uml.resource.UMLResource;
 
 import okhttp3.Request;
 
-public class UmlModelServerClient extends ModelServerClientV1 {
+public class UmlModelServerClient extends ModelServerClientV2 {
 
    private static final Map<String, Codec> SUPPORTED_UML_FORMATS = Map.of(
-      ModelServerPathParametersV1.FORMAT_JSON, new DefaultJsonCodec(),
-      ModelServerPathParametersV1.FORMAT_XMI, new XmiCodec(),
       UMLResource.FILE_EXTENSION, new UmlCodec());
 
    public UmlModelServerClient(final String baseUrl, final EPackageConfiguration... configurations)

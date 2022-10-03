@@ -10,40 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.deployment_diagram.operations;
 
-import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
-
-import java.util.List;
-import java.util.Optional;
-
-import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSBasicCreateOperationHandler;
-import org.eclipse.glsp.graph.GBoundsAware;
-import org.eclipse.glsp.graph.GCompartment;
-import org.eclipse.glsp.graph.GGraph;
-import org.eclipse.glsp.graph.GModelElement;
-import org.eclipse.glsp.graph.GNode;
-import org.eclipse.glsp.graph.GPoint;
-import org.eclipse.glsp.graph.util.GraphUtil;
-import org.eclipse.glsp.server.operations.CreateNodeOperation;
-import org.eclipse.glsp.server.operations.Operation;
-import org.eclipse.glsp.server.types.GLSPServerException;
-import org.eclipse.glsp.server.utils.GeometryUtil;
-import org.eclipse.uml2.uml.Artifact;
-import org.eclipse.uml2.uml.Device;
-import org.eclipse.uml2.uml.ExecutionEnvironment;
-import org.eclipse.uml2.uml.Model;
-import org.eclipse.uml2.uml.NamedElement;
-import org.eclipse.uml2.uml.Node;
-import org.eclipse.uml2.uml.PackageableElement;
-
-import com.eclipsesource.uml.glsp.model.UmlModelIndex;
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.uml.deployment_diagram.DeploymentModelServerAccess;
-import com.eclipsesource.uml.glsp.uml.deployment_diagram.constants.DeploymentTypes;
-import com.eclipsesource.uml.modelserver.unotation.Shape;
-import com.google.common.collect.Lists;
-
-public class CreateDeploymentDiagramNodeOperationHandler
-   extends EMSBasicCreateOperationHandler<CreateNodeOperation, DeploymentModelServerAccess> {
+public class CreateDeploymentDiagramNodeOperationHandler { /*-
 
    public CreateDeploymentDiagramNodeOperationHandler() {
       super(handledElementTypeIds);
@@ -73,12 +40,12 @@ public class CreateDeploymentDiagramNodeOperationHandler
       switch (operation.getElementTypeId()) {
          case DeploymentTypes.DEPLOYMENT_NODE: {
             NamedElement parentContainer = getOrThrow(
-               modelIndex.getSemantic(operation.getContainerId(), NamedElement.class),
+               modelIndex.getEObject(operation.getContainerId(), NamedElement.class),
                "No parent container found!");
             if (parentContainer instanceof Model) {
                modelAccess.addNode(getUmlModelState(), operation.getLocation(), Model.class.cast(parentContainer))
                   .thenAccept(response -> {
-                     if (!response.body()) {
+                     if (response.body() == null || response.body().isEmpty()) {
                         throw new GLSPServerException("Could not execute create operation on new deployment node");
                      }
                   });
@@ -89,7 +56,7 @@ public class CreateDeploymentDiagramNodeOperationHandler
                   getStructureCompartmentGModelElement(container));
                modelAccess.addNode(getUmlModelState(), relativeLocation, Node.class.cast(parentContainer))
                   .thenAccept(response -> {
-                     if (!response.body()) {
+                     if (response.body() == null || response.body().isEmpty()) {
                         throw new GLSPServerException("Could not execute create operation on new deployment node");
                      }
                   });
@@ -98,12 +65,12 @@ public class CreateDeploymentDiagramNodeOperationHandler
          }
          case DeploymentTypes.ARTIFACT: {
             NamedElement parentContainer = getOrThrow(
-               modelIndex.getSemantic(operation.getContainerId(), NamedElement.class),
+               modelIndex.getEObject(operation.getContainerId(), NamedElement.class),
                "No parent container found!");
             if (parentContainer instanceof Model) {
                modelAccess.addArtifact(getUmlModelState(), operation.getLocation(), Model.class.cast(parentContainer))
                   .thenAccept(response -> {
-                     if (!response.body()) {
+                     if (response.body() == null || response.body().isEmpty()) {
                         throw new GLSPServerException("Could not execute create operation on new deployment node");
                      }
                   });
@@ -113,7 +80,7 @@ public class CreateDeploymentDiagramNodeOperationHandler
                   getStructureCompartmentGModelElement(container));
                modelAccess.addArtifact(getUmlModelState(), relativeLocation, Artifact.class.cast(parentContainer))
                   .thenAccept(response -> {
-                     if (!response.body()) {
+                     if (response.body() == null || response.body().isEmpty()) {
                         throw new GLSPServerException(
                            "Could not execute create operation on new execution environment node");
                      }
@@ -123,7 +90,7 @@ public class CreateDeploymentDiagramNodeOperationHandler
          }
          case DeploymentTypes.EXECUTION_ENVIRONMENT: {
             NamedElement parentContainer = getOrThrow(
-               modelIndex.getSemantic(operation.getContainerId(), NamedElement.class),
+               modelIndex.getEObject(operation.getContainerId(), NamedElement.class),
                "No container object was found");
 
             if (parentContainer instanceof Model) {
@@ -131,7 +98,7 @@ public class CreateDeploymentDiagramNodeOperationHandler
                   .addExecutionEnvironment(getUmlModelState(), operation.getLocation(),
                      Model.class.cast(parentContainer))
                   .thenAccept(response -> {
-                     if (!response.body()) {
+                     if (response.body() == null || response.body().isEmpty()) {
                         throw new GLSPServerException(
                            "Could not execute create operation on new execution environment node");
                      }
@@ -144,7 +111,7 @@ public class CreateDeploymentDiagramNodeOperationHandler
                   .addExecutionEnvironment(getUmlModelState(), relativeLocation,
                      ExecutionEnvironment.class.cast(parentContainer))
                   .thenAccept(response -> {
-                     if (!response.body()) {
+                     if (response.body() == null || response.body().isEmpty()) {
                         throw new GLSPServerException(
                            "Could not execute create operation on new execution environment node");
                      }
@@ -154,13 +121,13 @@ public class CreateDeploymentDiagramNodeOperationHandler
          }
          case DeploymentTypes.DEVICE: {
             NamedElement parentContainer = getOrThrow(
-               modelIndex.getSemantic(operation.getContainerId(), NamedElement.class),
+               modelIndex.getEObject(operation.getContainerId(), NamedElement.class),
                "No container object was found");
 
             if (parentContainer instanceof Model) {
                modelAccess.addDevice(getUmlModelState(), operation.getLocation(), Model.class.cast(parentContainer))
                   .thenAccept(response -> {
-                     if (!response.body()) {
+                     if (response.body() == null || response.body().isEmpty()) {
                         throw new GLSPServerException("Could not execute create operation on new device node");
                      }
                   });
@@ -170,7 +137,7 @@ public class CreateDeploymentDiagramNodeOperationHandler
                   getStructureCompartmentGModelElement(container));
                modelAccess.addDevice(getUmlModelState(), relativeLocation, Device.class.cast(parentContainer))
                   .thenAccept(response -> {
-                     if (!response.body()) {
+                     if (response.body() == null || response.body().isEmpty()) {
                         throw new GLSPServerException("Could not execute create operation on new device node");
                      }
                   });
@@ -180,14 +147,14 @@ public class CreateDeploymentDiagramNodeOperationHandler
          case DeploymentTypes.DEPLOYMENT_SPECIFICATION: {
             String containerId = operation.getContainerId();
 
-            PackageableElement container = getOrThrow(modelState.getIndex().getSemantic(containerId),
+            PackageableElement container = getOrThrow(modelState.getIndex().getEObject(containerId),
                PackageableElement.class, "No valid container with id " + operation.getContainerId() + " found");
 
             Optional<GPoint> location = getDeploymentSpecificationPosition(modelState, container,
                operation.getLocation().orElse(GraphUtil.point(0, 0)));
 
             modelAccess.addDeploymentSpecification(modelState, location, container).thenAccept(response -> {
-               if (!response.body()) {
+               if (response.body() == null || response.body().isEmpty()) {
                   throw new GLSPServerException(
                      "Could not execute create operation on new DeploymentSpecification node");
                }
@@ -248,5 +215,5 @@ public class CreateDeploymentDiagramNodeOperationHandler
 
    @Override
    public String getLabel() { return "Create uml classifier"; }
-
+   */
 }

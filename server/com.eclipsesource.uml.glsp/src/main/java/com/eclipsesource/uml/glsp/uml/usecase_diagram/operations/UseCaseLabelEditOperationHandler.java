@@ -10,29 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.usecase_diagram.operations;
 
-import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
-
-import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSBasicOperationHandler;
-import org.eclipse.glsp.graph.GModelElement;
-import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperation;
-import org.eclipse.glsp.server.types.GLSPServerException;
-import org.eclipse.uml2.uml.Actor;
-import org.eclipse.uml2.uml.Constraint;
-import org.eclipse.uml2.uml.Element;
-import org.eclipse.uml2.uml.ExtensionPoint;
-import org.eclipse.uml2.uml.NamedElement;
-import org.eclipse.uml2.uml.Package;
-import org.eclipse.uml2.uml.UseCase;
-
-import com.eclipsesource.uml.glsp.model.UmlModelIndex;
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.uml.usecase_diagram.UseCaseModelServerAccess;
-import com.eclipsesource.uml.glsp.uml.usecase_diagram.constants.UseCaseTypes;
-import com.eclipsesource.uml.glsp.utils.UmlConfig.Types;
-import com.eclipsesource.uml.glsp.utils.UmlIDUtil;
-
-public class UseCaseLabelEditOperationHandler
-   extends EMSBasicOperationHandler<ApplyLabelEditOperation, UseCaseModelServerAccess> {
+public class UseCaseLabelEditOperationHandler { /*-
 
    protected UmlModelState getUmlModelState() { return (UmlModelState) getEMSModelState(); }
 
@@ -51,41 +29,41 @@ public class UseCaseLabelEditOperationHandler
       switch (label.getType()) {
          case Types.LABEL_NAME:
             String containerElementId = UmlIDUtil.getElementIdFromHeaderLabel(graphicalElementId);
-            Element semanticElement = getOrThrow(modelIndex.getSemantic(containerElementId),
+            Element semanticElement = getOrThrow(modelIndex.getEObject(containerElementId),
                Element.class, "No valid container with id " + graphicalElementId + " found");
 
             if (semanticElement instanceof Constraint) {
                modelAccess.setConditionBody(modelState, (Constraint) semanticElement, inputText)
                   .thenAccept(response -> {
-                     if (!response.body()) {
+                     if (response.body() == null || response.body().isEmpty()) {
                         throw new GLSPServerException("Could not change Property to: " + inputText);
                      }
                   });
             } else if (semanticElement instanceof Package) {
                modelAccess.setPackageName(modelState, (Package) semanticElement, inputText)
                   .thenAccept(response -> {
-                     if (!response.body()) {
+                     if (response.body() == null || response.body().isEmpty()) {
                         throw new GLSPServerException("Could not rename Package to: " + inputText);
                      }
                   });
             } else if (semanticElement instanceof Actor) {
                modelAccess.setActorName(modelState, (Actor) semanticElement, inputText)
                   .thenAccept(response -> {
-                     if (!response.body()) {
+                     if (response.body() == null || response.body().isEmpty()) {
                         throw new GLSPServerException("Could not rename Actor to: " + inputText);
                      }
                   });
             } else if (semanticElement instanceof UseCase) {
                modelAccess.setUseCaseName(modelState, (UseCase) semanticElement, inputText)
                   .thenAccept(response -> {
-                     if (!response.body()) {
+                     if (response.body() == null || response.body().isEmpty()) {
                         throw new GLSPServerException("Could not rename UseCase to: " + inputText);
                      }
                   });
             } else if (semanticElement instanceof NamedElement) {
                modelAccess.renameElement(modelState, (NamedElement) semanticElement, inputText)
                   .thenAccept(response -> {
-                     if (!response.body()) {
+                     if (response.body() == null || response.body().isEmpty()) {
                         throw new GLSPServerException("Could not change Property to: " + inputText);
                      }
                   });
@@ -93,12 +71,12 @@ public class UseCaseLabelEditOperationHandler
             break;
 
          case UseCaseTypes.EXTENSIONPOINT:
-            ExtensionPoint ep = getOrThrow(modelIndex.getSemantic(graphicalElementId),
+            ExtensionPoint ep = getOrThrow(modelIndex.getEObject(graphicalElementId),
                ExtensionPoint.class, "No valid container with id " + graphicalElementId + " found");
 
             modelAccess.setExtensionPointName(modelState, ep, inputText)
                .thenAccept(response -> {
-                  if (!response.body()) {
+                  if (response.body() == null || response.body().isEmpty()) {
                      throw new GLSPServerException("Could not change ExtensionPoint Name to: " + inputText);
                   }
                });
@@ -110,4 +88,5 @@ public class UseCaseLabelEditOperationHandler
 
    @Override
    public String getLabel() { return "Apply label"; }
+   */
 }

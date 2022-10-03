@@ -18,12 +18,11 @@ import org.eclipse.glsp.server.types.GLSPServerException;
 import org.eclipse.uml2.uml.Comment;
 import org.eclipse.uml2.uml.Element;
 
-import com.eclipsesource.uml.glsp.model.UmlModelIndex;
+import com.eclipsesource.uml.glsp.model.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.operations.DiagramEditLabelOperationHandler;
-import com.eclipsesource.uml.glsp.utils.UmlIDUtil;
 import com.eclipsesource.uml.glsp.utils.UmlConfig.Types;
+import com.eclipsesource.uml.glsp.utils.UmlIDUtil;
 import com.eclipsesource.uml.modelserver.commands.activitydiagram.comment.SetBodyCommandContribution;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
@@ -33,14 +32,17 @@ public class CommonLabelEditOperationHandler implements DiagramEditLabelOperatio
    @Inject
    protected UmlModelState modelState;
 
+   @Inject
+   private UmlModelServerAccess modelServerAccess;
+
    @Override
    public boolean supports(final Representation representation) {
       return true;
    }
 
    @Override
-   public void edit(final ApplyLabelEditOperation editLabelOperation, final UmlModelServerAccess modelAccess) {
-      UmlModelIndex modelIndex = modelState.getIndex();
+   public void edit(final ApplyLabelEditOperation editLabelOperation) {
+      var modelIndex = modelState.getIndex();
 
       String inputText = editLabelOperation.getText().trim();
       String graphicalElementId = editLabelOperation.getLabelId();
@@ -52,13 +54,13 @@ public class CommonLabelEditOperationHandler implements DiagramEditLabelOperatio
 
          case Types.LABEL_NAME:
             String containerElementId = UmlIDUtil.getElementIdFromHeaderLabel(graphicalElementId);
-            Element semanticElement = getOrThrow(modelIndex.getSemantic(containerElementId),
+            Element semanticElement = getOrThrow(modelIndex.getEObject(containerElementId),
                Element.class, "No valid container with id " + graphicalElementId + " found");
 
             if (semanticElement instanceof Comment) {
-               modelAccess.exec(SetBodyCommandContribution.create((Comment) semanticElement, inputText))
+               modelServerAccess.exec(SetBodyCommandContribution.create((Comment) semanticElement, inputText))
                   .thenAccept(response -> {
-                     if (!response.body()) {
+                     if (response.body() == null || response.body().isEmpty()) {
                         throw new GLSPServerException("Could not change comment to: " + inputText);
                      }
                   });

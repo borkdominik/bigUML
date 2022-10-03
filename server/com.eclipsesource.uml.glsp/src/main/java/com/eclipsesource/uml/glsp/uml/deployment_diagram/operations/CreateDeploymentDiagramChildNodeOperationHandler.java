@@ -1,27 +1,7 @@
 package com.eclipsesource.uml.glsp.uml.deployment_diagram.operations;
 
-import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
+public class CreateDeploymentDiagramChildNodeOperationHandler { /*-
 
-import java.util.List;
-
-import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSBasicCreateOperationHandler;
-import org.eclipse.glsp.graph.GPoint;
-import org.eclipse.glsp.graph.util.GraphUtil;
-import org.eclipse.glsp.server.operations.CreateNodeOperation;
-import org.eclipse.glsp.server.operations.Operation;
-import org.eclipse.glsp.server.types.GLSPServerException;
-import org.eclipse.uml2.uml.Device;
-import org.eclipse.uml2.uml.Element;
-import org.eclipse.uml2.uml.NamedElement;
-
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.uml.deployment_diagram.DeploymentModelServerAccess;
-import com.eclipsesource.uml.glsp.uml.deployment_diagram.constants.DeploymentTypes;
-import com.eclipsesource.uml.modelserver.unotation.Shape;
-import com.google.common.collect.Lists;
-
-public class CreateDeploymentDiagramChildNodeOperationHandler
-   extends EMSBasicCreateOperationHandler<CreateNodeOperation, DeploymentModelServerAccess> {
 
    public CreateDeploymentDiagramChildNodeOperationHandler() {
       super(handledElementTypeIds);
@@ -46,7 +26,7 @@ public class CreateDeploymentDiagramChildNodeOperationHandler
 
       UmlModelState modelState = getUmlModelState();
       String containerId = operation.getContainerId();
-      NamedElement container = getOrThrow(modelState.getIndex().getSemantic(containerId), NamedElement.class,
+      NamedElement container = getOrThrow(modelState.getIndex().getEObject(containerId), NamedElement.class,
          "No valid container with id " + containerId + " found");
       System.out.println("CONTAINER " + container.getLabel());
       String elementTypeId = operation.getElementTypeId();
@@ -56,7 +36,7 @@ public class CreateDeploymentDiagramChildNodeOperationHandler
       if (DeploymentTypes.DEPLOYMENT_COMPONENT.equals(elementTypeId)) {
          modelAccess.addDeploymentComponent(modelState, location, container)
             .thenAccept(response -> {
-               if (!response.body()) {
+               if (response.body() == null || response.body().isEmpty()) {
                   throw new GLSPServerException("Could not execute create operation on new Component node");
                }
             });
@@ -79,4 +59,5 @@ public class CreateDeploymentDiagramChildNodeOperationHandler
 
    @Override
    public String getLabel() { return "Create deployment child node"; }
+   */
 }

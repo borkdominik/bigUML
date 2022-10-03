@@ -12,27 +12,28 @@ package com.eclipsesource.uml.glsp.actions;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.eclipse.emfcloud.modelserver.glsp.actions.handlers.AbstractEMSActionHandler;
 import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.ServerMessageAction;
 import org.eclipse.glsp.server.features.validation.Marker;
 import org.eclipse.glsp.server.features.validation.ModelValidator;
 import org.eclipse.glsp.server.features.validation.RequestMarkersAction;
-import org.eclipse.glsp.server.features.validation.RequestMarkersHandler;
 import org.eclipse.glsp.server.features.validation.SetMarkersAction;
 import org.eclipse.glsp.server.types.Severity;
 
-import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.google.inject.Inject;
 
-public class UmlRequestMarkersHandler extends RequestMarkersHandler {
+public class UmlRequestMarkersHandler extends AbstractEMSActionHandler<RequestMarkersAction> {
 
-   private static final Logger LOG = Logger.getLogger(UmlRequestMarkersHandler.class);
+   private static final Logger LOG = LogManager.getLogger(UmlRequestMarkersHandler.class);
 
    @Inject
-   protected UmlModelState modelState;
+   protected Optional<ModelValidator> validator;
 
    @Override
    @SuppressWarnings("checkstyle:cyclomaticComplexity")

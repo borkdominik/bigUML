@@ -16,7 +16,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSBasicCreateOperationHandler;
+import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.AbstractEMSOperationHandler;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.actions.ServerMessageAction;
 import org.eclipse.glsp.server.operations.CreateEdgeOperation;
@@ -25,24 +25,23 @@ import org.eclipse.glsp.server.types.GLSPServerException;
 import org.eclipse.glsp.server.types.Severity;
 import org.eclipse.uml2.uml.Lifeline;
 
-import com.eclipsesource.uml.glsp.model.UmlModelIndex;
+import com.eclipsesource.uml.glsp.model.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.uml.communication_diagram.constants.CommunicationTypes;
 import com.eclipsesource.uml.modelserver.commands.communication.message.AddMessageCommandContribution;
 import com.google.common.collect.Lists;
 
 public class CreateMessageEdgeOperationHandler
-   extends EMSBasicCreateOperationHandler<CreateEdgeOperation, UmlModelServerAccess> {
+   extends AbstractEMSOperationHandler<CreateEdgeOperation> {
+   private static List<String> handledElementTypeIds = Lists.newArrayList(CommunicationTypes.MESSAGE);
 
    @Inject
    private ActionDispatcher actionDispatcher;
+   @Inject
+   protected UmlModelState modelState;
 
-   public CreateMessageEdgeOperationHandler() {
-      super(handledElementTypeIds);
-   }
-
-   private static List<String> handledElementTypeIds = Lists.newArrayList(CommunicationTypes.MESSAGE);
+   @Inject
+   private UmlModelServerAccess modelServerAccess;
 
    @Override
    public boolean handles(final Operation execAction) {
@@ -53,18 +52,14 @@ public class CreateMessageEdgeOperationHandler
       return false;
    }
 
-   protected UmlModelState getUmlModelState() { return (UmlModelState) getEMSModelState(); }
-
    @Override
-   public void executeOperation(final CreateEdgeOperation operation, final UmlModelServerAccess modelAccess) {
-      String elementTypeId = operation.getElementTypeId();
+   public void executeOperation(final CreateEdgeOperation operation) {
+      var elementTypeId = operation.getElementTypeId();
+      var modelIndex = modelState.getIndex();
 
-      UmlModelState modelState = getUmlModelState();
-      UmlModelIndex modelIndex = modelState.getIndex();
-
-      Lifeline sourceLifeline = getOrThrow(modelIndex.getSemantic(operation.getSourceElementId(), Lifeline.class),
+      Lifeline sourceLifeline = getOrThrow(modelIndex.getEObject(operation.getSourceElementId(), Lifeline.class),
          "No semantic Lifeline found for source element with id " + operation.getSourceElementId());
-      Lifeline targetLifeline = getOrThrow(modelIndex.getSemantic(operation.getTargetElementId(), Lifeline.class),
+      Lifeline targetLifeline = getOrThrow(modelIndex.getEObject(operation.getTargetElementId(), Lifeline.class),
          "No semantic Lifeline found for target element with id" + operation.getTargetElementId());
 
       if (!sourceLifeline.getInteraction().equals(targetLifeline.getInteraction())) {
@@ -75,12 +70,12 @@ public class CreateMessageEdgeOperationHandler
       }
 
       if (elementTypeId.equals(CommunicationTypes.MESSAGE)) {
-         modelAccess
+         modelServerAccess
             .exec(AddMessageCommandContribution.create(
                sourceLifeline,
                targetLifeline))
             .thenAccept(response -> {
-               if (!response.body()) {
+               if (response.body() == null || response.body().isEmpty()) {
                   throw new GLSPServerException("Could not execute create operation on new Message edge");
                }
             });

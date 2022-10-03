@@ -1,32 +1,6 @@
 package com.eclipsesource.uml.glsp.uml.statemachine_diagram.operations;
 
-import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
-
-import java.util.List;
-import java.util.Optional;
-
-import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSBasicCreateOperationHandler;
-import org.eclipse.glsp.graph.GBoundsAware;
-import org.eclipse.glsp.graph.GCompartment;
-import org.eclipse.glsp.graph.GGraph;
-import org.eclipse.glsp.graph.GModelElement;
-import org.eclipse.glsp.graph.GNode;
-import org.eclipse.glsp.graph.GPoint;
-import org.eclipse.glsp.graph.util.GraphUtil;
-import org.eclipse.glsp.server.operations.CreateNodeOperation;
-import org.eclipse.glsp.server.operations.Operation;
-import org.eclipse.glsp.server.types.GLSPServerException;
-import org.eclipse.glsp.server.utils.GeometryUtil;
-import org.eclipse.uml2.uml.NamedElement;
-
-import com.eclipsesource.uml.glsp.model.UmlModelIndex;
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.uml.statemachine_diagram.StateMachineModelServerAccess;
-import com.eclipsesource.uml.glsp.uml.statemachine_diagram.constants.StateMachineTypes;
-import com.google.common.collect.Lists;
-
-public class CreateStateMachineDiagramNodeOperationHandler
-   extends EMSBasicCreateOperationHandler<CreateNodeOperation, StateMachineModelServerAccess> {
+public class CreateStateMachineDiagramNodeOperationHandler { /*-
 
    public CreateStateMachineDiagramNodeOperationHandler() {
       super(handledElementTypeIds);
@@ -58,14 +32,14 @@ public class CreateStateMachineDiagramNodeOperationHandler
          case StateMachineTypes.STATE_MACHINE:
             modelAccess.addStateMachine(UmlModelState.getModelState(modelState), operation.getLocation())
                .thenAccept(response -> {
-                  if (!response.body()) {
+                  if (response.body() == null || response.body().isEmpty()) {
                      throw new GLSPServerException("Could not execute create operation on new State Machine node");
                   }
                });
             break;
          case StateMachineTypes.REGION:
             NamedElement parentContainer = getOrThrow(
-               modelIndex.getSemantic(operation.getContainerId(), NamedElement.class),
+               modelIndex.getEObject(operation.getContainerId(), NamedElement.class),
                "No semantic container object found for source element with id " + operation.getContainerId());
             if (parentContainer != null) {
                Optional<GModelElement> container = modelIndex.get(operation.getContainerId());
@@ -77,7 +51,7 @@ public class CreateStateMachineDiagramNodeOperationHandler
                modelAccess.addRegion(UmlModelState.getModelState(modelState), parentContainer,
                   relativeLocation)
                   .thenAccept(response -> {
-                     if (!response.body()) {
+                     if (response.body() == null || response.body().isEmpty()) {
                         throw new GLSPServerException("Could not execute create operation on new State Machine node");
                      }
                   });
@@ -116,4 +90,5 @@ public class CreateStateMachineDiagramNodeOperationHandler
 
    @Override
    public String getLabel() { return "Create uml state machine"; }
+   */
 }

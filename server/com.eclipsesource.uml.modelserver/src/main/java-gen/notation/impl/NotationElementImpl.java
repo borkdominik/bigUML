@@ -8,11 +8,11 @@
  * 
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  */
-package com.eclipsesource.uml.modelserver.unotation.impl;
+package notation.impl;
 
-import com.eclipsesource.uml.modelserver.unotation.NotationElement;
-import com.eclipsesource.uml.modelserver.unotation.SemanticProxy;
-import com.eclipsesource.uml.modelserver.unotation.UnotationPackage;
+import notation.NotationElement;
+import notation.NotationPackage;
+import notation.SemanticElementReference;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -25,14 +25,14 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Notation Element</b></em>'.
+ * An implementation of the model object '<em><b>Element</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link com.eclipsesource.uml.modelserver.unotation.impl.NotationElementImpl#getSemanticElement <em>Semantic Element</em>}</li>
- *   <li>{@link com.eclipsesource.uml.modelserver.unotation.impl.NotationElementImpl#getType <em>Type</em>}</li>
+ *   <li>{@link notation.impl.NotationElementImpl#getSemanticElement <em>Semantic Element</em>}</li>
+ *   <li>{@link notation.impl.NotationElementImpl#getType <em>Type</em>}</li>
  * </ul>
  *
  * @generated
@@ -46,7 +46,7 @@ public abstract class NotationElementImpl extends MinimalEObjectImpl.Container i
     * @generated
     * @ordered
     */
-   protected SemanticProxy semanticElement;
+   protected SemanticElementReference semanticElement;
 
    /**
     * The default value of the '{@link #getType() <em>Type</em>}' attribute.
@@ -84,7 +84,7 @@ public abstract class NotationElementImpl extends MinimalEObjectImpl.Container i
     */
    @Override
    protected EClass eStaticClass() {
-      return UnotationPackage.Literals.NOTATION_ELEMENT;
+      return NotationPackage.Literals.NOTATION_ELEMENT;
    }
 
    /**
@@ -93,7 +93,7 @@ public abstract class NotationElementImpl extends MinimalEObjectImpl.Container i
     * @generated
     */
    @Override
-   public SemanticProxy getSemanticElement() {
+   public SemanticElementReference getSemanticElement() {
       return semanticElement;
    }
 
@@ -102,11 +102,11 @@ public abstract class NotationElementImpl extends MinimalEObjectImpl.Container i
     * <!-- end-user-doc -->
     * @generated
     */
-   public NotificationChain basicSetSemanticElement(SemanticProxy newSemanticElement, NotificationChain msgs) {
-      SemanticProxy oldSemanticElement = semanticElement;
+   public NotificationChain basicSetSemanticElement(SemanticElementReference newSemanticElement, NotificationChain msgs) {
+      SemanticElementReference oldSemanticElement = semanticElement;
       semanticElement = newSemanticElement;
       if (eNotificationRequired()) {
-         ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, UnotationPackage.NOTATION_ELEMENT__SEMANTIC_ELEMENT, oldSemanticElement, newSemanticElement);
+         ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, NotationPackage.NOTATION_ELEMENT__SEMANTIC_ELEMENT, oldSemanticElement, newSemanticElement);
          if (msgs == null) msgs = notification; else msgs.add(notification);
       }
       return msgs;
@@ -118,18 +118,18 @@ public abstract class NotationElementImpl extends MinimalEObjectImpl.Container i
     * @generated
     */
    @Override
-   public void setSemanticElement(SemanticProxy newSemanticElement) {
+   public void setSemanticElement(SemanticElementReference newSemanticElement) {
       if (newSemanticElement != semanticElement) {
          NotificationChain msgs = null;
          if (semanticElement != null)
-            msgs = ((InternalEObject)semanticElement).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - UnotationPackage.NOTATION_ELEMENT__SEMANTIC_ELEMENT, null, msgs);
+            msgs = ((InternalEObject)semanticElement).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - NotationPackage.NOTATION_ELEMENT__SEMANTIC_ELEMENT, null, msgs);
          if (newSemanticElement != null)
-            msgs = ((InternalEObject)newSemanticElement).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - UnotationPackage.NOTATION_ELEMENT__SEMANTIC_ELEMENT, null, msgs);
+            msgs = ((InternalEObject)newSemanticElement).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - NotationPackage.NOTATION_ELEMENT__SEMANTIC_ELEMENT, null, msgs);
          msgs = basicSetSemanticElement(newSemanticElement, msgs);
          if (msgs != null) msgs.dispatch();
       }
       else if (eNotificationRequired())
-         eNotify(new ENotificationImpl(this, Notification.SET, UnotationPackage.NOTATION_ELEMENT__SEMANTIC_ELEMENT, newSemanticElement, newSemanticElement));
+         eNotify(new ENotificationImpl(this, Notification.SET, NotationPackage.NOTATION_ELEMENT__SEMANTIC_ELEMENT, newSemanticElement, newSemanticElement));
    }
 
    /**
@@ -152,7 +152,7 @@ public abstract class NotationElementImpl extends MinimalEObjectImpl.Container i
       String oldType = type;
       type = newType;
       if (eNotificationRequired())
-         eNotify(new ENotificationImpl(this, Notification.SET, UnotationPackage.NOTATION_ELEMENT__TYPE, oldType, type));
+         eNotify(new ENotificationImpl(this, Notification.SET, NotationPackage.NOTATION_ELEMENT__TYPE, oldType, type));
    }
 
    /**
@@ -163,7 +163,7 @@ public abstract class NotationElementImpl extends MinimalEObjectImpl.Container i
    @Override
    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
       switch (featureID) {
-         case UnotationPackage.NOTATION_ELEMENT__SEMANTIC_ELEMENT:
+         case NotationPackage.NOTATION_ELEMENT__SEMANTIC_ELEMENT:
             return basicSetSemanticElement(null, msgs);
       }
       return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -177,9 +177,9 @@ public abstract class NotationElementImpl extends MinimalEObjectImpl.Container i
    @Override
    public Object eGet(int featureID, boolean resolve, boolean coreType) {
       switch (featureID) {
-         case UnotationPackage.NOTATION_ELEMENT__SEMANTIC_ELEMENT:
+         case NotationPackage.NOTATION_ELEMENT__SEMANTIC_ELEMENT:
             return getSemanticElement();
-         case UnotationPackage.NOTATION_ELEMENT__TYPE:
+         case NotationPackage.NOTATION_ELEMENT__TYPE:
             return getType();
       }
       return super.eGet(featureID, resolve, coreType);
@@ -193,10 +193,10 @@ public abstract class NotationElementImpl extends MinimalEObjectImpl.Container i
    @Override
    public void eSet(int featureID, Object newValue) {
       switch (featureID) {
-         case UnotationPackage.NOTATION_ELEMENT__SEMANTIC_ELEMENT:
-            setSemanticElement((SemanticProxy)newValue);
+         case NotationPackage.NOTATION_ELEMENT__SEMANTIC_ELEMENT:
+            setSemanticElement((SemanticElementReference)newValue);
             return;
-         case UnotationPackage.NOTATION_ELEMENT__TYPE:
+         case NotationPackage.NOTATION_ELEMENT__TYPE:
             setType((String)newValue);
             return;
       }
@@ -211,10 +211,10 @@ public abstract class NotationElementImpl extends MinimalEObjectImpl.Container i
    @Override
    public void eUnset(int featureID) {
       switch (featureID) {
-         case UnotationPackage.NOTATION_ELEMENT__SEMANTIC_ELEMENT:
-            setSemanticElement((SemanticProxy)null);
+         case NotationPackage.NOTATION_ELEMENT__SEMANTIC_ELEMENT:
+            setSemanticElement((SemanticElementReference)null);
             return;
-         case UnotationPackage.NOTATION_ELEMENT__TYPE:
+         case NotationPackage.NOTATION_ELEMENT__TYPE:
             setType(TYPE_EDEFAULT);
             return;
       }
@@ -229,9 +229,9 @@ public abstract class NotationElementImpl extends MinimalEObjectImpl.Container i
    @Override
    public boolean eIsSet(int featureID) {
       switch (featureID) {
-         case UnotationPackage.NOTATION_ELEMENT__SEMANTIC_ELEMENT:
+         case NotationPackage.NOTATION_ELEMENT__SEMANTIC_ELEMENT:
             return semanticElement != null;
-         case UnotationPackage.NOTATION_ELEMENT__TYPE:
+         case NotationPackage.NOTATION_ELEMENT__TYPE:
             return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
       }
       return super.eIsSet(featureID);

@@ -8,7 +8,7 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.CommunicationPath;
 
 import com.eclipsesource.uml.modelserver.commands.util.UmlNotationCommandUtil;
-import com.eclipsesource.uml.modelserver.unotation.Edge;
+import org.eclipse.glsp.server.emf.model.notation.Edge;
 import com.eclipsesource.uml.modelserver.unotation.SemanticProxy;
 import com.eclipsesource.uml.modelserver.unotation.UnotationFactory;
 
@@ -24,13 +24,13 @@ public class AddCommunicationPathEdgeCommand extends UmlNotationElementCommand {
     }
 
     public AddCommunicationPathEdgeCommand(final EditingDomain domain, final URI modelUri,
-                                           final String semanticProxyUri) {
+        final String semanticProxyUri) {
         this(domain, modelUri);
         this.semanticProxyUri = semanticProxyUri;
     }
 
     public AddCommunicationPathEdgeCommand(final EditingDomain domain, final URI modelUri,
-                                           final Supplier<CommunicationPath> communicationPathSupplier) {
+        final Supplier<CommunicationPath> communicationPathSupplier) {
         this(domain, modelUri);
         this.communicationPathSupplier = communicationPathSupplier;
     }

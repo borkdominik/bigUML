@@ -12,6 +12,9 @@ package com.eclipsesource.uml.modelserver.unotation.util;
 
 import com.eclipsesource.uml.modelserver.unotation.*;
 
+import notation.Diagram;
+import notation.NotationElement;
+
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 
@@ -76,12 +79,8 @@ public class UnotationAdapterFactory extends AdapterFactoryImpl {
    protected UnotationSwitch<Adapter> modelSwitch =
       new UnotationSwitch<Adapter>() {
          @Override
-         public Adapter caseShape(Shape object) {
-            return createShapeAdapter();
-         }
-         @Override
-         public Adapter caseEdge(Edge object) {
-            return createEdgeAdapter();
+         public Adapter caseUmlDiagram(UmlDiagram object) {
+            return createUmlDiagramAdapter();
          }
          @Override
          public Adapter caseNotationElement(NotationElement object) {
@@ -90,10 +89,6 @@ public class UnotationAdapterFactory extends AdapterFactoryImpl {
          @Override
          public Adapter caseDiagram(Diagram object) {
             return createDiagramAdapter();
-         }
-         @Override
-         public Adapter caseSemanticProxy(SemanticProxy object) {
-            return createSemanticProxyAdapter();
          }
          @Override
          public Adapter defaultCase(EObject object) {
@@ -116,41 +111,27 @@ public class UnotationAdapterFactory extends AdapterFactoryImpl {
 
 
    /**
-    * Creates a new adapter for an object of class '{@link com.eclipsesource.uml.modelserver.unotation.Shape <em>Shape</em>}'.
+    * Creates a new adapter for an object of class '{@link com.eclipsesource.uml.modelserver.unotation.UmlDiagram <em>Uml Diagram</em>}'.
     * <!-- begin-user-doc -->
     * This default implementation returns null so that we can easily ignore cases;
     * it's useful to ignore a case when inheritance will catch all the cases anyway.
     * <!-- end-user-doc -->
     * @return the new adapter.
-    * @see com.eclipsesource.uml.modelserver.unotation.Shape
+    * @see com.eclipsesource.uml.modelserver.unotation.UmlDiagram
     * @generated
     */
-   public Adapter createShapeAdapter() {
+   public Adapter createUmlDiagramAdapter() {
       return null;
    }
 
    /**
-    * Creates a new adapter for an object of class '{@link com.eclipsesource.uml.modelserver.unotation.Edge <em>Edge</em>}'.
+    * Creates a new adapter for an object of class '{@link notation.NotationElement <em>Element</em>}'.
     * <!-- begin-user-doc -->
     * This default implementation returns null so that we can easily ignore cases;
     * it's useful to ignore a case when inheritance will catch all the cases anyway.
     * <!-- end-user-doc -->
     * @return the new adapter.
-    * @see com.eclipsesource.uml.modelserver.unotation.Edge
-    * @generated
-    */
-   public Adapter createEdgeAdapter() {
-      return null;
-   }
-
-   /**
-    * Creates a new adapter for an object of class '{@link com.eclipsesource.uml.modelserver.unotation.NotationElement <em>Notation Element</em>}'.
-    * <!-- begin-user-doc -->
-    * This default implementation returns null so that we can easily ignore cases;
-    * it's useful to ignore a case when inheritance will catch all the cases anyway.
-    * <!-- end-user-doc -->
-    * @return the new adapter.
-    * @see com.eclipsesource.uml.modelserver.unotation.NotationElement
+    * @see notation.NotationElement
     * @generated
     */
    public Adapter createNotationElementAdapter() {
@@ -158,30 +139,16 @@ public class UnotationAdapterFactory extends AdapterFactoryImpl {
    }
 
    /**
-    * Creates a new adapter for an object of class '{@link com.eclipsesource.uml.modelserver.unotation.Diagram <em>Diagram</em>}'.
+    * Creates a new adapter for an object of class '{@link notation.Diagram <em>Diagram</em>}'.
     * <!-- begin-user-doc -->
     * This default implementation returns null so that we can easily ignore cases;
     * it's useful to ignore a case when inheritance will catch all the cases anyway.
     * <!-- end-user-doc -->
     * @return the new adapter.
-    * @see com.eclipsesource.uml.modelserver.unotation.Diagram
+    * @see notation.Diagram
     * @generated
     */
    public Adapter createDiagramAdapter() {
-      return null;
-   }
-
-   /**
-    * Creates a new adapter for an object of class '{@link com.eclipsesource.uml.modelserver.unotation.SemanticProxy <em>Semantic Proxy</em>}'.
-    * <!-- begin-user-doc -->
-    * This default implementation returns null so that we can easily ignore cases;
-    * it's useful to ignore a case when inheritance will catch all the cases anyway.
-    * <!-- end-user-doc -->
-    * @return the new adapter.
-    * @see com.eclipsesource.uml.modelserver.unotation.SemanticProxy
-    * @generated
-    */
-   public Adapter createSemanticProxyAdapter() {
       return null;
    }
 

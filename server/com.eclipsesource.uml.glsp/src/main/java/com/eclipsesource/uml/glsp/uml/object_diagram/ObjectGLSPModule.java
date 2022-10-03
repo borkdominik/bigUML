@@ -10,18 +10,12 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.object_diagram;
 
-import org.eclipse.glsp.server.di.MultiBinding;
-import org.eclipse.glsp.server.operations.OperationHandler;
-
-import com.eclipsesource.uml.glsp.uml.object_diagram.operations.CreateObjectDiagramChildNodeOperationHandler;
-import com.eclipsesource.uml.glsp.uml.object_diagram.operations.CreateObjectDiagramEdgeOperationHandler;
-import com.eclipsesource.uml.glsp.uml.object_diagram.operations.CreateObjectDiagramNodeOperationHandler;
-
 public class ObjectGLSPModule {
+   /*-
    protected void configureOperationHandlers(final MultiBinding<OperationHandler> bindings) {
       bindings.add(CreateObjectDiagramNodeOperationHandler.class);
       bindings.add(CreateObjectDiagramChildNodeOperationHandler.class);
       bindings.add(CreateObjectDiagramEdgeOperationHandler.class);
    }
-
+   */
 }

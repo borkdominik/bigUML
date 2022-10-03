@@ -18,7 +18,7 @@ import org.eclipse.uml2.uml.Message;
 
 import com.eclipsesource.uml.modelserver.commands.commons.notation.UmlNotationElementCommand;
 import com.eclipsesource.uml.modelserver.commands.util.UmlNotationCommandUtil;
-import com.eclipsesource.uml.modelserver.unotation.Edge;
+import org.eclipse.glsp.server.emf.model.notation.Edge;
 import com.eclipsesource.uml.modelserver.unotation.SemanticProxy;
 import com.eclipsesource.uml.modelserver.unotation.UnotationFactory;
 

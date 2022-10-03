@@ -33,7 +33,7 @@ import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.uml.activity_diagram.ActivityIdUtil;
 import com.eclipsesource.uml.glsp.uml.activity_diagram.constants.ActivityTypes;
 import com.eclipsesource.uml.glsp.utils.UmlConfig.CSS;
-import com.eclipsesource.uml.modelserver.unotation.Edge;
+import org.eclipse.glsp.server.emf.model.notation.Edge;
 
 public class ActivityDiagramEdgeFactory extends ActivityAbstractGModelFactory<ActivityEdge, GEdge> {
 

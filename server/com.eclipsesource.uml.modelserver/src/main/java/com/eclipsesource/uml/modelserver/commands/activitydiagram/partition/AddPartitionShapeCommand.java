@@ -3,7 +3,7 @@ package com.eclipsesource.uml.modelserver.commands.activitydiagram.partition;
 import com.eclipsesource.uml.modelserver.commands.commons.notation.UmlNotationElementCommand;
 import com.eclipsesource.uml.modelserver.commands.util.UmlNotationCommandUtil;
 import com.eclipsesource.uml.modelserver.unotation.SemanticProxy;
-import com.eclipsesource.uml.modelserver.unotation.Shape;
+import org.eclipse.glsp.server.emf.model.notation.Shape;
 import com.eclipsesource.uml.modelserver.unotation.UnotationFactory;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -26,13 +26,13 @@ public class AddPartitionShapeCommand extends UmlNotationElementCommand {
    }
 
    public AddPartitionShapeCommand(final EditingDomain domain, final URI modelUri, final GPoint position,
-                                   final String semanticProxyUri) {
+      final String semanticProxyUri) {
       this(domain, modelUri, position);
       this.semanticProxyUri = semanticProxyUri;
    }
 
    public AddPartitionShapeCommand(final EditingDomain domain, final URI modelUri, final GPoint position,
-                                   final Supplier<ActivityPartition> activityPartitionSupplier) {
+      final Supplier<ActivityPartition> activityPartitionSupplier) {
       this(domain, modelUri, position);
       this.activityPartitionSupplier = activityPartitionSupplier;
 

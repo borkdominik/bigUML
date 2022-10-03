@@ -20,7 +20,7 @@ import org.eclipse.uml2.uml.Activity;
 import com.eclipsesource.uml.modelserver.commands.commons.notation.UmlNotationElementCommand;
 import com.eclipsesource.uml.modelserver.commands.util.UmlNotationCommandUtil;
 import com.eclipsesource.uml.modelserver.unotation.SemanticProxy;
-import com.eclipsesource.uml.modelserver.unotation.Shape;
+import org.eclipse.glsp.server.emf.model.notation.Shape;
 import com.eclipsesource.uml.modelserver.unotation.UnotationFactory;
 
 public class AddActivityShapeCommand extends UmlNotationElementCommand {

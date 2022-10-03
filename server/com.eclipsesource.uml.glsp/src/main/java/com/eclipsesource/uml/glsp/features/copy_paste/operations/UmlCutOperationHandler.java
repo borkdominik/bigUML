@@ -13,20 +13,19 @@ package com.eclipsesource.uml.glsp.features.copy_paste.operations;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSBasicOperationHandler;
+import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.AbstractEMSOperationHandler;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.operations.CutOperation;
 import org.eclipse.glsp.server.operations.DeleteOperation;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.uml.communication_diagram.constants.CommunicationTypes;
 import com.eclipsesource.uml.glsp.utils.gmodel.GModelFilterUtil;
 import com.google.inject.Inject;
 
 public class UmlCutOperationHandler
-   extends EMSBasicOperationHandler<CutOperation, UmlModelServerAccess> {
+   extends AbstractEMSOperationHandler<CutOperation> {
    private final List<String> ignoreList = List.of(CommunicationTypes.MESSAGE);
 
    @Inject
@@ -36,7 +35,7 @@ public class UmlCutOperationHandler
    protected UmlModelState modelState;
 
    @Override
-   public void executeOperation(final CutOperation operation, final UmlModelServerAccess modelServerAccess) {
+   public void executeOperation(final CutOperation operation) {
       List<String> cutableElementIds = getElementToCut(operation);
       if (!cutableElementIds.isEmpty()) {
          actionDispatcher.dispatch(new DeleteOperation(cutableElementIds));

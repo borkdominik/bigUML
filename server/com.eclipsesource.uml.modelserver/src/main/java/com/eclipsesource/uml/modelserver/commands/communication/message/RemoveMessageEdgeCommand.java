@@ -15,7 +15,7 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 
 import com.eclipsesource.uml.modelserver.commands.commons.notation.UmlNotationElementCommand;
 import com.eclipsesource.uml.modelserver.commands.util.UmlNotationCommandUtil;
-import com.eclipsesource.uml.modelserver.unotation.Edge;
+import org.eclipse.glsp.server.emf.model.notation.Edge;
 
 public class RemoveMessageEdgeCommand extends UmlNotationElementCommand {
 

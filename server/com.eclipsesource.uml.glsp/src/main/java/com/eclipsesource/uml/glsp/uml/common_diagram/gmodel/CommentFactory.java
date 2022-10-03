@@ -12,10 +12,8 @@ package com.eclipsesource.uml.glsp.uml.common_diagram.gmodel;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.graph.GCompartment;
 import org.eclipse.glsp.graph.GEdge;
 import org.eclipse.glsp.graph.GModelElement;
@@ -26,6 +24,8 @@ import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 import org.eclipse.glsp.graph.builder.impl.GNodeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.glsp.graph.util.GraphUtil;
+import org.eclipse.glsp.server.emf.EMFIdGenerator;
+import org.eclipse.glsp.server.emf.model.notation.Shape;
 import org.eclipse.uml2.uml.Comment;
 import org.eclipse.uml2.uml.Element;
 
@@ -33,11 +33,14 @@ import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.uml.common_diagram.constants.CommonTypes;
 import com.eclipsesource.uml.glsp.utils.UmlConfig.CSS;
 import com.eclipsesource.uml.glsp.utils.UmlConfig.Types;
-import com.eclipsesource.uml.modelserver.unotation.Shape;
+import com.google.inject.Inject;
 
 public class CommentFactory {
 
    private final UmlModelState modelState;
+
+   @Inject
+   protected EMFIdGenerator idGenerator;
 
    public CommentFactory(final UmlModelState modelState) {
       this.modelState = modelState;
@@ -54,7 +57,7 @@ public class CommentFactory {
 
    private GNode createCommentNode(final Comment comment) {
       GNodeBuilder b = new GNodeBuilder(CommonTypes.COMMENT) //
-         .id(toId(comment)) //
+         .id(idGenerator.getOrCreateId(comment)) //
          .layout(GConstants.Layout.VBOX) //
          .addCssClass(CSS.NODE) //
          .add(buildHeader(comment));
@@ -77,34 +80,24 @@ public class CommentFactory {
    protected GCompartment buildHeader(final Comment comment) {
       return new GCompartmentBuilder(Types.COMPARTMENT_HEADER) //
          .layout("hbox") //
-         .id(toId(comment) + "_header")
+         .id(idGenerator.getOrCreateId(comment) + "_header")
          .add(new GLabelBuilder(Types.LABEL_NAME) //
-            .id(toId(comment) + "_header_label").text(comment.getBody()) //
+            .id(idGenerator.getOrCreateId(comment) + "_header_label").text(comment.getBody()) //
             .build()) //
          .build();
    }
 
    private GEdge createCommentEdge(final Comment comment, final Element target) {
-      String sourceId = toId(comment);
-      String targetId = toId(target);
+      String sourceId = idGenerator.getOrCreateId(comment);
+      String targetId = idGenerator.getOrCreateId(target);
 
       GEdgeBuilder builder = new GEdgeBuilder(CommonTypes.COMMENT_EDGE) //
-         .id(toId(comment) + "_link_" + toId(target)) //
+         .id(idGenerator.getOrCreateId(comment) + "_link_" + idGenerator.getOrCreateId(target)) //
          .addCssClass(CSS.EDGE) //
          .sourceId(sourceId) //
          .targetId(targetId) //
          .routerKind(GConstants.RouterKind.POLYLINE);
 
       return builder.build();
-   }
-
-   protected String toId(final EObject semanticElement) {
-      String id = modelState.getIndex().getSemanticId(semanticElement).orElse(null);
-      if (id == null) {
-         id = UUID.randomUUID().toString();
-         modelState.getIndex().indexSemantic(id, semanticElement);
-      }
-      return id;
-
    }
 }

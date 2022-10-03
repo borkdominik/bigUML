@@ -10,10 +10,10 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp;
 
-import org.eclipse.glsp.server.di.ServerModule;
+import org.eclipse.emfcloud.modelserver.glsp.EMSGLSPServerModule;
 import org.eclipse.glsp.server.protocol.GLSPServer;
 
-public class UmlServerModule extends ServerModule {
+public class UmlServerModule extends EMSGLSPServerModule {
 
    @Override
    protected Class<? extends GLSPServer> bindGLSPServer() {

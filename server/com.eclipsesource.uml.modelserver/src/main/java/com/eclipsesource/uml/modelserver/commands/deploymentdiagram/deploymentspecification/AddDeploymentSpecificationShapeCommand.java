@@ -8,7 +8,7 @@ import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.uml2.uml.DeploymentSpecification;
 import com.eclipsesource.uml.modelserver.commands.util.UmlNotationCommandUtil;
 import com.eclipsesource.uml.modelserver.unotation.SemanticProxy;
-import com.eclipsesource.uml.modelserver.unotation.Shape;
+import org.eclipse.glsp.server.emf.model.notation.Shape;
 import com.eclipsesource.uml.modelserver.unotation.UnotationFactory;
 
 public class AddDeploymentSpecificationShapeCommand extends UmlNotationElementCommand {
@@ -18,7 +18,7 @@ public class AddDeploymentSpecificationShapeCommand extends UmlNotationElementCo
     protected String semanticProxyUri;
 
     private AddDeploymentSpecificationShapeCommand(final EditingDomain domain, final URI modelUri,
-                                                   final GPoint position) {
+        final GPoint position) {
         super(domain, modelUri);
         this.shapePosition = position;
         this.deploymentSpecificationSupplier = null;
@@ -26,13 +26,13 @@ public class AddDeploymentSpecificationShapeCommand extends UmlNotationElementCo
     }
 
     public AddDeploymentSpecificationShapeCommand(final EditingDomain domain, final URI modelUri, final GPoint position,
-                                                  final String semanticProxyUri) {
+        final String semanticProxyUri) {
         this(domain, modelUri, position);
         this.semanticProxyUri = semanticProxyUri;
     }
 
     public AddDeploymentSpecificationShapeCommand(final EditingDomain domain, final URI modelUri, final GPoint position,
-                                                  final Supplier<DeploymentSpecification> deploymentSpecificationSupplier) {
+        final Supplier<DeploymentSpecification> deploymentSpecificationSupplier) {
         this(domain, modelUri, position);
         this.deploymentSpecificationSupplier = deploymentSpecificationSupplier;
 

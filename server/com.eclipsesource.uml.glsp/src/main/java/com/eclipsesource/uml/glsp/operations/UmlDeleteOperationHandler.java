@@ -15,37 +15,35 @@ import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSBasicOperationHandler;
+import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.AbstractEMSOperationHandler;
 import org.eclipse.glsp.server.operations.DeleteOperation;
 import org.eclipse.glsp.server.types.GLSPServerException;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 
-public class UmlDeleteOperationHandler extends EMSBasicOperationHandler<DeleteOperation, UmlModelServerAccess> {
+public class UmlDeleteOperationHandler extends AbstractEMSOperationHandler<DeleteOperation> {
 
    @Inject
    private Set<DiagramDeleteOperationHandler> deleteOperationHandlers;
 
-   protected UmlModelState getUmlModelState() { return (UmlModelState) getEMSModelState(); }
+   @Inject
+   private UmlModelState modelState;
 
    @Override
-   public void executeOperation(final DeleteOperation operation, final UmlModelServerAccess modelAccess) {
-      UmlModelState modelState = getUmlModelState();
-
-      Representation diagramType = UmlModelState.getModelState(modelState).getNotationModel().getDiagramType();
+   public void executeOperation(final DeleteOperation operation) {
+      Representation diagramType = modelState.getUmlNotationModel().getRepresentation();
       var deleteOperationHandler = deleteOperationHandlers.stream().filter(handler -> handler.supports(diagramType))
          .findFirst();
 
       operation.getElementIds().forEach(elementId -> {
-         EObject semanticElement = getOrThrow(modelState.getIndex().getSemantic(elementId),
+         EObject semanticElement = getOrThrow(modelState.getIndex().getEObject(elementId),
             EObject.class, "Could not find element for id '" + elementId + "', no delete operation executed.");
 
          deleteOperationHandler
             .orElseThrow(() -> new GLSPServerException("No handler found for diagram " + diagramType))
-            .delete(semanticElement, modelAccess);
+            .delete(semanticElement);
       });
    }
 

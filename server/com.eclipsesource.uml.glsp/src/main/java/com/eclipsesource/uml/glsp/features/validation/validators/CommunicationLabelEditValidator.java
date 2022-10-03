@@ -12,7 +12,8 @@ package com.eclipsesource.uml.glsp.features.validation.validators;
 
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.server.features.directediting.LabelEditValidator;
 import org.eclipse.glsp.server.features.directediting.ValidationStatus;
@@ -25,7 +26,7 @@ import com.eclipsesource.uml.glsp.uml.communication_diagram.constants.Communicat
 import com.google.inject.Inject;
 
 public class CommunicationLabelEditValidator implements LabelEditValidator {
-   private static Logger LOGGER = Logger.getLogger(CommunicationLabelEditValidator.class.getSimpleName());
+   private static Logger LOGGER = LogManager.getLogger(CommunicationLabelEditValidator.class.getSimpleName());
    private static Set<String> supportedElements = Set.of(CommunicationTypes.LIFELINE,
       CommunicationTypes.INTERACTION, CommunicationTypes.MESSAGE);
 

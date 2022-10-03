@@ -8,14 +8,13 @@
  * 
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  */
-package com.eclipsesource.uml.modelserver.unotation.impl;
-
-import com.eclipsesource.uml.modelserver.unotation.Diagram;
-import com.eclipsesource.uml.modelserver.unotation.NotationElement;
-import com.eclipsesource.uml.modelserver.unotation.Representation;
-import com.eclipsesource.uml.modelserver.unotation.UnotationPackage;
+package notation.impl;
 
 import java.util.Collection;
+
+import notation.Diagram;
+import notation.NotationElement;
+import notation.NotationPackage;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -38,8 +37,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link com.eclipsesource.uml.modelserver.unotation.impl.DiagramImpl#getElements <em>Elements</em>}</li>
- *   <li>{@link com.eclipsesource.uml.modelserver.unotation.impl.DiagramImpl#getDiagramType <em>Diagram Type</em>}</li>
+ *   <li>{@link notation.impl.DiagramImpl#getElements <em>Elements</em>}</li>
+ *   <li>{@link notation.impl.DiagramImpl#getDiagramType <em>Diagram Type</em>}</li>
  * </ul>
  *
  * @generated
@@ -63,7 +62,7 @@ public class DiagramImpl extends NotationElementImpl implements Diagram {
     * @generated
     * @ordered
     */
-   protected static final Representation DIAGRAM_TYPE_EDEFAULT = Representation.CLASS;
+   protected static final String DIAGRAM_TYPE_EDEFAULT = null;
 
    /**
     * The cached value of the '{@link #getDiagramType() <em>Diagram Type</em>}' attribute.
@@ -73,7 +72,7 @@ public class DiagramImpl extends NotationElementImpl implements Diagram {
     * @generated
     * @ordered
     */
-   protected Representation diagramType = DIAGRAM_TYPE_EDEFAULT;
+   protected String diagramType = DIAGRAM_TYPE_EDEFAULT;
 
    /**
     * <!-- begin-user-doc -->
@@ -91,7 +90,7 @@ public class DiagramImpl extends NotationElementImpl implements Diagram {
     */
    @Override
    protected EClass eStaticClass() {
-      return UnotationPackage.Literals.DIAGRAM;
+      return NotationPackage.Literals.DIAGRAM;
    }
 
    /**
@@ -102,7 +101,7 @@ public class DiagramImpl extends NotationElementImpl implements Diagram {
    @Override
    public EList<NotationElement> getElements() {
       if (elements == null) {
-         elements = new EObjectContainmentEList<NotationElement>(NotationElement.class, this, UnotationPackage.DIAGRAM__ELEMENTS);
+         elements = new EObjectContainmentEList<NotationElement>(NotationElement.class, this, NotationPackage.DIAGRAM__ELEMENTS);
       }
       return elements;
    }
@@ -113,7 +112,7 @@ public class DiagramImpl extends NotationElementImpl implements Diagram {
     * @generated
     */
    @Override
-   public Representation getDiagramType() {
+   public String getDiagramType() {
       return diagramType;
    }
 
@@ -123,11 +122,11 @@ public class DiagramImpl extends NotationElementImpl implements Diagram {
     * @generated
     */
    @Override
-   public void setDiagramType(Representation newDiagramType) {
-      Representation oldDiagramType = diagramType;
-      diagramType = newDiagramType == null ? DIAGRAM_TYPE_EDEFAULT : newDiagramType;
+   public void setDiagramType(String newDiagramType) {
+      String oldDiagramType = diagramType;
+      diagramType = newDiagramType;
       if (eNotificationRequired())
-         eNotify(new ENotificationImpl(this, Notification.SET, UnotationPackage.DIAGRAM__DIAGRAM_TYPE, oldDiagramType, diagramType));
+         eNotify(new ENotificationImpl(this, Notification.SET, NotationPackage.DIAGRAM__DIAGRAM_TYPE, oldDiagramType, diagramType));
    }
 
    /**
@@ -138,7 +137,7 @@ public class DiagramImpl extends NotationElementImpl implements Diagram {
    @Override
    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
       switch (featureID) {
-         case UnotationPackage.DIAGRAM__ELEMENTS:
+         case NotationPackage.DIAGRAM__ELEMENTS:
             return ((InternalEList<?>)getElements()).basicRemove(otherEnd, msgs);
       }
       return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -152,9 +151,9 @@ public class DiagramImpl extends NotationElementImpl implements Diagram {
    @Override
    public Object eGet(int featureID, boolean resolve, boolean coreType) {
       switch (featureID) {
-         case UnotationPackage.DIAGRAM__ELEMENTS:
+         case NotationPackage.DIAGRAM__ELEMENTS:
             return getElements();
-         case UnotationPackage.DIAGRAM__DIAGRAM_TYPE:
+         case NotationPackage.DIAGRAM__DIAGRAM_TYPE:
             return getDiagramType();
       }
       return super.eGet(featureID, resolve, coreType);
@@ -169,12 +168,12 @@ public class DiagramImpl extends NotationElementImpl implements Diagram {
    @Override
    public void eSet(int featureID, Object newValue) {
       switch (featureID) {
-         case UnotationPackage.DIAGRAM__ELEMENTS:
+         case NotationPackage.DIAGRAM__ELEMENTS:
             getElements().clear();
             getElements().addAll((Collection<? extends NotationElement>)newValue);
             return;
-         case UnotationPackage.DIAGRAM__DIAGRAM_TYPE:
-            setDiagramType((Representation)newValue);
+         case NotationPackage.DIAGRAM__DIAGRAM_TYPE:
+            setDiagramType((String)newValue);
             return;
       }
       super.eSet(featureID, newValue);
@@ -188,10 +187,10 @@ public class DiagramImpl extends NotationElementImpl implements Diagram {
    @Override
    public void eUnset(int featureID) {
       switch (featureID) {
-         case UnotationPackage.DIAGRAM__ELEMENTS:
+         case NotationPackage.DIAGRAM__ELEMENTS:
             getElements().clear();
             return;
-         case UnotationPackage.DIAGRAM__DIAGRAM_TYPE:
+         case NotationPackage.DIAGRAM__DIAGRAM_TYPE:
             setDiagramType(DIAGRAM_TYPE_EDEFAULT);
             return;
       }
@@ -206,10 +205,10 @@ public class DiagramImpl extends NotationElementImpl implements Diagram {
    @Override
    public boolean eIsSet(int featureID) {
       switch (featureID) {
-         case UnotationPackage.DIAGRAM__ELEMENTS:
+         case NotationPackage.DIAGRAM__ELEMENTS:
             return elements != null && !elements.isEmpty();
-         case UnotationPackage.DIAGRAM__DIAGRAM_TYPE:
-            return diagramType != DIAGRAM_TYPE_EDEFAULT;
+         case NotationPackage.DIAGRAM__DIAGRAM_TYPE:
+            return DIAGRAM_TYPE_EDEFAULT == null ? diagramType != null : !DIAGRAM_TYPE_EDEFAULT.equals(diagramType);
       }
       return super.eIsSet(featureID);
    }

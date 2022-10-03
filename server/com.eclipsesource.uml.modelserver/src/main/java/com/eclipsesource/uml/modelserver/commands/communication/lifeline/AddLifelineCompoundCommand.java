@@ -20,7 +20,7 @@ import org.eclipse.uml2.uml.Model;
 
 import com.eclipsesource.uml.modelserver.commands.util.UmlNotationCommandUtil;
 import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-import com.eclipsesource.uml.modelserver.unotation.Shape;
+import org.eclipse.glsp.server.emf.model.notation.Shape;
 
 public class AddLifelineCompoundCommand extends CompoundCommand {
    private final EditingDomain domain;

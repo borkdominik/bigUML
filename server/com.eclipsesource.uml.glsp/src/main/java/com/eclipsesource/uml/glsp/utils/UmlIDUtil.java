@@ -10,11 +10,6 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.utils;
 
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.util.EcoreUtil;
-
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-
 public final class UmlIDUtil {
 
    private UmlIDUtil() {}
@@ -81,14 +76,5 @@ public final class UmlIDUtil {
 
    public static String getElementIdFromHeaderLabel(final String headerLabelId) {
       return headerLabelId.replace(HEADER_LABEL_SUFFIX, "");
-   }
-
-   public static String toId(final UmlModelState modelState, final EObject semanticElement) {
-      String id = modelState.getIndex().getSemanticId(semanticElement).orElse(null);
-      if (id == null) {
-         id = EcoreUtil.getURI(semanticElement).fragment();
-         modelState.getIndex().indexSemantic(id, semanticElement);
-      }
-      return id;
    }
 }

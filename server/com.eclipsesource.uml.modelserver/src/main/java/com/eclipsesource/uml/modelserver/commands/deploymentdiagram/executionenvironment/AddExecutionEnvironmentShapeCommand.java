@@ -9,7 +9,7 @@ import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.uml2.uml.ExecutionEnvironment;
 import com.eclipsesource.uml.modelserver.commands.util.UmlNotationCommandUtil;
 import com.eclipsesource.uml.modelserver.unotation.SemanticProxy;
-import com.eclipsesource.uml.modelserver.unotation.Shape;
+import org.eclipse.glsp.server.emf.model.notation.Shape;
 import com.eclipsesource.uml.modelserver.unotation.UnotationFactory;
 
 public class AddExecutionEnvironmentShapeCommand extends UmlNotationElementCommand {
@@ -26,13 +26,13 @@ public class AddExecutionEnvironmentShapeCommand extends UmlNotationElementComma
     }
 
     public AddExecutionEnvironmentShapeCommand(final EditingDomain domain, final URI modelUri, final GPoint position,
-                                               final String semanticProxyUri) {
+        final String semanticProxyUri) {
         this(domain, modelUri, position);
         this.semanticProxyUri = semanticProxyUri;
     }
 
     public AddExecutionEnvironmentShapeCommand(final EditingDomain domain, final URI modelUri, final GPoint position,
-                                               final Supplier<ExecutionEnvironment> executionEnvironmentSupplier) {
+        final Supplier<ExecutionEnvironment> executionEnvironmentSupplier) {
         this(domain, modelUri, position);
         this.executionEnvironmentSupplier = executionEnvironmentSupplier;
 

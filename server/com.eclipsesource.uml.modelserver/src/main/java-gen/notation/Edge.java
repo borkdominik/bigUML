@@ -8,7 +8,7 @@
  * 
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  */
-package com.eclipsesource.uml.modelserver.unotation;
+package notation;
 
 import org.eclipse.emf.common.util.EList;
 
@@ -23,12 +23,12 @@ import org.eclipse.glsp.graph.GPoint;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link com.eclipsesource.uml.modelserver.unotation.Edge#getBendPoints <em>Bend Points</em>}</li>
- *   <li>{@link com.eclipsesource.uml.modelserver.unotation.Edge#getSource <em>Source</em>}</li>
- *   <li>{@link com.eclipsesource.uml.modelserver.unotation.Edge#getTarget <em>Target</em>}</li>
+ *   <li>{@link notation.Edge#getBendPoints <em>Bend Points</em>}</li>
+ *   <li>{@link notation.Edge#getSource <em>Source</em>}</li>
+ *   <li>{@link notation.Edge#getTarget <em>Target</em>}</li>
  * </ul>
  *
- * @see com.eclipsesource.uml.modelserver.unotation.UnotationPackage#getEdge()
+ * @see notation.NotationPackage#getEdge()
  * @model
  * @generated
  */
@@ -39,7 +39,7 @@ public interface Edge extends NotationElement {
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @return the value of the '<em>Bend Points</em>' containment reference list.
-    * @see com.eclipsesource.uml.modelserver.unotation.UnotationPackage#getEdge_BendPoints()
+    * @see notation.NotationPackage#getEdge_BendPoints()
     * @model containment="true"
     * @generated
     */
@@ -51,14 +51,14 @@ public interface Edge extends NotationElement {
     * <!-- end-user-doc -->
     * @return the value of the '<em>Source</em>' reference.
     * @see #setSource(NotationElement)
-    * @see com.eclipsesource.uml.modelserver.unotation.UnotationPackage#getEdge_Source()
+    * @see notation.NotationPackage#getEdge_Source()
     * @model
     * @generated
     */
    NotationElement getSource();
 
    /**
-    * Sets the value of the '{@link com.eclipsesource.uml.modelserver.unotation.Edge#getSource <em>Source</em>}' reference.
+    * Sets the value of the '{@link notation.Edge#getSource <em>Source</em>}' reference.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @param value the new value of the '<em>Source</em>' reference.
@@ -73,14 +73,14 @@ public interface Edge extends NotationElement {
     * <!-- end-user-doc -->
     * @return the value of the '<em>Target</em>' reference.
     * @see #setTarget(NotationElement)
-    * @see com.eclipsesource.uml.modelserver.unotation.UnotationPackage#getEdge_Target()
+    * @see notation.NotationPackage#getEdge_Target()
     * @model
     * @generated
     */
    NotationElement getTarget();
 
    /**
-    * Sets the value of the '{@link com.eclipsesource.uml.modelserver.unotation.Edge#getTarget <em>Target</em>}' reference.
+    * Sets the value of the '{@link notation.Edge#getTarget <em>Target</em>}' reference.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @param value the new value of the '<em>Target</em>' reference.

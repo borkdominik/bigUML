@@ -10,31 +10,17 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.class_diagram.operations;
 
-import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
-
-import java.util.List;
-
-import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSBasicCreateOperationHandler;
-import org.eclipse.glsp.server.operations.CreateEdgeOperation;
-import org.eclipse.glsp.server.operations.Operation;
-import org.eclipse.glsp.server.types.GLSPServerException;
-import org.eclipse.uml2.uml.Class;
-
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.uml.class_diagram.ClassModelServerAccess;
-import com.eclipsesource.uml.glsp.uml.class_diagram.constants.ClassTypes;
-import com.google.common.collect.Lists;
-
-public class CreateClassDiagramEdgeOperationHandler
-   extends EMSBasicCreateOperationHandler<CreateEdgeOperation, ClassModelServerAccess> {
-
+public class CreateClassDiagramEdgeOperationHandler {
+   /*-
+   
+   
    public CreateClassDiagramEdgeOperationHandler() {
       super(handledElementTypeIds);
    }
-
+   
    private static List<String> handledElementTypeIds = Lists.newArrayList(ClassTypes.ASSOCIATION,
       ClassTypes.AGGREGATION, ClassTypes.COMPOSITION, ClassTypes.CLASS_GENERALIZATION);
-
+   
    @Override
    public boolean handles(final Operation execAction) {
       if (execAction instanceof CreateEdgeOperation) {
@@ -43,22 +29,22 @@ public class CreateClassDiagramEdgeOperationHandler
       }
       return false;
    }
-
+   
    protected UmlModelState getUmlModelState() { return (UmlModelState) getEMSModelState(); }
-
+   
    @Override
    public void executeOperation(final CreateEdgeOperation operation, final ClassModelServerAccess modelAccess) {
-
+   
       UmlModelState modelState = getUmlModelState();
-
+   
       String sourceId = operation.getSourceElementId();
       String targetId = operation.getTargetElementId();
-
-      Class source = getOrThrow(modelState.getIndex().getSemantic(sourceId), Class.class,
+   
+      Class source = getOrThrow(modelState.getIndex().getEObject(sourceId), Class.class,
          "No valid source comment with id " + sourceId + " found");
-      Class target = getOrThrow(modelState.getIndex().getSemantic(targetId), Class.class,
+      Class target = getOrThrow(modelState.getIndex().getEObject(targetId), Class.class,
          "No valid target element with id " + targetId + " found");
-
+   
       System.out.println("ELEMENT TYPE ID " + operation.getElementTypeId());
       if (ClassTypes.ASSOCIATION.equals(operation.getElementTypeId()) ||
          ClassTypes.COMPOSITION.equals(operation.getElementTypeId()) ||
@@ -73,7 +59,7 @@ public class CreateClassDiagramEdgeOperationHandler
          }
          modelAccess.addAssociation(modelState, source, target, keyword)
             .thenAccept(response -> {
-               if (!response.body()) {
+               if (response.body() == null || response.body().isEmpty()) {
                   throw new GLSPServerException("Could not execute create operation on new Association edge");
                }
             });
@@ -82,7 +68,7 @@ public class CreateClassDiagramEdgeOperationHandler
          System.out.println("source: " + source + " target: " + target);
          modelAccess.addClassGeneralization(modelState, source, target)
             .thenAccept(response -> {
-               if (!response.body()) {
+               if (response.body() == null || response.body().isEmpty()) {
                   throw new GLSPServerException("Could not execute create operation on new Generalisation edge");
                }
             });
@@ -90,8 +76,8 @@ public class CreateClassDiagramEdgeOperationHandler
          System.out.println("Association could not be created!");
       }
    }
-
+   
    @Override
    public String getLabel() { return "Create uml edge"; }
-
+   */
 }

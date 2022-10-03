@@ -36,7 +36,7 @@ import com.eclipsesource.uml.glsp.uml.class_diagram.constants.ClassTypes;
 import com.eclipsesource.uml.glsp.utils.UmlConfig;
 import com.eclipsesource.uml.glsp.utils.UmlConfig.CSS;
 import com.eclipsesource.uml.glsp.utils.UmlIDUtil;
-import com.eclipsesource.uml.modelserver.unotation.Shape;
+import org.eclipse.glsp.server.emf.model.notation.Shape;
 
 public class ClassDiagramNodeFactory extends ClassAbstractGModelFactory<Classifier, GNode> {
 

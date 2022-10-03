@@ -1,22 +1,6 @@
 package com.eclipsesource.uml.glsp.uml.statemachine_diagram.operations;
 
-import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
-
-import java.util.List;
-
-import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSBasicCreateOperationHandler;
-import org.eclipse.glsp.server.operations.CreateEdgeOperation;
-import org.eclipse.glsp.server.operations.Operation;
-import org.eclipse.glsp.server.types.GLSPServerException;
-import org.eclipse.uml2.uml.Vertex;
-
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.uml.statemachine_diagram.StateMachineModelServerAccess;
-import com.eclipsesource.uml.glsp.uml.statemachine_diagram.constants.StateMachineTypes;
-import com.google.common.collect.Lists;
-
-public class CreateStateMachineDiagramEdgeOperationHandler
-   extends EMSBasicCreateOperationHandler<CreateEdgeOperation, StateMachineModelServerAccess> {
+public class CreateStateMachineDiagramEdgeOperationHandler { /*-
 
    public CreateStateMachineDiagramEdgeOperationHandler() {
       super(handledElementTypeIds);
@@ -44,15 +28,15 @@ public class CreateStateMachineDiagramEdgeOperationHandler
       String sourceId = operation.getSourceElementId();
       String targetId = operation.getTargetElementId();
 
-      Vertex source = getOrThrow(modelState.getIndex().getSemantic(sourceId), Vertex.class,
+      Vertex source = getOrThrow(modelState.getIndex().getEObject(sourceId), Vertex.class,
          "No valid source vertex with id " + sourceId + " found!");
-      Vertex target = getOrThrow(modelState.getIndex().getSemantic(targetId), Vertex.class,
+      Vertex target = getOrThrow(modelState.getIndex().getEObject(targetId), Vertex.class,
          "No valid target vertex with id " + targetId + " found!");
 
       if (elementTypeId.equals(StateMachineTypes.TRANSITION)) {
          modelAccess.addTransition(UmlModelState.getModelState(modelState), source, target)
             .thenAccept(response -> {
-               if (!response.body()) {
+               if (response.body() == null || response.body().isEmpty()) {
                   throw new GLSPServerException("Could not execute create operation on new Transition edge");
                }
             });
@@ -61,4 +45,5 @@ public class CreateStateMachineDiagramEdgeOperationHandler
 
    @Override
    public String getLabel() { return "Create uml edge"; }
+   */
 }

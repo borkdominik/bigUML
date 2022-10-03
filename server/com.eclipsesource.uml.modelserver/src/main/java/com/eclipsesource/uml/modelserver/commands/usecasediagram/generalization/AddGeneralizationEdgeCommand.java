@@ -2,7 +2,7 @@ package com.eclipsesource.uml.modelserver.commands.usecasediagram.generalization
 
 import com.eclipsesource.uml.modelserver.commands.commons.notation.UmlNotationElementCommand;
 import com.eclipsesource.uml.modelserver.commands.util.UmlNotationCommandUtil;
-import com.eclipsesource.uml.modelserver.unotation.Edge;
+import org.eclipse.glsp.server.emf.model.notation.Edge;
 import com.eclipsesource.uml.modelserver.unotation.SemanticProxy;
 import com.eclipsesource.uml.modelserver.unotation.UnotationFactory;
 import org.eclipse.emf.common.util.URI;
@@ -28,7 +28,7 @@ public class AddGeneralizationEdgeCommand extends UmlNotationElementCommand {
    }
 
    public AddGeneralizationEdgeCommand(final EditingDomain domain, final URI modelUri,
-                                       final Supplier<Generalization> generalizationSupplier) {
+      final Supplier<Generalization> generalizationSupplier) {
       this(domain, modelUri);
       this.generalizationSupplier = generalizationSupplier;
    }

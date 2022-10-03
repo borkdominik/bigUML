@@ -10,52 +10,13 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.activity_diagram.operations;
 
-import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
-
-import java.util.List;
-import java.util.Optional;
-
-import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSBasicCreateOperationHandler;
-import org.eclipse.glsp.graph.GBoundsAware;
-import org.eclipse.glsp.graph.GCompartment;
-import org.eclipse.glsp.graph.GGraph;
-import org.eclipse.glsp.graph.GModelElement;
-import org.eclipse.glsp.graph.GNode;
-import org.eclipse.glsp.graph.GPoint;
-import org.eclipse.glsp.graph.util.GraphUtil;
-import org.eclipse.glsp.server.operations.CreateNodeOperation;
-import org.eclipse.glsp.server.operations.Operation;
-import org.eclipse.glsp.server.types.GLSPServerException;
-import org.eclipse.glsp.server.utils.GeometryUtil;
-import org.eclipse.uml2.uml.Action;
-import org.eclipse.uml2.uml.Activity;
-import org.eclipse.uml2.uml.ActivityPartition;
-import org.eclipse.uml2.uml.CallBehaviorAction;
-import org.eclipse.uml2.uml.CentralBufferNode;
-import org.eclipse.uml2.uml.DataStoreNode;
-import org.eclipse.uml2.uml.DecisionNode;
-import org.eclipse.uml2.uml.FinalNode;
-import org.eclipse.uml2.uml.FlowFinalNode;
-import org.eclipse.uml2.uml.ForkNode;
-import org.eclipse.uml2.uml.InitialNode;
-import org.eclipse.uml2.uml.InterruptibleActivityRegion;
-import org.eclipse.uml2.uml.NamedElement;
-import org.eclipse.uml2.uml.OpaqueAction;
-import org.eclipse.uml2.uml.SendSignalAction;
-
-import com.eclipsesource.uml.glsp.model.UmlModelIndex;
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.uml.activity_diagram.ActivityModelServerAccess;
-import com.eclipsesource.uml.glsp.uml.activity_diagram.constants.ActivityTypes;
-import com.google.common.collect.Lists;
-
-public class CreateActivityDiagramChildNodeOperationHandler
-   extends EMSBasicCreateOperationHandler<CreateNodeOperation, ActivityModelServerAccess> {
-
+public class CreateActivityDiagramChildNodeOperationHandler {
+   /*-
+   
    public CreateActivityDiagramChildNodeOperationHandler() {
       super(handledElementTypeIds);
    }
-
+   
    private static List<String> handledElementTypeIds = Lists.newArrayList(
       ActivityTypes.ACTION, ActivityTypes.ACCEPTEVENT, ActivityTypes.TIMEEVENT,
       ActivityTypes.SENDSIGNAL, ActivityTypes.CALL, ActivityTypes.INITIALNODE, ActivityTypes.FINALNODE,
@@ -63,7 +24,7 @@ public class CreateActivityDiagramChildNodeOperationHandler
       ActivityTypes.DECISIONMERGENODE, ActivityTypes.FORKJOINNODE, ActivityTypes.PARAMETER, ActivityTypes.CENTRALBUFFER,
       ActivityTypes.DATASTORE,
       ActivityTypes.CONDITION);
-
+   
    @Override
    public boolean handles(final Operation execAction) {
       if (execAction instanceof CreateNodeOperation) {
@@ -72,21 +33,21 @@ public class CreateActivityDiagramChildNodeOperationHandler
       }
       return false;
    }
-
+   
    protected UmlModelState getUmlModelState() { return (UmlModelState) getEMSModelState(); }
-
+   
    @Override
    public void executeOperation(final CreateNodeOperation operation, final ActivityModelServerAccess modelAccess) {
-
+   
       UmlModelState modelState = getUmlModelState();
       UmlModelIndex modelIndex = modelState.getIndex();
-
+   
       NamedElement parentContainer = getOrThrow(
-         modelIndex.getSemantic(operation.getContainerId(), NamedElement.class),
+         modelIndex.getEObject(operation.getContainerId(), NamedElement.class),
          "No parent container found!");
-
+   
       System.out.println("PARENT " + parentContainer.getClass());
-
+   
       switch (operation.getElementTypeId()) {
          case (ActivityTypes.ACTION): {
             if (parentContainer instanceof Activity
@@ -97,7 +58,7 @@ public class CreateActivityDiagramChildNodeOperationHandler
                   getStructureCompartmentGModelElement(containerActivity));
                modelAccess.addAction(getUmlModelState(), relativeLocation, parentContainer, OpaqueAction.class)
                   .thenAccept(response -> {
-                     if (!response.body()) {
+                     if (response.body() == null || response.body().isEmpty()) {
                         throw new GLSPServerException("Could not create operation on new Action node");
                      }
                   });
@@ -111,7 +72,7 @@ public class CreateActivityDiagramChildNodeOperationHandler
                   getStructureCompartmentGModelElement(containerActivity));
                modelAccess.addAction(getUmlModelState(), relativeLocation, parentContainer, SendSignalAction.class)
                   .thenAccept(response -> {
-                     if (!response.body()) {
+                     if (response.body() == null || response.body().isEmpty()) {
                         throw new GLSPServerException("Could not create operation on new Action node");
                      }
                   });
@@ -127,7 +88,7 @@ public class CreateActivityDiagramChildNodeOperationHandler
                   getStructureCompartmentGModelElement(containerActivity));
                modelAccess.addAction(getUmlModelState(), relativeLocation, parentContainer, CallBehaviorAction.class)
                   .thenAccept(response -> {
-                     if (!response.body()) {
+                     if (response.body() == null || response.body().isEmpty()) {
                         throw new GLSPServerException("Could not create operation on new Action node");
                      }
                   });
@@ -142,7 +103,7 @@ public class CreateActivityDiagramChildNodeOperationHandler
                   getStructureCompartmentGModelElement(containerActivity));
                modelAccess.addEventAction(getUmlModelState(), relativeLocation, parentContainer, false)
                   .thenAccept(response -> {
-                     if (!response.body()) {
+                     if (response.body() == null || response.body().isEmpty()) {
                         throw new GLSPServerException("Could not create operation on new Action node");
                      }
                   });
@@ -158,7 +119,7 @@ public class CreateActivityDiagramChildNodeOperationHandler
                   getStructureCompartmentGModelElement(containerActivity));
                modelAccess.addEventAction(getUmlModelState(), relativeLocation, parentContainer, true)
                   .thenAccept(response -> {
-                     if (!response.body()) {
+                     if (response.body() == null || response.body().isEmpty()) {
                         throw new GLSPServerException("Could not create operation on new Action node");
                      }
                   });
@@ -172,7 +133,7 @@ public class CreateActivityDiagramChildNodeOperationHandler
                   getStructureCompartmentGModelElement(containerActivity));
                modelAccess.addParameter(getUmlModelState(), relativeLocation, (Activity) parentContainer)
                   .thenAccept(response -> {
-                     if (!response.body()) {
+                     if (response.body() == null || response.body().isEmpty()) {
                         throw new GLSPServerException("Could not create operation on new Action node");
                      }
                   });
@@ -187,7 +148,7 @@ public class CreateActivityDiagramChildNodeOperationHandler
                   getStructureCompartmentGModelElement(containerActivity));
                modelAccess.addCondition(getUmlModelState(), relativeLocation, (Activity) parentContainer, true)
                   .thenAccept(response -> {
-                     if (!response.body()) {
+                     if (response.body() == null || response.body().isEmpty()) {
                         throw new GLSPServerException("Could not create operation on new Action node");
                      }
                   });
@@ -203,7 +164,7 @@ public class CreateActivityDiagramChildNodeOperationHandler
                   .addObjectNode(getUmlModelState(), relativeLocation, parentContainer,
                      CentralBufferNode.class)
                   .thenAccept(response -> {
-                     if (!response.body()) {
+                     if (response.body() == null || response.body().isEmpty()) {
                         throw new GLSPServerException("Could not create operation on new Action node");
                      }
                   });
@@ -218,7 +179,7 @@ public class CreateActivityDiagramChildNodeOperationHandler
                modelAccess
                   .addObjectNode(getUmlModelState(), relativeLocation, parentContainer, DataStoreNode.class)
                   .thenAccept(response -> {
-                     if (!response.body()) {
+                     if (response.body() == null || response.body().isEmpty()) {
                         throw new GLSPServerException("Could not create operation on new Action node");
                      }
                   });
@@ -234,7 +195,7 @@ public class CreateActivityDiagramChildNodeOperationHandler
                   getStructureCompartmentGModelElement(containerActivity));
                modelAccess.addControlNode(getUmlModelState(), relativeLocation, parentContainer, InitialNode.class)
                   .thenAccept(response -> {
-                     if (!response.body()) {
+                     if (response.body() == null || response.body().isEmpty()) {
                         throw new GLSPServerException("Could not create operation on new Action node");
                      }
                   });
@@ -250,7 +211,7 @@ public class CreateActivityDiagramChildNodeOperationHandler
                   getStructureCompartmentGModelElement(containerActivity));
                modelAccess.addControlNode(getUmlModelState(), relativeLocation, parentContainer, FinalNode.class)
                   .thenAccept(response -> {
-                     if (!response.body()) {
+                     if (response.body() == null || response.body().isEmpty()) {
                         throw new GLSPServerException("Could not create operation on new Action node");
                      }
                   });
@@ -266,7 +227,7 @@ public class CreateActivityDiagramChildNodeOperationHandler
                   getStructureCompartmentGModelElement(containerActivity));
                modelAccess.addControlNode(getUmlModelState(), relativeLocation, parentContainer, FlowFinalNode.class)
                   .thenAccept(response -> {
-                     if (!response.body()) {
+                     if (response.body() == null || response.body().isEmpty()) {
                         throw new GLSPServerException("Could not create operation on new Action node");
                      }
                   });
@@ -282,7 +243,7 @@ public class CreateActivityDiagramChildNodeOperationHandler
                   getStructureCompartmentGModelElement(containerActivity));
                modelAccess.addControlNode(getUmlModelState(), relativeLocation, parentContainer, DecisionNode.class)
                   .thenAccept(response -> {
-                     if (!response.body()) {
+                     if (response.body() == null || response.body().isEmpty()) {
                         throw new GLSPServerException("Could not create operation on new Action node");
                      }
                   });
@@ -298,7 +259,7 @@ public class CreateActivityDiagramChildNodeOperationHandler
                   getStructureCompartmentGModelElement(containerActivity));
                modelAccess.addControlNode(getUmlModelState(), relativeLocation, parentContainer, ForkNode.class)
                   .thenAccept(response -> {
-                     if (!response.body()) {
+                     if (response.body() == null || response.body().isEmpty()) {
                         throw new GLSPServerException("Could not create operation on new Action node");
                      }
                   });
@@ -309,7 +270,7 @@ public class CreateActivityDiagramChildNodeOperationHandler
          case (ActivityTypes.PIN): {
             modelAccess.addPin(UmlModelState.getModelState(modelState), (Action) parentContainer)
                .thenAccept(response -> {
-                  if (!response.body()) {
+                  if (response.body() == null || response.body().isEmpty()) {
                      throw new GLSPServerException("Could not execute create operation on new Pin node");
                   }
                });
@@ -317,18 +278,18 @@ public class CreateActivityDiagramChildNodeOperationHandler
          }
       }
    }
-
+   
    protected Optional<GModelElement> getStructureCompartmentGModelElement(final Optional<GModelElement> container) {
       return container.filter(GNode.class::isInstance)
          .map(GNode.class::cast)
          .flatMap(this::getStructureCompartment);
    }
-
+   
    protected Optional<GCompartment> getStructureCompartment(final GNode packageable) {
       return packageable.getChildren().stream().filter(GCompartment.class::isInstance).map(GCompartment.class::cast)
          .filter(comp -> ActivityTypes.STRUCTURE.equals(comp.getType())).findFirst();
    }
-
+   
    protected Optional<GPoint> getRelativeLocation(final CreateNodeOperation operation,
       final Optional<GPoint> absoluteLocation,
       final Optional<GModelElement> container) {
@@ -350,8 +311,8 @@ public class CreateActivityDiagramChildNodeOperationHandler
       }
       return Optional.empty();
    }
-
+   
    @Override
    public String getLabel() { return "Create uml classifier"; }
-
+   */
 }

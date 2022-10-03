@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSBasicOperationHandler;
+import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.AbstractEMSOperationHandler;
 import org.eclipse.glsp.graph.GBoundsAware;
 import org.eclipse.glsp.graph.GEdge;
 import org.eclipse.glsp.graph.GModelElement;
@@ -34,8 +34,8 @@ import com.eclipsesource.uml.glsp.actions.UmlRequestClipboardDataActionHandler;
 import com.eclipsesource.uml.glsp.features.copy_paste.property.InteractionPropertiesFactory;
 import com.eclipsesource.uml.glsp.features.copy_paste.property.LifelinePropertiesFactory;
 import com.eclipsesource.uml.glsp.features.copy_paste.property.MessagePropertiesFactory;
+import com.eclipsesource.uml.glsp.model.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.uml.communication_diagram.constants.CommunicationTypes;
 import com.eclipsesource.uml.glsp.utils.gmodel.GModelFilterUtil;
 import com.eclipsesource.uml.modelserver.commands.communication.interaction.CopyInteractionCommandContribution;
@@ -48,12 +48,15 @@ import com.google.gson.GsonBuilder;
 import com.google.inject.Inject;
 
 public class UmlPasteOperationHandler
-   extends EMSBasicOperationHandler<PasteOperation, UmlModelServerAccess> {
+   extends AbstractEMSOperationHandler<PasteOperation> {
    private final static String ARG_LAST_CONTAINABLE_ID = "lastContainableId";
    private static final int DEFAULT_OFFSET = 20;
 
    @Inject
    protected UmlModelState modelState;
+
+   @Inject
+   protected UmlModelServerAccess modelServerAccess;
 
    @Inject
    protected ActionDispatcher actionDispatcher;
@@ -67,8 +70,7 @@ public class UmlPasteOperationHandler
    }
 
    @Override
-   public void executeOperation(final PasteOperation operation,
-      final UmlModelServerAccess modelServerAccess) {
+   public void executeOperation(final PasteOperation operation) {
       var selectedElements = getCopiedElements(
          operation.getClipboardData().get(UmlRequestClipboardDataActionHandler.CLIPBOARD_SELECTED_ELEMENTS));
       var interactionElements = GModelFilterUtil
@@ -83,7 +85,7 @@ public class UmlPasteOperationHandler
          modelServerAccess.exec(CopyInteractionCommandContribution.create(interactionProperties));
       } else {
          var parentInteraction = modelState.getIndex()
-            .getSemantic(operation.getEditorContext().getArgs().get(ARG_LAST_CONTAINABLE_ID), Interaction.class);
+            .getEObject(operation.getEditorContext().getArgs().get(ARG_LAST_CONTAINABLE_ID), Interaction.class);
 
          if (parentInteraction.isPresent()) {
             var root = getCopiedElement(

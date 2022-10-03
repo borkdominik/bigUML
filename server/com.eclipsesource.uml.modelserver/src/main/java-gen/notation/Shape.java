@@ -8,7 +8,7 @@
  * 
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  */
-package com.eclipsesource.uml.modelserver.unotation;
+package notation;
 
 import org.eclipse.glsp.graph.GDimension;
 import org.eclipse.glsp.graph.GPoint;
@@ -22,11 +22,11 @@ import org.eclipse.glsp.graph.GPoint;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link com.eclipsesource.uml.modelserver.unotation.Shape#getPosition <em>Position</em>}</li>
- *   <li>{@link com.eclipsesource.uml.modelserver.unotation.Shape#getSize <em>Size</em>}</li>
+ *   <li>{@link notation.Shape#getPosition <em>Position</em>}</li>
+ *   <li>{@link notation.Shape#getSize <em>Size</em>}</li>
  * </ul>
  *
- * @see com.eclipsesource.uml.modelserver.unotation.UnotationPackage#getShape()
+ * @see notation.NotationPackage#getShape()
  * @model
  * @generated
  */
@@ -37,14 +37,14 @@ public interface Shape extends NotationElement {
     * <!-- end-user-doc -->
     * @return the value of the '<em>Position</em>' containment reference.
     * @see #setPosition(GPoint)
-    * @see com.eclipsesource.uml.modelserver.unotation.UnotationPackage#getShape_Position()
+    * @see notation.NotationPackage#getShape_Position()
     * @model containment="true"
     * @generated
     */
    GPoint getPosition();
 
    /**
-    * Sets the value of the '{@link com.eclipsesource.uml.modelserver.unotation.Shape#getPosition <em>Position</em>}' containment reference.
+    * Sets the value of the '{@link notation.Shape#getPosition <em>Position</em>}' containment reference.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @param value the new value of the '<em>Position</em>' containment reference.
@@ -59,14 +59,14 @@ public interface Shape extends NotationElement {
     * <!-- end-user-doc -->
     * @return the value of the '<em>Size</em>' containment reference.
     * @see #setSize(GDimension)
-    * @see com.eclipsesource.uml.modelserver.unotation.UnotationPackage#getShape_Size()
+    * @see notation.NotationPackage#getShape_Size()
     * @model containment="true"
     * @generated
     */
    GDimension getSize();
 
    /**
-    * Sets the value of the '{@link com.eclipsesource.uml.modelserver.unotation.Shape#getSize <em>Size</em>}' containment reference.
+    * Sets the value of the '{@link notation.Shape#getSize <em>Size</em>}' containment reference.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @param value the new value of the '<em>Size</em>' containment reference.

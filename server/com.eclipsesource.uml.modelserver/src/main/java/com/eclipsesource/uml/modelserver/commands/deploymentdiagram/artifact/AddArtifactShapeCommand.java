@@ -9,7 +9,7 @@ import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.uml2.uml.Artifact;
 import com.eclipsesource.uml.modelserver.commands.util.UmlNotationCommandUtil;
 import com.eclipsesource.uml.modelserver.unotation.SemanticProxy;
-import com.eclipsesource.uml.modelserver.unotation.Shape;
+import org.eclipse.glsp.server.emf.model.notation.Shape;
 import com.eclipsesource.uml.modelserver.unotation.UnotationFactory;
 
 public class AddArtifactShapeCommand extends UmlNotationElementCommand {
@@ -26,13 +26,13 @@ public class AddArtifactShapeCommand extends UmlNotationElementCommand {
     }
 
     public AddArtifactShapeCommand(final EditingDomain domain, final URI modelUri, final GPoint position,
-                                   final String semanticProxyUri) {
+        final String semanticProxyUri) {
         this(domain, modelUri, position);
         this.semanticProxyUri = semanticProxyUri;
     }
 
     public AddArtifactShapeCommand(final EditingDomain domain, final URI modelUri, final GPoint position,
-                                   final Supplier<Artifact> artifactSupplier) {
+        final Supplier<Artifact> artifactSupplier) {
         this(domain, modelUri, position);
         this.artifactSupplier = artifactSupplier;
 

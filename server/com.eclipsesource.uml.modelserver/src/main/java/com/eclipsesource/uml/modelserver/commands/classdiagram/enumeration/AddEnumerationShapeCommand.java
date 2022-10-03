@@ -3,7 +3,7 @@ package com.eclipsesource.uml.modelserver.commands.classdiagram.enumeration;
 import com.eclipsesource.uml.modelserver.commands.commons.notation.UmlNotationElementCommand;
 import com.eclipsesource.uml.modelserver.commands.util.UmlNotationCommandUtil;
 import com.eclipsesource.uml.modelserver.unotation.SemanticProxy;
-import com.eclipsesource.uml.modelserver.unotation.Shape;
+import org.eclipse.glsp.server.emf.model.notation.Shape;
 import com.eclipsesource.uml.modelserver.unotation.UnotationFactory;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -24,13 +24,13 @@ public class AddEnumerationShapeCommand extends UmlNotationElementCommand {
    }
 
    public AddEnumerationShapeCommand(final EditingDomain domain, final URI modelUri, final GPoint position,
-                                     final String semanticProxyUri) {
+      final String semanticProxyUri) {
       this(domain, modelUri, position);
       this.semanticProxyUri = semanticProxyUri;
    }
 
    public AddEnumerationShapeCommand(final EditingDomain domain, final URI modelUri, final Enumeration newEnumeration,
-                                     final GPoint position) {
+      final GPoint position) {
       this(domain, modelUri, position);
       this.newEnumeration = newEnumeration;
    }

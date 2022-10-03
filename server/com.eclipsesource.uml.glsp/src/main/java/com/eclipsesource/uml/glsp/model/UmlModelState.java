@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2021 EclipseSource and others.
+ * Copyright (c) 2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -10,68 +10,25 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.model;
 
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emfcloud.modelserver.glsp.EMSModelServerAccess;
-import org.eclipse.emfcloud.modelserver.glsp.model.EMSModelState;
-import org.eclipse.glsp.server.model.GModelState;
+import org.eclipse.emfcloud.modelserver.glsp.notation.integration.EMSNotationModelState;
 import org.eclipse.glsp.server.types.GLSPServerException;
 import org.eclipse.uml2.uml.Model;
 
-import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;
-import com.eclipsesource.uml.modelserver.unotation.Diagram;
+import com.eclipsesource.uml.modelserver.unotation.UmlDiagram;
 
-public class UmlModelState extends EMSModelState {
+// TODO: Make those getter better
+public class UmlModelState extends EMSNotationModelState {
+   public UmlDiagram getUmlNotationModel() {
+      var model = super.getNotationModel(UmlDiagram.class);
 
-   protected UmlModelServerAccess modelServerAccess;
-
-   protected Model semanticModel;
-   protected Diagram notationModel;
-
-   public static UmlModelState getModelState(final GModelState state) {
-      if (!(state instanceof UmlModelState)) {
-         throw new IllegalArgumentException("Argument must be a ModelServer aware UmlModelState");
+      if (model.isEmpty()) {
+         throw new GLSPServerException("Could not access UML Notation Model");
       }
-      return ((UmlModelState) state);
-   }
 
-   public static UmlModelServerAccess getModelServerAccess(final GModelState state) {
-      return getModelState(state).getModelServerAccess();
+      return model.get();
    }
 
    @Override
-   public UmlModelServerAccess getModelServerAccess() { return modelServerAccess; }
-
-   @Override
-   protected void setModelServerAccess(final EMSModelServerAccess modelServerAccess) {
-      this.modelServerAccess = (UmlModelServerAccess) modelServerAccess;
-   }
-
-   @Override
-   public Diagram getNotationModel() { return notationModel; }
-
-   @Override
-   public Model getSemanticModel() { return semanticModel; }
-
-   @Override
-   public UmlModelIndex getIndex() { return UmlModelIndex.get(getRoot()); }
-
-   @Override
-   public void loadSourceModels() throws GLSPServerException {
-      EObject semanticRoot = modelServerAccess.getSemanticModel();
-      if (!(semanticRoot instanceof Model)) {
-         throw new GLSPServerException("Error during semantic model loading");
-      }
-      this.semanticModel = (Model) semanticRoot;
-
-      // initialize semantic model
-      EcoreUtil.resolveAll(semanticModel);
-
-      EObject notationRoot = modelServerAccess.getNotationModel();
-      if (notationRoot != null && !(notationRoot instanceof Diagram)) {
-         throw new GLSPServerException("Error during notation diagram loading");
-      }
-      this.notationModel = (Diagram) notationRoot;
-   }
+   public Model getSemanticModel() { return (Model) this.semanticModel; }
 
 }

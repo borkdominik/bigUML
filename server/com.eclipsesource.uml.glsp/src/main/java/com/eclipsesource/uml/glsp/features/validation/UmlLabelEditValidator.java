@@ -10,7 +10,8 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.features.validation;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.server.features.directediting.LabelEditValidator;
 import org.eclipse.glsp.server.features.directediting.ValidationStatus;
@@ -20,7 +21,7 @@ import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.google.inject.Inject;
 
 public class UmlLabelEditValidator implements LabelEditValidator {
-   private static Logger LOGGER = Logger.getLogger(UmlLabelEditValidator.class.getSimpleName());
+   private static Logger LOGGER = LogManager.getLogger(UmlLabelEditValidator.class.getSimpleName());
 
    @Inject
    protected UmlModelState modelState;
@@ -31,7 +32,7 @@ public class UmlLabelEditValidator implements LabelEditValidator {
 
    @Override
    public ValidationStatus validate(final String label, final GModelElement element) {
-      var diagramType = modelState.getNotationModel().getDiagramType();
+      var diagramType = modelState.getUmlNotationModel().getRepresentation();
 
       switch (diagramType) {
          case COMMUNICATION: {

@@ -29,7 +29,7 @@ import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.uml.statemachine_diagram.constants.StateMachineTypes;
 import com.eclipsesource.uml.glsp.utils.UmlConfig;
 import com.eclipsesource.uml.glsp.utils.UmlConfig.CSS;
-import com.eclipsesource.uml.modelserver.unotation.Shape;
+import org.eclipse.glsp.server.emf.model.notation.Shape;
 
 public class StateMachineDiagramVertexFactory extends StateMachineAbstractGModelFactory<Vertex, GNode> {
 

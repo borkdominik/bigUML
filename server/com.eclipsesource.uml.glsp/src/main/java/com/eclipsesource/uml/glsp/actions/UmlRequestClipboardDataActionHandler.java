@@ -13,28 +13,24 @@ package com.eclipsesource.uml.glsp.actions;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.glsp.server.actions.AbstractActionHandler;
+import org.eclipse.emfcloud.modelserver.glsp.actions.handlers.AbstractEMSActionHandler;
 import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.features.clipboard.RequestClipboardDataAction;
 import org.eclipse.glsp.server.features.clipboard.SetClipboardDataAction;
 import org.eclipse.glsp.server.gson.GraphGsonConfigurationFactory;
 
-import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.uml.communication_diagram.constants.CommunicationTypes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.inject.Inject;
 
-public class UmlRequestClipboardDataActionHandler extends AbstractActionHandler<RequestClipboardDataAction> {
+public class UmlRequestClipboardDataActionHandler extends AbstractEMSActionHandler<RequestClipboardDataAction> {
    public static String CLIPBOARD_SELECTED_ELEMENTS = "selectedElements";
    public static String CLIPBOARD_ROOT = "root";
    private final List<String> ignoreList = List.of(CommunicationTypes.MESSAGE);
 
    protected final Gson gson;
-
-   @Inject
-   protected UmlModelState modelState;
 
    @Inject
    public UmlRequestClipboardDataActionHandler(final GraphGsonConfigurationFactory gsonConfigurator) {

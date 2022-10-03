@@ -10,26 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.deployment_diagram.operations;
 
-import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
-
-import java.util.List;
-
-import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSBasicCreateOperationHandler;
-import org.eclipse.glsp.server.operations.CreateEdgeOperation;
-import org.eclipse.glsp.server.operations.Operation;
-import org.eclipse.glsp.server.types.GLSPServerException;
-import org.eclipse.uml2.uml.Artifact;
-import org.eclipse.uml2.uml.Classifier;
-import org.eclipse.uml2.uml.Node;
-
-import com.eclipsesource.uml.glsp.model.UmlModelIndex;
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.uml.deployment_diagram.DeploymentModelServerAccess;
-import com.eclipsesource.uml.glsp.uml.deployment_diagram.constants.DeploymentTypes;
-import com.google.common.collect.Lists;
-
-public class CreateDeploymentDiagramEdgeOperationHandler
-   extends EMSBasicCreateOperationHandler<CreateEdgeOperation, DeploymentModelServerAccess> {
+public class CreateDeploymentDiagramEdgeOperationHandler { /*-
 
    public CreateDeploymentDiagramEdgeOperationHandler() {
       super(handledElementTypeIds);
@@ -58,24 +39,24 @@ public class CreateDeploymentDiagramEdgeOperationHandler
 
       UmlModelIndex modelIndex = modelState.getIndex();
       if (elementTypeId.equals(DeploymentTypes.COMMUNICATION_PATH)) {
-         Classifier sourceNode = getOrThrow(modelIndex.getSemantic(operation.getSourceElementId(), Classifier.class),
+         Classifier sourceNode = getOrThrow(modelIndex.getEObject(operation.getSourceElementId(), Classifier.class),
             "No semantic Node found for source element with id " + operation.getSourceElementId());
-         Classifier targetNode = getOrThrow(modelIndex.getSemantic(operation.getTargetElementId(), Classifier.class),
+         Classifier targetNode = getOrThrow(modelIndex.getEObject(operation.getTargetElementId(), Classifier.class),
             "No semantic Node found for source element with id " + operation.getTargetElementId());
          modelAccess.addCommunicationPath(modelState, sourceNode, targetNode)
             .thenAccept(response -> {
-               if (!response.body()) {
+               if (response.body() == null || response.body().isEmpty()) {
                   throw new GLSPServerException("Could not execute create operation on new Association edge");
                }
             });
       } else if (elementTypeId.equals(DeploymentTypes.DEPLOYMENT)) {
-         Artifact sourceArtifact = getOrThrow(modelIndex.getSemantic(operation.getSourceElementId(), Artifact.class),
+         Artifact sourceArtifact = getOrThrow(modelIndex.getEObject(operation.getSourceElementId(), Artifact.class),
             "No semantic Node found for source element with id " + operation.getSourceElementId());
-         Node targetNode = getOrThrow(modelIndex.getSemantic(operation.getTargetElementId(), Node.class),
+         Node targetNode = getOrThrow(modelIndex.getEObject(operation.getTargetElementId(), Node.class),
             "No semantic Node found for source element with id " + operation.getTargetElementId());
          modelAccess.addDeployment(modelState, sourceArtifact, targetNode)
             .thenAccept(response -> {
-               if (!response.body()) {
+               if (response.body() == null || response.body().isEmpty()) {
                   throw new GLSPServerException("Could not execute create operation on new Association edge");
                }
             });
@@ -84,5 +65,5 @@ public class CreateDeploymentDiagramEdgeOperationHandler
 
    @Override
    public String getLabel() { return "Create uml edge"; }
-
+   */
 }

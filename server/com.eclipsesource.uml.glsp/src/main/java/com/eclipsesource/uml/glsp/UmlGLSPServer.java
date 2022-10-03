@@ -11,10 +11,9 @@
 package com.eclipsesource.uml.glsp;
 
 import java.net.MalformedURLException;
-import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
-import org.eclipse.emfcloud.modelserver.client.v1.ModelServerClientV1;
+import org.eclipse.emfcloud.modelserver.client.v2.ModelServerClientV2;
 import org.eclipse.emfcloud.modelserver.glsp.EMSGLSPServer;
 import org.eclipse.glsp.server.protocol.DisposeClientSessionParameters;
 import org.eclipse.glsp.server.types.GLSPServerException;
@@ -27,13 +26,13 @@ import com.eclipsesource.uml.modelserver.UmlNotationUtil;
 public class UmlGLSPServer extends EMSGLSPServer {
 
    @Override
-   protected ModelServerClientV1 createModelServerClient(final String modelServerURL) throws MalformedURLException {
+   protected ModelServerClientV2 createModelServerClient(final String modelServerURL) throws MalformedURLException {
       return new UmlModelServerClient(modelServerURL);
    }
 
    @Override
    public CompletableFuture<Void> disposeClientSession(final DisposeClientSessionParameters params) {
-      Optional<ModelServerClientV1> modelServerClient = modelServerClientProvider.get();
+      var modelServerClient = modelServerClientProvider.get();
       if (modelServerClient.isPresent()) {
          String sourceURI = ClientOptionsUtil.getSourceUri(params.getArgs())
             .orElseThrow(() -> new GLSPServerException("No source URI given to dispose client session!"));

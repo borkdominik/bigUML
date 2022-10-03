@@ -12,7 +12,7 @@ package com.eclipsesource.uml.modelserver.commands.usecasediagram.association;
 
 import com.eclipsesource.uml.modelserver.commands.commons.notation.UmlNotationElementCommand;
 import com.eclipsesource.uml.modelserver.commands.util.UmlNotationCommandUtil;
-import com.eclipsesource.uml.modelserver.unotation.Edge;
+import org.eclipse.glsp.server.emf.model.notation.Edge;
 import com.eclipsesource.uml.modelserver.unotation.SemanticProxy;
 import com.eclipsesource.uml.modelserver.unotation.UnotationFactory;
 import org.eclipse.emf.common.util.URI;
@@ -32,13 +32,14 @@ public class AddUseCaseAssociationEdgeCommand extends UmlNotationElementCommand 
       this.associationSupplier = null;
    }
 
-   public AddUseCaseAssociationEdgeCommand(final EditingDomain domain, final URI modelUri, final String semanticProxyUri) {
+   public AddUseCaseAssociationEdgeCommand(final EditingDomain domain, final URI modelUri,
+      final String semanticProxyUri) {
       this(domain, modelUri);
       this.semanticProxyUri = semanticProxyUri;
    }
 
    public AddUseCaseAssociationEdgeCommand(final EditingDomain domain, final URI modelUri,
-                                           final Supplier<Association> associationSupplier) {
+      final Supplier<Association> associationSupplier) {
       this(domain, modelUri);
       this.associationSupplier = associationSupplier;
    }

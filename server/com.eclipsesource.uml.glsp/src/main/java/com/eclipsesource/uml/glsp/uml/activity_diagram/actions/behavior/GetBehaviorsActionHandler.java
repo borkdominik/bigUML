@@ -10,24 +10,10 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.activity_diagram.actions.behavior;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
-
-import org.apache.log4j.Logger;
-import org.eclipse.emfcloud.modelserver.client.Response;
-import org.eclipse.emfcloud.modelserver.glsp.actions.handlers.EMSBasicActionHandler;
-import org.eclipse.glsp.server.actions.Action;
-
-import com.eclipsesource.uml.glsp.actions.UmlGetTypesActionHandler;
-import com.eclipsesource.uml.glsp.uml.activity_diagram.ActivityModelServerAccess;
-
-public class GetBehaviorsActionHandler extends EMSBasicActionHandler<GetBehaviorsAction, ActivityModelServerAccess> {
-
-   private static Logger LOGGER = Logger.getLogger(UmlGetTypesActionHandler.class.getSimpleName());
-
-   @Override
+public class GetBehaviorsActionHandler {
+   /*-
+   private static Logger LOGGER = LogManager.getLogger(UmlGetTypesActionHandler.class.getSimpleName());
+   
    public List<Action> executeAction(final GetBehaviorsAction getBehaviorsAction,
       final ActivityModelServerAccess modelServerAccess) {
       LOGGER.info("Behaviors suggestion activated");
@@ -41,4 +27,5 @@ public class GetBehaviorsActionHandler extends EMSBasicActionHandler<GetBehavior
       }
       return List.of(new CallBehaviorsAction(behaviors));
    }
+   */
 }

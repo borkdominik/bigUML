@@ -10,18 +10,13 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.deployment_diagram;
 
-import org.eclipse.glsp.server.di.MultiBinding;
-import org.eclipse.glsp.server.operations.OperationHandler;
-
-import com.eclipsesource.uml.glsp.uml.deployment_diagram.operations.CreateDeploymentDiagramChildNodeOperationHandler;
-import com.eclipsesource.uml.glsp.uml.deployment_diagram.operations.CreateDeploymentDiagramEdgeOperationHandler;
-import com.eclipsesource.uml.glsp.uml.deployment_diagram.operations.CreateDeploymentDiagramNodeOperationHandler;
-
 public class DeploymentGLSPModule {
+   /*-
    protected void configureOperationHandlers(final MultiBinding<OperationHandler> bindings) {
       // DEPLOYMENT
       bindings.add(CreateDeploymentDiagramNodeOperationHandler.class);
       bindings.add(CreateDeploymentDiagramChildNodeOperationHandler.class);
       bindings.add(CreateDeploymentDiagramEdgeOperationHandler.class);
    }
+   */
 }

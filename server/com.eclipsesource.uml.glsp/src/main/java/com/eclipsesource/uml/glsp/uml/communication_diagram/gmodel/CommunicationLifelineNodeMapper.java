@@ -18,6 +18,8 @@ import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 import org.eclipse.glsp.graph.builder.impl.GNodeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.glsp.graph.util.GraphUtil;
+import org.eclipse.glsp.server.emf.EMFIdGenerator;
+import org.eclipse.glsp.server.emf.model.notation.Shape;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Lifeline;
 
@@ -26,10 +28,11 @@ import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.uml.communication_diagram.constants.CommunicationTypes;
 import com.eclipsesource.uml.glsp.utils.UmlConfig;
 import com.eclipsesource.uml.glsp.utils.UmlIDUtil;
-import com.eclipsesource.uml.modelserver.unotation.Shape;
 import com.google.inject.Inject;
 
 public class CommunicationLifelineNodeMapper implements UmlGModelMapper<Lifeline, GNode> {
+   @Inject
+   protected EMFIdGenerator idGenerator;
 
    @Inject
    private UmlModelState modelState;
@@ -37,7 +40,7 @@ public class CommunicationLifelineNodeMapper implements UmlGModelMapper<Lifeline
    @Override
    public GNode map(final Lifeline lifeline) {
       GNodeBuilder lifelineNodeBuilder = new GNodeBuilder(CommunicationTypes.LIFELINE)
-         .id(UmlIDUtil.toId(modelState, lifeline))
+         .id(idGenerator.getOrCreateId(lifeline))
          .layout(GConstants.Layout.VBOX)
          .addCssClass(UmlConfig.CSS.NODE);
 
@@ -63,14 +66,14 @@ public class CommunicationLifelineNodeMapper implements UmlGModelMapper<Lifeline
    protected GCompartment buildClassHeader(final Lifeline umlLifeline) {
       GCompartmentBuilder classHeaderBuilder = new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER)
          .layout(GConstants.Layout.HBOX)
-         .id(UmlIDUtil.createHeaderId(UmlIDUtil.toId(modelState, umlLifeline)));
+         .id(UmlIDUtil.createHeaderId(idGenerator.getOrCreateId(umlLifeline)));
 
       GCompartment classHeaderIcon = new GCompartmentBuilder(CommunicationTypes.ICON_LIFELINE)
-         .id(UmlIDUtil.createHeaderIconId(UmlIDUtil.toId(modelState, umlLifeline))).build();
+         .id(UmlIDUtil.createHeaderIconId(idGenerator.getOrCreateId(umlLifeline))).build();
       classHeaderBuilder.add(classHeaderIcon);
 
       GLabel classHeaderLabel = new GLabelBuilder(UmlConfig.Types.LABEL_NAME)
-         .id(UmlIDUtil.createHeaderLabelId(UmlIDUtil.toId(modelState, umlLifeline)))
+         .id(UmlIDUtil.createHeaderLabelId(idGenerator.getOrCreateId(umlLifeline)))
          .text(umlLifeline.getName()).build();
       classHeaderBuilder.add(classHeaderLabel);
 

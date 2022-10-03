@@ -26,6 +26,8 @@ import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.builder.impl.GNodeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.glsp.graph.util.GraphUtil;
+import org.eclipse.glsp.server.emf.EMFIdGenerator;
+import org.eclipse.glsp.server.emf.model.notation.Shape;
 import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.Interaction;
 
@@ -35,10 +37,11 @@ import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.uml.communication_diagram.constants.CommunicationTypes;
 import com.eclipsesource.uml.glsp.utils.UmlConfig;
 import com.eclipsesource.uml.glsp.utils.UmlIDUtil;
-import com.eclipsesource.uml.modelserver.unotation.Shape;
 import com.google.inject.Inject;
 
 public class CommunicationInteractionNodeMapper implements UmlGModelMapper<Interaction, GNode> {
+   @Inject
+   protected EMFIdGenerator idGenerator;
 
    private static final String V_GRAB = "vGrab";
    private static final String H_GRAB = "hGrab";
@@ -62,7 +65,7 @@ public class CommunicationInteractionNodeMapper implements UmlGModelMapper<Inter
       children.addAll(interaction.getMessages());
 
       GNodeBuilder builder = new GNodeBuilder(CommunicationTypes.INTERACTION)
-         .id(UmlIDUtil.toId(modelState, interaction))
+         .id(idGenerator.getOrCreateId(interaction))
          .layout(GConstants.Layout.VBOX)
          .layoutOptions(layoutOptions)
          .addCssClass(UmlConfig.CSS.NODE)
@@ -91,11 +94,11 @@ public class CommunicationInteractionNodeMapper implements UmlGModelMapper<Inter
    protected GCompartment buildInteractionHeader(final Interaction umlInteraction) {
       return new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER)
          .layout(GConstants.Layout.HBOX)
-         .id(UmlIDUtil.createHeaderId(UmlIDUtil.toId(modelState, umlInteraction)))
+         .id(UmlIDUtil.createHeaderId(idGenerator.getOrCreateId(umlInteraction)))
          .add(new GCompartmentBuilder(CommunicationTypes.ICON_INTERACTION)
-            .id(UmlIDUtil.createHeaderIconId(UmlIDUtil.toId(modelState, umlInteraction))).build())
+            .id(UmlIDUtil.createHeaderIconId(idGenerator.getOrCreateId(umlInteraction))).build())
          .add(new GLabelBuilder(UmlConfig.Types.LABEL_NAME)
-            .id(UmlIDUtil.createHeaderLabelId(UmlIDUtil.toId(modelState, umlInteraction)))
+            .id(UmlIDUtil.createHeaderLabelId(idGenerator.getOrCreateId(umlInteraction)))
             .text(umlInteraction.getName()).build())
          .build();
    }
@@ -108,7 +111,7 @@ public class CommunicationInteractionNodeMapper implements UmlGModelMapper<Inter
       layoutOptions.put(V_GRAB, true);
 
       return new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT)
-         .id(UmlIDUtil.createChildCompartmentId(UmlIDUtil.toId(modelState, interaction)))
+         .id(UmlIDUtil.createChildCompartmentId(idGenerator.getOrCreateId(interaction)))
          .layout(GConstants.Layout.FREEFORM)
          .layoutOptions(layoutOptions)
          .addAll(children.stream()

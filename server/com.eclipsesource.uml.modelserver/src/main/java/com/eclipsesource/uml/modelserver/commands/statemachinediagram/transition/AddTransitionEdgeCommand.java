@@ -1,7 +1,7 @@
 package com.eclipsesource.uml.modelserver.commands.statemachinediagram.transition;
 
 import com.eclipsesource.uml.modelserver.commands.commons.notation.UmlNotationElementCommand;
-import com.eclipsesource.uml.modelserver.unotation.Edge;
+import org.eclipse.glsp.server.emf.model.notation.Edge;
 import com.eclipsesource.uml.modelserver.unotation.SemanticProxy;
 import com.eclipsesource.uml.modelserver.unotation.UnotationFactory;
 import org.eclipse.emf.common.util.URI;
@@ -28,7 +28,7 @@ public class AddTransitionEdgeCommand extends UmlNotationElementCommand {
     }
 
     public AddTransitionEdgeCommand(final EditingDomain domain, final URI modelUri,
-                                    final Supplier<Transition> transitionSupplier) {
+        final Supplier<Transition> transitionSupplier) {
         this(domain, modelUri);
         this.transitionSupplier = transitionSupplier;
     }

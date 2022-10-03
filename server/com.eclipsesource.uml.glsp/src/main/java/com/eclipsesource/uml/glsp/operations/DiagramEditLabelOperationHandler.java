@@ -12,11 +12,10 @@ package com.eclipsesource.uml.glsp.operations;
 
 import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperation;
 
-import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 
 public interface DiagramEditLabelOperationHandler {
    boolean supports(Representation representation);
 
-   void edit(final ApplyLabelEditOperation editLabelOperation, UmlModelServerAccess modelAccess);
+   void edit(final ApplyLabelEditOperation editLabelOperation);
 }

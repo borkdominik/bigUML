@@ -10,7 +10,7 @@ import org.eclipse.uml2.uml.Device;
 
 import com.eclipsesource.uml.modelserver.commands.util.UmlNotationCommandUtil;
 import com.eclipsesource.uml.modelserver.unotation.SemanticProxy;
-import com.eclipsesource.uml.modelserver.unotation.Shape;
+import org.eclipse.glsp.server.emf.model.notation.Shape;
 import com.eclipsesource.uml.modelserver.unotation.UnotationFactory;
 
 public class AddDeviceShapeCommand extends UmlNotationElementCommand {
@@ -27,13 +27,13 @@ public class AddDeviceShapeCommand extends UmlNotationElementCommand {
     }
 
     public AddDeviceShapeCommand(final EditingDomain domain, final URI modelUri, final GPoint position,
-                                 final String semanticProxyUri) {
+        final String semanticProxyUri) {
         this(domain, modelUri, position);
         this.semanticProxyUri = semanticProxyUri;
     }
 
     public AddDeviceShapeCommand(final EditingDomain domain, final URI modelUri, final GPoint position,
-                                 final Supplier<Device> deviceSupplier) {
+        final Supplier<Device> deviceSupplier) {
         this(domain, modelUri, position);
         this.deviceSupplier = deviceSupplier;
 

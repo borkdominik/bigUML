@@ -4,14 +4,14 @@ import com.eclipsesource.uml.modelserver.commands.commons.notation.UmlNotationEl
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import com.eclipsesource.uml.modelserver.commands.util.UmlNotationCommandUtil;
-import com.eclipsesource.uml.modelserver.unotation.Shape;
+import org.eclipse.glsp.server.emf.model.notation.Shape;
 
 public class RemoveDeploymentSpecificationShapeCommand extends UmlNotationElementCommand {
 
     protected final Shape shapeToRemove;
 
     public RemoveDeploymentSpecificationShapeCommand(final EditingDomain domain, final URI modelUri,
-                                                     final String semanticProxyUri) {
+        final String semanticProxyUri) {
         super(domain, modelUri);
         this.shapeToRemove = UmlNotationCommandUtil.getNotationElement(modelUri, domain, semanticProxyUri, Shape.class);
     }

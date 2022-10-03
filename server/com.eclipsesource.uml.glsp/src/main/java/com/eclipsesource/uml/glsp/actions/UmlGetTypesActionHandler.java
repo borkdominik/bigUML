@@ -10,32 +10,37 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.actions;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
-import org.apache.log4j.Logger;
-import org.eclipse.emfcloud.modelserver.client.Response;
-import org.eclipse.emfcloud.modelserver.glsp.actions.handlers.EMSBasicActionHandler;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.eclipse.emfcloud.modelserver.glsp.actions.handlers.AbstractEMSActionHandler;
 import org.eclipse.glsp.server.actions.Action;
 
-import com.eclipsesource.uml.glsp.modelserver.UmlModelServerAccess;
+import com.eclipsesource.uml.glsp.model.UmlModelServerAccess;
+import com.google.inject.Inject;
 
-public class UmlGetTypesActionHandler extends EMSBasicActionHandler<GetTypesAction, UmlModelServerAccess> {
+public class UmlGetTypesActionHandler extends AbstractEMSActionHandler<GetTypesAction> {
 
-   private static Logger LOGGER = Logger.getLogger(UmlGetTypesActionHandler.class.getSimpleName());
+   private static Logger LOGGER = LogManager.getLogger(UmlGetTypesActionHandler.class.getSimpleName());
+
+   @Inject
+   protected UmlModelServerAccess modelServerAccess;
 
    @Override
-   public List<Action> executeAction(final GetTypesAction action, final UmlModelServerAccess modelServerAccess) {
-      try {
-         Response<List<String>> response = modelServerAccess.getUmlTypes().get();
-         List<String> types = response.body();
-         Collections.sort(types);
-         return List.of(new ReturnTypesAction(types));
-      } catch (InterruptedException | ExecutionException e) {
-         LOGGER.error("Error while fetching UML types from Model Server");
-         e.printStackTrace();
-      }
+   public List<Action> executeAction(final GetTypesAction action) {
+      // TODO: Find out why this is required
+      /*
+       * try {
+       * Response<List<String>> response = modelServerAccess.getUmlTypes().get();
+       * List<String> types = response.body();
+       * Collections.sort(types);
+       * return List.of(new ReturnTypesAction(types));
+       * } catch (InterruptedException | ExecutionException e) {
+       * LOGGER.error("Error while fetching UML types from Model Server");
+       * e.printStackTrace();
+       * }
+       */
       return List.of();
    }
 

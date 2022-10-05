@@ -12,10 +12,10 @@ package com.eclipsesource.uml.glsp.gmodel;
 
 import org.eclipse.glsp.graph.GGraph;
 import org.eclipse.glsp.server.emf.EMFIdGenerator;
+import org.eclipse.glsp.server.emf.model.notation.Diagram;
 import org.eclipse.uml2.uml.Model;
 
 import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.modelserver.unotation.UmlDiagram;
 import com.google.inject.Inject;
 
 public class UmlDiagramMapper {
@@ -28,7 +28,7 @@ public class UmlDiagramMapper {
    @Inject
    protected EMFIdGenerator idGenerator;
 
-   public GGraph map(final GGraph graph, final UmlDiagram notationModel) {
+   public GGraph map(final GGraph graph, final Diagram notationModel) {
       if (notationModel.getSemanticElement() != null
          && notationModel.getSemanticElement().getResolvedSemanticElement() != null) {
          Model umlModel = (Model) notationModel.getSemanticElement().getResolvedSemanticElement();

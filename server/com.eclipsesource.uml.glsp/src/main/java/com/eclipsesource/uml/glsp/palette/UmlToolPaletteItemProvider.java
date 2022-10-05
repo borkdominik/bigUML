@@ -37,7 +37,7 @@ public class UmlToolPaletteItemProvider
 
    @Override
    public List<PaletteItem> getItems(final Map<String, String> args) {
-      Representation diagramType = modelState.getUmlNotationModel().getRepresentation();
+      Representation diagramType = modelState.getRepresentation();
       LOGGER.info("------- CURRENT DIAGRAM TYPE: " + diagramType + " ----------");
 
       var items = new ArrayList<PaletteItem>();

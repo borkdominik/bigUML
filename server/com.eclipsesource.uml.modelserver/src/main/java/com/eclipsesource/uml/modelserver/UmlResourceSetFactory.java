@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emfcloud.modelserver.emf.common.DefaultResourceSetFactory;
 import org.eclipse.emfcloud.modelserver.integration.SemanticFileExtension;
 import org.eclipse.emfcloud.modelserver.notation.integration.NotationFileExtension;
+import org.eclipse.emfcloud.modelserver.notation.integration.NotationResource;
 import org.eclipse.uml2.uml.resource.UMLResource;
 import org.eclipse.uml2.uml.resources.util.UMLResourcesUtil;
 
@@ -45,6 +46,8 @@ public class UmlResourceSetFactory extends DefaultResourceSetFactory {
          semanticFileExtension, UMLResource.Factory.INSTANCE);
       resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
          notationFileExtension, UmlNotationResource.FACTORY);
+      resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
+         NotationResource.FILE_EXTENSION, NotationResource.FACTORY);
 
       UMLResourcesUtil.init(resourceSet);
       loadResourceLibraries(resourceSet);

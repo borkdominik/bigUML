@@ -35,16 +35,19 @@ public class DefaultOutlineGeneratorImpl implements DefaultOutlineGenerator {
 
    @Override
    public List<OutlineTreeNode> generate() {
+      /*- TODO: Activate
       var rootElement = modelState.getSemanticModel();
       List<OutlineTreeNode> outlineTreeNodes = new ArrayList<>();
-
+      
       var model = modelState.getSemanticModel();
-
+      
       outlineTreeNodes = model.getOwnedElements().stream()
          .map(rootChildren -> mapElementToOutlineTreeNode(rootChildren))
          .collect(Collectors.toList());
-
+      
       return outlineTreeNodes;
+      */
+      return List.of();
    }
 
    private OutlineTreeNode mapElementToOutlineTreeNode(final Element element) {

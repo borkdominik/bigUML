@@ -20,6 +20,7 @@ import org.eclipse.emfcloud.modelserver.emf.common.codecs.CodecProvider;
 import org.eclipse.emfcloud.modelserver.emf.configuration.EPackageConfiguration;
 import org.eclipse.emfcloud.modelserver.notation.integration.EMSNotationModelServerModule;
 import org.eclipse.emfcloud.modelserver.notation.integration.NotationPackageConfiguration;
+import org.eclipse.emfcloud.modelserver.notation.integration.NotationResource;
 import org.eclipse.uml2.uml.resource.UMLResource;
 
 import com.eclipsesource.uml.modelserver.codecs.UmlCodecProvider;
@@ -37,7 +38,6 @@ import com.eclipsesource.uml.modelserver.commands.communication.message.AddMessa
 import com.eclipsesource.uml.modelserver.commands.communication.message.RemoveMessageCommandContribution;
 import com.eclipsesource.uml.modelserver.commands.communication.message.SetMessageNameCommandContribution;
 import com.eclipsesource.uml.modelserver.resource.UmlNotationPackageConfiguration;
-import com.eclipsesource.uml.modelserver.resource.UmlNotationResource;
 import com.eclipsesource.uml.modelserver.resource.UmlPackageConfiguration;
 
 public class UmlModelServerModule extends EMSNotationModelServerModule {
@@ -56,7 +56,7 @@ public class UmlModelServerModule extends EMSNotationModelServerModule {
    protected String getSemanticFileExtension() { return UMLResource.FILE_EXTENSION; }
 
    @Override
-   protected String getNotationFileExtension() { return UmlNotationResource.FILE_EXTENSION; }
+   protected String getNotationFileExtension() { return NotationResource.FILE_EXTENSION; }
 
    @Override
    protected void configureEPackages(final MultiBinding<EPackageConfiguration> binding) {

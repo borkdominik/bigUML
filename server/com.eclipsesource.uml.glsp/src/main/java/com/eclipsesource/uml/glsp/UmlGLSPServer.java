@@ -10,26 +10,16 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp;
 
-import java.net.MalformedURLException;
-import java.util.concurrent.CompletableFuture;
-
-import org.eclipse.emfcloud.modelserver.client.v2.ModelServerClientV2;
 import org.eclipse.emfcloud.modelserver.glsp.EMSGLSPServer;
-import org.eclipse.glsp.server.protocol.DisposeClientSessionParameters;
-import org.eclipse.glsp.server.types.GLSPServerException;
-import org.eclipse.glsp.server.utils.ClientOptionsUtil;
-import org.eclipse.uml2.uml.resource.UMLResource;
-
-import com.eclipsesource.uml.modelserver.UmlModelServerClient;
-import com.eclipsesource.uml.modelserver.commands.util.UmlNotationUtil;
 
 public class UmlGLSPServer extends EMSGLSPServer {
 
+   /*-
    @Override
    protected ModelServerClientV2 createModelServerClient(final String modelServerURL) throws MalformedURLException {
       return new UmlModelServerClient(modelServerURL);
    }
-
+   
    @Override
    public CompletableFuture<Void> disposeClientSession(final DisposeClientSessionParameters params) {
       var modelServerClient = modelServerClientProvider.get();
@@ -41,5 +31,5 @@ public class UmlGLSPServer extends EMSGLSPServer {
       }
       return super.disposeClientSession(params);
    }
-
+   */
 }

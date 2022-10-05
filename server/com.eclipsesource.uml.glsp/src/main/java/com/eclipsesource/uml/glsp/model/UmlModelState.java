@@ -11,15 +11,17 @@
 package com.eclipsesource.uml.glsp.model;
 
 import org.eclipse.emfcloud.modelserver.glsp.notation.integration.EMSNotationModelState;
+import org.eclipse.glsp.graph.GModelRoot;
+import org.eclipse.glsp.server.emf.model.notation.Diagram;
 import org.eclipse.glsp.server.types.GLSPServerException;
-import org.eclipse.uml2.uml.Model;
 
-import com.eclipsesource.uml.modelserver.unotation.UmlDiagram;
+import com.eclipsesource.uml.modelserver.commands.util.UmlNotationUtil;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
 
 // TODO: Make those getter better
 public class UmlModelState extends EMSNotationModelState {
-   public UmlDiagram getUmlNotationModel() {
-      var model = super.getNotationModel(UmlDiagram.class);
+   public Diagram getUmlNotationModel() {
+      var model = super.getNotationModel(Diagram.class);
 
       if (model.isEmpty()) {
          throw new GLSPServerException("Could not access UML Notation Model");
@@ -29,6 +31,16 @@ public class UmlModelState extends EMSNotationModelState {
    }
 
    @Override
-   public Model getSemanticModel() { return (Model) this.semanticModel; }
+   public void updateRoot(final GModelRoot newRoot) {
+      System.out.println("");
+      System.out.println("UPDATE ROOT");
+      System.out.println("");
+      setRoot(newRoot);
+      this.index = getOrUpdateIndex(newRoot);
+   }
+
+   public Representation getRepresentation() {
+      return UmlNotationUtil.getRepresentation(this.getUmlNotationModel().getDiagramType());
+   }
 
 }

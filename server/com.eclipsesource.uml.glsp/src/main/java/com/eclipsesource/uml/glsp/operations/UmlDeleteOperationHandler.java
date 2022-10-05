@@ -33,7 +33,7 @@ public class UmlDeleteOperationHandler extends AbstractEMSOperationHandler<Delet
 
    @Override
    public void executeOperation(final DeleteOperation operation) {
-      Representation diagramType = modelState.getUmlNotationModel().getRepresentation();
+      Representation diagramType = modelState.getRepresentation();
       var deleteOperationHandler = deleteOperationHandlers.stream().filter(handler -> handler.supports(diagramType))
          .findFirst();
 

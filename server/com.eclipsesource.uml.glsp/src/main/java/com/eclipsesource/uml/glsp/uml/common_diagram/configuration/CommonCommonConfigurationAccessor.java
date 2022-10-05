@@ -29,7 +29,7 @@ public class CommonCommonConfigurationAccessor {
    }
 
    public Optional<CommonDiagramConfiguration> getActive() {
-      var representation = modelState.getUmlNotationModel().getRepresentation();
+      var representation = modelState.getRepresentation();
       return get(representation);
    }
 }

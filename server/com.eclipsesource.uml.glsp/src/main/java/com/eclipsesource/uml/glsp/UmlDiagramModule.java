@@ -14,6 +14,7 @@ import org.eclipse.emfcloud.modelserver.glsp.EMSModelState;
 import org.eclipse.emfcloud.modelserver.glsp.actions.handlers.EMSOperationActionHandler;
 import org.eclipse.emfcloud.modelserver.glsp.notation.integration.EMSGLSPNotationDiagramModule;
 import org.eclipse.emfcloud.modelserver.glsp.notation.integration.EMSNotationModelServerAccess;
+import org.eclipse.emfcloud.modelserver.glsp.notation.integration.EMSNotationModelState;
 import org.eclipse.glsp.graph.GraphExtension;
 import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.ActionHandler;
@@ -50,13 +51,20 @@ import com.google.inject.Singleton;
 public class UmlDiagramModule extends EMSGLSPNotationDiagramModule {
 
    @Override
+   protected void configureBase() {
+      super.configureBase();
+      bind(EMSModelState.class).to(bindGModelState());
+      bind(EMSNotationModelState.class).to(bindGModelState());
+   }
+
+   @Override
    protected void registerEPackages() {
       super.registerEPackages();
       UMLPackage.eINSTANCE.eClass();
    }
 
    @Override
-   protected Class<? extends EMSModelState> bindGModelState() {
+   protected Class<? extends EMSNotationModelState> bindGModelState() {
       return UmlModelState.class;
    }
 
@@ -107,7 +115,7 @@ public class UmlDiagramModule extends EMSGLSPNotationDiagramModule {
    protected String getSemanticFileExtension() { return "uml"; }
 
    @Override
-   protected String getNotationFileExtension() { return "unotation"; }
+   protected String getNotationFileExtension() { return "notation"; }
 
    @Override
    protected void configureClientActions(final MultiBinding<Action> bindings) {

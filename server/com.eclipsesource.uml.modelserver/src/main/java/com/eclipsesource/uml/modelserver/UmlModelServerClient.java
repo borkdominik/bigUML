@@ -10,26 +10,15 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver;
 
-import java.io.IOException;
 import java.net.MalformedURLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.CompletionException;
 
-import org.eclipse.emfcloud.modelserver.client.Response;
 import org.eclipse.emfcloud.modelserver.client.v2.ModelServerClientV2;
-import org.eclipse.emfcloud.modelserver.common.ModelServerPathParametersV1;
 import org.eclipse.emfcloud.modelserver.common.codecs.Codec;
 import org.eclipse.emfcloud.modelserver.emf.configuration.EPackageConfiguration;
-import org.eclipse.emfcloud.modelserver.jsonschema.Json;
 import org.eclipse.uml2.uml.resource.UMLResource;
 
 import com.eclipsesource.uml.modelserver.codecs.UmlCodec;
-import com.eclipsesource.uml.modelserver.routing.UmlModelServerPaths;
-
-import okhttp3.Request;
 
 public class UmlModelServerClient extends ModelServerClientV2 {
 
@@ -41,6 +30,7 @@ public class UmlModelServerClient extends ModelServerClientV2 {
       super(baseUrl, SUPPORTED_UML_FORMATS, configurations);
    }
 
+   /*- TODO: Enable it later
    public CompletableFuture<Response<List<String>>> getUmlTypes(final String modelUri) {
       final Request request = new Request.Builder()
          .url(
@@ -60,5 +50,5 @@ public class UmlModelServerClient extends ModelServerClientV2 {
             }
          }));
    }
-
+   */
 }

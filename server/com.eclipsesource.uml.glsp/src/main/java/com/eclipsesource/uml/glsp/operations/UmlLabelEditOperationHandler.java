@@ -61,7 +61,7 @@ public class UmlLabelEditOperationHandler
        * }
        */
 
-      var diagramType = modelState.getUmlNotationModel().getRepresentation();
+      var diagramType = modelState.getRepresentation();
       var editLabelHandler = editLabelOperationHandlers.stream().filter(handler -> handler.supports(diagramType))
          .findFirst();
 

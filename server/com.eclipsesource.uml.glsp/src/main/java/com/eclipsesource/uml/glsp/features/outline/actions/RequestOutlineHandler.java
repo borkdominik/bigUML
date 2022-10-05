@@ -38,7 +38,7 @@ public class RequestOutlineHandler extends AbstractActionHandler<RequestOutlineA
 
    @Override
    protected List<Action> executeAction(final RequestOutlineAction actualAction) {
-      var diagramType = modelState.getUmlNotationModel().getRepresentation();
+      var diagramType = modelState.getRepresentation();
 
       var generator = generators.stream().filter(g -> g.supports(diagramType)).findFirst().orElse(defaultGenerator);
 

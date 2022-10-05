@@ -11,6 +11,7 @@
 package com.eclipsesource.uml.modelserver;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.Set;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -51,27 +52,45 @@ public class UmlModelResourceManager extends RecordingModelResourceManager {
          return;
       }
       File directory = new File(directoryPath);
-      for (File file : directory.listFiles()) {
+      File[] list = directory.listFiles();
+      Arrays.sort(list);
+      for (File file : list) {
          if (isSourceDirectory(file)) {
             loadSourceResources(file.getAbsolutePath());
          } else if (file.isFile()) {
-            URI modelURI = createURI(file.getAbsolutePath());
-            if (modelURI.fileExtension().equals(UMLResource.FILE_EXTENSION)) {
-               resourceSets.put(modelURI, resourceSetFactory.createResourceSet(modelURI));
+            URI absolutePath = URI.createFileURI(file.getAbsolutePath());
+            if (UMLResource.FILE_EXTENSION.equals(absolutePath.fileExtension())) {
+               getUmlResourceSet(absolutePath);
             }
-            loadResource(modelURI.toString());
+            loadResource(absolutePath.toString());
          }
       }
    }
 
+   /**
+    * Get the resource set that manages the given UML semantic model resource, creating
+    * it if necessary.
+    *
+    * @param modelURI a UML semantic model resource URI
+    * @return its resource set
+    */
+   protected ResourceSet getUmlResourceSet(final URI modelURI) {
+      ResourceSet result = resourceSets.get(modelURI);
+      if (result == null) {
+         result = resourceSetFactory.createResourceSet(modelURI);
+         resourceSets.put(modelURI, result);
+      }
+      return result;
+   }
+
    @Override
    public ResourceSet getResourceSet(final String modeluri) {
-      var resourceUri = createURI(modeluri);
-      if (notationFileExtension.equals(resourceUri.fileExtension())) {
-         URI semanticUri = resourceUri.trimFileExtension().appendFileExtension(semanticFileExtension);
-         return resourceSets.get(semanticUri);
+      URI resourceURI = createURI(modeluri);
+      if (notationFileExtension.equals(resourceURI.fileExtension())) {
+         URI semanticUri = resourceURI.trimFileExtension().appendFileExtension(semanticFileExtension);
+         return getUmlResourceSet(semanticUri);
       }
-      return resourceSets.get(createURI(modeluri));
+      return resourceSets.get(resourceURI);
    }
 
    @Override
@@ -85,7 +104,6 @@ public class UmlModelResourceManager extends RecordingModelResourceManager {
       }
       return result;
    }
-
    /*-
     * TODO: Why is this necessary?
    public Set<String> getUmlTypes(final String modeluri) {
@@ -100,41 +118,41 @@ public class UmlModelResourceManager extends RecordingModelResourceManager {
       }
       return listOfClassifiers;
    }
-
+   
    public boolean addUmlResources(final String modeluri, final String diagramType) {
       URI umlModelUri = createURI(modeluri);
       ResourceSet resourceSet = resourceSetFactory.createResourceSet(umlModelUri);
       resourceSets.put(umlModelUri, resourceSet);
-
+   
       final Model umlModel = createNewModel(umlModelUri);
-
+   
       try {
          final Resource umlResource = resourceSet.createResource(umlModelUri);
          resourceSet.getResources().add(umlResource);
          umlResource.getContents().add(umlModel);
          umlResource.save(null);
-
+   
          final Resource umlNotationResource = resourceSet
             .createResource(umlModelUri.trimFileExtension().appendFileExtension(UmlNotationUtil.NOTATION_EXTENSION));
          resourceSet.getResources().add(umlNotationResource);
          umlNotationResource.getContents().add(createNewDiagram(umlModel, diagramType));
          umlNotationResource.save(null);
          createEditingDomain(resourceSet);
-
+   
       } catch (IOException e) {
          return false;
       }
-
+   
       return true;
    }
-   
+
    protected Model createNewModel(final URI modelUri) {
       Model newModel = UMLFactory.eINSTANCE.createModel();
       String modelName = modelUri.lastSegment().split("." + modelUri.fileExtension())[0];
       newModel.setName(modelName);
       return newModel;
    }
-   
+
    protected UmlDiagram createNewDiagram(final Model model, final String diagramType) {
       var newDiagram = UnotationFactory.eINSTANCE.createUmlDiagram();
       var semanticProxy = NotationFactory.eINSTANCE.createSemanticElementReference();

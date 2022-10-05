@@ -10,14 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.usecasediagram.association;
 
-import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Association;
-
-import java.util.function.Supplier;
-
-public class AddUseCaseAssociationCompoundCommand extends CompoundCommand {
+public class AddUseCaseAssociationCompoundCommand { /*-{
 
    public AddUseCaseAssociationCompoundCommand(final EditingDomain domain, final URI modelUri,
                                                final String sourceClassUriFragment, final String targetClassUriFragment) {
@@ -29,5 +22,5 @@ public class AddUseCaseAssociationCompoundCommand extends CompoundCommand {
       Supplier<Association> semanticResultSupplier = command::getNewAssociation;
       this.append(new AddUseCaseAssociationEdgeCommand(domain, modelUri, semanticResultSupplier));
    }
-
+   */
 }

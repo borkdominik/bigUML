@@ -1,14 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.objectdiagram.attribute;
 
-import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlSemanticCommandContribution;
-import org.eclipse.emf.common.command.Command;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
-import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
-
-public class AddAttributeCommandContribution extends UmlSemanticCommandContribution {
+public class AddAttributeCommandContribution { /*-{
 
     public static final String TYPE = "addAttribute";
 
@@ -25,5 +17,5 @@ public class AddAttributeCommandContribution extends UmlSemanticCommandContribut
 
         String parentSemanticUriFragment = command.getProperties().get(PARENT_SEMANTIC_URI_FRAGMENT);
         return new AddAttributeCommand(domain, modelUri, parentSemanticUriFragment);
-    }
+    }   */
 }

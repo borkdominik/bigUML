@@ -10,18 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.classdiagram.association;
 
-import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
-import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
-import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
-
-import com.eclipsesource.uml.modelserver.commands.classdiagram.association.RemoveAssociationCompoundCommand;
-import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlCompoundCommandContribution;
-
-public class RemoveAssociationCommandContribution extends UmlCompoundCommandContribution {
+public class RemoveAssociationCommandContribution { /*-{
 
    public static final String TYPE = "removeAssociation";
 
@@ -39,5 +28,5 @@ public class RemoveAssociationCommandContribution extends UmlCompoundCommandCont
       String semanticUriFragment = command.getProperties().get(SEMANTIC_URI_FRAGMENT);
       return new RemoveAssociationCompoundCommand(domain, modelUri, semanticUriFragment);
    }
-
+   */
 }

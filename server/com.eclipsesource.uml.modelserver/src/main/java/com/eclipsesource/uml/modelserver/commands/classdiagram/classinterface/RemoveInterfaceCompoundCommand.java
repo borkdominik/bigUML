@@ -1,22 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.classdiagram.classinterface;
 
-import com.eclipsesource.uml.modelserver.commands.classdiagram.association.RemoveAssociationCompoundCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlNotationCommandUtil;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Association;
-import org.eclipse.uml2.uml.Interface;
-import org.eclipse.uml2.uml.Model;
-import org.eclipse.uml2.uml.Property;
-
-import java.util.Collection;
-
-public class RemoveInterfaceCompoundCommand extends CompoundCommand {
+public class RemoveInterfaceCompoundCommand { /*-{
 
    public RemoveInterfaceCompoundCommand(final EditingDomain domain, final URI modelUri, final String semanticUriFragment) {
       this.append(new RemoveInterfaceCommand(domain, modelUri, semanticUriFragment));
@@ -41,5 +25,5 @@ public class RemoveInterfaceCompoundCommand extends CompoundCommand {
             && eObject.eContainer() instanceof Association
             && ((Property) eObject).getAssociation() != null;
    }
-
+   */
 }

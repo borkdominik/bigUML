@@ -10,13 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.activitydiagram.datanode;
 
-import com.eclipsesource.uml.modelserver.commands.commons.notation.AddGenericShapeCommand;
-import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.glsp.graph.GPoint;
-
-public class AddParameterCompoundCommand extends CompoundCommand {
+public class AddParameterCompoundCommand { /*-
 
    public AddParameterCompoundCommand(final EditingDomain domain, final URI modelUri, final GPoint position, final String actionUri) {
 
@@ -25,5 +19,5 @@ public class AddParameterCompoundCommand extends CompoundCommand {
       this.append(command);
       this.append(new AddGenericShapeCommand(domain, modelUri, position, command));
    }
-
+   */
 }

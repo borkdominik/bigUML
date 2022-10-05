@@ -10,14 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.deployment_diagram.gmodel;
 
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.glsp.graph.GModelElement;
-
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.uml.class_diagram.gmodel.CompartmentLabelFactory;
-import com.eclipsesource.uml.glsp.uml.common_diagram.gmodel.CommentFactory;
-
-public abstract class DeploymentDiagramFactory extends DeploymentAbstractGModelFactory<EObject, GModelElement> {
+public abstract class DeploymentDiagramFactory { /*-
 
    public final CommentFactory commentFactory;
    public final CompartmentLabelFactory compartmentLabelFactory;
@@ -42,4 +35,5 @@ public abstract class DeploymentDiagramFactory extends DeploymentAbstractGModelF
       // no-op as we focus on create(final Diagram umlDiagram)
       return null;
    }
+   */
 }

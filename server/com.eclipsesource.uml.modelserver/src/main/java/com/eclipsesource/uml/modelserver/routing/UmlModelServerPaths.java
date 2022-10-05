@@ -8,12 +8,13 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver;
+package com.eclipsesource.uml.modelserver.routing;
 
-import org.eclipse.emfcloud.modelserver.common.ModelServerPathParametersV1;
+import org.eclipse.emfcloud.modelserver.common.ModelServerPathsV1;
 
-public interface UmlModelServerPathsParameters extends ModelServerPathParametersV1 {
+public interface UmlModelServerPaths extends ModelServerPathsV1 {
 
-   String DIAGRAM_TYPE = "diagramtype";
+   String UML_TYPES = "uml/types";
+   String UML_CREATE = "uml/create";
 
 }

@@ -15,6 +15,7 @@ import java.util.function.Supplier;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emfcloud.modelserver.glsp.notation.commands.AddEdgeCommand;
 import org.eclipse.uml2.uml.Message;
 
 public class AddMessageCompoundCommand extends CompoundCommand {
@@ -27,7 +28,7 @@ public class AddMessageCompoundCommand extends CompoundCommand {
          targetLifelineUriFragment);
       this.append(command);
       Supplier<Message> semanticResultSupplier = () -> command.getNewMessage();
-      this.append(new AddMessageEdgeCommand(domain, modelUri, semanticResultSupplier));
+      this.append(new AddEdgeCommand(domain, modelUri, semanticResultSupplier));
    }
 
 }

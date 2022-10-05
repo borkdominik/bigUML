@@ -18,9 +18,8 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.glsp.graph.GPoint;
 
-import com.eclipsesource.uml.modelserver.unotation.SemanticProxy;
+import org.eclipse.glsp.server.emf.model.notation.NotationFactory;
 import org.eclipse.glsp.server.emf.model.notation.Shape;
-import com.eclipsesource.uml.modelserver.unotation.UnotationFactory;
 
 public class AddGenericShapeCommand extends UmlNotationElementCommand {
 
@@ -49,15 +48,15 @@ public class AddGenericShapeCommand extends UmlNotationElementCommand {
 
    @Override
    protected void doExecute() {
-      Shape newShape = UnotationFactory.eINSTANCE.createShape();
+      Shape newShape = NotationFactory.eINSTANCE.createShape();
       newShape.setPosition(this.shapePosition);
 
-      SemanticProxy proxy = UnotationFactory.eINSTANCE.createSemanticProxy();
+      var proxy = NotationFactory.eINSTANCE.createSemanticElementReference();
       if (this.semanticProxyUri != null) {
-         proxy.setUri(this.semanticProxyUri);
+         proxy.setElementId(semanticProxyUri);
       } else {
          String uri = EcoreUtil.getURI(elementSupplier.get()).fragment();
-         proxy.setUri(uri);
+         proxy.setElementId(uri);
       }
       newShape.setSemanticElement(proxy);
 

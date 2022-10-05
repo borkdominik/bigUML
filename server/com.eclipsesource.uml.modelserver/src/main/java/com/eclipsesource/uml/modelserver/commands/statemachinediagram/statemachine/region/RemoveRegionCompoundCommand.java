@@ -10,19 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.statemachinediagram.statemachine.region;
 
-import com.eclipsesource.uml.modelserver.commands.statemachinediagram.pseudostate.RemovePseudoStateCompoundCommand;
-import com.eclipsesource.uml.modelserver.commands.statemachinediagram.state.RemoveStateCompoundCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.ecore.util.EcoreUtil.UsageCrossReferencer;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Pseudostate;
-import org.eclipse.uml2.uml.Region;
-import org.eclipse.uml2.uml.State;
-
-public class RemoveRegionCompoundCommand extends CompoundCommand {
+public class RemoveRegionCompoundCommand { /*-{
 
    public RemoveRegionCompoundCommand(final EditingDomain domain, final URI modelUri,
       final String semanticUriFragment) {
@@ -42,14 +30,13 @@ public class RemoveRegionCompoundCommand extends CompoundCommand {
             var finalStateUri = UmlSemanticCommandUtil.getSemanticUriFragment((FinalState) eObject);
             this.append(
                new RemoveFinalStateCompoundCommand(domain, modelUri, semanticUriFragment, finalStateUri));
-         }*/ else if (eObject instanceof State) {
+         }* else if (eObject instanceof State) {
             var stateUri = UmlSemanticCommandUtil.getSemanticUriFragment((State) eObject);
             this.append(
                new RemoveStateCompoundCommand(domain, modelUri, semanticUriFragment, stateUri));
          }
       }
 
-      this.append(new RemoveRegionCommand(domain, modelUri, semanticUriFragment));
-   }
-
+this.append(new RemoveRegionCommand(domain,modelUri,semanticUriFragment));}
+   */
 }

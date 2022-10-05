@@ -10,18 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.activitydiagram.comment;
 
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Activity;
-import org.eclipse.uml2.uml.Comment;
-import org.eclipse.uml2.uml.Constraint;
-import org.eclipse.uml2.uml.Element;
-import org.eclipse.uml2.uml.OpaqueExpression;
-
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-
-public class SetBodyCommand extends UmlSemanticElementCommand {
+public class SetBodyCommand { /*-
 
    protected String semanticUriFragment;
    protected String newName;
@@ -50,5 +39,5 @@ public class SetBodyCommand extends UmlSemanticElementCommand {
          }
       }
    }
-
+   */
 }

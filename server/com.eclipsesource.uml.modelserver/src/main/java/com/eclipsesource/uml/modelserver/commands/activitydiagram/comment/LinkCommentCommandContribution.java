@@ -10,19 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.activitydiagram.comment;
 
-import org.eclipse.emf.common.command.Command;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
-import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
-import org.eclipse.uml2.uml.Comment;
-import org.eclipse.uml2.uml.Element;
-
-import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlSemanticCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-
-public class LinkCommentCommandContribution extends UmlSemanticCommandContribution {
+public class LinkCommentCommandContribution { /*-
 
    public static final String TYPE = "linkComment";
    public static final String COMMENT_URI = "commentUri";
@@ -45,5 +33,5 @@ public class LinkCommentCommandContribution extends UmlSemanticCommandContributi
 
       return new LinkCommentCommand(domain, modelUri, commentUri, elementUri);
    }
-
+   */
 }

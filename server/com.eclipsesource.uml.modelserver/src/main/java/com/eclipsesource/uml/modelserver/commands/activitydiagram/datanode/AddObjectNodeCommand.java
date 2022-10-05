@@ -10,22 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.activitydiagram.datanode;
 
-import java.util.function.Supplier;
-
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Activity;
-import org.eclipse.uml2.uml.ActivityPartition;
-import org.eclipse.uml2.uml.CentralBufferNode;
-import org.eclipse.uml2.uml.DataStoreNode;
-import org.eclipse.uml2.uml.Element;
-import org.eclipse.uml2.uml.ObjectNode;
-import org.eclipse.uml2.uml.UMLFactory;
-
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-
-public class AddObjectNodeCommand extends UmlSemanticElementCommand implements Supplier<ObjectNode> {
+public class AddObjectNodeCommand { /*-implements Supplier<ObjectNode> {
 
    protected final ObjectNode node;
    protected final Element parent;
@@ -80,5 +65,5 @@ public class AddObjectNodeCommand extends UmlSemanticElementCommand implements S
    public ObjectNode get() {
       return node;
    }
-
+   */
 }

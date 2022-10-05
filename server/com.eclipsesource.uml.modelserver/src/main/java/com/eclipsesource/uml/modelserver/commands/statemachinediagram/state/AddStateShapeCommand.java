@@ -10,19 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.statemachinediagram.state;
 
-import com.eclipsesource.uml.modelserver.commands.commons.notation.UmlNotationElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlNotationCommandUtil;
-import com.eclipsesource.uml.modelserver.unotation.SemanticProxy;
-import org.eclipse.glsp.server.emf.model.notation.Shape;
-import com.eclipsesource.uml.modelserver.unotation.UnotationFactory;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.glsp.graph.GPoint;
-import org.eclipse.uml2.uml.State;
-
-import java.util.function.Supplier;
-
-public class AddStateShapeCommand extends UmlNotationElementCommand {
+public class AddStateShapeCommand { /*- {
 
    protected final GPoint shapePosition;
    protected String semanticProxyUri;
@@ -62,5 +50,5 @@ public class AddStateShapeCommand extends UmlNotationElementCommand {
 
       umlDiagram.getElements().add(newShape);
    }
-
+   */
 }

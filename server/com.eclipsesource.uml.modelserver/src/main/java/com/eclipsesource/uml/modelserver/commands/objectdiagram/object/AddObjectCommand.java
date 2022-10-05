@@ -1,14 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.objectdiagram.object;
 
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.NamedElement;
-import org.eclipse.uml2.uml.PackageableElement;
-import org.eclipse.uml2.uml.UMLFactory;
-
-public class AddObjectCommand extends UmlSemanticElementCommand {
+public class AddObjectCommand { /*- {
 
     // protected final Class newObject;
     protected final NamedElement newObject;
@@ -26,6 +18,6 @@ public class AddObjectCommand extends UmlSemanticElementCommand {
 
     public NamedElement getNewObject() {
         return newObject;
-    }
+    }   */
 
 }

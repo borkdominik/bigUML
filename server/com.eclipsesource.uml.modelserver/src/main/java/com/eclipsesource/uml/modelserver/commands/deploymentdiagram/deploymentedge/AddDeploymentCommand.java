@@ -1,15 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.deploymentdiagram.deploymentedge;
 
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Artifact;
-import org.eclipse.uml2.uml.Deployment;
-import org.eclipse.uml2.uml.Node;
-import org.eclipse.uml2.uml.UMLFactory;
-
-public class AddDeploymentCommand extends UmlSemanticElementCommand {
+public class AddDeploymentCommand { /*- {
 
     private final Deployment newDeployment;
     protected final Artifact sourceArtifact;
@@ -30,11 +21,10 @@ public class AddDeploymentCommand extends UmlSemanticElementCommand {
     protected void doExecute() {
         /*this.newDeployment.getClients().add(targetNode);
         this.newDeployment.getSuppliers().add(sourceArtifact);
-        this.newDeployment.getDeployedArtifacts().add(sourceArtifact);*/
-        this.targetNode.getDeployments().add(getNewDeployment());
+        this.newDeployment.getDeployedArtifacts().add(sourceArtifact);*
+    this.targetNode.getDeployments().add(getNewDeployment());
     }
 
-    public Deployment getNewDeployment() {
-        return newDeployment;
-    }
+    public Deployment getNewDeployment() { return newDeployment; }
+       */
 }

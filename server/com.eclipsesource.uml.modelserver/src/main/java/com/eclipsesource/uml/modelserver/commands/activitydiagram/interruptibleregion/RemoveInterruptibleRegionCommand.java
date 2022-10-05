@@ -10,19 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.activitydiagram.interruptibleregion;
 
-import java.util.stream.Collectors;
-
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Activity;
-import org.eclipse.uml2.uml.ActivityPartition;
-import org.eclipse.uml2.uml.Element;
-import org.eclipse.uml2.uml.InterruptibleActivityRegion;
-
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-
-public class RemoveInterruptibleRegionCommand extends UmlSemanticElementCommand {
+public class RemoveInterruptibleRegionCommand { /*-
 
    private final InterruptibleActivityRegion region;
 
@@ -52,5 +40,5 @@ public class RemoveInterruptibleRegionCommand extends UmlSemanticElementCommand 
          ((InterruptibleActivityRegion) parent).getSubgroups().remove(region);
       }
    }
-
+   */
 }

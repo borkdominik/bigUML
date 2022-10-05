@@ -1,16 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.usecasediagram.usecase;
 
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Component;
-import org.eclipse.uml2.uml.Package;
-import org.eclipse.uml2.uml.UMLFactory;
-import org.eclipse.uml2.uml.UseCase;
-
-public class AddUseCaseCommand extends UmlSemanticElementCommand {
+public class AddUseCaseCommand { /*- {
 
     protected final UseCase newUseCase;
     protected final String parentSemanticUriFragment;
@@ -46,5 +36,5 @@ public class AddUseCaseCommand extends UmlSemanticElementCommand {
 
     public UseCase getNewUseCase() {
         return newUseCase;
-    }
+    }   */
 }

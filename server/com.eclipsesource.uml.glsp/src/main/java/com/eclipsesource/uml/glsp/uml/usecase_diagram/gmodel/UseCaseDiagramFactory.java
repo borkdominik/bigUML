@@ -10,14 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.usecase_diagram.gmodel;
 
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.glsp.graph.GModelElement;
-
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.uml.class_diagram.gmodel.CompartmentLabelFactory;
-import com.eclipsesource.uml.glsp.uml.common_diagram.gmodel.CommentFactory;
-
-public abstract class UseCaseDiagramFactory extends UseCaseAbstractGModelFactory<EObject, GModelElement> {
+public abstract class UseCaseDiagramFactory { /*- {
    public final UseCaseDiagramLabelFactory labelFactory;
    public final CommentFactory commentFactory;
    public final CompartmentLabelFactory compartmentLabelFactory;
@@ -43,4 +36,5 @@ public abstract class UseCaseDiagramFactory extends UseCaseAbstractGModelFactory
       // no-op as we focus on create(final Diagram umlDiagram)
       return null;
    }
+   */
 }

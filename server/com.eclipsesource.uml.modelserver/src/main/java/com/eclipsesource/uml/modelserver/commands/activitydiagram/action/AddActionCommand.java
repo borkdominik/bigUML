@@ -10,16 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.activitydiagram.action;
 
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.*;
-
-import java.lang.Class;
-import java.util.Random;
-
-public class AddActionCommand extends UmlSemanticElementCommand {
+public class AddActionCommand { /*-
 
    protected final Action action;
    protected final Element parent;
@@ -96,11 +87,9 @@ public class AddActionCommand extends UmlSemanticElementCommand {
          action.setName("NewSignal" + id);
       }
       // FIXME: THIS LEADS TO DUPLICATES AND DOES NOT WORK WITHOUT IT ATM!!!!
-      activity.getOwnedNodes().add(action);*/
+      activity.getOwnedNodes().add(action);*
    }
 
-   public Action getNewAction() {
-      return action;
-   }
-
+   public Action getNewAction() { return action; }
+   */
 }

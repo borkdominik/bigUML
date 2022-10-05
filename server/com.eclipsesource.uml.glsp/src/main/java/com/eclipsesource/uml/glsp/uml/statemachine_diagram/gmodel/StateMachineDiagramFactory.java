@@ -10,14 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.statemachine_diagram.gmodel;
 
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.glsp.graph.GModelElement;
-
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.uml.class_diagram.gmodel.CompartmentLabelFactory;
-import com.eclipsesource.uml.glsp.uml.common_diagram.gmodel.CommentFactory;
-
-public abstract class StateMachineDiagramFactory extends StateMachineAbstractGModelFactory<EObject, GModelElement> {
+public abstract class StateMachineDiagramFactory { /*-
 
    public final StateMachineDiagramLabelFactory labelFactory;
    public final CommentFactory commentFactory;
@@ -48,4 +41,5 @@ public abstract class StateMachineDiagramFactory extends StateMachineAbstractGMo
       // no-op as we focus on create(final Diagram umlDiagram)
       return null;
    }
+   */
 }

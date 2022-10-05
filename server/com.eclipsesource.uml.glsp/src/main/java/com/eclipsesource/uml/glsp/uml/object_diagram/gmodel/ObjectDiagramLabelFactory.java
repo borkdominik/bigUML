@@ -10,16 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.object_diagram.gmodel;
 
-import org.eclipse.glsp.graph.GLabel;
-import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
-import org.eclipse.uml2.uml.NamedElement;
-import org.eclipse.uml2.uml.Property;
-
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.uml.object_diagram.constants.ObjectTypes;
-import com.eclipsesource.uml.glsp.uml.utils.property.PropertyUtil;
-
-public class ObjectDiagramLabelFactory extends ObjectAbstractGModelFactory<NamedElement, GLabel> {
+public class ObjectDiagramLabelFactory { /*-
 
    public ObjectDiagramLabelFactory(final UmlModelState modelState) {
       super(modelState);
@@ -43,4 +34,5 @@ public class ObjectDiagramLabelFactory extends ObjectAbstractGModelFactory<Named
          .text(label)
          .build();
    }
+   */
 }

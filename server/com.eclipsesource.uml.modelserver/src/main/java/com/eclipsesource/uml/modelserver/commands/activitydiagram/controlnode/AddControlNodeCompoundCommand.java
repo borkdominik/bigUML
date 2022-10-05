@@ -10,15 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.activitydiagram.controlnode;
 
-import java.util.function.Supplier;
-
-import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.glsp.graph.GPoint;
-import org.eclipse.uml2.uml.ControlNode;
-
-public class AddControlNodeCompoundCommand extends CompoundCommand {
+public class AddControlNodeCompoundCommand { /*-
 
    public AddControlNodeCompoundCommand(final EditingDomain domain, final URI modelUri, final GPoint position,
       final String parentUri, final String clazzName) {
@@ -29,5 +21,5 @@ public class AddControlNodeCompoundCommand extends CompoundCommand {
       Supplier<ControlNode> semanticResultSupplier = () -> command.getNewControlNode();
       this.append(new AddControlNodeShapeCommand(domain, modelUri, position, semanticResultSupplier));
    }
-
+   */
 }

@@ -10,34 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.class_diagram.gmodel;
 
-import java.util.ArrayList;
-
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.glsp.graph.GEdge;
-import org.eclipse.glsp.graph.GLabel;
-import org.eclipse.glsp.graph.GPoint;
-import org.eclipse.glsp.graph.builder.impl.GEdgeBuilder;
-import org.eclipse.glsp.graph.builder.impl.GEdgePlacementBuilder;
-import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
-import org.eclipse.glsp.graph.util.GConstants;
-import org.eclipse.glsp.graph.util.GraphUtil;
-import org.eclipse.uml2.uml.Association;
-import org.eclipse.uml2.uml.Class;
-import org.eclipse.uml2.uml.Generalization;
-import org.eclipse.uml2.uml.Property;
-import org.eclipse.uml2.uml.Relationship;
-
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.uml.class_diagram.constants.ClassCSS;
-import com.eclipsesource.uml.glsp.uml.class_diagram.constants.ClassTypes;
-import com.eclipsesource.uml.glsp.uml.utils.edge.EdgeMultiplicityIdUtil;
-import com.eclipsesource.uml.glsp.uml.utils.property.PropertyUtil;
-import com.eclipsesource.uml.glsp.utils.UmlConfig;
-import com.eclipsesource.uml.glsp.utils.UmlConfig.CSS;
-import com.eclipsesource.uml.glsp.utils.UmlIDUtil;
-import org.eclipse.glsp.server.emf.model.notation.Edge;
-
-public class ClassDiagramEdgeFactory extends ClassAbstractGModelFactory<Relationship, GEdge> {
+public class ClassDiagramEdgeFactory { /*-
 
    public ClassDiagramEdgeFactory(final UmlModelState modelState) {
       super(modelState);
@@ -175,4 +148,5 @@ public class ClassDiagramEdgeFactory extends ClassAbstractGModelFactory<Relation
          .id(id)
          .text(name).build();
    }
+   */
 }

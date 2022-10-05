@@ -10,14 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.classdiagram.property;
 
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Property;
-
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-
-public class SetPropertyNameCommand extends UmlSemanticElementCommand {
+public class SetPropertyNameCommand { /*- {
 
    protected String semanticUriFragment;
    protected String newName;
@@ -34,5 +27,5 @@ public class SetPropertyNameCommand extends UmlSemanticElementCommand {
       Property property = UmlSemanticCommandUtil.getElement(umlModel, semanticUriFragment, Property.class);
       property.setName(newName);
    }
-
+   */
 }

@@ -1,13 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.statemachinediagram.finalstate;
 
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.FinalState;
-import org.eclipse.uml2.uml.Region;
-
-public class RemoveFinalStateCommand extends UmlSemanticElementCommand {
+public class RemoveFinalStateCommand { /*- {
 
     protected final String parentSemanticUriFragment;
     protected final String semanticUriFragment;
@@ -24,5 +17,5 @@ public class RemoveFinalStateCommand extends UmlSemanticElementCommand {
         Region parentRegion = UmlSemanticCommandUtil.getElement(umlModel, parentSemanticUriFragment, Region.class);
         FinalState finalStateToRemove = UmlSemanticCommandUtil.getElement(umlModel, semanticUriFragment, FinalState.class);
         parentRegion.getSubvertices().remove(finalStateToRemove);
-    }
+    }   */
 }

@@ -10,35 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.class_diagram.gmodel;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.eclipse.glsp.graph.GCompartment;
-import org.eclipse.glsp.graph.GLabel;
-import org.eclipse.glsp.graph.GModelElement;
-import org.eclipse.glsp.graph.GNode;
-import org.eclipse.glsp.graph.builder.impl.GCompartmentBuilder;
-import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
-import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
-import org.eclipse.glsp.graph.builder.impl.GNodeBuilder;
-import org.eclipse.glsp.graph.util.GConstants;
-import org.eclipse.glsp.graph.util.GraphUtil;
-import org.eclipse.uml2.uml.Class;
-import org.eclipse.uml2.uml.Classifier;
-import org.eclipse.uml2.uml.Element;
-import org.eclipse.uml2.uml.Enumeration;
-import org.eclipse.uml2.uml.Interface;
-import org.eclipse.uml2.uml.Property;
-
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.uml.class_diagram.constants.ClassTypes;
-import com.eclipsesource.uml.glsp.utils.UmlConfig;
-import com.eclipsesource.uml.glsp.utils.UmlConfig.CSS;
-import com.eclipsesource.uml.glsp.utils.UmlIDUtil;
-import org.eclipse.glsp.server.emf.model.notation.Shape;
-
-public class ClassDiagramNodeFactory extends ClassAbstractGModelFactory<Classifier, GNode> {
+public class ClassDiagramNodeFactory { /*-
 
    // private final LabelFactory labelFactory;
    private final CompartmentLabelFactory compartmentLabelFactory;
@@ -231,5 +203,5 @@ public class ClassDiagramNodeFactory extends ClassAbstractGModelFactory<Classifi
 
       return classPropertiesBuilder.build();
    }
-
+   */
 }

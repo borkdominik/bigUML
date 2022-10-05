@@ -18,9 +18,8 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Element;
 
-import com.eclipsesource.uml.modelserver.unotation.NotationElement;
-import com.eclipsesource.uml.modelserver.unotation.SemanticProxy;
-import com.eclipsesource.uml.modelserver.unotation.UnotationFactory;
+import org.eclipse.glsp.server.emf.model.notation.NotationElement;
+import org.eclipse.glsp.server.emf.model.notation.NotationFactory;
 
 public class ReplaceElementCommand extends UmlNotationElementCommand {
 
@@ -38,12 +37,12 @@ public class ReplaceElementCommand extends UmlNotationElementCommand {
    protected void doExecute() {
 
       Optional<NotationElement> notationElem = umlDiagram.getElements().stream()
-         .filter(s -> oldUri.equals(s.getSemanticElement().getUri()))
+         .filter(s -> oldUri.equals(s.getSemanticElement().getElementId()))
          .findAny();
       if (notationElem.isPresent()) {
-         SemanticProxy proxy = UnotationFactory.eINSTANCE.createSemanticProxy();
+         var proxy = NotationFactory.eINSTANCE.createSemanticElementReference();
          String uri = EcoreUtil.getURI(elementSupplier.get()).fragment();
-         proxy.setUri(uri);
+         proxy.setElementId(uri);
          notationElem.get().setSemanticElement(proxy);
       }
    }

@@ -10,16 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.activitydiagram.action;
 
-import org.eclipse.emf.common.command.Command;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
-import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
-
-import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlSemanticCommandContribution;
-
-public class SetBehaviorCommandContribution extends UmlSemanticCommandContribution {
+public class SetBehaviorCommandContribution { /*-
 
    public static final String TYPE = "setBehavior";
    public static final String BEHAVOIOR_NAME = "behaviorName";
@@ -41,5 +32,5 @@ public class SetBehaviorCommandContribution extends UmlSemanticCommandContributi
 
       return new SetBehaviorCommand(domain, modelUri, semanticUriFragment, behaviorName);
    }
-
+   */
 }

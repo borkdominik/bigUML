@@ -1,14 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.objectdiagram.link;
 
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Association;
-import org.eclipse.uml2.uml.Class;
-import org.eclipse.uml2.uml.UMLFactory;
-
-public class AddLinkCommand extends UmlSemanticElementCommand {
+public class AddLinkCommand { /*- {
 
     private final Association newLink;
     protected final Class sourceElement;
@@ -31,5 +23,5 @@ public class AddLinkCommand extends UmlSemanticElementCommand {
 
     public Association getNewLink() {
         return newLink;
-    }
+    }   */
 }

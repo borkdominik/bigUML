@@ -10,15 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.activitydiagram.controlnode;
 
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.*;
-
-import java.lang.Class;
-
-public class AddControlNodeCommand extends UmlSemanticElementCommand {
+public class AddControlNodeCommand { /*-
 
    protected final ControlNode node;
    protected final Element parent;
@@ -82,11 +74,9 @@ public class AddControlNodeCommand extends UmlSemanticElementCommand {
          throw new RuntimeException("Invalid action conatainer type: " + parent.getClass().getSimpleName());
       }
 
-      activity.getOwnedNodes().add(node);*/
+      activity.getOwnedNodes().add(node);*
    }
 
-   public ControlNode getNewControlNode() {
-      return node;
-   }
-
+   public ControlNode getNewControlNode() { return node; }
+   */
 }

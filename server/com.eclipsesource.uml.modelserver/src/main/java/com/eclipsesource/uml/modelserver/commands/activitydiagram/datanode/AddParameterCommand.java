@@ -10,18 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.activitydiagram.datanode;
 
-import java.util.function.Supplier;
-
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Activity;
-import org.eclipse.uml2.uml.ActivityParameterNode;
-import org.eclipse.uml2.uml.UMLFactory;
-
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-
-public class AddParameterCommand extends UmlSemanticElementCommand implements Supplier<ActivityParameterNode> {
+public class AddParameterCommand { /*-implements Supplier<ActivityParameterNode> {
 
    private final Activity activity;
    private ActivityParameterNode param;
@@ -43,5 +32,5 @@ public class AddParameterCommand extends UmlSemanticElementCommand implements Su
    public ActivityParameterNode get() {
       return param;
    }
-
+   */
 }

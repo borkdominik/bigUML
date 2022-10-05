@@ -14,7 +14,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
 
 import com.eclipsesource.uml.modelserver.commands.util.UmlNotationCommandUtil;
-import com.eclipsesource.uml.modelserver.unotation.NotationElement;
+import org.eclipse.glsp.server.emf.model.notation.NotationElement;
 
 public class RemoveNotationElementCommand extends UmlNotationElementCommand {
 

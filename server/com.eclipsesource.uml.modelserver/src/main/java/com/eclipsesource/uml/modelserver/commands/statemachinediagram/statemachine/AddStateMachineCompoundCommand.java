@@ -10,15 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.statemachinediagram.statemachine;
 
-import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.glsp.graph.GPoint;
-import org.eclipse.uml2.uml.StateMachine;
-
-import java.util.function.Supplier;
-
-public class AddStateMachineCompoundCommand extends CompoundCommand {
+public class AddStateMachineCompoundCommand { /*-{
 
    public AddStateMachineCompoundCommand(final EditingDomain domain, final URI modelUri, final GPoint statePosition) {
 
@@ -28,5 +20,5 @@ public class AddStateMachineCompoundCommand extends CompoundCommand {
       Supplier<StateMachine> semanticResultSupplier = () -> command.getNewStateMachine();
       this.append(new AddStateMachineShapeCommand(domain, modelUri, statePosition, semanticResultSupplier));
    }
-
+   */
 }

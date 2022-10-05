@@ -10,15 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.classdiagram.clazz;
 
-import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.glsp.graph.GPoint;
-import org.eclipse.uml2.uml.Class;
-
-import java.util.function.Supplier;
-
-public class AddClassCompoundCommand extends CompoundCommand {
+public class AddClassCompoundCommand { /*-{
 
    public AddClassCompoundCommand(final EditingDomain domain, final URI modelUri, final GPoint classPosition,
                                   final Boolean isAbstract) {
@@ -29,5 +21,5 @@ public class AddClassCompoundCommand extends CompoundCommand {
       Supplier<Class> semanticResultSupplier = command::getNewClass;
       this.append(new AddClassShapeCommand(domain, modelUri, classPosition, semanticResultSupplier));
    }
-
+   */
 }

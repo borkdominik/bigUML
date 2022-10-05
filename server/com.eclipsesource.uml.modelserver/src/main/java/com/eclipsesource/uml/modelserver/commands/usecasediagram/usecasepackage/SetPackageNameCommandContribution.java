@@ -1,15 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.usecasediagram.usecasepackage;
 
-import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlSemanticCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.commons.commands.SetNameCommand;
-import org.eclipse.emf.common.command.Command;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
-import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
-
-public class SetPackageNameCommandContribution extends UmlSemanticCommandContribution {
+public class SetPackageNameCommandContribution { /*-{
 
     public static final String TYPE = "setPackageName";
     public static final String NEW_NAME = "newName";
@@ -30,5 +21,5 @@ public class SetPackageNameCommandContribution extends UmlSemanticCommandContrib
         String newName = command.getProperties().get(NEW_NAME);
 
         return new SetNameCommand(domain, modelUri, semanticUriFragment, newName);
-    }
+    }   */
 }

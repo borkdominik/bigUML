@@ -10,19 +10,6 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.usecase_diagram.gmodel;
 
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.glsp.graph.GModelElement;
-import org.eclipse.uml2.uml.Actor;
-import org.eclipse.uml2.uml.Class;
-import org.eclipse.uml2.uml.Component;
-import org.eclipse.uml2.uml.Model;
-import org.eclipse.uml2.uml.NamedElement;
-import org.eclipse.uml2.uml.Package;
-import org.eclipse.uml2.uml.Relationship;
-import org.eclipse.uml2.uml.UseCase;
-
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-
 /**
  * The UmlUseCaseDiagramModelFactory maps all elements that are contained DIRECTLY in the Model.
  * That means that nested elements (elements that were added as child to another model element) are not iterated over in
@@ -30,7 +17,7 @@ import com.eclipsesource.uml.glsp.model.UmlModelState;
  * The only exception to that are Relationships, which are deliberately all rendered directly by this class to keep the
  * classifierNodeFactory leaner.
  */
-public class UmlUseCaseDiagramModelFactory extends UseCaseDiagramFactory {
+public class UmlUseCaseDiagramModelFactory { /*- {
 
    public UmlUseCaseDiagramModelFactory(final UmlModelState modelState) {
       super(modelState);
@@ -38,7 +25,7 @@ public class UmlUseCaseDiagramModelFactory extends UseCaseDiagramFactory {
 
    /**
     * Maps an EObject to the corresponding create method.
-    */
+    *
    @Override
    public GModelElement create(final EObject semanticElement) {
       GModelElement result = null;
@@ -60,7 +47,7 @@ public class UmlUseCaseDiagramModelFactory extends UseCaseDiagramFactory {
          * else if (semanticElement instanceof Comment) {
          * result = classifierNodeFactory.createComment((Comment) semanticElement);
          * }
-         */ else if (semanticElement instanceof NamedElement) {
+         * else if (semanticElement instanceof NamedElement) {
          result = labelFactory.create((NamedElement) semanticElement);
       }
 

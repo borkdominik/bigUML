@@ -14,13 +14,12 @@ import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.eclipsesource.uml.modelserver.unotation.UmlDiagram;
 import com.eclipsesource.uml.modelserver.unotation.UnotationPackage;
 
-import notation.impl.DiagramImpl;
-
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.glsp.server.emf.model.notation.impl.DiagramImpl;
 
 /**
  * <!-- begin-user-doc -->

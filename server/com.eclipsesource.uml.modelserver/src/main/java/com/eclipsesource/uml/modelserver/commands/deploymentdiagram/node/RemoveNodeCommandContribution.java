@@ -1,16 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.deploymentdiagram.node;
 
-import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlCompoundCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlSemanticCommandContribution;
-import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
-import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
-import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
-
-public class RemoveNodeCommandContribution extends UmlCompoundCommandContribution {
+public class RemoveNodeCommandContribution { /*-{
 
     public static final String TYPE = "removeNode";
 
@@ -32,5 +22,5 @@ public class RemoveNodeCommandContribution extends UmlCompoundCommandContributio
         String parentUriFragment = command.getProperties()
                 .get(UmlSemanticCommandContribution.PARENT_SEMANTIC_URI_FRAGMENT);
         return new RemoveNodeCompoundCommand(domain, modelUri, semanticUriFragment, parentUriFragment);
-    }
+    }   */
 }

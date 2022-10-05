@@ -10,15 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.statemachinediagram.statemachine;
 
-import com.eclipsesource.uml.modelserver.commands.statemachinediagram.statemachine.region.RemoveRegionCompoundCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Region;
-import org.eclipse.uml2.uml.StateMachine;
-
-public class RemoveStateMachineCompoundCommand extends CompoundCommand {
+public class RemoveStateMachineCompoundCommand { /*-{
 
    public RemoveStateMachineCompoundCommand(final EditingDomain domain, final URI modelUri,
       final String semanticUriFragment) {
@@ -35,5 +27,5 @@ public class RemoveStateMachineCompoundCommand extends CompoundCommand {
       this.append(new RemoveStateMachineCommand(domain, modelUri, semanticUriFragment));
       this.append(new RemoveStateMachineShapeCommand(domain, modelUri, semanticUriFragment));
    }
-
+   */
 }

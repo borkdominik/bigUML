@@ -13,6 +13,7 @@ package com.eclipsesource.uml.modelserver.commands.communication.interaction;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emfcloud.modelserver.glsp.notation.commands.RemoveNotationElementCommand;
 import org.eclipse.uml2.uml.Interaction;
 import org.eclipse.uml2.uml.Lifeline;
 import org.eclipse.uml2.uml.Model;
@@ -33,8 +34,7 @@ public class RemoveInteractionCompoundCommand extends CompoundCommand {
       removeLifelines(interactionToRemove, domain, modelUri);
 
       this.append(new RemoveInteractionCommand(domain, modelUri, semanticUriFragment));
-      this.append(new RemoveInteractionShapeCommand(domain, modelUri, semanticUriFragment));
-
+      this.append(new RemoveNotationElementCommand(domain, modelUri, semanticUriFragment));
    }
 
    protected void removeLifelines(final Interaction interactionToRemove, final EditingDomain domain,

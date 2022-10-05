@@ -10,17 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.activitydiagram.datanode;
 
-import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
-import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
-import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
-
-import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlCompoundCommandContribution;
-
-public class AddPinCommandContribution extends UmlCompoundCommandContribution {
+public class AddPinCommandContribution { /*-
 
    public static final String TYPE = "addPin";
    private static final String PARENT_URI = "parentUri";
@@ -39,5 +29,5 @@ public class AddPinCommandContribution extends UmlCompoundCommandContribution {
       final String actionUri = command.getProperties().get(PARENT_URI);
       return new AddPinCompoundCommand(domain, modelUri, actionUri);
    }
-
+   */
 }

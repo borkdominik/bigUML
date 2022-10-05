@@ -24,9 +24,8 @@ import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.PackageableElement;
 
-import com.eclipsesource.uml.modelserver.UmlNotationUtil;
-import com.eclipsesource.uml.modelserver.unotation.Diagram;
-import com.eclipsesource.uml.modelserver.unotation.NotationElement;
+import org.eclipse.glsp.server.emf.model.notation.NotationElement;
+import com.eclipsesource.uml.modelserver.unotation.UmlDiagram;
 
 public final class UmlNotationCommandUtil {
 
@@ -50,12 +49,12 @@ public final class UmlNotationCommandUtil {
       return gDimension;
    }
 
-   public static Diagram getDiagram(final URI modelUri, final EditingDomain domain) {
+   public static UmlDiagram getDiagram(final URI modelUri, final EditingDomain domain) {
       Resource notationResource = domain.getResourceSet()
          .getResource(modelUri.trimFileExtension().appendFileExtension(UmlNotationUtil.NOTATION_EXTENSION), false);
       EObject notationRoot = notationResource.getContents().get(0);
-      if (!(notationRoot instanceof Diagram)) {}
-      return (Diagram) notationRoot;
+      if (!(notationRoot instanceof UmlDiagram)) {}
+      return (UmlDiagram) notationRoot;
    }
 
    public static String getSemanticProxyUri(final PackageableElement element) {
@@ -73,7 +72,7 @@ public final class UmlNotationCommandUtil {
    public static NotationElement getNotationElement(final URI modelUri, final EditingDomain domain,
       final String semanticUri) {
       Optional<NotationElement> notationElement = getDiagram(modelUri, domain).getElements().stream()
-         .filter(el -> el.getSemanticElement().getUri().equals(semanticUri)).findFirst();
+         .filter(el -> el.getSemanticElement().getElementId().equals(semanticUri)).findFirst();
       return notationElement.orElse(null);
    }
 
@@ -82,7 +81,7 @@ public final class UmlNotationCommandUtil {
       final EditingDomain domain,
       final String semanticUri) {
       Optional<NotationElement> notationElement = getDiagram(modelUri, domain).getElements().stream()
-         .filter(el -> el.getSemanticElement().getUri().equals(semanticUri)).findFirst();
+         .filter(el -> el.getSemanticElement().getElementId().equals(semanticUri)).findFirst();
       return (C) notationElement.orElse(null);
    }
 

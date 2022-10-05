@@ -1,13 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.usecasediagram.extendedge;
 
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.*;
-
-public class AddExtendCommand extends UmlSemanticElementCommand {
+public class AddExtendCommand { /*- {
 
     private final Extend newExtend;
     protected final UseCase extendingUseCase;
@@ -50,5 +43,5 @@ public class AddExtendCommand extends UmlSemanticElementCommand {
 
     public Extend getNewExtend() {
         return newExtend;
-    }
+    }   */
 }

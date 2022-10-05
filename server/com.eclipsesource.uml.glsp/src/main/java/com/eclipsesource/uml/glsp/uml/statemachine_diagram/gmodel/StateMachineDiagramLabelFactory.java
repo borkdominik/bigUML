@@ -10,12 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.statemachine_diagram.gmodel;
 
-import org.eclipse.glsp.graph.GLabel;
-import org.eclipse.uml2.uml.NamedElement;
-
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-
-public class StateMachineDiagramLabelFactory extends StateMachineAbstractGModelFactory<NamedElement, GLabel> {
+public class StateMachineDiagramLabelFactory { /*-
 
    public StateMachineDiagramLabelFactory(final UmlModelState modelState) {
       super(modelState);
@@ -25,5 +20,5 @@ public class StateMachineDiagramLabelFactory extends StateMachineAbstractGModelF
    public GLabel create(final NamedElement namedElement) {
       return null;
    }
-
+   */
 }

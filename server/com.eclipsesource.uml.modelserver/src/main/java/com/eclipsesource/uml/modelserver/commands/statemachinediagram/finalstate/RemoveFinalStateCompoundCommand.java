@@ -1,20 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.statemachinediagram.finalstate;
 
-import com.eclipsesource.uml.modelserver.commands.statemachinediagram.transition.RemoveTransitionCompoundCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.FinalState;
-import org.eclipse.uml2.uml.Model;
-import org.eclipse.uml2.uml.Transition;
-
-import java.util.Collection;
-
-public class RemoveFinalStateCompoundCommand extends CompoundCommand {
+public class RemoveFinalStateCompoundCommand { /*-{
 
     public RemoveFinalStateCompoundCommand(final EditingDomain domain, final URI modelUri,
                                            final String parentSemanticUriFragment, final String semanticUriFragment) {
@@ -34,5 +20,5 @@ public class RemoveFinalStateCompoundCommand extends CompoundCommand {
                         new RemoveTransitionCompoundCommand(domain, modelUri, parentSemanticUriFragment, transitionUri));
             }
         }
-    }
+    }   */
 }

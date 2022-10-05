@@ -1,19 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.classdiagram.enumeration;
 
-import com.eclipsesource.uml.modelserver.commands.classdiagram.property.SetPropertyTypeCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.ecore.util.EcoreUtil.UsageCrossReferencer;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Class;
-import org.eclipse.uml2.uml.*;
-
-import java.util.Collection;
-
-public class RemoveEnumerationCompoundCommand extends CompoundCommand {
+public class RemoveEnumerationCompoundCommand { /*-{
 
    public RemoveEnumerationCompoundCommand(final EditingDomain domain, final URI modelUri,
                                            final String semanticUriFragment) {
@@ -41,5 +28,5 @@ public class RemoveEnumerationCompoundCommand extends CompoundCommand {
             && setting.getEStructuralFeature().equals(UMLPackage.Literals.TYPED_ELEMENT__TYPE)
             && enumerationToRemove.equals(((Property) eObject).getType());
    }
-
+   */
 }

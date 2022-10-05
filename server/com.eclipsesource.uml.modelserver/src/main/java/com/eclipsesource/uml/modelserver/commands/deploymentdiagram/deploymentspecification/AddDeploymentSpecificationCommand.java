@@ -1,13 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.deploymentdiagram.deploymentspecification;
 
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.*;
-
-public class AddDeploymentSpecificationCommand extends UmlSemanticElementCommand {
+public class AddDeploymentSpecificationCommand { /*- {
 
    protected final DeploymentSpecification newDeploymentSpecification;
    protected final String parentSemanticUriFragment;
@@ -46,4 +39,5 @@ public class AddDeploymentSpecificationCommand extends UmlSemanticElementCommand
    public DeploymentSpecification getNewDeploymentSpecification() {
       return newDeploymentSpecification;
    }
+      */
 }

@@ -1,12 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.deploymentdiagram.communicationpath;
 
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.CommunicationPath;
-
-public class RemoveCommunicationPathCommand extends UmlSemanticElementCommand {
+public class RemoveCommunicationPathCommand { /*- {
 
     protected final String semanticUriFragment;
 
@@ -22,4 +16,5 @@ public class RemoveCommunicationPathCommand extends UmlSemanticElementCommand {
                 CommunicationPath.class);
         umlModel.getPackagedElements().remove(communicationPathToRemove);
     }
+       */
 }

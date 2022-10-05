@@ -1,18 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.deploymentdiagram.deploymentedge;
 
-import java.util.function.Supplier;
-
-import com.eclipsesource.uml.modelserver.commands.commons.notation.UmlNotationElementCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Deployment;
-
-import com.eclipsesource.uml.modelserver.commands.util.UmlNotationCommandUtil;
-import org.eclipse.glsp.server.emf.model.notation.Edge;
-import com.eclipsesource.uml.modelserver.unotation.SemanticProxy;
-import com.eclipsesource.uml.modelserver.unotation.UnotationFactory;
-
-public class AddDeploymentEdgeCommand extends UmlNotationElementCommand {
+public class AddDeploymentEdgeCommand { /*- {
 
     protected String semanticProxyUri;
     protected Supplier<Deployment> deploymentSupplier;
@@ -47,4 +35,5 @@ public class AddDeploymentEdgeCommand extends UmlNotationElementCommand {
         newEdge.setSemanticElement(proxy);
         umlDiagram.getElements().add(newEdge);
     }
+       */
 }

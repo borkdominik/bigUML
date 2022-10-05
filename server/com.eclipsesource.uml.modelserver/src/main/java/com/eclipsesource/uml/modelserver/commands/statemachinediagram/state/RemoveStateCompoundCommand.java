@@ -10,21 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.statemachinediagram.state;
 
-import com.eclipsesource.uml.modelserver.commands.statemachinediagram.transition.RemoveTransitionCompoundCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.ecore.util.EcoreUtil.UsageCrossReferencer;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Model;
-import org.eclipse.uml2.uml.State;
-import org.eclipse.uml2.uml.Transition;
-
-import java.util.Collection;
-
-public class RemoveStateCompoundCommand extends CompoundCommand {
+public class RemoveStateCompoundCommand { /*-{
 
    public RemoveStateCompoundCommand(final EditingDomain domain, final URI modelUri,
       final String parentSemanticUriFragment, final String semanticUriFragment) {
@@ -46,5 +32,5 @@ public class RemoveStateCompoundCommand extends CompoundCommand {
          }
       }
    }
-
+   */
 }

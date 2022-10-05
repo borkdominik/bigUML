@@ -10,14 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.statemachinediagram.state;
 
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Region;
-import org.eclipse.uml2.uml.State;
-
-public class RemoveStateCommand extends UmlSemanticElementCommand {
+public class RemoveStateCommand { /*- {
 
    protected final String parentSemanticUriFragment;
    protected final String semanticUriFragment;
@@ -35,5 +28,5 @@ public class RemoveStateCommand extends UmlSemanticElementCommand {
       State stateToRemove = UmlSemanticCommandUtil.getElement(umlModel, semanticUriFragment, State.class);
       parentRegion.getSubvertices().remove(stateToRemove);
    }
-
+   */
 }

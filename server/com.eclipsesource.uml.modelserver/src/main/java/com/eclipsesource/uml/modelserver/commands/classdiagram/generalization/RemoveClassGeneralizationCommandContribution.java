@@ -1,16 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.classdiagram.generalization;
 
-import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlCompoundCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.usecasediagram.generalization.RemoveGeneralizationCompoundCommand;
-import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
-import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
-import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
-
-public class RemoveClassGeneralizationCommandContribution extends UmlCompoundCommandContribution {
+public class RemoveClassGeneralizationCommandContribution { /*-{
 
    public static final String TYPE = "removeGeneralization";
 
@@ -28,5 +18,5 @@ public class RemoveClassGeneralizationCommandContribution extends UmlCompoundCom
       String semanticUriFragment = command.getProperties().get(SEMANTIC_URI_FRAGMENT);
       return new RemoveGeneralizationCompoundCommand(domain, modelUri, semanticUriFragment);
    }
-
+   */
 }

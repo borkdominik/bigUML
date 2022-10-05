@@ -1,14 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.deploymentdiagram.communicationpath;
 
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Classifier;
-import org.eclipse.uml2.uml.CommunicationPath;
-import org.eclipse.uml2.uml.UMLFactory;
-
-public class AddCommunicationPathCommand extends UmlSemanticElementCommand {
+public class AddCommunicationPathCommand { /*- {
 
     private final CommunicationPath newCommunicationPath;
     protected final Classifier sourceNode;
@@ -30,4 +22,5 @@ public class AddCommunicationPathCommand extends UmlSemanticElementCommand {
     }
 
     public CommunicationPath getNewCommunicationPath() { return newCommunicationPath; }
+       */
 }

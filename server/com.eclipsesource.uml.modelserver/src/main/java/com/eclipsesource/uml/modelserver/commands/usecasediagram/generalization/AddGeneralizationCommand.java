@@ -1,12 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.usecasediagram.generalization;
 
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.*;
-
-public class AddGeneralizationCommand extends UmlSemanticElementCommand {
+public class AddGeneralizationCommand { /*- {
 
     private final Generalization newGeneralization;
     protected final Classifier generalClassifier;
@@ -30,10 +24,9 @@ public class AddGeneralizationCommand extends UmlSemanticElementCommand {
         /*System.out.println("general: " + generalClassifier + " & specific: " + specificClassifier);
         getNewGeneralization().setGeneral(generalClassifier);
         getNewGeneralization().setSpecific(specificClassifier);
-        umlModel.getPackagedElements().add((PackageableElement) getNewGeneralization());*/
+        umlModel.getPackagedElements().add((PackageableElement) getNewGeneralization());*
     }
 
-    public Generalization getNewGeneralization() {
-        return newGeneralization;
-    }
+    public Generalization getNewGeneralization() { return newGeneralization; }
+       */
 }

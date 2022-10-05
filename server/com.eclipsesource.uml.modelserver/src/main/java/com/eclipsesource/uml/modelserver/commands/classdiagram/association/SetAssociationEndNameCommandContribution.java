@@ -10,16 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.classdiagram.association;
 
-import org.eclipse.emf.common.command.Command;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
-import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
-
-import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlSemanticCommandContribution;
-
-public class SetAssociationEndNameCommandContribution extends UmlSemanticCommandContribution {
+public class SetAssociationEndNameCommandContribution { /*-{
 
    public static final String TYPE = "setAssociationEndName";
    public static final String NEW_NAME = "newName";
@@ -41,5 +32,5 @@ public class SetAssociationEndNameCommandContribution extends UmlSemanticCommand
 
       return new SetAssociationEndNameCommand(domain, modelUri, semanticUriFragment, newName);
    }
-
+   */
 }

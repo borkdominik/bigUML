@@ -10,15 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.statemachinediagram.statemachine.region;
 
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Region;
-import org.eclipse.uml2.uml.State;
-import org.eclipse.uml2.uml.StateMachine;
-
-public class RemoveRegionCommand extends UmlSemanticElementCommand {
+public class RemoveRegionCommand { /*- {
 
    protected final String semanticUriFragment;
 
@@ -38,5 +30,5 @@ public class RemoveRegionCommand extends UmlSemanticElementCommand {
          ((State) container).getRegions().remove(regionToRemove);
       }
    }
-
+   */
 }

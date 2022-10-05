@@ -12,15 +12,14 @@ package com.eclipsesource.uml.modelserver.unotation.util;
 
 import com.eclipsesource.uml.modelserver.unotation.*;
 
-import notation.Diagram;
-import notation.NotationElement;
-
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.glsp.server.emf.model.notation.Diagram;
+import org.eclipse.glsp.server.emf.model.notation.NotationElement;
 
 /**
  * <!-- begin-user-doc -->
@@ -125,13 +124,13 @@ public class UnotationAdapterFactory extends AdapterFactoryImpl {
    }
 
    /**
-    * Creates a new adapter for an object of class '{@link notation.NotationElement <em>Element</em>}'.
+    * Creates a new adapter for an object of class '{@link org.eclipse.glsp.server.emf.model.notation.NotationElement <em>Element</em>}'.
     * <!-- begin-user-doc -->
     * This default implementation returns null so that we can easily ignore cases;
     * it's useful to ignore a case when inheritance will catch all the cases anyway.
     * <!-- end-user-doc -->
     * @return the new adapter.
-    * @see notation.NotationElement
+    * @see org.eclipse.glsp.server.emf.model.notation.NotationElement
     * @generated
     */
    public Adapter createNotationElementAdapter() {
@@ -139,13 +138,13 @@ public class UnotationAdapterFactory extends AdapterFactoryImpl {
    }
 
    /**
-    * Creates a new adapter for an object of class '{@link notation.Diagram <em>Diagram</em>}'.
+    * Creates a new adapter for an object of class '{@link org.eclipse.glsp.server.emf.model.notation.Diagram <em>Diagram</em>}'.
     * <!-- begin-user-doc -->
     * This default implementation returns null so that we can easily ignore cases;
     * it's useful to ignore a case when inheritance will catch all the cases anyway.
     * <!-- end-user-doc -->
     * @return the new adapter.
-    * @see notation.Diagram
+    * @see org.eclipse.glsp.server.emf.model.notation.Diagram
     * @generated
     */
    public Adapter createDiagramAdapter() {

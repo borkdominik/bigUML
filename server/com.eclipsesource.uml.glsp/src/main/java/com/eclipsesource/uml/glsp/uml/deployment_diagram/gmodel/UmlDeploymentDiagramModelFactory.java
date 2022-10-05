@@ -1,20 +1,6 @@
 package com.eclipsesource.uml.glsp.uml.deployment_diagram.gmodel;
 
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.glsp.graph.GModelElement;
-import org.eclipse.uml2.uml.Artifact;
-import org.eclipse.uml2.uml.CommunicationPath;
-import org.eclipse.uml2.uml.Component;
-import org.eclipse.uml2.uml.Deployment;
-import org.eclipse.uml2.uml.DeploymentSpecification;
-import org.eclipse.uml2.uml.Device;
-import org.eclipse.uml2.uml.ExecutionEnvironment;
-import org.eclipse.uml2.uml.Model;
-import org.eclipse.uml2.uml.Node;
-
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-
-public class UmlDeploymentDiagramModelFactory extends DeploymentDiagramFactory {
+public class UmlDeploymentDiagramModelFactory { /*-
 
    public UmlDeploymentDiagramModelFactory(final UmlModelState modelState) {
       super(modelState);

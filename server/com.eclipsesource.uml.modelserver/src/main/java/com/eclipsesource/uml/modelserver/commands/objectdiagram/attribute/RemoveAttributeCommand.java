@@ -1,13 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.objectdiagram.attribute;
 
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Class;
-import org.eclipse.uml2.uml.Property;
-
-public class RemoveAttributeCommand extends UmlSemanticElementCommand {
+public class RemoveAttributeCommand { /*- {
 
     protected final String parentSemanticUriFragment;
     protected final String semanticUriFragment;
@@ -24,5 +17,5 @@ public class RemoveAttributeCommand extends UmlSemanticElementCommand {
         Class parentClass = UmlSemanticCommandUtil.getElement(umlModel, parentSemanticUriFragment, Class.class);
         Property propertyToRemove = UmlSemanticCommandUtil.getElement(umlModel, semanticUriFragment, Property.class);
         parentClass.getOwnedAttributes().remove(propertyToRemove);
-    }
+    }   */
 }

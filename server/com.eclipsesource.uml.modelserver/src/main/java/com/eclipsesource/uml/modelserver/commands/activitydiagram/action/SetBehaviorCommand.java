@@ -10,18 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.activitydiagram.action;
 
-import java.util.Optional;
-
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Behavior;
-import org.eclipse.uml2.uml.CallBehaviorAction;
-import org.eclipse.uml2.uml.Model;
-
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-
-public class SetBehaviorCommand extends UmlSemanticElementCommand {
+public class SetBehaviorCommand { /*-
 
    protected String semanticUriFragment;
    protected String behaviorName;
@@ -53,5 +42,5 @@ public class SetBehaviorCommand extends UmlSemanticElementCommand {
          cba.setBehavior(result.get());
       }
    }
-
+   */
 }

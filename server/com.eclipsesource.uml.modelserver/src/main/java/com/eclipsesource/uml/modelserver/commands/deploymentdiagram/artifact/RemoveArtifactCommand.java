@@ -1,16 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.deploymentdiagram.artifact;
 
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Artifact;
-import org.eclipse.uml2.uml.Device;
-import org.eclipse.uml2.uml.ExecutionEnvironment;
-import org.eclipse.uml2.uml.Node;
-
-public class RemoveArtifactCommand extends UmlSemanticElementCommand {
+public class RemoveArtifactCommand { /*- {
 
     protected final String semanticUriFragment;
     protected String parentSemanticUriFragment;
@@ -42,4 +32,5 @@ public class RemoveArtifactCommand extends UmlSemanticElementCommand {
         }
 
     }
+       */
 }

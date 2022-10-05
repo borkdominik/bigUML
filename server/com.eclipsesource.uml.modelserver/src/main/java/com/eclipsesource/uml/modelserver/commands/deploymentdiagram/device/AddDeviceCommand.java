@@ -1,12 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.deploymentdiagram.device;
 
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.*;
-
-public class AddDeviceCommand extends UmlSemanticElementCommand {
+public class AddDeviceCommand { /*- {
 
    protected final Device newDevice;
    protected final String parentSemanticUriFragment;
@@ -35,5 +29,5 @@ public class AddDeviceCommand extends UmlSemanticElementCommand {
 
    public Device getNewDevice() {
       return newDevice;
-   }
+   }   */
 }

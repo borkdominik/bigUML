@@ -10,17 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.activitydiagram.exceptionhandler;
 
-import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
-import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
-import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
-
-import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlCompoundCommandContribution;
-
-public class AddExceptionHandlerCommandContribution extends UmlCompoundCommandContribution {
+public class AddExceptionHandlerCommandContribution { /*-
 
    public static final String TYPE = "addExceptionHandlerContributuion";
    private static final String SOURCE_URI = "sourceUri";
@@ -47,5 +37,5 @@ public class AddExceptionHandlerCommandContribution extends UmlCompoundCommandCo
       cmd.append(semantic);
       return cmd;
    }
-
+   */
 }

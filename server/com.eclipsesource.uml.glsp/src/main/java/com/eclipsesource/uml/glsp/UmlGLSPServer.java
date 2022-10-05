@@ -21,7 +21,7 @@ import org.eclipse.glsp.server.utils.ClientOptionsUtil;
 import org.eclipse.uml2.uml.resource.UMLResource;
 
 import com.eclipsesource.uml.modelserver.UmlModelServerClient;
-import com.eclipsesource.uml.modelserver.UmlNotationUtil;
+import com.eclipsesource.uml.modelserver.commands.util.UmlNotationUtil;
 
 public class UmlGLSPServer extends EMSGLSPServer {
 

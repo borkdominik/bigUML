@@ -10,18 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.activitydiagram.comment;
 
-import org.eclipse.emf.common.command.Command;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
-import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
-import org.eclipse.uml2.uml.Comment;
-
-import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlSemanticCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-
-public class RemoveCommentCommandContribution extends UmlSemanticCommandContribution {
+public class RemoveCommentCommandContribution { /*-
 
    public static final String TYPE = "removeComment";
 
@@ -41,5 +30,5 @@ public class RemoveCommentCommandContribution extends UmlSemanticCommandContribu
 
       return new RemoveCommentCompoundCommand(domain, modelUri, semanticUri);
    }
-
+   */
 }

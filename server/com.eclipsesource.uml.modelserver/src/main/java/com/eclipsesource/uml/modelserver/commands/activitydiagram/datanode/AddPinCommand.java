@@ -10,21 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.activitydiagram.datanode;
 
-import java.util.function.Supplier;
-
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Action;
-import org.eclipse.uml2.uml.InputPin;
-import org.eclipse.uml2.uml.InvocationAction;
-import org.eclipse.uml2.uml.OpaqueAction;
-import org.eclipse.uml2.uml.Pin;
-import org.eclipse.uml2.uml.UMLFactory;
-
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-
-public class AddPinCommand extends UmlSemanticElementCommand implements Supplier<Pin> {
+public class AddPinCommand { /*-implements Supplier<Pin> {
 
    private final Action action;
    private Pin pin;
@@ -52,5 +38,5 @@ public class AddPinCommand extends UmlSemanticElementCommand implements Supplier
    public Pin get() {
       return pin;
    }
-
+   */
 }

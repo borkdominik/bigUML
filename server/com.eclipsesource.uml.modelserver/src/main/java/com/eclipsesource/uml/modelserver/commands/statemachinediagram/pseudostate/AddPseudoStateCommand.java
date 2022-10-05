@@ -10,17 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.statemachinediagram.pseudostate;
 
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Pseudostate;
-import org.eclipse.uml2.uml.PseudostateKind;
-import org.eclipse.uml2.uml.Region;
-import org.eclipse.uml2.uml.UMLFactory;
-
-public class AddPseudoStateCommand extends UmlSemanticElementCommand {
+public class AddPseudoStateCommand { /*- {
 
    protected final Pseudostate newPseudostate;
 
@@ -56,25 +46,23 @@ public class AddPseudoStateCommand extends UmlSemanticElementCommand {
          containerRegion.getSubvertices().add(newPseudostate);
       }*/
 
-
-      //if (newPseudostate.getKind() == PseudostateKind.ENTRY_POINT_LITERAL || newPseudostate.getKind() == PseudostateKind.EXIT_POINT_LITERAL) {
-      //}
-      /*if (List.of(PseudostateKind.ENTRY_POINT_LITERAL, PseudostateKind.EXIT_POINT_LITERAL)
-            .contains(newPseudostate.getKind())) {
-         EObject container = containerRegion.eContainer();
-         System.out.println("CONTAINER " + container.getClass());
-         if (container instanceof State) {
-            ((State) container).getConnectionPoints().add(newPseudostate);
-         } else if (container instanceof StateMachine) {
-            ((StateMachine) container).getConnectionPoints().add(newPseudostate);
-         }
-      } else {
-         containerRegion.getSubvertices().add(newPseudostate);
-      }*/
-   }
-
-   public Pseudostate getNewPseudostate() {
-      return newPseudostate;
-   }
-
+   // if (newPseudostate.getKind() == PseudostateKind.ENTRY_POINT_LITERAL || newPseudostate.getKind() ==
+   // PseudostateKind.EXIT_POINT_LITERAL) {
+   // }
+   /*
+    * if (List.of(PseudostateKind.ENTRY_POINT_LITERAL, PseudostateKind.EXIT_POINT_LITERAL)
+    * .contains(newPseudostate.getKind())) {
+    * EObject container = containerRegion.eContainer();
+    * System.out.println("CONTAINER " + container.getClass());
+    * if (container instanceof State) {
+    * ((State) container).getConnectionPoints().add(newPseudostate);
+    * } else if (container instanceof StateMachine) {
+    * ((StateMachine) container).getConnectionPoints().add(newPseudostate);
+    * }
+    * } else {
+    * containerRegion.getSubvertices().add(newPseudostate);
+    * }
+    * }
+    * public Pseudostate getNewPseudostate() { return newPseudostate; }
+    */
 }

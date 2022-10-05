@@ -1,37 +1,6 @@
 package com.eclipsesource.uml.glsp.uml.statemachine_diagram.gmodel;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.stream.Collectors;
-
-import org.eclipse.glsp.graph.GCompartment;
-import org.eclipse.glsp.graph.GLabel;
-import org.eclipse.glsp.graph.GModelElement;
-import org.eclipse.glsp.graph.GNode;
-import org.eclipse.glsp.graph.builder.impl.GCompartmentBuilder;
-import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
-import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
-import org.eclipse.glsp.graph.builder.impl.GNodeBuilder;
-import org.eclipse.glsp.graph.util.GConstants;
-import org.eclipse.glsp.graph.util.GraphUtil;
-import org.eclipse.uml2.uml.Classifier;
-import org.eclipse.uml2.uml.FinalState;
-import org.eclipse.uml2.uml.Pseudostate;
-import org.eclipse.uml2.uml.Region;
-import org.eclipse.uml2.uml.State;
-import org.eclipse.uml2.uml.StateMachine;
-
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.uml.statemachine_diagram.constants.StateMachineTypes;
-import com.eclipsesource.uml.glsp.utils.UmlConfig;
-import com.eclipsesource.uml.glsp.utils.UmlConfig.CSS;
-import com.eclipsesource.uml.glsp.utils.UmlIDUtil;
-import org.eclipse.glsp.server.emf.model.notation.Shape;
-
-public class StateMachineDiagramNodeFactory extends StateMachineAbstractGModelFactory<Classifier, GNode> {
+public class StateMachineDiagramNodeFactory { /*-
 
    private final StateMachineDiagramFactory parentFactory;
 
@@ -224,5 +193,5 @@ public class StateMachineDiagramNodeFactory extends StateMachineAbstractGModelFa
 
       return stateMachineRegionsBuilder.build();
    }
-
+   */
 }

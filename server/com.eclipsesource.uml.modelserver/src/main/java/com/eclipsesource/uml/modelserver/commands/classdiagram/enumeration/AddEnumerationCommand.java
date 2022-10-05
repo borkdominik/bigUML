@@ -1,13 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.classdiagram.enumeration;
 
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Enumeration;
-import org.eclipse.uml2.uml.UMLFactory;
-
-public class AddEnumerationCommand extends UmlSemanticElementCommand {
+public class AddEnumerationCommand { /*- {
 
    protected final Enumeration newEnumeration;
 
@@ -25,4 +18,5 @@ public class AddEnumerationCommand extends UmlSemanticElementCommand {
       newEnumeration.setName(UmlSemanticCommandUtil.getNewEnumerationName(umlModel));
       umlModel.getPackagedElements().add(newEnumeration);
    }
+      */
 }

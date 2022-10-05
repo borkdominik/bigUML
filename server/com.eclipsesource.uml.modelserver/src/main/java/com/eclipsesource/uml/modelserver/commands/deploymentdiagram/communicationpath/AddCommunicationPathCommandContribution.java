@@ -1,15 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.deploymentdiagram.communicationpath;
 
-import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlCompoundCommandContribution;
-import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
-import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
-import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
-
-public class AddCommunicationPathCommandContribution extends UmlCompoundCommandContribution {
+public class AddCommunicationPathCommandContribution { /*-{
 
     public static final String TYPE = "addCommunicationPathContributuion";
     public static final String SOURCE_NODE_URI_FRAGMENT = "sourceNodeUriFragment";
@@ -32,4 +23,5 @@ public class AddCommunicationPathCommandContribution extends UmlCompoundCommandC
 
         return new AddCommunicationPathCompoundCommand(domain, modelUri, sourceClassUriFragment, targetClassUriFragment);
     }
+       */
 }

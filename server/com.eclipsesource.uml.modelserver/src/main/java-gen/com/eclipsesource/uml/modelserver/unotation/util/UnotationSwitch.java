@@ -12,13 +12,12 @@ package com.eclipsesource.uml.modelserver.unotation.util;
 
 import com.eclipsesource.uml.modelserver.unotation.*;
 
-import notation.Diagram;
-import notation.NotationElement;
-
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 
 import org.eclipse.emf.ecore.util.Switch;
+import org.eclipse.glsp.server.emf.model.notation.Diagram;
+import org.eclipse.glsp.server.emf.model.notation.NotationElement;
 
 /**
  * <!-- begin-user-doc -->

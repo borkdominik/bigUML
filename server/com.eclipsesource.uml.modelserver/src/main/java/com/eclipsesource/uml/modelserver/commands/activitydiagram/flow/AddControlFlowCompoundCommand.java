@@ -10,13 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.activitydiagram.flow;
 
-import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-
-import com.eclipsesource.uml.modelserver.commands.commons.notation.ReplaceElementCommand;
-
-public class AddControlFlowCompoundCommand extends CompoundCommand {
+public class AddControlFlowCompoundCommand { /*-
 
    public AddControlFlowCompoundCommand(final EditingDomain domain, final URI modelUri,
       final String sourceUri, final String targetUri) {
@@ -44,5 +38,5 @@ public class AddControlFlowCompoundCommand extends CompoundCommand {
       }
 
    }
-
+   */
 }

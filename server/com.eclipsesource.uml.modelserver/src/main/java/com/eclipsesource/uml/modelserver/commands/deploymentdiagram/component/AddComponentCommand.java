@@ -1,15 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.deploymentdiagram.component;
 
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Component;
-import org.eclipse.uml2.uml.Device;
-import org.eclipse.uml2.uml.UMLFactory;
-
-public class AddComponentCommand extends UmlSemanticElementCommand {
+public class AddComponentCommand { /*- {
 
    protected final Component newComponent;
    protected final String parentSemanticUriFragment;
@@ -45,4 +36,5 @@ public class AddComponentCommand extends UmlSemanticElementCommand {
    public Component getNewComponent() {
       return newComponent;
    }
+      */
 }

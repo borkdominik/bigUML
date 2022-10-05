@@ -10,7 +10,7 @@
  */
 package com.eclipsesource.uml.modelserver.unotation;
 
-import notation.Diagram;
+import org.eclipse.glsp.server.emf.model.notation.Diagram;
 
 /**
  * <!-- begin-user-doc -->

@@ -1,13 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.statemachinediagram.transition;
 
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Region;
-import org.eclipse.uml2.uml.Transition;
-
-public class RemoveTransitionCommand extends UmlSemanticElementCommand {
+public class RemoveTransitionCommand { /*- {
 
     protected final String parentSemanticUriFragment;
     protected final String semanticUriFragment;
@@ -26,5 +19,5 @@ public class RemoveTransitionCommand extends UmlSemanticElementCommand {
         if (parentRegion != null && transitionToRemove != null) {
             parentRegion.getTransitions().remove(transitionToRemove);
         }
-    }
+    }   */
 }

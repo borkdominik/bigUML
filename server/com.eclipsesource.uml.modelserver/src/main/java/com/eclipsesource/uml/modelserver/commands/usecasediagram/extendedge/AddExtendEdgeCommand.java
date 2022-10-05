@@ -1,17 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.usecasediagram.extendedge;
 
-import com.eclipsesource.uml.modelserver.commands.commons.notation.UmlNotationElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlNotationCommandUtil;
-import org.eclipse.glsp.server.emf.model.notation.Edge;
-import com.eclipsesource.uml.modelserver.unotation.SemanticProxy;
-import com.eclipsesource.uml.modelserver.unotation.UnotationFactory;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Extend;
-
-import java.util.function.Supplier;
-
-public class AddExtendEdgeCommand extends UmlNotationElementCommand {
+public class AddExtendEdgeCommand { /*- {
 
     protected String semanticProxyUri;
     protected Supplier<Extend> extendSupplier;
@@ -45,5 +34,5 @@ public class AddExtendEdgeCommand extends UmlNotationElementCommand {
         }
         newEdge.setSemanticElement(proxy);
         umlDiagram.getElements().add(newEdge);
-    }
+    }   */
 }

@@ -10,15 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.activitydiagram.activity;
 
-import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-
-import com.eclipsesource.uml.modelserver.commands.activitydiagram.action.SetBehaviorCommand;
-import com.eclipsesource.uml.modelserver.commands.commons.notation.RemoveNotationElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-
-public class RemoveActivityCompoundCommand extends CompoundCommand {
+public class RemoveActivityCompoundCommand { /*-
 
    public RemoveActivityCompoundCommand(final EditingDomain domain, final URI modelUri, final String activityUri) {
       RemoveActivityCommand semanticCmd = new RemoveActivityCommand(domain, modelUri, activityUri);
@@ -33,5 +25,5 @@ public class RemoveActivityCompoundCommand extends CompoundCommand {
       this.append(semanticCmd);
       this.append(new RemoveNotationElementCommand(domain, modelUri, activityUri));
    }
-
+   */
 }

@@ -10,14 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.activitydiagram.exceptionhandler;
 
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.ExceptionHandler;
-
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-
-public class RemoveExceptionHandlerCommand extends UmlSemanticElementCommand {
+public class RemoveExceptionHandlerCommand { /*-
 
    private final ExceptionHandler handler;
 
@@ -31,5 +24,5 @@ public class RemoveExceptionHandlerCommand extends UmlSemanticElementCommand {
    protected void doExecute() {
       handler.getProtectedNode().getHandlers().remove(handler);
    }
-
+   */
 }

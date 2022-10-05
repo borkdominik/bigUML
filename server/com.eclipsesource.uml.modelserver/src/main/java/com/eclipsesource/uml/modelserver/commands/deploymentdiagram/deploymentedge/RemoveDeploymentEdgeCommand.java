@@ -1,12 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.deploymentdiagram.deploymentedge;
 
-import com.eclipsesource.uml.modelserver.commands.commons.notation.UmlNotationElementCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import com.eclipsesource.uml.modelserver.commands.util.UmlNotationCommandUtil;
-import org.eclipse.glsp.server.emf.model.notation.Edge;
-
-public class RemoveDeploymentEdgeCommand extends UmlNotationElementCommand {
+public class RemoveDeploymentEdgeCommand { /*- {
 
     protected final Edge edgeToRemove;
 
@@ -19,4 +13,5 @@ public class RemoveDeploymentEdgeCommand extends UmlNotationElementCommand {
     protected void doExecute() {
         umlDiagram.getElements().remove(edgeToRemove);
     }
+       */
 }

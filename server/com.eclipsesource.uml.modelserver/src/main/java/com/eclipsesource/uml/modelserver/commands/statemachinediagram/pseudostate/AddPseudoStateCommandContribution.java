@@ -10,20 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.statemachinediagram.pseudostate;
 
-import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlCompoundCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlNotationCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.util.UmlNotationCommandUtil;
-import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
-import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
-import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
-import org.eclipse.glsp.graph.GPoint;
-import org.eclipse.uml2.uml.PseudostateKind;
-
-public class AddPseudoStateCommandContribution extends UmlCompoundCommandContribution {
+public class AddPseudoStateCommandContribution { /*-{
 
    public static final String TYPE = "addPseudostateContributuion";
 
@@ -58,6 +45,6 @@ public class AddPseudoStateCommandContribution extends UmlCompoundCommandContrib
 
       return new AddPseudoStateCompoundCommand(domain, modelUri, pseudostatePosition, parentRegionUriFragment,
          pseudostateKind);
-   }
+   }   */
 
 }

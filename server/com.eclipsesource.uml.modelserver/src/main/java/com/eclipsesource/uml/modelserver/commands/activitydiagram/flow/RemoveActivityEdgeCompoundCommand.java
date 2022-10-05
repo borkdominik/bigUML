@@ -10,14 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.activitydiagram.flow;
 
-import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-
-import com.eclipsesource.uml.modelserver.commands.commons.notation.RemoveNotationElementCommand;
-import com.eclipsesource.uml.modelserver.commands.commons.notation.ReplaceElementCommand;
-
-public class RemoveActivityEdgeCompoundCommand extends CompoundCommand {
+public class RemoveActivityEdgeCompoundCommand { /*-
 
    public RemoveActivityEdgeCompoundCommand(final EditingDomain domain, final URI modelUri, final String parentUri,
       final String edgeUri) {
@@ -46,5 +39,5 @@ public class RemoveActivityEdgeCompoundCommand extends CompoundCommand {
          this.append(replaceCmd);
       }
    }
-
+   */
 }

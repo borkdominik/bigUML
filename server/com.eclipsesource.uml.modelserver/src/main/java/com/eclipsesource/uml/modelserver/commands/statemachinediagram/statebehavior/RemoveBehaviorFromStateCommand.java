@@ -1,13 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.statemachinediagram.statebehavior;
 
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Behavior;
-import org.eclipse.uml2.uml.State;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-
-public class RemoveBehaviorFromStateCommand extends UmlSemanticElementCommand {
+public class RemoveBehaviorFromStateCommand { /*- {
 
     protected final String parentSemanticUriFragment;
     protected final String semanticUriFragment;
@@ -34,5 +27,5 @@ public class RemoveBehaviorFromStateCommand extends UmlSemanticElementCommand {
             }
         }
     }
-
+   */
 }

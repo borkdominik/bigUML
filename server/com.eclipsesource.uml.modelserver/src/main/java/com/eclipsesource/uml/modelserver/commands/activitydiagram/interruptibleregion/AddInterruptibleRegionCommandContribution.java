@@ -10,21 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.activitydiagram.interruptibleregion;
 
-import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
-import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
-import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
-import org.eclipse.glsp.graph.GPoint;
-
-import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlCompoundCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlNotationCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.commons.notation.AddGenericShapeCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlNotationCommandUtil;
-
-public class AddInterruptibleRegionCommandContribution extends UmlCompoundCommandContribution {
+public class AddInterruptibleRegionCommandContribution { /*-
 
    public static final String TYPE = "addInterruptibleRegionContributuion";
    private static final String PARENT_URI = "parentUri";
@@ -56,5 +42,5 @@ public class AddInterruptibleRegionCommandContribution extends UmlCompoundComman
       cmd.append(new AddGenericShapeCommand(domain, modelUri, position, semantic));
       return cmd;
    }
-
+   */
 }

@@ -10,16 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.classdiagram.property;
 
-import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlSemanticCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-import org.eclipse.emf.common.command.Command;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
-import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
-
-public class SetPropertyBoundsCommandContribution extends UmlSemanticCommandContribution {
+public class SetPropertyBoundsCommandContribution { /*-{
 
    public static final String TYPE = "setPropertyBounds";
    public static final String NEW_BOUNDS = "newBounds";
@@ -42,5 +33,5 @@ public class SetPropertyBoundsCommandContribution extends UmlSemanticCommandCont
 
       return new SetPropertyBoundsCommand(domain, modelUri, semanticUriFragment, newLowerBound, newUpperBound);
    }
-
+   */
 }

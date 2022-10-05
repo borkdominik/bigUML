@@ -10,14 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.classdiagram.clazz;
 
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Class;
-
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-
-public class SetClassNameCommand extends UmlSemanticElementCommand {
+public class SetClassNameCommand { /*- {
 
    protected String semanticUriFragment;
    protected String newName;
@@ -34,5 +27,5 @@ public class SetClassNameCommand extends UmlSemanticElementCommand {
       Class classToRename = UmlSemanticCommandUtil.getElement(umlModel, semanticUriFragment, Class.class);
       classToRename.setName(newName);
    }
-
+   */
 }

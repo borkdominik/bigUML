@@ -10,16 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.classdiagram.property;
 
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Class;
-import org.eclipse.uml2.uml.Property;
-import org.eclipse.uml2.uml.Type;
-import org.eclipse.uml2.uml.UMLFactory;
-
-public class AddPropertyCommand extends UmlSemanticElementCommand {
+public class AddPropertyCommand { /*- {
 
    protected final String parentSemanticUriFragment;
    protected final Type defaultType;
@@ -38,5 +29,5 @@ public class AddPropertyCommand extends UmlSemanticElementCommand {
       newProperty.setType(defaultType);
       parentClass.getOwnedAttributes().add(newProperty);
    }
-
+   */
 }

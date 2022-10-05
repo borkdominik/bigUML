@@ -15,6 +15,7 @@ import java.util.function.Supplier;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emfcloud.modelserver.glsp.notation.commands.AddShapeCommand;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.uml2.uml.Interaction;
 
@@ -26,7 +27,7 @@ public class AddInteractionCompoundCommand extends CompoundCommand {
       AddInteractionCommand command = new AddInteractionCommand(domain, modelUri);
       this.append(command);
       Supplier<Interaction> semanticResultSupplier = () -> command.getNewInteraction();
-      this.append(new AddInteractionShapeCommand(domain, modelUri, lifelinePosition, semanticResultSupplier));
+      this.append(new AddShapeCommand(domain, modelUri, lifelinePosition, semanticResultSupplier));
    }
 
 }

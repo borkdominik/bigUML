@@ -15,8 +15,10 @@ import org.eclipse.emfcloud.modelserver.glsp.notation.integration.EMSNotationGMo
 import org.eclipse.glsp.graph.GGraph;
 import org.eclipse.glsp.graph.GModelRoot;
 import org.eclipse.glsp.server.emf.model.notation.Diagram;
+import org.eclipse.glsp.server.types.GLSPServerException;
 
 import com.eclipsesource.uml.glsp.gmodel.UmlDiagramMapper;
+import com.eclipsesource.uml.modelserver.unotation.UmlDiagram;
 import com.google.inject.Inject;
 
 public class UmlGModelFactory extends EMSNotationGModelFactory {
@@ -28,7 +30,12 @@ public class UmlGModelFactory extends EMSNotationGModelFactory {
    protected void fillRootElement(final EObject semanticModel, final Diagram notationModel, final GModelRoot newRoot) {
       GGraph graph = GGraph.class.cast(newRoot);
 
-      mapper.map(graph, notationModel);
+      if (notationModel instanceof UmlDiagram) {
+         mapper.map(graph, (UmlDiagram) notationModel);
+      } else {
+         throw new GLSPServerException("Could not fill root element. Given diagram was not of type "
+            + UmlDiagram.class.getSimpleName() + ". It was " + notationModel.getClass().getSimpleName());
+      }
    }
 
 }

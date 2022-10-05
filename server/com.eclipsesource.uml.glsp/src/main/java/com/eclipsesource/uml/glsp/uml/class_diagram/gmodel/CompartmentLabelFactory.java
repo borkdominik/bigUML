@@ -10,22 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.class_diagram.gmodel;
 
-import org.eclipse.glsp.graph.GCompartment;
-import org.eclipse.glsp.graph.GLabel;
-import org.eclipse.glsp.graph.builder.impl.GCompartmentBuilder;
-import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
-import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
-import org.eclipse.glsp.graph.util.GConstants;
-import org.eclipse.uml2.uml.NamedElement;
-import org.eclipse.uml2.uml.Property;
-
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.uml.class_diagram.constants.ClassTypes;
-import com.eclipsesource.uml.glsp.uml.utils.property.PropertyIdUtil;
-import com.eclipsesource.uml.glsp.uml.utils.property.PropertyUtil;
-import com.eclipsesource.uml.glsp.utils.UmlConfig.Types;
-
-public class CompartmentLabelFactory extends ClassAbstractGModelFactory<NamedElement, GCompartment> {
+public class CompartmentLabelFactory { /*-
 
    public CompartmentLabelFactory(final UmlModelState modelState) {
       super(modelState);
@@ -91,5 +76,5 @@ public class CompartmentLabelFactory extends ClassAbstractGModelFactory<NamedEle
 
       return propertyBuilder.build();
    }
-
+   */
 }

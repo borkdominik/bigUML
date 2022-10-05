@@ -10,13 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.statemachinediagram.pseudostate;
 
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Pseudostate;
-
-public class SetPseudoStateNameCommand extends UmlSemanticElementCommand {
+public class SetPseudoStateNameCommand { /*- {
 
    protected String semanticUriFragment;
    protected String newName;
@@ -35,5 +29,5 @@ public class SetPseudoStateNameCommand extends UmlSemanticElementCommand {
          Pseudostate.class);
       pseudostateToRename.setName(newName);
    }
-
+   */
 }

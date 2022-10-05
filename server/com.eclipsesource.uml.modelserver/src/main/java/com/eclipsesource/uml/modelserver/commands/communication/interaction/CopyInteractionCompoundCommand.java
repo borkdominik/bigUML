@@ -15,6 +15,7 @@ import java.util.List;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emfcloud.modelserver.glsp.notation.commands.AddShapeCommand;
 import org.eclipse.uml2.uml.Interaction;
 
 import com.eclipsesource.uml.modelserver.commands.communication.lifeline.CopyLifelineWithMessagesCompoundCommand;
@@ -46,7 +47,7 @@ public class CopyInteractionCompoundCommand extends CompoundCommand {
 
       this.append(command);
       this.append(
-         new AddInteractionShapeCommand(domain, modelUri, position, () -> command.getNewInteraction()));
+         new AddShapeCommand(domain, modelUri, position, () -> command.getNewInteraction()));
 
       return command.getNewInteraction();
    }

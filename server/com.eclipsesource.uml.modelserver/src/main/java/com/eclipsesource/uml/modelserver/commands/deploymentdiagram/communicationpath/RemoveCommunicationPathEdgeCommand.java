@@ -1,12 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.deploymentdiagram.communicationpath;
 
-import com.eclipsesource.uml.modelserver.commands.commons.notation.UmlNotationElementCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import com.eclipsesource.uml.modelserver.commands.util.UmlNotationCommandUtil;
-import org.eclipse.glsp.server.emf.model.notation.Edge;
-
-public class RemoveCommunicationPathEdgeCommand extends UmlNotationElementCommand {
+public class RemoveCommunicationPathEdgeCommand { /*- {
 
     protected final Edge edgeToRemove;
 
@@ -20,4 +14,5 @@ public class RemoveCommunicationPathEdgeCommand extends UmlNotationElementComman
     protected void doExecute() {
         umlDiagram.getElements().remove(edgeToRemove);
     }
+       */
 }

@@ -1,16 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.objectdiagram.attribute;
 
-import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlSemanticCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-import org.eclipse.emf.common.command.Command;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
-import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
-import org.eclipse.uml2.uml.Type;
-
-public class SetAttributeCommandContribution extends UmlSemanticCommandContribution {
+public class SetAttributeCommandContribution { /*-{
 
     public static final String TYPE = "setAttribute";
     public static final String NEW_NAME = "newName";
@@ -40,5 +30,5 @@ public class SetAttributeCommandContribution extends UmlSemanticCommandContribut
 
         return new SetAttributeCommand(domain, modelUri, semanticUriFragment, newName, newType, newLowerBound,
                 newUpperBound);
-    }
+    }   */
 }

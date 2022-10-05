@@ -10,16 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.statemachinediagram.statemachine;
 
-import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlCompoundCommandContribution;
-import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
-import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
-import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
-
-public class RemoveStateMachineCommandContribution extends UmlCompoundCommandContribution {
+public class RemoveStateMachineCommandContribution { /*-{
 
    public static final String TYPE = "removeStateMachine";
 
@@ -37,5 +28,5 @@ public class RemoveStateMachineCommandContribution extends UmlCompoundCommandCon
       String semanticUriFragment = command.getProperties().get(SEMANTIC_URI_FRAGMENT);
       return new RemoveStateMachineCompoundCommand(domain, modelUri, semanticUriFragment);
    }
-
+   */
 }

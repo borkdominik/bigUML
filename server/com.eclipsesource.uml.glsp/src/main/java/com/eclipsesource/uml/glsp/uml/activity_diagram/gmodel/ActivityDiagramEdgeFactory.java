@@ -10,32 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.activity_diagram.gmodel;
 
-import java.util.ArrayList;
-
-import org.eclipse.glsp.graph.GEdge;
-import org.eclipse.glsp.graph.GLabel;
-import org.eclipse.glsp.graph.GPoint;
-import org.eclipse.glsp.graph.builder.impl.GEdgeBuilder;
-import org.eclipse.glsp.graph.builder.impl.GEdgePlacementBuilder;
-import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
-import org.eclipse.glsp.graph.util.GConstants;
-import org.eclipse.glsp.graph.util.GraphUtil;
-import org.eclipse.uml2.uml.ActivityEdge;
-import org.eclipse.uml2.uml.ActivityNode;
-import org.eclipse.uml2.uml.ExceptionHandler;
-import org.eclipse.uml2.uml.ExecutableNode;
-import org.eclipse.uml2.uml.LiteralString;
-import org.eclipse.uml2.uml.ObjectNode;
-import org.eclipse.uml2.uml.Pin;
-import org.eclipse.uml2.uml.ValueSpecification;
-
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.uml.activity_diagram.ActivityIdUtil;
-import com.eclipsesource.uml.glsp.uml.activity_diagram.constants.ActivityTypes;
-import com.eclipsesource.uml.glsp.utils.UmlConfig.CSS;
-import org.eclipse.glsp.server.emf.model.notation.Edge;
-
-public class ActivityDiagramEdgeFactory extends ActivityAbstractGModelFactory<ActivityEdge, GEdge> {
+public class ActivityDiagramEdgeFactory { /*-
 
    public ActivityDiagramEdgeFactory(final UmlModelState modelState) {
       super(modelState);
@@ -130,5 +105,5 @@ public class ActivityDiagramEdgeFactory extends ActivityAbstractGModelFactory<Ac
          .id(id) //
          .text(name).build();
    }
-
+   */
 }

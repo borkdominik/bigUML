@@ -1,15 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.usecasediagram.actor;
 
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Actor;
-import org.eclipse.uml2.uml.Model;
-import org.eclipse.uml2.uml.Package;
-
-public class RemoveActorCommand extends UmlSemanticElementCommand {
+public class RemoveActorCommand { /*- {
 
     protected final String semanticUriFragment;
 
@@ -27,5 +18,5 @@ public class RemoveActorCommand extends UmlSemanticElementCommand {
         } else if (container instanceof Package) {
             ((Package) container).getPackagedElements().remove(actorToRemove);
         }
-    }
+    }   */
 }

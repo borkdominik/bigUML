@@ -10,15 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.activitydiagram.partition;
 
-import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.glsp.graph.GPoint;
-import org.eclipse.uml2.uml.ActivityPartition;
-
-import java.util.function.Supplier;
-
-public class AddPartitionCompoundCommand extends CompoundCommand {
+public class AddPartitionCompoundCommand { /*-
 
    public AddPartitionCompoundCommand(final EditingDomain domain, final URI modelUri, final GPoint position,
                                       final String parentUri) {
@@ -30,5 +22,5 @@ public class AddPartitionCompoundCommand extends CompoundCommand {
       this.append(new AddPartitionShapeCommand(domain, modelUri, position, semanticResultSupplier));
       //this.append(new AddGenericShapeCommand(domain, modelUri, position, command));
    }
-
+   */
 }

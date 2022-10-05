@@ -1,15 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.objectdiagram.attribute;
 
-import com.eclipsesource.uml.modelserver.commands.classdiagram.property.RemovePropertyCommand;
-import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlSemanticCommandContribution;
-import org.eclipse.emf.common.command.Command;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
-import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
-
-public class RemoveAttributeCommandContribution extends UmlSemanticCommandContribution {
+public class RemoveAttributeCommandContribution { /*-{
 
     public static final String TYPE = "removeAttribute";
 
@@ -29,5 +20,5 @@ public class RemoveAttributeCommandContribution extends UmlSemanticCommandContri
         String semanticUri = command.getProperties().get(SEMANTIC_URI_FRAGMENT);
 
         return new RemovePropertyCommand(domain, modelUri, parentSemanticUri, semanticUri);
-    }
+    }   */
 }

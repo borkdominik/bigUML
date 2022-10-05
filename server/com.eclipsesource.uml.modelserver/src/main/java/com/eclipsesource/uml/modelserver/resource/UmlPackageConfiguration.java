@@ -13,26 +13,27 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver;
+package com.eclipsesource.uml.modelserver.resource;
 
 import java.util.Collection;
 
 import org.eclipse.emfcloud.modelserver.emf.configuration.EPackageConfiguration;
+import org.eclipse.uml2.uml.UMLPackage;
+import org.eclipse.uml2.uml.resource.UMLResource;
 
-import com.eclipsesource.uml.modelserver.unotation.UnotationPackage;
 import com.google.common.collect.Lists;
 
-public class UnotationPackageConfiguration implements EPackageConfiguration {
+public class UmlPackageConfiguration implements EPackageConfiguration {
 
    @Override
-   public String getId() { return UnotationPackage.eINSTANCE.getNsURI(); }
+   public String getId() { return UMLPackage.eINSTANCE.getNsURI(); }
 
    @Override
-   public Collection<String> getFileExtensions() { return Lists.newArrayList("unotation"); }
+   public Collection<String> getFileExtensions() { return Lists.newArrayList(UMLResource.FILE_EXTENSION); }
 
    @Override
    public void registerEPackage() {
-      UnotationPackage.eINSTANCE.eClass();
+      UMLPackage.eINSTANCE.eClass();
    }
 
 }

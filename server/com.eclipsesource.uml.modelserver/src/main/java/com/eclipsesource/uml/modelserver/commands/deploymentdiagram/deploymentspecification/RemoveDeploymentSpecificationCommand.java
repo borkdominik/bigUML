@@ -1,17 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.deploymentdiagram.deploymentspecification;
 
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Artifact;
-import org.eclipse.uml2.uml.DeploymentSpecification;
-import org.eclipse.uml2.uml.Device;
-import org.eclipse.uml2.uml.ExecutionEnvironment;
-import org.eclipse.uml2.uml.Node;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-
-public class RemoveDeploymentSpecificationCommand extends UmlSemanticElementCommand {
+public class RemoveDeploymentSpecificationCommand { /*- {
 
     protected final String semanticUriFragment;
     protected final String parentSemanticUriFragment;
@@ -46,4 +35,5 @@ public class RemoveDeploymentSpecificationCommand extends UmlSemanticElementComm
             umlModel.getPackagedElements().remove(deploymentSpecificationToRemove);
         }
     }
+       */
 }

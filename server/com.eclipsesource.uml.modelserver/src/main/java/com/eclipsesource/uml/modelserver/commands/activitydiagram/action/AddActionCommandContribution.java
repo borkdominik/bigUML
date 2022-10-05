@@ -10,21 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.activitydiagram.action;
 
-import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
-import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
-import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
-import org.eclipse.glsp.graph.GPoint;
-import org.eclipse.uml2.uml.Action;
-
-import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlCompoundCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlNotationCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.util.UmlNotationCommandUtil;
-
-public class AddActionCommandContribution extends UmlCompoundCommandContribution {
+public class AddActionCommandContribution { /*-
 
    public static final String TYPE = "addActionContributuion";
    private static final String PARENT_URI = "parentUri";
@@ -71,5 +57,5 @@ public class AddActionCommandContribution extends UmlCompoundCommandContribution
 
       return new AddActionCompoundCommand(domain, modelUri, position, parentUri, actionType);
    }
-
+   */
 }

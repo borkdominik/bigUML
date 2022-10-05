@@ -10,14 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.statemachinediagram.statemachine;
 
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.StateMachine;
-import org.eclipse.uml2.uml.UMLFactory;
-
-public class AddStateMachineCommand extends UmlSemanticElementCommand {
+public class AddStateMachineCommand { /*- {
 
    protected final StateMachine newStateMachine;
 
@@ -33,12 +26,12 @@ public class AddStateMachineCommand extends UmlSemanticElementCommand {
       // region is created automatically, maybe this should be done user-driven
       /*Region region = UMLFactory.eINSTANCE.createRegion();
       region.setName(UmlSemanticCommandUtil.getNewRegionName(newStateMachine));
-      newStateMachine.getRegions().add(region);*/
-      umlModel.getPackagedElements().add(newStateMachine);
+      newStateMachine.getRegions().add(region);*
+   umlModel.getPackagedElements().add(newStateMachine);
    }
 
    public StateMachine getNewStateMachine() {
       return newStateMachine;
    }
-
+   */
 }

@@ -10,21 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.activitydiagram.controlnode;
 
-import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
-import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
-import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
-import org.eclipse.glsp.graph.GPoint;
-import org.eclipse.uml2.uml.ControlNode;
-
-import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlCompoundCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlNotationCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.util.UmlNotationCommandUtil;
-
-public class AddControlNodeCommandContribution extends UmlCompoundCommandContribution {
+public class AddControlNodeCommandContribution { /*-
 
    public static final String TYPE = "addControlNodeContributuion";
    private static final String PARENT_URI = "parentUri";
@@ -56,5 +42,5 @@ public class AddControlNodeCommandContribution extends UmlCompoundCommandContrib
 
       return new AddControlNodeCompoundCommand(domain, modelUri, position, parentUri, type);
    }
-
+   */
 }

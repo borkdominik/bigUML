@@ -10,16 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.activitydiagram.flow;
 
-import org.eclipse.emf.common.command.Command;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
-import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
-
-import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlSemanticCommandContribution;
-
-public class SetWeightCommandContribution extends UmlSemanticCommandContribution {
+public class SetWeightCommandContribution { /*-
 
    public static final String TYPE = "setWeight";
    public static final String NEW_VALUE = "newValue";
@@ -41,5 +32,5 @@ public class SetWeightCommandContribution extends UmlSemanticCommandContribution
 
       return new SetWeightCommand(domain, modelUri, semanticUriFragment, newValue);
    }
-
+   */
 }

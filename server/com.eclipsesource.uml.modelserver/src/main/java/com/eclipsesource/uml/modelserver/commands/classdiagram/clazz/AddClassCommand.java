@@ -10,14 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.classdiagram.clazz;
 
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Class;
-import org.eclipse.uml2.uml.UMLFactory;
-
-public class AddClassCommand extends UmlSemanticElementCommand {
+public class AddClassCommand { /*- {
 
    protected final Class newClass;
    protected final Boolean isAbstract;
@@ -38,5 +31,5 @@ public class AddClassCommand extends UmlSemanticElementCommand {
    public Class getNewClass() {
       return newClass;
    }
-
+   */
 }

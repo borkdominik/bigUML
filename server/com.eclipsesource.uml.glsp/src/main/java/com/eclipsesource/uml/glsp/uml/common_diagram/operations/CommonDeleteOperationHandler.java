@@ -11,13 +11,10 @@
 package com.eclipsesource.uml.glsp.uml.common_diagram.operations;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.glsp.server.types.GLSPServerException;
-import org.eclipse.uml2.uml.Comment;
 
 import com.eclipsesource.uml.glsp.model.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.operations.DiagramDeleteOperationHandler;
-import com.eclipsesource.uml.modelserver.commands.activitydiagram.comment.RemoveCommentCommandContribution;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 
@@ -36,24 +33,23 @@ public class CommonDeleteOperationHandler implements DiagramDeleteOperationHandl
    @Override
    public void delete(final EObject semanticElement) {
       // TODO: activate this
-      /*
-       * GModelElement gElem = modelState.getIndex().get(semanticElement).get();
-       * if (Types.COMMENT_EDGE.equals(gElem.getType())) {
-       * GEdge edge = (GEdge) gElem;
-       * Comment comment = getOrThrow(modelState.getIndex().getEObject(edge.getSource()),
-       * Comment.class, "Could not find element for id '" + edge.getId() + "', no delete operation executed.");
-       * Element target = getOrThrow(modelState.getIndex().getEObject(edge.getTarget()),
-       * Element.class, "Could not find element for id '" + edge.getId() + "', no delete operation executed.");
-       * modelAccess.unlinkComment(modelState, comment, target).thenAccept(response -> {
-       * if (response.body() == null || response.body().isEmpty()) {
-       * throw new GLSPServerException(
-       * "Could not execute unlink operation for Element: " + edge.getTargetId());
-       * }
-       * });
-       * return;
-       * }
-       */
-
+      /*-
+      GModelElement gElem = modelState.getIndex().get(semanticElement).get();
+      if (Types.COMMENT_EDGE.equals(gElem.getType())) {
+         GEdge edge = (GEdge) gElem;
+         Comment comment = getOrThrow(modelState.getIndex().getEObject(edge.getSource()),
+            Comment.class, "Could not find element for id '" + edge.getId() + "', no delete operation executed.");
+         Element target = getOrThrow(modelState.getIndex().getEObject(edge.getTarget()),
+            Element.class, "Could not find element for id '" + edge.getId() + "', no delete operation executed.");
+         modelAccess.unlinkComment(modelState, comment, target).thenAccept(response -> {
+            if (response.body() == null || response.body().isEmpty()) {
+               throw new GLSPServerException(
+                  "Could not execute unlink operation for Element: " + edge.getTargetId());
+            }
+         });
+         return;
+      }
+      
       if (semanticElement instanceof Comment) {
          modelServerAccess.exec(RemoveCommentCommandContribution
             .create((Comment) semanticElement)).thenAccept(response -> {
@@ -64,7 +60,7 @@ public class CommonDeleteOperationHandler implements DiagramDeleteOperationHandl
             });
          return;
       }
-
+      */
    }
 
 }

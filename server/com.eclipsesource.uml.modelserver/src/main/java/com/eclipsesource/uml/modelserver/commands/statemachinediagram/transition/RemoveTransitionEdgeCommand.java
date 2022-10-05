@@ -1,12 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.statemachinediagram.transition;
 
-import com.eclipsesource.uml.modelserver.commands.commons.notation.UmlNotationElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlNotationCommandUtil;
-import org.eclipse.glsp.server.emf.model.notation.Edge;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-
-public class RemoveTransitionEdgeCommand extends UmlNotationElementCommand {
+public class RemoveTransitionEdgeCommand { /*- {
 
     protected final Edge edgeToRemove;
 
@@ -20,5 +14,5 @@ public class RemoveTransitionEdgeCommand extends UmlNotationElementCommand {
         if (edgeToRemove != null) {
             umlDiagram.getElements().remove(edgeToRemove);
         }
-    }
+    }   */
 }

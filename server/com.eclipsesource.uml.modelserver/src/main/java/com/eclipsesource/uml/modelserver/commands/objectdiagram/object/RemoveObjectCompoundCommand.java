@@ -1,24 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.objectdiagram.object;
 
-import com.eclipsesource.uml.modelserver.commands.classdiagram.association.RemoveAssociationCompoundCommand;
-import com.eclipsesource.uml.modelserver.commands.classdiagram.clazz.RemoveClassCommand;
-import com.eclipsesource.uml.modelserver.commands.classdiagram.clazz.RemoveClassShapeCommand;
-import com.eclipsesource.uml.modelserver.commands.classdiagram.property.SetPropertyTypeCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlNotationCommandUtil;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.edit.domain.EditingDomain;
-//import org.eclipse.uml2.uml.InstanceSpecification;
-import org.eclipse.uml2.uml.*;
-import org.eclipse.uml2.uml.Class;
-
-import java.util.Collection;
-
-public class RemoveObjectCompoundCommand extends CompoundCommand {
+public class RemoveObjectCompoundCommand { /*-{
 
     public RemoveObjectCompoundCommand(final EditingDomain domain, final URI modelUri, final String semanticUriFragment) {
         this.append(new RemoveClassCommand(domain, modelUri, semanticUriFragment));
@@ -53,5 +35,5 @@ public class RemoveObjectCompoundCommand extends CompoundCommand {
         return eObject instanceof Property
                 && eObject.eContainer() instanceof Association
                 && ((Property) eObject).getAssociation() != null;
-    }
+    }   */
 }

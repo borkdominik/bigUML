@@ -10,19 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.classdiagram.association;
 
-import java.util.function.Supplier;
-
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Association;
-
-import com.eclipsesource.uml.modelserver.commands.commons.notation.UmlNotationElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlNotationCommandUtil;
-import org.eclipse.glsp.server.emf.model.notation.Edge;
-import com.eclipsesource.uml.modelserver.unotation.SemanticProxy;
-import com.eclipsesource.uml.modelserver.unotation.UnotationFactory;
-
-public class AddAssociationEdgeCommand extends UmlNotationElementCommand {
+public class AddAssociationEdgeCommand { /*- {
 
    protected String semanticProxyUri;
    protected Supplier<Association> associationSupplier;
@@ -58,5 +46,5 @@ public class AddAssociationEdgeCommand extends UmlNotationElementCommand {
 
       umlDiagram.getElements().add(newEdge);
    }
-
+   */
 }

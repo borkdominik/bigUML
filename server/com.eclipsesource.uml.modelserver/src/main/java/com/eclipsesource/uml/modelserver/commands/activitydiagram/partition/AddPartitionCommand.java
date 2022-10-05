@@ -10,16 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.activitydiagram.partition;
 
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Activity;
-import org.eclipse.uml2.uml.ActivityPartition;
-import org.eclipse.uml2.uml.NamedElement;
-import org.eclipse.uml2.uml.UMLFactory;
-
-public class AddPartitionCommand extends UmlSemanticElementCommand {
+public class AddPartitionCommand { /*-
 
    protected ActivityPartition newPartition;
    protected final String parentSemanticUriFragment;
@@ -43,23 +34,26 @@ public class AddPartitionCommand extends UmlSemanticElementCommand {
          System.out.println("NAME: " + name);
          //newPartition = ((Activity) parentContainer).createPartition(name);
          ((Activity) parentContainer).createPartition(name);
-      }*/
-      if (parentContainer instanceof Activity) {
-         Activity activity = (Activity) parentContainer;
-         String name = "NewPartition" + activity.getPartitions().size();
-         newPartition = activity.createPartition(name);
-      } else if (parentContainer instanceof ActivityPartition) {
-         System.out.println("MS IN PARTITION!!!");
-         ActivityPartition parent = (ActivityPartition) parentContainer;
-         String name = "NewPartition" + parent.getSubpartitions().size();
-         newPartition = parent.createSubpartition(name);
-      } else {
-         throw new RuntimeException("Invalid partition container type: " + parentContainer.getClass().getSimpleName());
-      }
+      }*
+   if(parentContainer instanceof Activity)
+   {
+      Activity activity = (Activity) parentContainer;
+      String name = "NewPartition" + activity.getPartitions().size();
+      newPartition = activity.createPartition(name);
+   }else if(parentContainer instanceof ActivityPartition)
+   {
+      System.out.println("MS IN PARTITION!!!");
+      ActivityPartition parent = (ActivityPartition) parentContainer;
+      String name = "NewPartition" + parent.getSubpartitions().size();
+      newPartition = parent.createSubpartition(name);
+   }else
+   {
+      throw new RuntimeException("Invalid partition container type: " + parentContainer.getClass().getSimpleName());
+   }
    }
 
    public ActivityPartition getNewPartition() {
       return newPartition;
    }
-
+   */
 }

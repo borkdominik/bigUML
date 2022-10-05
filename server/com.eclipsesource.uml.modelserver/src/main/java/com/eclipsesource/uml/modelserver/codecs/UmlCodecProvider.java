@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver;
+package com.eclipsesource.uml.modelserver.codecs;
 
 import java.util.Optional;
 import java.util.Set;

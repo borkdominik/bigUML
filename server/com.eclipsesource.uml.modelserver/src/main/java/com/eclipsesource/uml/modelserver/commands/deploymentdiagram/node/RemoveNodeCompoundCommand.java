@@ -1,10 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.deploymentdiagram.node;
 
-import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-
-public class RemoveNodeCompoundCommand extends CompoundCommand {
+public class RemoveNodeCompoundCommand { /*-{
 
     public RemoveNodeCompoundCommand(final EditingDomain domain, final URI modelUri, final String semanticUriFragment,
                                      final String parentSemanticUriFragment) {
@@ -12,6 +8,6 @@ public class RemoveNodeCompoundCommand extends CompoundCommand {
         this.append(new RemoveNodeShapeCommand(domain, modelUri, semanticUriFragment));
 
         /*Model umlModel = UmlSemanticCommandUtil.getModel(modelUri, domain);
-        Node nodeToRemove = UmlSemanticCommandUtil.getElement(umlModel, semanticUriFragment, Node.class);*/
-    }
+        Node nodeToRemove = UmlSemanticCommandUtil.getElement(umlModel, semanticUriFragment, Node.class);*
+    }   */
 }

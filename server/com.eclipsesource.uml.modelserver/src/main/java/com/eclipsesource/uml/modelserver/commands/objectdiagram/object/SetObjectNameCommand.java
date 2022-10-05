@@ -1,12 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.objectdiagram.object;
 
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Class;
-
-public class SetObjectNameCommand extends UmlSemanticElementCommand {
+public class SetObjectNameCommand { /*- {
 
     protected String semanticUriFragment;
     protected String newName;
@@ -23,5 +17,5 @@ public class SetObjectNameCommand extends UmlSemanticElementCommand {
         Class objectToRename = UmlSemanticCommandUtil.getElement(umlModel, semanticUriFragment,
                 Class.class);
         objectToRename.setName(newName);
-    }
+    }   */
 }

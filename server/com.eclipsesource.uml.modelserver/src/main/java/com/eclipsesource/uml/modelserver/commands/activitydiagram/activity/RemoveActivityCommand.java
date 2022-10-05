@@ -10,22 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.activitydiagram.activity;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Activity;
-import org.eclipse.uml2.uml.ActivityPartition;
-import org.eclipse.uml2.uml.CallBehaviorAction;
-import org.eclipse.uml2.uml.Element;
-
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-
-public class RemoveActivityCommand extends UmlSemanticElementCommand {
+public class RemoveActivityCommand { /*-
 
    private final Activity activity;
 
@@ -72,5 +57,5 @@ public class RemoveActivityCommand extends UmlSemanticElementCommand {
          .forEach(c -> c.getAnnotatedElements().remove(activity));
       activity.getModel().getPackagedElements().remove(activity);
    }
-
+   */
 }

@@ -1,20 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.deploymentdiagram.artifact;
 
-import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlCompoundCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlNotationCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlSemanticCommandContribution;
-import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
-import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
-import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
-import org.eclipse.glsp.graph.GPoint;
-
-import com.eclipsesource.uml.modelserver.commands.util.UmlNotationCommandUtil;
-
-public class AddArtifactCommandContribution extends UmlCompoundCommandContribution {
+public class AddArtifactCommandContribution { /*-{
 
     public static final String TYPE = "addArtifactContributuion";
 
@@ -43,4 +29,5 @@ public class AddArtifactCommandContribution extends UmlCompoundCommandContributi
         return new AddArtifactCompoundCommand(domain, modelUri, artifactPosition,
                 parentSemanticUriFragment);
     }
+       */
 }

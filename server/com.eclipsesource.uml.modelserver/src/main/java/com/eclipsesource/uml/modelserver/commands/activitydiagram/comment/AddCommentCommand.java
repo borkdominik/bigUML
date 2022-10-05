@@ -10,22 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.activitydiagram.comment;
 
-import java.util.function.Supplier;
-
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Activity;
-import org.eclipse.uml2.uml.ActivityContent;
-import org.eclipse.uml2.uml.ActivityEdge;
-import org.eclipse.uml2.uml.Comment;
-import org.eclipse.uml2.uml.Element;
-import org.eclipse.uml2.uml.Model;
-import org.eclipse.uml2.uml.NamedElement;
-
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-
-public class AddCommentCommand extends UmlSemanticElementCommand implements Supplier<Comment> {
+public class AddCommentCommand { /*-implements Supplier<Comment> {
 
    private final Element object;
    private Comment comment;
@@ -63,5 +48,5 @@ public class AddCommentCommand extends UmlSemanticElementCommand implements Supp
    public Comment get() {
       return comment;
    }
-
+   */
 }

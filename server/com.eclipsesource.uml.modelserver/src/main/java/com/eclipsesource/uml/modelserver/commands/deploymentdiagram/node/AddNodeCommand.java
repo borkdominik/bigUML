@@ -1,12 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.deploymentdiagram.node;
 
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.*;
-
-public class AddNodeCommand extends UmlSemanticElementCommand {
+public class AddNodeCommand { /*- {
 
    protected final Node newNode;
    protected String parentSemanticUriFragment;
@@ -44,11 +38,9 @@ public class AddNodeCommand extends UmlSemanticElementCommand {
             parentNode.getNestedNodes().add(newNode);
         } else {
             umlModel.getPackagedElements().add(newNode);
-        }*/
+        }*
 
    }
 
-   public Node getNewNode() {
-      return newNode;
-   }
+   public Node getNewNode() { return newNode; }   */
 }

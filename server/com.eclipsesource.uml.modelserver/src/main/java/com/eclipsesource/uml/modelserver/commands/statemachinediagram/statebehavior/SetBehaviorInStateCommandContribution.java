@@ -1,14 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.statemachinediagram.statebehavior;
 
-import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlSemanticCommandContribution;
-import org.eclipse.emf.common.command.Command;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
-import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
-
-public class SetBehaviorInStateCommandContribution extends UmlSemanticCommandContribution {
+public class SetBehaviorInStateCommandContribution { /*-{
 
     public static final String TYPE = "setBehaviorInState";
     public static final String NEW_NAME = "newName";
@@ -33,5 +25,5 @@ public class SetBehaviorInStateCommandContribution extends UmlSemanticCommandCon
 
         return new SetBehaviorInStateCommand(domain, modelUri, semanticUriFragment, behaviorType, newName);
     }
-
+   */
 }

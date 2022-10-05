@@ -10,18 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.activity_diagram.gmodel;
 
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.glsp.graph.GModelElement;
-import org.eclipse.uml2.uml.Activity;
-import org.eclipse.uml2.uml.ActivityEdge;
-import org.eclipse.uml2.uml.ActivityGroup;
-import org.eclipse.uml2.uml.ActivityNode;
-import org.eclipse.uml2.uml.ExceptionHandler;
-import org.eclipse.uml2.uml.Model;
-
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-
-public class UmlActivityDiagramModelFactory extends ActivityDiagramFactory {
+public class UmlActivityDiagramModelFactory { /*-
 
    public UmlActivityDiagramModelFactory(final UmlModelState modelState) {
       super(modelState);
@@ -65,6 +54,6 @@ public class UmlActivityDiagramModelFactory extends ActivityDiagramFactory {
     * }
     * return graph;
     * }
-    */
-
+    *
+   */
 }

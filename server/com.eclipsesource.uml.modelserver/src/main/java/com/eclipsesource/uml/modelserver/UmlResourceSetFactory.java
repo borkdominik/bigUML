@@ -17,23 +17,38 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emfcloud.modelserver.emf.common.DefaultResourceSetFactory;
+import org.eclipse.emfcloud.modelserver.integration.SemanticFileExtension;
+import org.eclipse.emfcloud.modelserver.notation.integration.NotationFileExtension;
 import org.eclipse.uml2.uml.resource.UMLResource;
 import org.eclipse.uml2.uml.resources.util.UMLResourcesUtil;
+
+import com.eclipsesource.uml.modelserver.resource.UmlNotationResource;
+import com.google.inject.Inject;
 
 public class UmlResourceSetFactory extends DefaultResourceSetFactory {
 
    protected static final Logger LOG = LogManager.getLogger(UmlResourceSetFactory.class);
 
+   @Inject
+   @SemanticFileExtension
+   protected String semanticFileExtension;
+   @Inject
+   @NotationFileExtension
+   protected String notationFileExtension;
+
    @Override
    public ResourceSet createResourceSet(final URI modelURI) {
-      ResourceSet resourceSet = new ResourceSetImpl();
-      resourceSet.setURIConverter(uriConverter);
-      resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(UMLResource.FILE_EXTENSION,
-         UMLResource.Factory.INSTANCE);
+      var resourceSet = super.createResourceSet(modelURI);
+
+      resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
+         semanticFileExtension, UMLResource.Factory.INSTANCE);
+      resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
+         notationFileExtension, UmlNotationResource.FACTORY);
+
       UMLResourcesUtil.init(resourceSet);
       loadResourceLibraries(resourceSet);
+
       return resourceSet;
    }
 

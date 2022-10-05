@@ -1,38 +1,6 @@
 package com.eclipsesource.uml.glsp.uml.deployment_diagram.gmodel;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.glsp.graph.GCompartment;
-import org.eclipse.glsp.graph.GLabel;
-import org.eclipse.glsp.graph.GModelElement;
-import org.eclipse.glsp.graph.GNode;
-import org.eclipse.glsp.graph.builder.impl.GCompartmentBuilder;
-import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
-import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
-import org.eclipse.glsp.graph.builder.impl.GNodeBuilder;
-import org.eclipse.glsp.graph.util.GConstants;
-import org.eclipse.glsp.graph.util.GraphUtil;
-import org.eclipse.uml2.uml.Artifact;
-import org.eclipse.uml2.uml.Classifier;
-import org.eclipse.uml2.uml.DeploymentSpecification;
-import org.eclipse.uml2.uml.Device;
-import org.eclipse.uml2.uml.ExecutionEnvironment;
-import org.eclipse.uml2.uml.NamedElement;
-import org.eclipse.uml2.uml.Node;
-
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.uml.deployment_diagram.constants.DeploymentTypes;
-import com.eclipsesource.uml.glsp.utils.UmlConfig;
-import com.eclipsesource.uml.glsp.utils.UmlConfig.CSS;
-import com.eclipsesource.uml.glsp.utils.UmlIDUtil;
-import org.eclipse.glsp.server.emf.model.notation.Shape;
-
-public class DeploymentDiagramNodeFactory extends DeploymentAbstractGModelFactory<Classifier, GNode> {
+public class DeploymentDiagramNodeFactory { /*-
 
    private final DeploymentDiagramFactory parentFactory;
 
@@ -140,7 +108,7 @@ public class DeploymentDiagramNodeFactory extends DeploymentAbstractGModelFactor
        * .add(createLabeledChildCompartment(nodeChildren, umlNode));
        * applyShapeData(umlNode, b);
        * return b.build();
-       */
+       *
    }
 
    protected GNode createArtifact(final Artifact artifact) {
@@ -188,7 +156,7 @@ public class DeploymentDiagramNodeFactory extends DeploymentAbstractGModelFactor
        * .collect(Collectors.toList()));
        * applyShapeData(artifact, b);
        * return b.build();
-       */
+       *
    }
 
    protected GNode createDevice(final Device device) {
@@ -243,296 +211,256 @@ public class DeploymentDiagramNodeFactory extends DeploymentAbstractGModelFactor
        * structureCompartment.getChildren().addAll(childComponents);
        */
 
-      // TODO: check why this is NOT working!!! might be the modelserver config!!!
-      /*
-       * List<GModelElement> childExecutionEnvironments = device.getNestedClassifiers().stream()
-       * .filter(ExecutionEnvironment.class::isInstance)
-       * .map(ExecutionEnvironment.class::cast)
-       * .map(this::createExecutionEnvironment)
-       * .collect(Collectors.toList());
-       * structureCompartment.getChildren().addAll(childExecutionEnvironments);
-       * // TODO: check why this is working
-       * List<GModelElement> childDeploymentSpecifications = device.getNestedClassifiers().stream()
-       * .filter(DeploymentSpecification.class::isInstance)
-       * .map(DeploymentSpecification.class::cast)
-       * .map(this::createDeploymentSpecification)
-       * .collect(Collectors.toList());
-       * structureCompartment.getChildren().addAll(childDeploymentSpecifications);
-       */
-
-      deviceNode.getChildren().add(structureCompartment);
-      return deviceNode;
-   }
-
-   // FIXME: also creates a device node somehow!!! check later again
-   protected GNode createExecutionEnvironment(final ExecutionEnvironment executionEnvironment) {
-      Map<String, Object> layoutOptions = new HashMap<>();
-      layoutOptions.put(H_ALIGN, GConstants.HAlign.CENTER);
-      layoutOptions.put(H_GRAB, false);
-      layoutOptions.put(V_GRAB, false);
-
-      GNodeBuilder builder = new GNodeBuilder(DeploymentTypes.EXECUTION_ENVIRONMENT)
-         .id(toId(executionEnvironment))
-         .layout(GConstants.Layout.VBOX)
-         .layoutOptions(layoutOptions)
-         .add(buildHeader(executionEnvironment))
-         .addCssClass(CSS.NODE)
-         .addCssClass(CSS.PACKAGEABLE_NODE);
-
-      applyShapeData(executionEnvironment, builder);
-
-      GNode executionEnvironmentNode = builder.build();
-
-      GCompartment structureCompartment = createStructureCompartment(executionEnvironment);
-
-      List<GModelElement> childNodes = executionEnvironment.getNestedClassifiers().stream()
-         .filter(Node.class::isInstance)
-         .map(Node.class::cast)
-         .map(this::createNode)
-         .collect(Collectors.toList());
-      structureCompartment.getChildren().addAll(childNodes);
-
-      List<GModelElement> childDevices = executionEnvironment.getNestedClassifiers().stream()
-         .filter(Device.class::isInstance)
-         .map(Device.class::cast)
-         .map(this::createDevice)
-         .collect(Collectors.toList());
-      structureCompartment.getChildren().addAll(childDevices);
-
-      List<GModelElement> childExecutionEnvironments = executionEnvironment.getNestedClassifiers().stream()
-         .filter(ExecutionEnvironment.class::isInstance)
-         .map(ExecutionEnvironment.class::cast)
-         .map(this::createExecutionEnvironment)
-         .collect(Collectors.toList());
-      structureCompartment.getChildren().addAll(childExecutionEnvironments);
-
-      List<GModelElement> childDeploymentSpecifications = executionEnvironment.getNestedClassifiers().stream()
-         .filter(DeploymentSpecification.class::isInstance)
-         .map(DeploymentSpecification.class::cast)
-         .map(this::createDeploymentSpecification)
-         .collect(Collectors.toList());
-      structureCompartment.getChildren().addAll(childDeploymentSpecifications);
-
-      List<GModelElement> childArtifacts = executionEnvironment.getNestedClassifiers().stream()
-         .filter(Artifact.class::isInstance)
-         .map(Artifact.class::cast)
-         .map(this::createArtifact)
-         .collect(Collectors.toList());
-      structureCompartment.getChildren().addAll(childArtifacts);
-
-      executionEnvironmentNode.getChildren().add(structureCompartment);
-      return executionEnvironmentNode;
-
-      /*
-       * List<EObject> executionEnvironmentChildren = new ArrayList<>(executionEnvironment.getOwnedElements());
-       * GNodeBuilder b = new GNodeBuilder(DeploymentTypes.EXECUTION_ENVIRONMENT)
-       * .id(toId(executionEnvironment))
-       * .layout(GConstants.Layout.VBOX)
-       * .addCssClass(CSS.NODE)
-       * .add(buildHeader(executionEnvironment))
-       * .add(createLabeledChildCompartment(executionEnvironmentChildren, executionEnvironment));
-       * applyShapeData(executionEnvironment, b);
-       * return b.build();
-       */
-   }
-
-   protected void applyShapeData(final Classifier classifier, final GNodeBuilder builder) {
-      modelState.getIndex().getNotation(classifier, Shape.class).ifPresent(shape -> {
-         if (shape.getPosition() != null) {
-            builder.position(GraphUtil.copy(shape.getPosition()));
-         }
-         if (shape.getSize() != null) {
-            builder.size(GraphUtil.copy(shape.getSize()));
-         }
-      });
-   }
-
-   protected GCompartment buildDeploymentSpecificationHeader(final DeploymentSpecification umlDeploymentSpecification) {
-      return new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER)
-         .layout("vbox")
-         .id(toId(umlDeploymentSpecification) + "_header")
-         .add(new GLabelBuilder(UmlConfig.Types.LABEL_TEXT)
-            .id(toId(umlDeploymentSpecification) + "_header_text")
-            .text("«deployment_spec»")
-            .build())
-         .add(new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER) //
-            .layout("hbox") //
-            /*
-             * .add(new GCompartmentBuilder(getType(umlDeploymentSpecification)) //
-             * .id(toId(umlDeploymentSpecification) + "_header_icon").build()) //
-             * .add(new GLabelBuilder(UmlConfig.Types.LABEL_NAME) //
-             * .id(toId(umlDeploymentSpecification) + "_header_label").text(umlDeploymentSpecification.getName()) //
-             * .build())
-             */ //
-            .build())
-         .build();
-   }
-
-   protected GCompartment buildHeader(final Node umlNode) {
-      return new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER) //
-         .layout("hbox") //
-         .id(toId(umlNode) + "_header")
-         .add(new GCompartmentBuilder(getType(umlNode)) //
-            // .id(toId(umlNode) + "_header_icon")
-            .build()) //
-         .add(new GLabelBuilder(UmlConfig.Types.LABEL_NAME) //
-            .id(toId(umlNode) + "_header_label").text(umlNode.getName()) //
-            .build()) //
-         .build();
-   }
-
-   protected GCompartment buildHeader(final Artifact umlArtifact) {
-
-      GCompartmentBuilder artifactHeader = new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER)
-         .layout(GConstants.Layout.VBOX)
-         .id(UmlIDUtil.createHeaderId(toId(umlArtifact)));
-
-      GLabel typeLabel = new GLabelBuilder(UmlConfig.Types.LABEL_NAME)
-         .id(UmlIDUtil.createHeaderLabelId(toId(umlArtifact)) + "_type_header")
-         .text("«artifact»")
-         .build();
-      artifactHeader.add(typeLabel);
-
-      GLabel artifactLabel = new GLabelBuilder(UmlConfig.Types.LABEL_NAME)
-         .id(UmlIDUtil.createHeaderLabelId(toId(umlArtifact)))
-         .text(umlArtifact.getName())
-         .build();
-      artifactHeader.add(artifactLabel);
-
-      return artifactHeader.build();
-   }
-
-   protected GCompartment buildHeader(final ExecutionEnvironment umlExecutionEnvironment) {
-      GCompartmentBuilder executionEnvironmentHeader = new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER)
-         .layout(GConstants.Layout.VBOX)
-         .id(UmlIDUtil.createHeaderId(toId(umlExecutionEnvironment)));
-
-      GLabel typeLabel = new GLabelBuilder(UmlConfig.Types.LABEL_NAME)
-         .id(UmlIDUtil.createHeaderLabelId(toId(umlExecutionEnvironment)) + "_type_header")
-         .text("«execution_environment»")
-         .build();
-      executionEnvironmentHeader.add(typeLabel);
-
-      GLabel executionEnvironmentLabel = new GLabelBuilder(UmlConfig.Types.LABEL_NAME)
-         .id(UmlIDUtil.createHeaderLabelId(toId(umlExecutionEnvironment)))
-         .text(umlExecutionEnvironment.getName())
-         .build();
-      executionEnvironmentHeader.add(executionEnvironmentLabel);
-
-      return executionEnvironmentHeader.build();
-   }
-
-   protected GCompartment buildHeader(final Device umlDevice) {
-      GCompartmentBuilder deviceHeader = new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER)
-         .layout(GConstants.Layout.VBOX)
-         .id(UmlIDUtil.createHeaderId(toId(umlDevice)));
-
-      /*
-       * GCompartment deviceIcon = new GCompartmentBuilder(getType(umlDevice))
-       * .id(UmlIDUtil.createHeaderIconId(toId(umlDevice)))
-       * .build();
-       * deviceHeader.add(deviceIcon);
-       */
-
-      GLabel typeLabel = new GLabelBuilder(UmlConfig.Types.LABEL_NAME)
-         .id(UmlIDUtil.createHeaderLabelId(toId(umlDevice)) + "_type_header")
-         .text("«device»")
-         .build();
-      deviceHeader.add(typeLabel);
-
-      GLabel deviceLabel = new GLabelBuilder(UmlConfig.Types.LABEL_NAME)
-         .id(UmlIDUtil.createHeaderLabelId(toId(umlDevice)))
-         .text(umlDevice.getName())
-         .build();
-      deviceHeader.add(deviceLabel);
-
-      return deviceHeader.build();
-   }
-
-   protected GCompartment createLabeledChildCompartment(final Collection<? extends EObject> children,
-      final Node parent) {
-      return new GCompartmentBuilder(UmlConfig.Types.COMP) //
-         .id(toId(parent) + "_childCompartment").layout(GConstants.Layout.VBOX) //
-         .layoutOptions(new GLayoutOptions() //
-            .hAlign(GConstants.HAlign.CENTER) //
-            .resizeContainer(true)) //
-         .addAll(children.stream() //
-            .map(parentFactory::create) //
-            .collect(Collectors.toList()))
-         .build();
-   }
-
-   protected GCompartment createLabeledChildCompartment(final Collection<? extends EObject> children,
-      final Artifact parent) {
-      return new GCompartmentBuilder(UmlConfig.Types.COMP) //
-         .id(toId(parent) + "_childCompartment").layout(GConstants.Layout.VBOX) //
-         .layoutOptions(new GLayoutOptions() //
-            .hAlign(GConstants.HAlign.CENTER) //
-            .resizeContainer(true)) //
-         .addAll(children.stream() //
-            .map(parentFactory::create) //
-            .collect(Collectors.toList()))
-         .build();
-   }
-
-   protected GCompartment createLabeledChildCompartment(final Collection<? extends EObject> children,
-      final Device parent) {
-      return new GCompartmentBuilder(UmlConfig.Types.COMP) //
-         .id(toId(parent) + "_childCompartment").layout(GConstants.Layout.VBOX) //
-         .layoutOptions(new GLayoutOptions() //
-            .hAlign(GConstants.HAlign.CENTER) //
-            .resizeContainer(true)) //
-         .addAll(children.stream() //
-            .map(parentFactory::create) //
-            .collect(Collectors.toList()))
-         .build();
-   }
-
-   protected GCompartment createLabeledChildCompartment(final Collection<? extends EObject> children,
-      final ExecutionEnvironment parent) {
-      return new GCompartmentBuilder(UmlConfig.Types.COMP) //
-         .id(toId(parent) + "_childCompartment").layout(GConstants.Layout.VBOX) //
-         .layoutOptions(new GLayoutOptions() //
-            .hAlign(GConstants.HAlign.CENTER) //
-            .resizeContainer(true)) //
-         .addAll(children.stream() //
-            .map(parentFactory::create) //
-            .collect(Collectors.toList()))
-         .build();
-   }
-
-   private GCompartment createStructureCompartment(final NamedElement namedElement) {
-      Map<String, Object> layoutOptions = new HashMap<>();
-      layoutOptions.put(H_ALIGN, GConstants.HAlign.LEFT);
-      layoutOptions.put(H_GRAB, true);
-      layoutOptions.put(V_GRAB, true);
-      GCompartment structCompartment = new GCompartmentBuilder(DeploymentTypes.STRUCTURE)
-         .id(toId(namedElement) + "_struct")
-         .layout(GConstants.Layout.FREEFORM)
-         .layoutOptions(layoutOptions)
-         .addCssClass("struct")
-         .build();
-      return structCompartment;
-   }
-
-   protected static String getType(final Classifier classifier) {
-      if (classifier instanceof DeploymentSpecification) {
-         return DeploymentTypes.ICON_DEPLOYMENT_SPECIFICATION;
-      }
-      if (classifier instanceof Artifact) {
-         return DeploymentTypes.ICON_ARTIFACT;
-      }
-      if (classifier instanceof ExecutionEnvironment) {
-         return DeploymentTypes.ICON_EXECUTION_ENVIRONMENT;
-      }
-      if (classifier instanceof Device) {
-         return DeploymentTypes.ICON_DEVICE;
-      }
-      if (classifier instanceof Node) {
-         return DeploymentTypes.ICON_DEPLOYMENT_NODE;
-      }
-
-      return "Classifier not found";
-   }
-
+   // TODO: check why this is NOT working!!! might be the modelserver config!!!
+   /*
+    * List<GModelElement> childExecutionEnvironments = device.getNestedClassifiers().stream()
+    * .filter(ExecutionEnvironment.class::isInstance)
+    * .map(ExecutionEnvironment.class::cast)
+    * .map(this::createExecutionEnvironment)
+    * .collect(Collectors.toList());
+    * structureCompartment.getChildren().addAll(childExecutionEnvironments);
+    * // TODO: check why this is working
+    * List<GModelElement> childDeploymentSpecifications = device.getNestedClassifiers().stream()
+    * .filter(DeploymentSpecification.class::isInstance)
+    * .map(DeploymentSpecification.class::cast)
+    * .map(this::createDeploymentSpecification)
+    * .collect(Collectors.toList());
+    * structureCompartment.getChildren().addAll(childDeploymentSpecifications);
+    * deviceNode.getChildren().add(structureCompartment);
+    * return deviceNode;
+    * }
+    * // FIXME: also creates a device node somehow!!! check later again
+    * protected GNode createExecutionEnvironment(final ExecutionEnvironment executionEnvironment) {
+    * Map<String, Object> layoutOptions = new HashMap<>();
+    * layoutOptions.put(H_ALIGN, GConstants.HAlign.CENTER);
+    * layoutOptions.put(H_GRAB, false);
+    * layoutOptions.put(V_GRAB, false);
+    * GNodeBuilder builder = new GNodeBuilder(DeploymentTypes.EXECUTION_ENVIRONMENT)
+    * .id(toId(executionEnvironment))
+    * .layout(GConstants.Layout.VBOX)
+    * .layoutOptions(layoutOptions)
+    * .add(buildHeader(executionEnvironment))
+    * .addCssClass(CSS.NODE)
+    * .addCssClass(CSS.PACKAGEABLE_NODE);
+    * applyShapeData(executionEnvironment, builder);
+    * GNode executionEnvironmentNode = builder.build();
+    * GCompartment structureCompartment = createStructureCompartment(executionEnvironment);
+    * List<GModelElement> childNodes = executionEnvironment.getNestedClassifiers().stream()
+    * .filter(Node.class::isInstance)
+    * .map(Node.class::cast)
+    * .map(this::createNode)
+    * .collect(Collectors.toList());
+    * structureCompartment.getChildren().addAll(childNodes);
+    * List<GModelElement> childDevices = executionEnvironment.getNestedClassifiers().stream()
+    * .filter(Device.class::isInstance)
+    * .map(Device.class::cast)
+    * .map(this::createDevice)
+    * .collect(Collectors.toList());
+    * structureCompartment.getChildren().addAll(childDevices);
+    * List<GModelElement> childExecutionEnvironments = executionEnvironment.getNestedClassifiers().stream()
+    * .filter(ExecutionEnvironment.class::isInstance)
+    * .map(ExecutionEnvironment.class::cast)
+    * .map(this::createExecutionEnvironment)
+    * .collect(Collectors.toList());
+    * structureCompartment.getChildren().addAll(childExecutionEnvironments);
+    * List<GModelElement> childDeploymentSpecifications = executionEnvironment.getNestedClassifiers().stream()
+    * .filter(DeploymentSpecification.class::isInstance)
+    * .map(DeploymentSpecification.class::cast)
+    * .map(this::createDeploymentSpecification)
+    * .collect(Collectors.toList());
+    * structureCompartment.getChildren().addAll(childDeploymentSpecifications);
+    * List<GModelElement> childArtifacts = executionEnvironment.getNestedClassifiers().stream()
+    * .filter(Artifact.class::isInstance)
+    * .map(Artifact.class::cast)
+    * .map(this::createArtifact)
+    * .collect(Collectors.toList());
+    * structureCompartment.getChildren().addAll(childArtifacts);
+    * executionEnvironmentNode.getChildren().add(structureCompartment);
+    * return executionEnvironmentNode;
+    * /*
+    * List<EObject> executionEnvironmentChildren = new ArrayList<>(executionEnvironment.getOwnedElements());
+    * GNodeBuilder b = new GNodeBuilder(DeploymentTypes.EXECUTION_ENVIRONMENT)
+    * .id(toId(executionEnvironment))
+    * .layout(GConstants.Layout.VBOX)
+    * .addCssClass(CSS.NODE)
+    * .add(buildHeader(executionEnvironment))
+    * .add(createLabeledChildCompartment(executionEnvironmentChildren, executionEnvironment));
+    * applyShapeData(executionEnvironment, b);
+    * return b.build();
+    * }
+    * protected void applyShapeData(final Classifier classifier, final GNodeBuilder builder) {
+    * modelState.getIndex().getNotation(classifier, Shape.class).ifPresent(shape -> {
+    * if (shape.getPosition() != null) {
+    * builder.position(GraphUtil.copy(shape.getPosition()));
+    * }
+    * if (shape.getSize() != null) {
+    * builder.size(GraphUtil.copy(shape.getSize()));
+    * }
+    * });
+    * }
+    * protected GCompartment buildDeploymentSpecificationHeader(final DeploymentSpecification
+    * umlDeploymentSpecification) {
+    * return new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER)
+    * .layout("vbox")
+    * .id(toId(umlDeploymentSpecification) + "_header")
+    * .add(new GLabelBuilder(UmlConfig.Types.LABEL_TEXT)
+    * .id(toId(umlDeploymentSpecification) + "_header_text")
+    * .text("«deployment_spec»")
+    * .build())
+    * .add(new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER) //
+    * .layout("hbox") //
+    * /*
+    * .add(new GCompartmentBuilder(getType(umlDeploymentSpecification)) //
+    * .id(toId(umlDeploymentSpecification) + "_header_icon").build()) //
+    * .add(new GLabelBuilder(UmlConfig.Types.LABEL_NAME) //
+    * .id(toId(umlDeploymentSpecification) + "_header_label").text(umlDeploymentSpecification.getName()) //
+    * .build())
+    * .build())
+    * .build();
+    * }
+    * protected GCompartment buildHeader(final Node umlNode) {
+    * return new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER) //
+    * .layout("hbox") //
+    * .id(toId(umlNode) + "_header")
+    * .add(new GCompartmentBuilder(getType(umlNode)) //
+    * // .id(toId(umlNode) + "_header_icon")
+    * .build()) //
+    * .add(new GLabelBuilder(UmlConfig.Types.LABEL_NAME) //
+    * .id(toId(umlNode) + "_header_label").text(umlNode.getName()) //
+    * .build()) //
+    * .build();
+    * }
+    * protected GCompartment buildHeader(final Artifact umlArtifact) {
+    * GCompartmentBuilder artifactHeader = new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER)
+    * .layout(GConstants.Layout.VBOX)
+    * .id(UmlIDUtil.createHeaderId(toId(umlArtifact)));
+    * GLabel typeLabel = new GLabelBuilder(UmlConfig.Types.LABEL_NAME)
+    * .id(UmlIDUtil.createHeaderLabelId(toId(umlArtifact)) + "_type_header")
+    * .text("«artifact»")
+    * .build();
+    * artifactHeader.add(typeLabel);
+    * GLabel artifactLabel = new GLabelBuilder(UmlConfig.Types.LABEL_NAME)
+    * .id(UmlIDUtil.createHeaderLabelId(toId(umlArtifact)))
+    * .text(umlArtifact.getName())
+    * .build();
+    * artifactHeader.add(artifactLabel);
+    * return artifactHeader.build();
+    * }
+    * protected GCompartment buildHeader(final ExecutionEnvironment umlExecutionEnvironment) {
+    * GCompartmentBuilder executionEnvironmentHeader = new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER)
+    * .layout(GConstants.Layout.VBOX)
+    * .id(UmlIDUtil.createHeaderId(toId(umlExecutionEnvironment)));
+    * GLabel typeLabel = new GLabelBuilder(UmlConfig.Types.LABEL_NAME)
+    * .id(UmlIDUtil.createHeaderLabelId(toId(umlExecutionEnvironment)) + "_type_header")
+    * .text("«execution_environment»")
+    * .build();
+    * executionEnvironmentHeader.add(typeLabel);
+    * GLabel executionEnvironmentLabel = new GLabelBuilder(UmlConfig.Types.LABEL_NAME)
+    * .id(UmlIDUtil.createHeaderLabelId(toId(umlExecutionEnvironment)))
+    * .text(umlExecutionEnvironment.getName())
+    * .build();
+    * executionEnvironmentHeader.add(executionEnvironmentLabel);
+    * return executionEnvironmentHeader.build();
+    * }
+    * protected GCompartment buildHeader(final Device umlDevice) {
+    * GCompartmentBuilder deviceHeader = new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER)
+    * .layout(GConstants.Layout.VBOX)
+    * .id(UmlIDUtil.createHeaderId(toId(umlDevice)));
+    * /*
+    * GCompartment deviceIcon = new GCompartmentBuilder(getType(umlDevice))
+    * .id(UmlIDUtil.createHeaderIconId(toId(umlDevice)))
+    * .build();
+    * deviceHeader.add(deviceIcon);
+    * GLabel typeLabel = new GLabelBuilder(UmlConfig.Types.LABEL_NAME)
+    * .id(UmlIDUtil.createHeaderLabelId(toId(umlDevice)) + "_type_header")
+    * .text("«device»")
+    * .build();
+    * deviceHeader.add(typeLabel);
+    * GLabel deviceLabel = new GLabelBuilder(UmlConfig.Types.LABEL_NAME)
+    * .id(UmlIDUtil.createHeaderLabelId(toId(umlDevice)))
+    * .text(umlDevice.getName())
+    * .build();
+    * deviceHeader.add(deviceLabel);
+    * return deviceHeader.build();
+    * }
+    * protected GCompartment createLabeledChildCompartment(final Collection<? extends EObject> children,
+    * final Node parent) {
+    * return new GCompartmentBuilder(UmlConfig.Types.COMP) //
+    * .id(toId(parent) + "_childCompartment").layout(GConstants.Layout.VBOX) //
+    * .layoutOptions(new GLayoutOptions() //
+    * .hAlign(GConstants.HAlign.CENTER) //
+    * .resizeContainer(true)) //
+    * .addAll(children.stream() //
+    * .map(parentFactory::create) //
+    * .collect(Collectors.toList()))
+    * .build();
+    * }
+    * protected GCompartment createLabeledChildCompartment(final Collection<? extends EObject> children,
+    * final Artifact parent) {
+    * return new GCompartmentBuilder(UmlConfig.Types.COMP) //
+    * .id(toId(parent) + "_childCompartment").layout(GConstants.Layout.VBOX) //
+    * .layoutOptions(new GLayoutOptions() //
+    * .hAlign(GConstants.HAlign.CENTER) //
+    * .resizeContainer(true)) //
+    * .addAll(children.stream() //
+    * .map(parentFactory::create) //
+    * .collect(Collectors.toList()))
+    * .build();
+    * }
+    * protected GCompartment createLabeledChildCompartment(final Collection<? extends EObject> children,
+    * final Device parent) {
+    * return new GCompartmentBuilder(UmlConfig.Types.COMP) //
+    * .id(toId(parent) + "_childCompartment").layout(GConstants.Layout.VBOX) //
+    * .layoutOptions(new GLayoutOptions() //
+    * .hAlign(GConstants.HAlign.CENTER) //
+    * .resizeContainer(true)) //
+    * .addAll(children.stream() //
+    * .map(parentFactory::create) //
+    * .collect(Collectors.toList()))
+    * .build();
+    * }
+    * protected GCompartment createLabeledChildCompartment(final Collection<? extends EObject> children,
+    * final ExecutionEnvironment parent) {
+    * return new GCompartmentBuilder(UmlConfig.Types.COMP) //
+    * .id(toId(parent) + "_childCompartment").layout(GConstants.Layout.VBOX) //
+    * .layoutOptions(new GLayoutOptions() //
+    * .hAlign(GConstants.HAlign.CENTER) //
+    * .resizeContainer(true)) //
+    * .addAll(children.stream() //
+    * .map(parentFactory::create) //
+    * .collect(Collectors.toList()))
+    * .build();
+    * }
+    * private GCompartment createStructureCompartment(final NamedElement namedElement) {
+    * Map<String, Object> layoutOptions = new HashMap<>();
+    * layoutOptions.put(H_ALIGN, GConstants.HAlign.LEFT);
+    * layoutOptions.put(H_GRAB, true);
+    * layoutOptions.put(V_GRAB, true);
+    * GCompartment structCompartment = new GCompartmentBuilder(DeploymentTypes.STRUCTURE)
+    * .id(toId(namedElement) + "_struct")
+    * .layout(GConstants.Layout.FREEFORM)
+    * .layoutOptions(layoutOptions)
+    * .addCssClass("struct")
+    * .build();
+    * return structCompartment;
+    * }
+    * protected static String getType(final Classifier classifier) {
+    * if (classifier instanceof DeploymentSpecification) {
+    * return DeploymentTypes.ICON_DEPLOYMENT_SPECIFICATION;
+    * }
+    * if (classifier instanceof Artifact) {
+    * return DeploymentTypes.ICON_ARTIFACT;
+    * }
+    * if (classifier instanceof ExecutionEnvironment) {
+    * return DeploymentTypes.ICON_EXECUTION_ENVIRONMENT;
+    * }
+    * if (classifier instanceof Device) {
+    * return DeploymentTypes.ICON_DEVICE;
+    * }
+    * if (classifier instanceof Node) {
+    * return DeploymentTypes.ICON_DEPLOYMENT_NODE;
+    * }
+    * return "Classifier not found";
+    * }
+    */
 }

@@ -10,16 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.activitydiagram.partition;
 
-import org.eclipse.emf.common.command.Command;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
-import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
-
-import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlSemanticCommandContribution;
-
-public class RemovePartitionCommandContribution extends UmlSemanticCommandContribution {
+public class RemovePartitionCommandContribution { /*-
 
    public static final String TYPE = "removePartition";
 
@@ -40,5 +31,5 @@ public class RemovePartitionCommandContribution extends UmlSemanticCommandContri
 
       return new RemovePartitionCompoundCommand(domain, modelUri, parentSemanticUri, semanticUri);
    }
-
+   */
 }

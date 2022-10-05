@@ -10,14 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.activitydiagram.comment;
 
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Comment;
-
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-
-public class RemoveCommentCommand extends UmlSemanticElementCommand {
+public class RemoveCommentCommand { /*-
 
    private final Comment comment;
 
@@ -30,5 +23,5 @@ public class RemoveCommentCommand extends UmlSemanticElementCommand {
    protected void doExecute() {
       comment.getOwner().getOwnedComments().remove(comment);
    }
-
+   */
 }

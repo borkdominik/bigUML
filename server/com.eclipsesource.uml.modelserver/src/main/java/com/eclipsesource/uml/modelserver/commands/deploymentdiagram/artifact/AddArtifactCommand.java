@@ -1,12 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.deploymentdiagram.artifact;
 
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.*;
-
-public class AddArtifactCommand extends UmlSemanticElementCommand {
+public class AddArtifactCommand { /*- {
 
    protected final Artifact newArtifact;
    protected String parentSemanticUriFragment;
@@ -37,4 +31,5 @@ public class AddArtifactCommand extends UmlSemanticElementCommand {
    public Artifact getNewArtifact() {
       return newArtifact;
    }
+      */
 }

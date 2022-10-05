@@ -1,12 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.deploymentdiagram.artifact;
 
-import com.eclipsesource.uml.modelserver.commands.commons.notation.UmlNotationElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlNotationCommandUtil;
-import org.eclipse.glsp.server.emf.model.notation.Shape;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-
-public class RemoveArtifactShapeCommand extends UmlNotationElementCommand {
+public class RemoveArtifactShapeCommand { /*- {
 
     protected final Shape shapeToRemove;
 
@@ -19,4 +13,5 @@ public class RemoveArtifactShapeCommand extends UmlNotationElementCommand {
     protected void doExecute() {
         umlDiagram.getElements().remove(shapeToRemove);
     }
+       */
 }

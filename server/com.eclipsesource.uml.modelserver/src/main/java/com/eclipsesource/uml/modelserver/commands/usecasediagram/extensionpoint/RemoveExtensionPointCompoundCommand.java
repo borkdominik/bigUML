@@ -1,15 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.usecasediagram.extensionpoint;
 
-import com.eclipsesource.uml.modelserver.commands.usecasediagram.extendedge.RemoveExtendCompoundCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlNotationCommandUtil;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-import org.eclipse.glsp.server.emf.model.notation.Edge;
-import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.*;
-
-public class RemoveExtensionPointCompoundCommand extends CompoundCommand {
+public class RemoveExtensionPointCompoundCommand { /*-{
 
     public RemoveExtensionPointCompoundCommand(final EditingDomain domain, final URI modelUri,
         final String semanticUriFragment) {
@@ -34,5 +25,5 @@ public class RemoveExtensionPointCompoundCommand extends CompoundCommand {
         }
 
         this.append(new RemoveExtensionPointCommand(domain, modelUri, semanticUriFragment));
-    }
+    }   */
 }

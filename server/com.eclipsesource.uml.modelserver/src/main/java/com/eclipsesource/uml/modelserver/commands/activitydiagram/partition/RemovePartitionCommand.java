@@ -10,22 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.activitydiagram.partition;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Activity;
-import org.eclipse.uml2.uml.ActivityGroup;
-import org.eclipse.uml2.uml.ActivityNode;
-import org.eclipse.uml2.uml.ActivityPartition;
-import org.eclipse.uml2.uml.Element;
-import org.eclipse.uml2.uml.InterruptibleActivityRegion;
-
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-
-public class RemovePartitionCommand extends UmlSemanticElementCommand {
+public class RemovePartitionCommand { /*-
 
    private final ActivityGroup group;
 
@@ -57,5 +42,5 @@ public class RemovePartitionCommand extends UmlSemanticElementCommand {
          ((ActivityPartition) parent).getSubpartitions().remove(group);
       }
    }
-
+   */
 }

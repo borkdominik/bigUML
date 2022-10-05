@@ -10,17 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.usecase_diagram.gmodel;
 
-import org.eclipse.glsp.graph.GLabel;
-import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
-import org.eclipse.uml2.uml.ExtensionPoint;
-import org.eclipse.uml2.uml.NamedElement;
-import org.eclipse.uml2.uml.UseCase;
-
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.uml.usecase_diagram.constants.UseCaseTypes;
-import com.eclipsesource.uml.glsp.utils.UmlConfig;
-
-public class UseCaseDiagramLabelFactory extends UseCaseAbstractGModelFactory<NamedElement, GLabel> {
+public class UseCaseDiagramLabelFactory { /*- {
 
    public UseCaseDiagramLabelFactory(final UmlModelState modelState) {
       super(modelState);
@@ -50,5 +40,5 @@ public class UseCaseDiagramLabelFactory extends UseCaseAbstractGModelFactory<Nam
          .text(label)
          .build();
    }
-
+   */
 }

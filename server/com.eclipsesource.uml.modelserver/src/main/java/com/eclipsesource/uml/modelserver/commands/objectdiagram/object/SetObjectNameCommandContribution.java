@@ -1,15 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.objectdiagram.object;
 
-import com.eclipsesource.uml.modelserver.commands.classdiagram.clazz.SetClassNameCommand;
-import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlSemanticCommandContribution;
-import org.eclipse.emf.common.command.Command;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
-import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
-
-public class SetObjectNameCommandContribution extends UmlSemanticCommandContribution {
+public class SetObjectNameCommandContribution { /*-{
 
     public static final String TYPE = "setObjectName";
     public static final String NEW_NAME = "newName";
@@ -29,5 +20,5 @@ public class SetObjectNameCommandContribution extends UmlSemanticCommandContribu
         String newName = commmand.getProperties().get(NEW_NAME);
 
         return new SetClassNameCommand(domain, modelUri, semanticUriFragment, newName);
-    }
+    }   */
 }

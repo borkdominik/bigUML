@@ -13,6 +13,7 @@ package com.eclipsesource.uml.modelserver.commands.communication.message;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emfcloud.modelserver.glsp.notation.commands.RemoveNotationElementCommand;
 
 public class RemoveMessageCompoundCommand extends CompoundCommand {
 
@@ -20,7 +21,7 @@ public class RemoveMessageCompoundCommand extends CompoundCommand {
       final String semanticUriFragment) {
 
       this.append(new RemoveMessageCommand(domain, modelUri, semanticUriFragment));
-      this.append(new RemoveMessageEdgeCommand(domain, modelUri, semanticUriFragment));
+      this.append(new RemoveNotationElementCommand(domain, modelUri, semanticUriFragment));
    }
 
 }

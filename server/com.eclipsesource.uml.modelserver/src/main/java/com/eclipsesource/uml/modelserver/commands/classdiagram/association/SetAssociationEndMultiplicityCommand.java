@@ -10,14 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.classdiagram.association;
 
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Property;
-
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-
-public class SetAssociationEndMultiplicityCommand extends UmlSemanticElementCommand {
+public class SetAssociationEndMultiplicityCommand { /*- {
 
    protected String semanticUriFragment;
    protected int newLowerBound;
@@ -37,5 +30,5 @@ public class SetAssociationEndMultiplicityCommand extends UmlSemanticElementComm
       property.setLower(newLowerBound);
       property.setUpper(newUpperBound);
    }
-
+   */
 }

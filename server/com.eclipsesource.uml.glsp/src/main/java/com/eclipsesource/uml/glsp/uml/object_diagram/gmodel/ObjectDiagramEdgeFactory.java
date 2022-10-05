@@ -1,23 +1,6 @@
 package com.eclipsesource.uml.glsp.uml.object_diagram.gmodel;
 
-import java.util.ArrayList;
-
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.glsp.graph.GEdge;
-import org.eclipse.glsp.graph.GPoint;
-import org.eclipse.glsp.graph.builder.impl.GEdgeBuilder;
-import org.eclipse.glsp.graph.util.GConstants;
-import org.eclipse.glsp.graph.util.GraphUtil;
-import org.eclipse.uml2.uml.Association;
-import org.eclipse.uml2.uml.Property;
-import org.eclipse.uml2.uml.Relationship;
-
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.uml.object_diagram.constants.ObjectTypes;
-import com.eclipsesource.uml.glsp.utils.UmlConfig.CSS;
-import org.eclipse.glsp.server.emf.model.notation.Edge;
-
-public class ObjectDiagramEdgeFactory extends ObjectAbstractGModelFactory<Relationship, GEdge> {
+public class ObjectDiagramEdgeFactory { /*-
 
    public ObjectDiagramEdgeFactory(final UmlModelState modelState) {
       super(modelState);
@@ -53,4 +36,5 @@ public class ObjectDiagramEdgeFactory extends ObjectAbstractGModelFactory<Relati
       });
       return builder.build();
    }
+   */
 }

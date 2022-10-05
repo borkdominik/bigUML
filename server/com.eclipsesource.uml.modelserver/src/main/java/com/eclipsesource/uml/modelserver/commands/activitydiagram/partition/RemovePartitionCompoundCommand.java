@@ -10,15 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.activitydiagram.partition;
 
-import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-
-import com.eclipsesource.uml.modelserver.commands.activitydiagram.general.RemoveActivityNodeCompoundCommand;
-import com.eclipsesource.uml.modelserver.commands.commons.notation.RemoveNotationElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-
-public class RemovePartitionCompoundCommand extends CompoundCommand {
+public class RemovePartitionCompoundCommand { /*-
 
    public RemovePartitionCompoundCommand(final EditingDomain domain, final URI modelUri, final String parentUri,
       final String partitionUri) {
@@ -42,5 +34,5 @@ public class RemovePartitionCompoundCommand extends CompoundCommand {
       this.append(new RemoveNotationElementCommand(domain, modelUri, partitionUri));
 
    }
-
+   */
 }

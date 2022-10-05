@@ -1,33 +1,6 @@
 package com.eclipsesource.uml.glsp.uml.object_diagram.gmodel;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.eclipse.glsp.graph.GCompartment;
-import org.eclipse.glsp.graph.GLabel;
-import org.eclipse.glsp.graph.GModelElement;
-import org.eclipse.glsp.graph.GNode;
-import org.eclipse.glsp.graph.builder.impl.GCompartmentBuilder;
-import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
-import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
-import org.eclipse.glsp.graph.builder.impl.GNodeBuilder;
-import org.eclipse.glsp.graph.util.GConstants;
-import org.eclipse.glsp.graph.util.GraphUtil;
-import org.eclipse.uml2.uml.Class;
-import org.eclipse.uml2.uml.Classifier;
-import org.eclipse.uml2.uml.Element;
-import org.eclipse.uml2.uml.Property;
-
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.uml.object_diagram.constants.ObjectCSS;
-import com.eclipsesource.uml.glsp.uml.object_diagram.constants.ObjectTypes;
-import com.eclipsesource.uml.glsp.utils.UmlConfig;
-import com.eclipsesource.uml.glsp.utils.UmlConfig.CSS;
-import com.eclipsesource.uml.glsp.utils.UmlIDUtil;
-import org.eclipse.glsp.server.emf.model.notation.Shape;
-
-public class ObjectDiagramNodeFactory extends ObjectAbstractGModelFactory<Classifier, GNode> {
+public class ObjectDiagramNodeFactory { /*-
 
    private final ObjectDiagramLabelFactory labelFactory;
 
@@ -90,16 +63,16 @@ public class ObjectDiagramNodeFactory extends ObjectAbstractGModelFactory<Classi
        * GCompartment objectHeaderIcon = new GCompartmentBuilder(getType(umlObject))
        * .id(UmlIDUtil.createHeaderIconId(toId(umlObject))).build();
        * objectHeaderBuilder.add(objectHeaderIcon);
-       */
+       *
 
-      GLabel objectHeaderLabel = new GLabelBuilder(UmlConfig.Types.LABEL_NAME)
-         .id(UmlIDUtil.createHeaderLabelId(toId(umlObject)))
-         .addCssClass(ObjectCSS.UNDERLINE)
-         .text(umlObject.getName()).build();
+   GLabel objectHeaderLabel = new GLabelBuilder(UmlConfig.Types.LABEL_NAME)
+      .id(UmlIDUtil.createHeaderLabelId(toId(umlObject)))
+      .addCssClass(ObjectCSS.UNDERLINE)
+      .text(umlObject.getName()).build();
 
-      objectHeaderBuilder.add(objectHeaderLabel);
+   objectHeaderBuilder.add(objectHeaderLabel);
 
-      return objectHeaderBuilder.build();
+   return objectHeaderBuilder.build();
    }
 
    protected static String getType(final Classifier classifier) {
@@ -127,4 +100,5 @@ public class ObjectDiagramNodeFactory extends ObjectAbstractGModelFactory<Classi
 
       return objectAttributeBuilder.build();
    }
+   */
 }

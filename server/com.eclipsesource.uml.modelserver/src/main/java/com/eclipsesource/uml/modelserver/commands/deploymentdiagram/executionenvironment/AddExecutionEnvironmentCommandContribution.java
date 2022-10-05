@@ -1,19 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.deploymentdiagram.executionenvironment;
 
-import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlCompoundCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlNotationCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlSemanticCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.util.UmlNotationCommandUtil;
-import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
-import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
-import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
-import org.eclipse.glsp.graph.GPoint;
-
-public class AddExecutionEnvironmentCommandContribution extends UmlCompoundCommandContribution {
+public class AddExecutionEnvironmentCommandContribution { /*-{
 
    public static final String TYPE = "addExecutionEnvironmentContributuion";
    public static final String PARENT_SEMANTIC_URI_FRAGMENT = "semanticProxyUri";
@@ -43,5 +30,5 @@ public class AddExecutionEnvironmentCommandContribution extends UmlCompoundComma
       return new AddExecutionEnvironmentCompoundCommand(domain, modelUri, executionEnvironmentPosition,
             parentSemanticUriFragment);
    }
-
+   */
 }

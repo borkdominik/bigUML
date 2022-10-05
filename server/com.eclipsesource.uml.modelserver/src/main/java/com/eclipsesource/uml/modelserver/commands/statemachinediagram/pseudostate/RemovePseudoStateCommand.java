@@ -10,16 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.statemachinediagram.pseudostate;
 
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.*;
-
-import java.util.List;
-
-public class RemovePseudoStateCommand extends UmlSemanticElementCommand {
+public class RemovePseudoStateCommand { /*- {
 
    protected final String parentSemanticUriFragment;
    protected final String semanticUriFragment;
@@ -52,6 +43,6 @@ public class RemovePseudoStateCommand extends UmlSemanticElementCommand {
          Region parentRegion = UmlSemanticCommandUtil.getElement(umlModel, parentSemanticUriFragment, Region.class);
          parentRegion.getSubvertices().remove(pseudostateToRemove);
       }
-   }
+   }   */
 
 }

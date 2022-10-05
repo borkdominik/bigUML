@@ -10,13 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.statemachinediagram.statemachine;
 
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.StateMachine;
-
-public class SetStateMachineNameCommand extends UmlSemanticElementCommand {
+public class SetStateMachineNameCommand { /*- {
 
    protected String semanticUriFragment;
    protected String newName;
@@ -34,5 +28,5 @@ public class SetStateMachineNameCommand extends UmlSemanticElementCommand {
          StateMachine.class);
       stateMachineToRename.setName(newName);
    }
-
+   */
 }

@@ -1,12 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.deploymentdiagram.deploymentspecification;
 
-import com.eclipsesource.uml.modelserver.commands.commons.notation.UmlNotationElementCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import com.eclipsesource.uml.modelserver.commands.util.UmlNotationCommandUtil;
-import org.eclipse.glsp.server.emf.model.notation.Shape;
-
-public class RemoveDeploymentSpecificationShapeCommand extends UmlNotationElementCommand {
+public class RemoveDeploymentSpecificationShapeCommand { /*- {
 
     protected final Shape shapeToRemove;
 
@@ -19,5 +13,5 @@ public class RemoveDeploymentSpecificationShapeCommand extends UmlNotationElemen
     @Override
     protected void doExecute() {
         umlDiagram.getElements().remove(shapeToRemove);
-    }
+    }   */
 }

@@ -1,30 +1,6 @@
 package com.eclipsesource.uml.glsp.uml.statemachine_diagram.gmodel;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.eclipse.glsp.graph.GEdge;
-import org.eclipse.glsp.graph.GLabel;
-import org.eclipse.glsp.graph.GPoint;
-import org.eclipse.glsp.graph.builder.impl.GEdgeBuilder;
-import org.eclipse.glsp.graph.builder.impl.GEdgePlacementBuilder;
-import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
-import org.eclipse.glsp.graph.util.GConstants;
-import org.eclipse.glsp.graph.util.GraphUtil;
-import org.eclipse.uml2.uml.Behavior;
-import org.eclipse.uml2.uml.Constraint;
-import org.eclipse.uml2.uml.Transition;
-import org.eclipse.uml2.uml.Trigger;
-import org.eclipse.uml2.uml.Vertex;
-
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.uml.statemachine_diagram.StateMachineIdUtil;
-import com.eclipsesource.uml.glsp.uml.statemachine_diagram.constants.StateMachineTypes;
-import com.eclipsesource.uml.glsp.utils.UmlConfig.CSS;
-import com.eclipsesource.uml.glsp.utils.UmlIDUtil;
-import org.eclipse.glsp.server.emf.model.notation.Edge;
-
-public class StateMachineDiagramEdgeFactory extends StateMachineAbstractGModelFactory<Transition, GEdge> {
+public class StateMachineDiagramEdgeFactory { /*-
 
    public StateMachineDiagramEdgeFactory(final UmlModelState modelState) {
       super(modelState);
@@ -106,4 +82,5 @@ public class StateMachineDiagramEdgeFactory extends StateMachineAbstractGModelFa
          .id(id) //
          .text(name).build();
    }
+   */
 }

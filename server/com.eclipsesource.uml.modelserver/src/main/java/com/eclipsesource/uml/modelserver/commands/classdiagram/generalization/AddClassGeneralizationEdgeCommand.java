@@ -1,17 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.classdiagram.generalization;
 
-import com.eclipsesource.uml.modelserver.commands.commons.notation.UmlNotationElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlNotationCommandUtil;
-import org.eclipse.glsp.server.emf.model.notation.Edge;
-import com.eclipsesource.uml.modelserver.unotation.SemanticProxy;
-import com.eclipsesource.uml.modelserver.unotation.UnotationFactory;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Generalization;
-
-import java.util.function.Supplier;
-
-public class AddClassGeneralizationEdgeCommand extends UmlNotationElementCommand {
+public class AddClassGeneralizationEdgeCommand { /*- {
 
    protected String semanticProxyUri;
    protected Supplier<Generalization> generalizationSupplier;
@@ -46,4 +35,5 @@ public class AddClassGeneralizationEdgeCommand extends UmlNotationElementCommand
       newEdge.setSemanticElement(proxy);
       umlDiagram.getElements().add(newEdge);
    }
+      */
 }

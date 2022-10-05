@@ -10,12 +10,11 @@
  */
 package com.eclipsesource.uml.modelserver.unotation;
 
-import notation.NotationPackage;
-
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.glsp.server.emf.model.notation.NotationPackage;
 
 /**
  * <!-- begin-user-doc -->

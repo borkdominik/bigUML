@@ -10,15 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.statemachinediagram.state;
 
-import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlSemanticCommandContribution;
-import org.eclipse.emf.common.command.Command;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
-import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
-
-public class SetStateNameCommandContribution extends UmlSemanticCommandContribution {
+public class SetStateNameCommandContribution { /*-{
 
    public static final String TYPE = "setStateName";
    public static final String NEW_NAME = "newName";
@@ -40,5 +32,5 @@ public class SetStateNameCommandContribution extends UmlSemanticCommandContribut
 
       return new SetStateNameCommand(domain, modelUri, semanticUriFragment, newName);
    }
-
+   */
 }

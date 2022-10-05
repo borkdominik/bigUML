@@ -1,14 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.classdiagram.enumeration;
 
-import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlSemanticCommandContribution;
-import org.eclipse.emf.common.command.Command;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
-import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
-
-public class SetEnumerationNameCommandContribution extends UmlSemanticCommandContribution {
+public class SetEnumerationNameCommandContribution { /*-{
 
    public static final String TYPE = "setEnumerationName";
    public static final String NEW_NAME = "newName";
@@ -28,4 +20,5 @@ public class SetEnumerationNameCommandContribution extends UmlSemanticCommandCon
       String newName = command.getProperties().get(NEW_NAME);
       return new SetEnumerationNameCommand(domain, modelUri, semanticUriFragment, newName);
    }
+      */
 }

@@ -10,15 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.activitydiagram.action;
 
-import java.util.function.Supplier;
-
-import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.glsp.graph.GPoint;
-import org.eclipse.uml2.uml.Action;
-
-public class AddActionCompoundCommand extends CompoundCommand {
+public class AddActionCompoundCommand { /*-
 
    public AddActionCompoundCommand(final EditingDomain domain, final URI modelUri, final GPoint position,
       final String parentUri, final String clazzName) {
@@ -29,5 +21,5 @@ public class AddActionCompoundCommand extends CompoundCommand {
       Supplier<Action> semanticResultSupplier = command::getNewAction;
       this.append(new AddActionShapeCommand(domain, modelUri, position, semanticResultSupplier));
    }
-
+   */
 }

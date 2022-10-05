@@ -1,14 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.deploymentdiagram.deploymentedge;
 
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Deployment;
-import org.eclipse.uml2.uml.Node;
-
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-
-public class RemoveDeploymentCommand extends UmlSemanticElementCommand {
+public class RemoveDeploymentCommand { /*- {
 
     protected final String semanticUriFragment;
     protected final String parentUriFragment;
@@ -28,4 +20,5 @@ public class RemoveDeploymentCommand extends UmlSemanticElementCommand {
                 Node.class);
         parent.getDeployments().remove(deploymentToRemove);
     }
+       */
 }

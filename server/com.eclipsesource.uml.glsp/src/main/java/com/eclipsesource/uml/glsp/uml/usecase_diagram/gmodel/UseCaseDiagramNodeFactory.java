@@ -10,47 +10,13 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.usecase_diagram.gmodel;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.glsp.graph.GCompartment;
-import org.eclipse.glsp.graph.GDimension;
-import org.eclipse.glsp.graph.GLabel;
-import org.eclipse.glsp.graph.GModelElement;
-import org.eclipse.glsp.graph.GNode;
-import org.eclipse.glsp.graph.builder.impl.GCompartmentBuilder;
-import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
-import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
-import org.eclipse.glsp.graph.builder.impl.GNodeBuilder;
-import org.eclipse.glsp.graph.util.GConstants;
-import org.eclipse.glsp.graph.util.GraphUtil;
-import org.eclipse.uml2.uml.Actor;
-import org.eclipse.uml2.uml.Classifier;
-import org.eclipse.uml2.uml.Component;
-import org.eclipse.uml2.uml.Element;
-import org.eclipse.uml2.uml.NamedElement;
-import org.eclipse.uml2.uml.Package;
-import org.eclipse.uml2.uml.PackageableElement;
-import org.eclipse.uml2.uml.UseCase;
-
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.uml.usecase_diagram.constants.UseCaseTypes;
-import com.eclipsesource.uml.glsp.utils.UmlConfig;
-import com.eclipsesource.uml.glsp.utils.UmlConfig.CSS;
-import com.eclipsesource.uml.glsp.utils.UmlIDUtil;
-import org.eclipse.glsp.server.emf.model.notation.Shape;
-
 /**
  * The ClassifierNodeFactory is responsible for creating GNode elements (Elements in the SVG representation)
  * for all Classifiers, which most of the "boxes" in the diagram belong to.
  * In here, you can find methods that are responsible for the display instruction that the client receives for each
  * Model element.
  */
-public class UseCaseDiagramNodeFactory extends UseCaseAbstractGModelFactory<PackageableElement, GNode> {
+public class UseCaseDiagramNodeFactory { /*-{
 
    private final UseCaseDiagramLabelFactory labelFactory;
 
@@ -68,7 +34,7 @@ public class UseCaseDiagramNodeFactory extends UseCaseAbstractGModelFactory<Pack
     * <p>
     * Special Notice for Use Case diagram: Comments are not Classifiers, thus the specific create method below must be
     * called directly.
-    */
+    *
    @Override
    public GNode create(final PackageableElement classifier) {
       if (classifier instanceof Package) {
@@ -93,7 +59,7 @@ public class UseCaseDiagramNodeFactory extends UseCaseAbstractGModelFactory<Pack
     *
     * @param umlComponent
     * @return The GNode that can be added to the graph in the ModelFactory.
-    */
+    *
    protected GNode createComponent(final Component umlComponent) {
       Map<String, Object> layoutOptions = new HashMap<>();
       layoutOptions.put(H_ALIGN, GConstants.HAlign.CENTER);
@@ -130,7 +96,7 @@ public class UseCaseDiagramNodeFactory extends UseCaseAbstractGModelFactory<Pack
     * This also builds the packagedElements (in this case UseCases, Actors and Components) and the owned comments.
     *
     * @return The GNode that can be added to the graph in the ModelFactory.
-    */
+    *
    protected GNode createPackage(final Package umlPackage) {
       Map<String, Object> layoutOptions = new HashMap<>();
       layoutOptions.put(H_ALIGN, GConstants.HAlign.CENTER);
@@ -199,7 +165,7 @@ public class UseCaseDiagramNodeFactory extends UseCaseAbstractGModelFactory<Pack
     *
     * @param umlUseCase
     * @return The GNode that can be added to the graph in the ModelFactory.
-    */
+    *
    protected GNode createUseCase(final UseCase umlUseCase) {
       GNodeBuilder b = new GNodeBuilder(UseCaseTypes.USECASE) //
          .id(toId(umlUseCase)) //
@@ -222,7 +188,7 @@ public class UseCaseDiagramNodeFactory extends UseCaseAbstractGModelFactory<Pack
     *
     * @param umlActor
     * @return The GNode that can be added to the graph in the ModelFactory.
-    */
+    *
    protected GNode createActor(final Actor umlActor) {
       GNodeBuilder b = new GNodeBuilder(UseCaseTypes.ACTOR) //
          .id(toId(umlActor)) //
@@ -269,7 +235,7 @@ public class UseCaseDiagramNodeFactory extends UseCaseAbstractGModelFactory<Pack
     *
     * @param classifier
     * @return
-    */
+    *
    protected GCompartment buildHeaderWithoutIcon(final NamedElement classifier) {
       GCompartmentBuilder classHeaderBuilder = new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER);
 
@@ -302,7 +268,7 @@ public class UseCaseDiagramNodeFactory extends UseCaseAbstractGModelFactory<Pack
     * @param childNodes
     * @param parent
     * @return
-    */
+    *
    protected GCompartment buildPackageOrComponentChildCompartment(final Collection<Element> childNodes,
       final EObject parent) {
       GCompartmentBuilder packageElementsBuilder = new GCompartmentBuilder(UmlConfig.Types.COMP)
@@ -319,7 +285,7 @@ public class UseCaseDiagramNodeFactory extends UseCaseAbstractGModelFactory<Pack
        * .filter(el -> el instanceof Comment)
        * .map(node -> this.createComment((Comment) node))
        * .collect(Collectors.toList()));
-       */
+       *
 
       packageElementsBuilder.addAll(childNodeGModelElements);
 
@@ -332,7 +298,7 @@ public class UseCaseDiagramNodeFactory extends UseCaseAbstractGModelFactory<Pack
     *
     * @param parent
     * @return
-    */
+    *
    protected GCompartment buildUsecaseExtensionPointCompartment(final UseCase parent) {
       GCompartmentBuilder extensionPointBuilder = new GCompartmentBuilder(UmlConfig.Types.COMP)
          .id(UmlIDUtil.createChildCompartmentId(toId(parent))).layout(GConstants.Layout.VBOX);
@@ -398,5 +364,5 @@ public class UseCaseDiagramNodeFactory extends UseCaseAbstractGModelFactory<Pack
          .build();
       return structCompartment;
    }
-
+   */
 }

@@ -10,15 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.usecasediagram.association;
 
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Association;
-import org.eclipse.uml2.uml.Classifier;
-import org.eclipse.uml2.uml.UMLFactory;
-
-public class AddUseCaseAssociationCommand extends UmlSemanticElementCommand {
+public class AddUseCaseAssociationCommand { /*- {
 
    private final Association newAssociation;
    protected final Classifier sourceActor;
@@ -42,5 +34,5 @@ public class AddUseCaseAssociationCommand extends UmlSemanticElementCommand {
    public Association getNewAssociation() {
       return newAssociation;
    }
-
+   */
 }

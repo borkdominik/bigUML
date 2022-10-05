@@ -26,6 +26,9 @@ import org.eclipse.emfcloud.modelserver.emf.configuration.EPackageConfiguration;
 import org.eclipse.emfcloud.modelserver.jsonschema.Json;
 import org.eclipse.uml2.uml.resource.UMLResource;
 
+import com.eclipsesource.uml.modelserver.codecs.UmlCodec;
+import com.eclipsesource.uml.modelserver.routing.UmlModelServerPaths;
+
 import okhttp3.Request;
 
 public class UmlModelServerClient extends ModelServerClientV2 {

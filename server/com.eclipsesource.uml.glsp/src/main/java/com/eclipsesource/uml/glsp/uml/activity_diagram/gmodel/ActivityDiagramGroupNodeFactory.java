@@ -10,44 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.activity_diagram.gmodel;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.stream.Collectors;
-
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.glsp.graph.GCompartment;
-import org.eclipse.glsp.graph.GModelElement;
-import org.eclipse.glsp.graph.GNode;
-import org.eclipse.glsp.graph.builder.impl.GCompartmentBuilder;
-import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
-import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
-import org.eclipse.glsp.graph.builder.impl.GNodeBuilder;
-import org.eclipse.glsp.graph.util.GConstants;
-import org.eclipse.glsp.graph.util.GraphUtil;
-import org.eclipse.uml2.uml.AcceptEventAction;
-import org.eclipse.uml2.uml.ActivityGroup;
-import org.eclipse.uml2.uml.ActivityPartition;
-import org.eclipse.uml2.uml.CallBehaviorAction;
-import org.eclipse.uml2.uml.DecisionNode;
-import org.eclipse.uml2.uml.FinalNode;
-import org.eclipse.uml2.uml.FlowFinalNode;
-import org.eclipse.uml2.uml.ForkNode;
-import org.eclipse.uml2.uml.InitialNode;
-import org.eclipse.uml2.uml.InterruptibleActivityRegion;
-import org.eclipse.uml2.uml.NamedElement;
-import org.eclipse.uml2.uml.OpaqueAction;
-import org.eclipse.uml2.uml.SendSignalAction;
-
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.uml.activity_diagram.constants.ActivityTypes;
-import com.eclipsesource.uml.glsp.utils.UmlConfig;
-import com.eclipsesource.uml.glsp.utils.UmlConfig.CSS;
-import org.eclipse.glsp.server.emf.model.notation.Shape;
-
-public class ActivityDiagramGroupNodeFactory extends ActivityAbstractGModelFactory<ActivityGroup, GNode> {
+public class ActivityDiagramGroupNodeFactory { /*-
 
    private final ActivityDiagramFactory parentFactory;
    private final ActivityDiagramChildNodeFactory activityDiagramChildNodeFactory;
@@ -226,7 +189,7 @@ public class ActivityDiagramGroupNodeFactory extends ActivityAbstractGModelFacto
        * .add(createLabeledChildrenCompartment(children, region));
        * applyShapeData(region, b);
        * return b.build();
-       */
+       *
    }
 
    protected GCompartment buildHeader(final ActivityGroup activityGroup) {
@@ -276,4 +239,5 @@ public class ActivityDiagramGroupNodeFactory extends ActivityAbstractGModelFacto
          .build();
       return structCompartment;
    }
+   */
 }

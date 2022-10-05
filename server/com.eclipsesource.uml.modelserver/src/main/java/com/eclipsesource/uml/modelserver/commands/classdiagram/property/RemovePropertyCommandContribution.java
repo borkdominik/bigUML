@@ -10,16 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.classdiagram.property;
 
-import org.eclipse.emf.common.command.Command;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
-import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
-
-import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlSemanticCommandContribution;
-
-public class RemovePropertyCommandContribution extends UmlSemanticCommandContribution {
+public class RemovePropertyCommandContribution { /*-{
 
    public static final String TYPE = "removeProperty";
 
@@ -40,5 +31,5 @@ public class RemovePropertyCommandContribution extends UmlSemanticCommandContrib
 
       return new RemovePropertyCommand(domain, modelUri, parentSemanticUri, semanticUri);
    }
-
+   */
 }

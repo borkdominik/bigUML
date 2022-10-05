@@ -1,15 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.objectdiagram.link;
 
-import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlCompoundCommandContribution;
-import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
-import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
-import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
-
-public class AddLinkCommandContribution extends UmlCompoundCommandContribution {
+public class AddLinkCommandContribution { /*-{
 
     public static final String TYPE = "addLinkContributuion";
     public static final String SOURCE_CLASS_URI_FRAGMENT = "sourceClassUriFragment";
@@ -31,5 +22,5 @@ public class AddLinkCommandContribution extends UmlCompoundCommandContribution {
         String targetClassUriFragment = command.getProperties().get(TARGET_CLASS_URI_FRAGMENT);
 
         return new AddLinkCompoundCommand(domain, modelUri, sourceClassUriFragment, targetClassUriFragment);
-    }
+    }   */
 }

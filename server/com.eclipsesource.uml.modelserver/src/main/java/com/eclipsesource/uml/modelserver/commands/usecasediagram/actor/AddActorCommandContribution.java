@@ -1,19 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.usecasediagram.actor;
 
-import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlCompoundCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlNotationCommandContribution;
-import com.eclipsesource.uml.modelserver.commands.util.UmlNotationCommandUtil;
-import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
-import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
-import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
-import org.eclipse.glsp.graph.GPoint;
-
-
-public class AddActorCommandContribution extends UmlCompoundCommandContribution {
+public class AddActorCommandContribution { /*-{
 
    public static final String TYPE = "addActorContribution";
 
@@ -46,5 +33,5 @@ public class AddActorCommandContribution extends UmlCompoundCommandContribution 
          return new AddActorCompoundCommand(domain, modelUri, actorPosition, parentUri);
       }
       return new AddActorCompoundCommand(domain, modelUri, actorPosition);
-   }
+   }   */
 }

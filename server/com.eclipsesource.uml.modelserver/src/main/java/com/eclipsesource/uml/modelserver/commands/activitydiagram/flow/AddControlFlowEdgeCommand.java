@@ -10,19 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.activitydiagram.flow;
 
-import java.util.function.Supplier;
-
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.ActivityEdge;
-
-import com.eclipsesource.uml.modelserver.commands.commons.notation.UmlNotationElementCommand;
-import org.eclipse.glsp.server.emf.model.notation.Edge;
-import com.eclipsesource.uml.modelserver.unotation.SemanticProxy;
-import com.eclipsesource.uml.modelserver.unotation.UnotationFactory;
-
-public class AddControlFlowEdgeCommand extends UmlNotationElementCommand {
+public class AddControlFlowEdgeCommand { /*-
 
    protected String semanticProxyUri;
    protected Supplier<ActivityEdge> controlflowSupplier;
@@ -64,5 +52,5 @@ public class AddControlFlowEdgeCommand extends UmlNotationElementCommand {
 
       umlDiagram.getElements().add(newEdge);
    }
-
+   */
 }

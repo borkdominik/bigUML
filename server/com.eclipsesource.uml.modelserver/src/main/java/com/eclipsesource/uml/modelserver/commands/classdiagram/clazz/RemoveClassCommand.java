@@ -10,14 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.classdiagram.clazz;
 
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Class;
-
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-
-public class RemoveClassCommand extends UmlSemanticElementCommand {
+public class RemoveClassCommand { /*- {
 
    protected final String semanticUriFragment;
 
@@ -31,5 +24,5 @@ public class RemoveClassCommand extends UmlSemanticElementCommand {
       Class classToRemove = UmlSemanticCommandUtil.getElement(umlModel, semanticUriFragment, Class.class);
       umlModel.getPackagedElements().remove(classToRemove);
    }
-
+   */
 }

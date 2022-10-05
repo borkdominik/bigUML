@@ -1,16 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.usecasediagram.usecasepackage;
 
-import com.eclipsesource.uml.modelserver.commands.usecasediagram.actor.RemoveActorCompoundCommand;
-import com.eclipsesource.uml.modelserver.commands.usecasediagram.usecase.RemoveUseCaseCompoundCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlNotationCommandUtil;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.*;
-import org.eclipse.uml2.uml.Package;
-
-public class RemovePackageCompoundCommand extends CompoundCommand {
+public class RemovePackageCompoundCommand { /*-{
 
     public RemovePackageCompoundCommand(final EditingDomain domain, final URI modelUri, final String semanticUriFragment) {
         Model umlModel = UmlSemanticCommandUtil.getModel(modelUri, domain);
@@ -20,7 +10,7 @@ public class RemovePackageCompoundCommand extends CompoundCommand {
         /*for (RemoveCommentEdgeCommand c : UmlCommentEdgeRemoveUtil.removeIncomingCommentEdge(modelUri, domain,
                 semanticUriFragment)) {
             this.append(c);
-        }*/
+        }*
 
         for (PackageableElement elem : packageToRemove.getPackagedElements()) {
             if (elem instanceof Actor) {
@@ -32,10 +22,10 @@ public class RemovePackageCompoundCommand extends CompoundCommand {
             } /*else if (elem instanceof Component) {
                 String uri = UmlNotationCommandUtil.getSemanticProxyUri(elem);
                 this.append(new RemoveComponentCompoundCommand(domain, modelUri, uri));
-            }*/
+            }*
         }
 
         this.append(new RemovePackageCommand(domain, modelUri, semanticUriFragment));
         this.append(new RemovePackageShapeCommand(domain, modelUri, semanticUriFragment));
-    }
+    }   */
 }

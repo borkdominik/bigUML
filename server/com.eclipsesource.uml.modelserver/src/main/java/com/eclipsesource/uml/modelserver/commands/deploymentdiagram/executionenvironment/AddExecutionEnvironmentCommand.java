@@ -1,12 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.deploymentdiagram.executionenvironment;
 
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.*;
-
-public class AddExecutionEnvironmentCommand extends UmlSemanticElementCommand {
+public class AddExecutionEnvironmentCommand { /*- {
 
    protected final ExecutionEnvironment newExecutionEnvironment;
    protected final String parentSemanticUriFragment;
@@ -45,10 +39,9 @@ public class AddExecutionEnvironmentCommand extends UmlSemanticElementCommand {
             parentNode.getNestedNodes().add(newExecutionEnvironment);
         } else {
             umlModel.getPackagedElements().add(newExecutionEnvironment);
-        }*/
+        }*
    }
 
-   public ExecutionEnvironment getNewExecutionEnvironment() {
-      return newExecutionEnvironment;
-   }
+   public ExecutionEnvironment getNewExecutionEnvironment() { return newExecutionEnvironment; }
+      */
 }

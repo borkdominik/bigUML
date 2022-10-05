@@ -10,16 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.usecasediagram.association;
 
-import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlCompoundCommandContribution;
-import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
-import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
-import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
-
-public class AddUseCaseAssociationCommandContribution extends UmlCompoundCommandContribution {
+public class AddUseCaseAssociationCommandContribution { /*-{
 
    public static final String TYPE = "addAssociationContributuion";
    public static final String SOURCE_CLASS_URI_FRAGMENT = "sourceClassUriFragment";
@@ -42,5 +33,5 @@ public class AddUseCaseAssociationCommandContribution extends UmlCompoundCommand
 
       return new AddUseCaseAssociationCompoundCommand(domain, modelUri, sourceClassUriFragment, targetClassUriFragment);
    }
-
+   */
 }

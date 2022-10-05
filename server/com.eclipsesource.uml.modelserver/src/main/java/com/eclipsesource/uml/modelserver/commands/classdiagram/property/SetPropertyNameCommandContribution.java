@@ -1,14 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.classdiagram.property;
 
-import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlSemanticCommandContribution;
-import org.eclipse.emf.common.command.Command;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
-import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
-
-public class SetPropertyNameCommandContribution extends UmlSemanticCommandContribution {
+public class SetPropertyNameCommandContribution { /*-{
 
    public static final String TYPE = "setPropertyName";
    public static final String NEW_NAME = "newName";
@@ -30,5 +22,5 @@ public class SetPropertyNameCommandContribution extends UmlSemanticCommandContri
 
       return new SetPropertyNameCommand(domain, modelUri, semanticUriFragment, newName);
    }
-
+   */
 }

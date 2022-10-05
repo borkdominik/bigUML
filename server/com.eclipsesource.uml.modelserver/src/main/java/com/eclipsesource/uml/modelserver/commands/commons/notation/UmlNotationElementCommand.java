@@ -18,11 +18,11 @@ import org.eclipse.uml2.uml.Model;
 
 import com.eclipsesource.uml.modelserver.commands.util.UmlNotationCommandUtil;
 import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-import com.eclipsesource.uml.modelserver.unotation.Diagram;
+import com.eclipsesource.uml.modelserver.unotation.UmlDiagram;
 
 public abstract class UmlNotationElementCommand extends RecordingCommand {
 
-   protected final Diagram umlDiagram;
+   protected final UmlDiagram umlDiagram;
    protected final Model umlModel;
 
    protected final EditingDomain domain;

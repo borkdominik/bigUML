@@ -10,19 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.activitydiagram.general;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Activity;
-import org.eclipse.uml2.uml.ActivityEdge;
-import org.eclipse.uml2.uml.ActivityNode;
-
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-
-public class RemoveActivityNodeCommand extends UmlSemanticElementCommand {
+public class RemoveActivityNodeCommand { /*-
 
    private final Activity activity;
    private final ActivityNode node;
@@ -52,5 +40,5 @@ public class RemoveActivityNodeCommand extends UmlSemanticElementCommand {
 
       activity.getOwnedNodes().remove(node);
    }
-
+   */
 }

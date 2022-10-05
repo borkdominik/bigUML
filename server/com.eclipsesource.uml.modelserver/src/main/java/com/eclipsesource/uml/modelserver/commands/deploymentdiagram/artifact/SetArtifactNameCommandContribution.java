@@ -1,15 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.deploymentdiagram.artifact;
 
-import com.eclipsesource.uml.modelserver.commands.commons.commands.SetNameCommand;
-import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlSemanticCommandContribution;
-import org.eclipse.emf.common.command.Command;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
-import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
-
-public class SetArtifactNameCommandContribution extends UmlSemanticCommandContribution {
+public class SetArtifactNameCommandContribution { /*-{
 
     public static final String TYPE = "setArtifactName";
     public static final String NEW_NAME = "newName";
@@ -30,4 +21,5 @@ public class SetArtifactNameCommandContribution extends UmlSemanticCommandContri
 
         return new SetNameCommand(domain, modelUri, semanticUriFragment, newName);
     }
+       */
 }

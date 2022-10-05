@@ -10,13 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.usecasediagram.association;
 
-import com.eclipsesource.uml.modelserver.commands.commons.notation.UmlNotationElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlNotationCommandUtil;
-import org.eclipse.glsp.server.emf.model.notation.Edge;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-
-public class RemoveUseCaseAssociationEdgeCommand extends UmlNotationElementCommand {
+public class RemoveUseCaseAssociationEdgeCommand { /*- {
 
    protected final Edge edgeToRemove;
 
@@ -30,4 +24,5 @@ public class RemoveUseCaseAssociationEdgeCommand extends UmlNotationElementComma
    protected void doExecute() {
       umlDiagram.getElements().remove(edgeToRemove);
    }
+      */
 }

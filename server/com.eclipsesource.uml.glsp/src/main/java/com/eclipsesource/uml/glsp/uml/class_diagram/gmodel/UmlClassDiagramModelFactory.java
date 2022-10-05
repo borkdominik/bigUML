@@ -10,9 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.class_diagram.gmodel;
 
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-
-public class UmlClassDiagramModelFactory extends ClassDiagramFactory {
+public class UmlClassDiagramModelFactory { /*-
 
    public UmlClassDiagramModelFactory(final UmlModelState modelState) {
       super(modelState);
@@ -69,5 +67,4 @@ public class UmlClassDiagramModelFactory extends ClassDiagramFactory {
     * return graph;
     * }
     */
-
 }

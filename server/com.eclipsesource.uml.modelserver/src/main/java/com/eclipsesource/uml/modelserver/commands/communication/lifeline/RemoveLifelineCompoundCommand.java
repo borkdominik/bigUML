@@ -13,6 +13,7 @@ package com.eclipsesource.uml.modelserver.commands.communication.lifeline;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emfcloud.modelserver.glsp.notation.commands.RemoveNotationElementCommand;
 import org.eclipse.uml2.uml.Lifeline;
 import org.eclipse.uml2.uml.MessageOccurrenceSpecification;
 
@@ -26,7 +27,7 @@ public class RemoveLifelineCompoundCommand extends CompoundCommand {
       final String semanticUriFragment) {
 
       this.append(new RemoveLifelineCommand(domain, modelUri, semanticUriFragment));
-      this.append(new RemoveLifelineShapeCommand(domain, modelUri, semanticUriFragment));
+      this.append(new RemoveNotationElementCommand(domain, modelUri, semanticUriFragment));
 
       var umlModel = UmlSemanticCommandUtil.getModel(modelUri, domain);
       var lifelineToRemove = UmlSemanticCommandUtil.getElement(umlModel, semanticUriFragment, Lifeline.class);

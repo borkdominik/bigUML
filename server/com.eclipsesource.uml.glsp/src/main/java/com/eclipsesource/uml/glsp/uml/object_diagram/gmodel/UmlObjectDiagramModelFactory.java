@@ -1,8 +1,6 @@
 package com.eclipsesource.uml.glsp.uml.object_diagram.gmodel;
 
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-
-public class UmlObjectDiagramModelFactory extends ObjectDiagramFactory {
+public class UmlObjectDiagramModelFactory { /*-
 
    public UmlObjectDiagramModelFactory(final UmlModelState modelState) {
       super(modelState);

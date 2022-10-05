@@ -10,31 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.activitydiagram.flow;
 
-import java.util.function.Supplier;
-
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Action;
-import org.eclipse.uml2.uml.Activity;
-import org.eclipse.uml2.uml.ActivityEdge;
-import org.eclipse.uml2.uml.ActivityNode;
-import org.eclipse.uml2.uml.CentralBufferNode;
-import org.eclipse.uml2.uml.DecisionNode;
-import org.eclipse.uml2.uml.ForkNode;
-import org.eclipse.uml2.uml.InputPin;
-import org.eclipse.uml2.uml.JoinNode;
-import org.eclipse.uml2.uml.LiteralString;
-import org.eclipse.uml2.uml.MergeNode;
-import org.eclipse.uml2.uml.ObjectFlow;
-import org.eclipse.uml2.uml.ObjectNode;
-import org.eclipse.uml2.uml.OutputPin;
-import org.eclipse.uml2.uml.Pin;
-import org.eclipse.uml2.uml.UMLFactory;
-
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-
-public class AddControlFlowCommand extends UmlSemanticElementCommand implements Supplier<ActivityEdge> {
+public class AddControlFlowCommand { /*-implements Supplier<ActivityEdge> {
 
    private ActivityEdge edge;
    protected ActivityNode source;
@@ -94,7 +70,7 @@ public class AddControlFlowCommand extends UmlSemanticElementCommand implements 
       }
       if (target instanceof ActivityParameterNode) {
          adjustParameterTypes((ActivityParameterNode) target);
-      }*/
+      }*
    }
 
    @Override
@@ -102,17 +78,17 @@ public class AddControlFlowCommand extends UmlSemanticElementCommand implements 
       return edge;
    }
 
-   //private void adjustParameterTypes(final ActivityParameterNode param) {
-      /*
-       * if (!param.getIncomings().isEmpty() && !param.getOutgoings().isEmpty()) {
-       * param.getParameter().setDirection(ParameterDirectionKind.INOUT_LITERAL);
-       * } else if (!param.getIncomings().isEmpty()) {
-       * param.getParameter().setDirection(ParameterDirectionKind.IN_LITERAL);
-       * } else if (!param.getOutgoings().isEmpty()) {
-       * param.getParameter().setDirection(ParameterDirectionKind.OUT_LITERAL);
-       * }
-       */
-   //}
+   // private void adjustParameterTypes(final ActivityParameterNode param) {
+   /*
+    * if (!param.getIncomings().isEmpty() && !param.getOutgoings().isEmpty()) {
+    * param.getParameter().setDirection(ParameterDirectionKind.INOUT_LITERAL);
+    * } else if (!param.getIncomings().isEmpty()) {
+    * param.getParameter().setDirection(ParameterDirectionKind.IN_LITERAL);
+    * } else if (!param.getOutgoings().isEmpty()) {
+    * param.getParameter().setDirection(ParameterDirectionKind.OUT_LITERAL);
+    * }
+    *
+   // }
 
    private boolean validate() {
 
@@ -138,5 +114,5 @@ public class AddControlFlowCommand extends UmlSemanticElementCommand implements 
 
       return true;
    }
-
+   */
 }

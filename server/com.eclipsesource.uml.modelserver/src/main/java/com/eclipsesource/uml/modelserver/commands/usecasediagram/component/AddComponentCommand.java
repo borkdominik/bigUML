@@ -1,15 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.usecasediagram.component;
 
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Component;
-import org.eclipse.uml2.uml.Model;
-import org.eclipse.uml2.uml.Package;
-import org.eclipse.uml2.uml.UMLFactory;
-
-public class AddComponentCommand extends UmlSemanticElementCommand {
+public class AddComponentCommand { /*- {
 
    protected final Component newComponent;
    protected final String parentSemanticUri;
@@ -34,4 +25,5 @@ public class AddComponentCommand extends UmlSemanticElementCommand {
    public Component getNewComponent() {
       return newComponent;
    }
+      */
 }

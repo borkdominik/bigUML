@@ -1,24 +1,6 @@
 package com.eclipsesource.uml.glsp.uml.deployment_diagram.gmodel;
 
-import org.eclipse.glsp.graph.GCompartment;
-import org.eclipse.glsp.graph.GNode;
-import org.eclipse.glsp.graph.builder.impl.GCompartmentBuilder;
-import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
-import org.eclipse.glsp.graph.builder.impl.GNodeBuilder;
-import org.eclipse.glsp.graph.util.GConstants;
-import org.eclipse.glsp.graph.util.GraphUtil;
-import org.eclipse.uml2.uml.Classifier;
-import org.eclipse.uml2.uml.Component;
-import org.eclipse.uml2.uml.Node;
-
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.uml.deployment_diagram.constants.DeploymentTypes;
-import com.eclipsesource.uml.glsp.utils.UmlConfig;
-import com.eclipsesource.uml.glsp.utils.UmlConfig.CSS;
-import com.eclipsesource.uml.glsp.utils.UmlIDUtil;
-import org.eclipse.glsp.server.emf.model.notation.Shape;
-
-public class DeploymentDiagramChildNodeFactory extends DeploymentAbstractGModelFactory<Classifier, GNode> {
+public class DeploymentDiagramChildNodeFactory { /*-
 
    public DeploymentDiagramChildNodeFactory(final UmlModelState modelState) {
       super(modelState);
@@ -64,4 +46,5 @@ public class DeploymentDiagramChildNodeFactory extends DeploymentAbstractGModelF
             .build())
          .build();
    }
+   */
 }

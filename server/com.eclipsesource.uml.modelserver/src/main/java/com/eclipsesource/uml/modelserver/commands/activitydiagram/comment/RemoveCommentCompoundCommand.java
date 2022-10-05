@@ -10,17 +10,11 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.activitydiagram.comment;
 
-import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-
-import com.eclipsesource.uml.modelserver.commands.commons.notation.RemoveNotationElementCommand;
-
-public class RemoveCommentCompoundCommand extends CompoundCommand {
+public class RemoveCommentCompoundCommand { /*-
 
    public RemoveCommentCompoundCommand(final EditingDomain domain, final URI modelUri, final String commentUri) {
       this.append(new RemoveCommentCommand(domain, modelUri, commentUri));
       this.append(new RemoveNotationElementCommand(domain, modelUri, commentUri));
    }
-
+   */
 }

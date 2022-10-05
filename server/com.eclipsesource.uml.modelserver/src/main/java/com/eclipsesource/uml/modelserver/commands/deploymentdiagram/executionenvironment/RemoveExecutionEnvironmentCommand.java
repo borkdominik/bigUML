@@ -1,15 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.deploymentdiagram.executionenvironment;
 
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Device;
-import org.eclipse.uml2.uml.ExecutionEnvironment;
-import org.eclipse.uml2.uml.Node;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-
-public class RemoveExecutionEnvironmentCommand extends UmlSemanticElementCommand {
+public class RemoveExecutionEnvironmentCommand { /*- {
 
     protected final String semanticUriFragment;
     protected String parentSemanticUriFragment;
@@ -40,6 +31,6 @@ public class RemoveExecutionEnvironmentCommand extends UmlSemanticElementCommand
         } else {
             umlModel.getPackagedElements().remove(executionEnvironmentToRemove);
         }
-
     }
+       */
 }

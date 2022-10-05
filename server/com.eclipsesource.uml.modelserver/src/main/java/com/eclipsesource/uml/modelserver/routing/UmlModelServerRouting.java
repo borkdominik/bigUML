@@ -8,32 +8,9 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver;
+package com.eclipsesource.uml.modelserver.routing;
 
-import static io.javalin.apibuilder.ApiBuilder.get;
-import static org.eclipse.emfcloud.modelserver.emf.common.util.ContextRequest.getParam;
-import static org.eclipse.emfcloud.modelserver.emf.common.util.ContextResponse.encodingError;
-import static org.eclipse.emfcloud.modelserver.emf.common.util.ContextResponse.missingParameter;
-
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emfcloud.modelserver.common.ModelServerPathParametersV1;
-import org.eclipse.emfcloud.modelserver.common.codecs.EncodingException;
-import org.eclipse.emfcloud.modelserver.emf.common.JsonResponse;
-import org.eclipse.emfcloud.modelserver.emf.common.ModelController;
-import org.eclipse.emfcloud.modelserver.emf.common.ModelResourceManager;
-import org.eclipse.emfcloud.modelserver.emf.common.ModelServerRoutingV1;
-import org.eclipse.emfcloud.modelserver.emf.common.ModelURIConverter;
-import org.eclipse.emfcloud.modelserver.emf.common.SchemaController;
-import org.eclipse.emfcloud.modelserver.emf.common.ServerController;
-import org.eclipse.emfcloud.modelserver.emf.common.SessionController;
-import org.eclipse.emfcloud.modelserver.emf.common.codecs.JsonCodec;
-
-import com.google.inject.Inject;
-
-import io.javalin.Javalin;
-import io.javalin.http.Context;
-
-public class UmlModelServerRouting extends ModelServerRoutingV1 {
+public class UmlModelServerRouting { /*-extends ModelServerRoutingV1 {
 
    protected final ModelResourceManager resourceManager;
    protected ModelURIConverter uriConverter;
@@ -101,5 +78,5 @@ public class UmlModelServerRouting extends ModelServerRoutingV1 {
       get(UmlModelServerPaths.UML_TYPES, this::getUmlTypes);
       get(UmlModelServerPaths.UML_CREATE, this::createUmlModel);
    }
-
+   */
 }

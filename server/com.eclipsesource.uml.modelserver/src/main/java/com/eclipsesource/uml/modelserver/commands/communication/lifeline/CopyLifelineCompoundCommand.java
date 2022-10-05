@@ -17,6 +17,7 @@ import java.util.Map;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emfcloud.modelserver.glsp.notation.commands.AddShapeCommand;
 import org.eclipse.uml2.uml.Interaction;
 import org.eclipse.uml2.uml.Lifeline;
 
@@ -45,7 +46,7 @@ public class CopyLifelineCompoundCommand extends CompoundCommand {
       var position = UmlNotationCommandUtil.getGPoint(properties.getNotation().position);
 
       this.append(command);
-      this.append(new AddLifelineShapeCommand(domain, modelUri, position, () -> command.getNewLifeline()));
+      this.append(new AddShapeCommand(domain, modelUri, position, () -> command.getNewLifeline()));
 
       return command.getNewLifeline();
    }

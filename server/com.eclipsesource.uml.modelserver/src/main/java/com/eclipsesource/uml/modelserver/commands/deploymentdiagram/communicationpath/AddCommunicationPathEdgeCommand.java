@@ -1,18 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.deploymentdiagram.communicationpath;
 
-import java.util.function.Supplier;
-
-import com.eclipsesource.uml.modelserver.commands.commons.notation.UmlNotationElementCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.CommunicationPath;
-
-import com.eclipsesource.uml.modelserver.commands.util.UmlNotationCommandUtil;
-import org.eclipse.glsp.server.emf.model.notation.Edge;
-import com.eclipsesource.uml.modelserver.unotation.SemanticProxy;
-import com.eclipsesource.uml.modelserver.unotation.UnotationFactory;
-
-public class AddCommunicationPathEdgeCommand extends UmlNotationElementCommand {
+public class AddCommunicationPathEdgeCommand { /*- {
 
     protected String semanticProxyUri;
     protected Supplier<CommunicationPath> communicationPathSupplier;
@@ -47,5 +35,5 @@ public class AddCommunicationPathEdgeCommand extends UmlNotationElementCommand {
         newEdge.setSemanticElement(proxy);
         umlDiagram.getElements().add(newEdge);
     }
-
+   */
 }

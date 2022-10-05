@@ -19,9 +19,7 @@ import org.eclipse.uml2.uml.Message;
 
 import com.eclipsesource.uml.modelserver.commands.commons.notation.UmlNotationElementCommand;
 import com.eclipsesource.uml.modelserver.commands.util.UmlNotationCommandUtil;
-import org.eclipse.glsp.server.emf.model.notation.Edge;
-import com.eclipsesource.uml.modelserver.unotation.SemanticProxy;
-import com.eclipsesource.uml.modelserver.unotation.UnotationFactory;
+import org.eclipse.glsp.server.emf.model.notation.NotationFactory;
 
 public class CopyMessageEdgeCommand extends UmlNotationElementCommand {
 
@@ -38,11 +36,11 @@ public class CopyMessageEdgeCommand extends UmlNotationElementCommand {
 
    @Override
    protected void doExecute() {
-      Edge newEdge = UnotationFactory.eINSTANCE.createEdge();
+      var newEdge = NotationFactory.eINSTANCE.createEdge();
 
-      SemanticProxy proxy = UnotationFactory.eINSTANCE.createSemanticProxy();
+      var proxy = NotationFactory.eINSTANCE.createSemanticElementReference();
 
-      proxy.setUri(UmlNotationCommandUtil.getSemanticProxyUriElement(messageSupplier.get()));
+      proxy.setElementId(UmlNotationCommandUtil.getSemanticProxyUriElement(messageSupplier.get()));
 
       newEdge.setSemanticElement(proxy);
       newEdge.getBendPoints().addAll(properties.getNotation().bendingPoints.stream()

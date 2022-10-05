@@ -15,10 +15,6 @@ import com.eclipsesource.uml.modelserver.unotation.UmlDiagram;
 import com.eclipsesource.uml.modelserver.unotation.UnotationFactory;
 import com.eclipsesource.uml.modelserver.unotation.UnotationPackage;
 
-import notation.NotationPackage;
-
-import notation.impl.NotationPackageImpl;
-
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
@@ -27,6 +23,8 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 import org.eclipse.glsp.graph.GraphPackage;
+
+import org.eclipse.glsp.server.emf.model.notation.NotationPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -98,18 +96,13 @@ public class UnotationPackageImpl extends EPackageImpl implements UnotationPacka
 
       // Initialize simple dependencies
       GraphPackage.eINSTANCE.eClass();
-
-      // Obtain or create and register interdependencies
-      Object registeredPackage = EPackage.Registry.INSTANCE.getEPackage(NotationPackage.eNS_URI);
-      NotationPackageImpl theNotationPackage = (NotationPackageImpl)(registeredPackage instanceof NotationPackageImpl ? registeredPackage : NotationPackage.eINSTANCE);
+      NotationPackage.eINSTANCE.eClass();
 
       // Create package meta-data objects
       theUnotationPackage.createPackageContents();
-      theNotationPackage.createPackageContents();
 
       // Initialize created meta-data
       theUnotationPackage.initializePackageContents();
-      theNotationPackage.initializePackageContents();
 
       // Mark meta-data to indicate it can't be changed
       theUnotationPackage.freeze();

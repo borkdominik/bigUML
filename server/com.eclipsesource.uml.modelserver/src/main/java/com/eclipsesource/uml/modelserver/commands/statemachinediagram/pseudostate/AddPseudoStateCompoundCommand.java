@@ -10,16 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.statemachinediagram.pseudostate;
 
-import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.glsp.graph.GPoint;
-import org.eclipse.uml2.uml.Pseudostate;
-import org.eclipse.uml2.uml.PseudostateKind;
-
-import java.util.function.Supplier;
-
-public class AddPseudoStateCompoundCommand extends CompoundCommand {
+public class AddPseudoStateCompoundCommand { /*-{
 
    public AddPseudoStateCompoundCommand(final EditingDomain domain, final URI modelUri, final GPoint statePosition,
                                         final String regionUriFragment, final PseudostateKind pseudostateKind) {
@@ -30,5 +21,5 @@ public class AddPseudoStateCompoundCommand extends CompoundCommand {
       Supplier<Pseudostate> semanticResultSupplier = () -> command.getNewPseudostate();
       this.append(new AddPseudoStateShapeCommand(domain, modelUri, statePosition, semanticResultSupplier));
    }
-
+   */
 }

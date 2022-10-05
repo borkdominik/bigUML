@@ -10,21 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.statemachine_diagram.gmodel;
 
-import java.util.List;
-
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.glsp.graph.GModelElement;
-import org.eclipse.uml2.uml.Model;
-import org.eclipse.uml2.uml.Pseudostate;
-import org.eclipse.uml2.uml.PseudostateKind;
-import org.eclipse.uml2.uml.Region;
-import org.eclipse.uml2.uml.StateMachine;
-import org.eclipse.uml2.uml.Transition;
-import org.eclipse.uml2.uml.Vertex;
-
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-
-public class UmlStateMachineDiagramModelFactory extends StateMachineDiagramFactory {
+public class UmlStateMachineDiagramModelFactory { /*-
 
    public UmlStateMachineDiagramModelFactory(final UmlModelState modelState) {
       super(modelState);

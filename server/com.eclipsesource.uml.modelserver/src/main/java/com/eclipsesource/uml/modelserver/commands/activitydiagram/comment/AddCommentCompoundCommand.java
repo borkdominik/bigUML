@@ -10,14 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.activitydiagram.comment;
 
-import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.glsp.graph.GPoint;
-
-import com.eclipsesource.uml.modelserver.commands.commons.notation.AddGenericShapeCommand;
-
-public class AddCommentCompoundCommand extends CompoundCommand {
+public class AddCommentCompoundCommand { /*-
 
    public AddCommentCompoundCommand(final EditingDomain domain, final URI modelUri, final GPoint position,
       final String parentUri) {
@@ -27,5 +20,5 @@ public class AddCommentCompoundCommand extends CompoundCommand {
       this.append(command);
       this.append(new AddGenericShapeCommand(domain, modelUri, position, command));
    }
-
+   */
 }

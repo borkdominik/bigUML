@@ -10,15 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.activitydiagram.flow;
 
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.ControlFlow;
-import org.eclipse.uml2.uml.LiteralString;
-
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-
-public class SetGuardCommand extends UmlSemanticElementCommand {
+public class SetGuardCommand { /*-
 
    protected String semanticUriFragment;
    protected String newValue;
@@ -35,5 +27,5 @@ public class SetGuardCommand extends UmlSemanticElementCommand {
       ControlFlow controlFlow = UmlSemanticCommandUtil.getElement(umlModel, semanticUriFragment, ControlFlow.class);
       ((LiteralString) controlFlow.getGuard()).setValue(newValue);
    }
-
+   */
 }

@@ -1,15 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.usecasediagram.generalization;
 
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Actor;
-import org.eclipse.uml2.uml.Generalization;
-import org.eclipse.uml2.uml.UseCase;
-
-public class RemoveGeneralizationCommand extends UmlSemanticElementCommand {
+public class RemoveGeneralizationCommand { /*- {
 
     protected final String semanticUriFragment;
 
@@ -32,5 +23,5 @@ public class RemoveGeneralizationCommand extends UmlSemanticElementCommand {
             ((Actor) container).getGeneralizations().remove(generalizationToRemove);
         }
     }
-
+   */
 }

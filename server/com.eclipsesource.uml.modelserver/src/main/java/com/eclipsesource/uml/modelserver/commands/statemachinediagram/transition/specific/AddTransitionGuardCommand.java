@@ -1,12 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.statemachinediagram.transition.specific;
 
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Transition;
-
-public class AddTransitionGuardCommand extends UmlSemanticElementCommand {
+public class AddTransitionGuardCommand { /*- {
 
     protected String semanticUriFragment;
     protected String newValue;
@@ -29,5 +23,5 @@ public class AddTransitionGuardCommand extends UmlSemanticElementCommand {
             transition.createGuard(newValue);
             transition.getGuard().setName("new guard");
         }
-    }
+    }   */
 }

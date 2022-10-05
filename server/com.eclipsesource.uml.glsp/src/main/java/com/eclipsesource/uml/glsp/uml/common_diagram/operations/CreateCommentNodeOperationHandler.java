@@ -10,23 +10,15 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.common_diagram.operations;
 
-import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
-
 import java.util.List;
 
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.AbstractEMSOperationHandler;
-import org.eclipse.glsp.graph.GPoint;
-import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.operations.Operation;
-import org.eclipse.glsp.server.types.GLSPServerException;
 
 import com.eclipsesource.uml.glsp.model.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.uml.common_diagram.constants.CommonTypes;
-import com.eclipsesource.uml.modelserver.commands.activitydiagram.comment.AddCommentCommandContribution;
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 
@@ -51,11 +43,12 @@ public class CreateCommentNodeOperationHandler
 
    @Override
    public void executeOperation(final CreateNodeOperation operation) {
-
+      /*-
+      
       if (!CommonTypes.COMMENT.equals(operation.getElementTypeId())) {
          throw new GLSPServerException("Unknown operation type for");
       }
-
+      
       String objectId = operation.getContainerId();
       EObject container = getOrThrow(modelState.getIndex().getEObject(objectId),
          "No valid element with id " + objectId + " found");
@@ -67,6 +60,7 @@ public class CreateCommentNodeOperationHandler
                throw new GLSPServerException("Could not execute create operation on new Comment node");
             }
          });
+         */
    }
 
    @Override

@@ -10,19 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.activitydiagram.exceptionhandler;
 
-import java.util.function.Supplier;
-
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.ExceptionHandler;
-import org.eclipse.uml2.uml.ExecutableNode;
-import org.eclipse.uml2.uml.Pin;
-import org.eclipse.uml2.uml.UMLFactory;
-
-import com.eclipsesource.uml.modelserver.commands.commons.semantic.UmlSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-
-public class AddExceptionHandlerCommand extends UmlSemanticElementCommand implements Supplier<ExceptionHandler> {
+public class AddExceptionHandlerCommand { /*-implements Supplier<ExceptionHandler> {
 
    private ExceptionHandler handler;
    protected ExecutableNode source;
@@ -51,5 +39,5 @@ public class AddExceptionHandlerCommand extends UmlSemanticElementCommand implem
    public ExceptionHandler get() {
       return handler;
    }
-
+   */
 }

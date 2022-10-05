@@ -1,15 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.deploymentdiagram.communicationpath;
 
-import com.eclipsesource.uml.modelserver.commands.commons.contributions.UmlCompoundCommandContribution;
-import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
-import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
-import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
-
-public class RemoveCommunicationPathCommandContribution extends UmlCompoundCommandContribution {
+public class RemoveCommunicationPathCommandContribution { /*-{
 
     public static final String TYPE = "removeCommunicationPath";
 
@@ -27,4 +18,5 @@ public class RemoveCommunicationPathCommandContribution extends UmlCompoundComma
         String semanticUriFragment = command.getProperties().get(SEMANTIC_URI_FRAGMENT);
         return new RemoveCommunicationPathCompoundCommand(domain, modelUri, semanticUriFragment);
     }
+       */
 }

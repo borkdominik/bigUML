@@ -10,26 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.commands.classdiagram.clazz;
 
-import java.util.Collection;
-
-import com.eclipsesource.uml.modelserver.commands.classdiagram.association.RemoveAssociationCompoundCommand;
-import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.ecore.util.EcoreUtil.UsageCrossReferencer;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Association;
-import org.eclipse.uml2.uml.Class;
-import org.eclipse.uml2.uml.Model;
-import org.eclipse.uml2.uml.Property;
-import org.eclipse.uml2.uml.UMLPackage;
-
-import com.eclipsesource.uml.modelserver.commands.classdiagram.property.SetPropertyTypeCommand;
-import com.eclipsesource.uml.modelserver.commands.util.UmlNotationCommandUtil;
-import com.eclipsesource.uml.modelserver.commands.util.UmlSemanticCommandUtil;
-
-public class RemoveClassCompoundCommand extends CompoundCommand {
+public class RemoveClassCompoundCommand { /*-{
 
    public RemoveClassCompoundCommand(final EditingDomain domain, final URI modelUri, final String semanticUriFragment) {
       this.append(new RemoveClassCommand(domain, modelUri, semanticUriFragment));
@@ -64,5 +45,5 @@ public class RemoveClassCompoundCommand extends CompoundCommand {
          && eObject.eContainer() instanceof Association
          && ((Property) eObject).getAssociation() != null;
    }
-
+   */
 }

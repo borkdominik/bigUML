@@ -1,10 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.deploymentdiagram.executionenvironment;
 
-import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-
-public class RemoveExecutionEnvironmentCompoundCommand extends CompoundCommand {
+public class RemoveExecutionEnvironmentCompoundCommand { /*-{
 
     public RemoveExecutionEnvironmentCompoundCommand(final EditingDomain domain, final URI modelUri,
                                                      final String semanticUriFragment, final String parentSemanticUri) {
@@ -15,19 +11,18 @@ public class RemoveExecutionEnvironmentCompoundCommand extends CompoundCommand {
         ExecutionEnvironment executionEnvironmentToRemove = UmlSemanticCommandUtil.getElement(umlModel,
                 semanticUriFragment, ExecutionEnvironment.class);*/
 
-        //TODO: check if this is needed at later stage
-        /*
-         * Remove children
-         * Collection<Setting> usagesNode = UsageCrossReferencer.find(nodeToRemove, umlModel.eResource());
-         * for (Setting setting : usagesNode) {
-         * EObject eObject = setting.getEObject();
-         * if (isPropertyTypeUsage(setting, eObject, nodeToRemove)) {
-         * String propertyUriFragment = UmlSemanticCommandUtil.getSemanticUriFragment((Property) eObject);
-         * this.append(new SetPropertyTypeCommand(domain, modelUri, propertyUriFragment, null));
-         * }
-         * }
-         */
-
-    }
+   // TODO: check if this is needed at later stage
+   /*
+    * Remove children
+    * Collection<Setting> usagesNode = UsageCrossReferencer.find(nodeToRemove, umlModel.eResource());
+    * for (Setting setting : usagesNode) {
+    * EObject eObject = setting.getEObject();
+    * if (isPropertyTypeUsage(setting, eObject, nodeToRemove)) {
+    * String propertyUriFragment = UmlSemanticCommandUtil.getSemanticUriFragment((Property) eObject);
+    * this.append(new SetPropertyTypeCommand(domain, modelUri, propertyUriFragment, null));
+    * }
+    * }
+    * }
+    */
 
 }

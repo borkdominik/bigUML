@@ -1,18 +1,6 @@
 package com.eclipsesource.uml.modelserver.commands.deploymentdiagram.artifact;
 
-import java.util.function.Supplier;
-
-import com.eclipsesource.uml.modelserver.commands.commons.notation.UmlNotationElementCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.glsp.graph.GPoint;
-import org.eclipse.uml2.uml.Artifact;
-import com.eclipsesource.uml.modelserver.commands.util.UmlNotationCommandUtil;
-import com.eclipsesource.uml.modelserver.unotation.SemanticProxy;
-import org.eclipse.glsp.server.emf.model.notation.Shape;
-import com.eclipsesource.uml.modelserver.unotation.UnotationFactory;
-
-public class AddArtifactShapeCommand extends UmlNotationElementCommand {
+public class AddArtifactShapeCommand { /*- {
 
     protected final GPoint shapePosition;
     protected String semanticProxyUri;
@@ -53,4 +41,5 @@ public class AddArtifactShapeCommand extends UmlNotationElementCommand {
         newShape.setSemanticElement(proxy);
         umlDiagram.getElements().add(newShape);
     }
+       */
 }

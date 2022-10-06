@@ -10,10 +10,10 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.routing;
 
-import org.eclipse.emfcloud.modelserver.common.ModelServerPathParametersV1;
+import org.eclipse.emfcloud.modelserver.common.ModelServerPathParametersV2;
 
-public interface UmlModelServerPathsParameters extends ModelServerPathParametersV1 {
+public interface UmlModelServerPathsParameters extends ModelServerPathParametersV2 {
 
-   String DIAGRAM_TYPE = "diagramtype";
+   String UML_DIAGRAM_TYPE = "diagramtype";
 
 }

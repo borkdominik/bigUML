@@ -8,7 +8,10 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-import { LaunchOptions, ModelServerClient } from "@eclipse-emfcloud/modelserver-theia";
+import {
+    LaunchOptions,
+    ModelServerClient,
+} from "@eclipse-emfcloud/modelserver-theia";
 import { GLSPServerContribution } from "@eclipse-glsp/theia-integration/lib/node";
 import { ContainerModule, injectable } from "inversify";
 import { join, resolve } from "path";
@@ -19,21 +22,33 @@ import { UmlGLSPServerContribution } from "./uml-glsp-server-contribution";
 
 @injectable()
 export class UmlModelServerLaunchOptions implements LaunchOptions {
-    baseURL = "api/v1/";
+    baseURL = "api/v2/";
     serverPort = 8081;
     hostname = "localhost";
-    jarPath = findEquinoxLauncher(join(__dirname, "..", "..", "build", "com.eclipsesource.uml.modelserver.product-0.1.0"));
+    jarPath = findEquinoxLauncher(
+        join(
+            __dirname,
+            "..",
+            "..",
+            "build",
+            "com.eclipsesource.uml.modelserver.product-0.1.0"
+        )
+    );
     additionalArgs = [
-        `-r=${resolve(join(__dirname, "..", "..", "..", "..", "workspace"))}`
+        `-r=${resolve(join(__dirname, "..", "..", "..", "..", "workspace"))}`,
     ];
 }
 
 export default new ContainerModule((bind, _unbind, isBound, rebind) => {
     if (isBound(LaunchOptions)) {
-        rebind(LaunchOptions).to(UmlModelServerLaunchOptions).inSingletonScope();
+        rebind(LaunchOptions)
+            .to(UmlModelServerLaunchOptions)
+            .inSingletonScope();
     } else {
         bind(LaunchOptions).to(UmlModelServerLaunchOptions).inSingletonScope();
     }
     rebind(ModelServerClient).to(UmlModelServerClientImpl).inSingletonScope();
-    bind(GLSPServerContribution).to(UmlGLSPServerContribution).inSingletonScope();
+    bind(GLSPServerContribution)
+        .to(UmlGLSPServerContribution)
+        .inSingletonScope();
 });

@@ -26,10 +26,6 @@ public class UmlGModelFactory extends EMSNotationGModelFactory {
 
    @Override
    protected void fillRootElement(final EObject semanticModel, final Diagram notationModel, final GModelRoot newRoot) {
-      System.out.println("");
-      System.out.println("FILL ROOT");
-      System.out.println("");
-
       GGraph graph = GGraph.class.cast(newRoot);
 
       mapper.map(graph, notationModel);

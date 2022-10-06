@@ -10,27 +10,17 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver;
 
-import java.net.MalformedURLException;
-import java.util.Map;
-
-import org.eclipse.emfcloud.modelserver.client.v2.ModelServerClientV2;
-import org.eclipse.emfcloud.modelserver.common.codecs.Codec;
-import org.eclipse.emfcloud.modelserver.emf.configuration.EPackageConfiguration;
-import org.eclipse.uml2.uml.resource.UMLResource;
-
-import com.eclipsesource.uml.modelserver.codecs.UmlCodec;
-
-public class UmlModelServerClient extends ModelServerClientV2 {
-
+public class UmlModelServerClient {
+   /*-
    private static final Map<String, Codec> SUPPORTED_UML_FORMATS = Map.of(
       UMLResource.FILE_EXTENSION, new UmlCodec());
-
+   
    public UmlModelServerClient(final String baseUrl, final EPackageConfiguration... configurations)
       throws MalformedURLException {
       super(baseUrl, SUPPORTED_UML_FORMATS, configurations);
    }
-
-   /*- TODO: Enable it later
+   
+    TODO: Enable it later
    public CompletableFuture<Response<List<String>>> getUmlTypes(final String modelUri) {
       final Request request = new Request.Builder()
          .url(
@@ -38,7 +28,7 @@ public class UmlModelServerClient extends ModelServerClientV2 {
                .addQueryParameter(ModelServerPathParametersV1.MODEL_URI, modelUri)
                .build())
          .build();
-
+   
       return makeCallAndGetDataBody(request)
          .thenApply(response -> response.mapBody(body -> {
             List<String> uris = new ArrayList<>();

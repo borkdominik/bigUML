@@ -10,11 +10,12 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.routing;
 
-import org.eclipse.emfcloud.modelserver.common.ModelServerPathsV1;
+import org.eclipse.emfcloud.modelserver.common.ModelServerPathsV2;
 
-public interface UmlModelServerPaths extends ModelServerPathsV1 {
-
-   String UML_TYPES = "uml/types";
-   String UML_CREATE = "uml/create";
+public interface UmlModelServerPaths {
+   String BASE_PATH = ModelServerPathsV2.BASE_PATH + "/uml";
+   // TODO: Enable it later
+   // String UML_TYPES = "uml/types";
+   String UML_CREATE = "create";
 
 }

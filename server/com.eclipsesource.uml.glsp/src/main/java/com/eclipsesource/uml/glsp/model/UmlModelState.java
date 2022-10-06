@@ -32,9 +32,6 @@ public class UmlModelState extends EMSNotationModelState {
 
    @Override
    public void updateRoot(final GModelRoot newRoot) {
-      System.out.println("");
-      System.out.println("UPDATE ROOT");
-      System.out.println("");
       setRoot(newRoot);
       this.index = getOrUpdateIndex(newRoot);
    }

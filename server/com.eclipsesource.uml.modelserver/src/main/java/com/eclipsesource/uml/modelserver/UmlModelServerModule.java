@@ -39,6 +39,7 @@ import com.eclipsesource.uml.modelserver.commands.communication.message.RemoveMe
 import com.eclipsesource.uml.modelserver.commands.communication.message.SetMessageNameCommandContribution;
 import com.eclipsesource.uml.modelserver.resource.UmlNotationPackageConfiguration;
 import com.eclipsesource.uml.modelserver.resource.UmlPackageConfiguration;
+import com.eclipsesource.uml.modelserver.routing.UmlModelServerRouting;
 
 public class UmlModelServerModule extends EMSNotationModelServerModule {
 
@@ -96,7 +97,6 @@ public class UmlModelServerModule extends EMSNotationModelServerModule {
    @Override
    protected void configureRoutings(final MultiBinding<Routing> binding) {
       super.configureRoutings(binding);
-      // TODO: Enable it later
-      // binding.add(UmlModelServerRouting.class);
+      binding.add(UmlModelServerRouting.class);
    }
 }

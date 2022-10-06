@@ -20,6 +20,8 @@ import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.ActionHandler;
 import org.eclipse.glsp.server.di.MultiBinding;
 import org.eclipse.glsp.server.diagram.DiagramConfiguration;
+import org.eclipse.glsp.server.emf.EMFIdGenerator;
+import org.eclipse.glsp.server.emf.idgen.AttributeIdGenerator;
 import org.eclipse.glsp.server.features.contextmenu.ContextMenuItemProvider;
 import org.eclipse.glsp.server.features.core.model.GModelFactory;
 import org.eclipse.glsp.server.features.toolpalette.ToolPaletteItemProvider;
@@ -61,6 +63,11 @@ public class UmlDiagramModule extends EMSGLSPNotationDiagramModule {
    protected void registerEPackages() {
       super.registerEPackages();
       UMLPackage.eINSTANCE.eClass();
+   }
+
+   @Override
+   protected Class<? extends EMFIdGenerator> bindEMFIdGenerator() {
+      return AttributeIdGenerator.class;
    }
 
    @Override

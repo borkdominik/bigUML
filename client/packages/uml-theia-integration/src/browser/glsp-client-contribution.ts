@@ -22,8 +22,8 @@ export interface UmlInitializeOptions {
 
 @injectable()
 export class UmlGLSPClientContribution extends BaseGLSPClientContribution {
-
-    @inject(ModelServerClient) protected readonly modelServerClient: ModelServerClient;
+    @inject(ModelServerClient)
+    protected readonly modelServerClient: ModelServerClient;
 
     readonly id = UmlLanguage.contributionId;
     readonly fileExtensions = UmlLanguage.fileExtensions;
@@ -31,8 +31,7 @@ export class UmlGLSPClientContribution extends BaseGLSPClientContribution {
     protected createInitializeOptions(): MaybePromise<Args | undefined> {
         return {
             ["timestamp"]: new Date().toString(),
-            ["modelServerURL"]: "http://localhost:8081/api/v1/"
+            ["modelServerURL"]: "http://localhost:8081/api/v2/",
         };
     }
-
 }

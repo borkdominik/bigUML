@@ -11,6 +11,7 @@
 package com.eclipsesource.uml.modelserver;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Set;
 
@@ -18,6 +19,7 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emfcloud.modelserver.emf.common.RecordingModelResourceManager;
 import org.eclipse.emfcloud.modelserver.emf.common.watchers.ModelWatchersManager;
 import org.eclipse.emfcloud.modelserver.emf.configuration.EPackageConfiguration;
@@ -25,6 +27,10 @@ import org.eclipse.emfcloud.modelserver.emf.configuration.ServerConfiguration;
 import org.eclipse.emfcloud.modelserver.emf.util.JsonPatchHelper;
 import org.eclipse.emfcloud.modelserver.integration.SemanticFileExtension;
 import org.eclipse.emfcloud.modelserver.notation.integration.NotationFileExtension;
+import org.eclipse.glsp.server.emf.model.notation.Diagram;
+import org.eclipse.glsp.server.emf.model.notation.NotationFactory;
+import org.eclipse.uml2.uml.Model;
+import org.eclipse.uml2.uml.UMLFactory;
 import org.eclipse.uml2.uml.resource.UMLResource;
 
 import com.google.inject.Inject;
@@ -118,31 +124,32 @@ public class UmlModelResourceManager extends RecordingModelResourceManager {
       }
       return listOfClassifiers;
    }
-   
+   */
+
    public boolean addUmlResources(final String modeluri, final String diagramType) {
       URI umlModelUri = createURI(modeluri);
       ResourceSet resourceSet = resourceSetFactory.createResourceSet(umlModelUri);
       resourceSets.put(umlModelUri, resourceSet);
-   
+
       final Model umlModel = createNewModel(umlModelUri);
-   
+
       try {
          final Resource umlResource = resourceSet.createResource(umlModelUri);
          resourceSet.getResources().add(umlResource);
          umlResource.getContents().add(umlModel);
          umlResource.save(null);
-   
+
          final Resource umlNotationResource = resourceSet
-            .createResource(umlModelUri.trimFileExtension().appendFileExtension(UmlNotationUtil.NOTATION_EXTENSION));
+            .createResource(umlModelUri.trimFileExtension().appendFileExtension(notationFileExtension));
          resourceSet.getResources().add(umlNotationResource);
          umlNotationResource.getContents().add(createNewDiagram(umlModel, diagramType));
          umlNotationResource.save(null);
          createEditingDomain(resourceSet);
-   
+
       } catch (IOException e) {
          return false;
       }
-   
+
       return true;
    }
 
@@ -153,13 +160,12 @@ public class UmlModelResourceManager extends RecordingModelResourceManager {
       return newModel;
    }
 
-   protected UmlDiagram createNewDiagram(final Model model, final String diagramType) {
-      var newDiagram = UnotationFactory.eINSTANCE.createUmlDiagram();
+   protected Diagram createNewDiagram(final Model model, final String diagramType) {
+      var newDiagram = NotationFactory.eINSTANCE.createDiagram();
       var semanticProxy = NotationFactory.eINSTANCE.createSemanticElementReference();
-      semanticProxy.setUri(EcoreUtil.getURI(model).fragment());
+      semanticProxy.setElementId(EcoreUtil.getURI(model).fragment());
       newDiagram.setSemanticElement(semanticProxy);
-      newDiagram.setRepresentation(UmlNotationUtil.getRepresentation(diagramType));
+      newDiagram.setDiagramType(diagramType);
       return newDiagram;
    }
-    */
 }

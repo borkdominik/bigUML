@@ -15,13 +15,14 @@ import org.eclipse.emfcloud.modelserver.glsp.actions.handlers.EMSOperationAction
 import org.eclipse.emfcloud.modelserver.glsp.notation.integration.EMSGLSPNotationDiagramModule;
 import org.eclipse.emfcloud.modelserver.glsp.notation.integration.EMSNotationModelServerAccess;
 import org.eclipse.emfcloud.modelserver.glsp.notation.integration.EMSNotationModelState;
+import org.eclipse.emfcloud.modelserver.notation.integration.NotationResource;
 import org.eclipse.glsp.graph.GraphExtension;
 import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.ActionHandler;
 import org.eclipse.glsp.server.di.MultiBinding;
 import org.eclipse.glsp.server.diagram.DiagramConfiguration;
 import org.eclipse.glsp.server.emf.EMFIdGenerator;
-import org.eclipse.glsp.server.emf.idgen.AttributeIdGenerator;
+import org.eclipse.glsp.server.emf.idgen.FragmentIdGenerator;
 import org.eclipse.glsp.server.features.contextmenu.ContextMenuItemProvider;
 import org.eclipse.glsp.server.features.core.model.GModelFactory;
 import org.eclipse.glsp.server.features.toolpalette.ToolPaletteItemProvider;
@@ -30,6 +31,7 @@ import org.eclipse.glsp.server.layout.LayoutEngine;
 import org.eclipse.glsp.server.operations.LayoutOperationHandler;
 import org.eclipse.glsp.server.operations.OperationHandler;
 import org.eclipse.uml2.uml.UMLPackage;
+import org.eclipse.uml2.uml.resource.UMLResource;
 
 import com.eclipsesource.uml.glsp.actions.ReturnTypesAction;
 import com.eclipsesource.uml.glsp.actions.UmlOperationActionHandler;
@@ -38,10 +40,10 @@ import com.eclipsesource.uml.glsp.diagram.UmlToolDiagramConfiguration;
 import com.eclipsesource.uml.glsp.features.outline.manifest.OutlineManifest;
 import com.eclipsesource.uml.glsp.features.validation.UmlDiagramModelValidator;
 import com.eclipsesource.uml.glsp.gmodel.UmlDiagramMapper;
+import com.eclipsesource.uml.glsp.gmodel.UmlGModelFactory;
 import com.eclipsesource.uml.glsp.gmodel.UmlGModelMapHandler;
 import com.eclipsesource.uml.glsp.gmodel.UmlGModelMapperRegistry;
 import com.eclipsesource.uml.glsp.layout.UmlLayoutEngine;
-import com.eclipsesource.uml.glsp.model.UmlGModelFactory;
 import com.eclipsesource.uml.glsp.model.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.operations.UmlDeleteOperationHandler;
@@ -67,7 +69,7 @@ public class UmlDiagramModule extends EMSGLSPNotationDiagramModule {
 
    @Override
    protected Class<? extends EMFIdGenerator> bindEMFIdGenerator() {
-      return AttributeIdGenerator.class;
+      return FragmentIdGenerator.class;
    }
 
    @Override
@@ -119,10 +121,10 @@ public class UmlDiagramModule extends EMSGLSPNotationDiagramModule {
    public String getDiagramType() { return "umldiagram"; }
 
    @Override
-   protected String getSemanticFileExtension() { return "uml"; }
+   protected String getSemanticFileExtension() { return UMLResource.FILE_EXTENSION; }
 
    @Override
-   protected String getNotationFileExtension() { return "notation"; }
+   protected String getNotationFileExtension() { return NotationResource.FILE_EXTENSION; }
 
    @Override
    protected void configureClientActions(final MultiBinding<Action> bindings) {

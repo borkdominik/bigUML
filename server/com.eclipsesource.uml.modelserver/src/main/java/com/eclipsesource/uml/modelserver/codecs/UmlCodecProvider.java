@@ -15,16 +15,17 @@ import java.util.Set;
 
 import org.eclipse.emfcloud.modelserver.common.codecs.Codec;
 import org.eclipse.emfcloud.modelserver.emf.common.codecs.CodecProvider;
-import org.eclipse.uml2.uml.resource.UMLResource;
+
+import com.eclipsesource.uml.modelserver.routing.UmlModelServerPaths;
 
 public class UmlCodecProvider implements CodecProvider {
 
    @Override
-   public Set<String> getAllFormats() { return Set.of(UMLResource.FILE_EXTENSION); }
+   public Set<String> getAllFormats() { return Set.of(UmlModelServerPaths.FORMAT_UML); }
 
    @Override
    public int getPriority(final String modelUri, final String format) {
-      return 1;
+      return getAllFormats().contains(format) ? 10 : NOT_SUPPORTED;
    }
 
    @Override

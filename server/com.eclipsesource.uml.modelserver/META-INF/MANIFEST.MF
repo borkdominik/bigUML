@@ -104,6 +104,7 @@ Export-Package: com.eclipsesource.uml.modelserver,
  com.eclipsesource.uml.modelserver.commands.usecasediagram.usecase,
  com.eclipsesource.uml.modelserver.commands.usecasediagram.usecasepackage,
  com.eclipsesource.uml.modelserver.commands.util,
+ com.eclipsesource.uml.modelserver.routing,
  com.eclipsesource.uml.modelserver.unotation,
  com.eclipsesource.uml.modelserver.unotation.impl,
  com.eclipsesource.uml.modelserver.unotation.util

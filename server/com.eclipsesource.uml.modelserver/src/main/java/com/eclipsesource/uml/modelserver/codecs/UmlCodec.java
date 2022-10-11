@@ -24,21 +24,26 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.XMLResource;
-import org.eclipse.emfcloud.modelserver.common.codecs.Codec;
 import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
 import org.eclipse.emfcloud.modelserver.common.codecs.EncodingException;
+import org.eclipse.emfcloud.modelserver.common.codecs.XmiCodec;
 import org.eclipse.emfcloud.modelserver.jsonschema.Json;
 import org.eclipse.uml2.uml.resource.UMLResource;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
-public class UmlCodec implements Codec {
+public class UmlCodec extends XmiCodec {
 
    private static Logger LOGGER = LogManager.getLogger(UmlCodec.class.getSimpleName());
 
    @Override
    public JsonNode encode(final EObject eObject) throws EncodingException {
       Resource originalResource = eObject.eResource();
+
+      if (originalResource == null) {
+         return super.encode(eObject);
+      }
+
       URI originalURI = originalResource.getURI();
       // temporarily set different URI to serialize
       eObject.eResource().setURI(URI.createURI("virtual.uml"));
@@ -58,17 +63,13 @@ public class UmlCodec implements Codec {
    }
 
    @Override
-   public Optional<EObject> decode(final String payload) throws DecodingException {
-      return decode(payload, null);
-   }
-
-   @Override
    public Optional<EObject> decode(final String payload, final URI workspaceURI) throws DecodingException {
       ResourceSet resourceSet = new ResourceSetImpl();
       Optional<Resource> resource = decode(resourceSet, "virtual.uml", workspaceURI, payload);
       return resource.map(r -> r.getContents().isEmpty() ? null : r.getContents().get(0));
    }
 
+   @Override
    public Optional<Resource> decode(final ResourceSet resourceSet, final String modelURI, final URI workspaceURI,
       final String payload)
       throws DecodingException {

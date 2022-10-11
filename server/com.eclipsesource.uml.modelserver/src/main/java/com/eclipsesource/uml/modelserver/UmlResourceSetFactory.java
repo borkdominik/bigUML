@@ -10,9 +10,6 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver;
 
-import java.io.IOException;
-import java.util.Collections;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.emf.common.util.URI;
@@ -50,23 +47,7 @@ public class UmlResourceSetFactory extends DefaultResourceSetFactory {
          NotationResource.FILE_EXTENSION, NotationResource.FACTORY);
 
       UMLResourcesUtil.init(resourceSet);
-      loadResourceLibraries(resourceSet);
 
       return resourceSet;
    }
-
-   protected void loadResourceLibraries(final ResourceSet resourceSet) {
-      try {
-         resourceSet.getResource(URI.createURI(UMLResource.UML_PRIMITIVE_TYPES_LIBRARY_URI), true)
-            .load(Collections.EMPTY_MAP);
-         resourceSet.getResource(URI.createURI(UMLResource.ECORE_PRIMITIVE_TYPES_LIBRARY_URI), true)
-            .load(Collections.EMPTY_MAP);
-         resourceSet.getResource(URI.createURI(UMLResource.ECORE_PROFILE_URI), true)
-            .load(Collections.EMPTY_MAP);
-      } catch (IOException e) {
-         LOG.debug("Could not load resource libraries for resourceSet with URI: " + resourceSet.toString());
-         e.printStackTrace();
-      }
-   }
-
 }

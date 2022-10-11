@@ -10,38 +10,24 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.communication_diagram.operations;
 
-import java.util.List;
-
-import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.AbstractEMSOperationHandler;
+import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.AbstractEMSCreateNodeOperationHandler;
 import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
-import org.eclipse.glsp.server.operations.Operation;
 import org.eclipse.glsp.server.types.GLSPServerException;
 
 import com.eclipsesource.uml.glsp.model.UmlModelServerAccess;
-import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.eclipsesource.uml.glsp.uml.communication_diagram.constants.CommunicationTypes;
 import com.eclipsesource.uml.modelserver.commands.communication.interaction.AddInteractionCommandContribution;
-import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 
 public class CreateInteractionNodeOperationHandler
-   extends AbstractEMSOperationHandler<CreateNodeOperation> {
-   private static List<String> handledElementTypeIds = Lists.newArrayList(CommunicationTypes.INTERACTION);
-
-   @Inject
-   protected UmlModelState modelState;
+   extends AbstractEMSCreateNodeOperationHandler {
 
    @Inject
    private UmlModelServerAccess modelServerAccess;
 
-   @Override
-   public boolean handles(final Operation execAction) {
-      if (execAction instanceof CreateNodeOperation) {
-         CreateNodeOperation action = (CreateNodeOperation) execAction;
-         return handledElementTypeIds.contains(action.getElementTypeId());
-      }
-      return false;
+   public CreateInteractionNodeOperationHandler() {
+      super(CommunicationTypes.INTERACTION);
    }
 
    @Override

@@ -21,6 +21,8 @@ import org.eclipse.emfcloud.modelserver.emf.configuration.EPackageConfiguration;
 import org.eclipse.emfcloud.modelserver.notation.integration.EMSNotationModelServerModule;
 import org.eclipse.emfcloud.modelserver.notation.integration.NotationPackageConfiguration;
 import org.eclipse.emfcloud.modelserver.notation.integration.NotationResource;
+import org.eclipse.glsp.server.emf.EMFIdGenerator;
+import org.eclipse.glsp.server.emf.idgen.FragmentIdGenerator;
 import org.eclipse.uml2.uml.resource.UMLResource;
 
 import com.eclipsesource.uml.modelserver.codecs.UmlCodecProvider;
@@ -40,8 +42,16 @@ import com.eclipsesource.uml.modelserver.commands.communication.message.SetMessa
 import com.eclipsesource.uml.modelserver.resource.UmlNotationPackageConfiguration;
 import com.eclipsesource.uml.modelserver.resource.UmlPackageConfiguration;
 import com.eclipsesource.uml.modelserver.routing.UmlModelServerRouting;
+import com.google.inject.Singleton;
 
 public class UmlModelServerModule extends EMSNotationModelServerModule {
+
+   @Override
+   protected void configure() {
+      super.configure();
+      // TODO: Somehow use this also in the other places in the commands
+      bind(EMFIdGenerator.class).to(FragmentIdGenerator.class).in(Singleton.class);
+   }
 
    @Override
    protected Class<? extends ModelResourceManager> bindModelResourceManager() {

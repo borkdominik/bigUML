@@ -10,16 +10,21 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp;
 
+import java.net.MalformedURLException;
+
+import org.eclipse.emfcloud.modelserver.client.v2.ModelServerClientV2;
 import org.eclipse.emfcloud.modelserver.glsp.EMSGLSPServer;
+
+import com.eclipsesource.uml.modelserver.UmlModelServerClient;
 
 public class UmlGLSPServer extends EMSGLSPServer {
 
-   /*-
    @Override
    protected ModelServerClientV2 createModelServerClient(final String modelServerURL) throws MalformedURLException {
       return new UmlModelServerClient(modelServerURL);
    }
-   
+
+   /*-
    @Override
    public CompletableFuture<Void> disposeClientSession(final DisposeClientSessionParameters params) {
       var modelServerClient = modelServerClientProvider.get();

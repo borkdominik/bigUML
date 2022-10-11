@@ -18,8 +18,8 @@ import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.server.features.validation.Marker;
 import org.eclipse.glsp.server.features.validation.ModelValidator;
 
+import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.eclipsesource.uml.glsp.features.validation.validators.CommunicationValidator;
-import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.google.inject.Inject;
 
 public class UmlModelValidator implements ModelValidator {

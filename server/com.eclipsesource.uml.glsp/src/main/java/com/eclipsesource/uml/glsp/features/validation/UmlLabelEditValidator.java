@@ -16,8 +16,8 @@ import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.server.features.directediting.LabelEditValidator;
 import org.eclipse.glsp.server.features.directediting.ValidationStatus;
 
+import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.eclipsesource.uml.glsp.features.validation.validators.CommunicationValidator;
-import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.google.inject.Inject;
 
 public class UmlLabelEditValidator implements LabelEditValidator {

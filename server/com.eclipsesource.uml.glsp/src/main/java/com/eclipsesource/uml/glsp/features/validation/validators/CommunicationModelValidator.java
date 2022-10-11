@@ -23,7 +23,7 @@ import org.eclipse.glsp.server.features.validation.Marker;
 import org.eclipse.glsp.server.features.validation.ModelValidator;
 import org.eclipse.uml2.uml.Interaction;
 
-import com.eclipsesource.uml.glsp.model.UmlModelState;
+import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.google.inject.Inject;
 
 public class CommunicationModelValidator implements ModelValidator {

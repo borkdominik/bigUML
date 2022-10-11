@@ -18,9 +18,9 @@ import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.server.actions.AbstractActionHandler;
 import org.eclipse.glsp.server.actions.Action;
 
+import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.eclipsesource.uml.glsp.features.outline.generator.DefaultOutlineGenerator;
 import com.eclipsesource.uml.glsp.features.outline.generator.DiagramOutlineGenerator;
-import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.google.inject.Inject;
 
 public class RequestOutlineHandler extends AbstractActionHandler<RequestOutlineAction> {

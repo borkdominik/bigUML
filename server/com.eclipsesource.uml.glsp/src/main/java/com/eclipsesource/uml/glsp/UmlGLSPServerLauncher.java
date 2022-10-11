@@ -21,6 +21,9 @@ import org.eclipse.glsp.layout.ElkLayoutEngine;
 import org.eclipse.glsp.server.launch.SocketGLSPServerLauncher;
 import org.eclipse.glsp.server.utils.LaunchUtil;
 
+import com.eclipsesource.uml.glsp.core.UmlDiagramModule;
+import com.eclipsesource.uml.glsp.core.UmlServerModule;
+
 public class UmlGLSPServerLauncher {
 
    private static final Logger LOGGER = LogManager.getLogger(UmlGLSPServerLauncher.class.getSimpleName());

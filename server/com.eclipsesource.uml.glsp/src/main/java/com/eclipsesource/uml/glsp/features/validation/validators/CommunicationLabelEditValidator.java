@@ -21,8 +21,8 @@ import org.eclipse.uml2.uml.Interaction;
 import org.eclipse.uml2.uml.Lifeline;
 import org.eclipse.uml2.uml.Message;
 
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.uml.communication_diagram.constants.CommunicationTypes;
+import com.eclipsesource.uml.glsp.core.model.UmlModelState;
+import com.eclipsesource.uml.glsp.diagram.communication_diagram.constants.CommunicationTypes;
 import com.google.inject.Inject;
 
 public class CommunicationLabelEditValidator implements LabelEditValidator {

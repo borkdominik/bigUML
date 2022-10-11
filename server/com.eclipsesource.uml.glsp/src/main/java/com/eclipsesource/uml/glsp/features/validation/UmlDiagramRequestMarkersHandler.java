@@ -16,7 +16,7 @@ import org.eclipse.glsp.server.features.validation.RequestMarkersAction;
 import org.eclipse.glsp.server.features.validation.RequestMarkersHandler;
 import org.eclipse.glsp.server.features.validation.SetMarkersAction;
 
-import com.eclipsesource.uml.glsp.model.UmlModelState;
+import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.google.inject.Inject;
 
 public class UmlDiagramRequestMarkersHandler extends AbstractActionHandler<RequestMarkersAction> {

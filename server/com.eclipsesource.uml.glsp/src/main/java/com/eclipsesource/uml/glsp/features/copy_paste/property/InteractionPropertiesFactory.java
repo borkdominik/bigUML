@@ -16,10 +16,10 @@ import org.eclipse.glsp.graph.GEdge;
 import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.GNode;
 
-import com.eclipsesource.uml.glsp.uml.communication_diagram.constants.CommunicationTypes;
-import com.eclipsesource.uml.glsp.utils.UmlIDUtil;
-import com.eclipsesource.uml.glsp.utils.gmodel.GModelFilterUtil;
-import com.eclipsesource.uml.modelserver.commands.communication.interaction.InteractionCopyableProperties;
+import com.eclipsesource.uml.glsp.core.utils.UmlIDUtil;
+import com.eclipsesource.uml.glsp.core.utils.gmodel.GModelFilterUtil;
+import com.eclipsesource.uml.glsp.diagram.communication_diagram.constants.CommunicationTypes;
+import com.eclipsesource.uml.modelserver.diagram.communication.interaction.InteractionCopyableProperties;
 
 public class InteractionPropertiesFactory {
 

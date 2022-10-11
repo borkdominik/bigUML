@@ -15,9 +15,9 @@ import java.awt.geom.Point2D;
 import org.eclipse.glsp.graph.GEdge;
 import org.eclipse.glsp.graph.GLabel;
 
-import com.eclipsesource.uml.glsp.utils.UmlIDUtil;
-import com.eclipsesource.uml.glsp.utils.gmodel.GModelFilterUtil;
-import com.eclipsesource.uml.modelserver.commands.communication.message.MessageCopyableProperties;
+import com.eclipsesource.uml.glsp.core.utils.UmlIDUtil;
+import com.eclipsesource.uml.glsp.core.utils.gmodel.GModelFilterUtil;
+import com.eclipsesource.uml.modelserver.diagram.communication.message.MessageCopyableProperties;
 
 public class MessagePropertiesFactory {
 

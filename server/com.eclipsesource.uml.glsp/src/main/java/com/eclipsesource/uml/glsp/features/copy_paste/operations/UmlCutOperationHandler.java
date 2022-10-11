@@ -19,9 +19,9 @@ import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.operations.CutOperation;
 import org.eclipse.glsp.server.operations.DeleteOperation;
 
-import com.eclipsesource.uml.glsp.model.UmlModelState;
-import com.eclipsesource.uml.glsp.uml.communication_diagram.constants.CommunicationTypes;
-import com.eclipsesource.uml.glsp.utils.gmodel.GModelFilterUtil;
+import com.eclipsesource.uml.glsp.core.model.UmlModelState;
+import com.eclipsesource.uml.glsp.core.utils.gmodel.GModelFilterUtil;
+import com.eclipsesource.uml.glsp.diagram.communication_diagram.constants.CommunicationTypes;
 import com.google.inject.Inject;
 
 public class UmlCutOperationHandler

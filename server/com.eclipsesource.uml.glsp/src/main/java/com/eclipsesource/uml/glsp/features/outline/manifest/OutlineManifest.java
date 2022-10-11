@@ -13,12 +13,12 @@ package com.eclipsesource.uml.glsp.features.outline.manifest;
 import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.ActionHandler;
 
+import com.eclipsesource.uml.glsp.core.manifest.contributions.ActionHandlerContribution;
+import com.eclipsesource.uml.glsp.core.manifest.contributions.ClientActionContribution;
 import com.eclipsesource.uml.glsp.features.outline.actions.RequestOutlineHandler;
 import com.eclipsesource.uml.glsp.features.outline.actions.SetOutlineAction;
 import com.eclipsesource.uml.glsp.features.outline.generator.DefaultOutlineGeneratorImpl;
 import com.eclipsesource.uml.glsp.features.outline.generator.DefaultOutlineGenerator;
-import com.eclipsesource.uml.glsp.manifest.contributions.ActionHandlerContribution;
-import com.eclipsesource.uml.glsp.manifest.contributions.ClientActionContribution;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;

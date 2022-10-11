@@ -13,7 +13,7 @@ import org.eclipse.glsp.server.features.validation.ModelValidator;
 import org.eclipse.uml2.uml.Association;
 import org.eclipse.uml2.uml.Class;
 
-import com.eclipsesource.uml.glsp.model.UmlModelState;
+import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.google.inject.Inject;
 
 public class UmlDiagramModelValidator implements ModelValidator {

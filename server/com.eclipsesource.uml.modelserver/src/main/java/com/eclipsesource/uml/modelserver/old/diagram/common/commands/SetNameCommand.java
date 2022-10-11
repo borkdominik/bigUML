@@ -1,4 +1,4 @@
-package com.eclipsesource.uml.modelserver.diagram.commons.commands;
+package com.eclipsesource.uml.modelserver.old.diagram.common.commands;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;

@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.diagram.commons.contributions;
+package com.eclipsesource.uml.modelserver.old.diagram.common.contributions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +23,9 @@ import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
 import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
 import org.eclipse.glsp.graph.GPoint;
 
-import com.eclipsesource.uml.modelserver.diagram.commons.notation.ChangeRoutingPointsCommand;
+import com.eclipsesource.uml.modelserver.diagram.commons.contributions.UmlNotationCommandContribution;
 import com.eclipsesource.uml.modelserver.diagram.util.UmlNotationCommandUtil;
+import com.eclipsesource.uml.modelserver.old.diagram.common.notation.ChangeRoutingPointsCommand;
 
 public class ChangeRoutingPointsCommandContribution extends UmlNotationCommandContribution {
 

@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.diagram.commons.notation;
+package com.eclipsesource.uml.modelserver.old.diagram.common.notation;
 
 import java.util.function.Supplier;
 
@@ -20,6 +20,8 @@ import org.eclipse.glsp.graph.GPoint;
 
 import org.eclipse.glsp.server.emf.model.notation.NotationFactory;
 import org.eclipse.glsp.server.emf.model.notation.Shape;
+
+import com.eclipsesource.uml.modelserver.diagram.commons.notation.UmlNotationElementCommand;
 
 public class AddGenericShapeCommand extends UmlNotationElementCommand {
 

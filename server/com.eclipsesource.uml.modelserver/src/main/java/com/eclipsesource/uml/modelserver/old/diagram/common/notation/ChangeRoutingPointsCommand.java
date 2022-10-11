@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.diagram.commons.notation;
+package com.eclipsesource.uml.modelserver.old.diagram.common.notation;
 
 import java.util.List;
 
@@ -17,6 +17,7 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.emf.model.notation.Edge;
 
+import com.eclipsesource.uml.modelserver.diagram.commons.notation.UmlNotationElementCommand;
 import com.eclipsesource.uml.modelserver.diagram.util.UmlNotationCommandUtil;
 
 public class ChangeRoutingPointsCommand extends UmlNotationElementCommand {

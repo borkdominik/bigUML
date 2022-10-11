@@ -18,13 +18,15 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emfcloud.modelserver.notation.integration.NotationResource;
 import org.eclipse.glsp.graph.GDimension;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.util.GraphUtil;
+import org.eclipse.glsp.server.emf.model.notation.Diagram;
+import org.eclipse.glsp.server.emf.model.notation.NotationElement;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.PackageableElement;
 
-import org.eclipse.glsp.server.emf.model.notation.NotationElement;
 import com.eclipsesource.uml.modelserver.unotation.UmlDiagram;
 
 public final class UmlNotationCommandUtil {
@@ -49,12 +51,12 @@ public final class UmlNotationCommandUtil {
       return gDimension;
    }
 
-   public static UmlDiagram getDiagram(final URI modelUri, final EditingDomain domain) {
+   public static Diagram getDiagram(final URI modelUri, final EditingDomain domain) {
       Resource notationResource = domain.getResourceSet()
-         .getResource(modelUri.trimFileExtension().appendFileExtension(UmlNotationUtil.NOTATION_EXTENSION), false);
+         .getResource(modelUri.trimFileExtension().appendFileExtension(NotationResource.FILE_EXTENSION), false);
       EObject notationRoot = notationResource.getContents().get(0);
       if (!(notationRoot instanceof UmlDiagram)) {}
-      return (UmlDiagram) notationRoot;
+      return (Diagram) notationRoot;
    }
 
    public static String getSemanticProxyUri(final PackageableElement element) {

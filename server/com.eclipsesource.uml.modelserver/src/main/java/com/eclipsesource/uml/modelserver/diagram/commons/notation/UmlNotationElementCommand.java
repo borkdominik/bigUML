@@ -14,15 +14,15 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
+import org.eclipse.glsp.server.emf.model.notation.Diagram;
 import org.eclipse.uml2.uml.Model;
 
 import com.eclipsesource.uml.modelserver.diagram.util.UmlNotationCommandUtil;
 import com.eclipsesource.uml.modelserver.diagram.util.UmlSemanticCommandUtil;
-import com.eclipsesource.uml.modelserver.unotation.UmlDiagram;
 
 public abstract class UmlNotationElementCommand extends RecordingCommand {
 
-   protected final UmlDiagram umlDiagram;
+   protected final Diagram umlDiagram;
    protected final Model umlModel;
 
    protected final EditingDomain domain;

@@ -12,15 +12,12 @@ package com.eclipsesource.uml.glsp.diagram.communication_diagram.operations;
 
 import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
-import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.AbstractEMSOperationHandler;
+import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.AbstractEMSCreateEdgeOperationHandler;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.actions.ServerMessageAction;
 import org.eclipse.glsp.server.operations.CreateEdgeOperation;
-import org.eclipse.glsp.server.operations.Operation;
 import org.eclipse.glsp.server.types.GLSPServerException;
 import org.eclipse.glsp.server.types.Severity;
 import org.eclipse.uml2.uml.Lifeline;
@@ -29,27 +26,21 @@ import com.eclipsesource.uml.glsp.core.model.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.eclipsesource.uml.glsp.diagram.communication_diagram.constants.CommunicationTypes;
 import com.eclipsesource.uml.modelserver.diagram.communication.message.AddMessageCommandContribution;
-import com.google.common.collect.Lists;
 
 public class CreateMessageEdgeOperationHandler
-   extends AbstractEMSOperationHandler<CreateEdgeOperation> {
-   private static List<String> handledElementTypeIds = Lists.newArrayList(CommunicationTypes.MESSAGE);
+   extends AbstractEMSCreateEdgeOperationHandler {
 
    @Inject
    private ActionDispatcher actionDispatcher;
+
    @Inject
    protected UmlModelState modelState;
 
    @Inject
    private UmlModelServerAccess modelServerAccess;
 
-   @Override
-   public boolean handles(final Operation execAction) {
-      if (execAction instanceof CreateEdgeOperation) {
-         CreateEdgeOperation action = (CreateEdgeOperation) execAction;
-         return handledElementTypeIds.contains(action.getElementTypeId());
-      }
-      return false;
+   public CreateMessageEdgeOperationHandler() {
+      super(CommunicationTypes.MESSAGE);
    }
 
    @Override

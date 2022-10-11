@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.diagram.commons.contributions;
+package com.eclipsesource.uml.modelserver.old.diagram.common.contributions;
 
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.URI;
@@ -20,8 +20,9 @@ import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
 import org.eclipse.glsp.graph.GDimension;
 import org.eclipse.glsp.graph.GPoint;
 
-import com.eclipsesource.uml.modelserver.diagram.commons.notation.ChangeBoundsCommand;
+import com.eclipsesource.uml.modelserver.diagram.commons.contributions.UmlNotationCommandContribution;
 import com.eclipsesource.uml.modelserver.diagram.util.UmlNotationCommandUtil;
+import com.eclipsesource.uml.modelserver.old.diagram.common.notation.ChangeBoundsCommand;
 
 public class ChangeBoundsCommandContribution extends UmlNotationCommandContribution {
 

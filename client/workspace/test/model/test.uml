@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_nD7_AEiTEe287ptuQ4W3Iw" name="test">
-  <packagedElement xmi:type="uml:Interaction" xmi:id="_R3O6MEljEe2IxsdMH-l2-w" name="NewInteraction0"/>
-  <packagedElement xmi:type="uml:Interaction" xmi:id="_sp5EYEljEe29opaQLlsCHg" name="NewInteraction1"/>
+  <packagedElement xmi:type="uml:Interaction" xmi:id="_R3O6MEljEe2IxsdMH-l2-w" name="NewInteraction0">
+    <lifeline xmi:id="_Ti964UlxEe28UdcTpFNaww" name="NewLifeline1"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Interaction" xmi:id="_sp5EYEljEe29opaQLlsCHg" name="NewInteraction1">
+    <lifeline xmi:id="_UxQ6AElxEe28UdcTpFNaww" name="NewLifeline1"/>
+    <lifeline xmi:id="_adutkElxEe28UdcTpFNaww" name="NewLifeline2"/>
+  </packagedElement>
 </uml:Model>

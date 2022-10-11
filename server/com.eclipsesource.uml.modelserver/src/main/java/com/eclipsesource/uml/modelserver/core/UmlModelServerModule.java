@@ -29,8 +29,6 @@ import com.eclipsesource.uml.modelserver.core.codecs.UmlCodecProvider;
 import com.eclipsesource.uml.modelserver.core.resource.UmlNotationPackageConfiguration;
 import com.eclipsesource.uml.modelserver.core.resource.UmlPackageConfiguration;
 import com.eclipsesource.uml.modelserver.core.routing.UmlModelServerRouting;
-import com.eclipsesource.uml.modelserver.diagram.commons.contributions.ChangeBoundsCommandContribution;
-import com.eclipsesource.uml.modelserver.diagram.commons.contributions.ChangeRoutingPointsCommandContribution;
 import com.eclipsesource.uml.modelserver.diagram.communication.interaction.AddInteractionCommandContribution;
 import com.eclipsesource.uml.modelserver.diagram.communication.interaction.CopyInteractionCommandContribution;
 import com.eclipsesource.uml.modelserver.diagram.communication.interaction.RemoveInteractionCommandContribution;
@@ -80,9 +78,6 @@ public class UmlModelServerModule extends EMSNotationModelServerModule {
    @Override
    protected void configureCommandCodecs(final MapBinding<String, CommandContribution> binding) {
       super.configureCommandCodecs(binding);
-      // COMMONS
-      binding.put(ChangeBoundsCommandContribution.TYPE, ChangeBoundsCommandContribution.class);
-      binding.put(ChangeRoutingPointsCommandContribution.TYPE, ChangeRoutingPointsCommandContribution.class);
 
       // UML Communication
       binding.put(AddInteractionCommandContribution.TYPE, AddInteractionCommandContribution.class);

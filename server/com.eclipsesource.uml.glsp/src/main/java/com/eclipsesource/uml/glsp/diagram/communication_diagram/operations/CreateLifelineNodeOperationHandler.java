@@ -12,12 +12,9 @@ package com.eclipsesource.uml.glsp.diagram.communication_diagram.operations;
 
 import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
 
-import java.util.List;
-
-import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.AbstractEMSOperationHandler;
+import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.AbstractEMSCreateNodeOperationHandler;
 import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
-import org.eclipse.glsp.server.operations.Operation;
 import org.eclipse.glsp.server.types.GLSPServerException;
 import org.eclipse.uml2.uml.Interaction;
 import org.eclipse.uml2.uml.PackageableElement;
@@ -26,33 +23,25 @@ import com.eclipsesource.uml.glsp.core.model.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.eclipsesource.uml.glsp.diagram.communication_diagram.constants.CommunicationTypes;
 import com.eclipsesource.uml.modelserver.diagram.communication.lifeline.AddLifelineCommandContribution;
-import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 
 public class CreateLifelineNodeOperationHandler
-   extends AbstractEMSOperationHandler<CreateNodeOperation> {
-
-   private static List<String> handledElementTypeIds = Lists.newArrayList(CommunicationTypes.LIFELINE);
-
-   @Inject
-   protected UmlModelState modelState;
+   extends AbstractEMSCreateNodeOperationHandler {
 
    @Inject
    private UmlModelServerAccess modelServerAccess;
 
-   @Override
-   public boolean handles(final Operation execAction) {
-      if (execAction instanceof CreateNodeOperation) {
-         CreateNodeOperation action = (CreateNodeOperation) execAction;
-         return handledElementTypeIds.contains(action.getElementTypeId());
-      }
-      return false;
+   @Inject
+   private UmlModelState modelState;
+
+   public CreateLifelineNodeOperationHandler() {
+      super(CommunicationTypes.LIFELINE);
    }
 
    @Override
    public void executeOperation(final CreateNodeOperation operation) {
-      String containerId = operation.getContainerId();
-      String elementTypeId = operation.getElementTypeId();
+      var containerId = operation.getContainerId();
+      var elementTypeId = operation.getElementTypeId();
 
       PackageableElement container = getOrThrow(modelState.getIndex().getEObject(containerId),
          PackageableElement.class, "No valid container with id " + operation.getContainerId() + " found");
@@ -74,6 +63,6 @@ public class CreateLifelineNodeOperationHandler
    }
 
    @Override
-   public String getLabel() { return "Create communication lifeline edge handler"; }
+   public String getLabel() { return "Create communication lifeline node handler"; }
 
 }

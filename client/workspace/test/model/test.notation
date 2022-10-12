@@ -15,4 +15,12 @@
     <position x="20.0" y="156.0"/>
     <size width="155.515625" height="42.0"/>
   </elements>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_GKhFEUoLEe29O5XQUrDqDw"/>
+    <position x="262.0" y="29.0"/>
+    <size width="155.515625" height="42.0"/>
+  </elements>
+  <elements xsi:type="notation:Edge">
+    <semanticElement/>
+  </elements>
 </notation:Diagram>

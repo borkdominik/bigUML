@@ -23,11 +23,11 @@ import org.eclipse.uml2.uml.Message;
 import com.eclipsesource.uml.glsp.core.model.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.eclipsesource.uml.glsp.core.operations.DiagramEditLabelOperationHandler;
-import com.eclipsesource.uml.glsp.core.utils.UmlIDUtil;
 import com.eclipsesource.uml.glsp.core.utils.UmlConfig.Types;
-import com.eclipsesource.uml.modelserver.diagram.communication_diagram.commands.interaction.SetInteractionNameContribution;
-import com.eclipsesource.uml.modelserver.diagram.communication_diagram.commands.lifeline.SetLifelineNameContribution;
-import com.eclipsesource.uml.modelserver.diagram.communication_diagram.commands.message.SetMessageNameContribution;
+import com.eclipsesource.uml.glsp.core.utils.UmlIDUtil;
+import com.eclipsesource.uml.glsp.diagram.communication_diagram.constants.CommunicationTypes;
+import com.eclipsesource.uml.modelserver.uml.diagram.common_diagram.commands.RenameElementContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.message.SetMessageNameContribution;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 
@@ -63,7 +63,7 @@ public class CommunicationLabelEditOperationHandler implements DiagramEditLabelO
 
             if (semanticElement instanceof Lifeline) {
                modelServerAccess
-                  .exec(SetLifelineNameContribution.create(
+                  .exec(RenameElementContribution.create(
                      (Lifeline) semanticElement,
                      inputText))
                   .thenAccept(response -> {
@@ -73,7 +73,7 @@ public class CommunicationLabelEditOperationHandler implements DiagramEditLabelO
                   });
             } else if (semanticElement instanceof Interaction) {
                modelServerAccess
-                  .exec(SetInteractionNameContribution.create((Interaction) semanticElement, inputText))
+                  .exec(RenameElementContribution.create((Interaction) semanticElement, inputText))
                   .thenAccept(response -> {
                      if (response.body() == null || response.body().isEmpty()) {
                         throw new GLSPServerException("Could not rename Interaction to: " + inputText);
@@ -81,7 +81,7 @@ public class CommunicationLabelEditOperationHandler implements DiagramEditLabelO
                   });
             }
             break;
-         case Types.LABEL_EDGE_NAME:
+         case CommunicationTypes.MESSAGE_LABEL_ARROW_EDGE_NAME:
             containerElementId = UmlIDUtil.getElementIdFromLabelName(graphicalElementId);
             semanticElement = getOrThrow(modelIndex.getEObject(containerElementId),
                Element.class, "No valid container with id " + graphicalElementId + " found");

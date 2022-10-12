@@ -19,7 +19,7 @@ import org.eclipse.glsp.graph.GNode;
 import com.eclipsesource.uml.glsp.core.utils.UmlIDUtil;
 import com.eclipsesource.uml.glsp.core.utils.gmodel.GModelFilterUtil;
 import com.eclipsesource.uml.glsp.diagram.communication_diagram.constants.CommunicationTypes;
-import com.eclipsesource.uml.modelserver.diagram.communication_diagram.feature.copy_paste.interaction.InteractionCopyableProperties;
+import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.feature.copy_paste.interaction.InteractionCopyableProperties;
 
 public class InteractionPropertiesFactory {
 

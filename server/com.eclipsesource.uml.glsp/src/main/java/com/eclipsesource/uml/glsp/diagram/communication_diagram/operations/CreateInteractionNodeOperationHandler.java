@@ -17,7 +17,7 @@ import org.eclipse.glsp.server.types.GLSPServerException;
 
 import com.eclipsesource.uml.glsp.core.model.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.diagram.communication_diagram.constants.CommunicationTypes;
-import com.eclipsesource.uml.modelserver.diagram.communication_diagram.commands.interaction.AddInteractionContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.interaction.AddInteractionContribution;
 import com.google.inject.Inject;
 
 public class CreateInteractionNodeOperationHandler

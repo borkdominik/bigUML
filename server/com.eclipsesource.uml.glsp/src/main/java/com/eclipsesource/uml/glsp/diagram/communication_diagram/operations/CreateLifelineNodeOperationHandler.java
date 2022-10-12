@@ -22,7 +22,7 @@ import org.eclipse.uml2.uml.PackageableElement;
 import com.eclipsesource.uml.glsp.core.model.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.eclipsesource.uml.glsp.diagram.communication_diagram.constants.CommunicationTypes;
-import com.eclipsesource.uml.modelserver.diagram.communication_diagram.commands.lifeline.AddLifelineContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.lifeline.AddLifelineContribution;
 import com.google.inject.Inject;
 
 public class CreateLifelineNodeOperationHandler

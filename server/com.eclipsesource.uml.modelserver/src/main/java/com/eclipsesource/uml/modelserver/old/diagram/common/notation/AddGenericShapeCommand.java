@@ -21,9 +21,9 @@ import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.emf.model.notation.NotationFactory;
 import org.eclipse.glsp.server.emf.model.notation.Shape;
 
-import com.eclipsesource.uml.modelserver.diagram.base.notation.UmlNotationCommand;
+import com.eclipsesource.uml.modelserver.uml.notation.UmlNotationElementCommand;
 
-public class AddGenericShapeCommand extends UmlNotationCommand {
+public class AddGenericShapeCommand extends UmlNotationElementCommand {
 
    protected final GPoint shapePosition;
    protected String semanticProxyUri;
@@ -62,7 +62,7 @@ public class AddGenericShapeCommand extends UmlNotationCommand {
       }
       newShape.setSemanticElement(proxy);
 
-      umlDiagram.getElements().add(newShape);
+      diagram.getElements().add(newShape);
    }
 
 }

@@ -15,7 +15,7 @@ import org.eclipse.glsp.graph.GModelRoot;
 import org.eclipse.glsp.server.emf.model.notation.Diagram;
 import org.eclipse.glsp.server.types.GLSPServerException;
 
-import com.eclipsesource.uml.modelserver.diagram.util.UmlNotationUtil;
+import com.eclipsesource.uml.modelserver.uml.util.UmlNotationUtil;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 
 // TODO: Make those getter better

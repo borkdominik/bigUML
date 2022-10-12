@@ -29,7 +29,8 @@ import com.eclipsesource.uml.modelserver.core.codec.UmlCodecProvider;
 import com.eclipsesource.uml.modelserver.core.resource.UmlNotationPackageConfiguration;
 import com.eclipsesource.uml.modelserver.core.resource.UmlPackageConfiguration;
 import com.eclipsesource.uml.modelserver.core.routing.UmlModelServerRouting;
-import com.eclipsesource.uml.modelserver.diagram.communication_diagram.manifest.CommunicationManifest;
+import com.eclipsesource.uml.modelserver.uml.diagram.common_diagram.manifest.CommonManifest;
+import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.manifest.CommunicationManifest;
 import com.google.inject.Singleton;
 
 public class UmlModelServerModule extends EMSNotationModelServerModule {
@@ -40,6 +41,7 @@ public class UmlModelServerModule extends EMSNotationModelServerModule {
       // TODO: Somehow use this also in the other places in the commands
       bind(EMFIdGenerator.class).to(FragmentIdGenerator.class).in(Singleton.class);
 
+      install(new CommonManifest());
       install(new CommunicationManifest());
    }
 

@@ -17,7 +17,7 @@ import org.eclipse.glsp.graph.GNode;
 
 import com.eclipsesource.uml.glsp.core.utils.UmlIDUtil;
 import com.eclipsesource.uml.glsp.core.utils.gmodel.GModelFilterUtil;
-import com.eclipsesource.uml.modelserver.diagram.communication_diagram.feature.copy_paste.lifeline.LifelineCopyableProperties;
+import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.feature.copy_paste.lifeline.LifelineCopyableProperties;
 
 public class LifelinePropertiesFactory {
 

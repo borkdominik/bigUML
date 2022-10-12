@@ -19,9 +19,9 @@ import org.eclipse.uml2.uml.Message;
 import com.eclipsesource.uml.glsp.core.model.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.eclipsesource.uml.glsp.core.operations.DiagramDeleteOperationHandler;
-import com.eclipsesource.uml.modelserver.diagram.communication_diagram.commands.interaction.RemoveInteractionContribution;
-import com.eclipsesource.uml.modelserver.diagram.communication_diagram.commands.lifeline.RemoveLifelineContribution;
-import com.eclipsesource.uml.modelserver.diagram.communication_diagram.commands.message.RemoveMessageContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.interaction.RemoveInteractionContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.lifeline.RemoveLifelineContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.message.RemoveMessageContribution;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 

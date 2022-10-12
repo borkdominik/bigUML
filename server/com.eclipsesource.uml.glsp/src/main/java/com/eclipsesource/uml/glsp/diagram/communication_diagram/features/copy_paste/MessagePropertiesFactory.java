@@ -17,7 +17,7 @@ import org.eclipse.glsp.graph.GLabel;
 
 import com.eclipsesource.uml.glsp.core.utils.UmlIDUtil;
 import com.eclipsesource.uml.glsp.core.utils.gmodel.GModelFilterUtil;
-import com.eclipsesource.uml.modelserver.diagram.communication_diagram.feature.copy_paste.message.MessageCopyableProperties;
+import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.feature.copy_paste.message.MessageCopyableProperties;
 
 public class MessagePropertiesFactory {
 

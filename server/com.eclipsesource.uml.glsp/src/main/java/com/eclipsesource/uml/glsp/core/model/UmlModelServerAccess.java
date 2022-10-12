@@ -20,10 +20,8 @@ import org.eclipse.emfcloud.modelserver.client.Response;
 import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.emfcloud.modelserver.glsp.notation.integration.EMSNotationModelServerAccess;
 import org.eclipse.glsp.server.types.GLSPServerException;
-import org.eclipse.uml2.uml.NamedElement;
 
 import com.eclipsesource.uml.modelserver.core.routing.UmlModelServerPaths;
-import com.eclipsesource.uml.modelserver.diagram.commons.RenameElementCommandContribution;
 
 public class UmlModelServerAccess extends EMSNotationModelServerAccess {
 
@@ -46,19 +44,6 @@ public class UmlModelServerAccess extends EMSNotationModelServerAccess {
          throw new GLSPServerException("Error during model loading", e);
       }
    }
-
-   /*
-    * Renaming
-    */
-   public CompletableFuture<Response<String>> renameElement(final UmlModelState modelState,
-      final NamedElement element, final String name) {
-
-      CCommand renameameCommand = RenameElementCommandContribution.create(idGenerator.getOrCreateId(element),
-         name);
-      return this.edit(renameameCommand);
-   }
-
-   // ========= DIAGRAMS =========== //
 
    public CompletableFuture<Response<String>> exec(final CCommand command) {
       return super.edit(command);

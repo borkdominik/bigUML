@@ -38,11 +38,11 @@ import com.eclipsesource.uml.glsp.diagram.communication_diagram.constants.Commun
 import com.eclipsesource.uml.glsp.diagram.communication_diagram.features.copy_paste.InteractionPropertiesFactory;
 import com.eclipsesource.uml.glsp.diagram.communication_diagram.features.copy_paste.LifelinePropertiesFactory;
 import com.eclipsesource.uml.glsp.diagram.communication_diagram.features.copy_paste.MessagePropertiesFactory;
-import com.eclipsesource.uml.modelserver.diagram.communication_diagram.feature.copy_paste.interaction.CopyInteractionCommandContribution;
-import com.eclipsesource.uml.modelserver.diagram.communication_diagram.feature.copy_paste.interaction.InteractionCopyableProperties;
-import com.eclipsesource.uml.modelserver.diagram.communication_diagram.feature.copy_paste.lifeline.CopyLifelineWithMessagesCommandContribution;
-import com.eclipsesource.uml.modelserver.diagram.communication_diagram.feature.copy_paste.lifeline.LifelineCopyableProperties;
-import com.eclipsesource.uml.modelserver.diagram.communication_diagram.feature.copy_paste.message.MessageCopyableProperties;
+import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.feature.copy_paste.interaction.CopyInteractionCommandContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.feature.copy_paste.interaction.InteractionCopyableProperties;
+import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.feature.copy_paste.lifeline.CopyLifelineWithMessagesCommandContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.feature.copy_paste.lifeline.LifelineCopyableProperties;
+import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.feature.copy_paste.message.MessageCopyableProperties;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.inject.Inject;

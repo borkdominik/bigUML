@@ -21,7 +21,6 @@ import org.eclipse.uml2.uml.Message;
 
 import com.eclipsesource.uml.modelserver.uml.constants.SemanticKeys;
 import com.eclipsesource.uml.modelserver.uml.extension.SemanticElementAccessor;
-import com.eclipsesource.uml.modelserver.uml.util.UmlSemanticCommandUtil;
 
 public class SetMessageNameContribution extends BasicCommandContribution<Command> {
 
@@ -33,7 +32,7 @@ public class SetMessageNameContribution extends BasicCommandContribution<Command
 
       command.setType(TYPE);
       command.getProperties().put(SemanticKeys.SEMANTIC_URI_FRAGMENT,
-         UmlSemanticCommandUtil.getSemanticUriFragment(message));
+         SemanticElementAccessor.getId(message));
       command.getProperties().put(NEW_NAME, newName);
 
       return command;

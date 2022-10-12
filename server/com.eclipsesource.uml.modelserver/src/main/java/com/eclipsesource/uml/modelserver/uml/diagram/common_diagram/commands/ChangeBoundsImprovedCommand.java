@@ -18,8 +18,8 @@ import org.eclipse.glsp.server.emf.model.notation.Shape;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.PackageableElement;
 
+import com.eclipsesource.uml.modelserver.uml.extension.SemanticElementAccessor;
 import com.eclipsesource.uml.modelserver.uml.notation.UmlNotationElementCommand;
-import com.eclipsesource.uml.modelserver.uml.util.UmlSemanticCommandUtil;
 
 public class ChangeBoundsImprovedCommand extends UmlNotationElementCommand {
    protected final GPoint shapePosition;
@@ -58,7 +58,7 @@ public class ChangeBoundsImprovedCommand extends UmlNotationElementCommand {
    }
 
    private void resizeContainer(final PackageableElement container, final GPoint position, final GDimension size) {
-      var containerShape = notationElementAccessor.getElement(UmlSemanticCommandUtil.getSemanticUriFragment(container),
+      var containerShape = notationElementAccessor.getElement(SemanticElementAccessor.getId(container),
          Shape.class);
       var containerSize = containerShape.getSize();
 
@@ -72,7 +72,7 @@ public class ChangeBoundsImprovedCommand extends UmlNotationElementCommand {
    }
 
    private void shiftContainer(final PackageableElement container, final GPoint position) {
-      var containerShape = notationElementAccessor.getElement(UmlSemanticCommandUtil.getSemanticUriFragment(container),
+      var containerShape = notationElementAccessor.getElement(SemanticElementAccessor.getId(container),
          Shape.class);
       var containerPosition = containerShape.getPosition();
       var containerSize = containerShape.getSize();
@@ -93,7 +93,7 @@ public class ChangeBoundsImprovedCommand extends UmlNotationElementCommand {
    }
 
    private void alignElement(final Element element, final GPoint position) {
-      var elementNotation = notationElementAccessor.getElement(UmlSemanticCommandUtil.getSemanticUriFragment(element));
+      var elementNotation = notationElementAccessor.getElement(SemanticElementAccessor.getId(element));
 
       if (elementNotation instanceof Shape) {
          var elementShape = (Shape) elementNotation;

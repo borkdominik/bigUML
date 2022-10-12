@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
 
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.TreeIterator;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.ActivityPartition;
 import org.eclipse.uml2.uml.Actor;
@@ -49,29 +48,6 @@ import org.eclipse.uml2.uml.UseCase;
 public final class UmlSemanticCommandUtil {
 
    private UmlSemanticCommandUtil() {}
-
-   public static String getSemanticUriFragment(final Element element) {
-      return EcoreUtil.getURI(element).fragment();
-   }
-
-   /*-
-   public static EObject getElement(final Model umlModel, final String semanticUriFragment) {
-      return umlModel.eResource().getEObject(semanticUriFragment);
-   }
-
-   public static <C extends Element> C getElement(final Model umlModel, final String semanticUriFragment,
-      final java.lang.Class<C> clazz) {
-      EObject element = getElement(umlModel, semanticUriFragment);
-      return clazz.cast(element);
-   }
-
-   public static Model getModel(final URI modelUri, final EditingDomain domain) {
-      Resource semanticResource = domain.getResourceSet()
-         .getResource(modelUri.trimFileExtension().appendFileExtension(UMLResource.FILE_EXTENSION), false);
-      EObject semanticRoot = semanticResource.getContents().get(0);
-      return (Model) semanticRoot;
-   }
-   */
 
    public static Type getType(final EditingDomain domain, final String typeName) {
       TreeIterator<Notifier> resourceSetContent = domain.getResourceSet().getAllContents();

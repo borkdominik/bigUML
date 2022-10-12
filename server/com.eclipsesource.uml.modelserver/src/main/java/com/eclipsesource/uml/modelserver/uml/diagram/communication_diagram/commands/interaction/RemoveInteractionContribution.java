@@ -23,7 +23,6 @@ import org.eclipse.uml2.uml.Interaction;
 
 import com.eclipsesource.uml.modelserver.uml.constants.SemanticKeys;
 import com.eclipsesource.uml.modelserver.uml.extension.SemanticElementAccessor;
-import com.eclipsesource.uml.modelserver.uml.util.UmlSemanticCommandUtil;
 
 public class RemoveInteractionContribution extends BasicCommandContribution<Command> {
 
@@ -33,8 +32,7 @@ public class RemoveInteractionContribution extends BasicCommandContribution<Comm
       var command = CCommandFactory.eINSTANCE.createCompoundCommand();
 
       command.setType(TYPE);
-      command.getProperties().put(SemanticKeys.SEMANTIC_URI_FRAGMENT,
-         UmlSemanticCommandUtil.getSemanticUriFragment(interaction));
+      command.getProperties().put(SemanticKeys.SEMANTIC_URI_FRAGMENT, SemanticElementAccessor.getId(interaction));
 
       return command;
    }

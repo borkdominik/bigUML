@@ -26,7 +26,6 @@ import com.eclipsesource.uml.modelserver.uml.constants.NotationKeys;
 import com.eclipsesource.uml.modelserver.uml.constants.SemanticKeys;
 import com.eclipsesource.uml.modelserver.uml.extension.SemanticElementAccessor;
 import com.eclipsesource.uml.modelserver.uml.util.UmlNotationCommandUtil;
-import com.eclipsesource.uml.modelserver.uml.util.UmlSemanticCommandUtil;
 
 public class AddLifelineContribution extends BasicCommandContribution<Command> {
 
@@ -41,7 +40,7 @@ public class AddLifelineContribution extends BasicCommandContribution<Command> {
       command.getProperties().put(NotationKeys.POSITION_Y,
          String.valueOf(position.getY()));
       command.getProperties().put(SemanticKeys.PARENT_SEMANTIC_URI_FRAGMENT,
-         UmlSemanticCommandUtil.getSemanticUriFragment(interaction));
+         SemanticElementAccessor.getId(interaction));
 
       return command;
    }

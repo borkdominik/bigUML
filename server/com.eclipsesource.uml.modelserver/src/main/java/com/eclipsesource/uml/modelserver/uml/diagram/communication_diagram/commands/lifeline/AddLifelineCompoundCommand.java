@@ -19,8 +19,8 @@ import org.eclipse.glsp.server.emf.model.notation.Shape;
 import org.eclipse.uml2.uml.Interaction;
 
 import com.eclipsesource.uml.modelserver.uml.extension.NotationElementAccessor;
+import com.eclipsesource.uml.modelserver.uml.extension.SemanticElementAccessor;
 import com.eclipsesource.uml.modelserver.uml.notation.commands.UmlAddShapeCommand;
-import com.eclipsesource.uml.modelserver.uml.util.UmlSemanticCommandUtil;
 
 public class AddLifelineCompoundCommand extends CompoundCommand {
    private final NotationElementAccessor notationElementAccessor;
@@ -37,7 +37,7 @@ public class AddLifelineCompoundCommand extends CompoundCommand {
    }
 
    protected GPoint shift(final Interaction interaction, final GPoint mousePosition) {
-      String semanticProxyUri = UmlSemanticCommandUtil.getSemanticUriFragment(interaction);
+      String semanticProxyUri = SemanticElementAccessor.getId(interaction);
       var interactionShape = notationElementAccessor.getElement(semanticProxyUri, Shape.class);
       var origin = interactionShape.getPosition();
       var size = interactionShape.getSize();

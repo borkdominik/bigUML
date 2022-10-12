@@ -21,7 +21,6 @@ import org.eclipse.uml2.uml.NamedElement;
 
 import com.eclipsesource.uml.modelserver.uml.constants.SemanticKeys;
 import com.eclipsesource.uml.modelserver.uml.extension.SemanticElementAccessor;
-import com.eclipsesource.uml.modelserver.uml.util.UmlCommandContributionUtil;
 
 public class RenameElementContribution extends BasicCommandContribution<Command> {
 
@@ -33,7 +32,7 @@ public class RenameElementContribution extends BasicCommandContribution<Command>
       var command = CCommandFactory.eINSTANCE.createCommand();
       command.setType(TYPE);
       command.getProperties().put(SemanticKeys.SEMANTIC_URI_FRAGMENT,
-         UmlCommandContributionUtil.getSemanticUriFragment(namedElement));
+         SemanticElementAccessor.getId(namedElement));
       command.getProperties().put(NEW_NAME, newName);
       return command;
    }

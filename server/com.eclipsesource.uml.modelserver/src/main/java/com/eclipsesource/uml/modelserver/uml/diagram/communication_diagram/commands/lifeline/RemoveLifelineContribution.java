@@ -23,7 +23,6 @@ import org.eclipse.uml2.uml.Lifeline;
 
 import com.eclipsesource.uml.modelserver.uml.constants.SemanticKeys;
 import com.eclipsesource.uml.modelserver.uml.extension.SemanticElementAccessor;
-import com.eclipsesource.uml.modelserver.uml.util.UmlNotationCommandUtil;
 
 public class RemoveLifelineContribution extends BasicCommandContribution<Command> {
 
@@ -34,7 +33,7 @@ public class RemoveLifelineContribution extends BasicCommandContribution<Command
 
       command.setType(TYPE);
       command.getProperties().put(SemanticKeys.SEMANTIC_URI_FRAGMENT,
-         UmlNotationCommandUtil.getSemanticProxyUri(lifeline));
+         SemanticElementAccessor.getId(lifeline));
 
       return command;
    }

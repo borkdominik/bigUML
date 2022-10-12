@@ -15,8 +15,8 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.glsp.server.emf.model.notation.NotationElement;
 import org.eclipse.uml2.uml.Element;
 
+import com.eclipsesource.uml.modelserver.uml.extension.SemanticElementAccessor;
 import com.eclipsesource.uml.modelserver.uml.notation.UmlNotationElementCommand;
-import com.eclipsesource.uml.modelserver.uml.util.UmlSemanticCommandUtil;
 
 public class UmlRemoveNotationElementCommand extends UmlNotationElementCommand {
 
@@ -32,7 +32,7 @@ public class UmlRemoveNotationElementCommand extends UmlNotationElementCommand {
    public UmlRemoveNotationElementCommand(final EditingDomain domain, final URI modelUri,
       final Element element) {
       super(domain, modelUri);
-      var semanticElementId = UmlSemanticCommandUtil.getSemanticUriFragment(element);
+      var semanticElementId = SemanticElementAccessor.getId(element);
 
       this.shapeToRemove = notationElementAccessor.getElement(semanticElementId,
          NotationElement.class);

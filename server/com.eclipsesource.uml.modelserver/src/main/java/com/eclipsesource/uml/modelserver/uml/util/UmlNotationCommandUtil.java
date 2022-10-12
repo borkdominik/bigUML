@@ -12,12 +12,9 @@ package com.eclipsesource.uml.modelserver.uml.util;
 
 import java.awt.geom.Point2D;
 
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.glsp.graph.GDimension;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.util.GraphUtil;
-import org.eclipse.uml2.uml.Element;
-import org.eclipse.uml2.uml.PackageableElement;
 
 public final class UmlNotationCommandUtil {
 
@@ -40,17 +37,4 @@ public final class UmlNotationCommandUtil {
          width.isEmpty() ? 0.0d : Double.parseDouble(width));
       return gDimension;
    }
-
-   public static String getSemanticProxyUri(final PackageableElement element) {
-      return EcoreUtil.getURI(element).fragment();
-   }
-
-   public static String getSemanticProxyUri(final Element element) {
-      return EcoreUtil.getURI(element).fragment();
-   }
-
-   public static String getSemanticProxyUriElement(final Element element) {
-      return EcoreUtil.getURI(element).fragment();
-   }
-
 }

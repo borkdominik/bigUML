@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Model;
@@ -38,6 +39,10 @@ public final class SemanticElementAccessor {
    }
 
    public Model getModel() { return this.model; }
+
+   public static String getId(final Element element) {
+      return EcoreUtil.getURI(element).fragment();
+   }
 
    public EObject getElement(final String semanticUriFragment) {
       return model.eResource().getEObject(semanticUriFragment);
@@ -74,5 +79,11 @@ public final class SemanticElementAccessor {
       }
 
       return null;
+   }
+
+   @SuppressWarnings("unchecked")
+   public <T extends Element> T refresh(final T element) {
+      var id = getId(element);
+      return (T) getElement(id);
    }
 }

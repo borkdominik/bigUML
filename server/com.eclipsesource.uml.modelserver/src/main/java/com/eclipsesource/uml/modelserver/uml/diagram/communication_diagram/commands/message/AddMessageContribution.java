@@ -22,7 +22,6 @@ import org.eclipse.emfcloud.modelserver.edit.command.BasicCommandContribution;
 import org.eclipse.uml2.uml.Lifeline;
 
 import com.eclipsesource.uml.modelserver.uml.extension.SemanticElementAccessor;
-import com.eclipsesource.uml.modelserver.uml.util.UmlSemanticCommandUtil;
 
 public class AddMessageContribution extends BasicCommandContribution<Command> {
 
@@ -36,9 +35,9 @@ public class AddMessageContribution extends BasicCommandContribution<Command> {
 
       command.setType(TYPE);
       command.getProperties().put(SOURCE_LIFELINE_URI_FRAGMENT,
-         UmlSemanticCommandUtil.getSemanticUriFragment(sourceLifeline));
+         SemanticElementAccessor.getId(sourceLifeline));
       command.getProperties().put(TARGET_LIFELINE_URI_FRAGMENT,
-         UmlSemanticCommandUtil.getSemanticUriFragment(targetLifeline));
+         SemanticElementAccessor.getId(targetLifeline));
 
       return command;
    }

@@ -33,7 +33,7 @@ public class RemoveInteractionCompoundCommand extends CompoundCommand {
       // Remove contained elements
       removeLifelines(interactionToRemove, domain, modelUri);
 
-      this.append(new RemoveInteractionCommand(domain, modelUri, semanticUriFragment));
+      this.append(new RemoveInteractionSemanticCommand(domain, modelUri, semanticUriFragment));
       this.append(new RemoveNotationElementCommand(domain, modelUri, semanticUriFragment));
    }
 

@@ -18,12 +18,12 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Element;
 
-import com.eclipsesource.uml.modelserver.diagram.commons.notation.UmlNotationElementCommand;
+import com.eclipsesource.uml.modelserver.diagram.base.notation.UmlNotationCommand;
 
 import org.eclipse.glsp.server.emf.model.notation.NotationElement;
 import org.eclipse.glsp.server.emf.model.notation.NotationFactory;
 
-public class ReplaceElementCommand extends UmlNotationElementCommand {
+public class ReplaceElementCommand extends UmlNotationCommand {
 
    protected String oldUri;
    protected Supplier<? extends Element> elementSupplier;

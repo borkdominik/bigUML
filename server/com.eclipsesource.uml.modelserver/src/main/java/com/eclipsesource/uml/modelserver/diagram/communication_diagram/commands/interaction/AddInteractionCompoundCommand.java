@@ -25,7 +25,7 @@ public class AddInteractionCompoundCommand extends CompoundCommand {
    public AddInteractionCompoundCommand(final EditingDomain domain, final URI modelUri, final GPoint lifelinePosition) {
 
       // Chain semantic and notation command
-      AddInteractionCommand command = new AddInteractionCommand(domain, modelUri);
+      AddInteractionSemanticCommand command = new AddInteractionSemanticCommand(domain, modelUri);
       this.append(command);
       Supplier<Interaction> semanticResultSupplier = () -> command.getNewInteraction();
       this.append(new AddShapeCommand(domain, modelUri,

@@ -17,10 +17,10 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.emf.model.notation.Edge;
 
-import com.eclipsesource.uml.modelserver.diagram.commons.notation.UmlNotationElementCommand;
+import com.eclipsesource.uml.modelserver.diagram.base.notation.UmlNotationCommand;
 import com.eclipsesource.uml.modelserver.diagram.util.UmlNotationCommandUtil;
 
-public class ChangeRoutingPointsCommand extends UmlNotationElementCommand {
+public class ChangeRoutingPointsCommand extends UmlNotationCommand {
 
    protected final Edge edge;
    protected final List<GPoint> newRoutingPoints;

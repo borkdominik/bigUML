@@ -35,7 +35,7 @@ public class AddLifelineCompoundCommand extends CompoundCommand {
       this.umlModel = UmlSemanticCommandUtil.getModel(modelUri, domain);
 
       var parentInteraction = UmlSemanticCommandUtil.getElement(umlModel, parentSemanticUriFragment, Interaction.class);
-      var command = new AddLifelineCommand(domain, modelUri, parentInteraction);
+      var command = new AddLifelineSemanticCommand(domain, modelUri, parentInteraction);
       var destination = shift(parentInteraction, lifelinePosition);
 
       this.append(command);

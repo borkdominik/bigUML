@@ -10,50 +10,33 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.old.diagram.common.contributions;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.eclipse.emf.common.command.Command;
-import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
-import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
-import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
-import org.eclipse.glsp.graph.GPoint;
-
-import com.eclipsesource.uml.modelserver.diagram.commons.contributions.UmlNotationCommandContribution;
-import com.eclipsesource.uml.modelserver.diagram.util.UmlNotationCommandUtil;
-import com.eclipsesource.uml.modelserver.old.diagram.common.notation.ChangeRoutingPointsCommand;
-
-public class ChangeRoutingPointsCommandContribution extends UmlNotationCommandContribution {
-
+public class ChangeRoutingPointsCommandContribution {
+   /*-
    public static final String TYPE = "changeRoutingPoints";
-
+   
    public static CCommand create(final String semanticUri, final List<GPoint> routingPoints) {
       CCompoundCommand changeRoutingPointsCommand = CCommandFactory.eINSTANCE.createCompoundCommand();
       changeRoutingPointsCommand.setType(TYPE);
       changeRoutingPointsCommand.getProperties().put(SEMANTIC_PROXI_URI, semanticUri);
-
+   
       routingPoints.forEach(point -> {
          CCommand childCommand = CCommandFactory.eINSTANCE.createCommand();
          childCommand.getProperties().put(POSITION_X, String.valueOf(point.getX()));
          childCommand.getProperties().put(POSITION_Y, String.valueOf(point.getY()));
          changeRoutingPointsCommand.getCommands().add(childCommand);
       });
-
+   
       return changeRoutingPointsCommand;
    }
-
+   
    @Override
    protected Command toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
       throws DecodingException {
-
+   
       CompoundCommand compoundCommand = new CompoundCommand();
-
+   
       if (command instanceof CCompoundCommand) {
-
+   
          ((CCompoundCommand) command).getCommands().forEach(changeRoutingPointCommand -> {
             String semanticProxyUri = changeRoutingPointCommand.getProperties().get(SEMANTIC_PROXI_URI);
             List<GPoint> newRoutingPoints = new ArrayList<>();
@@ -65,9 +48,9 @@ public class ChangeRoutingPointsCommandContribution extends UmlNotationCommandCo
             compoundCommand.append(
                new ChangeRoutingPointsCommand(domain, modelUri, semanticProxyUri, newRoutingPoints));
          });
-
+   
       }
       return compoundCommand;
    }
-
+   */
 }

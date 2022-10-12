@@ -14,15 +14,15 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Lifeline;
 
-import com.eclipsesource.uml.modelserver.diagram.commons.semantic.UmlSemanticElementCommand;
+import com.eclipsesource.uml.modelserver.diagram.base.semantic.UmlSemanticCommand;
 import com.eclipsesource.uml.modelserver.diagram.util.UmlSemanticCommandUtil;
 
-public class SetLifelineNameCommand extends UmlSemanticElementCommand {
+public class SetLifelineNameSemanticCommand extends UmlSemanticCommand {
 
    protected String semanticUriFragment;
    protected String newName;
 
-   public SetLifelineNameCommand(final EditingDomain domain, final URI modelUri, final String semanticUriFragment,
+   public SetLifelineNameSemanticCommand(final EditingDomain domain, final URI modelUri, final String semanticUriFragment,
       final String newName) {
       super(domain, modelUri);
       this.semanticUriFragment = semanticUriFragment;

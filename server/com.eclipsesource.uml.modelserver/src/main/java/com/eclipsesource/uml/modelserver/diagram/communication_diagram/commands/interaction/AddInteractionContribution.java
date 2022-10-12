@@ -10,6 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.diagram.communication_diagram.commands.interaction;
 
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -17,22 +18,22 @@ import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
 import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
 import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
+import org.eclipse.emfcloud.modelserver.edit.command.BasicCommandContribution;
 import org.eclipse.glsp.graph.GPoint;
 
-import com.eclipsesource.uml.modelserver.diagram.commons.contributions.UmlCompoundCommandContribution;
-import com.eclipsesource.uml.modelserver.diagram.commons.contributions.UmlNotationCommandContribution;
+import com.eclipsesource.uml.modelserver.diagram.base.constants.NotationKeys;
 import com.eclipsesource.uml.modelserver.diagram.util.UmlNotationCommandUtil;
 
-public class AddInteractionCommandContribution extends UmlCompoundCommandContribution {
+public class AddInteractionContribution extends BasicCommandContribution<Command> {
 
    public static final String TYPE = "addInteractionContribution";
 
    public static CCompoundCommand create(final GPoint position) {
       CCompoundCommand addInteractionCommand = CCommandFactory.eINSTANCE.createCompoundCommand();
       addInteractionCommand.setType(TYPE);
-      addInteractionCommand.getProperties().put(UmlNotationCommandContribution.POSITION_X,
+      addInteractionCommand.getProperties().put(NotationKeys.POSITION_X,
          String.valueOf(position.getX()));
-      addInteractionCommand.getProperties().put(UmlNotationCommandContribution.POSITION_Y,
+      addInteractionCommand.getProperties().put(NotationKeys.POSITION_Y,
          String.valueOf(position.getY()));
       return addInteractionCommand;
    }
@@ -42,8 +43,8 @@ public class AddInteractionCommandContribution extends UmlCompoundCommandContrib
       throws DecodingException {
 
       GPoint interactionPosition = UmlNotationCommandUtil.getGPoint(
-         command.getProperties().get(UmlNotationCommandContribution.POSITION_X),
-         command.getProperties().get(UmlNotationCommandContribution.POSITION_Y));
+         command.getProperties().get(NotationKeys.POSITION_X),
+         command.getProperties().get(NotationKeys.POSITION_Y));
 
       return new AddInteractionCompoundCommand(domain, modelUri, interactionPosition);
    }

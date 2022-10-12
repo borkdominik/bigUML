@@ -8,8 +8,9 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.diagram.communication_diagram.commands.interaction;
+package com.eclipsesource.uml.modelserver.diagram.communication_diagram.commands.message;
 
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -17,29 +18,30 @@ import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
 import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
 import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
-import org.eclipse.uml2.uml.Interaction;
+import org.eclipse.emfcloud.modelserver.edit.command.BasicCommandContribution;
+import org.eclipse.uml2.uml.Message;
 
-import com.eclipsesource.uml.modelserver.diagram.commons.contributions.UmlCompoundCommandContribution;
+import com.eclipsesource.uml.modelserver.diagram.base.constants.SemanticKeys;
 import com.eclipsesource.uml.modelserver.diagram.util.UmlSemanticCommandUtil;
 
-public class RemoveInteractionCommandContribution extends UmlCompoundCommandContribution {
+public class RemoveMessageContribution extends BasicCommandContribution<Command> {
 
-   public static final String TYPE = "removeInteraction";
+   public static final String TYPE = "removeMessage";
 
-   public static CCompoundCommand create(final Interaction interaction) {
-      CCompoundCommand removeInteractionCommand = CCommandFactory.eINSTANCE.createCompoundCommand();
-      removeInteractionCommand.setType(TYPE);
-      removeInteractionCommand.getProperties().put(SEMANTIC_URI_FRAGMENT,
-         UmlSemanticCommandUtil.getSemanticUriFragment(interaction));
+   public static CCompoundCommand create(final Message message) {
+      CCompoundCommand removeMessageCommand = CCommandFactory.eINSTANCE.createCompoundCommand();
+      removeMessageCommand.setType(TYPE);
+      removeMessageCommand.getProperties().put(SemanticKeys.SEMANTIC_URI_FRAGMENT,
+         UmlSemanticCommandUtil.getSemanticUriFragment(message));
 
-      return removeInteractionCommand;
+      return removeMessageCommand;
    }
 
    @Override
    protected CompoundCommand toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
       throws DecodingException {
-      String semanticUriFragment = command.getProperties().get(SEMANTIC_URI_FRAGMENT);
-      return new RemoveInteractionCompoundCommand(domain, modelUri, semanticUriFragment);
+      String semanticUriFragment = command.getProperties().get(SemanticKeys.SEMANTIC_URI_FRAGMENT);
+      return new RemoveMessageCompoundCommand(domain, modelUri, semanticUriFragment);
    }
 
 }

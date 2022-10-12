@@ -23,7 +23,7 @@ import org.eclipse.glsp.server.types.GLSPServerException;
 import org.eclipse.uml2.uml.NamedElement;
 
 import com.eclipsesource.uml.modelserver.core.routing.UmlModelServerPaths;
-import com.eclipsesource.uml.modelserver.diagram.commons.contributions.RenameElementCommandContribution;
+import com.eclipsesource.uml.modelserver.diagram.commons.RenameElementCommandContribution;
 
 public class UmlModelServerAccess extends EMSNotationModelServerAccess {
 

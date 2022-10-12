@@ -24,7 +24,7 @@ public class AddMessageCompoundCommand extends CompoundCommand {
       final String sourceLifelineUriFragment, final String targetLifelineUriFragment) {
 
       // Chain semantic and notation command
-      AddMessageCommand command = new AddMessageCommand(domain, modelUri, sourceLifelineUriFragment,
+      AddMessageSemanticCommand command = new AddMessageSemanticCommand(domain, modelUri, sourceLifelineUriFragment,
          targetLifelineUriFragment);
       this.append(command);
       Supplier<Message> semanticResultSupplier = () -> command.getNewMessage();

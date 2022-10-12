@@ -15,9 +15,9 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Interaction;
 import org.eclipse.uml2.uml.UMLFactory;
 
-import com.eclipsesource.uml.modelserver.diagram.commons.semantic.UmlSemanticElementCommand;
+import com.eclipsesource.uml.modelserver.diagram.base.semantic.UmlSemanticCommand;
 
-public class CopyInteractionCommand extends UmlSemanticElementCommand {
+public class CopyInteractionCommand extends UmlSemanticCommand {
 
    protected final Interaction newInteraction;
    protected final InteractionCopyableProperties properties;

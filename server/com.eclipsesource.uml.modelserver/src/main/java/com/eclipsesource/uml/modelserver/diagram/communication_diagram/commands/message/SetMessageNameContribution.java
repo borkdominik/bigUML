@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.diagram.communication_diagram.commands.lifeline;
+package com.eclipsesource.uml.modelserver.diagram.communication_diagram.commands.message;
 
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.util.URI;
@@ -16,33 +16,34 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
 import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
-import org.eclipse.uml2.uml.Lifeline;
+import org.eclipse.emfcloud.modelserver.edit.command.BasicCommandContribution;
+import org.eclipse.uml2.uml.Message;
 
-import com.eclipsesource.uml.modelserver.diagram.commons.contributions.UmlSemanticCommandContribution;
+import com.eclipsesource.uml.modelserver.diagram.base.constants.SemanticKeys;
 import com.eclipsesource.uml.modelserver.diagram.util.UmlSemanticCommandUtil;
 
-public class SetLifelineNameCommandContribution extends UmlSemanticCommandContribution {
+public class SetMessageNameContribution extends BasicCommandContribution<Command> {
 
-   public static final String TYPE = "setLifelineName";
+   public static final String TYPE = "setMessageName";
    public static final String NEW_NAME = "newName";
 
-   public static CCommand create(final Lifeline lifeline, final String newName) {
-      CCommand setLifelineNameCommand = CCommandFactory.eINSTANCE.createCommand();
-      setLifelineNameCommand.setType(TYPE);
-      setLifelineNameCommand.getProperties().put(SEMANTIC_URI_FRAGMENT,
-         UmlSemanticCommandUtil.getSemanticUriFragment(lifeline));
-      setLifelineNameCommand.getProperties().put(NEW_NAME, newName);
-      return setLifelineNameCommand;
+   public static CCommand create(final Message message, final String newName) {
+      CCommand setMessageNameCommand = CCommandFactory.eINSTANCE.createCommand();
+      setMessageNameCommand.setType(TYPE);
+      setMessageNameCommand.getProperties().put(SemanticKeys.SEMANTIC_URI_FRAGMENT,
+         UmlSemanticCommandUtil.getSemanticUriFragment(message));
+      setMessageNameCommand.getProperties().put(NEW_NAME, newName);
+      return setMessageNameCommand;
    }
 
    @Override
    protected Command toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
       throws DecodingException {
 
-      String semanticUriFragment = command.getProperties().get(SEMANTIC_URI_FRAGMENT);
+      String semanticUriFragment = command.getProperties().get(SemanticKeys.SEMANTIC_URI_FRAGMENT);
       String newName = command.getProperties().get(NEW_NAME);
 
-      return new SetLifelineNameCommand(domain, modelUri, semanticUriFragment, newName);
+      return new SetMessageNameSemanticCommand(domain, modelUri, semanticUriFragment, newName);
    }
 
 }

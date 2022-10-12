@@ -17,12 +17,12 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Message;
 
-import com.eclipsesource.uml.modelserver.diagram.commons.notation.UmlNotationElementCommand;
+import com.eclipsesource.uml.modelserver.diagram.base.notation.UmlNotationCommand;
 import com.eclipsesource.uml.modelserver.diagram.util.UmlNotationCommandUtil;
 
 import org.eclipse.glsp.server.emf.model.notation.NotationFactory;
 
-public class CopyMessageEdgeCommand extends UmlNotationElementCommand {
+public class CopyMessageEdgeCommand extends UmlNotationCommand {
 
    protected final Supplier<Message> messageSupplier;
    protected final MessageCopyableProperties properties;

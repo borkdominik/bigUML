@@ -20,7 +20,7 @@ public class RemoveMessageCompoundCommand extends CompoundCommand {
    public RemoveMessageCompoundCommand(final EditingDomain domain, final URI modelUri,
       final String semanticUriFragment) {
 
-      this.append(new RemoveMessageCommand(domain, modelUri, semanticUriFragment));
+      this.append(new RemoveMessageSemanticCommand(domain, modelUri, semanticUriFragment));
       this.append(new RemoveNotationElementCommand(domain, modelUri, semanticUriFragment));
    }
 

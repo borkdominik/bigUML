@@ -10,6 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.diagram.communication_diagram.commands.lifeline;
 
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -17,19 +18,20 @@ import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
 import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
 import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
+import org.eclipse.emfcloud.modelserver.edit.command.BasicCommandContribution;
 import org.eclipse.uml2.uml.Lifeline;
 
-import com.eclipsesource.uml.modelserver.diagram.commons.contributions.UmlCompoundCommandContribution;
+import com.eclipsesource.uml.modelserver.diagram.base.constants.SemanticKeys;
 import com.eclipsesource.uml.modelserver.diagram.util.UmlNotationCommandUtil;
 
-public class RemoveLifelineCommandContribution extends UmlCompoundCommandContribution {
+public class RemoveLifelineContribution extends BasicCommandContribution<Command> {
 
    public static final String TYPE = "removeLifeline";
 
    public static CCompoundCommand create(final Lifeline lifeline) {
       CCompoundCommand removeLifelineCommand = CCommandFactory.eINSTANCE.createCompoundCommand();
       removeLifelineCommand.setType(TYPE);
-      removeLifelineCommand.getProperties().put(SEMANTIC_URI_FRAGMENT,
+      removeLifelineCommand.getProperties().put(SemanticKeys.SEMANTIC_URI_FRAGMENT,
          UmlNotationCommandUtil.getSemanticProxyUri(lifeline));
 
       return removeLifelineCommand;
@@ -38,7 +40,7 @@ public class RemoveLifelineCommandContribution extends UmlCompoundCommandContrib
    @Override
    protected CompoundCommand toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
       throws DecodingException {
-      String semanticUriFragment = command.getProperties().get(SEMANTIC_URI_FRAGMENT);
+      String semanticUriFragment = command.getProperties().get(SemanticKeys.SEMANTIC_URI_FRAGMENT);
       return new RemoveLifelineCompoundCommand(domain, modelUri, semanticUriFragment);
    }
 

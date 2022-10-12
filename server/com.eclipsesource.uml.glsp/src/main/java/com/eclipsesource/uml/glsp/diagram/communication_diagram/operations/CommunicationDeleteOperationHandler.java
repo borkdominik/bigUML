@@ -19,9 +19,9 @@ import org.eclipse.uml2.uml.Message;
 import com.eclipsesource.uml.glsp.core.model.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.eclipsesource.uml.glsp.core.operations.DiagramDeleteOperationHandler;
-import com.eclipsesource.uml.modelserver.diagram.communication_diagram.commands.interaction.RemoveInteractionCommandContribution;
-import com.eclipsesource.uml.modelserver.diagram.communication_diagram.commands.lifeline.RemoveLifelineCommandContribution;
-import com.eclipsesource.uml.modelserver.diagram.communication_diagram.commands.message.RemoveMessageCommandContribution;
+import com.eclipsesource.uml.modelserver.diagram.communication_diagram.commands.interaction.RemoveInteractionContribution;
+import com.eclipsesource.uml.modelserver.diagram.communication_diagram.commands.lifeline.RemoveLifelineContribution;
+import com.eclipsesource.uml.modelserver.diagram.communication_diagram.commands.message.RemoveMessageContribution;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 
@@ -41,7 +41,7 @@ public class CommunicationDeleteOperationHandler implements DiagramDeleteOperati
    public void delete(final EObject semanticElement) {
       System.out.println("==== DELETE ====");
       if (semanticElement instanceof Interaction) {
-         modelServerAccess.exec(RemoveInteractionCommandContribution.create((Interaction) semanticElement))
+         modelServerAccess.exec(RemoveInteractionContribution.create((Interaction) semanticElement))
             .thenAccept(response -> {
                if (response.body() == null || response.body().isEmpty()) {
                   throw new GLSPServerException(
@@ -49,7 +49,7 @@ public class CommunicationDeleteOperationHandler implements DiagramDeleteOperati
                }
             });
       } else if (semanticElement instanceof Lifeline) {
-         modelServerAccess.exec(RemoveLifelineCommandContribution.create((Lifeline) semanticElement))
+         modelServerAccess.exec(RemoveLifelineContribution.create((Lifeline) semanticElement))
             .thenAccept(response -> {
                if (response.body() == null || response.body().isEmpty()) {
                   throw new GLSPServerException(
@@ -57,7 +57,7 @@ public class CommunicationDeleteOperationHandler implements DiagramDeleteOperati
                }
             });
       } else if (semanticElement instanceof Message) {
-         modelServerAccess.exec(RemoveMessageCommandContribution.create((Message) semanticElement))
+         modelServerAccess.exec(RemoveMessageContribution.create((Message) semanticElement))
             .thenAccept(response -> {
                if (response.body() == null || response.body().isEmpty()) {
                   throw new GLSPServerException(

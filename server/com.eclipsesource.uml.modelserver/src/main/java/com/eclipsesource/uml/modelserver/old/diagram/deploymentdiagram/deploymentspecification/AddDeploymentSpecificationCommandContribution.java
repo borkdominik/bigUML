@@ -7,9 +7,9 @@ public class AddDeploymentSpecificationCommandContribution { /*-{
     public static CCompoundCommand create(final GPoint position, final String parentSemanticUri) {
         CCompoundCommand addDeploymentSpecificationCommand = CCommandFactory.eINSTANCE.createCompoundCommand();
         addDeploymentSpecificationCommand.setType(TYPE);
-        addDeploymentSpecificationCommand.getProperties().put(UmlNotationCommandContribution.POSITION_X,
+        addDeploymentSpecificationCommand.getProperties().put(NotationKeys.POSITION_X,
                 String.valueOf(position.getX()));
-        addDeploymentSpecificationCommand.getProperties().put(UmlNotationCommandContribution.POSITION_Y,
+        addDeploymentSpecificationCommand.getProperties().put(NotationKeys.POSITION_Y,
                 String.valueOf(position.getY()));
         addDeploymentSpecificationCommand.getProperties().put(UmlSemanticCommandContribution.PARENT_SEMANTIC_URI_FRAGMENT,
                 parentSemanticUri);
@@ -20,8 +20,8 @@ public class AddDeploymentSpecificationCommandContribution { /*-{
     protected CompoundCommand toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
             throws DecodingException {
         GPoint deploymentSpecificationPosition = UmlNotationCommandUtil.getGPoint(
-                command.getProperties().get(UmlNotationCommandContribution.POSITION_X),
-                command.getProperties().get(UmlNotationCommandContribution.POSITION_Y));
+                command.getProperties().get(NotationKeys.POSITION_X),
+                command.getProperties().get(NotationKeys.POSITION_Y));
 
         String parentSemanticUriFragment = command.getProperties()
                 .get(UmlSemanticCommandContribution.PARENT_SEMANTIC_URI_FRAGMENT);

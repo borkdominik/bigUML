@@ -26,7 +26,7 @@ public class RemoveLifelineCompoundCommand extends CompoundCommand {
    public RemoveLifelineCompoundCommand(final EditingDomain domain, final URI modelUri,
       final String semanticUriFragment) {
 
-      this.append(new RemoveLifelineCommand(domain, modelUri, semanticUriFragment));
+      this.append(new RemoveLifelineSemanticCommand(domain, modelUri, semanticUriFragment));
       this.append(new RemoveNotationElementCommand(domain, modelUri, semanticUriFragment));
 
       var umlModel = UmlSemanticCommandUtil.getModel(modelUri, domain);

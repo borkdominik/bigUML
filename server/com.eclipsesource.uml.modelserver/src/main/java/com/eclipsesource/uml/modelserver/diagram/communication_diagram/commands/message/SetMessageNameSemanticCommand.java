@@ -8,20 +8,21 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.diagram.commons.semantic;
+package com.eclipsesource.uml.modelserver.diagram.communication_diagram.commands.message;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.NamedElement;
+import org.eclipse.uml2.uml.Message;
 
+import com.eclipsesource.uml.modelserver.diagram.base.semantic.UmlSemanticCommand;
 import com.eclipsesource.uml.modelserver.diagram.util.UmlSemanticCommandUtil;
 
-public class RenameElementCommand extends UmlSemanticElementCommand {
+public class SetMessageNameSemanticCommand extends UmlSemanticCommand {
 
    protected String semanticUriFragment;
    protected String newName;
 
-   public RenameElementCommand(final EditingDomain domain, final URI modelUri, final String semanticUriFragment,
+   public SetMessageNameSemanticCommand(final EditingDomain domain, final URI modelUri, final String semanticUriFragment,
       final String newName) {
       super(domain, modelUri);
       this.semanticUriFragment = semanticUriFragment;
@@ -30,8 +31,10 @@ public class RenameElementCommand extends UmlSemanticElementCommand {
 
    @Override
    protected void doExecute() {
-      NamedElement element = UmlSemanticCommandUtil.getElement(umlModel, semanticUriFragment, NamedElement.class);
-      element.setName(newName);
+      Message messageToRename = UmlSemanticCommandUtil.getElement(umlModel, semanticUriFragment, Message.class);
+      messageToRename.setName(newName);
+      messageToRename.getSendEvent().setName(messageToRename.getName() + " - SendEvent");
+      messageToRename.getReceiveEvent().setName(messageToRename.getName() + " - ReceiveEvent");
    }
 
 }

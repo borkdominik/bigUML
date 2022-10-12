@@ -18,8 +18,8 @@ public class AddClassCommandContribution { /*-{
    public static CCompoundCommand create(final GPoint position, final Boolean isAbstract) {
       CCompoundCommand addClassCommand = CCommandFactory.eINSTANCE.createCompoundCommand();
       addClassCommand.setType(TYPE);
-      addClassCommand.getProperties().put(UmlNotationCommandContribution.POSITION_X, String.valueOf(position.getX()));
-      addClassCommand.getProperties().put(UmlNotationCommandContribution.POSITION_Y, String.valueOf(position.getY()));
+      addClassCommand.getProperties().put(NotationKeys.POSITION_X, String.valueOf(position.getX()));
+      addClassCommand.getProperties().put(NotationKeys.POSITION_Y, String.valueOf(position.getY()));
       addClassCommand.getProperties().put(CLASS_TYPE, isAbstract.toString());
       return addClassCommand;
    }
@@ -29,8 +29,8 @@ public class AddClassCommandContribution { /*-{
          throws DecodingException {
 
       GPoint classPosition = UmlNotationCommandUtil.getGPoint(
-            command.getProperties().get(UmlNotationCommandContribution.POSITION_X),
-            command.getProperties().get(UmlNotationCommandContribution.POSITION_Y));
+            command.getProperties().get(NotationKeys.POSITION_X),
+            command.getProperties().get(NotationKeys.POSITION_Y));
 
       Boolean isAbstract = Boolean.parseBoolean(command.getProperties().get(CLASS_TYPE));
 

@@ -16,16 +16,16 @@ import org.eclipse.uml2.uml.Lifeline;
 import org.eclipse.uml2.uml.Message;
 import org.eclipse.uml2.uml.UMLFactory;
 
-import com.eclipsesource.uml.modelserver.diagram.commons.semantic.UmlSemanticElementCommand;
+import com.eclipsesource.uml.modelserver.diagram.base.semantic.UmlSemanticCommand;
 import com.eclipsesource.uml.modelserver.diagram.util.UmlSemanticCommandUtil;
 
-public class AddMessageCommand extends UmlSemanticElementCommand {
+public class AddMessageSemanticCommand extends UmlSemanticCommand {
 
    private final Message newMessage;
    protected final Lifeline sourceLifeline;
    protected final Lifeline targetLifeline;
 
-   public AddMessageCommand(final EditingDomain domain, final URI modelUri,
+   public AddMessageSemanticCommand(final EditingDomain domain, final URI modelUri,
       final String sourceLifelineUriFragment, final String targetLifelineUriFragment) {
       super(domain, modelUri);
       this.newMessage = UMLFactory.eINSTANCE.createMessage();
@@ -33,7 +33,7 @@ public class AddMessageCommand extends UmlSemanticElementCommand {
       this.targetLifeline = UmlSemanticCommandUtil.getElement(umlModel, targetLifelineUriFragment, Lifeline.class);
    }
 
-   public AddMessageCommand(final EditingDomain domain, final URI modelUri,
+   public AddMessageSemanticCommand(final EditingDomain domain, final URI modelUri,
       final Lifeline source, final Lifeline target) {
       super(domain, modelUri);
       this.newMessage = UMLFactory.eINSTANCE.createMessage();

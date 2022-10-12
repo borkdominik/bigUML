@@ -4,10 +4,10 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.NamedElement;
 
-import com.eclipsesource.uml.modelserver.diagram.commons.semantic.UmlSemanticElementCommand;
+import com.eclipsesource.uml.modelserver.diagram.base.semantic.UmlSemanticCommand;
 import com.eclipsesource.uml.modelserver.diagram.util.UmlSemanticCommandUtil;
 
-public class SetNameCommand extends UmlSemanticElementCommand {
+public class SetNameCommand extends UmlSemanticCommand {
 
     protected String semanticUriFragment;
     protected String newName;

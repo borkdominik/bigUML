@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.diagram.commons.contributions;
+package com.eclipsesource.uml.modelserver.diagram.commons;
 
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.util.URI;
@@ -16,10 +16,11 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
 import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
+import org.eclipse.emfcloud.modelserver.edit.command.BasicCommandContribution;
 
-import com.eclipsesource.uml.modelserver.diagram.commons.semantic.RenameElementCommand;
+import com.eclipsesource.uml.modelserver.diagram.base.constants.SemanticKeys;
 
-public class RenameElementCommandContribution extends UmlSemanticCommandContribution {
+public class RenameElementCommandContribution extends BasicCommandContribution<Command> {
 
    public static final String TYPE = "rename";
    public static final String NEW_NAME = "newName";
@@ -27,7 +28,7 @@ public class RenameElementCommandContribution extends UmlSemanticCommandContribu
    public static CCommand create(final String semanticUri, final String newName) {
       CCommand setClassNameCommand = CCommandFactory.eINSTANCE.createCommand();
       setClassNameCommand.setType(TYPE);
-      setClassNameCommand.getProperties().put(SEMANTIC_URI_FRAGMENT, semanticUri);
+      setClassNameCommand.getProperties().put(SemanticKeys.SEMANTIC_URI_FRAGMENT, semanticUri);
       setClassNameCommand.getProperties().put(NEW_NAME, newName);
       return setClassNameCommand;
    }
@@ -36,7 +37,7 @@ public class RenameElementCommandContribution extends UmlSemanticCommandContribu
    protected Command toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
       throws DecodingException {
 
-      String semanticUriFragment = command.getProperties().get(SEMANTIC_URI_FRAGMENT);
+      String semanticUriFragment = command.getProperties().get(SemanticKeys.SEMANTIC_URI_FRAGMENT);
       String newName = command.getProperties().get(NEW_NAME);
 
       return new RenameElementCommand(domain, modelUri, semanticUriFragment, newName);

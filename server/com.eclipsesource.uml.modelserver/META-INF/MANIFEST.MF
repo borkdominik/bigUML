@@ -50,9 +50,8 @@ Import-Package: javax.inject;version="1.0.0"
 Bundle-ActivationPolicy: lazy
 Export-Package: com.eclipsesource.uml.modelserver.core,
  com.eclipsesource.uml.modelserver.core.routing,
- com.eclipsesource.uml.modelserver.diagram.commons.contributions,
- com.eclipsesource.uml.modelserver.diagram.commons.notation,
- com.eclipsesource.uml.modelserver.diagram.commons.semantic,
+ com.eclipsesource.uml.modelserver.diagram.base.notation,
+ com.eclipsesource.uml.modelserver.diagram.base.semantic,
  com.eclipsesource.uml.modelserver.diagram.communication_diagram.commands.interaction,
  com.eclipsesource.uml.modelserver.diagram.communication_diagram.commands.lifeline,
  com.eclipsesource.uml.modelserver.diagram.communication_diagram.commands.message,

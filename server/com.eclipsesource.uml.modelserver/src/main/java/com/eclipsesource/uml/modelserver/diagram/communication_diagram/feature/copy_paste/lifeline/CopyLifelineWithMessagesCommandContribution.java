@@ -13,6 +13,7 @@ package com.eclipsesource.uml.modelserver.diagram.communication_diagram.feature.
 import java.util.Arrays;
 import java.util.List;
 
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -20,14 +21,15 @@ import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
 import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
 import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
+import org.eclipse.emfcloud.modelserver.edit.command.BasicCommandContribution;
 import org.eclipse.uml2.uml.Interaction;
 
-import com.eclipsesource.uml.modelserver.diagram.commons.contributions.UmlCompoundCommandContribution;
-import com.eclipsesource.uml.modelserver.diagram.commons.contributions.UmlSemanticCommandContribution;
+import com.eclipsesource.uml.modelserver.diagram.base.constants.SemanticKeys;
 import com.eclipsesource.uml.modelserver.diagram.communication_diagram.feature.copy_paste.message.MessageCopyableProperties;
+import com.eclipsesource.uml.modelserver.diagram.util.UmlCommandContributionUtil;
 import com.google.gson.Gson;
 
-public class CopyLifelineWithMessagesCommandContribution extends UmlCompoundCommandContribution {
+public class CopyLifelineWithMessagesCommandContribution extends BasicCommandContribution<Command> {
 
    public static final String TYPE = "copyLifelineWithMessagesContribution";
    public static final String LIFELINE_PROPERTIES = "lifelineProperties";
@@ -41,8 +43,8 @@ public class CopyLifelineWithMessagesCommandContribution extends UmlCompoundComm
       copyCommand.setType(TYPE);
       copyCommand.getProperties().put(LIFELINE_PROPERTIES, gson.toJsonTree(lifelineProperties).toString());
       copyCommand.getProperties().put(MESSAGE_PROPERTIES, gson.toJsonTree(messageProperties).toString());
-      copyCommand.getProperties().put(UmlSemanticCommandContribution.PARENT_SEMANTIC_URI_FRAGMENT,
-         getSemanticUriFragment(parentInteraction));
+      copyCommand.getProperties().put(SemanticKeys.PARENT_SEMANTIC_URI_FRAGMENT,
+         UmlCommandContributionUtil.getSemanticUriFragment(parentInteraction));
       return copyCommand;
    }
 
@@ -53,11 +55,12 @@ public class CopyLifelineWithMessagesCommandContribution extends UmlCompoundComm
       var lifelinesJSON = command.getProperties().get(LIFELINE_PROPERTIES);
       var messagesJSON = command.getProperties().get(MESSAGE_PROPERTIES);
       var parentSemanticUrlFragment = command.getProperties()
-         .get(UmlSemanticCommandContribution.PARENT_SEMANTIC_URI_FRAGMENT);
+         .get(SemanticKeys.PARENT_SEMANTIC_URI_FRAGMENT);
 
       var lifelineProperties = Arrays.asList(gson.fromJson(lifelinesJSON, LifelineCopyableProperties[].class));
       var messageProperties = Arrays.asList(gson.fromJson(messagesJSON, MessageCopyableProperties[].class));
-      var parentInteraction = fromSemanticUriFragment(modelUri, domain, parentSemanticUrlFragment, Interaction.class);
+      var parentInteraction = UmlCommandContributionUtil.fromSemanticUriFragment(modelUri, domain,
+         parentSemanticUrlFragment, Interaction.class);
 
       return new CopyLifelineWithMessagesCompoundCommand(domain, modelUri, lifelineProperties, messageProperties,
          parentInteraction);

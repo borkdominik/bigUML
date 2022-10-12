@@ -16,23 +16,23 @@ import org.eclipse.uml2.uml.Interaction;
 import org.eclipse.uml2.uml.Lifeline;
 import org.eclipse.uml2.uml.UMLFactory;
 
-import com.eclipsesource.uml.modelserver.diagram.commons.semantic.UmlSemanticElementCommand;
+import com.eclipsesource.uml.modelserver.diagram.base.semantic.UmlSemanticCommand;
 import com.eclipsesource.uml.modelserver.diagram.util.UmlSemanticCommandUtil;
 
-public class AddLifelineCommand extends UmlSemanticElementCommand {
+public class AddLifelineSemanticCommand extends UmlSemanticCommand {
 
    protected final Lifeline newLifeline;
 
    protected final Interaction parentInteraction;
 
-   public AddLifelineCommand(final EditingDomain domain, final URI modelUri, final String parentSemanticUriFragment) {
+   public AddLifelineSemanticCommand(final EditingDomain domain, final URI modelUri, final String parentSemanticUriFragment) {
       super(domain, modelUri);
       this.newLifeline = UMLFactory.eINSTANCE.createLifeline();
       this.parentInteraction = UmlSemanticCommandUtil.getElement(umlModel, parentSemanticUriFragment,
          Interaction.class);
    }
 
-   public AddLifelineCommand(final EditingDomain domain, final URI modelUri, final Interaction parentInteraction) {
+   public AddLifelineSemanticCommand(final EditingDomain domain, final URI modelUri, final Interaction parentInteraction) {
       super(domain, modelUri);
       this.newLifeline = UMLFactory.eINSTANCE.createLifeline();
       this.parentInteraction = parentInteraction;

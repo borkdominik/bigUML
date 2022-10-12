@@ -14,10 +14,10 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.glsp.server.emf.model.notation.NotationElement;
 
-import com.eclipsesource.uml.modelserver.diagram.commons.notation.UmlNotationElementCommand;
+import com.eclipsesource.uml.modelserver.diagram.base.notation.UmlNotationCommand;
 import com.eclipsesource.uml.modelserver.diagram.util.UmlNotationCommandUtil;
 
-public class RemoveNotationElementCommand extends UmlNotationElementCommand {
+public class RemoveNotationElementCommand extends UmlNotationCommand {
 
    protected final NotationElement element;
 

@@ -16,9 +16,9 @@ import org.eclipse.uml2.uml.Lifeline;
 import org.eclipse.uml2.uml.Message;
 import org.eclipse.uml2.uml.UMLFactory;
 
-import com.eclipsesource.uml.modelserver.diagram.commons.semantic.UmlSemanticElementCommand;
+import com.eclipsesource.uml.modelserver.diagram.base.semantic.UmlSemanticCommand;
 
-public class CopyMessageCommand extends UmlSemanticElementCommand {
+public class CopyMessageCommand extends UmlSemanticCommand {
 
    protected final Message newMessage;
    protected final MessageCopyableProperties properties;

@@ -16,14 +16,14 @@ import org.eclipse.uml2.uml.Interaction;
 import org.eclipse.uml2.uml.Message;
 import org.eclipse.uml2.uml.MessageOccurrenceSpecification;
 
-import com.eclipsesource.uml.modelserver.diagram.commons.semantic.UmlSemanticElementCommand;
+import com.eclipsesource.uml.modelserver.diagram.base.semantic.UmlSemanticCommand;
 import com.eclipsesource.uml.modelserver.diagram.util.UmlSemanticCommandUtil;
 
-public class RemoveMessageCommand extends UmlSemanticElementCommand {
+public class RemoveMessageSemanticCommand extends UmlSemanticCommand {
 
    protected final String semanticUriFragment;
 
-   public RemoveMessageCommand(final EditingDomain domain, final URI modelUri,
+   public RemoveMessageSemanticCommand(final EditingDomain domain, final URI modelUri,
       final String semanticUriFragment) {
       super(domain, modelUri);
       this.semanticUriFragment = semanticUriFragment;

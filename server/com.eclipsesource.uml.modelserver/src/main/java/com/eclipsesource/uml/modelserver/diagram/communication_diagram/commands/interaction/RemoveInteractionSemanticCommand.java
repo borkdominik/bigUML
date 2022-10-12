@@ -14,26 +14,24 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Interaction;
 
-import com.eclipsesource.uml.modelserver.diagram.commons.semantic.UmlSemanticElementCommand;
+import com.eclipsesource.uml.modelserver.diagram.base.semantic.UmlSemanticCommand;
 import com.eclipsesource.uml.modelserver.diagram.util.UmlSemanticCommandUtil;
 
-public class SetInteractionNameCommand extends UmlSemanticElementCommand {
+public class RemoveInteractionSemanticCommand extends UmlSemanticCommand {
 
-   protected String semanticUriFragment;
-   protected String newName;
+   protected final String semanticUriFragment;
 
-   public SetInteractionNameCommand(final EditingDomain domain, final URI modelUri, final String semanticUriFragment,
-      final String newName) {
+   public RemoveInteractionSemanticCommand(final EditingDomain domain, final URI modelUri, final String semanticUriFragment) {
       super(domain, modelUri);
       this.semanticUriFragment = semanticUriFragment;
-      this.newName = newName;
    }
 
    @Override
    protected void doExecute() {
-      Interaction interactionToRename = UmlSemanticCommandUtil.getElement(umlModel, semanticUriFragment,
+      Interaction interactionToRemove = UmlSemanticCommandUtil.getElement(umlModel, semanticUriFragment,
          Interaction.class);
-      interactionToRename.setName(newName);
+      umlModel.getPackagedElements().remove(interactionToRemove);
+
    }
 
 }

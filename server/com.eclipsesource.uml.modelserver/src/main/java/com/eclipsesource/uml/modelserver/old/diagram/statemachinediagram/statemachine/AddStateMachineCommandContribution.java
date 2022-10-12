@@ -17,9 +17,9 @@ public class AddStateMachineCommandContribution { /*-{
    public static CCompoundCommand create(final GPoint position) {
       CCompoundCommand addStateMachineCommand = CCommandFactory.eINSTANCE.createCompoundCommand();
       addStateMachineCommand.setType(TYPE);
-      addStateMachineCommand.getProperties().put(UmlNotationCommandContribution.POSITION_X,
+      addStateMachineCommand.getProperties().put(NotationKeys.POSITION_X,
          String.valueOf(position.getX()));
-      addStateMachineCommand.getProperties().put(UmlNotationCommandContribution.POSITION_Y,
+      addStateMachineCommand.getProperties().put(NotationKeys.POSITION_Y,
          String.valueOf(position.getY()));
       return addStateMachineCommand;
    }
@@ -28,8 +28,8 @@ public class AddStateMachineCommandContribution { /*-{
    protected CompoundCommand toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
       throws DecodingException {
       GPoint classPosition = UmlNotationCommandUtil.getGPoint(
-         command.getProperties().get(UmlNotationCommandContribution.POSITION_X),
-         command.getProperties().get(UmlNotationCommandContribution.POSITION_Y));
+         command.getProperties().get(NotationKeys.POSITION_X),
+         command.getProperties().get(NotationKeys.POSITION_Y));
 
       return new AddStateMachineCompoundCommand(domain, modelUri, classPosition);
    }

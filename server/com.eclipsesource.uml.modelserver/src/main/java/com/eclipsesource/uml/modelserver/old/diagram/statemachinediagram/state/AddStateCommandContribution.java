@@ -19,9 +19,9 @@ public class AddStateCommandContribution { /*-{
    public static CCompoundCommand create(final String parentSemanticUri, final GPoint position) {
       CCompoundCommand addStateCommand = CCommandFactory.eINSTANCE.createCompoundCommand();
       addStateCommand.setType(TYPE);
-      addStateCommand.getProperties().put(UmlNotationCommandContribution.POSITION_X,
+      addStateCommand.getProperties().put(NotationKeys.POSITION_X,
          String.valueOf(position.getX()));
-      addStateCommand.getProperties().put(UmlNotationCommandContribution.POSITION_Y,
+      addStateCommand.getProperties().put(NotationKeys.POSITION_Y,
          String.valueOf(position.getY()));
 
       addStateCommand.getProperties().put(PARENT_SEMANTIC_URI_FRAGMENT, parentSemanticUri);
@@ -33,8 +33,8 @@ public class AddStateCommandContribution { /*-{
       throws DecodingException {
 
       GPoint statePosition = UmlNotationCommandUtil.getGPoint(
-         command.getProperties().get(UmlNotationCommandContribution.POSITION_X),
-         command.getProperties().get(UmlNotationCommandContribution.POSITION_Y));
+         command.getProperties().get(NotationKeys.POSITION_X),
+         command.getProperties().get(NotationKeys.POSITION_Y));
 
       String parentRegionUriFragment = command.getProperties().get(PARENT_SEMANTIC_URI_FRAGMENT);
 

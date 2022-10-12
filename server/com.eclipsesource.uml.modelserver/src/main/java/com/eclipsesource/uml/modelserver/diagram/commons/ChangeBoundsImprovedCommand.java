@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.diagram.commons.notation;
+package com.eclipsesource.uml.modelserver.diagram.commons;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -17,12 +17,13 @@ import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.PackageableElement;
 
+import com.eclipsesource.uml.modelserver.diagram.base.notation.UmlNotationCommand;
 import com.eclipsesource.uml.modelserver.diagram.util.UmlNotationCommandUtil;
 import com.eclipsesource.uml.modelserver.diagram.util.UmlSemanticCommandUtil;
 
 import org.eclipse.glsp.server.emf.model.notation.Shape;
 
-public class ChangeBoundsImprovedCommand extends UmlNotationElementCommand {
+public class ChangeBoundsImprovedCommand extends UmlNotationCommand {
    protected final GPoint shapePosition;
    protected final GDimension shapeSize;
    protected final Shape shape;

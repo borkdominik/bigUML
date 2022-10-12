@@ -8,32 +8,31 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.diagram.communication_diagram.commands.lifeline;
+package com.eclipsesource.uml.modelserver.diagram.communication_diagram.commands.interaction;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Interaction;
-import org.eclipse.uml2.uml.Lifeline;
+import org.eclipse.uml2.uml.UMLFactory;
 
-import com.eclipsesource.uml.modelserver.diagram.commons.semantic.UmlSemanticElementCommand;
+import com.eclipsesource.uml.modelserver.diagram.base.semantic.UmlSemanticCommand;
 import com.eclipsesource.uml.modelserver.diagram.util.UmlSemanticCommandUtil;
 
-public class RemoveLifelineCommand extends UmlSemanticElementCommand {
+public class AddInteractionSemanticCommand extends UmlSemanticCommand {
 
-   protected final String semanticUriFragment;
+   protected final Interaction newInteraction;
 
-   public RemoveLifelineCommand(final EditingDomain domain, final URI modelUri, final String semanticUriFragment) {
+   public AddInteractionSemanticCommand(final EditingDomain domain, final URI modelUri) {
       super(domain, modelUri);
-      this.semanticUriFragment = semanticUriFragment;
+      this.newInteraction = UMLFactory.eINSTANCE.createInteraction();
    }
 
    @Override
    protected void doExecute() {
-      Lifeline lifelineToRemove = UmlSemanticCommandUtil.getElement(umlModel, semanticUriFragment,
-         Lifeline.class);
-      Interaction interaction = lifelineToRemove.getInteraction();
-      interaction.getLifelines().remove(lifelineToRemove);
-
+      newInteraction.setName(UmlSemanticCommandUtil.getNewInteractionName(umlModel));
+      umlModel.getPackagedElements().add(newInteraction);
    }
+
+   public Interaction getNewInteraction() { return newInteraction; }
 
 }

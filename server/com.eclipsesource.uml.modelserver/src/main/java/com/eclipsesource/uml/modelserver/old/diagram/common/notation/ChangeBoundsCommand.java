@@ -16,10 +16,10 @@ import org.eclipse.glsp.graph.GDimension;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.emf.model.notation.Shape;
 
-import com.eclipsesource.uml.modelserver.diagram.commons.notation.UmlNotationElementCommand;
+import com.eclipsesource.uml.modelserver.diagram.base.notation.UmlNotationCommand;
 import com.eclipsesource.uml.modelserver.diagram.util.UmlNotationCommandUtil;
 
-public class ChangeBoundsCommand extends UmlNotationElementCommand {
+public class ChangeBoundsCommand extends UmlNotationCommand {
 
    protected final GPoint shapePosition;
    protected final GDimension shapeSize;

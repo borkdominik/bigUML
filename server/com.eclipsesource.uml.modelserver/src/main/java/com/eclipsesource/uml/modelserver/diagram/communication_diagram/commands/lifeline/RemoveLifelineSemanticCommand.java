@@ -8,37 +8,32 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.diagram.communication_diagram.feature.copy_paste.lifeline;
+package com.eclipsesource.uml.modelserver.diagram.communication_diagram.commands.lifeline;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Interaction;
 import org.eclipse.uml2.uml.Lifeline;
-import org.eclipse.uml2.uml.UMLFactory;
 
 import com.eclipsesource.uml.modelserver.diagram.base.semantic.UmlSemanticCommand;
+import com.eclipsesource.uml.modelserver.diagram.util.UmlSemanticCommandUtil;
 
-public class CopyLifelineCommand extends UmlSemanticCommand {
+public class RemoveLifelineSemanticCommand extends UmlSemanticCommand {
 
-   protected final Lifeline newLifeline;
-   protected final LifelineCopyableProperties properties;
-   protected final Interaction parentInteraction;
+   protected final String semanticUriFragment;
 
-   public CopyLifelineCommand(final EditingDomain domain, final URI modelUri,
-      final LifelineCopyableProperties properties,
-      final Interaction parentInteraction) {
+   public RemoveLifelineSemanticCommand(final EditingDomain domain, final URI modelUri, final String semanticUriFragment) {
       super(domain, modelUri);
-      this.newLifeline = UMLFactory.eINSTANCE.createLifeline();
-      this.parentInteraction = parentInteraction;
-      this.properties = properties;
+      this.semanticUriFragment = semanticUriFragment;
    }
 
    @Override
    protected void doExecute() {
-      newLifeline.setName(properties.getSemantic().name);
-      parentInteraction.getLifelines().add(newLifeline);
-   }
+      Lifeline lifelineToRemove = UmlSemanticCommandUtil.getElement(umlModel, semanticUriFragment,
+         Lifeline.class);
+      Interaction interaction = lifelineToRemove.getInteraction();
+      interaction.getLifelines().remove(lifelineToRemove);
 
-   public Lifeline getNewLifeline() { return newLifeline; }
+   }
 
 }

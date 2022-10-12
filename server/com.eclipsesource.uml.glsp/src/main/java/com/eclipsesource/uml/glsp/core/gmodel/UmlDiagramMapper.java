@@ -15,15 +15,11 @@ import org.eclipse.glsp.server.emf.EMFIdGenerator;
 import org.eclipse.glsp.server.emf.model.notation.Diagram;
 import org.eclipse.uml2.uml.Model;
 
-import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.google.inject.Inject;
 
 public class UmlDiagramMapper {
    @Inject
    private UmlGModelMapHandler mapHandler;
-
-   @Inject
-   private UmlModelState modelState;
 
    @Inject
    protected EMFIdGenerator idGenerator;

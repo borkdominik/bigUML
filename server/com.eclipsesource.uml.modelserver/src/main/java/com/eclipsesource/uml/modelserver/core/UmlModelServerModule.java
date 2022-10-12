@@ -25,21 +25,11 @@ import org.eclipse.glsp.server.emf.EMFIdGenerator;
 import org.eclipse.glsp.server.emf.idgen.FragmentIdGenerator;
 import org.eclipse.uml2.uml.resource.UMLResource;
 
-import com.eclipsesource.uml.modelserver.core.codecs.UmlCodecProvider;
+import com.eclipsesource.uml.modelserver.core.codec.UmlCodecProvider;
 import com.eclipsesource.uml.modelserver.core.resource.UmlNotationPackageConfiguration;
 import com.eclipsesource.uml.modelserver.core.resource.UmlPackageConfiguration;
 import com.eclipsesource.uml.modelserver.core.routing.UmlModelServerRouting;
-import com.eclipsesource.uml.modelserver.diagram.communication.interaction.AddInteractionCommandContribution;
-import com.eclipsesource.uml.modelserver.diagram.communication.interaction.CopyInteractionCommandContribution;
-import com.eclipsesource.uml.modelserver.diagram.communication.interaction.RemoveInteractionCommandContribution;
-import com.eclipsesource.uml.modelserver.diagram.communication.interaction.SetInteractionNameCommandContribution;
-import com.eclipsesource.uml.modelserver.diagram.communication.lifeline.AddLifelineCommandContribution;
-import com.eclipsesource.uml.modelserver.diagram.communication.lifeline.CopyLifelineWithMessagesCommandContribution;
-import com.eclipsesource.uml.modelserver.diagram.communication.lifeline.RemoveLifelineCommandContribution;
-import com.eclipsesource.uml.modelserver.diagram.communication.lifeline.SetLifelineNameCommandContribution;
-import com.eclipsesource.uml.modelserver.diagram.communication.message.AddMessageCommandContribution;
-import com.eclipsesource.uml.modelserver.diagram.communication.message.RemoveMessageCommandContribution;
-import com.eclipsesource.uml.modelserver.diagram.communication.message.SetMessageNameCommandContribution;
+import com.eclipsesource.uml.modelserver.diagram.communication_diagram.manifest.CommunicationManifest;
 import com.google.inject.Singleton;
 
 public class UmlModelServerModule extends EMSNotationModelServerModule {
@@ -49,6 +39,8 @@ public class UmlModelServerModule extends EMSNotationModelServerModule {
       super.configure();
       // TODO: Somehow use this also in the other places in the commands
       bind(EMFIdGenerator.class).to(FragmentIdGenerator.class).in(Singleton.class);
+
+      install(new CommunicationManifest());
    }
 
    @Override
@@ -78,19 +70,6 @@ public class UmlModelServerModule extends EMSNotationModelServerModule {
    @Override
    protected void configureCommandCodecs(final MapBinding<String, CommandContribution> binding) {
       super.configureCommandCodecs(binding);
-
-      // UML Communication
-      binding.put(AddInteractionCommandContribution.TYPE, AddInteractionCommandContribution.class);
-      binding.put(SetInteractionNameCommandContribution.TYPE, SetInteractionNameCommandContribution.class);
-      binding.put(RemoveInteractionCommandContribution.TYPE, RemoveInteractionCommandContribution.class);
-      binding.put(AddLifelineCommandContribution.TYPE, AddLifelineCommandContribution.class);
-      binding.put(RemoveLifelineCommandContribution.TYPE, RemoveLifelineCommandContribution.class);
-      binding.put(SetLifelineNameCommandContribution.TYPE, SetLifelineNameCommandContribution.class);
-      binding.put(AddMessageCommandContribution.TYPE, AddMessageCommandContribution.class);
-      binding.put(RemoveMessageCommandContribution.TYPE, RemoveMessageCommandContribution.class);
-      binding.put(SetMessageNameCommandContribution.TYPE, SetMessageNameCommandContribution.class);
-      binding.put(CopyInteractionCommandContribution.TYPE, CopyInteractionCommandContribution.class);
-      binding.put(CopyLifelineWithMessagesCommandContribution.TYPE, CopyLifelineWithMessagesCommandContribution.class);
    }
 
    @Override

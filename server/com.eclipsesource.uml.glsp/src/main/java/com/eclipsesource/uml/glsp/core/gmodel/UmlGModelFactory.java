@@ -11,7 +11,6 @@
 package com.eclipsesource.uml.glsp.core.gmodel;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emfcloud.modelserver.glsp.notation.integration.EMSNotationGModelFactory;
 import org.eclipse.glsp.graph.GGraph;
 import org.eclipse.glsp.graph.GModelRoot;
@@ -23,14 +22,6 @@ public class UmlGModelFactory extends EMSNotationGModelFactory {
 
    @Inject
    private UmlDiagramMapper mapper;
-
-   @Override
-   protected void fillRootElement(final GModelRoot newRoot) {
-      EcoreUtil.resolveAll(modelState.getSemanticModel());
-      var resource = modelState.getSemanticModel().eResource();
-      var id = EcoreUtil.getURI(modelState.getSemanticModel());
-      super.fillRootElement(newRoot);
-   }
 
    @Override
    protected void fillRootElement(final EObject semanticModel, final Diagram notationModel, final GModelRoot newRoot) {

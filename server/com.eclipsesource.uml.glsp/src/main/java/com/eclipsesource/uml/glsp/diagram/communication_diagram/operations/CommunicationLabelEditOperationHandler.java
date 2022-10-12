@@ -25,9 +25,9 @@ import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.eclipsesource.uml.glsp.core.operations.DiagramEditLabelOperationHandler;
 import com.eclipsesource.uml.glsp.core.utils.UmlIDUtil;
 import com.eclipsesource.uml.glsp.core.utils.UmlConfig.Types;
-import com.eclipsesource.uml.modelserver.diagram.communication.interaction.SetInteractionNameCommandContribution;
-import com.eclipsesource.uml.modelserver.diagram.communication.lifeline.SetLifelineNameCommandContribution;
-import com.eclipsesource.uml.modelserver.diagram.communication.message.SetMessageNameCommandContribution;
+import com.eclipsesource.uml.modelserver.diagram.communication_diagram.commands.interaction.SetInteractionNameCommandContribution;
+import com.eclipsesource.uml.modelserver.diagram.communication_diagram.commands.lifeline.SetLifelineNameCommandContribution;
+import com.eclipsesource.uml.modelserver.diagram.communication_diagram.commands.message.SetMessageNameCommandContribution;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 

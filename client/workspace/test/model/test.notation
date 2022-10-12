@@ -11,15 +11,8 @@
     <position x="620.0" y="313.0"/>
   </elements>
   <elements xsi:type="notation:Shape">
-    <semanticElement/>
-    <position x="28.0" y="4.0"/>
-  </elements>
-  <elements xsi:type="notation:Shape">
-    <semanticElement/>
-    <position x="103.0" y="20.0"/>
-  </elements>
-  <elements xsi:type="notation:Shape">
-    <semanticElement/>
-    <position x="139.0" y="57.0"/>
+    <semanticElement elementId="_d618IEoKEe26xMMi-6wMhA"/>
+    <position x="20.0" y="156.0"/>
+    <size width="155.515625" height="42.0"/>
   </elements>
 </notation:Diagram>

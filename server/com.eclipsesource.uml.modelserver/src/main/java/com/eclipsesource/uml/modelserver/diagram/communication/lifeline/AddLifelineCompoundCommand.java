@@ -13,16 +13,15 @@ package com.eclipsesource.uml.modelserver.diagram.communication.lifeline;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emfcloud.modelserver.glsp.notation.commands.AddShapeCommand;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.impl.GPointImpl;
+import org.eclipse.glsp.server.emf.model.notation.Shape;
 import org.eclipse.uml2.uml.Interaction;
 import org.eclipse.uml2.uml.Model;
 
+import com.eclipsesource.uml.modelserver.diagram.notation.AddShapeCommand;
 import com.eclipsesource.uml.modelserver.diagram.util.UmlNotationCommandUtil;
 import com.eclipsesource.uml.modelserver.diagram.util.UmlSemanticCommandUtil;
-
-import org.eclipse.glsp.server.emf.model.notation.Shape;
 
 public class AddLifelineCompoundCommand extends CompoundCommand {
    private final EditingDomain domain;

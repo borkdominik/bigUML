@@ -10,12 +10,8 @@
  */
 package com.eclipsesource.uml.modelserver.unotation.impl;
 
-import com.eclipsesource.uml.modelserver.unotation.Diagram;
-import com.eclipsesource.uml.modelserver.unotation.Edge;
-import com.eclipsesource.uml.modelserver.unotation.NotationElement;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
-import com.eclipsesource.uml.modelserver.unotation.SemanticProxy;
-import com.eclipsesource.uml.modelserver.unotation.Shape;
+import com.eclipsesource.uml.modelserver.unotation.UmlDiagram;
 import com.eclipsesource.uml.modelserver.unotation.UnotationFactory;
 import com.eclipsesource.uml.modelserver.unotation.UnotationPackage;
 
@@ -23,11 +19,12 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EReference;
 
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 import org.eclipse.glsp.graph.GraphPackage;
+
+import org.eclipse.glsp.server.emf.model.notation.NotationPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -41,35 +38,7 @@ public class UnotationPackageImpl extends EPackageImpl implements UnotationPacka
     * <!-- end-user-doc -->
     * @generated
     */
-   private EClass shapeEClass = null;
-
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   private EClass edgeEClass = null;
-
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   private EClass notationElementEClass = null;
-
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   private EClass diagramEClass = null;
-
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   private EClass semanticProxyEClass = null;
+   private EClass umlDiagramEClass = null;
 
    /**
     * <!-- begin-user-doc -->
@@ -127,6 +96,7 @@ public class UnotationPackageImpl extends EPackageImpl implements UnotationPacka
 
       // Initialize simple dependencies
       GraphPackage.eINSTANCE.eClass();
+      NotationPackage.eINSTANCE.eClass();
 
       // Create package meta-data objects
       theUnotationPackage.createPackageContents();
@@ -148,8 +118,8 @@ public class UnotationPackageImpl extends EPackageImpl implements UnotationPacka
     * @generated
     */
    @Override
-   public EClass getShape() {
-      return shapeEClass;
+   public EClass getUmlDiagram() {
+      return umlDiagramEClass;
    }
 
    /**
@@ -158,148 +128,8 @@ public class UnotationPackageImpl extends EPackageImpl implements UnotationPacka
     * @generated
     */
    @Override
-   public EReference getShape_Position() {
-      return (EReference)shapeEClass.getEStructuralFeatures().get(0);
-   }
-
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   @Override
-   public EReference getShape_Size() {
-      return (EReference)shapeEClass.getEStructuralFeatures().get(1);
-   }
-
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   @Override
-   public EClass getEdge() {
-      return edgeEClass;
-   }
-
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   @Override
-   public EReference getEdge_BendPoints() {
-      return (EReference)edgeEClass.getEStructuralFeatures().get(0);
-   }
-
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   @Override
-   public EReference getEdge_Source() {
-      return (EReference)edgeEClass.getEStructuralFeatures().get(1);
-   }
-
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   @Override
-   public EReference getEdge_Target() {
-      return (EReference)edgeEClass.getEStructuralFeatures().get(2);
-   }
-
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   @Override
-   public EClass getNotationElement() {
-      return notationElementEClass;
-   }
-
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   @Override
-   public EReference getNotationElement_SemanticElement() {
-      return (EReference)notationElementEClass.getEStructuralFeatures().get(0);
-   }
-
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   @Override
-   public EAttribute getNotationElement_Type() {
-      return (EAttribute)notationElementEClass.getEStructuralFeatures().get(1);
-   }
-
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   @Override
-   public EClass getDiagram() {
-      return diagramEClass;
-   }
-
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   @Override
-   public EReference getDiagram_Elements() {
-      return (EReference)diagramEClass.getEStructuralFeatures().get(0);
-   }
-
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   @Override
-   public EAttribute getDiagram_DiagramType() {
-      return (EAttribute)diagramEClass.getEStructuralFeatures().get(1);
-   }
-
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   @Override
-   public EClass getSemanticProxy() {
-      return semanticProxyEClass;
-   }
-
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   @Override
-   public EAttribute getSemanticProxy_Uri() {
-      return (EAttribute)semanticProxyEClass.getEStructuralFeatures().get(0);
-   }
-
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   @Override
-   public EReference getSemanticProxy_ResolvedElement() {
-      return (EReference)semanticProxyEClass.getEStructuralFeatures().get(1);
+   public EAttribute getUmlDiagram_Representation() {
+      return (EAttribute)umlDiagramEClass.getEStructuralFeatures().get(0);
    }
 
    /**
@@ -341,26 +171,8 @@ public class UnotationPackageImpl extends EPackageImpl implements UnotationPacka
       isCreated = true;
 
       // Create classes and their features
-      shapeEClass = createEClass(SHAPE);
-      createEReference(shapeEClass, SHAPE__POSITION);
-      createEReference(shapeEClass, SHAPE__SIZE);
-
-      edgeEClass = createEClass(EDGE);
-      createEReference(edgeEClass, EDGE__BEND_POINTS);
-      createEReference(edgeEClass, EDGE__SOURCE);
-      createEReference(edgeEClass, EDGE__TARGET);
-
-      notationElementEClass = createEClass(NOTATION_ELEMENT);
-      createEReference(notationElementEClass, NOTATION_ELEMENT__SEMANTIC_ELEMENT);
-      createEAttribute(notationElementEClass, NOTATION_ELEMENT__TYPE);
-
-      diagramEClass = createEClass(DIAGRAM);
-      createEReference(diagramEClass, DIAGRAM__ELEMENTS);
-      createEAttribute(diagramEClass, DIAGRAM__DIAGRAM_TYPE);
-
-      semanticProxyEClass = createEClass(SEMANTIC_PROXY);
-      createEAttribute(semanticProxyEClass, SEMANTIC_PROXY__URI);
-      createEReference(semanticProxyEClass, SEMANTIC_PROXY__RESOLVED_ELEMENT);
+      umlDiagramEClass = createEClass(UML_DIAGRAM);
+      createEAttribute(umlDiagramEClass, UML_DIAGRAM__REPRESENTATION);
 
       // Create enums
       representationEEnum = createEEnum(REPRESENTATION);
@@ -390,38 +202,18 @@ public class UnotationPackageImpl extends EPackageImpl implements UnotationPacka
       setNsURI(eNS_URI);
 
       // Obtain other dependent packages
-      GraphPackage theGraphPackage = (GraphPackage)EPackage.Registry.INSTANCE.getEPackage(GraphPackage.eNS_URI);
+      NotationPackage theNotationPackage = (NotationPackage)EPackage.Registry.INSTANCE.getEPackage(NotationPackage.eNS_URI);
 
       // Create type parameters
 
       // Set bounds for type parameters
 
       // Add supertypes to classes
-      shapeEClass.getESuperTypes().add(this.getNotationElement());
-      edgeEClass.getESuperTypes().add(this.getNotationElement());
-      diagramEClass.getESuperTypes().add(this.getNotationElement());
+      umlDiagramEClass.getESuperTypes().add(theNotationPackage.getDiagram());
 
       // Initialize classes, features, and operations; add parameters
-      initEClass(shapeEClass, Shape.class, "Shape", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-      initEReference(getShape_Position(), theGraphPackage.getGPoint(), null, "position", null, 0, 1, Shape.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-      initEReference(getShape_Size(), theGraphPackage.getGDimension(), null, "size", null, 0, 1, Shape.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-      initEClass(edgeEClass, Edge.class, "Edge", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-      initEReference(getEdge_BendPoints(), theGraphPackage.getGPoint(), null, "bendPoints", null, 0, -1, Edge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-      initEReference(getEdge_Source(), this.getNotationElement(), null, "source", null, 0, 1, Edge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-      initEReference(getEdge_Target(), this.getNotationElement(), null, "target", null, 0, 1, Edge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-      initEClass(notationElementEClass, NotationElement.class, "NotationElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-      initEReference(getNotationElement_SemanticElement(), this.getSemanticProxy(), null, "semanticElement", null, 0, 1, NotationElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-      initEAttribute(getNotationElement_Type(), ecorePackage.getEString(), "type", null, 0, 1, NotationElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-      initEClass(diagramEClass, Diagram.class, "Diagram", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-      initEReference(getDiagram_Elements(), this.getNotationElement(), null, "elements", null, 0, -1, Diagram.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-      initEAttribute(getDiagram_DiagramType(), this.getRepresentation(), "diagramType", "CLASS", 1, 1, Diagram.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-      initEClass(semanticProxyEClass, SemanticProxy.class, "SemanticProxy", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-      initEAttribute(getSemanticProxy_Uri(), ecorePackage.getEString(), "uri", null, 0, 1, SemanticProxy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-      initEReference(getSemanticProxy_ResolvedElement(), ecorePackage.getEObject(), null, "resolvedElement", null, 0, 1, SemanticProxy.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+      initEClass(umlDiagramEClass, UmlDiagram.class, "UmlDiagram", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+      initEAttribute(getUmlDiagram_Representation(), this.getRepresentation(), "representation", "CLASS", 1, 1, UmlDiagram.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
       // Initialize enums and add enum literals
       initEEnum(representationEEnum, Representation.class, "Representation");

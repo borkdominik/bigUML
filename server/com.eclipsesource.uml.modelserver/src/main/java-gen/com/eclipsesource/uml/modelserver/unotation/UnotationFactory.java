@@ -30,40 +30,13 @@ public interface UnotationFactory extends EFactory {
    UnotationFactory eINSTANCE = com.eclipsesource.uml.modelserver.unotation.impl.UnotationFactoryImpl.init();
 
    /**
-    * Returns a new object of class '<em>Shape</em>'.
+    * Returns a new object of class '<em>Uml Diagram</em>'.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @return a new object of class '<em>Shape</em>'.
+    * @return a new object of class '<em>Uml Diagram</em>'.
     * @generated
     */
-   Shape createShape();
-
-   /**
-    * Returns a new object of class '<em>Edge</em>'.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @return a new object of class '<em>Edge</em>'.
-    * @generated
-    */
-   Edge createEdge();
-
-   /**
-    * Returns a new object of class '<em>Diagram</em>'.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @return a new object of class '<em>Diagram</em>'.
-    * @generated
-    */
-   Diagram createDiagram();
-
-   /**
-    * Returns a new object of class '<em>Semantic Proxy</em>'.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @return a new object of class '<em>Semantic Proxy</em>'.
-    * @generated
-    */
-   SemanticProxy createSemanticProxy();
+   UmlDiagram createUmlDiagram();
 
    /**
     * Returns the package supported by this factory.

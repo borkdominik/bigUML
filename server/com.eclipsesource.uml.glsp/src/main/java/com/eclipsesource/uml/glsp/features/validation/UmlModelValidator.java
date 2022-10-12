@@ -12,17 +12,18 @@ package com.eclipsesource.uml.glsp.features.validation;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.server.features.validation.Marker;
 import org.eclipse.glsp.server.features.validation.ModelValidator;
 
+import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.eclipsesource.uml.glsp.features.validation.validators.CommunicationValidator;
-import com.eclipsesource.uml.glsp.model.UmlModelState;
 import com.google.inject.Inject;
 
 public class UmlModelValidator implements ModelValidator {
-   private static Logger LOGGER = Logger.getLogger(UmlModelValidator.class.getSimpleName());
+   private static Logger LOGGER = LogManager.getLogger(UmlModelValidator.class.getSimpleName());
 
    @Inject
    protected UmlModelState modelState;
@@ -33,7 +34,7 @@ public class UmlModelValidator implements ModelValidator {
 
    @Override
    public List<Marker> validate(final GModelElement... elements) {
-      var diagramType = modelState.getNotationModel().getDiagramType();
+      var diagramType = modelState.getRepresentation();
 
       switch (diagramType) {
          case COMMUNICATION: {

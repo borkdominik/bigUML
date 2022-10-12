@@ -15,18 +15,19 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.features.validation.Marker;
 import org.eclipse.glsp.server.features.validation.ModelValidator;
 import org.eclipse.uml2.uml.Interaction;
 
-import com.eclipsesource.uml.glsp.model.UmlModelState;
+import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.google.inject.Inject;
 
 public class CommunicationModelValidator implements ModelValidator {
-   private static Logger LOGGER = Logger.getLogger(CommunicationModelValidator.class.getSimpleName());
+   private static Logger LOGGER = LogManager.getLogger(CommunicationModelValidator.class.getSimpleName());
 
    @Inject
    protected UmlModelState modelState;
@@ -42,7 +43,7 @@ public class CommunicationModelValidator implements ModelValidator {
    public List<Marker> validate(final GModelElement... elements) {
       List<Marker> markers = new ArrayList<>();
       var modelIndex = modelState.getIndex();
-      var semanticElements = Arrays.asList(elements).stream().map(element -> modelIndex.getSemantic(element))
+      var semanticElements = Arrays.asList(elements).stream().map(element -> modelIndex.getEObject(element))
          .filter(element -> element.isPresent()).map(element -> element.get()).collect(Collectors.toUnmodifiableList());
 
       semanticElements.forEach(element -> {

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="ASCII"?>
+<notation:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:notation="http://www.eclipse.org/glsp/notation" diagramType="COMMUNICATION">
+  <semanticElement elementId="_nD7_AEiTEe287ptuQ4W3Iw"/>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_R3O6MEljEe2IxsdMH-l2-w"/>
+    <position x="370.0" y="230.0"/>
+    <size width="185.53125" height="85.0"/>
+  </elements>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_sp5EYEljEe29opaQLlsCHg"/>
+    <position x="620.0" y="313.0"/>
+  </elements>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_d618IEoKEe26xMMi-6wMhA"/>
+    <position x="20.0" y="156.0"/>
+    <size width="155.515625" height="42.0"/>
+  </elements>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_GKhFEUoLEe29O5XQUrDqDw"/>
+    <position x="262.0" y="29.0"/>
+    <size width="155.515625" height="42.0"/>
+  </elements>
+  <elements xsi:type="notation:Edge">
+    <semanticElement/>
+  </elements>
+</notation:Diagram>

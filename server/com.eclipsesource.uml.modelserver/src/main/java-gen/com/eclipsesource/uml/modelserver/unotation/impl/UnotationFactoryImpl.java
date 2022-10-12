@@ -65,10 +65,7 @@ public class UnotationFactoryImpl extends EFactoryImpl implements UnotationFacto
    @Override
    public EObject create(EClass eClass) {
       switch (eClass.getClassifierID()) {
-         case UnotationPackage.SHAPE: return createShape();
-         case UnotationPackage.EDGE: return createEdge();
-         case UnotationPackage.DIAGRAM: return createDiagram();
-         case UnotationPackage.SEMANTIC_PROXY: return createSemanticProxy();
+         case UnotationPackage.UML_DIAGRAM: return createUmlDiagram();
          default:
             throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
       }
@@ -110,42 +107,9 @@ public class UnotationFactoryImpl extends EFactoryImpl implements UnotationFacto
     * @generated
     */
    @Override
-   public Shape createShape() {
-      ShapeImpl shape = new ShapeImpl();
-      return shape;
-   }
-
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   @Override
-   public Edge createEdge() {
-      EdgeImpl edge = new EdgeImpl();
-      return edge;
-   }
-
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   @Override
-   public Diagram createDiagram() {
-      DiagramImpl diagram = new DiagramImpl();
-      return diagram;
-   }
-
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   @Override
-   public SemanticProxy createSemanticProxy() {
-      SemanticProxyImpl semanticProxy = new SemanticProxyImpl();
-      return semanticProxy;
+   public UmlDiagram createUmlDiagram() {
+      UmlDiagramImpl umlDiagram = new UmlDiagramImpl();
+      return umlDiagram;
    }
 
    /**

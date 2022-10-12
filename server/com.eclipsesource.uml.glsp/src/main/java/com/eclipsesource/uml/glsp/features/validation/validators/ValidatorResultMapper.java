@@ -15,13 +15,14 @@ import java.util.stream.Collectors;
 
 import javax.naming.OperationNotSupportedException;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.server.features.directediting.ValidationStatus;
 import org.eclipse.glsp.server.features.validation.Marker;
 import org.eclipse.glsp.server.features.validation.MarkerKind;
 
 public class ValidatorResultMapper {
-   private static Logger LOGGER = Logger.getLogger(ValidatorResultMapper.class.getSimpleName());
+   private static Logger LOGGER = LogManager.getLogger(ValidatorResultMapper.class.getSimpleName());
 
    private ValidatorResultMapper() {
 

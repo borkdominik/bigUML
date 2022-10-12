@@ -1,85 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-                             http://maven.apache.org/maven-v4_0_0.xsd">
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+
 	<groupId>com.eclipsesource.uml</groupId>
 	<artifactId>com.eclipsesource.uml.parent</artifactId>
 	<packaging>pom</packaging>
-	<version>0.1.0</version>
+	<version>0.1.0-SNAPSHOT</version>	
+	<name>Uml Editor Parent</name>
 	
+	<modules>
+		<module>./targetplatform</module>
+		<module>./com.eclipsesource.uml.modelserver</module>
+		<module>./com.eclipsesource.uml.glsp</module>
+	</modules>
+	
+
 	<properties>
-		<!-- Encoding: used by the maven-resource-plugin -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<!-- Compiler: used by the maven-compiler-plugin for Java source and target -->
+		<tycho-version>2.7.4</tycho-version>
+		<xtext.version>2.23.0</xtext.version>
+		<xtext.antlr.version>[2.1.1, 3)</xtext.antlr.version>
+		<xtend.version>${xtext.version}</xtend.version>
+		<maven.clean.version>3.2.0</maven.clean.version>
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
-		<!-- Maven Plugin Versions: General maven plugin versions -->
-		<tycho.version>1.6.0</tycho.version>
-		<maven.antrun.plugin.version>1.8</maven.antrun.plugin.version>
+		<maven.compiler.plugin.version>3.8.0</maven.compiler.plugin.version>
+		<maven.checkstyle.version>3.1.1</maven.checkstyle.version>
+		<maven.shade.version>3.0.0</maven.shade.version>
+		<maven.surefire.plugin.version>2.22.1</maven.surefire.plugin.version>
+		<versions.maven.plugin.version>2.7</versions.maven.plugin.version>
+		<codehaus.mojo.maven.version>3.3.0</codehaus.mojo.maven.version>
+		<codehaus.mojo.exec.version>1.4.0</codehaus.mojo.exec.version>
+		<googlecode.addjars.version>1.0.5</googlecode.addjars.version>
+		<puppycrawl.checkstyle.version>8.44</puppycrawl.checkstyle.version>
+		<emfcloud.checkstyle.version>0.1.0-SNAPSHOT</emfcloud.checkstyle.version>
+		<checkstyle.plugin.version>3.1.2</checkstyle.plugin.version>
+		<emf.mwe2.version>2.11.3</emf.mwe2.version>
+		<eclipse.m2e.lifecycle.version>1.0.0</eclipse.m2e.lifecycle.version>
 	</properties>
 
-	<modules>
-		<module>targetplatform</module>
-		<module>com.eclipsesource.uml.glsp</module>
-		<module>com.eclipsesource.uml.glsp-app</module>
-		<module>com.eclipsesource.uml.modelserver</module>
-		<module>com.eclipsesource.uml.modelserver-app</module>
-	</modules>
-
 	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-maven-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<extensions>true</extensions>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>target-platform-configuration</artifactId>
+				<version>${tycho-version}</version>
+				<configuration>
+					<target>
+						<artifact>
+							<groupId>com.eclipsesource.uml</groupId>
+							<artifactId>com.eclipsesource.uml.target</artifactId>
+							<version>0.1.0-SNAPSHOT</version>
+						</artifact>
+					</target>
+					<environments>
+						<environment>
+							<os>win32</os>
+							<ws>win32</ws>
+							<arch>x86_64</arch>
+						</environment>
+						<environment>
+							<os>linux</os>
+							<ws>gtk</ws>
+							<arch>x86_64</arch>
+						</environment>
+						<environment>
+							<os>macosx</os>
+							<ws>cocoa</ws>
+							<arch>x86_64</arch>
+						</environment>
+					</environments>
+				</configuration>
+			</plugin>
+			<!-- Check Style: to disable use -Dcheckstyle.skip -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>${maven.checkstyle.version}</version>
+				<configuration>
+					<configLocation>emfcloud-checkstyle-8.44.xml</configLocation>
+					<consoleOutput>true</consoleOutput>
+					<suppressionsLocation>.settings/checkstyle-suppressions.xml</suppressionsLocation>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>check</goal>
+						</goals>
+						<phase>verify</phase>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>com.puppycrawl.tools</groupId>
+						<artifactId>checkstyle</artifactId>
+						<version>${puppycrawl.checkstyle.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>org.eclipse.emfcloud</groupId>
+						<artifactId>org.eclipse.emfcloud.checkstyle</artifactId>
+						<version>${emfcloud.checkstyle.version}</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+		</plugins>
 		<pluginManagement>
 			<plugins>
 				<plugin>
-					<groupId>org.eclipse.tycho</groupId>
-					<artifactId>target-platform-configuration</artifactId>
-					<version>${tycho.version}</version>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-clean-plugin</artifactId>
+					<version>${maven.clean.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>build-helper-maven-plugin</artifactId>
+					<version>${codehaus.mojo.maven.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>${eclipse.m2e.lifecycle.version}</version>
 					<configuration>
-						<target>
-							<artifact>
-								<groupId>com.eclipsesource.uml</groupId>
-								<artifactId>targetplatform</artifactId>
-								<version>0.1.0</version>
-								<classifier>targetplatform</classifier>
-							</artifact>
-						</target>
-						<environments>
-							<environment>
-								<os>linux</os>
-								<ws>gtk</ws>
-								<arch>x86_64</arch>
-							</environment>
-							<environment>
-								<os>win32</os>
-								<ws>win32</ws>
-								<arch>x86_64</arch>
-							</environment>
-							<environment>
-								<os>macosx</os>
-								<ws>cocoa</ws>
-								<arch>x86_64</arch>
-							</environment>
-						</environments>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.apache.maven.plugins
+										</groupId>
+										<artifactId>
+											maven-resources-plugin
+										</artifactId>
+										<versionRange>
+											[2.4.3,)
+										</versionRange>
+										<goals>
+											<goal>resources</goal>
+											<goal>testResources</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.codehaus.mojo
+										</groupId>
+										<artifactId>
+											build-helper-maven-plugin
+										</artifactId>
+										<versionRange>
+											[1.9.1,)
+										</versionRange>
+										<goals>
+											<goal>add-resource</goal>
+											<goal>add-source</goal>
+											<goal>add-test-resource</goal>
+											<goal>add-test-source</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.eclipse.tycho
+										</groupId>
+										<artifactId>
+											tycho-compiler-plugin
+										</artifactId>
+										<versionRange>
+											[0.23.1,)
+										</versionRange>
+										<goals>
+											<goal>compile</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.eclipse.tycho
+										</groupId>
+										<artifactId>
+											tycho-packaging-plugin
+										</artifactId>
+										<versionRange>
+											[0.23.1,)
+										</versionRange>
+										<goals>
+											<goal>build-qualifier</goal>
+											<goal>build-qualifier-aggregator</goal>
+											<goal>validate-id</goal>
+											<goal>validate-version</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+				<plugin>
+					<!-- Can be removed after first generator execution https://bugs.eclipse.org/bugs/show_bug.cgi?id=480097 -->
+					<groupId>org.eclipse.tycho</groupId>
+					<artifactId>tycho-compiler-plugin</artifactId>
+					<version>${tycho-version}</version>
+					<configuration>
+						<compilerArgument>-err:-forbidden</compilerArgument>
+						<useProjectSettings>false</useProjectSettings>
 					</configuration>
 				</plugin>
 				<plugin>
 					<groupId>org.eclipse.tycho</groupId>
-					<artifactId>tycho-maven-plugin</artifactId>
-					<version>${tycho.version}</version>
-					<extensions>true</extensions>
+					<artifactId>tycho-surefire-plugin</artifactId>
+					<version>${tycho-version}</version>
+					<configuration>
+						<!-- THE FOLLOWING LINE MUST NOT BE BROKEN BY AUTOFORMATTING -->
+						<argLine>${tycho.testArgLine} ${platformSystemProperties}
+							${systemProperties} ${moduleProperties}</argLine>
+					</configuration>
 				</plugin>
 			</plugins>
 		</pluginManagement>
-
-		<plugins>
-			<plugin>
-				<groupId>org.eclipse.tycho</groupId>
-				<artifactId>target-platform-configuration</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.eclipse.tycho</groupId>
-				<artifactId>tycho-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
 	</build>
+
+	<repositories>
+		<repository>
+			<id>codehaus-snapshots</id>
+			<name>disable dead 'Codehaus Snapshots' repository, see https://bugs.eclipse.org/bugs/show_bug.cgi?id=481478</name>
+			<url>http://nexus.codehaus.org/snapshots/</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>sonatype-snapshots</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>codehaus-snapshots</id>
+			<name>disable dead 'Codehaus Snapshots' repository, see https://bugs.eclipse.org/bugs/show_bug.cgi?id=481478</name>
+			<url>http://nexus.codehaus.org/snapshots/</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</pluginRepository>
+		<pluginRepository>
+			<id>sonatype-snapshots</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
+
+	<profiles>
+		<profile>
+			<id>macos</id>
+			<activation>
+				<os>
+					<family>mac</family>
+				</os>
+			</activation>
+			<properties>
+				<!-- THE FOLLOWING LINE MUST NOT BE BROKEN BY AUTOFORMATTING -->
+				<platformSystemProperties>-XstartOnFirstThread</platformSystemProperties>
+			</properties>
+		</profile>
+		<profile>
+			<id>jdk9-or-newer</id>
+			<activation>
+				<jdk>[9,)</jdk>
+			</activation>
+			<properties>
+				<moduleProperties>--add-modules=ALL-SYSTEM</moduleProperties>
+			</properties>
+		</profile>
+	</profiles>
 </project>

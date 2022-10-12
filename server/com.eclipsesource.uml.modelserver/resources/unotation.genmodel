@@ -7,11 +7,11 @@
     testsDirectory="" testSuiteClass="com.eclipsesource.uml.modelserver.unotation.tests.UnotationAllTests"
     importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0" copyrightFields="false"
     editPluginID="com.eclipsesource.uml.modelserver.edit" editorPluginID="com.eclipsesource.uml.modelserver.edit"
-    testsPluginID="com.eclipsesource.uml.modelserver.edit" usedGenPackages="platform:/plugin/org.eclipse.glsp.graph/model/glsp-graph.genmodel#//graph"
+    testsPluginID="com.eclipsesource.uml.modelserver.edit" usedGenPackages="platform:/plugin/org.eclipse.glsp.graph/model/glsp-graph.genmodel#//graph platform:/plugin/org.eclipse.glsp.server.emf/model/notation.genmodel#//notation"
     operationReflection="true" importOrganizing="true">
   <foreignModel>unotation.ecore</foreignModel>
   <genPackages prefix="Unotation" basePackage="com.eclipsesource.uml.modelserver"
-      disposableProviderFactory="true" ecorePackage="unotation.ecore#/">
+      resource="XMI" disposableProviderFactory="true" ecorePackage="unotation.ecore#/">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="unotation.ecore#//Representation">
       <genEnumLiterals ecoreEnumLiteral="unotation.ecore#//Representation/ACTIVITY"/>
       <genEnumLiterals ecoreEnumLiteral="unotation.ecore#//Representation/CLASS"/>
@@ -24,26 +24,8 @@
       <genEnumLiterals ecoreEnumLiteral="unotation.ecore#//Representation/COMPONENT"/>
       <genEnumLiterals ecoreEnumLiteral="unotation.ecore#//Representation/COMMUNICATION"/>
     </genEnums>
-    <genClasses ecoreClass="unotation.ecore#//Shape">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference unotation.ecore#//Shape/position"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference unotation.ecore#//Shape/size"/>
-    </genClasses>
-    <genClasses ecoreClass="unotation.ecore#//Edge">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference unotation.ecore#//Edge/bendPoints"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference unotation.ecore#//Edge/source"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference unotation.ecore#//Edge/target"/>
-    </genClasses>
-    <genClasses image="false" ecoreClass="unotation.ecore#//NotationElement">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference unotation.ecore#//NotationElement/semanticElement"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute unotation.ecore#//NotationElement/type"/>
-    </genClasses>
-    <genClasses ecoreClass="unotation.ecore#//Diagram">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference unotation.ecore#//Diagram/elements"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute unotation.ecore#//Diagram/diagramType"/>
-    </genClasses>
-    <genClasses ecoreClass="unotation.ecore#//SemanticProxy">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute unotation.ecore#//SemanticProxy/uri"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference unotation.ecore#//SemanticProxy/resolvedElement"/>
+    <genClasses ecoreClass="unotation.ecore#//UmlDiagram">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute unotation.ecore#//UmlDiagram/representation"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

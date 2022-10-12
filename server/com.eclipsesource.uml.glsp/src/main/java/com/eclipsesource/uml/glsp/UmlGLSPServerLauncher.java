@@ -12,28 +12,30 @@ package com.eclipsesource.uml.glsp;
 
 import java.io.IOException;
 
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.elk.alg.layered.options.LayeredMetaDataProvider;
 import org.eclipse.emfcloud.modelserver.command.CCommandPackage;
 import org.eclipse.glsp.layout.ElkLayoutEngine;
-import org.eclipse.glsp.server.di.ServerModule;
-import org.eclipse.glsp.server.launch.GLSPServerLauncher;
 import org.eclipse.glsp.server.launch.SocketGLSPServerLauncher;
 import org.eclipse.glsp.server.utils.LaunchUtil;
 
+import com.eclipsesource.uml.glsp.core.UmlDiagramModule;
+import com.eclipsesource.uml.glsp.core.UmlServerModule;
+
 public class UmlGLSPServerLauncher {
 
-   private static final Logger LOGGER = Logger.getLogger(UmlGLSPServerLauncher.class.getSimpleName());
+   private static final Logger LOGGER = LogManager.getLogger(UmlGLSPServerLauncher.class.getSimpleName());
 
    private static final int DEFAULT_PORT = 5007;
 
    public static void main(final String[] args) {
       int port = getPort(args);
       ElkLayoutEngine.initialize(new LayeredMetaDataProvider());
-      ServerModule module = new UmlServerModule();
-      module.configureDiagramModule(new UmlGLSPModule());
-      GLSPServerLauncher launcher = new SocketGLSPServerLauncher(module);
+      var module = new UmlServerModule().configureDiagramModule(new UmlDiagramModule());
+
+      var launcher = new SocketGLSPServerLauncher(module);
       CCommandPackage.eINSTANCE.eClass();
       try {
          LaunchUtil.configureLogger(true, Level.DEBUG);

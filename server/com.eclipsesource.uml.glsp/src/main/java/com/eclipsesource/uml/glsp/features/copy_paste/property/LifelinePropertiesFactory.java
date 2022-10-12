@@ -15,9 +15,9 @@ import java.awt.geom.Point2D;
 import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.GNode;
 
-import com.eclipsesource.uml.glsp.utils.UmlIDUtil;
-import com.eclipsesource.uml.glsp.utils.gmodel.GModelFilterUtil;
-import com.eclipsesource.uml.modelserver.commands.communication.lifeline.LifelineCopyableProperties;
+import com.eclipsesource.uml.glsp.core.utils.UmlIDUtil;
+import com.eclipsesource.uml.glsp.core.utils.gmodel.GModelFilterUtil;
+import com.eclipsesource.uml.modelserver.diagram.communication.lifeline.LifelineCopyableProperties;
 
 public class LifelinePropertiesFactory {
 

@@ -19,6 +19,8 @@ import org.eclipse.emfcloud.modelserver.emf.launch.CLIBasedModelServerLauncher;
 import org.eclipse.emfcloud.modelserver.emf.launch.CLIParser;
 import org.eclipse.emfcloud.modelserver.emf.launch.ModelServerLauncher;
 
+import com.eclipsesource.uml.modelserver.core.UmlModelServerModule;
+
 public class UmlModelServerLauncher {
 
    public static void main(final String[] args) {

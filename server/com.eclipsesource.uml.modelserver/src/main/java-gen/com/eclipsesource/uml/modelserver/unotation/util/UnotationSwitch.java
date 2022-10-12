@@ -16,6 +16,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 
 import org.eclipse.emf.ecore.util.Switch;
+import org.eclipse.glsp.server.emf.model.notation.Diagram;
+import org.eclipse.glsp.server.emf.model.notation.NotationElement;
 
 /**
  * <!-- begin-user-doc -->
@@ -74,36 +76,11 @@ public class UnotationSwitch<T> extends Switch<T> {
    @Override
    protected T doSwitch(int classifierID, EObject theEObject) {
       switch (classifierID) {
-         case UnotationPackage.SHAPE: {
-            Shape shape = (Shape)theEObject;
-            T result = caseShape(shape);
-            if (result == null) result = caseNotationElement(shape);
-            if (result == null) result = defaultCase(theEObject);
-            return result;
-         }
-         case UnotationPackage.EDGE: {
-            Edge edge = (Edge)theEObject;
-            T result = caseEdge(edge);
-            if (result == null) result = caseNotationElement(edge);
-            if (result == null) result = defaultCase(theEObject);
-            return result;
-         }
-         case UnotationPackage.NOTATION_ELEMENT: {
-            NotationElement notationElement = (NotationElement)theEObject;
-            T result = caseNotationElement(notationElement);
-            if (result == null) result = defaultCase(theEObject);
-            return result;
-         }
-         case UnotationPackage.DIAGRAM: {
-            Diagram diagram = (Diagram)theEObject;
-            T result = caseDiagram(diagram);
-            if (result == null) result = caseNotationElement(diagram);
-            if (result == null) result = defaultCase(theEObject);
-            return result;
-         }
-         case UnotationPackage.SEMANTIC_PROXY: {
-            SemanticProxy semanticProxy = (SemanticProxy)theEObject;
-            T result = caseSemanticProxy(semanticProxy);
+         case UnotationPackage.UML_DIAGRAM: {
+            UmlDiagram umlDiagram = (UmlDiagram)theEObject;
+            T result = caseUmlDiagram(umlDiagram);
+            if (result == null) result = caseDiagram(umlDiagram);
+            if (result == null) result = caseNotationElement(umlDiagram);
             if (result == null) result = defaultCase(theEObject);
             return result;
          }
@@ -112,43 +89,28 @@ public class UnotationSwitch<T> extends Switch<T> {
    }
 
    /**
-    * Returns the result of interpreting the object as an instance of '<em>Shape</em>'.
+    * Returns the result of interpreting the object as an instance of '<em>Uml Diagram</em>'.
     * <!-- begin-user-doc -->
     * This implementation returns null;
     * returning a non-null result will terminate the switch.
     * <!-- end-user-doc -->
     * @param object the target of the switch.
-    * @return the result of interpreting the object as an instance of '<em>Shape</em>'.
+    * @return the result of interpreting the object as an instance of '<em>Uml Diagram</em>'.
     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
     * @generated
     */
-   public T caseShape(Shape object) {
+   public T caseUmlDiagram(UmlDiagram object) {
       return null;
    }
 
    /**
-    * Returns the result of interpreting the object as an instance of '<em>Edge</em>'.
+    * Returns the result of interpreting the object as an instance of '<em>Element</em>'.
     * <!-- begin-user-doc -->
     * This implementation returns null;
     * returning a non-null result will terminate the switch.
     * <!-- end-user-doc -->
     * @param object the target of the switch.
-    * @return the result of interpreting the object as an instance of '<em>Edge</em>'.
-    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-    * @generated
-    */
-   public T caseEdge(Edge object) {
-      return null;
-   }
-
-   /**
-    * Returns the result of interpreting the object as an instance of '<em>Notation Element</em>'.
-    * <!-- begin-user-doc -->
-    * This implementation returns null;
-    * returning a non-null result will terminate the switch.
-    * <!-- end-user-doc -->
-    * @param object the target of the switch.
-    * @return the result of interpreting the object as an instance of '<em>Notation Element</em>'.
+    * @return the result of interpreting the object as an instance of '<em>Element</em>'.
     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
     * @generated
     */
@@ -168,21 +130,6 @@ public class UnotationSwitch<T> extends Switch<T> {
     * @generated
     */
    public T caseDiagram(Diagram object) {
-      return null;
-   }
-
-   /**
-    * Returns the result of interpreting the object as an instance of '<em>Semantic Proxy</em>'.
-    * <!-- begin-user-doc -->
-    * This implementation returns null;
-    * returning a non-null result will terminate the switch.
-    * <!-- end-user-doc -->
-    * @param object the target of the switch.
-    * @return the result of interpreting the object as an instance of '<em>Semantic Proxy</em>'.
-    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-    * @generated
-    */
-   public T caseSemanticProxy(SemanticProxy object) {
       return null;
    }
 

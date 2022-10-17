@@ -47,9 +47,9 @@ import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.eclipsesource.uml.glsp.core.operations.UmlDeleteOperationHandler;
 import com.eclipsesource.uml.glsp.core.operations.UmlLabelEditOperationHandler;
 import com.eclipsesource.uml.glsp.core.palette.UmlToolPaletteItemProvider;
-import com.eclipsesource.uml.glsp.diagram.communication_diagram.manifest.CommunicationUmlManifest;
 import com.eclipsesource.uml.glsp.features.outline.manifest.OutlineManifest;
 import com.eclipsesource.uml.glsp.features.validation.UmlDiagramModelValidator;
+import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.manifest.CommunicationUmlManifest;
 import com.google.inject.Singleton;
 
 public class UmlDiagramModule extends EMSGLSPNotationDiagramModule {

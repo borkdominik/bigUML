@@ -19,7 +19,7 @@ import org.eclipse.glsp.server.features.clipboard.RequestClipboardDataAction;
 import org.eclipse.glsp.server.features.clipboard.SetClipboardDataAction;
 import org.eclipse.glsp.server.gson.GraphGsonConfigurationFactory;
 
-import com.eclipsesource.uml.glsp.diagram.communication_diagram.constants.CommunicationTypes;
+import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;

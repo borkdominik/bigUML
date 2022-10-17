@@ -15,16 +15,18 @@ import java.lang.reflect.ParameterizedType;
 public final class GenericsUtil {
    private GenericsUtil() {}
 
-   public static ParameterizedType getParametrizedType(final Class<?> clazz, final Class<?> genericBaseclass) {
+   public static ParameterizedType getClassParameterType(final Class<?> clazz, final Class<?> genericBaseclass) {
       if (clazz.equals(genericBaseclass) || clazz.getSuperclass().equals(genericBaseclass)) {
          return (ParameterizedType) clazz.getGenericSuperclass();
       }
-      return getParametrizedType(clazz.getSuperclass(), genericBaseclass);
+
+      return getClassParameterType(clazz.getSuperclass(), genericBaseclass);
    }
 
-   public static Class<?> getGenericTypeParameterClass(final Class<?> clazz, final Class<?> genericBaseclass) {
-      return (Class<?>) (GenericsUtil.getParametrizedType(clazz, genericBaseclass))
-         .getActualTypeArguments()[0];
+   @SuppressWarnings({ "unchecked" })
+   public static <T> Class<T> deriveClassActualType(final Class<?> current, final Class<?> target, final int position) {
+      return (Class<T>) (GenericsUtil.getClassParameterType(current, target))
+         .getActualTypeArguments()[position];
    }
 
    public static ParameterizedType getInterfaceParameterType(final Class<?> clazz, final Class<?> interfaceClass) {

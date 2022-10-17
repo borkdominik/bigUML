@@ -1,10 +1,2 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_nD7_AEiTEe287ptuQ4W3Iw" name="test">
-  <packagedElement xmi:type="uml:Interaction" xmi:id="_gQh8IEpBEe2Yg-6gO-40sA" name="asd">
-    <lifeline xmi:id="_lYsv0EpBEe2Yg-6gO-40sA" name="2" coveredBy="_muTQ0EpBEe2Yg-6gO-40sA"/>
-    <lifeline xmi:id="_lxlJ4EpBEe2Yg-6gO-40sA" name="NewLifeline2" coveredBy="_muSpwEpBEe2Yg-6gO-40sA"/>
-    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_muSpwEpBEe2Yg-6gO-40sA" name="asd - SendEvent" covered="_lxlJ4EpBEe2Yg-6gO-40sA" message="_muQ0kEpBEe2Yg-6gO-40sA"/>
-    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_muTQ0EpBEe2Yg-6gO-40sA" name="asd - ReceiveEvent" covered="_lYsv0EpBEe2Yg-6gO-40sA" message="_muQ0kEpBEe2Yg-6gO-40sA"/>
-    <message xmi:id="_muQ0kEpBEe2Yg-6gO-40sA" name="asd" receiveEvent="_muTQ0EpBEe2Yg-6gO-40sA" sendEvent="_muSpwEpBEe2Yg-6gO-40sA"/>
-  </packagedElement>
-</uml:Model>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_nD7_AEiTEe287ptuQ4W3Iw" name="test"/>

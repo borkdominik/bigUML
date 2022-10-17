@@ -1,4 +1,4 @@
-package com.eclipsesource.uml.modelserver.uml.util;
+package com.eclipsesource.uml.modelserver.old.diagram.usecasediagram.util;
 
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.util.GraphUtil;

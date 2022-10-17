@@ -25,7 +25,7 @@ import org.eclipse.uml2.uml.Interaction;
 import com.eclipsesource.uml.modelserver.uml.constants.NotationKeys;
 import com.eclipsesource.uml.modelserver.uml.constants.SemanticKeys;
 import com.eclipsesource.uml.modelserver.uml.extension.SemanticElementAccessor;
-import com.eclipsesource.uml.modelserver.uml.util.UmlNotationCommandUtil;
+import com.eclipsesource.uml.modelserver.uml.util.UmlGraphUtil;
 
 public class AddLifelineContribution extends BasicCommandContribution<Command> {
 
@@ -50,7 +50,7 @@ public class AddLifelineContribution extends BasicCommandContribution<Command> {
       throws DecodingException {
       var elementAccessor = new SemanticElementAccessor(modelUri, domain);
 
-      var position = UmlNotationCommandUtil.getGPoint(
+      var position = UmlGraphUtil.getGPoint(
          command.getProperties().get(NotationKeys.POSITION_X),
          command.getProperties().get(NotationKeys.POSITION_Y));
 

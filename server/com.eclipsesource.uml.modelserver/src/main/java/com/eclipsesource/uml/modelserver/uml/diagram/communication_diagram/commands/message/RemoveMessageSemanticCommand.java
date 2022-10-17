@@ -29,7 +29,7 @@ public class RemoveMessageSemanticCommand extends UmlSemanticElementCommand {
 
    /*-
     * We first create all commands, then execute them afterwards,
-    * therefore it can happen that the same message is tried to be removed twice.
+    * therefore it can happen that the same message is tried to be removed multiple times.
     */
    @Override
    protected void doExecute() {

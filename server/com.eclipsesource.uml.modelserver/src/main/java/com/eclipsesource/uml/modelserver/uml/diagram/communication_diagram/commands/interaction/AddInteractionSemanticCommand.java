@@ -15,21 +15,24 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Interaction;
 import org.eclipse.uml2.uml.UMLFactory;
 
+import com.eclipsesource.uml.modelserver.uml.generator.NameGenerator;
+import com.eclipsesource.uml.modelserver.uml.generator.PackageableElementNameGenerator;
 import com.eclipsesource.uml.modelserver.uml.semantic.UmlSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.uml.util.UmlSemanticCommandUtil;
 
 public class AddInteractionSemanticCommand extends UmlSemanticElementCommand {
 
    protected final Interaction newInteraction;
+   protected final NameGenerator nameGenerator;
 
    public AddInteractionSemanticCommand(final EditingDomain domain, final URI modelUri) {
       super(domain, modelUri);
       this.newInteraction = UMLFactory.eINSTANCE.createInteraction();
+      this.nameGenerator = new PackageableElementNameGenerator(Interaction.class, modelUri, domain);
    }
 
    @Override
    protected void doExecute() {
-      newInteraction.setName(UmlSemanticCommandUtil.getNewInteractionName(model));
+      newInteraction.setName(nameGenerator.newName());
       model.getPackagedElements().add(newInteraction);
    }
 

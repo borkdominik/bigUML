@@ -16,22 +16,18 @@ import java.util.stream.Collectors;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Model;
-import org.eclipse.uml2.uml.resource.UMLResource;
+
+import com.eclipsesource.uml.modelserver.uml.util.UmlSemanticUtil;
 
 public final class SemanticElementAccessor {
    private final Model model;
 
    public SemanticElementAccessor(final URI modelUri, final EditingDomain domain) {
-      Resource semanticResource = domain.getResourceSet()
-         .getResource(modelUri.trimFileExtension().appendFileExtension(UMLResource.FILE_EXTENSION), false);
-      EObject semanticRoot = semanticResource.getContents().get(0);
-
-      this.model = (Model) semanticRoot;
+      this.model = UmlSemanticUtil.getModel(modelUri, domain);
    }
 
    public SemanticElementAccessor(final Model model) {

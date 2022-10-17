@@ -22,7 +22,7 @@ import org.eclipse.emfcloud.modelserver.edit.command.BasicCommandContribution;
 import org.eclipse.glsp.graph.GPoint;
 
 import com.eclipsesource.uml.modelserver.uml.constants.NotationKeys;
-import com.eclipsesource.uml.modelserver.uml.util.UmlNotationCommandUtil;
+import com.eclipsesource.uml.modelserver.uml.util.UmlGraphUtil;
 
 public class AddInteractionContribution extends BasicCommandContribution<Command> {
 
@@ -44,7 +44,7 @@ public class AddInteractionContribution extends BasicCommandContribution<Command
    protected CompoundCommand toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
       throws DecodingException {
 
-      var position = UmlNotationCommandUtil.getGPoint(
+      var position = UmlGraphUtil.getGPoint(
          command.getProperties().get(NotationKeys.POSITION_X),
          command.getProperties().get(NotationKeys.POSITION_Y));
 

@@ -10,8 +10,6 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.features.copy_paste.operations;
 
-import static org.eclipse.glsp.server.utils.GeometryUtil.shift;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -28,9 +26,7 @@ import org.eclipse.glsp.graph.impl.GPointImpl;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.gson.GraphGsonConfigurationFactory;
 import org.eclipse.glsp.server.operations.PasteOperation;
-import org.eclipse.uml2.uml.Interaction;
 
-import com.eclipsesource.uml.glsp.core.actions.UmlRequestClipboardDataActionHandler;
 import com.eclipsesource.uml.glsp.core.model.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.eclipsesource.uml.glsp.core.utils.gmodel.GModelFilterUtil;
@@ -38,9 +34,7 @@ import com.eclipsesource.uml.glsp.diagram.communication_diagram.constants.Commun
 import com.eclipsesource.uml.glsp.diagram.communication_diagram.features.copy_paste.InteractionPropertiesFactory;
 import com.eclipsesource.uml.glsp.diagram.communication_diagram.features.copy_paste.LifelinePropertiesFactory;
 import com.eclipsesource.uml.glsp.diagram.communication_diagram.features.copy_paste.MessagePropertiesFactory;
-import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.feature.copy_paste.interaction.CopyInteractionCommandContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.feature.copy_paste.interaction.InteractionCopyableProperties;
-import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.feature.copy_paste.lifeline.CopyLifelineWithMessagesCommandContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.feature.copy_paste.lifeline.LifelineCopyableProperties;
 import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.feature.copy_paste.message.MessageCopyableProperties;
 import com.google.gson.Gson;
@@ -71,32 +65,33 @@ public class UmlPasteOperationHandler
 
    @Override
    public void executeOperation(final PasteOperation operation) {
+      /*-
       var selectedElements = getCopiedElements(
          operation.getClipboardData().get(UmlRequestClipboardDataActionHandler.CLIPBOARD_SELECTED_ELEMENTS));
       var interactionElements = GModelFilterUtil
          .filterByType(selectedElements, CommunicationTypes.INTERACTION, GModelElement.class)
          .collect(Collectors.toUnmodifiableList());
-
+      
       if (interactionElements.size() > 0) {
          shift(interactionElements,
             computeOffset(interactionElements, operation.getEditorContext().getLastMousePosition()));
          var interactionProperties = getInteractionProperties(interactionElements);
-
+      
          modelServerAccess.exec(CopyInteractionCommandContribution.create(interactionProperties));
       } else {
          var parentInteraction = modelState.getIndex()
             .getEObject(operation.getEditorContext().getArgs().get(ARG_LAST_CONTAINABLE_ID), Interaction.class);
-
+      
          if (parentInteraction.isPresent()) {
             var root = getCopiedElement(
                operation.getClipboardData().get(UmlRequestClipboardDataActionHandler.CLIPBOARD_ROOT));
             var lifelineElements = GModelFilterUtil
                .filterByType(selectedElements, CommunicationTypes.LIFELINE, GModelElement.class)
                .collect(Collectors.toUnmodifiableList());
-
+      
             var lifelineProperties = getLifelineProperties(lifelineElements);
             var messageProperties = getMessageProperties(lifelineElements, root);
-
+      
             modelServerAccess
                .exec(CopyLifelineWithMessagesCommandContribution.create(
                   lifelineProperties,
@@ -104,6 +99,7 @@ public class UmlPasteOperationHandler
                   parentInteraction.get()));
          }
       }
+      */
    }
 
    protected ArrayList<GModelElement> getCopiedElements(final String jsonString) {

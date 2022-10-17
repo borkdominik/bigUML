@@ -16,25 +16,18 @@ import org.eclipse.glsp.graph.GDimension;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.util.GraphUtil;
 
-public final class UmlNotationCommandUtil {
-
-   private UmlNotationCommandUtil() {}
+public final class UmlGraphUtil {
+   private UmlGraphUtil() {}
 
    public static GPoint getGPoint(final Point2D.Double position) {
       return GraphUtil.point(position.x, position.y);
    }
 
    public static GPoint getGPoint(final String propertyX, final String propertyY) {
-      GPoint gPoint = GraphUtil.point(
-         propertyX.isEmpty() ? 0.0d : Double.parseDouble(propertyX),
-         propertyY.isEmpty() ? 0.0d : Double.parseDouble(propertyY));
-      return gPoint;
+      return GraphUtil.point(Double.parseDouble(propertyX), Double.parseDouble(propertyY));
    }
 
    public static GDimension getGDimension(final String height, final String width) {
-      GDimension gDimension = GraphUtil.dimension(
-         height.isEmpty() ? 0.0d : Double.parseDouble(height),
-         width.isEmpty() ? 0.0d : Double.parseDouble(width));
-      return gDimension;
+      return GraphUtil.dimension(Double.parseDouble(height), Double.parseDouble(width));
    }
 }

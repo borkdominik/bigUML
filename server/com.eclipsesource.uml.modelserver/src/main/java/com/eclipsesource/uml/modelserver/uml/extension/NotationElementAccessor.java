@@ -27,6 +27,7 @@ public final class NotationElementAccessor {
       Resource notationResource = domain.getResourceSet()
          .getResource(modelUri.trimFileExtension().appendFileExtension(NotationResource.FILE_EXTENSION), false);
       EObject notationRoot = notationResource.getContents().get(0);
+
       this.diagram = (Diagram) notationRoot;
    }
 

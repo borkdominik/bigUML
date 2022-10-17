@@ -16,14 +16,16 @@ import org.eclipse.uml2.uml.Lifeline;
 import org.eclipse.uml2.uml.Message;
 import org.eclipse.uml2.uml.UMLFactory;
 
+import com.eclipsesource.uml.modelserver.uml.generator.ListNameGenerator;
+import com.eclipsesource.uml.modelserver.uml.generator.NameGenerator;
 import com.eclipsesource.uml.modelserver.uml.semantic.UmlSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.uml.util.UmlSemanticCommandUtil;
 
 public class AddMessageSemanticCommand extends UmlSemanticElementCommand {
 
-   private final Message newMessage;
+   protected final Message newMessage;
    protected final Lifeline sourceLifeline;
    protected final Lifeline targetLifeline;
+   protected final NameGenerator nameGenerator;
 
    public AddMessageSemanticCommand(final EditingDomain domain, final URI modelUri,
       final Lifeline source, final Lifeline target) {
@@ -31,13 +33,14 @@ public class AddMessageSemanticCommand extends UmlSemanticElementCommand {
       this.newMessage = UMLFactory.eINSTANCE.createMessage();
       this.sourceLifeline = source;
       this.targetLifeline = target;
+      this.nameGenerator = new ListNameGenerator(Message.class, source.getInteraction().getMessages());
    }
 
    @Override
    protected void doExecute() {
       var interaction = sourceLifeline.getInteraction();
 
-      newMessage.setName(UmlSemanticCommandUtil.getNewMessageName(interaction));
+      newMessage.setName(nameGenerator.newName());
       newMessage.setInteraction(interaction);
 
       var sendEvent = UMLFactory.eINSTANCE.createMessageOccurrenceSpecification();

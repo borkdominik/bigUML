@@ -1,20 +1,4 @@
 <?xml version="1.0" encoding="ASCII"?>
-<notation:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:notation="http://www.eclipse.org/glsp/notation" diagramType="COMMUNICATION">
+<notation:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:notation="http://www.eclipse.org/glsp/notation" diagramType="COMMUNICATION">
   <semanticElement elementId="_nD7_AEiTEe287ptuQ4W3Iw"/>
-  <elements xsi:type="notation:Shape">
-    <semanticElement elementId="_gQh8IEpBEe2Yg-6gO-40sA"/>
-    <position x="572.0" y="198.0"/>
-  </elements>
-  <elements xsi:type="notation:Shape">
-    <semanticElement elementId="_lYsv0EpBEe2Yg-6gO-40sA"/>
-    <position x="38.0" y="14.0"/>
-  </elements>
-  <elements xsi:type="notation:Shape">
-    <semanticElement elementId="_lxlJ4EpBEe2Yg-6gO-40sA"/>
-    <position x="2.0" y="177.0"/>
-    <size width="155.515625" height="42.0"/>
-  </elements>
-  <elements xsi:type="notation:Edge">
-    <semanticElement elementId="_muQ0kEpBEe2Yg-6gO-40sA"/>
-  </elements>
 </notation:Diagram>

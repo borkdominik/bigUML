@@ -8,16 +8,14 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.old.diagram.activity_diagram.actions.behavior;
+package com.eclipsesource.uml.glsp.core.handler.action;
 
 import org.eclipse.glsp.server.actions.RequestAction;
 
-import com.eclipsesource.uml.glsp.core.handler.action.ActionKind;
+public class GetTypesAction extends RequestAction<ReturnTypesAction> {
 
-public class GetBehaviorsAction extends RequestAction<CallBehaviorsAction> {
-
-   public GetBehaviorsAction() {
-      super(ActionKind.GET_BEHAVIORS);
+   public GetTypesAction() {
+      super(ActionKind.GET_TYPES);
    }
 
 }

@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2021 EclipseSource and others.
+ * Copyright (c) 2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -8,16 +8,14 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.old.diagram.activity_diagram.actions.behavior;
+package com.eclipsesource.uml.glsp.core.handler.operation;
 
-import org.eclipse.glsp.server.actions.RequestAction;
+import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperation;
 
-import com.eclipsesource.uml.glsp.core.handler.action.ActionKind;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
 
-public class GetBehaviorsAction extends RequestAction<CallBehaviorsAction> {
+public interface DiagramEditLabelOperationHandler {
+   boolean supports(Representation representation);
 
-   public GetBehaviorsAction() {
-      super(ActionKind.GET_BEHAVIORS);
-   }
-
+   void edit(final ApplyLabelEditOperation editLabelOperation);
 }

@@ -12,9 +12,9 @@ package com.eclipsesource.uml.glsp.uml.diagram.common_diagram.operations;
 
 import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperation;
 
+import com.eclipsesource.uml.glsp.core.handler.operation.DiagramEditLabelOperationHandler;
 import com.eclipsesource.uml.glsp.core.model.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
-import com.eclipsesource.uml.glsp.core.operations.DiagramEditLabelOperationHandler;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 

@@ -30,23 +30,27 @@ import org.eclipse.glsp.server.features.validation.ModelValidator;
 import org.eclipse.glsp.server.layout.LayoutEngine;
 import org.eclipse.glsp.server.operations.LayoutOperationHandler;
 import org.eclipse.glsp.server.operations.OperationHandler;
+import org.eclipse.glsp.server.operations.OperationHandlerRegistry;
 import org.eclipse.uml2.uml.UMLPackage;
 import org.eclipse.uml2.uml.resource.UMLResource;
 
-import com.eclipsesource.uml.glsp.core.actions.ReturnTypesAction;
-import com.eclipsesource.uml.glsp.core.actions.UmlOperationActionHandler;
 import com.eclipsesource.uml.glsp.core.contextmenu.UmlContextMenuItemProvider;
 import com.eclipsesource.uml.glsp.core.diagram.UmlToolDiagramConfiguration;
 import com.eclipsesource.uml.glsp.core.gmodel.UmlDiagramMapper;
 import com.eclipsesource.uml.glsp.core.gmodel.UmlGModelFactory;
 import com.eclipsesource.uml.glsp.core.gmodel.UmlGModelMapHandler;
 import com.eclipsesource.uml.glsp.core.gmodel.UmlGModelMapperRegistry;
+import com.eclipsesource.uml.glsp.core.handler.action.ReturnTypesAction;
+import com.eclipsesource.uml.glsp.core.handler.operation.DiagramDeleteHandlerHandlerRegistry;
+import com.eclipsesource.uml.glsp.core.handler.operation.UmlDeleteOperationHandler;
+import com.eclipsesource.uml.glsp.core.handler.operation.UmlLabelEditOperationHandler;
+import com.eclipsesource.uml.glsp.core.handler.operation.UmlOperationActionHandler;
+import com.eclipsesource.uml.glsp.core.handler.operation.UmlOperationHandlerRegistry;
 import com.eclipsesource.uml.glsp.core.layout.UmlLayoutEngine;
 import com.eclipsesource.uml.glsp.core.model.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
-import com.eclipsesource.uml.glsp.core.operations.UmlDeleteOperationHandler;
-import com.eclipsesource.uml.glsp.core.operations.UmlLabelEditOperationHandler;
 import com.eclipsesource.uml.glsp.core.palette.UmlToolPaletteItemProvider;
+import com.eclipsesource.uml.glsp.core.type.TypeRegistry;
 import com.eclipsesource.uml.glsp.features.outline.manifest.OutlineManifest;
 import com.eclipsesource.uml.glsp.features.validation.UmlDiagramModelValidator;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.manifest.CommunicationUmlManifest;
@@ -59,6 +63,13 @@ public class UmlDiagramModule extends EMSGLSPNotationDiagramModule {
       super.configureBase();
       bind(EMSModelState.class).to(bindGModelState());
       bind(EMSNotationModelState.class).to(bindGModelState());
+
+      bind(UmlDiagramMapper.class).in(Singleton.class);
+      bind(UmlGModelMapHandler.class).in(Singleton.class);
+      bind(UmlGModelMapperRegistry.class).in(Singleton.class);
+
+      bind(TypeRegistry.class).in(Singleton.class);
+      bind(DiagramDeleteHandlerHandlerRegistry.class).in(Singleton.class);
    }
 
    @Override
@@ -118,6 +129,11 @@ public class UmlDiagramModule extends EMSGLSPNotationDiagramModule {
    }
 
    @Override
+   protected Class<? extends OperationHandlerRegistry> bindOperationHandlerRegistry() {
+      return UmlOperationHandlerRegistry.class;
+   }
+
+   @Override
    public String getDiagramType() { return "umldiagram"; }
 
    @Override
@@ -154,10 +170,6 @@ public class UmlDiagramModule extends EMSGLSPNotationDiagramModule {
    @Override
    protected void configureAdditionals() {
       super.configureAdditionals();
-
-      bind(UmlDiagramMapper.class).in(Singleton.class);
-      bind(UmlGModelMapHandler.class).in(Singleton.class);
-      bind(UmlGModelMapperRegistry.class).in(Singleton.class);
 
       install(new OutlineManifest());
       // install(new CommonUmlManifest());

@@ -13,17 +13,16 @@ package com.eclipsesource.uml.glsp.uml.diagram.common_diagram.manifest;
 import org.eclipse.glsp.server.operations.OperationHandler;
 
 import com.eclipsesource.uml.glsp.core.diagram.DiagramConfiguration;
-import com.eclipsesource.uml.glsp.core.manifest.contributions.DeleteOperationHandlerContribution;
+import com.eclipsesource.uml.glsp.core.handler.operation.DiagramDeleteHandler;
+import com.eclipsesource.uml.glsp.core.handler.operation.DiagramEditLabelOperationHandler;
+import com.eclipsesource.uml.glsp.core.manifest.contributions.DeleteHandlerContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.DiagramConfigurationContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.DiagramPaletteContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.EditLabelOperationHandlerContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.OperationHandlerContribution;
-import com.eclipsesource.uml.glsp.core.operations.DiagramDeleteOperationHandler;
-import com.eclipsesource.uml.glsp.core.operations.DiagramEditLabelOperationHandler;
 import com.eclipsesource.uml.glsp.core.palette.DiagramPalette;
 import com.eclipsesource.uml.glsp.uml.diagram.common_diagram.configuration.CommonDiagramConfiguration;
 import com.eclipsesource.uml.glsp.uml.diagram.common_diagram.diagram.CommonConfiguration;
-import com.eclipsesource.uml.glsp.uml.diagram.common_diagram.operations.CommonDeleteOperationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.common_diagram.operations.CommonLabelEditOperationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.common_diagram.operations.CreateCommentEdgeOperationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.common_diagram.operations.CreateCommentNodeOperationHandler;
@@ -33,14 +32,14 @@ import com.google.inject.multibindings.Multibinder;
 
 public class CommonUmlManifest extends AbstractModule
    implements DiagramConfigurationContribution, DiagramPaletteContribution, OperationHandlerContribution,
-   DeleteOperationHandlerContribution, EditLabelOperationHandlerContribution {
+   DeleteHandlerContribution, EditLabelOperationHandlerContribution {
 
    @Override
    protected void configure() {
       contributeConfiguration(binder());
       contributePalette(binder());
       contributeOperationHandler(binder());
-      contributeDeleteOperationHandler(binder());
+      contributeDeleteHandler(binder());
       contributeEditLabelOperationHandler(binder());
 
       // Default
@@ -69,7 +68,7 @@ public class CommonUmlManifest extends AbstractModule
    }
 
    @Override
-   public void contributeDeleteOperationHandler(final Multibinder<DiagramDeleteOperationHandler> multibinder) {
-      multibinder.addBinding().to(CommonDeleteOperationHandler.class);
+   public void contributeDeleteHandler(final Multibinder<DiagramDeleteHandler> multibinder) {
+      // multibinder.addBinding().to(CommonDeleteOperationHandler.class);
    }
 }

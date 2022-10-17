@@ -10,15 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.diagram.common_diagram.operations;
 
-import org.eclipse.emf.ecore.EObject;
-
-import com.eclipsesource.uml.glsp.core.model.UmlModelServerAccess;
-import com.eclipsesource.uml.glsp.core.model.UmlModelState;
-import com.eclipsesource.uml.glsp.core.operations.DiagramDeleteOperationHandler;
-import com.eclipsesource.uml.modelserver.unotation.Representation;
-import com.google.inject.Inject;
-
-public class CommonDeleteOperationHandler implements DiagramDeleteOperationHandler {
+public class CommonDeleteOperationHandler { /*- implements DiagramDeleteHandler {
    @Inject
    private UmlModelState modelState;
 
@@ -31,7 +23,7 @@ public class CommonDeleteOperationHandler implements DiagramDeleteOperationHandl
    }
 
    @Override
-   public void delete(final EObject semanticElement) {
+   public void executeDeletion(final EObject semanticElement) {
       // TODO: activate this
       /*-
       GModelElement gElem = modelState.getIndex().get(semanticElement).get();
@@ -49,7 +41,7 @@ public class CommonDeleteOperationHandler implements DiagramDeleteOperationHandl
          });
          return;
       }
-      
+
       if (semanticElement instanceof Comment) {
          modelServerAccess.exec(RemoveCommentCommandContribution
             .create((Comment) semanticElement)).thenAccept(response -> {
@@ -60,7 +52,7 @@ public class CommonDeleteOperationHandler implements DiagramDeleteOperationHandl
             });
          return;
       }
-      */
+      *
    }
-
+   */
 }

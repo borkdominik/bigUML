@@ -2,7 +2,7 @@ package com.eclipsesource.uml.glsp.old.diagram.statemachine_diagram.actions;
 
 import org.eclipse.glsp.server.actions.ResponseAction;
 
-import com.eclipsesource.uml.glsp.core.actions.ActionKind;
+import com.eclipsesource.uml.glsp.core.handler.action.ActionKind;
 
 public class AddTransitionGuardAction extends ResponseAction {
 

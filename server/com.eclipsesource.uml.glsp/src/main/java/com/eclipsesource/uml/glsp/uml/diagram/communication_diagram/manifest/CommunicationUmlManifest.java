@@ -10,54 +10,65 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.manifest;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.server.operations.OperationHandler;
+import org.eclipse.uml2.uml.Interaction;
+import org.eclipse.uml2.uml.Lifeline;
+import org.eclipse.uml2.uml.Message;
 
 import com.eclipsesource.uml.glsp.core.diagram.DiagramConfiguration;
 import com.eclipsesource.uml.glsp.core.gmodel.UmlGModelMapper;
-import com.eclipsesource.uml.glsp.core.manifest.contributions.DeleteOperationHandlerContribution;
+import com.eclipsesource.uml.glsp.core.handler.operation.DiagramDeleteHandler;
+import com.eclipsesource.uml.glsp.core.handler.operation.DiagramEditLabelOperationHandler;
+import com.eclipsesource.uml.glsp.core.manifest.DiagramManifest;
+import com.eclipsesource.uml.glsp.core.manifest.contributions.DeleteHandlerContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.DiagramConfigurationContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.DiagramPaletteContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.EditLabelOperationHandlerContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.GModelMapperContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.OperationHandlerContribution;
-import com.eclipsesource.uml.glsp.core.operations.DiagramDeleteOperationHandler;
-import com.eclipsesource.uml.glsp.core.operations.DiagramEditLabelOperationHandler;
+import com.eclipsesource.uml.glsp.core.manifest.contributions.TypeMappingContribution;
 import com.eclipsesource.uml.glsp.core.palette.DiagramPalette;
 import com.eclipsesource.uml.glsp.features.outline.generator.DiagramOutlineGenerator;
 import com.eclipsesource.uml.glsp.features.outline.manifest.contributions.OutlineGeneratorContribution;
-import com.eclipsesource.uml.glsp.uml.diagram.common_diagram.configuration.CommonDiagramConfiguration;
-import com.eclipsesource.uml.glsp.uml.diagram.common_diagram.manifest.contributions.CommonDiagramConfigurationContribution;
+import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.diagram.CommunicationConfiguration;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.features.outline.CommunicationOutlineGenerator;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.gmodel.CommunicationInteractionNodeMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.gmodel.CommunicationLifelineNodeMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.gmodel.CommunicationMessageEdgeMapper;
-import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.handler.create.CreateInteractionHandler;
-import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.handler.create.CreateLifelineHandler;
-import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.handler.create.CreateMessageHandler;
-import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.handler.operations.CommunicationDeleteOperationHandler;
-import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.handler.operations.CommunicationLabelEditOperationHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.handler.operation.CommunicationLabelEditOperationHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.handler.operation.interaction.CreateInteractionHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.handler.operation.interaction.DeleteInteractionHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.handler.operation.lifeline.CreateLifelineHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.handler.operation.lifeline.DeleteLifelineHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.handler.operation.message.CreateMessageHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.handler.operation.message.DeleteMessageHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.palette.CommunicationPalette;
-import com.google.inject.AbstractModule;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.inject.multibindings.MapBinder;
 import com.google.inject.multibindings.Multibinder;
 
-public class CommunicationUmlManifest extends AbstractModule
+public class CommunicationUmlManifest extends DiagramManifest
    implements DiagramConfigurationContribution, DiagramPaletteContribution, OperationHandlerContribution,
-   DeleteOperationHandlerContribution, EditLabelOperationHandlerContribution, OutlineGeneratorContribution,
-   CommonDiagramConfigurationContribution, GModelMapperContribution {
+   DeleteHandlerContribution, EditLabelOperationHandlerContribution, OutlineGeneratorContribution,
+   GModelMapperContribution, TypeMappingContribution {
 
    @Override
    protected void configure() {
+      super.configure();
       contributeConfiguration(binder());
       contributePalette(binder());
       contributeOperationHandler(binder());
-      contributeDeleteOperationHandler(binder());
+      contributeDeleteHandler(binder());
       contributeEditLabelOperationHandler(binder());
       contributeOutlineGenerator(binder());
-      contributeCommonDiagramConfiguration(binder());
       contributeGModelMapper(binder());
+      contributeTypeMapping(binder());
    }
 
    public void configureAdditionals() {
@@ -99,8 +110,10 @@ public class CommunicationUmlManifest extends AbstractModule
    }
 
    @Override
-   public void contributeDeleteOperationHandler(final Multibinder<DiagramDeleteOperationHandler> multibinder) {
-      multibinder.addBinding().to(CommunicationDeleteOperationHandler.class);
+   public void contributeDeleteHandler(final Multibinder<DiagramDeleteHandler> multibinder) {
+      multibinder.addBinding().to(DeleteInteractionHandler.class);
+      multibinder.addBinding().to(DeleteLifelineHandler.class);
+      multibinder.addBinding().to(DeleteMessageHandler.class);
    }
 
    @Override
@@ -109,15 +122,21 @@ public class CommunicationUmlManifest extends AbstractModule
    }
 
    @Override
-   public void contributeCommonDiagramConfiguration(final Multibinder<CommonDiagramConfiguration> multibinder) {
-      // multibinder.addBinding().toInstance(new CommonDiagramConfiguration(Representation.COMMUNICATION));
-   }
-
-   @Override
    public void contributeModelMapper(
       final Multibinder<UmlGModelMapper<? extends EObject, ? extends GModelElement>> multibinder) {
       multibinder.addBinding().to(CommunicationInteractionNodeMapper.class);
       multibinder.addBinding().to(CommunicationLifelineNodeMapper.class);
       multibinder.addBinding().to(CommunicationMessageEdgeMapper.class);
+   }
+
+   @Override
+   public void contributeTypeMapping(
+      final MapBinder<Representation, Map<String, Class<? extends EObject>>> mapbinder) {
+      var map = new HashMap<String, Class<? extends EObject>>();
+      map.put(CommunicationTypes.INTERACTION, Interaction.class);
+      map.put(CommunicationTypes.LIFELINE, Lifeline.class);
+      map.put(CommunicationTypes.MESSAGE, Message.class);
+
+      mapbinder.addBinding(CommunicationDiagram.REPRESENTATION).toInstance(map);
    }
 }

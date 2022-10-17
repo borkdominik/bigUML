@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2021 EclipseSource and others.
+ * Copyright (c) 2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -8,16 +8,10 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.old.diagram.activity_diagram.actions.behavior;
+package com.eclipsesource.uml.glsp.core.manifest;
 
-import org.eclipse.glsp.server.actions.RequestAction;
+import com.google.inject.AbstractModule;
 
-import com.eclipsesource.uml.glsp.core.handler.action.ActionKind;
-
-public class GetBehaviorsAction extends RequestAction<CallBehaviorsAction> {
-
-   public GetBehaviorsAction() {
-      super(ActionKind.GET_BEHAVIORS);
-   }
+public class DiagramManifest extends AbstractModule {
 
 }

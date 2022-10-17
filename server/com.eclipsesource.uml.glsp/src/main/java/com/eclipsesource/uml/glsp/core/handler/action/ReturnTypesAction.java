@@ -8,29 +8,26 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.old.diagram.activity_diagram.actions.behavior;
+package com.eclipsesource.uml.glsp.core.handler.action;
 
 import java.util.List;
 
 import org.eclipse.glsp.server.actions.ResponseAction;
 
-import com.eclipsesource.uml.glsp.core.handler.action.ActionKind;
+public class ReturnTypesAction extends ResponseAction {
 
-public class CallBehaviorsAction extends ResponseAction {
+   private List<String> types;
 
-   private List<String> behaviors;
-
-   public CallBehaviorsAction() {
-      super(ActionKind.CALL_BEHAVIORS);
+   public ReturnTypesAction() {
+      super(ActionKind.RETURN_TYPES);
    }
 
-   public CallBehaviorsAction(final List<String> behaviors) {
-      super(ActionKind.CALL_BEHAVIORS);
-      this.behaviors = behaviors;
+   public ReturnTypesAction(final List<String> types) {
+      super(ActionKind.RETURN_TYPES);
+      this.types = types;
    }
 
-   public List<String> getBehaviors() { return behaviors; }
+   public List<String> getTypes() { return types; }
 
-   public void setBehaviors(final List<String> behaviors) { this.behaviors = behaviors; }
-
+   public void setTypes(final List<String> types) { this.types = types; }
 }

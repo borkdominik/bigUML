@@ -10,16 +10,16 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.core.manifest.contributions;
 
-import com.eclipsesource.uml.glsp.core.handler.operation.DiagramEditLabelOperationHandler;
+import com.eclipsesource.uml.glsp.core.handler.operation.DiagramDeleteHandler;
 import com.google.inject.Binder;
 import com.google.inject.multibindings.Multibinder;
 
-public interface EditLabelOperationHandlerContribution {
+public interface DeleteHandlerContribution {
 
-   default void contributeEditLabelOperationHandler(final Binder binder) {
-      var provider = Multibinder.newSetBinder(binder, DiagramEditLabelOperationHandler.class);
-      contributeEditLabelOperationHandler(provider);
+   default void contributeDeleteHandler(final Binder binder) {
+      var provider = Multibinder.newSetBinder(binder, DiagramDeleteHandler.class);
+      contributeDeleteHandler(provider);
    }
 
-   void contributeEditLabelOperationHandler(Multibinder<DiagramEditLabelOperationHandler> multibinder);
+   void contributeDeleteHandler(Multibinder<DiagramDeleteHandler> multibinder);
 }

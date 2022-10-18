@@ -19,19 +19,17 @@ import org.eclipse.glsp.graph.util.GraphUtil;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
 import com.eclipsesource.uml.glsp.uml.handler.operations.create.CreateNodeHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.interaction.AddInteractionContribution;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
 
 public class CreateInteractionHandler
    extends CreateNodeHandler {
 
    public CreateInteractionHandler() {
-      super(CommunicationTypes.INTERACTION);
+      super(Representation.COMMUNICATION, CommunicationTypes.INTERACTION);
    }
 
    @Override
-   public String getLabel() { return "Communication:Interaction"; }
-
-   @Override
-   protected CCommand create(final Optional<GPoint> location) {
+   protected CCommand command(final Optional<GPoint> location) {
       return AddInteractionContribution.create(location.orElse(GraphUtil.point(0, 0)));
    }
 }

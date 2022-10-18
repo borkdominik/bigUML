@@ -10,16 +10,16 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.core.manifest.contributions;
 
-import com.eclipsesource.uml.glsp.core.palette.DiagramPalette;
+import com.eclipsesource.uml.glsp.core.handler.operation.DiagramCreateHandler;
 import com.google.inject.Binder;
 import com.google.inject.multibindings.Multibinder;
 
-public interface DiagramPaletteContribution {
+public interface CreateHandlerContribution {
 
-   default void contributePalette(final Binder binder) {
-      var provider = Multibinder.newSetBinder(binder, DiagramPalette.class);
-      contributePalette(provider);
+   default void contributeCreateHandler(final Binder binder) {
+      var provider = Multibinder.newSetBinder(binder, DiagramCreateHandler.class);
+      contributeCreateHandler(provider);
    }
 
-   void contributePalette(Multibinder<DiagramPalette> multibinder);
+   void contributeCreateHandler(Multibinder<DiagramCreateHandler> multibinder);
 }

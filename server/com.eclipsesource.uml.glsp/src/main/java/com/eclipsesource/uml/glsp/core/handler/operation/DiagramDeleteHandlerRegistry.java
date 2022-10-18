@@ -10,89 +10,53 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.core.handler.operation;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.glsp.server.internal.registry.MapRegistry;
-import org.eclipse.glsp.server.registry.Registry;
 
+import com.eclipsesource.uml.glsp.core.common.DiagramRegistry;
+import com.eclipsesource.uml.glsp.core.common.DoubleKey;
 import com.eclipsesource.uml.glsp.core.type.TypeRegistry;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 
-@SuppressWarnings("restriction")
 public class DiagramDeleteHandlerRegistry
-   implements Registry<Class<? extends EObject>, DiagramDeleteHandler> {
-
-   private final MapRegistry<String, DiagramDeleteHandler> internalRegistry;
-   private final Map<String, Class<? extends EObject>> classes;
+   extends DiagramRegistry<Class<? extends EObject>, DiagramDeleteHandler> {
 
    @Inject
    public DiagramDeleteHandlerRegistry(final Set<DiagramDeleteHandler> handlers,
       final TypeRegistry typeRegistry) {
-      classes = new HashMap<>();
-      internalRegistry = new MapRegistry<>() {};
       handlers.forEach(handler -> {
-         var types = typeRegistry.get(handler.getRepresentation()).get();
+         var representation = handler.getRepresentation();
+         var types = typeRegistry.get(representation).get();
          var clazz = types.get(handler.getHandledElementTypeId());
-         register(clazz, handler);
+         register(DoubleKey.of(representation, clazz), handler);
       });
    }
 
-   protected String deriveKey(final Class<? extends EObject> key) {
-      return deriveKey(key, null);
-   }
+   @Override
+   protected String deriveKey(final DoubleKey<Representation, Class<? extends EObject>> key) {
+      var representation = key.key1;
+      var clazz = key.key2;
 
-   protected String deriveKey(final Class<? extends EObject> key, final String elementTypeId) {
-      String derivedKey = key.getName();
-      if (elementTypeId != null) {
-         return derivedKey + "_" + elementTypeId;
-      }
-      return derivedKey;
+      return representation.getName() + ":" + clazz.getName();
    }
 
    @Override
-   public boolean register(final Class<? extends EObject> key, final DiagramDeleteHandler handler) {
-      classes.put(deriveKey(key), key);
-      return internalRegistry.register(deriveKey(key), handler);
-   }
+   public Optional<DiagramDeleteHandler> get(final DoubleKey<Representation, Class<? extends EObject>> key) {
+      var classKey = keys.keySet().stream().filter(cKey -> {
+         var value = keys.get(cKey);
 
-   @Override
-   public boolean deregister(final Class<? extends EObject> key) {
-      classes.remove(deriveKey(key));
-      return internalRegistry.deregister(deriveKey(key));
-   }
-
-   @Override
-   public boolean hasKey(final Class<? extends EObject> key) {
-      return internalRegistry.hasKey(deriveKey(key));
-   }
-
-   @Override
-   public Optional<DiagramDeleteHandler> get(final Class<? extends EObject> key) {
-      var classKey = classes.keySet().stream().filter(cKey -> {
-         var value = classes.get(cKey);
-
-         return value.isAssignableFrom(key);
+         return value.key1.equals(key.key1) && value.key2.isAssignableFrom(key.key2);
       }).findFirst();
 
       if (classKey.isPresent()) {
-         return internalRegistry.get(classKey.get());
+         return registry.get(classKey.get());
       }
 
       return Optional.empty();
 
-   }
-
-   @Override
-   public Set<DiagramDeleteHandler> getAll() { return internalRegistry.getAll(); }
-
-   @Override
-   public Set<Class<? extends EObject>> keys() {
-      return classes.values().stream().collect(Collectors.toSet());
    }
 
 }

@@ -10,41 +10,32 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.core.handler.operation;
 
-import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
-
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.AbstractEMSOperationHandler;
-import org.eclipse.glsp.server.operations.DeleteOperation;
+import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 import org.eclipse.glsp.server.types.GLSPServerException;
 
 import com.eclipsesource.uml.glsp.core.common.DoubleKey;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.google.inject.Inject;
 
-public class UmlDeleteOperationHandler extends AbstractEMSOperationHandler<DeleteOperation> {
+public class UmlCreateEdgeOperationHandler extends AbstractEMSOperationHandler<CreateEdgeOperation> {
 
    @Inject
-   private DiagramDeleteHandlerRegistry registry;
+   private DiagramCreateHandlerRegistry registry;
 
    @Inject
    private UmlModelState modelState;
 
    @Override
-   public void executeOperation(final DeleteOperation operation) {
+   public void executeOperation(final CreateEdgeOperation operation) {
       var representation = modelState.getRepresentation();
 
-      operation.getElementIds().forEach(elementId -> {
-         var semanticElement = getOrThrow(modelState.getIndex().getEObject(elementId),
-            EObject.class, "Could not find semantic element for id '" + elementId + "', no delete operation executed.");
+      var handler = registry.get(DoubleKey.of(representation, operation.getElementTypeId()));
 
-         var handler = registry.get(DoubleKey.of(representation, semanticElement.getClass()));
-
-         handler
-            .orElseThrow(
-               () -> new GLSPServerException(
-                  "No delete handler found for class " + semanticElement.getClass().getName()))
-            .executeDeletion(semanticElement);
-      });
+      handler
+         .orElseThrow(
+            () -> new GLSPServerException("No create edge handler found for element " + operation.getElementTypeId()))
+         .executeOperation(operation);
    }
 
 }

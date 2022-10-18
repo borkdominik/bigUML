@@ -15,19 +15,19 @@ import java.util.Map;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.graph.GModelElement;
-import org.eclipse.glsp.server.operations.OperationHandler;
 import org.eclipse.uml2.uml.Interaction;
 import org.eclipse.uml2.uml.Lifeline;
 import org.eclipse.uml2.uml.Message;
 
 import com.eclipsesource.uml.glsp.core.diagram.DiagramConfiguration;
 import com.eclipsesource.uml.glsp.core.gmodel.UmlGModelMapper;
+import com.eclipsesource.uml.glsp.core.handler.operation.DiagramCreateHandler;
 import com.eclipsesource.uml.glsp.core.handler.operation.DiagramDeleteHandler;
 import com.eclipsesource.uml.glsp.core.handler.operation.DiagramEditLabelOperationHandler;
 import com.eclipsesource.uml.glsp.core.manifest.DiagramManifest;
+import com.eclipsesource.uml.glsp.core.manifest.contributions.CreateHandlerContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.DeleteHandlerContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.EditLabelOperationHandlerContribution;
-import com.eclipsesource.uml.glsp.core.manifest.contributions.OperationHandlerContribution;
 import com.eclipsesource.uml.glsp.core.palette.DiagramPalette;
 import com.eclipsesource.uml.glsp.features.outline.generator.DiagramOutlineGenerator;
 import com.eclipsesource.uml.glsp.features.outline.manifest.contributions.OutlineGeneratorContribution;
@@ -50,14 +50,14 @@ import com.google.inject.multibindings.MapBinder;
 import com.google.inject.multibindings.Multibinder;
 
 public class CommunicationUmlManifest extends DiagramManifest
-   implements OperationHandlerContribution,
+   implements CreateHandlerContribution,
    DeleteHandlerContribution, EditLabelOperationHandlerContribution, OutlineGeneratorContribution {
 
    @Override
    protected void configure() {
       super.configure();
 
-      contributeOperationHandler(binder());
+      contributeCreateHandler(binder());
       contributeDeleteHandler(binder());
       contributeEditLabelOperationHandler(binder());
       contributeOutlineGenerator(binder());
@@ -90,7 +90,7 @@ public class CommunicationUmlManifest extends DiagramManifest
    }
 
    @Override
-   public void contributeOperationHandler(final Multibinder<OperationHandler> multibinder) {
+   public void contributeCreateHandler(final Multibinder<DiagramCreateHandler> multibinder) {
       multibinder.addBinding().to(CreateInteractionHandler.class);
       multibinder.addBinding().to(CreateLifelineHandler.class);
       multibinder.addBinding().to(CreateMessageHandler.class);

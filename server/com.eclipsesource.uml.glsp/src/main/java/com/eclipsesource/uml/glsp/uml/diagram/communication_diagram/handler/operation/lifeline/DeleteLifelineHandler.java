@@ -25,7 +25,7 @@ public class DeleteLifelineHandler extends DeleteElementHandler<Lifeline> {
    }
 
    @Override
-   protected CCommand delete(final Lifeline element) {
+   protected CCommand command(final Lifeline element) {
       return RemoveLifelineContribution.create(element);
    }
 

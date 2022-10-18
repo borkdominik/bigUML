@@ -23,7 +23,7 @@ import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 
 public abstract class DeleteElementHandler<T extends EObject> implements DiagramDeleteHandler {
-   protected final Class<T> elementClass;
+   protected final Class<T> elementType;
    protected final String elementTypeId;
    protected final Representation representation;
 
@@ -36,7 +36,7 @@ public abstract class DeleteElementHandler<T extends EObject> implements Diagram
    public DeleteElementHandler(final Representation representation, final String typeId) {
       this.representation = representation;
       this.elementTypeId = typeId;
-      this.elementClass = GenericsUtil.deriveClassActualType(getClass(), DeleteElementHandler.class, 0);
+      this.elementType = GenericsUtil.deriveClassActualType(getClass(), DeleteElementHandler.class, 0);
    }
 
    @Override
@@ -48,10 +48,10 @@ public abstract class DeleteElementHandler<T extends EObject> implements Diagram
    @Override
    public void executeDeletion(final EObject object) {
       var element = ReflectionUtil.castOrThrow(object,
-         elementClass,
-         "Object is not castable to " + elementClass.getName() + ". it was " + object.getClass().getName());
+         elementType,
+         "Object is not castable to " + elementType.getName() + ". it was " + object.getClass().getName());
 
-      modelServerAccess.exec(delete(element))
+      modelServerAccess.exec(command(element))
          .thenAccept(response -> {
             if (response.body() == null || response.body().isEmpty()) {
                throw new GLSPServerException("Could not execute delete on " + elementTypeId);
@@ -59,5 +59,5 @@ public abstract class DeleteElementHandler<T extends EObject> implements Diagram
          });
    }
 
-   protected abstract CCommand delete(T element);
+   protected abstract CCommand command(T element);
 }

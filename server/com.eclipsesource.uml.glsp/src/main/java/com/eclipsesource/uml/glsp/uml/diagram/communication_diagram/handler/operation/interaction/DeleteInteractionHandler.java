@@ -25,7 +25,7 @@ public class DeleteInteractionHandler extends DeleteElementHandler<Interaction> 
    }
 
    @Override
-   protected CCommand delete(final Interaction element) {
+   protected CCommand command(final Interaction element) {
       return RemoveInteractionContribution.create(element);
    }
 }

@@ -17,7 +17,7 @@ import com.eclipsesource.uml.glsp.core.handler.operation.DiagramDeleteHandler;
 import com.eclipsesource.uml.glsp.core.handler.operation.DiagramEditLabelOperationHandler;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.DeleteHandlerContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.DiagramConfigurationContribution;
-import com.eclipsesource.uml.glsp.core.manifest.contributions.DiagramPaletteContribution;
+import com.eclipsesource.uml.glsp.core.manifest.contributions.PaletteContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.EditLabelOperationHandlerContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.OperationHandlerContribution;
 import com.eclipsesource.uml.glsp.core.palette.DiagramPalette;
@@ -31,7 +31,7 @@ import com.google.inject.AbstractModule;
 import com.google.inject.multibindings.Multibinder;
 
 public class CommonUmlManifest extends AbstractModule
-   implements DiagramConfigurationContribution, DiagramPaletteContribution, OperationHandlerContribution,
+   implements DiagramConfigurationContribution, PaletteContribution, OperationHandlerContribution,
    DeleteHandlerContribution, EditLabelOperationHandlerContribution {
 
    @Override

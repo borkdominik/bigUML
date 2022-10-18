@@ -15,7 +15,6 @@ import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
 import java.util.Optional;
 
 import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.AbstractEMSCreateNodeOperationHandler;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.types.GLSPServerException;
@@ -24,11 +23,12 @@ import org.eclipse.uml2.uml.Element;
 import com.eclipsesource.uml.glsp.core.model.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.eclipsesource.uml.glsp.core.utils.reflection.GenericsUtil;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 
-public abstract class CreateChildNodeHandler<T extends Element> extends AbstractEMSCreateNodeOperationHandler {
+public abstract class CreateChildNodeHandler<T extends Element> extends BaseCreateHandler<CreateNodeOperation> {
 
-   protected final Class<T> containerClass;
+   protected final Class<T> containerType;
 
    @Inject
    protected UmlModelServerAccess modelServerAccess;
@@ -36,26 +36,26 @@ public abstract class CreateChildNodeHandler<T extends Element> extends Abstract
    @Inject
    protected UmlModelState modelState;
 
-   public CreateChildNodeHandler(final String type) {
-      super(type);
+   public CreateChildNodeHandler(final Representation representation, final String typeId) {
+      super(representation, typeId);
 
-      this.containerClass = GenericsUtil.deriveClassActualType(getClass(), CreateChildNodeHandler.class, 0);
+      this.containerType = GenericsUtil.deriveClassActualType(getClass(), CreateChildNodeHandler.class, 0);
    }
 
    @Override
-   public void executeOperation(final CreateNodeOperation operation) {
+   public void create(final CreateNodeOperation operation) {
       var containerId = operation.getContainerId();
       var container = getOrThrow(modelState.getIndex().getEObject(containerId),
-         containerClass, "No valid container with id " + containerId + " found");
+         containerType, "No valid container with id " + containerId + " found");
 
-      modelServerAccess.exec(create(container, operation.getLocation()))
+      modelServerAccess.exec(command(container, operation.getLocation()))
          .thenAccept(response -> {
             if (response.body() == null || response.body().isEmpty()) {
-               throw new GLSPServerException("Could not execute CreateOperation on " + getLabel());
+               throw new GLSPServerException("Could not execute create on " + elementTypeId);
             }
          });
    }
 
-   protected abstract CCommand create(T container, Optional<GPoint> location);
+   protected abstract CCommand command(T container, Optional<GPoint> location);
 
 }

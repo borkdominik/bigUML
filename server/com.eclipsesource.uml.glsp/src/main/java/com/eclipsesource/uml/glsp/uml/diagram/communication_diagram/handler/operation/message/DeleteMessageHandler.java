@@ -25,7 +25,7 @@ public class DeleteMessageHandler extends DeleteElementHandler<Message> {
    }
 
    @Override
-   protected CCommand delete(final Message element) {
+   protected CCommand command(final Message element) {
       return RemoveMessageContribution.create(element);
    }
 

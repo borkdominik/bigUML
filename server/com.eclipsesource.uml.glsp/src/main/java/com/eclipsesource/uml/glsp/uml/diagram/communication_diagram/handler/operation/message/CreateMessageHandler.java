@@ -16,27 +16,17 @@ import org.eclipse.uml2.uml.Lifeline;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
 import com.eclipsesource.uml.glsp.uml.handler.operations.create.CreateEdgeHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.message.AddMessageContribution;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
 
 public class CreateMessageHandler
    extends CreateEdgeHandler<Lifeline, Lifeline> {
 
    public CreateMessageHandler() {
-      super(CommunicationTypes.MESSAGE);
+      super(Representation.COMMUNICATION, CommunicationTypes.MESSAGE);
    }
 
    @Override
-   public String getLabel() { return "Communication:Message"; }
-
-   @Override
-   protected CCommand create(final Lifeline source, final Lifeline target) {
-      /*- TODO: Enable it with validation
-      if (!source.getInteraction().equals(target.getInteraction())) {
-         actionDispatcher.dispatch(new ServerMessageAction(Severity.ERROR,
-            "Connecting Lifelines between two different Interactions is not possible.",
-            3000));
-      }
-      */
-
+   protected CCommand command(final Lifeline source, final Lifeline target) {
       return AddMessageContribution.create(
          source,
          target);

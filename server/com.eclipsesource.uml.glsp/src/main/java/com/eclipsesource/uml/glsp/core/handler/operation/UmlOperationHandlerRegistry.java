@@ -18,8 +18,6 @@ import java.util.stream.Collectors;
 
 import org.eclipse.glsp.server.internal.registry.MapRegistry;
 import org.eclipse.glsp.server.internal.util.ReflectionUtil;
-import org.eclipse.glsp.server.operations.CreateOperation;
-import org.eclipse.glsp.server.operations.CreateOperationHandler;
 import org.eclipse.glsp.server.operations.Operation;
 import org.eclipse.glsp.server.operations.OperationHandler;
 import org.eclipse.glsp.server.operations.OperationHandlerRegistry;
@@ -40,30 +38,15 @@ public class UmlOperationHandlerRegistry implements OperationHandlerRegistry {
          ReflectionUtil.construct(handler.getHandledOperationType())
             .ifPresent(operation -> register(operation, handler));
       });
-      System.out.print("");
    }
 
    protected String deriveKey(final Operation key) {
-      String elementTypeId = key instanceof CreateOperation ? ((CreateOperation) key).getElementTypeId() : null;
-      return deriveKey(key, elementTypeId);
-   }
-
-   protected String deriveKey(final Operation key, final String elementTypeId) {
-      String derivedKey = key.getClass().getName();
-      if (elementTypeId != null) {
-         return derivedKey + "_" + elementTypeId;
-      }
-      return derivedKey;
+      return key.getClass().getName();
    }
 
    @Override
    public boolean register(final Operation key, final OperationHandler handler) {
-      if (handler instanceof CreateOperationHandler) {
-         return ((CreateOperationHandler) handler).getHandledElementTypeIds().stream()
-            .allMatch(typeId -> internalRegistry.register(deriveKey(key, typeId), handler));
-      }
-
-      final String strKey = deriveKey(key, null);
+      final String strKey = deriveKey(key);
       operations.put(strKey, key);
       return internalRegistry.register(strKey, handler);
    }

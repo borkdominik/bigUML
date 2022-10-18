@@ -39,7 +39,10 @@ import com.eclipsesource.uml.glsp.core.gmodel.UmlGModelFactory;
 import com.eclipsesource.uml.glsp.core.gmodel.UmlGModelMapHandler;
 import com.eclipsesource.uml.glsp.core.gmodel.UmlGModelMapperRegistry;
 import com.eclipsesource.uml.glsp.core.handler.action.UmlOperationActionHandler;
+import com.eclipsesource.uml.glsp.core.handler.operation.DiagramCreateHandlerRegistry;
 import com.eclipsesource.uml.glsp.core.handler.operation.DiagramDeleteHandlerRegistry;
+import com.eclipsesource.uml.glsp.core.handler.operation.UmlCreateEdgeOperationHandler;
+import com.eclipsesource.uml.glsp.core.handler.operation.UmlCreateNodeOperationHandler;
 import com.eclipsesource.uml.glsp.core.handler.operation.UmlDeleteOperationHandler;
 import com.eclipsesource.uml.glsp.core.handler.operation.UmlLabelEditOperationHandler;
 import com.eclipsesource.uml.glsp.core.handler.operation.UmlOperationHandlerRegistry;
@@ -66,6 +69,7 @@ public class UmlDiagramModule extends EMSGLSPNotationDiagramModule {
       bind(UmlGModelMapperRegistry.class).in(Singleton.class);
 
       bind(TypeRegistry.class).in(Singleton.class);
+      bind(DiagramCreateHandlerRegistry.class).in(Singleton.class);
       bind(DiagramDeleteHandlerRegistry.class).in(Singleton.class);
    }
 
@@ -154,6 +158,8 @@ public class UmlDiagramModule extends EMSGLSPNotationDiagramModule {
    protected void configureOperationHandlers(final MultiBinding<OperationHandler> bindings) {
       super.configureOperationHandlers(bindings);
       bindings.add(UmlLabelEditOperationHandler.class);
+      bindings.add(UmlCreateNodeOperationHandler.class);
+      bindings.add(UmlCreateEdgeOperationHandler.class);
       bindings.add(UmlDeleteOperationHandler.class);
    }
 

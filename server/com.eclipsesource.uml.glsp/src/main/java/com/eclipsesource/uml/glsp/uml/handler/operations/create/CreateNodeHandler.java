@@ -13,32 +13,32 @@ package com.eclipsesource.uml.glsp.uml.handler.operations.create;
 import java.util.Optional;
 
 import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.AbstractEMSCreateNodeOperationHandler;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.types.GLSPServerException;
 
 import com.eclipsesource.uml.glsp.core.model.UmlModelServerAccess;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 
-public abstract class CreateNodeHandler extends AbstractEMSCreateNodeOperationHandler {
+public abstract class CreateNodeHandler extends BaseCreateHandler<CreateNodeOperation> {
 
    @Inject
    protected UmlModelServerAccess modelServerAccess;
 
-   public CreateNodeHandler(final String type) {
-      super(type);
+   public CreateNodeHandler(final Representation representation, final String typeId) {
+      super(representation, typeId);
    }
 
    @Override
-   public void executeOperation(final CreateNodeOperation operation) {
-      modelServerAccess.exec(create(operation.getLocation()))
+   public void create(final CreateNodeOperation operation) {
+      modelServerAccess.exec(command(operation.getLocation()))
          .thenAccept(response -> {
             if (response.body() == null || response.body().isEmpty()) {
-               throw new GLSPServerException("Could not execute CreateOperation on " + getLabel());
+               throw new GLSPServerException("Could not execute create on " + elementTypeId);
             }
          });
    }
 
-   protected abstract CCommand create(Optional<GPoint> location);
+   protected abstract CCommand command(Optional<GPoint> location);
 }

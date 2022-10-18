@@ -16,6 +16,7 @@ public class ActivityGLSPModule {
    protected void configureActionHandlers(final MultiBinding<ActionHandler> bindings) {
       bindings.add(UmlGetTypesActionHandler.class);
       bindings.add(CreateGuardActionHandler.class);
+               // bindings.add(UmlGetTypesActionHandler.class);
       bindings.add(CreateWeightActionHandler.class);
    }
    

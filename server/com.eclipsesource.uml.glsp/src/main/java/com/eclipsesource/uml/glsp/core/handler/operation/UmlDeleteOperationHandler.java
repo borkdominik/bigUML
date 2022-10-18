@@ -23,7 +23,7 @@ import com.google.inject.Inject;
 public class UmlDeleteOperationHandler extends AbstractEMSOperationHandler<DeleteOperation> {
 
    @Inject
-   private DiagramDeleteHandlerHandlerRegistry registry;
+   private DiagramDeleteHandlerRegistry registry;
 
    @Inject
    private UmlModelState modelState;

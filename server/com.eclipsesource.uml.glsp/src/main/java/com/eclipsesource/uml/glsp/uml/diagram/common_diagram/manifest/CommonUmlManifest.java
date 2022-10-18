@@ -36,7 +36,7 @@ public class CommonUmlManifest extends AbstractModule
 
    @Override
    protected void configure() {
-      contributeConfiguration(binder());
+      contributeDiagramConfiguration(binder());
       contributePalette(binder());
       contributeOperationHandler(binder());
       contributeDeleteHandler(binder());
@@ -52,7 +52,7 @@ public class CommonUmlManifest extends AbstractModule
    }
 
    @Override
-   public void contributeConfiguration(final Multibinder<DiagramConfiguration> multibinder) {
+   public void contributeDiagramConfiguration(final Multibinder<DiagramConfiguration> multibinder) {
       multibinder.addBinding().to(CommonConfiguration.class);
    }
 

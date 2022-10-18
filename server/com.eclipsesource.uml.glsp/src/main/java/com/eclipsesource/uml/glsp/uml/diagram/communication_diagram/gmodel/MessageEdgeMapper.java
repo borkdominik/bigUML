@@ -32,7 +32,7 @@ import com.eclipsesource.uml.glsp.core.utils.UmlIDUtil;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
 import com.google.inject.Inject;
 
-public class CommunicationMessageEdgeMapper implements UmlGModelMapper<Message, GEdge> {
+public class MessageEdgeMapper implements UmlGModelMapper<Message, GEdge> {
    @Inject
    protected EMFIdGenerator idGenerator;
 

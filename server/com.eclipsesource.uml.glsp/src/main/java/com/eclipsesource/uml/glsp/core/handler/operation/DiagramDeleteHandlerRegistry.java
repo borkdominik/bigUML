@@ -24,14 +24,14 @@ import com.eclipsesource.uml.glsp.core.type.TypeRegistry;
 import com.google.inject.Inject;
 
 @SuppressWarnings("restriction")
-public class DiagramDeleteHandlerHandlerRegistry
+public class DiagramDeleteHandlerRegistry
    implements Registry<Class<? extends EObject>, DiagramDeleteHandler> {
 
    private final MapRegistry<String, DiagramDeleteHandler> internalRegistry;
    private final Map<String, Class<? extends EObject>> classes;
 
    @Inject
-   public DiagramDeleteHandlerHandlerRegistry(final Set<DiagramDeleteHandler> handlers,
+   public DiagramDeleteHandlerRegistry(final Set<DiagramDeleteHandler> handlers,
       final TypeRegistry typeRegistry) {
       classes = new HashMap<>();
       internalRegistry = new MapRegistry<>() {};

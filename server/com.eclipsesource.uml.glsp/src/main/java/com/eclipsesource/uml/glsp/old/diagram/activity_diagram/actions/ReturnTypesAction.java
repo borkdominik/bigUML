@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.core.handler.action;
+package com.eclipsesource.uml.glsp.old.diagram.activity_diagram.actions;
 
 import java.util.List;
 
@@ -16,14 +16,16 @@ import org.eclipse.glsp.server.actions.ResponseAction;
 
 public class ReturnTypesAction extends ResponseAction {
 
+   public static String TYPE = "returnTypes";
+
    private List<String> types;
 
    public ReturnTypesAction() {
-      super(ActionKind.RETURN_TYPES);
+      super(TYPE);
    }
 
    public ReturnTypesAction(final List<String> types) {
-      super(ActionKind.RETURN_TYPES);
+      super(TYPE);
       this.types = types;
    }
 

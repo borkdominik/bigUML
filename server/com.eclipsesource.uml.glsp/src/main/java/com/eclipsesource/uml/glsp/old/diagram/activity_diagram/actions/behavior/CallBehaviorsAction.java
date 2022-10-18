@@ -14,18 +14,17 @@ import java.util.List;
 
 import org.eclipse.glsp.server.actions.ResponseAction;
 
-import com.eclipsesource.uml.glsp.core.handler.action.ActionKind;
-
 public class CallBehaviorsAction extends ResponseAction {
+   public static final String TYPE = "callBehaviors";
 
    private List<String> behaviors;
 
    public CallBehaviorsAction() {
-      super(ActionKind.CALL_BEHAVIORS);
+      super(TYPE);
    }
 
    public CallBehaviorsAction(final List<String> behaviors) {
-      super(ActionKind.CALL_BEHAVIORS);
+      super(TYPE);
       this.behaviors = behaviors;
    }
 

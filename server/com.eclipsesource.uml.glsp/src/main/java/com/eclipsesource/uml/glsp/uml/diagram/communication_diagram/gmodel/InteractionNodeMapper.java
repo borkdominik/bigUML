@@ -39,7 +39,7 @@ import com.eclipsesource.uml.glsp.core.utils.UmlIDUtil;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
 import com.google.inject.Inject;
 
-public class CommunicationInteractionNodeMapper implements UmlGModelMapper<Interaction, GNode> {
+public class InteractionNodeMapper implements UmlGModelMapper<Interaction, GNode> {
    @Inject
    protected EMFIdGenerator idGenerator;
 

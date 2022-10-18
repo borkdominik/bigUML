@@ -2,23 +2,22 @@ package com.eclipsesource.uml.glsp.old.diagram.statemachine_diagram.actions;
 
 import org.eclipse.glsp.server.actions.ResponseAction;
 
-import com.eclipsesource.uml.glsp.core.handler.action.ActionKind;
-
 public class AddTransitionGuardAction extends ResponseAction {
+   public static final String TYPE = "addTransitionGuard";
 
-    private String elementTypeId;
+   private String elementTypeId;
 
-    public AddTransitionGuardAction() {
-        super(ActionKind.ADD_TRANSITION_GUARD);
-    }
+   public AddTransitionGuardAction() {
+      super(TYPE);
+   }
 
-    public AddTransitionGuardAction(final String elementTypeId) {
-        super(ActionKind.ADD_TRANSITION_GUARD);
-        this.elementTypeId = elementTypeId;
-    }
+   public AddTransitionGuardAction(final String elementTypeId) {
+      super(TYPE);
+      this.elementTypeId = elementTypeId;
+   }
 
-    public String getElementTypeId() { return elementTypeId; }
+   public String getElementTypeId() { return elementTypeId; }
 
-    public void setElementTypeId(final String elementTypeId) { this.elementTypeId = elementTypeId; }
+   public void setElementTypeId(final String elementTypeId) { this.elementTypeId = elementTypeId; }
 
 }

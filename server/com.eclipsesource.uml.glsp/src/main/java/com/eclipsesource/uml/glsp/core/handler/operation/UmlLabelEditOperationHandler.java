@@ -31,35 +31,36 @@ public class UmlLabelEditOperationHandler
    @Override
    public void executeOperation(final ApplyLabelEditOperation operation) {
       // TODO: Do not use instanceof etc.
-      /*
-       * UmlModelIndex modelIndex = modelState.getIndex();
-       * String inputText = operation.getText().trim();
-       * String graphicalElementId = operation.getLabelId();
-       * GModelElement label = getOrThrow(modelIndex.findElementByClass(graphicalElementId, GModelElement.class),
-       * GModelElement.class, "Element not found.");
-       * switch (label.getType()) {
-       * case Types.LABEL_NAME:
-       * String containerElementId = UmlIDUtil.getElementIdFromHeaderLabel(graphicalElementId);
-       * Element semanticElement = getOrThrow(modelIndex.getEObject(containerElementId),
-       * Element.class, "No valid container with id " + graphicalElementId + " found");
-       * if (semanticElement instanceof Constraint) {
-       * modelAccess.setConditionBody(modelState, (Constraint) semanticElement, inputText)
-       * .thenAccept(response -> {
-       * if (response.body() == null || response.body().isEmpty()) {
-       * throw new GLSPServerException("Could not change constraint to: " + inputText);
-       * }
-       * });
-       * } else if (semanticElement instanceof NamedElement) {
-       * modelAccess.renameElement(modelState, (NamedElement) semanticElement, inputText)
-       * .thenAccept(response -> {
-       * if (response.body() == null || response.body().isEmpty()) {
-       * throw new GLSPServerException("Could not change named element to: " + inputText);
-       * }
-       * });
-       * }
-       * break;
-       * }
-       */
+
+      /*-
+      UmlModelIndex modelIndex = modelState.getIndex();
+      String inputText = operation.getText().trim();
+      String graphicalElementId = operation.getLabelId();
+      GModelElement label = getOrThrow(modelIndex.findElementByClass(graphicalElementId, GModelElement.class),
+         GModelElement.class, "Element not found.");
+      switch (label.getType()) {
+         case Types.LABEL_NAME:
+            String containerElementId = UmlIDUtil.getElementIdFromHeaderLabel(graphicalElementId);
+            Element semanticElement = getOrThrow(modelIndex.getEObject(containerElementId),
+               Element.class, "No valid container with id " + graphicalElementId + " found");
+            if (semanticElement instanceof Constraint) {
+               modelAccess.setConditionBody(modelState, (Constraint) semanticElement, inputText)
+                  .thenAccept(response -> {
+                     if (response.body() == null || response.body().isEmpty()) {
+                        throw new GLSPServerException("Could not change constraint to: " + inputText);
+                     }
+                  });
+            } else if (semanticElement instanceof NamedElement) {
+               modelAccess.renameElement(modelState, (NamedElement) semanticElement, inputText)
+                  .thenAccept(response -> {
+                     if (response.body() == null || response.body().isEmpty()) {
+                        throw new GLSPServerException("Could not change named element to: " + inputText);
+                     }
+                  });
+            }
+            break;
+      }
+      */
 
       var diagramType = modelState.getRepresentation();
       var editLabelHandler = editLabelOperationHandlers.stream().filter(handler -> handler.supports(diagramType))

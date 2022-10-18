@@ -16,10 +16,10 @@ import com.google.inject.multibindings.Multibinder;
 
 public interface DiagramConfigurationContribution {
 
-   default void contributeConfiguration(final Binder binder) {
+   default void contributeDiagramConfiguration(final Binder binder) {
       var provider = Multibinder.newSetBinder(binder, DiagramConfiguration.class);
-      contributeConfiguration(provider);
+      contributeDiagramConfiguration(provider);
    }
 
-   void contributeConfiguration(Multibinder<DiagramConfiguration> multibinder);
+   void contributeDiagramConfiguration(Multibinder<DiagramConfiguration> multibinder);
 }

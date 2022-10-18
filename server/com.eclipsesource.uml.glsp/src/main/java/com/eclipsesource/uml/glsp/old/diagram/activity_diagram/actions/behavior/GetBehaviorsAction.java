@@ -12,12 +12,11 @@ package com.eclipsesource.uml.glsp.old.diagram.activity_diagram.actions.behavior
 
 import org.eclipse.glsp.server.actions.RequestAction;
 
-import com.eclipsesource.uml.glsp.core.handler.action.ActionKind;
-
 public class GetBehaviorsAction extends RequestAction<CallBehaviorsAction> {
+   public static final String TYPE = "getBehaviors";
 
    public GetBehaviorsAction() {
-      super(ActionKind.GET_BEHAVIORS);
+      super(TYPE);
    }
 
 }

@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.core.handler.action;
+package com.eclipsesource.uml.glsp.old.diagram.activity_diagram.actions;
 
 import java.util.List;
 

@@ -1,2 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_nD7_AEiTEe287ptuQ4W3Iw" name="test"/>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_nD7_AEiTEe287ptuQ4W3Iw" name="test">
+  <packagedElement xmi:type="uml:Interaction" xmi:id="_tn-zUE8AEe2BIOlYr_Nj2g" name="NewInteraction1">
+    <lifeline xmi:id="_uR9kcE8AEe2BIOlYr_Nj2g" name="NewLifeline1" coveredBy="_vjQ0QU8AEe2BIOlYr_Nj2g"/>
+    <lifeline xmi:id="_uovswE8AEe2BIOlYr_Nj2g" name="NewLifeline2" coveredBy="_vjQ0QE8AEe2BIOlYr_Nj2g"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_vjQ0QE8AEe2BIOlYr_Nj2g" name="NewMessage1 - SendEvent" covered="_uovswE8AEe2BIOlYr_Nj2g" message="_vjQNME8AEe2BIOlYr_Nj2g"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_vjQ0QU8AEe2BIOlYr_Nj2g" name="NewMessage1 - ReceiveEvent" covered="_uR9kcE8AEe2BIOlYr_Nj2g" message="_vjQNME8AEe2BIOlYr_Nj2g"/>
+    <message xmi:id="_vjQNME8AEe2BIOlYr_Nj2g" name="NewMessage1" receiveEvent="_vjQ0QU8AEe2BIOlYr_Nj2g" sendEvent="_vjQ0QE8AEe2BIOlYr_Nj2g"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Interaction" xmi:id="_t8C-0E8AEe2BIOlYr_Nj2g" name="NewInteraction2"/>
+</uml:Model>

@@ -15,10 +15,6 @@ import java.util.Map;
 
 import org.eclipse.glsp.server.features.toolpalette.PaletteItem;
 
-import com.eclipsesource.uml.modelserver.unotation.Representation;
-
 public interface DiagramPalette {
-   boolean supports(Representation representation);
-
    List<PaletteItem> getItems(Map<String, String> args);
 }

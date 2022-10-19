@@ -30,19 +30,17 @@ public class UmlToolPaletteItemProvider
    private static Logger LOGGER = LogManager.getLogger(UmlToolPaletteItemProvider.class.getSimpleName());
 
    @Inject
-   private Set<DiagramPalette> diagramPaletteItemProviders;
+   private Map<Representation, Set<DiagramPalette>> palettes;
 
    @Inject
    private UmlModelState modelState;
 
    @Override
    public List<PaletteItem> getItems(final Map<String, String> args) {
-      Representation diagramType = modelState.getRepresentation();
-      LOGGER.info("------- CURRENT DIAGRAM TYPE: " + diagramType + " ----------");
-
+      var representation = modelState.getRepresentation();
       var items = new ArrayList<PaletteItem>();
 
-      diagramPaletteItemProviders.stream().filter(contribution -> contribution.supports(diagramType))
+      palettes.get(representation).stream()
          .forEachOrdered(contribution -> {
             items.addAll(contribution.getItems(args));
          });

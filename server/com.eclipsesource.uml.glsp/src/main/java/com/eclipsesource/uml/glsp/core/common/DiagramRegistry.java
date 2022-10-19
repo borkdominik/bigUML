@@ -63,4 +63,11 @@ public abstract class DiagramRegistry<K, V> implements Registry<DoubleKey<Repres
       return keys.values().stream().collect(Collectors.toSet());
    }
 
+   protected void debug() {
+      System.out.println("==== " + getClass().getName() + " ====");
+      keys().forEach(key -> {
+         System.out.println("Key: " + deriveKey(key) + " | Value: " + get(key).get().getClass().getName());
+      });
+      System.out.println("==== END ====");
+   }
 }

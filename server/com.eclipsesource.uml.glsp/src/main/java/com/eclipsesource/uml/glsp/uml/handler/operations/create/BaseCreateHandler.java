@@ -14,24 +14,18 @@ import org.eclipse.glsp.server.operations.CreateOperation;
 
 import com.eclipsesource.uml.glsp.core.handler.operation.DiagramCreateHandler;
 import com.eclipsesource.uml.glsp.core.utils.reflection.GenericsUtil;
-import com.eclipsesource.uml.modelserver.unotation.Representation;
 
 public abstract class BaseCreateHandler<T extends CreateOperation> implements DiagramCreateHandler {
    protected final Class<T> operationType;
    protected final String elementTypeId;
-   protected final Representation representation;
 
-   public BaseCreateHandler(final Representation representation, final String typeId) {
-      this.representation = representation;
+   public BaseCreateHandler(final String typeId) {
       this.elementTypeId = typeId;
       this.operationType = GenericsUtil.deriveClassActualType(getClass(), BaseCreateHandler.class, 0);
    }
 
    @Override
    public String getHandledElementTypeId() { return elementTypeId; }
-
-   @Override
-   public Representation getRepresentation() { return representation; }
 
    @Override
    public void executeOperation(final CreateOperation operation) {

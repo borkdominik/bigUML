@@ -8,18 +8,18 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.uml.utils.edge;
+package com.eclipsesource.uml.glsp.core.manifest.contributions;
 
-public final class EdgeMultiplicityIdUtil {
-   public static String LABEL_MULTIIPLICITY_SUFFIX = "_label_multiplicity";
+import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.inject.name.Named;
+import com.google.inject.name.Names;
 
-   public static String createEdgeLabelMultiplicityId(final String containerId) {
-      return containerId + LABEL_MULTIIPLICITY_SUFFIX;
+public interface BaseDiagramContribution {
+
+   Representation representation();
+
+   default Named namedRepresentation() {
+      return Names.named(representation().getName());
    }
 
-   public static String getElementIdFromEdgeLabelMultiplicity(final String multiplicityLabelId) {
-      return multiplicityLabelId.replace(LABEL_MULTIIPLICITY_SUFFIX, "");
-   }
-
-   private EdgeMultiplicityIdUtil() {}
 }

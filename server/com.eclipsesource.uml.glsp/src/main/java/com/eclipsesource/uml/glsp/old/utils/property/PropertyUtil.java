@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.uml.utils.property;
+package com.eclipsesource.uml.glsp.old.utils.property;
 
 import org.eclipse.uml2.uml.Property;
 

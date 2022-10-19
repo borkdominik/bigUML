@@ -20,7 +20,6 @@ import org.eclipse.uml2.uml.Element;
 import com.eclipsesource.uml.glsp.core.model.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.eclipsesource.uml.glsp.core.utils.reflection.GenericsUtil;
-import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 
 public abstract class CreateEdgeHandler<S extends Element, T extends Element>
@@ -34,8 +33,8 @@ public abstract class CreateEdgeHandler<S extends Element, T extends Element>
    @Inject
    protected UmlModelState modelState;
 
-   public CreateEdgeHandler(final Representation representation, final String typeId) {
-      super(representation, typeId);
+   public CreateEdgeHandler(final String typeId) {
+      super(typeId);
 
       sourceType = GenericsUtil.deriveClassActualType(getClass(), CreateEdgeHandler.class, 0);
       targetType = GenericsUtil.deriveClassActualType(getClass(), CreateEdgeHandler.class, 1);

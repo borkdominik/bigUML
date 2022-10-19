@@ -8,19 +8,18 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.core.gmodel;
+package com.eclipsesource.uml.glsp.old.utils.edge;
 
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.glsp.graph.GModelElement;
+public final class EdgeMultiplicityIdUtil {
+   public static String LABEL_MULTIIPLICITY_SUFFIX = "_label_multiplicity";
 
-import com.eclipsesource.uml.glsp.core.utils.reflection.GenericsUtil;
-
-public interface UmlGModelMapper<T extends EObject, E extends GModelElement> {
-   E map(T object);
-
-   @SuppressWarnings({ "unchecked" })
-   default Class<T> deriveEObjectType() {
-      return (Class<T>) (GenericsUtil.getInterfaceParameterType(getClass(), UmlGModelMapper.class))
-         .getActualTypeArguments()[0];
+   public static String createEdgeLabelMultiplicityId(final String containerId) {
+      return containerId + LABEL_MULTIIPLICITY_SUFFIX;
    }
+
+   public static String getElementIdFromEdgeLabelMultiplicity(final String multiplicityLabelId) {
+      return multiplicityLabelId.replace(LABEL_MULTIIPLICITY_SUFFIX, "");
+   }
+
+   private EdgeMultiplicityIdUtil() {}
 }

@@ -31,15 +31,15 @@ import org.eclipse.glsp.server.emf.model.notation.Shape;
 import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.Interaction;
 
-import com.eclipsesource.uml.glsp.core.gmodel.UmlGModelMapHandler;
-import com.eclipsesource.uml.glsp.core.gmodel.UmlGModelMapper;
+import com.eclipsesource.uml.glsp.core.gmodel.GModelMapHandler;
+import com.eclipsesource.uml.glsp.core.gmodel.GModelMapper;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.eclipsesource.uml.glsp.core.utils.UmlConfig;
 import com.eclipsesource.uml.glsp.core.utils.UmlIDUtil;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
 import com.google.inject.Inject;
 
-public class InteractionNodeMapper implements UmlGModelMapper<Interaction, GNode> {
+public class InteractionNodeMapper implements GModelMapper<Interaction, GNode> {
    @Inject
    protected EMFIdGenerator idGenerator;
 
@@ -51,7 +51,7 @@ public class InteractionNodeMapper implements UmlGModelMapper<Interaction, GNode
    private UmlModelState modelState;
 
    @Inject
-   private UmlGModelMapHandler mapHandler;
+   private GModelMapHandler mapHandler;
 
    @Override
    public GNode map(final Interaction interaction) {

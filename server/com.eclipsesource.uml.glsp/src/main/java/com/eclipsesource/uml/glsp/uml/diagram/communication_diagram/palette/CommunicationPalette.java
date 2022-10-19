@@ -18,7 +18,6 @@ import org.eclipse.glsp.server.features.toolpalette.PaletteItem;
 import com.eclipsesource.uml.glsp.core.palette.DiagramPalette;
 import com.eclipsesource.uml.glsp.core.palette.PaletteItemUtil;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
-import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.common.collect.Lists;
 
 public class CommunicationPalette implements DiagramPalette {
@@ -42,11 +41,6 @@ public class CommunicationPalette implements DiagramPalette {
 
       List<PaletteItem> edges = Lists.newArrayList(createAssociation);
       return PaletteItem.createPaletteGroup("uml.relation", "Edges", edges, "export");
-   }
-
-   @Override
-   public boolean supports(final Representation representation) {
-      return representation == Representation.COMMUNICATION;
    }
 
 }

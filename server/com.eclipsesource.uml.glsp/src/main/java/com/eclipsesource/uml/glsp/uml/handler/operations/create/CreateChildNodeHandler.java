@@ -23,7 +23,6 @@ import org.eclipse.uml2.uml.Element;
 import com.eclipsesource.uml.glsp.core.model.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.eclipsesource.uml.glsp.core.utils.reflection.GenericsUtil;
-import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 
 public abstract class CreateChildNodeHandler<T extends Element> extends BaseCreateHandler<CreateNodeOperation> {
@@ -36,8 +35,8 @@ public abstract class CreateChildNodeHandler<T extends Element> extends BaseCrea
    @Inject
    protected UmlModelState modelState;
 
-   public CreateChildNodeHandler(final Representation representation, final String typeId) {
-      super(representation, typeId);
+   public CreateChildNodeHandler(final String typeId) {
+      super(typeId);
 
       this.containerType = GenericsUtil.deriveClassActualType(getClass(), CreateChildNodeHandler.class, 0);
    }

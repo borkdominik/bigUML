@@ -10,15 +10,32 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.core.manifest.contributions;
 
+import java.util.Set;
+
 import com.eclipsesource.uml.glsp.core.palette.DiagramPalette;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Binder;
+import com.google.inject.Key;
+import com.google.inject.TypeLiteral;
+import com.google.inject.multibindings.MapBinder;
 import com.google.inject.multibindings.Multibinder;
 
-public interface PaletteContribution {
+public interface PaletteContribution extends BaseDiagramContribution {
 
    default void contributePalette(final Binder binder) {
       var provider = Multibinder.newSetBinder(binder, DiagramPalette.class);
       contributePalette(provider);
+      var multibinder = Multibinder.newSetBinder(binder,
+         new TypeLiteral<DiagramPalette>() {}, namedRepresentation());
+
+      contributePalette(multibinder);
+
+      var mapbinder = MapBinder.newMapBinder(binder, new TypeLiteral<Representation>() {},
+         new TypeLiteral<Set<DiagramPalette>>() {});
+
+      mapbinder.addBinding(representation())
+         .to(Key.get(new TypeLiteral<Set<DiagramPalette>>() {},
+            namedRepresentation()));
    }
 
    void contributePalette(Multibinder<DiagramPalette> multibinder);

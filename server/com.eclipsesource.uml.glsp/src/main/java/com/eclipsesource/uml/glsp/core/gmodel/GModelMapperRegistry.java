@@ -8,32 +8,32 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.core.handler.operation;
+package com.eclipsesource.uml.glsp.core.gmodel;
 
 import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.glsp.graph.GModelElement;
 
 import com.eclipsesource.uml.glsp.core.common.DiagramClassRegistry;
 import com.eclipsesource.uml.glsp.core.common.DoubleKey;
-import com.eclipsesource.uml.glsp.core.type.TypeRegistry;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 
-public class DiagramDeleteHandlerRegistry
-   extends DiagramClassRegistry<Class<? extends EObject>, DiagramDeleteHandler> {
+public class GModelMapperRegistry
+   extends DiagramClassRegistry<Class<? extends EObject>, GModelMapper<EObject, GModelElement>> {
 
    @Inject
-   public DiagramDeleteHandlerRegistry(final Map<Representation, Set<DiagramDeleteHandler>> handlers,
-      final TypeRegistry typeRegistry) {
-      handlers.entrySet().forEach(e -> {
+   public GModelMapperRegistry(
+      final Map<Representation, Set<GModelMapper<? extends EObject, ? extends GModelElement>>> mappers) {
+      mappers.entrySet().forEach(e -> {
          var representation = e.getKey();
 
-         e.getValue().forEach(handler -> {
-            var types = typeRegistry.get(representation).get();
-            var clazz = types.get(handler.getHandledElementTypeId());
-            register(DoubleKey.of(representation, clazz), handler);
+         e.getValue().forEach(mapper -> {
+            var key = mapper.deriveEObjectType();
+            register(DoubleKey.of(representation, key),
+               (GModelMapper<EObject, GModelElement>) mapper);
          });
       });
 

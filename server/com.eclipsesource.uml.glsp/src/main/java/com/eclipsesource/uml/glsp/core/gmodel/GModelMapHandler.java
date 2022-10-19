@@ -17,14 +17,20 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.server.types.GLSPServerException;
 
+import com.eclipsesource.uml.glsp.core.common.DoubleKey;
+import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.google.inject.Inject;
 
-public class UmlGModelMapHandler {
+public class GModelMapHandler {
    @Inject
-   private UmlGModelMapperRegistry registry;
+   private GModelMapperRegistry registry;
+
+   @Inject
+   private UmlModelState modelState;
 
    public GModelElement handle(final EObject object) {
-      var mapperOpt = registry.get(object);
+      var representation = modelState.getRepresentation();
+      var mapperOpt = registry.get(DoubleKey.of(representation, object.getClass()));
 
       if (mapperOpt.isEmpty()) {
          throw new GLSPServerException("Error during model initialization!", new Throwable(

@@ -16,13 +16,12 @@ import org.eclipse.uml2.uml.Lifeline;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
 import com.eclipsesource.uml.glsp.uml.handler.operations.create.CreateEdgeHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.message.AddMessageContribution;
-import com.eclipsesource.uml.modelserver.unotation.Representation;
 
 public class CreateMessageHandler
    extends CreateEdgeHandler<Lifeline, Lifeline> {
 
    public CreateMessageHandler() {
-      super(Representation.COMMUNICATION, CommunicationTypes.MESSAGE);
+      super(CommunicationTypes.MESSAGE);
    }
 
    @Override

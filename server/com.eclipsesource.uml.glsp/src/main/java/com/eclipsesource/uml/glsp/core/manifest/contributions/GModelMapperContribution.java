@@ -10,21 +10,34 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.core.manifest.contributions;
 
+import java.util.Set;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.graph.GModelElement;
 
-import com.eclipsesource.uml.glsp.core.gmodel.UmlGModelMapper;
+import com.eclipsesource.uml.glsp.core.gmodel.GModelMapper;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Binder;
+import com.google.inject.Key;
 import com.google.inject.TypeLiteral;
+import com.google.inject.multibindings.MapBinder;
 import com.google.inject.multibindings.Multibinder;
 
-public interface GModelMapperContribution {
+public interface GModelMapperContribution extends BaseDiagramContribution {
 
    default void contributeGModelMapper(final Binder binder) {
-      var provider = Multibinder.newSetBinder(binder,
-         new TypeLiteral<UmlGModelMapper<? extends EObject, ? extends GModelElement>>() {});
-      contributeModelMapper(provider);
+      var multibinder = Multibinder.newSetBinder(binder,
+         new TypeLiteral<GModelMapper<? extends EObject, ? extends GModelElement>>() {}, namedRepresentation());
+
+      contributeGModelMapper(multibinder);
+
+      var mapbinder = MapBinder.newMapBinder(binder, new TypeLiteral<Representation>() {},
+         new TypeLiteral<Set<GModelMapper<? extends EObject, ? extends GModelElement>>>() {});
+
+      mapbinder.addBinding(representation())
+         .to(Key.get(new TypeLiteral<Set<GModelMapper<? extends EObject, ? extends GModelElement>>>() {},
+            namedRepresentation()));
    }
 
-   void contributeModelMapper(Multibinder<UmlGModelMapper<? extends EObject, ? extends GModelElement>> multibinder);
+   void contributeGModelMapper(Multibinder<GModelMapper<? extends EObject, ? extends GModelElement>> multibinder);
 }

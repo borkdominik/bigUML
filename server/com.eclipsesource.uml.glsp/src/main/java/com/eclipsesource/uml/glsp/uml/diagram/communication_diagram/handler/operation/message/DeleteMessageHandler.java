@@ -16,12 +16,11 @@ import org.eclipse.uml2.uml.Message;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
 import com.eclipsesource.uml.glsp.uml.handler.operations.delete.DeleteElementHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.message.RemoveMessageContribution;
-import com.eclipsesource.uml.modelserver.unotation.Representation;
 
 public class DeleteMessageHandler extends DeleteElementHandler<Message> {
 
    public DeleteMessageHandler() {
-      super(Representation.COMMUNICATION, CommunicationTypes.MESSAGE);
+      super(CommunicationTypes.MESSAGE);
    }
 
    @Override

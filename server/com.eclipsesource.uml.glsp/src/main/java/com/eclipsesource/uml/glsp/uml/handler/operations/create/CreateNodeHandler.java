@@ -18,7 +18,6 @@ import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.types.GLSPServerException;
 
 import com.eclipsesource.uml.glsp.core.model.UmlModelServerAccess;
-import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 
 public abstract class CreateNodeHandler extends BaseCreateHandler<CreateNodeOperation> {
@@ -26,8 +25,8 @@ public abstract class CreateNodeHandler extends BaseCreateHandler<CreateNodeOper
    @Inject
    protected UmlModelServerAccess modelServerAccess;
 
-   public CreateNodeHandler(final Representation representation, final String typeId) {
-      super(representation, typeId);
+   public CreateNodeHandler(final String typeId) {
+      super(typeId);
    }
 
    @Override

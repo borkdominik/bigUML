@@ -10,15 +10,28 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.core.manifest.contributions;
 
+import java.util.Set;
+
 import com.eclipsesource.uml.glsp.core.handler.operation.DiagramCreateHandler;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Binder;
+import com.google.inject.Key;
+import com.google.inject.TypeLiteral;
+import com.google.inject.multibindings.MapBinder;
 import com.google.inject.multibindings.Multibinder;
 
-public interface CreateHandlerContribution {
+public interface CreateHandlerContribution extends BaseDiagramContribution {
 
    default void contributeCreateHandler(final Binder binder) {
-      var provider = Multibinder.newSetBinder(binder, DiagramCreateHandler.class);
-      contributeCreateHandler(provider);
+      var multibinder = Multibinder.newSetBinder(binder, DiagramCreateHandler.class, namedRepresentation());
+
+      contributeCreateHandler(multibinder);
+
+      var mapbinder = MapBinder.newMapBinder(binder, new TypeLiteral<Representation>() {},
+         new TypeLiteral<Set<DiagramCreateHandler>>() {});
+
+      mapbinder.addBinding(representation())
+         .to(Key.get(new TypeLiteral<Set<DiagramCreateHandler>>() {}, namedRepresentation()));
    }
 
    void contributeCreateHandler(Multibinder<DiagramCreateHandler> multibinder);

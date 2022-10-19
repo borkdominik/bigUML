@@ -19,13 +19,11 @@ import com.eclipsesource.uml.glsp.core.model.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.eclipsesource.uml.glsp.core.utils.reflection.GenericsUtil;
 import com.eclipsesource.uml.glsp.core.utils.reflection.ReflectionUtil;
-import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 
 public abstract class DeleteElementHandler<T extends EObject> implements DiagramDeleteHandler {
    protected final Class<T> elementType;
    protected final String elementTypeId;
-   protected final Representation representation;
 
    @Inject
    protected UmlModelState modelState;
@@ -33,17 +31,13 @@ public abstract class DeleteElementHandler<T extends EObject> implements Diagram
    @Inject
    protected UmlModelServerAccess modelServerAccess;
 
-   public DeleteElementHandler(final Representation representation, final String typeId) {
-      this.representation = representation;
+   public DeleteElementHandler(final String typeId) {
       this.elementTypeId = typeId;
       this.elementType = GenericsUtil.deriveClassActualType(getClass(), DeleteElementHandler.class, 0);
    }
 
    @Override
    public String getHandledElementTypeId() { return elementTypeId; }
-
-   @Override
-   public Representation getRepresentation() { return representation; }
 
    @Override
    public void executeDeletion(final EObject object) {

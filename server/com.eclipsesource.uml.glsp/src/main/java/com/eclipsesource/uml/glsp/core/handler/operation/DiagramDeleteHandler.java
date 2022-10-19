@@ -12,12 +12,8 @@ package com.eclipsesource.uml.glsp.core.handler.operation;
 
 import org.eclipse.emf.ecore.EObject;
 
-import com.eclipsesource.uml.modelserver.unotation.Representation;
-
 public interface DiagramDeleteHandler {
    String getHandledElementTypeId();
-
-   Representation getRepresentation();
 
    void executeDeletion(EObject object);
 }

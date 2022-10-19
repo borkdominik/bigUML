@@ -34,10 +34,10 @@ import org.eclipse.uml2.uml.resource.UMLResource;
 
 import com.eclipsesource.uml.glsp.core.contextmenu.UmlContextMenuItemProvider;
 import com.eclipsesource.uml.glsp.core.diagram.UmlToolDiagramConfiguration;
-import com.eclipsesource.uml.glsp.core.gmodel.UmlDiagramMapper;
+import com.eclipsesource.uml.glsp.core.gmodel.DiagramMapper;
 import com.eclipsesource.uml.glsp.core.gmodel.UmlGModelFactory;
-import com.eclipsesource.uml.glsp.core.gmodel.UmlGModelMapHandler;
-import com.eclipsesource.uml.glsp.core.gmodel.UmlGModelMapperRegistry;
+import com.eclipsesource.uml.glsp.core.gmodel.GModelMapHandler;
+import com.eclipsesource.uml.glsp.core.gmodel.GModelMapperRegistry;
 import com.eclipsesource.uml.glsp.core.handler.action.UmlOperationActionHandler;
 import com.eclipsesource.uml.glsp.core.handler.operation.DiagramCreateHandlerRegistry;
 import com.eclipsesource.uml.glsp.core.handler.operation.DiagramDeleteHandlerRegistry;
@@ -64,9 +64,9 @@ public class UmlDiagramModule extends EMSGLSPNotationDiagramModule {
       bind(EMSModelState.class).to(bindGModelState());
       bind(EMSNotationModelState.class).to(bindGModelState());
 
-      bind(UmlDiagramMapper.class).in(Singleton.class);
-      bind(UmlGModelMapHandler.class).in(Singleton.class);
-      bind(UmlGModelMapperRegistry.class).in(Singleton.class);
+      bind(DiagramMapper.class).in(Singleton.class);
+      bind(GModelMapHandler.class).in(Singleton.class);
+      bind(GModelMapperRegistry.class).in(Singleton.class);
 
       bind(TypeRegistry.class).in(Singleton.class);
       bind(DiagramCreateHandlerRegistry.class).in(Singleton.class);

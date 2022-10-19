@@ -8,12 +8,19 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.core.handler.operation;
+package com.eclipsesource.uml.glsp.core.gmodel;
 
-import org.eclipse.glsp.server.operations.CreateOperation;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.glsp.graph.GModelElement;
 
-public interface DiagramCreateHandler {
-   String getHandledElementTypeId();
+import com.eclipsesource.uml.glsp.core.utils.reflection.GenericsUtil;
 
-   void executeOperation(CreateOperation operation);
+public interface GModelMapper<T extends EObject, E extends GModelElement> {
+   E map(T object);
+
+   @SuppressWarnings({ "unchecked" })
+   default Class<T> deriveEObjectType() {
+      return (Class<T>) (GenericsUtil.getInterfaceParameterType(getClass(), GModelMapper.class))
+         .getActualTypeArguments()[0];
+   }
 }

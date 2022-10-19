@@ -21,7 +21,7 @@ import com.google.inject.Inject;
 public class UmlGModelFactory extends EMSNotationGModelFactory {
 
    @Inject
-   private UmlDiagramMapper mapper;
+   private DiagramMapper mapper;
 
    @Override
    protected void fillRootElement(final EObject semanticModel, final Diagram notationModel, final GModelRoot newRoot) {

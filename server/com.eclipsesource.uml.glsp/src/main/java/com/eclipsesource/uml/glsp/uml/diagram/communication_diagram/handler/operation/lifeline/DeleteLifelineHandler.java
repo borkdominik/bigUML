@@ -16,12 +16,11 @@ import org.eclipse.uml2.uml.Lifeline;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
 import com.eclipsesource.uml.glsp.uml.handler.operations.delete.DeleteElementHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.lifeline.RemoveLifelineContribution;
-import com.eclipsesource.uml.modelserver.unotation.Representation;
 
 public class DeleteLifelineHandler extends DeleteElementHandler<Lifeline> {
 
    public DeleteLifelineHandler() {
-      super(Representation.COMMUNICATION, CommunicationTypes.LIFELINE);
+      super(CommunicationTypes.LIFELINE);
    }
 
    @Override

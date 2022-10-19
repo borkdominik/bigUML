@@ -23,14 +23,14 @@ import org.eclipse.glsp.server.emf.model.notation.Shape;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Lifeline;
 
-import com.eclipsesource.uml.glsp.core.gmodel.UmlGModelMapper;
+import com.eclipsesource.uml.glsp.core.gmodel.GModelMapper;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.eclipsesource.uml.glsp.core.utils.UmlConfig;
 import com.eclipsesource.uml.glsp.core.utils.UmlIDUtil;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
 import com.google.inject.Inject;
 
-public class LifelineNodeMapper implements UmlGModelMapper<Lifeline, GNode> {
+public class LifelineNodeMapper implements GModelMapper<Lifeline, GNode> {
    @Inject
    protected EMFIdGenerator idGenerator;
 

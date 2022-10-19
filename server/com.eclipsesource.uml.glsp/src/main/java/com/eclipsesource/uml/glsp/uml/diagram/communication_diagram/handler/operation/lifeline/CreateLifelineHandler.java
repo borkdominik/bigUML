@@ -20,13 +20,12 @@ import org.eclipse.uml2.uml.Interaction;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
 import com.eclipsesource.uml.glsp.uml.handler.operations.create.CreateChildNodeHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.lifeline.AddLifelineContribution;
-import com.eclipsesource.uml.modelserver.unotation.Representation;
 
 public class CreateLifelineHandler
    extends CreateChildNodeHandler<Interaction> {
 
    public CreateLifelineHandler() {
-      super(Representation.COMMUNICATION, CommunicationTypes.LIFELINE);
+      super(CommunicationTypes.LIFELINE);
    }
 
    @Override

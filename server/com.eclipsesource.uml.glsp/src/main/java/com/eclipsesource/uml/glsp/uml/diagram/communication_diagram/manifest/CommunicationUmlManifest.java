@@ -20,7 +20,7 @@ import org.eclipse.uml2.uml.Lifeline;
 import org.eclipse.uml2.uml.Message;
 
 import com.eclipsesource.uml.glsp.core.diagram.DiagramConfiguration;
-import com.eclipsesource.uml.glsp.core.gmodel.UmlGModelMapper;
+import com.eclipsesource.uml.glsp.core.gmodel.GModelMapper;
 import com.eclipsesource.uml.glsp.core.handler.operation.DiagramCreateHandler;
 import com.eclipsesource.uml.glsp.core.handler.operation.DiagramDeleteHandler;
 import com.eclipsesource.uml.glsp.core.handler.operation.DiagramEditLabelOperationHandler;
@@ -52,6 +52,11 @@ import com.google.inject.multibindings.Multibinder;
 public class CommunicationUmlManifest extends DiagramManifest
    implements CreateHandlerContribution,
    DeleteHandlerContribution, EditLabelOperationHandlerContribution, OutlineGeneratorContribution {
+
+   @Override
+   public Representation representation() {
+      return Representation.COMMUNICATION;
+   }
 
    @Override
    protected void configure() {
@@ -114,8 +119,8 @@ public class CommunicationUmlManifest extends DiagramManifest
    }
 
    @Override
-   public void contributeModelMapper(
-      final Multibinder<UmlGModelMapper<? extends EObject, ? extends GModelElement>> multibinder) {
+   public void contributeGModelMapper(
+      final Multibinder<GModelMapper<? extends EObject, ? extends GModelElement>> multibinder) {
       multibinder.addBinding().to(InteractionNodeMapper.class);
       multibinder.addBinding().to(LifelineNodeMapper.class);
       multibinder.addBinding().to(MessageEdgeMapper.class);

@@ -10,15 +10,27 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.core.manifest.contributions;
 
+import java.util.Set;
+
 import com.eclipsesource.uml.glsp.core.handler.operation.DiagramDeleteHandler;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Binder;
+import com.google.inject.Key;
+import com.google.inject.TypeLiteral;
+import com.google.inject.multibindings.MapBinder;
 import com.google.inject.multibindings.Multibinder;
 
-public interface DeleteHandlerContribution {
+public interface DeleteHandlerContribution extends BaseDiagramContribution {
 
    default void contributeDeleteHandler(final Binder binder) {
-      var provider = Multibinder.newSetBinder(binder, DiagramDeleteHandler.class);
-      contributeDeleteHandler(provider);
+      var multibinder = Multibinder.newSetBinder(binder, DiagramDeleteHandler.class, namedRepresentation());
+
+      contributeDeleteHandler(multibinder);
+
+      var mapbinder = MapBinder.newMapBinder(binder, new TypeLiteral<Representation>() {},
+         new TypeLiteral<Set<DiagramDeleteHandler>>() {});
+      mapbinder.addBinding(representation())
+         .to(Key.get(new TypeLiteral<Set<DiagramDeleteHandler>>() {}, namedRepresentation()));
    }
 
    void contributeDeleteHandler(Multibinder<DiagramDeleteHandler> multibinder);

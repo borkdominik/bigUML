@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.uml.utils.property;
+package com.eclipsesource.uml.glsp.old.utils.property;
 
 public final class PropertyIdUtil {
    public static String PROPERTY_SUFFIX = "_property";

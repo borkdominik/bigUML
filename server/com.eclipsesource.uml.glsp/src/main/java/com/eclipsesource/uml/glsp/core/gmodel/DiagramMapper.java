@@ -17,9 +17,9 @@ import org.eclipse.uml2.uml.Model;
 
 import com.google.inject.Inject;
 
-public class UmlDiagramMapper {
+public class DiagramMapper {
    @Inject
-   private UmlGModelMapHandler mapHandler;
+   private GModelMapHandler mapHandler;
 
    @Inject
    protected EMFIdGenerator idGenerator;

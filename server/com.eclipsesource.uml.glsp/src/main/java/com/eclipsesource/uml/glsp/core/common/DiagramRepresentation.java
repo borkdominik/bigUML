@@ -8,12 +8,8 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.core.handler.operation;
+package com.eclipsesource.uml.glsp.core.common;
 
-import org.eclipse.glsp.server.operations.CreateOperation;
+public class DiagramRepresentation {
 
-public interface DiagramCreateHandler {
-   String getHandledElementTypeId();
-
-   void executeOperation(CreateOperation operation);
 }

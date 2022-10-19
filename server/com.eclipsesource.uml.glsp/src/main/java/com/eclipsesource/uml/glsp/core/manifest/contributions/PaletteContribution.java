@@ -23,8 +23,6 @@ import com.google.inject.multibindings.Multibinder;
 public interface PaletteContribution extends BaseDiagramContribution {
 
    default void contributePalette(final Binder binder) {
-      var provider = Multibinder.newSetBinder(binder, DiagramPalette.class);
-      contributePalette(provider);
       var multibinder = Multibinder.newSetBinder(binder,
          new TypeLiteral<DiagramPalette>() {}, namedRepresentation());
 

@@ -31,8 +31,7 @@ public class DiagramDeleteHandlerRegistry
          var representation = e.getKey();
 
          e.getValue().forEach(handler -> {
-            var types = typeRegistry.get(representation).get();
-            var clazz = types.get(handler.getHandledElementTypeId());
+            var clazz = typeRegistry.get(DoubleKey.of(representation, handler.getHandledElementTypeId())).get();
             register(DoubleKey.of(representation, clazz), handler);
          });
       });

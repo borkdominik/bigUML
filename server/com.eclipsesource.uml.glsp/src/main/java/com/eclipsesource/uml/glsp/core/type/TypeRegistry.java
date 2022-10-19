@@ -11,55 +11,27 @@
 package com.eclipsesource.uml.glsp.core.type;
 
 import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.glsp.server.internal.registry.MapRegistry;
-import org.eclipse.glsp.server.registry.Registry;
 
+import com.eclipsesource.uml.glsp.core.common.DiagramRegistry;
+import com.eclipsesource.uml.glsp.core.common.DoubleKey;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 
-@SuppressWarnings("restriction")
-public class TypeRegistry implements Registry<Representation, Map<String, Class<? extends EObject>>> {
-
-   private final MapRegistry<Representation, Map<String, Class<? extends EObject>>> internalRegistry;
+public class TypeRegistry extends DiagramRegistry<String, Class<? extends EObject>> {
 
    @Inject
    public TypeRegistry(
-      @TypeMapping final Map<Representation, Map<String, Class<? extends EObject>>> mappings) {
+      final Map<Representation, Map<String, Class<? extends EObject>>> mappings) {
+      mappings.entrySet().forEach(e -> {
+         var representation = e.getKey();
 
-      internalRegistry = new MapRegistry<>();
-      mappings.forEach((key, value) -> register(key, value));
+         e.getValue().entrySet().forEach(m -> {
+            register(DoubleKey.of(representation, m.getKey()), m.getValue());
+         });
+      });
+
+      debug();
    }
-
-   @Override
-   public boolean register(final Representation key, final Map<String, Class<? extends EObject>> element) {
-      return internalRegistry.register(key, element);
-   }
-
-   @Override
-   public boolean deregister(final Representation key) {
-      return internalRegistry.deregister(key);
-   }
-
-   @Override
-   public boolean hasKey(final Representation key) {
-      return internalRegistry.hasKey(key);
-   }
-
-   @Override
-   public Optional<Map<String, Class<? extends EObject>>> get(final Representation key) {
-      return internalRegistry.get(key);
-   }
-
-   @Override
-   public Set<Map<String, Class<? extends EObject>>> getAll() { return internalRegistry.getAll(); }
-
-   @Override
-   public Set<Representation> keys() {
-      return internalRegistry.keys();
-   }
-
 }

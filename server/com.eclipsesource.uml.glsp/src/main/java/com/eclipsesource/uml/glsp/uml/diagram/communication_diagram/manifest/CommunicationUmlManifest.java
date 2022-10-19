@@ -10,9 +10,6 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.manifest;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.uml2.uml.Interaction;
@@ -128,13 +125,9 @@ public class CommunicationUmlManifest extends DiagramManifest
 
    @Override
    public void contributeTypeMapping(
-      final MapBinder<Representation, Map<String, Class<? extends EObject>>> mapbinder) {
-      var map = new HashMap<String, Class<? extends EObject>>();
-
-      map.put(CommunicationTypes.INTERACTION, Interaction.class);
-      map.put(CommunicationTypes.LIFELINE, Lifeline.class);
-      map.put(CommunicationTypes.MESSAGE, Message.class);
-
-      mapbinder.addBinding(CommunicationDiagram.REPRESENTATION).toInstance(map);
+      final MapBinder<String, Class<? extends EObject>> mapbinder) {
+      mapbinder.addBinding(CommunicationTypes.INTERACTION).toInstance(Interaction.class);
+      mapbinder.addBinding(CommunicationTypes.LIFELINE).toInstance(Lifeline.class);
+      mapbinder.addBinding(CommunicationTypes.MESSAGE).toInstance(Message.class);
    }
 }

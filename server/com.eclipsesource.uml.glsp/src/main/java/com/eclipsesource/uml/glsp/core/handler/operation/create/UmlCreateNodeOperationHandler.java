@@ -28,7 +28,7 @@ public class UmlCreateNodeOperationHandler extends AbstractEMSOperationHandler<C
 
    @Override
    public void executeOperation(final CreateNodeOperation operation) {
-      var representation = modelState.getRepresentation();
+      var representation = modelState.getUnsafeRepresentation();
 
       var handler = registry.get(DoubleKey.of(representation, operation.getElementTypeId()));
 

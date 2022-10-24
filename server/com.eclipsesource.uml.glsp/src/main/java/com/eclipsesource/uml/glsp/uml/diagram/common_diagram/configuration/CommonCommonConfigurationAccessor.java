@@ -29,7 +29,7 @@ public class CommonCommonConfigurationAccessor {
    }
 
    public Optional<CommonDiagramConfiguration> getActive() {
-      var representation = modelState.getRepresentation();
+      var representation = modelState.getUnsafeRepresentation();
       return get(representation);
    }
 }

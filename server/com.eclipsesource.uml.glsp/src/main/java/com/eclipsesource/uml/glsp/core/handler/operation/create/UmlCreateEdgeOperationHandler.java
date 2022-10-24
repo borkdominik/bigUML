@@ -28,7 +28,7 @@ public class UmlCreateEdgeOperationHandler extends AbstractEMSOperationHandler<C
 
    @Override
    public void executeOperation(final CreateEdgeOperation operation) {
-      var representation = modelState.getRepresentation();
+      var representation = modelState.getUnsafeRepresentation();
 
       var handler = registry.get(DoubleKey.of(representation, operation.getElementTypeId()));
 

@@ -29,7 +29,7 @@ public class GModelMapHandler {
    private UmlModelState modelState;
 
    public GModelElement handle(final EObject object) {
-      var representation = modelState.getRepresentation();
+      var representation = modelState.getUnsafeRepresentation();
       var mapperOpt = registry.get(DoubleKey.of(representation, object.getClass()));
 
       if (mapperOpt.isEmpty()) {

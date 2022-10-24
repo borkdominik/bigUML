@@ -22,6 +22,9 @@ import org.eclipse.glsp.server.operations.Operation;
 import org.eclipse.glsp.server.operations.OperationHandler;
 import org.eclipse.glsp.server.operations.OperationHandlerRegistry;
 
+import com.eclipsesource.uml.glsp.core.common.DoubleKey;
+import com.eclipsesource.uml.glsp.core.model.UmlModelState;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 
 @SuppressWarnings("restriction")
@@ -30,14 +33,31 @@ public class UmlOperationHandlerRegistry implements OperationHandlerRegistry {
    private final MapRegistry<String, OperationHandler> internalRegistry;
    private final Map<String, Operation> operations;
 
+   private final UmlModelState modelState;
+   private final UmlOverrideOperationHandlerRegistry overrideRegistry;
+
    @Inject
-   public UmlOperationHandlerRegistry(final Set<OperationHandler> handlers) {
+   public UmlOperationHandlerRegistry(final Set<OperationHandler> handlers, final UmlModelState modelState,
+      final UmlOverrideOperationHandlerRegistry overrideRegsitry) {
+      this.modelState = modelState;
+      this.overrideRegistry = overrideRegsitry;
+
       operations = new HashMap<>();
       internalRegistry = new MapRegistry<>() {};
       handlers.forEach(handler -> {
          ReflectionUtil.construct(handler.getHandledOperationType())
             .ifPresent(operation -> register(operation, handler));
       });
+
+      debug();
+   }
+
+   protected void debug() {
+      System.out.println("==== " + getClass().getName() + " ====");
+      keys().forEach(key -> {
+         System.out.println("Key: " + deriveKey(key) + " | Value: " + get(key).get().getClass().getName());
+      });
+      System.out.println("==== END ====");
    }
 
    protected String deriveKey(final Operation key) {
@@ -63,7 +83,17 @@ public class UmlOperationHandlerRegistry implements OperationHandlerRegistry {
 
    @Override
    public Optional<OperationHandler> get(final Operation key) {
-      return internalRegistry.get(deriveKey(key));
+      var diagramHandler = this.modelState.getRepresentation().flatMap(representation -> {
+         var overrideKey = DoubleKey.<Representation, Class<? extends Operation>> of(representation, key.getClass());
+
+         if (overrideRegistry.hasKey(overrideKey)) {
+            return overrideRegistry.get(overrideKey);
+         }
+
+         return Optional.<OperationHandler> empty();
+      });
+
+      return diagramHandler.or(() -> internalRegistry.get(deriveKey(key)));
    }
 
    @Override

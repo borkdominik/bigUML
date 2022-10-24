@@ -41,6 +41,7 @@ import com.eclipsesource.uml.glsp.core.gmodel.UmlGModelFactory;
 import com.eclipsesource.uml.glsp.core.handler.action.UmlOperationActionHandler;
 import com.eclipsesource.uml.glsp.core.handler.operation.UmlLabelEditOperationHandler;
 import com.eclipsesource.uml.glsp.core.handler.operation.UmlOperationHandlerRegistry;
+import com.eclipsesource.uml.glsp.core.handler.operation.UmlOverrideOperationHandlerRegistry;
 import com.eclipsesource.uml.glsp.core.handler.operation.create.DiagramCreateHandlerRegistry;
 import com.eclipsesource.uml.glsp.core.handler.operation.create.UmlCreateEdgeOperationHandler;
 import com.eclipsesource.uml.glsp.core.handler.operation.create.UmlCreateNodeOperationHandler;
@@ -67,6 +68,7 @@ public class UmlDiagramModule extends EMSGLSPNotationDiagramModule {
       bind(GModelMapHandler.class).in(Singleton.class);
       bind(GModelMapperRegistry.class).in(Singleton.class);
 
+      bind(UmlOverrideOperationHandlerRegistry.class).in(Singleton.class);
       bind(DiagramCreateHandlerRegistry.class).in(Singleton.class);
       bind(DiagramDeleteHandlerRegistry.class).in(Singleton.class);
    }

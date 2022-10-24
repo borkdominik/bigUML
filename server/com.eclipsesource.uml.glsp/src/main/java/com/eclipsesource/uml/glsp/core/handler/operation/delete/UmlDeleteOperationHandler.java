@@ -31,7 +31,7 @@ public class UmlDeleteOperationHandler extends AbstractEMSOperationHandler<Delet
 
    @Override
    public void executeOperation(final DeleteOperation operation) {
-      var representation = modelState.getRepresentation();
+      var representation = modelState.getUnsafeRepresentation();
 
       operation.getElementIds().forEach(elementId -> {
          var semanticElement = getOrThrow(modelState.getIndex().getEObject(elementId),

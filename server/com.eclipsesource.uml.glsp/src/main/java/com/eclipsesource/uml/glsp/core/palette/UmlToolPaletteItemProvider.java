@@ -37,7 +37,7 @@ public class UmlToolPaletteItemProvider
 
    @Override
    public List<PaletteItem> getItems(final Map<String, String> args) {
-      var representation = modelState.getRepresentation();
+      var representation = modelState.getUnsafeRepresentation();
       var items = new ArrayList<PaletteItem>();
 
       palettes.get(representation).stream()

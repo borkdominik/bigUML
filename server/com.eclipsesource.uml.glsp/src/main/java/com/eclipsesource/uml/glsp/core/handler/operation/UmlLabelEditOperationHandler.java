@@ -62,7 +62,7 @@ public class UmlLabelEditOperationHandler
       }
       */
 
-      var diagramType = modelState.getRepresentation();
+      var diagramType = modelState.getUnsafeRepresentation();
       var editLabelHandler = editLabelOperationHandlers.stream().filter(handler -> handler.supports(diagramType))
          .findFirst();
 

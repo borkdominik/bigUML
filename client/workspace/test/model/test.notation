@@ -21,4 +21,7 @@
     <bendPoints x="252.515625" y="40.0"/>
     <bendPoints x="91.7578125" y="40.0"/>
   </elements>
+  <elements xsi:type="notation:Edge">
+    <semanticElement elementId="_V96V4VOOEe2COJmb4fFkAw"/>
+  </elements>
 </notation:Diagram>

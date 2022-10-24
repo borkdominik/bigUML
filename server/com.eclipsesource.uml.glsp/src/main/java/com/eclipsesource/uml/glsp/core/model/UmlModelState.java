@@ -10,6 +10,8 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.core.model;
 
+import java.util.Optional;
+
 import org.eclipse.emfcloud.modelserver.glsp.notation.integration.EMSNotationModelState;
 import org.eclipse.glsp.graph.GModelRoot;
 import org.eclipse.glsp.server.emf.model.notation.Diagram;
@@ -20,14 +22,13 @@ import com.eclipsesource.uml.modelserver.unotation.Representation;
 
 // TODO: Make those getter better
 public class UmlModelState extends EMSNotationModelState {
-   public Diagram getUmlNotationModel() {
-      var model = super.getNotationModel(Diagram.class);
+   public Optional<Diagram> getUmlNotationModel() { return super.getNotationModel(Diagram.class); }
 
-      if (model.isEmpty()) {
-         throw new GLSPServerException("Could not access UML Notation Model");
-      }
+   public Diagram getUnsafeUmlNotationModel() {
+      var model = getUmlNotationModel()
+         .orElseThrow(() -> new GLSPServerException("Could not access UML Notation Model"));
 
-      return model.get();
+      return model;
    }
 
    @Override
@@ -36,8 +37,12 @@ public class UmlModelState extends EMSNotationModelState {
       this.index = getOrUpdateIndex(newRoot);
    }
 
-   public Representation getRepresentation() {
-      return UmlNotationUtil.getRepresentation(this.getUmlNotationModel().getDiagramType());
+   public Optional<Representation> getRepresentation() {
+      return this.getUmlNotationModel().map(diagram -> UmlNotationUtil.getRepresentation(diagram.getDiagramType()));
+   }
+
+   public Representation getUnsafeRepresentation() {
+      return UmlNotationUtil.getRepresentation(this.getUnsafeUmlNotationModel().getDiagramType());
    }
 
 }

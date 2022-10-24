@@ -17,11 +17,11 @@ import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.util.GraphUtil;
 
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
-import com.eclipsesource.uml.glsp.uml.handler.operations.create.CreateNodeHandler;
+import com.eclipsesource.uml.glsp.uml.handler.operations.create.BaseCreateNodeHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.interaction.AddInteractionContribution;
 
 public class CreateInteractionHandler
-   extends CreateNodeHandler {
+   extends BaseCreateNodeHandler {
 
    public CreateInteractionHandler() {
       super(CommunicationTypes.INTERACTION);

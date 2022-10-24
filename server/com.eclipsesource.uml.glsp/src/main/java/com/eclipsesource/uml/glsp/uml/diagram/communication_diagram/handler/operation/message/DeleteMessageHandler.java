@@ -13,10 +13,10 @@ package com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.handler.ope
 import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.uml2.uml.Message;
 
-import com.eclipsesource.uml.glsp.uml.handler.operations.delete.DeleteElementHandler;
+import com.eclipsesource.uml.glsp.uml.handler.operations.delete.BaseDeleteElementHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.message.RemoveMessageContribution;
 
-public class DeleteMessageHandler extends DeleteElementHandler<Message> {
+public class DeleteMessageHandler extends BaseDeleteElementHandler<Message> {
 
    @Override
    protected CCommand command(final Message element) {

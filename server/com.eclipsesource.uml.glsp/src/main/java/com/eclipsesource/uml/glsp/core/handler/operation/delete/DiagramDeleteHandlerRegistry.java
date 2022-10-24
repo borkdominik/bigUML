@@ -16,7 +16,7 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
 
 import com.eclipsesource.uml.glsp.core.common.DiagramClassRegistry;
-import com.eclipsesource.uml.glsp.core.common.DoubleKey;
+import com.eclipsesource.uml.glsp.core.common.RepresentationKey;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 
@@ -30,10 +30,10 @@ public class DiagramDeleteHandlerRegistry
          var representation = e.getKey();
 
          e.getValue().forEach(handler -> {
-            register(DoubleKey.of(representation, handler.getHandledElementType()), handler);
+            register(RepresentationKey.of(representation, handler.getHandledElementType()), handler);
          });
       });
 
-      debug();
+      // debug();
    }
 }

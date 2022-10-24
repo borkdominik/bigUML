@@ -8,14 +8,18 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.core.handler.operation;
+package com.eclipsesource.uml.glsp.core.handler.operation.directediting;
 
-import java.util.Set;
+import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.AbstractEMSOperationHandler;
 import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperation;
 import org.eclipse.glsp.server.types.GLSPServerException;
 
+import com.eclipsesource.uml.glsp.core.common.DoubleKey;
+import com.eclipsesource.uml.glsp.core.common.RepresentationKey;
+import com.eclipsesource.uml.glsp.core.features.idgenerator.SuffixIdExtractor;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.google.inject.Inject;
 
@@ -23,10 +27,13 @@ public class UmlLabelEditOperationHandler
    extends AbstractEMSOperationHandler<ApplyLabelEditOperation> {
 
    @Inject
-   private Set<DiagramEditLabelOperationHandler> editLabelOperationHandlers;
+   private DiagramLabelEditHandlerRegistry registry;
 
    @Inject
    private UmlModelState modelState;
+
+   @Inject
+   private SuffixIdExtractor suffixIdExtractor;
 
    @Override
    public void executeOperation(final ApplyLabelEditOperation operation) {
@@ -62,13 +69,24 @@ public class UmlLabelEditOperationHandler
       }
       */
 
-      var diagramType = modelState.getUnsafeRepresentation();
-      var editLabelHandler = editLabelOperationHandlers.stream().filter(handler -> handler.supports(diagramType))
-         .findFirst();
+      var representation = modelState.getUnsafeRepresentation();
+
+      var labelId = operation.getLabelId();
+      var suffix = suffixIdExtractor.extractSuffix(labelId)
+         .orElseThrow(() -> new GLSPServerException("No suffix found by extractor for label " + labelId));
+      var elementId = suffixIdExtractor.extractId(labelId)
+         .orElseThrow(() -> new GLSPServerException("No elementId found by extractor for label " + labelId));
+
+      var semanticElement = getOrThrow(modelState.getIndex().getEObject(elementId),
+         EObject.class,
+         "Could not find semantic element for id '" + elementId + "', no edit label operation executed.");
+
+      var editLabelHandler = registry
+         .get(RepresentationKey.of(representation, DoubleKey.of(semanticElement.getClass(), suffix)));
 
       editLabelHandler
-         .orElseThrow(() -> new GLSPServerException("No handler found for diagram " + diagramType))
-         .edit(operation);
+         .orElseThrow(() -> new GLSPServerException("No handler found for labelId " + labelId))
+         .executeLabelEdit(operation);
    }
 
    @Override

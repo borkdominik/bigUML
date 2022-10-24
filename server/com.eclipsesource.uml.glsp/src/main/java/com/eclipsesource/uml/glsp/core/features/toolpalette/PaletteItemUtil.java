@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.core.palette;
+package com.eclipsesource.uml.glsp.core.features.toolpalette;
 
 import org.eclipse.glsp.server.actions.TriggerEdgeCreationAction;
 import org.eclipse.glsp.server.actions.TriggerNodeCreationAction;

@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.core.palette;
+package com.eclipsesource.uml.glsp.core.features.toolpalette;
 
 import java.util.ArrayList;
 import java.util.List;

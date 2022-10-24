@@ -33,9 +33,9 @@ import org.eclipse.uml2.uml.Interaction;
 
 import com.eclipsesource.uml.glsp.core.gmodel.GModelMapHandler;
 import com.eclipsesource.uml.glsp.core.gmodel.GModelMapper;
+import com.eclipsesource.uml.glsp.core.gmodel.suffix.SuffixAppender;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.eclipsesource.uml.glsp.core.utils.UmlConfig;
-import com.eclipsesource.uml.glsp.core.utils.UmlIDUtil;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
 import com.google.inject.Inject;
 
@@ -46,6 +46,9 @@ public class InteractionNodeMapper implements GModelMapper<Interaction, GNode> {
    private static final String V_GRAB = "vGrab";
    private static final String H_GRAB = "hGrab";
    private static final String H_ALIGN = "hAlign";
+
+   @Inject
+   private SuffixAppender suffix;
 
    @Inject
    private UmlModelState modelState;
@@ -94,11 +97,11 @@ public class InteractionNodeMapper implements GModelMapper<Interaction, GNode> {
    protected GCompartment buildInteractionHeader(final Interaction umlInteraction) {
       return new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER)
          .layout(GConstants.Layout.HBOX)
-         .id(UmlIDUtil.createHeaderId(idGenerator.getOrCreateId(umlInteraction)))
+         .id(suffix.headerSuffix.appendTo(idGenerator.getOrCreateId(umlInteraction)))
          .add(new GCompartmentBuilder(CommunicationTypes.ICON_INTERACTION)
-            .id(UmlIDUtil.createHeaderIconId(idGenerator.getOrCreateId(umlInteraction))).build())
+            .id(suffix.headerIconSuffix.appendTo(idGenerator.getOrCreateId(umlInteraction))).build())
          .add(new GLabelBuilder(UmlConfig.Types.LABEL_NAME)
-            .id(UmlIDUtil.createHeaderLabelId(idGenerator.getOrCreateId(umlInteraction)))
+            .id(suffix.headerLabelSuffix.appendTo(idGenerator.getOrCreateId(umlInteraction)))
             .text(umlInteraction.getName()).build())
          .build();
    }
@@ -111,7 +114,7 @@ public class InteractionNodeMapper implements GModelMapper<Interaction, GNode> {
       layoutOptions.put(V_GRAB, true);
 
       return new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT)
-         .id(UmlIDUtil.createChildCompartmentId(idGenerator.getOrCreateId(interaction)))
+         .id(suffix.compartmentSuffix.appendTo(idGenerator.getOrCreateId(interaction)))
          .layout(GConstants.Layout.FREEFORM)
          .layoutOptions(layoutOptions)
          .addAll(children.stream()

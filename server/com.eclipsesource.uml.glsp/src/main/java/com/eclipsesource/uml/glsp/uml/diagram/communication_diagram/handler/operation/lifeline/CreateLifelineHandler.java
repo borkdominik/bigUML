@@ -18,11 +18,11 @@ import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.uml2.uml.Interaction;
 
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
-import com.eclipsesource.uml.glsp.uml.handler.operations.create.CreateChildNodeHandler;
+import com.eclipsesource.uml.glsp.uml.handler.operations.create.BaseCreateChildNodeHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.lifeline.AddLifelineContribution;
 
 public class CreateLifelineHandler
-   extends CreateChildNodeHandler<Interaction> {
+   extends BaseCreateChildNodeHandler<Interaction> {
 
    public CreateLifelineHandler() {
       super(CommunicationTypes.LIFELINE);

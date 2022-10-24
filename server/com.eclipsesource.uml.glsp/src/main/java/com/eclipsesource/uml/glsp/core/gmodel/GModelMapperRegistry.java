@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.graph.GModelElement;
 
 import com.eclipsesource.uml.glsp.core.common.DiagramClassRegistry;
-import com.eclipsesource.uml.glsp.core.common.DoubleKey;
+import com.eclipsesource.uml.glsp.core.common.RepresentationKey;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 
@@ -32,11 +32,11 @@ public class GModelMapperRegistry
 
          e.getValue().forEach(mapper -> {
             var key = mapper.deriveEObjectType();
-            register(DoubleKey.of(representation, key),
+            register(RepresentationKey.of(representation, key),
                (GModelMapper<EObject, GModelElement>) mapper);
          });
       });
 
-      debug();
+      // debug();
    }
 }

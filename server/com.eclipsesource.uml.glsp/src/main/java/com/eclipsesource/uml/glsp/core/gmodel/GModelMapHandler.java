@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.server.types.GLSPServerException;
 
-import com.eclipsesource.uml.glsp.core.common.DoubleKey;
+import com.eclipsesource.uml.glsp.core.common.RepresentationKey;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.google.inject.Inject;
 
@@ -30,7 +30,7 @@ public class GModelMapHandler {
 
    public GModelElement handle(final EObject object) {
       var representation = modelState.getUnsafeRepresentation();
-      var mapperOpt = registry.get(DoubleKey.of(representation, object.getClass()));
+      var mapperOpt = registry.get(RepresentationKey.of(representation, object.getClass()));
 
       if (mapperOpt.isEmpty()) {
          throw new GLSPServerException("Error during model initialization!", new Throwable(

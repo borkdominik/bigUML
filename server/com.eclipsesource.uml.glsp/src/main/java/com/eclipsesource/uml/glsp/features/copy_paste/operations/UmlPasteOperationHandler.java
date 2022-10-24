@@ -10,38 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.features.copy_paste.operations;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.AbstractEMSOperationHandler;
-import org.eclipse.glsp.graph.GBoundsAware;
-import org.eclipse.glsp.graph.GEdge;
-import org.eclipse.glsp.graph.GModelElement;
-import org.eclipse.glsp.graph.GNode;
-import org.eclipse.glsp.graph.GPoint;
-import org.eclipse.glsp.graph.impl.GPointImpl;
-import org.eclipse.glsp.server.actions.ActionDispatcher;
-import org.eclipse.glsp.server.gson.GraphGsonConfigurationFactory;
-import org.eclipse.glsp.server.operations.PasteOperation;
-
-import com.eclipsesource.uml.glsp.core.model.UmlModelServerAccess;
-import com.eclipsesource.uml.glsp.core.model.UmlModelState;
-import com.eclipsesource.uml.glsp.core.utils.gmodel.GModelFilterUtil;
-import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
-import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.features.copy_paste.InteractionPropertiesFactory;
-import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.features.copy_paste.LifelinePropertiesFactory;
-import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.features.copy_paste.MessagePropertiesFactory;
-import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.feature.copy_paste.interaction.InteractionCopyableProperties;
-import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.feature.copy_paste.lifeline.LifelineCopyableProperties;
-import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.feature.copy_paste.message.MessageCopyableProperties;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.inject.Inject;
-
-public class UmlPasteOperationHandler
+public class UmlPasteOperationHandler {/*-
    extends AbstractEMSOperationHandler<PasteOperation> {
    private final static String ARG_LAST_CONTAINABLE_ID = "lastContainableId";
    private static final int DEFAULT_OFFSET = 20;
@@ -71,27 +40,27 @@ public class UmlPasteOperationHandler
       var interactionElements = GModelFilterUtil
          .filterByType(selectedElements, CommunicationTypes.INTERACTION, GModelElement.class)
          .collect(Collectors.toUnmodifiableList());
-      
+
       if (interactionElements.size() > 0) {
          shift(interactionElements,
             computeOffset(interactionElements, operation.getEditorContext().getLastMousePosition()));
          var interactionProperties = getInteractionProperties(interactionElements);
-      
+
          modelServerAccess.exec(CopyInteractionCommandContribution.create(interactionProperties));
       } else {
          var parentInteraction = modelState.getIndex()
             .getEObject(operation.getEditorContext().getArgs().get(ARG_LAST_CONTAINABLE_ID), Interaction.class);
-      
+
          if (parentInteraction.isPresent()) {
             var root = getCopiedElement(
                operation.getClipboardData().get(UmlRequestClipboardDataActionHandler.CLIPBOARD_ROOT));
             var lifelineElements = GModelFilterUtil
                .filterByType(selectedElements, CommunicationTypes.LIFELINE, GModelElement.class)
                .collect(Collectors.toUnmodifiableList());
-      
+
             var lifelineProperties = getLifelineProperties(lifelineElements);
             var messageProperties = getMessageProperties(lifelineElements, root);
-      
+
             modelServerAccess
                .exec(CopyLifelineWithMessagesCommandContribution.create(
                   lifelineProperties,
@@ -99,7 +68,7 @@ public class UmlPasteOperationHandler
                   parentInteraction.get()));
          }
       }
-      */
+      *
    }
 
    protected ArrayList<GModelElement> getCopiedElements(final String jsonString) {
@@ -162,4 +131,5 @@ public class UmlPasteOperationHandler
       }
       return Optional.empty();
    }
+   */
 }

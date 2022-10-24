@@ -14,7 +14,7 @@ import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.AbstractEMSOper
 import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 import org.eclipse.glsp.server.types.GLSPServerException;
 
-import com.eclipsesource.uml.glsp.core.common.DoubleKey;
+import com.eclipsesource.uml.glsp.core.common.RepresentationKey;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.google.inject.Inject;
 
@@ -30,12 +30,12 @@ public class UmlCreateEdgeOperationHandler extends AbstractEMSOperationHandler<C
    public void executeOperation(final CreateEdgeOperation operation) {
       var representation = modelState.getUnsafeRepresentation();
 
-      var handler = registry.get(DoubleKey.of(representation, operation.getElementTypeId()));
+      var handler = registry.get(RepresentationKey.of(representation, operation.getElementTypeId()));
 
       handler
          .orElseThrow(
             () -> new GLSPServerException("No create edge handler found for element " + operation.getElementTypeId()))
-         .executeOperation(operation);
+         .executeCreate(operation);
    }
 
 }

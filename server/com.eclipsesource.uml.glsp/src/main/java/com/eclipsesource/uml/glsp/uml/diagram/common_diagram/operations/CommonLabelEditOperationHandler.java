@@ -10,15 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.diagram.common_diagram.operations;
 
-import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperation;
-
-import com.eclipsesource.uml.glsp.core.handler.operation.DiagramEditLabelOperationHandler;
-import com.eclipsesource.uml.glsp.core.model.UmlModelServerAccess;
-import com.eclipsesource.uml.glsp.core.model.UmlModelState;
-import com.eclipsesource.uml.modelserver.unotation.Representation;
-import com.google.inject.Inject;
-
-public class CommonLabelEditOperationHandler implements DiagramEditLabelOperationHandler {
+public class CommonLabelEditOperationHandler {/*- {
 
    @Inject
    protected UmlModelState modelState;
@@ -32,23 +24,23 @@ public class CommonLabelEditOperationHandler implements DiagramEditLabelOperatio
    }
 
    @Override
-   public void edit(final ApplyLabelEditOperation editLabelOperation) {
+   public void executeLabelEdit(final ApplyLabelEditOperation editLabelOperation) {
       /*-
       var modelIndex = modelState.getIndex();
-      
+
       String inputText = editLabelOperation.getText().trim();
       String graphicalElementId = editLabelOperation.getLabelId();
-      
+
       GModelElement label = getOrThrow(modelIndex.findElementByClass(graphicalElementId, GModelElement.class),
          GModelElement.class, "Element not found.");
-      
+
       switch (label.getType()) {
-      
+
          case Types.LABEL_NAME:
             String containerElementId = UmlIDUtil.getElementIdFromHeaderLabel(graphicalElementId);
             Element semanticElement = getOrThrow(modelIndex.getEObject(containerElementId),
                Element.class, "No valid container with id " + graphicalElementId + " found");
-      
+
             if (semanticElement instanceof Comment) {
                modelServerAccess.exec(SetBodyCommandContribution.create((Comment) semanticElement, inputText))
                   .thenAccept(response -> {
@@ -59,6 +51,7 @@ public class CommonLabelEditOperationHandler implements DiagramEditLabelOperatio
             }
             break;
       }
-      */
+      *
    }
+   */
 }

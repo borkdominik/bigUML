@@ -8,8 +8,23 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.core.common;
+package com.eclipsesource.uml.glsp.core.features.idgenerator;
 
-public class DiagramRepresentation {
+public interface SuffixIdAppender {
 
+   String appendTo(String id);
+
+   String clear(String id);
+
+   String suffix();
+
+   boolean isSuffixOf(String id);
+
+   default String clear(final String id, final String suffix) {
+      if (isSuffixOf(id)) {
+         return id.substring(0, id.length() - suffix.length());
+      }
+
+      return id;
+   }
 }

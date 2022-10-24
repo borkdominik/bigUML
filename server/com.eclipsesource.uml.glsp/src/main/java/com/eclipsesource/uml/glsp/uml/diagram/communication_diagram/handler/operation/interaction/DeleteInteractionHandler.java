@@ -13,10 +13,10 @@ package com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.handler.ope
 import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.uml2.uml.Interaction;
 
-import com.eclipsesource.uml.glsp.uml.handler.operations.delete.DeleteElementHandler;
+import com.eclipsesource.uml.glsp.uml.handler.operations.delete.BaseDeleteElementHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.interaction.RemoveInteractionContribution;
 
-public class DeleteInteractionHandler extends DeleteElementHandler<Interaction> {
+public class DeleteInteractionHandler extends BaseDeleteElementHandler<Interaction> {
 
    @Override
    protected CCommand command(final Interaction element) {

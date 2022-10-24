@@ -8,13 +8,15 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.core.palette;
+package com.eclipsesource.uml.glsp.core.handler.operation.directediting;
 
-import java.util.List;
-import java.util.Map;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperation;
 
-import org.eclipse.glsp.server.features.toolpalette.PaletteItem;
+public interface DiagramLabelEditHandler<T extends EObject> {
+   Class<T> getHandledElementType();
 
-public interface DiagramPalette {
-   List<PaletteItem> getItems(Map<String, String> args);
+   String getHandledLabelSuffix();
+
+   void executeLabelEdit(final ApplyLabelEditOperation editLabelOperation);
 }

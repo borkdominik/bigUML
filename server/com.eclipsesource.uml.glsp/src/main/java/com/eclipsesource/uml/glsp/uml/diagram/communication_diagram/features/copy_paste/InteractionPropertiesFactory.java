@@ -10,23 +10,13 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.features.copy_paste;
 
-import java.awt.geom.Point2D;
-
-import org.eclipse.glsp.graph.GEdge;
-import org.eclipse.glsp.graph.GLabel;
-import org.eclipse.glsp.graph.GNode;
-
-import com.eclipsesource.uml.glsp.core.utils.UmlIDUtil;
-import com.eclipsesource.uml.glsp.core.utils.gmodel.GModelFilterUtil;
-import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
-import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.feature.copy_paste.interaction.InteractionCopyableProperties;
-
 public class InteractionPropertiesFactory {
-
+   /*-
+   
    private InteractionPropertiesFactory() {
-
+   
    }
-
+   
    public static InteractionCopyableProperties from(final GNode element) {
       var semantic = new InteractionCopyableProperties.Semantic();
       semantic.id = element.getId();
@@ -38,11 +28,11 @@ public class InteractionPropertiesFactory {
       GModelFilterUtil.flatFilterByType(element, CommunicationTypes.MESSAGE, GEdge.class).forEach(message -> {
          semantic.messages.add(MessagePropertiesFactory.from(message));
       });
-
+   
       var notation = new InteractionCopyableProperties.Notation();
       notation.position = new Point2D.Double(element.getPosition().getX(), element.getPosition().getY());
-
+   
       return new InteractionCopyableProperties(semantic, notation);
    }
-
+   */
 }

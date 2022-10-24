@@ -18,8 +18,8 @@ import com.google.inject.multibindings.Multibinder;
 public interface ActionHandlerContribution {
 
    default void contributeActionHandler(final Binder binder) {
-      var provider = Multibinder.newSetBinder(binder, ActionHandler.class);
-      contributeActionHandler(provider);
+      var multibinder = Multibinder.newSetBinder(binder, ActionHandler.class);
+      contributeActionHandler(multibinder);
    }
 
    void contributeActionHandler(Multibinder<ActionHandler> multibinder);

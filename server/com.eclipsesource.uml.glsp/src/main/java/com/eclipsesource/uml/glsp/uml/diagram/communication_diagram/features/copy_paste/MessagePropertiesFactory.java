@@ -10,21 +10,13 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.features.copy_paste;
 
-import java.awt.geom.Point2D;
-
-import org.eclipse.glsp.graph.GEdge;
-import org.eclipse.glsp.graph.GLabel;
-
-import com.eclipsesource.uml.glsp.core.utils.UmlIDUtil;
-import com.eclipsesource.uml.glsp.core.utils.gmodel.GModelFilterUtil;
-import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.feature.copy_paste.message.MessageCopyableProperties;
-
 public class MessagePropertiesFactory {
-
+   /*-
+   
    private MessagePropertiesFactory() {
-
+   
    }
-
+   
    public static MessageCopyableProperties from(final GEdge element) {
       var semantic = new MessageCopyableProperties.Semantic();
       semantic.id = element.getId();
@@ -32,13 +24,13 @@ public class MessagePropertiesFactory {
          .ifPresent(label -> semantic.name = label.getText());
       semantic.sourceId = element.getSourceId();
       semantic.targetId = element.getTargetId();
-
+   
       var notation = new MessageCopyableProperties.Notation();
       element.getRoutingPoints().forEach(point -> {
          notation.bendingPoints.add(new Point2D.Double(point.getX(), point.getY()));
       });
-
+   
       return new MessageCopyableProperties(semantic, notation);
    }
-
+   */
 }

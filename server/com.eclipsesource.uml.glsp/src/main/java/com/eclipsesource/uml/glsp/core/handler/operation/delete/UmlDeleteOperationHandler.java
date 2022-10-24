@@ -17,7 +17,7 @@ import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.AbstractEMSOper
 import org.eclipse.glsp.server.operations.DeleteOperation;
 import org.eclipse.glsp.server.types.GLSPServerException;
 
-import com.eclipsesource.uml.glsp.core.common.DoubleKey;
+import com.eclipsesource.uml.glsp.core.common.RepresentationKey;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.google.inject.Inject;
 
@@ -37,14 +37,16 @@ public class UmlDeleteOperationHandler extends AbstractEMSOperationHandler<Delet
          var semanticElement = getOrThrow(modelState.getIndex().getEObject(elementId),
             EObject.class, "Could not find semantic element for id '" + elementId + "', no delete operation executed.");
 
-         var handler = registry.get(DoubleKey.of(representation, semanticElement.getClass()));
+         var handler = registry.get(RepresentationKey.of(representation, semanticElement.getClass()));
 
          handler
             .orElseThrow(
                () -> new GLSPServerException(
                   "No delete handler found for class " + semanticElement.getClass().getName()))
-            .executeDeletion(semanticElement);
+            .executeDelete(semanticElement);
       });
+
+      // debug();
    }
 
 }

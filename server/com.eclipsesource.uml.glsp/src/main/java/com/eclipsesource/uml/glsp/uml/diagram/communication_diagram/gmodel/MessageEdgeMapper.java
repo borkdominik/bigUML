@@ -26,9 +26,9 @@ import org.eclipse.uml2.uml.Message;
 import org.eclipse.uml2.uml.MessageOccurrenceSpecification;
 
 import com.eclipsesource.uml.glsp.core.gmodel.GModelMapper;
+import com.eclipsesource.uml.glsp.core.gmodel.suffix.SuffixAppender;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.eclipsesource.uml.glsp.core.utils.UmlConfig;
-import com.eclipsesource.uml.glsp.core.utils.UmlIDUtil;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
 import com.google.inject.Inject;
 
@@ -38,6 +38,9 @@ public class MessageEdgeMapper implements GModelMapper<Message, GEdge> {
 
    @Inject
    private UmlModelState modelState;
+
+   @Inject
+   private SuffixAppender suffix;
 
    @Override
    public GEdge map(final Message message) {
@@ -55,7 +58,7 @@ public class MessageEdgeMapper implements GModelMapper<Message, GEdge> {
          .routerKind(GConstants.RouterKind.MANHATTAN);
 
       GLabel nameLabel = createEdgeNameLabel(message.getName(),
-         UmlIDUtil.createLabelNameId(idGenerator.getOrCreateId(message)), 0.6d);
+         suffix.labelSuffix.appendTo(idGenerator.getOrCreateId(message)), 0.6d);
       builder.add(nameLabel);
 
       modelState.getIndex().getNotation(message, Edge.class).ifPresent(edge -> {

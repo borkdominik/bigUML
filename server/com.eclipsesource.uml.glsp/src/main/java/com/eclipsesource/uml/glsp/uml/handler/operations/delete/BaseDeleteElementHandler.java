@@ -21,7 +21,7 @@ import com.eclipsesource.uml.glsp.core.utils.reflection.GenericsUtil;
 import com.eclipsesource.uml.glsp.core.utils.reflection.ReflectionUtil;
 import com.google.inject.Inject;
 
-public abstract class DeleteElementHandler<T extends EObject> implements DiagramDeleteHandler<T> {
+public abstract class BaseDeleteElementHandler<T extends EObject> implements DiagramDeleteHandler<T> {
    protected final Class<T> elementType;
 
    @Inject
@@ -30,23 +30,24 @@ public abstract class DeleteElementHandler<T extends EObject> implements Diagram
    @Inject
    protected UmlModelServerAccess modelServerAccess;
 
-   public DeleteElementHandler() {
-      this.elementType = GenericsUtil.deriveClassActualType(getClass(), DeleteElementHandler.class, 0);
+   public BaseDeleteElementHandler() {
+      this.elementType = GenericsUtil.deriveClassActualType(getClass(), BaseDeleteElementHandler.class, 0);
    }
 
    @Override
    public Class<T> getHandledElementType() { return elementType; }
 
    @Override
-   public void executeDeletion(final EObject object) {
+   public void executeDelete(final EObject object) {
       var element = ReflectionUtil.castOrThrow(object,
          elementType,
          "Object is not castable to " + elementType.getName() + ". it was " + object.getClass().getName());
 
-      modelServerAccess.exec(command(element))
+      var command = command(element);
+      modelServerAccess.exec(command)
          .thenAccept(response -> {
             if (response.body() == null || response.body().isEmpty()) {
-               throw new GLSPServerException("Could not execute delete on " + object.getClass().getName());
+               throw new GLSPServerException("Could not execute command if " + command.getClass().getName());
             }
          });
    }

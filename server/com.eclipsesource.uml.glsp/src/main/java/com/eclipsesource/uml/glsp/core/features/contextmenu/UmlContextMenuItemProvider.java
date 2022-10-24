@@ -1,4 +1,4 @@
-package com.eclipsesource.uml.glsp.core.contextmenu;
+package com.eclipsesource.uml.glsp.core.features.contextmenu;
 
 import java.util.List;
 import java.util.Map;

@@ -12,11 +12,8 @@ package com.eclipsesource.uml.glsp.uml.handler.operations.create;
 
 import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
 
-import java.util.Optional;
-
 import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.glsp.graph.GPoint;
-import org.eclipse.glsp.server.operations.CreateNodeOperation;
+import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 import org.eclipse.glsp.server.types.GLSPServerException;
 import org.eclipse.uml2.uml.Element;
 
@@ -25,9 +22,10 @@ import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.eclipsesource.uml.glsp.core.utils.reflection.GenericsUtil;
 import com.google.inject.Inject;
 
-public abstract class CreateChildNodeHandler<T extends Element> extends BaseCreateHandler<CreateNodeOperation> {
-
-   protected final Class<T> containerType;
+public abstract class BaseCreateEdgeHandler<S extends Element, T extends Element>
+   extends BaseCreateHandler<CreateEdgeOperation> {
+   protected final Class<S> sourceType;
+   protected final Class<T> targetType;
 
    @Inject
    protected UmlModelServerAccess modelServerAccess;
@@ -35,26 +33,31 @@ public abstract class CreateChildNodeHandler<T extends Element> extends BaseCrea
    @Inject
    protected UmlModelState modelState;
 
-   public CreateChildNodeHandler(final String typeId) {
+   public BaseCreateEdgeHandler(final String typeId) {
       super(typeId);
 
-      this.containerType = GenericsUtil.deriveClassActualType(getClass(), CreateChildNodeHandler.class, 0);
+      sourceType = GenericsUtil.deriveClassActualType(getClass(), BaseCreateEdgeHandler.class, 0);
+      targetType = GenericsUtil.deriveClassActualType(getClass(), BaseCreateEdgeHandler.class, 1);
    }
 
    @Override
-   public void create(final CreateNodeOperation operation) {
-      var containerId = operation.getContainerId();
-      var container = getOrThrow(modelState.getIndex().getEObject(containerId),
-         containerType, "No valid container with id " + containerId + " found");
+   public void create(final CreateEdgeOperation operation) {
+      var sourceId = operation.getSourceElementId();
+      var targetId = operation.getTargetElementId();
 
-      modelServerAccess.exec(command(container, operation.getLocation()))
+      var source = getOrThrow(modelState.getIndex().getEObject(sourceId),
+         sourceType, "No valid container with id " + sourceId + " found");
+      var target = getOrThrow(modelState.getIndex().getEObject(targetId),
+         targetType, "No valid container with id " + targetId + " found");
+
+      var command = command(source, target);
+      modelServerAccess.exec(command)
          .thenAccept(response -> {
             if (response.body() == null || response.body().isEmpty()) {
-               throw new GLSPServerException("Could not execute create on " + elementTypeId);
+               throw new GLSPServerException("Could not execute command of " + command.getClass().getName());
             }
          });
    }
 
-   protected abstract CCommand command(T container, Optional<GPoint> location);
-
+   protected abstract CCommand command(S source, T target);
 }

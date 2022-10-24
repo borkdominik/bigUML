@@ -8,14 +8,16 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.core.handler.operation;
+package com.eclipsesource.uml.glsp.core.gmodel.suffix;
 
-import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperation;
+import com.eclipsesource.uml.glsp.core.features.idgenerator.BaseSuffixIdAppender;
 
-import com.eclipsesource.uml.modelserver.unotation.Representation;
+public class CompartmentSuffixAppender extends BaseSuffixIdAppender {
 
-public interface DiagramEditLabelOperationHandler {
-   boolean supports(Representation representation);
+   public static final String SUFFIX = "_compartment";
 
-   void edit(final ApplyLabelEditOperation editLabelOperation);
+   public CompartmentSuffixAppender() {
+      super(SUFFIX);
+   }
+
 }

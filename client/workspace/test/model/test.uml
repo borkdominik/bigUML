@@ -3,11 +3,14 @@
   <packagedElement xmi:type="uml:Interaction" xmi:id="_2sxvcU8SEe2yZ8WUeq5c5w" name="NewInteraction1">
     <lifeline xmi:id="_67mgUE8SEe2yZ8WUeq5c5w" name="NewLifeline1" coveredBy="_JMlSoE8TEe2yZ8WUeq5c5w _V97kAVOOEe2COJmb4fFkAw"/>
     <lifeline xmi:id="_Im7n4E8TEe2yZ8WUeq5c5w" name="NewLifeline2" coveredBy="_JMkrkE8TEe2yZ8WUeq5c5w _V97kAFOOEe2COJmb4fFkAw"/>
-    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_JMkrkE8TEe2yZ8WUeq5c5w" name="NewMessage1 - SendEvent" covered="_Im7n4E8TEe2yZ8WUeq5c5w" message="_JL8ZcE8TEe2yZ8WUeq5c5w"/>
-    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_JMlSoE8TEe2yZ8WUeq5c5w" name="NewMessage1 - ReceiveEvent" covered="_67mgUE8SEe2yZ8WUeq5c5w" message="_JL8ZcE8TEe2yZ8WUeq5c5w"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_JMkrkE8TEe2yZ8WUeq5c5w" name="asd - SendEvent" covered="_Im7n4E8TEe2yZ8WUeq5c5w" message="_JL8ZcE8TEe2yZ8WUeq5c5w"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_JMlSoE8TEe2yZ8WUeq5c5w" name="asd - ReceiveEvent" covered="_67mgUE8SEe2yZ8WUeq5c5w" message="_JL8ZcE8TEe2yZ8WUeq5c5w"/>
     <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_V97kAFOOEe2COJmb4fFkAw" name="NewMessage2 - SendEvent" covered="_Im7n4E8TEe2yZ8WUeq5c5w" message="_V96V4VOOEe2COJmb4fFkAw"/>
     <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_V97kAVOOEe2COJmb4fFkAw" name="NewMessage2 - ReceiveEvent" covered="_67mgUE8SEe2yZ8WUeq5c5w" message="_V96V4VOOEe2COJmb4fFkAw"/>
-    <message xmi:id="_JL8ZcE8TEe2yZ8WUeq5c5w" name="NewMessage1" receiveEvent="_JMlSoE8TEe2yZ8WUeq5c5w" sendEvent="_JMkrkE8TEe2yZ8WUeq5c5w"/>
+    <message xmi:id="_JL8ZcE8TEe2yZ8WUeq5c5w" name="asd" receiveEvent="_JMlSoE8TEe2yZ8WUeq5c5w" sendEvent="_JMkrkE8TEe2yZ8WUeq5c5w"/>
     <message xmi:id="_V96V4VOOEe2COJmb4fFkAw" name="NewMessage2" receiveEvent="_V97kAVOOEe2COJmb4fFkAw" sendEvent="_V97kAFOOEe2COJmb4fFkAw"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Interaction" xmi:id="_exiyEFO3Ee2COJmb4fFkAw" name="asd">
+    <lifeline xmi:id="_fGRE4FO3Ee2COJmb4fFkAw" name="asd"/>
   </packagedElement>
 </uml:Model>

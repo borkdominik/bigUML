@@ -22,9 +22,8 @@ import org.eclipse.glsp.server.operations.Operation;
 import org.eclipse.glsp.server.operations.OperationHandler;
 import org.eclipse.glsp.server.operations.OperationHandlerRegistry;
 
-import com.eclipsesource.uml.glsp.core.common.DoubleKey;
+import com.eclipsesource.uml.glsp.core.common.RepresentationKey;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
-import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 
 @SuppressWarnings("restriction")
@@ -49,7 +48,7 @@ public class UmlOperationHandlerRegistry implements OperationHandlerRegistry {
             .ifPresent(operation -> register(operation, handler));
       });
 
-      debug();
+      // debug();
    }
 
    protected void debug() {
@@ -84,7 +83,8 @@ public class UmlOperationHandlerRegistry implements OperationHandlerRegistry {
    @Override
    public Optional<OperationHandler> get(final Operation key) {
       var diagramHandler = this.modelState.getRepresentation().flatMap(representation -> {
-         var overrideKey = DoubleKey.<Representation, Class<? extends Operation>> of(representation, key.getClass());
+         var overrideKey = RepresentationKey.<Class<? extends Operation>> of(representation,
+            key.getClass());
 
          if (overrideRegistry.hasKey(overrideKey)) {
             return overrideRegistry.get(overrideKey);

@@ -14,11 +14,11 @@ import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.uml2.uml.Lifeline;
 
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
-import com.eclipsesource.uml.glsp.uml.handler.operations.create.CreateEdgeHandler;
+import com.eclipsesource.uml.glsp.uml.handler.operations.create.BaseCreateEdgeHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.message.AddMessageContribution;
 
 public class CreateMessageHandler
-   extends CreateEdgeHandler<Lifeline, Lifeline> {
+   extends BaseCreateEdgeHandler<Lifeline, Lifeline> {
 
    public CreateMessageHandler() {
       super(CommunicationTypes.MESSAGE);

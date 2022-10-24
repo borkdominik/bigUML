@@ -13,13 +13,11 @@ package com.eclipsesource.uml.glsp.core.common;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.eclipsesource.uml.modelserver.unotation.Representation;
-
 public abstract class DiagramClassRegistry<K extends Class<?>, V> extends DiagramRegistry<K, V> {
 
    @Override
-   protected String deriveKey(final DoubleKey<Representation, K> key) {
-      var representation = key.key1;
+   protected String deriveKey(final RepresentationKey<K> key) {
+      var representation = key.representation;
       var clazz = key.key2;
 
       if (clazz.isInterface()) {
@@ -27,7 +25,7 @@ public abstract class DiagramClassRegistry<K extends Class<?>, V> extends Diagra
       }
 
       var interfaces = List.of(clazz.getInterfaces());
-      var keys = keys().stream().filter(k -> k.key1.equals(representation)).map(k -> k.key2)
+      var keys = keys().stream().filter(k -> k.representation.equals(representation)).map(k -> k.key2)
          .collect(Collectors.toSet());
 
       var found = keys.stream().filter(k -> interfaces.contains(k)).findFirst();

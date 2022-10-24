@@ -24,9 +24,9 @@ import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Lifeline;
 
 import com.eclipsesource.uml.glsp.core.gmodel.GModelMapper;
+import com.eclipsesource.uml.glsp.core.gmodel.suffix.SuffixAppender;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.eclipsesource.uml.glsp.core.utils.UmlConfig;
-import com.eclipsesource.uml.glsp.core.utils.UmlIDUtil;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
 import com.google.inject.Inject;
 
@@ -36,6 +36,9 @@ public class LifelineNodeMapper implements GModelMapper<Lifeline, GNode> {
 
    @Inject
    private UmlModelState modelState;
+
+   @Inject
+   private SuffixAppender suffix;
 
    @Override
    public GNode map(final Lifeline lifeline) {
@@ -66,14 +69,14 @@ public class LifelineNodeMapper implements GModelMapper<Lifeline, GNode> {
    protected GCompartment buildClassHeader(final Lifeline umlLifeline) {
       GCompartmentBuilder classHeaderBuilder = new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER)
          .layout(GConstants.Layout.HBOX)
-         .id(UmlIDUtil.createHeaderId(idGenerator.getOrCreateId(umlLifeline)));
+         .id(suffix.headerSuffix.appendTo(idGenerator.getOrCreateId(umlLifeline)));
 
       GCompartment classHeaderIcon = new GCompartmentBuilder(CommunicationTypes.ICON_LIFELINE)
-         .id(UmlIDUtil.createHeaderIconId(idGenerator.getOrCreateId(umlLifeline))).build();
+         .id(suffix.headerIconSuffix.appendTo(idGenerator.getOrCreateId(umlLifeline))).build();
       classHeaderBuilder.add(classHeaderIcon);
 
       GLabel classHeaderLabel = new GLabelBuilder(UmlConfig.Types.LABEL_NAME)
-         .id(UmlIDUtil.createHeaderLabelId(idGenerator.getOrCreateId(umlLifeline)))
+         .id(suffix.headerLabelSuffix.appendTo(idGenerator.getOrCreateId(umlLifeline)))
          .text(umlLifeline.getName()).build();
       classHeaderBuilder.add(classHeaderLabel);
 

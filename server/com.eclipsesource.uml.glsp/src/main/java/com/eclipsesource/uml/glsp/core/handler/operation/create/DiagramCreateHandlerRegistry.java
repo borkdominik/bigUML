@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.eclipsesource.uml.glsp.core.common.DiagramRegistry;
-import com.eclipsesource.uml.glsp.core.common.DoubleKey;
+import com.eclipsesource.uml.glsp.core.common.RepresentationKey;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 
@@ -28,10 +28,10 @@ public class DiagramCreateHandlerRegistry
 
          e.getValue().forEach(handler -> {
             var elementId = handler.getHandledElementTypeId();
-            register(DoubleKey.of(representation, elementId), handler);
+            register(RepresentationKey.of(representation, elementId), handler);
          });
       });
 
-      debug();
+      // debug();
    }
 }

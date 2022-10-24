@@ -10,6 +10,8 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.core;
 
+import java.util.Set;
+
 import org.eclipse.emfcloud.modelserver.glsp.EMSModelState;
 import org.eclipse.emfcloud.modelserver.glsp.actions.handlers.EMSOperationActionHandler;
 import org.eclipse.emfcloud.modelserver.glsp.notation.integration.EMSGLSPNotationDiagramModule;
@@ -32,14 +34,22 @@ import org.eclipse.glsp.server.operations.OperationHandlerRegistry;
 import org.eclipse.uml2.uml.UMLPackage;
 import org.eclipse.uml2.uml.resource.UMLResource;
 
-import com.eclipsesource.uml.glsp.core.contextmenu.UmlContextMenuItemProvider;
 import com.eclipsesource.uml.glsp.core.diagram.UmlToolDiagramConfiguration;
+import com.eclipsesource.uml.glsp.core.features.contextmenu.UmlContextMenuItemProvider;
+import com.eclipsesource.uml.glsp.core.features.idgenerator.SuffixIdAppender;
+import com.eclipsesource.uml.glsp.core.features.idgenerator.SuffixIdExtractor;
+import com.eclipsesource.uml.glsp.core.features.toolpalette.UmlToolPaletteItemProvider;
 import com.eclipsesource.uml.glsp.core.gmodel.DiagramMapper;
 import com.eclipsesource.uml.glsp.core.gmodel.GModelMapHandler;
 import com.eclipsesource.uml.glsp.core.gmodel.GModelMapperRegistry;
 import com.eclipsesource.uml.glsp.core.gmodel.UmlGModelFactory;
+import com.eclipsesource.uml.glsp.core.gmodel.suffix.CompartmentSuffixAppender;
+import com.eclipsesource.uml.glsp.core.gmodel.suffix.HeaderIconSuffixAppender;
+import com.eclipsesource.uml.glsp.core.gmodel.suffix.HeaderLabelSuffixAppender;
+import com.eclipsesource.uml.glsp.core.gmodel.suffix.HeaderSuffixAppender;
+import com.eclipsesource.uml.glsp.core.gmodel.suffix.LabelSuffixAppender;
+import com.eclipsesource.uml.glsp.core.gmodel.suffix.SuffixAppender;
 import com.eclipsesource.uml.glsp.core.handler.action.UmlOperationActionHandler;
-import com.eclipsesource.uml.glsp.core.handler.operation.UmlLabelEditOperationHandler;
 import com.eclipsesource.uml.glsp.core.handler.operation.UmlOperationHandlerRegistry;
 import com.eclipsesource.uml.glsp.core.handler.operation.UmlOverrideOperationHandlerRegistry;
 import com.eclipsesource.uml.glsp.core.handler.operation.create.DiagramCreateHandlerRegistry;
@@ -47,30 +57,60 @@ import com.eclipsesource.uml.glsp.core.handler.operation.create.UmlCreateEdgeOpe
 import com.eclipsesource.uml.glsp.core.handler.operation.create.UmlCreateNodeOperationHandler;
 import com.eclipsesource.uml.glsp.core.handler.operation.delete.DiagramDeleteHandlerRegistry;
 import com.eclipsesource.uml.glsp.core.handler.operation.delete.UmlDeleteOperationHandler;
+import com.eclipsesource.uml.glsp.core.handler.operation.directediting.DiagramLabelEditHandlerRegistry;
+import com.eclipsesource.uml.glsp.core.handler.operation.directediting.UmlLabelEditOperationHandler;
 import com.eclipsesource.uml.glsp.core.model.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
-import com.eclipsesource.uml.glsp.core.palette.UmlToolPaletteItemProvider;
 import com.eclipsesource.uml.glsp.features.outline.manifest.OutlineManifest;
 import com.eclipsesource.uml.glsp.features.validation.UmlDiagramModelValidator;
 import com.eclipsesource.uml.glsp.old.diagram.activity_diagram.actions.ReturnTypesAction;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.manifest.CommunicationUmlManifest;
+import com.google.inject.Key;
 import com.google.inject.Singleton;
+import com.google.inject.multibindings.Multibinder;
 
 public class UmlDiagramModule extends EMSGLSPNotationDiagramModule {
 
    @Override
    protected void configureBase() {
       super.configureBase();
+      configureFixes();
+      configureMappers();
+      configureRegistries();
+      configureSuffixGenerators();
+   }
+
+   protected void configureFixes() {
       bind(EMSModelState.class).to(bindGModelState());
       bind(EMSNotationModelState.class).to(bindGModelState());
+   }
 
+   protected void configureMappers() {
       bind(DiagramMapper.class).in(Singleton.class);
       bind(GModelMapHandler.class).in(Singleton.class);
       bind(GModelMapperRegistry.class).in(Singleton.class);
+   }
 
+   protected void configureRegistries() {
       bind(UmlOverrideOperationHandlerRegistry.class).in(Singleton.class);
       bind(DiagramCreateHandlerRegistry.class).in(Singleton.class);
       bind(DiagramDeleteHandlerRegistry.class).in(Singleton.class);
+      bind(DiagramLabelEditHandlerRegistry.class).in(Singleton.class);
+   }
+
+   protected void configureSuffixGenerators() {
+      var multibinder = Multibinder.newSetBinder(binder(), SuffixIdAppender.class);
+
+      var classes = Set.of(LabelSuffixAppender.class, CompartmentSuffixAppender.class, HeaderSuffixAppender.class,
+         HeaderLabelSuffixAppender.class, HeaderIconSuffixAppender.class);
+
+      for (var clazz : classes) {
+         bind(clazz).in(Singleton.class);
+         multibinder.addBinding().to(Key.get(clazz));
+      }
+
+      bind(SuffixIdExtractor.class).in(Singleton.class);
+      bind(SuffixAppender.class).in(Singleton.class);
    }
 
    @Override

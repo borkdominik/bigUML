@@ -20,21 +20,22 @@ import org.eclipse.glsp.server.types.GLSPServerException;
 import com.eclipsesource.uml.glsp.core.model.UmlModelServerAccess;
 import com.google.inject.Inject;
 
-public abstract class CreateNodeHandler extends BaseCreateHandler<CreateNodeOperation> {
+public abstract class BaseCreateNodeHandler extends BaseCreateHandler<CreateNodeOperation> {
 
    @Inject
    protected UmlModelServerAccess modelServerAccess;
 
-   public CreateNodeHandler(final String typeId) {
+   public BaseCreateNodeHandler(final String typeId) {
       super(typeId);
    }
 
    @Override
    public void create(final CreateNodeOperation operation) {
-      modelServerAccess.exec(command(operation.getLocation()))
+      var command = command(operation.getLocation());
+      modelServerAccess.exec(command)
          .thenAccept(response -> {
             if (response.body() == null || response.body().isEmpty()) {
-               throw new GLSPServerException("Could not execute create on " + elementTypeId);
+               throw new GLSPServerException("Could not execute command of " + command.getClass().getName());
             }
          });
    }

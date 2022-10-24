@@ -15,5 +15,5 @@ import org.eclipse.glsp.server.operations.CreateOperation;
 public interface DiagramCreateHandler {
    String getHandledElementTypeId();
 
-   void executeOperation(CreateOperation operation);
+   void executeCreate(CreateOperation operation);
 }

@@ -17,7 +17,7 @@ import org.eclipse.glsp.server.operations.Operation;
 import org.eclipse.glsp.server.operations.OperationHandler;
 
 import com.eclipsesource.uml.glsp.core.common.DiagramClassRegistry;
-import com.eclipsesource.uml.glsp.core.common.DoubleKey;
+import com.eclipsesource.uml.glsp.core.common.RepresentationKey;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 
@@ -31,10 +31,10 @@ public class UmlOverrideOperationHandlerRegistry
          var representation = e.getKey();
 
          e.getValue().forEach(handler -> {
-            register(DoubleKey.of(representation, handler.getHandledOperationType()), handler);
+            register(RepresentationKey.of(representation, handler.getHandledOperationType()), handler);
          });
       });
 
-      debug();
+      // debug();
    }
 }

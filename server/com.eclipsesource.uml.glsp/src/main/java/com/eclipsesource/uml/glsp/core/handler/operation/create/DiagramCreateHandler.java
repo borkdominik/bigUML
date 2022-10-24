@@ -8,21 +8,12 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.core.type;
+package com.eclipsesource.uml.glsp.core.handler.operation.create;
 
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.ElementType.PARAMETER;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
+import org.eclipse.glsp.server.operations.CreateOperation;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
+public interface DiagramCreateHandler {
+   String getHandledElementTypeId();
 
-import javax.inject.Qualifier;
-
-@Qualifier
-@Target({ FIELD, PARAMETER, METHOD })
-@Retention(RUNTIME)
-public @interface TypeMapping {
-
+   void executeOperation(CreateOperation operation);
 }

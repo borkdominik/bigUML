@@ -8,12 +8,12 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.core.handler.operation;
+package com.eclipsesource.uml.glsp.core.handler.operation.delete;
 
-import org.eclipse.glsp.server.operations.CreateOperation;
+import org.eclipse.emf.ecore.EObject;
 
-public interface DiagramCreateHandler {
-   String getHandledElementTypeId();
+public interface DiagramDeleteHandler<T extends EObject> {
+   Class<T> getHandledElementType();
 
-   void executeOperation(CreateOperation operation);
+   void executeDeletion(EObject object);
 }

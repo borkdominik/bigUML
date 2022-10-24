@@ -8,7 +8,8 @@
   </elements>
   <elements xsi:type="notation:Shape">
     <semanticElement elementId="_67mgUE8SEe2yZ8WUeq5c5w"/>
-    <position x="67.0" y="19.0"/>
+    <position x="14.0" y="118.0"/>
+    <size width="155.515625" height="42.0"/>
   </elements>
   <elements xsi:type="notation:Shape">
     <semanticElement elementId="_Im7n4E8TEe2yZ8WUeq5c5w"/>
@@ -18,5 +19,6 @@
   <elements xsi:type="notation:Edge">
     <semanticElement elementId="_JL8ZcE8TEe2yZ8WUeq5c5w"/>
     <bendPoints x="252.515625" y="40.0"/>
+    <bendPoints x="91.7578125" y="40.0"/>
   </elements>
 </notation:Diagram>

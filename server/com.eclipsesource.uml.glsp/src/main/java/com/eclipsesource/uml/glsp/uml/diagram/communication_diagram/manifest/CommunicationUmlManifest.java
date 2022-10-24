@@ -12,15 +12,12 @@ package com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.manifest;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.graph.GModelElement;
-import org.eclipse.uml2.uml.Interaction;
-import org.eclipse.uml2.uml.Lifeline;
-import org.eclipse.uml2.uml.Message;
 
 import com.eclipsesource.uml.glsp.core.diagram.DiagramConfiguration;
 import com.eclipsesource.uml.glsp.core.gmodel.GModelMapper;
-import com.eclipsesource.uml.glsp.core.handler.operation.DiagramCreateHandler;
-import com.eclipsesource.uml.glsp.core.handler.operation.DiagramDeleteHandler;
 import com.eclipsesource.uml.glsp.core.handler.operation.DiagramEditLabelOperationHandler;
+import com.eclipsesource.uml.glsp.core.handler.operation.create.DiagramCreateHandler;
+import com.eclipsesource.uml.glsp.core.handler.operation.delete.DiagramDeleteHandler;
 import com.eclipsesource.uml.glsp.core.manifest.DiagramManifest;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.CreateHandlerContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.DeleteHandlerContribution;
@@ -28,7 +25,6 @@ import com.eclipsesource.uml.glsp.core.manifest.contributions.EditLabelOperation
 import com.eclipsesource.uml.glsp.core.palette.DiagramPalette;
 import com.eclipsesource.uml.glsp.features.outline.generator.DiagramOutlineGenerator;
 import com.eclipsesource.uml.glsp.features.outline.manifest.contributions.OutlineGeneratorContribution;
-import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.diagram.CommunicationConfiguration;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.features.outline.CommunicationOutlineGenerator;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.gmodel.InteractionNodeMapper;
@@ -43,7 +39,6 @@ import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.handler.oper
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.handler.operation.message.DeleteMessageHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.palette.CommunicationPalette;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
-import com.google.inject.multibindings.MapBinder;
 import com.google.inject.multibindings.Multibinder;
 
 public class CommunicationUmlManifest extends DiagramManifest
@@ -104,7 +99,7 @@ public class CommunicationUmlManifest extends DiagramManifest
    }
 
    @Override
-   public void contributeDeleteHandler(final Multibinder<DiagramDeleteHandler> multibinder) {
+   public void contributeDeleteHandler(final Multibinder<DiagramDeleteHandler<? extends EObject>> multibinder) {
       multibinder.addBinding().to(DeleteInteractionHandler.class);
       multibinder.addBinding().to(DeleteLifelineHandler.class);
       multibinder.addBinding().to(DeleteMessageHandler.class);
@@ -121,13 +116,5 @@ public class CommunicationUmlManifest extends DiagramManifest
       multibinder.addBinding().to(InteractionNodeMapper.class);
       multibinder.addBinding().to(LifelineNodeMapper.class);
       multibinder.addBinding().to(MessageEdgeMapper.class);
-   }
-
-   @Override
-   public void contributeTypeMapping(
-      final MapBinder<String, Class<? extends EObject>> mapbinder) {
-      mapbinder.addBinding(CommunicationTypes.INTERACTION).toInstance(Interaction.class);
-      mapbinder.addBinding(CommunicationTypes.LIFELINE).toInstance(Lifeline.class);
-      mapbinder.addBinding(CommunicationTypes.MESSAGE).toInstance(Message.class);
    }
 }

@@ -8,27 +8,29 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.core.handler.operation;
+package com.eclipsesource.uml.glsp.core.handler.operation.delete;
 
 import java.util.Map;
 import java.util.Set;
 
-import com.eclipsesource.uml.glsp.core.common.DiagramRegistry;
+import org.eclipse.emf.ecore.EObject;
+
+import com.eclipsesource.uml.glsp.core.common.DiagramClassRegistry;
 import com.eclipsesource.uml.glsp.core.common.DoubleKey;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 
-public class DiagramCreateHandlerRegistry
-   extends DiagramRegistry<String, DiagramCreateHandler> {
+public class DiagramDeleteHandlerRegistry
+   extends DiagramClassRegistry<Class<? extends EObject>, DiagramDeleteHandler<? extends EObject>> {
 
    @Inject
-   public DiagramCreateHandlerRegistry(final Map<Representation, Set<DiagramCreateHandler>> handlers) {
+   public DiagramDeleteHandlerRegistry(
+      final Map<Representation, Set<DiagramDeleteHandler<? extends EObject>>> handlers) {
       handlers.entrySet().forEach(e -> {
          var representation = e.getKey();
 
          e.getValue().forEach(handler -> {
-            var elementId = handler.getHandledElementTypeId();
-            register(DoubleKey.of(representation, elementId), handler);
+            register(DoubleKey.of(representation, handler.getHandledElementType()), handler);
          });
       });
 

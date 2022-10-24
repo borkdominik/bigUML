@@ -12,7 +12,7 @@ package com.eclipsesource.uml.glsp.core.manifest.contributions;
 
 import java.util.Set;
 
-import com.eclipsesource.uml.glsp.core.handler.operation.DiagramCreateHandler;
+import com.eclipsesource.uml.glsp.core.handler.operation.create.DiagramCreateHandler;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Binder;
 import com.google.inject.Key;

@@ -12,7 +12,7 @@ package com.eclipsesource.uml.glsp.uml.handler.operations.create;
 
 import org.eclipse.glsp.server.operations.CreateOperation;
 
-import com.eclipsesource.uml.glsp.core.handler.operation.DiagramCreateHandler;
+import com.eclipsesource.uml.glsp.core.handler.operation.create.DiagramCreateHandler;
 import com.eclipsesource.uml.glsp.core.utils.reflection.GenericsUtil;
 
 public abstract class BaseCreateHandler<T extends CreateOperation> implements DiagramCreateHandler {

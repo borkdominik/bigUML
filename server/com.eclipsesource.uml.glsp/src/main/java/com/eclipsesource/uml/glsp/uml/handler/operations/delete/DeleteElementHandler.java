@@ -14,16 +14,15 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.glsp.server.types.GLSPServerException;
 
-import com.eclipsesource.uml.glsp.core.handler.operation.DiagramDeleteHandler;
+import com.eclipsesource.uml.glsp.core.handler.operation.delete.DiagramDeleteHandler;
 import com.eclipsesource.uml.glsp.core.model.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.eclipsesource.uml.glsp.core.utils.reflection.GenericsUtil;
 import com.eclipsesource.uml.glsp.core.utils.reflection.ReflectionUtil;
 import com.google.inject.Inject;
 
-public abstract class DeleteElementHandler<T extends EObject> implements DiagramDeleteHandler {
+public abstract class DeleteElementHandler<T extends EObject> implements DiagramDeleteHandler<T> {
    protected final Class<T> elementType;
-   protected final String elementTypeId;
 
    @Inject
    protected UmlModelState modelState;
@@ -31,13 +30,12 @@ public abstract class DeleteElementHandler<T extends EObject> implements Diagram
    @Inject
    protected UmlModelServerAccess modelServerAccess;
 
-   public DeleteElementHandler(final String typeId) {
-      this.elementTypeId = typeId;
+   public DeleteElementHandler() {
       this.elementType = GenericsUtil.deriveClassActualType(getClass(), DeleteElementHandler.class, 0);
    }
 
    @Override
-   public String getHandledElementTypeId() { return elementTypeId; }
+   public Class<T> getHandledElementType() { return elementType; }
 
    @Override
    public void executeDeletion(final EObject object) {
@@ -48,7 +46,7 @@ public abstract class DeleteElementHandler<T extends EObject> implements Diagram
       modelServerAccess.exec(command(element))
          .thenAccept(response -> {
             if (response.body() == null || response.body().isEmpty()) {
-               throw new GLSPServerException("Could not execute delete on " + elementTypeId);
+               throw new GLSPServerException("Could not execute delete on " + object.getClass().getName());
             }
          });
    }

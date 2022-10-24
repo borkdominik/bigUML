@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.core.handler.operation;
+package com.eclipsesource.uml.glsp.core.handler.operation.delete;
 
 import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
 

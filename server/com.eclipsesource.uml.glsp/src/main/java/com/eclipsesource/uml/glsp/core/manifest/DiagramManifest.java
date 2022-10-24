@@ -11,14 +11,12 @@
 package com.eclipsesource.uml.glsp.core.manifest;
 
 import com.eclipsesource.uml.glsp.core.manifest.contributions.DiagramConfigurationContribution;
-import com.eclipsesource.uml.glsp.core.manifest.contributions.PaletteContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.GModelMapperContribution;
-import com.eclipsesource.uml.glsp.core.manifest.contributions.TypeMappingContribution;
+import com.eclipsesource.uml.glsp.core.manifest.contributions.PaletteContribution;
 import com.google.inject.AbstractModule;
 
 public abstract class DiagramManifest extends AbstractModule
-   implements DiagramConfigurationContribution, PaletteContribution, GModelMapperContribution,
-   TypeMappingContribution {
+   implements DiagramConfigurationContribution, PaletteContribution, GModelMapperContribution {
 
    @Override
    protected void configure() {
@@ -27,6 +25,5 @@ public abstract class DiagramManifest extends AbstractModule
       contributeDiagramConfiguration(binder());
       contributePalette(binder());
       contributeGModelMapper(binder());
-      contributeTypeMapping(binder());
    }
 }

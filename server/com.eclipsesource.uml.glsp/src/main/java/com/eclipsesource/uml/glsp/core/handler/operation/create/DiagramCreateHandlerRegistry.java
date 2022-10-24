@@ -8,27 +8,27 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.core.type;
+package com.eclipsesource.uml.glsp.core.handler.operation.create;
 
 import java.util.Map;
-
-import org.eclipse.emf.ecore.EObject;
+import java.util.Set;
 
 import com.eclipsesource.uml.glsp.core.common.DiagramRegistry;
 import com.eclipsesource.uml.glsp.core.common.DoubleKey;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 
-public class TypeRegistry extends DiagramRegistry<String, Class<? extends EObject>> {
+public class DiagramCreateHandlerRegistry
+   extends DiagramRegistry<String, DiagramCreateHandler> {
 
    @Inject
-   public TypeRegistry(
-      final Map<Representation, Map<String, Class<? extends EObject>>> mappings) {
-      mappings.entrySet().forEach(e -> {
+   public DiagramCreateHandlerRegistry(final Map<Representation, Set<DiagramCreateHandler>> handlers) {
+      handlers.entrySet().forEach(e -> {
          var representation = e.getKey();
 
-         e.getValue().entrySet().forEach(m -> {
-            register(DoubleKey.of(representation, m.getKey()), m.getValue());
+         e.getValue().forEach(handler -> {
+            var elementId = handler.getHandledElementTypeId();
+            register(DoubleKey.of(representation, elementId), handler);
          });
       });
 

@@ -12,7 +12,9 @@ package com.eclipsesource.uml.glsp.core.manifest.contributions;
 
 import java.util.Set;
 
-import com.eclipsesource.uml.glsp.core.handler.operation.DiagramDeleteHandler;
+import org.eclipse.emf.ecore.EObject;
+
+import com.eclipsesource.uml.glsp.core.handler.operation.delete.DiagramDeleteHandler;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Binder;
 import com.google.inject.Key;
@@ -23,15 +25,16 @@ import com.google.inject.multibindings.Multibinder;
 public interface DeleteHandlerContribution extends BaseDiagramContribution {
 
    default void contributeDeleteHandler(final Binder binder) {
-      var multibinder = Multibinder.newSetBinder(binder, DiagramDeleteHandler.class, namedRepresentation());
+      var multibinder = Multibinder.newSetBinder(binder, new TypeLiteral<DiagramDeleteHandler<? extends EObject>>() {},
+         namedRepresentation());
 
       contributeDeleteHandler(multibinder);
 
       var mapbinder = MapBinder.newMapBinder(binder, new TypeLiteral<Representation>() {},
-         new TypeLiteral<Set<DiagramDeleteHandler>>() {});
+         new TypeLiteral<Set<DiagramDeleteHandler<? extends EObject>>>() {});
       mapbinder.addBinding(representation())
-         .to(Key.get(new TypeLiteral<Set<DiagramDeleteHandler>>() {}, namedRepresentation()));
+         .to(Key.get(new TypeLiteral<Set<DiagramDeleteHandler<? extends EObject>>>() {}, namedRepresentation()));
    }
 
-   void contributeDeleteHandler(Multibinder<DiagramDeleteHandler> multibinder);
+   void contributeDeleteHandler(Multibinder<DiagramDeleteHandler<? extends EObject>> multibinder);
 }

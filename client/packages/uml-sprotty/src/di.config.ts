@@ -48,12 +48,14 @@ import { LabeledNode, SEditableLabel } from "./model";
 import createCommunicationModule from "./uml/communication/di.config";
 import { BaseTypes, UmlTypes } from "./utils";
 import { CommentLinkEdgeView, CommentNodeView } from "./views/commons";
+import createClassModule from "./uml/class/di.config";
+import createDeploymentModule from "./uml/deployment/di.config";
 
 export default function createContainer(widgetId: string): Container {
     const commonDiagramModule = new ContainerModule(
         (bind, unbind, isBound, rebind) => {
             rebind(TYPES.ILogger).to(ConsoleLogger).inSingletonScope();
-            rebind(TYPES.LogLevel).toConstantValue(LogLevel.info);
+            rebind(TYPES.LogLevel).toConstantValue(LogLevel.log);
             rebind(EditLabelUI).to(EditLabelUIAutocomplete);
             bind(TYPES.IVNodePostprocessor).to(
                 IconLabelCompartmentSelectionFeedback
@@ -132,10 +134,14 @@ export default function createContainer(widgetId: string): Container {
         }
     );
     const communicationModule = createCommunicationModule();
+    const classModule = createClassModule();
+    const deploymentModule = createDeploymentModule();
 
     const container = createClientContainer(
         commonDiagramModule,
         communicationModule,
+        classModule,
+        deploymentModule,
         umlToolPaletteModule,
         saveModule,
         diagramOutlineViewModule

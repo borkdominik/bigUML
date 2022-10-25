@@ -20,7 +20,6 @@ import org.eclipse.glsp.server.types.GLSPServerException;
 import com.eclipsesource.uml.modelserver.uml.util.UmlNotationUtil;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 
-// TODO: Make those getter better
 public class UmlModelState extends EMSNotationModelState {
    public Optional<Diagram> getUmlNotationModel() { return super.getNotationModel(Diagram.class); }
 

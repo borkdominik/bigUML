@@ -18,14 +18,16 @@ import { GetTypesAction, ReturnTypesAction } from "./action-definitions";
 
 @injectable()
 export class EditLabelUIAutocomplete extends EditLabelUI {
-
     protected showAutocomplete = false;
     protected outerDiv: HTMLElement;
     protected listContainer: HTMLElement;
     protected currentFocus: number;
     protected types: string[] = [];
 
-    constructor(@inject(TYPES.IActionDispatcher) protected actionDispatcher: GLSPActionDispatcher) {
+    constructor(
+        @inject(TYPES.IActionDispatcher)
+        protected actionDispatcher: GLSPActionDispatcher
+    ) {
         super();
     }
 
@@ -34,10 +36,17 @@ export class EditLabelUIAutocomplete extends EditLabelUI {
         super.initializeContents(containerElement);
     }
 
-    protected configureAndAdd(element: HTMLInputElement | HTMLTextAreaElement, containerElement: HTMLElement): void {
+    protected configureAndAdd(
+        element: HTMLInputElement | HTMLTextAreaElement,
+        containerElement: HTMLElement
+    ): void {
         super.configureAndAdd(element, containerElement);
-        element.addEventListener("keydown", (event: KeyboardEvent) => this.handleKeyDown(event));
-        element.removeEventListener("blur", () => window.setTimeout(() => this.applyLabelEdit(), 200));
+        element.addEventListener("keydown", (event: KeyboardEvent) =>
+            this.handleKeyDown(event)
+        );
+        element.removeEventListener("blur", () =>
+            window.setTimeout(() => this.applyLabelEdit(), 200)
+        );
         element.addEventListener("blur", () => this.handleBlur());
     }
 
@@ -59,8 +68,14 @@ export class EditLabelUIAutocomplete extends EditLabelUI {
         }
     }
 
-    protected validateLabelIfContentChange(event: KeyboardEvent, value: string): void {
-        if (this.isAutoCompleteEnabled() && this.previousLabelContent !== value) {
+    protected validateLabelIfContentChange(
+        event: KeyboardEvent,
+        value: string
+    ): void {
+        if (
+            this.isAutoCompleteEnabled() &&
+            this.previousLabelContent !== value
+        ) {
             // recreate autocomplete list if value changed
             this.createAutocomplete();
         }
@@ -92,21 +107,32 @@ export class EditLabelUIAutocomplete extends EditLabelUI {
         this.currentFocus = -1;
 
         this.listContainer = document.createElement("div");
-        this.listContainer.setAttribute("id", this.inputElement.id + "autocomplete-list");
+        this.listContainer.setAttribute(
+            "id",
+            this.inputElement.id + "autocomplete-list"
+        );
         this.listContainer.setAttribute("class", "autocomplete-items");
         this.outerDiv.appendChild(this.listContainer);
 
         // create autocomplete items starting with input
         for (let i = 0; i < this.types.length; i++) {
-            if (this.types[i].substring(0, input.length).toLowerCase() === input.toLowerCase()) {
+            if (
+                this.types[i].substring(0, input.length).toLowerCase() ===
+                input.toLowerCase()
+            ) {
                 const element = document.createElement("div");
                 element.setAttribute("class", "autocomplete-item");
-                element.innerHTML = "<strong>" + this.types[i].substring(0, input.length) + "</strong>";
+                element.innerHTML =
+                    "<strong>" +
+                    this.types[i].substring(0, input.length) +
+                    "</strong>";
                 element.innerHTML += this.types[i].substring(input.length);
-                element.innerHTML += "<input type='hidden' value='" + this.types[i] + "'>";
+                element.innerHTML +=
+                    "<input type='hidden' value='" + this.types[i] + "'>";
                 element.addEventListener("click", () => {
                     // change the type of the label
-                    this.inputElement.value = element.getElementsByTagName("input")[0].value;
+                    this.inputElement.value =
+                        element.getElementsByTagName("input")[0].value;
                     this.closeAllLists();
                 });
                 this.listContainer.appendChild(element);
@@ -118,7 +144,8 @@ export class EditLabelUIAutocomplete extends EditLabelUI {
         if (parent) {
             const parentHeight = parent.offsetHeight;
             const parentPosY = parent.offsetTop;
-            const posY = this.outerDiv.offsetTop + this.inputElement.offsetHeight;
+            const posY =
+                this.outerDiv.offsetTop + this.inputElement.offsetHeight;
             const maxHeight = parentHeight - (posY - parentPosY);
             this.listContainer.style.maxHeight = `${maxHeight}px`;
         }
@@ -135,7 +162,7 @@ export class EditLabelUIAutocomplete extends EditLabelUI {
                 this.currentFocus = 0;
             }
             if (this.currentFocus < 0) {
-                this.currentFocus = (children.length - 1);
+                this.currentFocus = children.length - 1;
             }
             children[this.currentFocus].classList.add("autocomplete-active");
         }
@@ -155,21 +182,30 @@ export class EditLabelUIAutocomplete extends EditLabelUI {
         }
     }
 
-    protected onBeforeShow(containerElement: HTMLElement, root: Readonly<SModelRoot>, ...contextElementIds: string[]): void {
+    protected onBeforeShow(
+        containerElement: HTMLElement,
+        root: Readonly<SModelRoot>,
+        ...contextElementIds: string[]
+    ): void {
         super.onBeforeShow(containerElement, root, ...contextElementIds);
 
         // request possible element types
+        /* TODO: Not Supported currently
         this.actionDispatcher.requestUntil(new GetTypesAction()).then(response => {
             if (response) {
                 const action: ReturnTypesAction = response as ReturnTypesAction;
                 this.types = action.types;
             }
         });
+        */
     }
 
     protected isAutoCompleteEnabled(): boolean {
         if (this.label) {
-            return this.label.type === UmlTypes.LABEL_PROPERTY_TYPE && this.showAutocomplete;
+            return (
+                this.label.type === UmlTypes.LABEL_PROPERTY_TYPE &&
+                this.showAutocomplete
+            );
         }
         return false;
     }

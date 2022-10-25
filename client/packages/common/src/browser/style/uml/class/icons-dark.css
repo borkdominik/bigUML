@@ -1,9 +1,9 @@
 :root {
 
     /* CLASS DIAGRAM */
-    --uml-icon-class: url(../../../resources/icons/dark/class/Class.gif);
-    --uml-icon-association: url(../../../resources/icons/dark/class/Association.gif);
-    --uml-icon-property: url(../../../resources/icons/dark/class/Property.gif);
-    --uml-icon-enumeration: url(../../../resources/icons/dark/class/Enumeration.gif);
+    --uml-icon-class: url(../../../../../resources/icons/dark/class/Class.gif);
+    --uml-icon-association: url(../../../../../resources/icons/dark/class/Association.gif);
+    --uml-icon-property: url(../../../../../resources/icons/dark/class/Property.gif);
+    --uml-icon-enumeration: url(../../../../../resources/icons/dark/class/Enumeration.gif);
 
 }

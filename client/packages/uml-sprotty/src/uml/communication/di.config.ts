@@ -24,20 +24,51 @@ import {
     InteractionNodeView,
     LifelineNodeView,
     MessageArrowLabelView,
-    MessageEdgeView
+    MessageEdgeView,
 } from "./views";
 
 export default function createCommunicationModule(): ContainerModule {
-    const communicationModule = new ContainerModule((bind, unbind, isBound, rebind) => {
-        const context = { bind, unbind, isBound, rebind };
-        configureModelElement(context, UmlTypes.ICON_LIFELINE, IconLifeline, IconView);
-        configureModelElement(context, UmlTypes.ICON_INTERACTION, IconInteraction, IconView);
-        configureModelElement(context, UmlTypes.INTERACTION, LabeledNode, InteractionNodeView);
-        configureModelElement(context, UmlTypes.LIFELINE, LabeledNode, LifelineNodeView);
-        configureModelElement(context, UmlTypes.MESSAGE, SEdge, MessageEdgeView);
-        configureModelElement(context, UmlTypes.MESSAGE_LABEL_ARROW_EDGE_NAME, SEditableLabel, MessageArrowLabelView);
-    });
+    const communicationModule = new ContainerModule(
+        (bind, unbind, isBound, rebind) => {
+            const context = { bind, unbind, isBound, rebind };
+            configureModelElement(
+                context,
+                UmlTypes.ICON_LIFELINE,
+                IconLifeline,
+                IconView
+            );
+            configureModelElement(
+                context,
+                UmlTypes.ICON_INTERACTION,
+                IconInteraction,
+                IconView
+            );
+            configureModelElement(
+                context,
+                UmlTypes.INTERACTION,
+                LabeledNode,
+                InteractionNodeView
+            );
+            configureModelElement(
+                context,
+                UmlTypes.LIFELINE,
+                LabeledNode,
+                LifelineNodeView
+            );
+            configureModelElement(
+                context,
+                UmlTypes.MESSAGE,
+                SEdge,
+                MessageEdgeView
+            );
+            configureModelElement(
+                context,
+                UmlTypes.MESSAGE_LABEL_ARROW_EDGE_NAME,
+                SEditableLabel,
+                MessageArrowLabelView
+            );
+        }
+    );
 
     return communicationModule;
 }
-

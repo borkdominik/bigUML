@@ -39,14 +39,14 @@ public abstract class BaseLabelEditHandler<T extends EObject> implements Diagram
 
    public BaseLabelEditHandler(final String suffix) {
       this.suffix = suffix;
-      this.elementType = GenericsUtil.deriveActualTypeArgument(getClass(), EObject.class);
+      this.elementType = GenericsUtil.getClassParameter(getClass(), BaseLabelEditHandler.class, 0);
    }
 
    @Override
-   public Class<T> getHandledElementType() { return elementType; }
+   public Class<T> getElementType() { return elementType; }
 
    @Override
-   public String getHandledLabelSuffix() { return suffix; }
+   public String getLabelSuffix() { return suffix; }
 
    @Override
    public void executeLabelEdit(final ApplyLabelEditOperation editLabelOperation) {

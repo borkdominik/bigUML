@@ -31,7 +31,7 @@ public class GModelMapperRegistry
          var representation = e.getKey();
 
          e.getValue().forEach(mapper -> {
-            var key = mapper.deriveEObjectType();
+            var key = mapper.getSourceType();
             register(RepresentationKey.of(representation, key),
                (GModelMapper<EObject, GModelElement>) mapper);
          });

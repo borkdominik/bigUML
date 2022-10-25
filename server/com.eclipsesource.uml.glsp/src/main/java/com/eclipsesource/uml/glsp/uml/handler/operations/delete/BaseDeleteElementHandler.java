@@ -31,11 +31,11 @@ public abstract class BaseDeleteElementHandler<T extends EObject> implements Dia
    protected UmlModelServerAccess modelServerAccess;
 
    public BaseDeleteElementHandler() {
-      this.elementType = GenericsUtil.deriveClassActualType(getClass(), BaseDeleteElementHandler.class, 0);
+      this.elementType = GenericsUtil.getClassParameter(getClass(), BaseDeleteElementHandler.class, 0);
    }
 
    @Override
-   public Class<T> getHandledElementType() { return elementType; }
+   public Class<T> getElementType() { return elementType; }
 
    @Override
    public void executeDelete(final EObject object) {

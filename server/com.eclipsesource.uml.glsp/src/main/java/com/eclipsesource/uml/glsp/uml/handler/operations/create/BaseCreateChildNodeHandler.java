@@ -38,7 +38,7 @@ public abstract class BaseCreateChildNodeHandler<T extends Element> extends Base
    public BaseCreateChildNodeHandler(final String typeId) {
       super(typeId);
 
-      this.containerType = GenericsUtil.deriveClassActualType(getClass(), BaseCreateChildNodeHandler.class, 0);
+      this.containerType = GenericsUtil.getClassParameter(getClass(), BaseCreateChildNodeHandler.class, 0);
    }
 
    @Override

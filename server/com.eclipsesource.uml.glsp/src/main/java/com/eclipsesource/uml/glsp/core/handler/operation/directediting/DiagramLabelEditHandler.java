@@ -14,9 +14,9 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperation;
 
 public interface DiagramLabelEditHandler<T extends EObject> {
-   Class<T> getHandledElementType();
+   Class<T> getElementType();
 
-   String getHandledLabelSuffix();
+   String getLabelSuffix();
 
    void executeLabelEdit(final ApplyLabelEditOperation editLabelOperation);
 }

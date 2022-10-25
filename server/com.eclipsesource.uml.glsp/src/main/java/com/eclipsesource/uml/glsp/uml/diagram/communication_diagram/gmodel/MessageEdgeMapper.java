@@ -25,14 +25,14 @@ import org.eclipse.glsp.server.emf.model.notation.Edge;
 import org.eclipse.uml2.uml.Message;
 import org.eclipse.uml2.uml.MessageOccurrenceSpecification;
 
-import com.eclipsesource.uml.glsp.core.gmodel.GModelMapper;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.SuffixAppender;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.eclipsesource.uml.glsp.core.utils.UmlConfig;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
+import com.eclipsesource.uml.glsp.uml.gmodel.BaseGModelMapper;
 import com.google.inject.Inject;
 
-public class MessageEdgeMapper implements GModelMapper<Message, GEdge> {
+public class MessageEdgeMapper extends BaseGModelMapper<Message, GEdge> {
    @Inject
    protected EMFIdGenerator idGenerator;
 

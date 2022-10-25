@@ -27,7 +27,7 @@ public class DiagramCreateHandlerRegistry
          var representation = e.getKey();
 
          e.getValue().forEach(handler -> {
-            var elementId = handler.getHandledElementTypeId();
+            var elementId = handler.getElementTypeId();
             register(RepresentationKey.of(representation, elementId), handler);
          });
       });

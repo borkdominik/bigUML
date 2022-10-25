@@ -21,11 +21,11 @@ public abstract class BaseCreateHandler<T extends CreateOperation> implements Di
 
    public BaseCreateHandler(final String typeId) {
       this.elementTypeId = typeId;
-      this.operationType = GenericsUtil.deriveClassActualType(getClass(), BaseCreateHandler.class, 0);
+      this.operationType = GenericsUtil.getClassParameter(getClass(), BaseCreateHandler.class, 0);
    }
 
    @Override
-   public String getHandledElementTypeId() { return elementTypeId; }
+   public String getElementTypeId() { return elementTypeId; }
 
    @Override
    public void executeCreate(final CreateOperation operation) {

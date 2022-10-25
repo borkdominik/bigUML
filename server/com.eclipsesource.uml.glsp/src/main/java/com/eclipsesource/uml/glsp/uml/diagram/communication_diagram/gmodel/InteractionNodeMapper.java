@@ -32,14 +32,14 @@ import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.Interaction;
 
 import com.eclipsesource.uml.glsp.core.gmodel.GModelMapHandler;
-import com.eclipsesource.uml.glsp.core.gmodel.GModelMapper;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.SuffixAppender;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.eclipsesource.uml.glsp.core.utils.UmlConfig;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
+import com.eclipsesource.uml.glsp.uml.gmodel.BaseGModelMapper;
 import com.google.inject.Inject;
 
-public class InteractionNodeMapper implements GModelMapper<Interaction, GNode> {
+public class InteractionNodeMapper extends BaseGModelMapper<Interaction, GNode> {
    @Inject
    protected EMFIdGenerator idGenerator;
 

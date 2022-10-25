@@ -33,8 +33,8 @@ public class DiagramLabelEditHandlerRegistry
          var representation = e.getKey();
 
          e.getValue().forEach(handler -> {
-            var elementType = handler.getHandledElementType();
-            var suffix = handler.getHandledLabelSuffix();
+            var elementType = handler.getElementType();
+            var suffix = handler.getLabelSuffix();
             register(RepresentationKey.of(representation, DoubleKey.of(elementType, suffix)), handler);
          });
       });

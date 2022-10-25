@@ -30,7 +30,7 @@ public class DiagramDeleteHandlerRegistry
          var representation = e.getKey();
 
          e.getValue().forEach(handler -> {
-            register(RepresentationKey.of(representation, handler.getHandledElementType()), handler);
+            register(RepresentationKey.of(representation, handler.getElementType()), handler);
          });
       });
 

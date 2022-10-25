@@ -13,7 +13,7 @@ package com.eclipsesource.uml.glsp.core.handler.operation.delete;
 import org.eclipse.emf.ecore.EObject;
 
 public interface DiagramDeleteHandler<T extends EObject> {
-   Class<T> getHandledElementType();
+   Class<T> getElementType();
 
    void executeDelete(EObject object);
 }

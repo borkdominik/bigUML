@@ -36,8 +36,8 @@ public abstract class BaseCreateEdgeHandler<S extends Element, T extends Element
    public BaseCreateEdgeHandler(final String typeId) {
       super(typeId);
 
-      sourceType = GenericsUtil.deriveClassActualType(getClass(), BaseCreateEdgeHandler.class, 0);
-      targetType = GenericsUtil.deriveClassActualType(getClass(), BaseCreateEdgeHandler.class, 1);
+      sourceType = GenericsUtil.getClassParameter(getClass(), BaseCreateEdgeHandler.class, 0);
+      targetType = GenericsUtil.getClassParameter(getClass(), BaseCreateEdgeHandler.class, 1);
    }
 
    @Override

@@ -13,7 +13,7 @@ package com.eclipsesource.uml.glsp.core.handler.operation.create;
 import org.eclipse.glsp.server.operations.CreateOperation;
 
 public interface DiagramCreateHandler {
-   String getHandledElementTypeId();
+   String getElementTypeId();
 
    void executeCreate(CreateOperation operation);
 }

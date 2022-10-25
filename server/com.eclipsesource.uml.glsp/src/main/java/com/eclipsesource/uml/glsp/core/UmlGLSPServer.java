@@ -11,11 +11,17 @@
 package com.eclipsesource.uml.glsp.core;
 
 import java.net.MalformedURLException;
+import java.util.concurrent.CompletableFuture;
 
 import org.eclipse.emfcloud.modelserver.client.v2.ModelServerClientV2;
 import org.eclipse.emfcloud.modelserver.glsp.EMSGLSPServer;
+import org.eclipse.glsp.server.protocol.DisposeClientSessionParameters;
+import org.eclipse.glsp.server.types.GLSPServerException;
+import org.eclipse.glsp.server.utils.ClientOptionsUtil;
+import org.eclipse.uml2.uml.resource.UMLResource;
 
 import com.eclipsesource.uml.modelserver.core.UmlModelServerClient;
+import com.eclipsesource.uml.modelserver.uml.util.UmlNotationUtil;
 
 public class UmlGLSPServer extends EMSGLSPServer {
 
@@ -24,17 +30,15 @@ public class UmlGLSPServer extends EMSGLSPServer {
       return new UmlModelServerClient(modelServerURL);
    }
 
-   /*-
    @Override
    public CompletableFuture<Void> disposeClientSession(final DisposeClientSessionParameters params) {
       var modelServerClient = modelServerClientProvider.get();
       if (modelServerClient.isPresent()) {
-         String sourceURI = ClientOptionsUtil.getSourceUri(params.getArgs())
+         var sourceURI = ClientOptionsUtil.getSourceUri(params.getArgs())
             .orElseThrow(() -> new GLSPServerException("No source URI given to dispose client session!"));
          modelServerClient.get()
-            .unsubscribe(sourceURI.replace(UmlNotationUtil.NOTATION_EXTENSION, UMLResource.FILE_EXTENSION));
+            .unsubscribe(sourceURI.replace(UMLResource.FILE_EXTENSION, UmlNotationUtil.NOTATION_EXTENSION));
       }
       return super.disposeClientSession(params);
    }
-   */
 }

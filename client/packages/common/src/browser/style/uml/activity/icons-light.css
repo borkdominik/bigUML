@@ -1,27 +1,27 @@
 :root {
 
     /* ACTIVITY DIAGRAM */
-    --uml-icon-activity: url(../../../resources/icons/light/activity/Activity.gif);
-    --uml-icon-partition: url(../../../resources/icons/light/activity/Partition.gif);
-    --uml-icon-controlflow: url(../../../resources/icons/light/activity/ControlFlow.gif);
-    --uml-icon-action: url(../../../resources/icons/light/activity/Action.gif);
-    --uml-icon-event: url(../../../resources/icons/light/activity/Event.gif);
-    --uml-icon-time: url(../../../resources/icons/light/activity/Time.gif);
-    --uml-icon-signal: url(../../../resources/icons/light/activity/Signal.gif);
-    --uml-icon-call: url(../../../resources/icons/light/activity/Call.gif);
-    --uml-icon-initial: url(../../../resources/icons/light/activity/Initial.gif);
-    --uml-icon-final: url(../../../resources/icons/light/activity/Final.gif);
-    --uml-icon-flowfinal: url(../../../resources/icons/light/activity/FlowFinal.gif);
-    --uml-icon-decision: url(../../../resources/icons/light/activity/Decision.gif);
-    --uml-icon-merge: url(../../../resources/icons/light/activity/Merge.gif);
-    --uml-icon-fork: url(../../../resources/icons/light/activity/Fork.gif);
-    --uml-icon-join: url(../../../resources/icons/light/activity/Join.gif);
-    --uml-icon-parameter: url(../../../resources/icons/light/activity/Parameter.gif);
-    --uml-icon-pin: url(../../../resources/icons/light/activity/Pin.gif);
-    --uml-icon-centralbuffer: url(../../../resources/icons/light/activity/CentralBuffer.gif);
-    --uml-icon-datastore: url(../../../resources/icons/light/activity/DataStore.gif);
-    --uml-icon-exceptionhandler: url(../../../resources/icons/light/activity/ExceptionHandler.gif);
-    --uml-icon-interruptibleregion: url(../../../resources/icons/light/activity/Region.gif);
-    --uml-icon-condition: url(../../../resources/icons/light/activity/Condition.gif);
+    --uml-icon-activity: url(../../../../../resources/icons/light/activity/Activity.gif);
+    --uml-icon-partition: url(../../../../../resources/icons/light/activity/Partition.gif);
+    --uml-icon-controlflow: url(../../../../../resources/icons/light/activity/ControlFlow.gif);
+    --uml-icon-action: url(../../../../../resources/icons/light/activity/Action.gif);
+    --uml-icon-event: url(../../../../../resources/icons/light/activity/Event.gif);
+    --uml-icon-time: url(../../../../../resources/icons/light/activity/Time.gif);
+    --uml-icon-signal: url(../../../../../resources/icons/light/activity/Signal.gif);
+    --uml-icon-call: url(../../../../../resources/icons/light/activity/Call.gif);
+    --uml-icon-initial: url(../../../../../resources/icons/light/activity/Initial.gif);
+    --uml-icon-final: url(../../../../../resources/icons/light/activity/Final.gif);
+    --uml-icon-flowfinal: url(../../../../../resources/icons/light/activity/FlowFinal.gif);
+    --uml-icon-decision: url(../../../../../resources/icons/light/activity/Decision.gif);
+    --uml-icon-merge: url(../../../../../resources/icons/light/activity/Merge.gif);
+    --uml-icon-fork: url(../../../../../resources/icons/light/activity/Fork.gif);
+    --uml-icon-join: url(../../../../../resources/icons/light/activity/Join.gif);
+    --uml-icon-parameter: url(../../../../../resources/icons/light/activity/Parameter.gif);
+    --uml-icon-pin: url(../../../../../resources/icons/light/activity/Pin.gif);
+    --uml-icon-centralbuffer: url(../../../../../resources/icons/light/activity/CentralBuffer.gif);
+    --uml-icon-datastore: url(../../../../../resources/icons/light/activity/DataStore.gif);
+    --uml-icon-exceptionhandler: url(../../../../../resources/icons/light/activity/ExceptionHandler.gif);
+    --uml-icon-interruptibleregion: url(../../../../../resources/icons/light/activity/Region.gif);
+    --uml-icon-condition: url(../../../../../resources/icons/light/activity/Condition.gif);
 
 }

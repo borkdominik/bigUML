@@ -1,12 +1,12 @@
 :root {
     /* DEPLOYMENT DIAGRAM */
-    --uml-icon-artifact: url(../../../resources/icons/dark/deployment/Artifact.svg);
-    --uml-icon-device: url(../../../resources/icons/dark/deployment/Device.svg);
-    --uml-icon-execution-environment: url(../../../resources/icons/dark/deployment/ExecutionEnvironment.svg);
-    --uml-icon-deployment-node: url(../../../resources/icons/dark/deployment/DeploymentNode.svg);
-    --uml-icon-deployment-specification: url(../../../resources/icons/dark/deployment/DeploymentSpecification.svg);
-    --uml-icon-communication-path: url(../../../resources/icons/dark/class/Association.gif);
+    --uml-icon-artifact: url(../../../../../resources/icons/dark/deployment/Artifact.svg);
+    --uml-icon-device: url(../../../../../resources/icons/dark/deployment/Device.svg);
+    --uml-icon-execution-environment: url(../../../../../resources/icons/dark/deployment/ExecutionEnvironment.svg);
+    --uml-icon-deployment-node: url(../../../../../resources/icons/dark/deployment/DeploymentNode.svg);
+    --uml-icon-deployment-specification: url(../../../../../resources/icons/dark/deployment/DeploymentSpecification.svg);
+    --uml-icon-communication-path: url(../../../../../resources/icons/dark/class/Association.gif);
     /* TODO change icon */
-    --uml-icon-deployment: url(../../../resources/icons/dark/class/Association.gif);
+    --uml-icon-deployment: url(../../../../../resources/icons/dark/class/Association.gif);
     /* TODO change icon */
 }

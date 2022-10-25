@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ASCII"?>
+<unotation:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:unotation="http://www.eclipsesource.com/glsp/uml/notation" diagramType="DEPLOYMENT">
+  <semanticElement uri="_pW9yMFRzEe2W6tU7k_B5Dw"/>
+  <elements xsi:type="unotation:Shape">
+    <semanticElement uri="_svRx0FRzEe2W6tU7k_B5Dw"/>
+    <position x="584.0" y="290.0"/>
+  </elements>
+  <elements xsi:type="unotation:Shape">
+    <semanticElement uri="_uE3EsFRzEe2W6tU7k_B5Dw"/>
+    <position x="-1.70544978608649" y="100.53770948636216"/>
+    <size width="139.953125" height="43.0"/>
+  </elements>
+</unotation:Diagram>

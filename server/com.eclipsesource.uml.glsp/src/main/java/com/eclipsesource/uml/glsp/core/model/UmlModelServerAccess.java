@@ -17,6 +17,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emfcloud.modelserver.client.Response;
+import org.eclipse.emfcloud.modelserver.client.SubscriptionListener;
 import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.emfcloud.modelserver.glsp.notation.integration.EMSNotationModelServerAccess;
 import org.eclipse.glsp.server.types.GLSPServerException;
@@ -43,6 +44,11 @@ public class UmlModelServerAccess extends EMSNotationModelServerAccess {
          LOGGER.error(e);
          throw new GLSPServerException("Error during model loading", e);
       }
+   }
+
+   public void subscribe(final String uri, final SubscriptionListener subscriptionListener) {
+      this.subscriptionListener = subscriptionListener;
+      getModelServerClient().subscribe(uri, subscriptionListener);
    }
 
    public CompletableFuture<Response<String>> exec(final CCommand command) {

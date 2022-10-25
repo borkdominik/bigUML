@@ -1,19 +1,19 @@
 :root {
     /* STATEMACHINE DIAGRAM */
-    --uml-icon-state: url(../../../resources/icons/light/statemachine/State.svg);
-    --uml-icon-final-state: url(../../../resources/icons/light/statemachine/FinalState.svg);
-    --uml-icon-state-machine: url(../../../resources/icons/light/class/Class.gif);
+    --uml-icon-state: url(../../../../../resources/icons/light/statemachine/State.svg);
+    --uml-icon-final-state: url(../../../../../resources/icons/light/statemachine/FinalState.svg);
+    --uml-icon-state-machine: url(../../../../../resources/icons/light/class/Class.gif);
     /* TODO change icon */
-    --uml-icon-initial-state: url(../../../resources/icons/light/statemachine/InitialState.svg);
-    --uml-icon-choice: url(../../../resources/icons/light/statemachine/Choice.svg);
-    --uml-icon-deep-history: url(../../../resources/icons/light/statemachine/DeepHistory.svg);
-    --uml-icon-join-fork: url(../../../resources/icons/light/statemachine/JoinFork.svg);
-    --uml-icon-shallow-history: url(../../../resources/icons/light/statemachine/ShallowHistory.svg);
-    --uml-icon-terminate: url(../../../resources/icons/light/statemachine/Terminate.svg);
-    --uml-icon-transition: url(../../../resources/icons/light/statemachine/Transition.svg);
-    --uml-icon-exit-point: url(../../../resources/icons/light/statemachine/ExitPoint.svg);
-    --uml-icon-entry-point: url(../../../resources/icons/light/statemachine/EntryPoint.svg);
-    --uml-icon-state-activity: url(../../../resources/icons/light/class/Property.gif);
+    --uml-icon-initial-state: url(../../../../../resources/icons/light/statemachine/InitialState.svg);
+    --uml-icon-choice: url(../../../../../resources/icons/light/statemachine/Choice.svg);
+    --uml-icon-deep-history: url(../../../../../resources/icons/light/statemachine/DeepHistory.svg);
+    --uml-icon-join-fork: url(../../../../../resources/icons/light/statemachine/JoinFork.svg);
+    --uml-icon-shallow-history: url(../../../../../resources/icons/light/statemachine/ShallowHistory.svg);
+    --uml-icon-terminate: url(../../../../../resources/icons/light/statemachine/Terminate.svg);
+    --uml-icon-transition: url(../../../../../resources/icons/light/statemachine/Transition.svg);
+    --uml-icon-exit-point: url(../../../../../resources/icons/light/statemachine/ExitPoint.svg);
+    --uml-icon-entry-point: url(../../../../../resources/icons/light/statemachine/EntryPoint.svg);
+    --uml-icon-state-activity: url(../../../../../resources/icons/light/class/Property.gif);
     /* TODO change icon */
 
 }

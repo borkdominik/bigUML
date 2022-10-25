@@ -17,6 +17,7 @@ import org.eclipse.emfcloud.modelserver.glsp.actions.handlers.EMSOperationAction
 import org.eclipse.emfcloud.modelserver.glsp.notation.integration.EMSGLSPNotationDiagramModule;
 import org.eclipse.emfcloud.modelserver.glsp.notation.integration.EMSNotationModelServerAccess;
 import org.eclipse.emfcloud.modelserver.glsp.notation.integration.EMSNotationModelState;
+import org.eclipse.emfcloud.modelserver.glsp.notation.integration.EMSNotationSourceModelStorage;
 import org.eclipse.emfcloud.modelserver.notation.integration.NotationResource;
 import org.eclipse.glsp.graph.GraphExtension;
 import org.eclipse.glsp.server.actions.Action;
@@ -61,9 +62,9 @@ import com.eclipsesource.uml.glsp.core.handler.operation.directediting.DiagramLa
 import com.eclipsesource.uml.glsp.core.handler.operation.directediting.UmlLabelEditOperationHandler;
 import com.eclipsesource.uml.glsp.core.model.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
+import com.eclipsesource.uml.glsp.core.model.UmlSourceModelStorage;
 import com.eclipsesource.uml.glsp.features.outline.manifest.OutlineManifest;
 import com.eclipsesource.uml.glsp.features.validation.UmlDiagramModelValidator;
-import com.eclipsesource.uml.glsp.old.diagram.activity_diagram.actions.ReturnTypesAction;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.manifest.CommunicationUmlManifest;
 import com.google.inject.Key;
 import com.google.inject.Singleton;
@@ -130,6 +131,11 @@ public class UmlDiagramModule extends EMSGLSPNotationDiagramModule {
    }
 
    @Override
+   protected Class<? extends EMSNotationSourceModelStorage> bindSourceModelStorage() {
+      return UmlSourceModelStorage.class;
+   }
+
+   @Override
    public Class<? extends GModelFactory> bindGModelFactory() {
       return UmlGModelFactory.class;
    }
@@ -181,7 +187,7 @@ public class UmlDiagramModule extends EMSGLSPNotationDiagramModule {
    @Override
    protected void configureClientActions(final MultiBinding<Action> bindings) {
       super.configureClientActions(bindings);
-      bindings.add(ReturnTypesAction.class);
+      // bindings.add(ReturnTypesAction.class);
    }
 
    @Override

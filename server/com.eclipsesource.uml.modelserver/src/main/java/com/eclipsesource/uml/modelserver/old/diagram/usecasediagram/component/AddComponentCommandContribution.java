@@ -9,8 +9,8 @@ public class AddComponentCommandContribution { /*-{
       CCompoundCommand addComponentCommand = CCommandFactory.eINSTANCE.createCompoundCommand();
       addComponentCommand.setType(TYPE);
       addComponentCommand.getProperties().put(PARENT_SEMANTIC_PROXY_URI, parentSemanticUri);
-      addComponentCommand.getProperties().put(UmlNotationCommandContribution.POSITION_X, String.valueOf(position.getX()));
-      addComponentCommand.getProperties().put(UmlNotationCommandContribution.POSITION_Y, String.valueOf(position.getY()));
+      addComponentCommand.getProperties().put(NotationKeys.POSITION_X, String.valueOf(position.getX()));
+      addComponentCommand.getProperties().put(NotationKeys.POSITION_Y, String.valueOf(position.getY()));
       return addComponentCommand;
    }
 
@@ -19,8 +19,8 @@ public class AddComponentCommandContribution { /*-{
          throws DecodingException {
       String parentSemanticUri = command.getProperties().get(PARENT_SEMANTIC_PROXY_URI);
       GPoint componentPosition = UmlNotationCommandUtil.getGPoint(
-            command.getProperties().get(UmlNotationCommandContribution.POSITION_X),
-            command.getProperties().get(UmlNotationCommandContribution.POSITION_Y));
+            command.getProperties().get(NotationKeys.POSITION_X),
+            command.getProperties().get(NotationKeys.POSITION_Y));
       return new AddComponentCompoundCommand(domain, modelUri, componentPosition, parentSemanticUri);
    }   */
 }

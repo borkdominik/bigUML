@@ -19,7 +19,7 @@ import org.eclipse.emfcloud.modelserver.client.v2.ModelServerClientV2;
 import org.eclipse.emfcloud.modelserver.common.codecs.Codec;
 import org.eclipse.emfcloud.modelserver.emf.configuration.EPackageConfiguration;
 
-import com.eclipsesource.uml.modelserver.core.codecs.UmlCodec;
+import com.eclipsesource.uml.modelserver.core.codec.UmlCodec;
 import com.eclipsesource.uml.modelserver.core.routing.UmlModelServerPaths;
 
 public class UmlModelServerClient extends ModelServerClientV2 {

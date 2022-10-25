@@ -10,21 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.features.copy_paste.operations;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.AbstractEMSOperationHandler;
-import org.eclipse.glsp.graph.GModelElement;
-import org.eclipse.glsp.server.actions.ActionDispatcher;
-import org.eclipse.glsp.server.operations.CutOperation;
-import org.eclipse.glsp.server.operations.DeleteOperation;
-
-import com.eclipsesource.uml.glsp.core.model.UmlModelState;
-import com.eclipsesource.uml.glsp.core.utils.gmodel.GModelFilterUtil;
-import com.eclipsesource.uml.glsp.diagram.communication_diagram.constants.CommunicationTypes;
-import com.google.inject.Inject;
-
-public class UmlCutOperationHandler
+public class UmlCutOperationHandler {/*-
    extends AbstractEMSOperationHandler<CutOperation> {
    private final List<String> ignoreList = List.of(CommunicationTypes.MESSAGE);
 
@@ -60,4 +46,5 @@ public class UmlCutOperationHandler
          .map(element -> element.getId())
          .collect(Collectors.toUnmodifiableList());
    }
+   */
 }

@@ -31,7 +31,7 @@ import {
     SRoutingHandleView,
     StructureCompartmentView,
     TYPES,
-    validationModule
+    validationModule,
 } from "@eclipse-glsp/client/lib";
 import toolPaletteModule from "@eclipse-glsp/client/lib/features/tool-palette/di.config";
 import { Container, ContainerModule } from "inversify";
@@ -47,46 +47,114 @@ import { SLabelNodeProperty } from "../class/model";
 import { ObjectNodeView } from "./views";
 
 export default function createContainer(widgetId: string): Container {
-    const classDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
-        rebind(TYPES.ILogger).to(ConsoleLogger).inSingletonScope();
-        rebind(TYPES.LogLevel).toConstantValue(LogLevel.info);
-        rebind(EditLabelUI).to(EditLabelUIAutocomplete);
-        bind(TYPES.IVNodePostprocessor).to(IconLabelCompartmentSelectionFeedback);
+    const classDiagramModule = new ContainerModule(
+        (bind, unbind, isBound, rebind) => {
+            rebind(TYPES.ILogger).to(ConsoleLogger).inSingletonScope();
+            rebind(TYPES.LogLevel).toConstantValue(LogLevel.info);
+            rebind(EditLabelUI).to(EditLabelUIAutocomplete);
+            bind(TYPES.IVNodePostprocessor).to(
+                IconLabelCompartmentSelectionFeedback
+            );
 
-        const context = { bind, unbind, isBound, rebind };
-        // bind(TYPES.IVNodePostprocessor).to(LabelSelectionFeedback);
-        configureDefaultModelElements(context);
-        configureModelElement(context, UmlTypes.LABEL_NAME, SEditableLabel, SLabelView);
-        configureModelElement(context, UmlTypes.LABEL_EDGE_NAME, SEditableLabel, SLabelView);
-        configureModelElement(context, UmlTypes.LABEL_EDGE_MULTIPLICITY, SEditableLabel, SLabelView);
-        configureModelElement(context, UmlTypes.LABEL_TEXT, SLabel, SLabelView);
-        // configureModelElement(context, UmlTypes.LABEL_ICON, SLabel, SLabelView);
-        configureModelElement(context, BaseTypes.COMPARTMENT, SCompartment, SCompartmentView);
-        configureModelElement(context, BaseTypes.COMPARTMENT_HEADER, SCompartment, SCompartmentView);
-        configureModelElement(context, BaseTypes.ROUTING_POINT, SRoutingHandle, SRoutingHandleView);
-        configureModelElement(context, BaseTypes.VOLATILE_ROUTING_POINT, SRoutingHandle, SRoutingHandleView);
-        configureModelElement(context, UmlTypes.STRUCTURE, SCompartment, StructureCompartmentView);
+            const context = { bind, unbind, isBound, rebind };
+            // bind(TYPES.IVNodePostprocessor).to(LabelSelectionFeedback);
+            configureDefaultModelElements(context);
+            configureModelElement(
+                context,
+                UmlTypes.LABEL_NAME,
+                SEditableLabel,
+                SLabelView
+            );
+            configureModelElement(
+                context,
+                UmlTypes.LABEL_EDGE_NAME,
+                SEditableLabel,
+                SLabelView
+            );
+            configureModelElement(
+                context,
+                UmlTypes.LABEL_EDGE_MULTIPLICITY,
+                SEditableLabel,
+                SLabelView
+            );
+            configureModelElement(
+                context,
+                UmlTypes.LABEL_TEXT,
+                SLabel,
+                SLabelView
+            );
+            // configureModelElement(context, UmlTypes.LABEL_ICON, SLabel, SLabelView);
+            configureModelElement(
+                context,
+                BaseTypes.COMPARTMENT,
+                SCompartment,
+                SCompartmentView
+            );
+            configureModelElement(
+                context,
+                BaseTypes.COMPARTMENT_HEADER,
+                SCompartment,
+                SCompartmentView
+            );
+            configureModelElement(
+                context,
+                BaseTypes.ROUTING_POINT,
+                SRoutingHandle,
+                SRoutingHandleView
+            );
+            configureModelElement(
+                context,
+                BaseTypes.VOLATILE_ROUTING_POINT,
+                SRoutingHandle,
+                SRoutingHandleView
+            );
+            configureModelElement(
+                context,
+                UmlTypes.STRUCTURE,
+                SCompartment,
+                StructureCompartmentView
+            );
 
-        // OBJECT DIAGRAM
-        // configureModelElement(context, UmlTypes.ICON_OBJECT, IconObject, IconView);
-        configureModelElement(context, UmlTypes.OBJECT, LabeledNode, ObjectNodeView);
-        configureModelElement(context, UmlTypes.LINK, SEdge, PolylineEdgeView);
-        configureModelElement(context, UmlTypes.ATTRIBUTE, SLabelNodeProperty, LabelNodeView);
+            // OBJECT DIAGRAM
+            // configureModelElement(context, UmlTypes.ICON_OBJECT, IconObject, IconView);
+            configureModelElement(
+                context,
+                UmlTypes.OBJECT,
+                LabeledNode,
+                ObjectNodeView
+            );
+            configureModelElement(
+                context,
+                UmlTypes.LINK,
+                SEdge,
+                PolylineEdgeView
+            );
+            configureModelElement(
+                context,
+                UmlTypes.ATTRIBUTE,
+                SLabelNodeProperty,
+                LabelNodeView
+            );
 
-        configureViewerOptions(context, {
-            needsClientLayout: true,
-            baseDiv: widgetId
-        });
-    });
+            configureViewerOptions(context, {
+                needsClientLayout: true,
+                baseDiv: widgetId,
+            });
+        }
+    );
 
-    const container = createClientContainer(classDiagramModule, umlToolPaletteModule, saveModule, copyPasteContextMenuModule,
-        validationModule);
+    const container = createClientContainer(
+        classDiagramModule,
+        umlToolPaletteModule,
+        saveModule,
+        copyPasteContextMenuModule,
+        validationModule
+    );
     container.unload(toolPaletteModule);
     overrideViewerOptions(container, {
         baseDiv: widgetId,
-        hiddenDiv: widgetId + "_hidden"
+        hiddenDiv: widgetId + "_hidden",
     });
 
     return container;
-
 }

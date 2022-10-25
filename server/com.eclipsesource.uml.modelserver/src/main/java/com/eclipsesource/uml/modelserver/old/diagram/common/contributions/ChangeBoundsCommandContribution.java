@@ -10,24 +10,10 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.old.diagram.common.contributions;
 
-import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
-import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
-import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
-import org.eclipse.glsp.graph.GDimension;
-import org.eclipse.glsp.graph.GPoint;
-
-import com.eclipsesource.uml.modelserver.diagram.commons.contributions.UmlNotationCommandContribution;
-import com.eclipsesource.uml.modelserver.diagram.util.UmlNotationCommandUtil;
-import com.eclipsesource.uml.modelserver.old.diagram.common.notation.ChangeBoundsCommand;
-
-public class ChangeBoundsCommandContribution extends UmlNotationCommandContribution {
-
+public class ChangeBoundsCommandContribution {
+   /*-
    public static final String TYPE = "changeBounds";
-
+   
    public static CCommand create(final String semanticUri, final GPoint position, final GDimension size) {
       CCommand changeBoundsCommand = CCommandFactory.eINSTANCE.createCommand();
       changeBoundsCommand.setType(TYPE);
@@ -38,15 +24,15 @@ public class ChangeBoundsCommandContribution extends UmlNotationCommandContribut
       changeBoundsCommand.getProperties().put(HEIGHT, String.valueOf(size.getWidth()));
       return changeBoundsCommand;
    }
-
+   
    @Override
    protected CompoundCommand toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
          throws DecodingException {
-
+   
       CompoundCommand changeBoundsCommand = new CompoundCommand();
-
+   
       if (command instanceof CCompoundCommand) {
-
+   
          ((CCompoundCommand) command).getCommands().forEach(cmd -> {
             // parent element
             String semanticProxyUri = cmd.getProperties().get(SEMANTIC_PROXI_URI);
@@ -60,5 +46,5 @@ public class ChangeBoundsCommandContribution extends UmlNotationCommandContribut
       }
       return changeBoundsCommand;
    }
-
+   */
 }

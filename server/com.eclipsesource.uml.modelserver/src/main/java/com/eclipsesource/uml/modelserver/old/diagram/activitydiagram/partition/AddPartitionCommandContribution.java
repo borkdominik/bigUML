@@ -18,9 +18,9 @@ public class AddPartitionCommandContribution { /*-
    public static CCompoundCommand create(final GPoint position, final String parentUri) {
       CCompoundCommand addPartitionCommand = CCommandFactory.eINSTANCE.createCompoundCommand();
       addPartitionCommand.setType(TYPE);
-      addPartitionCommand.getProperties().put(UmlNotationCommandContribution.POSITION_X,
+      addPartitionCommand.getProperties().put(NotationKeys.POSITION_X,
          String.valueOf(position.getX()));
-      addPartitionCommand.getProperties().put(UmlNotationCommandContribution.POSITION_Y,
+      addPartitionCommand.getProperties().put(NotationKeys.POSITION_Y,
          String.valueOf(position.getY()));
       addPartitionCommand.getProperties().put(PARENT_URI, parentUri);
       return addPartitionCommand;
@@ -31,8 +31,8 @@ public class AddPartitionCommandContribution { /*-
       throws DecodingException {
 
       GPoint position = UmlNotationCommandUtil.getGPoint(
-         command.getProperties().get(UmlNotationCommandContribution.POSITION_X),
-         command.getProperties().get(UmlNotationCommandContribution.POSITION_Y));
+         command.getProperties().get(NotationKeys.POSITION_X),
+         command.getProperties().get(NotationKeys.POSITION_Y));
 
       final String parentUri = command.getProperties().get(PARENT_URI);
       return new AddPartitionCompoundCommand(domain, modelUri, position, parentUri);

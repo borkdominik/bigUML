@@ -8,9 +8,9 @@ public class AddDeploymentComponentCommandContribution { /*-{
    public static CCompoundCommand create(final GPoint position, final String parentUri) {
       CCompoundCommand addComponentCommand = CCommandFactory.eINSTANCE.createCompoundCommand();
       addComponentCommand.setType(TYPE);
-      addComponentCommand.getProperties().put(UmlNotationCommandContribution.POSITION_X,
+      addComponentCommand.getProperties().put(NotationKeys.POSITION_X,
             String.valueOf(position.getX()));
-      addComponentCommand.getProperties().put(UmlNotationCommandContribution.POSITION_Y,
+      addComponentCommand.getProperties().put(NotationKeys.POSITION_Y,
             String.valueOf(position.getY()));
       addComponentCommand.getProperties().put(PARENT_URI, parentUri);
       return addComponentCommand;
@@ -20,8 +20,8 @@ public class AddDeploymentComponentCommandContribution { /*-{
    protected CompoundCommand toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
          throws DecodingException {
       GPoint position = UmlNotationCommandUtil.getGPoint(
-            command.getProperties().get(UmlNotationCommandContribution.POSITION_X),
-            command.getProperties().get(UmlNotationCommandContribution.POSITION_Y));
+            command.getProperties().get(NotationKeys.POSITION_X),
+            command.getProperties().get(NotationKeys.POSITION_Y));
 
       String parentUri = command.getProperties().get(PARENT_URI);
 

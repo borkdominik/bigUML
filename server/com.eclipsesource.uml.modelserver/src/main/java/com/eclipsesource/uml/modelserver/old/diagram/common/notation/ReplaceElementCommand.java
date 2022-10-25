@@ -18,7 +18,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Element;
 
-import com.eclipsesource.uml.modelserver.diagram.commons.notation.UmlNotationElementCommand;
+import com.eclipsesource.uml.modelserver.uml.notation.UmlNotationElementCommand;
 
 import org.eclipse.glsp.server.emf.model.notation.NotationElement;
 import org.eclipse.glsp.server.emf.model.notation.NotationFactory;
@@ -38,7 +38,7 @@ public class ReplaceElementCommand extends UmlNotationElementCommand {
    @Override
    protected void doExecute() {
 
-      Optional<NotationElement> notationElem = umlDiagram.getElements().stream()
+      Optional<NotationElement> notationElem = diagram.getElements().stream()
          .filter(s -> oldUri.equals(s.getSemanticElement().getElementId()))
          .findAny();
       if (notationElem.isPresent()) {

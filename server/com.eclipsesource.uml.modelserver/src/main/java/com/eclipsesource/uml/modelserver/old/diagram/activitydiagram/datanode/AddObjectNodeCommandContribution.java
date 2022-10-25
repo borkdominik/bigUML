@@ -20,9 +20,9 @@ public class AddObjectNodeCommandContribution { /*-
       final Class<? extends ObjectNode> clazz) {
       CCompoundCommand addActivityCommand = CCommandFactory.eINSTANCE.createCompoundCommand();
       addActivityCommand.setType(TYPE);
-      addActivityCommand.getProperties().put(UmlNotationCommandContribution.POSITION_X,
+      addActivityCommand.getProperties().put(NotationKeys.POSITION_X,
          String.valueOf(position.getX()));
-      addActivityCommand.getProperties().put(UmlNotationCommandContribution.POSITION_Y,
+      addActivityCommand.getProperties().put(NotationKeys.POSITION_Y,
          String.valueOf(position.getY()));
       addActivityCommand.getProperties().put(PARENT_URI, parentUri);
       addActivityCommand.getProperties().put(NODE_TYPE, clazz.getName());
@@ -34,8 +34,8 @@ public class AddObjectNodeCommandContribution { /*-
       throws DecodingException {
 
       GPoint position = UmlNotationCommandUtil.getGPoint(
-         command.getProperties().get(UmlNotationCommandContribution.POSITION_X),
-         command.getProperties().get(UmlNotationCommandContribution.POSITION_Y));
+         command.getProperties().get(NotationKeys.POSITION_X),
+         command.getProperties().get(NotationKeys.POSITION_Y));
 
       String parentUri = command.getProperties().get(PARENT_URI);
       String type = command.getProperties().get(NODE_TYPE);

@@ -32,7 +32,7 @@ public class UmlLabelEditValidator implements LabelEditValidator {
 
    @Override
    public ValidationStatus validate(final String label, final GModelElement element) {
-      var diagramType = modelState.getRepresentation();
+      var diagramType = modelState.getUnsafeRepresentation();
 
       switch (diagramType) {
          case COMMUNICATION: {

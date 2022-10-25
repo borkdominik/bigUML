@@ -8,9 +8,9 @@ public class AddDeviceCommandContribution { /*-{
    public static CCompoundCommand create(final GPoint position, final String parentSemanticUri) {
       CCompoundCommand addDeviceCommand = CCommandFactory.eINSTANCE.createCompoundCommand();
       addDeviceCommand.setType(TYPE);
-      addDeviceCommand.getProperties().put(UmlNotationCommandContribution.POSITION_X,
+      addDeviceCommand.getProperties().put(NotationKeys.POSITION_X,
             String.valueOf(position.getX()));
-      addDeviceCommand.getProperties().put(UmlNotationCommandContribution.POSITION_Y,
+      addDeviceCommand.getProperties().put(NotationKeys.POSITION_Y,
             String.valueOf(position.getY()));
       addDeviceCommand.getProperties().put(UmlSemanticCommandContribution.PARENT_SEMANTIC_URI_FRAGMENT,
             parentSemanticUri);
@@ -21,8 +21,8 @@ public class AddDeviceCommandContribution { /*-{
    protected CompoundCommand toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
          throws DecodingException {
       GPoint devicePosition = UmlNotationCommandUtil.getGPoint(
-            command.getProperties().get(UmlNotationCommandContribution.POSITION_X),
-            command.getProperties().get(UmlNotationCommandContribution.POSITION_Y));
+            command.getProperties().get(NotationKeys.POSITION_X),
+            command.getProperties().get(NotationKeys.POSITION_Y));
 
       String parentSemanticUriFragment = command.getProperties()
             .get(UmlSemanticCommandContribution.PARENT_SEMANTIC_URI_FRAGMENT);

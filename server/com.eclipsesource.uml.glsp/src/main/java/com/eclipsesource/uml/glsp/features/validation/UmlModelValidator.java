@@ -34,7 +34,7 @@ public class UmlModelValidator implements ModelValidator {
 
    @Override
    public List<Marker> validate(final GModelElement... elements) {
-      var diagramType = modelState.getRepresentation();
+      var diagramType = modelState.getUnsafeRepresentation();
 
       switch (diagramType) {
          case COMMUNICATION: {

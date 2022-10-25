@@ -30,13 +30,16 @@ import {
     SRoutingHandle,
     SRoutingHandleView,
     StructureCompartmentView,
-    TYPES
+    TYPES,
 } from "@eclipse-glsp/client/lib";
 import toolPaletteModule from "@eclipse-glsp/client/lib/features/tool-palette/di.config";
 import { Container, ContainerModule } from "inversify";
 import { EditLabelUI } from "sprotty/lib";
 
-import { CustomCopyPasteHandler, LastContainableElementTracker } from "./features/copy-paste/copy-paste";
+import {
+    CustomCopyPasteHandler,
+    LastContainableElementTracker,
+} from "./features/copy-paste/copy-paste";
 import diagramOutlineViewModule from "./features/diagram-outline-view/di.config";
 import { EditLabelUIAutocomplete } from "./features/edit-label";
 import umlToolPaletteModule from "./features/tool-palette/di.config";
@@ -47,45 +50,106 @@ import { BaseTypes, UmlTypes } from "./utils";
 import { CommentLinkEdgeView, CommentNodeView } from "./views/commons";
 
 export default function createContainer(widgetId: string): Container {
-    const commonDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
-        rebind(TYPES.ILogger).to(ConsoleLogger).inSingletonScope();
-        rebind(TYPES.LogLevel).toConstantValue(LogLevel.info);
-        rebind(EditLabelUI).to(EditLabelUIAutocomplete);
-        bind(TYPES.IVNodePostprocessor).to(IconLabelCompartmentSelectionFeedback);
+    const commonDiagramModule = new ContainerModule(
+        (bind, unbind, isBound, rebind) => {
+            rebind(TYPES.ILogger).to(ConsoleLogger).inSingletonScope();
+            rebind(TYPES.LogLevel).toConstantValue(LogLevel.info);
+            rebind(EditLabelUI).to(EditLabelUIAutocomplete);
+            bind(TYPES.IVNodePostprocessor).to(
+                IconLabelCompartmentSelectionFeedback
+            );
 
-        const context = { bind, unbind, isBound, rebind };
-        configureDefaultModelElements(context);
-        configureModelElement(context, UmlTypes.LABEL_NAME, SEditableLabel, SLabelView);
-        configureModelElement(context, UmlTypes.LABEL_EDGE_NAME, SEditableLabel, SLabelView);
-        configureModelElement(context, UmlTypes.LABEL_TEXT, SLabel, SLabelView);
+            const context = { bind, unbind, isBound, rebind };
+            configureDefaultModelElements(context);
+            configureModelElement(
+                context,
+                UmlTypes.LABEL_NAME,
+                SEditableLabel,
+                SLabelView
+            );
+            configureModelElement(
+                context,
+                UmlTypes.LABEL_EDGE_NAME,
+                SEditableLabel,
+                SLabelView
+            );
+            configureModelElement(
+                context,
+                UmlTypes.LABEL_TEXT,
+                SLabel,
+                SLabelView
+            );
 
-        // configureModelElement(context, UmlTypes.LABEL_ICON, SLabel, SLabelView);
-        configureModelElement(context, BaseTypes.COMPARTMENT, SCompartment, SCompartmentView);
-        configureModelElement(context, BaseTypes.COMPARTMENT_HEADER, SCompartment, SCompartmentView);
-        configureModelElement(context, BaseTypes.ROUTING_POINT, SRoutingHandle, SRoutingHandleView);
-        configureModelElement(context, BaseTypes.VOLATILE_ROUTING_POINT, SRoutingHandle, SRoutingHandleView);
-        configureModelElement(context, UmlTypes.STRUCTURE, SCompartment, StructureCompartmentView);
+            // configureModelElement(context, UmlTypes.LABEL_ICON, SLabel, SLabelView);
+            configureModelElement(
+                context,
+                BaseTypes.COMPARTMENT,
+                SCompartment,
+                SCompartmentView
+            );
+            configureModelElement(
+                context,
+                BaseTypes.COMPARTMENT_HEADER,
+                SCompartment,
+                SCompartmentView
+            );
+            configureModelElement(
+                context,
+                BaseTypes.ROUTING_POINT,
+                SRoutingHandle,
+                SRoutingHandleView
+            );
+            configureModelElement(
+                context,
+                BaseTypes.VOLATILE_ROUTING_POINT,
+                SRoutingHandle,
+                SRoutingHandleView
+            );
+            configureModelElement(
+                context,
+                UmlTypes.STRUCTURE,
+                SCompartment,
+                StructureCompartmentView
+            );
 
-        configureModelElement(context, UmlTypes.COMMENT, LabeledNode, CommentNodeView);
-        configureModelElement(context, UmlTypes.COMMENT_LINK, SEdge, CommentLinkEdgeView);
+            configureModelElement(
+                context,
+                UmlTypes.COMMENT,
+                LabeledNode,
+                CommentNodeView
+            );
+            configureModelElement(
+                context,
+                UmlTypes.COMMENT_LINK,
+                SEdge,
+                CommentLinkEdgeView
+            );
 
-        configureViewerOptions(context, {
-            needsClientLayout: true,
-            baseDiv: widgetId
-        });
-    });
+            configureViewerOptions(context, {
+                needsClientLayout: true,
+                baseDiv: widgetId,
+            });
+        }
+    );
     const communicationModule = createCommunicationModule();
 
-    const container = createClientContainer(commonDiagramModule, communicationModule, umlToolPaletteModule, saveModule, diagramOutlineViewModule);
+    const container = createClientContainer(
+        commonDiagramModule,
+        communicationModule,
+        umlToolPaletteModule,
+        saveModule,
+        diagramOutlineViewModule
+    );
     container.unload(toolPaletteModule);
     container.bind(LastContainableElementTracker).toSelf().inSingletonScope();
-    container.bind(TYPES.MouseListener).toService(LastContainableElementTracker);
+    container
+        .bind(TYPES.MouseListener)
+        .toService(LastContainableElementTracker);
     container.rebind(GLSP_TYPES.ICopyPasteHandler).to(CustomCopyPasteHandler);
 
     overrideViewerOptions(container, {
         baseDiv: widgetId,
-        hiddenDiv: widgetId + "_hidden"
+        hiddenDiv: widgetId + "_hidden",
     });
     return container;
 }
-

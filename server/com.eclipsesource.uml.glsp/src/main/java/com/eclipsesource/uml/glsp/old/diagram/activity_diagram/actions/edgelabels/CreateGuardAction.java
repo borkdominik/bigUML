@@ -12,18 +12,17 @@ package com.eclipsesource.uml.glsp.old.diagram.activity_diagram.actions.edgelabe
 
 import org.eclipse.glsp.server.actions.ResponseAction;
 
-import com.eclipsesource.uml.glsp.core.actions.ActionKind;
-
 public class CreateGuardAction extends ResponseAction {
+   public static final String TYPE = "createGuard";
 
    private String elementTypeId;
 
    public CreateGuardAction() {
-      super(ActionKind.GUARD_CREATE);
+      super(TYPE);
    }
 
    public CreateGuardAction(final String elementTypeId) {
-      super(ActionKind.GUARD_CREATE);
+      super(TYPE);
       this.elementTypeId = elementTypeId;
    }
 

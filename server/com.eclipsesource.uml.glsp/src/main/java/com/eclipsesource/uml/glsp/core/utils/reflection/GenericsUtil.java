@@ -10,35 +10,55 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.core.utils.reflection;
 
+import java.lang.reflect.GenericDeclaration;
 import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.lang.reflect.TypeVariable;
+import java.util.HashMap;
+import java.util.Map;
 
 public final class GenericsUtil {
    private GenericsUtil() {}
 
-   public static ParameterizedType getParametrizedType(final Class<?> clazz, final Class<?> genericBaseclass) {
-      if (clazz.equals(genericBaseclass) || clazz.getSuperclass().equals(genericBaseclass)) {
-         return (ParameterizedType) clazz.getGenericSuperclass();
-      }
-      return getParametrizedType(clazz.getSuperclass(), genericBaseclass);
-   }
+   // https://stackoverflow.com/questions/18707582/get-actual-type-of-generic-type-argument-on-abstract-superclass
+   @SuppressWarnings("unchecked")
+   public static <T> Class<T> getClassParameter(final Class<?> subClass,
+      final Class<?> superClass, final int pos) {
+      Map<TypeVariable<?>, Class<?>> mapping = new HashMap<>();
 
-   public static Class<?> getGenericTypeParameterClass(final Class<?> clazz, final Class<?> genericBaseclass) {
-      return (Class<?>) (GenericsUtil.getParametrizedType(clazz, genericBaseclass))
-         .getActualTypeArguments()[0];
-   }
-
-   public static ParameterizedType getInterfaceParameterType(final Class<?> clazz, final Class<?> interfaceClass) {
-      var interfaces = clazz.getGenericInterfaces();
-
-      for (var type : interfaces) {
+      Class<?> klass = subClass;
+      while (klass != null) {
+         Type type = klass.getGenericSuperclass();
          if (type instanceof ParameterizedType) {
-            var pType = (ParameterizedType) type;
-            if (pType.getRawType().equals(interfaceClass)) {
-               return pType;
+            ParameterizedType parType = (ParameterizedType) type;
+            Type rawType = parType.getRawType();
+            if (rawType == superClass) {
+               // found
+               Type t = parType.getActualTypeArguments()[pos];
+
+               if (t instanceof Class<?>) {
+                  return (Class<T>) t;
+               }
+
+               return (Class<T>) mapping.get(t);
             }
+
+            // resolve
+            Type[] vars = ((GenericDeclaration) (parType.getRawType())).getTypeParameters();
+            Type[] args = parType.getActualTypeArguments();
+            for (int i = 0; i < vars.length; i++) {
+               if (args[i] instanceof Class<?>) {
+                  mapping.put((TypeVariable) vars[i], (Class<?>) args[i]);
+               } else {
+                  mapping.put((TypeVariable) vars[i], mapping.get((args[i])));
+               }
+            }
+            klass = (Class<?>) rawType;
+         } else {
+            klass = klass.getSuperclass();
          }
       }
-
-      return GenericsUtil.getInterfaceParameterType(clazz.getSuperclass(), interfaceClass);
+      throw new IllegalArgumentException(
+         "no generic supertype for " + subClass + " of type " + superClass);
    }
 }

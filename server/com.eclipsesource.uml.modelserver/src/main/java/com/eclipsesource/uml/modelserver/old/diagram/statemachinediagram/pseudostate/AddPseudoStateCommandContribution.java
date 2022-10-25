@@ -22,9 +22,9 @@ public class AddPseudoStateCommandContribution { /*-{
       final GPoint position) {
       CCompoundCommand addPseudostateCommand = CCommandFactory.eINSTANCE.createCompoundCommand();
       addPseudostateCommand.setType(TYPE);
-      addPseudostateCommand.getProperties().put(UmlNotationCommandContribution.POSITION_X,
+      addPseudostateCommand.getProperties().put(NotationKeys.POSITION_X,
          String.valueOf(position.getX()));
-      addPseudostateCommand.getProperties().put(UmlNotationCommandContribution.POSITION_Y,
+      addPseudostateCommand.getProperties().put(NotationKeys.POSITION_Y,
          String.valueOf(position.getY()));
 
       addPseudostateCommand.getProperties().put(PARENT_SEMANTIC_URI_FRAGMENT, parentSemanticUri);
@@ -37,8 +37,8 @@ public class AddPseudoStateCommandContribution { /*-{
       throws DecodingException {
 
       GPoint pseudostatePosition = UmlNotationCommandUtil.getGPoint(
-         command.getProperties().get(UmlNotationCommandContribution.POSITION_X),
-         command.getProperties().get(UmlNotationCommandContribution.POSITION_Y));
+         command.getProperties().get(NotationKeys.POSITION_X),
+         command.getProperties().get(NotationKeys.POSITION_Y));
 
       String parentRegionUriFragment = command.getProperties().get(PARENT_SEMANTIC_URI_FRAGMENT);
       PseudostateKind pseudostateKind = PseudostateKind.get(command.getProperties().get(PSEUDOSTATE_KIND));

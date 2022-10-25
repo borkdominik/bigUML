@@ -12,18 +12,17 @@ package com.eclipsesource.uml.glsp.old.diagram.activity_diagram.actions.edgelabe
 
 import org.eclipse.glsp.server.actions.ResponseAction;
 
-import com.eclipsesource.uml.glsp.core.actions.ActionKind;
-
 public class CreateWeightAction extends ResponseAction {
+   public static final String TYPE = "createWeight";
 
    private String elementTypeId;
 
    public CreateWeightAction() {
-      super(ActionKind.WEIGHT_CREATE);
+      super(TYPE);
    }
 
    public CreateWeightAction(final String elementTypeId) {
-      super(ActionKind.WEIGHT_CREATE);
+      super(TYPE);
       this.elementTypeId = elementTypeId;
    }
 

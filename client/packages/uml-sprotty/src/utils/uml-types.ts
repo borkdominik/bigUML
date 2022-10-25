@@ -11,7 +11,6 @@
 import { DefaultTypes } from "@eclipse-glsp/protocol";
 
 export namespace UmlTypes {
-
     // COMMONS
     export const ICON = "icon";
     export const LABEL_NAME = `${DefaultTypes.LABEL}:name`;

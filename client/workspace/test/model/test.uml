@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_nD7_AEiTEe287ptuQ4W3Iw" name="test">
-  <packagedElement xmi:type="uml:Interaction" xmi:id="_R3O6MEljEe2IxsdMH-l2-w" name="NewInteraction0"/>
-  <packagedElement xmi:type="uml:Interaction" xmi:id="_sp5EYEljEe29opaQLlsCHg" name="NewInteraction1">
-    <lifeline xmi:id="_d618IEoKEe26xMMi-6wMhA" name="NewLifeline1" coveredBy="_JHjd8EoLEe29O5XQUrDqDw"/>
-    <lifeline xmi:id="_GKhFEUoLEe29O5XQUrDqDw" name="NewLifeline2" coveredBy="_JHjd8UoLEe29O5XQUrDqDw"/>
-    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_JHjd8EoLEe29O5XQUrDqDw" name="NewMessage1 - SendEvent" covered="_d618IEoKEe26xMMi-6wMhA" message="_JHiP0EoLEe29O5XQUrDqDw"/>
-    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_JHjd8UoLEe29O5XQUrDqDw" name="NewMessage1 - ReceiveEvent" covered="_GKhFEUoLEe29O5XQUrDqDw" message="_JHiP0EoLEe29O5XQUrDqDw"/>
-    <message xmi:id="_JHiP0EoLEe29O5XQUrDqDw" name="NewMessage1" receiveEvent="_JHjd8UoLEe29O5XQUrDqDw" sendEvent="_JHjd8EoLEe29O5XQUrDqDw"/>
+  <packagedElement xmi:type="uml:Interaction" xmi:id="_2sxvcU8SEe2yZ8WUeq5c5w" name="NewInteraction1">
+    <lifeline xmi:id="_67mgUE8SEe2yZ8WUeq5c5w" name="NewLifeline1" coveredBy="_V97kAVOOEe2COJmb4fFkAw"/>
+    <lifeline xmi:id="_Im7n4E8TEe2yZ8WUeq5c5w" name="asd" coveredBy="_V97kAFOOEe2COJmb4fFkAw"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_V97kAFOOEe2COJmb4fFkAw" name="NewMessage2 - SendEvent" covered="_Im7n4E8TEe2yZ8WUeq5c5w" message="_V96V4VOOEe2COJmb4fFkAw"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_V97kAVOOEe2COJmb4fFkAw" name="NewMessage2 - ReceiveEvent" covered="_67mgUE8SEe2yZ8WUeq5c5w" message="_V96V4VOOEe2COJmb4fFkAw"/>
+    <message xmi:id="_V96V4VOOEe2COJmb4fFkAw" name="NewMessage2" receiveEvent="_V97kAVOOEe2COJmb4fFkAw" sendEvent="_V97kAFOOEe2COJmb4fFkAw"/>
   </packagedElement>
 </uml:Model>

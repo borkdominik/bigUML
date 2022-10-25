@@ -10,44 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.features.copy_paste.operations;
 
-import static org.eclipse.glsp.server.utils.GeometryUtil.shift;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.AbstractEMSOperationHandler;
-import org.eclipse.glsp.graph.GBoundsAware;
-import org.eclipse.glsp.graph.GEdge;
-import org.eclipse.glsp.graph.GModelElement;
-import org.eclipse.glsp.graph.GNode;
-import org.eclipse.glsp.graph.GPoint;
-import org.eclipse.glsp.graph.impl.GPointImpl;
-import org.eclipse.glsp.server.actions.ActionDispatcher;
-import org.eclipse.glsp.server.gson.GraphGsonConfigurationFactory;
-import org.eclipse.glsp.server.operations.PasteOperation;
-import org.eclipse.uml2.uml.Interaction;
-
-import com.eclipsesource.uml.glsp.core.actions.UmlRequestClipboardDataActionHandler;
-import com.eclipsesource.uml.glsp.core.model.UmlModelServerAccess;
-import com.eclipsesource.uml.glsp.core.model.UmlModelState;
-import com.eclipsesource.uml.glsp.core.utils.gmodel.GModelFilterUtil;
-import com.eclipsesource.uml.glsp.diagram.communication_diagram.constants.CommunicationTypes;
-import com.eclipsesource.uml.glsp.features.copy_paste.property.InteractionPropertiesFactory;
-import com.eclipsesource.uml.glsp.features.copy_paste.property.LifelinePropertiesFactory;
-import com.eclipsesource.uml.glsp.features.copy_paste.property.MessagePropertiesFactory;
-import com.eclipsesource.uml.modelserver.diagram.communication.interaction.CopyInteractionCommandContribution;
-import com.eclipsesource.uml.modelserver.diagram.communication.interaction.InteractionCopyableProperties;
-import com.eclipsesource.uml.modelserver.diagram.communication.lifeline.CopyLifelineWithMessagesCommandContribution;
-import com.eclipsesource.uml.modelserver.diagram.communication.lifeline.LifelineCopyableProperties;
-import com.eclipsesource.uml.modelserver.diagram.communication.message.MessageCopyableProperties;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.inject.Inject;
-
-public class UmlPasteOperationHandler
+public class UmlPasteOperationHandler {/*-
    extends AbstractEMSOperationHandler<PasteOperation> {
    private final static String ARG_LAST_CONTAINABLE_ID = "lastContainableId";
    private static final int DEFAULT_OFFSET = 20;
@@ -71,6 +34,7 @@ public class UmlPasteOperationHandler
 
    @Override
    public void executeOperation(final PasteOperation operation) {
+      /*-
       var selectedElements = getCopiedElements(
          operation.getClipboardData().get(UmlRequestClipboardDataActionHandler.CLIPBOARD_SELECTED_ELEMENTS));
       var interactionElements = GModelFilterUtil
@@ -104,6 +68,7 @@ public class UmlPasteOperationHandler
                   parentInteraction.get()));
          }
       }
+      *
    }
 
    protected ArrayList<GModelElement> getCopiedElements(final String jsonString) {
@@ -166,4 +131,5 @@ public class UmlPasteOperationHandler
       }
       return Optional.empty();
    }
+   */
 }

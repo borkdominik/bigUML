@@ -15,6 +15,9 @@ import org.eclipse.glsp.server.operations.OperationHandler;
 import com.google.inject.Binder;
 import com.google.inject.multibindings.Multibinder;
 
+/*
+ * Contributes to GLSP directly
+ */
 public interface OperationHandlerContribution {
 
    default void contributeOperationHandler(final Binder binder) {

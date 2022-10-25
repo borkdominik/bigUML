@@ -25,19 +25,17 @@ import org.eclipse.glsp.server.types.EdgeTypeHint;
 import org.eclipse.glsp.server.types.ShapeTypeHint;
 
 import com.eclipsesource.uml.glsp.core.utils.UmlConfig.Types;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 
 public class UmlToolDiagramConfiguration extends BaseDiagramConfiguration {
 
    @Inject
-   private Set<DiagramConfiguration> diagramConfigurationProviders;
-
-   @Override
-   public String getDiagramType() { return "umldiagram"; }
+   private Map<Representation, Set<DiagramConfiguration>> diagramConfigurations;
 
    @Override
    public List<EdgeTypeHint> getEdgeTypeHints() {
-      var hints = diagramConfigurationProviders.stream()
+      var hints = getConfigurations().stream()
          .flatMap(contribution -> contribution.getEdgeTypeHints().stream())
          .collect(Collectors.toList());
 
@@ -48,7 +46,9 @@ public class UmlToolDiagramConfiguration extends BaseDiagramConfiguration {
    public List<ShapeTypeHint> getShapeTypeHints() {
       List<ShapeTypeHint> hints = new ArrayList<>();
 
-      var graphContainableElements = diagramConfigurationProviders.stream()
+      var configurations = getConfigurations();
+
+      var graphContainableElements = configurations.stream()
          .flatMap(contribution -> contribution.getGraphContainableElements().stream())
          .collect(Collectors.toList());
 
@@ -56,7 +56,7 @@ public class UmlToolDiagramConfiguration extends BaseDiagramConfiguration {
          new ShapeTypeHint(DefaultTypes.GRAPH, false, false, false, false,
             graphContainableElements));
 
-      hints.addAll(diagramConfigurationProviders.stream()
+      hints.addAll(configurations.stream()
          .flatMap(contribution -> contribution.getShapeTypeHints().stream())
          .collect(Collectors.toList()));
 
@@ -77,7 +77,7 @@ public class UmlToolDiagramConfiguration extends BaseDiagramConfiguration {
       mappings.put(Types.COMPARTMENT, GraphPackage.Literals.GCOMPARTMENT);
       mappings.put(Types.COMPARTMENT_HEADER, GraphPackage.Literals.GCOMPARTMENT);
 
-      diagramConfigurationProviders.stream().map(contribution -> contribution.getTypeMappings())
+      getConfigurations().stream().map(contribution -> contribution.getTypeMappings())
          .forEach(typeMappings -> {
             mappings.putAll(typeMappings);
          });
@@ -87,4 +87,8 @@ public class UmlToolDiagramConfiguration extends BaseDiagramConfiguration {
    @Override
    public ServerLayoutKind getLayoutKind() { return ServerLayoutKind.MANUAL; }
 
+   protected Set<DiagramConfiguration> getConfigurations() {
+
+      return diagramConfigurations.values().stream().flatMap(Set::stream).collect(Collectors.toSet());
+   }
 }

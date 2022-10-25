@@ -8,13 +8,12 @@ Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-11
-Export-Package: com.eclipsesource.uml.glsp.core.actions,
- com.eclipsesource.uml.glsp.core.diagram,
+Export-Package: com.eclipsesource.uml.glsp.core.diagram,
+ com.eclipsesource.uml.glsp.core.features.toolpalette,
  com.eclipsesource.uml.glsp.core.gmodel,
- com.eclipsesource.uml.glsp.core.layout,
+ com.eclipsesource.uml.glsp.core.handler.action,
+ com.eclipsesource.uml.glsp.core.handler.operation,
  com.eclipsesource.uml.glsp.core.model,
- com.eclipsesource.uml.glsp.core.operations,
- com.eclipsesource.uml.glsp.core.palette,
  com.eclipsesource.uml.glsp.core.utils,
  com.eclipsesource.uml.glsp.old.diagram.activity_diagram.actions.behavior,
  com.eclipsesource.uml.glsp.old.diagram.activity_diagram.actions.edgelabels,

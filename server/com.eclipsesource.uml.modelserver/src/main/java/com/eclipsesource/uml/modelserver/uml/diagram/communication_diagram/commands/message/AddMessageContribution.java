@@ -25,7 +25,7 @@ import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccesso
 
 public class AddMessageContribution extends BasicCommandContribution<Command> {
 
-   public static final String TYPE = "add_message";
+   public static final String TYPE = "uml:add_message";
 
    public static final String SOURCE_LIFELINE_URI_FRAGMENT = "source_lifeline_uri_fragment";
    public static final String TARGET_LIFELINE_URI_FRAGMENT = "target_lifeline_uri_fragment";

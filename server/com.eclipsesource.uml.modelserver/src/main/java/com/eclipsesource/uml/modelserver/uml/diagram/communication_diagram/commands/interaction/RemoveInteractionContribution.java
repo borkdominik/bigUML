@@ -26,13 +26,13 @@ import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccesso
 
 public class RemoveInteractionContribution extends BasicCommandContribution<Command> {
 
-   public static final String TYPE = "remove_interaction";
+   public static final String TYPE = "uml:remove_interaction";
 
    public static CCompoundCommand create(final Interaction interaction) {
       var command = CCommandFactory.eINSTANCE.createCompoundCommand();
 
       command.setType(TYPE);
-      command.getProperties().put(SemanticKeys.SEMANTIC_URI_FRAGMENT, SemanticElementAccessor.getId(interaction));
+      command.getProperties().put(SemanticKeys.SEMANTIC_ELEMENT_ID, SemanticElementAccessor.getId(interaction));
 
       return command;
    }
@@ -42,7 +42,7 @@ public class RemoveInteractionContribution extends BasicCommandContribution<Comm
       throws DecodingException {
       var elementAccessor = new SemanticElementAccessor(modelUri, domain);
 
-      var semanticUriFragment = command.getProperties().get(SemanticKeys.SEMANTIC_URI_FRAGMENT);
+      var semanticUriFragment = command.getProperties().get(SemanticKeys.SEMANTIC_ELEMENT_ID);
 
       var interaction = elementAccessor.getElement(semanticUriFragment, Interaction.class);
 

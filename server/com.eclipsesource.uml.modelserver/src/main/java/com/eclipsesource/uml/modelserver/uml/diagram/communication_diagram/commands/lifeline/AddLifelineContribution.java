@@ -29,7 +29,7 @@ import com.eclipsesource.uml.modelserver.shared.utils.UmlGraphUtil;
 
 public class AddLifelineContribution extends BasicCommandContribution<Command> {
 
-   public static final String TYPE = "add_lifeline";
+   public static final String TYPE = "uml:add_lifeline";
 
    public static CCompoundCommand create(final Interaction interaction, final GPoint position) {
       var command = CCommandFactory.eINSTANCE.createCompoundCommand();
@@ -39,7 +39,7 @@ public class AddLifelineContribution extends BasicCommandContribution<Command> {
          String.valueOf(position.getX()));
       command.getProperties().put(NotationKeys.POSITION_Y,
          String.valueOf(position.getY()));
-      command.getProperties().put(SemanticKeys.PARENT_SEMANTIC_URI_FRAGMENT,
+      command.getProperties().put(SemanticKeys.PARENT_SEMANTIC_ELEMENT_ID,
          SemanticElementAccessor.getId(interaction));
 
       return command;
@@ -54,7 +54,7 @@ public class AddLifelineContribution extends BasicCommandContribution<Command> {
          command.getProperties().get(NotationKeys.POSITION_X),
          command.getProperties().get(NotationKeys.POSITION_Y));
 
-      var parentInteractionSemanticUriFragment = command.getProperties().get(SemanticKeys.PARENT_SEMANTIC_URI_FRAGMENT);
+      var parentInteractionSemanticUriFragment = command.getProperties().get(SemanticKeys.PARENT_SEMANTIC_ELEMENT_ID);
 
       var parentInteraction = elementAccessor.getElement(parentInteractionSemanticUriFragment, Interaction.class);
 

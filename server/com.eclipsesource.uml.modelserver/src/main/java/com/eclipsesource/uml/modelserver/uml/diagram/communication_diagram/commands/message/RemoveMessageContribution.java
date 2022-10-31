@@ -26,13 +26,13 @@ import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccesso
 
 public class RemoveMessageContribution extends BasicCommandContribution<Command> {
 
-   public static final String TYPE = "remove_message";
+   public static final String TYPE = "uml:remove_message";
 
    public static CCompoundCommand create(final Message message) {
       var command = CCommandFactory.eINSTANCE.createCompoundCommand();
 
       command.setType(TYPE);
-      command.getProperties().put(SemanticKeys.SEMANTIC_URI_FRAGMENT,
+      command.getProperties().put(SemanticKeys.SEMANTIC_ELEMENT_ID,
          SemanticElementAccessor.getId(message));
 
       return command;
@@ -43,7 +43,7 @@ public class RemoveMessageContribution extends BasicCommandContribution<Command>
       throws DecodingException {
       var elementAccessor = new SemanticElementAccessor(modelUri, domain);
 
-      var semanticUriFragment = command.getProperties().get(SemanticKeys.SEMANTIC_URI_FRAGMENT);
+      var semanticUriFragment = command.getProperties().get(SemanticKeys.SEMANTIC_ELEMENT_ID);
 
       var message = elementAccessor.getElement(semanticUriFragment, Message.class);
 

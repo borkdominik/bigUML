@@ -26,13 +26,13 @@ import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccesso
 
 public class RemoveLifelineContribution extends BasicCommandContribution<Command> {
 
-   public static final String TYPE = "remove_lifeline";
+   public static final String TYPE = "uml:remove_lifeline";
 
    public static CCompoundCommand create(final Lifeline lifeline) {
       var command = CCommandFactory.eINSTANCE.createCompoundCommand();
 
       command.setType(TYPE);
-      command.getProperties().put(SemanticKeys.SEMANTIC_URI_FRAGMENT,
+      command.getProperties().put(SemanticKeys.SEMANTIC_ELEMENT_ID,
          SemanticElementAccessor.getId(lifeline));
 
       return command;
@@ -43,7 +43,7 @@ public class RemoveLifelineContribution extends BasicCommandContribution<Command
       throws DecodingException {
       var elementAccessor = new SemanticElementAccessor(modelUri, domain);
 
-      var semanticUriFragment = command.getProperties().get(SemanticKeys.SEMANTIC_URI_FRAGMENT);
+      var semanticUriFragment = command.getProperties().get(SemanticKeys.SEMANTIC_ELEMENT_ID);
 
       var lifeline = elementAccessor.getElement(semanticUriFragment, Lifeline.class);
 

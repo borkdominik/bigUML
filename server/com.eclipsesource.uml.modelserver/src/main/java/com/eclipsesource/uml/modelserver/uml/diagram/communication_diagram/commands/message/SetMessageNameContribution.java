@@ -24,14 +24,14 @@ import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccesso
 
 public class SetMessageNameContribution extends BasicCommandContribution<Command> {
 
-   public static final String TYPE = "set_message_name";
+   public static final String TYPE = "uml:set_message_name";
    private static final String NEW_NAME = "new_name";
 
    public static CCommand create(final Message message, final String newName) {
       var command = CCommandFactory.eINSTANCE.createCommand();
 
       command.setType(TYPE);
-      command.getProperties().put(SemanticKeys.SEMANTIC_URI_FRAGMENT,
+      command.getProperties().put(SemanticKeys.SEMANTIC_ELEMENT_ID,
          SemanticElementAccessor.getId(message));
       command.getProperties().put(NEW_NAME, newName);
 
@@ -43,7 +43,7 @@ public class SetMessageNameContribution extends BasicCommandContribution<Command
       throws DecodingException {
       var elementAccessor = new SemanticElementAccessor(modelUri, domain);
 
-      var semanticUriFragment = command.getProperties().get(SemanticKeys.SEMANTIC_URI_FRAGMENT);
+      var semanticUriFragment = command.getProperties().get(SemanticKeys.SEMANTIC_ELEMENT_ID);
       var newName = command.getProperties().get(NEW_NAME);
 
       var message = elementAccessor.getElement(semanticUriFragment, Message.class);

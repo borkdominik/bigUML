@@ -38,4 +38,7 @@ public class UmlCreateEdgeOperationHandler extends AbstractEMSOperationHandler<C
          .executeCreate(operation);
    }
 
+   @Override
+   public String getLabel() { return "Uml: Create edge"; }
+
 }

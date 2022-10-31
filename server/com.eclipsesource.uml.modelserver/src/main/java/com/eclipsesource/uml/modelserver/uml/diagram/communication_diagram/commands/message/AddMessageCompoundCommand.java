@@ -15,7 +15,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Lifeline;
 
-import com.eclipsesource.uml.modelserver.uml.notation.commands.UmlAddEdgeCommand;
+import com.eclipsesource.uml.modelserver.shared.notation.commands.UmlAddEdgeCommand;
 
 public class AddMessageCompoundCommand extends CompoundCommand {
 

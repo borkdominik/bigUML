@@ -21,8 +21,8 @@ import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
 import org.eclipse.emfcloud.modelserver.edit.command.BasicCommandContribution;
 import org.eclipse.glsp.graph.GPoint;
 
-import com.eclipsesource.uml.modelserver.uml.constants.NotationKeys;
-import com.eclipsesource.uml.modelserver.uml.util.UmlGraphUtil;
+import com.eclipsesource.uml.modelserver.shared.constants.NotationKeys;
+import com.eclipsesource.uml.modelserver.shared.utils.UmlGraphUtil;
 
 public class AddInteractionContribution extends BasicCommandContribution<Command> {
 

@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.uml.constants;
+package com.eclipsesource.uml.modelserver.shared.constants;
 
 public class NotationKeys {
 

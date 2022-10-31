@@ -21,8 +21,8 @@ import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
 import org.eclipse.emfcloud.modelserver.edit.command.BasicCommandContribution;
 import org.eclipse.uml2.uml.Lifeline;
 
-import com.eclipsesource.uml.modelserver.uml.constants.SemanticKeys;
-import com.eclipsesource.uml.modelserver.uml.extension.SemanticElementAccessor;
+import com.eclipsesource.uml.modelserver.shared.constants.SemanticKeys;
+import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
 
 public class RemoveLifelineContribution extends BasicCommandContribution<Command> {
 

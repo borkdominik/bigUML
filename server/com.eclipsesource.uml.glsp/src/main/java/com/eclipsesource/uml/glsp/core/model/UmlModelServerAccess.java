@@ -10,6 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.core.model;
 
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -20,6 +21,8 @@ import org.eclipse.emfcloud.modelserver.client.Response;
 import org.eclipse.emfcloud.modelserver.client.SubscriptionListener;
 import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.emfcloud.modelserver.glsp.notation.integration.EMSNotationModelServerAccess;
+import org.eclipse.glsp.server.emf.model.notation.Shape;
+import org.eclipse.glsp.server.types.ElementAndBounds;
 import org.eclipse.glsp.server.types.GLSPServerException;
 
 import com.eclipsesource.uml.modelserver.core.routing.UmlModelServerPaths;
@@ -44,6 +47,18 @@ public class UmlModelServerAccess extends EMSNotationModelServerAccess {
          LOGGER.error(e);
          throw new GLSPServerException("Error during model loading", e);
       }
+   }
+
+   @Override
+   public CompletableFuture<Response<String>> changeBounds(final Map<Shape, ElementAndBounds> changeBoundsMap) {
+      throw new UnsupportedOperationException(
+         "Change Bounds is removed. Please use exec with combination with the new ChangeBoundsContribution.");
+   }
+
+   @Override
+   public CompletableFuture<Response<String>> changeBounds(final Shape shape, final ElementAndBounds changedBounds) {
+      throw new UnsupportedOperationException(
+         "Change Bounds is removed. Please use exec with combination with the new ChangeBoundsContribution.");
    }
 
    public void subscribe(final String uri, final SubscriptionListener subscriptionListener) {

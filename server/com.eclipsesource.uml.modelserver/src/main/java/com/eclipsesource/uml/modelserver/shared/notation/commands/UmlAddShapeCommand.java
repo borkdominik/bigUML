@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.uml.notation.commands;
+package com.eclipsesource.uml.modelserver.shared.notation.commands;
 
 import java.util.function.Supplier;
 
@@ -22,7 +22,7 @@ import org.eclipse.glsp.server.emf.model.notation.NotationFactory;
 import org.eclipse.glsp.server.emf.model.notation.SemanticElementReference;
 import org.eclipse.glsp.server.emf.model.notation.Shape;
 
-import com.eclipsesource.uml.modelserver.uml.notation.UmlNotationElementCommand;
+import com.eclipsesource.uml.modelserver.shared.notation.UmlNotationElementCommand;
 
 public class UmlAddShapeCommand extends UmlNotationElementCommand {
 

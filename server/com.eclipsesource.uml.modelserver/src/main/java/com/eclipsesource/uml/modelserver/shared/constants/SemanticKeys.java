@@ -8,9 +8,10 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.uml.constants;
+package com.eclipsesource.uml.modelserver.shared.constants;
 
 public class SemanticKeys {
+   public static final String SEMANTIC_ELEMENT_ID = "semanticElementId";
    public static final String SEMANTIC_URI_FRAGMENT = "semanticUriFragment";
    public static final String SEMANTIC_URI_FRAGMENT_LIST = "semanticUriFragmentList";
    public static final String PARENT_SEMANTIC_URI_FRAGMENT = "parentSemanticUriFragment";

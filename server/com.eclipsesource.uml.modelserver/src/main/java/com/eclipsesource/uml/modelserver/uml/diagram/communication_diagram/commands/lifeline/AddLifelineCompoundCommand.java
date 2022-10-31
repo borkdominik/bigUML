@@ -18,9 +18,9 @@ import org.eclipse.glsp.graph.impl.GPointImpl;
 import org.eclipse.glsp.server.emf.model.notation.Shape;
 import org.eclipse.uml2.uml.Interaction;
 
-import com.eclipsesource.uml.modelserver.uml.extension.NotationElementAccessor;
-import com.eclipsesource.uml.modelserver.uml.extension.SemanticElementAccessor;
-import com.eclipsesource.uml.modelserver.uml.notation.commands.UmlAddShapeCommand;
+import com.eclipsesource.uml.modelserver.shared.extension.NotationElementAccessor;
+import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
+import com.eclipsesource.uml.modelserver.shared.notation.commands.UmlAddShapeCommand;
 
 public class AddLifelineCompoundCommand extends CompoundCommand {
    private final NotationElementAccessor notationElementAccessor;

@@ -18,6 +18,7 @@ import org.eclipse.emfcloud.modelserver.emf.common.ModelResourceManager;
 import org.eclipse.emfcloud.modelserver.emf.common.ResourceSetFactory;
 import org.eclipse.emfcloud.modelserver.emf.common.codecs.CodecProvider;
 import org.eclipse.emfcloud.modelserver.emf.configuration.EPackageConfiguration;
+import org.eclipse.emfcloud.modelserver.glsp.notation.commands.contribution.ChangeBoundsCommandContribution;
 import org.eclipse.emfcloud.modelserver.notation.integration.EMSNotationModelServerModule;
 import org.eclipse.emfcloud.modelserver.notation.integration.NotationPackageConfiguration;
 import org.eclipse.emfcloud.modelserver.notation.integration.NotationResource;
@@ -26,6 +27,7 @@ import org.eclipse.glsp.server.emf.idgen.FragmentIdGenerator;
 import org.eclipse.uml2.uml.resource.UMLResource;
 
 import com.eclipsesource.uml.modelserver.core.codec.UmlCodecProvider;
+import com.eclipsesource.uml.modelserver.core.commands.change_bounds.UmlChangeBoundsContribution;
 import com.eclipsesource.uml.modelserver.core.resource.UmlNotationPackageConfiguration;
 import com.eclipsesource.uml.modelserver.core.resource.UmlPackageConfiguration;
 import com.eclipsesource.uml.modelserver.core.routing.UmlModelServerRouting;
@@ -72,6 +74,8 @@ public class UmlModelServerModule extends EMSNotationModelServerModule {
    @Override
    protected void configureCommandCodecs(final MapBinding<String, CommandContribution> binding) {
       super.configureCommandCodecs(binding);
+      binding.remove(ChangeBoundsCommandContribution.TYPE);
+      binding.put(UmlChangeBoundsContribution.TYPE, UmlChangeBoundsContribution.class);
    }
 
    @Override

@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.uml.extension;
+package com.eclipsesource.uml.modelserver.shared.extension;
 
 import java.util.Optional;
 

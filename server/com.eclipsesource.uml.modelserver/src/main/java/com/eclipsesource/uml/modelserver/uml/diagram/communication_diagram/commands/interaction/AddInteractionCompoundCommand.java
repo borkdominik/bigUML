@@ -15,7 +15,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.glsp.graph.GPoint;
 
-import com.eclipsesource.uml.modelserver.uml.notation.commands.UmlAddShapeCommand;
+import com.eclipsesource.uml.modelserver.shared.notation.commands.UmlAddShapeCommand;
 
 public class AddInteractionCompoundCommand extends CompoundCommand {
 

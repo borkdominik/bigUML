@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.uml.extension;
+package com.eclipsesource.uml.modelserver.shared.extension;
 
 import java.util.Arrays;
 import java.util.List;
@@ -21,7 +21,7 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Model;
 
-import com.eclipsesource.uml.modelserver.uml.util.UmlSemanticUtil;
+import com.eclipsesource.uml.modelserver.shared.utils.UmlSemanticUtil;
 
 public final class SemanticElementAccessor {
    private final Model model;

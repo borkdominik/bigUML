@@ -16,9 +16,9 @@ import org.eclipse.uml2.uml.Interaction;
 import org.eclipse.uml2.uml.Lifeline;
 import org.eclipse.uml2.uml.UMLFactory;
 
+import com.eclipsesource.uml.modelserver.shared.semantic.UmlSemanticElementCommand;
 import com.eclipsesource.uml.modelserver.uml.generator.ListNameGenerator;
 import com.eclipsesource.uml.modelserver.uml.generator.NameGenerator;
-import com.eclipsesource.uml.modelserver.uml.semantic.UmlSemanticElementCommand;
 
 public class AddLifelineSemanticCommand extends UmlSemanticElementCommand {
 

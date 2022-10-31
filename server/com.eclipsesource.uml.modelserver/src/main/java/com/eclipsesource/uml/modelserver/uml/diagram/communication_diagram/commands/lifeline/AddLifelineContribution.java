@@ -22,10 +22,10 @@ import org.eclipse.emfcloud.modelserver.edit.command.BasicCommandContribution;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.uml2.uml.Interaction;
 
-import com.eclipsesource.uml.modelserver.uml.constants.NotationKeys;
-import com.eclipsesource.uml.modelserver.uml.constants.SemanticKeys;
-import com.eclipsesource.uml.modelserver.uml.extension.SemanticElementAccessor;
-import com.eclipsesource.uml.modelserver.uml.util.UmlGraphUtil;
+import com.eclipsesource.uml.modelserver.shared.constants.NotationKeys;
+import com.eclipsesource.uml.modelserver.shared.constants.SemanticKeys;
+import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
+import com.eclipsesource.uml.modelserver.shared.utils.UmlGraphUtil;
 
 public class AddLifelineContribution extends BasicCommandContribution<Command> {
 

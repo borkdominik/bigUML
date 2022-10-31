@@ -14,7 +14,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Interaction;
 
-import com.eclipsesource.uml.modelserver.uml.semantic.UmlSemanticElementCommand;
+import com.eclipsesource.uml.modelserver.shared.semantic.UmlSemanticElementCommand;
 
 public class RemoveInteractionSemanticCommand extends UmlSemanticElementCommand {
 

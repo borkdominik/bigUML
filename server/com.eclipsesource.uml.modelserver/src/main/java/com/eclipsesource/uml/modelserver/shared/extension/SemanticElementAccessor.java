@@ -12,6 +12,7 @@ package com.eclipsesource.uml.modelserver.shared.extension;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.eclipse.emf.common.util.URI;
@@ -45,14 +46,14 @@ public final class SemanticElementAccessor {
    }
 
    public <C extends Element> C getElement(final String semanticElementId,
-      final java.lang.Class<C> clazz) {
+      final Class<C> clazz) {
       var element = model.eResource().getEObject(semanticElementId);
       return clazz.cast(element);
    }
 
    public <T extends Element> List<T> getElements(
       final String[] elements,
-      final java.lang.Class<T> type) {
+      final Class<T> type) {
 
       return Arrays.asList(elements).stream().map(element -> {
          var mapped = getElement(element, type);
@@ -60,21 +61,21 @@ public final class SemanticElementAccessor {
       }).collect(Collectors.toUnmodifiableList());
    }
 
-   public <C extends Element> C getParent(final String semanticElementId,
-      final java.lang.Class<C> clazz) {
-      EObject container = getElement(
+   public <C extends Element> Optional<C> getParent(final String semanticElementId,
+      final Class<C> clazz) {
+
+      var container = getElement(
          semanticElementId, Element.class).eContainer();
+
       while (!(clazz.isAssignableFrom(container.getClass())) && container != null) {
-
          container = container.eContainer();
-
       }
 
       if (container != null && !(container instanceof Model)) {
-         return clazz.cast(container);
+         return Optional.of(clazz.cast(container));
       }
 
-      return null;
+      return Optional.empty();
    }
 
    @SuppressWarnings("unchecked")

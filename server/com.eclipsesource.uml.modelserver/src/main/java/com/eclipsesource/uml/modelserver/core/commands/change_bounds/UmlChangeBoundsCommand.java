@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2022 EclipseSource and others.
+ * Copyright (c) 2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -17,43 +17,97 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.glsp.graph.GDimension;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.emf.model.notation.Shape;
+import org.eclipse.uml2.uml.Element;
+import org.eclipse.uml2.uml.PackageableElement;
 
+import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
 import com.eclipsesource.uml.modelserver.shared.notation.UmlNotationElementCommand;
 
 public class UmlChangeBoundsCommand extends UmlNotationElementCommand {
-
    protected final Optional<GPoint> shapePosition;
    protected final Optional<GDimension> shapeSize;
+   protected final Optional<PackageableElement> container;
    protected final Shape shape;
 
    public UmlChangeBoundsCommand(final EditingDomain domain, final URI modelUri,
-      final String semanticElementId, final Optional<GPoint> shapePosition, final Optional<GDimension> shapeSize) {
+      final String semanticProxyUri, final Optional<GPoint> shapePosition, final Optional<GDimension> shapeSize) {
       super(domain, modelUri);
       this.shapePosition = shapePosition;
       this.shapeSize = shapeSize;
-
-      this.shape = notationElementAccessor.getElement(semanticElementId, Shape.class);
-   }
-
-   public UmlChangeBoundsCommand(final EditingDomain domain, final URI modelUri, final String semanticElementId,
-      final GPoint shapePosition) {
-      this(domain, modelUri, semanticElementId, Optional.of(shapePosition), Optional.empty());
-   }
-
-   public UmlChangeBoundsCommand(final EditingDomain domain, final URI modelUri, final String semanticElementId,
-      final GDimension shapeSize) {
-      this(domain, modelUri, semanticElementId, Optional.empty(), Optional.of(shapeSize));
+      this.shape = notationElementAccessor.getElement(semanticProxyUri, Shape.class);
+      this.container = semanticElementAccessor.getParent(semanticProxyUri, PackageableElement.class);
    }
 
    @Override
    protected void doExecute() {
-      this.shapePosition.ifPresent(position -> {
-         shape.setPosition(position);
+      this.container.ifPresent(container -> {
+         this.shapePosition.ifPresent(shapePosition -> {
+            if ((shapePosition.getX() < 0 || shapePosition.getY() < 0)) {
+
+               shiftContainer(container, shapePosition);
+               container.getOwnedElements().forEach(element -> {
+                  alignElement(element, shapePosition);
+               });
+
+               shapePosition.setX(Math.max(0, shapePosition.getX()));
+               shapePosition.setY(Math.max(0, shapePosition.getY()));
+            }
+
+            this.shapeSize.ifPresent(shapeSize -> {
+               resizeContainer(container, shapePosition, shapeSize);
+            });
+         });
       });
 
-      this.shapeSize.ifPresent(size -> {
-         shape.setSize(size);
-      });
+      this.shapePosition.ifPresent(shape::setPosition);
+      this.shapeSize.ifPresent(shape::setSize);
    }
 
+   private void resizeContainer(final PackageableElement container, final GPoint position, final GDimension size) {
+      var containerShape = notationElementAccessor.getElement(SemanticElementAccessor.getId(container),
+         Shape.class);
+      var containerSize = containerShape.getSize();
+
+      var width = Math.max(containerSize.getWidth(), position.getX() + size.getWidth());
+      var height = Math.max(containerSize.getHeight(), position.getY() + size.getHeight());
+
+      containerSize.setWidth(width);
+      containerSize.setHeight(height);
+
+      containerShape.setSize(containerSize);
+   }
+
+   private void shiftContainer(final PackageableElement container, final GPoint position) {
+      var containerShape = notationElementAccessor.getElement(SemanticElementAccessor.getId(container),
+         Shape.class);
+      var containerPosition = containerShape.getPosition();
+      var containerSize = containerShape.getSize();
+
+      var x = Math.min(0, position.getX());
+      var y = Math.min(0, position.getY());
+
+      var oldX = containerPosition.getX();
+      var oldY = containerPosition.getY();
+      containerPosition.setX(containerPosition.getX() + x);
+      containerPosition.setY(containerPosition.getY() + y);
+
+      containerShape.setPosition(containerPosition);
+
+      containerSize.setWidth(containerSize.getWidth() + (oldX - containerPosition.getX()));
+      containerSize.setHeight(containerSize.getHeight() + (oldY - containerPosition.getY()));
+      containerShape.setSize(containerSize);
+   }
+
+   private void alignElement(final Element element, final GPoint position) {
+      var elementShape = notationElementAccessor.getElement(SemanticElementAccessor.getId(element), Shape.class);
+      var elementPosition = elementShape.getPosition();
+
+      var x = Math.min(0, position.getX());
+      var y = Math.min(0, position.getY());
+
+      elementPosition.setX(elementPosition.getX() - x);
+      elementPosition.setY(elementPosition.getY() - y);
+      elementShape.setPosition(elementPosition);
+
+   }
 }

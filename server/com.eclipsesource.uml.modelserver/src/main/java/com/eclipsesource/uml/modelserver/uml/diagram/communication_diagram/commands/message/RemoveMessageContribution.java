@@ -43,9 +43,9 @@ public class RemoveMessageContribution extends BasicCommandContribution<Command>
       throws DecodingException {
       var elementAccessor = new SemanticElementAccessor(modelUri, domain);
 
-      var semanticUriFragment = command.getProperties().get(SemanticKeys.SEMANTIC_ELEMENT_ID);
+      var semanticElementId = command.getProperties().get(SemanticKeys.SEMANTIC_ELEMENT_ID);
 
-      var message = elementAccessor.getElement(semanticUriFragment, Message.class);
+      var message = elementAccessor.getElement(semanticElementId, Message.class);
 
       return new RemoveMessageCompoundCommand(domain, modelUri, message);
    }

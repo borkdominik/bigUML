@@ -6,4 +6,9 @@
     <position x="401.0" y="223.0"/>
     <size width="251.53939501131603" height="110.92433898567329"/>
   </elements>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_Im7n4E8TEe2yZ8WUeq5c5w"/>
+    <position x="158.87445612745262" y="89.74991632730054"/>
+    <size width="73.25" height="42.0"/>
+  </elements>
 </notation:Diagram>

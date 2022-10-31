@@ -54,9 +54,9 @@ public class AddLifelineContribution extends BasicCommandContribution<Command> {
          command.getProperties().get(NotationKeys.POSITION_X),
          command.getProperties().get(NotationKeys.POSITION_Y));
 
-      var parentInteractionSemanticUriFragment = command.getProperties().get(SemanticKeys.PARENT_SEMANTIC_ELEMENT_ID);
+      var parentInteractionsemanticElementId = command.getProperties().get(SemanticKeys.PARENT_SEMANTIC_ELEMENT_ID);
 
-      var parentInteraction = elementAccessor.getElement(parentInteractionSemanticUriFragment, Interaction.class);
+      var parentInteraction = elementAccessor.getElement(parentInteractionsemanticElementId, Interaction.class);
 
       return new AddLifelineCompoundCommand(domain, modelUri, position, parentInteraction);
    }

@@ -40,13 +40,13 @@ public final class SemanticElementAccessor {
       return EcoreUtil.getURI(element).fragment();
    }
 
-   public EObject getElement(final String semanticUriFragment) {
-      return model.eResource().getEObject(semanticUriFragment);
+   public EObject getElement(final String semanticElementId) {
+      return model.eResource().getEObject(semanticElementId);
    }
 
-   public <C extends Element> C getElement(final String semanticUriFragment,
+   public <C extends Element> C getElement(final String semanticElementId,
       final java.lang.Class<C> clazz) {
-      var element = model.eResource().getEObject(semanticUriFragment);
+      var element = model.eResource().getEObject(semanticElementId);
       return clazz.cast(element);
    }
 
@@ -60,10 +60,10 @@ public final class SemanticElementAccessor {
       }).collect(Collectors.toUnmodifiableList());
    }
 
-   public <C extends Element> C getParent(final String semanticUriFragment,
+   public <C extends Element> C getParent(final String semanticElementId,
       final java.lang.Class<C> clazz) {
       EObject container = getElement(
-         semanticUriFragment, Element.class).eContainer();
+         semanticElementId, Element.class).eContainer();
       while (!(clazz.isAssignableFrom(container.getClass())) && container != null) {
 
          container = container.eContainer();

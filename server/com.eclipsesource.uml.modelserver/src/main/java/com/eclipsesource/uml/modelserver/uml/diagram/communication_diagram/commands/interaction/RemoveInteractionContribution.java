@@ -42,9 +42,9 @@ public class RemoveInteractionContribution extends BasicCommandContribution<Comm
       throws DecodingException {
       var elementAccessor = new SemanticElementAccessor(modelUri, domain);
 
-      var semanticUriFragment = command.getProperties().get(SemanticKeys.SEMANTIC_ELEMENT_ID);
+      var semanticElementId = command.getProperties().get(SemanticKeys.SEMANTIC_ELEMENT_ID);
 
-      var interaction = elementAccessor.getElement(semanticUriFragment, Interaction.class);
+      var interaction = elementAccessor.getElement(semanticElementId, Interaction.class);
 
       return new RemoveInteractionCompoundCommand(domain, modelUri, interaction);
    }

@@ -43,9 +43,9 @@ public class RemoveLifelineContribution extends BasicCommandContribution<Command
       throws DecodingException {
       var elementAccessor = new SemanticElementAccessor(modelUri, domain);
 
-      var semanticUriFragment = command.getProperties().get(SemanticKeys.SEMANTIC_ELEMENT_ID);
+      var semanticElementId = command.getProperties().get(SemanticKeys.SEMANTIC_ELEMENT_ID);
 
-      var lifeline = elementAccessor.getElement(semanticUriFragment, Lifeline.class);
+      var lifeline = elementAccessor.getElement(semanticElementId, Lifeline.class);
 
       return new RemoveLifelineCompoundCommand(domain, modelUri, lifeline);
    }

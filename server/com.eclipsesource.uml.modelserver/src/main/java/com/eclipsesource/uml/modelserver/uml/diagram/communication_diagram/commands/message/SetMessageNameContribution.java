@@ -43,10 +43,10 @@ public class SetMessageNameContribution extends BasicCommandContribution<Command
       throws DecodingException {
       var elementAccessor = new SemanticElementAccessor(modelUri, domain);
 
-      var semanticUriFragment = command.getProperties().get(SemanticKeys.SEMANTIC_ELEMENT_ID);
+      var semanticElementId = command.getProperties().get(SemanticKeys.SEMANTIC_ELEMENT_ID);
       var newName = command.getProperties().get(NEW_NAME);
 
-      var message = elementAccessor.getElement(semanticUriFragment, Message.class);
+      var message = elementAccessor.getElement(semanticElementId, Message.class);
 
       return new SetMessageNameSemanticCommand(domain, modelUri, message, newName);
    }

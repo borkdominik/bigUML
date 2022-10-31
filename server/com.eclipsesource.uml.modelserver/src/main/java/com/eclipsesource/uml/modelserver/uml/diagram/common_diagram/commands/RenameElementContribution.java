@@ -41,11 +41,11 @@ public class RenameElementContribution extends BasicCommandContribution<Command>
    protected Command toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
       throws DecodingException {
 
-      var semanticUriFragment = command.getProperties().get(SemanticKeys.SEMANTIC_ELEMENT_ID);
+      var semanticElementId = command.getProperties().get(SemanticKeys.SEMANTIC_ELEMENT_ID);
       var newName = command.getProperties().get(NEW_NAME);
 
       var model = new SemanticElementAccessor(modelUri, domain);
-      var namedElement = model.getElement(semanticUriFragment,
+      var namedElement = model.getElement(semanticElementId,
          NamedElement.class);
 
       return new RenameElementSemanticCommand(domain, modelUri, namedElement, newName);

@@ -23,7 +23,7 @@ import com.eclipsesource.uml.glsp.core.handler.operation.directediting.DiagramLa
 import com.eclipsesource.uml.glsp.core.manifest.DiagramManifest;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.CreateHandlerContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.DeleteHandlerContribution;
-import com.eclipsesource.uml.glsp.core.manifest.contributions.LabelEditOperationHandlerContribution;
+import com.eclipsesource.uml.glsp.core.manifest.contributions.LabelEditHandlerContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.OverrideOperationHandlerContribution;
 import com.eclipsesource.uml.glsp.features.outline.generator.DiagramOutlineGenerator;
 import com.eclipsesource.uml.glsp.features.outline.manifest.contributions.OutlineGeneratorContribution;
@@ -47,7 +47,7 @@ import com.google.inject.multibindings.Multibinder;
 
 public class CommunicationUmlManifest extends DiagramManifest
    implements CreateHandlerContribution,
-   DeleteHandlerContribution, LabelEditOperationHandlerContribution, OutlineGeneratorContribution,
+   DeleteHandlerContribution, LabelEditHandlerContribution, OutlineGeneratorContribution,
    OverrideOperationHandlerContribution {
 
    @Override
@@ -61,7 +61,7 @@ public class CommunicationUmlManifest extends DiagramManifest
 
       contributeCreateHandler(binder());
       contributeDeleteHandler(binder());
-      contributeLabelEditOperationHandler(binder());
+      contributeLabelEditHandler(binder());
       contributeOutlineGenerator(binder());
       contributeOverrideOperationHandler(binder());
    }
@@ -100,7 +100,7 @@ public class CommunicationUmlManifest extends DiagramManifest
    }
 
    @Override
-   public void contributeLabelEditOperationHandler(
+   public void contributeLabelEditHandler(
       final Multibinder<DiagramLabelEditHandler<? extends EObject>> multibinder) {
       multibinder.addBinding().to(RenameInteractionHandler.class);
       multibinder.addBinding().to(RenameLifelineHandler.class);

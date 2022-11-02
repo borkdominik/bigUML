@@ -16,32 +16,58 @@ hide stereotype
 .injectionInterface {
     BackgroundColor LightCyan
 }
-.manifest {
-    BackgroundColor Green
-    FontColor White
-}
 </style>
 
-class UmlGLSPModule
+package "core" {
+    class UmlGLSPModule
 
+    package "core.manifest" {
+        package "core.manifest.contributions" {
+            interface CreateHandlerContribution <<contributionPoint>>
+            interface DeleteHandlerContribution <<contributionPoint>>
+            interface LabelEditHandlerContribution <<contributionPoint>>
+            interface OperationHandlerContribution <<contributionPoint>>
+            interface OverrideOperationHandlerContribution <<contributionPoint>>
+            interface PaletteContribtuion <<contributionPoint>>
+            interface DiagramConfigurationContribution <<contributionPoint>>
+        }
 
-package "diagram" {
-    interface DiagramConfiguration <<injectionInterface>>
-    class UmlDiagramConfiguration
+        class DiagramManifest
+    }
+
+    package "core.gmodel" {
+        interface GModelMapper <<injectionInterface>>
+        class GModelMapperRegistry
+    }
+
+    package "core.handlers.operations" {
+        package "core.handlers.operations.create" {
+            interface DiagramCreateHandler <<injectionInterface>>
+            class DiagramCreateHandlerRegistry
+            class UmlCreateEdgeOperationHandler
+            class UmlCreateNodeOperationHandler
+        }
+
+        /'
+        package "core.handlers.operations.delete" {
+            interface DiagramDeleteHandler <<injectionInterface>>
+            class DiagramDeleteHandlerRegistry
+            class UmlDeleteOperationHandler
+        }
+
+        package "core.handlers.operations.direct.editing" {
+            interface DiagramLabelEditHandler <<injectionInterface>>
+            class DiagramLabelEditHandlerRegistry
+            class UmlLabelEditOperationHandler
+        } 
+        '/
+        
+        class UmlOperationHandlerRegistry
+        class UmlOverrideOperationHandlerRegistry
+    }
+
+    CreateHandlerContribution ..> DiagramCreateHandler : uses
 }
-
-package "palette" {
-    interface DiagramPalette <<injectionInterface>>
-    class UmlToolPaletteItem
-}
-
-package "operations" {
-    interface DiagramDeleteOperationHandler <<injectionInterface>>
-    interface DiagramLabelEditOperationHandler <<injectionInterface>>
-    class UmlLabelEditOperationHandler
-    class UmlDeleteOperationHandler
-}
-
 
 package "features" {
     package "features.outline" {
@@ -54,8 +80,8 @@ package "features" {
             package "features.outline.manifest.contributions" {
                 interface OutlineGeneratorContribution <<contributionPoint>>
             }
-            class OutlineManifest <<manifest>>
-            OutlineManifest ..|> "manifest.contributions"
+            class OutlineManifest
+            OutlineManifest ..|> "core.manifest.contributions"
         }
         package "features.outline.actions" {
             class RequestOutlineAction
@@ -65,71 +91,62 @@ package "features" {
             RequestOutlineHandler ..> DiagramOutlineGenerator : uses
 
         }
-        package "features.outline.others.." {}
-
-    }
-}
-
-package "manifest" {
-    package "manifest.contributions" {
-        interface DiagramPaletteContribution <<contributionPoint>>
-        interface DiagramConfigurationContribution <<contributionPoint>>
-        interface ClientActionsContribution <<contributionPoint>>
-        interface ActionsHandlerContribution <<contributionPoint>>
-        interface OperationHandlerContribution <<contributionPoint>>
-        interface DeleteOperationHandlerContribution <<contributionPoint>>
-        interface EditLabelOperationHandlerContribution <<contributionPoint>>
     }
 }
 
 package "uml" {
-    package "uml.common" {
-        package "uml.common.manifest" {
-            package "uml.common.manifest.contributions" {
-                interface CommonDiagramConfigurationContribution <<contributionPoint>>
-            }
-            class CommonUmlManifest <<manifest>>
-            CommonUmlManifest ..|> "manifest.contributions"
-
+    package "uml.handler.operations" {
+        package "uml.handler.operations.create" {
+            class BaseCreateHandler implements DiagramCreateHandler
+            class BaseCreateChildNodeHandler extends BaseCreateHandler
+            class BaseCreateEdgeHandler extends BaseCreateHandler
+            class BaseCreateNodeHandler extends BaseCreateHandler
         }
-        package "uml.common.configuration" {
-            class CommonCommonConfigurationAccessor
-            class CommonDiagramConfiguration
-        }
+    }
 
-        package "uml.common.others.." {}
+    package "uml.gmodel" {
+        class BaseGModelMapper implements GModelMapper
     }
 
     package "uml.communication" {
         package "uml.communication.manifest" {
-            class CommunicationUmlManifest <<manifest>>
+            class CommunicationUmlManifest extends DiagramManifest
 
-            CommunicationUmlManifest ..|> "manifest.contributions"
-            CommunicationUmlManifest ..|> "uml.common.manifest.contributions"
+            /'
+            CommunicationUmlManifest ..|> "core.manifest.contributions"
             CommunicationUmlManifest ..|> "features.outline.manifest.contributions"
+            '/
         } 
+
+        package "uml.communication.gmodel" {
+            class InteractionNodeMapper extends BaseGModelMapper
+            class LifelineNodeMapper extends BaseGModelMapper
+            class MessageNodeMapper extends BaseGModelMapper
+        }
         
         package "uml.communication.operations" {
-            class CommunicationDeleteOperationHandler implements DiagramDeleteOperationHandler
-            class CommunicationLabelEditOperationHandler implements DiagramLabelEditOperationHandler
-            class Create*NodeOperationHandler
-            class Create*EdgeOperationHandler
+            package "uml.communication.operations.interaction" {
+                class CreateInteractionHandler extends BaseCreateNodeHandler
+                class DeleteInteractionHandler
+                class RenameInteractionHandler
+            }
+            package "uml.communication.operations.lifeline" {
+                class CreateLifelineHandler extends BaseCreateChildNodeHandler
+                class DeleteLifelineHandler
+                class RenameLifelineHandler
+            }
+            package "uml.communication.operations.message" {
+                class CreateMessageHandler extends BaseCreateEdgeHandler
+                class DeleteMessageHandler
+                class RenameMessageHandler
+            }
         }
 
         package "uml.communication.features.outline" {
             class CommunicationOutlineGenerator implements DiagramOutlineGenerator
         }
 
-        package "uml.communication.others.." {
-
-        }
-
     }
 }
-
-
-UmlGLSPModule *-- CommunicationUmlManifest
-UmlGLSPModule *-- OutlineManifest
-UmlGLSPModule *-- CommonUmlManifest
 
 @enduml

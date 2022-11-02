@@ -22,13 +22,13 @@ import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.MapBinder;
 import com.google.inject.multibindings.Multibinder;
 
-public interface LabelEditOperationHandlerContribution extends BaseDiagramContribution {
+public interface LabelEditHandlerContribution extends BaseDiagramContribution {
 
-   default void contributeLabelEditOperationHandler(final Binder binder) {
+   default void contributeLabelEditHandler(final Binder binder) {
       var multibinder = Multibinder.newSetBinder(binder,
          new TypeLiteral<DiagramLabelEditHandler<? extends EObject>>() {}, namedRepresentation());
 
-      contributeLabelEditOperationHandler(multibinder);
+      contributeLabelEditHandler(multibinder);
 
       var mapbinder = MapBinder.newMapBinder(binder, new TypeLiteral<Representation>() {},
          new TypeLiteral<Set<DiagramLabelEditHandler<? extends EObject>>>() {});
@@ -37,5 +37,5 @@ public interface LabelEditOperationHandlerContribution extends BaseDiagramContri
 
    }
 
-   void contributeLabelEditOperationHandler(Multibinder<DiagramLabelEditHandler<? extends EObject>> multibinder);
+   void contributeLabelEditHandler(Multibinder<DiagramLabelEditHandler<? extends EObject>> multibinder);
 }

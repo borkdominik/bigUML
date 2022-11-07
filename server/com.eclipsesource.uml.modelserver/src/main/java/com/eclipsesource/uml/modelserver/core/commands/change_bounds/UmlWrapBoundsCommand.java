@@ -22,7 +22,6 @@ import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.glsp.server.emf.model.notation.Shape;
 import org.eclipse.glsp.server.types.ElementAndBounds;
 import org.eclipse.uml2.uml.Element;
-import org.eclipse.uml2.uml.PackageableElement;
 
 import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
 import com.eclipsesource.uml.modelserver.shared.notation.UmlNotationElementCommand;
@@ -49,6 +48,7 @@ public class UmlWrapBoundsCommand extends UmlNotationElementCommand {
          parent.ifPresent(p -> {
             var position = this.elementPositions.get(bound.getElementId());
             wrapPositionBound(p, position);
+            wrapSizeBound(p, position, bound.getNewSize());
             recalculateElementPositions(bound);
          });
       });
@@ -76,8 +76,8 @@ public class UmlWrapBoundsCommand extends UmlNotationElementCommand {
       }
    }
 
-   protected void resizeContainer(final PackageableElement container, final GPoint position, final GDimension size) {
-      var containerShape = notationElementAccessor.getElement(SemanticElementAccessor.getId(container),
+   protected void wrapSizeBound(final Element parent, final GPoint position, final GDimension size) {
+      var containerShape = notationElementAccessor.getElement(SemanticElementAccessor.getId(parent),
          Shape.class);
       var containerSize = containerShape.getSize();
 

@@ -15,6 +15,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.impl.GPointImpl;
+import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.glsp.server.emf.model.notation.Shape;
 import org.eclipse.uml2.uml.Interaction;
 
@@ -33,7 +34,8 @@ public class AddLifelineCompoundCommand extends CompoundCommand {
       var destination = shift(parentInteraction, position);
 
       this.append(command);
-      this.append(new UmlAddShapeCommand(domain, modelUri, destination, () -> command.getNewLifeline()));
+      this.append(new UmlAddShapeCommand(domain, modelUri, destination, GraphUtil.dimension(160, 50),
+         () -> command.getNewLifeline()));
    }
 
    protected GPoint shift(final Interaction interaction, final GPoint mousePosition) {

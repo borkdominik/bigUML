@@ -10,8 +10,11 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.core.commands.change_bounds;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
@@ -26,9 +29,11 @@ import org.eclipse.glsp.graph.GDimension;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.emf.model.notation.Shape;
 import org.eclipse.glsp.server.types.ElementAndBounds;
+import org.eclipse.uml2.uml.Element;
 
 import com.eclipsesource.uml.modelserver.shared.constants.NotationKeys;
 import com.eclipsesource.uml.modelserver.shared.constants.SemanticKeys;
+import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
 import com.eclipsesource.uml.modelserver.shared.utils.UmlGraphUtil;
 
 public class UmlChangeBoundsContribution extends BasicCommandContribution<Command> {
@@ -89,44 +94,76 @@ public class UmlChangeBoundsContribution extends BasicCommandContribution<Comman
    @Override
    protected Command toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
       throws DecodingException {
+      var changeBoundsCompoundCommand = new CompoundCommand();
+      var bounds = new ArrayList<ElementAndBounds>();
 
       if (command instanceof CCompoundCommand) {
-         var changeBoundsCommand = new CompoundCommand();
+         var compoundCommand = ((CCompoundCommand) command);
 
-         ((CCompoundCommand) command).getCommands().forEach(childCommand -> {
-            var semanticElementId = childCommand.getProperties().get(SemanticKeys.SEMANTIC_ELEMENT_ID);
-            var elementPosition = getElementPosition(childCommand);
-            var elementSize = getElementSize(childCommand);
+         var newBounds = compoundCommand.getCommands().stream().map(childCommand -> {
+            return getBound(childCommand);
+         }).collect(Collectors.toList());
+         bounds.addAll(newBounds);
 
-            changeBoundsCommand
-               .append(new UmlChangeBoundsCommand(domain, modelUri, semanticElementId, elementPosition, elementSize));
+         newBounds.forEach(bound -> {
+            var changeBoundsCommand = getChangeBoundsCommand(modelUri, domain, bound);
+
+            changeBoundsCompoundCommand
+               .append(changeBoundsCommand);
          });
+      } else {
+         var bound = getBound(command);
 
-         return changeBoundsCommand;
+         bounds.add(bound);
+
+         changeBoundsCompoundCommand
+            .append(getChangeBoundsCommand(modelUri, domain, bound));
       }
 
+      changeBoundsCompoundCommand
+         .append(new UmlWrapBoundsCommand(domain, modelUri, bounds));
+      return changeBoundsCompoundCommand;
+   }
+
+   protected ElementAndBounds getBound(final CCommand command) {
       var semanticElementId = command.getProperties().get(SemanticKeys.SEMANTIC_ELEMENT_ID);
       var elementPosition = getElementPosition(command);
       var elementSize = getElementSize(command);
-      return new UmlChangeBoundsCommand(domain, modelUri, semanticElementId, elementPosition, elementSize);
+
+      Consumer<ElementAndBounds> init = (that) -> {
+         that.setElementId(semanticElementId);
+         that.setNewPosition(elementPosition);
+         that.setNewSize(elementSize);
+      };
+
+      return new ElementAndBounds(init);
    }
 
-   protected Optional<GPoint> getElementPosition(final CCommand command) {
+   protected UmlChangeBoundsCommand getChangeBoundsCommand(final URI modelUri, final EditingDomain domain,
+      final ElementAndBounds bound) {
+      var semanticElementAccessor = new SemanticElementAccessor(modelUri, domain);
+      var element = semanticElementAccessor.getElement(bound.getElementId(), Element.class);
+
+      return new UmlChangeBoundsCommand(domain, modelUri, element,
+         Optional.ofNullable(bound.getNewPosition()), Optional.of(bound.getNewSize()));
+   }
+
+   protected GPoint getElementPosition(final CCommand command) {
       if (command.getProperties().containsKey(NotationKeys.POSITION_X)
          && command.getProperties().containsKey(NotationKeys.POSITION_Y)) {
-         return Optional.of(UmlGraphUtil.getGPoint(command.getProperties().get(NotationKeys.POSITION_X),
-            command.getProperties().get(NotationKeys.POSITION_Y)));
+         return UmlGraphUtil.getGPoint(command.getProperties().get(NotationKeys.POSITION_X),
+            command.getProperties().get(NotationKeys.POSITION_Y));
       }
-      return Optional.empty();
+      return null;
    }
 
-   protected Optional<GDimension> getElementSize(final CCommand command) {
+   protected GDimension getElementSize(final CCommand command) {
       if (command.getProperties().containsKey(NotationKeys.WIDTH)
          && command.getProperties().containsKey(NotationKeys.HEIGHT)) {
-         return Optional.of(UmlGraphUtil.getGDimension(
-            command.getProperties().get(NotationKeys.WIDTH), command.getProperties().get(NotationKeys.HEIGHT)));
+         return UmlGraphUtil.getGDimension(
+            command.getProperties().get(NotationKeys.WIDTH), command.getProperties().get(NotationKeys.HEIGHT));
       }
-      return Optional.empty();
+      return null;
    }
 
 }

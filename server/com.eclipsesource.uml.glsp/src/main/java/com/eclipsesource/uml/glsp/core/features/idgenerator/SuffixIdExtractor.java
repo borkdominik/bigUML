@@ -32,4 +32,9 @@ public class SuffixIdExtractor {
    public Optional<String> extractId(final String id) {
       return extractGenerator(id).map(g -> g.clear(id));
    }
+
+   public boolean hasSuffix(final String id) {
+      return extractGenerator(id).isPresent();
+   }
+
 }

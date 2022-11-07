@@ -2,23 +2,18 @@
 <notation:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:notation="http://www.eclipse.org/glsp/notation" diagramType="COMMUNICATION">
   <semanticElement elementId="_nD7_AEiTEe287ptuQ4W3Iw"/>
   <elements xsi:type="notation:Shape">
-    <semanticElement elementId="_2sxvcU8SEe2yZ8WUeq5c5w"/>
-    <position x="75.63550939054858" y="111.13549903603484"/>
-    <size width="951.9478292194349" height="606.2551040346751"/>
+    <semanticElement elementId="_YMo0AFkwEe2JlJ6Hu0hssQ"/>
+    <position x="239.66920147470512" y="250.60269772847062"/>
+    <size width="760.5543549806166" height="411.0712578516732"/>
   </elements>
   <elements xsi:type="notation:Shape">
-    <semanticElement elementId="_Im7n4E8TEe2yZ8WUeq5c5w"/>
-    <position x="484.23894673690404" y="201.61441729126568"/>
-    <size width="73.25" height="42.0"/>
+    <semanticElement elementId="_YkesQFkwEe2JlJ6Hu0hssQ"/>
+    <position x="76.40656471743128" y="139.13897254060217"/>
+    <size width="155.515625" height="42.0"/>
   </elements>
   <elements xsi:type="notation:Shape">
-    <semanticElement elementId="_gcA9IVkYEe2leYN6Nnx35g"/>
-    <position x="968.268583806059" y="370.1378418716236"/>
-    <size width="18.10473552413737" height="5.074656941931756"/>
-  </elements>
-  <elements xsi:type="notation:Shape">
-    <semanticElement elementId="_hP3b8FkYEe2leYN6Nnx35g"/>
-    <position x="265.4774014064783" y="267.3274181410182"/>
+    <semanticElement elementId="_7tU98VkzEe2-DPjS777r_w"/>
+    <position x="257.93379484823527" y="63.08918166335087"/>
     <size width="155.515625" height="42.0"/>
   </elements>
 </notation:Diagram>

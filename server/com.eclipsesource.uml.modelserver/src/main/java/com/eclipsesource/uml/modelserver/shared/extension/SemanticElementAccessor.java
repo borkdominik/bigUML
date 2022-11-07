@@ -37,7 +37,7 @@ public final class SemanticElementAccessor {
 
    public Model getModel() { return this.model; }
 
-   public static String getId(final Element element) {
+   public static String getId(final EObject element) {
       return EcoreUtil.getURI(element).fragment();
    }
 
@@ -45,13 +45,13 @@ public final class SemanticElementAccessor {
       return model.eResource().getEObject(semanticElementId);
    }
 
-   public <C extends Element> C getElement(final String semanticElementId,
+   public <C extends EObject> C getElement(final String semanticElementId,
       final Class<C> clazz) {
       var element = model.eResource().getEObject(semanticElementId);
       return clazz.cast(element);
    }
 
-   public <T extends Element> List<T> getElements(
+   public <T extends EObject> List<T> getElements(
       final String[] elements,
       final Class<T> type) {
 
@@ -61,15 +61,26 @@ public final class SemanticElementAccessor {
       }).collect(Collectors.toUnmodifiableList());
    }
 
-   public <C extends Element> Optional<C> getParent(final String semanticElementId,
+   public <C extends EObject> Optional<C> getParentOfType(final EObject element,
       final Class<C> clazz) {
 
-      var container = getElement(
-         semanticElementId, Element.class).eContainer();
+      var container = element.eContainer();
 
       while (!(clazz.isAssignableFrom(container.getClass())) && container != null) {
          container = container.eContainer();
       }
+
+      if (container != null && !(container instanceof Model)) {
+         return Optional.of(clazz.cast(container));
+      }
+
+      return Optional.empty();
+   }
+
+   public <C extends EObject> Optional<C> getParent(final EObject element,
+      final Class<C> clazz) {
+
+      var container = element.eContainer();
 
       if (container != null && !(container instanceof Model)) {
          return Optional.of(clazz.cast(container));

@@ -15,7 +15,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Message;
 
-import com.eclipsesource.uml.modelserver.uml.notation.commands.UmlRemoveNotationElementCommand;
+import com.eclipsesource.uml.modelserver.shared.notation.commands.UmlRemoveNotationElementCommand;
 
 public class RemoveMessageCompoundCommand extends CompoundCommand {
 

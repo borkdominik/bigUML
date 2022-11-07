@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.uml.util;
+package com.eclipsesource.uml.modelserver.uml.utils;
 
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 

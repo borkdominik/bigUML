@@ -49,4 +49,7 @@ public class UmlDeleteOperationHandler extends AbstractEMSOperationHandler<Delet
       // debug();
    }
 
+   @Override
+   public String getLabel() { return "Uml: Delete"; }
+
 }

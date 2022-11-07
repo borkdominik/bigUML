@@ -16,8 +16,8 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Interaction;
 import org.eclipse.uml2.uml.Lifeline;
 
+import com.eclipsesource.uml.modelserver.shared.notation.commands.UmlRemoveNotationElementCommand;
 import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.lifeline.RemoveLifelineCompoundCommand;
-import com.eclipsesource.uml.modelserver.uml.notation.commands.UmlRemoveNotationElementCommand;
 
 public class RemoveInteractionCompoundCommand extends CompoundCommand {
 

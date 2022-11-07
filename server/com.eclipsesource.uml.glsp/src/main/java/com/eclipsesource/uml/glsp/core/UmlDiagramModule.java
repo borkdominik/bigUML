@@ -18,6 +18,7 @@ import org.eclipse.emfcloud.modelserver.glsp.notation.integration.EMSGLSPNotatio
 import org.eclipse.emfcloud.modelserver.glsp.notation.integration.EMSNotationModelServerAccess;
 import org.eclipse.emfcloud.modelserver.glsp.notation.integration.EMSNotationModelState;
 import org.eclipse.emfcloud.modelserver.glsp.notation.integration.EMSNotationSourceModelStorage;
+import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSChangeBoundsOperationHandler;
 import org.eclipse.emfcloud.modelserver.notation.integration.NotationResource;
 import org.eclipse.glsp.graph.GraphExtension;
 import org.eclipse.glsp.server.actions.Action;
@@ -51,6 +52,7 @@ import com.eclipsesource.uml.glsp.core.gmodel.suffix.HeaderSuffixAppender;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.LabelSuffixAppender;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.SuffixAppender;
 import com.eclipsesource.uml.glsp.core.handler.action.UmlOperationActionHandler;
+import com.eclipsesource.uml.glsp.core.handler.operation.UmlChangeBoundsOperationHandler;
 import com.eclipsesource.uml.glsp.core.handler.operation.UmlOperationHandlerRegistry;
 import com.eclipsesource.uml.glsp.core.handler.operation.UmlOverrideOperationHandlerRegistry;
 import com.eclipsesource.uml.glsp.core.handler.operation.create.DiagramCreateHandlerRegistry;
@@ -203,6 +205,8 @@ public class UmlDiagramModule extends EMSGLSPNotationDiagramModule {
    @Override
    protected void configureOperationHandlers(final MultiBinding<OperationHandler> bindings) {
       super.configureOperationHandlers(bindings);
+      bindings.rebind(EMSChangeBoundsOperationHandler.class, UmlChangeBoundsOperationHandler.class);
+
       bindings.add(UmlLabelEditOperationHandler.class);
       bindings.add(UmlCreateNodeOperationHandler.class);
       bindings.add(UmlCreateEdgeOperationHandler.class);

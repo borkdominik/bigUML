@@ -16,7 +16,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.PackageableElement;
 
-import com.eclipsesource.uml.modelserver.uml.util.UmlSemanticUtil;
+import com.eclipsesource.uml.modelserver.shared.utils.UmlSemanticUtil;
 
 public class PackageableElementNameGenerator extends ListNameGenerator {
    public PackageableElementNameGenerator(final Class<? extends PackageableElement> clazz, final URI modelUri,

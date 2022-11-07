@@ -19,19 +19,19 @@ import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
 import org.eclipse.emfcloud.modelserver.edit.command.BasicCommandContribution;
 import org.eclipse.uml2.uml.NamedElement;
 
-import com.eclipsesource.uml.modelserver.uml.constants.SemanticKeys;
-import com.eclipsesource.uml.modelserver.uml.extension.SemanticElementAccessor;
+import com.eclipsesource.uml.modelserver.shared.constants.SemanticKeys;
+import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
 
 public class RenameElementContribution extends BasicCommandContribution<Command> {
 
-   public static final String TYPE = "rename";
+   public static final String TYPE = "uml:rename";
 
    private static final String NEW_NAME = "new_name";
 
    public static CCommand create(final NamedElement namedElement, final String newName) {
       var command = CCommandFactory.eINSTANCE.createCommand();
       command.setType(TYPE);
-      command.getProperties().put(SemanticKeys.SEMANTIC_URI_FRAGMENT,
+      command.getProperties().put(SemanticKeys.SEMANTIC_ELEMENT_ID,
          SemanticElementAccessor.getId(namedElement));
       command.getProperties().put(NEW_NAME, newName);
       return command;
@@ -41,11 +41,11 @@ public class RenameElementContribution extends BasicCommandContribution<Command>
    protected Command toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
       throws DecodingException {
 
-      var semanticUriFragment = command.getProperties().get(SemanticKeys.SEMANTIC_URI_FRAGMENT);
+      var semanticElementId = command.getProperties().get(SemanticKeys.SEMANTIC_ELEMENT_ID);
       var newName = command.getProperties().get(NEW_NAME);
 
       var model = new SemanticElementAccessor(modelUri, domain);
-      var namedElement = model.getElement(semanticUriFragment,
+      var namedElement = model.getElement(semanticElementId,
          NamedElement.class);
 
       return new RenameElementSemanticCommand(domain, modelUri, namedElement, newName);

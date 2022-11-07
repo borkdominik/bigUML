@@ -16,8 +16,8 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Lifeline;
 import org.eclipse.uml2.uml.MessageOccurrenceSpecification;
 
+import com.eclipsesource.uml.modelserver.shared.notation.commands.UmlRemoveNotationElementCommand;
 import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.message.RemoveMessageCompoundCommand;
-import com.eclipsesource.uml.modelserver.uml.notation.commands.UmlRemoveNotationElementCommand;
 
 public class RemoveLifelineCompoundCommand extends CompoundCommand {
    public RemoveLifelineCompoundCommand(final EditingDomain domain, final URI modelUri,

@@ -18,7 +18,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Element;
 
-import com.eclipsesource.uml.modelserver.uml.notation.UmlNotationElementCommand;
+import com.eclipsesource.uml.modelserver.shared.notation.UmlNotationElementCommand;
 
 import org.eclipse.glsp.server.emf.model.notation.NotationElement;
 import org.eclipse.glsp.server.emf.model.notation.NotationFactory;

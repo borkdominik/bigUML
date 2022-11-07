@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.uml.notation;
+package com.eclipsesource.uml.modelserver.shared.notation;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -17,8 +17,8 @@ import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.glsp.server.emf.model.notation.Diagram;
 import org.eclipse.uml2.uml.Model;
 
-import com.eclipsesource.uml.modelserver.uml.extension.NotationElementAccessor;
-import com.eclipsesource.uml.modelserver.uml.extension.SemanticElementAccessor;
+import com.eclipsesource.uml.modelserver.shared.extension.NotationElementAccessor;
+import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
 
 public abstract class UmlNotationElementCommand extends RecordingCommand {
 

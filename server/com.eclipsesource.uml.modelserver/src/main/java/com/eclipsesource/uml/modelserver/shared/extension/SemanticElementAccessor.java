@@ -8,10 +8,11 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.uml.extension;
+package com.eclipsesource.uml.modelserver.shared.extension;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.eclipse.emf.common.util.URI;
@@ -21,7 +22,7 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Model;
 
-import com.eclipsesource.uml.modelserver.uml.util.UmlSemanticUtil;
+import com.eclipsesource.uml.modelserver.shared.utils.UmlSemanticUtil;
 
 public final class SemanticElementAccessor {
    private final Model model;
@@ -36,23 +37,23 @@ public final class SemanticElementAccessor {
 
    public Model getModel() { return this.model; }
 
-   public static String getId(final Element element) {
+   public static String getId(final EObject element) {
       return EcoreUtil.getURI(element).fragment();
    }
 
-   public EObject getElement(final String semanticUriFragment) {
-      return model.eResource().getEObject(semanticUriFragment);
+   public EObject getElement(final String semanticElementId) {
+      return model.eResource().getEObject(semanticElementId);
    }
 
-   public <C extends Element> C getElement(final String semanticUriFragment,
-      final java.lang.Class<C> clazz) {
-      var element = model.eResource().getEObject(semanticUriFragment);
+   public <C extends EObject> C getElement(final String semanticElementId,
+      final Class<C> clazz) {
+      var element = model.eResource().getEObject(semanticElementId);
       return clazz.cast(element);
    }
 
-   public <T extends Element> List<T> getElements(
+   public <T extends EObject> List<T> getElements(
       final String[] elements,
-      final java.lang.Class<T> type) {
+      final Class<T> type) {
 
       return Arrays.asList(elements).stream().map(element -> {
          var mapped = getElement(element, type);
@@ -60,21 +61,32 @@ public final class SemanticElementAccessor {
       }).collect(Collectors.toUnmodifiableList());
    }
 
-   public <C extends Element> C getParent(final String semanticUriFragment,
-      final java.lang.Class<C> clazz) {
-      EObject container = getElement(
-         semanticUriFragment, Element.class).eContainer();
+   public <C extends EObject> Optional<C> getParentOfType(final EObject element,
+      final Class<C> clazz) {
+
+      var container = element.eContainer();
+
       while (!(clazz.isAssignableFrom(container.getClass())) && container != null) {
-
          container = container.eContainer();
-
       }
 
       if (container != null && !(container instanceof Model)) {
-         return clazz.cast(container);
+         return Optional.of(clazz.cast(container));
       }
 
-      return null;
+      return Optional.empty();
+   }
+
+   public <C extends EObject> Optional<C> getParent(final EObject element,
+      final Class<C> clazz) {
+
+      var container = element.eContainer();
+
+      if (container != null && !(container instanceof Model)) {
+         return Optional.of(clazz.cast(container));
+      }
+
+      return Optional.empty();
    }
 
    @SuppressWarnings("unchecked")

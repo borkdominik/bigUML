@@ -58,5 +58,5 @@ public class UmlLabelEditOperationHandler
    }
 
    @Override
-   public String getLabel() { return "Apply label"; }
+   public String getLabel() { return "Uml: Apply label"; }
 }

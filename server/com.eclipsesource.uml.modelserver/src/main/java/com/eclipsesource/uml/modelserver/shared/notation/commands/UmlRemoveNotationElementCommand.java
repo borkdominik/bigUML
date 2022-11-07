@@ -8,15 +8,15 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.uml.notation.commands;
+package com.eclipsesource.uml.modelserver.shared.notation.commands;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.glsp.server.emf.model.notation.NotationElement;
 import org.eclipse.uml2.uml.Element;
 
-import com.eclipsesource.uml.modelserver.uml.extension.SemanticElementAccessor;
-import com.eclipsesource.uml.modelserver.uml.notation.UmlNotationElementCommand;
+import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
+import com.eclipsesource.uml.modelserver.shared.notation.UmlNotationElementCommand;
 
 public class UmlRemoveNotationElementCommand extends UmlNotationElementCommand {
 

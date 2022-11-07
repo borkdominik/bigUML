@@ -14,8 +14,9 @@ import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.glsp.graph.GPoint;
+import org.eclipse.glsp.graph.util.GraphUtil;
 
-import com.eclipsesource.uml.modelserver.uml.notation.commands.UmlAddShapeCommand;
+import com.eclipsesource.uml.modelserver.shared.notation.commands.UmlAddShapeCommand;
 
 public class AddInteractionCompoundCommand extends CompoundCommand {
 
@@ -23,6 +24,7 @@ public class AddInteractionCompoundCommand extends CompoundCommand {
       var command = new AddInteractionSemanticCommand(domain, modelUri);
 
       this.append(command);
-      this.append(new UmlAddShapeCommand(domain, modelUri, position, () -> command.getNewInteraction()));
+      this.append(new UmlAddShapeCommand(domain, modelUri, position, GraphUtil.dimension(160, 50),
+         () -> command.getNewInteraction()));
    }
 }

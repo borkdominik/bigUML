@@ -21,11 +21,11 @@ import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
 import org.eclipse.emfcloud.modelserver.edit.command.BasicCommandContribution;
 import org.eclipse.uml2.uml.Lifeline;
 
-import com.eclipsesource.uml.modelserver.uml.extension.SemanticElementAccessor;
+import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
 
 public class AddMessageContribution extends BasicCommandContribution<Command> {
 
-   public static final String TYPE = "add_message";
+   public static final String TYPE = "uml:add_message";
 
    public static final String SOURCE_LIFELINE_URI_FRAGMENT = "source_lifeline_uri_fragment";
    public static final String TARGET_LIFELINE_URI_FRAGMENT = "target_lifeline_uri_fragment";

@@ -42,7 +42,7 @@ public class StandardOutlineGenerator implements DefaultDiagramOutlineGenerator 
    protected OutlineTreeNode map(final Element element) {
       var label = labelOf(element);
       var children = childrenOf(element);
-      var icon = children.size() > 0 ? "class" : "method";
+      var icon = iconOf(element);
 
       return new OutlineTreeNode(label, EcoreUtil.getURI(element).fragment(), children, icon);
    }
@@ -52,6 +52,10 @@ public class StandardOutlineGenerator implements DefaultDiagramOutlineGenerator 
          return ((NamedElement) element).getName();
       }
       return EcoreUtil.getID(element);
+   }
+
+   protected String iconOf(final Element element) {
+      return "class";
    }
 
    protected List<OutlineTreeNode> childrenOf(final Element element) {

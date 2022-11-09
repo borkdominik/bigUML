@@ -16,7 +16,8 @@ import org.eclipse.glsp.server.actions.ActionHandler;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.ActionHandlerContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.ClientActionContribution;
 import com.eclipsesource.uml.glsp.features.outline.generator.DefaultDiagramOutlineGenerator;
-import com.eclipsesource.uml.glsp.features.outline.generator.DefaultOutlineGenerator;
+import com.eclipsesource.uml.glsp.features.outline.generator.NotationBasedOutlineGenerator;
+import com.eclipsesource.uml.glsp.features.outline.handler.action.DiagramOutlineGeneratorRegistry;
 import com.eclipsesource.uml.glsp.features.outline.handler.action.RequestOutlineHandler;
 import com.eclipsesource.uml.glsp.features.outline.handler.action.SetOutlineAction;
 import com.eclipsesource.uml.glsp.features.outline.manifest.contributions.OutlineGeneratorContribution;
@@ -29,8 +30,6 @@ public class OutlineManifest extends AbstractModule
    implements ClientActionContribution.Contributor, ActionHandlerContribution.Contributor,
    OutlineGeneratorContribution.Creator {
 
-   public static final String Id = "OUTLINE_MANIFEST";
-
    @Override
    protected void configure() {
       super.configure();
@@ -38,9 +37,10 @@ public class OutlineManifest extends AbstractModule
       contributeActionHandler(binder());
       createDiagramOutlineGeneratorBinding(binder());
 
+      bind(DiagramOutlineGeneratorRegistry.class).in(Singleton.class);
       OptionalBinder.newOptionalBinder(binder(), DefaultDiagramOutlineGenerator.class)
          .setDefault()
-         .to(DefaultOutlineGenerator.class)
+         .to(NotationBasedOutlineGenerator.class)
          .in(Singleton.class);
    }
 

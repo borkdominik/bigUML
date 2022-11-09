@@ -23,10 +23,7 @@ import com.eclipsesource.uml.glsp.core.manifest.DiagramManifest;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.CreateHandlerContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.DeleteHandlerContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.LabelEditHandlerContribution;
-import com.eclipsesource.uml.glsp.features.outline.generator.DiagramOutlineGenerator;
-import com.eclipsesource.uml.glsp.features.outline.manifest.contributions.OutlineGeneratorContribution;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.diagram.CommunicationConfiguration;
-import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.features.outline.CommunicationOutlineGenerator;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.gmodel.InteractionNodeMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.gmodel.LifelineNodeMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.gmodel.MessageEdgeMapper;
@@ -45,8 +42,7 @@ import com.google.inject.multibindings.Multibinder;
 
 public class CommunicationUmlManifest extends DiagramManifest
    implements CreateHandlerContribution.Contributor,
-   DeleteHandlerContribution.Contributor, LabelEditHandlerContribution.Contributor,
-   OutlineGeneratorContribution.Contributor {
+   DeleteHandlerContribution.Contributor, LabelEditHandlerContribution.Contributor {
 
    @Override
    public String id() {
@@ -122,10 +118,5 @@ public class CommunicationUmlManifest extends DiagramManifest
       multibinder.addBinding().to(InteractionNodeMapper.class);
       multibinder.addBinding().to(LifelineNodeMapper.class);
       multibinder.addBinding().to(MessageEdgeMapper.class);
-   }
-
-   @Override
-   public Class<? extends DiagramOutlineGenerator> contributeOutlineGenerator() {
-      return CommunicationOutlineGenerator.class;
    }
 }

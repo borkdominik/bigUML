@@ -8,9 +8,8 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.features.outline;
+package com.eclipsesource.uml.glsp.features.outline.generator;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,41 +18,49 @@ import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.NamedElement;
 
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
-import com.eclipsesource.uml.glsp.features.outline.generator.DiagramOutlineGenerator;
 import com.eclipsesource.uml.glsp.features.outline.model.OutlineTreeNode;
 import com.google.inject.Inject;
 
-public class CommunicationOutlineGenerator implements DiagramOutlineGenerator {
+public class StandardOutlineGenerator implements DefaultDiagramOutlineGenerator {
+
    @Inject
    protected UmlModelState modelState;
 
    @Override
    public List<OutlineTreeNode> generate() {
       var model = modelState.getSemanticModel();
-      List<OutlineTreeNode> outlineTreeNodes = new ArrayList<>();
 
-      outlineTreeNodes = model.eContents().stream().filter(elem -> modelState.hasNotation(elem))
+      var outlineTreeNodes = model.eContents().stream().filter(elem -> modelState.hasNotation(elem))
          .filter(elem -> elem instanceof Element)
          .map(elem -> (Element) elem)
-         .map(rootChildren -> mapElementToOutlineTreeNode(rootChildren))
+         .map(child -> map(child))
          .collect(Collectors.toList());
+
       return outlineTreeNodes;
    }
 
-   private OutlineTreeNode mapElementToOutlineTreeNode(final Element element) {
-      var lable = "";
+   protected OutlineTreeNode map(final Element element) {
+      var label = labelOf(element);
+      var children = childrenOf(element);
+      var icon = children.size() > 0 ? "class" : "method";
+
+      return new OutlineTreeNode(label, EcoreUtil.getURI(element).fragment(), children, icon);
+   }
+
+   protected String labelOf(final Element element) {
       if (element instanceof NamedElement) {
-         lable = ((NamedElement) element).getName();
-      } else {
-         lable = EcoreUtil.getID(element);
+         return ((NamedElement) element).getName();
       }
+      return EcoreUtil.getID(element);
+   }
+
+   protected List<OutlineTreeNode> childrenOf(final Element element) {
       if (element.getOwnedElements().isEmpty()) {
-         return new OutlineTreeNode(lable, EcoreUtil.getURI(element).fragment(), new ArrayList<>(), "method");
+         return List.of();
       }
 
-      return new OutlineTreeNode(lable, EcoreUtil.getURI(element).fragment(),
-         element.getOwnedElements().stream().filter(elem -> modelState.hasNotation(elem))
-            .map(elem -> mapElementToOutlineTreeNode(elem)).collect(Collectors.toList()),
-         "class");
+      return element.getOwnedElements().stream()
+         .map(elem -> map(elem))
+         .collect(Collectors.toList());
    }
 }

@@ -8,10 +8,9 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.features.outline.actions;
+package com.eclipsesource.uml.glsp.features.outline.handler.action;
 
 import java.util.List;
-import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,8 +18,7 @@ import org.eclipse.glsp.server.actions.AbstractActionHandler;
 import org.eclipse.glsp.server.actions.Action;
 
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
-import com.eclipsesource.uml.glsp.features.outline.generator.DefaultOutlineGenerator;
-import com.eclipsesource.uml.glsp.features.outline.generator.DiagramOutlineGenerator;
+import com.eclipsesource.uml.glsp.features.outline.generator.DefaultDiagramOutlineGenerator;
 import com.google.inject.Inject;
 
 public class RequestOutlineHandler extends AbstractActionHandler<RequestOutlineAction> {
@@ -28,19 +26,19 @@ public class RequestOutlineHandler extends AbstractActionHandler<RequestOutlineA
    private static final Logger LOG = LogManager.getLogger(RequestOutlineHandler.class);
 
    @Inject
-   private DefaultOutlineGenerator defaultGenerator;
-
-   @Inject
-   private Set<DiagramOutlineGenerator> generators;
-
-   @Inject
    protected UmlModelState modelState;
+
+   @Inject
+   protected DiagramOutlineGeneratorRegistry registry;
+
+   @Inject
+   protected DefaultDiagramOutlineGenerator defaultGenerator;
 
    @Override
    protected List<Action> executeAction(final RequestOutlineAction actualAction) {
-      var diagramType = modelState.getUnsafeRepresentation();
+      var representation = modelState.getUnsafeRepresentation();
 
-      var generator = generators.stream().filter(g -> g.supports(diagramType)).findFirst().orElse(defaultGenerator);
+      var generator = registry.get(representation).orElse(defaultGenerator);
 
       return List.of(new SetOutlineAction(generator.generate()));
    }

@@ -8,12 +8,17 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.features.outline.generator;
+package com.eclipsesource.uml.glsp.core.manifest.contributions;
 
-import java.util.List;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.inject.name.Named;
+import com.google.inject.name.Names;
 
-import com.eclipsesource.uml.glsp.features.outline.model.OutlineTreeNode;
+public interface BaseRepresentationContribution {
 
-public interface DiagramOutlineGenerator {
-   List<OutlineTreeNode> generate();
+   Representation representation();
+
+   default Named representationNamed() {
+      return Names.named(representation().getName());
+   }
 }

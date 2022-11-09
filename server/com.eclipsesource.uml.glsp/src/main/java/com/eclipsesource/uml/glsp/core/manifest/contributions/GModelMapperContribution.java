@@ -23,21 +23,31 @@ import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.MapBinder;
 import com.google.inject.multibindings.Multibinder;
 
-public interface GModelMapperContribution extends BaseDiagramContribution {
+public interface GModelMapperContribution {
+   interface Creator extends BaseContribution {
+      default Multibinder<GModelMapper<? extends EObject, ? extends GModelElement>> createGModelMapperBinding(
+         final Binder binder) {
+         return Multibinder.newSetBinder(binder,
+            new TypeLiteral<GModelMapper<? extends EObject, ? extends GModelElement>>() {},
+            idNamed());
+      }
 
-   default void contributeGModelMapper(final Binder binder) {
-      var multibinder = Multibinder.newSetBinder(binder,
-         new TypeLiteral<GModelMapper<? extends EObject, ? extends GModelElement>>() {}, namedRepresentation());
-
-      contributeGModelMapper(multibinder);
-
-      var mapbinder = MapBinder.newMapBinder(binder, new TypeLiteral<Representation>() {},
-         new TypeLiteral<Set<GModelMapper<? extends EObject, ? extends GModelElement>>>() {});
-
-      mapbinder.addBinding(representation())
-         .to(Key.get(new TypeLiteral<Set<GModelMapper<? extends EObject, ? extends GModelElement>>>() {},
-            namedRepresentation()));
+      default MapBinder<Representation, Set<GModelMapper<? extends EObject, ? extends GModelElement>>> createDiagramGModelMapperBinding(
+         final Binder binder) {
+         return MapBinder.newMapBinder(binder, new TypeLiteral<Representation>() {},
+            new TypeLiteral<Set<GModelMapper<? extends EObject, ? extends GModelElement>>>() {});
+      }
    }
 
-   void contributeGModelMapper(Multibinder<GModelMapper<? extends EObject, ? extends GModelElement>> multibinder);
+   interface Contributor extends Creator, BaseRepresentationContribution {
+      default void contributeGModelMapper(final Binder binder) {
+         contributeGModelMapper(createGModelMapperBinding(binder));
+
+         createDiagramGModelMapperBinding(binder).addBinding(representation())
+            .to(Key.get(new TypeLiteral<Set<GModelMapper<? extends EObject, ? extends GModelElement>>>() {},
+               idNamed()));
+      }
+
+      void contributeGModelMapper(Multibinder<GModelMapper<? extends EObject, ? extends GModelElement>> multibinder);
+   }
 }

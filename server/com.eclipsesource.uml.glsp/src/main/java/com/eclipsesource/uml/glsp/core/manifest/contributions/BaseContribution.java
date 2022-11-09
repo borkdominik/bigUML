@@ -8,16 +8,16 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.features.outline.actions;
+package com.eclipsesource.uml.glsp.core.manifest.contributions;
 
-import org.eclipse.glsp.server.actions.RequestAction;
+import com.google.inject.name.Named;
+import com.google.inject.name.Names;
 
-public class RequestOutlineAction extends RequestAction<SetOutlineAction> {
-   public static final String KIND = "requestOutlineView";
+public interface BaseContribution {
 
-   public RequestOutlineAction() {
-      super(KIND);
+   String id();
 
+   default Named idNamed() {
+      return Names.named(id());
    }
-
 }

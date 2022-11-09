@@ -10,10 +10,6 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.features.outline.generator;
 
-import java.util.List;
+public interface DefaultDiagramOutlineGenerator extends DiagramOutlineGenerator {
 
-import com.eclipsesource.uml.glsp.features.outline.model.OutlineTreeNode;
-
-public interface DiagramOutlineGenerator {
-   List<OutlineTreeNode> generate();
 }

@@ -16,11 +16,17 @@ import com.google.inject.Binder;
 import com.google.inject.multibindings.Multibinder;
 
 public interface ActionHandlerContribution {
-
-   default void contributeActionHandler(final Binder binder) {
-      var multibinder = Multibinder.newSetBinder(binder, ActionHandler.class);
-      contributeActionHandler(multibinder);
+   interface Creator {
+      default Multibinder<ActionHandler> createActionHandlerBinding(final Binder binder) {
+         return Multibinder.newSetBinder(binder, ActionHandler.class);
+      }
    }
 
-   void contributeActionHandler(Multibinder<ActionHandler> multibinder);
+   interface Contributor extends Creator {
+      default void contributeActionHandler(final Binder binder) {
+         contributeActionHandler(createActionHandlerBinding(binder));
+      }
+
+      void contributeActionHandler(Multibinder<ActionHandler> multibinder);
+   }
 }

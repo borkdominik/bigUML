@@ -19,37 +19,37 @@ import java.util.stream.Collectors;
 import org.eclipse.glsp.server.internal.registry.MapRegistry;
 import org.eclipse.glsp.server.registry.Registry;
 
+import com.eclipsesource.uml.modelserver.unotation.Representation;
+
 @SuppressWarnings("restriction")
-public abstract class DiagramRegistry<K, V> implements Registry<RepresentationKey<K>, V> {
-   protected final Map<String, RepresentationKey<K>> keys = new HashMap<>();
+public abstract class DiagramSingleKeyRegistry<V> implements Registry<Representation, V> {
+   protected final Map<String, Representation> keys = new HashMap<>();
    protected final MapRegistry<String, V> registry = new MapRegistry<>();
 
-   protected String deriveKey(final RepresentationKey<K> key) {
-      var representation = key.representation;
-
-      return representation.getName() + ":" + key.key2;
+   protected String deriveKey(final Representation key) {
+      return key.getName();
    }
 
    @Override
-   public boolean register(final RepresentationKey<K> key,
+   public boolean register(final Representation key,
       final V value) {
       keys.put(deriveKey(key), key);
       return registry.register(deriveKey(key), value);
    }
 
    @Override
-   public boolean deregister(final RepresentationKey<K> key) {
+   public boolean deregister(final Representation key) {
       keys.remove(deriveKey(key));
       return registry.deregister(deriveKey(key));
    }
 
    @Override
-   public boolean hasKey(final RepresentationKey<K> key) {
+   public boolean hasKey(final Representation key) {
       return registry.hasKey(deriveKey(key));
    }
 
    @Override
-   public Optional<V> get(final RepresentationKey<K> key) {
+   public Optional<V> get(final Representation key) {
       return registry.get(deriveKey(key));
    }
 
@@ -57,7 +57,7 @@ public abstract class DiagramRegistry<K, V> implements Registry<RepresentationKe
    public Set<V> getAll() { return registry.getAll(); }
 
    @Override
-   public Set<RepresentationKey<K>> keys() {
+   public Set<Representation> keys() {
       return keys.values().stream().collect(Collectors.toSet());
    }
 

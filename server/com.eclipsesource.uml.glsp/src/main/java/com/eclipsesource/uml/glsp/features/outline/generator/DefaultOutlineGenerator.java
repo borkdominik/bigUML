@@ -10,4 +10,53 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.features.outline.generator;
 
-public interface DefaultOutlineGenerator extends DiagramOutlineGenerator {}
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.uml2.uml.Element;
+import org.eclipse.uml2.uml.NamedElement;
+
+import com.eclipsesource.uml.glsp.core.model.UmlModelState;
+import com.eclipsesource.uml.glsp.features.outline.model.OutlineTreeNode;
+import com.google.inject.Inject;
+
+public class DefaultOutlineGenerator implements DefaultDiagramOutlineGenerator {
+
+   @Inject
+   protected UmlModelState modelState;
+
+   @Override
+   public List<OutlineTreeNode> generate() {
+      /*- TODO: Activate
+      var rootElement = modelState.getSemanticModel();
+      List<OutlineTreeNode> outlineTreeNodes = new ArrayList<>();
+      
+      var model = modelState.getSemanticModel();
+      
+      outlineTreeNodes = model.getOwnedElements().stream()
+         .map(rootChildren -> mapElementToOutlineTreeNode(rootChildren))
+         .collect(Collectors.toList());
+      
+      return outlineTreeNodes;
+      */
+      return List.of();
+   }
+
+   private OutlineTreeNode mapElementToOutlineTreeNode(final Element element) {
+      var lable = "";
+      if (element instanceof NamedElement) {
+         lable = ((NamedElement) element).getName();
+      } else {
+         lable = EcoreUtil.getID(element);
+      }
+      if (element.getOwnedElements().isEmpty()) {
+         return new OutlineTreeNode(lable, EcoreUtil.getURI(element).fragment(), new ArrayList<>(), "method");
+      }
+
+      return new OutlineTreeNode(lable, EcoreUtil.getURI(element).fragment(), element.getOwnedElements().stream()
+         .map(elem -> mapElementToOutlineTreeNode(elem)).collect(Collectors.toList()), "class");
+   }
+
+}

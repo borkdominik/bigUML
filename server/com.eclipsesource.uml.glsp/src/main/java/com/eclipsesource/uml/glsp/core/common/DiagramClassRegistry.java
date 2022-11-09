@@ -13,7 +13,7 @@ package com.eclipsesource.uml.glsp.core.common;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public abstract class DiagramClassRegistry<K extends Class<?>, V> extends DiagramRegistry<K, V> {
+public abstract class DiagramClassRegistry<K extends Class<?>, V> extends DiagramMultiKeyRegistry<K, V> {
 
    @Override
    protected String deriveKey(final RepresentationKey<K> key) {

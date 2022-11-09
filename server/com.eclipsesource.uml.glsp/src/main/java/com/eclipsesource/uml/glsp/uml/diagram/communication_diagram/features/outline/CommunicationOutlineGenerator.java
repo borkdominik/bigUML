@@ -21,7 +21,6 @@ import org.eclipse.uml2.uml.NamedElement;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.eclipsesource.uml.glsp.features.outline.generator.DiagramOutlineGenerator;
 import com.eclipsesource.uml.glsp.features.outline.model.OutlineTreeNode;
-import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 
 public class CommunicationOutlineGenerator implements DiagramOutlineGenerator {
@@ -29,24 +28,16 @@ public class CommunicationOutlineGenerator implements DiagramOutlineGenerator {
    protected UmlModelState modelState;
 
    @Override
-   public boolean supports(final Representation representation) {
-      return representation == Representation.COMMUNICATION;
-   }
-
-   @Override
    public List<OutlineTreeNode> generate() {
-      /*- TODO: ACtivate
-      var rootElement = modelState.getSemanticModel();
-      List<OutlineTreeNode> outlineTreeNodes = new ArrayList<>();
-      
       var model = modelState.getSemanticModel();
-      
-      outlineTreeNodes = model.getOwnedElements().stream().filter(elem -> hasNotation(elem))
+      List<OutlineTreeNode> outlineTreeNodes = new ArrayList<>();
+
+      outlineTreeNodes = model.eContents().stream().filter(elem -> modelState.hasNotation(elem))
+         .filter(elem -> elem instanceof Element)
+         .map(elem -> (Element) elem)
          .map(rootChildren -> mapElementToOutlineTreeNode(rootChildren))
          .collect(Collectors.toList());
       return outlineTreeNodes;
-      */
-      return List.of();
    }
 
    private OutlineTreeNode mapElementToOutlineTreeNode(final Element element) {
@@ -61,13 +52,8 @@ public class CommunicationOutlineGenerator implements DiagramOutlineGenerator {
       }
 
       return new OutlineTreeNode(lable, EcoreUtil.getURI(element).fragment(),
-         element.getOwnedElements().stream().filter(elem -> hasNotation(elem))
+         element.getOwnedElements().stream().filter(elem -> modelState.hasNotation(elem))
             .map(elem -> mapElementToOutlineTreeNode(elem)).collect(Collectors.toList()),
          "class");
    }
-
-   private boolean hasNotation(final Element element) {
-      return modelState.getIndex().getNotation(element).isPresent();
-   }
-
 }

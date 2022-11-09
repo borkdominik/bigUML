@@ -8,28 +8,26 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.core.handler.operation.create;
+package com.eclipsesource.uml.glsp.features.outline.handler.action;
 
 import java.util.Map;
-import java.util.Set;
 
-import com.eclipsesource.uml.glsp.core.common.DiagramMultiKeyRegistry;
-import com.eclipsesource.uml.glsp.core.common.RepresentationKey;
+import com.eclipsesource.uml.glsp.core.common.DiagramSingleKeyRegistry;
+import com.eclipsesource.uml.glsp.features.outline.generator.DiagramOutlineGenerator;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 
-public class DiagramCreateHandlerRegistry
-   extends DiagramMultiKeyRegistry<String, DiagramCreateHandler> {
+public class DiagramOutlineGeneratorRegistry
+   extends DiagramSingleKeyRegistry<DiagramOutlineGenerator> {
 
    @Inject
-   public DiagramCreateHandlerRegistry(final Map<Representation, Set<DiagramCreateHandler>> handlers) {
+   public DiagramOutlineGeneratorRegistry(
+      final Map<Representation, DiagramOutlineGenerator> handlers) {
       handlers.entrySet().forEach(e -> {
          var representation = e.getKey();
+         var generator = e.getValue();
 
-         e.getValue().forEach(handler -> {
-            var elementId = handler.getElementTypeId();
-            register(RepresentationKey.of(representation, elementId), handler);
-         });
+         register(representation, generator);
       });
 
       // debug();

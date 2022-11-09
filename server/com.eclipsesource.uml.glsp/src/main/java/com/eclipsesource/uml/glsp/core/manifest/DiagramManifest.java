@@ -16,7 +16,8 @@ import com.eclipsesource.uml.glsp.core.manifest.contributions.PaletteContributio
 import com.google.inject.AbstractModule;
 
 public abstract class DiagramManifest extends AbstractModule
-   implements DiagramConfigurationContribution, PaletteContribution, GModelMapperContribution {
+   implements DiagramConfigurationContribution.Contributor, PaletteContribution.Contributor,
+   GModelMapperContribution.Contributor {
 
    @Override
    protected void configure() {

@@ -20,19 +20,27 @@ import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.MapBinder;
 import com.google.inject.multibindings.Multibinder;
 
-public interface CreateHandlerContribution extends BaseDiagramContribution {
+public interface CreateHandlerContribution {
+   interface Creator extends BaseContribution {
+      default Multibinder<DiagramCreateHandler> createCreateHandlerBinding(final Binder binder) {
+         return Multibinder.newSetBinder(binder, DiagramCreateHandler.class, idNamed());
+      }
 
-   default void contributeCreateHandler(final Binder binder) {
-      var multibinder = Multibinder.newSetBinder(binder, DiagramCreateHandler.class, namedRepresentation());
-
-      contributeCreateHandler(multibinder);
-
-      var mapbinder = MapBinder.newMapBinder(binder, new TypeLiteral<Representation>() {},
-         new TypeLiteral<Set<DiagramCreateHandler>>() {});
-
-      mapbinder.addBinding(representation())
-         .to(Key.get(new TypeLiteral<Set<DiagramCreateHandler>>() {}, namedRepresentation()));
+      default MapBinder<Representation, Set<DiagramCreateHandler>> createDiagramCreateHandlerBinding(
+         final Binder binder) {
+         return MapBinder.newMapBinder(binder, new TypeLiteral<Representation>() {},
+            new TypeLiteral<Set<DiagramCreateHandler>>() {});
+      }
    }
 
-   void contributeCreateHandler(Multibinder<DiagramCreateHandler> multibinder);
+   interface Contributor extends Creator, BaseRepresentationContribution {
+      default void contributeCreateHandler(final Binder binder) {
+         contributeCreateHandler(createCreateHandlerBinding(binder));
+
+         createDiagramCreateHandlerBinding(binder).addBinding(representation())
+            .to(Key.get(new TypeLiteral<Set<DiagramCreateHandler>>() {}, idNamed()));
+      }
+
+      void contributeCreateHandler(Multibinder<DiagramCreateHandler> multibinder);
+   }
 }

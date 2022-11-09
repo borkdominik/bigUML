@@ -22,19 +22,28 @@ import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.MapBinder;
 import com.google.inject.multibindings.Multibinder;
 
-public interface DeleteHandlerContribution extends BaseDiagramContribution {
+public interface DeleteHandlerContribution {
+   interface Creator extends BaseContribution {
+      default Multibinder<DiagramDeleteHandler<? extends EObject>> createDeleteHandlerBinding(final Binder binder) {
+         return Multibinder.newSetBinder(binder, new TypeLiteral<DiagramDeleteHandler<? extends EObject>>() {},
+            idNamed());
+      }
 
-   default void contributeDeleteHandler(final Binder binder) {
-      var multibinder = Multibinder.newSetBinder(binder, new TypeLiteral<DiagramDeleteHandler<? extends EObject>>() {},
-         namedRepresentation());
-
-      contributeDeleteHandler(multibinder);
-
-      var mapbinder = MapBinder.newMapBinder(binder, new TypeLiteral<Representation>() {},
-         new TypeLiteral<Set<DiagramDeleteHandler<? extends EObject>>>() {});
-      mapbinder.addBinding(representation())
-         .to(Key.get(new TypeLiteral<Set<DiagramDeleteHandler<? extends EObject>>>() {}, namedRepresentation()));
+      default MapBinder<Representation, Set<DiagramDeleteHandler<? extends EObject>>> createDiagramDeleteHandlerBinding(
+         final Binder binder) {
+         return MapBinder.newMapBinder(binder, new TypeLiteral<Representation>() {},
+            new TypeLiteral<Set<DiagramDeleteHandler<? extends EObject>>>() {});
+      }
    }
 
-   void contributeDeleteHandler(Multibinder<DiagramDeleteHandler<? extends EObject>> multibinder);
+   interface Contributor extends Creator, BaseRepresentationContribution {
+      default void contributeDeleteHandler(final Binder binder) {
+         contributeDeleteHandler(createDeleteHandlerBinding(binder));
+
+         createDiagramDeleteHandlerBinding(binder).addBinding(representation())
+            .to(Key.get(new TypeLiteral<Set<DiagramDeleteHandler<? extends EObject>>>() {}, idNamed()));
+      }
+
+      void contributeDeleteHandler(Multibinder<DiagramDeleteHandler<? extends EObject>> multibinder);
+   }
 }

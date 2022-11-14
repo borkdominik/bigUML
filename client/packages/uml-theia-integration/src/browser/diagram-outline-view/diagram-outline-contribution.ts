@@ -13,14 +13,16 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
+import { GLSPDiagramWidget } from "@eclipse-glsp/theia-integration";
 import { DisposableCollection } from "@theia/core";
+import { ApplicationShell, FocusTracker, Widget } from "@theia/core/lib/browser";
 import { FrontendApplication, FrontendApplicationContribution } from "@theia/core/lib/browser/frontend-application";
 import { AbstractViewContribution } from "@theia/core/lib/browser/shell/view-contribution";
 import { OS } from "@theia/core/lib/common/os";
 import { inject, injectable } from "@theia/core/shared/inversify";
 import { EditorManager } from "@theia/editor/lib/browser";
-import debounce = require("lodash.debounce");
 
+import { TheiaDiagramOutlineManager } from "../theia-diagram-outline";
 import { DiagramOutlineViewService } from "./diagram-outline-view-service";
 import { DiagramOutlineViewWidget } from "./diagram-outline-view-widget";
 
@@ -34,6 +36,12 @@ export class DiagramOutlineViewContribution extends AbstractViewContribution<Dia
 
     @inject(DiagramOutlineViewService)
     protected readonly diagramOutlineViewService: DiagramOutlineViewService;
+
+    @inject(TheiaDiagramOutlineManager)
+    protected readonly theiaDiagramOutlineManager: TheiaDiagramOutlineManager;
+
+    @inject(ApplicationShell)
+    protected readonly shell: ApplicationShell;
 
     @inject(EditorManager)
     protected readonly editorManager: EditorManager;
@@ -54,8 +62,25 @@ export class DiagramOutlineViewContribution extends AbstractViewContribution<Dia
     }
 
     onStart(app: FrontendApplication): void {
+        this.editorManager.onActiveEditorChanged(event => {
+            console.log("EDITOR MANAGER Active Changed", event);
+        });
+        this.editorManager.onCurrentEditorChanged(event => {
+            console.log("EDITOR MANAGER Current Changed", event);
+        });
+
+        this.shell.onDidChangeCurrentWidget(event => {
+            console.log("SHELL Current Changed", event);
+            // this.handleEditorChanged(event);
+        });
+        this.shell.onDidChangeActiveWidget(event => {
+            console.log("SHELL Active Changed", event);
+            // this.handleEditorChanged(event);
+        });
+        // this.handleCurrentEditorChanged();
+
         this.diagramOutlineViewService.onDidChangeOpenState(async open => {
-            console.log("OnDidChangeOpenState", open);
+            /*
             if (open) {
                 this.toDisposeOnClose.push(this.toDisposeOnEditor);
                 this.toDisposeOnClose.push(this.editorManager.onCurrentEditorChanged(
@@ -65,27 +90,17 @@ export class DiagramOutlineViewContribution extends AbstractViewContribution<Dia
             } else {
                 this.toDisposeOnClose.dispose();
             }
-        });
-        this.diagramOutlineViewService.onDidSelect(async node => {
-            console.log("OnDidDelect", node);
+            */
         });
     }
 
-    protected handleCurrentEditorChanged(): void {
-        this.toDisposeOnEditor.dispose();
-        if (this.toDisposeOnClose.disposed) {
-            return;
+    protected handleEditorChanged(event: FocusTracker.IChangedArgs<Widget>): void {
+        console.log("Editor changed", event);
+        if (event.newValue instanceof GLSPDiagramWidget) {
+            this.theiaDiagramOutlineManager.refresh(event.newValue);
+        } else if (event.oldValue instanceof GLSPDiagramWidget) {
+            this.theiaDiagramOutlineManager.clear(event.oldValue);
         }
-        this.toDisposeOnClose.push(this.toDisposeOnEditor);
-
-        this.updateOutline();
-    }
-
-    protected async updateOutline(editorSelection?: Range): Promise<void> {
-        if (!this.canUpdateOutline) {
-            return;
-        }
-
     }
 
     async initializeLayout(app: FrontendApplication): Promise<void> {

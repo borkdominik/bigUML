@@ -25,6 +25,12 @@ export interface DiagramOutlineSymbolInformationNode extends OutlineSymbolInform
     children: DiagramOutlineSymbolInformationNode[];
 }
 
+export namespace DiagramOutlineSymbolInformationNode {
+    export function is(node: OutlineSymbolInformationNode): node is DiagramOutlineSymbolInformationNode {
+        return OutlineSymbolInformationNode.is(node) && "children" in node;
+    }
+}
+
 export type DiagramOutlineViewWidgetFactory = () => DiagramOutlineViewWidget;
 export const DiagramOutlineViewWidgetFactory = Symbol("DiagramOutlineViewWidgetFactory");
 

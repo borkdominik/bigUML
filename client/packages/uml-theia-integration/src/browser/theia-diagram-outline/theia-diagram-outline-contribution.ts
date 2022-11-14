@@ -17,15 +17,19 @@ import { GLSP_TYPES, IActionDispatcher, TYPES } from "@eclipse-glsp/client";
 import { DiagramOutlineService } from "@eclipsesource/uml-sprotty/lib/features/diagram-outline";
 import { Container } from "@theia/core/shared/inversify";
 
+import { UmlTheiaDiagramServer } from "../diagram/diagram-server";
+import { TheiaDiagramOutlineService } from "./theia-diagram-outline-service";
+
 export function connectTheiaDiagramOutlineView(
     container: Container,
-    diagramOutlineViewServiceFactory: () => DiagramOutlineService
+    theiaDiagramOutlineServiceFactory: () => TheiaDiagramOutlineService
 ): void {
-    const diagramOutlineViewService = diagramOutlineViewServiceFactory();
-    container.bind(DiagramOutlineService).toConstantValue(diagramOutlineViewService);
-    container.bind(GLSP_TYPES.SModelRootListener).toConstantValue(diagramOutlineViewService);
+    const theiaDiagramOutlineService = theiaDiagramOutlineServiceFactory();
+    container.bind(DiagramOutlineService).toConstantValue(theiaDiagramOutlineService);
+    container.bind(TheiaDiagramOutlineService).toConstantValue(theiaDiagramOutlineService);
+    container.bind(GLSP_TYPES.SModelRootListener).toConstantValue(theiaDiagramOutlineService);
 
-    if (diagramOutlineViewService instanceof DiagramOutlineService) {
-        diagramOutlineViewService.connect(container.get<IActionDispatcher>(TYPES.IActionDispatcher));
+    if (theiaDiagramOutlineService instanceof DiagramOutlineService) {
+        theiaDiagramOutlineService.connect(container.get(UmlTheiaDiagramServer), container.get<IActionDispatcher>(TYPES.IActionDispatcher));
     }
 }

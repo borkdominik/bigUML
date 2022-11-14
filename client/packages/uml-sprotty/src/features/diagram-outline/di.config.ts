@@ -13,7 +13,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { configureActionHandler, FocusStateChangedAction } from "@eclipse-glsp/client";
+import { configureActionHandler } from "@eclipse-glsp/client";
 import { ContainerModule } from "inversify";
 
 import { SetOutlineAction } from "./actions";
@@ -23,7 +23,6 @@ const umlDiagramOutlineViewModule = new ContainerModule((bind, _unbind, isBound,
     const context = { bind, _unbind, isBound, rebind };
     bind(DiagramOutlineActionHandler).toSelf().inSingletonScope();
     configureActionHandler(context, SetOutlineAction.KIND, DiagramOutlineActionHandler);
-    configureActionHandler(context, FocusStateChangedAction.KIND, DiagramOutlineActionHandler);
 });
 
 export default umlDiagramOutlineViewModule;

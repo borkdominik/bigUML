@@ -13,7 +13,7 @@ import { GLSPTheiaDiagramServer } from "@eclipse-glsp/theia-integration/lib/brow
 import { injectable } from "inversify";
 
 @injectable()
-export class UmlGLSPTheiaDiagramServer extends GLSPTheiaDiagramServer {
+export class UmlTheiaDiagramServer extends GLSPTheiaDiagramServer {
     initialize(registry: ActionHandlerRegistry): void {
         super.initialize(registry);
 

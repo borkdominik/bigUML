@@ -13,15 +13,13 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
+import { GLSPDiagramWidget } from "@eclipse-glsp/theia-integration";
 import { DiagramOutlineService, OutlineTreeNode } from "@eclipsesource/uml-sprotty/lib/features/diagram-outline";
-import { inject, injectable } from "@theia/core/shared/inversify";
-import { OutlineSymbolInformationNode } from "@theia/outline-view/lib/browser/outline-view-widget";
+import { ApplicationShell } from "@theia/core/lib/browser";
+import { inject, injectable, postConstruct } from "@theia/core/shared/inversify";
 
 import { DiagramOutlineViewService } from "../diagram-outline-view/diagram-outline-view-service";
-
-export interface DiagramOutlineSymbolInformationNode extends OutlineSymbolInformationNode {
-    children: DiagramOutlineSymbolInformationNode[]
-}
+import { DiagramOutlineSymbolInformationNode } from "../diagram-outline-view/diagram-outline-view-widget";
 
 export type TheiaDiagramOutlineFactory = () => TheiaDiagramOutlineService;
 export const TheiaDiagramOutlineFactory = Symbol("TheiaDiagramOutlineFactory");
@@ -30,36 +28,80 @@ export const TheiaDiagramOutlineFactory = Symbol("TheiaDiagramOutlineFactory");
 export class TheiaDiagramOutlineService extends DiagramOutlineService {
 
     @inject(DiagramOutlineViewService)
-    protected readonly outlineViewService: DiagramOutlineViewService;
+    protected readonly diagramOutlineViewService: DiagramOutlineViewService;
 
-    updateOutline(nodes: OutlineTreeNode[]): void {
-        const mappedNodes = nodes.map(node => map(node));
-        this.outlineViewService.publish(mappedNodes);
+    @inject(ApplicationShell)
+    protected readonly shell: ApplicationShell;
+
+    protected readonly mappings = new Map<string, [OutlineTreeNode, DiagramOutlineSymbolInformationNode]>();
+
+    protected get belongsToActiveWidget(): boolean {
+        return this.shell.activeWidget instanceof GLSPDiagramWidget && this.shell.activeWidget.clientId === this.diagramServer.clientId;
     }
-}
 
-function map(outlineTreeNode: OutlineTreeNode): DiagramOutlineSymbolInformationNode {
-
-    if (outlineTreeNode.children.length === 0) {
-        return {
-            id: outlineTreeNode.semanticUri,
-            children: [], parent: undefined,
-            iconClass: outlineTreeNode.iconClass,
-            expanded: true,
-            selected: false,
-            name: outlineTreeNode.label
-        };
+    protected get isActiveGLSPWidget(): boolean {
+        return this.shell.activeWidget instanceof GLSPDiagramWidget;
     }
-    const children = outlineTreeNode.children.map(c => map(c));
 
-    return {
-        id: outlineTreeNode.semanticUri,
-        children,
-        parent: undefined,
-        iconClass: outlineTreeNode.iconClass,
-        expanded: true,
-        selected: false,
-        name: outlineTreeNode.label
-    };
+    @postConstruct()
+    init(): void {
+        this.diagramOutlineViewService.onDidSelect(async node => {
+            if (DiagramOutlineSymbolInformationNode.is(node)) {
+                await this.onSelect(node);
+            }
+        });
+    }
+
+    updateOutline(outlineNodes: OutlineTreeNode[]): void {
+        console.log("Update Outline", outlineNodes);
+        this.mappings.clear();
+
+        const mappedNodes = outlineNodes.map(outlineNode => this.cachedMap(outlineNode));
+
+        if (!this.isActiveGLSPWidget) {
+            this.diagramOutlineViewService.publish([]);
+        } else if (this.belongsToActiveWidget) {
+            this.diagramOutlineViewService.publish(mappedNodes);
+        }
+    }
+
+    async onSelect(informationNode: DiagramOutlineSymbolInformationNode): Promise<void> {
+        console.log("OnSelect", informationNode);
+        const mapping = this.mappings.get(informationNode.id);
+
+        if (mapping !== undefined) {
+            await this.center(mapping[0]);
+        }
+    }
+
+    protected cachedMap(outlineTreeNode: OutlineTreeNode): DiagramOutlineSymbolInformationNode {
+        let informationNode: DiagramOutlineSymbolInformationNode;
+
+        if (outlineTreeNode.children.length === 0) {
+            informationNode = {
+                id: outlineTreeNode.semanticUri,
+                children: [], parent: undefined,
+                iconClass: outlineTreeNode.iconClass,
+                expanded: true,
+                selected: false,
+                name: outlineTreeNode.label
+            };
+        } else {
+            const children = outlineTreeNode.children.map(c => this.cachedMap(c));
+
+            informationNode = {
+                id: outlineTreeNode.semanticUri,
+                children,
+                parent: undefined,
+                iconClass: outlineTreeNode.iconClass,
+                expanded: true,
+                selected: false,
+                name: outlineTreeNode.label
+            };
+        }
+
+        this.mappings.set(informationNode.id, [outlineTreeNode, informationNode]);
+        return informationNode;
+    }
 }
 

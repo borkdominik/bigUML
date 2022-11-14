@@ -8,11 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-import {
-    configureDiagramServer,
-    GLSPDiagramConfiguration,
-    TheiaDiagramServer
-} from "@eclipse-glsp/theia-integration/lib/browser";
+import { configureDiagramServer, GLSPDiagramConfiguration } from "@eclipse-glsp/theia-integration/lib/browser";
 import { createUmlDiagramContainer } from "@eclipsesource/uml-sprotty/lib";
 import { Container, inject, injectable } from "inversify";
 
@@ -22,7 +18,7 @@ import {
     TheiaDiagramOutlineFactory,
     TheiaDiagramOutlineService
 } from "../theia-diagram-outline";
-import { UmlGLSPTheiaDiagramServer } from "./diagram-server";
+import { UmlTheiaDiagramServer } from "./diagram-server";
 
 @injectable()
 export class UmlDiagramConfiguration extends GLSPDiagramConfiguration {
@@ -33,8 +29,7 @@ export class UmlDiagramConfiguration extends GLSPDiagramConfiguration {
     doCreateContainer(widgetId: string): Container {
         const container = createUmlDiagramContainer(widgetId);
 
-        configureDiagramServer(container, UmlGLSPTheiaDiagramServer);
-        container.bind(TheiaDiagramServer).toService(UmlGLSPTheiaDiagramServer);
+        configureDiagramServer(container, UmlTheiaDiagramServer);
 
         connectTheiaDiagramOutlineView(container, this.theiaDiagramOutlineFactory);
 

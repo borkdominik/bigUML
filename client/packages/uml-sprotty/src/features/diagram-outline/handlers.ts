@@ -13,7 +13,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { Action, IActionHandler, isFocusStateChangedAction } from "@eclipse-glsp/client";
+import { Action, IActionHandler } from "@eclipse-glsp/client";
 import { inject, injectable } from "inversify";
 
 import { isSetOutlineAction } from "./actions";
@@ -26,10 +26,7 @@ export class DiagramOutlineActionHandler implements IActionHandler {
     protected readonly diagramOutlineService: DiagramOutlineService;
 
     handle(action: Action): void | Action {
-        console.log("DiagramOutlineActionHandler", action);
-        if (isFocusStateChangedAction(action) && action.hasFocus) {
-            this.diagramOutlineService.refresh();
-        } else if (isSetOutlineAction(action)) {
+        if (isSetOutlineAction(action)) {
             this.diagramOutlineService.updateOutline(action.outlineTreeNodes);
         }
     }

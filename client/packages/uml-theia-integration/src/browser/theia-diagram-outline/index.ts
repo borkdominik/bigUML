@@ -12,3 +12,4 @@
 export * from "./theia-diagram-outline-contribution";
 export * from "./theia-diagram-outline-frontend-module";
 export * from "./theia-diagram-outline-service";
+export * from "./theia-diagram-outline-manager";

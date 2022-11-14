@@ -13,7 +13,14 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { GLSPGraph, IActionDispatcher, SModelRoot, SModelRootListener } from "@eclipse-glsp/client";
+import {
+    CenterAction,
+    DiagramServer,
+    GLSPGraph,
+    IActionDispatcher,
+    SModelRoot,
+    SModelRootListener
+} from "@eclipse-glsp/client";
 import { injectable } from "inversify";
 
 import { RequestOutlineAction, SetOutlineAction } from "./actions";
@@ -22,9 +29,16 @@ import { OutlineTreeNode } from "./outline-tree-node";
 @injectable()
 export abstract class DiagramOutlineService implements SModelRootListener {
     protected actionDispatcher: IActionDispatcher;
+    protected diagramServer: DiagramServer;
+    protected outlineNodes: OutlineTreeNode[] = [];
 
-    connect(actionDispatcher: IActionDispatcher): void {
+    connect(diagramServer: DiagramServer, actionDispatcher: IActionDispatcher): void {
+        this.diagramServer = diagramServer;
         this.actionDispatcher = actionDispatcher;
+    }
+
+    get nodes(): OutlineTreeNode[] {
+        return this.outlineNodes;
     }
 
     get isConnected(): boolean {
@@ -32,7 +46,6 @@ export abstract class DiagramOutlineService implements SModelRootListener {
     }
 
     async modelRootChanged(root: Readonly<SModelRoot>): Promise<void> {
-        console.log("ModelRootChanged", root);
         if (root instanceof GLSPGraph) {
             await this.refresh();
         }
@@ -40,9 +53,20 @@ export abstract class DiagramOutlineService implements SModelRootListener {
 
     async refresh(): Promise<void> {
         const { outlineTreeNodes } = await this.actionDispatcher.request<SetOutlineAction>(new RequestOutlineAction());
+
+        this.outlineNodes = outlineTreeNodes;
         this.updateOutline(outlineTreeNodes);
     }
 
-    abstract updateOutline(nodes: OutlineTreeNode[]): void;
+    clear(): void {
+        this.updateOutline([]);
+    }
+
+    async center(outlineNode: OutlineTreeNode): Promise<void> {
+        console.log("center", outlineNode);
+        await this.actionDispatcher.dispatch(new CenterAction([outlineNode.semanticUri]));
+    }
+
+    abstract updateOutline(outlineNodes: OutlineTreeNode[]): void;
 }
 

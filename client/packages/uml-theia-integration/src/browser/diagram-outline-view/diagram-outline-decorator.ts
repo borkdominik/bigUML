@@ -13,14 +13,18 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
+import { TreeDecorator } from "@theia/core/lib/browser/tree/tree-decorator";
+import { ContributionProvider } from "@theia/core/lib/common/contribution-provider";
+import { inject, injectable, named } from "@theia/core/shared/inversify";
+import { OutlineDecoratorService } from "@theia/outline-view/lib/browser/outline-decorator-service";
 
-import { TheiaDiagramOutlineService, TheiaDiagramOutlineFactory } from "./theia-diagram-outline-view-service";
-import { interfaces } from "@theia/core/shared/inversify";
+export const DiagramOutlineTreeDecorator = Symbol("DiagramOutlineTreeDecorator");
 
-export function registerTheiaDiagramOutline(bind: interfaces.Bind): void {
-    bind(TheiaDiagramOutlineFactory).toFactory(ctx => () => {
-        const container = ctx.container.createChild();
-        container.bind(TheiaDiagramOutlineService).toSelf().inSingletonScope();
-        return container.get(TheiaDiagramOutlineService);
-    });
+@injectable()
+export class DiagramOutlineDecoratorService extends OutlineDecoratorService {
+
+    constructor(@inject(ContributionProvider) @named(DiagramOutlineTreeDecorator) protected readonly contributions: ContributionProvider<TreeDecorator>) {
+        super(contributions);
+    }
+
 }

@@ -30,32 +30,29 @@ import {
     SRoutingHandle,
     SRoutingHandleView,
     StructureCompartmentView,
-    TYPES,
+    TYPES
 } from "@eclipse-glsp/client/lib";
 import toolPaletteModule from "@eclipse-glsp/client/lib/features/tool-palette/di.config";
 import { Container, ContainerModule } from "inversify";
 import { EditLabelUI } from "sprotty/lib";
 
-import {
-    CustomCopyPasteHandler,
-    LastContainableElementTracker,
-} from "./features/copy-paste/copy-paste";
-import diagramOutlineViewModule from "./features/diagram-outline-view/di.config";
+import { CustomCopyPasteHandler, LastContainableElementTracker } from "./features/copy-paste/copy-paste";
+import umlDiagramOutlineViewModule from "./features/diagram-outline/di.config";
 import { EditLabelUIAutocomplete } from "./features/edit-label";
 import umlToolPaletteModule from "./features/tool-palette/di.config";
 import { IconLabelCompartmentSelectionFeedback } from "./feedback";
 import { LabeledNode, SEditableLabel } from "./model";
+import createClassModule from "./uml/class/di.config";
 import createCommunicationModule from "./uml/communication/di.config";
+import createDeploymentModule from "./uml/deployment/di.config";
 import { BaseTypes, UmlTypes } from "./utils";
 import { CommentLinkEdgeView, CommentNodeView } from "./views/commons";
-import createClassModule from "./uml/class/di.config";
-import createDeploymentModule from "./uml/deployment/di.config";
 
 export default function createContainer(widgetId: string): Container {
     const commonDiagramModule = new ContainerModule(
         (bind, unbind, isBound, rebind) => {
             rebind(TYPES.ILogger).to(ConsoleLogger).inSingletonScope();
-            rebind(TYPES.LogLevel).toConstantValue(LogLevel.log);
+            rebind(TYPES.LogLevel).toConstantValue(LogLevel.info);
             rebind(EditLabelUI).to(EditLabelUIAutocomplete);
             bind(TYPES.IVNodePostprocessor).to(
                 IconLabelCompartmentSelectionFeedback
@@ -129,7 +126,7 @@ export default function createContainer(widgetId: string): Container {
 
             configureViewerOptions(context, {
                 needsClientLayout: true,
-                baseDiv: widgetId,
+                baseDiv: widgetId
             });
         }
     );
@@ -144,7 +141,7 @@ export default function createContainer(widgetId: string): Container {
         deploymentModule,
         umlToolPaletteModule,
         saveModule,
-        diagramOutlineViewModule
+        umlDiagramOutlineViewModule
     );
     container.unload(toolPaletteModule);
     container.bind(LastContainableElementTracker).toSelf().inSingletonScope();
@@ -155,7 +152,7 @@ export default function createContainer(widgetId: string): Container {
 
     overrideViewerOptions(container, {
         baseDiv: widgetId,
-        hiddenDiv: widgetId + "_hidden",
+        hiddenDiv: widgetId + "_hidden"
     });
     return container;
 }

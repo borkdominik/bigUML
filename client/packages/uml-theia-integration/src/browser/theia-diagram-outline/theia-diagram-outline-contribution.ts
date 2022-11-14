@@ -13,19 +13,19 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { IActionDispatcher, GLSP_TYPES, TYPES } from "@eclipse-glsp/client";
-import { DiagramOutlineViewService } from "@eclipsesource/uml-sprotty/lib/features/diagram-outline-view/diagram-outline-view-service";
+import { GLSP_TYPES, IActionDispatcher, TYPES } from "@eclipse-glsp/client";
+import { DiagramOutlineService } from "@eclipsesource/uml-sprotty/lib/features/diagram-outline";
 import { Container } from "@theia/core/shared/inversify";
 
 export function connectTheiaDiagramOutlineView(
     container: Container,
-    diagramOutlineViewServiceFactory: () => DiagramOutlineViewService
+    diagramOutlineViewServiceFactory: () => DiagramOutlineService
 ): void {
     const diagramOutlineViewService = diagramOutlineViewServiceFactory();
-    container.bind(DiagramOutlineViewService).toConstantValue(diagramOutlineViewService);
+    container.bind(DiagramOutlineService).toConstantValue(diagramOutlineViewService);
     container.bind(GLSP_TYPES.SModelRootListener).toConstantValue(diagramOutlineViewService);
 
-    if (diagramOutlineViewService instanceof DiagramOutlineViewService) {
+    if (diagramOutlineViewService instanceof DiagramOutlineService) {
         diagramOutlineViewService.connect(container.get<IActionDispatcher>(TYPES.IActionDispatcher));
     }
 }

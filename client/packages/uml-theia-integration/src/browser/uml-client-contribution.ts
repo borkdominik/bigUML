@@ -31,7 +31,7 @@ export class UmlGLSPClientContribution extends BaseGLSPClientContribution {
     protected createInitializeOptions(): MaybePromise<Args | undefined> {
         return {
             ["timestamp"]: new Date().toString(),
-            ["modelServerURL"]: "http://localhost:8081/api/v2/",
+            ["modelServerURL"]: "http://localhost:8081/api/v2/"
         };
     }
 }

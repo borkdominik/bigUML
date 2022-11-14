@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020-2021 EclipseSource and others.
+ * Copyright (c) 2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -14,10 +14,8 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 
-import { injectable } from "@theia/core/shared/inversify";
-import { OutlineViewTreeModel } from "@theia/outline-view/lib/browser/outline-view-tree-model";
-
-@injectable()
-export class DiagramOutlineViewWidgetTreeModel extends OutlineViewTreeModel {
-
-}
+export * from "./actions";
+export * from "./di.config";
+export * from "./diagram-outline-service";
+export * from "./handlers";
+export * from "./outline-tree-node";

@@ -43,8 +43,8 @@
   },
   "theiaExtensions": [
     {
-      "frontend": "lib/browser/frontend-extension",
-      "backend": "lib/node/backend-extension"
+      "frontend": "lib/browser/uml-theia-frontend-module",
+      "backend": "lib/node/uml-backend-module"
     }
   ]
 }

@@ -13,13 +13,11 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import {
-    DiagramOutlineViewService
-} from "@eclipsesource/uml-sprotty/lib/features/diagram-outline-view/diagram-outline-view-service";
-import { OutlineTreeNode } from "@eclipsesource/uml-sprotty/lib/features/diagram-outline-view/outline-tree-node";
-import { inject, injectable, postConstruct } from "@theia/core/shared/inversify";
+import { DiagramOutlineService, OutlineTreeNode } from "@eclipsesource/uml-sprotty/lib/features/diagram-outline";
+import { inject, injectable } from "@theia/core/shared/inversify";
 import { OutlineSymbolInformationNode } from "@theia/outline-view/lib/browser/outline-view-widget";
-import { DiagramOutlineViewWidgetService } from "../diagram-outline-view-widget/diagram-outline-view-widget-service";
+
+import { DiagramOutlineViewService } from "../diagram-outline-view/diagram-outline-view-service";
 
 export interface DiagramOutlineSymbolInformationNode extends OutlineSymbolInformationNode {
     children: DiagramOutlineSymbolInformationNode[]
@@ -29,26 +27,18 @@ export type TheiaDiagramOutlineFactory = () => TheiaDiagramOutlineService;
 export const TheiaDiagramOutlineFactory = Symbol("TheiaDiagramOutlineFactory");
 
 @injectable()
-export class TheiaDiagramOutlineService extends DiagramOutlineViewService {
+export class TheiaDiagramOutlineService extends DiagramOutlineService {
 
-    @inject(DiagramOutlineViewWidgetService)
-    protected readonly outlineViewService: DiagramOutlineViewWidgetService;
-
-    @postConstruct()
-    protected initialize(): void {
-        this.outlineViewService.onDidSelect(e => {
-            this.navigateToElementId(e.id);
-        });
-    }
+    @inject(DiagramOutlineViewService)
+    protected readonly outlineViewService: DiagramOutlineViewService;
 
     updateOutline(nodes: OutlineTreeNode[]): void {
-        const mappedNodes = nodes.map(node => mapOutlineTreeNodeToOutlineSymbolInformation(node));
+        const mappedNodes = nodes.map(node => map(node));
         this.outlineViewService.publish(mappedNodes);
     }
-
 }
 
-function mapOutlineTreeNodeToOutlineSymbolInformation(outlineTreeNode: OutlineTreeNode): DiagramOutlineSymbolInformationNode {
+function map(outlineTreeNode: OutlineTreeNode): DiagramOutlineSymbolInformationNode {
 
     if (outlineTreeNode.children.length === 0) {
         return {
@@ -57,9 +47,10 @@ function mapOutlineTreeNodeToOutlineSymbolInformation(outlineTreeNode: OutlineTr
             iconClass: outlineTreeNode.iconClass,
             expanded: true,
             selected: false,
-            name: outlineTreeNode.label };
+            name: outlineTreeNode.label
+        };
     }
-    const children = outlineTreeNode.children.map(c => mapOutlineTreeNodeToOutlineSymbolInformation(c));
+    const children = outlineTreeNode.children.map(c => map(c));
 
     return {
         id: outlineTreeNode.semanticUri,
@@ -68,6 +59,7 @@ function mapOutlineTreeNodeToOutlineSymbolInformation(outlineTreeNode: OutlineTr
         iconClass: outlineTreeNode.iconClass,
         expanded: true,
         selected: false,
-        name: outlineTreeNode.label };
+        name: outlineTreeNode.label
+    };
 }
 

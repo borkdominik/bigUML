@@ -14,35 +14,35 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 import { GLSPGraph, IActionDispatcher, SModelRoot, SModelRootListener } from "@eclipse-glsp/client";
-import { CenterAction } from "@eclipse-glsp/protocol";
 import { injectable } from "inversify";
 
 import { RequestOutlineAction, SetOutlineAction } from "./actions";
 import { OutlineTreeNode } from "./outline-tree-node";
 
 @injectable()
-export abstract class DiagramOutlineViewService implements SModelRootListener {
+export abstract class DiagramOutlineService implements SModelRootListener {
     protected actionDispatcher: IActionDispatcher;
 
     connect(actionDispatcher: IActionDispatcher): void {
         this.actionDispatcher = actionDispatcher;
     }
 
+    get isConnected(): boolean {
+        return this.actionDispatcher !== undefined;
+    }
+
     async modelRootChanged(root: Readonly<SModelRoot>): Promise<void> {
+        console.log("ModelRootChanged", root);
         if (root instanceof GLSPGraph) {
             await this.refresh();
         }
     }
 
     async refresh(): Promise<void> {
-        const response = await this.actionDispatcher.request<SetOutlineAction>(new RequestOutlineAction());
-        this.updateOutline(response.outlineTreeNodes);
+        const { outlineTreeNodes } = await this.actionDispatcher.request<SetOutlineAction>(new RequestOutlineAction());
+        this.updateOutline(outlineTreeNodes);
     }
 
     abstract updateOutline(nodes: OutlineTreeNode[]): void;
-
-    protected navigateToElementId(elementId: string): void {
-        this.actionDispatcher.dispatch(new CenterAction([elementId]));
-    }
 }
 

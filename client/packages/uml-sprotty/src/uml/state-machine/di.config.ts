@@ -31,7 +31,7 @@ import {
     SRoutingHandleView,
     StructureCompartmentView,
     TYPES,
-    validationModule,
+    validationModule
 } from "@eclipse-glsp/client/lib";
 import toolPaletteModule from "@eclipse-glsp/client/lib/features/tool-palette/di.config";
 import { Container, ContainerModule } from "inversify";
@@ -62,7 +62,7 @@ import {
     StateNodeView,
     TransitionEdgeView,
     TransitionEffectView,
-    TransitionGuardView,
+    TransitionGuardView
 } from "./views";
 
 export default function createContainer(widgetId: string): Container {
@@ -282,7 +282,7 @@ export default function createContainer(widgetId: string): Container {
 
             configureViewerOptions(context, {
                 needsClientLayout: true,
-                baseDiv: widgetId,
+                baseDiv: widgetId
             });
         }
     );
@@ -297,7 +297,7 @@ export default function createContainer(widgetId: string): Container {
     container.unload(toolPaletteModule);
     overrideViewerOptions(container, {
         baseDiv: widgetId,
-        hiddenDiv: widgetId + "_hidden",
+        hiddenDiv: widgetId + "_hidden"
     });
 
     return container;

@@ -13,25 +13,25 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
+import { inject, injectable } from "@theia/core/shared/inversify";
+import { OutlineViewService } from "@theia/outline-view/lib/browser/outline-view-service";
 
-import { inject, injectable, named } from "@theia/core/shared/inversify";
-import { ContributionProvider } from "@theia/core/lib/common/contribution-provider";
-import { TreeDecorator } from "@theia/core/lib/browser/tree/tree-decorator";
-import { OutlineDecoratorService } from "@theia/outline-view/lib/browser/outline-decorator-service";
+import { DiagramOutlineSymbolInformationNode, DiagramOutlineViewWidgetFactory } from "./diagram-outline-view-widget";
 
-/**
- * Symbol for all decorators that would like to contribute into the outline.
- */
-export const DiagramOutlineTreeDecorator = Symbol("DiagramOutlineTreeDecorator");
-
-/**
- * Decorator service for the outline.
- */
 @injectable()
-export class DiagramOutlineViewWidgetDecoratorService extends OutlineDecoratorService {
+export class DiagramOutlineViewService extends OutlineViewService {
 
-    constructor(@inject(ContributionProvider) @named(DiagramOutlineTreeDecorator) protected readonly contributions: ContributionProvider<TreeDecorator>) {
-        super(contributions);
+    id = "diagram-outline-view";
+
+    constructor(@inject(DiagramOutlineViewWidgetFactory) protected factory: DiagramOutlineViewWidgetFactory) {
+        super(factory);
     }
 
+    publish(roots: DiagramOutlineSymbolInformationNode[]): void {
+        if (this.widget) {
+            this.widget.setOutlineTree(roots);
+        }
+        this.onDidChangeOutlineEmitter.fire(roots);
+    }
 }
+

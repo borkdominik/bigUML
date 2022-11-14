@@ -31,7 +31,7 @@ import {
     SRoutingHandleView,
     StructureCompartmentView,
     TYPES,
-    validationModule,
+    validationModule
 } from "@eclipse-glsp/client/lib";
 import toolPaletteModule from "@eclipse-glsp/client/lib/features/tool-palette/di.config";
 import { Container, ContainerModule } from "inversify";
@@ -40,12 +40,7 @@ import { EditLabelUI } from "sprotty/lib";
 import { EditLabelUIAutocomplete } from "../../features/edit-label";
 import umlToolPaletteModule from "../../features/tool-palette/di.config";
 import { IconLabelCompartmentSelectionFeedback } from "../../feedback";
-import {
-    ConnectableEdge,
-    ConnectableEditableLabel,
-    LabeledNode,
-    SEditableLabel,
-} from "../../model";
+import { ConnectableEdge, ConnectableEditableLabel, LabeledNode, SEditableLabel } from "../../model";
 import { BaseTypes, UmlTypes } from "../../utils";
 import { IconView } from "../../views/commons";
 import { PackageNode } from "../shared/model";
@@ -210,7 +205,7 @@ export default function createContainer(widgetId: string): Container {
 
             configureViewerOptions(context, {
                 needsClientLayout: true,
-                baseDiv: widgetId,
+                baseDiv: widgetId
             });
         }
     );
@@ -225,7 +220,7 @@ export default function createContainer(widgetId: string): Container {
     container.unload(toolPaletteModule);
     overrideViewerOptions(container, {
         baseDiv: widgetId,
-        hiddenDiv: widgetId + "_hidden",
+        hiddenDiv: widgetId + "_hidden"
     });
 
     return container;

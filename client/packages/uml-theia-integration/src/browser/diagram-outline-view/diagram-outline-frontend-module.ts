@@ -13,41 +13,35 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-
-import { interfaces } from "@theia/core/shared/inversify";
-import { DiagramOutlineViewContribution } from "./diagram-outline-view-widget-contribution";
+import { bindViewContribution, createTreeContainer, FrontendApplicationContribution } from "@theia/core/lib/browser";
 import { WidgetFactory } from "@theia/core/lib/browser/widget-manager";
-import {
-    FrontendApplicationContribution,
-    createTreeContainer,
-    bindViewContribution
-} from "@theia/core/lib/browser";
-import { TabBarToolbarContribution } from "@theia/core/lib/browser/shell/tab-bar-toolbar";
-import { DiagramOutlineViewWidgetFactory, DiagramOutlineViewWidget } from "./diagram-outline-view-widget";
 import { bindContributionProvider } from "@theia/core/lib/common/contribution-provider";
-import { DiagramOutlineViewWidgetTreeModel } from "./diagram-outline-view-widget-model";
-import { DiagramOutlineViewWidgetDecoratorService, DiagramOutlineTreeDecorator } from "./diagram-outline-view-widget-decorator";
-import { DiagramOutlineViewWidgetService } from "./diagram-outline-view-widget-service";
+import { interfaces } from "@theia/core/shared/inversify";
+
+import { DiagramOutlineViewContribution } from "./diagram-outline-contribution";
+import { DiagramOutlineDecoratorService, DiagramOutlineTreeDecorator } from "./diagram-outline-decorator";
+import { DiagramOutlineViewTreeModel } from "./diagram-outline-view-model";
+import { DiagramOutlineViewService } from "./diagram-outline-view-service";
+import { DiagramOutlineViewWidget, DiagramOutlineViewWidgetFactory } from "./diagram-outline-view-widget";
 
 export function registerDiagramOutlineViewWidget(bind: interfaces.Bind): void {
     bind(DiagramOutlineViewWidgetFactory).toFactory(ctx =>
         () => createDiagramOutlineViewWidget(ctx.container)
     );
 
-    bind(DiagramOutlineViewWidgetService).toSelf().inSingletonScope();
-    bind(WidgetFactory).toService(DiagramOutlineViewWidgetService);
+    bind(DiagramOutlineViewService).toSelf().inSingletonScope();
+    bind(WidgetFactory).toService(DiagramOutlineViewService);
 
     bindViewContribution(bind, DiagramOutlineViewContribution);
     bind(FrontendApplicationContribution).toService(DiagramOutlineViewContribution);
-    bind(TabBarToolbarContribution).toService(DiagramOutlineViewContribution);
 }
 
 function createDiagramOutlineViewWidgetContainer(parent: interfaces.Container): interfaces.Container {
     const child = createTreeContainer(parent, {
         props: { expandOnlyOnExpansionToggleClick: true, search: true },
         widget: DiagramOutlineViewWidget,
-        model: DiagramOutlineViewWidgetTreeModel,
-        decoratorService: DiagramOutlineViewWidgetDecoratorService
+        model: DiagramOutlineViewTreeModel,
+        decoratorService: DiagramOutlineDecoratorService
     });
     bindContributionProvider(child, DiagramOutlineTreeDecorator);
     return child;

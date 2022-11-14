@@ -10,12 +10,6 @@
  ********************************************************************************/
 import { ActionHandlerRegistry } from "@eclipse-glsp/client/lib";
 import { GLSPTheiaDiagramServer } from "@eclipse-glsp/theia-integration/lib/browser";
-import {
-    CallBehaviorsAction,
-    GetBehaviorsAction,
-    GetTypesAction,
-    ReturnTypesAction
-} from "@eclipsesource/uml-sprotty/lib/features/edit-label";
 import { injectable } from "inversify";
 
 @injectable()
@@ -23,10 +17,11 @@ export class UmlGLSPTheiaDiagramServer extends GLSPTheiaDiagramServer {
     initialize(registry: ActionHandlerRegistry): void {
         super.initialize(registry);
 
-        registry.register(GetTypesAction.KIND, this);
-        registry.register(ReturnTypesAction.KIND, this);
-        registry.register(GetBehaviorsAction.KIND, this);
-        registry.register(CallBehaviorsAction.KIND, this);
+        // TODO: Check them
+        // registry.register(GetTypesAction.KIND, this);
+        // registry.register(ReturnTypesAction.KIND, this);
+        // registry.register(GetBehaviorsAction.KIND, this);
+        // registry.register(CallBehaviorsAction.KIND, this);
     }
 
 }

@@ -18,15 +18,16 @@ import {
 } from "@eclipse-glsp/theia-integration/lib/browser";
 import { CommandContribution, MenuContribution } from "@theia/core";
 import { DiagramConfiguration } from "sprotty-theia/lib";
-import { registerDiagramOutlineViewWidget } from "./diagram-outline-view-widget/diagram-outline-view-widget-frontend-module";
+
 import { UmlLanguage } from "../common/uml-language";
 import { UmlModelServerClient } from "../common/uml-model-server-client";
-import { UmlModelContribution } from "./command-contribution";
+import { registerDiagramOutlineViewWidget } from "./diagram-outline-view/diagram-outline-frontend-module";
 import { UmlDiagramConfiguration } from "./diagram/diagram-configuration";
 import { UmlDiagramManager } from "./diagram/diagram-manager";
 import { UmlTheiaGLSPConnector } from "./diagram/theia-glsp-connector";
-import { UmlGLSPClientContribution } from "./glsp-client-contribution";
-import { registerTheiaDiagramOutline } from "./theia-diagram-outline-view/theia-diagram-outline-view-frontend-module";
+import { registerTheiaDiagramOutlineView } from "./theia-diagram-outline/theia-diagram-outline-frontend-module";
+import { UmlGLSPClientContribution } from "./uml-client-contribution";
+import { UmlModelContribution } from "./uml-command-contribution";
 
 export class UmlTheiaFrontendModule extends GLSPTheiaFrontendModule {
     protected enableCopyPaste = true;
@@ -56,7 +57,7 @@ export class UmlTheiaFrontendModule extends GLSPTheiaFrontendModule {
         context.bind(MenuContribution).toService(UmlModelContribution);
         context.bind(UmlModelServerClient).toService(ModelServerClient);
 
-        registerTheiaDiagramOutline(context.bind);
+        registerTheiaDiagramOutlineView(context.bind);
         registerDiagramOutlineViewWidget(context.bind);
     }
 

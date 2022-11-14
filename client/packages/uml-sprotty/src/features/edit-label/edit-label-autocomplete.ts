@@ -14,7 +14,6 @@ import { EditLabelUI, SModelRoot } from "sprotty/lib";
 import { matchesKeystroke } from "sprotty/lib/utils/keyboard";
 
 import { UmlTypes } from "../../utils";
-import { GetTypesAction, ReturnTypesAction } from "./action-definitions";
 
 @injectable()
 export class EditLabelUIAutocomplete extends EditLabelUI {

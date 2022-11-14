@@ -8,10 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-import {
-    LaunchOptions,
-    ModelServerClient,
-} from "@eclipse-emfcloud/modelserver-theia";
+import { LaunchOptions, ModelServerClient } from "@eclipse-emfcloud/modelserver-theia";
 import { GLSPServerContribution } from "@eclipse-glsp/theia-integration/lib/node";
 import { ContainerModule, injectable } from "inversify";
 import { join, resolve } from "path";
@@ -35,7 +32,7 @@ export class UmlModelServerLaunchOptions implements LaunchOptions {
         )
     );
     additionalArgs = [
-        `-r=${resolve(join(__dirname, "..", "..", "..", "..", "workspace"))}`,
+        `-r=${resolve(join(__dirname, "..", "..", "..", "..", "workspace"))}`
     ];
 }
 

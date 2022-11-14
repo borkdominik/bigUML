@@ -15,13 +15,15 @@
  ********************************************************************************/
 import { configureActionHandler, FocusStateChangedAction } from "@eclipse-glsp/client";
 import { ContainerModule } from "inversify";
-import { SetOutlineAction, DiagramOutlineActionHandler } from "./actions";
 
-const diagramOutlineViewModule = new ContainerModule((bind, _unbind, isBound, rebind) => {
+import { SetOutlineAction } from "./actions";
+import { DiagramOutlineActionHandler } from "./handlers";
+
+const umlDiagramOutlineViewModule = new ContainerModule((bind, _unbind, isBound, rebind) => {
     const context = { bind, _unbind, isBound, rebind };
     bind(DiagramOutlineActionHandler).toSelf().inSingletonScope();
     configureActionHandler(context, SetOutlineAction.KIND, DiagramOutlineActionHandler);
     configureActionHandler(context, FocusStateChangedAction.KIND, DiagramOutlineActionHandler);
 });
 
-export default diagramOutlineViewModule;
+export default umlDiagramOutlineViewModule;

@@ -13,10 +13,9 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { Action, IActionHandler, isFocusStateChangedAction } from "@eclipse-glsp/client";
+import { Action } from "@eclipse-glsp/client";
 import { generateRequestId, RequestAction, ResponseAction } from "@eclipse-glsp/protocol";
-import { injectable, inject } from "inversify";
-import { DiagramOutlineViewService } from "./diagram-outline-view-service";
+
 import { OutlineTreeNode } from "./outline-tree-node";
 
 export class SetOutlineAction implements ResponseAction {
@@ -36,20 +35,5 @@ export class RequestOutlineAction implements RequestAction<SetOutlineAction> {
 
     constructor(public requestId: string = generateRequestId()) {
 
-    }
-}
-
-@injectable()
-export class DiagramOutlineActionHandler implements IActionHandler {
-
-    @inject(DiagramOutlineViewService)
-    protected readonly diagramOutlineViewService: DiagramOutlineViewService;
-
-    handle(action: Action): void | Action {
-        if (isFocusStateChangedAction(action) && action.hasFocus) {
-            this.diagramOutlineViewService.refresh();
-        } else if(isSetOutlineAction(action)) {
-            this.diagramOutlineViewService.updateOutline(action.outlineTreeNodes);
-        }
     }
 }

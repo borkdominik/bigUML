@@ -13,21 +13,14 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-
-import { injectable, inject } from "@theia/core/shared/inversify";
-import {
-    TreeProps,
-    ContextMenuRenderer,
-    codicon
-} from "@theia/core/lib/browser";
-import { DiagramOutlineViewWidgetTreeModel } from "./diagram-outline-view-widget-model";
 import { Emitter } from "@theia/core";
+import { codicon, ContextMenuRenderer, TreeProps } from "@theia/core/lib/browser";
 import { nls } from "@theia/core/lib/common/nls";
+import { inject, injectable } from "@theia/core/shared/inversify";
 import { OutlineSymbolInformationNode, OutlineViewWidget } from "@theia/outline-view/lib/browser/outline-view-widget";
 
-/**
- * Representation of an outline symbol information node.
- */
+import { DiagramOutlineViewTreeModel } from "./diagram-outline-view-model";
+
 export interface DiagramOutlineSymbolInformationNode extends OutlineSymbolInformationNode {
     children: DiagramOutlineSymbolInformationNode[];
 }
@@ -44,7 +37,7 @@ export class DiagramOutlineViewWidget extends OutlineViewWidget {
 
     constructor(
         @inject(TreeProps) treeProps: TreeProps,
-        @inject(DiagramOutlineViewWidgetTreeModel) override readonly model: DiagramOutlineViewWidgetTreeModel,
+        @inject(DiagramOutlineViewTreeModel) override readonly model: DiagramOutlineViewTreeModel,
         @inject(ContextMenuRenderer) contextMenuRenderer: ContextMenuRenderer
     ) {
         super(treeProps, model, contextMenuRenderer);

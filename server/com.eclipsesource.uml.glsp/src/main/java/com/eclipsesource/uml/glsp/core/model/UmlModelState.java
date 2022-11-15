@@ -12,6 +12,7 @@ package com.eclipsesource.uml.glsp.core.model;
 
 import java.util.Optional;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emfcloud.modelserver.glsp.notation.integration.EMSNotationModelState;
 import org.eclipse.glsp.graph.GModelRoot;
 import org.eclipse.glsp.server.emf.model.notation.Diagram;
@@ -44,4 +45,11 @@ public class UmlModelState extends EMSNotationModelState {
       return UmlNotationUtil.getRepresentation(this.getUnsafeUmlNotationModel().getDiagramType());
    }
 
+   public boolean hasNotation(final EObject element) {
+      return getIndex().getNotation(element).isPresent();
+   }
+
+   public boolean hasSemantic(final String elementId) {
+      return getIndex().getEObject(elementId).isPresent();
+   }
 }

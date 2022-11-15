@@ -17,14 +17,14 @@ import java.util.stream.Collectors;
 
 import org.eclipse.emf.ecore.EObject;
 
-import com.eclipsesource.uml.glsp.core.common.DiagramRegistry;
+import com.eclipsesource.uml.glsp.core.common.DiagramMultiKeyRegistry;
 import com.eclipsesource.uml.glsp.core.common.DoubleKey;
 import com.eclipsesource.uml.glsp.core.common.RepresentationKey;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 
 public class DiagramLabelEditHandlerRegistry
-   extends DiagramRegistry<DoubleKey<Class<? extends EObject>, String>, DiagramLabelEditHandler<? extends EObject>> {
+   extends DiagramMultiKeyRegistry<DoubleKey<Class<? extends EObject>, String>, DiagramLabelEditHandler<? extends EObject>> {
 
    @Inject
    public DiagramLabelEditHandlerRegistry(

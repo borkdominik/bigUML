@@ -2,6 +2,6 @@
 <uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_nD7_AEiTEe287ptuQ4W3Iw" name="test">
   <packagedElement xmi:type="uml:Interaction" xmi:id="_YMo0AFkwEe2JlJ6Hu0hssQ" name="NewInteraction1">
     <lifeline xmi:id="_YkesQFkwEe2JlJ6Hu0hssQ" name="NewLifeline1"/>
-    <lifeline xmi:id="_7tU98VkzEe2-DPjS777r_w" name="NewLifeline2"/>
+    <lifeline xmi:id="_7tU98VkzEe2-DPjS777r_w" name="asd"/>
   </packagedElement>
 </uml:Model>

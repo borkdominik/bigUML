@@ -24,19 +24,27 @@ import com.google.inject.multibindings.Multibinder;
 /*
  * Contributes to GLSP by replacing an operation handler provided by core for the specific diagram
  */
-public interface OverrideOperationHandlerContribution extends BaseDiagramContribution {
+public interface OverrideOperationHandlerContribution {
+   interface Creator extends BaseContribution {
+      default Multibinder<OperationHandler> createOverrideOperationHandlerBinding(final Binder binder) {
+         return Multibinder.newSetBinder(binder, OperationHandler.class, idNamed());
+      }
 
-   default void contributeOverrideOperationHandler(final Binder binder) {
-      var multibinder = Multibinder.newSetBinder(binder, OperationHandler.class, namedRepresentation());
-
-      contributeOverrideOperationHandler(multibinder);
-
-      var mapbinder = MapBinder.newMapBinder(binder, new TypeLiteral<Representation>() {},
-         new TypeLiteral<Set<OperationHandler>>() {});
-
-      mapbinder.addBinding(representation())
-         .to(Key.get(new TypeLiteral<Set<OperationHandler>>() {}, namedRepresentation()));
+      default MapBinder<Representation, Set<OperationHandler>> createDiagramOverrideOperationHandlerBinding(
+         final Binder binder) {
+         return MapBinder.newMapBinder(binder, new TypeLiteral<Representation>() {},
+            new TypeLiteral<Set<OperationHandler>>() {});
+      }
    }
 
-   void contributeOverrideOperationHandler(Multibinder<OperationHandler> multibinder);
+   interface Contributor extends Creator, BaseRepresentationContribution {
+      default void contributeOverrideOperationHandler(final Binder binder) {
+         contributeOverrideOperationHandler(createOverrideOperationHandlerBinding(binder));
+
+         createDiagramOverrideOperationHandlerBinding(binder).addBinding(representation())
+            .to(Key.get(new TypeLiteral<Set<OperationHandler>>() {}, idNamed()));
+      }
+
+      void contributeOverrideOperationHandler(Multibinder<OperationHandler> multibinder);
+   }
 }

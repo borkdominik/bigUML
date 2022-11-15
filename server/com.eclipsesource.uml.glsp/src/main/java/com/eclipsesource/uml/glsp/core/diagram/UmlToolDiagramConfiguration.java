@@ -11,9 +11,9 @@
 package com.eclipsesource.uml.glsp.core.diagram;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.eclipse.emf.ecore.EClass;
@@ -31,7 +31,7 @@ import com.google.inject.Inject;
 public class UmlToolDiagramConfiguration extends BaseDiagramConfiguration {
 
    @Inject
-   private Map<Representation, Set<DiagramConfiguration>> diagramConfigurations;
+   private Map<Representation, DiagramConfiguration> diagramConfigurations;
 
    @Override
    public List<EdgeTypeHint> getEdgeTypeHints() {
@@ -87,8 +87,5 @@ public class UmlToolDiagramConfiguration extends BaseDiagramConfiguration {
    @Override
    public ServerLayoutKind getLayoutKind() { return ServerLayoutKind.MANUAL; }
 
-   protected Set<DiagramConfiguration> getConfigurations() {
-
-      return diagramConfigurations.values().stream().flatMap(Set::stream).collect(Collectors.toSet());
-   }
+   protected Collection<DiagramConfiguration> getConfigurations() { return diagramConfigurations.values(); }
 }

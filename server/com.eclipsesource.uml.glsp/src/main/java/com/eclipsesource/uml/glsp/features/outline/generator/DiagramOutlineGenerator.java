@@ -13,10 +13,7 @@ package com.eclipsesource.uml.glsp.features.outline.generator;
 import java.util.List;
 
 import com.eclipsesource.uml.glsp.features.outline.model.OutlineTreeNode;
-import com.eclipsesource.uml.modelserver.unotation.Representation;
 
 public interface DiagramOutlineGenerator {
-   boolean supports(Representation representation);
-
    List<OutlineTreeNode> generate();
 }

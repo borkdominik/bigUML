@@ -11,21 +11,10 @@
 import "@eclipse-glsp/client/css/glsp-sprotty.css";
 import "sprotty/css/edit-label.css";
 
-import {
-    configureModelElement,
-    PolylineEdgeView,
-    SCompartmentView,
-    SEdge,
-    SLabelView,
-} from "@eclipse-glsp/client/lib";
+import { configureModelElement, PolylineEdgeView, SCompartmentView, SEdge, SLabelView } from "@eclipse-glsp/client/lib";
 import { ContainerModule } from "inversify";
 
-import {
-    ConnectableEdge,
-    IconLabelCompartment,
-    LabeledNode,
-    SEditableLabel,
-} from "../../model";
+import { ConnectableEdge, IconLabelCompartment, LabeledNode, SEditableLabel } from "../../model";
 import { UmlTypes } from "../../utils";
 import { IconView } from "../../views/commons";
 import { DirectedEdgeView } from "../usecase/views";

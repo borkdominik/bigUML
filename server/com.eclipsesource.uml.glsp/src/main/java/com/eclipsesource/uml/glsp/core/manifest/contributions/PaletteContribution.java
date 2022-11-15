@@ -20,21 +20,27 @@ import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.MapBinder;
 import com.google.inject.multibindings.Multibinder;
 
-public interface PaletteContribution extends BaseDiagramContribution {
+public interface PaletteContribution {
+   interface Creator extends BaseContribution {
+      default Multibinder<DiagramPalette> createPaletteBinding(final Binder binder) {
+         return Multibinder.newSetBinder(binder, DiagramPalette.class, idNamed());
+      }
 
-   default void contributePalette(final Binder binder) {
-      var multibinder = Multibinder.newSetBinder(binder,
-         new TypeLiteral<DiagramPalette>() {}, namedRepresentation());
-
-      contributePalette(multibinder);
-
-      var mapbinder = MapBinder.newMapBinder(binder, new TypeLiteral<Representation>() {},
-         new TypeLiteral<Set<DiagramPalette>>() {});
-
-      mapbinder.addBinding(representation())
-         .to(Key.get(new TypeLiteral<Set<DiagramPalette>>() {},
-            namedRepresentation()));
+      default MapBinder<Representation, Set<DiagramPalette>> createDiagramPaletteBinding(final Binder binder) {
+         return MapBinder.newMapBinder(binder, new TypeLiteral<Representation>() {},
+            new TypeLiteral<Set<DiagramPalette>>() {});
+      }
    }
 
-   void contributePalette(Multibinder<DiagramPalette> multibinder);
+   interface Contributor extends Creator, BaseRepresentationContribution {
+      default void contributePalette(final Binder binder) {
+         contributePalette(createPaletteBinding(binder));
+
+         createDiagramPaletteBinding(binder).addBinding(representation())
+            .to(Key.get(new TypeLiteral<Set<DiagramPalette>>() {},
+               idNamed()));
+      }
+
+      void contributePalette(Multibinder<DiagramPalette> multibinder);
+   }
 }

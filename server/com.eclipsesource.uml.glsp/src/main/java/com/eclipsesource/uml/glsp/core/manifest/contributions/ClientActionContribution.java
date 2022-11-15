@@ -18,11 +18,17 @@ import com.google.inject.multibindings.Multibinder;
 import com.google.inject.name.Names;
 
 public interface ClientActionContribution {
-
-   default void contributeClientAction(final Binder binder) {
-      var provider = Multibinder.newSetBinder(binder, Action.class, Names.named(GLSPModule.CLIENT_ACTIONS));
-      contributeClientAction(provider);
+   interface Creator {
+      default Multibinder<Action> createClientActionBinding(final Binder binder) {
+         return Multibinder.newSetBinder(binder, Action.class, Names.named(GLSPModule.CLIENT_ACTIONS));
+      }
    }
 
-   void contributeClientAction(Multibinder<Action> multibinder);
+   interface Contributor extends Creator {
+      default void contributeClientAction(final Binder binder) {
+         contributeClientAction(createClientActionBinding(binder));
+      }
+
+      void contributeClientAction(Multibinder<Action> multibinder);
+   }
 }

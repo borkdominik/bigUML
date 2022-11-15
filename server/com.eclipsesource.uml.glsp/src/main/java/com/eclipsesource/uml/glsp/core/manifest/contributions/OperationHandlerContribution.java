@@ -19,11 +19,17 @@ import com.google.inject.multibindings.Multibinder;
  * Contributes to GLSP directly
  */
 public interface OperationHandlerContribution {
-
-   default void contributeOperationHandler(final Binder binder) {
-      var provider = Multibinder.newSetBinder(binder, OperationHandler.class);
-      contributeOperationHandler(provider);
+   interface Creator {
+      default Multibinder<OperationHandler> createOperationHandlerBinding(final Binder binder) {
+         return Multibinder.newSetBinder(binder, OperationHandler.class);
+      }
    }
 
-   void contributeOperationHandler(Multibinder<OperationHandler> multibinder);
+   interface Contributor extends Creator {
+      default void contributeOperationHandler(final Binder binder) {
+         contributeOperationHandler(createOperationHandlerBinding(binder));
+      }
+
+      void contributeOperationHandler(Multibinder<OperationHandler> multibinder);
+   }
 }

@@ -24,7 +24,7 @@ import {
     InteractionNodeView,
     LifelineNodeView,
     MessageArrowLabelView,
-    MessageEdgeView,
+    MessageEdgeView
 } from "./views";
 
 export default function createCommunicationModule(): ContainerModule {

@@ -13,13 +13,13 @@ package com.eclipsesource.uml.glsp.core.handler.operation.create;
 import java.util.Map;
 import java.util.Set;
 
-import com.eclipsesource.uml.glsp.core.common.DiagramRegistry;
+import com.eclipsesource.uml.glsp.core.common.DiagramMultiKeyRegistry;
 import com.eclipsesource.uml.glsp.core.common.RepresentationKey;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 
 public class DiagramCreateHandlerRegistry
-   extends DiagramRegistry<String, DiagramCreateHandler> {
+   extends DiagramMultiKeyRegistry<String, DiagramCreateHandler> {
 
    @Inject
    public DiagramCreateHandlerRegistry(final Map<Representation, Set<DiagramCreateHandler>> handlers) {

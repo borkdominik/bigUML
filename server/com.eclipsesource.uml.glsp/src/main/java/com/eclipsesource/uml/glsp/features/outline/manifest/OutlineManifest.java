@@ -15,22 +15,38 @@ import org.eclipse.glsp.server.actions.ActionHandler;
 
 import com.eclipsesource.uml.glsp.core.manifest.contributions.ActionHandlerContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.ClientActionContribution;
-import com.eclipsesource.uml.glsp.features.outline.actions.RequestOutlineHandler;
-import com.eclipsesource.uml.glsp.features.outline.actions.SetOutlineAction;
-import com.eclipsesource.uml.glsp.features.outline.generator.DefaultOutlineGeneratorImpl;
-import com.eclipsesource.uml.glsp.features.outline.generator.DefaultOutlineGenerator;
+import com.eclipsesource.uml.glsp.features.outline.generator.DefaultDiagramOutlineGenerator;
+import com.eclipsesource.uml.glsp.features.outline.generator.NotationBasedOutlineGenerator;
+import com.eclipsesource.uml.glsp.features.outline.handler.action.DiagramOutlineGeneratorRegistry;
+import com.eclipsesource.uml.glsp.features.outline.handler.action.RequestOutlineHandler;
+import com.eclipsesource.uml.glsp.features.outline.handler.action.SetOutlineAction;
+import com.eclipsesource.uml.glsp.features.outline.manifest.contributions.OutlineGeneratorContribution;
 import com.google.inject.AbstractModule;
-import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import com.google.inject.multibindings.Multibinder;
+import com.google.inject.multibindings.OptionalBinder;
 
 public class OutlineManifest extends AbstractModule
-   implements ClientActionContribution, ActionHandlerContribution {
+   implements ClientActionContribution.Contributor, ActionHandlerContribution.Contributor,
+   OutlineGeneratorContribution.Creator {
+
    @Override
    protected void configure() {
       super.configure();
       contributeClientAction(binder());
       contributeActionHandler(binder());
+      createDiagramOutlineGeneratorBinding(binder());
+
+      bind(DiagramOutlineGeneratorRegistry.class).in(Singleton.class);
+      OptionalBinder.newOptionalBinder(binder(), DefaultDiagramOutlineGenerator.class)
+         .setDefault()
+         .to(NotationBasedOutlineGenerator.class)
+         .in(Singleton.class);
+   }
+
+   @Override
+   public String id() {
+      return getClass().getSimpleName();
    }
 
    @Override
@@ -41,11 +57,5 @@ public class OutlineManifest extends AbstractModule
    @Override
    public void contributeActionHandler(final Multibinder<ActionHandler> multibinder) {
       multibinder.addBinding().to(RequestOutlineHandler.class);
-   }
-
-   @Provides
-   @Singleton
-   DefaultOutlineGenerator provideDefaultOutlineGenerator() {
-      return new DefaultOutlineGeneratorImpl();
    }
 }

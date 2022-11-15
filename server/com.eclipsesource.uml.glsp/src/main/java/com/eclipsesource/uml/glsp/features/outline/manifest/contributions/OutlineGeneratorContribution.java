@@ -10,16 +10,33 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.features.outline.manifest.contributions;
 
+import com.eclipsesource.uml.glsp.core.manifest.contributions.BaseContribution;
+import com.eclipsesource.uml.glsp.core.manifest.contributions.BaseRepresentationContribution;
 import com.eclipsesource.uml.glsp.features.outline.generator.DiagramOutlineGenerator;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Binder;
-import com.google.inject.multibindings.Multibinder;
+import com.google.inject.Key;
+import com.google.inject.multibindings.MapBinder;
 
 public interface OutlineGeneratorContribution {
-
-   default void contributeOutlineGenerator(final Binder binder) {
-      var provider = Multibinder.newSetBinder(binder, DiagramOutlineGenerator.class);
-      contributeOutlineGenerator(provider);
+   interface Creator extends BaseContribution {
+      default MapBinder<Representation, DiagramOutlineGenerator> createDiagramOutlineGeneratorBinding(
+         final Binder binder) {
+         return MapBinder.newMapBinder(binder, Representation.class,
+            DiagramOutlineGenerator.class);
+      }
    }
 
-   void contributeOutlineGenerator(Multibinder<DiagramOutlineGenerator> multibinder);
+   interface Contributor extends Creator, BaseRepresentationContribution {
+      default void contributeOutlineGenerator(final Binder binder) {
+         var generator = contributeOutlineGenerator();
+         binder.bind(DiagramOutlineGenerator.class).annotatedWith(idNamed())
+            .to(generator);
+
+         createDiagramOutlineGeneratorBinding(binder).addBinding(representation())
+            .to(Key.get(DiagramOutlineGenerator.class, idNamed()));
+      }
+
+      Class<? extends DiagramOutlineGenerator> contributeOutlineGenerator();
+   }
 }

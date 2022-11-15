@@ -22,20 +22,29 @@ import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.MapBinder;
 import com.google.inject.multibindings.Multibinder;
 
-public interface LabelEditHandlerContribution extends BaseDiagramContribution {
+public interface LabelEditHandlerContribution {
+   interface Creator extends BaseContribution {
+      default Multibinder<DiagramLabelEditHandler<? extends EObject>> createLabelEditHandlerBinding(
+         final Binder binder) {
+         return Multibinder.newSetBinder(binder, new TypeLiteral<DiagramLabelEditHandler<? extends EObject>>() {},
+            idNamed());
+      }
 
-   default void contributeLabelEditHandler(final Binder binder) {
-      var multibinder = Multibinder.newSetBinder(binder,
-         new TypeLiteral<DiagramLabelEditHandler<? extends EObject>>() {}, namedRepresentation());
-
-      contributeLabelEditHandler(multibinder);
-
-      var mapbinder = MapBinder.newMapBinder(binder, new TypeLiteral<Representation>() {},
-         new TypeLiteral<Set<DiagramLabelEditHandler<? extends EObject>>>() {});
-      mapbinder.addBinding(representation())
-         .to(Key.get(new TypeLiteral<Set<DiagramLabelEditHandler<? extends EObject>>>() {}, namedRepresentation()));
-
+      default MapBinder<Representation, Set<DiagramLabelEditHandler<? extends EObject>>> createDiagramLabelEditHandlerBinding(
+         final Binder binder) {
+         return MapBinder.newMapBinder(binder, new TypeLiteral<Representation>() {},
+            new TypeLiteral<Set<DiagramLabelEditHandler<? extends EObject>>>() {});
+      }
    }
 
-   void contributeLabelEditHandler(Multibinder<DiagramLabelEditHandler<? extends EObject>> multibinder);
+   interface Contributor extends Creator, BaseRepresentationContribution {
+      default void contributeLabelEditHandler(final Binder binder) {
+         contributeLabelEditHandler(createLabelEditHandlerBinding(binder));
+
+         createDiagramLabelEditHandlerBinding(binder).addBinding(representation())
+            .to(Key.get(new TypeLiteral<Set<DiagramLabelEditHandler<? extends EObject>>>() {}, idNamed()));
+      }
+
+      void contributeLabelEditHandler(Multibinder<DiagramLabelEditHandler<? extends EObject>> multibinder);
+   }
 }

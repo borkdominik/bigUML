@@ -12,7 +12,6 @@ package com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.manifest;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.graph.GModelElement;
-import org.eclipse.glsp.server.operations.OperationHandler;
 
 import com.eclipsesource.uml.glsp.core.diagram.DiagramConfiguration;
 import com.eclipsesource.uml.glsp.core.features.toolpalette.DiagramPalette;
@@ -24,11 +23,7 @@ import com.eclipsesource.uml.glsp.core.manifest.DiagramManifest;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.CreateHandlerContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.DeleteHandlerContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.LabelEditHandlerContribution;
-import com.eclipsesource.uml.glsp.core.manifest.contributions.OverrideOperationHandlerContribution;
-import com.eclipsesource.uml.glsp.features.outline.generator.DiagramOutlineGenerator;
-import com.eclipsesource.uml.glsp.features.outline.manifest.contributions.OutlineGeneratorContribution;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.diagram.CommunicationConfiguration;
-import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.features.outline.CommunicationOutlineGenerator;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.gmodel.InteractionNodeMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.gmodel.LifelineNodeMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.gmodel.MessageEdgeMapper;
@@ -46,9 +41,13 @@ import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.multibindings.Multibinder;
 
 public class CommunicationUmlManifest extends DiagramManifest
-   implements CreateHandlerContribution,
-   DeleteHandlerContribution, LabelEditHandlerContribution, OutlineGeneratorContribution,
-   OverrideOperationHandlerContribution {
+   implements CreateHandlerContribution.Contributor,
+   DeleteHandlerContribution.Contributor, LabelEditHandlerContribution.Contributor {
+
+   @Override
+   public String id() {
+      return representation().getName();
+   }
 
    @Override
    public Representation representation() {
@@ -62,8 +61,7 @@ public class CommunicationUmlManifest extends DiagramManifest
       contributeCreateHandler(binder());
       contributeDeleteHandler(binder());
       contributeLabelEditHandler(binder());
-      contributeOutlineGenerator(binder());
-      contributeOverrideOperationHandler(binder());
+      // contributeOutlineGenerator(binder());
    }
 
    public void configureAdditionals() {
@@ -88,8 +86,8 @@ public class CommunicationUmlManifest extends DiagramManifest
    }
 
    @Override
-   public void contributeDiagramConfiguration(final Multibinder<DiagramConfiguration> multibinder) {
-      multibinder.addBinding().to(CommunicationConfiguration.class);
+   public Class<? extends DiagramConfiguration> contributeDiagramConfiguration() {
+      return CommunicationConfiguration.class;
    }
 
    @Override
@@ -115,21 +113,10 @@ public class CommunicationUmlManifest extends DiagramManifest
    }
 
    @Override
-   public void contributeOutlineGenerator(final Multibinder<DiagramOutlineGenerator> multibinder) {
-      multibinder.addBinding().to(CommunicationOutlineGenerator.class);
-   }
-
-   @Override
    public void contributeGModelMapper(
       final Multibinder<GModelMapper<? extends EObject, ? extends GModelElement>> multibinder) {
       multibinder.addBinding().to(InteractionNodeMapper.class);
       multibinder.addBinding().to(LifelineNodeMapper.class);
       multibinder.addBinding().to(MessageEdgeMapper.class);
-   }
-
-   @Override
-   public void contributeOverrideOperationHandler(final Multibinder<OperationHandler> multibinder) {
-      // TODO Auto-generated method stub
-
    }
 }

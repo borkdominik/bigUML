@@ -62,6 +62,7 @@ import com.eclipsesource.uml.glsp.core.handler.operation.delete.DiagramDeleteHan
 import com.eclipsesource.uml.glsp.core.handler.operation.delete.UmlDeleteOperationHandler;
 import com.eclipsesource.uml.glsp.core.handler.operation.directediting.DiagramLabelEditHandlerRegistry;
 import com.eclipsesource.uml.glsp.core.handler.operation.directediting.UmlLabelEditOperationHandler;
+import com.eclipsesource.uml.glsp.core.manifest.EmptyManifest;
 import com.eclipsesource.uml.glsp.core.model.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.eclipsesource.uml.glsp.core.model.UmlSourceModelStorage;
@@ -217,6 +218,7 @@ public class UmlDiagramModule extends EMSGLSPNotationDiagramModule {
    protected void configureAdditionals() {
       super.configureAdditionals();
 
+      install(new EmptyManifest());
       install(new OutlineManifest());
       // install(new CommonUmlManifest());
       install(new CommunicationUmlManifest());

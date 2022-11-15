@@ -31,7 +31,7 @@ import {
     SRoutingHandleView,
     StructureCompartmentView,
     TYPES,
-    validationModule,
+    validationModule
 } from "@eclipse-glsp/client/lib";
 import toolPaletteModule from "@eclipse-glsp/client/lib/features/tool-palette/di.config";
 import { Container, ContainerModule } from "inversify";
@@ -42,11 +42,7 @@ import umlToolPaletteModule from "../../features/tool-palette/di.config";
 import { IconLabelCompartmentSelectionFeedback } from "../../feedback";
 import { LabeledNode, SEditableLabel } from "../../model";
 import { BaseTypes, UmlTypes } from "../../utils";
-import {
-    CommentLinkEdgeView,
-    CommentNodeView,
-    IconView,
-} from "../../views/commons";
+import { CommentLinkEdgeView, CommentNodeView, IconView } from "../../views/commons";
 import { PackageNode } from "../shared/model";
 import { PackageNodeView } from "../shared/package-node-view";
 import { ControlNode, IconAction, IconActivity } from "./model";
@@ -67,7 +63,7 @@ import {
     ParameterNodeView,
     PinNodeView,
     PinPortView,
-    SendSignalNodeView,
+    SendSignalNodeView
 } from "./views";
 
 export default function createContainer(widgetId: string): Container {
@@ -311,7 +307,7 @@ export default function createContainer(widgetId: string): Container {
             );
             configureViewerOptions(context, {
                 needsClientLayout: true,
-                baseDiv: widgetId,
+                baseDiv: widgetId
             });
         }
     );
@@ -326,7 +322,7 @@ export default function createContainer(widgetId: string): Container {
     container.unload(toolPaletteModule);
     overrideViewerOptions(container, {
         baseDiv: widgetId,
-        hiddenDiv: widgetId + "_hidden",
+        hiddenDiv: widgetId + "_hidden"
     });
 
     return container;

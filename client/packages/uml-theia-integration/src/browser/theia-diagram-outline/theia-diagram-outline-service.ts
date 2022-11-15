@@ -13,13 +13,12 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { GLSPDiagramWidget } from "@eclipse-glsp/theia-integration";
 import { DiagramOutlineService, OutlineTreeNode } from "@eclipsesource/uml-sprotty/lib/features/diagram-outline";
-import { ApplicationShell } from "@theia/core/lib/browser";
 import { inject, injectable, postConstruct } from "@theia/core/shared/inversify";
 
 import { DiagramOutlineViewService } from "../diagram-outline-view/diagram-outline-view-service";
 import { DiagramOutlineSymbolInformationNode } from "../diagram-outline-view/diagram-outline-view-widget";
+import { belongsToDiagramWidget, UmlDiagramManager } from "../diagram/uml-diagram-manager";
 
 export type TheiaDiagramOutlineFactory = () => TheiaDiagramOutlineService;
 export const TheiaDiagramOutlineFactory = Symbol("TheiaDiagramOutlineFactory");
@@ -30,18 +29,10 @@ export class TheiaDiagramOutlineService extends DiagramOutlineService {
     @inject(DiagramOutlineViewService)
     protected readonly diagramOutlineViewService: DiagramOutlineViewService;
 
-    @inject(ApplicationShell)
-    protected readonly shell: ApplicationShell;
+    @inject(UmlDiagramManager)
+    protected readonly diagramManager: UmlDiagramManager;
 
     protected readonly mappings = new Map<string, [OutlineTreeNode, DiagramOutlineSymbolInformationNode]>();
-
-    protected get belongsToActiveWidget(): boolean {
-        return this.shell.activeWidget instanceof GLSPDiagramWidget && this.shell.activeWidget.clientId === this.diagramServer.clientId;
-    }
-
-    protected get isActiveGLSPWidget(): boolean {
-        return this.shell.activeWidget instanceof GLSPDiagramWidget;
-    }
 
     @postConstruct()
     init(): void {
@@ -53,20 +44,16 @@ export class TheiaDiagramOutlineService extends DiagramOutlineService {
     }
 
     updateOutline(outlineNodes: OutlineTreeNode[]): void {
-        console.log("Update Outline", outlineNodes);
         this.mappings.clear();
 
         const mappedNodes = outlineNodes.map(outlineNode => this.cachedMap(outlineNode));
 
-        if (!this.isActiveGLSPWidget) {
-            this.diagramOutlineViewService.publish([]);
-        } else if (this.belongsToActiveWidget) {
+        if (belongsToDiagramWidget(this.diagramManager.currentEditor, this.diagramServer.clientId)) {
             this.diagramOutlineViewService.publish(mappedNodes);
         }
     }
 
     async onSelect(informationNode: DiagramOutlineSymbolInformationNode): Promise<void> {
-        console.log("OnSelect", informationNode);
         const mapping = this.mappings.get(informationNode.id);
 
         if (mapping !== undefined) {
@@ -104,4 +91,3 @@ export class TheiaDiagramOutlineService extends DiagramOutlineService {
         return informationNode;
     }
 }
-

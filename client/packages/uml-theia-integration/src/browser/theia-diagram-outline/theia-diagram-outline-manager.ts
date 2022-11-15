@@ -17,20 +17,23 @@ import { GLSPDiagramWidget } from "@eclipse-glsp/theia-integration";
 import { ApplicationShell } from "@theia/core/lib/browser";
 import { inject, injectable } from "@theia/core/shared/inversify";
 
+import { DiagramOutlineViewService } from "../diagram-outline-view/diagram-outline-view-service";
 import { TheiaDiagramOutlineService } from "./theia-diagram-outline-service";
 
 @injectable()
 export class TheiaDiagramOutlineManager {
     @inject(ApplicationShell) protected readonly shell: ApplicationShell;
 
+    @inject(DiagramOutlineViewService)
+    protected readonly diagramOutlineViewService: DiagramOutlineViewService;
+
     async refresh(widget: GLSPDiagramWidget): Promise<void> {
         const diagramOutlineService = widget.diContainer.get(TheiaDiagramOutlineService);
         await diagramOutlineService.refresh();
     }
 
-    clear(widget: GLSPDiagramWidget): void {
-        const diagramOutlineService = widget.diContainer.get(TheiaDiagramOutlineService);
-        diagramOutlineService.clear();
+    clear(): void {
+        this.diagramOutlineViewService.publish([]);
     }
 }
 

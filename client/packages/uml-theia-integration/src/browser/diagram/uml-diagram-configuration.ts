@@ -18,7 +18,7 @@ import {
     TheiaDiagramOutlineFactory,
     TheiaDiagramOutlineService
 } from "../theia-diagram-outline";
-import { UmlTheiaDiagramServer } from "./diagram-server";
+import { UmlTheiaDiagramServer } from "./uml-diagram-server";
 
 @injectable()
 export class UmlDiagramConfiguration extends GLSPDiagramConfiguration {

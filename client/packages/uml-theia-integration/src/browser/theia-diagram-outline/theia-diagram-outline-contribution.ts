@@ -17,7 +17,7 @@ import { GLSP_TYPES, IActionDispatcher, TYPES } from "@eclipse-glsp/client";
 import { DiagramOutlineService } from "@eclipsesource/uml-sprotty/lib/features/diagram-outline";
 import { Container } from "@theia/core/shared/inversify";
 
-import { UmlTheiaDiagramServer } from "../diagram/diagram-server";
+import { UmlTheiaDiagramServer } from "../diagram/uml-diagram-server";
 import { TheiaDiagramOutlineService } from "./theia-diagram-outline-service";
 
 export function connectTheiaDiagramOutlineView(

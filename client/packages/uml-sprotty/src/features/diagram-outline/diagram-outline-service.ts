@@ -58,12 +58,7 @@ export abstract class DiagramOutlineService implements SModelRootListener {
         this.updateOutline(outlineTreeNodes);
     }
 
-    clear(): void {
-        this.updateOutline([]);
-    }
-
     async center(outlineNode: OutlineTreeNode): Promise<void> {
-        console.log("center", outlineNode);
         await this.actionDispatcher.dispatch(new CenterAction([outlineNode.semanticUri]));
     }
 

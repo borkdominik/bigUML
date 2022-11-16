@@ -8,17 +8,17 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.core.handler.operation.directediting;
+package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.uinterface;
 
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperation;
+import org.eclipse.uml2.uml.Interface;
 
-public interface DiagramLabelEditHandler<T extends EObject> {
-   Class<T> getElementType();
+import com.eclipsesource.uml.glsp.core.gmodel.suffix.HeaderLabelSuffixAppender;
+import com.eclipsesource.uml.glsp.uml.handler.operations.directediting.DefaultRenameNamedElementHandler;
 
-   String getLabelType();
+public class RenameInterfaceHandler extends DefaultRenameNamedElementHandler<Interface> {
 
-   String getLabelSuffix();
+   public RenameInterfaceHandler() {
+      super(HeaderLabelSuffixAppender.SUFFIX);
+   }
 
-   void executeLabelEdit(final ApplyLabelEditOperation editLabelOperation);
 }

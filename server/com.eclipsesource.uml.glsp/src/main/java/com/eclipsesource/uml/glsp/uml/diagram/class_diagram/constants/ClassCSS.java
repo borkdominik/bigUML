@@ -8,17 +8,10 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.core.handler.operation.directediting;
+package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants;
 
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperation;
+public final class ClassCSS {
+   public static final String EDGE_DIAMOND_EMPTY = "uml-edge-directed-diamond-empty";
 
-public interface DiagramLabelEditHandler<T extends EObject> {
-   Class<T> getElementType();
-
-   String getLabelType();
-
-   String getLabelSuffix();
-
-   void executeLabelEdit(final ApplyLabelEditOperation editLabelOperation);
+   private ClassCSS() {}
 }

@@ -22,8 +22,8 @@ import org.eclipse.glsp.server.layout.ServerLayoutKind;
 import org.eclipse.glsp.server.types.EdgeTypeHint;
 import org.eclipse.glsp.server.types.ShapeTypeHint;
 
-import com.eclipsesource.uml.glsp.old.diagram.class_diagram.constants.ClassTypes;
 import com.eclipsesource.uml.glsp.old.diagram.object_diagram.constants.ObjectTypes;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
 import com.google.common.collect.Lists;
 
 public class ObjectDiagramConfiguration extends BaseDiagramConfiguration {

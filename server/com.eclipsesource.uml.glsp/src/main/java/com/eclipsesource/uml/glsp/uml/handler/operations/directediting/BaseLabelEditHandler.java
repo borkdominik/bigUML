@@ -26,7 +26,8 @@ import com.google.inject.Inject;
 
 public abstract class BaseLabelEditHandler<T extends EObject> implements DiagramLabelEditHandler<T> {
    protected final Class<T> elementType;
-   protected final String suffix;
+   protected final String labelType;
+   protected final String labelSuffix;
 
    @Inject
    protected UmlModelState modelState;
@@ -37,8 +38,9 @@ public abstract class BaseLabelEditHandler<T extends EObject> implements Diagram
    @Inject
    private SuffixIdExtractor suffixIdExtractor;
 
-   public BaseLabelEditHandler(final String suffix) {
-      this.suffix = suffix;
+   public BaseLabelEditHandler(final String labelType, final String labelSuffix) {
+      this.labelType = labelType;
+      this.labelSuffix = labelSuffix;
       this.elementType = GenericsUtil.getClassParameter(getClass(), BaseLabelEditHandler.class, 0);
    }
 
@@ -46,7 +48,10 @@ public abstract class BaseLabelEditHandler<T extends EObject> implements Diagram
    public Class<T> getElementType() { return elementType; }
 
    @Override
-   public String getLabelSuffix() { return suffix; }
+   public String getLabelType() { return this.labelType; }
+
+   @Override
+   public String getLabelSuffix() { return labelSuffix; }
 
    @Override
    public void executeLabelEdit(final ApplyLabelEditOperation editLabelOperation) {

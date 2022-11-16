@@ -8,17 +8,14 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.core.handler.operation.directediting;
+package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix;
 
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperation;
+import com.eclipsesource.uml.glsp.core.features.idgenerator.BaseSuffixIdAppender;
 
-public interface DiagramLabelEditHandler<T extends EObject> {
-   Class<T> getElementType();
+public class PropertyLabelMultiplicitySuffixAppender extends BaseSuffixIdAppender {
+   public static final String SUFFIX = "_property_label_multiplicity";
 
-   String getLabelType();
-
-   String getLabelSuffix();
-
-   void executeLabelEdit(final ApplyLabelEditOperation editLabelOperation);
+   public PropertyLabelMultiplicitySuffixAppender() {
+      super(SUFFIX);
+   }
 }

@@ -18,7 +18,7 @@ import org.eclipse.uml2.uml.Class;
 
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
 import com.eclipsesource.uml.glsp.uml.handler.operations.create.BaseCreateChildNodeHandler;
-import com.eclipsesource.uml.modelserver.old.diagram.classdiagram.property.AddPropertyCommandContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.AddPropertyContribution;
 
 public class CreatePropertyHandler
    extends BaseCreateChildNodeHandler<Class> {
@@ -29,7 +29,7 @@ public class CreatePropertyHandler
 
    @Override
    protected CCommand command(final Class container, final Optional<GPoint> location) {
-      return AddPropertyCommandContribution.create(container);
+      return AddPropertyContribution.create(container);
    }
 
 }

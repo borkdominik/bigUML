@@ -18,7 +18,7 @@ import org.eclipse.glsp.graph.util.GraphUtil;
 
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
 import com.eclipsesource.uml.glsp.uml.handler.operations.create.BaseCreateNodeHandler;
-import com.eclipsesource.uml.modelserver.old.diagram.classdiagram.classinterface.AddInterfaceCommandContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uinterface.AddInterfaceContribution;
 
 public class CreateInterfaceHandler
    extends BaseCreateNodeHandler {
@@ -29,7 +29,7 @@ public class CreateInterfaceHandler
 
    @Override
    protected CCommand command(final Optional<GPoint> location) {
-      return AddInterfaceCommandContribution
+      return AddInterfaceContribution
          .create(location.orElse(GraphUtil.point(0, 0)));
    }
 }

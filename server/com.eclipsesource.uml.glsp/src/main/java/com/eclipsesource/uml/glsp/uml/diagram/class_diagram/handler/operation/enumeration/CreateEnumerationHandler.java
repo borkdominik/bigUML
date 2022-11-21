@@ -18,7 +18,7 @@ import org.eclipse.glsp.graph.util.GraphUtil;
 
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
 import com.eclipsesource.uml.glsp.uml.handler.operations.create.BaseCreateNodeHandler;
-import com.eclipsesource.uml.modelserver.old.diagram.classdiagram.enumeration.AddEnumerationCommandContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.enumeration.AddEnumerationContribution;
 
 public class CreateEnumerationHandler
    extends BaseCreateNodeHandler {
@@ -29,6 +29,6 @@ public class CreateEnumerationHandler
 
    @Override
    protected CCommand command(final Optional<GPoint> location) {
-      return AddEnumerationCommandContribution.create(location.orElse(GraphUtil.point(0, 0)));
+      return AddEnumerationContribution.create(location.orElse(GraphUtil.point(0, 0)));
    }
 }

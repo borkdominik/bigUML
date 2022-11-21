@@ -19,7 +19,7 @@ import org.eclipse.uml2.uml.Property;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.LabelSuffixAppender;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
 import com.eclipsesource.uml.glsp.uml.handler.operations.directediting.BaseLabelEditHandler;
-import com.eclipsesource.uml.modelserver.old.diagram.classdiagram.association.SetAssociationEndMultiplicityCommandContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association.SetAssociationEndMultiplicityContribution;
 
 public class SetAssociationEndMultiplicityHandler extends BaseLabelEditHandler<Property> {
 
@@ -30,7 +30,7 @@ public class SetAssociationEndMultiplicityHandler extends BaseLabelEditHandler<P
    @Override
    protected CCommand command(final Property element, final String newText) {
       var newBounds = getBoundsFromInput(newText);
-      return SetAssociationEndMultiplicityCommandContribution.create(element, newBounds);
+      return SetAssociationEndMultiplicityContribution.create(element, newBounds);
    }
 
    private String multiplicityRegex() {

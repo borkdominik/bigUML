@@ -15,12 +15,12 @@ import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
 import org.eclipse.uml2.uml.Interface;
 
 import com.eclipsesource.uml.glsp.uml.handler.operations.delete.BaseDeleteElementHandler;
-import com.eclipsesource.uml.modelserver.old.diagram.classdiagram.clazz.RemoveClassCommandContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uclass.RemoveClassContribution;
 
 public class DeleteInterfaceHandler extends BaseDeleteElementHandler<Interface> {
 
    @Override
    protected CCommand command(final Interface element) {
-      CCompoundCommand compoundCommand = RemoveClassCommandContribution.create(element);
+      CCompoundCommand compoundCommand = RemoveClassContribution.create(element);
    }
 }

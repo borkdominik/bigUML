@@ -15,13 +15,13 @@ import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Property;
 
 import com.eclipsesource.uml.glsp.uml.handler.operations.delete.BaseDeleteElementHandler;
-import com.eclipsesource.uml.modelserver.old.diagram.classdiagram.property.RemovePropertyCommandContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.RemovePropertyContribution;
 
 public class DeletePropertyHandler extends BaseDeleteElementHandler<Property> {
 
    @Override
    protected CCommand command(final Property element) {
       var container = (Class) element.eContainer();
-      return RemovePropertyCommandContribution.create(container, element);
+      return RemovePropertyContribution.create(container, element);
    }
 }

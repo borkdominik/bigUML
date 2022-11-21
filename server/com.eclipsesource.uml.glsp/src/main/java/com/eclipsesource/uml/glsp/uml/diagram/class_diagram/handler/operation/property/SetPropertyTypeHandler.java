@@ -16,7 +16,7 @@ import org.eclipse.uml2.uml.Property;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyLabelTypeSuffixAppender;
 import com.eclipsesource.uml.glsp.uml.handler.operations.directediting.BaseLabelEditHandler;
-import com.eclipsesource.uml.modelserver.old.diagram.classdiagram.property.SetPropertyTypeCommandContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.SetPropertyTypeContribution;
 
 public class SetPropertyTypeHandler extends BaseLabelEditHandler<Property> {
 
@@ -26,7 +26,7 @@ public class SetPropertyTypeHandler extends BaseLabelEditHandler<Property> {
 
    @Override
    protected CCommand command(final Property element, final String newText) {
-      return SetPropertyTypeCommandContribution.create(element, newText);
+      return SetPropertyTypeContribution.create(element, newText);
    }
 
 }

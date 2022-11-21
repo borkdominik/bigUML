@@ -69,7 +69,6 @@ public class UmlDiagramModule extends EMSGLSPNotationDiagramModule {
       configureFixes();
       configureMappers();
       configureRegistries();
-      configureSuffixGenerators();
    }
 
    protected void configureFixes() {

@@ -15,7 +15,7 @@ import org.eclipse.uml2.uml.Class;
 
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
 import com.eclipsesource.uml.glsp.uml.handler.operations.create.BaseCreateEdgeHandler;
-import com.eclipsesource.uml.modelserver.old.diagram.classdiagram.association.AddAssociationCommandContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association.AddAssociationContribution;
 
 public class CreateAggregationHandler
    extends BaseCreateEdgeHandler<Class, Class> {
@@ -27,7 +27,7 @@ public class CreateAggregationHandler
    @Override
    protected CCommand command(final Class source, final Class target) {
       var keyword = "aggregation";
-      return AddAssociationCommandContribution
+      return AddAssociationContribution
          .create(source, target, keyword);
 
    }

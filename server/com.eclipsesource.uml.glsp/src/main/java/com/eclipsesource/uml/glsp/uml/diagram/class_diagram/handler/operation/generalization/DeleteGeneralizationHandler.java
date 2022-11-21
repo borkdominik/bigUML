@@ -11,7 +11,6 @@
 package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.generalization;
 
 import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
 import org.eclipse.uml2.uml.Generalization;
 
 import com.eclipsesource.uml.glsp.uml.handler.operations.delete.BaseDeleteElementHandler;
@@ -21,6 +20,6 @@ public class DeleteGeneralizationHandler extends BaseDeleteElementHandler<Genera
 
    @Override
    protected CCommand command(final Generalization element) {
-      CCompoundCommand compoundCommand = RemoveGeneralizationContribution.create(element);
+      return RemoveGeneralizationContribution.create(element);
    }
 }

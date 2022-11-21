@@ -58,6 +58,7 @@ import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.eclipsesource.uml.glsp.core.model.UmlSourceModelStorage;
 import com.eclipsesource.uml.glsp.features.outline.manifest.OutlineManifest;
 import com.eclipsesource.uml.glsp.features.validation.UmlDiagramModelValidator;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.manifest.ClassUmlManifest;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.manifest.CommunicationUmlManifest;
 import com.google.inject.Singleton;
 
@@ -193,6 +194,7 @@ public class UmlDiagramModule extends EMSGLSPNotationDiagramModule {
       install(new DefaultManifest());
       install(new OutlineManifest());
       // install(new CommonUmlManifest());
+      install(new ClassUmlManifest());
       install(new CommunicationUmlManifest());
    }
 }

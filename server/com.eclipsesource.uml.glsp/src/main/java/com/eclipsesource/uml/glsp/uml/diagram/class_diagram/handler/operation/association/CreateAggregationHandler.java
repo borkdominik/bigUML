@@ -21,7 +21,7 @@ public class CreateAggregationHandler
    extends BaseCreateEdgeHandler<Class, Class> {
 
    public CreateAggregationHandler() {
-      super(ClassTypes.ASSOCIATION);
+      super(ClassTypes.AGGREGATION);
    }
 
    @Override

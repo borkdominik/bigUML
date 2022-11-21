@@ -21,7 +21,7 @@ public class CreateCompositionHandler
    extends BaseCreateEdgeHandler<Class, Class> {
 
    public CreateCompositionHandler() {
-      super(ClassTypes.ASSOCIATION);
+      super(ClassTypes.COMPOSITION);
    }
 
    @Override

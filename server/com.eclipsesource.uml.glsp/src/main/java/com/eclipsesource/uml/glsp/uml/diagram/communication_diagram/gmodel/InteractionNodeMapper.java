@@ -32,7 +32,7 @@ import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.Interaction;
 
 import com.eclipsesource.uml.glsp.core.gmodel.GModelMapHandler;
-import com.eclipsesource.uml.glsp.core.gmodel.suffix.SuffixAppender;
+import com.eclipsesource.uml.glsp.core.gmodel.suffix.Suffix;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.eclipsesource.uml.glsp.core.utils.UmlConfig;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
@@ -48,7 +48,7 @@ public class InteractionNodeMapper extends BaseGModelMapper<Interaction, GNode> 
    private static final String H_ALIGN = "hAlign";
 
    @Inject
-   private SuffixAppender suffix;
+   private Suffix suffix;
 
    @Inject
    private UmlModelState modelState;

@@ -1,10 +1,11 @@
 package com.eclipsesource.uml.modelserver.old.diagram.usecasediagram.generalization;
 
-public class RemoveGeneralizationCompoundCommand { /*-{
+public class RemoveGeneralizationCompoundCommand { /*-
 
-    public RemoveGeneralizationCompoundCommand(final EditingDomain domain, final URI modelUri,
-                                               final String semanticUriFragment) {
-        this.append(new RemoveGeneralizationCommand(domain, modelUri, semanticUriFragment));
-        this.append(new RemoveGeneralizationEdgeCommand(domain, modelUri, semanticUriFragment));
-    }   */
+   public RemoveGeneralizationCompoundCommand(final EditingDomain domain, final URI modelUri,
+      final Generalization generalization) {
+      this.append(new RemoveGeneralizationSemanticCommand(domain, modelUri, generalization));
+      this.append(new RemoveGeneralizationNotationCommand(domain, modelUri, generalization));
+   }
+   */
 }

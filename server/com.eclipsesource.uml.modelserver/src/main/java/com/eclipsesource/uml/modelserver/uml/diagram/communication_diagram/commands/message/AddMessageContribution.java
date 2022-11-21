@@ -21,22 +21,20 @@ import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
 import org.eclipse.emfcloud.modelserver.edit.command.BasicCommandContribution;
 import org.eclipse.uml2.uml.Lifeline;
 
+import com.eclipsesource.uml.modelserver.shared.constants.SemanticKeys;
 import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
 
 public class AddMessageContribution extends BasicCommandContribution<Command> {
 
-   public static final String TYPE = "uml:add_message";
-
-   public static final String SOURCE_LIFELINE_URI_FRAGMENT = "source_lifeline_uri_fragment";
-   public static final String TARGET_LIFELINE_URI_FRAGMENT = "target_lifeline_uri_fragment";
+   public static final String TYPE = "communication:add_message";
 
    public static CCompoundCommand create(final Lifeline sourceLifeline, final Lifeline targetLifeline) {
       var command = CCommandFactory.eINSTANCE.createCompoundCommand();
 
       command.setType(TYPE);
-      command.getProperties().put(SOURCE_LIFELINE_URI_FRAGMENT,
+      command.getProperties().put(SemanticKeys.SOURCE_SEMANTIC_ELEMENT_ID,
          SemanticElementAccessor.getId(sourceLifeline));
-      command.getProperties().put(TARGET_LIFELINE_URI_FRAGMENT,
+      command.getProperties().put(SemanticKeys.TARGET_SEMANTIC_ELEMENT_ID,
          SemanticElementAccessor.getId(targetLifeline));
 
       return command;
@@ -48,8 +46,8 @@ public class AddMessageContribution extends BasicCommandContribution<Command> {
 
       var elementAccessor = new SemanticElementAccessor(modelUri, domain);
 
-      var sourceLifelineUriFragment = command.getProperties().get(SOURCE_LIFELINE_URI_FRAGMENT);
-      var targetLifelineUriFragment = command.getProperties().get(TARGET_LIFELINE_URI_FRAGMENT);
+      var sourceLifelineUriFragment = command.getProperties().get(SemanticKeys.SOURCE_SEMANTIC_ELEMENT_ID);
+      var targetLifelineUriFragment = command.getProperties().get(SemanticKeys.TARGET_SEMANTIC_ELEMENT_ID);
 
       var sourceLifeline = elementAccessor.getElement(sourceLifelineUriFragment, Lifeline.class);
       var targetLifeline = elementAccessor.getElement(targetLifelineUriFragment, Lifeline.class);

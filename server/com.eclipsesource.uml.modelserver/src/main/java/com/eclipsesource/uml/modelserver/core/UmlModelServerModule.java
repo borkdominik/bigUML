@@ -31,6 +31,7 @@ import com.eclipsesource.uml.modelserver.core.commands.change_bounds.UmlChangeBo
 import com.eclipsesource.uml.modelserver.core.resource.UmlNotationPackageConfiguration;
 import com.eclipsesource.uml.modelserver.core.resource.UmlPackageConfiguration;
 import com.eclipsesource.uml.modelserver.core.routing.UmlModelServerRouting;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.manifest.ClassManifest;
 import com.eclipsesource.uml.modelserver.uml.diagram.common_diagram.manifest.CommonManifest;
 import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.manifest.CommunicationManifest;
 import com.google.inject.Singleton;
@@ -45,6 +46,7 @@ public class UmlModelServerModule extends EMSNotationModelServerModule {
 
       install(new CommonManifest());
       install(new CommunicationManifest());
+      install(new ClassManifest());
    }
 
    @Override

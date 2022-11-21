@@ -25,7 +25,7 @@ import org.eclipse.glsp.server.emf.model.notation.Edge;
 import org.eclipse.uml2.uml.Message;
 import org.eclipse.uml2.uml.MessageOccurrenceSpecification;
 
-import com.eclipsesource.uml.glsp.core.gmodel.suffix.SuffixAppender;
+import com.eclipsesource.uml.glsp.core.gmodel.suffix.Suffix;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.eclipsesource.uml.glsp.core.utils.UmlConfig;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
@@ -40,7 +40,7 @@ public class MessageEdgeMapper extends BaseGModelMapper<Message, GEdge> {
    private UmlModelState modelState;
 
    @Inject
-   private SuffixAppender suffix;
+   private Suffix suffix;
 
    @Override
    public GEdge map(final Message message) {

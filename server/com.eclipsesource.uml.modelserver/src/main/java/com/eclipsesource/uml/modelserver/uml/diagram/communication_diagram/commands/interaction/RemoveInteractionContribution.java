@@ -26,7 +26,7 @@ import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccesso
 
 public class RemoveInteractionContribution extends BasicCommandContribution<Command> {
 
-   public static final String TYPE = "uml:remove_interaction";
+   public static final String TYPE = "communication:remove_interaction";
 
    public static CCompoundCommand create(final Interaction interaction) {
       var command = CCommandFactory.eINSTANCE.createCompoundCommand();

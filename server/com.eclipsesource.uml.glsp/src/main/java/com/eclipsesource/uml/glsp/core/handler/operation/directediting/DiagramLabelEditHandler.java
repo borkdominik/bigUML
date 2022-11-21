@@ -16,6 +16,8 @@ import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperation;
 public interface DiagramLabelEditHandler<T extends EObject> {
    Class<T> getElementType();
 
+   String getLabelType();
+
    String getLabelSuffix();
 
    void executeLabelEdit(final ApplyLabelEditOperation editLabelOperation);

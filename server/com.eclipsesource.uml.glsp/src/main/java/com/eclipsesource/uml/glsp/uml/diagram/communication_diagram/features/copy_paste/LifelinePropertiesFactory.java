@@ -20,7 +20,7 @@ public class LifelinePropertiesFactory {
    public static LifelineCopyableProperties from(final GNode element) {
       var semantic = new LifelineCopyableProperties.Semantic();
       semantic.id = element.getId();
-      GModelFilterUtil.flatFilterById(element, UmlIDUtil.createHeaderLabelId(element.getId()), GLabel.class).findFirst()
+      GModelFilterUtil.flatFilterById(element, suffix.headerLabelSuffix.appendTo(element.getId()), GLabel.class).findFirst()
          .ifPresent(label -> semantic.name = label.getText());
    
       var notation = new LifelineCopyableProperties.Notation();

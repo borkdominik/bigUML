@@ -14,11 +14,12 @@ import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.AbstractEMSOperationHandler;
+import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperation;
 import org.eclipse.glsp.server.types.GLSPServerException;
 
-import com.eclipsesource.uml.glsp.core.common.DoubleKey;
 import com.eclipsesource.uml.glsp.core.common.RepresentationKey;
+import com.eclipsesource.uml.glsp.core.common.TripleKey;
 import com.eclipsesource.uml.glsp.core.features.idgenerator.SuffixIdExtractor;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.google.inject.Inject;
@@ -40,17 +41,21 @@ public class UmlLabelEditOperationHandler
       var representation = modelState.getUnsafeRepresentation();
 
       var labelId = operation.getLabelId();
-      var suffix = suffixIdExtractor.extractSuffix(labelId)
+      var labelSuffix = suffixIdExtractor.extractSuffix(labelId)
          .orElseThrow(() -> new GLSPServerException("No suffix found by extractor for label " + labelId));
       var elementId = suffixIdExtractor.extractId(labelId)
          .orElseThrow(() -> new GLSPServerException("No elementId found by extractor for label " + labelId));
+
+      var label = getOrThrow(modelState.getIndex().getEObject(labelId),
+         GLabel.class, "No GLabel found for label " + labelId);
+      var labelType = label.getType();
 
       var semanticElement = getOrThrow(modelState.getIndex().getEObject(elementId),
          EObject.class,
          "Could not find semantic element for id '" + elementId + "', no edit label operation executed.");
 
       var editLabelHandler = registry
-         .get(RepresentationKey.of(representation, DoubleKey.of(semanticElement.getClass(), suffix)));
+         .get(RepresentationKey.of(representation, TripleKey.of(semanticElement.getClass(), labelType, labelSuffix)));
 
       editLabelHandler
          .orElseThrow(() -> new GLSPServerException("No handler found for labelId " + labelId))

@@ -18,13 +18,14 @@ import java.util.stream.Collectors;
 import org.eclipse.emf.ecore.EObject;
 
 import com.eclipsesource.uml.glsp.core.common.DiagramMultiKeyRegistry;
-import com.eclipsesource.uml.glsp.core.common.DoubleKey;
 import com.eclipsesource.uml.glsp.core.common.RepresentationKey;
+import com.eclipsesource.uml.glsp.core.common.TripleKey;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 
 public class DiagramLabelEditHandlerRegistry
-   extends DiagramMultiKeyRegistry<DoubleKey<Class<? extends EObject>, String>, DiagramLabelEditHandler<? extends EObject>> {
+   extends
+   DiagramMultiKeyRegistry<TripleKey<Class<? extends EObject>, String, String>, DiagramLabelEditHandler<? extends EObject>> {
 
    @Inject
    public DiagramLabelEditHandlerRegistry(
@@ -34,8 +35,9 @@ public class DiagramLabelEditHandlerRegistry
 
          e.getValue().forEach(handler -> {
             var elementType = handler.getElementType();
-            var suffix = handler.getLabelSuffix();
-            register(RepresentationKey.of(representation, DoubleKey.of(elementType, suffix)), handler);
+            var labelType = handler.getLabelType();
+            var labelSuffix = handler.getLabelSuffix();
+            register(RepresentationKey.of(representation, TripleKey.of(elementType, labelType, labelSuffix)), handler);
          });
       });
 
@@ -43,13 +45,13 @@ public class DiagramLabelEditHandlerRegistry
    }
 
    @Override
-   protected String deriveKey(final RepresentationKey<DoubleKey<Class<? extends EObject>, String>> key) {
+   protected String deriveKey(final RepresentationKey<TripleKey<Class<? extends EObject>, String, String>> key) {
       var representation = key.representation;
-      var representationKey2 = key.key2;
+      var tripleKey = key.key2;
 
-      var clazz = representationKey2.key1;
+      var clazz = tripleKey.key1;
       if (clazz.isInterface()) {
-         return representation.getName() + ":" + clazz + ":" + representationKey2.key2;
+         return representation.getName() + ":" + clazz + ":" + tripleKey.key2 + "$" + tripleKey.key3;
       }
 
       var interfaces = List.of(clazz.getInterfaces());
@@ -58,7 +60,7 @@ public class DiagramLabelEditHandlerRegistry
 
       var found = dkeys.stream().filter(k -> interfaces.contains(k.key1)).findFirst();
       if (found.isPresent()) {
-         return representation.getName() + ":" + found.get().key1 + ":" + representationKey2.key2;
+         return representation.getName() + ":" + found.get().key1 + ":" + tripleKey.key2 + "$" + tripleKey.key2;
       }
 
       return super.deriveKey(key);

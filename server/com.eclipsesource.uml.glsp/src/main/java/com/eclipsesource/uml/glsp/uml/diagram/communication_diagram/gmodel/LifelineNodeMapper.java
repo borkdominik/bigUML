@@ -23,7 +23,7 @@ import org.eclipse.glsp.server.emf.model.notation.Shape;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Lifeline;
 
-import com.eclipsesource.uml.glsp.core.gmodel.suffix.SuffixAppender;
+import com.eclipsesource.uml.glsp.core.gmodel.suffix.Suffix;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.eclipsesource.uml.glsp.core.utils.UmlConfig;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
@@ -38,7 +38,7 @@ public class LifelineNodeMapper extends BaseGModelMapper<Lifeline, GNode> {
    private UmlModelState modelState;
 
    @Inject
-   private SuffixAppender suffix;
+   private Suffix suffix;
 
    @Override
    public GNode map(final Lifeline lifeline) {

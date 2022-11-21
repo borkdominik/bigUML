@@ -21,6 +21,7 @@ import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.UMLPackage;
 
+import com.eclipsesource.uml.modelserver.shared.notation.commands.UmlRemoveNotationElementCommand;
 import com.eclipsesource.uml.modelserver.shared.utils.UmlSemanticUtil;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association.RemoveAssociationCompoundCommand;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.SetPropertyTypeSemanticCommand;
@@ -29,7 +30,7 @@ public class RemoveClassCompoundCommand extends CompoundCommand {
 
    public RemoveClassCompoundCommand(final EditingDomain domain, final URI modelUri, final Class classToRemove) {
       this.append(new RemoveClassSemanticCommand(domain, modelUri, classToRemove));
-      this.append(new RemoveClassNotationCommand(domain, modelUri, classToRemove));
+      this.append(new UmlRemoveNotationElementCommand(domain, modelUri, classToRemove));
 
       var umlModel = UmlSemanticUtil.getModel(modelUri, domain);
       var usagesClass = UsageCrossReferencer.find(classToRemove, umlModel.eResource());

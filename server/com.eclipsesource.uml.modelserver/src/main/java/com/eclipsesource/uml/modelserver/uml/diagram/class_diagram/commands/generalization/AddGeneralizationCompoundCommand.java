@@ -1,12 +1,11 @@
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.generalization;
 
-import java.util.function.Supplier;
-
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Class;
-import org.eclipse.uml2.uml.Generalization;
+
+import com.eclipsesource.uml.modelserver.shared.notation.commands.UmlAddEdgeCommand;
 
 public class AddGeneralizationCompoundCommand extends CompoundCommand {
 
@@ -17,7 +16,6 @@ public class AddGeneralizationCompoundCommand extends CompoundCommand {
       var command = new AddGeneralizationSemanticCommand(domain, modelUri, generalClass,
          specificClass);
       this.append(command);
-      Supplier<Generalization> semanticResultSupplier = command::getNewGeneralization;
-      this.append(new AddClassGeneralizationEdgeCommand(domain, modelUri, semanticResultSupplier));
+      this.append(new UmlAddEdgeCommand(domain, modelUri, () -> command.getNewGeneralization()));
    }
 }

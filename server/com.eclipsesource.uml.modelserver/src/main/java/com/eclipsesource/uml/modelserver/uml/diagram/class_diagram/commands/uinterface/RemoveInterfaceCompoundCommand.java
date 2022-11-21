@@ -10,6 +10,7 @@ import org.eclipse.uml2.uml.Association;
 import org.eclipse.uml2.uml.Interface;
 import org.eclipse.uml2.uml.Property;
 
+import com.eclipsesource.uml.modelserver.shared.notation.commands.UmlRemoveNotationElementCommand;
 import com.eclipsesource.uml.modelserver.shared.utils.UmlSemanticUtil;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association.RemoveAssociationCompoundCommand;
 
@@ -18,7 +19,7 @@ public class RemoveInterfaceCompoundCommand extends CompoundCommand {
    public RemoveInterfaceCompoundCommand(final EditingDomain domain, final URI modelUri,
       final Interface interfaceToRemove) {
       this.append(new RemoveInterfaceSemanticCommand(domain, modelUri, interfaceToRemove));
-      this.append(new RemoveInterfaceNotationCommand(domain, modelUri, interfaceToRemove));
+      this.append(new UmlRemoveNotationElementCommand(domain, modelUri, interfaceToRemove));
 
       var umlModel = UmlSemanticUtil.getModel(modelUri, domain);
       var usagesInterface = EcoreUtil.UsageCrossReferencer.find(interfaceToRemove,

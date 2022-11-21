@@ -10,13 +10,12 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association;
 
-import java.util.function.Supplier;
-
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Association;
 import org.eclipse.uml2.uml.Class;
+
+import com.eclipsesource.uml.modelserver.shared.notation.commands.UmlAddEdgeCommand;
 
 public class AddAssociationCompoundCommand extends CompoundCommand {
 
@@ -27,8 +26,7 @@ public class AddAssociationCompoundCommand extends CompoundCommand {
       var command = new AddAssociationSemanticCommand(domain, modelUri, source,
          target, type);
       this.append(command);
-      Supplier<Association> semanticResultSupplier = command::getNewAssociation;
-      this.append(new AddAssociationNotationCommand(domain, modelUri, semanticResultSupplier));
+      this.append(new UmlAddEdgeCommand(domain, modelUri, () -> command.getNewAssociation()));
    }
 
 }

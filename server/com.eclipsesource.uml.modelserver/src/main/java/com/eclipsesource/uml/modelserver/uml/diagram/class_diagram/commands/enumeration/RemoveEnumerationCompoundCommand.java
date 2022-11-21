@@ -10,6 +10,7 @@ import org.eclipse.uml2.uml.Enumeration;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.UMLPackage;
 
+import com.eclipsesource.uml.modelserver.shared.notation.commands.UmlRemoveNotationElementCommand;
 import com.eclipsesource.uml.modelserver.shared.utils.UmlSemanticUtil;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.SetPropertyTypeSemanticCommand;
 
@@ -18,7 +19,7 @@ public class RemoveEnumerationCompoundCommand extends CompoundCommand {
    public RemoveEnumerationCompoundCommand(final EditingDomain domain, final URI modelUri,
       final Enumeration enumeration) {
       this.append(new RemoveEnumerationSemanticCommand(domain, modelUri, enumeration));
-      this.append(new RemoveEnumerationNotationCommand(domain, modelUri, enumeration));
+      this.append(new UmlRemoveNotationElementCommand(domain, modelUri, enumeration));
 
       var umlModel = UmlSemanticUtil.getModel(modelUri, domain);
 

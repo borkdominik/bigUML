@@ -10,24 +10,23 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uclass;
 
-import java.util.function.Supplier;
-
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.glsp.graph.GPoint;
-import org.eclipse.uml2.uml.Class;
+import org.eclipse.glsp.graph.util.GraphUtil;
+
+import com.eclipsesource.uml.modelserver.shared.notation.commands.UmlAddShapeCommand;
 
 public class AddClassCompoundCommand extends CompoundCommand {
 
-   public AddClassCompoundCommand(final EditingDomain domain, final URI modelUri, final GPoint classPosition,
+   public AddClassCompoundCommand(final EditingDomain domain, final URI modelUri, final GPoint position,
       final Boolean isAbstract) {
 
-      // Chain semantic and notation command
       var command = new AddClassSemanticCommand(domain, modelUri, isAbstract);
       this.append(command);
-      Supplier<Class> semanticResultSupplier = command::getNewClass;
-      this.append(new AddClassShapeNotationCommand(domain, modelUri, classPosition, semanticResultSupplier));
+      this.append(new UmlAddShapeCommand(domain, modelUri, position, GraphUtil.dimension(160, 50),
+         () -> command.getNewClass()));
    }
 
 }

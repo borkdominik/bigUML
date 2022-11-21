@@ -27,4 +27,5 @@ public class AddEnumerationSemanticCommand extends UmlSemanticElementCommand {
       model.getPackagedElements().add(newEnumeration);
    }
 
+   public Enumeration getNewEnumeration() { return newEnumeration; }
 }

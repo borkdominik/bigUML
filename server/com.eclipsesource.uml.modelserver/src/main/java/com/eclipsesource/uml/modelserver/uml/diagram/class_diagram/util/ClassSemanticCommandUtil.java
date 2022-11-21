@@ -10,18 +10,14 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.util;
 
-import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.DataType;
-import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.NamedElement;
-import org.eclipse.uml2.uml.PackageableElement;
 import org.eclipse.uml2.uml.Type;
 
 public class ClassSemanticCommandUtil {
@@ -60,20 +56,4 @@ public class ClassSemanticCommandUtil {
       }
       return result.isEmpty() ? 1 : (result.equals("*") ? -1 : Integer.parseInt(result, 10));
    }
-
-   public static String getNewPackageableElementName(final Model umlModel,
-      final java.lang.Class<? extends PackageableElement> clazz) {
-      return getNewPackageableElementName(clazz, umlModel);
-   }
-
-   private static String getNewPackageableElementName(final java.lang.Class<? extends PackageableElement> umlClassifier,
-      final Model umlModel) {
-      Function<Integer, String> nameProvider = i -> "New" + umlClassifier.getSimpleName() + i;
-
-      int classifierCounter = umlModel.getPackagedElements().stream().filter(umlClassifier::isInstance)
-         .collect(Collectors.toList()).size();
-
-      return nameProvider.apply(classifierCounter);
-   }
-
 }

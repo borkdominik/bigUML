@@ -1,11 +1,15 @@
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.enumeration;
 
-public class AddEnumerationCompoundCommand { /*-{
+import org.eclipse.emf.common.command.CompoundCommand;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.glsp.graph.GPoint;
+
+public class AddEnumerationCompoundCommand extends CompoundCommand {
 
    public AddEnumerationCompoundCommand(final EditingDomain domain, final URI modelUri, final GPoint position) {
-      Enumeration newEnumeration = UMLFactory.eINSTANCE.createEnumeration();
-      this.append(new AddEnumerationCommand(domain, modelUri, newEnumeration));
-      this.append(new AddEnumerationShapeCommand(domain, modelUri, newEnumeration, position));
+      var semanticCommand = new AddEnumerationSemanticCommand(domain, modelUri);
+      this.append(semanticCommand);
+      this.append(new AddEnumerationNotationCommand(domain, modelUri, newEnumeration, position));
    }
-      */
 }

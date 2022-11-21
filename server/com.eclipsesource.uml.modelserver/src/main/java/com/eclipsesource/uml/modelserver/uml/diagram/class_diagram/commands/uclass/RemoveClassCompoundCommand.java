@@ -10,25 +10,37 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uclass;
 
-public class RemoveClassCompoundCommand { /*-{
+import org.eclipse.emf.common.command.CompoundCommand;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.util.EcoreUtil.UsageCrossReferencer;
+import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.uml2.uml.Association;
+import org.eclipse.uml2.uml.Class;
+import org.eclipse.uml2.uml.Property;
+import org.eclipse.uml2.uml.UMLPackage;
 
-   public RemoveClassCompoundCommand(final EditingDomain domain, final URI modelUri, final String semanticUriFragment) {
-      this.append(new RemoveClassCommand(domain, modelUri, semanticUriFragment));
-      this.append(new RemoveClassShapeCommand(domain, modelUri, semanticUriFragment));
+import com.eclipsesource.uml.modelserver.shared.utils.UmlSemanticUtil;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association.RemoveAssociationCompoundCommand;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.SetPropertyTypeSemanticCommand;
 
-      Model umlModel = UmlSemanticCommandUtil.getModel(modelUri, domain);
-      Class classToRemove = UmlSemanticCommandUtil.getElement(umlModel, semanticUriFragment, Class.class);
+public class RemoveClassCompoundCommand extends CompoundCommand {
 
-      Collection<Setting> usagesClass = UsageCrossReferencer.find(classToRemove, umlModel.eResource());
+   public RemoveClassCompoundCommand(final EditingDomain domain, final URI modelUri, final Class classToRemove) {
+      this.append(new RemoveClassSemanticCommand(domain, modelUri, classToRemove));
+      this.append(new RemoveClassNotationCommand(domain, modelUri, classToRemove));
+
+      var umlModel = UmlSemanticUtil.getModel(modelUri, domain);
+      var usagesClass = UsageCrossReferencer.find(classToRemove, umlModel.eResource());
+
       for (Setting setting : usagesClass) {
-         EObject eObject = setting.getEObject();
+         var eObject = setting.getEObject();
          if (isPropertyTypeUsage(setting, eObject, classToRemove)) {
-            String propertyUriFragment = UmlSemanticCommandUtil.getSemanticUriFragment((Property) eObject);
-            this.append(new SetPropertyTypeCommand(domain, modelUri, propertyUriFragment, null));
+            this.append(new SetPropertyTypeSemanticCommand(domain, modelUri, (Property) eObject, null));
+
          } else if (isAssociationTypeUsage(setting, eObject)) {
-            String associationUriFragment = UmlNotationCommandUtil
-               .getSemanticProxyUri((Association) eObject.eContainer());
-            this.append(new RemoveAssociationCompoundCommand(domain, modelUri, associationUriFragment));
+            this.append(new RemoveAssociationCompoundCommand(domain, modelUri, (Association) eObject));
          }
       }
    }
@@ -45,5 +57,4 @@ public class RemoveClassCompoundCommand { /*-{
          && eObject.eContainer() instanceof Association
          && ((Property) eObject).getAssociation() != null;
    }
-   */
 }

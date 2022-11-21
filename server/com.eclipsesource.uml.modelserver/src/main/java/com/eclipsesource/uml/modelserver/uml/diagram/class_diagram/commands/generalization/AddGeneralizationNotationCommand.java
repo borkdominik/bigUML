@@ -1,6 +1,6 @@
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.generalization;
 
-public class AddClassGeneralizationNotationCommand { /*- {
+public class AddGeneralizationNotationCommand { /*- {
 
    protected String semanticProxyUri;
    protected Supplier<Generalization> generalizationSupplier;

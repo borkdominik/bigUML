@@ -26,7 +26,7 @@ import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccesso
 
 public class RemoveMessageContribution extends BasicCommandContribution<Command> {
 
-   public static final String TYPE = "uml:remove_message";
+   public static final String TYPE = "communication:remove_message";
 
    public static CCompoundCommand create(final Message message) {
       var command = CCommandFactory.eINSTANCE.createCompoundCommand();

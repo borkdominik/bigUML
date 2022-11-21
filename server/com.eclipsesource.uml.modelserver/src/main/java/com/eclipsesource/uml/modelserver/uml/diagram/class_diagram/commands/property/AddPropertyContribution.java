@@ -10,23 +10,40 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property;
 
-public class AddPropertyContribution { /*-{
+import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emfcloud.modelserver.command.CCommand;
+import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
+import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
+import org.eclipse.emfcloud.modelserver.edit.command.BasicCommandContribution;
+import org.eclipse.uml2.uml.Class;
 
-   public static final String TYPE = "addProperty";
+import com.eclipsesource.uml.modelserver.shared.constants.SemanticKeys;
+import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
 
-   public static CCommand create(final String parentSemanticUri) {
-      CCommand addPropertyCommand = CCommandFactory.eINSTANCE.createCommand();
-      addPropertyCommand.setType(TYPE);
-      addPropertyCommand.getProperties().put(PARENT_SEMANTIC_URI_FRAGMENT, parentSemanticUri);
-      return addPropertyCommand;
+public class AddPropertyContribution extends BasicCommandContribution<Command> {
+
+   public static final String TYPE = "class:add_property";
+
+   public static CCommand create(final Class parent) {
+      var command = CCommandFactory.eINSTANCE.createCommand();
+
+      command.setType(TYPE);
+      command.getProperties().put(SemanticKeys.PARENT_SEMANTIC_ELEMENT_ID, SemanticElementAccessor.getId(parent));
+
+      return command;
    }
 
    @Override
    protected Command toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
       throws DecodingException {
+      var elementAccessor = new SemanticElementAccessor(modelUri, domain);
 
-      String parentSemanticUriFragment = command.getProperties().get(PARENT_SEMANTIC_URI_FRAGMENT);
-      return new AddPropertyCommand(domain, modelUri, parentSemanticUriFragment);
+      var parentSemanticElementId = command.getProperties().get(SemanticKeys.PARENT_SEMANTIC_ELEMENT_ID);
+
+      var parent = elementAccessor.getElement(parentSemanticElementId, Class.class);
+
+      return new AddPropertySemanticCommand(domain, modelUri, parent);
    }
-   */
 }

@@ -1,6 +1,6 @@
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.generalization;
 
-public class RemoveClassGeneralizationNotationCommand { /*- {
+public class RemoveGeneralizationNotationCommand { /*- {
 
    protected final Edge edgeToRemove;
 

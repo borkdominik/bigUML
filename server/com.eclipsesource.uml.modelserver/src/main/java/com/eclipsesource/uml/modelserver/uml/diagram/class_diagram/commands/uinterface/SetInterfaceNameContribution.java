@@ -1,24 +1,42 @@
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uinterface;
 
-public class SetInterfaceNameContribution { /*-{
+import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emfcloud.modelserver.command.CCommand;
+import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
+import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
+import org.eclipse.emfcloud.modelserver.edit.command.BasicCommandContribution;
+import org.eclipse.uml2.uml.Interface;
 
-   public static final String TYPE = "setClassName";
-   public static final String NEW_NAME = "newName";
+import com.eclipsesource.uml.modelserver.shared.constants.SemanticKeys;
+import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
 
-   public static CCommand create(final String semanticUri, final String newName) {
-      CCommand setInterfaceNameCommand = CCommandFactory.eINSTANCE.createCommand();
-      setInterfaceNameCommand.setType(TYPE);
-      setInterfaceNameCommand.getProperties().put(SEMANTIC_URI_FRAGMENT, semanticUri);
-      setInterfaceNameCommand.getProperties().put(NEW_NAME, newName);
-      return setInterfaceNameCommand;
+public class SetInterfaceNameContribution extends BasicCommandContribution<Command> {
+
+   public static final String TYPE = "class:set_interface_name";
+   public static final String NEW_NAME = "new_name";
+
+   public static CCommand create(final Interface uinterface, final String newName) {
+      var command = CCommandFactory.eINSTANCE.createCommand();
+
+      command.setType(TYPE);
+      command.getProperties().put(SemanticKeys.SEMANTIC_ELEMENT_ID, SemanticElementAccessor.getId(uinterface));
+      command.getProperties().put(NEW_NAME, newName);
+
+      return command;
    }
 
    @Override
    protected Command toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
-         throws DecodingException {
-      String semanticUriFragment = command.getProperties().get(SEMANTIC_URI_FRAGMENT);
-      String newName = command.getProperties().get(NEW_NAME);
-      return new SetInterfaceNameCommand(domain, modelUri, semanticUriFragment, newName);
+      throws DecodingException {
+      var elementAccessor = new SemanticElementAccessor(modelUri, domain);
+
+      var semanticElementId = command.getProperties().get(SemanticKeys.SEMANTIC_ELEMENT_ID);
+      var newName = command.getProperties().get(NEW_NAME);
+
+      var uinterface = elementAccessor.getElement(semanticElementId, Interface.class);
+
+      return new SetInterfaceNameSemanticCommand(domain, modelUri, uinterface, newName);
    }
-      */
 }

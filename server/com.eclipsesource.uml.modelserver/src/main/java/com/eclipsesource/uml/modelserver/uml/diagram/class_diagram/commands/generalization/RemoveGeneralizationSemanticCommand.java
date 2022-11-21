@@ -6,11 +6,11 @@ import org.eclipse.uml2.uml.Generalization;
 
 import com.eclipsesource.uml.modelserver.shared.semantic.UmlSemanticElementCommand;
 
-public class RemoveClassGeneralizationSemanticCommand extends UmlSemanticElementCommand {
+public class RemoveGeneralizationSemanticCommand extends UmlSemanticElementCommand {
 
    protected final Generalization generalizationToRemove;
 
-   public RemoveClassGeneralizationSemanticCommand(final EditingDomain domain, final URI modelUri,
+   public RemoveGeneralizationSemanticCommand(final EditingDomain domain, final URI modelUri,
       final Generalization generalizationToRemove) {
       super(domain, modelUri);
       this.generalizationToRemove = generalizationToRemove;

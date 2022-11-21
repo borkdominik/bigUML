@@ -10,33 +10,50 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association;
 
-public class AddAssociationContribution { /*-{
+import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.command.CompoundCommand;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emfcloud.modelserver.command.CCommand;
+import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
+import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
+import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
+import org.eclipse.emfcloud.modelserver.edit.command.BasicCommandContribution;
+import org.eclipse.uml2.uml.Class;
 
-   public static final String TYPE = "addAssociationContributuion";
-   public static final String SOURCE_CLASS_URI_FRAGMENT = "sourceClassUriFragment";
-   public static final String TARGET_CLASS_URI_FRAGMENT = "targetClassUriFragment";
-   public static final String TYPE_KEYWORD = "typeKeyword";
+import com.eclipsesource.uml.modelserver.shared.constants.SemanticKeys;
+import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
 
-   public static CCompoundCommand create(final String sourceClassUriFragment, final String targetClassUriFragment,
-                                         final String keyword) {
-      CCompoundCommand addAssociationCommand = CCommandFactory.eINSTANCE.createCompoundCommand();
-      addAssociationCommand.setType(TYPE);
-      addAssociationCommand.getProperties().put(SOURCE_CLASS_URI_FRAGMENT, sourceClassUriFragment);
-      addAssociationCommand.getProperties().put(TARGET_CLASS_URI_FRAGMENT, targetClassUriFragment);
-      addAssociationCommand.getProperties().put(TYPE_KEYWORD, keyword);
-      return addAssociationCommand;
+public class AddAssociationContribution extends BasicCommandContribution<Command> {
+
+   public static final String TYPE = "class:add_association";
+   public static final String TYPE_KEYWORD = "type_keyword";
+
+   public static CCompoundCommand create(final Class source, final Class target,
+      final String keyword) {
+      var command = CCommandFactory.eINSTANCE.createCompoundCommand();
+
+      command.setType(TYPE);
+      command.getProperties().put(SemanticKeys.SOURCE_SEMANTIC_ELEMENT_ID, SemanticElementAccessor.getId(source));
+      command.getProperties().put(SemanticKeys.TARGET_SEMANTIC_ELEMENT_ID, SemanticElementAccessor.getId(target));
+      command.getProperties().put(TYPE_KEYWORD, keyword);
+
+      return command;
    }
 
    @Override
    protected CompoundCommand toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
-         throws DecodingException {
+      throws DecodingException {
+      var elementAccessor = new SemanticElementAccessor(modelUri, domain);
 
-      String sourceClassUriFragment = command.getProperties().get(SOURCE_CLASS_URI_FRAGMENT);
-      String targetClassUriFragment = command.getProperties().get(TARGET_CLASS_URI_FRAGMENT);
+      var sourceElementId = command.getProperties().get(SemanticKeys.SOURCE_SEMANTIC_ELEMENT_ID);
+      var targetElementId = command.getProperties().get(SemanticKeys.TARGET_SEMANTIC_ELEMENT_ID);
+      var type = command.getProperties().get(TYPE_KEYWORD);
 
-      String type = command.getProperties().get(TYPE_KEYWORD);
+      var source = elementAccessor.getElement(sourceElementId, Class.class);
+      var target = elementAccessor.getElement(targetElementId, Class.class);
 
-      return new AddAssociationCompoundCommand(domain, modelUri, sourceClassUriFragment, targetClassUriFragment, type);
+      return new AddAssociationCompoundCommand(domain, modelUri, source, target, type);
    }
-   */
+
 }

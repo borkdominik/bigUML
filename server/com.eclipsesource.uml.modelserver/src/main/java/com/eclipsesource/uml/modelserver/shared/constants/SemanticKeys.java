@@ -11,8 +11,10 @@
 package com.eclipsesource.uml.modelserver.shared.constants;
 
 public class SemanticKeys {
-   public static final String SEMANTIC_ELEMENT_ID = "semanticElementId";
-   public static final String PARENT_SEMANTIC_ELEMENT_ID = "parentSemanticElementId";
+   public static final String SEMANTIC_ELEMENT_ID = "semantic_element_id";
+   public static final String PARENT_SEMANTIC_ELEMENT_ID = "parent_semantic_element_id";
+   public static final String SOURCE_SEMANTIC_ELEMENT_ID = "source_semantic_element_id";
+   public static final String TARGET_SEMANTIC_ELEMENT_ID = "target_semantic_element_id";
 
    private SemanticKeys() {}
 }

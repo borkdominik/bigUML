@@ -1,29 +1,40 @@
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uinterface;
 
-public class RemoveInterfaceCompoundCommand { /*-{
+import org.eclipse.emf.common.command.CompoundCommand;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.uml2.uml.Association;
+import org.eclipse.uml2.uml.Interface;
+import org.eclipse.uml2.uml.Property;
 
-   public RemoveInterfaceCompoundCommand(final EditingDomain domain, final URI modelUri, final String semanticUriFragment) {
-      this.append(new RemoveInterfaceCommand(domain, modelUri, semanticUriFragment));
-      this.append(new RemoveInterfaceShapeCommand(domain, modelUri, semanticUriFragment));
+import com.eclipsesource.uml.modelserver.shared.utils.UmlSemanticUtil;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association.RemoveAssociationCompoundCommand;
 
-      Model umlModel = UmlSemanticCommandUtil.getModel(modelUri, domain);
-      Interface interfaceToRemove = UmlSemanticCommandUtil.getElement(umlModel, semanticUriFragment, Interface.class);
+public class RemoveInterfaceCompoundCommand extends CompoundCommand {
 
-      Collection<Setting> usagesInterface = EcoreUtil.UsageCrossReferencer.find(interfaceToRemove, umlModel.eResource());
+   public RemoveInterfaceCompoundCommand(final EditingDomain domain, final URI modelUri,
+      final Interface interfaceToRemove) {
+      this.append(new RemoveInterfaceSemanticCommand(domain, modelUri, interfaceToRemove));
+      this.append(new RemoveInterfaceNotationCommand(domain, modelUri, interfaceToRemove));
+
+      var umlModel = UmlSemanticUtil.getModel(modelUri, domain);
+      var usagesInterface = EcoreUtil.UsageCrossReferencer.find(interfaceToRemove,
+         umlModel.eResource());
+
       for (Setting setting : usagesInterface) {
-         EObject object = setting.getEObject();
+         var object = setting.getEObject();
          if (isAssociationTypeUsage(setting, object)) {
-            String associationUriFragment = UmlNotationCommandUtil.getSemanticProxyUri((Association) object.eContainer());
-            this.append(new RemoveAssociationCompoundCommand(domain, modelUri, semanticUriFragment));
+            this.append(new RemoveAssociationCompoundCommand(domain, modelUri, (Association) object));
          }
       }
    }
 
-
    protected boolean isAssociationTypeUsage(final Setting setting, final EObject eObject) {
       return eObject instanceof Property
-            && eObject.eContainer() instanceof Association
-            && ((Property) eObject).getAssociation() != null;
+         && eObject.eContainer() instanceof Association
+         && ((Property) eObject).getAssociation() != null;
    }
-   */
 }

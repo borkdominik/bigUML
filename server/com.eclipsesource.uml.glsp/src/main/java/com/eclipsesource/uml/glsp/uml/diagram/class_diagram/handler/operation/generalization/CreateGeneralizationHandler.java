@@ -15,7 +15,7 @@ import org.eclipse.uml2.uml.Class;
 
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
 import com.eclipsesource.uml.glsp.uml.handler.operations.create.BaseCreateEdgeHandler;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.generalization.AddClassGeneralizationContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.generalization.AddGeneralizationContribution;
 
 public class CreateGeneralizationHandler
    extends BaseCreateEdgeHandler<Class, Class> {
@@ -26,7 +26,7 @@ public class CreateGeneralizationHandler
 
    @Override
    protected CCommand command(final Class source, final Class target) {
-      return AddClassGeneralizationContribution.create(source, target);
+      return AddGeneralizationContribution.create(source, target);
    }
 
 }

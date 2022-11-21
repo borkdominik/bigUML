@@ -10,29 +10,46 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association;
 
-public class SetAssociationEndMultiplicityContribution { /*-{
+import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emfcloud.modelserver.command.CCommand;
+import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
+import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
+import org.eclipse.emfcloud.modelserver.edit.command.BasicCommandContribution;
+import org.eclipse.uml2.uml.Property;
 
-   public static final String TYPE = "setAssociationEndMultiplicity";
-   public static final String NEW_BOUNDS = "newBounds";
+import com.eclipsesource.uml.modelserver.shared.constants.SemanticKeys;
+import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.util.ClassSemanticCommandUtil;
 
-   public static CCommand create(final String semanticUri, final String newBounds) {
-      CCommand setAssociationEndMultiplicityCommand = CCommandFactory.eINSTANCE.createCommand();
-      setAssociationEndMultiplicityCommand.setType(TYPE);
-      setAssociationEndMultiplicityCommand.getProperties().put(SEMANTIC_URI_FRAGMENT, semanticUri);
-      setAssociationEndMultiplicityCommand.getProperties().put(NEW_BOUNDS, newBounds);
-      return setAssociationEndMultiplicityCommand;
+public class SetAssociationEndMultiplicityContribution extends BasicCommandContribution<Command> {
+
+   public static final String TYPE = "class:set_association_end_multiplicity";
+   public static final String NEW_BOUNDS = "new_bounds";
+
+   public static CCommand create(final Property property, final String newBounds) {
+      var command = CCommandFactory.eINSTANCE.createCommand();
+
+      command.setType(TYPE);
+      command.getProperties().put(SemanticKeys.SEMANTIC_ELEMENT_ID, SemanticElementAccessor.getId(property));
+      command.getProperties().put(NEW_BOUNDS, newBounds);
+
+      return command;
    }
 
    @Override
    protected Command toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
       throws DecodingException {
+      var elementAccessor = new SemanticElementAccessor(modelUri, domain);
 
-      String semanticUriFragment = command.getProperties().get(SEMANTIC_URI_FRAGMENT);
-      int newLowerBound = UmlSemanticCommandUtil.getLower(command.getProperties().get(NEW_BOUNDS));
-      int newUpperBound = UmlSemanticCommandUtil.getUpper(command.getProperties().get(NEW_BOUNDS));
+      var semanticElementId = command.getProperties().get(SemanticKeys.SEMANTIC_ELEMENT_ID);
+      int newLowerBound = ClassSemanticCommandUtil.getLower(command.getProperties().get(NEW_BOUNDS));
+      int newUpperBound = ClassSemanticCommandUtil.getUpper(command.getProperties().get(NEW_BOUNDS));
 
-      return new SetAssociationEndMultiplicityCommand(domain, modelUri, semanticUriFragment, newLowerBound,
+      var property = elementAccessor.getElement(semanticElementId, Property.class);
+
+      return new SetAssociationEndMultiplicitySemanticCommand(domain, modelUri, property, newLowerBound,
          newUpperBound);
    }
-   */
 }

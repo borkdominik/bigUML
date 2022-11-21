@@ -8,13 +8,13 @@ import org.eclipse.uml2.uml.UMLFactory;
 
 import com.eclipsesource.uml.modelserver.shared.semantic.UmlSemanticElementCommand;
 
-public class AddClassGeneralizationSemanticCommand extends UmlSemanticElementCommand {
+public class AddGeneralizationSemanticCommand extends UmlSemanticElementCommand {
 
    protected final Generalization newGeneralization;
    protected final Class source;
    protected final Class target;
 
-   public AddClassGeneralizationSemanticCommand(final EditingDomain domain, final URI modelUri,
+   public AddGeneralizationSemanticCommand(final EditingDomain domain, final URI modelUri,
       final Class source, final Class target) {
       super(domain, modelUri);
       this.newGeneralization = UMLFactory.eINSTANCE.createGeneralization();

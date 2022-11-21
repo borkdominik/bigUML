@@ -1,25 +1,41 @@
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uinterface;
 
-public class AddInterfaceContribution { /*-{
+import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.command.CompoundCommand;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emfcloud.modelserver.command.CCommand;
+import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
+import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
+import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
+import org.eclipse.emfcloud.modelserver.edit.command.BasicCommandContribution;
+import org.eclipse.glsp.graph.GPoint;
 
-   public static final String TYPE = "addInterfaceContribution";
+import com.eclipsesource.uml.modelserver.shared.constants.NotationKeys;
+import com.eclipsesource.uml.modelserver.shared.utils.UmlGraphUtil;
+
+public class AddInterfaceContribution extends BasicCommandContribution<Command> {
+
+   public static final String TYPE = "class:add_interface";
 
    public static CCompoundCommand create(final GPoint position) {
-      CCompoundCommand addInterfaceCommand = CCommandFactory.eINSTANCE.createCompoundCommand();
-      addInterfaceCommand.setType(TYPE);
-      addInterfaceCommand.getProperties().put(NotationKeys.POSITION_X, String.valueOf(position.getX()));
-      addInterfaceCommand.getProperties().put(NotationKeys.POSITION_Y, String.valueOf(position.getY()));
-      return addInterfaceCommand;
+      var command = CCommandFactory.eINSTANCE.createCompoundCommand();
+
+      command.setType(TYPE);
+      command.getProperties().put(NotationKeys.POSITION_X, String.valueOf(position.getX()));
+      command.getProperties().put(NotationKeys.POSITION_Y, String.valueOf(position.getY()));
+
+      return command;
    }
 
    @Override
    protected CompoundCommand toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
-         throws DecodingException {
-      GPoint interfacePosition = UmlNotationCommandUtil.getGPoint(
-            command.getProperties().get(NotationKeys.POSITION_X),
-            command.getProperties().get(NotationKeys.POSITION_Y)
-      );
+      throws DecodingException {
+      var interfacePosition = UmlGraphUtil.getGPoint(
+         command.getProperties().get(NotationKeys.POSITION_X),
+         command.getProperties().get(NotationKeys.POSITION_Y));
+
       return new AddInterfaceCompoundCommand(domain, modelUri, interfacePosition);
    }
-      */
+
 }

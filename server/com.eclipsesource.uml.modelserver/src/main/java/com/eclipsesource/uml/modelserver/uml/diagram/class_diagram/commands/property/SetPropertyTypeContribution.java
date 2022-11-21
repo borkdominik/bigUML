@@ -1,26 +1,44 @@
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property;
 
-public class SetPropertyTypeContribution { /*-{
+import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emfcloud.modelserver.command.CCommand;
+import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
+import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
+import org.eclipse.emfcloud.modelserver.edit.command.BasicCommandContribution;
+import org.eclipse.uml2.uml.Property;
 
-   public static final String TYPE = "setPropertyType";
-   public static final String NEW_TYPE = "newType";
+import com.eclipsesource.uml.modelserver.shared.constants.SemanticKeys;
+import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.util.ClassSemanticCommandUtil;
 
-   public static CCommand create(final String semanticUri, final String newType) {
-      CCommand setPropertyCommand = CCommandFactory.eINSTANCE.createCommand();
-      setPropertyCommand.setType(TYPE);
-      setPropertyCommand.getProperties().put(SEMANTIC_URI_FRAGMENT, semanticUri);
-      setPropertyCommand.getProperties().put(NEW_TYPE, newType);
-      return setPropertyCommand;
+public class SetPropertyTypeContribution extends BasicCommandContribution<Command> {
+
+   public static final String TYPE = "class:set_property_type";
+   public static final String NEW_TYPE = "new_type";
+
+   public static CCommand create(final Property property, final String newType) {
+      var command = CCommandFactory.eINSTANCE.createCommand();
+
+      command.setType(TYPE);
+      command.getProperties().put(SemanticKeys.SEMANTIC_ELEMENT_ID, SemanticElementAccessor.getId(property));
+      command.getProperties().put(NEW_TYPE, newType);
+
+      return command;
    }
 
    @Override
    protected Command toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
-         throws DecodingException {
+      throws DecodingException {
+      var elementAccessor = new SemanticElementAccessor(modelUri, domain);
 
-      String semanticUriFragment = command.getProperties().get(SEMANTIC_URI_FRAGMENT);
-      Type newType = UmlSemanticCommandUtil.getType(domain, command.getProperties().get(NEW_TYPE));
+      var semanticElementId = command.getProperties().get(SemanticKeys.SEMANTIC_ELEMENT_ID);
+      var newType = ClassSemanticCommandUtil.getType(domain, command.getProperties().get(NEW_TYPE));
 
-      return new SetPropertyTypeCommand(domain, modelUri, semanticUriFragment, newType);
+      var property = elementAccessor.getElement(semanticElementId, Property.class);
+
+      return new SetPropertyTypeSemanticCommand(domain, modelUri, property, newType);
    }
-   */
+
 }

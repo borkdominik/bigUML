@@ -1,21 +1,25 @@
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uinterface;
 
-public class SetInterfaceNameSemanticCommand { /*- {
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.uml2.uml.Interface;
 
-   protected String semanticUriFragment;
-   protected String newName;
+import com.eclipsesource.uml.modelserver.shared.semantic.UmlSemanticElementCommand;
 
-   public SetInterfaceNameCommand(final EditingDomain domain, final URI modelUri, final String semanticUriFragment,
-                                  final String newName) {
+public class SetInterfaceNameSemanticCommand extends UmlSemanticElementCommand {
+
+   protected final Interface uinterface;
+   protected final String newName;
+
+   public SetInterfaceNameSemanticCommand(final EditingDomain domain, final URI modelUri, final Interface uinterface,
+      final String newName) {
       super(domain, modelUri);
-      this.semanticUriFragment = semanticUriFragment;
+      this.uinterface = uinterface;
       this.newName = newName;
    }
 
    @Override
    protected void doExecute() {
-      Interface interfaceToRename = UmlSemanticCommandUtil.getElement(umlModel, semanticUriFragment, Interface.class);
-      interfaceToRename.setName(newName);
+      uinterface.setName(newName);
    }
-      */
 }

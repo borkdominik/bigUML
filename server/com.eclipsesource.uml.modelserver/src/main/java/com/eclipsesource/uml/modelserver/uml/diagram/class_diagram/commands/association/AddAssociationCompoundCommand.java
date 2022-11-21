@@ -10,18 +10,25 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association;
 
-public class AddAssociationCompoundCommand { /*-{
+import java.util.function.Supplier;
+
+import org.eclipse.emf.common.command.CompoundCommand;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.uml2.uml.Association;
+import org.eclipse.uml2.uml.Class;
+
+public class AddAssociationCompoundCommand extends CompoundCommand {
 
    public AddAssociationCompoundCommand(final EditingDomain domain, final URI modelUri,
-                                        final String sourceClassUriFragment, final String targetClassUriFragment,
-                                        final String type) {
+      final Class source, final Class target,
+      final String type) {
 
-      // Chain semantic and notation command
-      AddAssociationCommand command = new AddAssociationCommand(domain, modelUri, sourceClassUriFragment,
-            targetClassUriFragment, type);
+      var command = new AddAssociationSemanticCommand(domain, modelUri, source,
+         target, type);
       this.append(command);
       Supplier<Association> semanticResultSupplier = command::getNewAssociation;
-      this.append(new AddAssociationEdgeCommand(domain, modelUri, semanticResultSupplier));
+      this.append(new AddAssociationNotationCommand(domain, modelUri, semanticResultSupplier));
    }
-   */
+
 }

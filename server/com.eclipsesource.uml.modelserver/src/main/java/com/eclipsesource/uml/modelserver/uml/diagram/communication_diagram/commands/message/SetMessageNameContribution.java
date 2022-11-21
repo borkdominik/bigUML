@@ -24,7 +24,7 @@ import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccesso
 
 public class SetMessageNameContribution extends BasicCommandContribution<Command> {
 
-   public static final String TYPE = "uml:set_message_name";
+   public static final String TYPE = "communication:set_message_name";
    private static final String NEW_NAME = "new_name";
 
    public static CCommand create(final Message message, final String newName) {

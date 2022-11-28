@@ -21,11 +21,13 @@ import org.eclipse.emfcloud.modelserver.client.Response;
 import org.eclipse.emfcloud.modelserver.client.SubscriptionListener;
 import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.emfcloud.modelserver.glsp.notation.integration.EMSNotationModelServerAccess;
+import org.eclipse.glsp.server.emf.model.notation.Diagram;
 import org.eclipse.glsp.server.emf.model.notation.Shape;
 import org.eclipse.glsp.server.types.ElementAndBounds;
 import org.eclipse.glsp.server.types.GLSPServerException;
 
 import com.eclipsesource.uml.modelserver.core.routing.UmlModelServerPaths;
+import com.eclipsesource.uml.modelserver.unotation.UmlDiagram;
 
 public class UmlModelServerAccess extends EMSNotationModelServerAccess {
 
@@ -43,6 +45,24 @@ public class UmlModelServerAccess extends EMSNotationModelServerAccess {
       try {
          return getModelServerClient().get(getSemanticURI(), UmlModelServerPaths.FORMAT_UML)
             .thenApply(res -> res.body()).get();
+      } catch (InterruptedException | ExecutionException e) {
+         LOGGER.error(e);
+         throw new GLSPServerException("Error during model loading", e);
+      }
+   }
+
+   /*-
+    * We have our own notation model
+    */
+   @Override
+   public Diagram getNotationModel() {
+      try {
+         var notationModel = getModelServerClient().get(getNotationURI(), notationFormat)
+            .thenApply(res -> res.body()).get();
+         if (notationModel instanceof UmlDiagram) {
+            return (Diagram) notationModel;
+         }
+         throw new GLSPServerException("Error during model loading, notation model is not a UmlDiagram!");
       } catch (InterruptedException | ExecutionException e) {
          LOGGER.error(e);
          throw new GLSPServerException("Error during model loading", e);

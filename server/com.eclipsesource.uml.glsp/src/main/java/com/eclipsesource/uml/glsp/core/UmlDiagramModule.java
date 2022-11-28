@@ -17,7 +17,6 @@ import org.eclipse.emfcloud.modelserver.glsp.notation.integration.EMSNotationMod
 import org.eclipse.emfcloud.modelserver.glsp.notation.integration.EMSNotationModelState;
 import org.eclipse.emfcloud.modelserver.glsp.notation.integration.EMSNotationSourceModelStorage;
 import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSChangeBoundsOperationHandler;
-import org.eclipse.emfcloud.modelserver.notation.integration.NotationResource;
 import org.eclipse.glsp.graph.GraphExtension;
 import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.ActionHandler;
@@ -60,6 +59,8 @@ import com.eclipsesource.uml.glsp.features.outline.manifest.OutlineManifest;
 import com.eclipsesource.uml.glsp.features.validation.UmlDiagramModelValidator;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.manifest.ClassUmlManifest;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.manifest.CommunicationUmlManifest;
+import com.eclipsesource.uml.modelserver.core.resource.UmlNotationResource;
+import com.eclipsesource.uml.modelserver.unotation.UnotationPackage;
 import com.google.inject.Singleton;
 
 public class UmlDiagramModule extends EMSGLSPNotationDiagramModule {
@@ -94,6 +95,7 @@ public class UmlDiagramModule extends EMSGLSPNotationDiagramModule {
    protected void registerEPackages() {
       super.registerEPackages();
       UMLPackage.eINSTANCE.eClass();
+      UnotationPackage.eINSTANCE.eClass();
    }
 
    @Override
@@ -158,7 +160,7 @@ public class UmlDiagramModule extends EMSGLSPNotationDiagramModule {
    protected String getSemanticFileExtension() { return UMLResource.FILE_EXTENSION; }
 
    @Override
-   protected String getNotationFileExtension() { return NotationResource.FILE_EXTENSION; }
+   protected String getNotationFileExtension() { return UmlNotationResource.FILE_EXTENSION; }
 
    @Override
    protected void configureClientActions(final MultiBinding<Action> bindings) {

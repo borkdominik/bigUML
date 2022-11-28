@@ -21,7 +21,6 @@ import org.eclipse.emfcloud.modelserver.emf.configuration.EPackageConfiguration;
 import org.eclipse.emfcloud.modelserver.glsp.notation.commands.contribution.ChangeBoundsCommandContribution;
 import org.eclipse.emfcloud.modelserver.notation.integration.EMSNotationModelServerModule;
 import org.eclipse.emfcloud.modelserver.notation.integration.NotationPackageConfiguration;
-import org.eclipse.emfcloud.modelserver.notation.integration.NotationResource;
 import org.eclipse.glsp.server.emf.EMFIdGenerator;
 import org.eclipse.glsp.server.emf.idgen.FragmentIdGenerator;
 import org.eclipse.uml2.uml.resource.UMLResource;
@@ -29,6 +28,7 @@ import org.eclipse.uml2.uml.resource.UMLResource;
 import com.eclipsesource.uml.modelserver.core.codec.UmlCodecProvider;
 import com.eclipsesource.uml.modelserver.core.commands.change_bounds.UmlChangeBoundsContribution;
 import com.eclipsesource.uml.modelserver.core.resource.UmlNotationPackageConfiguration;
+import com.eclipsesource.uml.modelserver.core.resource.UmlNotationResource;
 import com.eclipsesource.uml.modelserver.core.resource.UmlPackageConfiguration;
 import com.eclipsesource.uml.modelserver.core.routing.UmlModelServerRouting;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.manifest.ClassManifest;
@@ -63,7 +63,7 @@ public class UmlModelServerModule extends EMSNotationModelServerModule {
    protected String getSemanticFileExtension() { return UMLResource.FILE_EXTENSION; }
 
    @Override
-   protected String getNotationFileExtension() { return NotationResource.FILE_EXTENSION; }
+   protected String getNotationFileExtension() { return UmlNotationResource.FILE_EXTENSION; }
 
    @Override
    protected void configureEPackages(final MultiBinding<EPackageConfiguration> binding) {

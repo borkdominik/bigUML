@@ -17,7 +17,7 @@
    <extension point="org.eclipse.emf.ecore.generated_package">
       <!-- @generated unotation -->
       <package
-            uri="http://www.eclipsesource.com/glsp/uml/notation"
+            uri="http://www.eclipsesource.com/glsp/uml/unotation"
             class="com.eclipsesource.uml.modelserver.unotation.UnotationPackage"
             genModel="resources/unotation.genmodel"/>
    </extension>

@@ -17,7 +17,6 @@ import java.util.Set;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emfcloud.modelserver.emf.common.RecordingModelResourceManager;
@@ -27,12 +26,14 @@ import org.eclipse.emfcloud.modelserver.emf.configuration.ServerConfiguration;
 import org.eclipse.emfcloud.modelserver.emf.util.JsonPatchHelper;
 import org.eclipse.emfcloud.modelserver.integration.SemanticFileExtension;
 import org.eclipse.emfcloud.modelserver.notation.integration.NotationFileExtension;
-import org.eclipse.glsp.server.emf.model.notation.Diagram;
 import org.eclipse.glsp.server.emf.model.notation.NotationFactory;
 import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.UMLFactory;
 import org.eclipse.uml2.uml.resource.UMLResource;
 
+import com.eclipsesource.uml.modelserver.uml.utils.UmlNotationUtil;
+import com.eclipsesource.uml.modelserver.unotation.UmlDiagram;
+import com.eclipsesource.uml.modelserver.unotation.UnotationFactory;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 
@@ -81,7 +82,7 @@ public class UmlModelResourceManager extends RecordingModelResourceManager {
     * @return its resource set
     */
    protected ResourceSet getUmlResourceSet(final URI modelURI) {
-      ResourceSet result = resourceSets.get(modelURI);
+      var result = resourceSets.get(modelURI);
       if (result == null) {
          result = resourceSetFactory.createResourceSet(modelURI);
          resourceSets.put(modelURI, result);
@@ -91,9 +92,9 @@ public class UmlModelResourceManager extends RecordingModelResourceManager {
 
    @Override
    public ResourceSet getResourceSet(final String modeluri) {
-      URI resourceURI = createURI(modeluri);
+      var resourceURI = createURI(modeluri);
       if (notationFileExtension.equals(resourceURI.fileExtension())) {
-         URI semanticUri = resourceURI.trimFileExtension().appendFileExtension(semanticFileExtension);
+         var semanticUri = resourceURI.trimFileExtension().appendFileExtension(semanticFileExtension);
          return getUmlResourceSet(semanticUri);
       }
       return resourceSets.get(resourceURI);
@@ -101,8 +102,8 @@ public class UmlModelResourceManager extends RecordingModelResourceManager {
 
    @Override
    public boolean save(final String modeluri) {
-      boolean result = false;
-      for (Resource resource : getResourceSet(modeluri).getResources()) {
+      var result = false;
+      for (var resource : getResourceSet(modeluri).getResources()) {
          result = saveResource(resource) || result;
       }
       if (result) {
@@ -127,19 +128,19 @@ public class UmlModelResourceManager extends RecordingModelResourceManager {
    */
 
    public boolean addUmlResources(final String modeluri, final String diagramType) {
-      URI umlModelUri = createURI(modeluri);
-      ResourceSet resourceSet = resourceSetFactory.createResourceSet(umlModelUri);
+      var umlModelUri = createURI(modeluri);
+      var resourceSet = resourceSetFactory.createResourceSet(umlModelUri);
       resourceSets.put(umlModelUri, resourceSet);
 
-      final Model umlModel = createNewModel(umlModelUri);
+      final var umlModel = createNewModel(umlModelUri);
 
       try {
-         final Resource umlResource = resourceSet.createResource(umlModelUri);
+         final var umlResource = resourceSet.createResource(umlModelUri);
          resourceSet.getResources().add(umlResource);
          umlResource.getContents().add(umlModel);
          umlResource.save(null);
 
-         final Resource umlNotationResource = resourceSet
+         final var umlNotationResource = resourceSet
             .createResource(umlModelUri.trimFileExtension().appendFileExtension(notationFileExtension));
          resourceSet.getResources().add(umlNotationResource);
          umlNotationResource.getContents().add(createNewDiagram(umlModel, diagramType));
@@ -154,18 +155,23 @@ public class UmlModelResourceManager extends RecordingModelResourceManager {
    }
 
    protected Model createNewModel(final URI modelUri) {
-      Model newModel = UMLFactory.eINSTANCE.createModel();
-      String modelName = modelUri.lastSegment().split("." + modelUri.fileExtension())[0];
+      var newModel = UMLFactory.eINSTANCE.createModel();
+      var modelName = modelUri.lastSegment().split("." + modelUri.fileExtension())[0];
+
       newModel.setName(modelName);
+
       return newModel;
    }
 
-   protected Diagram createNewDiagram(final Model model, final String diagramType) {
-      var newDiagram = NotationFactory.eINSTANCE.createDiagram();
+   protected UmlDiagram createNewDiagram(final Model model, final String diagramType) {
+      var newDiagram = UnotationFactory.eINSTANCE.createUmlDiagram();
       var semanticProxy = NotationFactory.eINSTANCE.createSemanticElementReference();
+
       semanticProxy.setElementId(EcoreUtil.getURI(model).fragment());
       newDiagram.setSemanticElement(semanticProxy);
       newDiagram.setDiagramType(diagramType);
+      newDiagram.setRepresentation(UmlNotationUtil.getRepresentation(diagramType));
+
       return newDiagram;
    }
 }

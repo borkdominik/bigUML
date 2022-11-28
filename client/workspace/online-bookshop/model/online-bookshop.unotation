@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<notation:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:notation="http://www.eclipse.org/glsp/notation" diagramType="COMMUNICATION">
+<unotation:UmlDiagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:unotation="http://www.eclipsesource.com/glsp/uml/unotation" xmlns:notation="http://www.eclipse.org/glsp/notation" diagramType="COMMUNICATION" representation="COMMUNICATION">
   <semanticElement elementId="_VMjIwPS3EeyWkaR_ubGN2A"/>
   <elements xsi:type="notation:Shape">
     <semanticElement elementId="_VrBNcPS3EeyWkaR_ubGN2A"/>
@@ -75,4 +75,4 @@
     <semanticElement elementId="_PWGEwPVREeyNj7aaTFsTUA"/>
     <position x="38.700260060837536" y="46.847683231540145"/>
   </elements>
-</notation:Diagram>
+</unotation:UmlDiagram>

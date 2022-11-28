@@ -14,13 +14,12 @@ import com.eclipsesource.uml.modelserver.unotation.Representation;
 
 public final class UmlNotationUtil {
 
-   private UmlNotationUtil() {
-   }
+   private UmlNotationUtil() {}
 
    public static final String NOTATION_EXTENSION = "unotation";
 
-   public static Representation getRepresentation(final String diagramType) {
-      switch (diagramType.toLowerCase()) {
+   public static Representation getRepresentation(final String representation) {
+      switch (representation.toLowerCase()) {
          case "activity":
             return Representation.ACTIVITY;
          case "class":

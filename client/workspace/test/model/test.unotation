@@ -13,7 +13,7 @@
   </elements>
   <elements xsi:type="notation:Shape">
     <semanticElement elementId="_7tU98VkzEe2-DPjS777r_w"/>
-    <position x="354.93379484823527" y="129.08918166335087"/>
+    <position x="440.93379484823527" y="221.08918166335087"/>
     <size width="73.25" height="42.0"/>
   </elements>
   <elements xsi:type="notation:Shape">
@@ -23,5 +23,8 @@
   </elements>
   <elements xsi:type="notation:Edge">
     <semanticElement elementId="_Wji0cG8XEe2mJIxqi4TDVg"/>
+    <bendPoints x="313.92799228283326" y="160.13897254060217"/>
+    <bendPoints x="313.92799228283326" y="152.08918166335087"/>
+    <bendPoints x="477.55879484823527" y="152.08918166335087"/>
   </elements>
 </unotation:UmlDiagram>

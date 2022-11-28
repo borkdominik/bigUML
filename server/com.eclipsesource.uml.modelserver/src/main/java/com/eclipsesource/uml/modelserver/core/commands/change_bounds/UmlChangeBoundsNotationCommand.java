@@ -23,13 +23,13 @@ import org.eclipse.uml2.uml.Element;
 import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
 import com.eclipsesource.uml.modelserver.shared.notation.UmlNotationElementCommand;
 
-public class UmlChangeBoundsCommand extends UmlNotationElementCommand {
+public class UmlChangeBoundsNotationCommand extends UmlNotationElementCommand {
    protected final Optional<GPoint> shapePosition;
    protected final Optional<GDimension> shapeSize;
    protected final Shape shape;
    protected final Element element;
 
-   public UmlChangeBoundsCommand(final EditingDomain domain, final URI modelUri,
+   public UmlChangeBoundsNotationCommand(final EditingDomain domain, final URI modelUri,
       final Element semanticElement, final Optional<GPoint> shapePosition,
       final Optional<GDimension> shapeSize) {
       super(domain, modelUri);

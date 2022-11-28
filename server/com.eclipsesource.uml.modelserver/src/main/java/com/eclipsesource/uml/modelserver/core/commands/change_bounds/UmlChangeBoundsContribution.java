@@ -139,12 +139,12 @@ public class UmlChangeBoundsContribution extends BasicCommandContribution<Comman
       return new ElementAndBounds(init);
    }
 
-   protected UmlChangeBoundsCommand getChangeBoundsCommand(final URI modelUri, final EditingDomain domain,
+   protected UmlChangeBoundsNotationCommand getChangeBoundsCommand(final URI modelUri, final EditingDomain domain,
       final ElementAndBounds bound) {
       var semanticElementAccessor = new SemanticElementAccessor(modelUri, domain);
       var element = semanticElementAccessor.getElement(bound.getElementId(), Element.class);
 
-      return new UmlChangeBoundsCommand(domain, modelUri, element,
+      return new UmlChangeBoundsNotationCommand(domain, modelUri, element,
          Optional.ofNullable(bound.getNewPosition()), Optional.of(bound.getNewSize()));
    }
 

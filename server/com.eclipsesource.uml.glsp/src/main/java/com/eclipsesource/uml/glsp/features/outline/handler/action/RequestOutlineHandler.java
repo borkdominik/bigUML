@@ -36,11 +36,11 @@ public class RequestOutlineHandler extends AbstractActionHandler<RequestOutlineA
 
    @Override
    protected List<Action> executeAction(final RequestOutlineAction actualAction) {
-      var representation = modelState.getUnsafeRepresentation();
+      return modelState.getRepresentation().map(representation -> {
 
-      var generator = registry.get(representation).orElse(defaultGenerator);
+         var generator = registry.get(representation).orElse(defaultGenerator);
 
-      return List.of(new SetOutlineAction(generator.generate()));
+         return List.<Action> of(new SetOutlineAction(generator.generate()));
+      }).orElse(List.of());
    }
-
 }

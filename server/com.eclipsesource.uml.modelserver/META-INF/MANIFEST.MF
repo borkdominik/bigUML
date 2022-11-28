@@ -50,6 +50,8 @@ Import-Package: javax.inject;version="1.0.0"
 Bundle-ActivationPolicy: lazy
 Export-Package: com.eclipsesource.uml.modelserver.core,
  com.eclipsesource.uml.modelserver.core.commands.change_bounds,
+ com.eclipsesource.uml.modelserver.core.commands.change_routing_points,
+ com.eclipsesource.uml.modelserver.core.resource,
  com.eclipsesource.uml.modelserver.core.routing,
  com.eclipsesource.uml.modelserver.old.diagram.activitydiagram.action,
  com.eclipsesource.uml.modelserver.old.diagram.activitydiagram.activity,

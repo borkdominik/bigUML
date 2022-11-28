@@ -47,7 +47,7 @@ public interface UnotationPackage extends EPackage {
     * <!-- end-user-doc -->
     * @generated
     */
-   String eNS_URI = "http://www.eclipsesource.com/glsp/uml/notation";
+   String eNS_URI = "http://www.eclipsesource.com/glsp/uml/unotation";
 
    /**
     * The package namespace name.

@@ -13,17 +13,17 @@ package com.eclipsesource.uml.glsp.core.handler.operation;
 import java.util.HashMap;
 
 import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.AbstractEMSOperationHandler;
-import org.eclipse.glsp.server.emf.model.notation.Shape;
-import org.eclipse.glsp.server.operations.ChangeBoundsOperation;
-import org.eclipse.glsp.server.types.ElementAndBounds;
+import org.eclipse.glsp.server.emf.model.notation.Edge;
+import org.eclipse.glsp.server.operations.ChangeRoutingPointsOperation;
+import org.eclipse.glsp.server.types.ElementAndRoutingPoints;
 import org.eclipse.glsp.server.types.GLSPServerException;
 
 import com.eclipsesource.uml.glsp.core.model.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
-import com.eclipsesource.uml.modelserver.core.commands.change_bounds.UmlChangeBoundsContribution;
+import com.eclipsesource.uml.modelserver.core.commands.change_routing_points.UmlChangeRoutingPointsContribution;
 import com.google.inject.Inject;
 
-public class UmlChangeBoundsOperationHandler extends AbstractEMSOperationHandler<ChangeBoundsOperation> {
+public class UmlChangeRoutingPointsOperationHandler extends AbstractEMSOperationHandler<ChangeRoutingPointsOperation> {
 
    @Inject
    protected UmlModelState modelState;
@@ -31,25 +31,25 @@ public class UmlChangeBoundsOperationHandler extends AbstractEMSOperationHandler
    protected UmlModelServerAccess modelServerAccess;
 
    @Override
-   public void executeOperation(final ChangeBoundsOperation operation) {
+   public void executeOperation(final ChangeRoutingPointsOperation operation) {
 
-      var changeBoundsMap = new HashMap<Shape, ElementAndBounds>();
+      var changeRoutingPointsMap = new HashMap<Edge, ElementAndRoutingPoints>();
 
-      for (ElementAndBounds element : operation.getNewBounds()) {
-         modelState.getIndex().getNotation(element.getElementId(), Shape.class)
-            .ifPresent(shape -> {
-               changeBoundsMap.put(shape, element);
+      for (ElementAndRoutingPoints element : operation.getNewRoutingPoints()) {
+         modelState.getIndex().getNotation(element.getElementId(), Edge.class)
+            .ifPresent(notationElement -> {
+               changeRoutingPointsMap.put(notationElement, element);
             });
       }
 
-      modelServerAccess.exec(UmlChangeBoundsContribution.create(changeBoundsMap)).thenAccept(response -> {
+      modelServerAccess.exec(UmlChangeRoutingPointsContribution.create(changeRoutingPointsMap)).thenAccept(response -> {
          if (response.body() == null || response.body().isEmpty()) {
-            throw new GLSPServerException("Could not change bounds: " + changeBoundsMap.toString());
+            throw new GLSPServerException("Could not change routing points: " + changeRoutingPointsMap.toString());
          }
       });
    }
 
    @Override
-   public String getLabel() { return "Uml: Change bounds"; }
+   public String getLabel() { return "Uml: Change routing points"; }
 
 }

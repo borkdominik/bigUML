@@ -13,29 +13,28 @@ package com.eclipsesource.uml.modelserver.shared.extension;
 import java.util.Optional;
 
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emfcloud.modelserver.notation.integration.NotationResource;
-import org.eclipse.glsp.server.emf.model.notation.Diagram;
 import org.eclipse.glsp.server.emf.model.notation.NotationElement;
 
+import com.eclipsesource.uml.modelserver.core.resource.UmlNotationResource;
+import com.eclipsesource.uml.modelserver.unotation.UmlDiagram;
+
 public final class NotationElementAccessor {
-   private final Diagram diagram;
+   private final UmlDiagram diagram;
 
    public NotationElementAccessor(final URI modelUri, final EditingDomain domain) {
-      Resource notationResource = domain.getResourceSet()
-         .getResource(modelUri.trimFileExtension().appendFileExtension(NotationResource.FILE_EXTENSION), false);
-      EObject notationRoot = notationResource.getContents().get(0);
+      var notationResource = domain.getResourceSet()
+         .getResource(modelUri.trimFileExtension().appendFileExtension(UmlNotationResource.FILE_EXTENSION), false);
+      var notationRoot = notationResource.getContents().get(0);
 
-      this.diagram = (Diagram) notationRoot;
+      this.diagram = (UmlDiagram) notationRoot;
    }
 
-   public NotationElementAccessor(final Diagram diagram) {
+   public NotationElementAccessor(final UmlDiagram diagram) {
       this.diagram = diagram;
    }
 
-   public Diagram getDiagram() { return this.diagram; }
+   public UmlDiagram getDiagram() { return this.diagram; }
 
    public <C extends NotationElement> C getElement(final String semanticUri, final Class<C> clazz) {
       NotationElement element = getElement(semanticUri);

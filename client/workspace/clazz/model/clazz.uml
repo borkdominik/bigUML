@@ -1,18 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_Cfp0UGmxEe2kLe5KTNzRtw" name="clazz">
-  <packagedElement xmi:type="uml:Class" xmi:id="_H-DtkG8eEe2ylsFz_BrkQw" name="NewClass1"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="_H-DtkG8eEe2ylsFz_BrkQw" name="asd"/>
   <packagedElement xmi:type="uml:Class" xmi:id="_IVZ2kG8eEe2ylsFz_BrkQw" name="NewClass2"/>
-  <packagedElement xmi:type="uml:Class" xmi:id="_I4GT8G8eEe2ylsFz_BrkQw" name="NewClass3" isAbstract="true"/>
-  <packagedElement xmi:type="uml:Association" xmi:id="_KtOpkG8eEe2ylsFz_BrkQw" memberEnd="_KtOpk28eEe2ylsFz_BrkQw _KtOplG8eEe2ylsFz_BrkQw">
-    <eAnnotations xmi:id="_KtOpkW8eEe2ylsFz_BrkQw" source="http://www.eclipse.org/uml2/2.0.0/UML">
-      <details xmi:id="_KtOpkm8eEe2ylsFz_BrkQw" key="aggregation"/>
-    </eAnnotations>
-    <ownedEnd xmi:id="_KtOpk28eEe2ylsFz_BrkQw" name="newclass2s" type="_IVZ2kG8eEe2ylsFz_BrkQw" association="_KtOpkG8eEe2ylsFz_BrkQw"/>
-    <ownedEnd xmi:id="_KtOplG8eEe2ylsFz_BrkQw" name="newclass1s" type="_H-DtkG8eEe2ylsFz_BrkQw" association="_KtOpkG8eEe2ylsFz_BrkQw"/>
-  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_I4GT8G8eEe2ylsFz_BrkQw" name="asd" isAbstract="true"/>
   <packagedElement xmi:type="uml:Interface" xmi:id="_LUoAwG8eEe2ylsFz_BrkQw" name="NewInterface1"/>
   <packagedElement xmi:type="uml:Enumeration" xmi:id="_sFkKcW8iEe2K6utU_hUYnw" name="NewClass4"/>
-  <packagedElement xmi:type="uml:Class" xmi:id="_wwK4YG8iEe2K6utU_hUYnw" name="NewClass4">
-    <generalization xmi:id="_eT--8W_oEe2jd-3aF9P_Nw" general="_IVZ2kG8eEe2ylsFz_BrkQw"/>
-  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_wwK4YG8iEe2K6utU_hUYnw" name="NewClass4"/>
 </uml:Model>

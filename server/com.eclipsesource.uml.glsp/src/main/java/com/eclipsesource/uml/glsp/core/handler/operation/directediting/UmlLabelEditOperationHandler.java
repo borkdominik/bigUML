@@ -46,7 +46,7 @@ public class UmlLabelEditOperationHandler
       var elementId = suffixIdExtractor.extractId(labelId)
          .orElseThrow(() -> new GLSPServerException("No elementId found by extractor for label " + labelId));
 
-      var label = getOrThrow(modelState.getIndex().getEObject(labelId),
+      var label = getOrThrow(modelState.getIndex().get(labelId),
          GLabel.class, "No GLabel found for label " + labelId);
       var labelType = label.getType();
 
@@ -58,7 +58,8 @@ public class UmlLabelEditOperationHandler
          .get(RepresentationKey.of(representation, TripleKey.of(semanticElement.getClass(), labelType, labelSuffix)));
 
       editLabelHandler
-         .orElseThrow(() -> new GLSPServerException("No handler found for labelId " + labelId))
+         .orElseThrow(() -> new GLSPServerException(
+            "No handler found for label type " + labelType + " with suffix " + labelSuffix + " for labelId " + labelId))
          .executeLabelEdit(operation);
    }
 

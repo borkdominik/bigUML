@@ -76,12 +76,12 @@ public class ClassNodeMapper extends BaseGModelMapper<Class, GNode> {
    }
 
    protected GCompartment buildHeader(final Class umlClass) {
-      var builder = new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER);
+      var builder = new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER)
+         .id(suffix.headerSuffix.appendTo(idGenerator.getOrCreateId(umlClass)));
 
       if (umlClass.isAbstract()) {
          builder
-            .layout(GConstants.Layout.VBOX)
-            .id(suffix.headerSuffix.appendTo(idGenerator.getOrCreateId(umlClass)));
+            .layout(GConstants.Layout.VBOX);
 
          var typeLabel = new GLabelBuilder(UmlConfig.Types.LABEL_NAME)
             .id(classSuffix.headerTypeSuffix.appendTo(idGenerator.getOrCreateId(umlClass)))
@@ -91,8 +91,7 @@ public class ClassNodeMapper extends BaseGModelMapper<Class, GNode> {
 
       } else {
          builder
-            .layout(GConstants.Layout.HBOX)
-            .id(suffix.headerSuffix.appendTo(idGenerator.getOrCreateId(umlClass)));
+            .layout(GConstants.Layout.HBOX);
 
          var classHeaderIcon = new GCompartmentBuilder(ClassTypes.ICON_CLASS)
             .id(suffix.headerIconSuffix.appendTo(idGenerator.getOrCreateId(umlClass)))

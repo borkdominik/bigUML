@@ -36,4 +36,7 @@
     <position x="681.0412044478034" y="347.7305863701464"/>
     <size width="142.15625" height="43.0"/>
   </elements>
+  <elements xsi:type="notation:Edge">
+    <semanticElement elementId="_eT--8W_oEe2jd-3aF9P_Nw"/>
+  </elements>
 </unotation:UmlDiagram>

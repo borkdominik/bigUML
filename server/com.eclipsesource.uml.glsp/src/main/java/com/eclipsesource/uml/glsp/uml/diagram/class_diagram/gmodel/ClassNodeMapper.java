@@ -63,12 +63,16 @@ public class ClassNodeMapper extends BaseGModelMapper<Class, GNode> {
          .layout(GConstants.Layout.VBOX)
          .addCssClass(UmlConfig.CSS.NODE)
          .add(buildHeader(umlClass))
-         .add(buildCompartment(umlClass))
-         .addAll(buildGeneralizations(umlClass));
+         .add(buildCompartment(umlClass));
 
       applyNotation(umlClass, builder);
 
       return builder.build();
+   }
+
+   @Override
+   public List<GModelElement> mapSiblings(final Class source) {
+      return buildGeneralizations(source);
    }
 
    protected GCompartment buildHeader(final Class umlClass) {

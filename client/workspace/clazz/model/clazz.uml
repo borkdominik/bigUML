@@ -12,5 +12,7 @@
   </packagedElement>
   <packagedElement xmi:type="uml:Interface" xmi:id="_LUoAwG8eEe2ylsFz_BrkQw" name="NewInterface1"/>
   <packagedElement xmi:type="uml:Enumeration" xmi:id="_sFkKcW8iEe2K6utU_hUYnw" name="NewClass4"/>
-  <packagedElement xmi:type="uml:Class" xmi:id="_wwK4YG8iEe2K6utU_hUYnw" name="NewClass4"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="_wwK4YG8iEe2K6utU_hUYnw" name="NewClass4">
+    <generalization xmi:id="_eT--8W_oEe2jd-3aF9P_Nw" general="_IVZ2kG8eEe2ylsFz_BrkQw"/>
+  </packagedElement>
 </uml:Model>

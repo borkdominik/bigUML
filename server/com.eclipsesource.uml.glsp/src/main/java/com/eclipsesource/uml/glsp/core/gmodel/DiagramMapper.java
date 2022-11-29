@@ -10,7 +10,10 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.core.gmodel;
 
+import java.util.ArrayList;
+
 import org.eclipse.glsp.graph.GGraph;
+import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.server.emf.EMFIdGenerator;
 import org.eclipse.glsp.server.emf.model.notation.Diagram;
 import org.eclipse.uml2.uml.Model;
@@ -27,12 +30,21 @@ public class DiagramMapper {
    public GGraph map(final GGraph graph, final Diagram notationModel) {
       if (notationModel.getSemanticElement() != null
          && notationModel.getSemanticElement().getResolvedSemanticElement() != null) {
-         Model umlModel = (Model) notationModel.getSemanticElement().getResolvedSemanticElement();
+         var umlModel = (Model) notationModel.getSemanticElement().getResolvedSemanticElement();
 
          graph.setId(idGenerator.getOrCreateId(umlModel));
          umlModel.getPackagedElements().stream()
-            .map(element -> mapHandler.handle(element))
-            .forEachOrdered(graph.getChildren()::add);
+            .map(element -> {
+               var current = mapHandler.handle(element);
+               var siblings = mapHandler.handleSiblings(element);
+
+               var gmodels = new ArrayList<GModelElement>();
+               gmodels.add(current);
+               gmodels.addAll(siblings);
+
+               return gmodels;
+            })
+            .forEachOrdered(graph.getChildren()::addAll);
       }
 
       return graph;

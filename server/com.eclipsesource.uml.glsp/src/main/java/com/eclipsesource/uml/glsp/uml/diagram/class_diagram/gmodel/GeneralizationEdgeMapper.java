@@ -22,7 +22,6 @@ import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.glsp.server.emf.EMFIdGenerator;
 import org.eclipse.glsp.server.emf.model.notation.Edge;
-import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Generalization;
 
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.Suffix;
@@ -45,10 +44,10 @@ public class GeneralizationEdgeMapper extends BaseGModelMapper<Generalization, G
 
    @Override
    public GEdge map(final Generalization generalization) {
-      Class source = (Class) generalization.eContainer();
-      String sourceId = idGenerator.getOrCreateId(source);
-      Class target = (Class) generalization.getGeneral();
-      String targetId = idGenerator.getOrCreateId(target);
+      var source = generalization.getSpecific();
+      var sourceId = idGenerator.getOrCreateId(source);
+      var target = generalization.getGeneral();
+      var targetId = idGenerator.getOrCreateId(target);
 
       GEdgeBuilder builder = new GEdgeBuilder(ClassTypes.CLASS_GENERALIZATION)
          .id(idGenerator.getOrCreateId(generalization))

@@ -10,6 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.core.gmodel;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,7 +41,7 @@ public class GModelMapHandler {
       return mapperOpt.get().map(object);
    }
 
-   public List<GModelElement> handle(final List<EObject> objects) {
+   public List<GModelElement> handle(final Collection<? extends EObject> objects) {
       return objects.stream().map(obj -> handle(obj)).collect(Collectors.toList());
    }
 }

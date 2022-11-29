@@ -49,7 +49,7 @@ public class PropertyCompartmentMapper extends BaseGModelMapper<Property, GCompa
    public GCompartment map(final Property property) {
       GCompartmentBuilder propertyBuilder = new GCompartmentBuilder(ClassTypes.PROPERTY)
          .layout(GConstants.Layout.HBOX)
-         .id(classSuffix.propertySuffix.appendTo((idGenerator.getOrCreateId(property))));
+         .id(idGenerator.getOrCreateId(property));
 
       // property icon
       GCompartment propertyIcon = new GCompartmentBuilder(ClassTypes.ICON_PROPERTY)

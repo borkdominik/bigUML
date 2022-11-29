@@ -19,7 +19,11 @@ import com.eclipsesource.uml.modelserver.uml.diagram.common_diagram.commands.Ren
 public class DefaultRenameNamedElementHandler<T extends NamedElement> extends BaseLabelEditHandler<T> {
 
    public DefaultRenameNamedElementHandler(final String suffix) {
-      super(UmlConfig.Types.LABEL_NAME, suffix);
+      this(UmlConfig.Types.LABEL_NAME, suffix);
+   }
+
+   public DefaultRenameNamedElementHandler(final String type, final String suffix) {
+      super(type, suffix);
    }
 
    @Override

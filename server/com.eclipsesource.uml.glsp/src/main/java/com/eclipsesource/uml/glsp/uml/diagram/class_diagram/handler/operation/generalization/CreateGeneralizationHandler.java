@@ -28,12 +28,12 @@ public class CreateGeneralizationHandler
 
    @Override
    protected List<String> sources() {
-      return List.of(ClassTypes.CLASS, ClassTypes.INTERFACE);
+      return List.of(ClassTypes.CLASS, ClassTypes.ABSTRACT_CLASS);
    }
 
    @Override
    protected List<String> targets() {
-      return List.of(ClassTypes.CLASS, ClassTypes.INTERFACE);
+      return List.of(ClassTypes.CLASS, ClassTypes.ABSTRACT_CLASS);
    }
 
    @Override

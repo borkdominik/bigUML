@@ -2,7 +2,6 @@ package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.enu
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Enumeration;
 import org.eclipse.uml2.uml.UMLFactory;
 
@@ -18,7 +17,7 @@ public class AddEnumerationSemanticCommand extends UmlSemanticElementCommand {
    public AddEnumerationSemanticCommand(final EditingDomain domain, final URI modelUri) {
       super(domain, modelUri);
       this.newEnumeration = UMLFactory.eINSTANCE.createEnumeration();
-      this.nameGenerator = new PackageableElementNameGenerator(Class.class, modelUri, domain);
+      this.nameGenerator = new PackageableElementNameGenerator(Enumeration.class, modelUri, domain);
    }
 
    @Override

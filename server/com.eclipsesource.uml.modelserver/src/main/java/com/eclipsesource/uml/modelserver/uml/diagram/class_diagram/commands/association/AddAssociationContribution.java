@@ -19,7 +19,7 @@ import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
 import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
 import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
 import org.eclipse.emfcloud.modelserver.edit.command.BasicCommandContribution;
-import org.eclipse.uml2.uml.Class;
+import org.eclipse.uml2.uml.Type;
 
 import com.eclipsesource.uml.modelserver.shared.constants.SemanticKeys;
 import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
@@ -29,7 +29,7 @@ public class AddAssociationContribution extends BasicCommandContribution<Command
    public static final String TYPE = "class:add_association";
    public static final String TYPE_KEYWORD = "type_keyword";
 
-   public static CCompoundCommand create(final Class source, final Class target,
+   public static CCompoundCommand create(final Type source, final Type target,
       final String keyword) {
       var command = CCommandFactory.eINSTANCE.createCompoundCommand();
 
@@ -50,8 +50,8 @@ public class AddAssociationContribution extends BasicCommandContribution<Command
       var targetElementId = command.getProperties().get(SemanticKeys.TARGET_SEMANTIC_ELEMENT_ID);
       var type = command.getProperties().get(TYPE_KEYWORD);
 
-      var source = elementAccessor.getElement(sourceElementId, Class.class);
-      var target = elementAccessor.getElement(targetElementId, Class.class);
+      var source = elementAccessor.getElement(sourceElementId, Type.class);
+      var target = elementAccessor.getElement(targetElementId, Type.class);
 
       return new AddAssociationCompoundCommand(domain, modelUri, source, target, type);
    }

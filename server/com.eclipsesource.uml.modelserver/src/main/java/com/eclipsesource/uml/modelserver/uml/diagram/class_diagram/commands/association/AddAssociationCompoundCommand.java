@@ -13,14 +13,14 @@ package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.ass
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Class;
+import org.eclipse.uml2.uml.Type;
 
 import com.eclipsesource.uml.modelserver.shared.notation.commands.UmlAddEdgeCommand;
 
 public class AddAssociationCompoundCommand extends CompoundCommand {
 
    public AddAssociationCompoundCommand(final EditingDomain domain, final URI modelUri,
-      final Class source, final Class target,
+      final Type source, final Type target,
       final String type) {
 
       var command = new AddAssociationSemanticCommand(domain, modelUri, source,

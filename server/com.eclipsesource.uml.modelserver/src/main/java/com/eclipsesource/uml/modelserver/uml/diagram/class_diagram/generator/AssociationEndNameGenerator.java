@@ -10,14 +10,14 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.generator;
 
-import org.eclipse.uml2.uml.Class;
+import org.eclipse.uml2.uml.Type;
 
 import com.eclipsesource.uml.modelserver.uml.generator.ContextualNameGenerator;
 
-public class AssociationEndNameGenerator implements ContextualNameGenerator<Class> {
+public class AssociationEndNameGenerator implements ContextualNameGenerator<Type> {
 
    @Override
-   public String newNameInContextOf(final Class element) {
+   public String newNameInContextOf(final Type element) {
       String suffix = "s";
       return element.getName().toLowerCase().concat(suffix);
    }

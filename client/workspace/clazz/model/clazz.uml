@@ -5,7 +5,12 @@
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_wwgLQHCxEe2ghd0IrCbv6A" value="2"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_wwgyUHCxEe2ghd0IrCbv6A" value="3"/>
     </ownedAttribute>
+    <ownedAttribute xmi:id="_fJaRYHC0Ee2ghd0IrCbv6A" name="newProperty1">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_fjJnEHC0Ee2ghd0IrCbv6A" value="4"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_fjJnEXC0Ee2ghd0IrCbv6A" value="4"/>
+    </ownedAttribute>
   </packagedElement>
-  <packagedElement xmi:type="uml:Class" xmi:id="_edYIQXCoEe2OPNK09vgqPA" name="NewClass2"/>
-  <packagedElement xmi:type="uml:Class" xmi:id="_AIllAHCxEe2ghd0IrCbv6A" name="NewClass3"/>
+  <packagedElement xmi:type="uml:Enumeration" xmi:id="_c6hX8HC0Ee2ghd0IrCbv6A" name="NewEnumeration1"/>
+  <packagedElement xmi:type="uml:Interface" xmi:id="_d6uQsHC0Ee2ghd0IrCbv6A" name="NewInterface1"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="_Ie5L0XC1Ee2FpstNgxotrw" name="NewClass2" isAbstract="true"/>
 </uml:Model>

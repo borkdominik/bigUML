@@ -20,20 +20,16 @@ import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.asso
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association.SetAssociationEndNameContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.enumeration.AddEnumerationContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.enumeration.RemoveEnumerationContribution;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.enumeration.SetEnumerationNameContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.generalization.AddGeneralizationContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.generalization.RemoveGeneralizationContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.AddPropertyContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.RemovePropertyContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.SetPropertyBoundsContribution;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.SetPropertyNameContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.SetPropertyTypeContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uclass.AddClassContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uclass.RemoveClassContribution;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uclass.SetClassNameContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uinterface.AddInterfaceContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uinterface.RemoveInterfaceContribution;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uinterface.SetInterfaceNameContribution;
 import com.google.inject.multibindings.MapBinder;
 
 public class ClassManifest extends DiagramManifest implements CommandCodecContribution {
@@ -49,15 +45,11 @@ public class ClassManifest extends DiagramManifest implements CommandCodecContri
       // Class
       multibinder.addBinding(AddClassContribution.TYPE).to(AddClassContribution.class);
       multibinder.addBinding(RemoveClassContribution.TYPE).to(RemoveClassContribution.class);
-      multibinder.addBinding(SetClassNameContribution.TYPE).to(SetClassNameContribution.class);
 
       // Property
       multibinder.addBinding(AddPropertyContribution.TYPE).to(AddPropertyContribution.class);
       multibinder.addBinding(RemovePropertyContribution.TYPE).to(RemovePropertyContribution.class);
-      // multibinder.addBinding(SetPropertyContribution.TYPE,
-      // SetPropertyContribution.class);
 
-      multibinder.addBinding(SetPropertyNameContribution.TYPE).to(SetPropertyNameContribution.class);
       multibinder.addBinding(SetPropertyTypeContribution.TYPE).to(SetPropertyTypeContribution.class);
       multibinder.addBinding(SetPropertyBoundsContribution.TYPE).to(SetPropertyBoundsContribution.class);
 
@@ -75,11 +67,9 @@ public class ClassManifest extends DiagramManifest implements CommandCodecContri
       // Interface
       multibinder.addBinding(AddInterfaceContribution.TYPE).to(AddInterfaceContribution.class);
       multibinder.addBinding(RemoveInterfaceContribution.TYPE).to(RemoveInterfaceContribution.class);
-      multibinder.addBinding(SetInterfaceNameContribution.TYPE).to(SetInterfaceNameContribution.class);
+
       // Enumeration
       multibinder.addBinding(AddEnumerationContribution.TYPE).to(AddEnumerationContribution.class);
       multibinder.addBinding(RemoveEnumerationContribution.TYPE).to(RemoveEnumerationContribution.class);
-      multibinder.addBinding(SetEnumerationNameContribution.TYPE).to(SetEnumerationNameContribution.class);
-
    }
 }

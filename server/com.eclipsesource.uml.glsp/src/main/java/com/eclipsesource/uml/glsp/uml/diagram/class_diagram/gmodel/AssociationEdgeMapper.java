@@ -10,116 +10,75 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel;
 
-import java.util.ArrayList;
-
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.glsp.graph.GEdge;
 import org.eclipse.glsp.graph.GLabel;
-import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.builder.impl.GEdgeBuilder;
 import org.eclipse.glsp.graph.builder.impl.GEdgePlacementBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
-import org.eclipse.glsp.graph.util.GraphUtil;
-import org.eclipse.glsp.server.emf.EMFIdGenerator;
-import org.eclipse.glsp.server.emf.model.notation.Edge;
 import org.eclipse.uml2.uml.Association;
-import org.eclipse.uml2.uml.Property;
 
-import com.eclipsesource.uml.glsp.core.gmodel.suffix.Suffix;
-import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.eclipsesource.uml.glsp.core.utils.UmlConfig;
 import com.eclipsesource.uml.glsp.old.utils.edge.EdgeMultiplicityIdUtil;
 import com.eclipsesource.uml.glsp.old.utils.property.PropertyUtil;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassCSS;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGModelMapper;
-import com.google.inject.Inject;
 
 public class AssociationEdgeMapper extends BaseGModelMapper<Association, GEdge> {
-   @Inject
-   protected EMFIdGenerator idGenerator;
-
-   @Inject
-   private UmlModelState modelState;
-
-   @Inject
-   private Suffix suffix;
 
    @Override
    public GEdge map(final Association association) {
-      EList<Property> memberEnds = association.getMemberEnds();
-      Property source = memberEnds.get(0);
-      String sourceId = idGenerator.getOrCreateId(source);
-      Property target = memberEnds.get(1);
-      String targetId = idGenerator.getOrCreateId(target);
+      var memberEnds = association.getMemberEnds();
+      var source = memberEnds.get(0);
+      var target = memberEnds.get(1);
+
+      var builder = new GEdgeBuilder(ClassTypes.ASSOCIATION)
+         .id(idGenerator.getOrCreateId(association))
+         .addCssClass(UmlConfig.CSS.EDGE)
+         .sourceId(idGenerator.getOrCreateId(source.getType()))
+         .targetId(idGenerator.getOrCreateId(target.getType()))
+         .routerKind(GConstants.RouterKind.MANHATTAN);
 
       if (association.getKeywords().get(0).equals("composition")) {
-         GEdgeBuilder builder = new GEdgeBuilder(ClassTypes.COMPOSITION)
-            .id(idGenerator.getOrCreateId(association))
-            .addCssClass(UmlConfig.CSS.EDGE)
-            .addCssClass(UmlConfig.CSS.EDGE_DIRECTED_END_TENT)
-            .sourceId(idGenerator.getOrCreateId(source.getType()))
-            .targetId(idGenerator.getOrCreateId(target.getType()))
-            .routerKind(GConstants.RouterKind.MANHATTAN);
-
-         modelState.getIndex().getNotation(association, Edge.class).ifPresent(edge -> {
-            if (edge.getBendPoints() != null) {
-               ArrayList<GPoint> bendPoints = new ArrayList<>();
-               edge.getBendPoints().forEach(p -> bendPoints.add(GraphUtil.copy(p)));
-               builder.addRoutingPoints(bendPoints);
-            }
-         });
-         return builder.build();
+         applyComposition(association, builder);
       } else if (association.getKeywords().get(0).equals("aggregation")) {
-
-         GEdgeBuilder builder = new GEdgeBuilder(ClassTypes.COMPOSITION)
-            .id(idGenerator.getOrCreateId(association))
-            .addCssClass(UmlConfig.CSS.EDGE)
-            .addCssClass(ClassCSS.EDGE_DIAMOND_EMPTY)
-            .sourceId(idGenerator.getOrCreateId(source.getType()))
-            .targetId(idGenerator.getOrCreateId(target.getType()))
-            .routerKind(GConstants.RouterKind.MANHATTAN);
-
-         modelState.getIndex().getNotation(association, Edge.class).ifPresent(edge -> {
-            if (edge.getBendPoints() != null) {
-               ArrayList<GPoint> bendPoints = new ArrayList<>();
-               edge.getBendPoints().forEach(p -> bendPoints.add(GraphUtil.copy(p)));
-               builder.addRoutingPoints(bendPoints);
-            }
-         });
-         return builder.build();
+         applyAggregation(association, builder);
       } else {
-         GEdgeBuilder builder = new GEdgeBuilder(ClassTypes.ASSOCIATION)
-            .id(idGenerator.getOrCreateId(association))
-            .addCssClass(UmlConfig.CSS.EDGE)
-            .sourceId(idGenerator.getOrCreateId(source.getType()))
-            .targetId(idGenerator.getOrCreateId(target.getType()))
-            .routerKind(GConstants.RouterKind.MANHATTAN);
-
-         GLabel sourceNameLabel = createEdgeNameLabel(source.getName(), suffix.labelSuffix.appendTo(sourceId), 0.1d);
-         builder.add(sourceNameLabel);
-
-         GLabel sourceMultiplicityLabel = createEdgeMultiplicityLabel(PropertyUtil.getMultiplicity(source),
-            EdgeMultiplicityIdUtil.createEdgeLabelMultiplicityId(sourceId), 0.1d);
-         builder.add(sourceMultiplicityLabel);
-
-         GLabel targetNameLabel = createEdgeNameLabel(target.getName(), suffix.labelSuffix.appendTo(targetId), 0.9d);
-         builder.add(targetNameLabel);
-
-         GLabel targetMultiplicityLabel = createEdgeMultiplicityLabel(PropertyUtil.getMultiplicity(target),
-            EdgeMultiplicityIdUtil.createEdgeLabelMultiplicityId(targetId), 0.9d);
-         builder.add(targetMultiplicityLabel);
-
-         modelState.getIndex().getNotation(association, Edge.class).ifPresent(edge -> {
-            if (edge.getBendPoints() != null) {
-               ArrayList<GPoint> bendPoints = new ArrayList<>();
-               edge.getBendPoints().forEach(p -> bendPoints.add(GraphUtil.copy(p)));
-               builder.addRoutingPoints(bendPoints);
-            }
-         });
-         return builder.build();
+         applyAssociation(association, builder);
       }
+
+      return builder.build();
+   }
+
+   protected void applyComposition(final Association association, final GEdgeBuilder builder) {
+      builder.addCssClass(UmlConfig.CSS.EDGE_DIRECTED_END_TENT);
+   }
+
+   protected void applyAggregation(final Association association, final GEdgeBuilder builder) {
+      builder.addCssClass(ClassCSS.EDGE_DIAMOND_EMPTY);
+   }
+
+   protected void applyAssociation(final Association association, final GEdgeBuilder builder) {
+      var memberEnds = association.getMemberEnds();
+      var source = memberEnds.get(0);
+      var sourceId = idGenerator.getOrCreateId(source);
+      var target = memberEnds.get(1);
+      var targetId = idGenerator.getOrCreateId(target);
+
+      var sourceNameLabel = createEdgeNameLabel(source.getName(), suffix.labelSuffix.appendTo(sourceId), 0.1d);
+      builder.add(sourceNameLabel);
+
+      var sourceMultiplicityLabel = createEdgeMultiplicityLabel(PropertyUtil.getMultiplicity(source),
+         EdgeMultiplicityIdUtil.createEdgeLabelMultiplicityId(sourceId), 0.1d);
+      builder.add(sourceMultiplicityLabel);
+
+      var targetNameLabel = createEdgeNameLabel(target.getName(), suffix.labelSuffix.appendTo(targetId), 0.9d);
+      builder.add(targetNameLabel);
+
+      var targetMultiplicityLabel = createEdgeMultiplicityLabel(PropertyUtil.getMultiplicity(target),
+         EdgeMultiplicityIdUtil.createEdgeLabelMultiplicityId(targetId), 0.9d);
+      builder.add(targetMultiplicityLabel);
    }
 
    protected GLabel createEdgeMultiplicityLabel(final String value, final String id, final double position) {

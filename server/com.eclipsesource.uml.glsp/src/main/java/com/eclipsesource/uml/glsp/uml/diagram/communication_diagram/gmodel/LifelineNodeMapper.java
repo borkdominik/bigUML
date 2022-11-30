@@ -11,48 +11,33 @@
 package com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.gmodel;
 
 import org.eclipse.glsp.graph.GCompartment;
-import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.builder.impl.GCompartmentBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 import org.eclipse.glsp.graph.builder.impl.GNodeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.glsp.graph.util.GraphUtil;
-import org.eclipse.glsp.server.emf.EMFIdGenerator;
 import org.eclipse.glsp.server.emf.model.notation.Shape;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Lifeline;
 
-import com.eclipsesource.uml.glsp.core.gmodel.suffix.Suffix;
-import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.eclipsesource.uml.glsp.core.utils.UmlConfig;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGModelMapper;
-import com.google.inject.Inject;
 
 public class LifelineNodeMapper extends BaseGModelMapper<Lifeline, GNode> {
-   @Inject
-   protected EMFIdGenerator idGenerator;
-
-   @Inject
-   private UmlModelState modelState;
-
-   @Inject
-   private Suffix suffix;
 
    @Override
    public GNode map(final Lifeline lifeline) {
-      GNodeBuilder lifelineNodeBuilder = new GNodeBuilder(CommunicationTypes.LIFELINE)
+      var builder = new GNodeBuilder(CommunicationTypes.LIFELINE)
          .id(idGenerator.getOrCreateId(lifeline))
          .layout(GConstants.Layout.VBOX)
-         .addCssClass(UmlConfig.CSS.NODE);
+         .addCssClass(UmlConfig.CSS.NODE)
+         .add(buildHeader(lifeline));
 
-      applyShapeData(lifeline, lifelineNodeBuilder);
+      applyShapeData(lifeline, builder);
 
-      GCompartment classHeader = buildClassHeader(lifeline);
-      lifelineNodeBuilder.add(classHeader);
-
-      return lifelineNodeBuilder.build();
+      return builder.build();
    }
 
    protected void applyShapeData(final Element element, final GNodeBuilder builder) {
@@ -66,21 +51,21 @@ public class LifelineNodeMapper extends BaseGModelMapper<Lifeline, GNode> {
       });
    }
 
-   protected GCompartment buildClassHeader(final Lifeline umlLifeline) {
-      GCompartmentBuilder classHeaderBuilder = new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER)
-         .layout(GConstants.Layout.HBOX)
-         .id(suffix.headerSuffix.appendTo(idGenerator.getOrCreateId(umlLifeline)));
+   protected GCompartment buildHeader(final Lifeline umlLifeline) {
+      var builder = new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER)
+         .id(suffix.headerSuffix.appendTo(idGenerator.getOrCreateId(umlLifeline)))
+         .layout(GConstants.Layout.HBOX);
 
-      GCompartment classHeaderIcon = new GCompartmentBuilder(CommunicationTypes.ICON_LIFELINE)
+      var icon = new GCompartmentBuilder(CommunicationTypes.ICON_LIFELINE)
          .id(suffix.headerIconSuffix.appendTo(idGenerator.getOrCreateId(umlLifeline))).build();
-      classHeaderBuilder.add(classHeaderIcon);
+      builder.add(icon);
 
-      GLabel classHeaderLabel = new GLabelBuilder(UmlConfig.Types.LABEL_NAME)
+      var nameLabel = new GLabelBuilder(UmlConfig.Types.LABEL_NAME)
          .id(suffix.headerLabelSuffix.appendTo(idGenerator.getOrCreateId(umlLifeline)))
          .text(umlLifeline.getName()).build();
-      classHeaderBuilder.add(classHeaderLabel);
+      builder.add(nameLabel);
 
-      return classHeaderBuilder.build();
+      return builder.build();
    }
 
 }

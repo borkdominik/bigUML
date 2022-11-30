@@ -18,7 +18,6 @@ import org.eclipse.glsp.graph.builder.impl.GCompartmentBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.util.GConstants;
-import org.eclipse.glsp.server.emf.EMFIdGenerator;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Type;
 
@@ -31,9 +30,6 @@ import com.eclipsesource.uml.glsp.uml.gmodel.BaseGModelMapper;
 import com.google.inject.Inject;
 
 public class PropertyCompartmentMapper extends BaseGModelMapper<Property, GCompartment> {
-   @Inject
-   protected EMFIdGenerator idGenerator;
-
    @Inject
    protected IdCountContextGenerator idCountGenerator;
 

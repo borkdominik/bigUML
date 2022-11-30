@@ -10,7 +10,6 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.gmodel;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -26,56 +25,36 @@ import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.builder.impl.GNodeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.glsp.graph.util.GraphUtil;
-import org.eclipse.glsp.server.emf.EMFIdGenerator;
 import org.eclipse.glsp.server.emf.model.notation.Shape;
 import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.Interaction;
 
-import com.eclipsesource.uml.glsp.core.gmodel.GModelMapHandler;
-import com.eclipsesource.uml.glsp.core.gmodel.suffix.Suffix;
-import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.eclipsesource.uml.glsp.core.utils.UmlConfig;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGModelMapper;
-import com.google.inject.Inject;
 
 public class InteractionNodeMapper extends BaseGModelMapper<Interaction, GNode> {
-   @Inject
-   protected EMFIdGenerator idGenerator;
-
    private static final String V_GRAB = "vGrab";
    private static final String H_GRAB = "hGrab";
    private static final String H_ALIGN = "hAlign";
 
-   @Inject
-   private Suffix suffix;
-
-   @Inject
-   private UmlModelState modelState;
-
-   @Inject
-   private GModelMapHandler mapHandler;
-
    @Override
    public GNode map(final Interaction interaction) {
-      Map<String, Object> layoutOptions = new HashMap<>();
+      var layoutOptions = new HashMap<String, Object>();
       layoutOptions.put(H_ALIGN, GConstants.HAlign.CENTER);
       layoutOptions.put(H_GRAB, false);
       layoutOptions.put(V_GRAB, false);
 
-      Collection<EObject> children = new LinkedList<>();
-      children.addAll(interaction.getLifelines());
-      children.addAll(interaction.getMessages());
-
-      GNodeBuilder builder = new GNodeBuilder(CommunicationTypes.INTERACTION)
+      var builder = new GNodeBuilder(CommunicationTypes.INTERACTION)
          .id(idGenerator.getOrCreateId(interaction))
          .layout(GConstants.Layout.VBOX)
          .layoutOptions(layoutOptions)
          .addCssClass(UmlConfig.CSS.NODE)
-         .add(buildInteractionHeader(interaction))
-         .add(createInteractionChildrenCompartment(interaction, children));
+         .add(buildHeader(interaction))
+         .add(buildCompartment(interaction));
 
       applyShapeData(interaction, builder);
+
       return builder.build();
    }
 
@@ -94,21 +73,26 @@ public class InteractionNodeMapper extends BaseGModelMapper<Interaction, GNode> 
       });
    }
 
-   protected GCompartment buildInteractionHeader(final Interaction umlInteraction) {
+   protected GCompartment buildHeader(final Interaction umlInteraction) {
       return new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER)
-         .layout(GConstants.Layout.HBOX)
          .id(suffix.headerSuffix.appendTo(idGenerator.getOrCreateId(umlInteraction)))
+         .layout(GConstants.Layout.HBOX)
          .add(new GCompartmentBuilder(CommunicationTypes.ICON_INTERACTION)
-            .id(suffix.headerIconSuffix.appendTo(idGenerator.getOrCreateId(umlInteraction))).build())
+            .id(suffix.headerIconSuffix.appendTo(idGenerator.getOrCreateId(umlInteraction)))
+            .build())
          .add(new GLabelBuilder(UmlConfig.Types.LABEL_NAME)
             .id(suffix.headerLabelSuffix.appendTo(idGenerator.getOrCreateId(umlInteraction)))
-            .text(umlInteraction.getName()).build())
+            .text(umlInteraction.getName())
+            .build())
          .build();
    }
 
-   protected GCompartment createInteractionChildrenCompartment(final Interaction interaction,
-      final Collection<? extends EObject> children) {
-      Map<String, Object> layoutOptions = new HashMap<>();
+   protected GCompartment buildCompartment(final Interaction interaction) {
+      var children = new LinkedList<EObject>();
+      children.addAll(interaction.getLifelines());
+      children.addAll(interaction.getMessages());
+
+      var layoutOptions = new HashMap<String, Object>();
       layoutOptions.put(H_ALIGN, GConstants.HAlign.LEFT);
       layoutOptions.put(H_GRAB, true);
       layoutOptions.put(V_GRAB, true);

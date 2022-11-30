@@ -11,69 +11,57 @@
 package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel;
 
 import org.eclipse.glsp.graph.GCompartment;
-import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.builder.impl.GCompartmentBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 import org.eclipse.glsp.graph.builder.impl.GNodeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.glsp.graph.util.GraphUtil;
-import org.eclipse.glsp.server.emf.EMFIdGenerator;
 import org.eclipse.glsp.server.emf.model.notation.Shape;
 import org.eclipse.uml2.uml.Classifier;
-import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Interface;
 
-import com.eclipsesource.uml.glsp.core.gmodel.GModelMapHandler;
-import com.eclipsesource.uml.glsp.core.gmodel.suffix.Suffix;
-import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.eclipsesource.uml.glsp.core.utils.UmlConfig;
-import com.eclipsesource.uml.glsp.old.utils.UmlIDUtil;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.ClassSuffix;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGModelMapper;
 import com.google.inject.Inject;
 
 public class InterfaceNodeMapper extends BaseGModelMapper<Interface, GNode> {
    @Inject
-   protected EMFIdGenerator idGenerator;
-
-   @Inject
-   private Suffix suffix;
-
-   @Inject
-   private UmlModelState modelState;
-
-   @Inject
-   private GModelMapHandler mapHandler;
+   private ClassSuffix classSuffix;
 
    @Override
    public GNode map(final Interface umlInterface) {
-      GNodeBuilder b = new GNodeBuilder(ClassTypes.INTERFACE)
+      var builder = new GNodeBuilder(ClassTypes.INTERFACE)
          .id(idGenerator.getOrCreateId(umlInterface))
          .layout(GConstants.Layout.VBOX)
          .addCssClass(UmlConfig.CSS.NODE)
-         .add(buildInterfaceHeader(umlInterface));
-      applyShapeData(umlInterface, b);
-      return b.build();
+         .add(buildHeader(umlInterface));
+
+      applyShapeData(umlInterface, builder);
+
+      return builder.build();
    }
 
-   protected GCompartment buildInterfaceHeader(final Interface umlInterface) {
-      GCompartmentBuilder interfaceHeaderBuilder = new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER)
+   protected GCompartment buildHeader(final Interface umlInterface) {
+      var builder = new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER)
          .layout(GConstants.Layout.VBOX)
          .id(suffix.headerSuffix.appendTo(idGenerator.getOrCreateId(umlInterface)));
 
-      GLabel typeLabel = new GLabelBuilder(UmlConfig.Types.LABEL_NAME)
-         .id(suffix.headerLabelSuffix.appendTo(idGenerator.getOrCreateId(umlInterface)) + "_type_header")
+      var typeLabel = new GLabelBuilder(UmlConfig.Types.LABEL_TEXT)
+         .id(classSuffix.headerTypeSuffix.appendTo(idGenerator.getOrCreateId(umlInterface)))
          .text("«interface»")
          .build();
-      interfaceHeaderBuilder.add(typeLabel);
+      builder.add(typeLabel);
 
-      GLabel interfaceHeaderLabel = new GLabelBuilder(UmlConfig.Types.LABEL_NAME)
+      var nameLabel = new GLabelBuilder(UmlConfig.Types.LABEL_NAME)
          .id(suffix.headerLabelSuffix.appendTo(idGenerator.getOrCreateId(umlInterface)))
          .text(umlInterface.getName())
          .build();
-      interfaceHeaderBuilder.add(interfaceHeaderLabel);
-      return interfaceHeaderBuilder.build();
+      builder.add(nameLabel);
+
+      return builder.build();
    }
 
    protected void applyShapeData(final Classifier classifier, final GNodeBuilder builder) {
@@ -86,15 +74,4 @@ public class InterfaceNodeMapper extends BaseGModelMapper<Interface, GNode> {
          }
       });
    }
-
-   protected void applyShapeData(final Element element, final GNodeBuilder builder) {
-      modelState.getIndex().getNotation(element, Shape.class).ifPresent(shape -> {
-         if (shape.getPosition() != null) {
-            builder.position(GraphUtil.copy(shape.getPosition()));
-         } else if (shape.getSize() != null) {
-            builder.size(GraphUtil.copy(shape.getSize()));
-         }
-      });
-   }
-
 }

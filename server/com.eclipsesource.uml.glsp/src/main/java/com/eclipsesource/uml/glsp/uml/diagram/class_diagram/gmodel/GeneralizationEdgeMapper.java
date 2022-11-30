@@ -20,27 +20,15 @@ import org.eclipse.glsp.graph.builder.impl.GEdgePlacementBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.glsp.graph.util.GraphUtil;
-import org.eclipse.glsp.server.emf.EMFIdGenerator;
 import org.eclipse.glsp.server.emf.model.notation.Edge;
 import org.eclipse.uml2.uml.Generalization;
 
-import com.eclipsesource.uml.glsp.core.gmodel.suffix.Suffix;
-import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.eclipsesource.uml.glsp.core.utils.UmlConfig;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGModelMapper;
-import com.google.inject.Inject;
 
 public class GeneralizationEdgeMapper extends BaseGModelMapper<Generalization, GEdge> {
-   @Inject
-   protected EMFIdGenerator idGenerator;
-
-   @Inject
-   private UmlModelState modelState;
-
-   @Inject
-   private Suffix suffix;
 
    @Override
    public GEdge map(final Generalization generalization) {

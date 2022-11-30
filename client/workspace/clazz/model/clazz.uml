@@ -5,9 +5,9 @@
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_wwgLQHCxEe2ghd0IrCbv6A" value="2"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_wwgyUHCxEe2ghd0IrCbv6A" value="3"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="_fJaRYHC0Ee2ghd0IrCbv6A" name="newProperty1">
-      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_fjJnEHC0Ee2ghd0IrCbv6A" value="4"/>
-      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_fjJnEXC0Ee2ghd0IrCbv6A" value="4"/>
+    <ownedAttribute xmi:id="_fJaRYHC0Ee2ghd0IrCbv6A" name="asd">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_fjJnEHC0Ee2ghd0IrCbv6A" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_fjJnEXC0Ee2ghd0IrCbv6A" value="5"/>
     </ownedAttribute>
   </packagedElement>
   <packagedElement xmi:type="uml:Enumeration" xmi:id="_c6hX8HC0Ee2ghd0IrCbv6A" name="NewEnumeration1"/>

@@ -62,7 +62,7 @@ public class ClassDiagramConfiguration implements DiagramConfiguration {
       hints.add(new ShapeTypeHint(ClassTypes.INTERFACE, true, true, false, false,
          List.of(ClassTypes.PROPERTY)));
       hints.add(new ShapeTypeHint(ClassTypes.ENUMERATION, true, true, false, false,
-         List.of(ClassTypes.PROPERTY)));
+         List.of()));
       hints.add(new ShapeTypeHint(ClassTypes.PROPERTY, false, true, false, true,
          List.of()));
 

@@ -20,27 +20,15 @@ import org.eclipse.glsp.graph.builder.impl.GEdgePlacementBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.glsp.graph.util.GraphUtil;
-import org.eclipse.glsp.server.emf.EMFIdGenerator;
 import org.eclipse.glsp.server.emf.model.notation.Edge;
 import org.eclipse.uml2.uml.Message;
 import org.eclipse.uml2.uml.MessageOccurrenceSpecification;
 
-import com.eclipsesource.uml.glsp.core.gmodel.suffix.Suffix;
-import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.eclipsesource.uml.glsp.core.utils.UmlConfig;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGModelMapper;
-import com.google.inject.Inject;
 
 public class MessageEdgeMapper extends BaseGModelMapper<Message, GEdge> {
-   @Inject
-   protected EMFIdGenerator idGenerator;
-
-   @Inject
-   private UmlModelState modelState;
-
-   @Inject
-   private Suffix suffix;
 
    @Override
    public GEdge map(final Message message) {
@@ -50,14 +38,14 @@ public class MessageEdgeMapper extends BaseGModelMapper<Message, GEdge> {
       var source = sendEvent.getCovered();
       var target = receiveEvent.getCovered();
 
-      GEdgeBuilder builder = new GEdgeBuilder(CommunicationTypes.MESSAGE)
+      var builder = new GEdgeBuilder(CommunicationTypes.MESSAGE)
          .id(idGenerator.getOrCreateId(message))
          .addCssClass(UmlConfig.CSS.EDGE)
          .sourceId(idGenerator.getOrCreateId(source))
          .targetId(idGenerator.getOrCreateId(target))
          .routerKind(GConstants.RouterKind.MANHATTAN);
 
-      GLabel nameLabel = createEdgeNameLabel(message.getName(),
+      var nameLabel = createEdgeNameLabel(message.getName(),
          suffix.labelSuffix.appendTo(idGenerator.getOrCreateId(message)), 0.6d);
       builder.add(nameLabel);
 

@@ -22,13 +22,9 @@ import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.builder.impl.GNodeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.glsp.graph.util.GraphUtil;
-import org.eclipse.glsp.server.emf.EMFIdGenerator;
 import org.eclipse.glsp.server.emf.model.notation.Shape;
 import org.eclipse.uml2.uml.Class;
 
-import com.eclipsesource.uml.glsp.core.gmodel.GModelMapHandler;
-import com.eclipsesource.uml.glsp.core.gmodel.suffix.Suffix;
-import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.eclipsesource.uml.glsp.core.utils.UmlConfig;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.ClassSuffix;
@@ -37,19 +33,7 @@ import com.google.inject.Inject;
 
 public class ClassNodeMapper extends BaseGModelMapper<Class, GNode> {
    @Inject
-   protected EMFIdGenerator idGenerator;
-
-   @Inject
-   private Suffix suffix;
-
-   @Inject
    private ClassSuffix classSuffix;
-
-   @Inject
-   private UmlModelState modelState;
-
-   @Inject
-   private GModelMapHandler mapHandler;
 
    @Override
    public GNode map(final Class umlClass) {
@@ -83,7 +67,7 @@ public class ClassNodeMapper extends BaseGModelMapper<Class, GNode> {
          builder
             .layout(GConstants.Layout.VBOX);
 
-         var typeLabel = new GLabelBuilder(UmlConfig.Types.LABEL_NAME)
+         var typeLabel = new GLabelBuilder(UmlConfig.Types.LABEL_TEXT)
             .id(classSuffix.headerTypeSuffix.appendTo(idGenerator.getOrCreateId(umlClass)))
             .text("{abstract}")
             .build();
@@ -93,16 +77,16 @@ public class ClassNodeMapper extends BaseGModelMapper<Class, GNode> {
          builder
             .layout(GConstants.Layout.HBOX);
 
-         var classHeaderIcon = new GCompartmentBuilder(ClassTypes.ICON_CLASS)
+         var icon = new GCompartmentBuilder(ClassTypes.ICON_CLASS)
             .id(suffix.headerIconSuffix.appendTo(idGenerator.getOrCreateId(umlClass)))
             .build();
-         builder.add(classHeaderIcon);
+         builder.add(icon);
       }
 
-      var classHeaderLabel = new GLabelBuilder(UmlConfig.Types.LABEL_NAME)
+      var nameLabel = new GLabelBuilder(UmlConfig.Types.LABEL_NAME)
          .id(suffix.headerLabelSuffix.appendTo(idGenerator.getOrCreateId(umlClass)))
          .text(umlClass.getName()).build();
-      builder.add(classHeaderLabel);
+      builder.add(nameLabel);
 
       return builder.build();
    }

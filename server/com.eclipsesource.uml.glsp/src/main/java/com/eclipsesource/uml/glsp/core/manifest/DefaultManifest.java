@@ -12,6 +12,7 @@ package com.eclipsesource.uml.glsp.core.manifest;
 
 import java.util.Set;
 
+import com.eclipsesource.uml.glsp.core.features.idgenerator.IdCountContextGenerator;
 import com.eclipsesource.uml.glsp.core.features.idgenerator.SuffixIdExtractor;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.CompartmentSuffixAppender;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.HeaderIconSuffixAppender;
@@ -60,16 +61,17 @@ public class DefaultManifest extends AbstractModule
       createPaletteBinding(binder());
       createDiagramPaletteBinding(binder());
 
-      configureSuffixGenerators();
+      configureGenerators();
    }
 
-   protected void configureSuffixGenerators() {
+   protected void configureGenerators() {
       contributeSuffixIdAppenders(binder(), Set.of(LabelSuffixAppender.class,
          CompartmentSuffixAppender.class, HeaderSuffixAppender.class,
          HeaderLabelSuffixAppender.class, HeaderIconSuffixAppender.class));
 
       bind(SuffixIdExtractor.class).in(Singleton.class);
       bind(Suffix.class).in(Singleton.class);
+      bind(IdCountContextGenerator.class).in(Singleton.class);
    }
 
    @Override

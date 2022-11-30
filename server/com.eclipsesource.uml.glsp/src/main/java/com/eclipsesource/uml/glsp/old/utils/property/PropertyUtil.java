@@ -16,13 +16,6 @@ public final class PropertyUtil {
 
    private PropertyUtil() {}
 
-   public static String getTypeName(final Property property) {
-      if (property.getType() != null) {
-         return property.getType().getName();
-      }
-      return "";
-   }
-
    public static String getMultiplicity(final Property property) {
       if (property.getLower() == property.getUpper()) {
          return String.format("%s", property.getUpper() == -1 ? "*" : property.getUpper());

@@ -2,36 +2,18 @@
 <unotation:UmlDiagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:notation="http://www.eclipse.org/glsp/notation" xmlns:unotation="http://www.eclipsesource.com/glsp/uml/unotation" diagramType="CLASS">
   <semanticElement elementId="_Cfp0UGmxEe2kLe5KTNzRtw"/>
   <elements xsi:type="notation:Shape">
-    <semanticElement elementId="_H-DtkG8eEe2ylsFz_BrkQw"/>
-    <position x="145.45412627064147" y="158.25275674084682"/>
-    <size width="216.65625" height="85.0"/>
-  </elements>
-  <elements xsi:type="notation:Shape">
-    <semanticElement elementId="_IVZ2kG8eEe2ylsFz_BrkQw"/>
-    <position x="280.994717384097" y="362.1347068149268"/>
-    <size width="142.15625" height="43.0"/>
-  </elements>
-  <elements xsi:type="notation:Shape">
-    <semanticElement elementId="_I4GT8G8eEe2ylsFz_BrkQw"/>
-    <position x="83.90825254128293" y="569.9450810373287"/>
-    <size width="104.822265625" height="66.0"/>
-  </elements>
-  <elements xsi:type="notation:Shape">
-    <semanticElement elementId="_LUoAwG8eEe2ylsFz_BrkQw"/>
-    <position x="781.0" y="150.0"/>
-    <size width="148.96875" height="65.0"/>
-  </elements>
-  <elements xsi:type="notation:Shape">
-    <semanticElement elementId="_sFkKcW8iEe2K6utU_hUYnw"/>
-    <position x="548.0" y="144.0"/>
-    <size width="155.65625" height="75.0"/>
-  </elements>
-  <elements xsi:type="notation:Shape">
     <semanticElement elementId="_wwK4YG8iEe2K6utU_hUYnw"/>
-    <position x="681.0412044478034" y="347.7305863701464"/>
+    <position x="687.3965197564895" y="240.96128918421874"/>
+    <size width="142.15625" height="85.0"/>
+  </elements>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_edYIQXCoEe2OPNK09vgqPA"/>
+    <position x="978.112512517994" y="275.45671554027314"/>
     <size width="142.15625" height="43.0"/>
   </elements>
-  <elements xsi:type="notation:Edge">
-    <semanticElement elementId="_6vLfUHALEe22z_wIp4m2aw"/>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_AIllAHCxEe2ghd0IrCbv6A"/>
+    <position x="421.3868914770854" y="316.1307335158646"/>
+    <size width="160.0" height="50.0"/>
   </elements>
 </unotation:UmlDiagram>

@@ -23,7 +23,6 @@ import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Type;
 
 import com.eclipsesource.uml.glsp.core.features.idgenerator.IdCountContextGenerator;
-import com.eclipsesource.uml.glsp.core.gmodel.suffix.Suffix;
 import com.eclipsesource.uml.glsp.core.utils.UmlConfig;
 import com.eclipsesource.uml.glsp.old.utils.property.PropertyUtil;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
@@ -37,9 +36,6 @@ public class PropertyCompartmentMapper extends BaseGModelMapper<Property, GCompa
 
    @Inject
    protected IdCountContextGenerator idCountGenerator;
-
-   @Inject
-   private Suffix suffix;
 
    @Inject
    private ClassSuffix classSuffix;

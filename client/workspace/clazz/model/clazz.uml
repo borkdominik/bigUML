@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_Cfp0UGmxEe2kLe5KTNzRtw" name="clazz">
   <packagedElement xmi:type="uml:Class" xmi:id="_wwK4YG8iEe2K6utU_hUYnw" name="NewClass4">
-    <ownedAttribute xmi:id="_Qfj34HALEe22z_wIp4m2aw" name="asd"/>
+    <ownedAttribute xmi:id="_Qfj34HALEe22z_wIp4m2aw" name="asd">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_wwgLQHCxEe2ghd0IrCbv6A" value="2"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_wwgyUHCxEe2ghd0IrCbv6A" value="3"/>
+    </ownedAttribute>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="_edYIQXCoEe2OPNK09vgqPA" name="NewClass2"/>
   <packagedElement xmi:type="uml:Class" xmi:id="_AIllAHCxEe2ghd0IrCbv6A" name="NewClass3"/>

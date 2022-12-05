@@ -24,9 +24,9 @@ import com.eclipsesource.uml.glsp.old.utils.edge.EdgeMultiplicityIdUtil;
 import com.eclipsesource.uml.glsp.old.utils.property.PropertyUtil;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.AssociationTypes;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
-import com.eclipsesource.uml.glsp.uml.gmodel.BaseGModelMapper;
+import com.eclipsesource.uml.glsp.uml.gmodel.BaseGEdgeMapper;
 
-public class AssociationEdgeMapper extends BaseGModelMapper<Association, GEdge> {
+public class AssociationEdgeMapper extends BaseGEdgeMapper<Association, GEdge> {
 
    @Override
    public GEdge map(final Association association) {
@@ -49,6 +49,8 @@ public class AssociationEdgeMapper extends BaseGModelMapper<Association, GEdge> 
       } else {
          applyAssociation(association, builder);
       }
+
+      applyEdgeNotation(association, builder);
 
       return builder.build();
    }

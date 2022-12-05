@@ -16,19 +16,16 @@ import org.eclipse.glsp.graph.builder.impl.GCompartmentBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 import org.eclipse.glsp.graph.builder.impl.GNodeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
-import org.eclipse.glsp.graph.util.GraphUtil;
-import org.eclipse.glsp.server.emf.model.notation.Shape;
-import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.Enumeration;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.ClassSuffix;
-import com.eclipsesource.uml.glsp.uml.gmodel.BaseGModelMapper;
+import com.eclipsesource.uml.glsp.uml.gmodel.BaseGNodeMapper;
 import com.google.inject.Inject;
 
-public class EnumerationNodeMapper extends BaseGModelMapper<Enumeration, GNode> {
+public class EnumerationNodeMapper extends BaseGNodeMapper<Enumeration, GNode> {
    @Inject
    private ClassSuffix classSuffix;
 
@@ -40,7 +37,7 @@ public class EnumerationNodeMapper extends BaseGModelMapper<Enumeration, GNode> 
          .addCssClass(CoreCSS.NODE)
          .add(buildHeader(umlEnumeration));
 
-      applyShapeData(umlEnumeration, builder);
+      applyShapeNotation(umlEnumeration, builder);
 
       return builder.build();
    }
@@ -72,16 +69,5 @@ public class EnumerationNodeMapper extends BaseGModelMapper<Enumeration, GNode> 
       builder.add(compBuilder.build());
 
       return builder.build();
-   }
-
-   protected void applyShapeData(final Classifier classifier, final GNodeBuilder builder) {
-      modelState.getIndex().getNotation(classifier, Shape.class).ifPresent(shape -> {
-         if (shape.getPosition() != null) {
-            builder.position(GraphUtil.copy(shape.getPosition()));
-         }
-         if (shape.getSize() != null) {
-            builder.size(GraphUtil.copy(shape.getSize()));
-         }
-      });
    }
 }

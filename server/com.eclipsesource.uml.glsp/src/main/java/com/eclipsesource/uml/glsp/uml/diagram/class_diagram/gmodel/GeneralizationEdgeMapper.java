@@ -10,25 +10,20 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel;
 
-import java.util.ArrayList;
-
 import org.eclipse.glsp.graph.GEdge;
 import org.eclipse.glsp.graph.GLabel;
-import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.builder.impl.GEdgeBuilder;
 import org.eclipse.glsp.graph.builder.impl.GEdgePlacementBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
-import org.eclipse.glsp.graph.util.GraphUtil;
-import org.eclipse.glsp.server.emf.model.notation.Edge;
 import org.eclipse.uml2.uml.Generalization;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
-import com.eclipsesource.uml.glsp.uml.gmodel.BaseGModelMapper;
+import com.eclipsesource.uml.glsp.uml.gmodel.BaseGEdgeMapper;
 
-public class GeneralizationEdgeMapper extends BaseGModelMapper<Generalization, GEdge> {
+public class GeneralizationEdgeMapper extends BaseGEdgeMapper<Generalization, GEdge> {
 
    @Override
    public GEdge map(final Generalization generalization) {
@@ -46,13 +41,8 @@ public class GeneralizationEdgeMapper extends BaseGModelMapper<Generalization, G
          .targetId(targetId)
          .routerKind(GConstants.RouterKind.MANHATTAN);
 
-      modelState.getIndex().getNotation(generalization, Edge.class).ifPresent(edge -> {
-         if (edge.getBendPoints() != null) {
-            ArrayList<GPoint> bendPoints = new ArrayList<>();
-            edge.getBendPoints().forEach(p -> bendPoints.add(GraphUtil.copy(p)));
-            builder.addRoutingPoints(bendPoints);
-         }
-      });
+      applyEdgeNotation(generalization, builder);
+
       return builder.build();
    }
 

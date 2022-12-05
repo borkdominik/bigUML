@@ -15,7 +15,6 @@
 }
 
 .uml-edge>.sprotty-routing-handle {
-    r: 4;
     fill: var(--uml-edge);
     stroke: var(--uml-edge);
     stroke-width: 2;
@@ -29,4 +28,3 @@
 .uml-edge-dashed {
     stroke-dasharray: 15 10;
 }
-

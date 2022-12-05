@@ -21,18 +21,16 @@ import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.builder.impl.GNodeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
-import org.eclipse.glsp.graph.util.GraphUtil;
-import org.eclipse.glsp.server.emf.model.notation.Shape;
 import org.eclipse.uml2.uml.Class;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.ClassSuffix;
-import com.eclipsesource.uml.glsp.uml.gmodel.BaseGModelMapper;
+import com.eclipsesource.uml.glsp.uml.gmodel.BaseGNodeMapper;
 import com.google.inject.Inject;
 
-public class ClassNodeMapper extends BaseGModelMapper<Class, GNode> {
+public class ClassNodeMapper extends BaseGNodeMapper<Class, GNode> {
    @Inject
    private ClassSuffix classSuffix;
 
@@ -50,7 +48,7 @@ public class ClassNodeMapper extends BaseGModelMapper<Class, GNode> {
          .add(buildHeader(umlClass))
          .add(buildCompartment(umlClass));
 
-      applyNotation(umlClass, builder);
+      applyShapeNotation(umlClass, builder);
 
       return builder.build();
    }
@@ -114,17 +112,5 @@ public class ClassNodeMapper extends BaseGModelMapper<Class, GNode> {
 
    protected List<GModelElement> buildGeneralizations(final Class umlClass) {
       return mapHandler.handle(umlClass.getGeneralizations());
-   }
-
-   protected void applyNotation(final Class umlClass, final GNodeBuilder builder) {
-      modelState.getIndex().getNotation(umlClass, Shape.class).ifPresent(shape -> {
-         if (shape.getPosition() != null) {
-            builder.position(GraphUtil.copy(shape.getPosition()));
-         }
-
-         if (shape.getSize() != null) {
-            builder.size(GraphUtil.copy(shape.getSize()));
-         }
-      });
    }
 }

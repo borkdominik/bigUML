@@ -16,17 +16,14 @@ import org.eclipse.glsp.graph.builder.impl.GCompartmentBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 import org.eclipse.glsp.graph.builder.impl.GNodeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
-import org.eclipse.glsp.graph.util.GraphUtil;
-import org.eclipse.glsp.server.emf.model.notation.Shape;
-import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Lifeline;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
-import com.eclipsesource.uml.glsp.uml.gmodel.BaseGModelMapper;
+import com.eclipsesource.uml.glsp.uml.gmodel.BaseGNodeMapper;
 
-public class LifelineNodeMapper extends BaseGModelMapper<Lifeline, GNode> {
+public class LifelineNodeMapper extends BaseGNodeMapper<Lifeline, GNode> {
 
    @Override
    public GNode map(final Lifeline lifeline) {
@@ -36,20 +33,9 @@ public class LifelineNodeMapper extends BaseGModelMapper<Lifeline, GNode> {
          .addCssClass(CoreCSS.NODE)
          .add(buildHeader(lifeline));
 
-      applyShapeData(lifeline, builder);
+      applyShapeNotation(lifeline, builder);
 
       return builder.build();
-   }
-
-   protected void applyShapeData(final Element element, final GNodeBuilder builder) {
-      modelState.getIndex().getNotation(element, Shape.class).ifPresent(shape -> {
-         if (shape.getPosition() != null) {
-            builder.position(GraphUtil.copy(shape.getPosition()));
-         }
-         if (shape.getSize() != null) {
-            builder.size(GraphUtil.copy(shape.getSize()));
-         }
-      });
    }
 
    protected GCompartment buildHeader(final Lifeline umlLifeline) {

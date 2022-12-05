@@ -49,13 +49,8 @@ public class MessageEdgeMapper extends BaseGModelMapper<Message, GEdge> {
          suffix.labelSuffix.appendTo(idGenerator.getOrCreateId(message)), 0.6d);
       builder.add(nameLabel);
 
-      modelState.getIndex().getNotation(message, Edge.class).ifPresent(edge -> {
-         if (edge.getBendPoints() != null) {
-            ArrayList<GPoint> bendPoints = new ArrayList<>();
-            edge.getBendPoints().forEach(p -> bendPoints.add(GraphUtil.copy(p)));
-            builder.addRoutingPoints(bendPoints);
-         }
-      });
+      applyNotation(message, builder);
+
       return builder.build();
    }
 
@@ -74,5 +69,15 @@ public class MessageEdgeMapper extends BaseGModelMapper<Message, GEdge> {
             .build())
          .id(id)
          .text(name).build();
+   }
+
+   protected void applyNotation(final Message message, final GEdgeBuilder builder) {
+      modelState.getIndex().getNotation(message, Edge.class).ifPresent(edge -> {
+         if (edge.getBendPoints() != null) {
+            ArrayList<GPoint> bendPoints = new ArrayList<>();
+            edge.getBendPoints().forEach(p -> bendPoints.add(GraphUtil.copy(p)));
+            builder.addRoutingPoints(bendPoints);
+         }
+      });
    }
 }

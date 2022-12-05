@@ -12,29 +12,23 @@ package com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.gmodel;
 
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.graph.GCompartment;
-import org.eclipse.glsp.graph.GDimension;
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.builder.impl.GCompartmentBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
-import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.builder.impl.GNodeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
-import org.eclipse.glsp.graph.util.GraphUtil;
-import org.eclipse.glsp.server.emf.model.notation.Shape;
-import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.Interaction;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
-import com.eclipsesource.uml.glsp.uml.gmodel.BaseGModelMapper;
+import com.eclipsesource.uml.glsp.uml.gmodel.BaseGNodeMapper;
 
-public class InteractionNodeMapper extends BaseGModelMapper<Interaction, GNode> {
+public class InteractionNodeMapper extends BaseGNodeMapper<Interaction, GNode> {
    private static final String V_GRAB = "vGrab";
    private static final String H_GRAB = "hGrab";
    private static final String H_ALIGN = "hAlign";
@@ -54,24 +48,9 @@ public class InteractionNodeMapper extends BaseGModelMapper<Interaction, GNode> 
          .add(buildHeader(interaction))
          .add(buildCompartment(interaction));
 
-      applyShapeData(interaction, builder);
+      applyShapeNotation(interaction, builder);
 
       return builder.build();
-   }
-
-   protected void applyShapeData(final Classifier classifier, final GNodeBuilder builder) {
-      modelState.getIndex().getNotation(classifier, Shape.class).ifPresent(shape -> {
-         if (shape.getPosition() != null) {
-            builder.position(GraphUtil.copy(shape.getPosition()));
-         }
-         if (shape.getSize() != null) {
-            GDimension size = GraphUtil.copy(shape.getSize());
-            builder.size(size);
-            builder.layoutOptions(Map.of(
-               GLayoutOptions.KEY_PREF_WIDTH, size.getWidth(),
-               GLayoutOptions.KEY_PREF_HEIGHT, size.getHeight()));
-         }
-      });
    }
 
    protected GCompartment buildHeader(final Interaction umlInteraction) {

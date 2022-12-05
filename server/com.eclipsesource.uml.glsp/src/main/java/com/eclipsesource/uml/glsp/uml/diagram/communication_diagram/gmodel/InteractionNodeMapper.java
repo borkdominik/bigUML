@@ -29,7 +29,8 @@ import org.eclipse.glsp.server.emf.model.notation.Shape;
 import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.Interaction;
 
-import com.eclipsesource.uml.glsp.core.utils.UmlConfig;
+import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
+import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGModelMapper;
 
@@ -49,7 +50,7 @@ public class InteractionNodeMapper extends BaseGModelMapper<Interaction, GNode> 
          .id(idGenerator.getOrCreateId(interaction))
          .layout(GConstants.Layout.VBOX)
          .layoutOptions(layoutOptions)
-         .addCssClass(UmlConfig.CSS.NODE)
+         .addCssClass(CoreCSS.NODE)
          .add(buildHeader(interaction))
          .add(buildCompartment(interaction));
 
@@ -74,13 +75,13 @@ public class InteractionNodeMapper extends BaseGModelMapper<Interaction, GNode> 
    }
 
    protected GCompartment buildHeader(final Interaction umlInteraction) {
-      return new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER)
+      return new GCompartmentBuilder(CoreTypes.COMPARTMENT_HEADER)
          .id(suffix.headerSuffix.appendTo(idGenerator.getOrCreateId(umlInteraction)))
          .layout(GConstants.Layout.HBOX)
          .add(new GCompartmentBuilder(CommunicationTypes.ICON_INTERACTION)
             .id(suffix.headerIconSuffix.appendTo(idGenerator.getOrCreateId(umlInteraction)))
             .build())
-         .add(new GLabelBuilder(UmlConfig.Types.LABEL_NAME)
+         .add(new GLabelBuilder(CoreTypes.LABEL_NAME)
             .id(suffix.headerLabelSuffix.appendTo(idGenerator.getOrCreateId(umlInteraction)))
             .text(umlInteraction.getName())
             .build())
@@ -97,7 +98,7 @@ public class InteractionNodeMapper extends BaseGModelMapper<Interaction, GNode> 
       layoutOptions.put(H_GRAB, true);
       layoutOptions.put(V_GRAB, true);
 
-      return new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT)
+      return new GCompartmentBuilder(CoreTypes.COMPARTMENT)
          .id(suffix.compartmentSuffix.appendTo(idGenerator.getOrCreateId(interaction)))
          .layout(GConstants.Layout.FREEFORM)
          .layoutOptions(layoutOptions)

@@ -24,7 +24,7 @@ import org.eclipse.glsp.server.layout.ServerLayoutKind;
 import org.eclipse.glsp.server.types.EdgeTypeHint;
 import org.eclipse.glsp.server.types.ShapeTypeHint;
 
-import com.eclipsesource.uml.glsp.core.utils.UmlConfig.Types;
+import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 
@@ -68,14 +68,14 @@ public class UmlToolDiagramConfiguration extends BaseDiagramConfiguration {
       Map<String, EClass> mappings = DefaultTypes.getDefaultTypeMappings();
 
       // COMMONS
-      mappings.put(Types.LABEL_NAME, GraphPackage.Literals.GLABEL);
-      mappings.put(Types.LABEL_TEXT, GraphPackage.Literals.GLABEL);
-      mappings.put(Types.LABEL_EDGE_NAME, GraphPackage.Literals.GLABEL);
-      mappings.put(Types.COMP, GraphPackage.Literals.GCOMPARTMENT);
+      mappings.put(CoreTypes.LABEL_NAME, GraphPackage.Literals.GLABEL);
+      mappings.put(CoreTypes.LABEL_TEXT, GraphPackage.Literals.GLABEL);
+      mappings.put(CoreTypes.LABEL_EDGE_NAME, GraphPackage.Literals.GLABEL);
+      mappings.put(CoreTypes.COMP, GraphPackage.Literals.GCOMPARTMENT);
       // mappings.put(Types.COMP_HEADER, GraphPackage.Literals.GCOMPARTMENT);
-      mappings.put(Types.LABEL_ICON, GraphPackage.Literals.GCOMPARTMENT);
-      mappings.put(Types.COMPARTMENT, GraphPackage.Literals.GCOMPARTMENT);
-      mappings.put(Types.COMPARTMENT_HEADER, GraphPackage.Literals.GCOMPARTMENT);
+      mappings.put(CoreTypes.LABEL_ICON, GraphPackage.Literals.GCOMPARTMENT);
+      mappings.put(CoreTypes.COMPARTMENT, GraphPackage.Literals.GCOMPARTMENT);
+      mappings.put(CoreTypes.COMPARTMENT_HEADER, GraphPackage.Literals.GCOMPARTMENT);
 
       getConfigurations().stream().map(contribution -> contribution.getTypeMappings())
          .forEach(typeMappings -> {

@@ -227,7 +227,7 @@ public class StateMachineDiagramVertexFactory { /*-
    }
 
    protected GCompartment buildHeader(final Vertex vertex) {
-      return new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER)
+      return new GCompartmentBuilder(CoreTypes.COMPARTMENT_HEADER)
          .layout("hbox")
          .id(toId(vertex) + "_header")
          .add(new GCompartmentBuilder(getType(vertex))
@@ -239,7 +239,7 @@ public class StateMachineDiagramVertexFactory { /*-
    }
 
    protected GCompartment buildHeader(final Pseudostate vertex) {
-      return new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER)
+      return new GCompartmentBuilder(CoreTypes.COMPARTMENT_HEADER)
          .layout("hbox")
          .id(toId(vertex) + "_header")
          .add(new GLabelBuilder(StateMachineTypes.LABEL_VERTEX_NAME)
@@ -249,7 +249,7 @@ public class StateMachineDiagramVertexFactory { /*-
    }
 
    protected GCompartment buildHeader(final State vertex) {
-      return new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER)
+      return new GCompartmentBuilder(CoreTypes.COMPARTMENT_HEADER)
          .layout("hbox")
          .id(toId(vertex) + "_header")
          .add(new GLabelBuilder(StateMachineTypes.LABEL_VERTEX_NAME)
@@ -259,7 +259,7 @@ public class StateMachineDiagramVertexFactory { /*-
    }
 
    protected GCompartment createLabeledStateChildrenCompartment(final State parent) {
-      GCompartmentBuilder builder = new GCompartmentBuilder(UmlConfig.Types.COMP)
+      GCompartmentBuilder builder = new GCompartmentBuilder(CoreTypes.COMP)
          .id(toId(parent) + "_childCompartment").layout(GConstants.Layout.VBOX)
          .layoutOptions(new GLayoutOptions()
             .hAlign(GConstants.HAlign.LEFT)

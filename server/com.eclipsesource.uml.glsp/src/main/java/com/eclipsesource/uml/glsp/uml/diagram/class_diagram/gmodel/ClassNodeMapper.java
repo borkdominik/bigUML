@@ -25,7 +25,8 @@ import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.glsp.server.emf.model.notation.Shape;
 import org.eclipse.uml2.uml.Class;
 
-import com.eclipsesource.uml.glsp.core.utils.UmlConfig;
+import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
+import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.ClassSuffix;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGModelMapper;
@@ -45,7 +46,7 @@ public class ClassNodeMapper extends BaseGModelMapper<Class, GNode> {
 
       builder.id(idGenerator.getOrCreateId(umlClass))
          .layout(GConstants.Layout.VBOX)
-         .addCssClass(UmlConfig.CSS.NODE)
+         .addCssClass(CoreCSS.NODE)
          .add(buildHeader(umlClass))
          .add(buildCompartment(umlClass));
 
@@ -60,14 +61,14 @@ public class ClassNodeMapper extends BaseGModelMapper<Class, GNode> {
    }
 
    protected GCompartment buildHeader(final Class umlClass) {
-      var builder = new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER)
+      var builder = new GCompartmentBuilder(CoreTypes.COMPARTMENT_HEADER)
          .id(suffix.headerSuffix.appendTo(idGenerator.getOrCreateId(umlClass)));
 
       if (umlClass.isAbstract()) {
          builder
             .layout(GConstants.Layout.VBOX);
 
-         var typeLabel = new GLabelBuilder(UmlConfig.Types.LABEL_TEXT)
+         var typeLabel = new GLabelBuilder(CoreTypes.LABEL_TEXT)
             .id(classSuffix.headerTypeSuffix.appendTo(idGenerator.getOrCreateId(umlClass)))
             .text("{abstract}")
             .build();
@@ -83,7 +84,7 @@ public class ClassNodeMapper extends BaseGModelMapper<Class, GNode> {
          builder.add(icon);
       }
 
-      var nameLabel = new GLabelBuilder(UmlConfig.Types.LABEL_NAME)
+      var nameLabel = new GLabelBuilder(CoreTypes.LABEL_NAME)
          .id(suffix.headerLabelSuffix.appendTo(idGenerator.getOrCreateId(umlClass)))
          .text(umlClass.getName()).build();
       builder.add(nameLabel);
@@ -94,7 +95,7 @@ public class ClassNodeMapper extends BaseGModelMapper<Class, GNode> {
    protected GCompartment buildCompartment(final Class umlClass) {
       var properties = umlClass.getAllAttributes();
 
-      var builder = new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT)
+      var builder = new GCompartmentBuilder(CoreTypes.COMPARTMENT)
          .id(suffix.compartmentSuffix.appendTo(idGenerator.getOrCreateId(umlClass)))
          .layout(GConstants.Layout.VBOX);
 

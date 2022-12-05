@@ -17,8 +17,10 @@ import { ContainerModule } from "inversify";
 import { IconLabelCompartment, LabeledNode, SEditableLabel } from "../../model";
 import { UmlTypes } from "../../utils";
 import { IconView } from "../../views/commons";
+import { AggregationEdgeView } from "./elements/association";
+import { ClassNodeView } from "./elements/class";
+import { EnumerationNodeView } from "./elements/enumeration";
 import { IconClass, IconProperty } from "./model";
-import { ClassNodeView, EnumerationNodeView } from "./views";
 
 export default function createClassModule(): ContainerModule {
     const classModule = new ContainerModule((bind, unbind, isBound, rebind) => {
@@ -70,13 +72,13 @@ export default function createClassModule(): ContainerModule {
             context,
             UmlTypes.AGGREGATION,
             SEdge,
-            PolylineEdgeView
+            AggregationEdgeView
         );
         configureModelElement(
             context,
             UmlTypes.COMPOSITION,
             SEdge,
-            PolylineEdgeView
+            AggregationEdgeView
         );
         configureModelElement(
             context,
@@ -112,6 +114,12 @@ export default function createClassModule(): ContainerModule {
         configureModelElement(
             context,
             UmlTypes.LABEL_PROPERTY_MULTIPLICITY,
+            SEditableLabel,
+            SLabelView
+        );
+        configureModelElement(
+            context,
+            UmlTypes.LABEL_EDGE_MULTIPLICITY,
             SEditableLabel,
             SLabelView
         );

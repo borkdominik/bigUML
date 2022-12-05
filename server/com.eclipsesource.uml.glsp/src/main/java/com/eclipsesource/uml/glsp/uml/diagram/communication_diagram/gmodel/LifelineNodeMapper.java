@@ -21,7 +21,8 @@ import org.eclipse.glsp.server.emf.model.notation.Shape;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Lifeline;
 
-import com.eclipsesource.uml.glsp.core.utils.UmlConfig;
+import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
+import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGModelMapper;
 
@@ -32,7 +33,7 @@ public class LifelineNodeMapper extends BaseGModelMapper<Lifeline, GNode> {
       var builder = new GNodeBuilder(CommunicationTypes.LIFELINE)
          .id(idGenerator.getOrCreateId(lifeline))
          .layout(GConstants.Layout.VBOX)
-         .addCssClass(UmlConfig.CSS.NODE)
+         .addCssClass(CoreCSS.NODE)
          .add(buildHeader(lifeline));
 
       applyShapeData(lifeline, builder);
@@ -52,7 +53,7 @@ public class LifelineNodeMapper extends BaseGModelMapper<Lifeline, GNode> {
    }
 
    protected GCompartment buildHeader(final Lifeline umlLifeline) {
-      var builder = new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER)
+      var builder = new GCompartmentBuilder(CoreTypes.COMPARTMENT_HEADER)
          .id(suffix.headerSuffix.appendTo(idGenerator.getOrCreateId(umlLifeline)))
          .layout(GConstants.Layout.HBOX);
 
@@ -60,7 +61,7 @@ public class LifelineNodeMapper extends BaseGModelMapper<Lifeline, GNode> {
          .id(suffix.headerIconSuffix.appendTo(idGenerator.getOrCreateId(umlLifeline))).build();
       builder.add(icon);
 
-      var nameLabel = new GLabelBuilder(UmlConfig.Types.LABEL_NAME)
+      var nameLabel = new GLabelBuilder(CoreTypes.LABEL_NAME)
          .id(suffix.headerLabelSuffix.appendTo(idGenerator.getOrCreateId(umlLifeline)))
          .text(umlLifeline.getName()).build();
       builder.add(nameLabel);

@@ -237,14 +237,14 @@ public class UseCaseDiagramNodeFactory { /*-{
     * @return
     *
    protected GCompartment buildHeaderWithoutIcon(final NamedElement classifier) {
-      GCompartmentBuilder classHeaderBuilder = new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER);
+      GCompartmentBuilder classHeaderBuilder = new GCompartmentBuilder(CoreTypes.COMPARTMENT_HEADER);
 
       if (classifier instanceof Component) {
          classHeaderBuilder
             .layout(GConstants.Layout.VBOX)
             .id(UmlIDUtil.createHeaderId(toId(classifier)));
 
-         GLabel classHeaderLabel = new GLabelBuilder(UmlConfig.Types.LABEL_TEXT)
+         GLabel classHeaderLabel = new GLabelBuilder(CoreTypes.LABEL_TEXT)
             .id(UmlIDUtil.createHeaderLabelId(toId(classifier)) + "_prep")
             .text("<<SubSystem>> ").build();
          classHeaderBuilder.add(classHeaderLabel);
@@ -253,7 +253,7 @@ public class UseCaseDiagramNodeFactory { /*-{
             .layout(GConstants.Layout.HBOX)
             .id(UmlIDUtil.createHeaderId(toId(classifier)));
       }
-      GLabel classHeaderLabel = new GLabelBuilder(UmlConfig.Types.LABEL_NAME)
+      GLabel classHeaderLabel = new GLabelBuilder(CoreTypes.LABEL_NAME)
          .id(UmlIDUtil.createHeaderLabelId(toId(classifier)))
          .text(classifier.getName()).build();
       classHeaderBuilder.add(classHeaderLabel);
@@ -271,7 +271,7 @@ public class UseCaseDiagramNodeFactory { /*-{
     *
    protected GCompartment buildPackageOrComponentChildCompartment(final Collection<Element> childNodes,
       final EObject parent) {
-      GCompartmentBuilder packageElementsBuilder = new GCompartmentBuilder(UmlConfig.Types.COMP)
+      GCompartmentBuilder packageElementsBuilder = new GCompartmentBuilder(CoreTypes.COMP)
          .id(UmlIDUtil.createChildCompartmentId(toId(parent)))
          .layout(GConstants.Layout.VBOX);
 
@@ -300,7 +300,7 @@ public class UseCaseDiagramNodeFactory { /*-{
     * @return
     *
    protected GCompartment buildUsecaseExtensionPointCompartment(final UseCase parent) {
-      GCompartmentBuilder extensionPointBuilder = new GCompartmentBuilder(UmlConfig.Types.COMP)
+      GCompartmentBuilder extensionPointBuilder = new GCompartmentBuilder(CoreTypes.COMP)
          .id(UmlIDUtil.createChildCompartmentId(toId(parent))).layout(GConstants.Layout.VBOX);
 
       GLayoutOptions layoutOptions = new GLayoutOptions()
@@ -327,7 +327,7 @@ public class UseCaseDiagramNodeFactory { /*-{
          .build();
 
       Map<String, Object> layoutOptions = new HashMap<>();
-      GCompartment packageHeader = new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER)
+      GCompartment packageHeader = new GCompartmentBuilder(CoreTypes.COMPARTMENT_HEADER)
          .id(UmlIDUtil.createHeaderLabelId(toId(umlPackage)))
          .layout(GConstants.Layout.HBOX)
          .layoutOptions(layoutOptions)

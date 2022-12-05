@@ -21,7 +21,8 @@ import org.eclipse.glsp.server.emf.model.notation.Shape;
 import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.Interface;
 
-import com.eclipsesource.uml.glsp.core.utils.UmlConfig;
+import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
+import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.ClassSuffix;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGModelMapper;
@@ -36,7 +37,7 @@ public class InterfaceNodeMapper extends BaseGModelMapper<Interface, GNode> {
       var builder = new GNodeBuilder(ClassTypes.INTERFACE)
          .id(idGenerator.getOrCreateId(umlInterface))
          .layout(GConstants.Layout.VBOX)
-         .addCssClass(UmlConfig.CSS.NODE)
+         .addCssClass(CoreCSS.NODE)
          .add(buildHeader(umlInterface));
 
       applyShapeData(umlInterface, builder);
@@ -45,17 +46,17 @@ public class InterfaceNodeMapper extends BaseGModelMapper<Interface, GNode> {
    }
 
    protected GCompartment buildHeader(final Interface umlInterface) {
-      var builder = new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER)
+      var builder = new GCompartmentBuilder(CoreTypes.COMPARTMENT_HEADER)
          .layout(GConstants.Layout.VBOX)
          .id(suffix.headerSuffix.appendTo(idGenerator.getOrCreateId(umlInterface)));
 
-      var typeLabel = new GLabelBuilder(UmlConfig.Types.LABEL_TEXT)
+      var typeLabel = new GLabelBuilder(CoreTypes.LABEL_TEXT)
          .id(classSuffix.headerTypeSuffix.appendTo(idGenerator.getOrCreateId(umlInterface)))
          .text("«interface»")
          .build();
       builder.add(typeLabel);
 
-      var nameLabel = new GLabelBuilder(UmlConfig.Types.LABEL_NAME)
+      var nameLabel = new GLabelBuilder(CoreTypes.LABEL_NAME)
          .id(suffix.headerLabelSuffix.appendTo(idGenerator.getOrCreateId(umlInterface)))
          .text(umlInterface.getName())
          .build();

@@ -160,7 +160,7 @@ public class StateMachineDiagramNodeFactory { /*-
    }
 
    protected GCompartment buildStateMachineHeader(final StateMachine umlStateMachine) {
-      GCompartmentBuilder stateMachineHeaderBuilder = new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER)
+      GCompartmentBuilder stateMachineHeaderBuilder = new GCompartmentBuilder(CoreTypes.COMPARTMENT_HEADER)
          .layout(GConstants.Layout.HBOX)
          .id(UmlIDUtil.createHeaderId(toId(umlStateMachine)));
 
@@ -168,7 +168,7 @@ public class StateMachineDiagramNodeFactory { /*-
          .id(UmlIDUtil.createHeaderIconId(toId(umlStateMachine))).build();
       stateMachineHeaderBuilder.add(stateMachineHeaderIcon);
 
-      GLabel stateMachineHeaderLabel = new GLabelBuilder(UmlConfig.Types.LABEL_NAME)
+      GLabel stateMachineHeaderLabel = new GLabelBuilder(CoreTypes.LABEL_NAME)
          .id(UmlIDUtil.createHeaderLabelId(toId(umlStateMachine)))
          .text(umlStateMachine.getName()).build();
       stateMachineHeaderBuilder.add(stateMachineHeaderLabel);
@@ -178,7 +178,7 @@ public class StateMachineDiagramNodeFactory { /*-
 
    protected GCompartment buildStateMachineRegionCompartment(final Collection<Region> children,
       final Classifier parent) {
-      GCompartmentBuilder stateMachineRegionsBuilder = new GCompartmentBuilder(UmlConfig.Types.COMP)
+      GCompartmentBuilder stateMachineRegionsBuilder = new GCompartmentBuilder(CoreTypes.COMP)
          .id(UmlIDUtil.createChildCompartmentId(toId(parent))).layout(GConstants.Layout.VBOX);
 
       GLayoutOptions layoutOptions = new GLayoutOptions()

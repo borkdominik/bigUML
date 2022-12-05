@@ -21,7 +21,8 @@ import org.eclipse.glsp.server.emf.model.notation.Shape;
 import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.Enumeration;
 
-import com.eclipsesource.uml.glsp.core.utils.UmlConfig;
+import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
+import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.ClassSuffix;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGModelMapper;
@@ -36,7 +37,7 @@ public class EnumerationNodeMapper extends BaseGModelMapper<Enumeration, GNode> 
       var builder = new GNodeBuilder(ClassTypes.ENUMERATION)
          .id(idGenerator.getOrCreateId(umlEnumeration))
          .layout(GConstants.Layout.VBOX)
-         .addCssClass(UmlConfig.CSS.NODE)
+         .addCssClass(CoreCSS.NODE)
          .add(buildHeader(umlEnumeration));
 
       applyShapeData(umlEnumeration, builder);
@@ -45,16 +46,16 @@ public class EnumerationNodeMapper extends BaseGModelMapper<Enumeration, GNode> 
    }
 
    protected GCompartment buildHeader(final Enumeration umlEnumeration) {
-      var builder = new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER)
+      var builder = new GCompartmentBuilder(CoreTypes.COMPARTMENT_HEADER)
          .layout(GConstants.Layout.VBOX)
          .id(classSuffix.headerOuterSuffix.appendTo(idGenerator.getOrCreateId(umlEnumeration)));
 
-      var typeLabel = new GLabelBuilder(UmlConfig.Types.LABEL_TEXT)
+      var typeLabel = new GLabelBuilder(CoreTypes.LABEL_TEXT)
          .id(classSuffix.headerTypeSuffix.appendTo(idGenerator.getOrCreateId(umlEnumeration)))
          .text("<<" + Enumeration.class.getSimpleName() + ">>").build();
       builder.add(typeLabel);
 
-      var compBuilder = new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER)
+      var compBuilder = new GCompartmentBuilder(CoreTypes.COMPARTMENT_HEADER)
          .layout(GConstants.Layout.HBOX)
          .id(suffix.headerSuffix.appendTo(idGenerator.getOrCreateId(umlEnumeration)));
 
@@ -62,7 +63,7 @@ public class EnumerationNodeMapper extends BaseGModelMapper<Enumeration, GNode> 
          .id(suffix.headerIconSuffix.appendTo(idGenerator.getOrCreateId(umlEnumeration))).build();
       compBuilder.add(icon);
 
-      var nameLabel = new GLabelBuilder(UmlConfig.Types.LABEL_NAME)
+      var nameLabel = new GLabelBuilder(CoreTypes.LABEL_NAME)
          .id(suffix.headerLabelSuffix.appendTo(idGenerator.getOrCreateId(umlEnumeration)))
          .text(umlEnumeration.getName())
          .build();

@@ -21,8 +21,8 @@ import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Type;
 
+import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 import com.eclipsesource.uml.glsp.core.features.idgenerator.IdCountContextGenerator;
-import com.eclipsesource.uml.glsp.core.utils.UmlConfig;
 import com.eclipsesource.uml.glsp.old.utils.property.PropertyUtil;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.ClassSuffix;
@@ -47,7 +47,7 @@ public class PropertyCompartmentMapper extends BaseGModelMapper<Property, GCompa
          .add(buildIcon(property))
          .add(buildName(property));
 
-      var separatorLabel = new GLabelBuilder(UmlConfig.Types.LABEL_TEXT)
+      var separatorLabel = new GLabelBuilder(CoreTypes.LABEL_TEXT)
          .id(idCountGenerator.getOrCreateId(property))
          .text(":")
          .build();
@@ -59,12 +59,12 @@ public class PropertyCompartmentMapper extends BaseGModelMapper<Property, GCompa
 
       var propertyMultiplicity = PropertyUtil.getMultiplicity(property);
       builder.add(
-         new GLabelBuilder(UmlConfig.Types.LABEL_TEXT).text("[")
+         new GLabelBuilder(CoreTypes.LABEL_TEXT).text("[")
             .id(idCountGenerator.getOrCreateId(property))
             .build())
          .add(buildTypeMultiplicity(property, propertyMultiplicity))
          .add(
-            new GLabelBuilder(UmlConfig.Types.LABEL_TEXT).text("]")
+            new GLabelBuilder(CoreTypes.LABEL_TEXT).text("]")
                .id(idCountGenerator.getOrCreateId(property))
                .build());
 

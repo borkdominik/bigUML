@@ -10,31 +10,31 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants;
 
-import com.eclipsesource.uml.glsp.core.utils.UmlConfig;
+import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 
 public final class ClassTypes {
    // CLASS DIAGRAM
-   public static final String ICON_CLASS = UmlConfig.Types.PRE_ICON + "class";
-   public static final String CLASS = UmlConfig.Types.PRE_NODE + "class";
-   public static final String ABSTRACT_CLASS = UmlConfig.Types.PRE_NODE + "abstract-class";
-   public static final String ENUMERATION = UmlConfig.Types.PRE_NODE + "enumeration";
-   public static final String ICON_ENUMERATION = UmlConfig.Types.PRE_ICON + "enumeration";
-   public static final String INTERFACE = UmlConfig.Types.PRE_NODE + "interface";
-   public static final String ASSOCIATION = UmlConfig.Types.PRE_EDGE + "association";
-   public static final String COMPOSITION = UmlConfig.Types.PRE_EDGE + "composition";
-   public static final String AGGREGATION = UmlConfig.Types.PRE_EDGE + "aggregation";
-   public static final String CLASS_GENERALIZATION = UmlConfig.Types.PRE_EDGE + "class-generalization";
+   public static final String ICON_CLASS = CoreTypes.PRE_ICON + "class";
+   public static final String CLASS = CoreTypes.PRE_NODE + "class";
+   public static final String ABSTRACT_CLASS = CoreTypes.PRE_NODE + "abstract-class";
+   public static final String ENUMERATION = CoreTypes.PRE_NODE + "enumeration";
+   public static final String ICON_ENUMERATION = CoreTypes.PRE_ICON + "enumeration";
+   public static final String INTERFACE = CoreTypes.PRE_NODE + "interface";
+   public static final String ASSOCIATION = CoreTypes.PRE_EDGE + "association";
+   public static final String COMPOSITION = CoreTypes.PRE_EDGE + "composition";
+   public static final String AGGREGATION = CoreTypes.PRE_EDGE + "aggregation";
+   public static final String CLASS_GENERALIZATION = CoreTypes.PRE_EDGE + "class-generalization";
 
    // SHARED WITH DEPLOYMENT AND USECASE
-   public static final String LABEL_EDGE_MULTIPLICITY = UmlConfig.Types.PRE_LABEL + "edge-multiplicity";
+   public static final String LABEL_EDGE_MULTIPLICITY = CoreTypes.PRE_LABEL + "edge-multiplicity";
 
    // SHARED WITH OBJECT DIAGRAM
-   public static final String ATTRIBUTE = UmlConfig.Types.PRE_NODE + "attribute";
-   public static final String PROPERTY = UmlConfig.Types.PRE_COMP_BASE + "property";
-   public static final String ICON_PROPERTY = UmlConfig.Types.PRE_ICON + "property";
-   public static final String LABEL_PROPERTY_NAME = UmlConfig.Types.PRE_LABEL + "property:name";
-   public static final String LABEL_PROPERTY_TYPE = UmlConfig.Types.PRE_LABEL + "property:type";
-   public static final String LABEL_PROPERTY_MULTIPLICITY = UmlConfig.Types.PRE_LABEL + "property:multiplicity";
+   public static final String ATTRIBUTE = CoreTypes.PRE_NODE + "attribute";
+   public static final String PROPERTY = CoreTypes.PRE_COMP_BASE + "property";
+   public static final String ICON_PROPERTY = CoreTypes.PRE_ICON + "property";
+   public static final String LABEL_PROPERTY_NAME = CoreTypes.PRE_LABEL + "property:name";
+   public static final String LABEL_PROPERTY_TYPE = CoreTypes.PRE_LABEL + "property:type";
+   public static final String LABEL_PROPERTY_MULTIPLICITY = CoreTypes.PRE_LABEL + "property:multiplicity";
 
    private ClassTypes() {}
 }

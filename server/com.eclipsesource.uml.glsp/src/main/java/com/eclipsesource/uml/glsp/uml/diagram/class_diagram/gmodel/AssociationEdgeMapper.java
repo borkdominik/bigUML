@@ -18,10 +18,11 @@ import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.Association;
 
-import com.eclipsesource.uml.glsp.core.utils.UmlConfig;
+import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
+import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 import com.eclipsesource.uml.glsp.old.utils.edge.EdgeMultiplicityIdUtil;
 import com.eclipsesource.uml.glsp.old.utils.property.PropertyUtil;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassCSS;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.AssociationTypes;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGModelMapper;
 
@@ -29,20 +30,21 @@ public class AssociationEdgeMapper extends BaseGModelMapper<Association, GEdge> 
 
    @Override
    public GEdge map(final Association association) {
+      var associationType = AssociationTypes.valueOf(association.getKeywords().get(0));
       var memberEnds = association.getMemberEnds();
       var source = memberEnds.get(0);
       var target = memberEnds.get(1);
 
-      var builder = new GEdgeBuilder(ClassTypes.ASSOCIATION)
+      var builder = new GEdgeBuilder(associationType.toClassType())
          .id(idGenerator.getOrCreateId(association))
-         .addCssClass(UmlConfig.CSS.EDGE)
+         .addCssClass(CoreCSS.EDGE)
          .sourceId(idGenerator.getOrCreateId(source.getType()))
          .targetId(idGenerator.getOrCreateId(target.getType()))
          .routerKind(GConstants.RouterKind.MANHATTAN);
 
-      if (association.getKeywords().get(0).equals("composition")) {
+      if (associationType == AssociationTypes.COMPOSITION) {
          applyComposition(association, builder);
-      } else if (association.getKeywords().get(0).equals("aggregation")) {
+      } else if (associationType == AssociationTypes.AGGREGATION) {
          applyAggregation(association, builder);
       } else {
          applyAssociation(association, builder);
@@ -52,11 +54,13 @@ public class AssociationEdgeMapper extends BaseGModelMapper<Association, GEdge> 
    }
 
    protected void applyComposition(final Association association, final GEdgeBuilder builder) {
-      builder.addCssClass(UmlConfig.CSS.EDGE_DIRECTED_END_TENT);
+      builder.addCssClass(CoreCSS.MARKER_DIAMOND)
+         .addCssClass(CoreCSS.MARKER_START);
    }
 
    protected void applyAggregation(final Association association, final GEdgeBuilder builder) {
-      builder.addCssClass(ClassCSS.EDGE_DIAMOND_EMPTY);
+      builder.addCssClass(CoreCSS.MARKER_DIAMOND_EMPTY)
+         .addCssClass(CoreCSS.MARKER_START);
    }
 
    protected void applyAssociation(final Association association, final GEdgeBuilder builder) {
@@ -86,7 +90,7 @@ public class AssociationEdgeMapper extends BaseGModelMapper<Association, GEdge> 
    }
 
    protected GLabel createEdgeNameLabel(final String name, final String id, final double position) {
-      return createEdgeLabel(name, position, id, UmlConfig.Types.LABEL_EDGE_NAME, GConstants.EdgeSide.TOP);
+      return createEdgeLabel(name, position, id, CoreTypes.LABEL_EDGE_NAME, GConstants.EdgeSide.TOP);
    }
 
    protected GLabel createEdgeLabel(final String name, final double position, final String id, final String type,

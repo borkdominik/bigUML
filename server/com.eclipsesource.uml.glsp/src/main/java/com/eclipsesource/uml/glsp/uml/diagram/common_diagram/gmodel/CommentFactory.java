@@ -29,9 +29,9 @@ import org.eclipse.glsp.server.emf.model.notation.Shape;
 import org.eclipse.uml2.uml.Comment;
 import org.eclipse.uml2.uml.Element;
 
+import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
+import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
-import com.eclipsesource.uml.glsp.core.utils.UmlConfig.CSS;
-import com.eclipsesource.uml.glsp.core.utils.UmlConfig.Types;
 import com.eclipsesource.uml.glsp.uml.diagram.common_diagram.constants.CommonTypes;
 import com.google.inject.Inject;
 
@@ -59,7 +59,7 @@ public class CommentFactory {
       GNodeBuilder b = new GNodeBuilder(CommonTypes.COMMENT) //
          .id(idGenerator.getOrCreateId(comment)) //
          .layout(GConstants.Layout.VBOX) //
-         .addCssClass(CSS.NODE) //
+         .addCssClass(CoreCSS.NODE) //
          .add(buildHeader(comment));
 
       applyShapeData(comment, b);
@@ -78,10 +78,10 @@ public class CommentFactory {
    }
 
    protected GCompartment buildHeader(final Comment comment) {
-      return new GCompartmentBuilder(Types.COMPARTMENT_HEADER) //
+      return new GCompartmentBuilder(CoreTypes.COMPARTMENT_HEADER) //
          .layout("hbox") //
          .id(idGenerator.getOrCreateId(comment) + "_header")
-         .add(new GLabelBuilder(Types.LABEL_NAME) //
+         .add(new GLabelBuilder(CoreTypes.LABEL_NAME) //
             .id(idGenerator.getOrCreateId(comment) + "_header_label").text(comment.getBody()) //
             .build()) //
          .build();
@@ -93,7 +93,7 @@ public class CommentFactory {
 
       GEdgeBuilder builder = new GEdgeBuilder(CommonTypes.COMMENT_EDGE) //
          .id(idGenerator.getOrCreateId(comment) + "_link_" + idGenerator.getOrCreateId(target)) //
-         .addCssClass(CSS.EDGE) //
+         .addCssClass(CoreCSS.EDGE) //
          .sourceId(sourceId) //
          .targetId(targetId) //
          .routerKind(GConstants.RouterKind.POLYLINE);

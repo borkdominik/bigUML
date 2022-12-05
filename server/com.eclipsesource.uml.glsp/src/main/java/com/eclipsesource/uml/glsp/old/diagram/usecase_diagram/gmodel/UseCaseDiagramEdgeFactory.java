@@ -54,7 +54,7 @@ public class UseCaseDiagramEdgeFactory { /*- {
          .routerKind(GConstants.RouterKind.MANHATTAN);
 
       GLabel extendLable = createEdgeLabel("<<extends>>", 0.5d,
-         targetId + "_" + sourceId + "_" + toId(extend) + "_label", UmlConfig.Types.LABEL_TEXT,
+         targetId + "_" + sourceId + "_" + toId(extend) + "_label", CoreTypes.LABEL_TEXT,
          EdgeSide.TOP);
       builder.add(extendLable);
 
@@ -104,7 +104,7 @@ public class UseCaseDiagramEdgeFactory { /*- {
          .routerKind(GConstants.RouterKind.MANHATTAN);
 
       GLabel includeLabel = createEdgeLabel("<<includes>>", 0.5d,
-         targetId + "_" + sourceId + "_" + toId(include) + "_label", UmlConfig.Types.LABEL_TEXT,
+         targetId + "_" + sourceId + "_" + toId(include) + "_label", CoreTypes.LABEL_TEXT,
          EdgeSide.TOP);
       builder.add(includeLabel);
 
@@ -191,7 +191,7 @@ public class UseCaseDiagramEdgeFactory { /*- {
     * @return The GLabel that can be added to the graph.
     *
    protected GLabel createEdgeNameLabel(final String name, final String id, final double position) {
-      return createEdgeLabel(name, position, id, UmlConfig.Types.LABEL_EDGE_NAME, EdgeSide.TOP);
+      return createEdgeLabel(name, position, id, CoreTypes.LABEL_EDGE_NAME, EdgeSide.TOP);
    }
 
    /**

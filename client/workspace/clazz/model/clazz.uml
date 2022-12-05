@@ -13,4 +13,28 @@
   <packagedElement xmi:type="uml:Enumeration" xmi:id="_c6hX8HC0Ee2ghd0IrCbv6A" name="NewEnumeration1"/>
   <packagedElement xmi:type="uml:Interface" xmi:id="_d6uQsHC0Ee2ghd0IrCbv6A" name="NewInterface1"/>
   <packagedElement xmi:type="uml:Class" xmi:id="_Ie5L0XC1Ee2FpstNgxotrw" name="NewClass2" isAbstract="true"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="_8HfRUXSFEe2que1J3uAC3A" memberEnd="_8HfRVHSFEe2que1J3uAC3A _8HfRVXSFEe2que1J3uAC3A">
+    <eAnnotations xmi:id="_8HfRUnSFEe2que1J3uAC3A" source="http://www.eclipse.org/uml2/2.0.0/UML">
+      <details xmi:id="_8HfRU3SFEe2que1J3uAC3A" key="ASSOCIATION"/>
+    </eAnnotations>
+    <ownedEnd xmi:id="_8HfRVHSFEe2que1J3uAC3A" name="" type="_wwK4YG8iEe2K6utU_hUYnw" association="_8HfRUXSFEe2que1J3uAC3A"/>
+    <ownedEnd xmi:id="_8HfRVXSFEe2que1J3uAC3A" name="newinterface1s" type="_d6uQsHC0Ee2ghd0IrCbv6A" association="_8HfRUXSFEe2que1J3uAC3A"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_O0zsEHSGEe2que1J3uAC3A" name="NewClass3"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="_sjt6EHSIEe2que1J3uAC3A" name="NewClass5"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="_XngUIHSvEe2que1J3uAC3A" name="NewClass6"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="_RkKC4HS1Ee2que1J3uAC3A" memberEnd="_RkKC43S1Ee2que1J3uAC3A _RkKC5HS1Ee2que1J3uAC3A">
+    <eAnnotations xmi:id="_RkKC4XS1Ee2que1J3uAC3A" source="http://www.eclipse.org/uml2/2.0.0/UML">
+      <details xmi:id="_RkKC4nS1Ee2que1J3uAC3A" key="AGGREGATION"/>
+    </eAnnotations>
+    <ownedEnd xmi:id="_RkKC43S1Ee2que1J3uAC3A" name="newclass4s" type="_wwK4YG8iEe2K6utU_hUYnw" association="_RkKC4HS1Ee2que1J3uAC3A"/>
+    <ownedEnd xmi:id="_RkKC5HS1Ee2que1J3uAC3A" name="newclass3s" type="_O0zsEHSGEe2que1J3uAC3A" association="_RkKC4HS1Ee2que1J3uAC3A"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_SRx94HS1Ee2que1J3uAC3A" memberEnd="_SRx943S1Ee2que1J3uAC3A _SRx95HS1Ee2que1J3uAC3A">
+    <eAnnotations xmi:id="_SRx94XS1Ee2que1J3uAC3A" source="http://www.eclipse.org/uml2/2.0.0/UML">
+      <details xmi:id="_SRx94nS1Ee2que1J3uAC3A" key="COMPOSITION"/>
+    </eAnnotations>
+    <ownedEnd xmi:id="_SRx943S1Ee2que1J3uAC3A" name="newclass4s" type="_wwK4YG8iEe2K6utU_hUYnw" association="_SRx94HS1Ee2que1J3uAC3A"/>
+    <ownedEnd xmi:id="_SRx95HS1Ee2que1J3uAC3A" name="newclass6s" type="_XngUIHSvEe2que1J3uAC3A" association="_SRx94HS1Ee2que1J3uAC3A"/>
+  </packagedElement>
 </uml:Model>

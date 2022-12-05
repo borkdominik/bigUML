@@ -27,7 +27,7 @@ public class StateMachineLabelEditOperationHandler { /*-
          GModelElement.class, "Element not found.");
 
       switch (label.getType()) {
-         case UmlConfig.Types.LABEL_NAME:
+         case CoreTypes.LABEL_NAME:
             String containerElementId = UmlIDUtil.getElementIdFromHeaderLabel(graphicalElementId);
             Element semanticElement = getOrThrow(modelIndex.getEObject(containerElementId),
                Element.class, "No valid container with id " + graphicalElementId + " found");

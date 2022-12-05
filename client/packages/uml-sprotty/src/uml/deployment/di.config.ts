@@ -17,7 +17,7 @@ import { ContainerModule } from "inversify";
 import { LabeledNode } from "../../model";
 import { UmlTypes } from "../../utils";
 import { IconView } from "../../views/commons";
-import { ClassNodeView } from "../class/views";
+import { ClassNodeView } from "../class/elements/class";
 import { PackageNode } from "../shared/model";
 import { DirectedEdgeView } from "../usecase/views";
 import {

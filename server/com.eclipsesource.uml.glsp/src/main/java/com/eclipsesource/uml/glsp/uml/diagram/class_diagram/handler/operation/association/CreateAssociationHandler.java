@@ -15,6 +15,7 @@ import java.util.List;
 import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.uml2.uml.Type;
 
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.AssociationTypes;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
 import com.eclipsesource.uml.glsp.uml.handler.operations.create.BaseCreateEdgeBetweenNodesHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association.AddAssociationContribution;
@@ -38,7 +39,7 @@ public class CreateAssociationHandler
 
    @Override
    protected CCommand command(final Type source, final Type target) {
-      var keyword = "association";
+      var keyword = AssociationTypes.ASSOCIATION.name();
       return AddAssociationContribution
          .create(source, target, keyword);
    }

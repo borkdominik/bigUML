@@ -24,7 +24,7 @@ import org.eclipse.glsp.server.emf.model.notation.Edge;
 import org.eclipse.uml2.uml.Message;
 import org.eclipse.uml2.uml.MessageOccurrenceSpecification;
 
-import com.eclipsesource.uml.glsp.core.utils.UmlConfig;
+import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGModelMapper;
 
@@ -40,7 +40,7 @@ public class MessageEdgeMapper extends BaseGModelMapper<Message, GEdge> {
 
       var builder = new GEdgeBuilder(CommunicationTypes.MESSAGE)
          .id(idGenerator.getOrCreateId(message))
-         .addCssClass(UmlConfig.CSS.EDGE)
+         .addCssClass(CoreCSS.EDGE)
          .sourceId(idGenerator.getOrCreateId(source))
          .targetId(idGenerator.getOrCreateId(target))
          .routerKind(GConstants.RouterKind.MANHATTAN);

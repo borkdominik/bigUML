@@ -13,15 +13,15 @@ package com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.handler.ope
 import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.uml2.uml.Message;
 
+import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.LabelSuffixAppender;
-import com.eclipsesource.uml.glsp.core.utils.UmlConfig;
 import com.eclipsesource.uml.glsp.uml.handler.operations.directediting.BaseLabelEditHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.message.SetMessageNameContribution;
 
 public class RenameMessageHandler extends BaseLabelEditHandler<Message> {
 
    public RenameMessageHandler() {
-      super(UmlConfig.Types.LABEL_EDGE_NAME, LabelSuffixAppender.SUFFIX);
+      super(CoreTypes.LABEL_EDGE_NAME, LabelSuffixAppender.SUFFIX);
    }
 
    @Override

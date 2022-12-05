@@ -10,17 +10,17 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants;
 
-import com.eclipsesource.uml.glsp.core.utils.UmlConfig;
+import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 
 public final class CommunicationTypes {
-   public static final String INTERACTION = UmlConfig.Types.PRE_NODE + "interaction";
-   public static final String LIFELINE = UmlConfig.Types.PRE_NODE + "lifeline";
-   public static final String MESSAGE = UmlConfig.Types.PRE_EDGE + "message";
-   public static final String MESSAGE_LABEL_ARROW_EDGE_NAME = UmlConfig.Types.PRE_LABEL + "message-arrow-edge-name";
+   public static final String INTERACTION = CoreTypes.PRE_NODE + "interaction";
+   public static final String LIFELINE = CoreTypes.PRE_NODE + "lifeline";
+   public static final String MESSAGE = CoreTypes.PRE_EDGE + "message";
+   public static final String MESSAGE_LABEL_ARROW_EDGE_NAME = CoreTypes.PRE_LABEL + "message-arrow-edge-name";
 
-   public static final String ICON_INTERACTION = UmlConfig.Types.PRE_ICON + "interaction";
-   public static final String ICON_MESSAGE = UmlConfig.Types.PRE_ICON + "message";
-   public static final String ICON_LIFELINE = UmlConfig.Types.PRE_ICON + "lifeline";
+   public static final String ICON_INTERACTION = CoreTypes.PRE_ICON + "interaction";
+   public static final String ICON_MESSAGE = CoreTypes.PRE_ICON + "message";
+   public static final String ICON_LIFELINE = CoreTypes.PRE_ICON + "lifeline";
 
    private CommunicationTypes() {}
 }

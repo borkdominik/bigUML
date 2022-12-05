@@ -21,4 +21,30 @@
     <position x="1050.5631070370164" y="488.99530991212856"/>
     <size width="160.0" height="50.0"/>
   </elements>
+  <elements xsi:type="notation:Edge">
+    <semanticElement elementId="_8HfRUXSFEe2que1J3uAC3A"/>
+  </elements>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_O0zsEHSGEe2que1J3uAC3A"/>
+    <position x="994.636332320578" y="274.1856524785359"/>
+    <size width="160.0" height="50.0"/>
+  </elements>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_sjt6EHSIEe2que1J3uAC3A"/>
+    <position x="277.756765500778" y="243.6801389968423"/>
+    <size width="160.0" height="50.0"/>
+  </elements>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_XngUIHSvEe2que1J3uAC3A"/>
+    <position x="997.1087677747623" y="368.2107878826427"/>
+    <size width="142.15625" height="43.0"/>
+  </elements>
+  <elements xsi:type="notation:Edge">
+    <semanticElement elementId="_RkKC4HS1Ee2que1J3uAC3A"/>
+  </elements>
+  <elements xsi:type="notation:Edge">
+    <semanticElement elementId="_SRx94HS1Ee2que1J3uAC3A"/>
+    <bendPoints x="896.704984607109" y="299.96128918421874"/>
+    <bendPoints x="896.704984607109" y="389.7107878826427"/>
+  </elements>
 </unotation:UmlDiagram>

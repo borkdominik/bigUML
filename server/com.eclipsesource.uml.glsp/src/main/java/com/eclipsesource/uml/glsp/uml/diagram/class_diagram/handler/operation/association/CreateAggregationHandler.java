@@ -13,6 +13,7 @@ package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.a
 import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.uml2.uml.Class;
 
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.AssociationTypes;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
 import com.eclipsesource.uml.glsp.uml.handler.operations.create.BaseCreateEdgeHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association.AddAssociationContribution;
@@ -26,7 +27,7 @@ public class CreateAggregationHandler
 
    @Override
    protected CCommand command(final Class source, final Class target) {
-      var keyword = "aggregation";
+      var keyword = AssociationTypes.AGGREGATION.name();
       return AddAssociationContribution
          .create(source, target, keyword);
 

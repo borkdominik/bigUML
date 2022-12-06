@@ -11,41 +11,7 @@
 import "@eclipse-glsp/client/css/glsp-sprotty.css";
 import "sprotty/css/edit-label.css";
 
-import {
-    configureDefaultModelElements,
-    configureModelElement,
-    configureViewerOptions,
-    ConsoleLogger,
-    copyPasteContextMenuModule,
-    createClientContainer,
-    LogLevel,
-    overrideViewerOptions,
-    PolylineEdgeView,
-    saveModule,
-    SCompartment,
-    SCompartmentView,
-    SEdge,
-    SLabel,
-    SLabelView,
-    SRoutingHandle,
-    SRoutingHandleView,
-    StructureCompartmentView,
-    TYPES,
-    validationModule
-} from "@eclipse-glsp/client/lib";
-import toolPaletteModule from "@eclipse-glsp/client/lib/features/tool-palette/di.config";
-import { Container, ContainerModule } from "inversify";
-import { EditLabelUI } from "sprotty/lib";
-
-import { LabelNodeView } from "../../common/common";
-import { EditLabelUIAutocomplete } from "../../features/edit-label";
-import umlToolPaletteModule from "../../features/tool-palette/di.config";
-import { IconLabelCompartmentSelectionFeedback } from "../../feedback";
-import { LabeledNode, SEditableLabel } from "../../model";
-import { BaseTypes, UmlTypes } from "../../utils";
-import { SLabelNodeProperty } from "../class/model";
-import { ObjectNodeView } from "./views";
-
+/*
 export default function createContainer(widgetId: string): Container {
     const classDiagramModule = new ContainerModule(
         (bind, unbind, isBound, rebind) => {
@@ -158,3 +124,4 @@ export default function createContainer(widgetId: string): Container {
 
     return container;
 }
+*/

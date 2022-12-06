@@ -7,5 +7,4 @@
     <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_WjkCkG8XEe2mJIxqi4TDVg" name="NewMessage1 - ReceiveEvent" covered="_7tU98VkzEe2-DPjS777r_w" message="_Wji0cG8XEe2mJIxqi4TDVg"/>
     <message xmi:id="_Wji0cG8XEe2mJIxqi4TDVg" name="NewMessage1" receiveEvent="_WjkCkG8XEe2mJIxqi4TDVg" sendEvent="_WjjbgG8XEe2mJIxqi4TDVg"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Interaction" xmi:id="_Rz0LYG8WEe2mJIxqi4TDVg" name="NewInteraction2"/>
 </uml:Model>

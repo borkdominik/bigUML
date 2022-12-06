@@ -8,7 +8,8 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-export * from "./interaction-node.view";
-export * from "./lifeline-node.view";
-export * from "./message-edge.view";
-export * from "./message-arrow-label.view";
+import { Icon } from "../../../../model";
+
+export class IconEnumeration extends Icon {
+    iconImageName = "class/Enumeration.svg";
+}

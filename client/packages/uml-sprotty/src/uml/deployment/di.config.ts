@@ -11,29 +11,7 @@
 import "@eclipse-glsp/client/css/glsp-sprotty.css";
 import "sprotty/css/edit-label.css";
 
-import { configureModelElement, PolylineEdgeView, SEdge } from "@eclipse-glsp/client";
-import { ContainerModule } from "inversify";
-
-import { IconView } from "../../common/common";
-import { LabeledNode } from "../../model";
-import { UmlTypes } from "../../utils";
-import { PackageNode } from "../shared/model";
-import { DirectedEdgeView } from "../usecase/views";
-import {
-    IconArtifact,
-    IconDeploymentNode,
-    IconDeploymentSpecification,
-    IconDevice,
-    IconExecutionEnvironment
-} from "./model";
-import {
-    ArtifactNodeView,
-    DeploymentNodeNodeView,
-    DeploymentSpecificationNodeView,
-    DeviceNodeView,
-    ExecutionEnvironmentNodeView
-} from "./views";
-
+/*
 export default function createDeploymentModule(): ContainerModule {
     const deplyomentModule = new ContainerModule(
         (bind, unbind, isBound, rebind) => {
@@ -119,9 +97,10 @@ export default function createDeploymentModule(): ContainerModule {
                 LabeledNode,
                 ClassNodeView
             );
-            */
+            *
         }
     );
 
     return deplyomentModule;
 }
+*/

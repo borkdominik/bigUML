@@ -51,7 +51,7 @@ import createCommunicationModule from "./uml/communication/di.config";
 import { BaseTypes, UmlTypes } from "./utils";
 
 export default function createContainer(widgetId: string): Container {
-    const commonDiagramModule = new ContainerModule(
+    const coreDiagramModule = new ContainerModule(
         (bind, unbind, isBound, rebind) => {
             rebind(TYPES.ILogger).to(ConsoleLogger).inSingletonScope();
             rebind(TYPES.LogLevel).toConstantValue(LogLevel.info);
@@ -135,7 +135,7 @@ export default function createContainer(widgetId: string): Container {
 
             configureViewerOptions(context, {
                 needsClientLayout: true,
-                baseDiv: widgetId,
+                baseDiv: widgetId
             });
         }
     );
@@ -143,7 +143,7 @@ export default function createContainer(widgetId: string): Container {
     const classModule = createClassModule();
 
     const container = createClientContainer(
-        commonDiagramModule,
+        coreDiagramModule,
         communicationModule,
         classModule,
         umlToolPaletteModule,
@@ -159,7 +159,7 @@ export default function createContainer(widgetId: string): Container {
 
     overrideViewerOptions(container, {
         baseDiv: widgetId,
-        hiddenDiv: widgetId + "_hidden",
+        hiddenDiv: widgetId + "_hidden"
     });
     return container;
 }

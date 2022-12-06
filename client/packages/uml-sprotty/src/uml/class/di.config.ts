@@ -19,7 +19,9 @@ import { IconLabelCompartment, SEditableLabel } from "../../model";
 import { UmlTypes } from "../../utils";
 import { NamedElement } from "../shared/named-element.model";
 import { NamedElementView } from "../shared/named-element.view";
-import { IconClass, IconProperty } from "./model";
+import { IconClass } from "./elements/class";
+import { IconEnumeration } from "./elements/enumeration";
+import { IconProperty } from "./elements/property";
 
 export default function createClassModule(): ContainerModule {
     const classModule = new ContainerModule((bind, unbind, isBound, rebind) => {
@@ -49,7 +51,7 @@ export default function createClassModule(): ContainerModule {
         configureModelElement(
             context,
             UmlTypes.ICON_ENUMERATION,
-            IconClass,
+            IconEnumeration,
             IconView
         );
         configureModelElement(

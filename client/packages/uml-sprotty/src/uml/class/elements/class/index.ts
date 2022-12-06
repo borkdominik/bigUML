@@ -8,22 +8,4 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-import { Icon, SLabelNode } from "../../model";
-
-// CLASS
-export class IconProperty extends Icon {
-    iconImageName = "class/Property.svg";
-}
-
-export class IconClass extends Icon {
-    iconImageName = "class/Class.svg";
-}
-
-export class IconEnumeration extends Icon {
-    iconImageName = "class/Enumeration.svg";
-}
-
-export class SLabelNodeProperty extends SLabelNode {
-    imageName = "Property.svg";
-}
-
+export * from "./model";

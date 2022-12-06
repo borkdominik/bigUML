@@ -23,7 +23,7 @@ import {
     svg
 } from "sprotty/lib";
 
-import { SEditableLabel } from "../../../model";
+import { SEditableLabel } from "../../../../model";
 
 /* eslint-disable react/react-in-jsx-scope */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

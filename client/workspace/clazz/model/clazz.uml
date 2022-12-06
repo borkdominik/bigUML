@@ -12,16 +12,20 @@
   </packagedElement>
   <packagedElement xmi:type="uml:Enumeration" xmi:id="_c6hX8HC0Ee2ghd0IrCbv6A" name="NewEnumeration1"/>
   <packagedElement xmi:type="uml:Interface" xmi:id="_d6uQsHC0Ee2ghd0IrCbv6A" name="NewInterface1"/>
-  <packagedElement xmi:type="uml:Class" xmi:id="_Ie5L0XC1Ee2FpstNgxotrw" name="NewClass2" isAbstract="true"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="_Ie5L0XC1Ee2FpstNgxotrw" name="NewClass2" isAbstract="true">
+    <generalization xmi:id="_h3EYAHV2Ee289aLaPFngLw" general="_XngUIHSvEe2que1J3uAC3A"/>
+  </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="_8HfRUXSFEe2que1J3uAC3A" memberEnd="_8HfRVHSFEe2que1J3uAC3A _8HfRVXSFEe2que1J3uAC3A">
     <eAnnotations xmi:id="_8HfRUnSFEe2que1J3uAC3A" source="http://www.eclipse.org/uml2/2.0.0/UML">
       <details xmi:id="_8HfRU3SFEe2que1J3uAC3A" key="ASSOCIATION"/>
     </eAnnotations>
     <ownedEnd xmi:id="_8HfRVHSFEe2que1J3uAC3A" name="" type="_wwK4YG8iEe2K6utU_hUYnw" association="_8HfRUXSFEe2que1J3uAC3A"/>
-    <ownedEnd xmi:id="_8HfRVXSFEe2que1J3uAC3A" name="newinterface1s" type="_d6uQsHC0Ee2ghd0IrCbv6A" association="_8HfRUXSFEe2que1J3uAC3A"/>
+    <ownedEnd xmi:id="_8HfRVXSFEe2que1J3uAC3A" name="asd" type="_d6uQsHC0Ee2ghd0IrCbv6A" association="_8HfRUXSFEe2que1J3uAC3A">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_G2KkMHV7Ee2_ZM7blrZrDQ" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_G2QDwHV7Ee2_ZM7blrZrDQ" value="1"/>
+    </ownedEnd>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="_O0zsEHSGEe2que1J3uAC3A" name="NewClass3"/>
-  <packagedElement xmi:type="uml:Class" xmi:id="_sjt6EHSIEe2que1J3uAC3A" name="NewClass5"/>
   <packagedElement xmi:type="uml:Class" xmi:id="_XngUIHSvEe2que1J3uAC3A" name="NewClass6"/>
   <packagedElement xmi:type="uml:Association" xmi:id="_RkKC4HS1Ee2que1J3uAC3A" memberEnd="_RkKC43S1Ee2que1J3uAC3A _RkKC5HS1Ee2que1J3uAC3A">
     <eAnnotations xmi:id="_RkKC4XS1Ee2que1J3uAC3A" source="http://www.eclipse.org/uml2/2.0.0/UML">

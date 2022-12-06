@@ -24,11 +24,11 @@ export class UmlGraphView<IRenderingArgs> extends SGraphView<IRenderingArgs> {
         const directedEdgeAdds: any = ([<defs>
             <marker id="marker-triangle" viewBox="0 0 10 10" refX="10" refY="5" markerUnits="userSpaceOnUse" markerWidth="10"
                 markerHeight="10" orient="auto-start-reverse">
-                <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--uml-edge)"/>
+                <path d="M 0 0 L 10 5 L 0 10 L 0 0 z" fill="var(--uml-edge)"/>
             </marker>
             <marker id="marker-triangle-empty" viewBox="0 0 10 10" refX="10" refY="5" markerUnits="userSpaceOnUse" markerWidth="10"
                 markerHeight="10" orient="auto-start-reverse">
-                <path d="M 0 0 L 10 5 L 0 10 z" stroke="var(--uml-edge)" fill="var(--theia-editor-background)"/>
+                <path d="M 0 0 L 10 5 L 0 10 L 0 0 z" stroke="var(--uml-edge)" fill="var(--theia-editor-background)"/>
             </marker>
             <marker id="marker-tent" viewBox="0 0 10 10" refX="10" refY="5" markerUnits="userSpaceOnUse" markerWidth="10"
                 markerHeight="10" orient="auto-start-reverse">

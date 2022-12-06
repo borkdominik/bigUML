@@ -42,6 +42,9 @@ export class UmlGraphView<IRenderingArgs> extends SGraphView<IRenderingArgs> {
                 markerWidth="20" markerHeight="10" orient="auto-start-reverse">
                 <path d="M 0 5 L 10 10 L 20 5 L 10 0 L 0 5 z" stroke="var(--uml-edge)" fill="var(--theia-editor-background)"/>
             </marker>
+            <filter id="filter-drop-shadow">
+                <feDropShadow dx="1.5" dy="1.5" stdDeviation="0.5" style-flood-color="var(--uml-drop-shadow)" style-flood-opacity="0.5" />
+            </filter>
         </defs>]);
 
         return directedEdgeAdds;

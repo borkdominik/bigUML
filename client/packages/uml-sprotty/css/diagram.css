@@ -53,6 +53,6 @@ svg {
     margin-bottom: 2px;
 }
 
-@import "uml/common.css";
+@import "uml/node.css";
 @import "uml/edge.css";
 @import "uml/marker.css";

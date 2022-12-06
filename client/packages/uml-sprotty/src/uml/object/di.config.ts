@@ -37,12 +37,12 @@ import toolPaletteModule from "@eclipse-glsp/client/lib/features/tool-palette/di
 import { Container, ContainerModule } from "inversify";
 import { EditLabelUI } from "sprotty/lib";
 
+import { LabelNodeView } from "../../common/common";
 import { EditLabelUIAutocomplete } from "../../features/edit-label";
 import umlToolPaletteModule from "../../features/tool-palette/di.config";
 import { IconLabelCompartmentSelectionFeedback } from "../../feedback";
 import { LabeledNode, SEditableLabel } from "../../model";
 import { BaseTypes, UmlTypes } from "../../utils";
-import { LabelNodeView } from "../../views/commons";
 import { SLabelNodeProperty } from "../class/model";
 import { ObjectNodeView } from "./views";
 
@@ -138,7 +138,7 @@ export default function createContainer(widgetId: string): Container {
 
             configureViewerOptions(context, {
                 needsClientLayout: true,
-                baseDiv: widgetId
+                baseDiv: widgetId,
             });
         }
     );
@@ -153,7 +153,7 @@ export default function createContainer(widgetId: string): Container {
     container.unload(toolPaletteModule);
     overrideViewerOptions(container, {
         baseDiv: widgetId,
-        hiddenDiv: widgetId + "_hidden"
+        hiddenDiv: widgetId + "_hidden",
     });
 
     return container;

@@ -38,6 +38,8 @@ import { DefaultTypes } from "@eclipse-glsp/protocol";
 import { Container, ContainerModule } from "inversify";
 import { EditLabelUI } from "sprotty/lib";
 
+import { CommentLinkEdgeView, CommentNodeView } from "./common/common";
+import { UmlGraphView } from "./common/graph-view";
 import { CustomCopyPasteHandler, LastContainableElementTracker } from "./features/copy-paste/copy-paste";
 import umlDiagramOutlineViewModule from "./features/diagram-outline/di.config";
 import { EditLabelUIAutocomplete } from "./features/edit-label";
@@ -47,8 +49,6 @@ import { LabeledNode, SEditableLabel } from "./model";
 import createClassModule from "./uml/class/di.config";
 import createCommunicationModule from "./uml/communication/di.config";
 import { BaseTypes, UmlTypes } from "./utils";
-import { CommentLinkEdgeView, CommentNodeView } from "./views/commons";
-import { UmlGraphView } from "./views/graph-view";
 
 export default function createContainer(widgetId: string): Container {
     const commonDiagramModule = new ContainerModule(
@@ -62,7 +62,12 @@ export default function createContainer(widgetId: string): Container {
 
             const context = { bind, unbind, isBound, rebind };
             configureDefaultModelElements(context);
-            configureModelElement(context, DefaultTypes.GRAPH, GLSPGraph, UmlGraphView);
+            configureModelElement(
+                context,
+                DefaultTypes.GRAPH,
+                GLSPGraph,
+                UmlGraphView
+            );
 
             configureModelElement(
                 context,
@@ -130,7 +135,7 @@ export default function createContainer(widgetId: string): Container {
 
             configureViewerOptions(context, {
                 needsClientLayout: true,
-                baseDiv: widgetId
+                baseDiv: widgetId,
             });
         }
     );
@@ -154,7 +159,7 @@ export default function createContainer(widgetId: string): Container {
 
     overrideViewerOptions(container, {
         baseDiv: widgetId,
-        hiddenDiv: widgetId + "_hidden"
+        hiddenDiv: widgetId + "_hidden",
     });
     return container;
 }

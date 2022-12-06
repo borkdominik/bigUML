@@ -43,12 +43,12 @@ public class InterfaceNodeMapper extends BaseGNodeMapper<Interface, GNode> {
 
    protected GCompartment buildHeader(final Interface umlInterface) {
       var builder = new GCompartmentBuilder(CoreTypes.COMPARTMENT_HEADER)
-         .layout(GConstants.Layout.VBOX)
-         .id(suffix.appendTo(HeaderSuffix.SUFFIX, idGenerator.getOrCreateId(umlInterface)));
+         .id(suffix.appendTo(HeaderSuffix.SUFFIX, idGenerator.getOrCreateId(umlInterface)))
+         .layout(GConstants.Layout.VBOX);
 
       var typeLabel = new GLabelBuilder(CoreTypes.LABEL_TEXT)
          .id(suffix.appendTo(HeaderTypeSuffix.SUFFIX, idGenerator.getOrCreateId(umlInterface)))
-         .text("«interface»")
+         .text("«Interface»")
          .build();
       builder.add(typeLabel);
 

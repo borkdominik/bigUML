@@ -44,20 +44,22 @@ public class EnumerationNodeMapper extends BaseGNodeMapper<Enumeration, GNode> {
 
    protected GCompartment buildHeader(final Enumeration umlEnumeration) {
       var builder = new GCompartmentBuilder(CoreTypes.COMPARTMENT_HEADER)
-         .layout(GConstants.Layout.VBOX)
-         .id(suffix.appendTo(HeaderOuterSuffix.SUFFIX, idGenerator.getOrCreateId(umlEnumeration)));
+         .id(suffix.appendTo(HeaderOuterSuffix.SUFFIX, idGenerator.getOrCreateId(umlEnumeration)))
+         .layout(GConstants.Layout.VBOX);
 
       var typeLabel = new GLabelBuilder(CoreTypes.LABEL_TEXT)
          .id(suffix.appendTo(HeaderTypeSuffix.SUFFIX, idGenerator.getOrCreateId(umlEnumeration)))
-         .text("<<" + Enumeration.class.getSimpleName() + ">>").build();
+         .text("«Enumeration»")
+         .build();
       builder.add(typeLabel);
 
       var compBuilder = new GCompartmentBuilder(CoreTypes.COMPARTMENT_HEADER)
-         .layout(GConstants.Layout.HBOX)
-         .id(suffix.appendTo(HeaderSuffix.SUFFIX, idGenerator.getOrCreateId(umlEnumeration)));
+         .id(suffix.appendTo(HeaderSuffix.SUFFIX, idGenerator.getOrCreateId(umlEnumeration)))
+         .layout(GConstants.Layout.HBOX);
 
       var icon = new GCompartmentBuilder(ClassTypes.ICON_ENUMERATION)
-         .id(suffix.appendTo(HeaderIconSuffix.SUFFIX, idGenerator.getOrCreateId(umlEnumeration))).build();
+         .id(suffix.appendTo(HeaderIconSuffix.SUFFIX, idGenerator.getOrCreateId(umlEnumeration)))
+         .build();
       compBuilder.add(icon);
 
       var nameLabel = new GLabelBuilder(CoreTypes.LABEL_NAME)

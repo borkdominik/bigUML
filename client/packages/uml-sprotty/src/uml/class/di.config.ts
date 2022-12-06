@@ -14,18 +14,18 @@ import "sprotty/css/edit-label.css";
 import { configureModelElement, PolylineEdgeView, SCompartmentView, SEdge, SLabelView } from "@eclipse-glsp/client/lib";
 import { ContainerModule } from "inversify";
 
-import { IconLabelCompartment, LabeledNode, SEditableLabel } from "../../model";
+import { IconView } from "../../common/common";
+import { IconLabelCompartment, SEditableLabel } from "../../model";
 import { UmlTypes } from "../../utils";
-import { IconView } from "../../views/commons";
-import { AggregationEdgeView } from "./elements/association";
-import { ClassNodeView } from "./elements/class";
-import { EnumerationNodeView } from "./elements/enumeration";
+import { NamedElement } from "../shared/named-element.model";
+import { NamedElementView } from "../shared/named-element.view";
 import { IconClass, IconProperty } from "./model";
 
 export default function createClassModule(): ContainerModule {
     const classModule = new ContainerModule((bind, unbind, isBound, rebind) => {
         const context = { bind, unbind, isBound, rebind };
-        // CLASS DIAGRAM
+
+        // Class
         configureModelElement(
             context,
             UmlTypes.ICON_CLASS,
@@ -35,15 +35,17 @@ export default function createClassModule(): ContainerModule {
         configureModelElement(
             context,
             UmlTypes.CLASS,
-            LabeledNode,
-            ClassNodeView
+            NamedElement,
+            NamedElementView
         );
         configureModelElement(
             context,
             UmlTypes.ABSTRACT_CLASS,
-            LabeledNode,
-            ClassNodeView
+            NamedElement,
+            NamedElementView
         );
+
+        // Enumeration
         configureModelElement(
             context,
             UmlTypes.ICON_ENUMERATION,
@@ -53,15 +55,19 @@ export default function createClassModule(): ContainerModule {
         configureModelElement(
             context,
             UmlTypes.ENUMERATION,
-            LabeledNode,
-            EnumerationNodeView
+            NamedElement,
+            NamedElementView
         );
+
+        // Interface
         configureModelElement(
             context,
             UmlTypes.INTERFACE,
-            LabeledNode,
-            ClassNodeView
+            NamedElement,
+            NamedElementView
         );
+
+        // Association
         configureModelElement(
             context,
             UmlTypes.ASSOCIATION,
@@ -72,32 +78,35 @@ export default function createClassModule(): ContainerModule {
             context,
             UmlTypes.AGGREGATION,
             SEdge,
-            AggregationEdgeView
+            PolylineEdgeView
         );
         configureModelElement(
             context,
             UmlTypes.COMPOSITION,
             SEdge,
-            AggregationEdgeView
+            PolylineEdgeView
         );
+
+        // Generalization
         configureModelElement(
             context,
             UmlTypes.CLASS_GENERALIZATION,
             SEdge,
             PolylineEdgeView
         );
-        // configureModelElement(context, UmlTypes.PROPERTY, SLabelNodeProperty, LabelNodeView);
-        configureModelElement(
-            context,
-            UmlTypes.PROPERTY,
-            IconLabelCompartment,
-            SCompartmentView
-        );
+
+        // Property
         configureModelElement(
             context,
             UmlTypes.ICON_PROPERTY,
             IconProperty,
             IconView
+        );
+        configureModelElement(
+            context,
+            UmlTypes.PROPERTY,
+            IconLabelCompartment,
+            SCompartmentView
         );
         configureModelElement(
             context,
@@ -117,6 +126,8 @@ export default function createClassModule(): ContainerModule {
             SEditableLabel,
             SLabelView
         );
+
+        // Other
         configureModelElement(
             context,
             UmlTypes.LABEL_EDGE_MULTIPLICITY,

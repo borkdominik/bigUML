@@ -15,9 +15,9 @@ import "sprotty/css/edit-label.css";
 import { configureModelElement, SEdge } from "@eclipse-glsp/client/lib";
 import { ContainerModule } from "inversify";
 
+import { IconView } from "../../common/common";
 import { LabeledNode, SEditableLabel } from "../../model";
 import { UmlTypes } from "../../utils";
-import { IconView } from "../../views/commons";
 import {
     IconInteraction,
     IconLifeline,

@@ -56,7 +56,7 @@ public class ClassNodeMapper extends BaseGNodeMapper<Class, GNode> {
 
    @Override
    public List<GModelElement> mapSiblings(final Class source) {
-      return buildGeneralizations(source);
+      return mapHandler.handle(source.getGeneralizations());
    }
 
    protected GCompartment buildHeader(final Class umlClass) {
@@ -109,9 +109,5 @@ public class ClassNodeMapper extends BaseGNodeMapper<Class, GNode> {
       builder.addAll(propertyElements);
 
       return builder.build();
-   }
-
-   protected List<GModelElement> buildGeneralizations(final Class umlClass) {
-      return mapHandler.handle(umlClass.getGeneralizations());
    }
 }

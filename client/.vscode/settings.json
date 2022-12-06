@@ -23,7 +23,7 @@
   "editor.insertSpaces": true,
   "[typescript]": {
     "editor.tabSize": 4,
-    "editor.defaultFormatter": "vscode.typescript-language-features",
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "[json]": {
     "editor.tabSize": 2

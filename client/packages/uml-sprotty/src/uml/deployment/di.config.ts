@@ -14,10 +14,9 @@ import "sprotty/css/edit-label.css";
 import { configureModelElement, PolylineEdgeView, SEdge } from "@eclipse-glsp/client";
 import { ContainerModule } from "inversify";
 
+import { IconView } from "../../common/common";
 import { LabeledNode } from "../../model";
 import { UmlTypes } from "../../utils";
-import { IconView } from "../../views/commons";
-import { ClassNodeView } from "../class/elements/class";
 import { PackageNode } from "../shared/model";
 import { DirectedEdgeView } from "../usecase/views";
 import {
@@ -113,12 +112,14 @@ export default function createDeploymentModule(): ContainerModule {
                 DirectedEdgeView
             );
             // TODO: ClassNodeView just used as placeholder
+            /*
             configureModelElement(
                 context,
                 UmlTypes.DEPLOYMENT_COMPONENT,
                 LabeledNode,
                 ClassNodeView
             );
+            */
         }
     );
 

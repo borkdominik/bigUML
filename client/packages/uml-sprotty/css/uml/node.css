@@ -1,6 +1,6 @@
 .uml-node {
     fill: var(--uml-node);
-    filter: url(#dropShadow);
+    filter: url(#filter-drop-shadow);
     stroke-width: 1;
     stroke: var(--uml-border);
 }
@@ -22,11 +22,6 @@
     stroke-width: 1;
     stroke: var(--uml-edge);
 }
-
-
-/*.uml-package > .sprotty-node {
-    fill: #88bd5c80;
-}*/
 
 .uml-packageable-node>.struct {
     fill: none;

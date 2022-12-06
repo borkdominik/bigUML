@@ -10,8 +10,11 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.gmodel;
 
+import java.util.Map;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.graph.GNode;
+import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.builder.impl.GNodeBuilder;
 import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.glsp.server.emf.model.notation.Shape;
@@ -26,7 +29,11 @@ public abstract class BaseGNodeMapper<Source extends EObject, Target extends GNo
          }
 
          if (shape.getSize() != null) {
-            builder.size(GraphUtil.copy(shape.getSize()));
+            var size = GraphUtil.copy(shape.getSize());
+            builder.size(size);
+            builder.layoutOptions(Map.of(
+               GLayoutOptions.KEY_PREF_WIDTH, size.getWidth(),
+               GLayoutOptions.KEY_PREF_HEIGHT, size.getHeight()));
          }
       });
    }

@@ -20,15 +20,15 @@ import org.eclipse.uml2.uml.Enumeration;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
+import com.eclipsesource.uml.glsp.core.gmodel.suffix.HeaderIconSuffix;
+import com.eclipsesource.uml.glsp.core.gmodel.suffix.HeaderLabelSuffix;
+import com.eclipsesource.uml.glsp.core.gmodel.suffix.HeaderSuffix;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.ClassSuffix;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.HeaderOuterSuffix;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.HeaderTypeSuffix;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGNodeMapper;
-import com.google.inject.Inject;
 
 public class EnumerationNodeMapper extends BaseGNodeMapper<Enumeration, GNode> {
-   @Inject
-   private ClassSuffix classSuffix;
-
    @Override
    public GNode map(final Enumeration umlEnumeration) {
       var builder = new GNodeBuilder(ClassTypes.ENUMERATION)
@@ -45,23 +45,23 @@ public class EnumerationNodeMapper extends BaseGNodeMapper<Enumeration, GNode> {
    protected GCompartment buildHeader(final Enumeration umlEnumeration) {
       var builder = new GCompartmentBuilder(CoreTypes.COMPARTMENT_HEADER)
          .layout(GConstants.Layout.VBOX)
-         .id(classSuffix.headerOuterSuffix.appendTo(idGenerator.getOrCreateId(umlEnumeration)));
+         .id(suffix.appendTo(HeaderOuterSuffix.SUFFIX, idGenerator.getOrCreateId(umlEnumeration)));
 
       var typeLabel = new GLabelBuilder(CoreTypes.LABEL_TEXT)
-         .id(classSuffix.headerTypeSuffix.appendTo(idGenerator.getOrCreateId(umlEnumeration)))
+         .id(suffix.appendTo(HeaderTypeSuffix.SUFFIX, idGenerator.getOrCreateId(umlEnumeration)))
          .text("<<" + Enumeration.class.getSimpleName() + ">>").build();
       builder.add(typeLabel);
 
       var compBuilder = new GCompartmentBuilder(CoreTypes.COMPARTMENT_HEADER)
          .layout(GConstants.Layout.HBOX)
-         .id(suffix.headerSuffix.appendTo(idGenerator.getOrCreateId(umlEnumeration)));
+         .id(suffix.appendTo(HeaderSuffix.SUFFIX, idGenerator.getOrCreateId(umlEnumeration)));
 
       var icon = new GCompartmentBuilder(ClassTypes.ICON_ENUMERATION)
-         .id(suffix.headerIconSuffix.appendTo(idGenerator.getOrCreateId(umlEnumeration))).build();
+         .id(suffix.appendTo(HeaderIconSuffix.SUFFIX, idGenerator.getOrCreateId(umlEnumeration))).build();
       compBuilder.add(icon);
 
       var nameLabel = new GLabelBuilder(CoreTypes.LABEL_NAME)
-         .id(suffix.headerLabelSuffix.appendTo(idGenerator.getOrCreateId(umlEnumeration)))
+         .id(suffix.appendTo(HeaderLabelSuffix.SUFFIX, idGenerator.getOrCreateId(umlEnumeration)))
          .text(umlEnumeration.getName())
          .build();
       compBuilder.add(nameLabel);

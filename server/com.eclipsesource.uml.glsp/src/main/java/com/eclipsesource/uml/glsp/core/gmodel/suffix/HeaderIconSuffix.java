@@ -8,14 +8,14 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix;
+package com.eclipsesource.uml.glsp.core.gmodel.suffix;
 
 import com.eclipsesource.uml.glsp.core.features.idgenerator.BaseSuffixIdAppender;
 
-public class PropertyLabelTypeSuffixAppender extends BaseSuffixIdAppender {
-   public static final String SUFFIX = "_property_label_type";
+public class HeaderIconSuffix extends BaseSuffixIdAppender {
+   public static final String SUFFIX = "_header_icon";
 
-   public PropertyLabelTypeSuffixAppender() {
+   public HeaderIconSuffix() {
       super(SUFFIX);
    }
 }

@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.uml2.uml.Property;
 
-import com.eclipsesource.uml.glsp.core.gmodel.suffix.LabelSuffixAppender;
+import com.eclipsesource.uml.glsp.core.gmodel.suffix.LabelSuffix;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
 import com.eclipsesource.uml.glsp.uml.handler.operations.directediting.BaseLabelEditHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association.SetAssociationEndMultiplicityContribution;
@@ -24,7 +24,7 @@ import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.asso
 public class SetAssociationEndMultiplicityHandler extends BaseLabelEditHandler<Property> {
 
    public SetAssociationEndMultiplicityHandler() {
-      super(ClassTypes.LABEL_EDGE_MULTIPLICITY, LabelSuffixAppender.SUFFIX);
+      super(ClassTypes.LABEL_EDGE_MULTIPLICITY, LabelSuffix.SUFFIX);
    }
 
    @Override

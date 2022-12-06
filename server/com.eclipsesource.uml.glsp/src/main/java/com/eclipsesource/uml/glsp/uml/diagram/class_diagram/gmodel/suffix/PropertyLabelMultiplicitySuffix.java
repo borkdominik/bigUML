@@ -12,10 +12,10 @@ package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix;
 
 import com.eclipsesource.uml.glsp.core.features.idgenerator.BaseSuffixIdAppender;
 
-public class HeaderOuterSuffixAppender extends BaseSuffixIdAppender {
-   public static final String SUFFIX = "_header_outer";
+public class PropertyLabelMultiplicitySuffix extends BaseSuffixIdAppender {
+   public static final String SUFFIX = "_property_label_multiplicity";
 
-   public HeaderOuterSuffixAppender() {
+   public PropertyLabelMultiplicitySuffix() {
       super(SUFFIX);
    }
 }

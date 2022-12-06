@@ -25,14 +25,15 @@ import org.eclipse.uml2.uml.Class;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
+import com.eclipsesource.uml.glsp.core.gmodel.suffix.CompartmentSuffix;
+import com.eclipsesource.uml.glsp.core.gmodel.suffix.HeaderIconSuffix;
+import com.eclipsesource.uml.glsp.core.gmodel.suffix.HeaderLabelSuffix;
+import com.eclipsesource.uml.glsp.core.gmodel.suffix.HeaderSuffix;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.ClassSuffix;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.HeaderTypeSuffix;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGNodeMapper;
-import com.google.inject.Inject;
 
 public class ClassNodeMapper extends BaseGNodeMapper<Class, GNode> {
-   @Inject
-   private ClassSuffix classSuffix;
 
    @Override
    public GNode map(final Class umlClass) {
@@ -60,14 +61,14 @@ public class ClassNodeMapper extends BaseGNodeMapper<Class, GNode> {
 
    protected GCompartment buildHeader(final Class umlClass) {
       var builder = new GCompartmentBuilder(CoreTypes.COMPARTMENT_HEADER)
-         .id(suffix.headerSuffix.appendTo(idGenerator.getOrCreateId(umlClass)));
+         .id(suffix.appendTo(HeaderSuffix.SUFFIX, idGenerator.getOrCreateId(umlClass)));
 
       if (umlClass.isAbstract()) {
          builder
             .layout(GConstants.Layout.VBOX);
 
          var typeLabel = new GLabelBuilder(CoreTypes.LABEL_TEXT)
-            .id(classSuffix.headerTypeSuffix.appendTo(idGenerator.getOrCreateId(umlClass)))
+            .id(suffix.appendTo(HeaderTypeSuffix.SUFFIX, idGenerator.getOrCreateId(umlClass)))
             .text("{abstract}")
             .build();
          builder.add(typeLabel);
@@ -77,13 +78,13 @@ public class ClassNodeMapper extends BaseGNodeMapper<Class, GNode> {
             .layout(GConstants.Layout.HBOX);
 
          var icon = new GCompartmentBuilder(ClassTypes.ICON_CLASS)
-            .id(suffix.headerIconSuffix.appendTo(idGenerator.getOrCreateId(umlClass)))
+            .id(suffix.appendTo(HeaderIconSuffix.SUFFIX, idGenerator.getOrCreateId(umlClass)))
             .build();
          builder.add(icon);
       }
 
       var nameLabel = new GLabelBuilder(CoreTypes.LABEL_NAME)
-         .id(suffix.headerLabelSuffix.appendTo(idGenerator.getOrCreateId(umlClass)))
+         .id(suffix.appendTo(HeaderLabelSuffix.SUFFIX, idGenerator.getOrCreateId(umlClass)))
          .text(umlClass.getName()).build();
       builder.add(nameLabel);
 
@@ -94,7 +95,7 @@ public class ClassNodeMapper extends BaseGNodeMapper<Class, GNode> {
       var properties = umlClass.getAllAttributes();
 
       var builder = new GCompartmentBuilder(CoreTypes.COMPARTMENT)
-         .id(suffix.compartmentSuffix.appendTo(idGenerator.getOrCreateId(umlClass)))
+         .id(suffix.appendTo(CompartmentSuffix.SUFFIX, idGenerator.getOrCreateId(umlClass)))
          .layout(GConstants.Layout.VBOX);
 
       var layoutOptions = new GLayoutOptions()

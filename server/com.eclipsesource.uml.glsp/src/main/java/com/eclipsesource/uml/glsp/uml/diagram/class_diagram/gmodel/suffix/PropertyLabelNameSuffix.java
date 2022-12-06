@@ -8,17 +8,14 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.handler.operation.interaction;
+package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix;
 
-import org.eclipse.uml2.uml.Interaction;
+import com.eclipsesource.uml.glsp.core.features.idgenerator.BaseSuffixIdAppender;
 
-import com.eclipsesource.uml.glsp.core.gmodel.suffix.HeaderLabelSuffix;
-import com.eclipsesource.uml.glsp.uml.handler.operations.directediting.DefaultRenameNamedElementHandler;
+public class PropertyLabelNameSuffix extends BaseSuffixIdAppender {
+   public static final String SUFFIX = "_property_label_name";
 
-public class RenameInteractionHandler extends DefaultRenameNamedElementHandler<Interaction> {
-
-   public RenameInteractionHandler() {
-      super(HeaderLabelSuffix.SUFFIX);
+   public PropertyLabelNameSuffix() {
+      super(SUFFIX);
    }
-
 }

@@ -21,19 +21,4 @@ public abstract class BaseSuffixIdAppender implements SuffixIdAppender {
    public String suffix() {
       return this.suffix;
    }
-
-   @Override
-   public String appendTo(final String id) {
-      return id + suffix;
-   }
-
-   @Override
-   public boolean isSuffixOf(final String id) {
-      return id.endsWith(suffix);
-   }
-
-   @Override
-   public String clear(final String id) {
-      return clear(id, suffix);
-   }
 }

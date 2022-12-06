@@ -10,8 +10,6 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.manifest;
 
-import java.util.Set;
-
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.graph.GModelElement;
 
@@ -33,14 +31,14 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.EnumerationNo
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.GeneralizationEdgeMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.InterfaceNodeMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.PropertyCompartmentMapper;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.ClassSuffix;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.HeaderOuterSuffixAppender;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.HeaderTypeSuffixAppender;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyIconSuffixAppender;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyLabelMultiplicitySuffixAppender;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyLabelNameSuffixAppender;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyLabelTypeSuffixAppender;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertySuffixAppender;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.HeaderOuterSuffix;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.HeaderTypeSuffix;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.LabelMultiplicitySuffix;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyIconSuffix;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyLabelMultiplicitySuffix;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyLabelNameSuffix;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyLabelTypeSuffix;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertySuffix;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.association.CreateAggregationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.association.CreateAssociationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.association.CreateCompositionHandler;
@@ -66,7 +64,6 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.ui
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.uinterface.RenameInterfaceHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.palette.ClassPalette;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
-import com.google.inject.Singleton;
 import com.google.inject.multibindings.Multibinder;
 
 public class ClassUmlManifest extends DiagramManifest
@@ -94,11 +91,17 @@ public class ClassUmlManifest extends DiagramManifest
    }
 
    public void contributeSuffixIdAppenders() {
-      contributeSuffixIdAppenders(binder(),
-         Set.of(HeaderOuterSuffixAppender.class, HeaderTypeSuffixAppender.class, PropertyIconSuffixAppender.class,
-            PropertyLabelMultiplicitySuffixAppender.class, PropertyLabelNameSuffixAppender.class,
-            PropertyLabelTypeSuffixAppender.class, PropertySuffixAppender.class));
-      bind(ClassSuffix.class).in(Singleton.class);
+      contributeSuffixIdAppenders(binder(), mapbinder -> {
+         mapbinder.addBinding(HeaderOuterSuffix.SUFFIX).to(HeaderOuterSuffix.class);
+         mapbinder.addBinding(HeaderTypeSuffix.SUFFIX).to(HeaderTypeSuffix.class);
+         mapbinder.addBinding(PropertyIconSuffix.SUFFIX).to(PropertyIconSuffix.class);
+         mapbinder.addBinding(PropertyLabelMultiplicitySuffix.SUFFIX)
+            .to(PropertyLabelMultiplicitySuffix.class);
+         mapbinder.addBinding(PropertyLabelNameSuffix.SUFFIX).to(PropertyLabelNameSuffix.class);
+         mapbinder.addBinding(PropertyLabelTypeSuffix.SUFFIX).to(PropertyLabelTypeSuffix.class);
+         mapbinder.addBinding(PropertySuffix.SUFFIX).to(PropertySuffix.class);
+         mapbinder.addBinding(LabelMultiplicitySuffix.SUFFIX).to(LabelMultiplicitySuffix.class);
+      });
    }
 
    @Override

@@ -20,7 +20,7 @@ import org.eclipse.glsp.server.types.GLSPServerException;
 
 import com.eclipsesource.uml.glsp.core.common.RepresentationKey;
 import com.eclipsesource.uml.glsp.core.common.TripleKey;
-import com.eclipsesource.uml.glsp.core.features.idgenerator.SuffixIdExtractor;
+import com.eclipsesource.uml.glsp.core.gmodel.suffix.Suffix;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.google.inject.Inject;
 
@@ -34,16 +34,16 @@ public class UmlLabelEditOperationHandler
    private UmlModelState modelState;
 
    @Inject
-   private SuffixIdExtractor suffixIdExtractor;
+   private Suffix suffix;
 
    @Override
    public void executeOperation(final ApplyLabelEditOperation operation) {
       var representation = modelState.getUnsafeRepresentation();
 
       var labelId = operation.getLabelId();
-      var labelSuffix = suffixIdExtractor.extractSuffix(labelId)
+      var labelSuffix = suffix.extractSuffix(labelId)
          .orElseThrow(() -> new GLSPServerException("No suffix found by extractor for label " + labelId));
-      var elementId = suffixIdExtractor.extractId(labelId)
+      var elementId = suffix.extractId(labelId)
          .orElseThrow(() -> new GLSPServerException("No elementId found by extractor for label " + labelId));
 
       var label = getOrThrow(modelState.getIndex().get(labelId),

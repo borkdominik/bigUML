@@ -12,11 +12,11 @@ package com.eclipsesource.uml.glsp.core.gmodel.suffix;
 
 import com.eclipsesource.uml.glsp.core.features.idgenerator.BaseSuffixIdAppender;
 
-public class LabelSuffixAppender extends BaseSuffixIdAppender {
+public class CompartmentSuffix extends BaseSuffixIdAppender {
 
-   public static final String SUFFIX = "_label";
+   public static final String SUFFIX = "_compartment";
 
-   public LabelSuffixAppender() {
+   public CompartmentSuffix() {
       super(SUFFIX);
    }
 

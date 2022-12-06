@@ -20,7 +20,7 @@ public class InteractionPropertiesFactory {
    public static InteractionCopyableProperties from(final GNode element) {
       var semantic = new InteractionCopyableProperties.Semantic();
       semantic.id = element.getId();
-      GModelFilterUtil.flatFilterById(element, suffix.headerLabelSuffix.appendTo(element.getId()), GLabel.class).findFirst()
+      GModelFilterUtil.flatFilterById(element, suffix.appendTo(HeaderLabelSuffix.SUFFIX, element.getId()), GLabel.class).findFirst()
          .ifPresent(label -> semantic.name = label.getText());
       GModelFilterUtil.flatFilterByType(element, CommunicationTypes.LIFELINE, GNode.class).forEach(lifeline -> {
          semantic.lifelines.add(LifelinePropertiesFactory.from(lifeline));

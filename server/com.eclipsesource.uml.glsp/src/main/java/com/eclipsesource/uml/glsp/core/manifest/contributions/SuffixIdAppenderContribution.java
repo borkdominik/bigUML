@@ -10,23 +10,19 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.core.manifest.contributions;
 
-import java.util.Set;
+import java.util.function.Consumer;
 
 import com.eclipsesource.uml.glsp.core.features.idgenerator.SuffixIdAppender;
 import com.google.inject.Binder;
-import com.google.inject.Key;
-import com.google.inject.Singleton;
-import com.google.inject.multibindings.Multibinder;
+import com.google.inject.multibindings.MapBinder;
 
 public interface SuffixIdAppenderContribution {
 
-   default void contributeSuffixIdAppenders(final Binder binder, final Set<Class<? extends SuffixIdAppender>> classes) {
-      var multibinder = Multibinder.newSetBinder(binder, SuffixIdAppender.class);
+   default void contributeSuffixIdAppenders(final Binder binder,
+      final Consumer<MapBinder<String, SuffixIdAppender>> consumer) {
+      var mapbinder = MapBinder.newMapBinder(binder, String.class, SuffixIdAppender.class);
 
-      for (var clazz : classes) {
-         binder.bind(clazz).in(Singleton.class);
-         multibinder.addBinding().to(Key.get(clazz));
-      }
+      consumer.accept(mapbinder);
    }
 
 }

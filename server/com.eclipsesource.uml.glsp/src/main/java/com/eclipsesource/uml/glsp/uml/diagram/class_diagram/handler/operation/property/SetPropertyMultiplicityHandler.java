@@ -14,14 +14,14 @@ import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.uml2.uml.Property;
 
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyLabelMultiplicitySuffixAppender;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyLabelMultiplicitySuffix;
 import com.eclipsesource.uml.glsp.uml.handler.operations.directediting.BaseLabelEditHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.SetPropertyBoundsContribution;
 
 public class SetPropertyMultiplicityHandler extends BaseLabelEditHandler<Property> {
 
    public SetPropertyMultiplicityHandler() {
-      super(ClassTypes.LABEL_PROPERTY_MULTIPLICITY, PropertyLabelMultiplicitySuffixAppender.SUFFIX);
+      super(ClassTypes.LABEL_PROPERTY_MULTIPLICITY, PropertyLabelMultiplicitySuffix.SUFFIX);
    }
 
    @Override

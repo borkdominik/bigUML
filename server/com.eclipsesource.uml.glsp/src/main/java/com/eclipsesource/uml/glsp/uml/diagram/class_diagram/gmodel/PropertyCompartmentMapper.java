@@ -25,16 +25,16 @@ import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 import com.eclipsesource.uml.glsp.core.features.idgenerator.IdCountContextGenerator;
 import com.eclipsesource.uml.glsp.old.utils.property.PropertyUtil;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.ClassSuffix;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyIconSuffix;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyLabelMultiplicitySuffix;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyLabelNameSuffix;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyLabelTypeSuffix;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGModelMapper;
 import com.google.inject.Inject;
 
 public class PropertyCompartmentMapper extends BaseGModelMapper<Property, GCompartment> {
    @Inject
    protected IdCountContextGenerator idCountGenerator;
-
-   @Inject
-   private ClassSuffix classSuffix;
 
    @Override
    public GCompartment map(final Property property) {
@@ -73,27 +73,27 @@ public class PropertyCompartmentMapper extends BaseGModelMapper<Property, GCompa
 
    protected GCompartment buildIcon(final Property property) {
       return new GCompartmentBuilder(ClassTypes.ICON_PROPERTY)
-         .id(classSuffix.propertyIconSuffix.appendTo(idGenerator.getOrCreateId(property)))
+         .id(suffix.appendTo(PropertyIconSuffix.SUFFIX, idGenerator.getOrCreateId(property)))
          .build();
    }
 
    protected GLabel buildName(final Property property) {
       return new GLabelBuilder(ClassTypes.LABEL_PROPERTY_NAME)
-         .id(classSuffix.propertyLabelNameSuffix.appendTo(idGenerator.getOrCreateId(property)))
+         .id(suffix.appendTo(PropertyLabelNameSuffix.SUFFIX, idGenerator.getOrCreateId(property)))
          .text(property.getName())
          .build();
    }
 
    protected GLabel buildTypeName(final Property property, final Type type) {
       return new GLabelBuilder(ClassTypes.LABEL_PROPERTY_TYPE)
-         .id(classSuffix.propertyLabelTypeSuffix.appendTo(idGenerator.getOrCreateId(property)))
+         .id(suffix.appendTo(PropertyLabelTypeSuffix.SUFFIX, idGenerator.getOrCreateId(property)))
          .text(type.getName())
          .build();
    }
 
    protected GLabel buildTypeMultiplicity(final Property property, final String multiplicity) {
       return new GLabelBuilder(ClassTypes.LABEL_PROPERTY_MULTIPLICITY)
-         .id(classSuffix.propertyLabelMultiplicitySuffix.appendTo(idGenerator.getOrCreateId(property)))
+         .id(suffix.appendTo(PropertyLabelMultiplicitySuffix.SUFFIX, idGenerator.getOrCreateId(property)))
          .text(multiplicity)
          .build();
    }

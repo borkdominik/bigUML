@@ -44,7 +44,7 @@
   </elements>
   <elements xsi:type="notation:Edge">
     <semanticElement elementId="_SRx94HS1Ee2que1J3uAC3A"/>
-    <bendPoints x="798.1758355688568" y="420.3954046492817"/>
+    <bendPoints x="767.4912188022176" y="420.3954046492817"/>
     <bendPoints x="1068.1868927747623" y="420.3954046492817"/>
   </elements>
 </unotation:UmlDiagram>

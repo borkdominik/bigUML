@@ -25,6 +25,10 @@ import org.eclipse.uml2.uml.Interaction;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
+import com.eclipsesource.uml.glsp.core.gmodel.suffix.CompartmentSuffix;
+import com.eclipsesource.uml.glsp.core.gmodel.suffix.HeaderIconSuffix;
+import com.eclipsesource.uml.glsp.core.gmodel.suffix.HeaderLabelSuffix;
+import com.eclipsesource.uml.glsp.core.gmodel.suffix.HeaderSuffix;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGNodeMapper;
 
@@ -55,13 +59,13 @@ public class InteractionNodeMapper extends BaseGNodeMapper<Interaction, GNode> {
 
    protected GCompartment buildHeader(final Interaction umlInteraction) {
       return new GCompartmentBuilder(CoreTypes.COMPARTMENT_HEADER)
-         .id(suffix.headerSuffix.appendTo(idGenerator.getOrCreateId(umlInteraction)))
+         .id(suffix.appendTo(HeaderSuffix.SUFFIX, idGenerator.getOrCreateId(umlInteraction)))
          .layout(GConstants.Layout.HBOX)
          .add(new GCompartmentBuilder(CommunicationTypes.ICON_INTERACTION)
-            .id(suffix.headerIconSuffix.appendTo(idGenerator.getOrCreateId(umlInteraction)))
+            .id(suffix.appendTo(HeaderIconSuffix.SUFFIX, idGenerator.getOrCreateId(umlInteraction)))
             .build())
          .add(new GLabelBuilder(CoreTypes.LABEL_NAME)
-            .id(suffix.headerLabelSuffix.appendTo(idGenerator.getOrCreateId(umlInteraction)))
+            .id(suffix.appendTo(HeaderLabelSuffix.SUFFIX, idGenerator.getOrCreateId(umlInteraction)))
             .text(umlInteraction.getName())
             .build())
          .build();
@@ -78,7 +82,7 @@ public class InteractionNodeMapper extends BaseGNodeMapper<Interaction, GNode> {
       layoutOptions.put(V_GRAB, true);
 
       return new GCompartmentBuilder(CoreTypes.COMPARTMENT)
-         .id(suffix.compartmentSuffix.appendTo(idGenerator.getOrCreateId(interaction)))
+         .id(suffix.appendTo(CompartmentSuffix.SUFFIX, idGenerator.getOrCreateId(interaction)))
          .layout(GConstants.Layout.FREEFORM)
          .layoutOptions(layoutOptions)
          .addAll(children.stream()

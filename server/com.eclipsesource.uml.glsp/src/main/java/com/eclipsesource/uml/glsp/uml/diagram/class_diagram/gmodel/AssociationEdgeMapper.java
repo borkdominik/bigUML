@@ -20,6 +20,7 @@ import org.eclipse.uml2.uml.Association;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
+import com.eclipsesource.uml.glsp.core.gmodel.suffix.LabelSuffix;
 import com.eclipsesource.uml.glsp.old.utils.edge.EdgeMultiplicityIdUtil;
 import com.eclipsesource.uml.glsp.old.utils.property.PropertyUtil;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.AssociationTypes;
@@ -72,14 +73,14 @@ public class AssociationEdgeMapper extends BaseGEdgeMapper<Association, GEdge> {
       var target = memberEnds.get(1);
       var targetId = idGenerator.getOrCreateId(target);
 
-      var sourceNameLabel = createEdgeNameLabel(source.getName(), suffix.labelSuffix.appendTo(sourceId), 0.1d);
+      var sourceNameLabel = createEdgeNameLabel(source.getName(), suffix.appendTo(LabelSuffix.SUFFIX, sourceId), 0.1d);
       builder.add(sourceNameLabel);
 
       var sourceMultiplicityLabel = createEdgeMultiplicityLabel(PropertyUtil.getMultiplicity(source),
          EdgeMultiplicityIdUtil.createEdgeLabelMultiplicityId(sourceId), 0.1d);
       builder.add(sourceMultiplicityLabel);
 
-      var targetNameLabel = createEdgeNameLabel(target.getName(), suffix.labelSuffix.appendTo(targetId), 0.9d);
+      var targetNameLabel = createEdgeNameLabel(target.getName(), suffix.appendTo(LabelSuffix.SUFFIX, targetId), 0.9d);
       builder.add(targetNameLabel);
 
       var targetMultiplicityLabel = createEdgeMultiplicityLabel(PropertyUtil.getMultiplicity(target),

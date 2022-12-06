@@ -11,18 +11,19 @@
 package com.eclipsesource.uml.glsp.core.features.idgenerator;
 
 public interface SuffixIdAppender {
-
-   String appendTo(String id);
-
-   String clear(String id);
-
    String suffix();
 
-   boolean isSuffixOf(String id);
+   default String appendTo(final String id) {
+      return id + suffix();
+   }
 
-   default String clear(final String id, final String suffix) {
+   default boolean isSuffixOf(final String id) {
+      return id.endsWith(suffix());
+   }
+
+   default String clear(final String id) {
       if (isSuffixOf(id)) {
-         return id.substring(0, id.length() - suffix.length());
+         return id.substring(0, id.length() - suffix().length());
       }
 
       return id;

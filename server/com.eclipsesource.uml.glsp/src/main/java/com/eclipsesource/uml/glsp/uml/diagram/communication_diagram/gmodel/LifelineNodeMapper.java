@@ -20,6 +20,9 @@ import org.eclipse.uml2.uml.Lifeline;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
+import com.eclipsesource.uml.glsp.core.gmodel.suffix.HeaderIconSuffix;
+import com.eclipsesource.uml.glsp.core.gmodel.suffix.HeaderLabelSuffix;
+import com.eclipsesource.uml.glsp.core.gmodel.suffix.HeaderSuffix;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGNodeMapper;
 
@@ -40,15 +43,15 @@ public class LifelineNodeMapper extends BaseGNodeMapper<Lifeline, GNode> {
 
    protected GCompartment buildHeader(final Lifeline umlLifeline) {
       var builder = new GCompartmentBuilder(CoreTypes.COMPARTMENT_HEADER)
-         .id(suffix.headerSuffix.appendTo(idGenerator.getOrCreateId(umlLifeline)))
+         .id(suffix.appendTo(HeaderSuffix.SUFFIX, idGenerator.getOrCreateId(umlLifeline)))
          .layout(GConstants.Layout.HBOX);
 
       var icon = new GCompartmentBuilder(CommunicationTypes.ICON_LIFELINE)
-         .id(suffix.headerIconSuffix.appendTo(idGenerator.getOrCreateId(umlLifeline))).build();
+         .id(suffix.appendTo(HeaderIconSuffix.SUFFIX, idGenerator.getOrCreateId(umlLifeline))).build();
       builder.add(icon);
 
       var nameLabel = new GLabelBuilder(CoreTypes.LABEL_NAME)
-         .id(suffix.headerLabelSuffix.appendTo(idGenerator.getOrCreateId(umlLifeline)))
+         .id(suffix.appendTo(HeaderLabelSuffix.SUFFIX, idGenerator.getOrCreateId(umlLifeline)))
          .text(umlLifeline.getName()).build();
       builder.add(nameLabel);
 

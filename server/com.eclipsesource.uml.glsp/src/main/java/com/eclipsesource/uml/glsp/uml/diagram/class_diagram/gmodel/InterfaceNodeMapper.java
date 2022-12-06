@@ -20,14 +20,13 @@ import org.eclipse.uml2.uml.Interface;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
+import com.eclipsesource.uml.glsp.core.gmodel.suffix.HeaderLabelSuffix;
+import com.eclipsesource.uml.glsp.core.gmodel.suffix.HeaderSuffix;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.ClassSuffix;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.HeaderTypeSuffix;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGNodeMapper;
-import com.google.inject.Inject;
 
 public class InterfaceNodeMapper extends BaseGNodeMapper<Interface, GNode> {
-   @Inject
-   private ClassSuffix classSuffix;
 
    @Override
    public GNode map(final Interface umlInterface) {
@@ -45,16 +44,16 @@ public class InterfaceNodeMapper extends BaseGNodeMapper<Interface, GNode> {
    protected GCompartment buildHeader(final Interface umlInterface) {
       var builder = new GCompartmentBuilder(CoreTypes.COMPARTMENT_HEADER)
          .layout(GConstants.Layout.VBOX)
-         .id(suffix.headerSuffix.appendTo(idGenerator.getOrCreateId(umlInterface)));
+         .id(suffix.appendTo(HeaderSuffix.SUFFIX, idGenerator.getOrCreateId(umlInterface)));
 
       var typeLabel = new GLabelBuilder(CoreTypes.LABEL_TEXT)
-         .id(classSuffix.headerTypeSuffix.appendTo(idGenerator.getOrCreateId(umlInterface)))
+         .id(suffix.appendTo(HeaderTypeSuffix.SUFFIX, idGenerator.getOrCreateId(umlInterface)))
          .text("«interface»")
          .build();
       builder.add(typeLabel);
 
       var nameLabel = new GLabelBuilder(CoreTypes.LABEL_NAME)
-         .id(suffix.headerLabelSuffix.appendTo(idGenerator.getOrCreateId(umlInterface)))
+         .id(suffix.appendTo(HeaderLabelSuffix.SUFFIX, idGenerator.getOrCreateId(umlInterface)))
          .text(umlInterface.getName())
          .build();
       builder.add(nameLabel);

@@ -30,17 +30,17 @@ public class ClassDiagramConfiguration implements DiagramConfiguration {
    public List<EdgeTypeHint> getEdgeTypeHints() {
       return Lists.newArrayList(
          new EdgeTypeHint(ClassTypes.ASSOCIATION, true, true, true,
-            List.of(ClassTypes.CLASS, ClassTypes.INTERFACE),
-            List.of(ClassTypes.CLASS, ClassTypes.INTERFACE)),
+            List.of(ClassTypes.ABSTRACT_CLASS, ClassTypes.CLASS, ClassTypes.INTERFACE),
+            List.of(ClassTypes.ABSTRACT_CLASS, ClassTypes.CLASS, ClassTypes.INTERFACE)),
          new EdgeTypeHint(ClassTypes.CLASS_GENERALIZATION, true, true, true,
             List.of(ClassTypes.CLASS, ClassTypes.ABSTRACT_CLASS),
             List.of(ClassTypes.CLASS, ClassTypes.ABSTRACT_CLASS)),
          new EdgeTypeHint(ClassTypes.COMPOSITION, true, true, true,
-            List.of(ClassTypes.CLASS),
-            List.of(ClassTypes.CLASS)),
+            List.of(ClassTypes.ABSTRACT_CLASS, ClassTypes.CLASS, ClassTypes.INTERFACE),
+            List.of(ClassTypes.ABSTRACT_CLASS, ClassTypes.CLASS, ClassTypes.INTERFACE)),
          new EdgeTypeHint(ClassTypes.AGGREGATION, true, true, true,
-            List.of(ClassTypes.CLASS),
-            List.of(ClassTypes.CLASS)));
+            List.of(ClassTypes.ABSTRACT_CLASS, ClassTypes.CLASS, ClassTypes.INTERFACE),
+            List.of(ClassTypes.ABSTRACT_CLASS, ClassTypes.CLASS, ClassTypes.INTERFACE)));
    }
 
    @Override

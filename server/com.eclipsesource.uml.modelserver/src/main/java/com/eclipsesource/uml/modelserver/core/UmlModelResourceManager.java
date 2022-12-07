@@ -13,12 +13,15 @@ package com.eclipsesource.uml.modelserver.core;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.emfcloud.modelserver.emf.common.RecordingModelResourceManager;
 import org.eclipse.emfcloud.modelserver.emf.common.watchers.ModelWatchersManager;
 import org.eclipse.emfcloud.modelserver.emf.configuration.EPackageConfiguration;
@@ -111,6 +114,21 @@ public class UmlModelResourceManager extends RecordingModelResourceManager {
       }
       return result;
    }
+
+   @Override
+   protected boolean saveResource(final Resource resource) {
+      if (resource.getURI() != null) {
+         try {
+            resource.save(Map.of(
+               XMIResource.OPTION_USE_XMI_TYPE, Boolean.TRUE));
+            return true;
+         } catch (IOException e) {
+            LOG.error("Could not save resource: " + resource.getURI(), e);
+         }
+      }
+      return false;
+   }
+
    /*-
     * TODO: Why is this necessary?
    public Set<String> getUmlTypes(final String modeluri) {

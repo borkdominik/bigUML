@@ -12,19 +12,11 @@ package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.ucl
 
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.ecore.util.EcoreUtil.UsageCrossReferencer;
 import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Association;
 import org.eclipse.uml2.uml.Class;
-import org.eclipse.uml2.uml.Property;
-import org.eclipse.uml2.uml.UMLPackage;
 
 import com.eclipsesource.uml.modelserver.shared.notation.commands.UmlRemoveNotationElementCommand;
-import com.eclipsesource.uml.modelserver.shared.utils.UmlSemanticUtil;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association.RemoveAssociationCompoundCommand;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.SetPropertyTypeSemanticCommand;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.reference_matcher.ClassDiagramCrossReferenceRemover;
 
 public class RemoveClassCompoundCommand extends CompoundCommand {
 
@@ -32,30 +24,7 @@ public class RemoveClassCompoundCommand extends CompoundCommand {
       this.append(new RemoveClassSemanticCommand(domain, modelUri, classToRemove));
       this.append(new UmlRemoveNotationElementCommand(domain, modelUri, classToRemove));
 
-      var umlModel = UmlSemanticUtil.getModel(modelUri, domain);
-      var usagesClass = UsageCrossReferencer.find(classToRemove, umlModel.eResource());
-
-      for (Setting setting : usagesClass) {
-         var eObject = setting.getEObject();
-         if (isPropertyTypeUsage(setting, eObject, classToRemove)) {
-            this.append(new SetPropertyTypeSemanticCommand(domain, modelUri, (Property) eObject, null));
-
-         } else if (isAssociationTypeUsage(setting, eObject)) {
-            this.append(new RemoveAssociationCompoundCommand(domain, modelUri, (Association) eObject));
-         }
-      }
-   }
-
-   protected boolean isPropertyTypeUsage(final Setting setting, final EObject eObject, final Class classToRemove) {
-      return eObject instanceof Property
-         && eObject.eContainer() instanceof Class
-         && setting.getEStructuralFeature().equals(UMLPackage.Literals.TYPED_ELEMENT__TYPE)
-         && classToRemove.equals(((Property) eObject).getType());
-   }
-
-   protected boolean isAssociationTypeUsage(final Setting setting, final EObject eObject) {
-      return eObject instanceof Property
-         && eObject.eContainer() instanceof Association
-         && ((Property) eObject).getAssociation() != null;
+      new ClassDiagramCrossReferenceRemover(domain, modelUri).removeCommandsFor(classToRemove)
+         .forEach(this::append);
    }
 }

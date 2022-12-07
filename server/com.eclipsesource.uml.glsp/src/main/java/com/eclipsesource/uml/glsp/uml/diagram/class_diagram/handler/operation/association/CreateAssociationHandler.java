@@ -29,12 +29,12 @@ public class CreateAssociationHandler
 
    @Override
    protected List<String> sources() {
-      return List.of(ClassTypes.CLASS, ClassTypes.INTERFACE);
+      return List.of(ClassTypes.ABSTRACT_CLASS, ClassTypes.CLASS, ClassTypes.INTERFACE);
    }
 
    @Override
    protected List<String> targets() {
-      return List.of(ClassTypes.CLASS, ClassTypes.INTERFACE);
+      return List.of(ClassTypes.ABSTRACT_CLASS, ClassTypes.CLASS, ClassTypes.INTERFACE);
    }
 
    @Override

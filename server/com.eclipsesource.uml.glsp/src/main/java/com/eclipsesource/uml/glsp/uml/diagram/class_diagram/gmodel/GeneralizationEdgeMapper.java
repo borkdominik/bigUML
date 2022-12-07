@@ -27,9 +27,9 @@ public class GeneralizationEdgeMapper extends BaseGEdgeMapper<Generalization, GE
 
    @Override
    public GEdge map(final Generalization generalization) {
-      var source = generalization.getSpecific();
+      var source = generalization.getGeneral();
       var sourceId = idGenerator.getOrCreateId(source);
-      var target = generalization.getGeneral();
+      var target = generalization.getSpecific();
       var targetId = idGenerator.getOrCreateId(target);
 
       GEdgeBuilder builder = new GEdgeBuilder(ClassTypes.CLASS_GENERALIZATION)

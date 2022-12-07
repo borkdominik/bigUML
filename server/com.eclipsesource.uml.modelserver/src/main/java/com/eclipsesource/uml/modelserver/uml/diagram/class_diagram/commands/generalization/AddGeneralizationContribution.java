@@ -19,7 +19,7 @@ public class AddGeneralizationContribution extends BasicCommandContribution<Comm
    public static final String GENERAL_CLASS_ELEMENT_ID = "general_class_semantic_element_id";
    public static final String SPECIFIC_CLASS_ELEMENT_ID = "specific_class_semantic_element_id";
 
-   public static CCompoundCommand create(final Classifier specific, final Classifier general) {
+   public static CCompoundCommand create(final Classifier general, final Classifier specific) {
       var command = CCommandFactory.eINSTANCE.createCompoundCommand();
 
       command.setType(TYPE);

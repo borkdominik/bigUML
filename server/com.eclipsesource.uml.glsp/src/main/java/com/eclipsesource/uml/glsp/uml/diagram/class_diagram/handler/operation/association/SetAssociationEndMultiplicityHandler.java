@@ -10,9 +10,6 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.association;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.uml2.uml.Property;
 
@@ -29,21 +26,6 @@ public class SetAssociationEndMultiplicityHandler extends BaseLabelEditHandler<P
 
    @Override
    protected CCommand command(final Property element, final String newText) {
-      var newBounds = getBoundsFromInput(newText);
-      return SetAssociationEndMultiplicityContribution.create(element, newBounds);
-   }
-
-   private String multiplicityRegex() {
-      return "\\[(.*?)\\]";
-   }
-
-   private String getBoundsFromInput(final String inputText) {
-      String bounds = "";
-      Pattern pattern = Pattern.compile(multiplicityRegex());
-      Matcher matcher = pattern.matcher(inputText);
-      if (matcher.find()) {
-         bounds = matcher.group(1);
-      }
-      return bounds.trim();
+      return SetAssociationEndMultiplicityContribution.create(element, newText);
    }
 }

@@ -32,4 +32,7 @@
   <elements xsi:type="notation:Edge">
     <semanticElement elementId="_RNGE4HrjEe23h8dJ4RYmwQ"/>
   </elements>
+  <elements xsi:type="notation:Edge">
+    <semanticElement elementId="_OLn9UHr2Ee2mpLR0oNPjJg"/>
+  </elements>
 </unotation:UmlDiagram>

@@ -7,48 +7,24 @@
     <size width="160.0" height="50.0"/>
   </elements>
   <elements xsi:type="notation:Shape">
-    <semanticElement elementId="_K5fsIHY-Ee22r-4vylV5aQ"/>
-    <position x="33.14124653535557" y="466.55844355496544"/>
-    <size width="160.0" height="50.0"/>
-  </elements>
-  <elements xsi:type="notation:Shape">
-    <semanticElement elementId="_LMHGIHY-Ee22r-4vylV5aQ"/>
-    <position x="327.1580101846532" y="261.9286859397507"/>
-    <size width="160.0" height="50.0"/>
-  </elements>
-  <elements xsi:type="notation:Edge">
-    <semanticElement elementId="_L4Ur4HY-Ee22r-4vylV5aQ"/>
-  </elements>
-  <elements xsi:type="notation:Edge">
-    <semanticElement elementId="_MaasUHY-Ee22r-4vylV5aQ"/>
-  </elements>
-  <elements xsi:type="notation:Edge">
-    <semanticElement elementId="_M-eboHY-Ee22r-4vylV5aQ"/>
-  </elements>
-  <elements xsi:type="notation:Edge">
-    <semanticElement elementId="_OLhdkHY-Ee22r-4vylV5aQ"/>
-    <bendPoints x="113.14124653535558" y="374.8382207997166"/>
-    <bendPoints x="59.95228426714091" y="374.8382207997166"/>
-  </elements>
-  <elements xsi:type="notation:Shape">
     <semanticElement elementId="_OvGrwHY-Ee22r-4vylV5aQ"/>
     <position x="260.67180734938495" y="133.38869379156532"/>
     <size width="160.0" height="50.0"/>
   </elements>
-  <elements xsi:type="notation:Edge">
-    <semanticElement elementId="_PpepUHY-Ee22r-4vylV5aQ"/>
-  </elements>
   <elements xsi:type="notation:Shape">
     <semanticElement elementId="_Sv-gMHY-Ee22r-4vylV5aQ"/>
-    <position x="-243.14586302453725" y="112.7040973539263"/>
-    <size width="160.0" height="50.0"/>
+    <position x="-313.3257437950982" y="77.98352476217507"/>
+    <size width="160.0" height="66.0"/>
   </elements>
   <elements xsi:type="notation:Edge">
-    <semanticElement elementId="_TnZ3cHY-Ee22r-4vylV5aQ"/>
+    <semanticElement elementId="_tlk0AHr8Ee2FRvuB9uMUlg"/>
+  </elements>
+  <elements xsi:type="notation:Edge">
+    <semanticElement elementId="_Aec-gHr9Ee2FRvuB9uMUlg"/>
   </elements>
   <elements xsi:type="notation:Shape">
-    <semanticElement elementId="_cGBCgHY-Ee22r-4vylV5aQ"/>
-    <position x="-313.3257437950983" y="327.67615318796055"/>
-    <size width="215.53125" height="75.0"/>
+    <semanticElement elementId="_xNd10Hr-Ee2h78mSO_eWXQ"/>
+    <position x="269.53663439408706" y="404.50465424204833"/>
+    <size width="160.0" height="50.0"/>
   </elements>
 </unotation:UmlDiagram>

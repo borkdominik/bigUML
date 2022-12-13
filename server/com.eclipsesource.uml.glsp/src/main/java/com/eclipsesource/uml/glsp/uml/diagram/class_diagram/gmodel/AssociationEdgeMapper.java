@@ -22,30 +22,31 @@ import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.LabelSuffix;
 import com.eclipsesource.uml.glsp.old.utils.property.PropertyUtil;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.AssociationTypes;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyLabelMultiplicitySuffix;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.utils.AssociationTypeUtil;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGEdgeMapper;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.constants.AssociationType;
 
 public class AssociationEdgeMapper extends BaseGEdgeMapper<Association, GEdge> {
 
    @Override
    public GEdge map(final Association association) {
-      var associationType = AssociationTypes.valueOf(association.getKeywords().get(0));
       var memberEnds = association.getMemberEnds();
       var source = memberEnds.get(0);
       var target = memberEnds.get(1);
+      var associationType = AssociationType.from(source.getAggregation());
 
-      var builder = new GEdgeBuilder(associationType.toClassType())
+      var builder = new GEdgeBuilder(AssociationTypeUtil.toClassType(associationType))
          .id(idGenerator.getOrCreateId(association))
          .addCssClass(CoreCSS.EDGE)
          .sourceId(idGenerator.getOrCreateId(source.getType()))
          .targetId(idGenerator.getOrCreateId(target.getType()))
          .routerKind(GConstants.RouterKind.MANHATTAN);
 
-      if (associationType == AssociationTypes.COMPOSITION) {
+      if (associationType == AssociationType.COMPOSITION) {
          applyComposition(association, builder);
-      } else if (associationType == AssociationTypes.AGGREGATION) {
+      } else if (associationType == AssociationType.AGGREGATION) {
          applyAggregation(association, builder);
       } else {
          applyAssociation(association, builder);

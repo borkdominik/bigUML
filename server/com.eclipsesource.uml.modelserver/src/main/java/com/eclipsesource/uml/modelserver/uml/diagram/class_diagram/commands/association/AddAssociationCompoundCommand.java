@@ -16,12 +16,13 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Type;
 
 import com.eclipsesource.uml.modelserver.shared.notation.commands.UmlAddEdgeCommand;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.constants.AssociationType;
 
 public class AddAssociationCompoundCommand extends CompoundCommand {
 
    public AddAssociationCompoundCommand(final EditingDomain domain, final URI modelUri,
       final Type source, final Type target,
-      final String type) {
+      final AssociationType type) {
 
       var command = new AddAssociationSemanticCommand(domain, modelUri, source,
          target, type);

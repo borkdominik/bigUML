@@ -18,7 +18,6 @@ public class AssociationEndNameGenerator implements ContextualNameGenerator<Type
 
    @Override
    public String newNameInContextOf(final Type element) {
-      String suffix = "s";
-      return element.getName().toLowerCase().concat(suffix);
+      return element.getName().toLowerCase();
    }
 }

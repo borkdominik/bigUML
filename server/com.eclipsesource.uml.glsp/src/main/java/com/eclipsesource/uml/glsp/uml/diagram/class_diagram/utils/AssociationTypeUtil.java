@@ -8,15 +8,14 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants;
+package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.utils;
 
-public enum AssociationTypes {
-   ASSOCIATION,
-   AGGREGATION,
-   COMPOSITION;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.constants.AssociationType;
 
-   public String toClassType() {
-      switch (this) {
+public class AssociationTypeUtil {
+   public static String toClassType(final AssociationType type) {
+      switch (type) {
          case AGGREGATION:
             return ClassTypes.AGGREGATION;
          case ASSOCIATION:

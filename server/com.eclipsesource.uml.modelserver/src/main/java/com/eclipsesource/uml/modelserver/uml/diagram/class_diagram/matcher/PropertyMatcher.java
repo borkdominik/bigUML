@@ -10,6 +10,8 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.matcher;
 
+import java.util.Optional;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.uml2.uml.Association;
@@ -18,20 +20,28 @@ import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.UMLPackage;
 
 public class PropertyMatcher {
-   public static boolean isPropertyTypeUsage(final Setting setting, final EObject context) {
+   public static Optional<Property> ofClassUsage(final Setting setting, final EObject interest) {
       var eObject = setting.getEObject();
 
-      return eObject instanceof Property
+      if (eObject instanceof Property
          && eObject.eContainer() instanceof Class
          && setting.getEStructuralFeature().equals(UMLPackage.Literals.TYPED_ELEMENT__TYPE)
-         && context.equals(((Property) eObject).getType());
+         && interest.equals(((Property) eObject).getType())) {
+         return Optional.of((Property) eObject);
+      }
+
+      return Optional.empty();
    }
 
-   public static boolean isAssociationUsage(final Setting setting, final EObject context) {
+   public static Optional<Property> ofAssociationUsage(final Setting setting, final EObject interest) {
       var eObject = setting.getEObject();
 
-      return eObject instanceof Property
+      if (eObject instanceof Property
          && eObject.eContainer() instanceof Association
-         && ((Property) eObject).getAssociation() != null;
+         && ((Property) eObject).getAssociation() != null) {
+         return Optional.of((Property) eObject);
+      }
+
+      return Optional.empty();
    }
 }

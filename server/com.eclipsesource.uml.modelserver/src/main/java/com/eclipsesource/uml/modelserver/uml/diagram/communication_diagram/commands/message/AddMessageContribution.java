@@ -11,7 +11,6 @@
 package com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.message;
 
 import org.eclipse.emf.common.command.Command;
-import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfcloud.modelserver.command.CCommand;
@@ -21,6 +20,7 @@ import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
 import org.eclipse.emfcloud.modelserver.edit.command.BasicCommandContribution;
 import org.eclipse.uml2.uml.Lifeline;
 
+import com.eclipsesource.uml.modelserver.core.commands.noop.NoopCommand;
 import com.eclipsesource.uml.modelserver.shared.constants.SemanticKeys;
 import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
 
@@ -41,7 +41,7 @@ public class AddMessageContribution extends BasicCommandContribution<Command> {
    }
 
    @Override
-   protected CompoundCommand toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
+   protected Command toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
       throws DecodingException {
 
       var elementAccessor = new SemanticElementAccessor(modelUri, domain);
@@ -52,7 +52,11 @@ public class AddMessageContribution extends BasicCommandContribution<Command> {
       var sourceLifeline = elementAccessor.getElement(sourceLifelineUriFragment, Lifeline.class);
       var targetLifeline = elementAccessor.getElement(targetLifelineUriFragment, Lifeline.class);
 
-      return new AddMessageCompoundCommand(domain, modelUri, sourceLifeline, targetLifeline);
+      if (sourceLifeline.isPresent() && targetLifeline.isPresent()) {
+         return new AddMessageCompoundCommand(domain, modelUri, sourceLifeline.get(), targetLifeline.get());
+      }
+
+      return new NoopCommand();
    }
 
 }

@@ -10,23 +10,20 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.matcher;
 
+import java.util.Optional;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.ecore.util.EObjectWithInverseEList;
 import org.eclipse.uml2.uml.Lifeline;
-import org.eclipse.uml2.uml.MessageOccurrenceSpecification;
 
 public class LifelineMatcher {
-   public static boolean isUsage(final Setting setting, final EObject context) {
+   public static Optional<Lifeline> ofUsage(final Setting setting, final EObject interest) {
       var eObject = setting.getEObject();
 
-      return eObject instanceof Lifeline;
-   }
+      if (eObject instanceof Lifeline) {
+         return Optional.of((Lifeline) eObject);
+      }
 
-   public static boolean isInverseMessageUsageSpecificationUsage(final Setting setting, final EObject context) {
-      var eObject = setting.getEObject();
-
-      return setting instanceof EObjectWithInverseEList
-         && eObject instanceof MessageOccurrenceSpecification;
+      return Optional.empty();
    }
 }

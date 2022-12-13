@@ -10,14 +10,34 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.matcher;
 
+import java.util.Optional;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.util.EObjectWithInverseEList;
 import org.eclipse.uml2.uml.Message;
+import org.eclipse.uml2.uml.MessageOccurrenceSpecification;
 
 public class MessageMatcher {
-   public static boolean isUsage(final Setting setting, final EObject context) {
+
+   public static Optional<Message> ofUsage(final Setting setting, final EObject interest) {
       var eObject = setting.getEObject();
 
-      return eObject instanceof Message;
+      if (eObject instanceof Message) {
+         return Optional.of((Message) eObject);
+      }
+
+      return Optional.empty();
+   }
+
+   public static Optional<MessageOccurrenceSpecification> ofInverseMessageUsageSpecificationUsage(
+      final Setting setting, final EObject interest) {
+      var eObject = setting.getEObject();
+
+      if (setting instanceof EObjectWithInverseEList && eObject instanceof MessageOccurrenceSpecification) {
+         return Optional.of((MessageOccurrenceSpecification) eObject);
+      }
+
+      return Optional.empty();
    }
 }

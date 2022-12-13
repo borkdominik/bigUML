@@ -19,6 +19,7 @@ import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
 import org.eclipse.emfcloud.modelserver.edit.command.BasicCommandContribution;
 import org.eclipse.uml2.uml.Message;
 
+import com.eclipsesource.uml.modelserver.core.commands.noop.NoopCommand;
 import com.eclipsesource.uml.modelserver.shared.constants.SemanticKeys;
 import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
 
@@ -48,7 +49,9 @@ public class SetMessageNameContribution extends BasicCommandContribution<Command
 
       var message = elementAccessor.getElement(semanticElementId, Message.class);
 
-      return new SetMessageNameSemanticCommand(domain, modelUri, message, newName);
+      return message
+         .<Command> map(m -> new SetMessageNameSemanticCommand(domain, modelUri, m, newName))
+         .orElse(new NoopCommand());
    }
 
 }

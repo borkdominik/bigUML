@@ -9,6 +9,7 @@ import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
 import org.eclipse.emfcloud.modelserver.edit.command.BasicCommandContribution;
 import org.eclipse.uml2.uml.Property;
 
+import com.eclipsesource.uml.modelserver.core.commands.noop.NoopCommand;
 import com.eclipsesource.uml.modelserver.shared.constants.SemanticKeys;
 import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.util.ClassSemanticCommandUtil;
@@ -38,7 +39,9 @@ public class SetPropertyTypeContribution extends BasicCommandContribution<Comman
 
       var property = elementAccessor.getElement(semanticElementId, Property.class);
 
-      return new SetPropertyTypeSemanticCommand(domain, modelUri, property, newType);
+      return property
+         .<Command> map(p -> new SetPropertyTypeSemanticCommand(domain, modelUri, p, newType))
+         .orElse(new NoopCommand());
    }
 
 }

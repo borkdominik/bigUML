@@ -12,9 +12,9 @@ package com.eclipsesource.uml.modelserver.shared.extension;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
+import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
@@ -26,10 +26,10 @@ import org.eclipse.emf.ecore.util.EcoreUtil.UsageCrossReferencer;
 import com.eclipsesource.uml.modelserver.shared.utils.StreamUtil;
 
 public class CrossReferenceMatcher<T> {
-   protected final Map<BiFunction<Setting, EObject, Boolean>, BiFunction<Setting, EObject, T>> matchers;
+   protected final List<BiFunction<Setting, EObject, Optional<T>>> matchers;
 
    protected CrossReferenceMatcher(
-      final Map<BiFunction<Setting, EObject, Boolean>, BiFunction<Setting, EObject, T>> matchers) {
+      final List<BiFunction<Setting, EObject, Optional<T>>> matchers) {
       this.matchers = matchers;
    }
 
@@ -47,13 +47,9 @@ public class CrossReferenceMatcher<T> {
          .collect(Collectors.toList());
 
       for (var setting : filteredSettings) {
-         for (var entry : matchers.entrySet()) {
-            var match = entry.getKey();
-            var consumer = entry.getValue();
-            if (match.apply(setting, interest)) {
-               matches.add(consumer.apply(setting, interest));
-               break;
-            }
+         for (var matcher : matchers) {
+
+            matcher.apply(setting, interest).ifPresent(matches::add);
          }
       }
 
@@ -62,11 +58,10 @@ public class CrossReferenceMatcher<T> {
    }
 
    public static class Builder<T> {
-      private final Map<BiFunction<Setting, EObject, Boolean>, BiFunction<Setting, EObject, T>> matchers = new HashMap<>();
+      private final List<BiFunction<Setting, EObject, Optional<T>>> matchers = new LinkedList<>();
 
-      public Builder<T> match(final BiFunction<Setting, EObject, Boolean> match,
-         final BiFunction<Setting, EObject, T> consumer) {
-         matchers.put(match, consumer);
+      public Builder<T> match(final BiFunction<Setting, EObject, Optional<T>> match) {
+         matchers.add(match);
          return this;
       }
 

@@ -19,6 +19,7 @@ import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
 import org.eclipse.emfcloud.modelserver.edit.command.BasicCommandContribution;
 import org.eclipse.uml2.uml.NamedElement;
 
+import com.eclipsesource.uml.modelserver.core.commands.noop.NoopCommand;
 import com.eclipsesource.uml.modelserver.shared.constants.SemanticKeys;
 import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
 
@@ -48,7 +49,9 @@ public class RenameElementContribution extends BasicCommandContribution<Command>
       var namedElement = model.getElement(semanticElementId,
          NamedElement.class);
 
-      return new RenameElementSemanticCommand(domain, modelUri, namedElement, newName);
+      return namedElement
+         .<Command> map(n -> new RenameElementSemanticCommand(domain, modelUri, n, newName))
+         .orElse(new NoopCommand());
    }
 
 }

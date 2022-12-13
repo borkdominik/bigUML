@@ -11,7 +11,6 @@
 package com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.lifeline;
 
 import org.eclipse.emf.common.command.Command;
-import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfcloud.modelserver.command.CCommand;
@@ -22,6 +21,7 @@ import org.eclipse.emfcloud.modelserver.edit.command.BasicCommandContribution;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.uml2.uml.Interaction;
 
+import com.eclipsesource.uml.modelserver.core.commands.noop.NoopCommand;
 import com.eclipsesource.uml.modelserver.shared.constants.NotationKeys;
 import com.eclipsesource.uml.modelserver.shared.constants.SemanticKeys;
 import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
@@ -46,7 +46,7 @@ public class AddLifelineContribution extends BasicCommandContribution<Command> {
    }
 
    @Override
-   protected CompoundCommand toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
+   protected Command toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
       throws DecodingException {
       var elementAccessor = new SemanticElementAccessor(modelUri, domain);
 
@@ -58,7 +58,9 @@ public class AddLifelineContribution extends BasicCommandContribution<Command> {
 
       var parentInteraction = elementAccessor.getElement(parentInteractionsemanticElementId, Interaction.class);
 
-      return new AddLifelineCompoundCommand(domain, modelUri, position, parentInteraction);
+      return parentInteraction
+         .<Command> map(p -> new AddLifelineCompoundCommand(domain, modelUri, position, p))
+         .orElse(new NoopCommand());
    }
 
 }

@@ -10,14 +10,21 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.matcher;
 
+import java.util.Optional;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.uml2.uml.Generalization;
 
 public class GeneralizationMatcher {
-   public static boolean isUsage(final Setting setting, final EObject context) {
+
+   public static Optional<Generalization> ofUsage(final Setting setting, final EObject interest) {
       var eObject = setting.getEObject();
 
-      return eObject instanceof Generalization;
+      if (eObject instanceof Generalization) {
+         return Optional.of((Generalization) eObject);
+      }
+
+      return Optional.empty();
    }
 }

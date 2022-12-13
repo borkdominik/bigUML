@@ -19,6 +19,7 @@ import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
 import org.eclipse.emfcloud.modelserver.edit.command.BasicCommandContribution;
 import org.eclipse.uml2.uml.Property;
 
+import com.eclipsesource.uml.modelserver.core.commands.noop.NoopCommand;
 import com.eclipsesource.uml.modelserver.shared.constants.SemanticKeys;
 import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
 
@@ -45,7 +46,9 @@ public class SetAssociationEndNameContribution extends BasicCommandContribution<
 
       var property = elementAccessor.getElement(semanticElementId, Property.class);
 
-      return new SetAssociationEndNameSemanticCommand(domain, modelUri, property, newName);
+      return property
+         .<Command> map(p -> new SetAssociationEndNameSemanticCommand(domain, modelUri, p, newName))
+         .orElse(new NoopCommand());
    }
 
 }

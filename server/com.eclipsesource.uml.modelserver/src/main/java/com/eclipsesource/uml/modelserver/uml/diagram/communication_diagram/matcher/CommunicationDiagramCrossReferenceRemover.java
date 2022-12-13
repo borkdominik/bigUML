@@ -16,9 +16,6 @@ import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Lifeline;
-import org.eclipse.uml2.uml.Message;
-import org.eclipse.uml2.uml.MessageOccurrenceSpecification;
 import org.eclipse.uml2.uml.Model;
 
 import com.eclipsesource.uml.modelserver.shared.extension.CrossReferenceMatcher;
@@ -35,18 +32,15 @@ public class CommunicationDiagramCrossReferenceRemover {
 
       model = UmlSemanticUtil.getModel(modelUri, domain);
       matcher = new CrossReferenceMatcher.Builder<Command>()
-         .match(LifelineMatcher::isUsage, (setting, context) -> {
-            var lifeline = (Lifeline) setting.getEObject();
-            return new RemoveLifelineCompoundCommand(domain, modelUri, lifeline);
-         })
-         .match(LifelineMatcher::isInverseMessageUsageSpecificationUsage, (setting, context) -> {
-            var messageOccureneSpecification = (MessageOccurrenceSpecification) setting.getEObject();
-            return new RemoveMessageCompoundCommand(domain, modelUri, messageOccureneSpecification.getMessage());
-         })
-         .match(MessageMatcher::isUsage, (setting, context) -> {
-            var message = (Message) setting.getEObject();
-            return new RemoveMessageCompoundCommand(domain, modelUri, message);
-         })
+         .match((setting, interest) -> LifelineMatcher
+            .ofUsage(setting, interest)
+            .map(lifeline -> new RemoveLifelineCompoundCommand(domain, modelUri, lifeline)))
+         .match((setting, interest) -> MessageMatcher
+            .ofUsage(setting, interest)
+            .map(message -> new RemoveMessageCompoundCommand(domain, modelUri, message)))
+         .match((setting, interest) -> MessageMatcher
+            .ofInverseMessageUsageSpecificationUsage(setting, interest)
+            .map(specification -> new RemoveMessageCompoundCommand(domain, modelUri, specification.getMessage())))
          .build();
    }
 

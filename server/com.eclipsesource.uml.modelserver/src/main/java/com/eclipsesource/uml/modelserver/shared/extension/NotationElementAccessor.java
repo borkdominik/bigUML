@@ -36,14 +36,12 @@ public final class NotationElementAccessor {
 
    public UmlDiagram getDiagram() { return this.diagram; }
 
-   public <C extends NotationElement> C getElement(final String semanticUri, final Class<C> clazz) {
-      NotationElement element = getElement(semanticUri);
-      return clazz.cast(element);
+   public <C extends NotationElement> Optional<C> getElement(final String semanticUri, final Class<C> clazz) {
+      return getElement(semanticUri).map(element -> clazz.cast(element));
    }
 
-   public NotationElement getElement(final String semanticUri) {
-      Optional<NotationElement> notationElement = diagram.getElements().stream()
+   public Optional<NotationElement> getElement(final String semanticUri) {
+      return diagram.getElements().stream()
          .filter(el -> el.getSemanticElement().getElementId().equals(semanticUri)).findFirst();
-      return notationElement.orElse(null);
    }
 }

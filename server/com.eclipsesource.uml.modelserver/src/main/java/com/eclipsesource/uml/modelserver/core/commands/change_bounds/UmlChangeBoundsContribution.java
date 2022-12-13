@@ -31,6 +31,7 @@ import org.eclipse.glsp.server.emf.model.notation.Shape;
 import org.eclipse.glsp.server.types.ElementAndBounds;
 import org.eclipse.uml2.uml.Element;
 
+import com.eclipsesource.uml.modelserver.core.commands.noop.NoopCommand;
 import com.eclipsesource.uml.modelserver.shared.constants.NotationKeys;
 import com.eclipsesource.uml.modelserver.shared.constants.SemanticKeys;
 import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
@@ -139,13 +140,15 @@ public class UmlChangeBoundsContribution extends BasicCommandContribution<Comman
       return new ElementAndBounds(init);
    }
 
-   protected UmlChangeBoundsNotationCommand getChangeBoundsCommand(final URI modelUri, final EditingDomain domain,
+   protected Command getChangeBoundsCommand(final URI modelUri, final EditingDomain domain,
       final ElementAndBounds bound) {
       var semanticElementAccessor = new SemanticElementAccessor(modelUri, domain);
+
       var element = semanticElementAccessor.getElement(bound.getElementId(), Element.class);
 
-      return new UmlChangeBoundsNotationCommand(domain, modelUri, element,
-         Optional.ofNullable(bound.getNewPosition()), Optional.of(bound.getNewSize()));
+      return element.<Command> map(e -> new UmlChangeBoundsNotationCommand(domain, modelUri, e,
+         Optional.ofNullable(bound.getNewPosition()), Optional.of(bound.getNewSize())))
+         .orElse(new NoopCommand("No element found for " + bound.getElementId()));
    }
 
    protected GPoint getElementPosition(final CCommand command) {

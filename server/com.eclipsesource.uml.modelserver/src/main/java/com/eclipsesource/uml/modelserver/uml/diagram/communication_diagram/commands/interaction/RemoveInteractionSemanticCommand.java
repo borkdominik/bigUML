@@ -14,20 +14,17 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Interaction;
 
-import com.eclipsesource.uml.modelserver.shared.semantic.UmlSemanticElementCommand;
+import com.eclipsesource.uml.modelserver.shared.semantic.SemanticExistenceCheckedCommand;
 
-public class RemoveInteractionSemanticCommand extends UmlSemanticElementCommand {
-
-   protected final Interaction interaction;
+public class RemoveInteractionSemanticCommand extends SemanticExistenceCheckedCommand<Interaction> {
 
    public RemoveInteractionSemanticCommand(final EditingDomain domain, final URI modelUri,
       final Interaction interaction) {
-      super(domain, modelUri);
-      this.interaction = interaction;
+      super(domain, modelUri, interaction);
    }
 
    @Override
-   protected void doExecute() {
-      model.getPackagedElements().remove(interaction);
+   protected void doChanges() {
+      model.getPackagedElements().remove(semanticElement);
    }
 }

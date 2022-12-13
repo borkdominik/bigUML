@@ -29,5 +29,7 @@
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_Aec-hnr9Ee2FRvuB9uMUlg" value="5"/>
     </ownedEnd>
   </packagedElement>
-  <packagedElement xmi:type="uml:Class" xmi:id="_xNd10Hr-Ee2h78mSO_eWXQ" name="NewClass3"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="_xNd10Hr-Ee2h78mSO_eWXQ" name="NewClass3">
+    <generalization xmi:id="_v6eckHsBEe21bfOWPw_Dwg" general="_KfaYMHY-Ee22r-4vylV5aQ"/>
+  </packagedElement>
 </uml:Model>

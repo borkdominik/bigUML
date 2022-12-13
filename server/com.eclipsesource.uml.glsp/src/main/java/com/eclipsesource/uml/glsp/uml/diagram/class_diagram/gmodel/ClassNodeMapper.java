@@ -92,7 +92,7 @@ public class ClassNodeMapper extends BaseGNodeMapper<Class, GNode> {
    }
 
    protected GCompartment buildCompartment(final Class umlClass) {
-      var properties = umlClass.getAllAttributes();
+      var properties = umlClass.getOwnedAttributes();
 
       var builder = new GCompartmentBuilder(CoreTypes.COMPARTMENT)
          .id(suffix.appendTo(CompartmentSuffix.SUFFIX, idGenerator.getOrCreateId(umlClass)))

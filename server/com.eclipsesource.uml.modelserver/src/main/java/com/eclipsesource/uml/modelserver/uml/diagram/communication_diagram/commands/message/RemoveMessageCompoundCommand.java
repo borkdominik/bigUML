@@ -21,7 +21,6 @@ public class RemoveMessageCompoundCommand extends CompoundCommand {
 
    public RemoveMessageCompoundCommand(final EditingDomain domain, final URI modelUri,
       final Message message) {
-
       this.append(new RemoveMessageSemanticCommand(domain, modelUri, message));
       this.append(new UmlRemoveNotationElementCommand(domain, modelUri, message));
    }

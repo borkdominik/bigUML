@@ -10,25 +10,40 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.core.gmodel.suffix;
 
+import java.util.Map;
+import java.util.Optional;
+
+import org.eclipse.glsp.server.types.GLSPServerException;
+
+import com.eclipsesource.uml.glsp.core.features.idgenerator.SuffixIdAppender;
 import com.google.inject.Inject;
 
 public class Suffix {
-   public final HeaderSuffixAppender headerSuffix;
-   public final HeaderLabelSuffixAppender headerLabelSuffix;
-   public final HeaderIconSuffixAppender headerIconSuffix;
-   public final CompartmentSuffixAppender compartmentSuffix;
-   public final LabelSuffixAppender labelSuffix;
-
    @Inject
-   public Suffix(final HeaderSuffixAppender headerSuffix,
-      final HeaderLabelSuffixAppender headerLabelSuffix, final HeaderIconSuffixAppender headerIconSuffix,
-      final CompartmentSuffixAppender compartmentSuffix, final LabelSuffixAppender labelSuffix) {
+   protected Map<String, SuffixIdAppender> appenders;
 
-      this.headerSuffix = headerSuffix;
-      this.headerLabelSuffix = headerLabelSuffix;
-      this.headerIconSuffix = headerIconSuffix;
-      this.compartmentSuffix = compartmentSuffix;
-      this.labelSuffix = labelSuffix;
+   public String appendTo(final String suffix, final String id) {
+      if (!appenders.containsKey(suffix)) {
+         throw new GLSPServerException("Suffix " + suffix + " is not known. Did you register it?");
+      }
+
+      return appenders.get(suffix).appendTo(id);
    }
 
+   public Optional<SuffixIdAppender> extractAppender(final String id) {
+      return appenders.values().stream().filter(g -> g.isSuffixOf(id))
+         .sorted((arg0, arg1) -> arg1.suffix().length() - arg0.suffix().length()).findFirst();
+   }
+
+   public Optional<String> extractSuffix(final String id) {
+      return extractAppender(id).map(g -> g.suffix());
+   }
+
+   public Optional<String> extractId(final String id) {
+      return extractAppender(id).map(g -> g.clear(id));
+   }
+
+   public boolean hasSuffix(final String id) {
+      return extractAppender(id).isPresent();
+   }
 }

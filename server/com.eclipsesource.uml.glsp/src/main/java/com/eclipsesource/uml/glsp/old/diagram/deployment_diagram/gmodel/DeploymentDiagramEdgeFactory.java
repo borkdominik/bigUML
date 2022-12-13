@@ -72,7 +72,7 @@ public class DeploymentDiagramEdgeFactory { /*-
    }
 
    protected GLabel createEdgeNameLabel(final String name, final String id, final double position) {
-      return createEdgeLabel(name, position, id, UmlConfig.Types.LABEL_EDGE_NAME, GConstants.EdgeSide.TOP);
+      return createEdgeLabel(name, position, id, CoreTypes.LABEL_EDGE_NAME, GConstants.EdgeSide.TOP);
    }
 
    protected GLabel createEdgeLabel(final String name, final double position, final String id, final String type,

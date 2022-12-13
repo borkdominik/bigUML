@@ -82,7 +82,7 @@ public class UmlChangeRoutingPointsContribution extends BasicCommandContribution
                newRoutingPoints.add(routingPoint);
             });
 
-            var edge = notationElementAccessor.getElement(semanticElementId, Edge.class);
+            var edge = notationElementAccessor.getElement(semanticElementId, Edge.class).get();
 
             compoundCommand.append(
                new UmlChangeRoutingPointsNotationCommand(domain, modelUri, edge, newRoutingPoints));

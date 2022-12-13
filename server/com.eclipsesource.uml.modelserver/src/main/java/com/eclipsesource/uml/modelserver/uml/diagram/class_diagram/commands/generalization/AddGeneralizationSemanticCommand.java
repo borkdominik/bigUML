@@ -2,31 +2,27 @@ package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.gen
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Class;
+import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.Generalization;
-import org.eclipse.uml2.uml.UMLFactory;
 
 import com.eclipsesource.uml.modelserver.shared.semantic.UmlSemanticElementCommand;
 
 public class AddGeneralizationSemanticCommand extends UmlSemanticElementCommand {
 
-   protected final Generalization newGeneralization;
-   protected final Class source;
-   protected final Class target;
+   protected Generalization newGeneralization;
+   protected final Classifier general;
+   protected final Classifier specific;
 
    public AddGeneralizationSemanticCommand(final EditingDomain domain, final URI modelUri,
-      final Class source, final Class target) {
+      final Classifier specific, final Classifier general) {
       super(domain, modelUri);
-      this.newGeneralization = UMLFactory.eINSTANCE.createGeneralization();
-      this.source = source;
-      this.target = target;
+      this.general = general;
+      this.specific = specific;
    }
 
    @Override
    protected void doExecute() {
-      source.getGeneralizations().add(getNewGeneralization());
-      getNewGeneralization().setGeneral(source);
-      getNewGeneralization().setSpecific(target);
+      this.newGeneralization = specific.createGeneralization(general);
    }
 
    public Generalization getNewGeneralization() { return newGeneralization; }

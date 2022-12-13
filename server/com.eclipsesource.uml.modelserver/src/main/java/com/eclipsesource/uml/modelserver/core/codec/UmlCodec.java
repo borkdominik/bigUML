@@ -51,7 +51,8 @@ public class UmlCodec extends XmiCodec {
       ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
       try {
          eObject.eResource().save(outputStream,
-            Map.of(XMLResource.OPTION_KEEP_DEFAULT_CONTENT, Boolean.TRUE,
+            Map.of(
+               XMLResource.OPTION_KEEP_DEFAULT_CONTENT, Boolean.TRUE,
                XMLResource.OPTION_PROCESS_DANGLING_HREF, XMLResource.OPTION_PROCESS_DANGLING_HREF_DISCARD));
       } catch (IOException e) {
          throw new EncodingException(e);

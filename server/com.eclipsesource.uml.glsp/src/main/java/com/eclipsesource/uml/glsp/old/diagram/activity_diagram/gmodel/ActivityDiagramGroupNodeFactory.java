@@ -193,10 +193,10 @@ public class ActivityDiagramGroupNodeFactory { /*-
    }
 
    protected GCompartment buildHeader(final ActivityGroup activityGroup) {
-      return new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER) //
+      return new GCompartmentBuilder(CoreTypes.COMPARTMENT_HEADER) //
          .layout("hbox") //
          .id(toId(activityGroup) + "_header") //
-         .add(new GLabelBuilder(UmlConfig.Types.LABEL_NAME) //
+         .add(new GLabelBuilder(CoreTypes.LABEL_NAME) //
             .id(toId(activityGroup) + "_header_label").text(activityGroup.getName()) //
             .build()) //
          .build();
@@ -215,7 +215,7 @@ public class ActivityDiagramGroupNodeFactory { /*-
 
    protected GCompartment createLabeledChildrenCompartment(final Collection<? extends EObject> children,
       final ActivityGroup parent) {
-      return new GCompartmentBuilder(UmlConfig.Types.COMP) //
+      return new GCompartmentBuilder(CoreTypes.COMP) //
          .id(toId(parent) + "_childCompartment").layout(GConstants.Layout.VBOX) //
          .layoutOptions(new GLayoutOptions() //
             .hAlign(GConstants.HAlign.LEFT) //

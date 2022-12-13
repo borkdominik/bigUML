@@ -16,6 +16,6 @@ import "reflect-metadata";
 import createUmlDiagramContainer from "./di.config";
 
 export * from "./model";
-export * from "./views/commons";
+export * from "./common/common";
 export * from "./features/edit-label";
 export { createUmlDiagramContainer };

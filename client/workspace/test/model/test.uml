@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_nD7_AEiTEe287ptuQ4W3Iw" name="test">
-  <packagedElement xmi:type="uml:Interaction" xmi:id="_YMo0AFkwEe2JlJ6Hu0hssQ" name="NewInteraction1">
-    <lifeline xmi:id="_YkesQFkwEe2JlJ6Hu0hssQ" name="NewLifeline1" coveredBy="_WjjbgG8XEe2mJIxqi4TDVg"/>
-    <lifeline xmi:id="_7tU98VkzEe2-DPjS777r_w" name="asd" coveredBy="_WjkCkG8XEe2mJIxqi4TDVg"/>
-    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_WjjbgG8XEe2mJIxqi4TDVg" name="NewMessage1 - SendEvent" covered="_YkesQFkwEe2JlJ6Hu0hssQ" message="_Wji0cG8XEe2mJIxqi4TDVg"/>
-    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_WjkCkG8XEe2mJIxqi4TDVg" name="NewMessage1 - ReceiveEvent" covered="_7tU98VkzEe2-DPjS777r_w" message="_Wji0cG8XEe2mJIxqi4TDVg"/>
-    <message xmi:id="_Wji0cG8XEe2mJIxqi4TDVg" name="NewMessage1" receiveEvent="_WjkCkG8XEe2mJIxqi4TDVg" sendEvent="_WjjbgG8XEe2mJIxqi4TDVg"/>
+  <packagedElement xmi:type="uml:Interaction" xmi:id="_Apok4XZJEe2wEbvDZ90BxA" name="asd">
+    <lifeline xmi:id="_BAry8HZJEe2wEbvDZ90BxA" name="asd" coveredBy="_CSxF4HZJEe2wEbvDZ90BxA _OLpygHr2Ee2mpLR0oNPjJg"/>
+    <lifeline xmi:id="_BVYQkHZJEe2wEbvDZ90BxA" name="asd" coveredBy="_CSxs8HZJEe2wEbvDZ90BxA _RNH6EHrjEe23h8dJ4RYmwQ"/>
+    <lifeline xmi:id="_Qp-wwHrjEe23h8dJ4RYmwQ" name="NewLifeline3" coveredBy="_RNHTAHrjEe23h8dJ4RYmwQ _OLpLcHr2Ee2mpLR0oNPjJg"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_CSxF4HZJEe2wEbvDZ90BxA" name="asd - SendEvent" covered="_BAry8HZJEe2wEbvDZ90BxA" message="_CSv3wHZJEe2wEbvDZ90BxA"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_CSxs8HZJEe2wEbvDZ90BxA" name="asd - ReceiveEvent" covered="_BVYQkHZJEe2wEbvDZ90BxA" message="_CSv3wHZJEe2wEbvDZ90BxA"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_RNHTAHrjEe23h8dJ4RYmwQ" name="NewMessage2 - SendEvent" covered="_Qp-wwHrjEe23h8dJ4RYmwQ" message="_RNGE4HrjEe23h8dJ4RYmwQ"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_RNH6EHrjEe23h8dJ4RYmwQ" name="NewMessage2 - ReceiveEvent" covered="_BVYQkHZJEe2wEbvDZ90BxA" message="_RNGE4HrjEe23h8dJ4RYmwQ"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_OLpLcHr2Ee2mpLR0oNPjJg" name="NewMessage3 - SendEvent" covered="_Qp-wwHrjEe23h8dJ4RYmwQ" message="_OLn9UHr2Ee2mpLR0oNPjJg"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_OLpygHr2Ee2mpLR0oNPjJg" name="NewMessage3 - ReceiveEvent" covered="_BAry8HZJEe2wEbvDZ90BxA" message="_OLn9UHr2Ee2mpLR0oNPjJg"/>
+    <message xmi:id="_CSv3wHZJEe2wEbvDZ90BxA" name="asd" receiveEvent="_CSxs8HZJEe2wEbvDZ90BxA" sendEvent="_CSxF4HZJEe2wEbvDZ90BxA"/>
+    <message xmi:id="_RNGE4HrjEe23h8dJ4RYmwQ" name="NewMessage2" receiveEvent="_RNH6EHrjEe23h8dJ4RYmwQ" sendEvent="_RNHTAHrjEe23h8dJ4RYmwQ"/>
+    <message xmi:id="_OLn9UHr2Ee2mpLR0oNPjJg" name="NewMessage3" receiveEvent="_OLpygHr2Ee2mpLR0oNPjJg" sendEvent="_OLpLcHr2Ee2mpLR0oNPjJg"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Interaction" xmi:id="_Rz0LYG8WEe2mJIxqi4TDVg" name="NewInteraction2"/>
+  <packagedElement xmi:type="uml:Interaction" xmi:id="_ntqiEXrTEe2uNb5d1e2_ig" name="NewInteraction2"/>
 </uml:Model>

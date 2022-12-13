@@ -1,14 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_Cfp0UGmxEe2kLe5KTNzRtw" name="clazz">
-  <packagedElement xmi:type="uml:Class" xmi:id="_H-DtkG8eEe2ylsFz_BrkQw" name="NewClass1"/>
-  <packagedElement xmi:type="uml:Class" xmi:id="_IVZ2kG8eEe2ylsFz_BrkQw" name="NewClass2"/>
-  <packagedElement xmi:type="uml:Class" xmi:id="_I4GT8G8eEe2ylsFz_BrkQw" name="NewClass3" isAbstract="true"/>
-  <packagedElement xmi:type="uml:Association" xmi:id="_KtOpkG8eEe2ylsFz_BrkQw" memberEnd="_KtOpk28eEe2ylsFz_BrkQw _KtOplG8eEe2ylsFz_BrkQw">
-    <eAnnotations xmi:id="_KtOpkW8eEe2ylsFz_BrkQw" source="http://www.eclipse.org/uml2/2.0.0/UML">
-      <details xmi:id="_KtOpkm8eEe2ylsFz_BrkQw" key="aggregation"/>
-    </eAnnotations>
-    <ownedEnd xmi:id="_KtOpk28eEe2ylsFz_BrkQw" name="newclass2s" type="_IVZ2kG8eEe2ylsFz_BrkQw" association="_KtOpkG8eEe2ylsFz_BrkQw"/>
-    <ownedEnd xmi:id="_KtOplG8eEe2ylsFz_BrkQw" name="newclass1s" type="_H-DtkG8eEe2ylsFz_BrkQw" association="_KtOpkG8eEe2ylsFz_BrkQw"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="_KfaYMHY-Ee22r-4vylV5aQ" name="Class">
+    <ownedAttribute xmi:id="_hCPgYHZIEe27uZDrCx60Rw" name="Property"/>
+    <ownedAttribute xmi:id="_oNhfUXr-Ee2h78mSO_eWXQ" name="lkasjd"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Interface" xmi:id="_LUoAwG8eEe2ylsFz_BrkQw" name="NewInterface1"/>
+  <packagedElement xmi:type="uml:Interface" xmi:id="_OvGrwHY-Ee22r-4vylV5aQ" name="Interface"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="_Sv-gMHY-Ee22r-4vylV5aQ" name="Abstract" isAbstract="true"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="_tlk0AHr8Ee2FRvuB9uMUlg" memberEnd="_tlk0A3r8Ee2FRvuB9uMUlg _tlk0Bnr8Ee2FRvuB9uMUlg">
+    <eAnnotations xmi:id="_tlk0AXr8Ee2FRvuB9uMUlg" source="http://www.eclipse.org/uml2/2.0.0/UML">
+      <details xmi:id="_tlk0Anr8Ee2FRvuB9uMUlg" key="COMPOSITION"/>
+    </eAnnotations>
+    <ownedEnd xmi:id="_tlk0A3r8Ee2FRvuB9uMUlg" name="abstracts" type="_Sv-gMHY-Ee22r-4vylV5aQ" aggregation="composite" association="_tlk0AHr8Ee2FRvuB9uMUlg">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_tlk0BHr8Ee2FRvuB9uMUlg" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_tlk0BXr8Ee2FRvuB9uMUlg" value="1"/>
+    </ownedEnd>
+    <ownedEnd xmi:id="_tlk0Bnr8Ee2FRvuB9uMUlg" name="classs" type="_KfaYMHY-Ee22r-4vylV5aQ" association="_tlk0AHr8Ee2FRvuB9uMUlg">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_tlk0B3r8Ee2FRvuB9uMUlg" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_tlk0CHr8Ee2FRvuB9uMUlg" value="1"/>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_Aec-gHr9Ee2FRvuB9uMUlg" memberEnd="_Aec-gXr9Ee2FRvuB9uMUlg _Aec-hHr9Ee2FRvuB9uMUlg">
+    <ownedEnd xmi:id="_Aec-gXr9Ee2FRvuB9uMUlg" name="aslkdja" type="_KfaYMHY-Ee22r-4vylV5aQ" association="_Aec-gHr9Ee2FRvuB9uMUlg">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_Aec-gnr9Ee2FRvuB9uMUlg" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_Aec-g3r9Ee2FRvuB9uMUlg" value="1"/>
+    </ownedEnd>
+    <ownedEnd xmi:id="_Aec-hHr9Ee2FRvuB9uMUlg" name="" type="_OvGrwHY-Ee22r-4vylV5aQ" association="_Aec-gHr9Ee2FRvuB9uMUlg">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_Aec-hXr9Ee2FRvuB9uMUlg" value="2"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_Aec-hnr9Ee2FRvuB9uMUlg" value="5"/>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_xNd10Hr-Ee2h78mSO_eWXQ" name="NewClass3">
+    <generalization xmi:id="_v6eckHsBEe21bfOWPw_Dwg" general="_KfaYMHY-Ee22r-4vylV5aQ"/>
+  </packagedElement>
 </uml:Model>

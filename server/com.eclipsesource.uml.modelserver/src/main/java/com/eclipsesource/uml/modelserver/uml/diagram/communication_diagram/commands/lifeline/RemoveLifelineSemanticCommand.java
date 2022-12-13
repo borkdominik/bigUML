@@ -14,22 +14,19 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Lifeline;
 
-import com.eclipsesource.uml.modelserver.shared.semantic.UmlSemanticElementCommand;
+import com.eclipsesource.uml.modelserver.shared.semantic.SemanticExistenceCheckedCommand;
 
-public class RemoveLifelineSemanticCommand extends UmlSemanticElementCommand {
-
-   protected final Lifeline lifeline;
+public class RemoveLifelineSemanticCommand extends SemanticExistenceCheckedCommand<Lifeline> {
 
    public RemoveLifelineSemanticCommand(final EditingDomain domain, final URI modelUri,
       final Lifeline lifeline) {
-      super(domain, modelUri);
-      this.lifeline = lifeline;
+      super(domain, modelUri, lifeline);
    }
 
    @Override
-   protected void doExecute() {
-      var interaction = lifeline.getInteraction();
-      interaction.getLifelines().remove(lifeline);
+   protected void doChanges() {
+      var interaction = semanticElement.getInteraction();
+      interaction.getLifelines().remove(semanticElement);
    }
 
 }

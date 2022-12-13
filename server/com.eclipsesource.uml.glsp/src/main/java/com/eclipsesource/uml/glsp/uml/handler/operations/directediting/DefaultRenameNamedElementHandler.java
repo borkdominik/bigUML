@@ -13,13 +13,17 @@ package com.eclipsesource.uml.glsp.uml.handler.operations.directediting;
 import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.uml2.uml.NamedElement;
 
-import com.eclipsesource.uml.glsp.core.utils.UmlConfig;
+import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 import com.eclipsesource.uml.modelserver.uml.diagram.common_diagram.commands.RenameElementContribution;
 
 public class DefaultRenameNamedElementHandler<T extends NamedElement> extends BaseLabelEditHandler<T> {
 
    public DefaultRenameNamedElementHandler(final String suffix) {
-      super(UmlConfig.Types.LABEL_NAME, suffix);
+      this(CoreTypes.LABEL_NAME, suffix);
+   }
+
+   public DefaultRenameNamedElementHandler(final String type, final String suffix) {
+      super(type, suffix);
    }
 
    @Override

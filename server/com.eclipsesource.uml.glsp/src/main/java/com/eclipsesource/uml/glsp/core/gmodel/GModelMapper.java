@@ -10,11 +10,17 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.core.gmodel;
 
+import java.util.List;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.graph.GModelElement;
 
 public interface GModelMapper<Source extends EObject, Target extends GModelElement> {
-   Target map(Source object);
+   Target map(Source source);
+
+   default List<GModelElement> mapSiblings(final Source source) {
+      return List.of();
+   }
 
    Class<Source> getSourceType();
 

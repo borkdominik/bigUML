@@ -38,10 +38,10 @@ public class DeploymentDiagramChildNodeFactory { /*-
    }
 
    protected GCompartment buildComponentHeader(final Component component) {
-      return new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER)
+      return new GCompartmentBuilder(CoreTypes.COMPARTMENT_HEADER)
          .layout("hbox")
          .id(UmlIDUtil.createHeaderId(toId(component)))
-         .add(new GLabelBuilder(UmlConfig.Types.LABEL_NAME)
+         .add(new GLabelBuilder(CoreTypes.LABEL_NAME)
             .id(UmlIDUtil.createHeaderLabelId(toId(component))).text(component.getName())
             .build())
          .build();

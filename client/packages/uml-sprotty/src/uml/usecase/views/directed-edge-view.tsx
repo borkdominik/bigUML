@@ -21,23 +21,23 @@ const JSX = {createElement: svg};
 export class DirectedEdgeView extends PolylineEdgeView {
     protected renderAdditionals(edge: SEdge, segments: Point[], context: RenderingContext): VNode[] {
         const directedEdgeAdds: any = ([<defs>
-            <marker id="triangle" viewBox="0 0 10 10" refX="10" refY="5" markerUnits="strokeWidth" markerWidth="10"
+            <marker marker-id="triangle" viewBox="0 0 10 10" refX="10" refY="5" markerUnits="strokeWidth" markerWidth="10"
                 markerHeight="10" orient="auto">
                 <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--uml-edge)"/>
             </marker>
-            <marker id="tent" viewBox="0 0 10 10" refX="10" refY="5" markerUnits="strokeWidth" markerWidth="10"
+            <marker marker-id="tent" viewBox="0 0 10 10" refX="10" refY="5" markerUnits="strokeWidth" markerWidth="10"
                 markerHeight="10" orient="auto">
                 <path d="M 0 0 L 10 5 L 0 10" stroke="var(--uml-edge)" fill="var(--theia-editor-background)"/>
             </marker>
-            <marker id="triangle-empty" viewBox="0 0 20 20" refX="20" refY="10" markerUnits="strokeWidth"
+            <marker marker-id="triangle-empty" viewBox="0 0 20 20" refX="20" refY="10" markerUnits="strokeWidth"
                 markerWidth="20" markerHeight="20" orient="auto">
                 <path d="M 0 0 L 100 100 L 40 20 z" stroke="var(--uml-edge)" fill="var(--theia-editor-background)"/>
             </marker>
-            <marker id="diamond" viewBox="20 20 20 20" refX="20" refY="10" markerUnits="strokeWidth" markerWidth="20"
+            <marker marker-id="diamond" viewBox="20 20 20 20" refX="20" refY="10" markerUnits="strokeWidth" markerWidth="20"
                 markerHeight="20" orient="auto">
                 <path d="M 0 0 L 10 5 L 0 10" stroke="var(--uml-edge)" fill="var(--theia-editor-background)"/>
             </marker>
-            <marker id="diamond-empty" viewBox="20 10 20 10" refX="20" refY="10" markerUnits="strokeWidth"
+            <marker marker-id="diamond-empty" viewBox="20 10 20 10" refX="20" refY="10" markerUnits="strokeWidth"
                 markerWidth="10" markerHeight="20" orient="auto">
                 <path d="M 0 0 L 10 5 L 0 10" stroke="var(--uml-edge)" fill="var(--theia-editor-background)"/>
             </marker>

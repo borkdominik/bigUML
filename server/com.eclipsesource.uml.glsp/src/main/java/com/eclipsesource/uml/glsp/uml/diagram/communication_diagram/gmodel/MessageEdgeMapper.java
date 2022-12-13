@@ -20,27 +20,16 @@ import org.eclipse.glsp.graph.builder.impl.GEdgePlacementBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.glsp.graph.util.GraphUtil;
-import org.eclipse.glsp.server.emf.EMFIdGenerator;
 import org.eclipse.glsp.server.emf.model.notation.Edge;
 import org.eclipse.uml2.uml.Message;
 import org.eclipse.uml2.uml.MessageOccurrenceSpecification;
 
-import com.eclipsesource.uml.glsp.core.gmodel.suffix.Suffix;
-import com.eclipsesource.uml.glsp.core.model.UmlModelState;
-import com.eclipsesource.uml.glsp.core.utils.UmlConfig;
+import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
+import com.eclipsesource.uml.glsp.core.gmodel.suffix.LabelSuffix;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGModelMapper;
-import com.google.inject.Inject;
 
 public class MessageEdgeMapper extends BaseGModelMapper<Message, GEdge> {
-   @Inject
-   protected EMFIdGenerator idGenerator;
-
-   @Inject
-   private UmlModelState modelState;
-
-   @Inject
-   private Suffix suffix;
 
    @Override
    public GEdge map(final Message message) {
@@ -50,24 +39,19 @@ public class MessageEdgeMapper extends BaseGModelMapper<Message, GEdge> {
       var source = sendEvent.getCovered();
       var target = receiveEvent.getCovered();
 
-      GEdgeBuilder builder = new GEdgeBuilder(CommunicationTypes.MESSAGE)
+      var builder = new GEdgeBuilder(CommunicationTypes.MESSAGE)
          .id(idGenerator.getOrCreateId(message))
-         .addCssClass(UmlConfig.CSS.EDGE)
+         .addCssClass(CoreCSS.EDGE)
          .sourceId(idGenerator.getOrCreateId(source))
          .targetId(idGenerator.getOrCreateId(target))
          .routerKind(GConstants.RouterKind.MANHATTAN);
 
-      GLabel nameLabel = createEdgeNameLabel(message.getName(),
-         suffix.labelSuffix.appendTo(idGenerator.getOrCreateId(message)), 0.6d);
+      var nameLabel = createEdgeNameLabel(message.getName(),
+         suffix.appendTo(LabelSuffix.SUFFIX, idGenerator.getOrCreateId(message)), 0.6d);
       builder.add(nameLabel);
 
-      modelState.getIndex().getNotation(message, Edge.class).ifPresent(edge -> {
-         if (edge.getBendPoints() != null) {
-            ArrayList<GPoint> bendPoints = new ArrayList<>();
-            edge.getBendPoints().forEach(p -> bendPoints.add(GraphUtil.copy(p)));
-            builder.addRoutingPoints(bendPoints);
-         }
-      });
+      applyNotation(message, builder);
+
       return builder.build();
    }
 
@@ -86,5 +70,15 @@ public class MessageEdgeMapper extends BaseGModelMapper<Message, GEdge> {
             .build())
          .id(id)
          .text(name).build();
+   }
+
+   protected void applyNotation(final Message message, final GEdgeBuilder builder) {
+      modelState.getIndex().getNotation(message, Edge.class).ifPresent(edge -> {
+         if (edge.getBendPoints() != null) {
+            ArrayList<GPoint> bendPoints = new ArrayList<>();
+            edge.getBendPoints().forEach(p -> bendPoints.add(GraphUtil.copy(p)));
+            builder.addRoutingPoints(bendPoints);
+         }
+      });
    }
 }

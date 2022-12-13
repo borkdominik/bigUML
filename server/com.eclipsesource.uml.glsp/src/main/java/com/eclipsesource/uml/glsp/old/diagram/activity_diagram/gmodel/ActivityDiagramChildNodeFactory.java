@@ -113,10 +113,10 @@ public class ActivityDiagramChildNodeFactory { /*-
          .id(toId(node)) //
          .layout(GConstants.Layout.VBOX) //
          .addCssClass(CSS.NODE)
-         .add(new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER) //
+         .add(new GCompartmentBuilder(CoreTypes.COMPARTMENT_HEADER) //
             .layout(GConstants.Layout.VBOX) //
             .id(toId(node) + "_header")
-            .add(new GLabelBuilder(UmlConfig.Types.LABEL_NAME) //
+            .add(new GLabelBuilder(CoreTypes.LABEL_NAME) //
                .id(UmlIDUtil.createHeaderLabelId(toId(node)))
                .text(node.getName()) //
                .build()) //
@@ -142,13 +142,13 @@ public class ActivityDiagramChildNodeFactory { /*-
          .id(toId(node) + rand.nextInt(1000)) //
          .layout(GConstants.Layout.VBOX) //
          .addCssClass(CSS.NODE)
-         .add(new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER) //
+         .add(new GCompartmentBuilder(CoreTypes.COMPARTMENT_HEADER) //
             .layout(GConstants.Layout.VBOX) //
             .id(UmlIDUtil.createHeaderId(toId(node)))
-            .add(new GLabelBuilder(UmlConfig.Types.LABEL_TEXT) //
+            .add(new GLabelBuilder(CoreTypes.LABEL_TEXT) //
                .id(toId(node) + "_header_labeltype").text(header) //
                .build()) //
-            .add(new GLabelBuilder(UmlConfig.Types.LABEL_NAME) //
+            .add(new GLabelBuilder(CoreTypes.LABEL_NAME) //
                .id(UmlIDUtil.createHeaderLabelId(toId(node)))
                .text(node.getName())
                .build()) //
@@ -195,14 +195,14 @@ public class ActivityDiagramChildNodeFactory { /*-
 
    protected GCompartment buildHeader(final Action action) {
       String text = action.getName();
-      String labelType = UmlConfig.Types.LABEL_NAME;
+      String labelType = CoreTypes.LABEL_NAME;
       if (action instanceof CallBehaviorAction) {
          CallBehaviorAction cba = (CallBehaviorAction) action;
          text = cba.getBehavior() != null ? cba.getBehavior().getName() : "<NoRef>";
          labelType = ActivityTypes.CALL_REF;
       }
       Random rand = new Random();
-      return new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER) //
+      return new GCompartmentBuilder(CoreTypes.COMPARTMENT_HEADER) //
          .layout("hbox") //
          .id(UmlIDUtil.createHeaderId(toId(action) + rand.nextInt(1000)))
          .add(new GLabelBuilder(labelType) //
@@ -212,10 +212,10 @@ public class ActivityDiagramChildNodeFactory { /*-
    }
 
    protected GCompartment buildHeader(final ObjectNode node) {
-      return new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER) //
+      return new GCompartmentBuilder(CoreTypes.COMPARTMENT_HEADER) //
          .layout("hbox") //
          .id(UmlIDUtil.createHeaderId(toId(node)))
-         .add(new GLabelBuilder(UmlConfig.Types.LABEL_NAME) //
+         .add(new GLabelBuilder(CoreTypes.LABEL_NAME) //
             .id(UmlIDUtil.createHeaderLabelId(toId(node))).text(node.getName()) //
             .build()) //
          .build();
@@ -223,7 +223,7 @@ public class ActivityDiagramChildNodeFactory { /*-
 
    protected GCompartment buildPins(final Action action, final List<? extends Pin> pins, final String type) {
 
-      return new GCompartmentBuilder(UmlConfig.Types.COMP) //
+      return new GCompartmentBuilder(CoreTypes.COMP) //
          .id(toId(action) + "_childCompartment" + type).layout(GConstants.Layout.VBOX) //
          .layoutOptions(new GLayoutOptions() //
             .hAlign(GConstants.HAlign.LEFT) //

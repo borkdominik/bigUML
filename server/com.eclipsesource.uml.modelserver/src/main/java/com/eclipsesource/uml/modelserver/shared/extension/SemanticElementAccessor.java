@@ -10,10 +10,10 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.shared.extension;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -41,24 +41,29 @@ public final class SemanticElementAccessor {
       return EcoreUtil.getURI(element).fragment();
    }
 
-   public EObject getElement(final String semanticElementId) {
-      return model.eResource().getEObject(semanticElementId);
+   public Optional<EObject> getElement(final String semanticElementId) {
+      return Optional.ofNullable(model.eResource().getEObject(semanticElementId));
    }
 
-   public <C extends EObject> C getElement(final String semanticElementId,
+   public <C extends EObject> Optional<C> getElement(final String semanticElementId,
       final Class<C> clazz) {
-      var element = model.eResource().getEObject(semanticElementId);
-      return clazz.cast(element);
+      return getElement(semanticElementId).map(element -> clazz.cast(element));
    }
 
    public <T extends EObject> List<T> getElements(
-      final String[] elements,
+      final String[] semanticElementIds,
       final Class<T> type) {
 
-      return Arrays.asList(elements).stream().map(element -> {
-         var mapped = getElement(element, type);
+      var elements = new ArrayList<T>();
+
+      Arrays.asList(semanticElementIds).stream().map(semanticElementId -> {
+         var mapped = getElement(semanticElementId, type);
          return mapped;
-      }).collect(Collectors.toUnmodifiableList());
+      }).forEach(element -> {
+         element.ifPresent(elements::add);
+      });
+
+      return elements;
    }
 
    public <C extends EObject> Optional<C> getParentOfType(final EObject element,
@@ -92,6 +97,6 @@ public final class SemanticElementAccessor {
    @SuppressWarnings("unchecked")
    public <T extends Element> T refresh(final T element) {
       var id = getId(element);
-      return (T) getElement(id);
+      return (T) getElement(id).get();
    }
 }

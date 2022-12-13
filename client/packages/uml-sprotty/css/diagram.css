@@ -36,7 +36,6 @@ svg {
     stroke-width: 1.5;
 }
 
-
 .sprotty-missing {
     stroke-width: 1;
     stroke: var(--uml-error);
@@ -54,8 +53,6 @@ svg {
     margin-bottom: 2px;
 }
 
-#tent path, #triangle path, #triangle-empty path, #diamond path, #diamond-empty path {
-    stroke-dasharray: none;
-}
-
-@import "uml/common.css"
+@import "uml/node.css";
+@import "uml/edge.css";
+@import "uml/marker.css";

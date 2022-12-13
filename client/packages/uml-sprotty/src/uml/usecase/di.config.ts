@@ -11,43 +11,7 @@
 import "@eclipse-glsp/client/css/glsp-sprotty.css";
 import "sprotty/css/edit-label.css";
 
-import {
-    configureDefaultModelElements,
-    configureModelElement,
-    configureViewerOptions,
-    ConsoleLogger,
-    copyPasteContextMenuModule,
-    createClientContainer,
-    LogLevel,
-    overrideViewerOptions,
-    PolylineEdgeView,
-    saveModule,
-    SCompartment,
-    SCompartmentView,
-    SEdge,
-    SLabel,
-    SLabelView,
-    SRoutingHandle,
-    SRoutingHandleView,
-    StructureCompartmentView,
-    TYPES,
-    validationModule
-} from "@eclipse-glsp/client/lib";
-import toolPaletteModule from "@eclipse-glsp/client/lib/features/tool-palette/di.config";
-import { Container, ContainerModule } from "inversify";
-import { EditLabelUI } from "sprotty/lib";
-
-import { EditLabelUIAutocomplete } from "../../features/edit-label";
-import umlToolPaletteModule from "../../features/tool-palette/di.config";
-import { IconLabelCompartmentSelectionFeedback } from "../../feedback";
-import { ConnectableEdge, ConnectableEditableLabel, LabeledNode, SEditableLabel } from "../../model";
-import { BaseTypes, UmlTypes } from "../../utils";
-import { IconView } from "../../views/commons";
-import { PackageNode } from "../shared/model";
-import { PackageNodeView } from "../shared/package-node-view";
-import { ConnectionPoint, IconActor, IconPackage, IconUseCase } from "./model";
-import { ActorNodeView, DirectedEdgeView, UseCaseNodeView } from "./views";
-
+/*
 export default function createContainer(widgetId: string): Container {
     const classDiagramModule = new ContainerModule(
         (bind, unbind, isBound, rebind) => {
@@ -205,7 +169,7 @@ export default function createContainer(widgetId: string): Container {
 
             configureViewerOptions(context, {
                 needsClientLayout: true,
-                baseDiv: widgetId
+                baseDiv: widgetId,
             });
         }
     );
@@ -220,8 +184,9 @@ export default function createContainer(widgetId: string): Container {
     container.unload(toolPaletteModule);
     overrideViewerOptions(container, {
         baseDiv: widgetId,
-        hiddenDiv: widgetId + "_hidden"
+        hiddenDiv: widgetId + "_hidden",
     });
 
     return container;
 }
+*/

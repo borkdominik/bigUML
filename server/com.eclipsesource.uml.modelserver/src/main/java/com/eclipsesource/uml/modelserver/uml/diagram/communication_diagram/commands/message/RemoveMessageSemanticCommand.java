@@ -15,36 +15,27 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Message;
 import org.eclipse.uml2.uml.MessageOccurrenceSpecification;
 
-import com.eclipsesource.uml.modelserver.shared.semantic.UmlSemanticElementCommand;
+import com.eclipsesource.uml.modelserver.shared.semantic.SemanticExistenceCheckedCommand;
 
-public class RemoveMessageSemanticCommand extends UmlSemanticElementCommand {
-
-   protected final Message message;
+public class RemoveMessageSemanticCommand extends SemanticExistenceCheckedCommand<Message> {
 
    public RemoveMessageSemanticCommand(final EditingDomain domain, final URI modelUri,
       final Message message) {
-      super(domain, modelUri);
-      this.message = message;
+      super(domain, modelUri, message);
    }
 
-   /*-
-    * We first create all commands, then execute them afterwards,
-    * therefore it can happen that the same message is tried to be removed multiple times.
-    */
    @Override
-   protected void doExecute() {
-      if (message.eContainer() != null) {
-         var sendEvent = (MessageOccurrenceSpecification) message.getSendEvent();
-         sendEvent.getCovereds().clear();
+   protected void doChanges() {
+      var sendEvent = (MessageOccurrenceSpecification) semanticElement.getSendEvent();
+      sendEvent.getCovereds().clear();
 
-         var receiveEvent = (MessageOccurrenceSpecification) message.getReceiveEvent();
-         receiveEvent.getCovereds().clear();
+      var receiveEvent = (MessageOccurrenceSpecification) semanticElement.getReceiveEvent();
+      receiveEvent.getCovereds().clear();
 
-         var interaction = message.getInteraction();
-         interaction.getFragments().remove(sendEvent);
-         interaction.getFragments().remove(receiveEvent);
-         interaction.getMessages().remove(message);
-      }
+      var interaction = semanticElement.getInteraction();
+      interaction.getFragments().remove(sendEvent);
+      interaction.getFragments().remove(receiveEvent);
+      interaction.getMessages().remove(semanticElement);
    }
 
 }

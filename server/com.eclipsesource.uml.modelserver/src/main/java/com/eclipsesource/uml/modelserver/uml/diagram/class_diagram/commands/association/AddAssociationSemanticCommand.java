@@ -13,23 +13,24 @@ package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.ass
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Association;
-import org.eclipse.uml2.uml.Class;
+import org.eclipse.uml2.uml.Type;
 import org.eclipse.uml2.uml.UMLFactory;
 
 import com.eclipsesource.uml.modelserver.shared.semantic.UmlSemanticElementCommand;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.constants.AssociationType;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.generator.AssociationEndNameGenerator;
 import com.eclipsesource.uml.modelserver.uml.generator.ContextualNameGenerator;
 
 public class AddAssociationSemanticCommand extends UmlSemanticElementCommand {
 
    protected final Association newAssociation;
-   protected final Class source;
-   protected final Class target;
-   protected final String type;
-   protected final ContextualNameGenerator<Class> nameGenerator;
+   protected final Type source;
+   protected final Type target;
+   protected final AssociationType type;
+   protected final ContextualNameGenerator<Type> nameGenerator;
 
    public AddAssociationSemanticCommand(final EditingDomain domain, final URI modelUri,
-      final Class source, final Class target, final String type) {
+      final Type source, final Type target, final AssociationType type) {
       super(domain, modelUri);
       this.newAssociation = UMLFactory.eINSTANCE.createAssociation();
       this.source = source;
@@ -40,9 +41,16 @@ public class AddAssociationSemanticCommand extends UmlSemanticElementCommand {
 
    @Override
    protected void doExecute() {
-      getNewAssociation().createOwnedEnd(nameGenerator.newNameInContextOf(source), source);
-      getNewAssociation().createOwnedEnd(nameGenerator.newNameInContextOf(target), target);
-      getNewAssociation().addKeyword(type);
+      var sourceProperty = getNewAssociation().createOwnedEnd(nameGenerator.newNameInContextOf(source), source);
+
+      sourceProperty.setAggregation(type.toAggregationKind());
+      sourceProperty.setLower(1);
+      sourceProperty.setUpper(1);
+
+      var targetProperty = getNewAssociation().createOwnedEnd(nameGenerator.newNameInContextOf(target), target);
+      targetProperty.setLower(1);
+      targetProperty.setUpper(1);
+
       model.getPackagedElements().add(getNewAssociation());
    }
 

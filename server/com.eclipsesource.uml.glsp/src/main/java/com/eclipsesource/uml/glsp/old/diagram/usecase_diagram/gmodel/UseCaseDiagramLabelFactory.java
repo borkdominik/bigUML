@@ -25,7 +25,7 @@ public class UseCaseDiagramLabelFactory { /*- {
    public GLabel createUseCaseExtensionPointsHeading(final UseCase useCase) {
       String label = "extension points";
 
-      return new GLabelBuilder(UmlConfig.Types.LABEL_TEXT)
+      return new GLabelBuilder(CoreTypes.LABEL_TEXT)
          .id(toId(useCase) + "_epheading")
          .text(label)
          .addCssClass("bold")

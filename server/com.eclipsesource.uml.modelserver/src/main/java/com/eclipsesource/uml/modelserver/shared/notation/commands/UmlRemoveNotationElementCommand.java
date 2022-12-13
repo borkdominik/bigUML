@@ -15,32 +15,19 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.glsp.server.emf.model.notation.NotationElement;
 import org.eclipse.uml2.uml.Element;
 
-import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
-import com.eclipsesource.uml.modelserver.shared.notation.UmlNotationElementCommand;
+import com.eclipsesource.uml.modelserver.shared.notation.NotationExistenceCheckedCommand;
 
-public class UmlRemoveNotationElementCommand extends UmlNotationElementCommand {
-
-   protected final NotationElement shapeToRemove;
+public class UmlRemoveNotationElementCommand extends NotationExistenceCheckedCommand<Element, NotationElement> {
 
    public UmlRemoveNotationElementCommand(final EditingDomain domain, final URI modelUri,
-      final String semanticElementId) {
-      super(domain, modelUri);
-      this.shapeToRemove = notationElementAccessor.getElement(semanticElementId,
-         NotationElement.class);
-   }
+      final Element semanticElement) {
+      super(domain, modelUri, semanticElement);
 
-   public UmlRemoveNotationElementCommand(final EditingDomain domain, final URI modelUri,
-      final Element element) {
-      super(domain, modelUri);
-      var semanticElementId = SemanticElementAccessor.getId(element);
-
-      this.shapeToRemove = notationElementAccessor.getElement(semanticElementId,
-         NotationElement.class);
    }
 
    @Override
-   protected void doExecute() {
-      diagram.getElements().remove(shapeToRemove);
+   protected void doChanges(final NotationElement notationElement) {
+      diagram.getElements().remove(notationElement);
    }
 
 }

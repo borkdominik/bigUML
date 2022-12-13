@@ -1,0 +1,35 @@
+#marker-tent path,
+#marker-triangle path,
+#marker-triangle-empty path,
+#marker-diamond path,
+#marker-diamond-empty path {
+    stroke-dasharray: none;
+}
+
+.marker-triangle {
+    --marker: url("#marker-triangle");
+}
+
+.marker-triangle-empty {
+    --marker: url("#marker-triangle-empty");
+}
+
+.marker-tent {
+    --marker: url("#marker-tent");
+}
+
+.marker-diamond {
+    --marker: url("#marker-diamond");
+}
+
+.marker-diamond-empty {
+    --marker: url("#marker-diamond-empty");
+}
+
+.marker-start {
+    marker-start: var(--marker);
+}
+
+.marker-end {
+    marker-end: var(--marker);
+}

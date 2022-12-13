@@ -40,7 +40,7 @@ public class AddLifelineCompoundCommand extends CompoundCommand {
 
    protected GPoint shift(final Interaction interaction, final GPoint mousePosition) {
       String semanticProxyUri = SemanticElementAccessor.getId(interaction);
-      var interactionShape = notationElementAccessor.getElement(semanticProxyUri, Shape.class);
+      var interactionShape = notationElementAccessor.getElement(semanticProxyUri, Shape.class).get();
       var origin = interactionShape.getPosition();
       var size = interactionShape.getSize();
 

@@ -10,26 +10,38 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.association;
 
+import java.util.List;
+
 import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.uml2.uml.Class;
+import org.eclipse.uml2.uml.Type;
 
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
-import com.eclipsesource.uml.glsp.uml.handler.operations.create.BaseCreateEdgeHandler;
+import com.eclipsesource.uml.glsp.uml.handler.operations.create.BaseCreateEdgeBetweenNodesHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association.AddAssociationContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.constants.AssociationType;
 
 public class CreateAssociationHandler
-   extends BaseCreateEdgeHandler<Class, Class> {
+   extends BaseCreateEdgeBetweenNodesHandler<Type, Type> {
 
    public CreateAssociationHandler() {
       super(ClassTypes.ASSOCIATION);
    }
 
    @Override
-   protected CCommand command(final Class source, final Class target) {
-      var keyword = "association";
+   protected List<String> sources() {
+      return List.of(ClassTypes.ABSTRACT_CLASS, ClassTypes.CLASS, ClassTypes.INTERFACE);
+   }
+
+   @Override
+   protected List<String> targets() {
+      return List.of(ClassTypes.ABSTRACT_CLASS, ClassTypes.CLASS, ClassTypes.INTERFACE);
+   }
+
+   @Override
+   protected CCommand command(final Type source, final Type target) {
+      var keyword = AssociationType.ASSOCIATION;
       return AddAssociationContribution
          .create(source, target, keyword);
-
    }
 
 }

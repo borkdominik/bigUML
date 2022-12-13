@@ -21,12 +21,12 @@ import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccesso
 public abstract class UmlSemanticElementCommand extends RecordingCommand {
 
    protected final Model model;
-   protected final SemanticElementAccessor elementAccessor;
+   protected final SemanticElementAccessor semanticElementAccessor;
 
    public UmlSemanticElementCommand(final EditingDomain domain, final URI modelUri) {
       super((TransactionalEditingDomain) domain);
-      this.elementAccessor = new SemanticElementAccessor(modelUri, domain);
-      this.model = elementAccessor.getModel();
+      this.semanticElementAccessor = new SemanticElementAccessor(modelUri, domain);
+      this.model = semanticElementAccessor.getModel();
    }
 
 }

@@ -43,14 +43,17 @@ public class UmlWrapBoundsCommand extends UmlNotationElementCommand {
 
       bounds.forEach(bound -> {
          var element = semanticElementAccessor.getElement(bound.getElementId(), Element.class);
-         var parent = semanticElementAccessor.getParent(element, Element.class);
+         element.ifPresent(e -> {
+            var parent = semanticElementAccessor.getParent(e, Element.class);
 
-         parent.ifPresent(p -> {
-            var position = this.elementPositions.get(bound.getElementId());
-            wrapPositionBound(p, position);
-            wrapSizeBound(p, position, bound.getNewSize());
-            recalculateElementPositions(bound);
+            parent.ifPresent(p -> {
+               var position = this.elementPositions.get(bound.getElementId());
+               wrapPositionBound(p, position);
+               wrapSizeBound(p, position, bound.getNewSize());
+               recalculateElementPositions(bound);
+            });
          });
+
       });
    }
 
@@ -65,7 +68,7 @@ public class UmlWrapBoundsCommand extends UmlNotationElementCommand {
 
    protected void wrapPositionBound(final Element parent, final GPoint position) {
       var containerShape = notationElementAccessor.getElement(SemanticElementAccessor.getId(parent),
-         Shape.class);
+         Shape.class).get();
       var childElements = parent.getOwnedElements();
 
       if (position.getX() < 0 || position.getY() < 0) {
@@ -78,7 +81,7 @@ public class UmlWrapBoundsCommand extends UmlNotationElementCommand {
 
    protected void wrapSizeBound(final Element parent, final GPoint position, final GDimension size) {
       var containerShape = notationElementAccessor.getElement(SemanticElementAccessor.getId(parent),
-         Shape.class);
+         Shape.class).get();
       var containerSize = containerShape.getSize();
 
       var width = Math.max(containerSize.getWidth(), position.getX() + size.getWidth());
@@ -110,7 +113,7 @@ public class UmlWrapBoundsCommand extends UmlNotationElementCommand {
    }
 
    protected void alignChild(final Element element, final GPoint position) {
-      var elementShape = notationElementAccessor.getElement(SemanticElementAccessor.getId(element), Shape.class);
+      var elementShape = notationElementAccessor.getElement(SemanticElementAccessor.getId(element), Shape.class).get();
       var elementPosition = elementShape.getPosition();
 
       var x = Math.min(0, position.getX());

@@ -10,61 +10,39 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel;
 
-import java.util.ArrayList;
-
 import org.eclipse.glsp.graph.GEdge;
 import org.eclipse.glsp.graph.GLabel;
-import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.builder.impl.GEdgeBuilder;
 import org.eclipse.glsp.graph.builder.impl.GEdgePlacementBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
-import org.eclipse.glsp.graph.util.GraphUtil;
-import org.eclipse.glsp.server.emf.EMFIdGenerator;
-import org.eclipse.glsp.server.emf.model.notation.Edge;
-import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Generalization;
 
-import com.eclipsesource.uml.glsp.core.gmodel.suffix.Suffix;
-import com.eclipsesource.uml.glsp.core.model.UmlModelState;
-import com.eclipsesource.uml.glsp.core.utils.UmlConfig;
+import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
-import com.eclipsesource.uml.glsp.uml.gmodel.BaseGModelMapper;
-import com.google.inject.Inject;
+import com.eclipsesource.uml.glsp.uml.gmodel.BaseGEdgeMapper;
 
-public class GeneralizationEdgeMapper extends BaseGModelMapper<Generalization, GEdge> {
-   @Inject
-   protected EMFIdGenerator idGenerator;
-
-   @Inject
-   private UmlModelState modelState;
-
-   @Inject
-   private Suffix suffix;
+public class GeneralizationEdgeMapper extends BaseGEdgeMapper<Generalization, GEdge> {
 
    @Override
    public GEdge map(final Generalization generalization) {
-      Class source = (Class) generalization.eContainer();
-      String sourceId = idGenerator.getOrCreateId(source);
-      Class target = (Class) generalization.getGeneral();
-      String targetId = idGenerator.getOrCreateId(target);
+      var source = generalization.getGeneral();
+      var sourceId = idGenerator.getOrCreateId(source);
+      var target = generalization.getSpecific();
+      var targetId = idGenerator.getOrCreateId(target);
 
       GEdgeBuilder builder = new GEdgeBuilder(ClassTypes.CLASS_GENERALIZATION)
          .id(idGenerator.getOrCreateId(generalization))
-         .addCssClass(UmlConfig.CSS.EDGE)
-         .addCssClass(UmlConfig.CSS.EDGE_DIRECTED_END_EMPTY)
+         .addCssClass(CoreCSS.EDGE)
+         .addCssClass(CoreCSS.MARKER_TRIANGLE_EMPTY)
+         .addCssClass(CoreCSS.MARKER_START)
          .sourceId(sourceId)
          .targetId(targetId)
          .routerKind(GConstants.RouterKind.MANHATTAN);
 
-      modelState.getIndex().getNotation(generalization, Edge.class).ifPresent(edge -> {
-         if (edge.getBendPoints() != null) {
-            ArrayList<GPoint> bendPoints = new ArrayList<>();
-            edge.getBendPoints().forEach(p -> bendPoints.add(GraphUtil.copy(p)));
-            builder.addRoutingPoints(bendPoints);
-         }
-      });
+      applyEdgeNotation(generalization, builder);
+
       return builder.build();
    }
 

@@ -20,6 +20,7 @@ import org.eclipse.emfcloud.modelserver.edit.command.BasicCommandContribution;
 import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Property;
 
+import com.eclipsesource.uml.modelserver.core.commands.noop.NoopCommand;
 import com.eclipsesource.uml.modelserver.shared.constants.SemanticKeys;
 import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
 
@@ -48,7 +49,11 @@ public class RemovePropertyContribution extends BasicCommandContribution<Command
       var parent = elementAccessor.getElement(parentSemanticElementId, Class.class);
       var property = elementAccessor.getElement(semanticElementId, Property.class);
 
-      return new RemovePropertySemanticCommand(domain, modelUri, parent, property);
+      if (parent.isPresent() && property.isPresent()) {
+         return new RemovePropertySemanticCommand(domain, modelUri, parent.get(), property.get());
+      }
+
+      return new NoopCommand();
    }
 
 }

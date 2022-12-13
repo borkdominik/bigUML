@@ -10,6 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.core.gmodel;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,19 +29,31 @@ public class GModelMapHandler {
    @Inject
    private UmlModelState modelState;
 
-   public GModelElement handle(final EObject object) {
+   public GModelElement handle(final EObject source) {
       var representation = modelState.getUnsafeRepresentation();
-      var mapperOpt = registry.get(RepresentationKey.of(representation, object.getClass()));
+      var mapperOpt = registry.get(RepresentationKey.of(representation, source.getClass()));
 
       if (mapperOpt.isEmpty()) {
          throw new GLSPServerException("Error during model initialization!", new Throwable(
-            "No matching GModelMapper found for the semanticElement of type: " + object.getClass().getSimpleName()));
+            "No matching GModelMapper found for the semanticElement of type: " + source.getClass().getSimpleName()));
       }
 
-      return mapperOpt.get().map(object);
+      return mapperOpt.get().map(source);
    }
 
-   public List<GModelElement> handle(final List<EObject> objects) {
-      return objects.stream().map(obj -> handle(obj)).collect(Collectors.toList());
+   public List<GModelElement> handle(final Collection<? extends EObject> sources) {
+      return sources.stream().map(obj -> handle(obj)).collect(Collectors.toList());
+   }
+
+   public List<GModelElement> handleSiblings(final EObject source) {
+      var representation = modelState.getUnsafeRepresentation();
+      var mapperOpt = registry.get(RepresentationKey.of(representation, source.getClass()));
+
+      if (mapperOpt.isEmpty()) {
+         throw new GLSPServerException("Error during model initialization!", new Throwable(
+            "No matching GModelMapper found for the semanticElement of type: " + source.getClass().getSimpleName()));
+      }
+
+      return mapperOpt.get().mapSiblings(source);
    }
 }

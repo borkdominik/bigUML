@@ -300,46 +300,46 @@ public class DeploymentDiagramNodeFactory { /*-
     * }
     * protected GCompartment buildDeploymentSpecificationHeader(final DeploymentSpecification
     * umlDeploymentSpecification) {
-    * return new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER)
+    * return new GCompartmentBuilder(CoreTypes.COMPARTMENT_HEADER)
     * .layout("vbox")
     * .id(toId(umlDeploymentSpecification) + "_header")
-    * .add(new GLabelBuilder(UmlConfig.Types.LABEL_TEXT)
+    * .add(new GLabelBuilder(CoreTypes.LABEL_TEXT)
     * .id(toId(umlDeploymentSpecification) + "_header_text")
     * .text("«deployment_spec»")
     * .build())
-    * .add(new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER) //
+    * .add(new GCompartmentBuilder(CoreTypes.COMPARTMENT_HEADER) //
     * .layout("hbox") //
     * /*
     * .add(new GCompartmentBuilder(getType(umlDeploymentSpecification)) //
     * .id(toId(umlDeploymentSpecification) + "_header_icon").build()) //
-    * .add(new GLabelBuilder(UmlConfig.Types.LABEL_NAME) //
+    * .add(new GLabelBuilder(CoreTypes.LABEL_NAME) //
     * .id(toId(umlDeploymentSpecification) + "_header_label").text(umlDeploymentSpecification.getName()) //
     * .build())
     * .build())
     * .build();
     * }
     * protected GCompartment buildHeader(final Node umlNode) {
-    * return new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER) //
+    * return new GCompartmentBuilder(CoreTypes.COMPARTMENT_HEADER) //
     * .layout("hbox") //
     * .id(toId(umlNode) + "_header")
     * .add(new GCompartmentBuilder(getType(umlNode)) //
     * // .id(toId(umlNode) + "_header_icon")
     * .build()) //
-    * .add(new GLabelBuilder(UmlConfig.Types.LABEL_NAME) //
+    * .add(new GLabelBuilder(CoreTypes.LABEL_NAME) //
     * .id(toId(umlNode) + "_header_label").text(umlNode.getName()) //
     * .build()) //
     * .build();
     * }
     * protected GCompartment buildHeader(final Artifact umlArtifact) {
-    * GCompartmentBuilder artifactHeader = new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER)
+    * GCompartmentBuilder artifactHeader = new GCompartmentBuilder(CoreTypes.COMPARTMENT_HEADER)
     * .layout(GConstants.Layout.VBOX)
     * .id(UmlIDUtil.createHeaderId(toId(umlArtifact)));
-    * GLabel typeLabel = new GLabelBuilder(UmlConfig.Types.LABEL_NAME)
+    * GLabel typeLabel = new GLabelBuilder(CoreTypes.LABEL_NAME)
     * .id(UmlIDUtil.createHeaderLabelId(toId(umlArtifact)) + "_type_header")
     * .text("«artifact»")
     * .build();
     * artifactHeader.add(typeLabel);
-    * GLabel artifactLabel = new GLabelBuilder(UmlConfig.Types.LABEL_NAME)
+    * GLabel artifactLabel = new GLabelBuilder(CoreTypes.LABEL_NAME)
     * .id(UmlIDUtil.createHeaderLabelId(toId(umlArtifact)))
     * .text(umlArtifact.getName())
     * .build();
@@ -347,15 +347,15 @@ public class DeploymentDiagramNodeFactory { /*-
     * return artifactHeader.build();
     * }
     * protected GCompartment buildHeader(final ExecutionEnvironment umlExecutionEnvironment) {
-    * GCompartmentBuilder executionEnvironmentHeader = new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER)
+    * GCompartmentBuilder executionEnvironmentHeader = new GCompartmentBuilder(CoreTypes.COMPARTMENT_HEADER)
     * .layout(GConstants.Layout.VBOX)
     * .id(UmlIDUtil.createHeaderId(toId(umlExecutionEnvironment)));
-    * GLabel typeLabel = new GLabelBuilder(UmlConfig.Types.LABEL_NAME)
+    * GLabel typeLabel = new GLabelBuilder(CoreTypes.LABEL_NAME)
     * .id(UmlIDUtil.createHeaderLabelId(toId(umlExecutionEnvironment)) + "_type_header")
     * .text("«execution_environment»")
     * .build();
     * executionEnvironmentHeader.add(typeLabel);
-    * GLabel executionEnvironmentLabel = new GLabelBuilder(UmlConfig.Types.LABEL_NAME)
+    * GLabel executionEnvironmentLabel = new GLabelBuilder(CoreTypes.LABEL_NAME)
     * .id(UmlIDUtil.createHeaderLabelId(toId(umlExecutionEnvironment)))
     * .text(umlExecutionEnvironment.getName())
     * .build();
@@ -363,7 +363,7 @@ public class DeploymentDiagramNodeFactory { /*-
     * return executionEnvironmentHeader.build();
     * }
     * protected GCompartment buildHeader(final Device umlDevice) {
-    * GCompartmentBuilder deviceHeader = new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER)
+    * GCompartmentBuilder deviceHeader = new GCompartmentBuilder(CoreTypes.COMPARTMENT_HEADER)
     * .layout(GConstants.Layout.VBOX)
     * .id(UmlIDUtil.createHeaderId(toId(umlDevice)));
     * /*
@@ -371,12 +371,12 @@ public class DeploymentDiagramNodeFactory { /*-
     * .id(UmlIDUtil.createHeaderIconId(toId(umlDevice)))
     * .build();
     * deviceHeader.add(deviceIcon);
-    * GLabel typeLabel = new GLabelBuilder(UmlConfig.Types.LABEL_NAME)
+    * GLabel typeLabel = new GLabelBuilder(CoreTypes.LABEL_NAME)
     * .id(UmlIDUtil.createHeaderLabelId(toId(umlDevice)) + "_type_header")
     * .text("«device»")
     * .build();
     * deviceHeader.add(typeLabel);
-    * GLabel deviceLabel = new GLabelBuilder(UmlConfig.Types.LABEL_NAME)
+    * GLabel deviceLabel = new GLabelBuilder(CoreTypes.LABEL_NAME)
     * .id(UmlIDUtil.createHeaderLabelId(toId(umlDevice)))
     * .text(umlDevice.getName())
     * .build();
@@ -385,7 +385,7 @@ public class DeploymentDiagramNodeFactory { /*-
     * }
     * protected GCompartment createLabeledChildCompartment(final Collection<? extends EObject> children,
     * final Node parent) {
-    * return new GCompartmentBuilder(UmlConfig.Types.COMP) //
+    * return new GCompartmentBuilder(CoreTypes.COMP) //
     * .id(toId(parent) + "_childCompartment").layout(GConstants.Layout.VBOX) //
     * .layoutOptions(new GLayoutOptions() //
     * .hAlign(GConstants.HAlign.CENTER) //
@@ -397,7 +397,7 @@ public class DeploymentDiagramNodeFactory { /*-
     * }
     * protected GCompartment createLabeledChildCompartment(final Collection<? extends EObject> children,
     * final Artifact parent) {
-    * return new GCompartmentBuilder(UmlConfig.Types.COMP) //
+    * return new GCompartmentBuilder(CoreTypes.COMP) //
     * .id(toId(parent) + "_childCompartment").layout(GConstants.Layout.VBOX) //
     * .layoutOptions(new GLayoutOptions() //
     * .hAlign(GConstants.HAlign.CENTER) //
@@ -409,7 +409,7 @@ public class DeploymentDiagramNodeFactory { /*-
     * }
     * protected GCompartment createLabeledChildCompartment(final Collection<? extends EObject> children,
     * final Device parent) {
-    * return new GCompartmentBuilder(UmlConfig.Types.COMP) //
+    * return new GCompartmentBuilder(CoreTypes.COMP) //
     * .id(toId(parent) + "_childCompartment").layout(GConstants.Layout.VBOX) //
     * .layoutOptions(new GLayoutOptions() //
     * .hAlign(GConstants.HAlign.CENTER) //
@@ -421,7 +421,7 @@ public class DeploymentDiagramNodeFactory { /*-
     * }
     * protected GCompartment createLabeledChildCompartment(final Collection<? extends EObject> children,
     * final ExecutionEnvironment parent) {
-    * return new GCompartmentBuilder(UmlConfig.Types.COMP) //
+    * return new GCompartmentBuilder(CoreTypes.COMP) //
     * .id(toId(parent) + "_childCompartment").layout(GConstants.Layout.VBOX) //
     * .layoutOptions(new GLayoutOptions() //
     * .hAlign(GConstants.HAlign.CENTER) //

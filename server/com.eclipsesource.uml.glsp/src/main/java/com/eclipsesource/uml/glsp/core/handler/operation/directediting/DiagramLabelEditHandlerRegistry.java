@@ -51,7 +51,7 @@ public class DiagramLabelEditHandlerRegistry
 
       var clazz = tripleKey.key1;
       if (clazz.isInterface()) {
-         return representation.getName() + ":" + clazz + ":" + tripleKey.key2 + "$" + tripleKey.key3;
+         return representation.getName() + ":" + clazz + ":" + tripleKey.key2 + "@" + tripleKey.key3;
       }
 
       var interfaces = List.of(clazz.getInterfaces());
@@ -60,7 +60,7 @@ public class DiagramLabelEditHandlerRegistry
 
       var found = dkeys.stream().filter(k -> interfaces.contains(k.key1)).findFirst();
       if (found.isPresent()) {
-         return representation.getName() + ":" + found.get().key1 + ":" + tripleKey.key2 + "$" + tripleKey.key2;
+         return representation.getName() + ":" + found.get().key1 + ":" + tripleKey.key2 + "@" + tripleKey.key3;
       }
 
       return super.deriveKey(key);

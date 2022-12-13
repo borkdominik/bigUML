@@ -37,7 +37,7 @@ public class UmlChangeBoundsNotationCommand extends UmlNotationElementCommand {
       this.shapeSize = shapeSize;
 
       this.element = semanticElement;
-      this.shape = notationElementAccessor.getElement(semanticId(), Shape.class);
+      this.shape = notationElementAccessor.getElement(semanticId(), Shape.class).get();
    }
 
    @Override

@@ -12,13 +12,13 @@ package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.u
 
 import org.eclipse.uml2.uml.Class;
 
-import com.eclipsesource.uml.glsp.core.gmodel.suffix.HeaderLabelSuffixAppender;
+import com.eclipsesource.uml.glsp.core.gmodel.suffix.HeaderLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.handler.operations.directediting.DefaultRenameNamedElementHandler;
 
 public class RenameClassHandler extends DefaultRenameNamedElementHandler<Class> {
 
    public RenameClassHandler() {
-      super(HeaderLabelSuffixAppender.SUFFIX);
+      super(HeaderLabelSuffix.SUFFIX);
    }
 
 }

@@ -8,17 +8,18 @@ import com.eclipsesource.uml.modelserver.shared.semantic.UmlSemanticElementComma
 
 public class RemoveGeneralizationSemanticCommand extends UmlSemanticElementCommand {
 
-   protected final Generalization generalizationToRemove;
+   protected final Generalization generalization;
 
    public RemoveGeneralizationSemanticCommand(final EditingDomain domain, final URI modelUri,
-      final Generalization generalizationToRemove) {
+      final Generalization generalization) {
       super(domain, modelUri);
-      this.generalizationToRemove = generalizationToRemove;
+      this.generalization = generalization;
    }
 
    @Override
    protected void doExecute() {
-      model.getPackagedElements().remove(generalizationToRemove);
+      var classifier = generalization.getSpecific();
+      classifier.getGeneralizations().remove(generalization);
    }
 
 }

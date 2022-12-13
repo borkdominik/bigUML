@@ -15,28 +15,21 @@ import "sprotty/css/edit-label.css";
 import { configureModelElement, SEdge } from "@eclipse-glsp/client/lib";
 import { ContainerModule } from "inversify";
 
-import { LabeledNode, SEditableLabel } from "../../model";
+import { IconView } from "../../common/common";
+import { SEditableLabel } from "../../model";
 import { UmlTypes } from "../../utils";
-import { IconView } from "../../views/commons";
-import {
-    IconInteraction,
-    IconLifeline,
-    InteractionNodeView,
-    LifelineNodeView,
-    MessageArrowLabelView,
-    MessageEdgeView
-} from "./views";
+import { NamedElement } from "../shared/named-element.model";
+import { NamedElementView } from "../shared/named-element.view";
+import { IconInteraction } from "./elements/interaction";
+import { IconLifeline } from "./elements/lifeline";
+import { MessageArrowLabelView, MessageEdgeView } from "./elements/message";
 
 export default function createCommunicationModule(): ContainerModule {
     const communicationModule = new ContainerModule(
         (bind, unbind, isBound, rebind) => {
             const context = { bind, unbind, isBound, rebind };
-            configureModelElement(
-                context,
-                UmlTypes.ICON_LIFELINE,
-                IconLifeline,
-                IconView
-            );
+
+            // Interaction
             configureModelElement(
                 context,
                 UmlTypes.ICON_INTERACTION,
@@ -46,15 +39,25 @@ export default function createCommunicationModule(): ContainerModule {
             configureModelElement(
                 context,
                 UmlTypes.INTERACTION,
-                LabeledNode,
-                InteractionNodeView
+                NamedElement,
+                NamedElementView
+            );
+
+            // Lifeline
+            configureModelElement(
+                context,
+                UmlTypes.ICON_LIFELINE,
+                IconLifeline,
+                IconView
             );
             configureModelElement(
                 context,
                 UmlTypes.LIFELINE,
-                LabeledNode,
-                LifelineNodeView
+                NamedElement,
+                NamedElementView
             );
+
+            // Message
             configureModelElement(
                 context,
                 UmlTypes.MESSAGE,

@@ -12,13 +12,13 @@ package com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.handler.ope
 
 import org.eclipse.uml2.uml.Interaction;
 
-import com.eclipsesource.uml.glsp.core.gmodel.suffix.HeaderLabelSuffixAppender;
+import com.eclipsesource.uml.glsp.core.gmodel.suffix.HeaderLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.handler.operations.directediting.DefaultRenameNamedElementHandler;
 
 public class RenameInteractionHandler extends DefaultRenameNamedElementHandler<Interaction> {
 
    public RenameInteractionHandler() {
-      super(HeaderLabelSuffixAppender.SUFFIX);
+      super(HeaderLabelSuffix.SUFFIX);
    }
 
 }

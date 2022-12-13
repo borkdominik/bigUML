@@ -13,15 +13,15 @@ package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.a
 import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.uml2.uml.Property;
 
-import com.eclipsesource.uml.glsp.core.gmodel.suffix.LabelSuffixAppender;
-import com.eclipsesource.uml.glsp.core.utils.UmlConfig;
+import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
+import com.eclipsesource.uml.glsp.core.gmodel.suffix.LabelSuffix;
 import com.eclipsesource.uml.glsp.uml.handler.operations.directediting.BaseLabelEditHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association.SetAssociationEndNameContribution;
 
 public class SetAssociationEndNameHandler extends BaseLabelEditHandler<Property> {
 
    public SetAssociationEndNameHandler() {
-      super(UmlConfig.Types.LABEL_EDGE_NAME, LabelSuffixAppender.SUFFIX);
+      super(CoreTypes.LABEL_EDGE_NAME, LabelSuffix.SUFFIX);
    }
 
    @Override

@@ -54,7 +54,7 @@ public class ObjectDiagramNodeFactory { /*-
 
    // protected GCompartment buildObjectHeader(final InstanceSpecification umlObject) {
    protected GCompartment buildObjectHeader(final Class umlObject) {
-      GCompartmentBuilder objectHeaderBuilder = new GCompartmentBuilder(UmlConfig.Types.COMPARTMENT_HEADER)
+      GCompartmentBuilder objectHeaderBuilder = new GCompartmentBuilder(CoreTypes.COMPARTMENT_HEADER)
          .layout(GConstants.Layout.HBOX)
          .id(UmlIDUtil.createHeaderId(toId(umlObject)));
 
@@ -65,7 +65,7 @@ public class ObjectDiagramNodeFactory { /*-
        * objectHeaderBuilder.add(objectHeaderIcon);
        *
 
-   GLabel objectHeaderLabel = new GLabelBuilder(UmlConfig.Types.LABEL_NAME)
+   GLabel objectHeaderLabel = new GLabelBuilder(CoreTypes.LABEL_NAME)
       .id(UmlIDUtil.createHeaderLabelId(toId(umlObject)))
       .addCssClass(ObjectCSS.UNDERLINE)
       .text(umlObject.getName()).build();
@@ -85,7 +85,7 @@ public class ObjectDiagramNodeFactory { /*-
 
    protected GCompartment buildObjectAttributeCompartment(final Collection<? extends Property> attributes,
       final Classifier parent) {
-      GCompartmentBuilder objectAttributeBuilder = new GCompartmentBuilder(UmlConfig.Types.COMP)
+      GCompartmentBuilder objectAttributeBuilder = new GCompartmentBuilder(CoreTypes.COMP)
          .id(UmlIDUtil.createChildCompartmentId(toId(parent))).layout(GConstants.Layout.VBOX);
 
       GLayoutOptions layoutOptions = new GLayoutOptions()

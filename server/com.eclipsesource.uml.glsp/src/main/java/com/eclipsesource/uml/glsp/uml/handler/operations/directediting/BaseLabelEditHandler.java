@@ -17,7 +17,7 @@ import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperation;
 import org.eclipse.glsp.server.types.GLSPServerException;
 
-import com.eclipsesource.uml.glsp.core.features.idgenerator.SuffixIdExtractor;
+import com.eclipsesource.uml.glsp.core.gmodel.suffix.Suffix;
 import com.eclipsesource.uml.glsp.core.handler.operation.directediting.DiagramLabelEditHandler;
 import com.eclipsesource.uml.glsp.core.model.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
@@ -36,7 +36,7 @@ public abstract class BaseLabelEditHandler<T extends EObject> implements Diagram
    protected UmlModelServerAccess modelServerAccess;
 
    @Inject
-   private SuffixIdExtractor suffixIdExtractor;
+   protected Suffix suffix;
 
    public BaseLabelEditHandler(final String labelType, final String labelSuffix) {
       this.labelType = labelType;
@@ -58,7 +58,7 @@ public abstract class BaseLabelEditHandler<T extends EObject> implements Diagram
       var labelId = editLabelOperation.getLabelId();
       var newText = editLabelOperation.getText();
 
-      var elementId = suffixIdExtractor.extractId(labelId)
+      var elementId = suffix.extractId(labelId)
          .orElseThrow(() -> new GLSPServerException("No elementId found by extractor for label " + labelId));
 
       var semanticElement = getOrThrow(modelState.getIndex().getEObject(elementId),

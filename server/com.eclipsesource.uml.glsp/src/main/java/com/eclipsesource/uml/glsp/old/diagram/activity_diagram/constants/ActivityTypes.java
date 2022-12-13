@@ -12,39 +12,39 @@ package com.eclipsesource.uml.glsp.old.diagram.activity_diagram.constants;
 
 import java.util.List;
 
-import com.eclipsesource.uml.glsp.core.utils.UmlConfig;
+import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 
 public final class ActivityTypes {
    // ACTIVITY DIAGRAM
-   public static final String ICON_ACTIVITY = UmlConfig.Types.PRE_ICON + "activity";
-   public static final String ACTIVITY = UmlConfig.Types.PRE_NODE + "activity";
-   public static final String PARTITION = UmlConfig.Types.PRE_NODE + "partition";
-   public static final String CONTROLFLOW = UmlConfig.Types.PRE_EDGE + "controlflow";
-   public static final String LABEL_GUARD = UmlConfig.Types.PRE_LABEL + "guard";
-   public static final String LABEL_WEIGHT = UmlConfig.Types.PRE_LABEL + "weight";
-   public static final String CONDITION = UmlConfig.Types.PRE_NODE + "condition";
-   public static final String ICON_ACTION = UmlConfig.Types.PRE_ICON + "action";
-   public static final String ACTION = UmlConfig.Types.PRE_NODE + "action";
-   public static final String SENDSIGNAL = UmlConfig.Types.PRE_NODE + "sendsignal";
-   public static final String ACCEPTEVENT = UmlConfig.Types.PRE_NODE + "acceptevent";
-   public static final String TIMEEVENT = UmlConfig.Types.PRE_NODE + "timeevent";
-   public static final String CALL = UmlConfig.Types.PRE_NODE + "call";
-   public static final String CALL_REF = UmlConfig.Types.PRE_LABEL + "callref";
+   public static final String ICON_ACTIVITY = CoreTypes.PRE_ICON + "activity";
+   public static final String ACTIVITY = CoreTypes.PRE_NODE + "activity";
+   public static final String PARTITION = CoreTypes.PRE_NODE + "partition";
+   public static final String CONTROLFLOW = CoreTypes.PRE_EDGE + "controlflow";
+   public static final String LABEL_GUARD = CoreTypes.PRE_LABEL + "guard";
+   public static final String LABEL_WEIGHT = CoreTypes.PRE_LABEL + "weight";
+   public static final String CONDITION = CoreTypes.PRE_NODE + "condition";
+   public static final String ICON_ACTION = CoreTypes.PRE_ICON + "action";
+   public static final String ACTION = CoreTypes.PRE_NODE + "action";
+   public static final String SENDSIGNAL = CoreTypes.PRE_NODE + "sendsignal";
+   public static final String ACCEPTEVENT = CoreTypes.PRE_NODE + "acceptevent";
+   public static final String TIMEEVENT = CoreTypes.PRE_NODE + "timeevent";
+   public static final String CALL = CoreTypes.PRE_NODE + "call";
+   public static final String CALL_REF = CoreTypes.PRE_LABEL + "callref";
    public static final List<String> ACTIONS = List.of(ACTION, SENDSIGNAL, ACCEPTEVENT, TIMEEVENT, CALL);
-   public static final String INITIALNODE = UmlConfig.Types.PRE_NODE + "initialnode";
-   public static final String FINALNODE = UmlConfig.Types.PRE_NODE + "finalnode";
-   public static final String FLOWFINALNODE = UmlConfig.Types.PRE_NODE + "flowfinalnode";
-   public static final String DECISIONMERGENODE = UmlConfig.Types.PRE_NODE + "decisionnode";
-   public static final String FORKJOINNODE = UmlConfig.Types.PRE_NODE + "forknode";
+   public static final String INITIALNODE = CoreTypes.PRE_NODE + "initialnode";
+   public static final String FINALNODE = CoreTypes.PRE_NODE + "finalnode";
+   public static final String FLOWFINALNODE = CoreTypes.PRE_NODE + "flowfinalnode";
+   public static final String DECISIONMERGENODE = CoreTypes.PRE_NODE + "decisionnode";
+   public static final String FORKJOINNODE = CoreTypes.PRE_NODE + "forknode";
    public static final List<String> CONTROL_NODES = List.of(INITIALNODE, FINALNODE, FLOWFINALNODE, DECISIONMERGENODE,
       FORKJOINNODE);
-   public static final String PARAMETER = UmlConfig.Types.PRE_NODE + "parameter";
-   public static final String PIN = UmlConfig.Types.PRE_NODE + "pin";
-   public static final String PIN_PORT = UmlConfig.Types.PRE_NODE + "pinport";
-   public static final String CENTRALBUFFER = UmlConfig.Types.PRE_NODE + "centralbuffer";
-   public static final String DATASTORE = UmlConfig.Types.PRE_NODE + "datastore";
-   public static final String EXCEPTIONHANDLER = UmlConfig.Types.PRE_EDGE + "exceptionhandler";
-   public static final String INTERRUPTIBLEREGION = UmlConfig.Types.PRE_NODE + "interruptibleregion";
+   public static final String PARAMETER = CoreTypes.PRE_NODE + "parameter";
+   public static final String PIN = CoreTypes.PRE_NODE + "pin";
+   public static final String PIN_PORT = CoreTypes.PRE_NODE + "pinport";
+   public static final String CENTRALBUFFER = CoreTypes.PRE_NODE + "centralbuffer";
+   public static final String DATASTORE = CoreTypes.PRE_NODE + "datastore";
+   public static final String EXCEPTIONHANDLER = CoreTypes.PRE_EDGE + "exceptionhandler";
+   public static final String INTERRUPTIBLEREGION = CoreTypes.PRE_NODE + "interruptibleregion";
 
    // COMMON CANDIDATE
    public static final String STRUCTURE = "struct";

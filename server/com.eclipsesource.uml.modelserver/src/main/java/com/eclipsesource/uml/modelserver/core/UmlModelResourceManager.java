@@ -21,7 +21,6 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.emfcloud.modelserver.emf.common.RecordingModelResourceManager;
 import org.eclipse.emfcloud.modelserver.emf.common.watchers.ModelWatchersManager;
 import org.eclipse.emfcloud.modelserver.emf.configuration.EPackageConfiguration;
@@ -119,8 +118,7 @@ public class UmlModelResourceManager extends RecordingModelResourceManager {
    protected boolean saveResource(final Resource resource) {
       if (resource.getURI() != null) {
          try {
-            resource.save(Map.of(
-               XMIResource.OPTION_USE_XMI_TYPE, Boolean.TRUE));
+            resource.save(Map.of());
             return true;
          } catch (IOException e) {
             LOG.error("Could not save resource: " + resource.getURI(), e);

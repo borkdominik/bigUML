@@ -14,10 +14,9 @@ import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Lifeline;
-import org.eclipse.uml2.uml.MessageOccurrenceSpecification;
 
 import com.eclipsesource.uml.modelserver.shared.notation.commands.UmlRemoveNotationElementCommand;
-import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.message.RemoveMessageCompoundCommand;
+import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.matcher.CommunicationDiagramCrossReferenceRemover;
 
 public class RemoveLifelineCompoundCommand extends CompoundCommand {
    public RemoveLifelineCompoundCommand(final EditingDomain domain, final URI modelUri,
@@ -25,11 +24,8 @@ public class RemoveLifelineCompoundCommand extends CompoundCommand {
       this.append(new RemoveLifelineSemanticCommand(domain, modelUri, lifeline));
       this.append(new UmlRemoveNotationElementCommand(domain, modelUri, lifeline));
 
-      lifeline.getCoveredBys().forEach(fragment -> {
-         var specification = (MessageOccurrenceSpecification) fragment;
-         var message = specification.getMessage();
-
-         this.append(new RemoveMessageCompoundCommand(domain, modelUri, message));
-      });
+      new CommunicationDiagramCrossReferenceRemover(domain, modelUri)
+         .removeCommandsFor(lifeline)
+         .forEach(this::append);
    }
 }

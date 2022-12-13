@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.reference_matcher;
+package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.matcher;
 
 import java.util.List;
 
@@ -50,6 +50,6 @@ public class ClassDiagramCrossReferenceRemover {
    }
 
    public List<Command> removeCommandsFor(final EObject elementToRemove) {
-      return matcher.findMatches(elementToRemove, model.eResource());
+      return matcher.find(elementToRemove, model.eResource());
    }
 }

@@ -33,27 +33,32 @@ public class CrossReferenceMatcher<T> {
       this.matchers = matchers;
    }
 
-   public List<T> findMatches(final EObject context, final Resource resource) {
-      var matches = new ArrayList<T>();
+   public List<T> find(final EObject interest, final Resource resource) {
       var settings = UsageCrossReferencer
-         .find(context, resource)
-         .stream()
-         .filter(s -> !(s instanceof Collection<?>))
+         .find(interest, resource);
+
+      return find(settings, interest);
+   }
+
+   protected List<T> find(final Collection<Setting> settings, final EObject interest) {
+      var matches = new ArrayList<T>();
+      var filteredSettings = settings.stream()
          .filter(StreamUtil.distinctByKey(Setting::getEObject))
          .collect(Collectors.toList());
 
-      for (var setting : settings) {
+      for (var setting : filteredSettings) {
          for (var entry : matchers.entrySet()) {
             var match = entry.getKey();
             var consumer = entry.getValue();
-            if (match.apply(setting, context)) {
-               matches.add(consumer.apply(setting, context));
+            if (match.apply(setting, interest)) {
+               matches.add(consumer.apply(setting, interest));
                break;
             }
          }
       }
 
       return matches;
+
    }
 
    public static class Builder<T> {

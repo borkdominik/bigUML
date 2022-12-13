@@ -2,6 +2,7 @@
 <uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_Cfp0UGmxEe2kLe5KTNzRtw" name="clazz">
   <packagedElement xmi:type="uml:Class" xmi:id="_KfaYMHY-Ee22r-4vylV5aQ" name="NewClass1">
     <generalization xmi:id="_L4Ur4HY-Ee22r-4vylV5aQ" general="_K5fsIHY-Ee22r-4vylV5aQ"/>
+    <ownedAttribute xmi:id="_hCPgYHZIEe27uZDrCx60Rw" name="newProperty0"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="_K5fsIHY-Ee22r-4vylV5aQ" name="NewClass2">
     <generalization xmi:id="_M-eboHY-Ee22r-4vylV5aQ" general="_LMHGIHY-Ee22r-4vylV5aQ"/>
@@ -23,14 +24,6 @@
     </eAnnotations>
     <ownedEnd xmi:id="_PpepU3Y-Ee22r-4vylV5aQ" name="newclass1s" type="_KfaYMHY-Ee22r-4vylV5aQ" association="_PpepUHY-Ee22r-4vylV5aQ"/>
     <ownedEnd xmi:id="_PpepVHY-Ee22r-4vylV5aQ" name="newinterface1s" type="_OvGrwHY-Ee22r-4vylV5aQ" association="_PpepUHY-Ee22r-4vylV5aQ"/>
-  </packagedElement>
-  <packagedElement xmi:type="uml:Class" xmi:id="_P_i_8HY-Ee22r-4vylV5aQ" name="NewClass4"/>
-  <packagedElement xmi:type="uml:Association" xmi:id="_Q_A44HY-Ee22r-4vylV5aQ" memberEnd="_Q_A443Y-Ee22r-4vylV5aQ _Q_A45HY-Ee22r-4vylV5aQ">
-    <eAnnotations xmi:id="_Q_A44XY-Ee22r-4vylV5aQ" source="http://www.eclipse.org/uml2/2.0.0/UML">
-      <details xmi:id="_Q_A44nY-Ee22r-4vylV5aQ" key="COMPOSITION"/>
-    </eAnnotations>
-    <ownedEnd xmi:id="_Q_A443Y-Ee22r-4vylV5aQ" name="newclass1s" type="_KfaYMHY-Ee22r-4vylV5aQ" association="_Q_A44HY-Ee22r-4vylV5aQ"/>
-    <ownedEnd xmi:id="_Q_A45HY-Ee22r-4vylV5aQ" name="newclass4s" type="_P_i_8HY-Ee22r-4vylV5aQ" association="_Q_A44HY-Ee22r-4vylV5aQ"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="_Sv-gMHY-Ee22r-4vylV5aQ" name="NewClass5" isAbstract="true"/>
   <packagedElement xmi:type="uml:Association" xmi:id="_TnZ3cHY-Ee22r-4vylV5aQ" memberEnd="_TnZ3c3Y-Ee22r-4vylV5aQ _TnZ3dHY-Ee22r-4vylV5aQ">

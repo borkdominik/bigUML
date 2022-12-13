@@ -34,6 +34,7 @@ public class RemoveMessageSemanticCommand extends UmlSemanticElementCommand {
    @Override
    protected void doExecute() {
       if (message.eContainer() != null) {
+
          var sendEvent = (MessageOccurrenceSpecification) message.getSendEvent();
          sendEvent.getCovereds().clear();
 

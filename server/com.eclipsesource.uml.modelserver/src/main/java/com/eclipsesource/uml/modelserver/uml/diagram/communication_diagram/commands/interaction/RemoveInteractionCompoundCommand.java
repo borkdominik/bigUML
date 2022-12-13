@@ -14,26 +14,18 @@ import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Interaction;
-import org.eclipse.uml2.uml.Lifeline;
 
 import com.eclipsesource.uml.modelserver.shared.notation.commands.UmlRemoveNotationElementCommand;
-import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.lifeline.RemoveLifelineCompoundCommand;
+import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.matcher.CommunicationDiagramCrossReferenceRemover;
 
 public class RemoveInteractionCompoundCommand extends CompoundCommand {
 
    public RemoveInteractionCompoundCommand(final EditingDomain domain, final URI modelUri,
       final Interaction interaction) {
-
-      removeLifelines(interaction, domain, modelUri);
-
       this.append(new RemoveInteractionSemanticCommand(domain, modelUri, interaction));
       this.append(new UmlRemoveNotationElementCommand(domain, modelUri, interaction));
-   }
 
-   protected void removeLifelines(final Interaction interactionToRemove, final EditingDomain domain,
-      final URI modelUri) {
-      for (Lifeline lifeline : interactionToRemove.getLifelines()) {
-         this.append(new RemoveLifelineCompoundCommand(domain, modelUri, lifeline));
-      }
+      new CommunicationDiagramCrossReferenceRemover(domain, modelUri).removeCommandsFor(interaction)
+         .forEach(this::append);
    }
 }

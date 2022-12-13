@@ -16,7 +16,7 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Class;
 
 import com.eclipsesource.uml.modelserver.shared.notation.commands.UmlRemoveNotationElementCommand;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.reference_matcher.ClassDiagramCrossReferenceRemover;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.matcher.ClassDiagramCrossReferenceRemover;
 
 public class RemoveClassCompoundCommand extends CompoundCommand {
 

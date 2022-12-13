@@ -2,23 +2,26 @@
 <unotation:UmlDiagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:notation="http://www.eclipse.org/glsp/notation" xmlns:unotation="http://www.eclipsesource.com/glsp/uml/unotation" diagramType="COMMUNICATION" representation="COMMUNICATION">
   <semanticElement elementId="_nD7_AEiTEe287ptuQ4W3Iw"/>
   <elements xsi:type="notation:Shape">
-    <semanticElement elementId="_YMo0AFkwEe2JlJ6Hu0hssQ"/>
-    <position x="190.66920147470512" y="194.60269772847062"/>
-    <size width="845.1837948482353" height="320.0712578516732"/>
+    <semanticElement elementId="_Apok4XZJEe2wEbvDZ90BxA"/>
+    <position x="274.0" y="369.0"/>
+    <size width="548.0" height="129.0"/>
   </elements>
   <elements xsi:type="notation:Shape">
-    <semanticElement elementId="_YkesQFkwEe2JlJ6Hu0hssQ"/>
-    <position x="76.40656471743128" y="139.13897254060217"/>
-    <size width="155.515625" height="42.0"/>
+    <semanticElement elementId="_BAry8HZJEe2wEbvDZ90BxA"/>
+    <position y="79.0"/>
+    <size width="160.0" height="50.0"/>
   </elements>
   <elements xsi:type="notation:Shape">
-    <semanticElement elementId="_7tU98VkzEe2-DPjS777r_w"/>
-    <position x="413.93379484823527" y="141.08918166335087"/>
-    <size width="73.25" height="42.0"/>
+    <semanticElement elementId="_BVYQkHZJEe2wEbvDZ90BxA"/>
+    <position x="388.0" y="49.0"/>
+    <size width="160.0" height="50.0"/>
   </elements>
   <elements xsi:type="notation:Edge">
-    <semanticElement elementId="_Wji0cG8XEe2mJIxqi4TDVg"/>
-    <bendPoints x="313.92799228283326" y="160.13897254060217"/>
-    <bendPoints x="313.92799228283326" y="152.08918166335087"/>
+    <semanticElement elementId="_CSv3wHZJEe2wEbvDZ90BxA"/>
+  </elements>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_ntqiEXrTEe2uNb5d1e2_ig"/>
+    <position x="616.4621330652031" y="238.4884195727044"/>
+    <size width="160.0" height="50.0"/>
   </elements>
 </unotation:UmlDiagram>

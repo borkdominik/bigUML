@@ -37,6 +37,6 @@ public class GModelMapperRegistry
          });
       });
 
-      // debug();
+      // printContent();
    }
 }

@@ -15,6 +15,7 @@ import com.eclipsesource.uml.glsp.core.gmodel.suffix.CompartmentSuffix;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.HeaderIconSuffix;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.HeaderLabelSuffix;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.HeaderSuffix;
+import com.eclipsesource.uml.glsp.core.gmodel.suffix.IconSuffix;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.LabelSuffix;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.Suffix;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.ActionHandlerContribution;
@@ -63,6 +64,7 @@ public class DefaultManifest extends AbstractModule
 
    protected void configureGenerators() {
       contributeSuffixIdAppenders(binder(), mapbinder -> {
+         mapbinder.addBinding(IconSuffix.SUFFIX).to(IconSuffix.class);
          mapbinder.addBinding(LabelSuffix.SUFFIX).to(LabelSuffix.class);
          mapbinder.addBinding(CompartmentSuffix.SUFFIX).to(CompartmentSuffix.class);
          mapbinder.addBinding(HeaderSuffix.SUFFIX).to(HeaderSuffix.class);

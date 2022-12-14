@@ -34,6 +34,6 @@ public class DiagramDeleteHandlerRegistry
          });
       });
 
-      // debug();
+      // printContent();
    }
 }

@@ -8,20 +8,17 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.generator;
+package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.enumeration_literal;
 
-import org.eclipse.uml2.uml.Class;
-import org.eclipse.uml2.uml.Property;
+import org.eclipse.uml2.uml.EnumerationLiteral;
 
-import com.eclipsesource.uml.modelserver.uml.generator.ContextualNameGenerator;
+import com.eclipsesource.uml.glsp.core.gmodel.suffix.LabelSuffix;
+import com.eclipsesource.uml.glsp.uml.handler.operations.directediting.DefaultRenameNamedElementHandler;
 
-public class PropertyNameGenerator implements ContextualNameGenerator<Class> {
+public class RenameEnumerationLiteralHandler extends DefaultRenameNamedElementHandler<EnumerationLiteral> {
 
-   @Override
-   public String newNameInContextOf(final Class element) {
-      var attributeCounter = element.getOwnedAttributes().size();
-
-      return "new" + Property.class.getSimpleName() + attributeCounter;
+   public RenameEnumerationLiteralHandler() {
+      super(LabelSuffix.SUFFIX);
    }
 
 }

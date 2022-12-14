@@ -62,8 +62,11 @@ public class ClassDiagramConfiguration implements DiagramConfiguration {
       hints.add(new ShapeTypeHint(ClassTypes.INTERFACE, true, true, false, false,
          List.of(ClassTypes.PROPERTY)));
       hints.add(new ShapeTypeHint(ClassTypes.ENUMERATION, true, true, false, false,
-         List.of()));
+         List.of(ClassTypes.ENUMERATION_LITERAL)));
+
       hints.add(new ShapeTypeHint(ClassTypes.PROPERTY, false, true, false, true,
+         List.of()));
+      hints.add(new ShapeTypeHint(ClassTypes.ENUMERATION_LITERAL, false, true, false, true,
          List.of()));
 
       return hints;
@@ -77,8 +80,9 @@ public class ClassDiagramConfiguration implements DiagramConfiguration {
       mappings.put(ClassTypes.CLASS, GraphPackage.Literals.GNODE);
       mappings.put(ClassTypes.ICON_ENUMERATION, GraphPackage.Literals.GCOMPARTMENT);
       mappings.put(ClassTypes.ENUMERATION, GraphPackage.Literals.GNODE);
+      mappings.put(ClassTypes.ICON_ENUMERATION_LITERAL, GraphPackage.Literals.GCOMPARTMENT);
+      mappings.put(ClassTypes.ENUMERATION_LITERAL, GraphPackage.Literals.GCOMPARTMENT);
       mappings.put(ClassTypes.INTERFACE, GraphPackage.Literals.GNODE);
-      mappings.put(ClassTypes.PROPERTY, GraphPackage.Literals.GLABEL);
       mappings.put(ClassTypes.ASSOCIATION, GraphPackage.Literals.GEDGE);
       mappings.put(ClassTypes.AGGREGATION, GraphPackage.Literals.GEDGE);
       mappings.put(ClassTypes.COMPOSITION, GraphPackage.Literals.GEDGE);

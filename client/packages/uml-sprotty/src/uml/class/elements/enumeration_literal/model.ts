@@ -10,7 +10,7 @@
  ********************************************************************************/
 import { Icon } from "../../../../model";
 
-export class IconProperty extends Icon {
+export class IconEnumerationLiteral extends Icon {
     iconImageName = "class/Property.svg";
 }
 

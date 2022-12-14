@@ -21,6 +21,7 @@ import { NamedElement } from "../shared/named-element.model";
 import { NamedElementView } from "../shared/named-element.view";
 import { IconClass } from "./elements/class";
 import { IconEnumeration } from "./elements/enumeration";
+import { IconEnumerationLiteral } from "./elements/enumeration_literal";
 import { IconProperty } from "./elements/property";
 
 export default function createClassModule(): ContainerModule {
@@ -59,6 +60,20 @@ export default function createClassModule(): ContainerModule {
             UmlTypes.ENUMERATION,
             NamedElement,
             NamedElementView
+        );
+
+        // Enumeration Literal
+        configureModelElement(
+            context,
+            UmlTypes.ICON_ENUMERATION_LITERAL,
+            IconEnumerationLiteral,
+            IconView
+        );
+        configureModelElement(
+            context,
+            UmlTypes.ENUMERATION_LITERAL,
+            IconLabelCompartment,
+            SCompartmentView
         );
 
         // Interface

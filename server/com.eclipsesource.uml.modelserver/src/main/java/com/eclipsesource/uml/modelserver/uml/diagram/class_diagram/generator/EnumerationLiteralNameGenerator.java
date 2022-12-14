@@ -10,23 +10,18 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.generator;
 
-import java.util.function.Function;
-import java.util.stream.Collectors;
-
-import org.eclipse.uml2.uml.StructuralFeature;
+import org.eclipse.uml2.uml.Enumeration;
+import org.eclipse.uml2.uml.EnumerationLiteral;
 
 import com.eclipsesource.uml.modelserver.uml.generator.ContextualNameGenerator;
 
-public abstract class StructuralFeatureNameGenerator<T> implements ContextualNameGenerator<T> {
+public class EnumerationLiteralNameGenerator implements ContextualNameGenerator<Enumeration> {
 
-   public String getNewStructuralFeatureName(
-      final Class<? extends StructuralFeature> umlStructuralFeature, final org.eclipse.uml2.uml.Class parentClass) {
+   @Override
+   public String newNameInContextOf(final Enumeration element) {
+      var attributeCounter = element.getOwnedLiterals().size();
 
-      Function<Integer, String> nameProvider = i -> "new" + umlStructuralFeature.getSimpleName() + i;
-
-      var attributeCounter = parentClass.getOwnedAttributes().stream().filter(umlStructuralFeature::isInstance)
-         .collect(Collectors.toList()).size();
-
-      return nameProvider.apply(attributeCounter);
+      return "new" + EnumerationLiteral.class.getSimpleName() + attributeCounter;
    }
+
 }

@@ -30,6 +30,6 @@ public class DiagramOutlineGeneratorRegistry
          register(representation, generator);
       });
 
-      // debug();
+      // printContent();
    }
 }

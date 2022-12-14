@@ -17,9 +17,14 @@ public final class ClassTypes {
    public static final String ICON_CLASS = CoreTypes.PRE_ICON + "class";
    public static final String CLASS = CoreTypes.PRE_NODE + "class";
    public static final String ABSTRACT_CLASS = CoreTypes.PRE_NODE + "abstract-class";
-   public static final String ENUMERATION = CoreTypes.PRE_NODE + "enumeration";
+
    public static final String ICON_ENUMERATION = CoreTypes.PRE_ICON + "enumeration";
+   public static final String ENUMERATION = CoreTypes.PRE_NODE + "enumeration";
+   public static final String ICON_ENUMERATION_LITERAL = CoreTypes.PRE_ICON + "enumeration-literal";
+   public static final String ENUMERATION_LITERAL = CoreTypes.PRE_COMP_BASE + "enumeration-literal";
+
    public static final String INTERFACE = CoreTypes.PRE_NODE + "interface";
+
    public static final String ASSOCIATION = CoreTypes.PRE_EDGE + "association";
    public static final String COMPOSITION = CoreTypes.PRE_EDGE + "composition";
    public static final String AGGREGATION = CoreTypes.PRE_EDGE + "aggregation";

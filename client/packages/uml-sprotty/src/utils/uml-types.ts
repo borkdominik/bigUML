@@ -25,6 +25,8 @@ export namespace UmlTypes {
     export const ABSTRACT_CLASS = `${DefaultTypes.NODE}:abstract-class`;
     export const ICON_ENUMERATION = `${ICON}:enumeration`;
     export const ENUMERATION = `${DefaultTypes.NODE}:enumeration`;
+    export const ICON_ENUMERATION_LITERAL = `${ICON}:enumeration-literal`;
+    export const ENUMERATION_LITERAL = `${DefaultTypes.COMPARTMENT}:enumeration-literal`;
     export const INTERFACE = `${DefaultTypes.NODE}:interface`;
     export const ASSOCIATION = `${DefaultTypes.EDGE}:association`;
     export const AGGREGATION = `${DefaultTypes.EDGE}:aggregation`;

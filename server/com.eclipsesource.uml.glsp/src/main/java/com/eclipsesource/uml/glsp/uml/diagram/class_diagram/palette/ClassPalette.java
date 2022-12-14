@@ -18,42 +18,36 @@ import org.eclipse.glsp.server.features.toolpalette.PaletteItem;
 import com.eclipsesource.uml.glsp.core.features.toolpalette.DiagramPalette;
 import com.eclipsesource.uml.glsp.core.features.toolpalette.PaletteItemUtil;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
-import com.google.common.collect.Lists;
 
 public class ClassPalette implements DiagramPalette {
    @Override
    public List<PaletteItem> getItems(final Map<String, String> args) {
-      return Lists.newArrayList(classifiersClass(), relationsClass(), featuresClass());
+      return List.of(containers(), relations(), features());
    }
 
-   private PaletteItem classifiersClass() {
-      PaletteItem createClass = PaletteItemUtil.node(ClassTypes.CLASS, "Class", "umlclass");
-      PaletteItem createAbstractClass = PaletteItemUtil.node(ClassTypes.ABSTRACT_CLASS, "Abstract Class", "umlclass");
-      // TODO: change icon
-      PaletteItem createInterface = PaletteItemUtil.node(ClassTypes.INTERFACE, "Interface", "umlclass");
-      PaletteItem createEnumeration = PaletteItemUtil.node(ClassTypes.ENUMERATION, "Enumeration", "umlenumeration");
-
-      List<PaletteItem> classifiers = Lists.newArrayList(createClass, createAbstractClass, createInterface,
-         createEnumeration);
-      return PaletteItem.createPaletteGroup("uml.classifier", "Container", classifiers, "symbol-property");
+   private PaletteItem containers() {
+      var containers = List.of(
+         PaletteItemUtil.node(ClassTypes.CLASS, "Class", "umlclass"),
+         PaletteItemUtil.node(ClassTypes.ABSTRACT_CLASS, "Abstract Class", "umlclass"),
+         PaletteItemUtil.node(ClassTypes.INTERFACE, "Interface", "umlclass"),
+         PaletteItemUtil.node(ClassTypes.ENUMERATION, "Enumeration", "umlenumeration"));
+      return PaletteItem.createPaletteGroup("uml.classifier", "Container", containers, "symbol-property");
    }
 
-   private PaletteItem relationsClass() {
-      PaletteItem createAssociation = PaletteItemUtil.edge(ClassTypes.ASSOCIATION, "Association", "umlassociation");
-      PaletteItem createGeneralisation = PaletteItemUtil.edge(ClassTypes.CLASS_GENERALIZATION, "Generalization",
-         "umlgeneralization");
-      PaletteItem createComposition = PaletteItemUtil.edge(ClassTypes.COMPOSITION, "Composition", "umlassociation");
-      PaletteItem createAggregation = PaletteItemUtil.edge(ClassTypes.AGGREGATION, "Aggregation", "umlassociation");
-
-      List<PaletteItem> relations = Lists.newArrayList(createAssociation, createGeneralisation, createComposition,
-         createAggregation);
+   private PaletteItem relations() {
+      var relations = List.of(
+         PaletteItemUtil.edge(ClassTypes.ASSOCIATION, "Association", "umlassociation"),
+         PaletteItemUtil.edge(ClassTypes.CLASS_GENERALIZATION, "Generalization",
+            "umlgeneralization"),
+         PaletteItemUtil.edge(ClassTypes.COMPOSITION, "Composition", "umlassociation"),
+         PaletteItemUtil.edge(ClassTypes.AGGREGATION, "Aggregation", "umlassociation"));
       return PaletteItem.createPaletteGroup("uml.classifier", "Relation", relations, "symbol-property");
    }
 
-   private PaletteItem featuresClass() {
-      PaletteItem createProperty = PaletteItemUtil.node(ClassTypes.PROPERTY, "Property", "umlproperty");
-
-      List<PaletteItem> features = Lists.newArrayList(createProperty);
+   private PaletteItem features() {
+      var features = List.of(
+         PaletteItemUtil.node(ClassTypes.PROPERTY, "Property", "umlproperty"),
+         PaletteItemUtil.node(ClassTypes.ENUMERATION_LITERAL, "Enumeration Literal", "umlliteral"));
       return PaletteItem.createPaletteGroup("uml.classifier", "Feature", features, "symbol-property");
    }
 }

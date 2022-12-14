@@ -27,6 +27,7 @@ import com.eclipsesource.uml.glsp.core.manifest.contributions.SuffixIdAppenderCo
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.ClassDiagramConfiguration;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.AssociationEdgeMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.ClassNodeMapper;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.EnumerationLiteralCompartmentMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.EnumerationNodeMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.GeneralizationEdgeMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.InterfaceNodeMapper;
@@ -48,6 +49,9 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.as
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.enumeration.CreateEnumerationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.enumeration.DeleteEnumerationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.enumeration.RenameEnumerationHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.enumeration_literal.CreateEnumerationLiteralHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.enumeration_literal.DeleteEnumerationLiteralHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.enumeration_literal.RenameEnumerationLiteralHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.generalization.CreateGeneralizationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.generalization.DeleteGeneralizationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.property.CreatePropertyHandler;
@@ -120,6 +124,7 @@ public class ClassUmlManifest extends DiagramManifest
       multibinder.addBinding().to(CreateAssociationHandler.class);
       multibinder.addBinding().to(CreateCompositionHandler.class);
       multibinder.addBinding().to(CreateEnumerationHandler.class);
+      multibinder.addBinding().to(CreateEnumerationLiteralHandler.class);
       multibinder.addBinding().to(CreateGeneralizationHandler.class);
       multibinder.addBinding().to(CreatePropertyHandler.class);
       multibinder.addBinding().to(CreateAbstractClassHandler.class);
@@ -131,6 +136,7 @@ public class ClassUmlManifest extends DiagramManifest
    public void contributeDeleteHandler(final Multibinder<DiagramDeleteHandler<? extends EObject>> multibinder) {
       multibinder.addBinding().to(DeleteAssociationHandler.class);
       multibinder.addBinding().to(DeleteEnumerationHandler.class);
+      multibinder.addBinding().to(DeleteEnumerationLiteralHandler.class);
       multibinder.addBinding().to(DeleteGeneralizationHandler.class);
       multibinder.addBinding().to(DeletePropertyHandler.class);
       multibinder.addBinding().to(DeleteClassHandler.class);
@@ -143,6 +149,7 @@ public class ClassUmlManifest extends DiagramManifest
       multibinder.addBinding().to(SetAssociationEndMultiplicityHandler.class);
       multibinder.addBinding().to(SetAssociationEndNameHandler.class);
       multibinder.addBinding().to(RenameEnumerationHandler.class);
+      multibinder.addBinding().to(RenameEnumerationLiteralHandler.class);
       multibinder.addBinding().to(RenamePropertyHandler.class);
       multibinder.addBinding().to(SetPropertyMultiplicityHandler.class);
       multibinder.addBinding().to(SetPropertyTypeHandler.class);
@@ -156,6 +163,7 @@ public class ClassUmlManifest extends DiagramManifest
       multibinder.addBinding().to(AssociationEdgeMapper.class);
       multibinder.addBinding().to(ClassNodeMapper.class);
       multibinder.addBinding().to(EnumerationNodeMapper.class);
+      multibinder.addBinding().to(EnumerationLiteralCompartmentMapper.class);
       multibinder.addBinding().to(GeneralizationEdgeMapper.class);
       multibinder.addBinding().to(InterfaceNodeMapper.class);
       multibinder.addBinding().to(PropertyCompartmentMapper.class);

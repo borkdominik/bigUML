@@ -8,20 +8,15 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.generator;
+package com.eclipsesource.uml.glsp.core.gmodel.suffix;
 
-import org.eclipse.uml2.uml.Class;
-import org.eclipse.uml2.uml.Property;
+import com.eclipsesource.uml.glsp.core.features.idgenerator.BaseSuffixIdAppender;
 
-import com.eclipsesource.uml.modelserver.uml.generator.ContextualNameGenerator;
+public class IconSuffix extends BaseSuffixIdAppender {
+   public static final String SUFFIX = "_icon";
 
-public class PropertyNameGenerator implements ContextualNameGenerator<Class> {
-
-   @Override
-   public String newNameInContextOf(final Class element) {
-      var attributeCounter = element.getOwnedAttributes().size();
-
-      return "new" + Property.class.getSimpleName() + attributeCounter;
+   public IconSuffix() {
+      super(SUFFIX);
    }
 
 }

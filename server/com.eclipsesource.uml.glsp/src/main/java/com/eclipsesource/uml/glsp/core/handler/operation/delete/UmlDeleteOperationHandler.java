@@ -41,12 +41,15 @@ public class UmlDeleteOperationHandler extends AbstractEMSOperationHandler<Delet
 
          handler
             .orElseThrow(
-               () -> new GLSPServerException(
-                  "No delete handler found for class " + semanticElement.getClass().getName()))
+               () -> {
+                  registry.printContent();
+                  return new GLSPServerException(
+                     "No delete handler found for class " + semanticElement.getClass().getName());
+               })
             .executeDelete(semanticElement);
       });
 
-      // debug();
+      // printContent();
    }
 
    @Override

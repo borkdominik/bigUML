@@ -20,6 +20,8 @@ import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.asso
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association.SetAssociationEndNameContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.enumeration.AddEnumerationContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.enumeration.RemoveEnumerationContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.enumeration_literal.AddEnumerationLiteralContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.enumeration_literal.RemoveEnumerationLiteralContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.generalization.AddGeneralizationContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.generalization.RemoveGeneralizationContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.AddPropertyContribution;
@@ -41,7 +43,6 @@ public class ClassManifest extends DiagramManifest implements CommandCodecContri
 
    @Override
    public void contributeCommandCodec(final MapBinder<String, CommandContribution> multibinder) {
-      // CLASS DIAGRAM
       // Class
       multibinder.addBinding(AddClassContribution.TYPE).to(AddClassContribution.class);
       multibinder.addBinding(RemoveClassContribution.TYPE).to(RemoveClassContribution.class);
@@ -49,7 +50,6 @@ public class ClassManifest extends DiagramManifest implements CommandCodecContri
       // Property
       multibinder.addBinding(AddPropertyContribution.TYPE).to(AddPropertyContribution.class);
       multibinder.addBinding(RemovePropertyContribution.TYPE).to(RemovePropertyContribution.class);
-
       multibinder.addBinding(SetPropertyTypeContribution.TYPE).to(SetPropertyTypeContribution.class);
       multibinder.addBinding(SetPropertyBoundsContribution.TYPE).to(SetPropertyBoundsContribution.class);
 
@@ -71,5 +71,9 @@ public class ClassManifest extends DiagramManifest implements CommandCodecContri
       // Enumeration
       multibinder.addBinding(AddEnumerationContribution.TYPE).to(AddEnumerationContribution.class);
       multibinder.addBinding(RemoveEnumerationContribution.TYPE).to(RemoveEnumerationContribution.class);
+
+      // Enumeration Literal
+      multibinder.addBinding(AddEnumerationLiteralContribution.TYPE).to(AddEnumerationLiteralContribution.class);
+      multibinder.addBinding(RemoveEnumerationLiteralContribution.TYPE).to(RemoveEnumerationLiteralContribution.class);
    }
 }

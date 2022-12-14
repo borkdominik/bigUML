@@ -10,16 +10,20 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel;
 
+import java.util.stream.Collectors;
+
 import org.eclipse.glsp.graph.GCompartment;
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.builder.impl.GCompartmentBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
+import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.builder.impl.GNodeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.Enumeration;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
+import com.eclipsesource.uml.glsp.core.gmodel.suffix.CompartmentSuffix;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.HeaderIconSuffix;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.HeaderLabelSuffix;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.HeaderSuffix;
@@ -30,46 +34,68 @@ import com.eclipsesource.uml.glsp.uml.gmodel.BaseGNodeMapper;
 
 public class EnumerationNodeMapper extends BaseGNodeMapper<Enumeration, GNode> {
    @Override
-   public GNode map(final Enumeration umlEnumeration) {
+   public GNode map(final Enumeration enumeration) {
       var builder = new GNodeBuilder(ClassTypes.ENUMERATION)
-         .id(idGenerator.getOrCreateId(umlEnumeration))
+         .id(idGenerator.getOrCreateId(enumeration))
          .layout(GConstants.Layout.VBOX)
          .addCssClass(CoreCSS.NODE)
-         .add(buildHeader(umlEnumeration));
+         .add(buildHeader(enumeration))
+         .add(buildLiterals(enumeration));
 
-      applyShapeNotation(umlEnumeration, builder);
+      applyShapeNotation(enumeration, builder);
 
       return builder.build();
    }
 
-   protected GCompartment buildHeader(final Enumeration umlEnumeration) {
+   protected GCompartment buildHeader(final Enumeration enumeration) {
       var builder = new GCompartmentBuilder(CoreTypes.COMPARTMENT_HEADER)
-         .id(suffix.appendTo(HeaderOuterSuffix.SUFFIX, idGenerator.getOrCreateId(umlEnumeration)))
+         .id(suffix.appendTo(HeaderOuterSuffix.SUFFIX, idGenerator.getOrCreateId(enumeration)))
          .layout(GConstants.Layout.VBOX);
 
       var typeLabel = new GLabelBuilder(CoreTypes.LABEL_TEXT)
-         .id(suffix.appendTo(HeaderTypeSuffix.SUFFIX, idGenerator.getOrCreateId(umlEnumeration)))
+         .id(suffix.appendTo(HeaderTypeSuffix.SUFFIX, idGenerator.getOrCreateId(enumeration)))
          .text("«Enumeration»")
          .build();
       builder.add(typeLabel);
 
       var compBuilder = new GCompartmentBuilder(CoreTypes.COMPARTMENT_HEADER)
-         .id(suffix.appendTo(HeaderSuffix.SUFFIX, idGenerator.getOrCreateId(umlEnumeration)))
+         .id(suffix.appendTo(HeaderSuffix.SUFFIX, idGenerator.getOrCreateId(enumeration)))
          .layout(GConstants.Layout.HBOX);
 
       var icon = new GCompartmentBuilder(ClassTypes.ICON_ENUMERATION)
-         .id(suffix.appendTo(HeaderIconSuffix.SUFFIX, idGenerator.getOrCreateId(umlEnumeration)))
+         .id(suffix.appendTo(HeaderIconSuffix.SUFFIX, idGenerator.getOrCreateId(enumeration)))
          .build();
       compBuilder.add(icon);
 
       var nameLabel = new GLabelBuilder(CoreTypes.LABEL_NAME)
-         .id(suffix.appendTo(HeaderLabelSuffix.SUFFIX, idGenerator.getOrCreateId(umlEnumeration)))
-         .text(umlEnumeration.getName())
+         .id(suffix.appendTo(HeaderLabelSuffix.SUFFIX, idGenerator.getOrCreateId(enumeration)))
+         .text(enumeration.getName())
          .build();
       compBuilder.add(nameLabel);
 
       builder.add(compBuilder.build());
 
       return builder.build();
+   }
+
+   protected GCompartment buildLiterals(final Enumeration enumeration) {
+      var literals = enumeration.getOwnedLiterals();
+
+      var builder = new GCompartmentBuilder(CoreTypes.COMPARTMENT)
+         .id(suffix.appendTo(CompartmentSuffix.SUFFIX, idGenerator.getOrCreateId(enumeration)))
+         .layout(GConstants.Layout.VBOX);
+
+      var layoutOptions = new GLayoutOptions()
+         .hAlign(GConstants.HAlign.LEFT)
+         .resizeContainer(true);
+      builder.layoutOptions(layoutOptions);
+
+      var literalElements = literals.stream()
+         .map(mapHandler::handle)
+         .collect(Collectors.toList());
+      builder.addAll(literalElements);
+
+      return builder.build();
+
    }
 }

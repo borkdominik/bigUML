@@ -8,14 +8,17 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix;
+package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.operation;
 
-import com.eclipsesource.uml.glsp.core.features.idgenerator.BaseSuffixIdAppender;
+import org.eclipse.uml2.uml.Operation;
 
-public class PropertyIconSuffix extends BaseSuffixIdAppender {
-   public static final String SUFFIX = "_property_icon";
+import com.eclipsesource.uml.glsp.core.gmodel.suffix.LabelSuffix;
+import com.eclipsesource.uml.glsp.uml.handler.operations.directediting.DefaultRenameNamedElementHandler;
 
-   public PropertyIconSuffix() {
-      super(SUFFIX);
+public class RenameOperationHandler extends DefaultRenameNamedElementHandler<Operation> {
+
+   public RenameOperationHandler() {
+      super(LabelSuffix.SUFFIX);
    }
+
 }

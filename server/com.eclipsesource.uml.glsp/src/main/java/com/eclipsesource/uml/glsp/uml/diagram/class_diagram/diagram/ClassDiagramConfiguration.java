@@ -56,17 +56,19 @@ public class ClassDiagramConfiguration implements DiagramConfiguration {
       List<ShapeTypeHint> hints = new ArrayList<>();
 
       hints.add(new ShapeTypeHint(ClassTypes.CLASS, true, true, false, false,
-         List.of(ClassTypes.PROPERTY)));
+         List.of(ClassTypes.PROPERTY, ClassTypes.OPERATION)));
       hints.add(new ShapeTypeHint(ClassTypes.ABSTRACT_CLASS, true, true, false, false,
-         List.of(ClassTypes.PROPERTY)));
+         List.of(ClassTypes.PROPERTY, ClassTypes.OPERATION)));
       hints.add(new ShapeTypeHint(ClassTypes.INTERFACE, true, true, false, false,
-         List.of(ClassTypes.PROPERTY)));
+         List.of(ClassTypes.PROPERTY, ClassTypes.OPERATION)));
       hints.add(new ShapeTypeHint(ClassTypes.ENUMERATION, true, true, false, false,
          List.of(ClassTypes.ENUMERATION_LITERAL)));
 
       hints.add(new ShapeTypeHint(ClassTypes.PROPERTY, false, true, false, true,
          List.of()));
       hints.add(new ShapeTypeHint(ClassTypes.ENUMERATION_LITERAL, false, true, false, true,
+         List.of()));
+      hints.add(new ShapeTypeHint(ClassTypes.OPERATION, false, true, false, true,
          List.of()));
 
       return hints;
@@ -87,6 +89,8 @@ public class ClassDiagramConfiguration implements DiagramConfiguration {
       mappings.put(ClassTypes.AGGREGATION, GraphPackage.Literals.GEDGE);
       mappings.put(ClassTypes.COMPOSITION, GraphPackage.Literals.GEDGE);
       mappings.put(ClassTypes.CLASS_GENERALIZATION, GraphPackage.Literals.GEDGE);
+      mappings.put(ClassTypes.ICON_OPERATION, GraphPackage.Literals.GCOMPARTMENT);
+      mappings.put(ClassTypes.OPERATION, GraphPackage.Literals.GCOMPARTMENT);
 
       // SHARED WITH DEPLOYMENT AND USECASE
       mappings.put(ClassTypes.LABEL_EDGE_MULTIPLICITY, GraphPackage.Literals.GLABEL);

@@ -23,10 +23,10 @@ import org.eclipse.uml2.uml.Type;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 import com.eclipsesource.uml.glsp.core.features.idgenerator.IdCountContextGenerator;
+import com.eclipsesource.uml.glsp.core.gmodel.suffix.IconSuffix;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.LabelSuffix;
 import com.eclipsesource.uml.glsp.old.utils.property.PropertyUtil;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyIconSuffix;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyLabelMultiplicitySuffix;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyLabelTypeSuffix;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGModelMapper;
@@ -73,7 +73,7 @@ public class PropertyCompartmentMapper extends BaseGModelMapper<Property, GCompa
 
    protected GCompartment buildIcon(final Property property) {
       return new GCompartmentBuilder(ClassTypes.ICON_PROPERTY)
-         .id(suffix.appendTo(PropertyIconSuffix.SUFFIX, idGenerator.getOrCreateId(property)))
+         .id(suffix.appendTo(IconSuffix.SUFFIX, idGenerator.getOrCreateId(property)))
          .build();
    }
 

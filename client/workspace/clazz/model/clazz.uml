@@ -31,6 +31,7 @@
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="_xNd10Hr-Ee2h78mSO_eWXQ" name="NewClass3">
     <generalization xmi:id="_v6eckHsBEe21bfOWPw_Dwg" general="_KfaYMHY-Ee22r-4vylV5aQ"/>
+    <ownedOperation xmi:id="_YXGW8XuzEe2atukIyIAy7A" name="asd"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Enumeration" xmi:id="_Yk_NgHupEe29QO41c0PM-A" name="NewEnumeration1">
     <ownedLiteral xmi:id="_Pc9ckHuqEe29QO41c0PM-A" name="asd"/>

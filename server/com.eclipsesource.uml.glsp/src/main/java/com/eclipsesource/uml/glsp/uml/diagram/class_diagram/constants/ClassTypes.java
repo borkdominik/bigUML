@@ -30,6 +30,9 @@ public final class ClassTypes {
    public static final String AGGREGATION = CoreTypes.PRE_EDGE + "aggregation";
    public static final String CLASS_GENERALIZATION = CoreTypes.PRE_EDGE + "class-generalization";
 
+   public static final String ICON_OPERATION = CoreTypes.PRE_ICON + "operation";
+   public static final String OPERATION = CoreTypes.PRE_COMP_BASE + "operation";
+
    // SHARED WITH DEPLOYMENT AND USECASE
    public static final String LABEL_EDGE_MULTIPLICITY = CoreTypes.PRE_LABEL + "edge-multiplicity";
 

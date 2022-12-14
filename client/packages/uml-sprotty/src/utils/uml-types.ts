@@ -32,10 +32,12 @@ export namespace UmlTypes {
     export const AGGREGATION = `${DefaultTypes.EDGE}:aggregation`;
     export const COMPOSITION = `${DefaultTypes.EDGE}:composition`;
     export const CLASS_GENERALIZATION = `${DefaultTypes.EDGE}:class-generalization`;
-    export const PROPERTY = `${DefaultTypes.COMPARTMENT}:property`;
     export const ICON_PROPERTY = `${ICON}:property`;
+    export const PROPERTY = `${DefaultTypes.COMPARTMENT}:property`;
     export const LABEL_PROPERTY_TYPE = `${DefaultTypes.LABEL}:property:type`;
     export const LABEL_PROPERTY_MULTIPLICITY = `${DefaultTypes.LABEL}:property:multiplicity`;
+    export const ICON_OPERATION = `${ICON}:operation`;
+    export const OPERATION = `${DefaultTypes.COMPARTMENT}:operation`;
 
     // OBJECT DIAGRAM
     export const OBJECT = `${DefaultTypes.NODE}:object`;

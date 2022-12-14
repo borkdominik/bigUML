@@ -118,6 +118,20 @@ export default function createClassModule(): ContainerModule {
             PolylineEdgeView
         );
 
+        // Operation
+        configureModelElement(
+            context,
+            UmlTypes.ICON_OPERATION,
+            IconProperty,
+            IconView
+        );
+        configureModelElement(
+            context,
+            UmlTypes.OPERATION,
+            IconLabelCompartment,
+            SCompartmentView
+        );
+
         // Property
         configureModelElement(
             context,

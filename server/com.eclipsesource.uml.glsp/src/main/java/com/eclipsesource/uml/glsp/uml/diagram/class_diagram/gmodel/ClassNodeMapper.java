@@ -92,7 +92,6 @@ public class ClassNodeMapper extends BaseGNodeMapper<Class, GNode> {
    }
 
    protected GCompartment buildCompartment(final Class umlClass) {
-      var properties = umlClass.getOwnedAttributes();
 
       var builder = new GCompartmentBuilder(CoreTypes.COMPARTMENT)
          .id(suffix.appendTo(CompartmentSuffix.SUFFIX, idGenerator.getOrCreateId(umlClass)))
@@ -103,10 +102,15 @@ public class ClassNodeMapper extends BaseGNodeMapper<Class, GNode> {
          .resizeContainer(true);
       builder.layoutOptions(layoutOptions);
 
-      var propertyElements = properties.stream()
+      var propertyElements = umlClass.getOwnedAttributes().stream()
          .map(mapHandler::handle)
          .collect(Collectors.toList());
       builder.addAll(propertyElements);
+
+      var operationElements = umlClass.getOwnedOperations().stream()
+         .map(mapHandler::handle)
+         .collect(Collectors.toList());
+      builder.addAll(operationElements);
 
       return builder.build();
    }

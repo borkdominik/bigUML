@@ -47,7 +47,8 @@ public class ClassPalette implements DiagramPalette {
    private PaletteItem features() {
       var features = List.of(
          PaletteItemUtil.node(ClassTypes.PROPERTY, "Property", "umlproperty"),
-         PaletteItemUtil.node(ClassTypes.ENUMERATION_LITERAL, "Enumeration Literal", "umlliteral"));
+         PaletteItemUtil.node(ClassTypes.ENUMERATION_LITERAL, "Enumeration Literal", "umlliteral"),
+         PaletteItemUtil.node(ClassTypes.OPERATION, "Operation", "umloperation"));
       return PaletteItem.createPaletteGroup("uml.classifier", "Feature", features, "symbol-property");
    }
 }

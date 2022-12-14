@@ -23,11 +23,11 @@ import org.eclipse.uml2.uml.Type;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 import com.eclipsesource.uml.glsp.core.features.idgenerator.IdCountContextGenerator;
+import com.eclipsesource.uml.glsp.core.gmodel.suffix.LabelSuffix;
 import com.eclipsesource.uml.glsp.old.utils.property.PropertyUtil;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyIconSuffix;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyLabelMultiplicitySuffix;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyLabelNameSuffix;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyLabelTypeSuffix;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGModelMapper;
 import com.google.inject.Inject;
@@ -78,8 +78,8 @@ public class PropertyCompartmentMapper extends BaseGModelMapper<Property, GCompa
    }
 
    protected GLabel buildName(final Property property) {
-      return new GLabelBuilder(ClassTypes.LABEL_PROPERTY_NAME)
-         .id(suffix.appendTo(PropertyLabelNameSuffix.SUFFIX, idGenerator.getOrCreateId(property)))
+      return new GLabelBuilder(CoreTypes.LABEL_NAME)
+         .id(suffix.appendTo(LabelSuffix.SUFFIX, idGenerator.getOrCreateId(property)))
          .text(property.getName())
          .build();
    }

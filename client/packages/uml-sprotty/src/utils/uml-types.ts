@@ -34,7 +34,6 @@ export namespace UmlTypes {
     export const CLASS_GENERALIZATION = `${DefaultTypes.EDGE}:class-generalization`;
     export const PROPERTY = `${DefaultTypes.COMPARTMENT}:property`;
     export const ICON_PROPERTY = `${ICON}:property`;
-    export const LABEL_PROPERTY_NAME = `${DefaultTypes.LABEL}:property:name`;
     export const LABEL_PROPERTY_TYPE = `${DefaultTypes.LABEL}:property:type`;
     export const LABEL_PROPERTY_MULTIPLICITY = `${DefaultTypes.LABEL}:property:multiplicity`;
 

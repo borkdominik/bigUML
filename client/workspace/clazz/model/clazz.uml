@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_Cfp0UGmxEe2kLe5KTNzRtw" name="clazz">
   <packagedElement xmi:type="uml:Class" xmi:id="_KfaYMHY-Ee22r-4vylV5aQ" name="Class">
-    <ownedAttribute xmi:id="_hCPgYHZIEe27uZDrCx60Rw" name="Property"/>
-    <ownedAttribute xmi:id="_oNhfUXr-Ee2h78mSO_eWXQ" name="lkasjd"/>
+    <ownedAttribute xmi:id="_hCPgYHZIEe27uZDrCx60Rw" name="asd"/>
+    <ownedAttribute xmi:id="_0c5ywHutEe29QO41c0PM-A" name="2"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Interface" xmi:id="_OvGrwHY-Ee22r-4vylV5aQ" name="Interface"/>
   <packagedElement xmi:type="uml:Class" xmi:id="_Sv-gMHY-Ee22r-4vylV5aQ" name="Abstract" isAbstract="true"/>

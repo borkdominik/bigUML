@@ -35,9 +35,8 @@ public final class ClassTypes {
 
    // SHARED WITH OBJECT DIAGRAM
    public static final String ATTRIBUTE = CoreTypes.PRE_NODE + "attribute";
-   public static final String PROPERTY = CoreTypes.PRE_COMP_BASE + "property";
    public static final String ICON_PROPERTY = CoreTypes.PRE_ICON + "property";
-   public static final String LABEL_PROPERTY_NAME = CoreTypes.PRE_LABEL + "property:name";
+   public static final String PROPERTY = CoreTypes.PRE_COMP_BASE + "property";
    public static final String LABEL_PROPERTY_TYPE = CoreTypes.PRE_LABEL + "property:type";
    public static final String LABEL_PROPERTY_MULTIPLICITY = CoreTypes.PRE_LABEL + "property:multiplicity";
 

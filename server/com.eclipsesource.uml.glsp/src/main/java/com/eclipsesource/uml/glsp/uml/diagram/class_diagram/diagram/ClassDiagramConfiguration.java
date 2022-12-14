@@ -93,9 +93,8 @@ public class ClassDiagramConfiguration implements DiagramConfiguration {
 
       // SHARED WITH OBJECT DIAGRAM
       mappings.put(ClassTypes.ATTRIBUTE, GraphPackage.Literals.GLABEL);
-      mappings.put(ClassTypes.PROPERTY, GraphPackage.Literals.GCOMPARTMENT);
       mappings.put(ClassTypes.ICON_PROPERTY, GraphPackage.Literals.GCOMPARTMENT);
-      mappings.put(ClassTypes.LABEL_PROPERTY_NAME, GraphPackage.Literals.GLABEL);
+      mappings.put(ClassTypes.PROPERTY, GraphPackage.Literals.GCOMPARTMENT);
       mappings.put(ClassTypes.LABEL_PROPERTY_TYPE, GraphPackage.Literals.GLABEL);
       mappings.put(ClassTypes.LABEL_PROPERTY_MULTIPLICITY, GraphPackage.Literals.GLABEL);
 

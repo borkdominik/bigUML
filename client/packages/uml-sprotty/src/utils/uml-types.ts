@@ -38,6 +38,8 @@ export namespace UmlTypes {
     export const LABEL_PROPERTY_MULTIPLICITY = `${DefaultTypes.LABEL}:property:multiplicity`;
     export const ICON_OPERATION = `${ICON}:operation`;
     export const OPERATION = `${DefaultTypes.COMPARTMENT}:operation`;
+    export const ICON_DATA_TYPE = `${ICON}:data-type`;
+    export const DATA_TYPE = `${DefaultTypes.NODE}:data-type`;
 
     // OBJECT DIAGRAM
     export const OBJECT = `${DefaultTypes.NODE}:object`;

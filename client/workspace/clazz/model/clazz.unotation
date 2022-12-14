@@ -35,4 +35,9 @@
     <position x="-269.7403441586447" y="377.17143752088236"/>
     <size width="160.0" height="50.0"/>
   </elements>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_xM9V4Xu2Ee2WtMVa3maplg"/>
+    <position x="12.45665009771633" y="518.269934649063"/>
+    <size width="160.0" height="50.0"/>
+  </elements>
 </unotation:UmlDiagram>

@@ -11,13 +11,7 @@
 import "@eclipse-glsp/client/css/glsp-sprotty.css";
 import "sprotty/css/edit-label.css";
 
-import {
-    configureModelElement,
-    PolylineEdgeView,
-    SCompartmentView,
-    SEdge,
-    SLabelView,
-} from "@eclipse-glsp/client/lib";
+import { configureModelElement, PolylineEdgeView, SCompartmentView, SEdge, SLabelView } from "@eclipse-glsp/client/lib";
 import { ContainerModule } from "inversify";
 
 import { IconView } from "../../common/common";
@@ -26,6 +20,7 @@ import { UmlTypes } from "../../utils";
 import { NamedElement } from "../shared/named-element.model";
 import { NamedElementView } from "../shared/named-element.view";
 import { IconClass } from "./elements/class";
+import { IconDataType } from "./elements/data_type";
 import { IconEnumeration } from "./elements/enumeration";
 import { IconEnumerationLiteral } from "./elements/enumeration_literal";
 import { IconProperty } from "./elements/property";
@@ -156,6 +151,20 @@ export default function createClassModule(): ContainerModule {
             UmlTypes.LABEL_PROPERTY_MULTIPLICITY,
             SEditableLabel,
             SLabelView
+        );
+
+        // Data Type
+        configureModelElement(
+            context,
+            UmlTypes.ICON_DATA_TYPE,
+            IconDataType,
+            IconView
+        );
+        configureModelElement(
+            context,
+            UmlTypes.DATA_TYPE,
+            NamedElement,
+            NamedElementView
         );
 
         // Other

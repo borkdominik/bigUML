@@ -18,6 +18,8 @@ import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.asso
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association.RemoveAssociationContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association.SetAssociationEndMultiplicityContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association.SetAssociationEndNameContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.data_type.AddDataTypeContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.data_type.RemoveDataTypeContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.enumeration.AddEnumerationContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.enumeration.RemoveEnumerationContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.enumeration_literal.AddEnumerationLiteralContribution;
@@ -81,6 +83,10 @@ public class ClassManifest extends DiagramManifest implements CommandCodecContri
       // Operation
       multibinder.addBinding(AddOperationContribution.TYPE).to(AddOperationContribution.class);
       multibinder.addBinding(RemoveOperationContribution.TYPE).to(RemoveOperationContribution.class);
+
+      // Data Type
+      multibinder.addBinding(AddDataTypeContribution.TYPE).to(AddDataTypeContribution.class);
+      multibinder.addBinding(RemoveDataTypeContribution.TYPE).to(RemoveDataTypeContribution.class);
 
    }
 }

@@ -48,7 +48,8 @@ public class ClassDiagramConfiguration implements DiagramConfiguration {
       return List.of(ClassTypes.CLASS,
          ClassTypes.ENUMERATION,
          ClassTypes.INTERFACE,
-         ClassTypes.ABSTRACT_CLASS);
+         ClassTypes.ABSTRACT_CLASS,
+         ClassTypes.DATA_TYPE);
    }
 
    @Override
@@ -63,6 +64,8 @@ public class ClassDiagramConfiguration implements DiagramConfiguration {
          List.of(ClassTypes.PROPERTY, ClassTypes.OPERATION)));
       hints.add(new ShapeTypeHint(ClassTypes.ENUMERATION, true, true, false, false,
          List.of(ClassTypes.ENUMERATION_LITERAL)));
+      hints.add(new ShapeTypeHint(ClassTypes.DATA_TYPE, true, true, false, false,
+         List.of(ClassTypes.PROPERTY, ClassTypes.OPERATION)));
 
       hints.add(new ShapeTypeHint(ClassTypes.PROPERTY, false, true, false, true,
          List.of()));
@@ -91,6 +94,8 @@ public class ClassDiagramConfiguration implements DiagramConfiguration {
       mappings.put(ClassTypes.CLASS_GENERALIZATION, GraphPackage.Literals.GEDGE);
       mappings.put(ClassTypes.ICON_OPERATION, GraphPackage.Literals.GCOMPARTMENT);
       mappings.put(ClassTypes.OPERATION, GraphPackage.Literals.GCOMPARTMENT);
+      mappings.put(ClassTypes.ICON_DATA_TYPE, GraphPackage.Literals.GCOMPARTMENT);
+      mappings.put(ClassTypes.DATA_TYPE, GraphPackage.Literals.GNODE);
 
       // SHARED WITH DEPLOYMENT AND USECASE
       mappings.put(ClassTypes.LABEL_EDGE_MULTIPLICITY, GraphPackage.Literals.GLABEL);

@@ -49,7 +49,8 @@ public class ClassDiagramConfiguration implements DiagramConfiguration {
          ClassTypes.ENUMERATION,
          ClassTypes.INTERFACE,
          ClassTypes.ABSTRACT_CLASS,
-         ClassTypes.DATA_TYPE);
+         ClassTypes.DATA_TYPE,
+         ClassTypes.PRIMITIVE_TYPE);
    }
 
    @Override
@@ -65,6 +66,8 @@ public class ClassDiagramConfiguration implements DiagramConfiguration {
       hints.add(new ShapeTypeHint(ClassTypes.ENUMERATION, true, true, false, false,
          List.of(ClassTypes.ENUMERATION_LITERAL)));
       hints.add(new ShapeTypeHint(ClassTypes.DATA_TYPE, true, true, false, false,
+         List.of(ClassTypes.PROPERTY, ClassTypes.OPERATION)));
+      hints.add(new ShapeTypeHint(ClassTypes.PRIMITIVE_TYPE, true, true, false, false,
          List.of(ClassTypes.PROPERTY, ClassTypes.OPERATION)));
 
       hints.add(new ShapeTypeHint(ClassTypes.PROPERTY, false, true, false, true,
@@ -96,6 +99,8 @@ public class ClassDiagramConfiguration implements DiagramConfiguration {
       mappings.put(ClassTypes.OPERATION, GraphPackage.Literals.GCOMPARTMENT);
       mappings.put(ClassTypes.ICON_DATA_TYPE, GraphPackage.Literals.GCOMPARTMENT);
       mappings.put(ClassTypes.DATA_TYPE, GraphPackage.Literals.GNODE);
+      mappings.put(ClassTypes.ICON_PRIMITIVE_TYPE, GraphPackage.Literals.GCOMPARTMENT);
+      mappings.put(ClassTypes.PRIMITIVE_TYPE, GraphPackage.Literals.GNODE);
 
       // SHARED WITH DEPLOYMENT AND USECASE
       mappings.put(ClassTypes.LABEL_EDGE_MULTIPLICITY, GraphPackage.Literals.GLABEL);

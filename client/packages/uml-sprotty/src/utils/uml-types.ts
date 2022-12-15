@@ -40,6 +40,8 @@ export namespace UmlTypes {
     export const OPERATION = `${DefaultTypes.COMPARTMENT}:operation`;
     export const ICON_DATA_TYPE = `${ICON}:data-type`;
     export const DATA_TYPE = `${DefaultTypes.NODE}:data-type`;
+    export const ICON_PRIMITIVE_TYPE = `${ICON}:primitive-type`;
+    export const PRIMITIVE_TYPE = `${DefaultTypes.NODE}:primitive-type`;
 
     // OBJECT DIAGRAM
     export const OBJECT = `${DefaultTypes.NODE}:object`;

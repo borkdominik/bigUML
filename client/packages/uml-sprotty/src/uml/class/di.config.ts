@@ -23,6 +23,7 @@ import { IconClass } from "./elements/class";
 import { IconDataType } from "./elements/data_type";
 import { IconEnumeration } from "./elements/enumeration";
 import { IconEnumerationLiteral } from "./elements/enumeration_literal";
+import { IconPrimitiveType } from "./elements/primitive_type";
 import { IconProperty } from "./elements/property";
 
 export default function createClassModule(): ContainerModule {
@@ -163,6 +164,20 @@ export default function createClassModule(): ContainerModule {
         configureModelElement(
             context,
             UmlTypes.DATA_TYPE,
+            NamedElement,
+            NamedElementView
+        );
+
+        // Data Type
+        configureModelElement(
+            context,
+            UmlTypes.ICON_PRIMITIVE_TYPE,
+            IconPrimitiveType,
+            IconView
+        );
+        configureModelElement(
+            context,
+            UmlTypes.PRIMITIVE_TYPE,
             NamedElement,
             NamedElementView
         );

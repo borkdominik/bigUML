@@ -36,6 +36,9 @@ public final class ClassTypes {
    public static final String ICON_DATA_TYPE = CoreTypes.PRE_ICON + "data-type";
    public static final String DATA_TYPE = CoreTypes.PRE_NODE + "data-type";
 
+   public static final String ICON_PRIMITIVE_TYPE = CoreTypes.PRE_ICON + "primitive-type";
+   public static final String PRIMITIVE_TYPE = CoreTypes.PRE_NODE + "primitive-type";
+
    // SHARED WITH DEPLOYMENT AND USECASE
    public static final String LABEL_EDGE_MULTIPLICITY = CoreTypes.PRE_LABEL + "edge-multiplicity";
 

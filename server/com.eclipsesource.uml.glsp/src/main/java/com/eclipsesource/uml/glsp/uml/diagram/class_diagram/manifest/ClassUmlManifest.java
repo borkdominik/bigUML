@@ -33,6 +33,7 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.EnumerationNo
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.GeneralizationEdgeMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.InterfaceNodeMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.OperationCompartmentMapper;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.PrimitiveTypeNodeMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.PropertyCompartmentMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.HeaderOuterSuffix;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.HeaderTypeSuffix;
@@ -60,6 +61,9 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.ge
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.operation.CreateOperationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.operation.DeleteOperationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.operation.RenameOperationHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.primitive_type.CreatePrimitiveTypeHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.primitive_type.DeletePrimitiveTypeHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.primitive_type.RenamePrimitiveTypeHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.property.CreatePropertyHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.property.DeletePropertyHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.property.RenamePropertyHandler;
@@ -136,6 +140,7 @@ public class ClassUmlManifest extends DiagramManifest
       multibinder.addBinding().to(CreateInterfaceHandler.class);
       multibinder.addBinding().to(CreateOperationHandler.class);
       multibinder.addBinding().to(CreateDataTypeHandler.class);
+      multibinder.addBinding().to(CreatePrimitiveTypeHandler.class);
    }
 
    @Override
@@ -149,6 +154,7 @@ public class ClassUmlManifest extends DiagramManifest
       multibinder.addBinding().to(DeleteInterfaceHandler.class);
       multibinder.addBinding().to(DeleteOperationHandler.class);
       multibinder.addBinding().to(DeleteDataTypeHandler.class);
+      multibinder.addBinding().to(DeletePrimitiveTypeHandler.class);
    }
 
    @Override
@@ -165,6 +171,7 @@ public class ClassUmlManifest extends DiagramManifest
       multibinder.addBinding().to(RenameInterfaceHandler.class);
       multibinder.addBinding().to(RenameOperationHandler.class);
       multibinder.addBinding().to(RenameDataTypeHandler.class);
+      multibinder.addBinding().to(RenamePrimitiveTypeHandler.class);
    }
 
    @Override
@@ -179,5 +186,6 @@ public class ClassUmlManifest extends DiagramManifest
       multibinder.addBinding().to(PropertyCompartmentMapper.class);
       multibinder.addBinding().to(OperationCompartmentMapper.class);
       multibinder.addBinding().to(DataTypeNodeMapper.class);
+      multibinder.addBinding().to(PrimitiveTypeNodeMapper.class);
    }
 }

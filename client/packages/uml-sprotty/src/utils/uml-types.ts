@@ -42,6 +42,8 @@ export namespace UmlTypes {
     export const DATA_TYPE = `${DefaultTypes.NODE}:data-type`;
     export const ICON_PRIMITIVE_TYPE = `${ICON}:primitive-type`;
     export const PRIMITIVE_TYPE = `${DefaultTypes.NODE}:primitive-type`;
+    export const ICON_PACKAGE = `${ICON}:package`;
+    export const PACKAGE = `${DefaultTypes.NODE}:package`;
 
     // OBJECT DIAGRAM
     export const OBJECT = `${DefaultTypes.NODE}:object`;
@@ -84,9 +86,9 @@ export namespace UmlTypes {
     export const ICON_USECASE = `${ICON}:usecase`;
     export const ACTOR = `${DefaultTypes.NODE}:actor`;
     export const ICON_ACTOR = `${ICON}:actor`;
-    export const PACKAGE = `${DefaultTypes.NODE}:package`;
+    // export const PACKAGE = `${DefaultTypes.NODE}:package`;
     export const LABEL_PACKAGE_NAME = `${DefaultTypes.LABEL}:package:name`;
-    export const ICON_PACKAGE = `${ICON}:package`;
+    // export const ICON_PACKAGE = `${ICON}:package`;
     export const COMPONENT = `${DefaultTypes.NODE}:component`;
     export const EXTENSIONPOINT = `${DefaultTypes.NODE}:extensionpoint`;
     export const EXTEND = `${DefaultTypes.EDGE}:extend`;

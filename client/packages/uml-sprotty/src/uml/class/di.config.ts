@@ -19,10 +19,12 @@ import { IconLabelCompartment, SEditableLabel } from "../../model";
 import { UmlTypes } from "../../utils";
 import { NamedElement } from "../shared/named-element.model";
 import { NamedElementView } from "../shared/named-element.view";
+import { IconPackage } from "../usecase/model";
 import { IconClass } from "./elements/class";
 import { IconDataType } from "./elements/data_type";
 import { IconEnumeration } from "./elements/enumeration";
 import { IconEnumerationLiteral } from "./elements/enumeration_literal";
+import { IconPackage } from "./elements/package";
 import { IconPrimitiveType } from "./elements/primitive_type";
 import { IconProperty } from "./elements/property";
 
@@ -178,6 +180,20 @@ export default function createClassModule(): ContainerModule {
         configureModelElement(
             context,
             UmlTypes.PRIMITIVE_TYPE,
+            NamedElement,
+            NamedElementView
+        );
+
+        // PACKAGE
+        configureModelElement(
+            context,
+            UmlTypes.ICON_PACKAGE,
+            IconPackage,
+            IconView
+        );
+        configureModelElement(
+            context,
+            UmlTypes.PACKAGE,
             NamedElement,
             NamedElementView
         );

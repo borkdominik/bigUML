@@ -38,6 +38,8 @@ import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.ucla
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uclass.RemoveClassContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uinterface.AddInterfaceContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uinterface.RemoveInterfaceContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.upackage.AddPackageContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.upackage.RemovePackageContribution;
 import com.google.inject.multibindings.MapBinder;
 
 public class ClassManifest extends DiagramManifest implements CommandCodecContribution {
@@ -93,6 +95,10 @@ public class ClassManifest extends DiagramManifest implements CommandCodecContri
       // Data Type
       multibinder.addBinding(AddPrimitiveTypeContribution.TYPE).to(AddPrimitiveTypeContribution.class);
       multibinder.addBinding(RemovePrimitiveTypeContribution.TYPE).to(RemovePrimitiveTypeContribution.class);
+
+      // Package
+      multibinder.addBinding(AddPackageContribution.TYPE).to(AddPackageContribution.class);
+      multibinder.addBinding(RemovePackageContribution.TYPE).to(RemovePackageContribution.class);
 
    }
 }

@@ -32,7 +32,8 @@ public class ClassPalette implements DiagramPalette {
          PaletteItemUtil.node(ClassTypes.INTERFACE, "Interface", "umlclass"),
          PaletteItemUtil.node(ClassTypes.ENUMERATION, "Enumeration", "umlenumeration"),
          PaletteItemUtil.node(ClassTypes.DATA_TYPE, "Data Type", "umldatatype"),
-         PaletteItemUtil.node(ClassTypes.PRIMITIVE_TYPE, "Primitive Type", "umlprimitivetype"));
+         PaletteItemUtil.node(ClassTypes.PRIMITIVE_TYPE, "Primitive Type", "umlprimitivetype"),
+         PaletteItemUtil.node(ClassTypes.PACKAGE, "Package", "umlpackage"));
       return PaletteItem.createPaletteGroup("uml.classifier", "Container", containers, "symbol-property");
    }
 

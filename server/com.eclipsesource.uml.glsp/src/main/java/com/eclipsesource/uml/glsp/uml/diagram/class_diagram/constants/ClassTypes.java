@@ -39,6 +39,9 @@ public final class ClassTypes {
    public static final String ICON_PRIMITIVE_TYPE = CoreTypes.PRE_ICON + "primitive-type";
    public static final String PRIMITIVE_TYPE = CoreTypes.PRE_NODE + "primitive-type";
 
+   public static final String ICON_PACKAGE = CoreTypes.PRE_ICON + "package";
+   public static final String PACKAGE = CoreTypes.PRE_NODE + "package";
+
    // SHARED WITH DEPLOYMENT AND USECASE
    public static final String LABEL_EDGE_MULTIPLICITY = CoreTypes.PRE_LABEL + "edge-multiplicity";
 

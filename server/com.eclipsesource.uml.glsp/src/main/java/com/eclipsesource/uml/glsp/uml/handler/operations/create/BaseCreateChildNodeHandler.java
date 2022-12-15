@@ -18,14 +18,13 @@ import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.types.GLSPServerException;
-import org.eclipse.uml2.uml.Element;
 
 import com.eclipsesource.uml.glsp.core.model.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.eclipsesource.uml.glsp.core.utils.reflection.GenericsUtil;
 import com.google.inject.Inject;
 
-public abstract class BaseCreateChildNodeHandler<T extends Element> extends BaseCreateHandler<CreateNodeOperation> {
+public abstract class BaseCreateChildNodeHandler<T> extends BaseCreateHandler<CreateNodeOperation> {
 
    protected final Class<T> containerType;
 
@@ -45,7 +44,9 @@ public abstract class BaseCreateChildNodeHandler<T extends Element> extends Base
    public void create(final CreateNodeOperation operation) {
       var containerId = operation.getContainerId();
       var container = getOrThrow(modelState.getIndex().getEObject(containerId),
-         containerType, "No valid container with id " + containerId + " found");
+         containerType,
+         "No valid container with id " + containerId + " for container type " + containerType.getSimpleName()
+            + " found.");
 
       modelServerAccess.exec(command(container, operation.getLocation()))
          .thenAccept(response -> {

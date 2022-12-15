@@ -14,21 +14,21 @@ import java.util.Optional;
 
 import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.glsp.graph.GPoint;
-import org.eclipse.uml2.uml.Class;
+import org.eclipse.uml2.uml.AttributeOwner;
 
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
 import com.eclipsesource.uml.glsp.uml.handler.operations.create.BaseCreateChildNodeHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.AddPropertyContribution;
 
 public class CreatePropertyHandler
-   extends BaseCreateChildNodeHandler<Class> {
+   extends BaseCreateChildNodeHandler<AttributeOwner> {
 
    public CreatePropertyHandler() {
       super(ClassTypes.PROPERTY);
    }
 
    @Override
-   protected CCommand command(final Class container, final Optional<GPoint> location) {
+   protected CCommand command(final AttributeOwner container, final Optional<GPoint> location) {
       return AddPropertyContribution.create(container);
    }
 

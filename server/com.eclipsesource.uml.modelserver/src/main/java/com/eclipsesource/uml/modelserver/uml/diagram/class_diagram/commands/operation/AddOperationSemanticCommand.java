@@ -12,8 +12,8 @@ package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.ope
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Operation;
+import org.eclipse.uml2.uml.OperationOwner;
 
 import com.eclipsesource.uml.modelserver.shared.semantic.UmlSemanticElementCommand;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.generator.OperatorNameGenerator;
@@ -22,11 +22,11 @@ import com.eclipsesource.uml.modelserver.uml.generator.ContextualNameGenerator;
 public class AddOperationSemanticCommand extends UmlSemanticElementCommand {
 
    protected Operation newOperation;
-   protected final Class parent;
-   protected final ContextualNameGenerator<Class> nameGenerator;
+   protected final OperationOwner parent;
+   protected final ContextualNameGenerator<OperationOwner> nameGenerator;
 
    public AddOperationSemanticCommand(final EditingDomain domain, final URI modelUri,
-      final Class parent) {
+      final OperationOwner parent) {
       super(domain, modelUri);
       this.parent = parent;
       this.nameGenerator = new OperatorNameGenerator();
@@ -34,6 +34,6 @@ public class AddOperationSemanticCommand extends UmlSemanticElementCommand {
 
    @Override
    protected void doExecute() {
-      newOperation = parent.createOwnedOperation(nameGenerator.newNameInContextOf(parent), null, null);
+      newOperation = this.parent.createOwnedOperation(nameGenerator.newNameInContextOf(parent), null, null);
    }
 }

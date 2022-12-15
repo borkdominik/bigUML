@@ -10,15 +10,15 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.generator;
 
-import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Operation;
+import org.eclipse.uml2.uml.OperationOwner;
 
 import com.eclipsesource.uml.modelserver.uml.generator.ContextualNameGenerator;
 
-public class OperatorNameGenerator implements ContextualNameGenerator<Class> {
+public class OperatorNameGenerator implements ContextualNameGenerator<OperationOwner> {
 
    @Override
-   public String newNameInContextOf(final Class element) {
+   public String newNameInContextOf(final OperationOwner element) {
       var attributeCounter = element.getOwnedOperations().size();
 
       return "new" + Operation.class.getSimpleName() + attributeCounter;

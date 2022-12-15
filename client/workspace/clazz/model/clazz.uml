@@ -4,7 +4,11 @@
     <ownedAttribute xmi:id="_hCPgYHZIEe27uZDrCx60Rw" name="asd"/>
     <ownedAttribute xmi:id="_0c5ywHutEe29QO41c0PM-A" name="2"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Interface" xmi:id="_OvGrwHY-Ee22r-4vylV5aQ" name="Interface"/>
+  <packagedElement xmi:type="uml:Interface" xmi:id="_OvGrwHY-Ee22r-4vylV5aQ" name="Interface">
+    <ownedAttribute xmi:id="_AGW5YXyDEe2RwcVNTDPICQ" name="newProperty0"/>
+    <ownedAttribute xmi:id="_F90cAHyDEe2RwcVNTDPICQ" name="newProperty1"/>
+    <ownedOperation xmi:id="_E1PDUHyDEe2RwcVNTDPICQ" name="newOperation0"/>
+  </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="_Sv-gMHY-Ee22r-4vylV5aQ" name="Abstract" isAbstract="true"/>
   <packagedElement xmi:type="uml:Association" xmi:id="_tlk0AHr8Ee2FRvuB9uMUlg" memberEnd="_tlk0A3r8Ee2FRvuB9uMUlg _tlk0Bnr8Ee2FRvuB9uMUlg">
     <eAnnotations xmi:id="_tlk0AXr8Ee2FRvuB9uMUlg" source="http://www.eclipse.org/uml2/2.0.0/UML">
@@ -36,5 +40,8 @@
   <packagedElement xmi:type="uml:Enumeration" xmi:id="_Yk_NgHupEe29QO41c0PM-A" name="NewEnumeration1">
     <ownedLiteral xmi:id="_Pc9ckHuqEe29QO41c0PM-A" name="asd"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:DataType" xmi:id="_xM9V4Xu2Ee2WtMVa3maplg" name="asd"/>
+  <packagedElement xmi:type="uml:DataType" xmi:id="_xM9V4Xu2Ee2WtMVa3maplg" name="asd">
+    <ownedAttribute xmi:id="_CgCtkHyDEe2RwcVNTDPICQ" name="newProperty0"/>
+    <ownedOperation xmi:id="_FZQ9cHyDEe2RwcVNTDPICQ" name="newOperation0"/>
+  </packagedElement>
 </uml:Model>

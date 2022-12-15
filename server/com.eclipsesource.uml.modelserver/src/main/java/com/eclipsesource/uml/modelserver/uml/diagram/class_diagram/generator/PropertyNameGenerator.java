@@ -10,15 +10,15 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.generator;
 
-import org.eclipse.uml2.uml.Class;
+import org.eclipse.uml2.uml.AttributeOwner;
 import org.eclipse.uml2.uml.Property;
 
 import com.eclipsesource.uml.modelserver.uml.generator.ContextualNameGenerator;
 
-public class PropertyNameGenerator implements ContextualNameGenerator<Class> {
+public class PropertyNameGenerator implements ContextualNameGenerator<AttributeOwner> {
 
    @Override
-   public String newNameInContextOf(final Class element) {
+   public String newNameInContextOf(final AttributeOwner element) {
       var attributeCounter = element.getOwnedAttributes().size();
 
       return "new" + Property.class.getSimpleName() + attributeCounter;

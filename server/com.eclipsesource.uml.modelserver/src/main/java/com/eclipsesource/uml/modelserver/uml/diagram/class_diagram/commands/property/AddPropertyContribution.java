@@ -12,12 +12,13 @@ package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.pro
 
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
 import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
 import org.eclipse.emfcloud.modelserver.edit.command.BasicCommandContribution;
-import org.eclipse.uml2.uml.Class;
+import org.eclipse.uml2.uml.AttributeOwner;
 
 import com.eclipsesource.uml.modelserver.core.commands.noop.NoopCommand;
 import com.eclipsesource.uml.modelserver.shared.constants.SemanticKeys;
@@ -27,11 +28,12 @@ public class AddPropertyContribution extends BasicCommandContribution<Command> {
 
    public static final String TYPE = "class:add_property";
 
-   public static CCommand create(final Class parent) {
+   public static CCommand create(final AttributeOwner parent) {
       var command = CCommandFactory.eINSTANCE.createCommand();
 
       command.setType(TYPE);
-      command.getProperties().put(SemanticKeys.PARENT_SEMANTIC_ELEMENT_ID, SemanticElementAccessor.getId(parent));
+      command.getProperties().put(SemanticKeys.PARENT_SEMANTIC_ELEMENT_ID,
+         SemanticElementAccessor.getId((EObject) parent));
 
       return command;
    }
@@ -43,7 +45,7 @@ public class AddPropertyContribution extends BasicCommandContribution<Command> {
 
       var parentSemanticElementId = command.getProperties().get(SemanticKeys.PARENT_SEMANTIC_ELEMENT_ID);
 
-      var parent = elementAccessor.getElement(parentSemanticElementId, Class.class);
+      var parent = elementAccessor.getElement(parentSemanticElementId, AttributeOwner.class);
 
       return parent
          .<Command> map(p -> new AddPropertySemanticCommand(domain, modelUri, p))

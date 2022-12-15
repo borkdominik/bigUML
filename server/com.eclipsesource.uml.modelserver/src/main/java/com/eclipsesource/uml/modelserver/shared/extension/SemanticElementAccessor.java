@@ -41,16 +41,20 @@ public final class SemanticElementAccessor {
       return EcoreUtil.getURI(element).fragment();
    }
 
+   public static String getUnsafeId(final Object element) {
+      return EcoreUtil.getURI((EObject) element).fragment();
+   }
+
    public Optional<EObject> getElement(final String semanticElementId) {
       return Optional.ofNullable(model.eResource().getEObject(semanticElementId));
    }
 
-   public <C extends EObject> Optional<C> getElement(final String semanticElementId,
+   public <C> Optional<C> getElement(final String semanticElementId,
       final Class<C> clazz) {
       return getElement(semanticElementId).map(element -> clazz.cast(element));
    }
 
-   public <T extends EObject> List<T> getElements(
+   public <T> List<T> getElements(
       final String[] semanticElementIds,
       final Class<T> type) {
 

@@ -12,7 +12,7 @@ package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.pro
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Class;
+import org.eclipse.uml2.uml.AttributeOwner;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Type;
 
@@ -24,12 +24,12 @@ import com.eclipsesource.uml.modelserver.uml.generator.ContextualNameGenerator;
 public class AddPropertySemanticCommand extends UmlSemanticElementCommand {
 
    protected Property newProperty;
-   protected final Class parent;
+   protected final AttributeOwner parent;
    protected final Type defaultType;
-   protected final ContextualNameGenerator<Class> nameGenerator;
+   protected final ContextualNameGenerator<AttributeOwner> nameGenerator;
 
    public AddPropertySemanticCommand(final EditingDomain domain, final URI modelUri,
-      final Class parent) {
+      final AttributeOwner parent) {
       super(domain, modelUri);
       this.parent = parent;
       this.defaultType = ClassSemanticCommandUtil.getType(domain, "String");
@@ -38,6 +38,6 @@ public class AddPropertySemanticCommand extends UmlSemanticElementCommand {
 
    @Override
    protected void doExecute() {
-      newProperty = parent.createOwnedAttribute(nameGenerator.newNameInContextOf(parent), defaultType);
+      this.newProperty = parent.createOwnedAttribute(nameGenerator.newNameInContextOf(parent), defaultType);
    }
 }

@@ -12,18 +12,18 @@ package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.ope
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Operation;
+import org.eclipse.uml2.uml.OperationOwner;
 
 import com.eclipsesource.uml.modelserver.shared.semantic.UmlSemanticElementCommand;
 
 public class RemoveOperationSemanticCommand extends UmlSemanticElementCommand {
 
-   protected final Class parent;
+   protected final OperationOwner parent;
    protected final Operation operation;
 
    public RemoveOperationSemanticCommand(final EditingDomain domain, final URI modelUri,
-      final Class parent,
+      final OperationOwner parent,
       final Operation operation) {
       super(domain, modelUri);
       this.parent = parent;

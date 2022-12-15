@@ -17,7 +17,7 @@ import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
 import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
 import org.eclipse.emfcloud.modelserver.edit.command.BasicCommandContribution;
-import org.eclipse.uml2.uml.Class;
+import org.eclipse.uml2.uml.AttributeOwner;
 import org.eclipse.uml2.uml.Property;
 
 import com.eclipsesource.uml.modelserver.core.commands.noop.NoopCommand;
@@ -28,11 +28,11 @@ public class RemovePropertyContribution extends BasicCommandContribution<Command
 
    public static final String TYPE = "class:remove_property";
 
-   public static CCommand create(final Class parent, final Property property) {
+   public static CCommand create(final AttributeOwner parent, final Property property) {
       var command = CCommandFactory.eINSTANCE.createCommand();
 
       command.setType(TYPE);
-      command.getProperties().put(SemanticKeys.PARENT_SEMANTIC_ELEMENT_ID, SemanticElementAccessor.getId(parent));
+      command.getProperties().put(SemanticKeys.PARENT_SEMANTIC_ELEMENT_ID, SemanticElementAccessor.getUnsafeId(parent));
       command.getProperties().put(SemanticKeys.SEMANTIC_ELEMENT_ID, SemanticElementAccessor.getId(property));
 
       return command;
@@ -46,7 +46,7 @@ public class RemovePropertyContribution extends BasicCommandContribution<Command
       var parentSemanticElementId = command.getProperties().get(SemanticKeys.PARENT_SEMANTIC_ELEMENT_ID);
       var semanticElementId = command.getProperties().get(SemanticKeys.SEMANTIC_ELEMENT_ID);
 
-      var parent = elementAccessor.getElement(parentSemanticElementId, Class.class);
+      var parent = elementAccessor.getElement(parentSemanticElementId, AttributeOwner.class);
       var property = elementAccessor.getElement(semanticElementId, Property.class);
 
       if (parent.isPresent() && property.isPresent()) {

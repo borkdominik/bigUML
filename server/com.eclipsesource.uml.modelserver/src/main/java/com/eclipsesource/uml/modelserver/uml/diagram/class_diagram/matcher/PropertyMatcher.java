@@ -14,18 +14,13 @@ import java.util.Optional;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.uml2.uml.Association;
-import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Property;
-import org.eclipse.uml2.uml.UMLPackage;
 
 public class PropertyMatcher {
-   public static Optional<Property> ofClassUsage(final Setting setting, final EObject interest) {
+   public static Optional<Property> ofOwnedAttributeTypeUsage(final Setting setting, final EObject interest) {
       var eObject = setting.getEObject();
 
       if (eObject instanceof Property
-         && eObject.eContainer() instanceof Class
-         && setting.getEStructuralFeature().equals(UMLPackage.Literals.TYPED_ELEMENT__TYPE)
          && interest.equals(((Property) eObject).getType())) {
          return Optional.of((Property) eObject);
       }
@@ -33,11 +28,10 @@ public class PropertyMatcher {
       return Optional.empty();
    }
 
-   public static Optional<Property> ofAssociationUsage(final Setting setting, final EObject interest) {
+   public static Optional<Property> ofOwnedEndUsage(final Setting setting, final EObject interest) {
       var eObject = setting.getEObject();
 
       if (eObject instanceof Property
-         && eObject.eContainer() instanceof Association
          && ((Property) eObject).getAssociation() != null) {
          return Optional.of((Property) eObject);
       }

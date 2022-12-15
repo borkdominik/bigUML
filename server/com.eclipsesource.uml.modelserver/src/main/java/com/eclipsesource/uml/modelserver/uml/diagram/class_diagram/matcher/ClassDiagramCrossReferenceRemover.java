@@ -34,10 +34,10 @@ public class ClassDiagramCrossReferenceRemover {
       model = UmlSemanticUtil.getModel(modelUri, domain);
       matcher = new CrossReferenceMatcher.Builder<Command>()
          .match((setting, interest) -> PropertyMatcher
-            .ofClassUsage(setting, interest)
+            .ofOwnedAttributeTypeUsage(setting, interest)
             .map(property -> new SetPropertyTypeSemanticCommand(domain, modelUri, property, null)))
          .match((setting, interest) -> PropertyMatcher
-            .ofAssociationUsage(setting, interest)
+            .ofOwnedEndUsage(setting, interest)
             .map(property -> new RemoveAssociationCompoundCommand(domain, modelUri, property.getAssociation())))
          .match((setting, interest) -> GeneralizationMatcher
             .ofUsage(setting, interest)

@@ -39,5 +39,7 @@ public class AddPropertySemanticCommand extends UmlSemanticElementCommand {
    @Override
    protected void doExecute() {
       this.newProperty = parent.createOwnedAttribute(nameGenerator.newNameInContextOf(parent), defaultType);
+      this.newProperty.setLower(1);
+      this.newProperty.setUpper(1);
    }
 }

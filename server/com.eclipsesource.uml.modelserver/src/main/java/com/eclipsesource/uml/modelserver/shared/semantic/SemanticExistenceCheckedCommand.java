@@ -16,13 +16,20 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.domain.EditingDomain;
 
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
+
 public abstract class SemanticExistenceCheckedCommand<T extends EObject> extends UmlSemanticElementCommand {
    private static Logger LOGGER = LogManager.getLogger(SemanticExistenceCheckedCommand.class.getSimpleName());
 
    protected final T semanticElement;
 
+   @Deprecated
    public SemanticExistenceCheckedCommand(final EditingDomain domain, final URI modelUri, final T semanticElement) {
-      super(domain, modelUri);
+      this(ModelContext.of(modelUri, domain), semanticElement);
+   }
+
+   public SemanticExistenceCheckedCommand(final ModelContext context, final T semanticElement) {
+      super(context);
       this.semanticElement = semanticElement;
    }
 

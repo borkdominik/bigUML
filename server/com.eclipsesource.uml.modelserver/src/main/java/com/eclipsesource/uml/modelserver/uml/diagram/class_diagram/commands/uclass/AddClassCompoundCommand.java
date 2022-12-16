@@ -11,22 +11,23 @@
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uclass;
 
 import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.util.GraphUtil;
+import org.eclipse.uml2.uml.Package;
 
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.commands.UmlAddShapeCommand;
 
 public class AddClassCompoundCommand extends CompoundCommand {
 
-   public AddClassCompoundCommand(final EditingDomain domain, final URI modelUri, final GPoint position,
+   public AddClassCompoundCommand(final ModelContext context, final Package parent,
+      final GPoint position,
       final Boolean isAbstract) {
 
-      var command = new AddClassSemanticCommand(domain, modelUri, isAbstract);
+      var command = new AddClassSemanticCommand(context, parent, isAbstract);
       this.append(command);
-      this.append(new UmlAddShapeCommand(domain, modelUri, position, GraphUtil.dimension(160, 50),
-         () -> command.getNewClass()));
+      this.append(
+         new UmlAddShapeCommand(context, command::getCreatedSemanticElement, position, GraphUtil.dimension(160, 50)));
    }
 
 }

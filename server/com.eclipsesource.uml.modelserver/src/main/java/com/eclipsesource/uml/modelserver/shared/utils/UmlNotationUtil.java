@@ -8,9 +8,12 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.uml.utils;
+package com.eclipsesource.uml.modelserver.shared.utils;
 
+import com.eclipsesource.uml.modelserver.core.resource.UmlNotationResource;
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.eclipsesource.uml.modelserver.unotation.UmlDiagram;
 
 public final class UmlNotationUtil {
 
@@ -42,6 +45,14 @@ public final class UmlNotationUtil {
             return Representation.COMMUNICATION;
       }
       return Representation.CLASS;
+   }
+
+   public static UmlDiagram getDiagram(final ModelContext context) {
+      var notationResource = context.domain.getResourceSet()
+         .getResource(context.uri.trimFileExtension().appendFileExtension(UmlNotationResource.FILE_EXTENSION), false);
+      var notationRoot = notationResource.getContents().get(0);
+
+      return (UmlDiagram) notationRoot;
    }
 
 }

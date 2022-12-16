@@ -18,6 +18,7 @@ import org.eclipse.uml2.uml.Model;
 
 import com.eclipsesource.uml.modelserver.shared.extension.NotationElementAccessor;
 import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.unotation.UmlDiagram;
 
 public abstract class UmlNotationElementCommand extends RecordingCommand {
@@ -28,10 +29,15 @@ public abstract class UmlNotationElementCommand extends RecordingCommand {
    protected final SemanticElementAccessor semanticElementAccessor;
    protected final NotationElementAccessor notationElementAccessor;
 
+   @Deprecated
    public UmlNotationElementCommand(final EditingDomain domain, final URI modelUri) {
-      super((TransactionalEditingDomain) domain);
-      this.notationElementAccessor = new NotationElementAccessor(modelUri, domain);
-      this.semanticElementAccessor = new SemanticElementAccessor(modelUri, domain);
+      this(ModelContext.of(modelUri, domain));
+   }
+
+   public UmlNotationElementCommand(final ModelContext context) {
+      super((TransactionalEditingDomain) context.domain);
+      this.notationElementAccessor = new NotationElementAccessor(context);
+      this.semanticElementAccessor = new SemanticElementAccessor(context);
 
       this.diagram = notationElementAccessor.getDiagram();
       this.model = semanticElementAccessor.getModel();

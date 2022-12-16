@@ -22,13 +22,19 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Model;
 
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.utils.UmlSemanticUtil;
 
 public final class SemanticElementAccessor {
    private final Model model;
 
+   @Deprecated
    public SemanticElementAccessor(final URI modelUri, final EditingDomain domain) {
-      this.model = UmlSemanticUtil.getModel(modelUri, domain);
+      this(UmlSemanticUtil.getModel(modelUri, domain));
+   }
+
+   public SemanticElementAccessor(final ModelContext context) {
+      this(UmlSemanticUtil.getModel(context));
    }
 
    public SemanticElementAccessor(final Model model) {

@@ -10,35 +10,33 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uclass;
 
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Class;
-import org.eclipse.uml2.uml.UMLFactory;
+import org.eclipse.uml2.uml.Package;
 
-import com.eclipsesource.uml.modelserver.shared.semantic.UmlSemanticElementCommand;
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
+import com.eclipsesource.uml.modelserver.shared.semantic.CreateSemanticElementCommand;
 import com.eclipsesource.uml.modelserver.uml.generator.NameGenerator;
 import com.eclipsesource.uml.modelserver.uml.generator.PackageableElementNameGenerator;
 
-public class AddClassSemanticCommand extends UmlSemanticElementCommand {
+public class AddClassSemanticCommand extends CreateSemanticElementCommand<Package, Class> {
 
-   protected final Class newClass;
+   protected Class createdSemanticElement;
    protected final Boolean isAbstract;
    protected final NameGenerator nameGenerator;
 
-   public AddClassSemanticCommand(final EditingDomain domain, final URI modelUri, final Boolean isAbstract) {
-      super(domain, modelUri);
-      this.newClass = UMLFactory.eINSTANCE.createClass();
+   public AddClassSemanticCommand(final ModelContext context, final Package parent,
+      final Boolean isAbstract) {
+      super(context, parent);
       this.isAbstract = isAbstract;
-      this.nameGenerator = new PackageableElementNameGenerator(Class.class, modelUri, domain);
+      this.nameGenerator = new PackageableElementNameGenerator(context, Class.class);
    }
 
    @Override
    protected void doExecute() {
-      newClass.setIsAbstract(isAbstract);
-      newClass.setName(nameGenerator.newName());
-      model.getPackagedElements().add(newClass);
+      createdSemanticElement = this.parent.createOwnedClass(nameGenerator.newName(), isAbstract);
    }
 
-   public Class getNewClass() { return newClass; }
+   @Override
+   public Class getCreatedSemanticElement() { return createdSemanticElement; }
 
 }

@@ -15,14 +15,20 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.glsp.server.emf.model.notation.NotationElement;
 import org.eclipse.uml2.uml.Element;
 
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.NotationExistenceCheckedCommand;
 
 public class UmlRemoveNotationElementCommand extends NotationExistenceCheckedCommand<Element, NotationElement> {
 
+   @Deprecated
    public UmlRemoveNotationElementCommand(final EditingDomain domain, final URI modelUri,
       final Element semanticElement) {
-      super(domain, modelUri, semanticElement);
+      this(ModelContext.of(modelUri, domain), semanticElement);
+   }
 
+   public UmlRemoveNotationElementCommand(final ModelContext context,
+      final Element semanticElement) {
+      super(context, semanticElement);
    }
 
    @Override

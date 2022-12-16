@@ -33,7 +33,7 @@ import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.UMLFactory;
 import org.eclipse.uml2.uml.resource.UMLResource;
 
-import com.eclipsesource.uml.modelserver.uml.utils.UmlNotationUtil;
+import com.eclipsesource.uml.modelserver.shared.utils.UmlNotationUtil;
 import com.eclipsesource.uml.modelserver.unotation.UmlDiagram;
 import com.eclipsesource.uml.modelserver.unotation.UnotationFactory;
 import com.google.inject.Inject;

@@ -19,6 +19,7 @@ import org.eclipse.glsp.server.emf.model.notation.NotationElement;
 
 import com.eclipsesource.uml.modelserver.core.utils.reflection.GenericsUtil;
 import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 
 public abstract class NotationExistenceCheckedCommand<TSemantic extends EObject, TNotation extends NotationElement>
    extends UmlNotationElementCommand {
@@ -28,9 +29,15 @@ public abstract class NotationExistenceCheckedCommand<TSemantic extends EObject,
 
    protected final Class<TNotation> notationElementClass;
 
+   @Deprecated
    public NotationExistenceCheckedCommand(final EditingDomain domain, final URI modelUri,
       final TSemantic semanticElement) {
-      super(domain, modelUri);
+      this(ModelContext.of(modelUri, domain), semanticElement);
+   }
+
+   public NotationExistenceCheckedCommand(final ModelContext context,
+      final TSemantic semanticElement) {
+      super(context);
       notationElementClass = GenericsUtil.getClassParameter(getClass(), NotationExistenceCheckedCommand.class, 1);
 
       this.semanticElement = semanticElement;

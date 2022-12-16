@@ -17,13 +17,20 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.resource.UMLResource;
 
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
+
 public final class UmlSemanticUtil {
 
    private UmlSemanticUtil() {}
 
+   @Deprecated
    public static Model getModel(final URI modelUri, final EditingDomain domain) {
-      Resource semanticResource = domain.getResourceSet()
-         .getResource(modelUri.trimFileExtension().appendFileExtension(UMLResource.FILE_EXTENSION), false);
+      return getModel(ModelContext.of(modelUri, domain));
+   }
+
+   public static Model getModel(final ModelContext context) {
+      Resource semanticResource = context.domain.getResourceSet()
+         .getResource(context.uri.trimFileExtension().appendFileExtension(UMLResource.FILE_EXTENSION), false);
       EObject semanticRoot = semanticResource.getContents().get(0);
 
       return (Model) semanticRoot;

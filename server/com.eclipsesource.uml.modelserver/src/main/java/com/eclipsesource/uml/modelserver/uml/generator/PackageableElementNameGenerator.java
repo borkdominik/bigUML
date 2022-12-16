@@ -16,12 +16,18 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.PackageableElement;
 
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.utils.UmlSemanticUtil;
 
 public class PackageableElementNameGenerator extends ListNameGenerator {
+   @Deprecated
    public PackageableElementNameGenerator(final Class<? extends PackageableElement> clazz, final URI modelUri,
       final EditingDomain domain) {
-      super(clazz, UmlSemanticUtil.getModel(modelUri, domain).getPackagedElements().stream().filter(clazz::isInstance)
+      this(ModelContext.of(modelUri, domain), clazz);
+   }
+
+   public PackageableElementNameGenerator(final ModelContext context, final Class<? extends PackageableElement> clazz) {
+      super(clazz, UmlSemanticUtil.getModel(context).getPackagedElements().stream().filter(clazz::isInstance)
          .collect(Collectors.toList()));
    }
 }

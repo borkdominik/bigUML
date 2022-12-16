@@ -53,4 +53,5 @@
     <ownedOperation xmi:id="_ZHNqkHyKEe2MTblvJxfFYg" name="newOperation0"/>
   </packagedElement>
   <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_3zwlgXyMEe2e9NcMk5GOjQ" name="NewPrimitiveType1"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="_q8TrgX1IEe2nU4lFDx50pw" name="NewClass4"/>
 </uml:Model>

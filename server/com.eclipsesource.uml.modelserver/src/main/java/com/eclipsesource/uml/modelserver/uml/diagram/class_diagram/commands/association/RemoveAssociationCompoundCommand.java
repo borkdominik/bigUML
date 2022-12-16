@@ -15,6 +15,7 @@ import org.eclipse.uml2.uml.Association;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.commands.UmlRemoveNotationElementCommand;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.matcher.ClassDiagramCrossReferenceRemover;
 
 public class RemoveAssociationCompoundCommand extends CompoundCommand {
 
@@ -23,6 +24,7 @@ public class RemoveAssociationCompoundCommand extends CompoundCommand {
       this.append(new RemoveAssociationSemanticCommand(context, association));
       this.append(new UmlRemoveNotationElementCommand(context, association));
 
-      // TODO Make sure to remove also all other AssociationEnds (not only the ownedByAssociation Ends!
+      new ClassDiagramCrossReferenceRemover(context).removeCommandsFor(association)
+         .forEach(this::append);
    }
 }

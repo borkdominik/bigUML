@@ -78,6 +78,7 @@ public class InterfaceNodeMapper extends BaseGNodeMapper<Interface, GNode> {
       builder.layoutOptions(layoutOptions);
 
       var propertyElements = umlInterface.getOwnedAttributes().stream()
+         .filter(p -> p.getAssociation() == null)
          .map(mapHandler::handle)
          .collect(Collectors.toList());
       builder.addAll(propertyElements);

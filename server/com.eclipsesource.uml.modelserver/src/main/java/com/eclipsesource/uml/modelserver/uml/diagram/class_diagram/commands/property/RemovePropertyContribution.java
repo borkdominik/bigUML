@@ -52,7 +52,7 @@ public class RemovePropertyContribution extends BasicCommandContribution<Command
       var property = elementAccessor.getElement(semanticElementId, Property.class);
 
       if (parent.isPresent() && property.isPresent()) {
-         return new RemovePropertySemanticCommand(context, parent.get(), property.get());
+         return new RemovePropertySemanticCommand(context, property.get());
       }
 
       return new NoopCommand();

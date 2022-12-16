@@ -21,6 +21,7 @@ import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.utils.UmlSemanticUtil;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association.RemoveAssociationCompoundCommand;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.generalization.RemoveGeneralizationCompoundCommand;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.RemovePropertySemanticCommand;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.SetPropertyTypeSemanticCommand;
 
 public class ClassDiagramCrossReferenceRemover {
@@ -36,8 +37,11 @@ public class ClassDiagramCrossReferenceRemover {
             .ofOwnedAttributeTypeUsage(setting, interest)
             .map(property -> new SetPropertyTypeSemanticCommand(context, property, null)))
          .match((setting, interest) -> PropertyMatcher
-            .ofOwnedEndUsage(setting, interest)
-            .map(property -> new RemoveAssociationCompoundCommand(context, property.getAssociation())))
+            .ofOwnedAttributeAssociationUsage(setting, interest)
+            .map(property -> new RemovePropertySemanticCommand(context, property)))
+         .match((setting, interest) -> AssociationMatcher
+            .ofUsage(setting, interest)
+            .map(association -> new RemoveAssociationCompoundCommand(context, association)))
          .match((setting, interest) -> GeneralizationMatcher
             .ofUsage(setting, interest)
             .map(generalization -> new RemoveGeneralizationCompoundCommand(context, generalization)))

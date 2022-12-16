@@ -18,20 +18,17 @@ import com.eclipsesource.uml.modelserver.shared.semantic.UmlSemanticElementComma
 
 public class RemovePropertySemanticCommand extends UmlSemanticElementCommand {
 
-   protected final AttributeOwner parent;
    protected final Property property;
 
-   public RemovePropertySemanticCommand(final ModelContext context,
-      final AttributeOwner parent,
-      final Property property) {
+   public RemovePropertySemanticCommand(final ModelContext context, final Property property) {
       super(context);
-      this.parent = parent;
       this.property = property;
    }
 
    @Override
    protected void doExecute() {
-      parent.getOwnedAttributes().remove(property);
+      var owner = (AttributeOwner) property.getOwner();
+      owner.getOwnedAttributes().remove(property);
    }
 
 }

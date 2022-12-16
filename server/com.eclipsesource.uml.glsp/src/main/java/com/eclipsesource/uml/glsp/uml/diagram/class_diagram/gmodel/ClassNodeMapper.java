@@ -103,6 +103,7 @@ public class ClassNodeMapper extends BaseGNodeMapper<Class, GNode> {
       builder.layoutOptions(layoutOptions);
 
       var propertyElements = umlClass.getOwnedAttributes().stream()
+         .filter(p -> p.getAssociation() == null)
          .map(mapHandler::handle)
          .collect(Collectors.toList());
       builder.addAll(propertyElements);

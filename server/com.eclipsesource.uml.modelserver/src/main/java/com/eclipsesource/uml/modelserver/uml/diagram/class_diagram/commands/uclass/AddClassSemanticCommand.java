@@ -14,11 +14,11 @@ import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Package;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
-import com.eclipsesource.uml.modelserver.shared.semantic.CreateSemanticElementCommand;
+import com.eclipsesource.uml.modelserver.shared.semantic.CreateSemanticChildCommand;
 import com.eclipsesource.uml.modelserver.uml.generator.NameGenerator;
 import com.eclipsesource.uml.modelserver.uml.generator.PackageableElementNameGenerator;
 
-public class AddClassSemanticCommand extends CreateSemanticElementCommand<Package, Class> {
+public class AddClassSemanticCommand extends CreateSemanticChildCommand<Package, Class> {
 
    protected Class createdSemanticElement;
    protected final Boolean isAbstract;

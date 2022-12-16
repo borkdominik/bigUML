@@ -26,7 +26,7 @@ public class AddAssociationCompoundCommand extends CompoundCommand {
       var command = new AddAssociationSemanticCommand(context, source,
          target, type);
       this.append(command);
-      this.append(new UmlAddEdgeCommand(context, () -> command.getNewAssociation()));
+      this.append(new UmlAddEdgeCommand(context, command::getSemanticElement));
    }
 
 }

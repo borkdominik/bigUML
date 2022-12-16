@@ -35,13 +35,13 @@ public class AssociationEdgeMapper extends BaseGEdgeMapper<Association, GEdge> {
       var memberEnds = association.getMemberEnds();
       var source = memberEnds.get(0);
       var target = memberEnds.get(1);
-      var associationType = AssociationType.from(source.getAggregation());
+      var associationType = AssociationType.from(target.getAggregation());
 
       var builder = new GEdgeBuilder(AssociationTypeUtil.toClassType(associationType))
          .id(idGenerator.getOrCreateId(association))
          .addCssClass(CoreCSS.EDGE)
-         .sourceId(idGenerator.getOrCreateId(source.getType()))
-         .targetId(idGenerator.getOrCreateId(target.getType()))
+         .sourceId(idGenerator.getOrCreateId(source.getOwner()))
+         .targetId(idGenerator.getOrCreateId(target.getOwner()))
          .routerKind(GConstants.RouterKind.MANHATTAN);
 
       if (associationType == AssociationType.COMPOSITION) {
@@ -74,18 +74,20 @@ public class AssociationEdgeMapper extends BaseGEdgeMapper<Association, GEdge> {
       var target = memberEnds.get(1);
       var targetId = idGenerator.getOrCreateId(target);
 
-      var sourceNameLabel = createEdgeNameLabel(source.getName(), suffix.appendTo(LabelSuffix.SUFFIX, sourceId), 0.1d);
+      // Label at source
+      var sourceNameLabel = createEdgeNameLabel(target.getName(), suffix.appendTo(LabelSuffix.SUFFIX, targetId), 0.1d);
       builder.add(sourceNameLabel);
 
-      var sourceMultiplicityLabel = createEdgeMultiplicityLabel(PropertyUtil.getMultiplicity(source),
-         suffix.appendTo(PropertyLabelMultiplicitySuffix.SUFFIX, sourceId), 0.1d);
+      var sourceMultiplicityLabel = createEdgeMultiplicityLabel(PropertyUtil.getMultiplicity(target),
+         suffix.appendTo(PropertyLabelMultiplicitySuffix.SUFFIX, targetId), 0.1d);
       builder.add(sourceMultiplicityLabel);
 
-      var targetNameLabel = createEdgeNameLabel(target.getName(), suffix.appendTo(LabelSuffix.SUFFIX, targetId), 0.9d);
+      // Label at target
+      var targetNameLabel = createEdgeNameLabel(source.getName(), suffix.appendTo(LabelSuffix.SUFFIX, sourceId), 0.9d);
       builder.add(targetNameLabel);
 
-      var targetMultiplicityLabel = createEdgeMultiplicityLabel(PropertyUtil.getMultiplicity(target),
-         suffix.appendTo(PropertyLabelMultiplicitySuffix.SUFFIX, targetId), 0.9d);
+      var targetMultiplicityLabel = createEdgeMultiplicityLabel(PropertyUtil.getMultiplicity(source),
+         suffix.appendTo(PropertyLabelMultiplicitySuffix.SUFFIX, sourceId), 0.9d);
       builder.add(targetMultiplicityLabel);
    }
 

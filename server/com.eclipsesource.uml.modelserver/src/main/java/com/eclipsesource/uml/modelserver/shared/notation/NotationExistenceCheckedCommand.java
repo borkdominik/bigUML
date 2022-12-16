@@ -12,9 +12,7 @@ package com.eclipsesource.uml.modelserver.shared.notation;
 
 import java.util.Optional;
 
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.glsp.server.emf.model.notation.NotationElement;
 
 import com.eclipsesource.uml.modelserver.core.utils.reflection.GenericsUtil;
@@ -26,14 +24,7 @@ public abstract class NotationExistenceCheckedCommand<TSemantic extends EObject,
 
    protected final TSemantic semanticElement;
    protected final Optional<TNotation> notationElement;
-
    protected final Class<TNotation> notationElementClass;
-
-   @Deprecated
-   public NotationExistenceCheckedCommand(final EditingDomain domain, final URI modelUri,
-      final TSemantic semanticElement) {
-      this(ModelContext.of(modelUri, domain), semanticElement);
-   }
 
    public NotationExistenceCheckedCommand(final ModelContext context,
       final TSemantic semanticElement) {

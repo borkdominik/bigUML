@@ -12,9 +12,7 @@ package com.eclipsesource.uml.modelserver.shared.notation.commands;
 
 import java.util.function.Supplier;
 
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.glsp.graph.GDimension;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.emf.model.notation.NotationFactory;
@@ -28,18 +26,6 @@ public class UmlAddShapeCommand extends UmlNotationElementCommand {
    protected final GPoint shapePosition;
    protected final GDimension shapeSize;
    protected final Supplier<? extends EObject> semanticElementSupplier;
-
-   @Deprecated
-   public UmlAddShapeCommand(final EditingDomain domain, final URI modelUri, final GPoint position,
-      final Supplier<? extends EObject> supplier) {
-      this(ModelContext.of(modelUri, domain), supplier, position, null);
-   }
-
-   @Deprecated
-   public UmlAddShapeCommand(final EditingDomain domain, final URI modelUri, final GPoint position,
-      final GDimension size, final Supplier<? extends EObject> supplier) {
-      this(ModelContext.of(modelUri, domain), supplier, position, size);
-   }
 
    public UmlAddShapeCommand(final ModelContext context, final Supplier<? extends EObject> semanticElementSupplier,
       final GPoint position, final GDimension size) {

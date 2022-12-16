@@ -15,10 +15,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Model;
 
@@ -27,11 +25,6 @@ import com.eclipsesource.uml.modelserver.shared.utils.UmlSemanticUtil;
 
 public final class SemanticElementAccessor {
    private final Model model;
-
-   @Deprecated
-   public SemanticElementAccessor(final URI modelUri, final EditingDomain domain) {
-      this(UmlSemanticUtil.getModel(modelUri, domain));
-   }
 
    public SemanticElementAccessor(final ModelContext context) {
       this(UmlSemanticUtil.getModel(context));

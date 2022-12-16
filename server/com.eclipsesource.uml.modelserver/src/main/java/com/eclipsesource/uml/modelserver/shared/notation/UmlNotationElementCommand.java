@@ -10,8 +10,6 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.shared.notation;
 
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.uml2.uml.Model;
@@ -28,11 +26,6 @@ public abstract class UmlNotationElementCommand extends RecordingCommand {
 
    protected final SemanticElementAccessor semanticElementAccessor;
    protected final NotationElementAccessor notationElementAccessor;
-
-   @Deprecated
-   public UmlNotationElementCommand(final EditingDomain domain, final URI modelUri) {
-      this(ModelContext.of(modelUri, domain));
-   }
 
    public UmlNotationElementCommand(final ModelContext context) {
       super((TransactionalEditingDomain) context.domain);

@@ -12,8 +12,6 @@ package com.eclipsesource.uml.modelserver.core.commands.change_bounds;
 
 import java.util.Optional;
 
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.glsp.graph.GDimension;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.util.GraphUtil;
@@ -21,6 +19,7 @@ import org.eclipse.glsp.server.emf.model.notation.Shape;
 import org.eclipse.uml2.uml.Element;
 
 import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.UmlNotationElementCommand;
 
 public class UmlChangeBoundsNotationCommand extends UmlNotationElementCommand {
@@ -29,10 +28,10 @@ public class UmlChangeBoundsNotationCommand extends UmlNotationElementCommand {
    protected final Shape shape;
    protected final Element element;
 
-   public UmlChangeBoundsNotationCommand(final EditingDomain domain, final URI modelUri,
+   public UmlChangeBoundsNotationCommand(final ModelContext context,
       final Element semanticElement, final Optional<GPoint> shapePosition,
       final Optional<GDimension> shapeSize) {
-      super(domain, modelUri);
+      super(context);
       this.shapePosition = shapePosition;
       this.shapeSize = shapeSize;
 

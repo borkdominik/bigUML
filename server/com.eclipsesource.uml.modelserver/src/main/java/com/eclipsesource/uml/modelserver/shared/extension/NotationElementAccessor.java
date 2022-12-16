@@ -12,8 +12,6 @@ package com.eclipsesource.uml.modelserver.shared.extension;
 
 import java.util.Optional;
 
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.glsp.server.emf.model.notation.NotationElement;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
@@ -22,11 +20,6 @@ import com.eclipsesource.uml.modelserver.unotation.UmlDiagram;
 
 public final class NotationElementAccessor {
    private final UmlDiagram diagram;
-
-   @Deprecated
-   public NotationElementAccessor(final URI modelUri, final EditingDomain domain) {
-      this(ModelContext.of(modelUri, domain));
-   }
 
    public NotationElementAccessor(final ModelContext context) {
       this(UmlNotationUtil.getDiagram(context));

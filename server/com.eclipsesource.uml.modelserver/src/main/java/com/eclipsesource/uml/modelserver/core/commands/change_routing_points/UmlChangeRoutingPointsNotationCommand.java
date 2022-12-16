@@ -12,11 +12,10 @@ package com.eclipsesource.uml.modelserver.core.commands.change_routing_points;
 
 import java.util.List;
 
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.emf.model.notation.Edge;
 
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.UmlNotationElementCommand;
 
 public class UmlChangeRoutingPointsNotationCommand extends UmlNotationElementCommand {
@@ -24,9 +23,9 @@ public class UmlChangeRoutingPointsNotationCommand extends UmlNotationElementCom
    protected final Edge edge;
    protected final List<GPoint> newRoutingPoints;
 
-   public UmlChangeRoutingPointsNotationCommand(final EditingDomain domain, final URI modelUri,
+   public UmlChangeRoutingPointsNotationCommand(final ModelContext context,
       final Edge edge, final List<GPoint> newRoutingPoints) {
-      super(domain, modelUri);
+      super(context);
       this.newRoutingPoints = newRoutingPoints;
       this.edge = edge;
    }

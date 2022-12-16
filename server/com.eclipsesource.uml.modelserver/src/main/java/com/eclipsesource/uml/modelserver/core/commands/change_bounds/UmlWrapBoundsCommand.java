@@ -14,8 +14,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.glsp.graph.GDimension;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.util.GraphUtil;
@@ -24,15 +22,16 @@ import org.eclipse.glsp.server.types.ElementAndBounds;
 import org.eclipse.uml2.uml.Element;
 
 import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.UmlNotationElementCommand;
 
 public class UmlWrapBoundsCommand extends UmlNotationElementCommand {
    protected final List<ElementAndBounds> bounds;
    protected final Map<String, GPoint> elementPositions;
 
-   public UmlWrapBoundsCommand(final EditingDomain domain, final URI modelUri,
+   public UmlWrapBoundsCommand(final ModelContext context,
       final List<ElementAndBounds> bounds) {
-      super(domain, modelUri);
+      super(context);
       this.bounds = bounds;
       this.elementPositions = bounds.stream()
          .collect(Collectors.toMap(b -> b.getElementId(), b -> GraphUtil.copy(b.getNewPosition())));

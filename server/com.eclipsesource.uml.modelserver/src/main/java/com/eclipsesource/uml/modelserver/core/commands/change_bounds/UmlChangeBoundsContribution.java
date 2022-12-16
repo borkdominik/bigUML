@@ -35,6 +35,7 @@ import com.eclipsesource.uml.modelserver.core.commands.noop.NoopCommand;
 import com.eclipsesource.uml.modelserver.shared.constants.NotationKeys;
 import com.eclipsesource.uml.modelserver.shared.constants.SemanticKeys;
 import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.utils.UmlGraphUtil;
 
 public class UmlChangeBoundsContribution extends BasicCommandContribution<Command> {
@@ -95,6 +96,7 @@ public class UmlChangeBoundsContribution extends BasicCommandContribution<Comman
    @Override
    protected Command toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
       throws DecodingException {
+      var context = ModelContext.of(modelUri, domain);
       var changeBoundsCompoundCommand = new CompoundCommand();
       var bounds = new ArrayList<ElementAndBounds>();
 
@@ -107,7 +109,7 @@ public class UmlChangeBoundsContribution extends BasicCommandContribution<Comman
          bounds.addAll(newBounds);
 
          newBounds.forEach(bound -> {
-            var changeBoundsCommand = getChangeBoundsCommand(modelUri, domain, bound);
+            var changeBoundsCommand = getChangeBoundsCommand(context, bound);
 
             changeBoundsCompoundCommand
                .append(changeBoundsCommand);
@@ -118,11 +120,11 @@ public class UmlChangeBoundsContribution extends BasicCommandContribution<Comman
          bounds.add(bound);
 
          changeBoundsCompoundCommand
-            .append(getChangeBoundsCommand(modelUri, domain, bound));
+            .append(getChangeBoundsCommand(context, bound));
       }
 
       changeBoundsCompoundCommand
-         .append(new UmlWrapBoundsCommand(domain, modelUri, bounds));
+         .append(new UmlWrapBoundsCommand(context, bounds));
       return changeBoundsCompoundCommand;
    }
 
@@ -140,13 +142,13 @@ public class UmlChangeBoundsContribution extends BasicCommandContribution<Comman
       return new ElementAndBounds(init);
    }
 
-   protected Command getChangeBoundsCommand(final URI modelUri, final EditingDomain domain,
+   protected Command getChangeBoundsCommand(final ModelContext context,
       final ElementAndBounds bound) {
-      var semanticElementAccessor = new SemanticElementAccessor(modelUri, domain);
+      var semanticElementAccessor = new SemanticElementAccessor(context);
 
       var element = semanticElementAccessor.getElement(bound.getElementId(), Element.class);
 
-      return element.<Command> map(e -> new UmlChangeBoundsNotationCommand(domain, modelUri, e,
+      return element.<Command> map(e -> new UmlChangeBoundsNotationCommand(context, e,
          Optional.ofNullable(bound.getNewPosition()), Optional.of(bound.getNewSize())))
          .orElse(new NoopCommand("No element found for " + bound.getElementId()));
    }

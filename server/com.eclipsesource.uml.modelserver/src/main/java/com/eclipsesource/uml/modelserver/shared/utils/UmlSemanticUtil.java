@@ -10,10 +10,8 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.shared.utils;
 
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.resource.UMLResource;
 
@@ -22,11 +20,6 @@ import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 public final class UmlSemanticUtil {
 
    private UmlSemanticUtil() {}
-
-   @Deprecated
-   public static Model getModel(final URI modelUri, final EditingDomain domain) {
-      return getModel(ModelContext.of(modelUri, domain));
-   }
 
    public static Model getModel(final ModelContext context) {
       Resource semanticResource = context.domain.getResourceSet()

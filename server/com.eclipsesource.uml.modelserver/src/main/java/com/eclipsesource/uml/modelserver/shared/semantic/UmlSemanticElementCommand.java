@@ -10,8 +10,6 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.shared.semantic;
 
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.uml2.uml.Model;
@@ -23,11 +21,6 @@ public abstract class UmlSemanticElementCommand extends RecordingCommand {
 
    protected final Model model;
    protected final SemanticElementAccessor semanticElementAccessor;
-
-   @Deprecated
-   public UmlSemanticElementCommand(final EditingDomain domain, final URI modelUri) {
-      this(ModelContext.of(modelUri, domain));
-   }
 
    public UmlSemanticElementCommand(final ModelContext context) {
       super((TransactionalEditingDomain) context.domain);

@@ -12,9 +12,7 @@ package com.eclipsesource.uml.modelserver.shared.notation.commands;
 
 import java.util.function.Supplier;
 
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.glsp.server.emf.model.notation.NotationFactory;
 
 import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
@@ -24,12 +22,6 @@ import com.eclipsesource.uml.modelserver.shared.notation.UmlNotationElementComma
 public class UmlAddEdgeCommand extends UmlNotationElementCommand {
 
    protected Supplier<? extends EObject> semanticElementSupplier;
-
-   @Deprecated
-   public UmlAddEdgeCommand(final EditingDomain domain, final URI modelUri,
-      final Supplier<? extends EObject> supplier) {
-      this(ModelContext.of(modelUri, domain), supplier);
-   }
 
    public UmlAddEdgeCommand(final ModelContext context, final Supplier<? extends EObject> semanticElementSupplier) {
       super(context);

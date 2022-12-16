@@ -30,6 +30,7 @@ import org.eclipse.glsp.server.types.ElementAndRoutingPoints;
 import com.eclipsesource.uml.modelserver.shared.constants.NotationKeys;
 import com.eclipsesource.uml.modelserver.shared.constants.SemanticKeys;
 import com.eclipsesource.uml.modelserver.shared.extension.NotationElementAccessor;
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.utils.UmlGraphUtil;
 
 public class UmlChangeRoutingPointsContribution extends BasicCommandContribution<Command> {
@@ -67,10 +68,11 @@ public class UmlChangeRoutingPointsContribution extends BasicCommandContribution
    @Override
    protected Command toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
       throws DecodingException {
+      var context = ModelContext.of(modelUri, domain);
       var compoundCommand = new CompoundCommand();
 
       if (command instanceof CCompoundCommand) {
-         var notationElementAccessor = new NotationElementAccessor(modelUri, domain);
+         var notationElementAccessor = new NotationElementAccessor(context);
 
          ((CCompoundCommand) command).getCommands().forEach(changeRoutingPointCommand -> {
             var semanticElementId = changeRoutingPointCommand.getProperties().get(SemanticKeys.SEMANTIC_ELEMENT_ID);
@@ -85,7 +87,7 @@ public class UmlChangeRoutingPointsContribution extends BasicCommandContribution
             var edge = notationElementAccessor.getElement(semanticElementId, Edge.class).get();
 
             compoundCommand.append(
-               new UmlChangeRoutingPointsNotationCommand(domain, modelUri, edge, newRoutingPoints));
+               new UmlChangeRoutingPointsNotationCommand(context, edge, newRoutingPoints));
          });
 
       }

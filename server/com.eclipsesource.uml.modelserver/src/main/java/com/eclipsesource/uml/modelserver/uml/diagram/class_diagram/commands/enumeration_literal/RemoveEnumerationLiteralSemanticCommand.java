@@ -10,11 +10,10 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.enumeration_literal;
 
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Enumeration;
 import org.eclipse.uml2.uml.EnumerationLiteral;
 
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.UmlSemanticElementCommand;
 
 public class RemoveEnumerationLiteralSemanticCommand extends UmlSemanticElementCommand {
@@ -22,10 +21,10 @@ public class RemoveEnumerationLiteralSemanticCommand extends UmlSemanticElementC
    protected final Enumeration parent;
    protected final EnumerationLiteral literal;
 
-   public RemoveEnumerationLiteralSemanticCommand(final EditingDomain domain, final URI modelUri,
+   public RemoveEnumerationLiteralSemanticCommand(final ModelContext context,
       final Enumeration parent,
       final EnumerationLiteral literal) {
-      super(domain, modelUri);
+      super(context);
       this.parent = parent;
       this.literal = literal;
    }

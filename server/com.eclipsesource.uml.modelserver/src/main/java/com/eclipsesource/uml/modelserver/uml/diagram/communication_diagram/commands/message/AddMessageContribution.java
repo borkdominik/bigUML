@@ -23,6 +23,7 @@ import org.eclipse.uml2.uml.Lifeline;
 import com.eclipsesource.uml.modelserver.core.commands.noop.NoopCommand;
 import com.eclipsesource.uml.modelserver.shared.constants.SemanticKeys;
 import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 
 public class AddMessageContribution extends BasicCommandContribution<Command> {
 
@@ -43,8 +44,8 @@ public class AddMessageContribution extends BasicCommandContribution<Command> {
    @Override
    protected Command toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
       throws DecodingException {
-
-      var elementAccessor = new SemanticElementAccessor(modelUri, domain);
+      var context = ModelContext.of(modelUri, domain);
+      var elementAccessor = new SemanticElementAccessor(context);
 
       var sourceLifelineUriFragment = command.getProperties().get(SemanticKeys.SOURCE_SEMANTIC_ELEMENT_ID);
       var targetLifelineUriFragment = command.getProperties().get(SemanticKeys.TARGET_SEMANTIC_ELEMENT_ID);
@@ -53,7 +54,7 @@ public class AddMessageContribution extends BasicCommandContribution<Command> {
       var targetLifeline = elementAccessor.getElement(targetLifelineUriFragment, Lifeline.class);
 
       if (sourceLifeline.isPresent() && targetLifeline.isPresent()) {
-         return new AddMessageCompoundCommand(domain, modelUri, sourceLifeline.get(), targetLifeline.get());
+         return new AddMessageCompoundCommand(context, sourceLifeline.get(), targetLifeline.get());
       }
 
       return new NoopCommand();

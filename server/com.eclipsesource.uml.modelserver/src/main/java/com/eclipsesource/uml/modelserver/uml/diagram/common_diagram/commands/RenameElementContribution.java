@@ -22,6 +22,7 @@ import org.eclipse.uml2.uml.NamedElement;
 import com.eclipsesource.uml.modelserver.core.commands.noop.NoopCommand;
 import com.eclipsesource.uml.modelserver.shared.constants.SemanticKeys;
 import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 
 public class RenameElementContribution extends BasicCommandContribution<Command> {
 
@@ -41,16 +42,16 @@ public class RenameElementContribution extends BasicCommandContribution<Command>
    @Override
    protected Command toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
       throws DecodingException {
-
+      var context = ModelContext.of(modelUri, domain);
       var semanticElementId = command.getProperties().get(SemanticKeys.SEMANTIC_ELEMENT_ID);
       var newName = command.getProperties().get(NEW_NAME);
 
-      var model = new SemanticElementAccessor(modelUri, domain);
+      var model = new SemanticElementAccessor(context);
       var namedElement = model.getElement(semanticElementId,
          NamedElement.class);
 
       return namedElement
-         .<Command> map(n -> new RenameElementSemanticCommand(domain, modelUri, n, newName))
+         .<Command> map(n -> new RenameElementSemanticCommand(context, n, newName))
          .orElse(new NoopCommand());
    }
 

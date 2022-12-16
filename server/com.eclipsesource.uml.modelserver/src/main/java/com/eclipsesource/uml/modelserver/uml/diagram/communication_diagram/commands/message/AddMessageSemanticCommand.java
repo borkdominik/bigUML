@@ -10,12 +10,11 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.message;
 
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Lifeline;
 import org.eclipse.uml2.uml.Message;
 import org.eclipse.uml2.uml.UMLFactory;
 
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.UmlSemanticElementCommand;
 import com.eclipsesource.uml.modelserver.uml.generator.ListNameGenerator;
 import com.eclipsesource.uml.modelserver.uml.generator.NameGenerator;
@@ -27,9 +26,9 @@ public class AddMessageSemanticCommand extends UmlSemanticElementCommand {
    protected final Lifeline targetLifeline;
    protected final NameGenerator nameGenerator;
 
-   public AddMessageSemanticCommand(final EditingDomain domain, final URI modelUri,
+   public AddMessageSemanticCommand(final ModelContext context,
       final Lifeline source, final Lifeline target) {
-      super(domain, modelUri);
+      super(context);
       this.newMessage = UMLFactory.eINSTANCE.createMessage();
       this.sourceLifeline = source;
       this.targetLifeline = target;

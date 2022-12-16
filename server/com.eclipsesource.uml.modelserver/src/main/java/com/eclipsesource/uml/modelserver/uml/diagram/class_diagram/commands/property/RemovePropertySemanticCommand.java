@@ -10,11 +10,10 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property;
 
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.AttributeOwner;
 import org.eclipse.uml2.uml.Property;
 
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.UmlSemanticElementCommand;
 
 public class RemovePropertySemanticCommand extends UmlSemanticElementCommand {
@@ -22,10 +21,10 @@ public class RemovePropertySemanticCommand extends UmlSemanticElementCommand {
    protected final AttributeOwner parent;
    protected final Property property;
 
-   public RemovePropertySemanticCommand(final EditingDomain domain, final URI modelUri,
+   public RemovePropertySemanticCommand(final ModelContext context,
       final AttributeOwner parent,
       final Property property) {
-      super(domain, modelUri);
+      super(context);
       this.parent = parent;
       this.property = property;
    }

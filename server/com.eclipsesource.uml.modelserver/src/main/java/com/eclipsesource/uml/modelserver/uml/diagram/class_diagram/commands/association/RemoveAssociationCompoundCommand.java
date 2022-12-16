@@ -11,18 +11,17 @@
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association;
 
 import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Association;
 
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.commands.UmlRemoveNotationElementCommand;
 
 public class RemoveAssociationCompoundCommand extends CompoundCommand {
 
-   public RemoveAssociationCompoundCommand(final EditingDomain domain, final URI modelUri,
+   public RemoveAssociationCompoundCommand(final ModelContext context,
       final Association association) {
-      this.append(new RemoveAssociationSemanticCommand(domain, modelUri, association));
-      this.append(new UmlRemoveNotationElementCommand(domain, modelUri, association));
+      this.append(new RemoveAssociationSemanticCommand(context, association));
+      this.append(new UmlRemoveNotationElementCommand(context, association));
 
       // TODO Make sure to remove also all other AssociationEnds (not only the ownedByAssociation Ends!
    }

@@ -23,6 +23,7 @@ import org.eclipse.uml2.uml.Property;
 import com.eclipsesource.uml.modelserver.core.commands.noop.NoopCommand;
 import com.eclipsesource.uml.modelserver.shared.constants.SemanticKeys;
 import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 
 public class RemovePropertyContribution extends BasicCommandContribution<Command> {
 
@@ -41,7 +42,8 @@ public class RemovePropertyContribution extends BasicCommandContribution<Command
    @Override
    protected Command toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
       throws DecodingException {
-      var elementAccessor = new SemanticElementAccessor(modelUri, domain);
+      var context = ModelContext.of(modelUri, domain);
+      var elementAccessor = new SemanticElementAccessor(context);
 
       var parentSemanticElementId = command.getProperties().get(SemanticKeys.PARENT_SEMANTIC_ELEMENT_ID);
       var semanticElementId = command.getProperties().get(SemanticKeys.SEMANTIC_ELEMENT_ID);
@@ -50,7 +52,7 @@ public class RemovePropertyContribution extends BasicCommandContribution<Command
       var property = elementAccessor.getElement(semanticElementId, Property.class);
 
       if (parent.isPresent() && property.isPresent()) {
-         return new RemovePropertySemanticCommand(domain, modelUri, parent.get(), property.get());
+         return new RemovePropertySemanticCommand(context, parent.get(), property.get());
       }
 
       return new NoopCommand();

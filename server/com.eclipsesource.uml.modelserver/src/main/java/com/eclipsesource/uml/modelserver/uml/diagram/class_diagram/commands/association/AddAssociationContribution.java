@@ -23,6 +23,7 @@ import org.eclipse.uml2.uml.Type;
 import com.eclipsesource.uml.modelserver.core.commands.noop.NoopCommand;
 import com.eclipsesource.uml.modelserver.shared.constants.SemanticKeys;
 import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.constants.AssociationType;
 
 public class AddAssociationContribution extends BasicCommandContribution<Command> {
@@ -45,7 +46,8 @@ public class AddAssociationContribution extends BasicCommandContribution<Command
    @Override
    protected Command toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
       throws DecodingException {
-      var elementAccessor = new SemanticElementAccessor(modelUri, domain);
+      var context = ModelContext.of(modelUri, domain);
+      var elementAccessor = new SemanticElementAccessor(context);
 
       var sourceElementId = command.getProperties().get(SemanticKeys.SOURCE_SEMANTIC_ELEMENT_ID);
       var targetElementId = command.getProperties().get(SemanticKeys.TARGET_SEMANTIC_ELEMENT_ID);
@@ -55,7 +57,7 @@ public class AddAssociationContribution extends BasicCommandContribution<Command
       var target = elementAccessor.getElement(targetElementId, Type.class);
 
       if (source.isPresent() && target.isPresent()) {
-         return new AddAssociationCompoundCommand(domain, modelUri, source.get(), target.get(), type);
+         return new AddAssociationCompoundCommand(context, source.get(), target.get(), type);
       }
 
       return new NoopCommand();

@@ -10,10 +10,9 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association;
 
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Property;
 
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.UmlSemanticElementCommand;
 
 public class SetAssociationEndNameSemanticCommand extends UmlSemanticElementCommand {
@@ -21,9 +20,9 @@ public class SetAssociationEndNameSemanticCommand extends UmlSemanticElementComm
    protected final Property property;
    protected final String newName;
 
-   public SetAssociationEndNameSemanticCommand(final EditingDomain domain, final URI modelUri, final Property property,
+   public SetAssociationEndNameSemanticCommand(final ModelContext context, final Property property,
       final String newName) {
-      super(domain, modelUri);
+      super(context);
       this.property = property;
       this.newName = newName;
    }

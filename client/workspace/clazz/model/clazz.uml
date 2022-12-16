@@ -52,6 +52,12 @@
     </ownedAttribute>
     <ownedOperation xmi:id="_ZHNqkHyKEe2MTblvJxfFYg" name="newOperation0"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_3zwlgXyMEe2e9NcMk5GOjQ" name="NewPrimitiveType1"/>
   <packagedElement xmi:type="uml:Class" xmi:id="_q8TrgX1IEe2nU4lFDx50pw" name="NewClass4"/>
+  <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_-yTzUX1NEe2nTrZLL2kKBA" name="NewPrimitiveType1">
+    <ownedAttribute xmi:id="_AIj0kH1OEe2nTrZLL2kKBA" name="newProperty0">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_AIlCsH1OEe2nTrZLL2kKBA" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_AIlpwH1OEe2nTrZLL2kKBA" value="1"/>
+    </ownedAttribute>
+    <ownedOperation xmi:id="__uAmkH1NEe2nTrZLL2kKBA" name="newOperation0"/>
+  </packagedElement>
 </uml:Model>

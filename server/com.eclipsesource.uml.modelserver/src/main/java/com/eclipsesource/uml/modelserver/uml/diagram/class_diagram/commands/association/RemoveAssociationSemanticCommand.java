@@ -10,19 +10,18 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association;
 
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Association;
 
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.UmlSemanticElementCommand;
 
 public class RemoveAssociationSemanticCommand extends UmlSemanticElementCommand {
 
    protected final Association association;
 
-   public RemoveAssociationSemanticCommand(final EditingDomain domain, final URI modelUri,
+   public RemoveAssociationSemanticCommand(final ModelContext context,
       final Association association) {
-      super(domain, modelUri);
+      super(context);
       this.association = association;
    }
 

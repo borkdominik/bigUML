@@ -15,17 +15,18 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Interaction;
 
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.commands.UmlRemoveNotationElementCommand;
 import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.matcher.CommunicationDiagramCrossReferenceRemover;
 
 public class RemoveInteractionCompoundCommand extends CompoundCommand {
 
-   public RemoveInteractionCompoundCommand(final EditingDomain domain, final URI modelUri,
+   public RemoveInteractionCompoundCommand(final ModelContext context,
       final Interaction interaction) {
-      this.append(new RemoveInteractionSemanticCommand(domain, modelUri, interaction));
-      this.append(new UmlRemoveNotationElementCommand(domain, modelUri, interaction));
+      this.append(new RemoveInteractionSemanticCommand(context, interaction));
+      this.append(new UmlRemoveNotationElementCommand(context, interaction));
 
-      new CommunicationDiagramCrossReferenceRemover(domain, modelUri).removeCommandsFor(interaction)
+      new CommunicationDiagramCrossReferenceRemover(context).removeCommandsFor(interaction)
          .forEach(this::append);
    }
 }

@@ -10,11 +10,10 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.upackage;
 
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Package;
 import org.eclipse.uml2.uml.UMLFactory;
 
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.UmlSemanticElementCommand;
 import com.eclipsesource.uml.modelserver.uml.generator.NameGenerator;
 import com.eclipsesource.uml.modelserver.uml.generator.PackageableElementNameGenerator;
@@ -24,10 +23,10 @@ public class AddPackageSemanticCommand extends UmlSemanticElementCommand {
    protected final Package newPackage;
    protected final NameGenerator nameGenerator;
 
-   public AddPackageSemanticCommand(final EditingDomain domain, final URI modelUri) {
-      super(domain, modelUri);
+   public AddPackageSemanticCommand(final ModelContext context) {
+      super(context);
       this.newPackage = UMLFactory.eINSTANCE.createPackage();
-      this.nameGenerator = new PackageableElementNameGenerator(Package.class, modelUri, domain);
+      this.nameGenerator = new PackageableElementNameGenerator(context, Package.class);
    }
 
    @Override

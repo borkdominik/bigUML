@@ -10,11 +10,10 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.enumeration_literal;
 
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Enumeration;
 import org.eclipse.uml2.uml.EnumerationLiteral;
 
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.UmlSemanticElementCommand;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.generator.EnumerationLiteralNameGenerator;
 import com.eclipsesource.uml.modelserver.uml.generator.ContextualNameGenerator;
@@ -25,9 +24,9 @@ public class AddEnumerationLiteralSemanticCommand extends UmlSemanticElementComm
    protected final Enumeration parent;
    protected final ContextualNameGenerator<Enumeration> nameGenerator;
 
-   public AddEnumerationLiteralSemanticCommand(final EditingDomain domain, final URI modelUri,
+   public AddEnumerationLiteralSemanticCommand(final ModelContext context,
       final Enumeration parent) {
-      super(domain, modelUri);
+      super(context);
       this.parent = parent;
       this.nameGenerator = new EnumerationLiteralNameGenerator();
    }

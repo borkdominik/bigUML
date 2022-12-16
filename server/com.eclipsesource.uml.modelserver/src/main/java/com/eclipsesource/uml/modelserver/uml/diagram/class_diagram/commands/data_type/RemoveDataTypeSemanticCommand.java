@@ -10,17 +10,16 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.data_type;
 
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.DataType;
 
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.SemanticExistenceCheckedCommand;
 
 public class RemoveDataTypeSemanticCommand extends SemanticExistenceCheckedCommand<DataType> {
 
-   public RemoveDataTypeSemanticCommand(final EditingDomain domain, final URI modelUri,
+   public RemoveDataTypeSemanticCommand(final ModelContext context,
       final DataType dataType) {
-      super(domain, modelUri, dataType);
+      super(context, dataType);
    }
 
    @Override

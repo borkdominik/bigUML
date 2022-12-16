@@ -10,12 +10,11 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.lifeline;
 
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Interaction;
 import org.eclipse.uml2.uml.Lifeline;
 import org.eclipse.uml2.uml.UMLFactory;
 
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.UmlSemanticElementCommand;
 import com.eclipsesource.uml.modelserver.uml.generator.ListNameGenerator;
 import com.eclipsesource.uml.modelserver.uml.generator.NameGenerator;
@@ -26,9 +25,9 @@ public class AddLifelineSemanticCommand extends UmlSemanticElementCommand {
    protected final Interaction parentInteraction;
    protected final NameGenerator nameGenerator;
 
-   public AddLifelineSemanticCommand(final EditingDomain domain, final URI modelUri,
+   public AddLifelineSemanticCommand(final ModelContext context,
       final Interaction parentInteraction) {
-      super(domain, modelUri);
+      super(context);
       this.newLifeline = UMLFactory.eINSTANCE.createLifeline();
       this.parentInteraction = parentInteraction;
       this.nameGenerator = new ListNameGenerator(Lifeline.class, parentInteraction.getLifelines());

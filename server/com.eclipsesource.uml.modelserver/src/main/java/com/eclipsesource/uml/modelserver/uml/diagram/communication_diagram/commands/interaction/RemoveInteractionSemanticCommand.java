@@ -10,17 +10,16 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.interaction;
 
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Interaction;
 
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.SemanticExistenceCheckedCommand;
 
 public class RemoveInteractionSemanticCommand extends SemanticExistenceCheckedCommand<Interaction> {
 
-   public RemoveInteractionSemanticCommand(final EditingDomain domain, final URI modelUri,
+   public RemoveInteractionSemanticCommand(final ModelContext context,
       final Interaction interaction) {
-      super(domain, modelUri, interaction);
+      super(context, interaction);
    }
 
    @Override

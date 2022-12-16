@@ -10,17 +10,16 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.lifeline;
 
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Lifeline;
 
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.SemanticExistenceCheckedCommand;
 
 public class RemoveLifelineSemanticCommand extends SemanticExistenceCheckedCommand<Lifeline> {
 
-   public RemoveLifelineSemanticCommand(final EditingDomain domain, final URI modelUri,
+   public RemoveLifelineSemanticCommand(final ModelContext context,
       final Lifeline lifeline) {
-      super(domain, modelUri, lifeline);
+      super(context, lifeline);
    }
 
    @Override

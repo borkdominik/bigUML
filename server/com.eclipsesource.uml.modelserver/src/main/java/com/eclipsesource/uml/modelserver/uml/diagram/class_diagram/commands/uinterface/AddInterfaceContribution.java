@@ -12,6 +12,7 @@ import org.eclipse.emfcloud.modelserver.edit.command.BasicCommandContribution;
 import org.eclipse.glsp.graph.GPoint;
 
 import com.eclipsesource.uml.modelserver.shared.constants.NotationKeys;
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.utils.UmlGraphUtil;
 
 public class AddInterfaceContribution extends BasicCommandContribution<Command> {
@@ -31,11 +32,12 @@ public class AddInterfaceContribution extends BasicCommandContribution<Command> 
    @Override
    protected CompoundCommand toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
       throws DecodingException {
+      var context = ModelContext.of(modelUri, domain);
       var interfacePosition = UmlGraphUtil.getGPoint(
          command.getProperties().get(NotationKeys.POSITION_X),
          command.getProperties().get(NotationKeys.POSITION_Y));
 
-      return new AddInterfaceCompoundCommand(domain, modelUri, interfacePosition);
+      return new AddInterfaceCompoundCommand(context, interfacePosition);
    }
 
 }

@@ -11,18 +11,17 @@
 package com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.message;
 
 import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Message;
 
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.commands.UmlRemoveNotationElementCommand;
 
 public class RemoveMessageCompoundCommand extends CompoundCommand {
 
-   public RemoveMessageCompoundCommand(final EditingDomain domain, final URI modelUri,
+   public RemoveMessageCompoundCommand(final ModelContext context,
       final Message message) {
-      this.append(new RemoveMessageSemanticCommand(domain, modelUri, message));
-      this.append(new UmlRemoveNotationElementCommand(domain, modelUri, message));
+      this.append(new RemoveMessageSemanticCommand(context, message));
+      this.append(new UmlRemoveNotationElementCommand(context, message));
    }
 
 }

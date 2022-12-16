@@ -10,12 +10,11 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.primitive_type;
 
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.DataType;
 import org.eclipse.uml2.uml.PrimitiveType;
 import org.eclipse.uml2.uml.UMLFactory;
 
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.UmlSemanticElementCommand;
 import com.eclipsesource.uml.modelserver.uml.generator.NameGenerator;
 import com.eclipsesource.uml.modelserver.uml.generator.PackageableElementNameGenerator;
@@ -25,10 +24,10 @@ public class AddPrimitiveTypeSemanticCommand extends UmlSemanticElementCommand {
    protected final PrimitiveType newPrimitiveType;
    protected final NameGenerator nameGenerator;
 
-   public AddPrimitiveTypeSemanticCommand(final EditingDomain domain, final URI modelUri) {
-      super(domain, modelUri);
+   public AddPrimitiveTypeSemanticCommand(final ModelContext context) {
+      super(context);
       this.newPrimitiveType = UMLFactory.eINSTANCE.createPrimitiveType();
-      this.nameGenerator = new PackageableElementNameGenerator(PrimitiveType.class, modelUri, domain);
+      this.nameGenerator = new PackageableElementNameGenerator(context, PrimitiveType.class);
    }
 
    @Override

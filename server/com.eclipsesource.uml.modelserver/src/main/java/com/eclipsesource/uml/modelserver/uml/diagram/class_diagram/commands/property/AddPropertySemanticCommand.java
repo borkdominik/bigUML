@@ -10,12 +10,11 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property;
 
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.AttributeOwner;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Type;
 
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.UmlSemanticElementCommand;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.generator.PropertyNameGenerator;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.util.ClassSemanticCommandUtil;
@@ -28,11 +27,11 @@ public class AddPropertySemanticCommand extends UmlSemanticElementCommand {
    protected final Type defaultType;
    protected final ContextualNameGenerator<AttributeOwner> nameGenerator;
 
-   public AddPropertySemanticCommand(final EditingDomain domain, final URI modelUri,
+   public AddPropertySemanticCommand(final ModelContext context,
       final AttributeOwner parent) {
-      super(domain, modelUri);
+      super(context);
       this.parent = parent;
-      this.defaultType = ClassSemanticCommandUtil.getType(domain, "String");
+      this.defaultType = ClassSemanticCommandUtil.getType(context.domain, "String");
       this.nameGenerator = new PropertyNameGenerator();
    }
 

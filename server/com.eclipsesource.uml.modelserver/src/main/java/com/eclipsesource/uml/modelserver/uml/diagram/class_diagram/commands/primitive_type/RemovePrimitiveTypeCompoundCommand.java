@@ -11,21 +11,20 @@
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.primitive_type;
 
 import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.PrimitiveType;
 
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.commands.UmlRemoveNotationElementCommand;
 import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.matcher.CommunicationDiagramCrossReferenceRemover;
 
 public class RemovePrimitiveTypeCompoundCommand extends CompoundCommand {
 
-   public RemovePrimitiveTypeCompoundCommand(final EditingDomain domain, final URI modelUri,
+   public RemovePrimitiveTypeCompoundCommand(final ModelContext context,
       final PrimitiveType primitiveType) {
-      this.append(new RemovePrimitiveTypeSemanticCommand(domain, modelUri, primitiveType));
-      this.append(new UmlRemoveNotationElementCommand(domain, modelUri, primitiveType));
+      this.append(new RemovePrimitiveTypeSemanticCommand(context, primitiveType));
+      this.append(new UmlRemoveNotationElementCommand(context, primitiveType));
 
-      new CommunicationDiagramCrossReferenceRemover(domain, modelUri).removeCommandsFor(primitiveType)
+      new CommunicationDiagramCrossReferenceRemover(context).removeCommandsFor(primitiveType)
          .forEach(this::append);
    }
 }

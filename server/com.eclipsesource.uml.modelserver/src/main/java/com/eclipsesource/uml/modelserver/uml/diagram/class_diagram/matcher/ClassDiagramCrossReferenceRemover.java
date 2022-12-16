@@ -13,12 +13,11 @@ package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.matcher;
 import java.util.List;
 
 import org.eclipse.emf.common.command.Command;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Model;
 
 import com.eclipsesource.uml.modelserver.shared.extension.CrossReferenceMatcher;
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.utils.UmlSemanticUtil;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association.RemoveAssociationCompoundCommand;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.generalization.RemoveGeneralizationCompoundCommand;
@@ -28,20 +27,20 @@ public class ClassDiagramCrossReferenceRemover {
    protected final Model model;
    protected final CrossReferenceMatcher<Command> matcher;
 
-   public ClassDiagramCrossReferenceRemover(final EditingDomain domain, final URI modelUri) {
+   public ClassDiagramCrossReferenceRemover(final ModelContext context) {
       super();
 
-      model = UmlSemanticUtil.getModel(modelUri, domain);
+      model = UmlSemanticUtil.getModel(context);
       matcher = new CrossReferenceMatcher.Builder<Command>()
          .match((setting, interest) -> PropertyMatcher
             .ofOwnedAttributeTypeUsage(setting, interest)
-            .map(property -> new SetPropertyTypeSemanticCommand(domain, modelUri, property, null)))
+            .map(property -> new SetPropertyTypeSemanticCommand(context, property, null)))
          .match((setting, interest) -> PropertyMatcher
             .ofOwnedEndUsage(setting, interest)
-            .map(property -> new RemoveAssociationCompoundCommand(domain, modelUri, property.getAssociation())))
+            .map(property -> new RemoveAssociationCompoundCommand(context, property.getAssociation())))
          .match((setting, interest) -> GeneralizationMatcher
             .ofUsage(setting, interest)
-            .map(generalization -> new RemoveGeneralizationCompoundCommand(domain, modelUri, generalization)))
+            .map(generalization -> new RemoveGeneralizationCompoundCommand(context, generalization)))
          .build();
    }
 

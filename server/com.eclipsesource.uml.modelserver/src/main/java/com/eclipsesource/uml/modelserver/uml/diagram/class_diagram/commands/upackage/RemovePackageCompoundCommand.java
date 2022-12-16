@@ -11,21 +11,20 @@
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.upackage;
 
 import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Package;
 
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.commands.UmlRemoveNotationElementCommand;
 import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.matcher.CommunicationDiagramCrossReferenceRemover;
 
 public class RemovePackageCompoundCommand extends CompoundCommand {
 
-   public RemovePackageCompoundCommand(final EditingDomain domain, final URI modelUri,
+   public RemovePackageCompoundCommand(final ModelContext context,
       final Package upackage) {
-      this.append(new RemovePackageSemanticCommand(domain, modelUri, upackage));
-      this.append(new UmlRemoveNotationElementCommand(domain, modelUri, upackage));
+      this.append(new RemovePackageSemanticCommand(context, upackage));
+      this.append(new UmlRemoveNotationElementCommand(context, upackage));
 
-      new CommunicationDiagramCrossReferenceRemover(domain, modelUri).removeCommandsFor(upackage)
+      new CommunicationDiagramCrossReferenceRemover(context).removeCommandsFor(upackage)
          .forEach(this::append);
    }
 }

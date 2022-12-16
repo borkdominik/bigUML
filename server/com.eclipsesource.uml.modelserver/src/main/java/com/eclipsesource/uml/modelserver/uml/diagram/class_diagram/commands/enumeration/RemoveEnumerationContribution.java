@@ -13,6 +13,7 @@ import org.eclipse.uml2.uml.Enumeration;
 import com.eclipsesource.uml.modelserver.core.commands.noop.NoopCommand;
 import com.eclipsesource.uml.modelserver.shared.constants.SemanticKeys;
 import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 
 public class RemoveEnumerationContribution extends BasicCommandContribution<Command> {
 
@@ -30,14 +31,15 @@ public class RemoveEnumerationContribution extends BasicCommandContribution<Comm
    @Override
    protected Command toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
       throws DecodingException {
-      var elementAccessor = new SemanticElementAccessor(modelUri, domain);
+      var context = ModelContext.of(modelUri, domain);
+      var elementAccessor = new SemanticElementAccessor(context);
 
       var semanticElementId = command.getProperties().get(SemanticKeys.SEMANTIC_ELEMENT_ID);
 
       var enumeration = elementAccessor.getElement(semanticElementId, Enumeration.class);
 
       return enumeration
-         .<Command> map(e -> new RemoveEnumerationCompoundCommand(domain, modelUri, e))
+         .<Command> map(e -> new RemoveEnumerationCompoundCommand(context, e))
          .orElse(new NoopCommand());
    }
 

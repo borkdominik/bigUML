@@ -10,11 +10,10 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.data_type;
 
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.DataType;
 import org.eclipse.uml2.uml.UMLFactory;
 
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.UmlSemanticElementCommand;
 import com.eclipsesource.uml.modelserver.uml.generator.NameGenerator;
 import com.eclipsesource.uml.modelserver.uml.generator.PackageableElementNameGenerator;
@@ -24,10 +23,10 @@ public class AddDataTypeSemanticCommand extends UmlSemanticElementCommand {
    protected final DataType newDataType;
    protected final NameGenerator nameGenerator;
 
-   public AddDataTypeSemanticCommand(final EditingDomain domain, final URI modelUri) {
-      super(domain, modelUri);
+   public AddDataTypeSemanticCommand(final ModelContext context) {
+      super(context);
       this.newDataType = UMLFactory.eINSTANCE.createDataType();
-      this.nameGenerator = new PackageableElementNameGenerator(DataType.class, modelUri, domain);
+      this.nameGenerator = new PackageableElementNameGenerator(context, DataType.class);
    }
 
    @Override

@@ -15,16 +15,17 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Lifeline;
 
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.commands.UmlRemoveNotationElementCommand;
 import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.matcher.CommunicationDiagramCrossReferenceRemover;
 
 public class RemoveLifelineCompoundCommand extends CompoundCommand {
-   public RemoveLifelineCompoundCommand(final EditingDomain domain, final URI modelUri,
+   public RemoveLifelineCompoundCommand(final ModelContext context,
       final Lifeline lifeline) {
-      this.append(new RemoveLifelineSemanticCommand(domain, modelUri, lifeline));
-      this.append(new UmlRemoveNotationElementCommand(domain, modelUri, lifeline));
+      this.append(new RemoveLifelineSemanticCommand(context, lifeline));
+      this.append(new UmlRemoveNotationElementCommand(context, lifeline));
 
-      new CommunicationDiagramCrossReferenceRemover(domain, modelUri)
+      new CommunicationDiagramCrossReferenceRemover(context)
          .removeCommandsFor(lifeline)
          .forEach(this::append);
    }

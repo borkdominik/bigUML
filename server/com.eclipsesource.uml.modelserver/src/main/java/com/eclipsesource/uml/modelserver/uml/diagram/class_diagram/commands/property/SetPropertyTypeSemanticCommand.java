@@ -10,11 +10,10 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property;
 
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Type;
 
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.UmlSemanticElementCommand;
 
 public class SetPropertyTypeSemanticCommand extends UmlSemanticElementCommand {
@@ -22,10 +21,10 @@ public class SetPropertyTypeSemanticCommand extends UmlSemanticElementCommand {
    protected Property property;
    protected Type newType;
 
-   public SetPropertyTypeSemanticCommand(final EditingDomain domain, final URI modelUri,
+   public SetPropertyTypeSemanticCommand(final ModelContext context,
       final Property property,
       final Type newType) {
-      super(domain, modelUri);
+      super(context);
       this.property = property;
       this.newType = newType;
    }

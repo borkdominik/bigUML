@@ -23,6 +23,7 @@ import org.eclipse.uml2.uml.Lifeline;
 import com.eclipsesource.uml.modelserver.core.commands.noop.NoopCommand;
 import com.eclipsesource.uml.modelserver.shared.constants.SemanticKeys;
 import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 
 public class RemoveLifelineContribution extends BasicCommandContribution<Command> {
 
@@ -41,14 +42,15 @@ public class RemoveLifelineContribution extends BasicCommandContribution<Command
    @Override
    protected Command toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
       throws DecodingException {
-      var elementAccessor = new SemanticElementAccessor(modelUri, domain);
+      var context = ModelContext.of(modelUri, domain);
+      var elementAccessor = new SemanticElementAccessor(context);
 
       var semanticElementId = command.getProperties().get(SemanticKeys.SEMANTIC_ELEMENT_ID);
 
       var lifeline = elementAccessor.getElement(semanticElementId, Lifeline.class);
 
       return lifeline
-         .<Command> map(l -> new RemoveLifelineCompoundCommand(domain, modelUri, l))
+         .<Command> map(l -> new RemoveLifelineCompoundCommand(context, l))
          .orElse(new NoopCommand());
    }
 

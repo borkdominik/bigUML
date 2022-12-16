@@ -10,18 +10,17 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uclass;
 
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Class;
 
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.UmlSemanticElementCommand;
 
 public class RemoveClassSemanticCommand extends UmlSemanticElementCommand {
 
    protected final Class classToRemove;
 
-   public RemoveClassSemanticCommand(final EditingDomain domain, final URI modelUri, final Class classToRemove) {
-      super(domain, modelUri);
+   public RemoveClassSemanticCommand(final ModelContext context, final Class classToRemove) {
+      super(context);
       this.classToRemove = classToRemove;
    }
 

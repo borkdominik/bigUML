@@ -23,6 +23,7 @@ import org.eclipse.uml2.uml.PrimitiveType;
 import com.eclipsesource.uml.modelserver.core.commands.noop.NoopCommand;
 import com.eclipsesource.uml.modelserver.shared.constants.SemanticKeys;
 import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 
 public class RemovePrimitiveTypeContribution extends BasicCommandContribution<Command> {
 
@@ -40,14 +41,15 @@ public class RemovePrimitiveTypeContribution extends BasicCommandContribution<Co
    @Override
    protected Command toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
       throws DecodingException {
-      var elementAccessor = new SemanticElementAccessor(modelUri, domain);
+      var context = ModelContext.of(modelUri, domain);
+      var elementAccessor = new SemanticElementAccessor(context);
 
       var semanticElementId = command.getProperties().get(SemanticKeys.SEMANTIC_ELEMENT_ID);
 
       var primitiveType = elementAccessor.getElement(semanticElementId, PrimitiveType.class);
 
       return primitiveType
-         .<Command> map(d -> new RemovePrimitiveTypeCompoundCommand(domain, modelUri, d))
+         .<Command> map(d -> new RemovePrimitiveTypeCompoundCommand(context, d))
          .orElse(new NoopCommand());
    }
 

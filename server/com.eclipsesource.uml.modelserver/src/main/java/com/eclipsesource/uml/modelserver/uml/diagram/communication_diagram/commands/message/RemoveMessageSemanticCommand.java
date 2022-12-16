@@ -10,18 +10,17 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.message;
 
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Message;
 import org.eclipse.uml2.uml.MessageOccurrenceSpecification;
 
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.SemanticExistenceCheckedCommand;
 
 public class RemoveMessageSemanticCommand extends SemanticExistenceCheckedCommand<Message> {
 
-   public RemoveMessageSemanticCommand(final EditingDomain domain, final URI modelUri,
+   public RemoveMessageSemanticCommand(final ModelContext context,
       final Message message) {
-      super(domain, modelUri, message);
+      super(context, message);
    }
 
    @Override

@@ -10,10 +10,9 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.message;
 
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Message;
 
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.UmlSemanticElementCommand;
 
 public class SetMessageNameSemanticCommand extends UmlSemanticElementCommand {
@@ -21,10 +20,10 @@ public class SetMessageNameSemanticCommand extends UmlSemanticElementCommand {
    protected final Message message;
    protected final String newName;
 
-   public SetMessageNameSemanticCommand(final EditingDomain domain, final URI modelUri,
+   public SetMessageNameSemanticCommand(final ModelContext context,
       final Message message,
       final String newName) {
-      super(domain, modelUri);
+      super(context);
       this.message = message;
       this.newName = newName;
    }

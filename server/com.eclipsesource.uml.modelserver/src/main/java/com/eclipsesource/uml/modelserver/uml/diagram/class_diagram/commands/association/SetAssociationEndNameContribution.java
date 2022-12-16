@@ -22,6 +22,7 @@ import org.eclipse.uml2.uml.Property;
 import com.eclipsesource.uml.modelserver.core.commands.noop.NoopCommand;
 import com.eclipsesource.uml.modelserver.shared.constants.SemanticKeys;
 import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 
 public class SetAssociationEndNameContribution extends BasicCommandContribution<Command> {
 
@@ -39,7 +40,8 @@ public class SetAssociationEndNameContribution extends BasicCommandContribution<
    @Override
    protected Command toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
       throws DecodingException {
-      var elementAccessor = new SemanticElementAccessor(modelUri, domain);
+      var context = ModelContext.of(modelUri, domain);
+      var elementAccessor = new SemanticElementAccessor(context);
 
       var semanticElementId = command.getProperties().get(SemanticKeys.SEMANTIC_ELEMENT_ID);
       var newName = command.getProperties().get(NEW_NAME);
@@ -47,7 +49,7 @@ public class SetAssociationEndNameContribution extends BasicCommandContribution<
       var property = elementAccessor.getElement(semanticElementId, Property.class);
 
       return property
-         .<Command> map(p -> new SetAssociationEndNameSemanticCommand(domain, modelUri, p, newName))
+         .<Command> map(p -> new SetAssociationEndNameSemanticCommand(context, p, newName))
          .orElse(new NoopCommand());
    }
 

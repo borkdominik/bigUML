@@ -11,21 +11,20 @@
 package com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.message;
 
 import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Lifeline;
 
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.commands.UmlAddEdgeCommand;
 
 public class AddMessageCompoundCommand extends CompoundCommand {
 
-   public AddMessageCompoundCommand(final EditingDomain domain, final URI modelUri,
+   public AddMessageCompoundCommand(final ModelContext context,
       final Lifeline source, final Lifeline target) {
 
-      var command = new AddMessageSemanticCommand(domain, modelUri, source, target);
+      var command = new AddMessageSemanticCommand(context, source, target);
 
       this.append(command);
-      this.append(new UmlAddEdgeCommand(domain, modelUri, () -> command.getNewMessage()));
+      this.append(new UmlAddEdgeCommand(context, () -> command.getNewMessage()));
    }
 
 }

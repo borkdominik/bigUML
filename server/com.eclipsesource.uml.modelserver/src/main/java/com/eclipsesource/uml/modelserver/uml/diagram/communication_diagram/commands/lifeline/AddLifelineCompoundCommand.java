@@ -11,8 +11,6 @@
 package com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.lifeline;
 
 import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.impl.GPointImpl;
 import org.eclipse.glsp.graph.util.GraphUtil;
@@ -21,21 +19,21 @@ import org.eclipse.uml2.uml.Interaction;
 
 import com.eclipsesource.uml.modelserver.shared.extension.NotationElementAccessor;
 import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.commands.UmlAddShapeCommand;
 
 public class AddLifelineCompoundCommand extends CompoundCommand {
    private final NotationElementAccessor notationElementAccessor;
 
-   public AddLifelineCompoundCommand(final EditingDomain domain, final URI modelUri,
+   public AddLifelineCompoundCommand(final ModelContext context,
       final GPoint position, final Interaction parentInteraction) {
-      this.notationElementAccessor = new NotationElementAccessor(modelUri, domain);
+      this.notationElementAccessor = new NotationElementAccessor(context);
 
-      var command = new AddLifelineSemanticCommand(domain, modelUri, parentInteraction);
+      var command = new AddLifelineSemanticCommand(context, parentInteraction);
       var destination = shift(parentInteraction, position);
 
       this.append(command);
-      this.append(new UmlAddShapeCommand(domain, modelUri, destination, GraphUtil.dimension(160, 50),
-         () -> command.getNewLifeline()));
+      this.append(new UmlAddShapeCommand(context, command::getNewLifeline, destination, GraphUtil.dimension(160, 50)));
    }
 
    protected GPoint shift(final Interaction interaction, final GPoint mousePosition) {

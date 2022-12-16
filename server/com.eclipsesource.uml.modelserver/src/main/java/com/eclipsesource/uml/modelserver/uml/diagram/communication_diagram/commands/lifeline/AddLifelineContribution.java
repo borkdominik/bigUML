@@ -25,6 +25,7 @@ import com.eclipsesource.uml.modelserver.core.commands.noop.NoopCommand;
 import com.eclipsesource.uml.modelserver.shared.constants.NotationKeys;
 import com.eclipsesource.uml.modelserver.shared.constants.SemanticKeys;
 import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.utils.UmlGraphUtil;
 
 public class AddLifelineContribution extends BasicCommandContribution<Command> {
@@ -48,7 +49,8 @@ public class AddLifelineContribution extends BasicCommandContribution<Command> {
    @Override
    protected Command toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
       throws DecodingException {
-      var elementAccessor = new SemanticElementAccessor(modelUri, domain);
+      var context = ModelContext.of(modelUri, domain);
+      var elementAccessor = new SemanticElementAccessor(context);
 
       var position = UmlGraphUtil.getGPoint(
          command.getProperties().get(NotationKeys.POSITION_X),
@@ -59,7 +61,7 @@ public class AddLifelineContribution extends BasicCommandContribution<Command> {
       var parentInteraction = elementAccessor.getElement(parentInteractionsemanticElementId, Interaction.class);
 
       return parentInteraction
-         .<Command> map(p -> new AddLifelineCompoundCommand(domain, modelUri, position, p))
+         .<Command> map(p -> new AddLifelineCompoundCommand(context, position, p))
          .orElse(new NoopCommand());
    }
 

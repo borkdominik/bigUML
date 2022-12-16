@@ -10,21 +10,20 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.common_diagram.commands;
 
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.NamedElement;
 
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.UmlSemanticElementCommand;
 
 public class RenameElementSemanticCommand extends UmlSemanticElementCommand {
 
-   protected NamedElement element;
-   protected String newName;
+   protected final NamedElement element;
+   protected final String newName;
 
-   public RenameElementSemanticCommand(final EditingDomain domain, final URI modelUri,
+   public RenameElementSemanticCommand(final ModelContext context,
       final NamedElement element,
       final String newName) {
-      super(domain, modelUri);
+      super(context);
       this.element = element;
       this.newName = newName;
    }

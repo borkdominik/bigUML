@@ -13,6 +13,7 @@ import org.eclipse.uml2.uml.Generalization;
 import com.eclipsesource.uml.modelserver.core.commands.noop.NoopCommand;
 import com.eclipsesource.uml.modelserver.shared.constants.SemanticKeys;
 import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 
 public class RemoveGeneralizationContribution extends BasicCommandContribution<Command> {
 
@@ -30,14 +31,15 @@ public class RemoveGeneralizationContribution extends BasicCommandContribution<C
    @Override
    protected Command toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
       throws DecodingException {
-      var elementAccessor = new SemanticElementAccessor(modelUri, domain);
+      var context = ModelContext.of(modelUri, domain);
+      var elementAccessor = new SemanticElementAccessor(context);
 
       var semanticElementId = command.getProperties().get(SemanticKeys.SEMANTIC_ELEMENT_ID);
 
       var generalization = elementAccessor.getElement(semanticElementId, Generalization.class);
 
       return generalization
-         .<Command> map(g -> new RemoveGeneralizationCompoundCommand(domain, modelUri, g))
+         .<Command> map(g -> new RemoveGeneralizationCompoundCommand(context, g))
          .orElse(new NoopCommand());
    }
 

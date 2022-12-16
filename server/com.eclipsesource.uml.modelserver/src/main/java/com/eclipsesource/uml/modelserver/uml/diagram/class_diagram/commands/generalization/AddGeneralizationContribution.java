@@ -12,6 +12,7 @@ import org.eclipse.uml2.uml.Classifier;
 
 import com.eclipsesource.uml.modelserver.core.commands.noop.NoopCommand;
 import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 
 public class AddGeneralizationContribution extends BasicCommandContribution<Command> {
 
@@ -32,7 +33,8 @@ public class AddGeneralizationContribution extends BasicCommandContribution<Comm
    @Override
    protected Command toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
       throws DecodingException {
-      var elementAccessor = new SemanticElementAccessor(modelUri, domain);
+      var context = ModelContext.of(modelUri, domain);
+      var elementAccessor = new SemanticElementAccessor(context);
 
       var generalClassElementId = command.getProperties().get(GENERAL_CLASS_ELEMENT_ID);
       var specificClasElementId = command.getProperties().get(SPECIFIC_CLASS_ELEMENT_ID);
@@ -41,7 +43,7 @@ public class AddGeneralizationContribution extends BasicCommandContribution<Comm
       var specific = elementAccessor.getElement(specificClasElementId, Classifier.class);
 
       if (general.isPresent() && specific.isPresent()) {
-         return new AddGeneralizationCompoundCommand(domain, modelUri, specific.get(), general.get());
+         return new AddGeneralizationCompoundCommand(context, specific.get(), general.get());
       }
 
       return new NoopCommand();

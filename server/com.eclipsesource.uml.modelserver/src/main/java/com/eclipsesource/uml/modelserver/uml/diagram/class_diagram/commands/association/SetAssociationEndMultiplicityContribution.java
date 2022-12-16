@@ -22,6 +22,7 @@ import org.eclipse.uml2.uml.Property;
 import com.eclipsesource.uml.modelserver.core.commands.noop.NoopCommand;
 import com.eclipsesource.uml.modelserver.shared.constants.SemanticKeys;
 import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.util.ClassSemanticCommandUtil;
 
 public class SetAssociationEndMultiplicityContribution extends BasicCommandContribution<Command> {
@@ -42,7 +43,8 @@ public class SetAssociationEndMultiplicityContribution extends BasicCommandContr
    @Override
    protected Command toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
       throws DecodingException {
-      var elementAccessor = new SemanticElementAccessor(modelUri, domain);
+      var context = ModelContext.of(modelUri, domain);
+      var elementAccessor = new SemanticElementAccessor(context);
 
       var semanticElementId = command.getProperties().get(SemanticKeys.SEMANTIC_ELEMENT_ID);
       int newLowerBound = ClassSemanticCommandUtil.getLower(command.getProperties().get(NEW_BOUNDS));
@@ -51,7 +53,7 @@ public class SetAssociationEndMultiplicityContribution extends BasicCommandContr
       var property = elementAccessor.getElement(semanticElementId, Property.class);
 
       return property
-         .<Command> map(p -> new SetAssociationEndMultiplicitySemanticCommand(domain, modelUri, p, newLowerBound,
+         .<Command> map(p -> new SetAssociationEndMultiplicitySemanticCommand(context, p, newLowerBound,
             newUpperBound))
          .orElse(new NoopCommand());
    }

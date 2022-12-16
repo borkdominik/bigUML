@@ -23,6 +23,7 @@ import org.eclipse.uml2.uml.Interaction;
 import com.eclipsesource.uml.modelserver.core.commands.noop.NoopCommand;
 import com.eclipsesource.uml.modelserver.shared.constants.SemanticKeys;
 import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 
 public class RemoveInteractionContribution extends BasicCommandContribution<Command> {
 
@@ -40,14 +41,15 @@ public class RemoveInteractionContribution extends BasicCommandContribution<Comm
    @Override
    protected Command toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
       throws DecodingException {
-      var elementAccessor = new SemanticElementAccessor(modelUri, domain);
+      var context = ModelContext.of(modelUri, domain);
+      var elementAccessor = new SemanticElementAccessor(context);
 
       var semanticElementId = command.getProperties().get(SemanticKeys.SEMANTIC_ELEMENT_ID);
 
       var interaction = elementAccessor.getElement(semanticElementId, Interaction.class);
 
       return interaction
-         .<Command> map(i -> new RemoveInteractionCompoundCommand(domain, modelUri, i))
+         .<Command> map(i -> new RemoveInteractionCompoundCommand(context, i))
          .orElse(new NoopCommand());
    }
 

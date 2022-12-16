@@ -31,7 +31,7 @@ public class UmlAddEdgeCommand extends UmlNotationElementCommand {
       this(ModelContext.of(modelUri, domain), supplier);
    }
 
-   private UmlAddEdgeCommand(final ModelContext context, final Supplier<? extends EObject> semanticElementSupplier) {
+   public UmlAddEdgeCommand(final ModelContext context, final Supplier<? extends EObject> semanticElementSupplier) {
       super(context);
       this.semanticElementSupplier = semanticElementSupplier;
    }

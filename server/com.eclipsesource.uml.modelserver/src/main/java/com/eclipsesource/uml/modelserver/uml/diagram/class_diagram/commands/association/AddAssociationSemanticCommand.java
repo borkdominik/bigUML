@@ -10,12 +10,11 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association;
 
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Association;
 import org.eclipse.uml2.uml.Type;
 import org.eclipse.uml2.uml.UMLFactory;
 
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.UmlSemanticElementCommand;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.constants.AssociationType;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.generator.AssociationEndNameGenerator;
@@ -29,9 +28,9 @@ public class AddAssociationSemanticCommand extends UmlSemanticElementCommand {
    protected final AssociationType type;
    protected final ContextualNameGenerator<Type> nameGenerator;
 
-   public AddAssociationSemanticCommand(final EditingDomain domain, final URI modelUri,
+   public AddAssociationSemanticCommand(final ModelContext context,
       final Type source, final Type target, final AssociationType type) {
-      super(domain, modelUri);
+      super(context);
       this.newAssociation = UMLFactory.eINSTANCE.createAssociation();
       this.source = source;
       this.target = target;

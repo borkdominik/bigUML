@@ -10,17 +10,16 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.upackage;
 
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Package;
 
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.SemanticExistenceCheckedCommand;
 
 public class RemovePackageSemanticCommand extends SemanticExistenceCheckedCommand<Package> {
 
-   public RemovePackageSemanticCommand(final EditingDomain domain, final URI modelUri,
+   public RemovePackageSemanticCommand(final ModelContext context,
       final Package upackage) {
-      super(domain, modelUri, upackage);
+      super(context, upackage);
    }
 
    @Override

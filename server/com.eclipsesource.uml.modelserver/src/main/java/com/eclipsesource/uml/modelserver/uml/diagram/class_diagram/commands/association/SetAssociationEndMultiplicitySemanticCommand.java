@@ -10,10 +10,9 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association;
 
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Property;
 
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.UmlSemanticElementCommand;
 
 public class SetAssociationEndMultiplicitySemanticCommand extends UmlSemanticElementCommand {
@@ -22,9 +21,9 @@ public class SetAssociationEndMultiplicitySemanticCommand extends UmlSemanticEle
    protected final int newLowerBound;
    protected final int newUpperBound;
 
-   public SetAssociationEndMultiplicitySemanticCommand(final EditingDomain domain, final URI modelUri,
+   public SetAssociationEndMultiplicitySemanticCommand(final ModelContext context,
       final Property property, final int newLowerBound, final int newUpperBound) {
-      super(domain, modelUri);
+      super(context);
       this.property = property;
       this.newLowerBound = newLowerBound;
       this.newUpperBound = newUpperBound;

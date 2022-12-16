@@ -10,10 +10,9 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property;
 
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Property;
 
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.UmlSemanticElementCommand;
 
 public class SetPropertyBoundsSemanticCommand extends UmlSemanticElementCommand {
@@ -22,10 +21,10 @@ public class SetPropertyBoundsSemanticCommand extends UmlSemanticElementCommand 
    protected final int newLowerBound;
    protected final int newUpperBound;
 
-   public SetPropertyBoundsSemanticCommand(final EditingDomain domain, final URI modelUri,
+   public SetPropertyBoundsSemanticCommand(final ModelContext context,
       final Property property,
       final int newLowerBound, final int newUpperBound) {
-      super(domain, modelUri);
+      super(context);
       this.property = property;
       this.newLowerBound = newLowerBound;
       this.newUpperBound = newUpperBound;

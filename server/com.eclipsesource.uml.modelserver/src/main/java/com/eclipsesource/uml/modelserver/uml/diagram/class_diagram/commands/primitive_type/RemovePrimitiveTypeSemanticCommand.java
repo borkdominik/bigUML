@@ -10,18 +10,17 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.primitive_type;
 
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.DataType;
 import org.eclipse.uml2.uml.PrimitiveType;
 
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.SemanticExistenceCheckedCommand;
 
 public class RemovePrimitiveTypeSemanticCommand extends SemanticExistenceCheckedCommand<DataType> {
 
-   public RemovePrimitiveTypeSemanticCommand(final EditingDomain domain, final URI modelUri,
+   public RemovePrimitiveTypeSemanticCommand(final ModelContext context,
       final PrimitiveType primitiveType) {
-      super(domain, modelUri, primitiveType);
+      super(context, primitiveType);
    }
 
    @Override

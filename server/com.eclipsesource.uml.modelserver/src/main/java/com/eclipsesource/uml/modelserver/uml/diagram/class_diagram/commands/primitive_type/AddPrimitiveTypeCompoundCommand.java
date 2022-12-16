@@ -11,20 +11,19 @@
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.primitive_type;
 
 import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.util.GraphUtil;
 
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.commands.UmlAddShapeCommand;
 
 public class AddPrimitiveTypeCompoundCommand extends CompoundCommand {
 
-   public AddPrimitiveTypeCompoundCommand(final EditingDomain domain, final URI modelUri, final GPoint position) {
-      var command = new AddPrimitiveTypeSemanticCommand(domain, modelUri);
+   public AddPrimitiveTypeCompoundCommand(final ModelContext context, final GPoint position) {
+      var command = new AddPrimitiveTypeSemanticCommand(context);
 
       this.append(command);
-      this.append(new UmlAddShapeCommand(domain, modelUri, position, GraphUtil.dimension(160, 50),
-         () -> command.getNewPrimitiveType()));
+      this
+         .append(new UmlAddShapeCommand(context, command::getNewPrimitiveType, position, GraphUtil.dimension(160, 50)));
    }
 }

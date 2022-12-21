@@ -20,7 +20,6 @@ import com.eclipsesource.uml.modelserver.uml.generator.PackageableElementNameGen
 
 public class AddClassSemanticCommand extends CreateSemanticChildCommand<Package, Class> {
 
-   protected Class createdSemanticElement;
    protected final Boolean isAbstract;
    protected final NameGenerator nameGenerator;
 
@@ -32,11 +31,8 @@ public class AddClassSemanticCommand extends CreateSemanticChildCommand<Package,
    }
 
    @Override
-   protected void doExecute() {
-      createdSemanticElement = this.parent.createOwnedClass(nameGenerator.newName(), isAbstract);
+   protected Class createSemanticElement(final Package parent) {
+      return parent.createOwnedClass(nameGenerator.newName(), isAbstract);
    }
-
-   @Override
-   public Class getCreatedSemanticElement() { return createdSemanticElement; }
 
 }

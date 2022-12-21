@@ -27,7 +27,7 @@ public class AddClassCompoundCommand extends CompoundCommand {
       var command = new AddClassSemanticCommand(context, parent, isAbstract);
       this.append(command);
       this.append(
-         new UmlAddShapeCommand(context, command::getCreatedSemanticElement, position, GraphUtil.dimension(160, 50)));
+         new UmlAddShapeCommand(context, command::getSemanticElement, position, GraphUtil.dimension(160, 50)));
    }
 
 }

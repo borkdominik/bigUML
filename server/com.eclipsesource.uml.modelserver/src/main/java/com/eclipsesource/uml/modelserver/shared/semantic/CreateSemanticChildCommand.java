@@ -12,8 +12,10 @@ package com.eclipsesource.uml.modelserver.shared.semantic;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 
-public abstract class CreateSemanticChildCommand<TParent, TChild> extends UmlSemanticElementCommand {
+public abstract class CreateSemanticChildCommand<TParent, TChild> extends UmlSemanticElementCommand
+   implements SemanticElementSupplier<TChild> {
 
+   protected TChild newSemanticElement;
    protected final TParent parent;
 
    public CreateSemanticChildCommand(final ModelContext context, final TParent parent) {
@@ -21,5 +23,14 @@ public abstract class CreateSemanticChildCommand<TParent, TChild> extends UmlSem
       this.parent = parent;
    }
 
-   abstract public TChild getCreatedSemanticElement();
+   @Override
+   protected void doExecute() {
+      newSemanticElement = createSemanticElement(parent);
+   }
+
+   @Override
+   public TChild getSemanticElement() { return newSemanticElement; }
+
+   abstract protected TChild createSemanticElement(TParent parent);
+
 }

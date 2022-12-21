@@ -11,30 +11,30 @@
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.data_type;
 
 import org.eclipse.uml2.uml.DataType;
+import org.eclipse.uml2.uml.Package;
 import org.eclipse.uml2.uml.UMLFactory;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
-import com.eclipsesource.uml.modelserver.shared.semantic.UmlSemanticElementCommand;
+import com.eclipsesource.uml.modelserver.shared.semantic.CreateSemanticChildCommand;
 import com.eclipsesource.uml.modelserver.uml.generator.NameGenerator;
 import com.eclipsesource.uml.modelserver.uml.generator.PackageableElementNameGenerator;
 
-public class AddDataTypeSemanticCommand extends UmlSemanticElementCommand {
+public class AddDataTypeSemanticCommand extends CreateSemanticChildCommand<Package, DataType> {
 
-   protected final DataType newDataType;
    protected final NameGenerator nameGenerator;
 
-   public AddDataTypeSemanticCommand(final ModelContext context) {
-      super(context);
-      this.newDataType = UMLFactory.eINSTANCE.createDataType();
+   public AddDataTypeSemanticCommand(final ModelContext context, final Package parent) {
+      super(context, parent);
       this.nameGenerator = new PackageableElementNameGenerator(context, DataType.class);
    }
 
    @Override
-   protected void doExecute() {
-      newDataType.setName(nameGenerator.newName());
-      model.getPackagedElements().add(newDataType);
-   }
+   protected DataType createSemanticElement(final Package parent) {
+      var dataType = UMLFactory.eINSTANCE.createDataType();
+      dataType.setName(nameGenerator.newName());
+      parent.getPackagedElements().add(dataType);
 
-   public DataType getNewDataType() { return newDataType; }
+      return dataType;
+   }
 
 }

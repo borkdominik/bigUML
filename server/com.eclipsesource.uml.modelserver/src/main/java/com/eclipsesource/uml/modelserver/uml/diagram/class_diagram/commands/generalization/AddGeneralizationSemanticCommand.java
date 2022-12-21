@@ -4,26 +4,19 @@ import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.Generalization;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
-import com.eclipsesource.uml.modelserver.shared.semantic.UmlSemanticElementCommand;
+import com.eclipsesource.uml.modelserver.shared.semantic.CreateSemanticRelationCommand;
 
-public class AddGeneralizationSemanticCommand extends UmlSemanticElementCommand {
-
-   protected Generalization newGeneralization;
-   protected final Classifier general;
-   protected final Classifier specific;
+public class AddGeneralizationSemanticCommand
+   extends CreateSemanticRelationCommand<Classifier, Classifier, Generalization> {
 
    public AddGeneralizationSemanticCommand(final ModelContext context,
-      final Classifier specific, final Classifier general) {
-      super(context);
-      this.general = general;
-      this.specific = specific;
+      final Classifier general, final Classifier specific) {
+      super(context, general, specific);
    }
 
    @Override
-   protected void doExecute() {
-      this.newGeneralization = specific.createGeneralization(general);
+   protected Generalization createSemanticElement(final Classifier source, final Classifier target) {
+      return target.createGeneralization(source);
    }
-
-   public Generalization getNewGeneralization() { return newGeneralization; }
 
 }

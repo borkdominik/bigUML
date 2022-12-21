@@ -11,4 +11,7 @@
     <position x="-398.5371416797961" y="-93.21347510129283"/>
     <size width="160.0" height="50.0"/>
   </elements>
+  <elements xsi:type="notation:Edge">
+    <semanticElement elementId="_0cxscH1ZEe20BLBzxEhlYw"/>
+  </elements>
 </unotation:UmlDiagram>

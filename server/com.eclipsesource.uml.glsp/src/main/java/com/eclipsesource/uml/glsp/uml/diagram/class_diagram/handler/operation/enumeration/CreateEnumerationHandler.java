@@ -15,20 +15,21 @@ import java.util.Optional;
 import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.util.GraphUtil;
+import org.eclipse.uml2.uml.Package;
 
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
-import com.eclipsesource.uml.glsp.uml.handler.operations.create.BaseCreateNodeHandler;
+import com.eclipsesource.uml.glsp.uml.handler.operations.create.BaseCreateChildNodeHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.enumeration.AddEnumerationContribution;
 
 public class CreateEnumerationHandler
-   extends BaseCreateNodeHandler {
+   extends BaseCreateChildNodeHandler<Package> {
 
    public CreateEnumerationHandler() {
       super(ClassTypes.ENUMERATION);
    }
 
    @Override
-   protected CCommand command(final Optional<GPoint> location) {
-      return AddEnumerationContribution.create(location.orElse(GraphUtil.point(0, 0)));
+   protected CCommand command(final Package parent, final Optional<GPoint> location) {
+      return AddEnumerationContribution.create(parent, location.orElse(GraphUtil.point(0, 0)));
    }
 }

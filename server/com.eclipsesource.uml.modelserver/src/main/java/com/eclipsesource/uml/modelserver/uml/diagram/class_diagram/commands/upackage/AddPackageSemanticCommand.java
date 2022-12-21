@@ -11,30 +11,24 @@
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.upackage;
 
 import org.eclipse.uml2.uml.Package;
-import org.eclipse.uml2.uml.UMLFactory;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
-import com.eclipsesource.uml.modelserver.shared.semantic.UmlSemanticElementCommand;
+import com.eclipsesource.uml.modelserver.shared.semantic.CreateSemanticChildCommand;
 import com.eclipsesource.uml.modelserver.uml.generator.NameGenerator;
 import com.eclipsesource.uml.modelserver.uml.generator.PackageableElementNameGenerator;
 
-public class AddPackageSemanticCommand extends UmlSemanticElementCommand {
+public class AddPackageSemanticCommand extends CreateSemanticChildCommand<Package, Package> {
 
-   protected final Package newPackage;
    protected final NameGenerator nameGenerator;
 
-   public AddPackageSemanticCommand(final ModelContext context) {
-      super(context);
-      this.newPackage = UMLFactory.eINSTANCE.createPackage();
+   public AddPackageSemanticCommand(final ModelContext context, final Package parent) {
+      super(context, parent);
       this.nameGenerator = new PackageableElementNameGenerator(context, Package.class);
    }
 
    @Override
-   protected void doExecute() {
-      newPackage.setName(nameGenerator.newName());
-      model.getPackagedElements().add(newPackage);
+   protected Package createSemanticElement(final Package parent) {
+      return parent.createNestedPackage(nameGenerator.newName());
    }
-
-   public Package getNewPackage() { return newPackage; }
 
 }

@@ -10,32 +10,26 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.primitive_type;
 
-import org.eclipse.uml2.uml.DataType;
+import org.eclipse.uml2.uml.Package;
 import org.eclipse.uml2.uml.PrimitiveType;
-import org.eclipse.uml2.uml.UMLFactory;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
-import com.eclipsesource.uml.modelserver.shared.semantic.UmlSemanticElementCommand;
+import com.eclipsesource.uml.modelserver.shared.semantic.CreateSemanticChildCommand;
 import com.eclipsesource.uml.modelserver.uml.generator.NameGenerator;
 import com.eclipsesource.uml.modelserver.uml.generator.PackageableElementNameGenerator;
 
-public class AddPrimitiveTypeSemanticCommand extends UmlSemanticElementCommand {
+public class AddPrimitiveTypeSemanticCommand extends CreateSemanticChildCommand<Package, PrimitiveType> {
 
-   protected final PrimitiveType newPrimitiveType;
    protected final NameGenerator nameGenerator;
 
-   public AddPrimitiveTypeSemanticCommand(final ModelContext context) {
-      super(context);
-      this.newPrimitiveType = UMLFactory.eINSTANCE.createPrimitiveType();
+   public AddPrimitiveTypeSemanticCommand(final ModelContext context, final Package parent) {
+      super(context, parent);
       this.nameGenerator = new PackageableElementNameGenerator(context, PrimitiveType.class);
    }
 
    @Override
-   protected void doExecute() {
-      newPrimitiveType.setName(nameGenerator.newName());
-      model.getPackagedElements().add(newPrimitiveType);
+   protected PrimitiveType createSemanticElement(final Package parent) {
+      return parent.createOwnedPrimitiveType(nameGenerator.newName());
    }
-
-   public DataType getNewPrimitiveType() { return newPrimitiveType; }
 
 }

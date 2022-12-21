@@ -51,14 +51,13 @@ public class AddClassContribution extends BasicCommandContribution<Command> {
       var context = ModelContext.of(modelUri, domain);
       var elementAccessor = new SemanticElementAccessor(context);
 
-      var parentSemanticId = command.getProperties().get(SemanticKeys.PARENT_SEMANTIC_ELEMENT_ID);
-
       var position = UmlGraphUtil.getGPoint(
          command.getProperties().get(NotationKeys.POSITION_X),
          command.getProperties().get(NotationKeys.POSITION_Y));
 
       var isAbstract = Boolean.parseBoolean(command.getProperties().get(IS_ABSTRACT));
 
+      var parentSemanticId = command.getProperties().get(SemanticKeys.PARENT_SEMANTIC_ELEMENT_ID);
       var parent = elementAccessor.getElement(parentSemanticId, Package.class);
 
       return parent

@@ -20,6 +20,6 @@ public class DeleteClassHandler extends BaseDeleteElementHandler<Class> {
 
    @Override
    protected CCommand command(final Class element) {
-      return RemoveClassContribution.create(element);
+      return RemoveClassContribution.create(element.getPackage(), element);
    }
 }

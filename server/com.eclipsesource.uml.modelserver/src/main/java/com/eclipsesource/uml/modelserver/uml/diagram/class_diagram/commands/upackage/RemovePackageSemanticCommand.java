@@ -13,17 +13,18 @@ package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.upa
 import org.eclipse.uml2.uml.Package;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
-import com.eclipsesource.uml.modelserver.shared.semantic.SemanticExistenceCheckedCommand;
+import com.eclipsesource.uml.modelserver.shared.semantic.DeleteSemanticChildCommand;
 
-public class RemovePackageSemanticCommand extends SemanticExistenceCheckedCommand<Package> {
+public class RemovePackageSemanticCommand extends DeleteSemanticChildCommand<Package, Package> {
 
    public RemovePackageSemanticCommand(final ModelContext context,
-      final Package upackage) {
-      super(context, upackage);
+      final Package parent,
+      final Package semanticElement) {
+      super(context, parent, semanticElement);
    }
 
    @Override
-   protected void doChanges() {
-      model.getPackagedElements().remove(semanticElement);
+   protected void deleteSemanticElement(final Package parent, final Package child) {
+      parent.getPackagedElements().remove(child);
    }
 }

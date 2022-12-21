@@ -9,6 +9,7 @@ import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
 import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
 import org.eclipse.emfcloud.modelserver.edit.command.BasicCommandContribution;
 import org.eclipse.uml2.uml.Interface;
+import org.eclipse.uml2.uml.Package;
 
 import com.eclipsesource.uml.modelserver.core.commands.noop.NoopCommand;
 import com.eclipsesource.uml.modelserver.shared.constants.SemanticKeys;
@@ -19,10 +20,13 @@ public class RemoveInterfaceContribution extends BasicCommandContribution<Comman
 
    public static final String TYPE = "class:remove_interface";
 
-   public static CCompoundCommand create(final Interface uinterface) {
+   public static CCompoundCommand create(final Package parent, final Interface semanticElement) {
       var command = CCommandFactory.eINSTANCE.createCompoundCommand();
+
       command.setType(TYPE);
-      command.getProperties().put(SemanticKeys.SEMANTIC_ELEMENT_ID, SemanticElementAccessor.getId(uinterface));
+      command.getProperties().put(SemanticKeys.PARENT_SEMANTIC_ELEMENT_ID, SemanticElementAccessor.getId(parent));
+      command.getProperties().put(SemanticKeys.SEMANTIC_ELEMENT_ID, SemanticElementAccessor.getId(semanticElement));
+
       return command;
    }
 
@@ -33,12 +37,16 @@ public class RemoveInterfaceContribution extends BasicCommandContribution<Comman
       var elementAccessor = new SemanticElementAccessor(context);
 
       var semanticElementId = command.getProperties().get(SemanticKeys.SEMANTIC_ELEMENT_ID);
+      var semanticElement = elementAccessor.getElement(semanticElementId, Interface.class);
 
-      var uinterface = elementAccessor.getElement(semanticElementId, Interface.class);
+      var parentSemanticElementId = command.getProperties().get(SemanticKeys.PARENT_SEMANTIC_ELEMENT_ID);
+      var parent = elementAccessor.getElement(parentSemanticElementId, Package.class);
 
-      return uinterface
-         .<Command> map(i -> new RemoveInterfaceCompoundCommand(context, i))
-         .orElse(new NoopCommand());
+      if (parent.isPresent() && semanticElement.isPresent()) {
+         return new RemoveInterfaceCompoundCommand(context, parent.get(), semanticElement.get());
+      }
+
+      return new NoopCommand();
    }
 
 }

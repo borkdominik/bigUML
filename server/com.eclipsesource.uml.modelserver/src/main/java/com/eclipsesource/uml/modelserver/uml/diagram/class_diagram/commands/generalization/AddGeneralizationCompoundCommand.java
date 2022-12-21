@@ -9,11 +9,11 @@ import com.eclipsesource.uml.modelserver.shared.notation.commands.UmlAddEdgeComm
 public class AddGeneralizationCompoundCommand extends CompoundCommand {
 
    public AddGeneralizationCompoundCommand(final ModelContext context,
-      final Classifier general,
-      final Classifier specific) {
+      final Classifier source,
+      final Classifier target) {
 
-      var command = new AddGeneralizationSemanticCommand(context, general,
-         specific);
+      var command = new AddGeneralizationSemanticCommand(context, source,
+         target);
       this.append(command);
       this.append(new UmlAddEdgeCommand(context, command::getSemanticElement));
    }

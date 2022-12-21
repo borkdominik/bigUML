@@ -10,16 +10,20 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel;
 
+import java.util.stream.Collectors;
+
 import org.eclipse.glsp.graph.GCompartment;
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.builder.impl.GCompartmentBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
+import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.builder.impl.GNodeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.Package;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
+import com.eclipsesource.uml.glsp.core.gmodel.suffix.CompartmentSuffix;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.HeaderIconSuffix;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.HeaderLabelSuffix;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.HeaderSuffix;
@@ -34,7 +38,8 @@ public class PackageNodeMapper extends BaseGNodeMapper<Package, GNode> {
          .id(idGenerator.getOrCreateId(upackage))
          .layout(GConstants.Layout.VBOX)
          .addCssClass(CoreCSS.NODE)
-         .add(buildHeader(upackage));
+         .add(buildHeader(upackage))
+         .add(buildCompartment(upackage));
 
       applyShapeNotation(upackage, builder);
 
@@ -57,5 +62,17 @@ public class PackageNodeMapper extends BaseGNodeMapper<Package, GNode> {
       builder.add(nameLabel);
 
       return builder.build();
+   }
+
+   protected GCompartment buildCompartment(final Package upackage) {
+      return new GCompartmentBuilder(CoreTypes.COMPARTMENT)
+         .id(suffix.appendTo(CompartmentSuffix.SUFFIX, idGenerator.getOrCreateId(upackage)))
+         .layout(GConstants.Layout.FREEFORM)
+         .layoutOptions(new GLayoutOptions()
+            .hAlign(GConstants.HAlign.LEFT))
+         .addAll(upackage.getPackagedElements().stream()
+            .map(mapHandler::handle)
+            .collect(Collectors.toList()))
+         .build();
    }
 }

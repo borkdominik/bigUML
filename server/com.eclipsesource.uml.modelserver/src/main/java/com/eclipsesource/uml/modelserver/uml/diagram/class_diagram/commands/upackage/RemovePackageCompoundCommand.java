@@ -20,11 +20,12 @@ import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.match
 public class RemovePackageCompoundCommand extends CompoundCommand {
 
    public RemovePackageCompoundCommand(final ModelContext context,
-      final Package upackage) {
-      this.append(new RemovePackageSemanticCommand(context, upackage));
-      this.append(new UmlRemoveNotationElementCommand(context, upackage));
+      final Package parent,
+      final Package semanticElement) {
+      this.append(new RemovePackageSemanticCommand(context, parent, semanticElement));
+      this.append(new UmlRemoveNotationElementCommand(context, semanticElement));
 
-      new CommunicationDiagramCrossReferenceRemover(context).removeCommandsFor(upackage)
+      new CommunicationDiagramCrossReferenceRemover(context).removeCommandsFor(semanticElement)
          .forEach(this::append);
    }
 }

@@ -14,6 +14,7 @@ import java.util.List;
 
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.uml2.uml.AttributeOwner;
 import org.eclipse.uml2.uml.Model;
 
 import com.eclipsesource.uml.modelserver.shared.extension.CrossReferenceMatcher;
@@ -38,13 +39,15 @@ public class ClassDiagramCrossReferenceRemover {
             .map(property -> new SetPropertyTypeSemanticCommand(context, property, null)))
          .match((setting, interest) -> PropertyMatcher
             .ofOwnedAttributeAssociationUsage(setting, interest)
-            .map(property -> new RemovePropertySemanticCommand(context, property)))
+            .map(
+               property -> new RemovePropertySemanticCommand(context, (AttributeOwner) property.getOwner(), property)))
          .match((setting, interest) -> AssociationMatcher
             .ofUsage(setting, interest)
-            .map(association -> new RemoveAssociationCompoundCommand(context, association)))
+            .map(association -> new RemoveAssociationCompoundCommand(context, association.getPackage(), association)))
          .match((setting, interest) -> GeneralizationMatcher
             .ofUsage(setting, interest)
-            .map(generalization -> new RemoveGeneralizationCompoundCommand(context, generalization)))
+            .map(generalization -> new RemoveGeneralizationCompoundCommand(context, generalization.getSpecific(),
+               generalization)))
          .build();
    }
 

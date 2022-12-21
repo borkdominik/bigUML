@@ -20,6 +20,6 @@ public class DeletePrimitiveTypeHandler extends BaseDeleteElementHandler<Primiti
 
    @Override
    protected CCommand command(final PrimitiveType element) {
-      return RemovePrimitiveTypeContribution.create(element);
+      return RemovePrimitiveTypeContribution.create(element.getPackage(), element);
    }
 }

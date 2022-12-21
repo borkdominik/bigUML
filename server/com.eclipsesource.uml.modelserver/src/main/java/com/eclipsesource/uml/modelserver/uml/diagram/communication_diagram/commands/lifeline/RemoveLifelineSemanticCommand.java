@@ -23,7 +23,7 @@ public class RemoveLifelineSemanticCommand extends SemanticExistenceCheckedComma
    }
 
    @Override
-   protected void doChanges() {
+   protected void doChanges(final Lifeline semanticElement) {
       var interaction = semanticElement.getInteraction();
       interaction.getLifelines().remove(semanticElement);
    }

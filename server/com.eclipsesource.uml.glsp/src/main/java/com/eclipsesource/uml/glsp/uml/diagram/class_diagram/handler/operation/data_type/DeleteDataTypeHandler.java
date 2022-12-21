@@ -20,6 +20,6 @@ public class DeleteDataTypeHandler extends BaseDeleteElementHandler<DataType> {
 
    @Override
    protected CCommand command(final DataType element) {
-      return RemoveDataTypeContribution.create(element);
+      return RemoveDataTypeContribution.create(element.getPackage(), element);
    }
 }

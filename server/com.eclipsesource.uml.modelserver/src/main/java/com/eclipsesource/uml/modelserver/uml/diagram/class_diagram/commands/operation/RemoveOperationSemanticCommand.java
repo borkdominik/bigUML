@@ -14,24 +14,19 @@ import org.eclipse.uml2.uml.Operation;
 import org.eclipse.uml2.uml.OperationOwner;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
-import com.eclipsesource.uml.modelserver.shared.semantic.UmlSemanticElementCommand;
+import com.eclipsesource.uml.modelserver.shared.semantic.DeleteSemanticChildCommand;
 
-public class RemoveOperationSemanticCommand extends UmlSemanticElementCommand {
-
-   protected final OperationOwner parent;
-   protected final Operation operation;
+public class RemoveOperationSemanticCommand extends DeleteSemanticChildCommand<OperationOwner, Operation> {
 
    public RemoveOperationSemanticCommand(final ModelContext context,
       final OperationOwner parent,
-      final Operation operation) {
-      super(context);
-      this.parent = parent;
-      this.operation = operation;
+      final Operation child) {
+      super(context, parent, child);
    }
 
    @Override
-   protected void doExecute() {
-      parent.getOwnedOperations().remove(operation);
+   protected void deleteSemanticElement(final OperationOwner parent, final Operation child) {
+      parent.getOwnedOperations().remove(child);
    }
 
 }

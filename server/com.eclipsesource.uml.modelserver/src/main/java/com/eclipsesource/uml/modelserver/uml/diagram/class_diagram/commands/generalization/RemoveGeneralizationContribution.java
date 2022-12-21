@@ -8,6 +8,7 @@ import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
 import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
 import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
 import org.eclipse.emfcloud.modelserver.edit.command.BasicCommandContribution;
+import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.Generalization;
 
 import com.eclipsesource.uml.modelserver.core.commands.noop.NoopCommand;
@@ -19,11 +20,12 @@ public class RemoveGeneralizationContribution extends BasicCommandContribution<C
 
    public static final String TYPE = "class:remove_generalization";
 
-   public static CCompoundCommand create(final Generalization generalization) {
+   public static CCompoundCommand create(final Classifier parent, final Generalization semanticElement) {
       var command = CCommandFactory.eINSTANCE.createCompoundCommand();
 
       command.setType(TYPE);
-      command.getProperties().put(SemanticKeys.SEMANTIC_ELEMENT_ID, SemanticElementAccessor.getId(generalization));
+      command.getProperties().put(SemanticKeys.PARENT_SEMANTIC_ELEMENT_ID, SemanticElementAccessor.getId(parent));
+      command.getProperties().put(SemanticKeys.SEMANTIC_ELEMENT_ID, SemanticElementAccessor.getId(semanticElement));
 
       return command;
    }
@@ -35,12 +37,16 @@ public class RemoveGeneralizationContribution extends BasicCommandContribution<C
       var elementAccessor = new SemanticElementAccessor(context);
 
       var semanticElementId = command.getProperties().get(SemanticKeys.SEMANTIC_ELEMENT_ID);
+      var semanticElement = elementAccessor.getElement(semanticElementId, Generalization.class);
 
-      var generalization = elementAccessor.getElement(semanticElementId, Generalization.class);
+      var parentSemanticElementId = command.getProperties().get(SemanticKeys.PARENT_SEMANTIC_ELEMENT_ID);
+      var parent = elementAccessor.getElement(parentSemanticElementId, Classifier.class);
 
-      return generalization
-         .<Command> map(g -> new RemoveGeneralizationCompoundCommand(context, g))
-         .orElse(new NoopCommand());
+      if (parent.isPresent() && semanticElement.isPresent()) {
+         return new RemoveGeneralizationCompoundCommand(context, parent.get(), semanticElement.get());
+      }
+
+      return new NoopCommand();
    }
 
 }

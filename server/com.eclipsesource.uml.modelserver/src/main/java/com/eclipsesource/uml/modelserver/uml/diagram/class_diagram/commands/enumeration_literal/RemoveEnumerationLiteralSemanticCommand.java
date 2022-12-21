@@ -14,24 +14,20 @@ import org.eclipse.uml2.uml.Enumeration;
 import org.eclipse.uml2.uml.EnumerationLiteral;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
-import com.eclipsesource.uml.modelserver.shared.semantic.UmlSemanticElementCommand;
+import com.eclipsesource.uml.modelserver.shared.semantic.DeleteSemanticChildCommand;
 
-public class RemoveEnumerationLiteralSemanticCommand extends UmlSemanticElementCommand {
-
-   protected final Enumeration parent;
-   protected final EnumerationLiteral literal;
+public class RemoveEnumerationLiteralSemanticCommand
+   extends DeleteSemanticChildCommand<Enumeration, EnumerationLiteral> {
 
    public RemoveEnumerationLiteralSemanticCommand(final ModelContext context,
       final Enumeration parent,
-      final EnumerationLiteral literal) {
-      super(context);
-      this.parent = parent;
-      this.literal = literal;
+      final EnumerationLiteral semanticElement) {
+      super(context, parent, semanticElement);
    }
 
    @Override
-   protected void doExecute() {
-      parent.getOwnedLiterals().remove(literal);
+   protected void deleteSemanticElement(final Enumeration parent, final EnumerationLiteral child) {
+      parent.getOwnedLiterals().remove(child);
    }
 
 }

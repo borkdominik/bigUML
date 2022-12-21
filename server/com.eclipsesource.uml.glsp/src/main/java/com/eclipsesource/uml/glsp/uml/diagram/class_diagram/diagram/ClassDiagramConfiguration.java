@@ -71,7 +71,13 @@ public class ClassDiagramConfiguration implements DiagramConfiguration {
       hints.add(new ShapeTypeHint(ClassTypes.PRIMITIVE_TYPE, true, true, false, false,
          List.of(ClassTypes.PROPERTY, ClassTypes.OPERATION)));
       hints.add(new ShapeTypeHint(ClassTypes.PACKAGE, true, true, false, false,
-         List.of()));
+         List.of(ClassTypes.CLASS,
+            ClassTypes.ENUMERATION,
+            ClassTypes.INTERFACE,
+            ClassTypes.ABSTRACT_CLASS,
+            ClassTypes.DATA_TYPE,
+            ClassTypes.PRIMITIVE_TYPE,
+            ClassTypes.PACKAGE)));
 
       hints.add(new ShapeTypeHint(ClassTypes.PROPERTY, false, true, false, true,
          List.of()));

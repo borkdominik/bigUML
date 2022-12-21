@@ -12,6 +12,7 @@ package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.dat
 
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.uml2.uml.DataType;
+import org.eclipse.uml2.uml.Package;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.commands.UmlRemoveNotationElementCommand;
@@ -20,11 +21,12 @@ import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.match
 public class RemoveDataTypeCompoundCommand extends CompoundCommand {
 
    public RemoveDataTypeCompoundCommand(final ModelContext context,
-      final DataType dataType) {
-      this.append(new RemoveDataTypeSemanticCommand(context, dataType));
-      this.append(new UmlRemoveNotationElementCommand(context, dataType));
+      final Package parent,
+      final DataType semanticElement) {
+      this.append(new RemoveDataTypeSemanticCommand(context, parent, semanticElement));
+      this.append(new UmlRemoveNotationElementCommand(context, semanticElement));
 
-      new CommunicationDiagramCrossReferenceRemover(context).removeCommandsFor(dataType)
+      new CommunicationDiagramCrossReferenceRemover(context).removeCommandsFor(semanticElement)
          .forEach(this::append);
    }
 }

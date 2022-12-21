@@ -11,6 +11,7 @@ import org.eclipse.emfcloud.modelserver.edit.command.BasicCommandContribution;
 import org.eclipse.uml2.uml.Classifier;
 
 import com.eclipsesource.uml.modelserver.core.commands.noop.NoopCommand;
+import com.eclipsesource.uml.modelserver.shared.constants.SemanticKeys;
 import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 
@@ -24,8 +25,8 @@ public class AddGeneralizationContribution extends BasicCommandContribution<Comm
       var command = CCommandFactory.eINSTANCE.createCompoundCommand();
 
       command.setType(TYPE);
-      command.getProperties().put(GENERAL_CLASS_ELEMENT_ID, SemanticElementAccessor.getId(general));
-      command.getProperties().put(SPECIFIC_CLASS_ELEMENT_ID, SemanticElementAccessor.getId(specific));
+      command.getProperties().put(SemanticKeys.SOURCE_SEMANTIC_ELEMENT_ID, SemanticElementAccessor.getId(general));
+      command.getProperties().put(SemanticKeys.TARGET_SEMANTIC_ELEMENT_ID, SemanticElementAccessor.getId(specific));
 
       return command;
    }
@@ -36,14 +37,14 @@ public class AddGeneralizationContribution extends BasicCommandContribution<Comm
       var context = ModelContext.of(modelUri, domain);
       var elementAccessor = new SemanticElementAccessor(context);
 
-      var generalClassElementId = command.getProperties().get(GENERAL_CLASS_ELEMENT_ID);
-      var specificClasElementId = command.getProperties().get(SPECIFIC_CLASS_ELEMENT_ID);
+      var sourceSemanticElementId = command.getProperties().get(SemanticKeys.SOURCE_SEMANTIC_ELEMENT_ID);
+      var source = elementAccessor.getElement(sourceSemanticElementId, Classifier.class);
 
-      var general = elementAccessor.getElement(generalClassElementId, Classifier.class);
-      var specific = elementAccessor.getElement(specificClasElementId, Classifier.class);
+      var targetSemanticElementId = command.getProperties().get(SemanticKeys.TARGET_SEMANTIC_ELEMENT_ID);
+      var target = elementAccessor.getElement(targetSemanticElementId, Classifier.class);
 
-      if (general.isPresent() && specific.isPresent()) {
-         return new AddGeneralizationCompoundCommand(context, specific.get(), general.get());
+      if (source.isPresent() && target.isPresent()) {
+         return new AddGeneralizationCompoundCommand(context, source.get(), target.get());
       }
 
       return new NoopCommand();

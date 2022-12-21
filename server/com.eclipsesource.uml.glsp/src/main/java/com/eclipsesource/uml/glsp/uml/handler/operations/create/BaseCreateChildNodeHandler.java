@@ -56,6 +56,6 @@ public abstract class BaseCreateChildNodeHandler<T> extends BaseCreateHandler<Cr
          });
    }
 
-   protected abstract CCommand command(T container, Optional<GPoint> location);
+   protected abstract CCommand command(T parent, Optional<GPoint> location);
 
 }

@@ -12,6 +12,7 @@ package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.ass
 
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.uml2.uml.Association;
+import org.eclipse.uml2.uml.Package;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.commands.UmlRemoveNotationElementCommand;
@@ -20,11 +21,12 @@ import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.matcher.Class
 public class RemoveAssociationCompoundCommand extends CompoundCommand {
 
    public RemoveAssociationCompoundCommand(final ModelContext context,
-      final Association association) {
-      this.append(new RemoveAssociationSemanticCommand(context, association));
-      this.append(new UmlRemoveNotationElementCommand(context, association));
+      final Package parent,
+      final Association semanticElement) {
+      this.append(new RemoveAssociationSemanticCommand(context, parent, semanticElement));
+      this.append(new UmlRemoveNotationElementCommand(context, semanticElement));
 
-      new ClassDiagramCrossReferenceRemover(context).removeCommandsFor(association)
+      new ClassDiagramCrossReferenceRemover(context).removeCommandsFor(semanticElement)
          .forEach(this::append);
    }
 }

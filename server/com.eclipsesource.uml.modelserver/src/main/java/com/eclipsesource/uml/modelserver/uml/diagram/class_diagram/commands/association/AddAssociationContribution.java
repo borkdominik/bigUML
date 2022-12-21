@@ -49,12 +49,13 @@ public class AddAssociationContribution extends BasicCommandContribution<Command
       var context = ModelContext.of(modelUri, domain);
       var elementAccessor = new SemanticElementAccessor(context);
 
-      var sourceElementId = command.getProperties().get(SemanticKeys.SOURCE_SEMANTIC_ELEMENT_ID);
-      var targetElementId = command.getProperties().get(SemanticKeys.TARGET_SEMANTIC_ELEMENT_ID);
-      var type = AssociationType.valueOf(command.getProperties().get(TYPE_KEYWORD));
+      var sourceSemanticElementId = command.getProperties().get(SemanticKeys.SOURCE_SEMANTIC_ELEMENT_ID);
+      var source = elementAccessor.getElement(sourceSemanticElementId, Type.class);
 
-      var source = elementAccessor.getElement(sourceElementId, Type.class);
-      var target = elementAccessor.getElement(targetElementId, Type.class);
+      var targetSemanticElementId = command.getProperties().get(SemanticKeys.TARGET_SEMANTIC_ELEMENT_ID);
+      var target = elementAccessor.getElement(targetSemanticElementId, Type.class);
+
+      var type = AssociationType.valueOf(command.getProperties().get(TYPE_KEYWORD));
 
       if (source.isPresent() && target.isPresent()) {
          return new AddAssociationCompoundCommand(context, source.get(), target.get(), type);

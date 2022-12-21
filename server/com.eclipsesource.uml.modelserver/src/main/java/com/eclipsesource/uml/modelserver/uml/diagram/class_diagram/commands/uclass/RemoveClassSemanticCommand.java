@@ -11,21 +11,19 @@
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uclass;
 
 import org.eclipse.uml2.uml.Class;
+import org.eclipse.uml2.uml.Package;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
-import com.eclipsesource.uml.modelserver.shared.semantic.UmlSemanticElementCommand;
+import com.eclipsesource.uml.modelserver.shared.semantic.DeleteSemanticChildCommand;
 
-public class RemoveClassSemanticCommand extends UmlSemanticElementCommand {
+public class RemoveClassSemanticCommand extends DeleteSemanticChildCommand<Package, Class> {
 
-   protected final Class classToRemove;
-
-   public RemoveClassSemanticCommand(final ModelContext context, final Class classToRemove) {
-      super(context);
-      this.classToRemove = classToRemove;
+   public RemoveClassSemanticCommand(final ModelContext context, final Package parent, final Class semanticElement) {
+      super(context, parent, semanticElement);
    }
 
    @Override
-   protected void doExecute() {
-      model.getPackagedElements().remove(classToRemove);
+   protected void deleteSemanticElement(final Package parent, final Class child) {
+      parent.getPackagedElements().remove(child);
    }
 }

@@ -18,6 +18,7 @@ import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
 import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
 import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
 import org.eclipse.emfcloud.modelserver.edit.command.BasicCommandContribution;
+import org.eclipse.uml2.uml.Package;
 import org.eclipse.uml2.uml.PrimitiveType;
 
 import com.eclipsesource.uml.modelserver.core.commands.noop.NoopCommand;
@@ -29,11 +30,12 @@ public class RemovePrimitiveTypeContribution extends BasicCommandContribution<Co
 
    public static final String TYPE = "class:remove_primitive_type";
 
-   public static CCompoundCommand create(final PrimitiveType primitiveType) {
+   public static CCompoundCommand create(final Package parent, final PrimitiveType semanticElement) {
       var command = CCommandFactory.eINSTANCE.createCompoundCommand();
 
       command.setType(TYPE);
-      command.getProperties().put(SemanticKeys.SEMANTIC_ELEMENT_ID, SemanticElementAccessor.getId(primitiveType));
+      command.getProperties().put(SemanticKeys.PARENT_SEMANTIC_ELEMENT_ID, SemanticElementAccessor.getId(parent));
+      command.getProperties().put(SemanticKeys.SEMANTIC_ELEMENT_ID, SemanticElementAccessor.getId(semanticElement));
 
       return command;
    }
@@ -45,12 +47,16 @@ public class RemovePrimitiveTypeContribution extends BasicCommandContribution<Co
       var elementAccessor = new SemanticElementAccessor(context);
 
       var semanticElementId = command.getProperties().get(SemanticKeys.SEMANTIC_ELEMENT_ID);
+      var semanticElement = elementAccessor.getElement(semanticElementId, PrimitiveType.class);
 
-      var primitiveType = elementAccessor.getElement(semanticElementId, PrimitiveType.class);
+      var parentSemanticElementId = command.getProperties().get(SemanticKeys.PARENT_SEMANTIC_ELEMENT_ID);
+      var parent = elementAccessor.getElement(parentSemanticElementId, Package.class);
 
-      return primitiveType
-         .<Command> map(d -> new RemovePrimitiveTypeCompoundCommand(context, d))
-         .orElse(new NoopCommand());
+      if (parent.isPresent() && semanticElement.isPresent()) {
+         return new RemovePrimitiveTypeCompoundCommand(context, parent.get(), semanticElement.get());
+      }
+
+      return new NoopCommand();
    }
 
 }

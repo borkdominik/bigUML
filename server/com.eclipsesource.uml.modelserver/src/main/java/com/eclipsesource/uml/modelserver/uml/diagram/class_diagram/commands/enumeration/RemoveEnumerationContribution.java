@@ -9,6 +9,7 @@ import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
 import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
 import org.eclipse.emfcloud.modelserver.edit.command.BasicCommandContribution;
 import org.eclipse.uml2.uml.Enumeration;
+import org.eclipse.uml2.uml.Package;
 
 import com.eclipsesource.uml.modelserver.core.commands.noop.NoopCommand;
 import com.eclipsesource.uml.modelserver.shared.constants.SemanticKeys;
@@ -19,11 +20,12 @@ public class RemoveEnumerationContribution extends BasicCommandContribution<Comm
 
    public static final String TYPE = "class:remove_enumeration";
 
-   public static CCompoundCommand create(final Enumeration enumeration) {
+   public static CCompoundCommand create(final Package parent, final Enumeration semanticElement) {
       var command = CCommandFactory.eINSTANCE.createCompoundCommand();
 
       command.setType(TYPE);
-      command.getProperties().put(SemanticKeys.SEMANTIC_ELEMENT_ID, SemanticElementAccessor.getId(enumeration));
+      command.getProperties().put(SemanticKeys.PARENT_SEMANTIC_ELEMENT_ID, SemanticElementAccessor.getId(parent));
+      command.getProperties().put(SemanticKeys.SEMANTIC_ELEMENT_ID, SemanticElementAccessor.getId(semanticElement));
 
       return command;
    }
@@ -35,12 +37,16 @@ public class RemoveEnumerationContribution extends BasicCommandContribution<Comm
       var elementAccessor = new SemanticElementAccessor(context);
 
       var semanticElementId = command.getProperties().get(SemanticKeys.SEMANTIC_ELEMENT_ID);
+      var semanticElement = elementAccessor.getElement(semanticElementId, Enumeration.class);
 
-      var enumeration = elementAccessor.getElement(semanticElementId, Enumeration.class);
+      var parentSemanticElementId = command.getProperties().get(SemanticKeys.PARENT_SEMANTIC_ELEMENT_ID);
+      var parent = elementAccessor.getElement(parentSemanticElementId, Package.class);
 
-      return enumeration
-         .<Command> map(e -> new RemoveEnumerationCompoundCommand(context, e))
-         .orElse(new NoopCommand());
+      if (parent.isPresent() && semanticElement.isPresent()) {
+         return new RemoveEnumerationCompoundCommand(context, parent.get(), semanticElement.get());
+      }
+
+      return new NoopCommand();
    }
 
 }

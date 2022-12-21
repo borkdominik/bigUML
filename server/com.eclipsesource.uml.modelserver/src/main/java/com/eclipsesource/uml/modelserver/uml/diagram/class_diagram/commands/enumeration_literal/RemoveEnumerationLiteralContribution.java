@@ -29,12 +29,12 @@ public class RemoveEnumerationLiteralContribution extends BasicCommandContributi
 
    public static final String TYPE = "class:remove_enumeration_literal";
 
-   public static CCommand create(final Enumeration parent, final EnumerationLiteral literal) {
+   public static CCommand create(final Enumeration parent, final EnumerationLiteral semanticElement) {
       var command = CCommandFactory.eINSTANCE.createCommand();
 
       command.setType(TYPE);
       command.getProperties().put(SemanticKeys.PARENT_SEMANTIC_ELEMENT_ID, SemanticElementAccessor.getId(parent));
-      command.getProperties().put(SemanticKeys.SEMANTIC_ELEMENT_ID, SemanticElementAccessor.getId(literal));
+      command.getProperties().put(SemanticKeys.SEMANTIC_ELEMENT_ID, SemanticElementAccessor.getId(semanticElement));
 
       return command;
    }
@@ -45,14 +45,14 @@ public class RemoveEnumerationLiteralContribution extends BasicCommandContributi
       var context = ModelContext.of(modelUri, domain);
       var elementAccessor = new SemanticElementAccessor(context);
 
-      var parentSemanticElementId = command.getProperties().get(SemanticKeys.PARENT_SEMANTIC_ELEMENT_ID);
       var semanticElementId = command.getProperties().get(SemanticKeys.SEMANTIC_ELEMENT_ID);
+      var semanticElement = elementAccessor.getElement(semanticElementId, EnumerationLiteral.class);
 
+      var parentSemanticElementId = command.getProperties().get(SemanticKeys.PARENT_SEMANTIC_ELEMENT_ID);
       var parent = elementAccessor.getElement(parentSemanticElementId, Enumeration.class);
-      var literal = elementAccessor.getElement(semanticElementId, EnumerationLiteral.class);
 
-      if (parent.isPresent() && literal.isPresent()) {
-         return new RemoveEnumerationLiteralSemanticCommand(context, parent.get(), literal.get());
+      if (parent.isPresent() && semanticElement.isPresent()) {
+         return new RemoveEnumerationLiteralSemanticCommand(context, parent.get(), semanticElement.get());
       }
 
       return new NoopCommand();

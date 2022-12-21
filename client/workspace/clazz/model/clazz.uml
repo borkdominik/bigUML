@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_Cfp0UGmxEe2kLe5KTNzRtw" name="clazz">
+  <packagedElement xmi:type="uml:Package" xmi:id="_wcv_sIFCEe2IVuM2UAj3dg" name="NewPackage1">
+    <packagedElement xmi:type="uml:Class" xmi:id="_wwjFcIFCEe2IVuM2UAj3dg" name="NewClass3">
+      <ownedAttribute xmi:id="__aQg0IFCEe2IVuM2UAj3dg" name="newclass3" type="_xmBU4IFCEe2IVuM2UAj3dg" association="__aP5wIFCEe2IVuM2UAj3dg">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="__aQg0YFCEe2IVuM2UAj3dg" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__aRH4IFCEe2IVuM2UAj3dg" value="1"/>
+      </ownedAttribute>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_xmBU4IFCEe2IVuM2UAj3dg" name="NewClass3">
+      <ownedAttribute xmi:id="__aRH4YFCEe2IVuM2UAj3dg" name="newclass3" type="_wwjFcIFCEe2IVuM2UAj3dg" association="__aP5wIFCEe2IVuM2UAj3dg">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="__aRu8IFCEe2IVuM2UAj3dg" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__aRu8YFCEe2IVuM2UAj3dg" value="1"/>
+      </ownedAttribute>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="__aP5wIFCEe2IVuM2UAj3dg" memberEnd="__aQg0IFCEe2IVuM2UAj3dg __aRH4YFCEe2IVuM2UAj3dg"/>
+  </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="_q8TrgX1IEe2nU4lFDx50pw" name="Target">
     <ownedAttribute xmi:id="_0cyTgX1ZEe20BLBzxEhlYw" name="source" type="_ZV1_kH1SEe2Sv-_90BJXGQ" association="_0cxscH1ZEe20BLBzxEhlYw">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_0cyTgn1ZEe20BLBzxEhlYw" value="1"/>

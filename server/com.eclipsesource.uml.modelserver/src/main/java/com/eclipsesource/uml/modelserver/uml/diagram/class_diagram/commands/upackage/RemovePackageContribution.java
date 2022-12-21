@@ -29,11 +29,12 @@ public class RemovePackageContribution extends BasicCommandContribution<Command>
 
    public static final String TYPE = "class:remove_package";
 
-   public static CCompoundCommand create(final Package upackage) {
+   public static CCompoundCommand create(final Package parent, final Package semanticElement) {
       var command = CCommandFactory.eINSTANCE.createCompoundCommand();
 
       command.setType(TYPE);
-      command.getProperties().put(SemanticKeys.SEMANTIC_ELEMENT_ID, SemanticElementAccessor.getId(upackage));
+      command.getProperties().put(SemanticKeys.PARENT_SEMANTIC_ELEMENT_ID, SemanticElementAccessor.getId(parent));
+      command.getProperties().put(SemanticKeys.SEMANTIC_ELEMENT_ID, SemanticElementAccessor.getId(semanticElement));
 
       return command;
    }
@@ -45,12 +46,16 @@ public class RemovePackageContribution extends BasicCommandContribution<Command>
       var elementAccessor = new SemanticElementAccessor(context);
 
       var semanticElementId = command.getProperties().get(SemanticKeys.SEMANTIC_ELEMENT_ID);
+      var semanticElement = elementAccessor.getElement(semanticElementId, Package.class);
 
-      var interaction = elementAccessor.getElement(semanticElementId, Package.class);
+      var parentSemanticElementId = command.getProperties().get(SemanticKeys.PARENT_SEMANTIC_ELEMENT_ID);
+      var parent = elementAccessor.getElement(parentSemanticElementId, Package.class);
 
-      return interaction
-         .<Command> map(i -> new RemovePackageCompoundCommand(context, i))
-         .orElse(new NoopCommand());
+      if (parent.isPresent() && semanticElement.isPresent()) {
+         return new RemovePackageCompoundCommand(context, parent.get(), semanticElement.get());
+      }
+
+      return new NoopCommand();
    }
 
 }

@@ -20,6 +20,6 @@ public class DeleteInterfaceHandler extends BaseDeleteElementHandler<Interface> 
 
    @Override
    protected CCommand command(final Interface element) {
-      return RemoveInterfaceContribution.create(element);
+      return RemoveInterfaceContribution.create(element.getPackage(), element);
    }
 }

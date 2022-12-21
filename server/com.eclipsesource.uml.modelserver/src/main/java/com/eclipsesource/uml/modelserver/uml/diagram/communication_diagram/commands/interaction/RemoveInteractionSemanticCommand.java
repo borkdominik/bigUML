@@ -23,7 +23,7 @@ public class RemoveInteractionSemanticCommand extends SemanticExistenceCheckedCo
    }
 
    @Override
-   protected void doChanges() {
+   protected void doChanges(final Interaction semanticElement) {
       model.getPackagedElements().remove(semanticElement);
    }
 }

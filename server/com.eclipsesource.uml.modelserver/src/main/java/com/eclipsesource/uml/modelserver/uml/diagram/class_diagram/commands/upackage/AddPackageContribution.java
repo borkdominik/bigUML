@@ -55,8 +55,8 @@ public class AddPackageContribution extends BasicCommandContribution<Command> {
          command.getProperties().get(NotationKeys.POSITION_X),
          command.getProperties().get(NotationKeys.POSITION_Y));
 
-      var parentSemanticId = command.getProperties().get(SemanticKeys.PARENT_SEMANTIC_ELEMENT_ID);
-      var parent = elementAccessor.getElement(parentSemanticId, Package.class);
+      var parentSemanticElementId = command.getProperties().get(SemanticKeys.PARENT_SEMANTIC_ELEMENT_ID);
+      var parent = elementAccessor.getElement(parentSemanticElementId, Package.class);
 
       return parent
          .<Command> map(p -> new AddPackageCompoundCommand(context, p, position))

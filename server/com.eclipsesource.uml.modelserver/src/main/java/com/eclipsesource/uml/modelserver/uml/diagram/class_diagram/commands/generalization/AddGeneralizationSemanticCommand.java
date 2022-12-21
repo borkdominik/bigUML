@@ -10,8 +10,8 @@ public class AddGeneralizationSemanticCommand
    extends CreateSemanticRelationCommand<Classifier, Classifier, Generalization> {
 
    public AddGeneralizationSemanticCommand(final ModelContext context,
-      final Classifier general, final Classifier specific) {
-      super(context, general, specific);
+      final Classifier source, final Classifier target) {
+      super(context, source, target);
    }
 
    @Override

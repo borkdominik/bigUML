@@ -11,22 +11,20 @@
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association;
 
 import org.eclipse.uml2.uml.Association;
+import org.eclipse.uml2.uml.Package;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
-import com.eclipsesource.uml.modelserver.shared.semantic.UmlSemanticElementCommand;
+import com.eclipsesource.uml.modelserver.shared.semantic.DeleteSemanticChildCommand;
 
-public class RemoveAssociationSemanticCommand extends UmlSemanticElementCommand {
-
-   protected final Association association;
+public class RemoveAssociationSemanticCommand extends DeleteSemanticChildCommand<Package, Association> {
 
    public RemoveAssociationSemanticCommand(final ModelContext context,
-      final Association association) {
-      super(context);
-      this.association = association;
+      final Package parent, final Association semanticElement) {
+      super(context, parent, semanticElement);
    }
 
    @Override
-   protected void doExecute() {
-      model.getPackagedElements().remove(association);
+   protected void deleteSemanticElement(final Package parent, final Association child) {
+      parent.getPackagedElements().remove(child);
    }
 }

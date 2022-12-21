@@ -12,6 +12,7 @@ package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.ucl
 
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.uml2.uml.Class;
+import org.eclipse.uml2.uml.Package;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.commands.UmlRemoveNotationElementCommand;
@@ -19,11 +20,11 @@ import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.matcher.Class
 
 public class RemoveClassCompoundCommand extends CompoundCommand {
 
-   public RemoveClassCompoundCommand(final ModelContext context, final Class classToRemove) {
-      this.append(new RemoveClassSemanticCommand(context, classToRemove));
-      this.append(new UmlRemoveNotationElementCommand(context, classToRemove));
+   public RemoveClassCompoundCommand(final ModelContext context, final Package parent, final Class semanticElement) {
+      this.append(new RemoveClassSemanticCommand(context, parent, semanticElement));
+      this.append(new UmlRemoveNotationElementCommand(context, semanticElement));
 
-      new ClassDiagramCrossReferenceRemover(context).removeCommandsFor(classToRemove)
+      new ClassDiagramCrossReferenceRemover(context).removeCommandsFor(semanticElement)
          .forEach(this::append);
    }
 }

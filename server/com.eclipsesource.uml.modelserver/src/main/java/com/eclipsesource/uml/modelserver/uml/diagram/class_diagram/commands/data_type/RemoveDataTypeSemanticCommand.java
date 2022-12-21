@@ -11,19 +11,20 @@
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.data_type;
 
 import org.eclipse.uml2.uml.DataType;
+import org.eclipse.uml2.uml.Package;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
-import com.eclipsesource.uml.modelserver.shared.semantic.SemanticExistenceCheckedCommand;
+import com.eclipsesource.uml.modelserver.shared.semantic.DeleteSemanticChildCommand;
 
-public class RemoveDataTypeSemanticCommand extends SemanticExistenceCheckedCommand<DataType> {
+public class RemoveDataTypeSemanticCommand extends DeleteSemanticChildCommand<Package, DataType> {
 
    public RemoveDataTypeSemanticCommand(final ModelContext context,
-      final DataType dataType) {
-      super(context, dataType);
+      final Package parent, final DataType semanticElement) {
+      super(context, parent, semanticElement);
    }
 
    @Override
-   protected void doChanges() {
-      model.getPackagedElements().remove(semanticElement);
+   protected void deleteSemanticElement(final Package parent, final DataType child) {
+      parent.getPackagedElements().remove(child);
    }
 }

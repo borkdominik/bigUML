@@ -24,7 +24,7 @@ public class RemoveMessageSemanticCommand extends SemanticExistenceCheckedComman
    }
 
    @Override
-   protected void doChanges() {
+   protected void doChanges(final Message semanticElement) {
       var sendEvent = (MessageOccurrenceSpecification) semanticElement.getSendEvent();
       sendEvent.getCovereds().clear();
 

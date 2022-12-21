@@ -10,21 +10,22 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.primitive_type;
 
-import org.eclipse.uml2.uml.DataType;
+import org.eclipse.uml2.uml.Package;
 import org.eclipse.uml2.uml.PrimitiveType;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
-import com.eclipsesource.uml.modelserver.shared.semantic.SemanticExistenceCheckedCommand;
+import com.eclipsesource.uml.modelserver.shared.semantic.DeleteSemanticChildCommand;
 
-public class RemovePrimitiveTypeSemanticCommand extends SemanticExistenceCheckedCommand<DataType> {
+public class RemovePrimitiveTypeSemanticCommand extends DeleteSemanticChildCommand<Package, PrimitiveType> {
 
    public RemovePrimitiveTypeSemanticCommand(final ModelContext context,
-      final PrimitiveType primitiveType) {
-      super(context, primitiveType);
+      final Package parent,
+      final PrimitiveType semanticElement) {
+      super(context, parent, semanticElement);
    }
 
    @Override
-   protected void doChanges() {
-      model.getPackagedElements().remove(semanticElement);
+   protected void deleteSemanticElement(final Package parent, final PrimitiveType child) {
+      parent.getPackagedElements().remove(child);
    }
 }

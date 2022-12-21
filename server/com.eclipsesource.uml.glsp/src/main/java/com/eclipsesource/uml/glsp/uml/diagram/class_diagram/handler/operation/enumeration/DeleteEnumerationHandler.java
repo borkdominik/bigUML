@@ -20,6 +20,6 @@ public class DeleteEnumerationHandler extends BaseDeleteElementHandler<Enumerati
 
    @Override
    protected CCommand command(final Enumeration element) {
-      return RemoveEnumerationContribution.create(element);
+      return RemoveEnumerationContribution.create(element.getPackage(), element);
    }
 }

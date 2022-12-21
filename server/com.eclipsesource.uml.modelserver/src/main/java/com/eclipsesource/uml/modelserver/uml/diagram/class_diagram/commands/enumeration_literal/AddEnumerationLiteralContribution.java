@@ -44,7 +44,6 @@ public class AddEnumerationLiteralContribution extends BasicCommandContribution<
       var elementAccessor = new SemanticElementAccessor(context);
 
       var parentSemanticElementId = command.getProperties().get(SemanticKeys.PARENT_SEMANTIC_ELEMENT_ID);
-
       var parent = elementAccessor.getElement(parentSemanticElementId, Enumeration.class);
 
       return parent

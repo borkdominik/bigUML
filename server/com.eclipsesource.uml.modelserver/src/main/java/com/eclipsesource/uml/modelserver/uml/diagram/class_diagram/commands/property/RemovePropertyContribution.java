@@ -45,14 +45,14 @@ public class RemovePropertyContribution extends BasicCommandContribution<Command
       var context = ModelContext.of(modelUri, domain);
       var elementAccessor = new SemanticElementAccessor(context);
 
-      var parentSemanticElementId = command.getProperties().get(SemanticKeys.PARENT_SEMANTIC_ELEMENT_ID);
       var semanticElementId = command.getProperties().get(SemanticKeys.SEMANTIC_ELEMENT_ID);
+      var semanticElement = elementAccessor.getElement(semanticElementId, Property.class);
 
+      var parentSemanticElementId = command.getProperties().get(SemanticKeys.PARENT_SEMANTIC_ELEMENT_ID);
       var parent = elementAccessor.getElement(parentSemanticElementId, AttributeOwner.class);
-      var property = elementAccessor.getElement(semanticElementId, Property.class);
 
-      if (parent.isPresent() && property.isPresent()) {
-         return new RemovePropertySemanticCommand(context, property.get());
+      if (parent.isPresent() && semanticElement.isPresent()) {
+         return new RemovePropertySemanticCommand(context, parent.get(), semanticElement.get());
       }
 
       return new NoopCommand();

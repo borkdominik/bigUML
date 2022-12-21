@@ -29,12 +29,12 @@ public class RemoveOperationContribution extends BasicCommandContribution<Comman
 
    public static final String TYPE = "class:remove_operation";
 
-   public static CCommand create(final OperationOwner parent, final Operation operation) {
+   public static CCommand create(final OperationOwner parent, final Operation semanticElement) {
       var command = CCommandFactory.eINSTANCE.createCommand();
 
       command.setType(TYPE);
       command.getProperties().put(SemanticKeys.PARENT_SEMANTIC_ELEMENT_ID, SemanticElementAccessor.getUnsafeId(parent));
-      command.getProperties().put(SemanticKeys.SEMANTIC_ELEMENT_ID, SemanticElementAccessor.getId(operation));
+      command.getProperties().put(SemanticKeys.SEMANTIC_ELEMENT_ID, SemanticElementAccessor.getId(semanticElement));
 
       return command;
    }
@@ -45,14 +45,14 @@ public class RemoveOperationContribution extends BasicCommandContribution<Comman
       var context = ModelContext.of(modelUri, domain);
       var elementAccessor = new SemanticElementAccessor(context);
 
-      var parentSemanticElementId = command.getProperties().get(SemanticKeys.PARENT_SEMANTIC_ELEMENT_ID);
       var semanticElementId = command.getProperties().get(SemanticKeys.SEMANTIC_ELEMENT_ID);
+      var semanticElement = elementAccessor.getElement(semanticElementId, Operation.class);
 
+      var parentSemanticElementId = command.getProperties().get(SemanticKeys.PARENT_SEMANTIC_ELEMENT_ID);
       var parent = elementAccessor.getElement(parentSemanticElementId, OperationOwner.class);
-      var operation = elementAccessor.getElement(semanticElementId, Operation.class);
 
-      if (parent.isPresent() && operation.isPresent()) {
-         return new RemoveOperationSemanticCommand(context, parent.get(), operation.get());
+      if (parent.isPresent() && semanticElement.isPresent()) {
+         return new RemoveOperationSemanticCommand(context, parent.get(), semanticElement.get());
       }
 
       return new NoopCommand();

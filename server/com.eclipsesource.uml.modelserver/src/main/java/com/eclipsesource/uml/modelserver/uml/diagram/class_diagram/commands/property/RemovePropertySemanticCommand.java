@@ -14,21 +14,16 @@ import org.eclipse.uml2.uml.AttributeOwner;
 import org.eclipse.uml2.uml.Property;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
-import com.eclipsesource.uml.modelserver.shared.semantic.UmlSemanticElementCommand;
+import com.eclipsesource.uml.modelserver.shared.semantic.DeleteSemanticChildCommand;
 
-public class RemovePropertySemanticCommand extends UmlSemanticElementCommand {
+public class RemovePropertySemanticCommand extends DeleteSemanticChildCommand<AttributeOwner, Property> {
 
-   protected final Property property;
-
-   public RemovePropertySemanticCommand(final ModelContext context, final Property property) {
-      super(context);
-      this.property = property;
+   public RemovePropertySemanticCommand(final ModelContext context, final AttributeOwner parent, final Property semanticElement) {
+      super(context, parent, semanticElement);
    }
 
    @Override
-   protected void doExecute() {
-      var owner = (AttributeOwner) property.getOwner();
-      owner.getOwnedAttributes().remove(property);
+   protected void deleteSemanticElement(final AttributeOwner parent, final Property child) {
+      parent.getOwnedAttributes().remove(child);
    }
-
 }

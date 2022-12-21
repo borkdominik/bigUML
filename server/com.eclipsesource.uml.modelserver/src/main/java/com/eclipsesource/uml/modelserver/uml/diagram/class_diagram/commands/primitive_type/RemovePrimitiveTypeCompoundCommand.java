@@ -11,6 +11,7 @@
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.primitive_type;
 
 import org.eclipse.emf.common.command.CompoundCommand;
+import org.eclipse.uml2.uml.Package;
 import org.eclipse.uml2.uml.PrimitiveType;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
@@ -20,11 +21,12 @@ import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.match
 public class RemovePrimitiveTypeCompoundCommand extends CompoundCommand {
 
    public RemovePrimitiveTypeCompoundCommand(final ModelContext context,
-      final PrimitiveType primitiveType) {
-      this.append(new RemovePrimitiveTypeSemanticCommand(context, primitiveType));
-      this.append(new UmlRemoveNotationElementCommand(context, primitiveType));
+      final Package parent,
+      final PrimitiveType semanticElement) {
+      this.append(new RemovePrimitiveTypeSemanticCommand(context, parent, semanticElement));
+      this.append(new UmlRemoveNotationElementCommand(context, semanticElement));
 
-      new CommunicationDiagramCrossReferenceRemover(context).removeCommandsFor(primitiveType)
+      new CommunicationDiagramCrossReferenceRemover(context).removeCommandsFor(semanticElement)
          .forEach(this::append);
    }
 }

@@ -14,46 +14,37 @@ import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
 import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
 import org.eclipse.emfcloud.modelserver.edit.command.BasicCommandContribution;
 import org.eclipse.uml2.uml.Property;
 
 import com.eclipsesource.uml.modelserver.core.commands.noop.NoopCommand;
-import com.eclipsesource.uml.modelserver.shared.constants.SemanticKeys;
-import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
-import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
+import com.eclipsesource.uml.modelserver.shared.codec.ContributionDecoder;
+import com.eclipsesource.uml.modelserver.shared.codec.ContributionEncoder;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.util.ClassSemanticCommandUtil;
 
 public class SetPropertyBoundsContribution extends BasicCommandContribution<Command> {
 
    public static final String TYPE = "class:set_property_bounds";
-   public static final String NEW_BOUNDS = "new_bounds";
+   private static final String NEW_BOUNDS = "new_bounds";
 
-   public static CCommand create(final Property property, final String newBounds) {
-      var command = CCommandFactory.eINSTANCE.createCommand();
-
-      command.setType(TYPE);
-      command.getProperties().put(SemanticKeys.SEMANTIC_ELEMENT_ID, SemanticElementAccessor.getId(property));
-      command.getProperties().put(NEW_BOUNDS, newBounds);
-
-      return command;
+   public static CCommand create(final Property semanticElement, final String newBounds) {
+      return new ContributionEncoder().type(TYPE).element(semanticElement).extra(NEW_BOUNDS, newBounds).ccommand();
    }
 
    @Override
    protected Command toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
       throws DecodingException {
-      var context = ModelContext.of(modelUri, domain);
-      var elementAccessor = new SemanticElementAccessor(context);
+      var decoder = new ContributionDecoder(modelUri, domain, command);
 
-      var semanticElementId = command.getProperties().get(SemanticKeys.SEMANTIC_ELEMENT_ID);
-      var newLowerBound = ClassSemanticCommandUtil.getLower(command.getProperties().get(NEW_BOUNDS));
-      var newUpperBound = ClassSemanticCommandUtil.getUpper(command.getProperties().get(NEW_BOUNDS));
+      var context = decoder.context();
+      var element = decoder.element(Property.class);
+      var newBounds = decoder.extra(NEW_BOUNDS);
+      var newLowerBound = ClassSemanticCommandUtil.getLower(newBounds);
+      var newUpperBound = ClassSemanticCommandUtil.getUpper(newBounds);
 
-      var property = elementAccessor.getElement(semanticElementId, Property.class);
-
-      return property
-         .<Command> map(p -> new SetPropertyBoundsSemanticCommand(context, p, newLowerBound, newUpperBound))
+      return element
+         .<Command> map(e -> new SetPropertyBoundsSemanticCommand(context, e, newLowerBound, newUpperBound))
          .orElse(new NoopCommand());
    }
 

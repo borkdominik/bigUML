@@ -37,4 +37,9 @@
   <elements xsi:type="notation:Edge">
     <semanticElement elementId="__aP5wIFCEe2IVuM2UAj3dg"/>
   </elements>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_f_3EcILMEe2MPeiDDvtNXQ"/>
+    <position x="-110.56280479110113" y="57.86726314030594"/>
+    <size width="160.0" height="50.0"/>
+  </elements>
 </unotation:UmlDiagram>

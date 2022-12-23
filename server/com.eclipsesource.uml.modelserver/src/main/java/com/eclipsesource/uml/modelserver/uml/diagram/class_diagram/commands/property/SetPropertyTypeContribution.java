@@ -4,45 +4,35 @@ import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
 import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
 import org.eclipse.emfcloud.modelserver.edit.command.BasicCommandContribution;
 import org.eclipse.uml2.uml.Property;
 
 import com.eclipsesource.uml.modelserver.core.commands.noop.NoopCommand;
-import com.eclipsesource.uml.modelserver.shared.constants.SemanticKeys;
-import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
-import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
+import com.eclipsesource.uml.modelserver.shared.codec.ContributionDecoder;
+import com.eclipsesource.uml.modelserver.shared.codec.ContributionEncoder;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.util.ClassSemanticCommandUtil;
 
 public class SetPropertyTypeContribution extends BasicCommandContribution<Command> {
 
    public static final String TYPE = "class:set_property_type";
-   public static final String NEW_TYPE = "new_type";
+   private static final String NEW_TYPE = "new_type";
 
-   public static CCommand create(final Property property, final String newType) {
-      var command = CCommandFactory.eINSTANCE.createCommand();
-
-      command.setType(TYPE);
-      command.getProperties().put(SemanticKeys.SEMANTIC_ELEMENT_ID, SemanticElementAccessor.getId(property));
-      command.getProperties().put(NEW_TYPE, newType);
-
-      return command;
+   public static CCommand create(final Property semanticElement, final String newType) {
+      return new ContributionEncoder().type(TYPE).element(semanticElement).extra(NEW_TYPE, newType).ccommand();
    }
 
    @Override
    protected Command toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
       throws DecodingException {
-      var context = ModelContext.of(modelUri, domain);
-      var elementAccessor = new SemanticElementAccessor(context);
+      var decoder = new ContributionDecoder(modelUri, domain, command);
 
-      var semanticElementId = command.getProperties().get(SemanticKeys.SEMANTIC_ELEMENT_ID);
-      var newType = ClassSemanticCommandUtil.getType(domain, command.getProperties().get(NEW_TYPE));
+      var context = decoder.context();
+      var element = decoder.element(Property.class);
+      var newType = ClassSemanticCommandUtil.getType(domain, decoder.extra(NEW_TYPE));
 
-      var property = elementAccessor.getElement(semanticElementId, Property.class);
-
-      return property
-         .<Command> map(p -> new SetPropertyTypeSemanticCommand(context, p, newType))
+      return element
+         .<Command> map(e -> new SetPropertyTypeSemanticCommand(context, e, newType))
          .orElse(new NoopCommand());
    }
 

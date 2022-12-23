@@ -96,7 +96,7 @@ public class UmlChangeBoundsContribution extends BasicCommandContribution<Comman
    @Override
    protected Command toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
       throws DecodingException {
-      var context = ModelContext.of(modelUri, domain);
+      var context = ModelContext.of(modelUri, domain, command);
       var changeBoundsCompoundCommand = new CompoundCommand();
       var bounds = new ArrayList<ElementAndBounds>();
 

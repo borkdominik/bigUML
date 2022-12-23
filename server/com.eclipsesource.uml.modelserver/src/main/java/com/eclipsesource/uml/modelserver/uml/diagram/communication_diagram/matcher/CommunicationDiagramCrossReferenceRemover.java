@@ -10,13 +10,13 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.matcher;
 
-import java.util.List;
+import java.util.Set;
 
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.uml2.uml.Model;
 
-import com.eclipsesource.uml.modelserver.shared.extension.CrossReferenceMatcher;
+import com.eclipsesource.uml.modelserver.shared.matcher.CrossReferenceMatcher;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.utils.UmlSemanticUtil;
 import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.lifeline.RemoveLifelineCompoundCommand;
@@ -43,7 +43,7 @@ public class CommunicationDiagramCrossReferenceRemover {
          .build();
    }
 
-   public List<Command> removeCommandsFor(final EObject elementToRemove) {
-      return matcher.find(elementToRemove, model.eResource());
+   public Set<Command> removeCommandsFor(final EObject elementToRemove) {
+      return matcher.find(null, elementToRemove, model.eResource());
    }
 }

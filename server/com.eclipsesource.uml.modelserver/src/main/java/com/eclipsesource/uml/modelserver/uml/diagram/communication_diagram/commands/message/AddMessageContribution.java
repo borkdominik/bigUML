@@ -44,7 +44,7 @@ public class AddMessageContribution extends BasicCommandContribution<Command> {
    @Override
    protected Command toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
       throws DecodingException {
-      var context = ModelContext.of(modelUri, domain);
+      var context = ModelContext.of(modelUri, domain, command);
       var elementAccessor = new SemanticElementAccessor(context);
 
       var sourceLifelineUriFragment = command.getProperties().get(SemanticKeys.SOURCE_SEMANTIC_ELEMENT_ID);

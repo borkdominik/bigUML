@@ -42,7 +42,7 @@ public class RenameElementContribution extends BasicCommandContribution<Command>
    @Override
    protected Command toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
       throws DecodingException {
-      var context = ModelContext.of(modelUri, domain);
+      var context = ModelContext.of(modelUri, domain, command);
       var semanticElementId = command.getProperties().get(SemanticKeys.SEMANTIC_ELEMENT_ID);
       var newName = command.getProperties().get(NEW_NAME);
 

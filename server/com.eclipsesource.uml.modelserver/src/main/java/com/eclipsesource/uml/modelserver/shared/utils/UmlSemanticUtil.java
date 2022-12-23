@@ -10,8 +10,6 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.shared.utils;
 
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.resource.UMLResource;
 
@@ -22,9 +20,9 @@ public final class UmlSemanticUtil {
    private UmlSemanticUtil() {}
 
    public static Model getModel(final ModelContext context) {
-      Resource semanticResource = context.domain.getResourceSet()
+      var semanticResource = context.domain.getResourceSet()
          .getResource(context.uri.trimFileExtension().appendFileExtension(UMLResource.FILE_EXTENSION), false);
-      EObject semanticRoot = semanticResource.getContents().get(0);
+      var semanticRoot = semanticResource.getContents().get(0);
 
       return (Model) semanticRoot;
    }

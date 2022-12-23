@@ -41,7 +41,7 @@ public class RemoveInteractionContribution extends BasicCommandContribution<Comm
    @Override
    protected Command toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
       throws DecodingException {
-      var context = ModelContext.of(modelUri, domain);
+      var context = ModelContext.of(modelUri, domain, command);
       var elementAccessor = new SemanticElementAccessor(context);
 
       var semanticElementId = command.getProperties().get(SemanticKeys.SEMANTIC_ELEMENT_ID);

@@ -8,13 +8,14 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.shared.extension;
+package com.eclipsesource.uml.modelserver.shared.matcher;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
@@ -33,22 +34,24 @@ public class CrossReferenceMatcher<T> {
       this.matchers = matchers;
    }
 
-   public List<T> find(final EObject interest, final Resource resource) {
+   public Set<T> find(final MatcherContext context, final EObject interest, final Resource resource) {
       var settings = UsageCrossReferencer
          .find(interest, resource);
 
-      return find(settings, interest);
+      return find(context, interest, settings);
    }
 
-   protected List<T> find(final Collection<Setting> settings, final EObject interest) {
-      var matches = new ArrayList<T>();
+   protected Set<T> find(final MatcherContext context, final EObject interest, final Collection<Setting> settings) {
+      var matches = new HashSet<T>();
       var filteredSettings = settings.stream()
          .filter(StreamUtil.distinctByKey(Setting::getEObject))
+         .filter(setting -> !context.processedSettings.contains(setting))
          .collect(Collectors.toList());
 
       for (var setting : filteredSettings) {
-         for (var matcher : matchers) {
+         context.processedSettings.add(setting);
 
+         for (var matcher : matchers) {
             matcher.apply(setting, interest).ifPresent(matches::add);
          }
       }

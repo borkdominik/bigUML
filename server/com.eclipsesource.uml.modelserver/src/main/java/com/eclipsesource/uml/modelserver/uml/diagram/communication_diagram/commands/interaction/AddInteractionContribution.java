@@ -44,7 +44,7 @@ public class AddInteractionContribution extends BasicCommandContribution<Command
    @Override
    protected CompoundCommand toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
       throws DecodingException {
-      var context = ModelContext.of(modelUri, domain);
+      var context = ModelContext.of(modelUri, domain, command);
 
       var position = UmlGraphUtil.getGPoint(
          command.getProperties().get(NotationKeys.POSITION_X),

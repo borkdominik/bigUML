@@ -15,7 +15,7 @@ import org.eclipse.uml2.uml.Package;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.commands.UmlRemoveNotationElementCommand;
-import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.matcher.CommunicationDiagramCrossReferenceRemover;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.matcher.ClassDiagramCrossReferenceRemover;
 
 public class RemovePackageCompoundCommand extends CompoundCommand {
 
@@ -25,7 +25,7 @@ public class RemovePackageCompoundCommand extends CompoundCommand {
       this.append(new RemovePackageSemanticCommand(context, parent, semanticElement));
       this.append(new UmlRemoveNotationElementCommand(context, semanticElement));
 
-      new CommunicationDiagramCrossReferenceRemover(context).removeCommandsFor(semanticElement)
+      new ClassDiagramCrossReferenceRemover(context).removeCommandsFor(semanticElement)
          .forEach(this::append);
    }
 }

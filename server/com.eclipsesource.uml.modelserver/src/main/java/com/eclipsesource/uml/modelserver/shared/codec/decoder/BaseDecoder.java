@@ -24,7 +24,7 @@ public class BaseDecoder implements CCommandProvider, ContextProvider {
 
    protected BaseDecoder(final URI modelUri, final EditingDomain domain, final CCommand command) {
       this.command = command;
-      this.context = ModelContext.of(modelUri, domain);
+      this.context = ModelContext.of(modelUri, domain, command);
    }
 
    @Override

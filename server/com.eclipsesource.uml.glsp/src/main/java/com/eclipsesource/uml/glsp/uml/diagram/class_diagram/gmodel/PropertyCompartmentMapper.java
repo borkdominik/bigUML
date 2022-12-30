@@ -32,7 +32,7 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.Proper
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGModelMapper;
 import com.google.inject.Inject;
 
-public class PropertyCompartmentMapper extends BaseGModelMapper<Property, GCompartment> {
+public final class PropertyCompartmentMapper extends BaseGModelMapper<Property, GCompartment> {
    @Inject
    protected IdCountContextGenerator idCountGenerator;
 

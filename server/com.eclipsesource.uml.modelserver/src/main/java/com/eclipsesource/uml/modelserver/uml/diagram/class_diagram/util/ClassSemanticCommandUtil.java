@@ -20,7 +20,7 @@ import org.eclipse.uml2.uml.DataType;
 import org.eclipse.uml2.uml.NamedElement;
 import org.eclipse.uml2.uml.Type;
 
-public class ClassSemanticCommandUtil {
+public final class ClassSemanticCommandUtil {
 
    public static Type getType(final EditingDomain domain, final String typeName) {
       TreeIterator<Notifier> resourceSetContent = domain.getResourceSet().getAllContents();

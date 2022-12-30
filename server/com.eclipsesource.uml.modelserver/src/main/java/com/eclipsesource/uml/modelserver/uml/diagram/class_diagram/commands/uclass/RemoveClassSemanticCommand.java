@@ -16,7 +16,7 @@ import org.eclipse.uml2.uml.Package;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.DeleteSemanticChildCommand;
 
-public class RemoveClassSemanticCommand extends DeleteSemanticChildCommand<Package, Class> {
+public final class RemoveClassSemanticCommand extends DeleteSemanticChildCommand<Package, Class> {
 
    public RemoveClassSemanticCommand(final ModelContext context, final Package parent, final Class semanticElement) {
       super(context, parent, semanticElement);

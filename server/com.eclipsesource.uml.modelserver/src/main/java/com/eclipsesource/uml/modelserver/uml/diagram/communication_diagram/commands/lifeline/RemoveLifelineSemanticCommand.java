@@ -15,7 +15,7 @@ import org.eclipse.uml2.uml.Lifeline;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.SemanticExistenceCheckedCommand;
 
-public class RemoveLifelineSemanticCommand extends SemanticExistenceCheckedCommand<Lifeline> {
+public final class RemoveLifelineSemanticCommand extends SemanticExistenceCheckedCommand<Lifeline> {
 
    public RemoveLifelineSemanticCommand(final ModelContext context,
       final Lifeline lifeline) {

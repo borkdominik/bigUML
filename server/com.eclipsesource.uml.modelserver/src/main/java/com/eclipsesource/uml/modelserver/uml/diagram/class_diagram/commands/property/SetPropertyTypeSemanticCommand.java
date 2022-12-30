@@ -16,7 +16,7 @@ import org.eclipse.uml2.uml.Type;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.UmlSemanticElementCommand;
 
-public class SetPropertyTypeSemanticCommand extends UmlSemanticElementCommand {
+public final class SetPropertyTypeSemanticCommand extends UmlSemanticElementCommand {
 
    protected Property property;
    protected Type newType;

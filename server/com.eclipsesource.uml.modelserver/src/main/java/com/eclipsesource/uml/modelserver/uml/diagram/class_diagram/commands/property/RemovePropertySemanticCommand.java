@@ -16,9 +16,10 @@ import org.eclipse.uml2.uml.Property;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.DeleteSemanticChildCommand;
 
-public class RemovePropertySemanticCommand extends DeleteSemanticChildCommand<AttributeOwner, Property> {
+public final class RemovePropertySemanticCommand extends DeleteSemanticChildCommand<AttributeOwner, Property> {
 
-   public RemovePropertySemanticCommand(final ModelContext context, final AttributeOwner parent, final Property semanticElement) {
+   public RemovePropertySemanticCommand(final ModelContext context, final AttributeOwner parent,
+      final Property semanticElement) {
       super(context, parent, semanticElement);
    }
 

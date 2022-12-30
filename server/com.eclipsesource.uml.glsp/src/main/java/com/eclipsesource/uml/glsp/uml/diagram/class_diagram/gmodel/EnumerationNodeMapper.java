@@ -32,7 +32,7 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.Header
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.HeaderTypeSuffix;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGNodeMapper;
 
-public class EnumerationNodeMapper extends BaseGNodeMapper<Enumeration, GNode> {
+public final class EnumerationNodeMapper extends BaseGNodeMapper<Enumeration, GNode> {
    @Override
    public GNode map(final Enumeration enumeration) {
       var builder = new GNodeBuilder(ClassTypes.ENUMERATION)

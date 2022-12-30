@@ -30,7 +30,7 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.HeaderTypeSuffix;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGNodeMapper;
 
-public class DataTypeNodeMapper extends BaseGNodeMapper<DataType, GNode> {
+public final class DataTypeNodeMapper extends BaseGNodeMapper<DataType, GNode> {
 
    @Override
    public GNode map(final DataType dataType) {

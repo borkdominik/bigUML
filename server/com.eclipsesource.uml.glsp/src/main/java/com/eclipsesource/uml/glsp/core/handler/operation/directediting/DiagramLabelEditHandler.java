@@ -20,5 +20,5 @@ public interface DiagramLabelEditHandler<T extends EObject> {
 
    String getLabelSuffix();
 
-   void executeLabelEdit(final ApplyLabelEditOperation editLabelOperation);
+   void executeLabelEdit(final ApplyLabelEditOperation operation);
 }

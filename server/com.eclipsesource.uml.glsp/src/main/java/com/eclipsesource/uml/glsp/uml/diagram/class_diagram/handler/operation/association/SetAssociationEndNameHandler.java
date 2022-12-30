@@ -11,6 +11,7 @@
 package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.association;
 
 import org.eclipse.emfcloud.modelserver.command.CCommand;
+import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperation;
 import org.eclipse.uml2.uml.Property;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
@@ -18,15 +19,15 @@ import com.eclipsesource.uml.glsp.core.gmodel.suffix.LabelSuffix;
 import com.eclipsesource.uml.glsp.uml.handler.operations.directediting.BaseLabelEditHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association.SetAssociationEndNameContribution;
 
-public class SetAssociationEndNameHandler extends BaseLabelEditHandler<Property> {
+public final class SetAssociationEndNameHandler extends BaseLabelEditHandler<Property> {
 
    public SetAssociationEndNameHandler() {
       super(CoreTypes.LABEL_EDGE_NAME, LabelSuffix.SUFFIX);
    }
 
    @Override
-   protected CCommand command(final Property element, final String newText) {
-      return SetAssociationEndNameContribution.create(element, newText);
+   protected CCommand createCommand(final ApplyLabelEditOperation operation, final Property element) {
+      return SetAssociationEndNameContribution.create(element, operation.getText());
    }
 
 }

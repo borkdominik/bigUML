@@ -16,7 +16,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.uml2.uml.DataType;
 
-public class DataTypeMatcher {
+public final class DataTypeMatcher {
 
    public static Optional<DataType> ofChildUsage(final Setting setting, final EObject interest) {
       var eObject = setting.getEObject();

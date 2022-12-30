@@ -28,7 +28,7 @@ import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccesso
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.utils.UmlGraphUtil;
 
-public class AddLifelineContribution extends BasicCommandContribution<Command> {
+public final class AddLifelineContribution extends BasicCommandContribution<Command> {
 
    public static final String TYPE = "uml:add_lifeline";
 

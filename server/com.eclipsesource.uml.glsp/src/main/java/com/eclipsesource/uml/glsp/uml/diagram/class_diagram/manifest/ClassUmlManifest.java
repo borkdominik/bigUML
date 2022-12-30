@@ -84,7 +84,7 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.palette.ClassPalette
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.multibindings.Multibinder;
 
-public class ClassUmlManifest extends DiagramManifest
+public final class ClassUmlManifest extends DiagramManifest
    implements CreateHandlerContribution.Contributor,
    DeleteHandlerContribution.Contributor, LabelEditHandlerContribution.Contributor, SuffixIdAppenderContribution {
 

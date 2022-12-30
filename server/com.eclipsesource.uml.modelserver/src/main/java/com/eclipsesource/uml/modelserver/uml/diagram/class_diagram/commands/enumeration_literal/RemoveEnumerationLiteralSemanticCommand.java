@@ -16,7 +16,7 @@ import org.eclipse.uml2.uml.EnumerationLiteral;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.DeleteSemanticChildCommand;
 
-public class RemoveEnumerationLiteralSemanticCommand
+public final class RemoveEnumerationLiteralSemanticCommand
    extends DeleteSemanticChildCommand<Enumeration, EnumerationLiteral> {
 
    public RemoveEnumerationLiteralSemanticCommand(final ModelContext context,

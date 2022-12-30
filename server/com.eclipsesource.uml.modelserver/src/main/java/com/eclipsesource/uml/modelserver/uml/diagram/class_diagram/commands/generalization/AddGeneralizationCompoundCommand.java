@@ -6,7 +6,7 @@ import org.eclipse.uml2.uml.Classifier;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.commands.UmlAddEdgeCommand;
 
-public class AddGeneralizationCompoundCommand extends CompoundCommand {
+public final class AddGeneralizationCompoundCommand extends CompoundCommand {
 
    public AddGeneralizationCompoundCommand(final ModelContext context,
       final Classifier source,

@@ -19,7 +19,7 @@ import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.commands.UmlRemoveNotationElementCommand;
 import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.matcher.CommunicationDiagramCrossReferenceRemover;
 
-public class RemoveInteractionCompoundCommand extends CompoundCommand {
+public final class RemoveInteractionCompoundCommand extends CompoundCommand {
 
    public RemoveInteractionCompoundCommand(final ModelContext context,
       final Interaction interaction) {

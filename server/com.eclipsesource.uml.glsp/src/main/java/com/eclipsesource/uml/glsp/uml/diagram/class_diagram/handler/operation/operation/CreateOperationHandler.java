@@ -18,7 +18,7 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes
 import com.eclipsesource.uml.glsp.uml.handler.operations.create.BaseCreateChildNodeHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.operation.AddOperationContribution;
 
-public class CreateOperationHandler
+public final class CreateOperationHandler
    extends BaseCreateChildNodeHandler<OperationOwner> {
 
    public CreateOperationHandler() {

@@ -15,7 +15,7 @@ import org.eclipse.uml2.uml.NamedElement;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.UmlSemanticElementCommand;
 
-public class RenameElementSemanticCommand extends UmlSemanticElementCommand {
+public final class RenameElementSemanticCommand extends UmlSemanticElementCommand {
 
    protected final NamedElement element;
    protected final String newName;

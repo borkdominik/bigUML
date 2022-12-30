@@ -16,7 +16,7 @@ import org.eclipse.uml2.uml.OperationOwner;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.DeleteSemanticChildCommand;
 
-public class RemoveOperationSemanticCommand extends DeleteSemanticChildCommand<OperationOwner, Operation> {
+public final class RemoveOperationSemanticCommand extends DeleteSemanticChildCommand<OperationOwner, Operation> {
 
    public RemoveOperationSemanticCommand(final ModelContext context,
       final OperationOwner parent,

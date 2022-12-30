@@ -18,7 +18,7 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes
 import com.eclipsesource.uml.glsp.uml.handler.operations.create.BaseCreateChildNodeHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.enumeration_literal.AddEnumerationLiteralContribution;
 
-public class CreateEnumerationLiteralHandler
+public final class CreateEnumerationLiteralHandler
    extends BaseCreateChildNodeHandler<Enumeration> {
 
    public CreateEnumerationLiteralHandler() {

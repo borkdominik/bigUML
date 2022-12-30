@@ -25,7 +25,7 @@ import com.eclipsesource.uml.modelserver.shared.constants.SemanticKeys;
 import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 
-public class AddMessageContribution extends BasicCommandContribution<Command> {
+public final class AddMessageContribution extends BasicCommandContribution<Command> {
 
    public static final String TYPE = "communication:add_message";
 

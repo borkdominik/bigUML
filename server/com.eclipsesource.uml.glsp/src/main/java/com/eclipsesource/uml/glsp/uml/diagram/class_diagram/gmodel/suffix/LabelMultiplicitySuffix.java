@@ -12,7 +12,7 @@ package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix;
 
 import com.eclipsesource.uml.glsp.core.features.idgenerator.BaseSuffixIdAppender;
 
-public class LabelMultiplicitySuffix extends BaseSuffixIdAppender {
+public final class LabelMultiplicitySuffix extends BaseSuffixIdAppender {
    public static final String SUFFIX = "_label_multiplicity";
 
    public LabelMultiplicitySuffix() {

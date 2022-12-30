@@ -25,7 +25,7 @@ import com.eclipsesource.uml.modelserver.shared.constants.SemanticKeys;
 import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 
-public class RemoveLifelineContribution extends BasicCommandContribution<Command> {
+public final class RemoveLifelineContribution extends BasicCommandContribution<Command> {
 
    public static final String TYPE = "uml:remove_lifeline";
 

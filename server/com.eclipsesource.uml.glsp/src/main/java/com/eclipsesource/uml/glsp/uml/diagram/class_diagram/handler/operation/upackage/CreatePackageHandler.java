@@ -20,7 +20,7 @@ import com.eclipsesource.uml.glsp.uml.handler.operations.create.BaseCreateChildN
 import com.eclipsesource.uml.glsp.uml.handler.operations.create.CreateLocationAwareNodeHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.upackage.AddPackageContribution;
 
-public class CreatePackageHandler
+public final class CreatePackageHandler
    extends BaseCreateChildNodeHandler<Package> implements CreateLocationAwareNodeHandler {
 
    public CreatePackageHandler() {

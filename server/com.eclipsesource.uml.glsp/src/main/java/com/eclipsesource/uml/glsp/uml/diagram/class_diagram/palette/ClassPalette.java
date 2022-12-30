@@ -19,7 +19,7 @@ import com.eclipsesource.uml.glsp.core.features.toolpalette.DiagramPalette;
 import com.eclipsesource.uml.glsp.core.features.toolpalette.PaletteItemUtil;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
 
-public class ClassPalette implements DiagramPalette {
+public final class ClassPalette implements DiagramPalette {
    @Override
    public List<PaletteItem> getItems(final Map<String, String> args) {
       return List.of(containers(), relations(), features());

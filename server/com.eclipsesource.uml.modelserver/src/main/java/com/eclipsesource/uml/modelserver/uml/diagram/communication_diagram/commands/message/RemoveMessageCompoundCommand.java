@@ -16,7 +16,7 @@ import org.eclipse.uml2.uml.Message;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.commands.UmlRemoveNotationElementCommand;
 
-public class RemoveMessageCompoundCommand extends CompoundCommand {
+public final class RemoveMessageCompoundCommand extends CompoundCommand {
 
    public RemoveMessageCompoundCommand(final ModelContext context,
       final Message message) {

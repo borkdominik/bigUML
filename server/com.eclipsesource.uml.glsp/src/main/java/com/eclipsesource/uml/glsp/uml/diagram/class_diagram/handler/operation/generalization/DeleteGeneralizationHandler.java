@@ -16,10 +16,10 @@ import org.eclipse.uml2.uml.Generalization;
 import com.eclipsesource.uml.glsp.uml.handler.operations.delete.BaseDeleteElementHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.generalization.RemoveGeneralizationContribution;
 
-public class DeleteGeneralizationHandler extends BaseDeleteElementHandler<Generalization> {
+public final class DeleteGeneralizationHandler extends BaseDeleteElementHandler<Generalization> {
 
    @Override
-   protected CCommand command(final Generalization element) {
+   protected CCommand createCommand(final Generalization element) {
       return RemoveGeneralizationContribution.create(element.getSpecific(), element);
    }
 }

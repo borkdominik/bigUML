@@ -13,7 +13,7 @@ import com.eclipsesource.uml.modelserver.shared.codec.ContributionDecoder;
 import com.eclipsesource.uml.modelserver.shared.codec.ContributionEncoder;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.util.ClassSemanticCommandUtil;
 
-public class SetPropertyTypeContribution extends BasicCommandContribution<Command> {
+public final class SetPropertyTypeContribution extends BasicCommandContribution<Command> {
 
    public static final String TYPE = "class:set_property_type";
    private static final String NEW_TYPE = "new_type";

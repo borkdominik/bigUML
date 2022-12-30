@@ -16,7 +16,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.uml2.uml.Association;
 
-public class AssociationMatcher {
+public final class AssociationMatcher {
 
    public static Optional<Association> ofUsage(final Setting setting, final EObject interest) {
       var eObject = setting.getEObject();

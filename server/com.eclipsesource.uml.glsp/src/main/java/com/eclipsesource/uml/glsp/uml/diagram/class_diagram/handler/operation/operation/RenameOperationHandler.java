@@ -13,9 +13,9 @@ package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.o
 import org.eclipse.uml2.uml.Operation;
 
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.LabelSuffix;
-import com.eclipsesource.uml.glsp.uml.handler.operations.directediting.DefaultRenameNamedElementHandler;
+import com.eclipsesource.uml.glsp.uml.handler.operations.directediting.RenameNamedElementHandler;
 
-public class RenameOperationHandler extends DefaultRenameNamedElementHandler<Operation> {
+public final class RenameOperationHandler extends RenameNamedElementHandler<Operation> {
 
    public RenameOperationHandler() {
       super(LabelSuffix.SUFFIX);

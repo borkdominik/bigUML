@@ -18,7 +18,7 @@ import com.eclipsesource.uml.modelserver.shared.semantic.CreateSemanticChildComm
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.generator.OperatorNameGenerator;
 import com.eclipsesource.uml.modelserver.uml.generator.ContextualNameGenerator;
 
-public class AddOperationSemanticCommand extends CreateSemanticChildCommand<OperationOwner, Operation> {
+public final class AddOperationSemanticCommand extends CreateSemanticChildCommand<OperationOwner, Operation> {
 
    protected final ContextualNameGenerator<OperationOwner> nameGenerator;
 

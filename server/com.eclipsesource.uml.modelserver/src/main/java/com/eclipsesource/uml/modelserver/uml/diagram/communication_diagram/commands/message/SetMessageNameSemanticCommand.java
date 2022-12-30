@@ -15,7 +15,7 @@ import org.eclipse.uml2.uml.Message;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.UmlSemanticElementCommand;
 
-public class SetMessageNameSemanticCommand extends UmlSemanticElementCommand {
+public final class SetMessageNameSemanticCommand extends UmlSemanticElementCommand {
 
    protected final Message message;
    protected final String newName;

@@ -15,7 +15,7 @@ import org.eclipse.uml2.uml.Interaction;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.SemanticExistenceCheckedCommand;
 
-public class RemoveInteractionSemanticCommand extends SemanticExistenceCheckedCommand<Interaction> {
+public final class RemoveInteractionSemanticCommand extends SemanticExistenceCheckedCommand<Interaction> {
 
    public RemoveInteractionSemanticCommand(final ModelContext context,
       final Interaction interaction) {

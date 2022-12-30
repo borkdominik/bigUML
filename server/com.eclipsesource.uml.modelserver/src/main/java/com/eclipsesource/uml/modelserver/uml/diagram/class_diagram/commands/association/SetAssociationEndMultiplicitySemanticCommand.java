@@ -15,7 +15,7 @@ import org.eclipse.uml2.uml.Property;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.UmlSemanticElementCommand;
 
-public class SetAssociationEndMultiplicitySemanticCommand extends UmlSemanticElementCommand {
+public final class SetAssociationEndMultiplicitySemanticCommand extends UmlSemanticElementCommand {
 
    protected final Property property;
    protected final int newLowerBound;

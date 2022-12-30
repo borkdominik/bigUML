@@ -15,7 +15,7 @@ import org.eclipse.uml2.uml.OperationOwner;
 
 import com.eclipsesource.uml.modelserver.uml.generator.ContextualNameGenerator;
 
-public class OperatorNameGenerator implements ContextualNameGenerator<OperationOwner> {
+public final class OperatorNameGenerator implements ContextualNameGenerator<OperationOwner> {
 
    @Override
    public String newNameInContextOf(final OperationOwner element) {

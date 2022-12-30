@@ -22,7 +22,7 @@ import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccesso
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.commands.UmlAddShapeCommand;
 
-public class AddLifelineCompoundCommand extends CompoundCommand {
+public final class AddLifelineCompoundCommand extends CompoundCommand {
    private final NotationElementAccessor notationElementAccessor;
 
    public AddLifelineCompoundCommand(final ModelContext context,

@@ -8,7 +8,7 @@ import org.eclipse.uml2.uml.Package;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.commands.UmlAddShapeCommand;
 
-public class AddEnumerationCompoundCommand extends CompoundCommand {
+public final class AddEnumerationCompoundCommand extends CompoundCommand {
 
    public AddEnumerationCompoundCommand(final ModelContext context, final Package parent, final GPoint position) {
       var command = new AddEnumerationSemanticCommand(context, parent);

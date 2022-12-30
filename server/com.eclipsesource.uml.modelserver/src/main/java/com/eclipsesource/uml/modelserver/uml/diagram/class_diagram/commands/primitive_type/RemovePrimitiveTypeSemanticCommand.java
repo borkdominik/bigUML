@@ -16,7 +16,7 @@ import org.eclipse.uml2.uml.PrimitiveType;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.DeleteSemanticChildCommand;
 
-public class RemovePrimitiveTypeSemanticCommand extends DeleteSemanticChildCommand<Package, PrimitiveType> {
+public final class RemovePrimitiveTypeSemanticCommand extends DeleteSemanticChildCommand<Package, PrimitiveType> {
 
    public RemovePrimitiveTypeSemanticCommand(final ModelContext context,
       final Package parent,

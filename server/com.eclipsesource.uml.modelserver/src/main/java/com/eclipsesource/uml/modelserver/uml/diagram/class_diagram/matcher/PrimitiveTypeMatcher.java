@@ -16,7 +16,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.uml2.uml.PrimitiveType;
 
-public class PrimitiveTypeMatcher {
+public final class PrimitiveTypeMatcher {
 
    public static Optional<PrimitiveType> ofChildUsage(final Setting setting, final EObject interest) {
       var eObject = setting.getEObject();

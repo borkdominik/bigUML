@@ -20,7 +20,7 @@ import com.eclipsesource.uml.glsp.uml.handler.operations.create.BaseCreateChildN
 import com.eclipsesource.uml.glsp.uml.handler.operations.create.CreateLocationAwareNodeHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.lifeline.AddLifelineContribution;
 
-public class CreateLifelineHandler
+public final class CreateLifelineHandler
    extends BaseCreateChildNodeHandler<Interaction> implements CreateLocationAwareNodeHandler {
 
    public CreateLifelineHandler() {

@@ -16,7 +16,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.uml2.uml.Property;
 
-public class PropertyMatcher {
+public final class PropertyMatcher {
    public static Optional<Property> ofOwnedAttributeTypeUsage(final Setting setting, final EObject interest) {
       var eObject = setting.getEObject();
 

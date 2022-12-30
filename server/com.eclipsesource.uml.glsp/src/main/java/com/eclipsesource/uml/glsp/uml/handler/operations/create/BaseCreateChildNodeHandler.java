@@ -45,10 +45,12 @@ public abstract class BaseCreateChildNodeHandler<T> extends BaseCreateHandler<Cr
          "No valid container with id " + containerId + " for container type " + containerType.getSimpleName()
             + " found.");
 
-      modelServerAccess.exec(createCommand(operation, container))
+      var command = createCommand(operation, container);
+      modelServerAccess.exec(command)
          .thenAccept(response -> {
             if (response.body() == null || response.body().isEmpty()) {
-               throw new GLSPServerException("Could not execute create on " + elementTypeId);
+               throw new GLSPServerException("Could not execute create on " + elementTypeId + " for command "
+                  + command.getClass().getName());
             }
          });
    }

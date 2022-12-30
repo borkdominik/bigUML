@@ -28,7 +28,7 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.utils.AssociationTyp
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGEdgeMapper;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.constants.AssociationType;
 
-public class AssociationEdgeMapper extends BaseGEdgeMapper<Association, GEdge> {
+public final class AssociationEdgeMapper extends BaseGEdgeMapper<Association, GEdge> {
 
    @Override
    public GEdge map(final Association association) {

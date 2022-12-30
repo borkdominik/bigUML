@@ -54,9 +54,8 @@ public abstract class BaseLabelEditHandler<T extends EObject> implements Diagram
    public String getLabelSuffix() { return labelSuffix; }
 
    @Override
-   public void executeLabelEdit(final ApplyLabelEditOperation editLabelOperation) {
-      var labelId = editLabelOperation.getLabelId();
-      var newText = editLabelOperation.getText();
+   public void executeLabelEdit(final ApplyLabelEditOperation operation) {
+      var labelId = operation.getLabelId();
 
       var elementId = suffix.extractId(labelId)
          .orElseThrow(() -> new GLSPServerException("No elementId found by extractor for label " + labelId));
@@ -65,7 +64,7 @@ public abstract class BaseLabelEditHandler<T extends EObject> implements Diagram
          elementType,
          "Could not find semantic element for id '" + elementId + "'.");
 
-      var command = command(semanticElement, newText);
+      var command = createCommand(operation, semanticElement);
       modelServerAccess.exec(command)
          .thenAccept(response -> {
             if (response.body() == null || response.body().isEmpty()) {
@@ -74,5 +73,5 @@ public abstract class BaseLabelEditHandler<T extends EObject> implements Diagram
          });
    }
 
-   protected abstract CCommand command(T element, String newText);
+   protected abstract CCommand createCommand(ApplyLabelEditOperation operation, T element);
 }

@@ -24,7 +24,7 @@ import com.eclipsesource.uml.modelserver.core.commands.noop.NoopCommand;
 import com.eclipsesource.uml.modelserver.shared.codec.ContributionDecoder;
 import com.eclipsesource.uml.modelserver.shared.codec.ContributionEncoder;
 
-public class AddClassContribution extends BasicCommandContribution<Command> {
+public final class AddClassContribution extends BasicCommandContribution<Command> {
 
    public static final String TYPE = "class:add_class";
    private static final String IS_ABSTRACT = "is_abstract";

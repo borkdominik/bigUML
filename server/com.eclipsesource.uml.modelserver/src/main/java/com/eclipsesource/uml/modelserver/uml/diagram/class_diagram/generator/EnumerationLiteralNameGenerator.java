@@ -15,7 +15,7 @@ import org.eclipse.uml2.uml.EnumerationLiteral;
 
 import com.eclipsesource.uml.modelserver.uml.generator.ContextualNameGenerator;
 
-public class EnumerationLiteralNameGenerator implements ContextualNameGenerator<Enumeration> {
+public final class EnumerationLiteralNameGenerator implements ContextualNameGenerator<Enumeration> {
 
    @Override
    public String newNameInContextOf(final Enumeration element) {

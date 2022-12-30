@@ -22,7 +22,7 @@ import com.eclipsesource.uml.modelserver.shared.utils.UmlSemanticUtil;
 import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.lifeline.RemoveLifelineCompoundCommand;
 import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.message.RemoveMessageCompoundCommand;
 
-public class CommunicationDiagramCrossReferenceRemover {
+public final class CommunicationDiagramCrossReferenceRemover {
    protected final Model model;
    protected final CrossReferenceMatcher<Command> matcher;
 

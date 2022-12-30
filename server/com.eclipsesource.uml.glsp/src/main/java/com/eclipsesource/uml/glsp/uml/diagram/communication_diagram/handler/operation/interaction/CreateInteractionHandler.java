@@ -10,17 +10,15 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.handler.operation.interaction;
 
-import java.util.Optional;
-
 import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.util.GraphUtil;
+import org.eclipse.glsp.server.operations.CreateNodeOperation;
 
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
 import com.eclipsesource.uml.glsp.uml.handler.operations.create.BaseCreateNodeHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.interaction.AddInteractionContribution;
 
-public class CreateInteractionHandler
+public final class CreateInteractionHandler
    extends BaseCreateNodeHandler {
 
    public CreateInteractionHandler() {
@@ -28,7 +26,7 @@ public class CreateInteractionHandler
    }
 
    @Override
-   protected CCommand command(final Optional<GPoint> location) {
-      return AddInteractionContribution.create(location.orElse(GraphUtil.point(0, 0)));
+   protected CCommand createCommand(final CreateNodeOperation operation) {
+      return AddInteractionContribution.create(operation.getLocation().orElse(GraphUtil.point(0, 0)));
    }
 }

@@ -11,13 +11,14 @@
 package com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.handler.operation.message;
 
 import org.eclipse.emfcloud.modelserver.command.CCommand;
+import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 import org.eclipse.uml2.uml.Lifeline;
 
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
 import com.eclipsesource.uml.glsp.uml.handler.operations.create.BaseCreateEdgeHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.message.AddMessageContribution;
 
-public class CreateMessageHandler
+public final class CreateMessageHandler
    extends BaseCreateEdgeHandler<Lifeline, Lifeline> {
 
    public CreateMessageHandler() {
@@ -25,7 +26,7 @@ public class CreateMessageHandler
    }
 
    @Override
-   protected CCommand command(final Lifeline source, final Lifeline target) {
+   protected CCommand createCommand(final CreateEdgeOperation operation, final Lifeline source, final Lifeline target) {
       return AddMessageContribution.create(
          source,
          target);

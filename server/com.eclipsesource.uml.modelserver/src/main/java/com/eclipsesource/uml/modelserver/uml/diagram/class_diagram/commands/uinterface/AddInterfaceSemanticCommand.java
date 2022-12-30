@@ -8,7 +8,7 @@ import com.eclipsesource.uml.modelserver.shared.semantic.CreateSemanticChildComm
 import com.eclipsesource.uml.modelserver.uml.generator.NameGenerator;
 import com.eclipsesource.uml.modelserver.uml.generator.PackageableElementNameGenerator;
 
-public class AddInterfaceSemanticCommand extends CreateSemanticChildCommand<Package, Interface> {
+public final class AddInterfaceSemanticCommand extends CreateSemanticChildCommand<Package, Interface> {
 
    protected final NameGenerator nameGenerator;
 

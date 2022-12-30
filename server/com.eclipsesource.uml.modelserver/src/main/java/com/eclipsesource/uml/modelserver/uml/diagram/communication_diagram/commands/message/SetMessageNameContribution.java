@@ -24,7 +24,7 @@ import com.eclipsesource.uml.modelserver.shared.constants.SemanticKeys;
 import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 
-public class SetMessageNameContribution extends BasicCommandContribution<Command> {
+public final class SetMessageNameContribution extends BasicCommandContribution<Command> {
 
    public static final String TYPE = "communication:set_message_name";
    private static final String NEW_NAME = "new_name";

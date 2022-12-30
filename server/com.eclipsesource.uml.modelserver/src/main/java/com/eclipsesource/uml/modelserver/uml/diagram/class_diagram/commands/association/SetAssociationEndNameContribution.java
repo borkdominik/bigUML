@@ -22,7 +22,7 @@ import com.eclipsesource.uml.modelserver.core.commands.noop.NoopCommand;
 import com.eclipsesource.uml.modelserver.shared.codec.ContributionDecoder;
 import com.eclipsesource.uml.modelserver.shared.codec.ContributionEncoder;
 
-public class SetAssociationEndNameContribution extends BasicCommandContribution<Command> {
+public final class SetAssociationEndNameContribution extends BasicCommandContribution<Command> {
 
    public static final String TYPE = "class:set_association_end_name";
    private static final String NEW_NAME = "new_name";

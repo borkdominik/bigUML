@@ -18,7 +18,7 @@ import org.eclipse.uml2.uml.Package;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.commands.UmlAddShapeCommand;
 
-public class AddPrimitiveTypeCompoundCommand extends CompoundCommand {
+public final class AddPrimitiveTypeCompoundCommand extends CompoundCommand {
 
    public AddPrimitiveTypeCompoundCommand(final ModelContext context, final Package parent, final GPoint position) {
       var command = new AddPrimitiveTypeSemanticCommand(context, parent);

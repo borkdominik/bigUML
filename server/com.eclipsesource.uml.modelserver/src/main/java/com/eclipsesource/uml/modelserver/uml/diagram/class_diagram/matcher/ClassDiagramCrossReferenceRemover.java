@@ -33,7 +33,7 @@ import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.ucla
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uinterface.RemoveInterfaceCompoundCommand;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.upackage.RemovePackageCompoundCommand;
 
-public class ClassDiagramCrossReferenceRemover {
+public final class ClassDiagramCrossReferenceRemover {
    public static String MATCHER_CONTEXT_KEY = "matcher_context";
 
    protected final ModelContext context;

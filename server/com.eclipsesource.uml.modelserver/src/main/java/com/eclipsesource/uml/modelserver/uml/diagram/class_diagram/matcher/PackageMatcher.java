@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.Package;
 
-public class PackageMatcher {
+public final class PackageMatcher {
 
    public static Optional<Package> ofChildUsage(final Setting setting, final EObject interest) {
       var eObject = setting.getEObject();

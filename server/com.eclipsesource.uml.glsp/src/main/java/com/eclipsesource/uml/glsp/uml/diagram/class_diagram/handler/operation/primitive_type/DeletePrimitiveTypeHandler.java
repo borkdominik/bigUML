@@ -16,10 +16,10 @@ import org.eclipse.uml2.uml.PrimitiveType;
 import com.eclipsesource.uml.glsp.uml.handler.operations.delete.BaseDeleteElementHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.primitive_type.RemovePrimitiveTypeContribution;
 
-public class DeletePrimitiveTypeHandler extends BaseDeleteElementHandler<PrimitiveType> {
+public final class DeletePrimitiveTypeHandler extends BaseDeleteElementHandler<PrimitiveType> {
 
    @Override
-   protected CCommand command(final PrimitiveType element) {
+   protected CCommand createCommand(final PrimitiveType element) {
       return RemovePrimitiveTypeContribution.create(element.getPackage(), element);
    }
 }

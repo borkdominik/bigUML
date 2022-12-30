@@ -18,7 +18,7 @@ import com.eclipsesource.uml.modelserver.shared.semantic.UmlSemanticElementComma
 import com.eclipsesource.uml.modelserver.uml.generator.NameGenerator;
 import com.eclipsesource.uml.modelserver.uml.generator.PackageableElementNameGenerator;
 
-public class AddInteractionSemanticCommand extends UmlSemanticElementCommand {
+public final class AddInteractionSemanticCommand extends UmlSemanticElementCommand {
 
    protected final Interaction newInteraction;
    protected final NameGenerator nameGenerator;

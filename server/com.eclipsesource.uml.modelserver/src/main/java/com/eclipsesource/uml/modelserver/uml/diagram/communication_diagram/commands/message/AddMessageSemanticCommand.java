@@ -19,7 +19,7 @@ import com.eclipsesource.uml.modelserver.shared.semantic.UmlSemanticElementComma
 import com.eclipsesource.uml.modelserver.uml.generator.ListNameGenerator;
 import com.eclipsesource.uml.modelserver.uml.generator.NameGenerator;
 
-public class AddMessageSemanticCommand extends UmlSemanticElementCommand {
+public final class AddMessageSemanticCommand extends UmlSemanticElementCommand {
 
    protected final Message newMessage;
    protected final Lifeline sourceLifeline;

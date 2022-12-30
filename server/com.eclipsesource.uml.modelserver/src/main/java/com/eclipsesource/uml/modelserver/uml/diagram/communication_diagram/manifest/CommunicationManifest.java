@@ -23,7 +23,7 @@ import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.comma
 import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.message.SetMessageNameContribution;
 import com.google.inject.multibindings.MapBinder;
 
-public class CommunicationManifest extends DiagramManifest implements CommandCodecContribution {
+public final class CommunicationManifest extends DiagramManifest implements CommandCodecContribution {
    @Override
    protected void configure() {
       super.configure();

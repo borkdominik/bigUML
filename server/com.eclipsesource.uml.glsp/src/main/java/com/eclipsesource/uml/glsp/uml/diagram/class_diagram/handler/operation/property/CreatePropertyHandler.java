@@ -18,7 +18,7 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes
 import com.eclipsesource.uml.glsp.uml.handler.operations.create.BaseCreateChildNodeHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.AddPropertyContribution;
 
-public class CreatePropertyHandler
+public final class CreatePropertyHandler
    extends BaseCreateChildNodeHandler<AttributeOwner> {
 
    public CreatePropertyHandler() {

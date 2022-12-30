@@ -17,10 +17,10 @@ import org.eclipse.uml2.uml.OperationOwner;
 import com.eclipsesource.uml.glsp.uml.handler.operations.delete.BaseDeleteElementHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.operation.RemoveOperationContribution;
 
-public class DeleteOperationHandler extends BaseDeleteElementHandler<Operation> {
+public final class DeleteOperationHandler extends BaseDeleteElementHandler<Operation> {
 
    @Override
-   protected CCommand command(final Operation element) {
+   protected CCommand createCommand(final Operation element) {
       var container = (OperationOwner) element.eContainer();
       return RemoveOperationContribution.create(container, element);
    }

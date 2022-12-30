@@ -23,7 +23,7 @@ import com.eclipsesource.uml.modelserver.core.commands.noop.NoopCommand;
 import com.eclipsesource.uml.modelserver.shared.codec.ContributionDecoder;
 import com.eclipsesource.uml.modelserver.shared.codec.ContributionEncoder;
 
-public class RemoveEnumerationLiteralContribution extends BasicCommandContribution<Command> {
+public final class RemoveEnumerationLiteralContribution extends BasicCommandContribution<Command> {
 
    public static final String TYPE = "class:remove_enumeration_literal";
 

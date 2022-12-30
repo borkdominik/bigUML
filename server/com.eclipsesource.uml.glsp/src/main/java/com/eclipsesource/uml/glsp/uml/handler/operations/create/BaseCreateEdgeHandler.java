@@ -51,7 +51,7 @@ public abstract class BaseCreateEdgeHandler<S, T>
          targetType,
          "No valid container with id " + targetId + " for target type " + targetType.getSimpleName() + " found.");
 
-      var command = command(source, target);
+      var command = createCommand(operation, source, target);
       modelServerAccess.exec(command)
          .thenAccept(response -> {
             if (response.body() == null || response.body().isEmpty()) {
@@ -60,5 +60,5 @@ public abstract class BaseCreateEdgeHandler<S, T>
          });
    }
 
-   protected abstract CCommand command(S source, T target);
+   protected abstract CCommand createCommand(CreateEdgeOperation operation, S source, T target);
 }

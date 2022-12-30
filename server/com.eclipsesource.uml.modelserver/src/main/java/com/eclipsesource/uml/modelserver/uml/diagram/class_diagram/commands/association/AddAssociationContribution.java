@@ -24,7 +24,7 @@ import com.eclipsesource.uml.modelserver.shared.codec.ContributionDecoder;
 import com.eclipsesource.uml.modelserver.shared.codec.ContributionEncoder;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.constants.AssociationType;
 
-public class AddAssociationContribution extends BasicCommandContribution<Command> {
+public final class AddAssociationContribution extends BasicCommandContribution<Command> {
 
    public static final String TYPE = "class:add_association";
    private static final String TYPE_KEYWORD = "type_keyword";

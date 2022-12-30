@@ -14,7 +14,7 @@ import org.eclipse.uml2.uml.Type;
 
 import com.eclipsesource.uml.modelserver.uml.generator.ContextualNameGenerator;
 
-public class AssociationEndNameGenerator implements ContextualNameGenerator<Type> {
+public final class AssociationEndNameGenerator implements ContextualNameGenerator<Type> {
 
    @Override
    public String newNameInContextOf(final Type element) {

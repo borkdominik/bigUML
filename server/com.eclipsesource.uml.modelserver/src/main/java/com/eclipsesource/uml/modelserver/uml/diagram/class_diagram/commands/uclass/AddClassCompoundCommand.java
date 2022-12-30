@@ -18,7 +18,7 @@ import org.eclipse.uml2.uml.Package;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.commands.UmlAddShapeCommand;
 
-public class AddClassCompoundCommand extends CompoundCommand {
+public final class AddClassCompoundCommand extends CompoundCommand {
 
    public AddClassCompoundCommand(final ModelContext context, final Package parent,
       final GPoint position,

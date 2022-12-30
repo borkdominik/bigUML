@@ -20,7 +20,7 @@ import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.constants.Ass
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.generator.AssociationEndNameGenerator;
 import com.eclipsesource.uml.modelserver.uml.generator.ContextualNameGenerator;
 
-public class AddAssociationSemanticCommand extends CreateSemanticRelationCommand<Type, Type, Association> {
+public final class AddAssociationSemanticCommand extends CreateSemanticRelationCommand<Type, Type, Association> {
 
    protected final AssociationType type;
    protected final ContextualNameGenerator<Type> nameGenerator;

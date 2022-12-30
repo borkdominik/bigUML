@@ -18,7 +18,8 @@ import com.eclipsesource.uml.modelserver.shared.semantic.CreateSemanticChildComm
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.generator.EnumerationLiteralNameGenerator;
 import com.eclipsesource.uml.modelserver.uml.generator.ContextualNameGenerator;
 
-public class AddEnumerationLiteralSemanticCommand extends CreateSemanticChildCommand<Enumeration, EnumerationLiteral> {
+public final class AddEnumerationLiteralSemanticCommand
+   extends CreateSemanticChildCommand<Enumeration, EnumerationLiteral> {
 
    protected final ContextualNameGenerator<Enumeration> nameGenerator;
 

@@ -18,7 +18,7 @@ import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.commands.UmlRemoveNotationElementCommand;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.matcher.ClassDiagramCrossReferenceRemover;
 
-public class RemoveAssociationCompoundCommand extends CompoundCommand {
+public final class RemoveAssociationCompoundCommand extends CompoundCommand {
 
    public RemoveAssociationCompoundCommand(final ModelContext context,
       final Package parent,

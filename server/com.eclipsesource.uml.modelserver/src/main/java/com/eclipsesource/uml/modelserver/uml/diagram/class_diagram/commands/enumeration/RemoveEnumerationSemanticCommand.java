@@ -6,7 +6,7 @@ import org.eclipse.uml2.uml.Package;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.DeleteSemanticChildCommand;
 
-public class RemoveEnumerationSemanticCommand extends DeleteSemanticChildCommand<Package, Enumeration> {
+public final class RemoveEnumerationSemanticCommand extends DeleteSemanticChildCommand<Package, Enumeration> {
 
    public RemoveEnumerationSemanticCommand(final ModelContext context,
       final Package parent, final Enumeration semanticElement) {

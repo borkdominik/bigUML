@@ -18,7 +18,7 @@ import com.eclipsesource.uml.modelserver.shared.semantic.CreateSemanticChildComm
 import com.eclipsesource.uml.modelserver.uml.generator.NameGenerator;
 import com.eclipsesource.uml.modelserver.uml.generator.PackageableElementNameGenerator;
 
-public class AddClassSemanticCommand extends CreateSemanticChildCommand<Package, Class> {
+public final class AddClassSemanticCommand extends CreateSemanticChildCommand<Package, Class> {
 
    protected final Boolean isAbstract;
    protected final NameGenerator nameGenerator;

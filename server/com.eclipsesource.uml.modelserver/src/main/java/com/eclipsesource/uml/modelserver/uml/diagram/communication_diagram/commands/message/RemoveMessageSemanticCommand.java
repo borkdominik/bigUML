@@ -16,7 +16,7 @@ import org.eclipse.uml2.uml.MessageOccurrenceSpecification;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.SemanticExistenceCheckedCommand;
 
-public class RemoveMessageSemanticCommand extends SemanticExistenceCheckedCommand<Message> {
+public final class RemoveMessageSemanticCommand extends SemanticExistenceCheckedCommand<Message> {
 
    public RemoveMessageSemanticCommand(final ModelContext context,
       final Message message) {

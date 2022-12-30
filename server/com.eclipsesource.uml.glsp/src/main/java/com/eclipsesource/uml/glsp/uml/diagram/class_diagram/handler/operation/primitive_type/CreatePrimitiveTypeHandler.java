@@ -20,7 +20,7 @@ import com.eclipsesource.uml.glsp.uml.handler.operations.create.BaseCreateChildN
 import com.eclipsesource.uml.glsp.uml.handler.operations.create.CreateLocationAwareNodeHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.primitive_type.AddPrimitiveTypeContribution;
 
-public class CreatePrimitiveTypeHandler
+public final class CreatePrimitiveTypeHandler
    extends BaseCreateChildNodeHandler<Package> implements CreateLocationAwareNodeHandler {
 
    public CreatePrimitiveTypeHandler() {

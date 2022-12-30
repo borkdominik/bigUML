@@ -15,7 +15,7 @@ import org.eclipse.uml2.uml.Property;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.UmlSemanticElementCommand;
 
-public class SetPropertyBoundsSemanticCommand extends UmlSemanticElementCommand {
+public final class SetPropertyBoundsSemanticCommand extends UmlSemanticElementCommand {
 
    protected final Property property;
    protected final int newLowerBound;

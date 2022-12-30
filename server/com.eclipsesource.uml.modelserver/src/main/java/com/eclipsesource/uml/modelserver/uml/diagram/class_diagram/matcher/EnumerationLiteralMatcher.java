@@ -16,7 +16,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.uml2.uml.EnumerationLiteral;
 
-public class EnumerationLiteralMatcher {
+public final class EnumerationLiteralMatcher {
 
    public static Optional<EnumerationLiteral> ofUsage(final Setting setting, final EObject interest) {
       var eObject = setting.getEObject();

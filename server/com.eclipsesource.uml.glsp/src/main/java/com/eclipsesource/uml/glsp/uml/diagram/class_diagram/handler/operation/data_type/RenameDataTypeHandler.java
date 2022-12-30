@@ -13,9 +13,9 @@ package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.d
 import org.eclipse.uml2.uml.DataType;
 
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.HeaderLabelSuffix;
-import com.eclipsesource.uml.glsp.uml.handler.operations.directediting.DefaultRenameNamedElementHandler;
+import com.eclipsesource.uml.glsp.uml.handler.operations.directediting.RenameNamedElementHandler;
 
-public class RenameDataTypeHandler extends DefaultRenameNamedElementHandler<DataType> {
+public final class RenameDataTypeHandler extends RenameNamedElementHandler<DataType> {
 
    public RenameDataTypeHandler() {
       super(HeaderLabelSuffix.SUFFIX);

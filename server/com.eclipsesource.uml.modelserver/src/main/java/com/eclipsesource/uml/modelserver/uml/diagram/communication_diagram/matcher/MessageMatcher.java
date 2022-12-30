@@ -18,7 +18,7 @@ import org.eclipse.emf.ecore.util.EObjectWithInverseEList;
 import org.eclipse.uml2.uml.Message;
 import org.eclipse.uml2.uml.MessageOccurrenceSpecification;
 
-public class MessageMatcher {
+public final class MessageMatcher {
 
    public static Optional<Message> ofUsage(final Setting setting, final EObject interest) {
       var eObject = setting.getEObject();

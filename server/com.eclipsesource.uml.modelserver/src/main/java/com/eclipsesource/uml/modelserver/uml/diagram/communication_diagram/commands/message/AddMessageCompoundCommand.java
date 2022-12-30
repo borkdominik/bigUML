@@ -16,7 +16,7 @@ import org.eclipse.uml2.uml.Lifeline;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.commands.UmlAddEdgeCommand;
 
-public class AddMessageCompoundCommand extends CompoundCommand {
+public final class AddMessageCompoundCommand extends CompoundCommand {
 
    public AddMessageCompoundCommand(final ModelContext context,
       final Lifeline source, final Lifeline target) {

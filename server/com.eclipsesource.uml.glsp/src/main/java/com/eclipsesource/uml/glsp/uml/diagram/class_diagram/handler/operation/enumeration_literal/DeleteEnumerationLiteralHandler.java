@@ -16,10 +16,10 @@ import org.eclipse.uml2.uml.EnumerationLiteral;
 import com.eclipsesource.uml.glsp.uml.handler.operations.delete.BaseDeleteElementHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.enumeration_literal.RemoveEnumerationLiteralContribution;
 
-public class DeleteEnumerationLiteralHandler extends BaseDeleteElementHandler<EnumerationLiteral> {
+public final class DeleteEnumerationLiteralHandler extends BaseDeleteElementHandler<EnumerationLiteral> {
 
    @Override
-   protected CCommand command(final EnumerationLiteral element) {
+   protected CCommand createCommand(final EnumerationLiteral element) {
       var container = element.getEnumeration();
       return RemoveEnumerationLiteralContribution.create(container, element);
    }

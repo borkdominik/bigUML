@@ -16,10 +16,10 @@ import org.eclipse.uml2.uml.Package;
 import com.eclipsesource.uml.glsp.uml.handler.operations.delete.BaseDeleteElementHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.upackage.RemovePackageContribution;
 
-public class DeletePackageHandler extends BaseDeleteElementHandler<Package> {
+public final class DeletePackageHandler extends BaseDeleteElementHandler<Package> {
 
    @Override
-   protected CCommand command(final Package element) {
+   protected CCommand createCommand(final Package element) {
       return RemovePackageContribution.create(element.getNestingPackage(), element);
    }
 }

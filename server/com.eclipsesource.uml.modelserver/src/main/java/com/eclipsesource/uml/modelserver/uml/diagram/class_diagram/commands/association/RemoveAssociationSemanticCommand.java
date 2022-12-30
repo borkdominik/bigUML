@@ -16,7 +16,7 @@ import org.eclipse.uml2.uml.Package;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.DeleteSemanticChildCommand;
 
-public class RemoveAssociationSemanticCommand extends DeleteSemanticChildCommand<Package, Association> {
+public final class RemoveAssociationSemanticCommand extends DeleteSemanticChildCommand<Package, Association> {
 
    public RemoveAssociationSemanticCommand(final ModelContext context,
       final Package parent, final Association semanticElement) {

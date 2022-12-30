@@ -17,7 +17,7 @@ import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.commands.UmlAddEdgeCommand;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.constants.AssociationType;
 
-public class AddAssociationCompoundCommand extends CompoundCommand {
+public final class AddAssociationCompoundCommand extends CompoundCommand {
 
    public AddAssociationCompoundCommand(final ModelContext context,
       final Type source, final Type target,

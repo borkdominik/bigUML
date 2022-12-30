@@ -13,9 +13,9 @@ package com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.handler.ope
 import org.eclipse.uml2.uml.Interaction;
 
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.HeaderLabelSuffix;
-import com.eclipsesource.uml.glsp.uml.handler.operations.directediting.DefaultRenameNamedElementHandler;
+import com.eclipsesource.uml.glsp.uml.handler.operations.directediting.RenameNamedElementHandler;
 
-public class RenameInteractionHandler extends DefaultRenameNamedElementHandler<Interaction> {
+public final class RenameInteractionHandler extends RenameNamedElementHandler<Interaction> {
 
    public RenameInteractionHandler() {
       super(HeaderLabelSuffix.SUFFIX);

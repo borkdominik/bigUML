@@ -11,24 +11,25 @@
 package com.eclipsesource.uml.glsp.uml.handler.operations.directediting;
 
 import org.eclipse.emfcloud.modelserver.command.CCommand;
+import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperation;
 import org.eclipse.uml2.uml.NamedElement;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 import com.eclipsesource.uml.modelserver.uml.diagram.common_diagram.commands.RenameElementContribution;
 
-public class DefaultRenameNamedElementHandler<T extends NamedElement> extends BaseLabelEditHandler<T> {
+public abstract class RenameNamedElementHandler<T extends NamedElement> extends BaseLabelEditHandler<T> {
 
-   public DefaultRenameNamedElementHandler(final String suffix) {
+   public RenameNamedElementHandler(final String suffix) {
       this(CoreTypes.LABEL_NAME, suffix);
    }
 
-   public DefaultRenameNamedElementHandler(final String type, final String suffix) {
+   public RenameNamedElementHandler(final String type, final String suffix) {
       super(type, suffix);
    }
 
    @Override
-   protected CCommand command(final T element, final String newText) {
-      return RenameElementContribution.create(element, newText);
+   protected CCommand createCommand(final ApplyLabelEditOperation operation, final T element) {
+      return RenameElementContribution.create(element, operation.getText());
    }
 
 }

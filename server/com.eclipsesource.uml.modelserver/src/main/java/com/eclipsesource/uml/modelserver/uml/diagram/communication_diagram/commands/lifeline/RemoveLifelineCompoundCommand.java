@@ -19,7 +19,7 @@ import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.commands.UmlRemoveNotationElementCommand;
 import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.matcher.CommunicationDiagramCrossReferenceRemover;
 
-public class RemoveLifelineCompoundCommand extends CompoundCommand {
+public final class RemoveLifelineCompoundCommand extends CompoundCommand {
    public RemoveLifelineCompoundCommand(final ModelContext context,
       final Lifeline lifeline) {
       this.append(new RemoveLifelineSemanticCommand(context, lifeline));

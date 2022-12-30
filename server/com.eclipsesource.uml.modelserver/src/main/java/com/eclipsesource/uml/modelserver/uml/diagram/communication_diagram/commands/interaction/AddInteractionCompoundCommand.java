@@ -17,7 +17,7 @@ import org.eclipse.glsp.graph.util.GraphUtil;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.commands.UmlAddShapeCommand;
 
-public class AddInteractionCompoundCommand extends CompoundCommand {
+public final class AddInteractionCompoundCommand extends CompoundCommand {
 
    public AddInteractionCompoundCommand(final ModelContext context, final GPoint position) {
       var command = new AddInteractionSemanticCommand(context);

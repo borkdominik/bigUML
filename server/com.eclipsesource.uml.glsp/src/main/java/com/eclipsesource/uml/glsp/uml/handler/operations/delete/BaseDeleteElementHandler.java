@@ -43,7 +43,7 @@ public abstract class BaseDeleteElementHandler<T extends EObject> implements Dia
          elementType,
          "Object is not castable to " + elementType.getName() + ". it was " + object.getClass().getName());
 
-      var command = command(element);
+      var command = createCommand(element);
       modelServerAccess.exec(command)
          .thenAccept(response -> {
             if (response.body() == null || response.body().isEmpty()) {
@@ -52,5 +52,5 @@ public abstract class BaseDeleteElementHandler<T extends EObject> implements Dia
          });
    }
 
-   protected abstract CCommand command(T element);
+   protected abstract CCommand createCommand(T element);
 }

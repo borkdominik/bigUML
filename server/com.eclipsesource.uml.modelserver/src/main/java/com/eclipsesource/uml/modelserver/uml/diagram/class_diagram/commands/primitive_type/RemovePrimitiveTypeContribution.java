@@ -24,7 +24,7 @@ import com.eclipsesource.uml.modelserver.core.commands.noop.NoopCommand;
 import com.eclipsesource.uml.modelserver.shared.codec.ContributionDecoder;
 import com.eclipsesource.uml.modelserver.shared.codec.ContributionEncoder;
 
-public class RemovePrimitiveTypeContribution extends BasicCommandContribution<Command> {
+public final class RemovePrimitiveTypeContribution extends BasicCommandContribution<Command> {
 
    public static final String TYPE = "class:remove_primitive_type";
 

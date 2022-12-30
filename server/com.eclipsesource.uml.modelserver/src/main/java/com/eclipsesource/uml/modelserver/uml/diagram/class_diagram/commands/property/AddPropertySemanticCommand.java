@@ -20,7 +20,7 @@ import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.generator.Pro
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.util.ClassSemanticCommandUtil;
 import com.eclipsesource.uml.modelserver.uml.generator.ContextualNameGenerator;
 
-public class AddPropertySemanticCommand extends CreateSemanticChildCommand<AttributeOwner, Property> {
+public final class AddPropertySemanticCommand extends CreateSemanticChildCommand<AttributeOwner, Property> {
 
    protected final Type defaultType;
    protected final ContextualNameGenerator<AttributeOwner> nameGenerator;

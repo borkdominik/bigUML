@@ -11,6 +11,7 @@
 package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.association;
 
 import org.eclipse.emfcloud.modelserver.command.CCommand;
+import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperation;
 import org.eclipse.uml2.uml.Property;
 
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
@@ -18,14 +19,14 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.Proper
 import com.eclipsesource.uml.glsp.uml.handler.operations.directediting.BaseLabelEditHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association.SetAssociationEndMultiplicityContribution;
 
-public class SetAssociationEndMultiplicityHandler extends BaseLabelEditHandler<Property> {
+public final class SetAssociationEndMultiplicityHandler extends BaseLabelEditHandler<Property> {
 
    public SetAssociationEndMultiplicityHandler() {
       super(ClassTypes.LABEL_EDGE_MULTIPLICITY, PropertyLabelMultiplicitySuffix.SUFFIX);
    }
 
    @Override
-   protected CCommand command(final Property element, final String newText) {
-      return SetAssociationEndMultiplicityContribution.create(element, newText);
+   protected CCommand createCommand(final ApplyLabelEditOperation operation, final Property element) {
+      return SetAssociationEndMultiplicityContribution.create(element, operation.getText());
    }
 }

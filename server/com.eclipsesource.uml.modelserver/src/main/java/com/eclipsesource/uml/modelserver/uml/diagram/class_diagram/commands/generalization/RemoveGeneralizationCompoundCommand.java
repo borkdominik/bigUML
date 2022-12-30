@@ -7,7 +7,7 @@ import org.eclipse.uml2.uml.Generalization;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.commands.UmlRemoveNotationElementCommand;
 
-public class RemoveGeneralizationCompoundCommand extends CompoundCommand {
+public final class RemoveGeneralizationCompoundCommand extends CompoundCommand {
 
    public RemoveGeneralizationCompoundCommand(final ModelContext context,
       final Classifier parent,

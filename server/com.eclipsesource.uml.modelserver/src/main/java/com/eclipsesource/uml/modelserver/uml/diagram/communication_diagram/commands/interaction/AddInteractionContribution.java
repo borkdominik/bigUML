@@ -25,7 +25,7 @@ import com.eclipsesource.uml.modelserver.shared.constants.NotationKeys;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.utils.UmlGraphUtil;
 
-public class AddInteractionContribution extends BasicCommandContribution<Command> {
+public final class AddInteractionContribution extends BasicCommandContribution<Command> {
 
    public static final String TYPE = "communication:add_interaction";
 

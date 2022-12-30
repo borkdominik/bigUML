@@ -42,7 +42,7 @@ import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.upac
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.upackage.RemovePackageContribution;
 import com.google.inject.multibindings.MapBinder;
 
-public class ClassManifest extends DiagramManifest implements CommandCodecContribution {
+public final class ClassManifest extends DiagramManifest implements CommandCodecContribution {
    @Override
    protected void configure() {
       super.configure();

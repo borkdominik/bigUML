@@ -15,7 +15,7 @@ import org.eclipse.uml2.uml.Property;
 
 import com.eclipsesource.uml.modelserver.uml.generator.ContextualNameGenerator;
 
-public class PropertyNameGenerator implements ContextualNameGenerator<AttributeOwner> {
+public final class PropertyNameGenerator implements ContextualNameGenerator<AttributeOwner> {
 
    @Override
    public String newNameInContextOf(final AttributeOwner element) {

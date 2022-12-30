@@ -16,10 +16,10 @@ import org.eclipse.uml2.uml.Message;
 import com.eclipsesource.uml.glsp.uml.handler.operations.delete.BaseDeleteElementHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.message.RemoveMessageContribution;
 
-public class DeleteMessageHandler extends BaseDeleteElementHandler<Message> {
+public final class DeleteMessageHandler extends BaseDeleteElementHandler<Message> {
 
    @Override
-   protected CCommand command(final Message element) {
+   protected CCommand createCommand(final Message element) {
       return RemoveMessageContribution.create(element);
    }
 

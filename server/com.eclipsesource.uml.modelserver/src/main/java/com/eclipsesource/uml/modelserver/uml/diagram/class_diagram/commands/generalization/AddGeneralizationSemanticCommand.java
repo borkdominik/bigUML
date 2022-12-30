@@ -6,7 +6,7 @@ import org.eclipse.uml2.uml.Generalization;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.CreateSemanticRelationCommand;
 
-public class AddGeneralizationSemanticCommand
+public final class AddGeneralizationSemanticCommand
    extends CreateSemanticRelationCommand<Classifier, Classifier, Generalization> {
 
    public AddGeneralizationSemanticCommand(final ModelContext context,

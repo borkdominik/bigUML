@@ -14,7 +14,6 @@ import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
 
 import java.util.List;
 
-import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 import org.eclipse.glsp.server.types.GLSPServerException;
@@ -52,8 +51,7 @@ public abstract class BaseCreateEdgeBetweenNodesHandler<S, T>
          targetType,
          "No valid container with id " + targetId + " for target type " + targetType.getSimpleName() + " found.");
 
-      var command = command(source, target);
-
+      var command = createCommand(operation, source, target);
       modelServerAccess.exec(command)
          .thenAccept(response -> {
             if (response.body() == null || response.body().isEmpty()) {
@@ -65,8 +63,5 @@ public abstract class BaseCreateEdgeBetweenNodesHandler<S, T>
    protected abstract List<String> sources();
 
    protected abstract List<String> targets();
-
-   @Override
-   protected abstract CCommand command(S source, T target);
 
 }

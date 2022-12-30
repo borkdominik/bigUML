@@ -22,7 +22,7 @@ import com.eclipsesource.uml.modelserver.core.commands.noop.NoopCommand;
 import com.eclipsesource.uml.modelserver.shared.codec.ContributionDecoder;
 import com.eclipsesource.uml.modelserver.shared.codec.ContributionEncoder;
 
-public class AddOperationContribution extends BasicCommandContribution<Command> {
+public final class AddOperationContribution extends BasicCommandContribution<Command> {
 
    public static final String TYPE = "class:add_operation";
 

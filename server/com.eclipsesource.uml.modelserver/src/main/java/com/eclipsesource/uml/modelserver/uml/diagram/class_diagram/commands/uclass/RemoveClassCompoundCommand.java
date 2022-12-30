@@ -18,7 +18,7 @@ import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.commands.UmlRemoveNotationElementCommand;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.matcher.ClassDiagramCrossReferenceRemover;
 
-public class RemoveClassCompoundCommand extends CompoundCommand {
+public final class RemoveClassCompoundCommand extends CompoundCommand {
 
    public RemoveClassCompoundCommand(final ModelContext context, final Package parent, final Class semanticElement) {
       this.append(new RemoveClassSemanticCommand(context, parent, semanticElement));

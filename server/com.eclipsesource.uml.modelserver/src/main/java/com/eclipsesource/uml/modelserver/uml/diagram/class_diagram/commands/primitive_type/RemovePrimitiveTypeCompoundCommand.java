@@ -18,7 +18,7 @@ import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.commands.UmlRemoveNotationElementCommand;
 import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.matcher.CommunicationDiagramCrossReferenceRemover;
 
-public class RemovePrimitiveTypeCompoundCommand extends CompoundCommand {
+public final class RemovePrimitiveTypeCompoundCommand extends CompoundCommand {
 
    public RemovePrimitiveTypeCompoundCommand(final ModelContext context,
       final Package parent,

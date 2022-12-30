@@ -26,7 +26,7 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGModelMapper;
 import com.google.inject.Inject;
 
-public class OperationCompartmentMapper extends BaseGModelMapper<Operation, GCompartment> {
+public final class OperationCompartmentMapper extends BaseGModelMapper<Operation, GCompartment> {
    @Inject
    protected IdCountContextGenerator idCountGenerator;
 

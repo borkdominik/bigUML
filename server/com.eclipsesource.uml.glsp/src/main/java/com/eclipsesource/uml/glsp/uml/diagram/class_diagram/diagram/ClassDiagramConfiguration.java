@@ -24,7 +24,7 @@ import com.eclipsesource.uml.glsp.core.diagram.DiagramConfiguration;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
 import com.google.common.collect.Lists;
 
-public class ClassDiagramConfiguration implements DiagramConfiguration {
+public final class ClassDiagramConfiguration implements DiagramConfiguration {
 
    @Override
    public List<EdgeTypeHint> getEdgeTypeHints() {

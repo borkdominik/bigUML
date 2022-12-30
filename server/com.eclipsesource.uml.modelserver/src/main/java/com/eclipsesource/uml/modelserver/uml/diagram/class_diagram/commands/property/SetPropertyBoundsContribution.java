@@ -23,7 +23,7 @@ import com.eclipsesource.uml.modelserver.shared.codec.ContributionDecoder;
 import com.eclipsesource.uml.modelserver.shared.codec.ContributionEncoder;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.util.ClassSemanticCommandUtil;
 
-public class SetPropertyBoundsContribution extends BasicCommandContribution<Command> {
+public final class SetPropertyBoundsContribution extends BasicCommandContribution<Command> {
 
    public static final String TYPE = "class:set_property_bounds";
    private static final String NEW_BOUNDS = "new_bounds";

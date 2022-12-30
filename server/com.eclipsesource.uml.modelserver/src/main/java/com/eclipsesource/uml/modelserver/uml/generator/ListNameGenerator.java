@@ -14,17 +14,19 @@ import java.util.List;
 
 import org.eclipse.uml2.uml.NamedElement;
 
-public class ListNameGenerator extends UniqueCountNameGenerator {
+public class ListNameGenerator extends BaseUniqueCountNameGenerator {
    protected final List<? extends NamedElement> elements;
 
    public ListNameGenerator(final Class<? extends NamedElement> clazz, final List<? extends NamedElement> elements) {
-      super(clazz, elements.size() + 1);
+      super(clazz);
       this.elements = elements;
    }
 
    @Override
    protected boolean isUnique(final String name) {
-      return elements.stream().noneMatch(element -> element.getName().equals(name));
+      return elements.stream()
+         .filter(element -> element.getName() != null)
+         .noneMatch(element -> element.getName().equals(name));
    }
 
 }

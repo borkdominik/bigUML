@@ -16,8 +16,6 @@ import com.eclipsesource.uml.modelserver.core.manifest.DiagramManifest;
 import com.eclipsesource.uml.modelserver.core.manifest.contributions.CommandCodecContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association.CreateAssociationContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association.DeleteAssociationContribution;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association.UpdateAssociationEndMultiplicityContribution;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association.UpdateAssociationEndNameContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.data_type.CreateDataTypeContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.data_type.DeleteDataTypeContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.enumeration.CreateEnumerationContribution;
@@ -64,9 +62,6 @@ public final class ClassManifest extends DiagramManifest implements CommandCodec
       // Association
       multibinder.addBinding(CreateAssociationContribution.TYPE).to(CreateAssociationContribution.class);
       multibinder.addBinding(DeleteAssociationContribution.TYPE).to(DeleteAssociationContribution.class);
-      multibinder.addBinding(UpdateAssociationEndNameContribution.TYPE).to(UpdateAssociationEndNameContribution.class);
-      multibinder.addBinding(UpdateAssociationEndMultiplicityContribution.TYPE)
-         .to(UpdateAssociationEndMultiplicityContribution.class);
 
       // Generalization
       multibinder.addBinding(CreateGeneralizationContribution.TYPE).to(CreateGeneralizationContribution.class);

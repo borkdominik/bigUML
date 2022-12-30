@@ -15,20 +15,18 @@ import org.eclipse.uml2.uml.PrimitiveType;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.BaseCreateSemanticChildCommand;
-import com.eclipsesource.uml.modelserver.uml.generator.NameGenerator;
-import com.eclipsesource.uml.modelserver.uml.generator.PackageableElementNameGenerator;
+import com.eclipsesource.uml.modelserver.uml.generator.ListNameGenerator;
 
 public final class CreatePrimitiveTypeSemanticCommand extends BaseCreateSemanticChildCommand<Package, PrimitiveType> {
 
-   protected final NameGenerator nameGenerator;
-
    public CreatePrimitiveTypeSemanticCommand(final ModelContext context, final Package parent) {
       super(context, parent);
-      this.nameGenerator = new PackageableElementNameGenerator(context, PrimitiveType.class);
    }
 
    @Override
    protected PrimitiveType createSemanticElement(final Package parent) {
+      var nameGenerator = new ListNameGenerator(PrimitiveType.class, parent.getPackagedElements());
+
       return parent.createOwnedPrimitiveType(nameGenerator.newName());
    }
 

@@ -16,25 +16,24 @@ import org.eclipse.uml2.uml.Type;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.BaseCreateSemanticChildCommand;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.generator.PropertyNameGenerator;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.util.ClassSemanticCommandUtil;
-import com.eclipsesource.uml.modelserver.uml.generator.ContextualNameGenerator;
+import com.eclipsesource.uml.modelserver.uml.generator.ListNameGenerator;
 
 public final class CreatePropertySemanticCommand extends BaseCreateSemanticChildCommand<AttributeOwner, Property> {
 
    protected final Type defaultType;
-   protected final ContextualNameGenerator<AttributeOwner> nameGenerator;
 
    public CreatePropertySemanticCommand(final ModelContext context,
       final AttributeOwner parent) {
       super(context, parent);
       this.defaultType = ClassSemanticCommandUtil.getType(context.domain, "String");
-      this.nameGenerator = new PropertyNameGenerator();
    }
 
    @Override
    protected Property createSemanticElement(final AttributeOwner parent) {
-      var property = parent.createOwnedAttribute(nameGenerator.newNameInContextOf(parent), defaultType);
+      var nameGenerator = new ListNameGenerator(Property.class, parent.getOwnedAttributes());
+
+      var property = parent.createOwnedAttribute(nameGenerator.newName(), defaultType);
       property.setLower(1);
       property.setUpper(1);
 

@@ -15,22 +15,20 @@ import org.eclipse.uml2.uml.OperationOwner;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.BaseCreateSemanticChildCommand;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.generator.OperatorNameGenerator;
-import com.eclipsesource.uml.modelserver.uml.generator.ContextualNameGenerator;
+import com.eclipsesource.uml.modelserver.uml.generator.ListNameGenerator;
 
 public final class CreateOperationSemanticCommand extends BaseCreateSemanticChildCommand<OperationOwner, Operation> {
-
-   protected final ContextualNameGenerator<OperationOwner> nameGenerator;
 
    public CreateOperationSemanticCommand(final ModelContext context,
       final OperationOwner parent) {
       super(context, parent);
-      this.nameGenerator = new OperatorNameGenerator();
    }
 
    @Override
    protected Operation createSemanticElement(final OperationOwner parent) {
-      return parent.createOwnedOperation(nameGenerator.newNameInContextOf(parent), null, null);
+      var nameGenerator = new ListNameGenerator(Operation.class, parent.getOwnedOperations());
+
+      return parent.createOwnedOperation(nameGenerator.newName(), null, null);
    }
 
 }

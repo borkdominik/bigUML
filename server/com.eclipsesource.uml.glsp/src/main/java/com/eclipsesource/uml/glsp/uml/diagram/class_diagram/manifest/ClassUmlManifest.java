@@ -46,7 +46,7 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.as
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.association.CreateAssociationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.association.CreateCompositionHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.association.DeleteAssociationHandler;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.association.SetAssociationEndMultiplicityHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.association.SetAssociationEndBoundsHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.association.SetAssociationEndNameHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.data_type.CreateDataTypeHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.data_type.DeleteDataTypeHandler;
@@ -68,7 +68,7 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.pr
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.property.CreatePropertyHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.property.DeletePropertyHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.property.RenamePropertyHandler;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.property.UpdatePropertyMultiplicityHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.property.UpdatePropertyBoundsHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.property.UpdatePropertyTypeHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.uclass.CreateAbstractClassHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.uclass.CreateClassHandler;
@@ -166,12 +166,12 @@ public final class ClassUmlManifest extends DiagramManifest
    @Override
    public void contributeLabelEditHandler(
       final Multibinder<DiagramLabelEditHandler<? extends EObject>> multibinder) {
-      multibinder.addBinding().to(SetAssociationEndMultiplicityHandler.class);
+      multibinder.addBinding().to(SetAssociationEndBoundsHandler.class);
       multibinder.addBinding().to(SetAssociationEndNameHandler.class);
       multibinder.addBinding().to(RenameEnumerationHandler.class);
       multibinder.addBinding().to(RenameEnumerationLiteralHandler.class);
       multibinder.addBinding().to(RenamePropertyHandler.class);
-      multibinder.addBinding().to(UpdatePropertyMultiplicityHandler.class);
+      multibinder.addBinding().to(UpdatePropertyBoundsHandler.class);
       multibinder.addBinding().to(UpdatePropertyTypeHandler.class);
       multibinder.addBinding().to(RenameClassHandler.class);
       multibinder.addBinding().to(RenameInterfaceHandler.class);

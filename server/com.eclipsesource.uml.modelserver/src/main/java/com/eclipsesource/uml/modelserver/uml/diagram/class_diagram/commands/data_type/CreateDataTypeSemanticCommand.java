@@ -16,20 +16,18 @@ import org.eclipse.uml2.uml.UMLFactory;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.BaseCreateSemanticChildCommand;
-import com.eclipsesource.uml.modelserver.uml.generator.NameGenerator;
-import com.eclipsesource.uml.modelserver.uml.generator.PackageableElementNameGenerator;
+import com.eclipsesource.uml.modelserver.uml.generator.ListNameGenerator;
 
 public final class CreateDataTypeSemanticCommand extends BaseCreateSemanticChildCommand<Package, DataType> {
 
-   protected final NameGenerator nameGenerator;
-
    public CreateDataTypeSemanticCommand(final ModelContext context, final Package parent) {
       super(context, parent);
-      this.nameGenerator = new PackageableElementNameGenerator(context, DataType.class);
    }
 
    @Override
    protected DataType createSemanticElement(final Package parent) {
+      var nameGenerator = new ListNameGenerator(DataType.class, parent.getPackagedElements());
+
       var dataType = UMLFactory.eINSTANCE.createDataType();
       dataType.setName(nameGenerator.newName());
       parent.getPackagedElements().add(dataType);

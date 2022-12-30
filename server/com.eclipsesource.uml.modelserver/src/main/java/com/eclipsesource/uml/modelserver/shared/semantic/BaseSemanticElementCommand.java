@@ -12,20 +12,20 @@ package com.eclipsesource.uml.modelserver.shared.semantic;
 
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
-import org.eclipse.uml2.uml.Model;
 
 import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 
 public abstract class BaseSemanticElementCommand extends RecordingCommand {
 
-   protected final Model model;
+   protected final ModelContext context;
    protected final SemanticElementAccessor semanticElementAccessor;
 
    public BaseSemanticElementCommand(final ModelContext context) {
       super((TransactionalEditingDomain) context.domain);
+
+      this.context = context;
       this.semanticElementAccessor = new SemanticElementAccessor(context);
-      this.model = semanticElementAccessor.getModel();
    }
 
 }

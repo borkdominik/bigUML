@@ -19,9 +19,9 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.Proper
 import com.eclipsesource.uml.glsp.uml.handler.operations.directediting.BaseLabelEditHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.UpdatePropertyBoundsContribution;
 
-public final class UpdatePropertyMultiplicityHandler extends BaseLabelEditHandler<Property> {
+public final class UpdatePropertyBoundsHandler extends BaseLabelEditHandler<Property> {
 
-   public UpdatePropertyMultiplicityHandler() {
+   public UpdatePropertyBoundsHandler() {
       super(ClassTypes.LABEL_PROPERTY_MULTIPLICITY, PropertyLabelMultiplicitySuffix.SUFFIX);
    }
 

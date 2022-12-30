@@ -12,7 +12,6 @@ package com.eclipsesource.uml.modelserver.shared.notation;
 
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
-import org.eclipse.uml2.uml.Model;
 
 import com.eclipsesource.uml.modelserver.shared.extension.NotationElementAccessor;
 import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
@@ -22,18 +21,20 @@ import com.eclipsesource.uml.modelserver.unotation.UmlDiagram;
 public abstract class BaseNotationElementCommand extends RecordingCommand {
 
    protected final UmlDiagram diagram;
-   protected final Model model;
+   protected final ModelContext context;
 
    protected final SemanticElementAccessor semanticElementAccessor;
    protected final NotationElementAccessor notationElementAccessor;
 
    public BaseNotationElementCommand(final ModelContext context) {
       super((TransactionalEditingDomain) context.domain);
+
+      this.context = context;
+
       this.notationElementAccessor = new NotationElementAccessor(context);
       this.semanticElementAccessor = new SemanticElementAccessor(context);
 
       this.diagram = notationElementAccessor.getDiagram();
-      this.model = semanticElementAccessor.getModel();
    }
 
 }

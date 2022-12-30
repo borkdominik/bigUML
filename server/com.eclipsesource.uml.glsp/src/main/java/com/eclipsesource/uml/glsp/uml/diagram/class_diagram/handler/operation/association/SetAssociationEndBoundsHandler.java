@@ -17,16 +17,16 @@ import org.eclipse.uml2.uml.Property;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyLabelMultiplicitySuffix;
 import com.eclipsesource.uml.glsp.uml.handler.operations.directediting.BaseLabelEditHandler;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association.UpdateAssociationEndMultiplicityContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.UpdatePropertyBoundsContribution;
 
-public final class SetAssociationEndMultiplicityHandler extends BaseLabelEditHandler<Property> {
+public final class SetAssociationEndBoundsHandler extends BaseLabelEditHandler<Property> {
 
-   public SetAssociationEndMultiplicityHandler() {
+   public SetAssociationEndBoundsHandler() {
       super(ClassTypes.LABEL_EDGE_MULTIPLICITY, PropertyLabelMultiplicitySuffix.SUFFIX);
    }
 
    @Override
    protected CCommand createCommand(final ApplyLabelEditOperation operation, final Property element) {
-      return UpdateAssociationEndMultiplicityContribution.create(element, operation.getText());
+      return UpdatePropertyBoundsContribution.create(element, operation.getText());
    }
 }

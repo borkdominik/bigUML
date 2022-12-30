@@ -12,15 +12,15 @@ package com.eclipsesource.uml.modelserver.uml.generator;
 
 import org.eclipse.uml2.uml.NamedElement;
 
-public abstract class UniqueCountNameGenerator implements NameGenerator {
+public abstract class BaseUniqueCountNameGenerator implements NameGenerator {
    protected final Class<? extends NamedElement> clazz;
-   protected int counter;
+   protected long counter;
 
-   public UniqueCountNameGenerator(final Class<? extends NamedElement> clazz) {
+   public BaseUniqueCountNameGenerator(final Class<? extends NamedElement> clazz) {
       this(clazz, 1);
    }
 
-   public UniqueCountNameGenerator(final Class<? extends NamedElement> clazz, final int counter) {
+   public BaseUniqueCountNameGenerator(final Class<? extends NamedElement> clazz, final long counter) {
       this.clazz = clazz;
       this.counter = counter;
    }

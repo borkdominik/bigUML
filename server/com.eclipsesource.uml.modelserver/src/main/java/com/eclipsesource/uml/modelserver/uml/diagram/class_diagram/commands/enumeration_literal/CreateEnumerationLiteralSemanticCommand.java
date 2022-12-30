@@ -15,23 +15,21 @@ import org.eclipse.uml2.uml.EnumerationLiteral;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.BaseCreateSemanticChildCommand;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.generator.EnumerationLiteralNameGenerator;
-import com.eclipsesource.uml.modelserver.uml.generator.ContextualNameGenerator;
+import com.eclipsesource.uml.modelserver.uml.generator.ListNameGenerator;
 
 public final class CreateEnumerationLiteralSemanticCommand
    extends BaseCreateSemanticChildCommand<Enumeration, EnumerationLiteral> {
 
-   protected final ContextualNameGenerator<Enumeration> nameGenerator;
-
    public CreateEnumerationLiteralSemanticCommand(final ModelContext context,
       final Enumeration parent) {
       super(context, parent);
-      this.nameGenerator = new EnumerationLiteralNameGenerator();
    }
 
    @Override
    protected EnumerationLiteral createSemanticElement(final Enumeration parent) {
-      return parent.createOwnedLiteral(nameGenerator.newNameInContextOf(parent));
+      var nameGenerator = new ListNameGenerator(EnumerationLiteral.class, parent.getOwnedLiterals());
+
+      return parent.createOwnedLiteral(nameGenerator.newName());
    }
 
 }

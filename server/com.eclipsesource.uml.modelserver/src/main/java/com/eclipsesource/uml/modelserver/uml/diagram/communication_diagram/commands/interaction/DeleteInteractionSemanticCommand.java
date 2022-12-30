@@ -24,6 +24,6 @@ public final class DeleteInteractionSemanticCommand extends BaseSemanticExistenc
 
    @Override
    protected void doChanges(final Interaction semanticElement) {
-      model.getPackagedElements().remove(semanticElement);
+      context.model.getPackagedElements().remove(semanticElement);
    }
 }

@@ -12,10 +12,7 @@ package com.eclipsesource.uml.glsp.uml.handler.operations.create;
 
 import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
 
-import java.util.Optional;
-
 import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.types.GLSPServerException;
 
@@ -48,7 +45,7 @@ public abstract class BaseCreateChildNodeHandler<T> extends BaseCreateHandler<Cr
          "No valid container with id " + containerId + " for container type " + containerType.getSimpleName()
             + " found.");
 
-      modelServerAccess.exec(command(container, operation.getLocation()))
+      modelServerAccess.exec(createCommand(operation, container))
          .thenAccept(response -> {
             if (response.body() == null || response.body().isEmpty()) {
                throw new GLSPServerException("Could not execute create on " + elementTypeId);
@@ -56,6 +53,6 @@ public abstract class BaseCreateChildNodeHandler<T> extends BaseCreateHandler<Cr
          });
    }
 
-   protected abstract CCommand command(T parent, Optional<GPoint> location);
+   protected abstract CCommand createCommand(CreateNodeOperation operation, T parent);
 
 }

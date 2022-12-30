@@ -10,10 +10,8 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.enumeration_literal;
 
-import java.util.Optional;
-
 import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.glsp.graph.GPoint;
+import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.uml2.uml.Enumeration;
 
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
@@ -28,8 +26,8 @@ public class CreateEnumerationLiteralHandler
    }
 
    @Override
-   protected CCommand command(final Enumeration container, final Optional<GPoint> location) {
-      return AddEnumerationLiteralContribution.create(container);
+   protected CCommand createCommand(final CreateNodeOperation operation, final Enumeration parent) {
+      return AddEnumerationLiteralContribution.create(parent);
    }
 
 }

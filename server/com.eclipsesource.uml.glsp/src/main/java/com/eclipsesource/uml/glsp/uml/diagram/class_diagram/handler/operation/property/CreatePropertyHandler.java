@@ -10,10 +10,8 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.property;
 
-import java.util.Optional;
-
 import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.glsp.graph.GPoint;
+import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.uml2.uml.AttributeOwner;
 
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
@@ -28,8 +26,8 @@ public class CreatePropertyHandler
    }
 
    @Override
-   protected CCommand command(final AttributeOwner container, final Optional<GPoint> location) {
-      return AddPropertyContribution.create(container);
+   protected CCommand createCommand(final CreateNodeOperation operation, final AttributeOwner parent) {
+      return AddPropertyContribution.create(parent);
    }
 
 }

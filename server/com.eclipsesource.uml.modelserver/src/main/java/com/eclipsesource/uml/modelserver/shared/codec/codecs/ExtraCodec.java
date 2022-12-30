@@ -19,6 +19,11 @@ public interface ExtraCodec {
          ccommand().getProperties().put(key, value);
          return (T) this;
       }
+
+      default T extra(final String key, final int value) {
+         ccommand().getProperties().put(key, value + "");
+         return (T) this;
+      }
    }
 
    interface Decoder extends CCommandProvider {

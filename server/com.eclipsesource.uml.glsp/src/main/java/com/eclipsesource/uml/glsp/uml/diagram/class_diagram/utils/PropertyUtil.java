@@ -8,37 +8,12 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.util;
+package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.utils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.eclipse.emf.common.notify.Notifier;
-import org.eclipse.emf.common.util.TreeIterator;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.DataType;
-import org.eclipse.uml2.uml.NamedElement;
-import org.eclipse.uml2.uml.Type;
-
-public final class ClassSemanticCommandUtil {
-
-   public static Type getType(final EditingDomain domain, final String typeName) {
-      TreeIterator<Notifier> resourceSetContent = domain.getResourceSet().getAllContents();
-      while (resourceSetContent.hasNext()) {
-         Notifier res = resourceSetContent.next();
-         if (res instanceof DataType || res instanceof org.eclipse.uml2.uml.Class) {
-            if (res instanceof NamedElement && ((NamedElement) res).getName().equals(typeName)) {
-               return (Type) res;
-            }
-         }
-      }
-      return null;
-   }
-
-   private static String multiplicityRegex() {
-      return "\\.\\.";
-   }
-
+public final class PropertyUtil {
    public static int getLower(final String multiplicityString) {
       return getBound(multiplicityString, 0);
    }
@@ -56,4 +31,9 @@ public final class ClassSemanticCommandUtil {
       }
       return result.isEmpty() ? 1 : (result.equals("*") ? -1 : Integer.parseInt(result, 10));
    }
+
+   private static String multiplicityRegex() {
+      return "\\.\\.";
+   }
+
 }

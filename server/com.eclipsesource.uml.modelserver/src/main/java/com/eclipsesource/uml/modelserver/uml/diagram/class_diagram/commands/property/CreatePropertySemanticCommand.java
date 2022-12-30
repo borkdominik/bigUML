@@ -16,7 +16,7 @@ import org.eclipse.uml2.uml.Type;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.BaseCreateSemanticChildCommand;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.util.ClassSemanticCommandUtil;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.util.PropertyUtil;
 import com.eclipsesource.uml.modelserver.uml.generator.ListNameGenerator;
 
 public final class CreatePropertySemanticCommand extends BaseCreateSemanticChildCommand<AttributeOwner, Property> {
@@ -26,7 +26,7 @@ public final class CreatePropertySemanticCommand extends BaseCreateSemanticChild
    public CreatePropertySemanticCommand(final ModelContext context,
       final AttributeOwner parent) {
       super(context, parent);
-      this.defaultType = ClassSemanticCommandUtil.getType(context.domain, "String");
+      this.defaultType = PropertyUtil.getType(context.domain, "String");
    }
 
    @Override

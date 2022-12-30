@@ -45,5 +45,10 @@
   <packagedElement xmi:type="uml:Package" xmi:id="_MFWcwIh9Ee2ekuJspw8-cA" name="2">
     <packagedElement xmi:type="uml:Class" xmi:id="_pseLQIiAEe2DMdFHhGzYmQ" name="s"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Class" xmi:id="_m7c1IIiAEe2DMdFHhGzYmQ" name="no"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="_m7c1IIiAEe2DMdFHhGzYmQ" name="no">
+    <ownedAttribute xmi:id="_rJVGoIiHEe2hu5Pa5bw_OA" name="NewProperty1">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_rJbNQIiHEe2hu5Pa5bw_OA" value="5"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_rJbNQYiHEe2hu5Pa5bw_OA" value="6"/>
+    </ownedAttribute>
+  </packagedElement>
 </uml:Model>

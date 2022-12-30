@@ -16,6 +16,7 @@ import org.eclipse.uml2.uml.Property;
 
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyMultiplicityLabelSuffix;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.utils.PropertyUtil;
 import com.eclipsesource.uml.glsp.uml.handler.operations.directediting.BaseLabelEditHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.UpdatePropertyMultiplicityContribution;
 
@@ -27,6 +28,11 @@ public final class UpdatePropertyMultiplicityHandler extends BaseLabelEditHandle
 
    @Override
    protected CCommand createCommand(final ApplyLabelEditOperation operation, final Property element) {
-      return UpdatePropertyMultiplicityContribution.create(element, operation.getText());
+      var bound = operation.getText();
+
+      return UpdatePropertyMultiplicityContribution.create(
+         element,
+         PropertyUtil.getLower(bound),
+         PropertyUtil.getUpper(bound));
    }
 }

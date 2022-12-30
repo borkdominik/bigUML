@@ -11,11 +11,11 @@ import org.eclipse.uml2.uml.Property;
 import com.eclipsesource.uml.modelserver.core.commands.noop.NoopCommand;
 import com.eclipsesource.uml.modelserver.shared.codec.ContributionDecoder;
 import com.eclipsesource.uml.modelserver.shared.codec.ContributionEncoder;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.util.ClassSemanticCommandUtil;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.util.PropertyUtil;
 
 public final class UpdatePropertyTypeContribution extends BasicCommandContribution<Command> {
 
-   public static final String TYPE = "class:set_property_type";
+   public static final String TYPE = "class:update_property_type";
    private static final String NEW_TYPE = "new_type";
 
    public static CCommand create(final Property semanticElement, final String newType) {
@@ -29,7 +29,7 @@ public final class UpdatePropertyTypeContribution extends BasicCommandContributi
 
       var context = decoder.context();
       var element = decoder.element(Property.class);
-      var newType = ClassSemanticCommandUtil.getType(domain, decoder.extra(NEW_TYPE));
+      var newType = PropertyUtil.getType(domain, decoder.extra(NEW_TYPE));
 
       return element
          .<Command> map(e -> new UpdatePropertyTypeSemanticCommand(context, e, newType))

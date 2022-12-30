@@ -21,15 +21,20 @@ import org.eclipse.uml2.uml.Property;
 import com.eclipsesource.uml.modelserver.core.commands.noop.NoopCommand;
 import com.eclipsesource.uml.modelserver.shared.codec.ContributionDecoder;
 import com.eclipsesource.uml.modelserver.shared.codec.ContributionEncoder;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.util.ClassSemanticCommandUtil;
 
 public final class UpdatePropertyMultiplicityContribution extends BasicCommandContribution<Command> {
 
-   public static final String TYPE = "class:set_property_bounds";
-   private static final String NEW_BOUNDS = "new_bounds";
+   public static final String TYPE = "class:update_property_multiplicity";
+   private static final String LOWER_BOUND = "lower_bound";
+   private static final String UPPER_BOUND = "upper_bound";
 
-   public static CCommand create(final Property semanticElement, final String newBounds) {
-      return new ContributionEncoder().type(TYPE).element(semanticElement).extra(NEW_BOUNDS, newBounds).ccommand();
+   public static CCommand create(final Property semanticElement, final int lowerBound, final int upperBound) {
+      return new ContributionEncoder()
+         .type(TYPE)
+         .element(semanticElement)
+         .extra(LOWER_BOUND, lowerBound)
+         .extra(UPPER_BOUND, upperBound)
+         .ccommand();
    }
 
    @Override
@@ -39,9 +44,8 @@ public final class UpdatePropertyMultiplicityContribution extends BasicCommandCo
 
       var context = decoder.context();
       var element = decoder.element(Property.class);
-      var newBounds = decoder.extra(NEW_BOUNDS);
-      var newLowerBound = ClassSemanticCommandUtil.getLower(newBounds);
-      var newUpperBound = ClassSemanticCommandUtil.getUpper(newBounds);
+      var newLowerBound = Integer.parseInt(decoder.extra(LOWER_BOUND));
+      var newUpperBound = Integer.parseInt(decoder.extra(UPPER_BOUND));
 
       return element
          .<Command> map(e -> new UpdatePropertyMultiplicitySemanticCommand(context, e, newLowerBound, newUpperBound))

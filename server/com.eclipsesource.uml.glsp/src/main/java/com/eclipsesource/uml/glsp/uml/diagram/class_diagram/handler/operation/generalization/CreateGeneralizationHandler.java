@@ -18,7 +18,7 @@ import org.eclipse.uml2.uml.Classifier;
 
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
 import com.eclipsesource.uml.glsp.uml.handler.operations.create.BaseCreateEdgeBetweenNodesHandler;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.generalization.AddGeneralizationContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.generalization.CreateGeneralizationContribution;
 
 public final class CreateGeneralizationHandler
    extends BaseCreateEdgeBetweenNodesHandler<Classifier, Classifier> {
@@ -40,7 +40,7 @@ public final class CreateGeneralizationHandler
    @Override
    protected CCommand createCommand(final CreateEdgeOperation operation, final Classifier source,
       final Classifier target) {
-      return AddGeneralizationContribution.create(source, target);
+      return CreateGeneralizationContribution.create(source, target);
    }
 
 }

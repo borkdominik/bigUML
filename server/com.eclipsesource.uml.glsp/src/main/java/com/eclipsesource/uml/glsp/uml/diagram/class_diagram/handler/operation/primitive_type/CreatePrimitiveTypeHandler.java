@@ -18,7 +18,7 @@ import org.eclipse.uml2.uml.Package;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
 import com.eclipsesource.uml.glsp.uml.handler.operations.create.BaseCreateChildNodeHandler;
 import com.eclipsesource.uml.glsp.uml.handler.operations.create.CreateLocationAwareNodeHandler;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.primitive_type.AddPrimitiveTypeContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.primitive_type.CreatePrimitiveTypeContribution;
 
 public final class CreatePrimitiveTypeHandler
    extends BaseCreateChildNodeHandler<Package> implements CreateLocationAwareNodeHandler {
@@ -29,7 +29,7 @@ public final class CreatePrimitiveTypeHandler
 
    @Override
    protected CCommand createCommand(final CreateNodeOperation operation, final Package parent) {
-      return AddPrimitiveTypeContribution.create(
+      return CreatePrimitiveTypeContribution.create(
          parent,
          relativeLocationOf(modelState, operation).orElse(GraphUtil.point(0, 0)));
    }

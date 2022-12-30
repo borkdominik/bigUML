@@ -17,7 +17,7 @@ import org.eclipse.uml2.uml.Message;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.LabelSuffix;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
 import com.eclipsesource.uml.glsp.uml.handler.operations.directediting.BaseLabelEditHandler;
-import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.message.SetMessageNameContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.message.RenameMessageContribution;
 
 public final class RenameMessageHandler extends BaseLabelEditHandler<Message> {
 
@@ -27,7 +27,7 @@ public final class RenameMessageHandler extends BaseLabelEditHandler<Message> {
 
    @Override
    protected CCommand createCommand(final ApplyLabelEditOperation operation, final Message element) {
-      return SetMessageNameContribution.create(element, operation.getText());
+      return RenameMessageContribution.create(element, operation.getText());
    }
 
 }

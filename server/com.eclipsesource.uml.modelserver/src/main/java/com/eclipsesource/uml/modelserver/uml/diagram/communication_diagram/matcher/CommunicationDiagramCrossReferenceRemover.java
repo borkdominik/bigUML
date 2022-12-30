@@ -19,12 +19,12 @@ import org.eclipse.uml2.uml.Model;
 import com.eclipsesource.uml.modelserver.shared.matcher.CrossReferenceMatcher;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.utils.UmlSemanticUtil;
-import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.lifeline.RemoveLifelineCompoundCommand;
-import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.message.RemoveMessageCompoundCommand;
+import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.lifeline.DeleteLifelineCompoundCommand;
+import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.message.DeleteMessageCompoundCommand;
 
 public final class CommunicationDiagramCrossReferenceRemover {
-   protected final Model model;
-   protected final CrossReferenceMatcher<Command> matcher;
+   private final Model model;
+   private final CrossReferenceMatcher<Command> matcher;
 
    public CommunicationDiagramCrossReferenceRemover(final ModelContext context) {
       super();
@@ -33,17 +33,17 @@ public final class CommunicationDiagramCrossReferenceRemover {
       matcher = new CrossReferenceMatcher.Builder<Command>()
          .match((setting, interest) -> LifelineMatcher
             .ofUsage(setting, interest)
-            .map(lifeline -> new RemoveLifelineCompoundCommand(context, lifeline)))
+            .map(lifeline -> new DeleteLifelineCompoundCommand(context, lifeline)))
          .match((setting, interest) -> MessageMatcher
             .ofUsage(setting, interest)
-            .map(message -> new RemoveMessageCompoundCommand(context, message)))
+            .map(message -> new DeleteMessageCompoundCommand(context, message)))
          .match((setting, interest) -> MessageMatcher
             .ofInverseMessageUsageSpecificationUsage(setting, interest)
-            .map(specification -> new RemoveMessageCompoundCommand(context, specification.getMessage())))
+            .map(specification -> new DeleteMessageCompoundCommand(context, specification.getMessage())))
          .build();
    }
 
-   public Set<Command> removeCommandsFor(final EObject elementToRemove) {
-      return matcher.find(null, elementToRemove, model.eResource());
+   public Set<Command> deleteCommandsFor(final EObject interest) {
+      return matcher.find(null, interest, model.eResource());
    }
 }

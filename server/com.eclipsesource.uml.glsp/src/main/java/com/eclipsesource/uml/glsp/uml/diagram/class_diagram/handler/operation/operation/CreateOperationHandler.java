@@ -16,7 +16,7 @@ import org.eclipse.uml2.uml.OperationOwner;
 
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
 import com.eclipsesource.uml.glsp.uml.handler.operations.create.BaseCreateChildNodeHandler;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.operation.AddOperationContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.operation.CreateOperationContribution;
 
 public final class CreateOperationHandler
    extends BaseCreateChildNodeHandler<OperationOwner> {
@@ -27,7 +27,7 @@ public final class CreateOperationHandler
 
    @Override
    protected CCommand createCommand(final CreateNodeOperation operation, final OperationOwner parent) {
-      return AddOperationContribution.create(parent);
+      return CreateOperationContribution.create(parent);
    }
 
 }

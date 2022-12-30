@@ -16,7 +16,7 @@ import org.eclipse.uml2.uml.Lifeline;
 
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
 import com.eclipsesource.uml.glsp.uml.handler.operations.create.BaseCreateEdgeHandler;
-import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.message.AddMessageContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.message.CreateMessageContribution;
 
 public final class CreateMessageHandler
    extends BaseCreateEdgeHandler<Lifeline, Lifeline> {
@@ -27,7 +27,7 @@ public final class CreateMessageHandler
 
    @Override
    protected CCommand createCommand(final CreateEdgeOperation operation, final Lifeline source, final Lifeline target) {
-      return AddMessageContribution.create(
+      return CreateMessageContribution.create(
          source,
          target);
 

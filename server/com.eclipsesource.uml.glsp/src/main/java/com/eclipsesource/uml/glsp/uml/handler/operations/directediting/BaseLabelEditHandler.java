@@ -54,7 +54,7 @@ public abstract class BaseLabelEditHandler<T extends EObject> implements Diagram
    public String getLabelSuffix() { return labelSuffix; }
 
    @Override
-   public void executeLabelEdit(final ApplyLabelEditOperation operation) {
+   public void handle(final ApplyLabelEditOperation operation) {
       var labelId = operation.getLabelId();
 
       var elementId = suffix.extractId(labelId)

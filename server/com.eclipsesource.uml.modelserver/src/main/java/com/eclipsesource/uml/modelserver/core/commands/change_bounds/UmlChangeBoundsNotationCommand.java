@@ -20,9 +20,9 @@ import org.eclipse.uml2.uml.Element;
 
 import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
-import com.eclipsesource.uml.modelserver.shared.notation.UmlNotationElementCommand;
+import com.eclipsesource.uml.modelserver.shared.notation.BaseNotationElementCommand;
 
-public class UmlChangeBoundsNotationCommand extends UmlNotationElementCommand {
+public class UmlChangeBoundsNotationCommand extends BaseNotationElementCommand {
    protected final Optional<GPoint> shapePosition;
    protected final Optional<GDimension> shapeSize;
    protected final Shape shape;

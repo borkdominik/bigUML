@@ -38,7 +38,7 @@ public abstract class BaseCreateChildNodeHandler<T> extends BaseCreateHandler<Cr
    }
 
    @Override
-   public void create(final CreateNodeOperation operation) {
+   public void execute(final CreateNodeOperation operation) {
       var containerId = operation.getContainerId();
       var container = getOrThrow(modelState.getIndex().getEObject(containerId),
          containerType,

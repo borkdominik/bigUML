@@ -14,12 +14,12 @@ import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.uml2.uml.PrimitiveType;
 
 import com.eclipsesource.uml.glsp.uml.handler.operations.delete.BaseDeleteElementHandler;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.primitive_type.RemovePrimitiveTypeContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.primitive_type.DeletePrimitiveTypeContribution;
 
 public final class DeletePrimitiveTypeHandler extends BaseDeleteElementHandler<PrimitiveType> {
 
    @Override
    protected CCommand createCommand(final PrimitiveType element) {
-      return RemovePrimitiveTypeContribution.create(element.getPackage(), element);
+      return DeletePrimitiveTypeContribution.create(element.getPackage(), element);
    }
 }

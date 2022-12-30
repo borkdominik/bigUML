@@ -14,13 +14,13 @@ import org.eclipse.emfcloud.modelserver.edit.CommandContribution;
 
 import com.eclipsesource.uml.modelserver.core.manifest.DiagramManifest;
 import com.eclipsesource.uml.modelserver.core.manifest.contributions.CommandCodecContribution;
-import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.interaction.AddInteractionContribution;
-import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.interaction.RemoveInteractionContribution;
-import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.lifeline.AddLifelineContribution;
-import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.lifeline.RemoveLifelineContribution;
-import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.message.AddMessageContribution;
-import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.message.RemoveMessageContribution;
-import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.message.SetMessageNameContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.interaction.CreateInteractionContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.interaction.DeleteInteractionContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.lifeline.CreateLifelineContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.lifeline.DeleteLifelineContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.message.CreateMessageContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.message.DeleteMessageContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.message.RenameMessageContribution;
 import com.google.inject.multibindings.MapBinder;
 
 public final class CommunicationManifest extends DiagramManifest implements CommandCodecContribution {
@@ -32,12 +32,12 @@ public final class CommunicationManifest extends DiagramManifest implements Comm
 
    @Override
    public void contributeCommandCodec(final MapBinder<String, CommandContribution> multibinder) {
-      multibinder.addBinding(AddInteractionContribution.TYPE).to(AddInteractionContribution.class);
-      multibinder.addBinding(RemoveInteractionContribution.TYPE).to(RemoveInteractionContribution.class);
-      multibinder.addBinding(AddLifelineContribution.TYPE).to(AddLifelineContribution.class);
-      multibinder.addBinding(RemoveLifelineContribution.TYPE).to(RemoveLifelineContribution.class);
-      multibinder.addBinding(AddMessageContribution.TYPE).to(AddMessageContribution.class);
-      multibinder.addBinding(RemoveMessageContribution.TYPE).to(RemoveMessageContribution.class);
-      multibinder.addBinding(SetMessageNameContribution.TYPE).to(SetMessageNameContribution.class);
+      multibinder.addBinding(CreateInteractionContribution.TYPE).to(CreateInteractionContribution.class);
+      multibinder.addBinding(DeleteInteractionContribution.TYPE).to(DeleteInteractionContribution.class);
+      multibinder.addBinding(CreateLifelineContribution.TYPE).to(CreateLifelineContribution.class);
+      multibinder.addBinding(DeleteLifelineContribution.TYPE).to(DeleteLifelineContribution.class);
+      multibinder.addBinding(CreateMessageContribution.TYPE).to(CreateMessageContribution.class);
+      multibinder.addBinding(DeleteMessageContribution.TYPE).to(DeleteMessageContribution.class);
+      multibinder.addBinding(RenameMessageContribution.TYPE).to(RenameMessageContribution.class);
    }
 }

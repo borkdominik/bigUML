@@ -17,7 +17,7 @@ import org.eclipse.uml2.uml.Property;
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.LabelSuffix;
 import com.eclipsesource.uml.glsp.uml.handler.operations.directediting.BaseLabelEditHandler;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association.SetAssociationEndNameContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association.UpdateAssociationEndNameContribution;
 
 public final class SetAssociationEndNameHandler extends BaseLabelEditHandler<Property> {
 
@@ -27,7 +27,7 @@ public final class SetAssociationEndNameHandler extends BaseLabelEditHandler<Pro
 
    @Override
    protected CCommand createCommand(final ApplyLabelEditOperation operation, final Property element) {
-      return SetAssociationEndNameContribution.create(element, operation.getText());
+      return UpdateAssociationEndNameContribution.create(element, operation.getText());
    }
 
 }

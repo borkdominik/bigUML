@@ -39,7 +39,7 @@ public class UmlCreateEdgeOperationHandler extends AbstractEMSOperationHandler<C
                return new GLSPServerException(
                   "No create edge handler found for element " + operation.getElementTypeId());
             })
-         .executeCreate(operation);
+         .handle(operation);
    }
 
    @Override

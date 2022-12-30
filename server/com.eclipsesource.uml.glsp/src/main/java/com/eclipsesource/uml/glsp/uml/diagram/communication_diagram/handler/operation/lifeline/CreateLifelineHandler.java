@@ -18,7 +18,7 @@ import org.eclipse.uml2.uml.Interaction;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
 import com.eclipsesource.uml.glsp.uml.handler.operations.create.BaseCreateChildNodeHandler;
 import com.eclipsesource.uml.glsp.uml.handler.operations.create.CreateLocationAwareNodeHandler;
-import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.lifeline.AddLifelineContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.lifeline.CreateLifelineContribution;
 
 public final class CreateLifelineHandler
    extends BaseCreateChildNodeHandler<Interaction> implements CreateLocationAwareNodeHandler {
@@ -29,7 +29,7 @@ public final class CreateLifelineHandler
 
    @Override
    protected CCommand createCommand(final CreateNodeOperation operation, final Interaction container) {
-      return AddLifelineContribution.create(
+      return CreateLifelineContribution.create(
          container,
          relativeLocationOf(modelState, operation).orElse(GraphUtil.point(0, 0)));
    }

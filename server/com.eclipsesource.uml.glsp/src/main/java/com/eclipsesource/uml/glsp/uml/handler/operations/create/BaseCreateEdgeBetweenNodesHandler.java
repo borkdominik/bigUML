@@ -26,7 +26,7 @@ public abstract class BaseCreateEdgeBetweenNodesHandler<S, T>
    }
 
    @Override
-   public void create(final CreateEdgeOperation operation) {
+   public void execute(final CreateEdgeOperation operation) {
       var sourceId = operation.getSourceElementId();
       var targetId = operation.getTargetElementId();
 

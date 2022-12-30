@@ -15,5 +15,5 @@ import org.eclipse.emf.ecore.EObject;
 public interface DiagramDeleteHandler<T extends EObject> {
    Class<T> getElementType();
 
-   void executeDelete(EObject object);
+   void handle(EObject object);
 }

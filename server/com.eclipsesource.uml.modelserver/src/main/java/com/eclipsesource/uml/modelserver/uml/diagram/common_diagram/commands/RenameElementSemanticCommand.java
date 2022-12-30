@@ -13,9 +13,9 @@ package com.eclipsesource.uml.modelserver.uml.diagram.common_diagram.commands;
 import org.eclipse.uml2.uml.NamedElement;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
-import com.eclipsesource.uml.modelserver.shared.semantic.UmlSemanticElementCommand;
+import com.eclipsesource.uml.modelserver.shared.semantic.BaseSemanticElementCommand;
 
-public final class RenameElementSemanticCommand extends UmlSemanticElementCommand {
+public final class RenameElementSemanticCommand extends BaseSemanticElementCommand {
 
    protected final NamedElement element;
    protected final String newName;

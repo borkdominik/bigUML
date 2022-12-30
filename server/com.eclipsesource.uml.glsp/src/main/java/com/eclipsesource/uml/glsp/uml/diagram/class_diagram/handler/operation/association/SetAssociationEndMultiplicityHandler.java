@@ -17,7 +17,7 @@ import org.eclipse.uml2.uml.Property;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyLabelMultiplicitySuffix;
 import com.eclipsesource.uml.glsp.uml.handler.operations.directediting.BaseLabelEditHandler;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association.SetAssociationEndMultiplicityContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association.UpdateAssociationEndMultiplicityContribution;
 
 public final class SetAssociationEndMultiplicityHandler extends BaseLabelEditHandler<Property> {
 
@@ -27,6 +27,6 @@ public final class SetAssociationEndMultiplicityHandler extends BaseLabelEditHan
 
    @Override
    protected CCommand createCommand(final ApplyLabelEditOperation operation, final Property element) {
-      return SetAssociationEndMultiplicityContribution.create(element, operation.getText());
+      return UpdateAssociationEndMultiplicityContribution.create(element, operation.getText());
    }
 }

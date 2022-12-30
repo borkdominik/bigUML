@@ -14,12 +14,12 @@ import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.uml2.uml.Interface;
 
 import com.eclipsesource.uml.glsp.uml.handler.operations.delete.BaseDeleteElementHandler;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uinterface.RemoveInterfaceContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uinterface.DeleteInterfaceContribution;
 
 public final class DeleteInterfaceHandler extends BaseDeleteElementHandler<Interface> {
 
    @Override
    protected CCommand createCommand(final Interface element) {
-      return RemoveInterfaceContribution.create(element.getPackage(), element);
+      return DeleteInterfaceContribution.create(element.getPackage(), element);
    }
 }

@@ -23,9 +23,9 @@ import org.eclipse.uml2.uml.Element;
 
 import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
-import com.eclipsesource.uml.modelserver.shared.notation.UmlNotationElementCommand;
+import com.eclipsesource.uml.modelserver.shared.notation.BaseNotationElementCommand;
 
-public class UmlWrapBoundsCommand extends UmlNotationElementCommand {
+public class UmlWrapBoundsCommand extends BaseNotationElementCommand {
    protected final List<ElementAndBounds> bounds;
    protected final Map<String, GPoint> elementPositions;
 

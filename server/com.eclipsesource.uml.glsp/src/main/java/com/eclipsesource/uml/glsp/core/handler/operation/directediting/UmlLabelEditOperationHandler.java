@@ -65,7 +65,7 @@ public class UmlLabelEditOperationHandler
                   + labelType + " with suffix " + labelSuffix + " for labelId "
                   + labelId);
          })
-         .executeLabelEdit(operation);
+         .handle(operation);
    }
 
    @Override

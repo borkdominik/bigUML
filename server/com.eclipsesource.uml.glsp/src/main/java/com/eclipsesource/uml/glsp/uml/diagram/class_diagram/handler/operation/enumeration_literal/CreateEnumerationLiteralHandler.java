@@ -16,7 +16,7 @@ import org.eclipse.uml2.uml.Enumeration;
 
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
 import com.eclipsesource.uml.glsp.uml.handler.operations.create.BaseCreateChildNodeHandler;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.enumeration_literal.AddEnumerationLiteralContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.enumeration_literal.CreateEnumerationLiteralContribution;
 
 public final class CreateEnumerationLiteralHandler
    extends BaseCreateChildNodeHandler<Enumeration> {
@@ -27,7 +27,7 @@ public final class CreateEnumerationLiteralHandler
 
    @Override
    protected CCommand createCommand(final CreateNodeOperation operation, final Enumeration parent) {
-      return AddEnumerationLiteralContribution.create(parent);
+      return CreateEnumerationLiteralContribution.create(parent);
    }
 
 }

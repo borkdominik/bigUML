@@ -14,12 +14,12 @@ import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.uml2.uml.Class;
 
 import com.eclipsesource.uml.glsp.uml.handler.operations.delete.BaseDeleteElementHandler;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uclass.RemoveClassContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uclass.DeleteClassContribution;
 
 public final class DeleteClassHandler extends BaseDeleteElementHandler<Class> {
 
    @Override
    protected CCommand createCommand(final Class element) {
-      return RemoveClassContribution.create(element.getPackage(), element);
+      return DeleteClassContribution.create(element.getPackage(), element);
    }
 }

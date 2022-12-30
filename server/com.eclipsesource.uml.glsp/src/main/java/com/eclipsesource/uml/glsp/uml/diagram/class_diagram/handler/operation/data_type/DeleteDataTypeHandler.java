@@ -14,12 +14,12 @@ import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.uml2.uml.DataType;
 
 import com.eclipsesource.uml.glsp.uml.handler.operations.delete.BaseDeleteElementHandler;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.data_type.RemoveDataTypeContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.data_type.DeleteDataTypeContribution;
 
 public final class DeleteDataTypeHandler extends BaseDeleteElementHandler<DataType> {
 
    @Override
    protected CCommand createCommand(final DataType element) {
-      return RemoveDataTypeContribution.create(element.getPackage(), element);
+      return DeleteDataTypeContribution.create(element.getPackage(), element);
    }
 }

@@ -14,12 +14,12 @@ import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.uml2.uml.Association;
 
 import com.eclipsesource.uml.glsp.uml.handler.operations.delete.BaseDeleteElementHandler;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association.RemoveAssociationContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association.DeleteAssociationContribution;
 
 public final class DeleteAssociationHandler extends BaseDeleteElementHandler<Association> {
 
    @Override
    protected CCommand createCommand(final Association element) {
-      return RemoveAssociationContribution.create(element.getPackage(), element);
+      return DeleteAssociationContribution.create(element.getPackage(), element);
    }
 }

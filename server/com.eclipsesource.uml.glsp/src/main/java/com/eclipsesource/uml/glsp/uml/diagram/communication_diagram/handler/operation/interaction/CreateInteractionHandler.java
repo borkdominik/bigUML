@@ -16,7 +16,7 @@ import org.eclipse.glsp.server.operations.CreateNodeOperation;
 
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
 import com.eclipsesource.uml.glsp.uml.handler.operations.create.BaseCreateNodeHandler;
-import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.interaction.AddInteractionContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.interaction.CreateInteractionContribution;
 
 public final class CreateInteractionHandler
    extends BaseCreateNodeHandler {
@@ -27,6 +27,6 @@ public final class CreateInteractionHandler
 
    @Override
    protected CCommand createCommand(final CreateNodeOperation operation) {
-      return AddInteractionContribution.create(operation.getLocation().orElse(GraphUtil.point(0, 0)));
+      return CreateInteractionContribution.create(operation.getLocation().orElse(GraphUtil.point(0, 0)));
    }
 }

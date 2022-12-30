@@ -38,7 +38,7 @@ public abstract class BaseDeleteElementHandler<T extends EObject> implements Dia
    public Class<T> getElementType() { return elementType; }
 
    @Override
-   public void executeDelete(final EObject object) {
+   public void handle(final EObject object) {
       var element = ReflectionUtil.castOrThrow(object,
          elementType,
          "Object is not castable to " + elementType.getName() + ". it was " + object.getClass().getName());

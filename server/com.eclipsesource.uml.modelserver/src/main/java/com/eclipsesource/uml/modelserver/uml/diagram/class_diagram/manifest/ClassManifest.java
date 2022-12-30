@@ -14,32 +14,32 @@ import org.eclipse.emfcloud.modelserver.edit.CommandContribution;
 
 import com.eclipsesource.uml.modelserver.core.manifest.DiagramManifest;
 import com.eclipsesource.uml.modelserver.core.manifest.contributions.CommandCodecContribution;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association.AddAssociationContribution;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association.RemoveAssociationContribution;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association.SetAssociationEndMultiplicityContribution;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association.SetAssociationEndNameContribution;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.data_type.AddDataTypeContribution;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.data_type.RemoveDataTypeContribution;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.enumeration.AddEnumerationContribution;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.enumeration.RemoveEnumerationContribution;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.enumeration_literal.AddEnumerationLiteralContribution;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.enumeration_literal.RemoveEnumerationLiteralContribution;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.generalization.AddGeneralizationContribution;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.generalization.RemoveGeneralizationContribution;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.operation.AddOperationContribution;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.operation.RemoveOperationContribution;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.primitive_type.AddPrimitiveTypeContribution;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.primitive_type.RemovePrimitiveTypeContribution;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.AddPropertyContribution;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.RemovePropertyContribution;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.SetPropertyBoundsContribution;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.SetPropertyTypeContribution;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uclass.AddClassContribution;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uclass.RemoveClassContribution;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uinterface.AddInterfaceContribution;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uinterface.RemoveInterfaceContribution;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.upackage.AddPackageContribution;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.upackage.RemovePackageContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association.CreateAssociationContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association.DeleteAssociationContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association.UpdateAssociationEndMultiplicityContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association.UpdateAssociationEndNameContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.data_type.CreateDataTypeContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.data_type.DeleteDataTypeContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.enumeration.CreateEnumerationContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.enumeration.DeleteEnumerationContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.enumeration_literal.CreateEnumerationLiteralContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.enumeration_literal.DeleteEnumerationLiteralContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.generalization.CreateGeneralizationContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.generalization.DeleteGeneralizationContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.operation.CreateOperationContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.operation.DeleteOperationContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.primitive_type.CreatePrimitiveTypeContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.primitive_type.DeletePrimitiveTypeContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.CreatePropertyContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.DeletePropertyContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.UpdatePropertyBoundsContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.UpdatePropertyTypeContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uclass.CreateClassContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uclass.DeleteClassContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uinterface.CreateInterfaceContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uinterface.DeleteInterfaceContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.upackage.CreatePackageContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.upackage.DeletePackageContribution;
 import com.google.inject.multibindings.MapBinder;
 
 public final class ClassManifest extends DiagramManifest implements CommandCodecContribution {
@@ -52,53 +52,53 @@ public final class ClassManifest extends DiagramManifest implements CommandCodec
    @Override
    public void contributeCommandCodec(final MapBinder<String, CommandContribution> multibinder) {
       // Class
-      multibinder.addBinding(AddClassContribution.TYPE).to(AddClassContribution.class);
-      multibinder.addBinding(RemoveClassContribution.TYPE).to(RemoveClassContribution.class);
+      multibinder.addBinding(CreateClassContribution.TYPE).to(CreateClassContribution.class);
+      multibinder.addBinding(DeleteClassContribution.TYPE).to(DeleteClassContribution.class);
 
       // Property
-      multibinder.addBinding(AddPropertyContribution.TYPE).to(AddPropertyContribution.class);
-      multibinder.addBinding(RemovePropertyContribution.TYPE).to(RemovePropertyContribution.class);
-      multibinder.addBinding(SetPropertyTypeContribution.TYPE).to(SetPropertyTypeContribution.class);
-      multibinder.addBinding(SetPropertyBoundsContribution.TYPE).to(SetPropertyBoundsContribution.class);
+      multibinder.addBinding(CreatePropertyContribution.TYPE).to(CreatePropertyContribution.class);
+      multibinder.addBinding(DeletePropertyContribution.TYPE).to(DeletePropertyContribution.class);
+      multibinder.addBinding(UpdatePropertyTypeContribution.TYPE).to(UpdatePropertyTypeContribution.class);
+      multibinder.addBinding(UpdatePropertyBoundsContribution.TYPE).to(UpdatePropertyBoundsContribution.class);
 
       // Association
-      multibinder.addBinding(AddAssociationContribution.TYPE).to(AddAssociationContribution.class);
-      multibinder.addBinding(RemoveAssociationContribution.TYPE).to(RemoveAssociationContribution.class);
-      multibinder.addBinding(SetAssociationEndNameContribution.TYPE).to(SetAssociationEndNameContribution.class);
-      multibinder.addBinding(SetAssociationEndMultiplicityContribution.TYPE)
-         .to(SetAssociationEndMultiplicityContribution.class);
+      multibinder.addBinding(CreateAssociationContribution.TYPE).to(CreateAssociationContribution.class);
+      multibinder.addBinding(DeleteAssociationContribution.TYPE).to(DeleteAssociationContribution.class);
+      multibinder.addBinding(UpdateAssociationEndNameContribution.TYPE).to(UpdateAssociationEndNameContribution.class);
+      multibinder.addBinding(UpdateAssociationEndMultiplicityContribution.TYPE)
+         .to(UpdateAssociationEndMultiplicityContribution.class);
 
       // Generalization
-      multibinder.addBinding(AddGeneralizationContribution.TYPE).to(AddGeneralizationContribution.class);
-      multibinder.addBinding(RemoveGeneralizationContribution.TYPE).to(RemoveGeneralizationContribution.class);
+      multibinder.addBinding(CreateGeneralizationContribution.TYPE).to(CreateGeneralizationContribution.class);
+      multibinder.addBinding(DeleteGeneralizationContribution.TYPE).to(DeleteGeneralizationContribution.class);
 
       // Interface
-      multibinder.addBinding(AddInterfaceContribution.TYPE).to(AddInterfaceContribution.class);
-      multibinder.addBinding(RemoveInterfaceContribution.TYPE).to(RemoveInterfaceContribution.class);
+      multibinder.addBinding(CreateInterfaceContribution.TYPE).to(CreateInterfaceContribution.class);
+      multibinder.addBinding(DeleteInterfaceContribution.TYPE).to(DeleteInterfaceContribution.class);
 
       // Enumeration
-      multibinder.addBinding(AddEnumerationContribution.TYPE).to(AddEnumerationContribution.class);
-      multibinder.addBinding(RemoveEnumerationContribution.TYPE).to(RemoveEnumerationContribution.class);
+      multibinder.addBinding(CreateEnumerationContribution.TYPE).to(CreateEnumerationContribution.class);
+      multibinder.addBinding(DeleteEnumerationContribution.TYPE).to(DeleteEnumerationContribution.class);
 
       // Enumeration Literal
-      multibinder.addBinding(AddEnumerationLiteralContribution.TYPE).to(AddEnumerationLiteralContribution.class);
-      multibinder.addBinding(RemoveEnumerationLiteralContribution.TYPE).to(RemoveEnumerationLiteralContribution.class);
+      multibinder.addBinding(CreateEnumerationLiteralContribution.TYPE).to(CreateEnumerationLiteralContribution.class);
+      multibinder.addBinding(DeleteEnumerationLiteralContribution.TYPE).to(DeleteEnumerationLiteralContribution.class);
 
       // Operation
-      multibinder.addBinding(AddOperationContribution.TYPE).to(AddOperationContribution.class);
-      multibinder.addBinding(RemoveOperationContribution.TYPE).to(RemoveOperationContribution.class);
+      multibinder.addBinding(CreateOperationContribution.TYPE).to(CreateOperationContribution.class);
+      multibinder.addBinding(DeleteOperationContribution.TYPE).to(DeleteOperationContribution.class);
 
       // Data Type
-      multibinder.addBinding(AddDataTypeContribution.TYPE).to(AddDataTypeContribution.class);
-      multibinder.addBinding(RemoveDataTypeContribution.TYPE).to(RemoveDataTypeContribution.class);
+      multibinder.addBinding(CreateDataTypeContribution.TYPE).to(CreateDataTypeContribution.class);
+      multibinder.addBinding(DeleteDataTypeContribution.TYPE).to(DeleteDataTypeContribution.class);
 
       // Data Type
-      multibinder.addBinding(AddPrimitiveTypeContribution.TYPE).to(AddPrimitiveTypeContribution.class);
-      multibinder.addBinding(RemovePrimitiveTypeContribution.TYPE).to(RemovePrimitiveTypeContribution.class);
+      multibinder.addBinding(CreatePrimitiveTypeContribution.TYPE).to(CreatePrimitiveTypeContribution.class);
+      multibinder.addBinding(DeletePrimitiveTypeContribution.TYPE).to(DeletePrimitiveTypeContribution.class);
 
       // Package
-      multibinder.addBinding(AddPackageContribution.TYPE).to(AddPackageContribution.class);
-      multibinder.addBinding(RemovePackageContribution.TYPE).to(RemovePackageContribution.class);
+      multibinder.addBinding(CreatePackageContribution.TYPE).to(CreatePackageContribution.class);
+      multibinder.addBinding(DeletePackageContribution.TYPE).to(DeletePackageContribution.class);
 
    }
 }

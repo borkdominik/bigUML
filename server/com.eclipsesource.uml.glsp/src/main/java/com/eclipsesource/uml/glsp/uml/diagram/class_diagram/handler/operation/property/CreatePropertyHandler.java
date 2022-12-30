@@ -16,7 +16,7 @@ import org.eclipse.uml2.uml.AttributeOwner;
 
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
 import com.eclipsesource.uml.glsp.uml.handler.operations.create.BaseCreateChildNodeHandler;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.AddPropertyContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.CreatePropertyContribution;
 
 public final class CreatePropertyHandler
    extends BaseCreateChildNodeHandler<AttributeOwner> {
@@ -27,7 +27,7 @@ public final class CreatePropertyHandler
 
    @Override
    protected CCommand createCommand(final CreateNodeOperation operation, final AttributeOwner parent) {
-      return AddPropertyContribution.create(parent);
+      return CreatePropertyContribution.create(parent);
    }
 
 }

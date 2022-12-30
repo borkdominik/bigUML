@@ -18,7 +18,7 @@ import org.eclipse.uml2.uml.Type;
 
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
 import com.eclipsesource.uml.glsp.uml.handler.operations.create.BaseCreateEdgeBetweenNodesHandler;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association.AddAssociationContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association.CreateAssociationContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.constants.AssociationType;
 
 public final class CreateAssociationHandler
@@ -41,7 +41,7 @@ public final class CreateAssociationHandler
    @Override
    protected CCommand createCommand(final CreateEdgeOperation operation, final Type source, final Type target) {
       var keyword = AssociationType.ASSOCIATION;
-      return AddAssociationContribution
+      return CreateAssociationContribution
          .create(source, target, keyword);
    }
 

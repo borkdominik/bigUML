@@ -28,9 +28,9 @@ public abstract class BaseCreateHandler<T extends CreateOperation> implements Di
    public String getElementTypeId() { return elementTypeId; }
 
    @Override
-   public void executeCreate(final CreateOperation operation) {
-      create(operationType.cast(operation));
+   public void handle(final CreateOperation operation) {
+      execute(operationType.cast(operation));
    }
 
-   abstract protected void create(T operation);
+   abstract protected void execute(T operation);
 }

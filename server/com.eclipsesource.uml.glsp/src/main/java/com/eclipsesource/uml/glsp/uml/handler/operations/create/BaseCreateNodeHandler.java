@@ -27,7 +27,7 @@ public abstract class BaseCreateNodeHandler extends BaseCreateHandler<CreateNode
    }
 
    @Override
-   public void create(final CreateNodeOperation operation) {
+   public void execute(final CreateNodeOperation operation) {
       var command = createCommand(operation);
       modelServerAccess.exec(command)
          .thenAccept(response -> {

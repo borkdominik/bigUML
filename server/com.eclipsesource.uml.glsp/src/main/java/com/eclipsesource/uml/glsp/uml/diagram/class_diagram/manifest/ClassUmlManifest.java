@@ -68,8 +68,8 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.pr
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.property.CreatePropertyHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.property.DeletePropertyHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.property.RenamePropertyHandler;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.property.SetPropertyMultiplicityHandler;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.property.SetPropertyTypeHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.property.UpdatePropertyMultiplicityHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.property.UpdatePropertyTypeHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.uclass.CreateAbstractClassHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.uclass.CreateClassHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.uclass.DeleteClassHandler;
@@ -171,8 +171,8 @@ public final class ClassUmlManifest extends DiagramManifest
       multibinder.addBinding().to(RenameEnumerationHandler.class);
       multibinder.addBinding().to(RenameEnumerationLiteralHandler.class);
       multibinder.addBinding().to(RenamePropertyHandler.class);
-      multibinder.addBinding().to(SetPropertyMultiplicityHandler.class);
-      multibinder.addBinding().to(SetPropertyTypeHandler.class);
+      multibinder.addBinding().to(UpdatePropertyMultiplicityHandler.class);
+      multibinder.addBinding().to(UpdatePropertyTypeHandler.class);
       multibinder.addBinding().to(RenameClassHandler.class);
       multibinder.addBinding().to(RenameInterfaceHandler.class);
       multibinder.addBinding().to(RenameOperationHandler.class);

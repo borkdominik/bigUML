@@ -20,8 +20,7 @@ import org.eclipse.uml2.uml.Operation;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 import com.eclipsesource.uml.glsp.core.features.idgenerator.IdCountContextGenerator;
-import com.eclipsesource.uml.glsp.core.gmodel.suffix.IconSuffix;
-import com.eclipsesource.uml.glsp.core.gmodel.suffix.LabelSuffix;
+import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGModelMapper;
 import com.google.inject.Inject;
@@ -31,28 +30,28 @@ public final class OperationCompartmentMapper extends BaseGModelMapper<Operation
    protected IdCountContextGenerator idCountGenerator;
 
    @Override
-   public GCompartment map(final Operation operation) {
+   public GCompartment map(final Operation source) {
       var builder = new GCompartmentBuilder(ClassTypes.OPERATION)
-         .id(idGenerator.getOrCreateId(operation))
+         .id(idGenerator.getOrCreateId(source))
          .layout(GConstants.Layout.HBOX)
          .layoutOptions(new GLayoutOptions()
             .hGap(3)
             .resizeContainer(true))
-         .add(buildIcon(operation))
-         .add(buildName(operation));
+         .add(buildIcon(source))
+         .add(buildName(source));
 
       return builder.build();
    }
 
-   protected GCompartment buildIcon(final Operation operation) {
+   protected GCompartment buildIcon(final Operation source) {
       return new GCompartmentBuilder(ClassTypes.ICON_PROPERTY)
-         .id(suffix.appendTo(IconSuffix.SUFFIX, idGenerator.getOrCreateId(operation)))
+         .id(idCountGenerator.getOrCreateId(source))
          .build();
    }
 
    protected GLabel buildName(final Operation operation) {
       return new GLabelBuilder(CoreTypes.LABEL_NAME)
-         .id(suffix.appendTo(LabelSuffix.SUFFIX, idGenerator.getOrCreateId(operation)))
+         .id(suffix.appendTo(NameLabelSuffix.SUFFIX, idGenerator.getOrCreateId(operation)))
          .text(operation.getName())
          .build();
    }

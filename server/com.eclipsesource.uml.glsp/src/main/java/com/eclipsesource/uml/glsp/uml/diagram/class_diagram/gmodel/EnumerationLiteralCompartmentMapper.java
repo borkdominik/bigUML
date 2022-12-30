@@ -20,8 +20,7 @@ import org.eclipse.uml2.uml.EnumerationLiteral;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 import com.eclipsesource.uml.glsp.core.features.idgenerator.IdCountContextGenerator;
-import com.eclipsesource.uml.glsp.core.gmodel.suffix.IconSuffix;
-import com.eclipsesource.uml.glsp.core.gmodel.suffix.LabelSuffix;
+import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGModelMapper;
 import com.google.inject.Inject;
@@ -31,29 +30,29 @@ public final class EnumerationLiteralCompartmentMapper extends BaseGModelMapper<
    protected IdCountContextGenerator idCountGenerator;
 
    @Override
-   public GCompartment map(final EnumerationLiteral literal) {
+   public GCompartment map(final EnumerationLiteral source) {
       var builder = new GCompartmentBuilder(ClassTypes.ENUMERATION_LITERAL)
-         .id(idGenerator.getOrCreateId(literal))
+         .id(idGenerator.getOrCreateId(source))
          .layout(GConstants.Layout.HBOX)
          .layoutOptions(new GLayoutOptions()
             .hGap(3)
             .resizeContainer(true))
-         .add(buildIcon(literal))
-         .add(buildName(literal));
+         .add(buildIcon(source))
+         .add(buildName(source));
 
       return builder.build();
    }
 
-   protected GCompartment buildIcon(final EnumerationLiteral literal) {
+   protected GCompartment buildIcon(final EnumerationLiteral source) {
       return new GCompartmentBuilder(ClassTypes.ICON_ENUMERATION_LITERAL)
-         .id(suffix.appendTo(IconSuffix.SUFFIX, idGenerator.getOrCreateId(literal)))
+         .id(idCountGenerator.getOrCreateId(source))
          .build();
    }
 
-   protected GLabel buildName(final EnumerationLiteral literal) {
+   protected GLabel buildName(final EnumerationLiteral source) {
       return new GLabelBuilder(CoreTypes.LABEL_NAME)
-         .id(suffix.appendTo(LabelSuffix.SUFFIX, idGenerator.getOrCreateId(literal)))
-         .text(literal.getName())
+         .id(suffix.appendTo(NameLabelSuffix.SUFFIX, idGenerator.getOrCreateId(source)))
+         .text(source.getName())
          .build();
    }
 }

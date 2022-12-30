@@ -12,13 +12,8 @@ package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.u
 
 import org.eclipse.uml2.uml.Package;
 
-import com.eclipsesource.uml.glsp.core.gmodel.suffix.HeaderLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.handler.operations.directediting.RenameNamedElementHandler;
 
 public final class RenamePackageHandler extends RenameNamedElementHandler<Package> {
-
-   public RenamePackageHandler() {
-      super(HeaderLabelSuffix.SUFFIX);
-   }
 
 }

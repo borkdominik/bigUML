@@ -20,39 +20,38 @@ import org.eclipse.uml2.uml.Lifeline;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
-import com.eclipsesource.uml.glsp.core.gmodel.suffix.HeaderIconSuffix;
-import com.eclipsesource.uml.glsp.core.gmodel.suffix.HeaderLabelSuffix;
-import com.eclipsesource.uml.glsp.core.gmodel.suffix.HeaderSuffix;
+import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGNodeMapper;
 
 public class LifelineNodeMapper extends BaseGNodeMapper<Lifeline, GNode> {
 
    @Override
-   public GNode map(final Lifeline lifeline) {
+   public GNode map(final Lifeline source) {
       var builder = new GNodeBuilder(CommunicationTypes.LIFELINE)
-         .id(idGenerator.getOrCreateId(lifeline))
+         .id(idGenerator.getOrCreateId(source))
          .layout(GConstants.Layout.VBOX)
          .addCssClass(CoreCSS.NODE)
-         .add(buildHeader(lifeline));
+         .add(buildHeader(source));
 
-      applyShapeNotation(lifeline, builder);
+      applyShapeNotation(source, builder);
 
       return builder.build();
    }
 
-   protected GCompartment buildHeader(final Lifeline umlLifeline) {
+   protected GCompartment buildHeader(final Lifeline source) {
       var builder = new GCompartmentBuilder(CoreTypes.COMPARTMENT_HEADER)
-         .id(suffix.appendTo(HeaderSuffix.SUFFIX, idGenerator.getOrCreateId(umlLifeline)))
+         .id(idCountGenerator.getOrCreateId(source))
          .layout(GConstants.Layout.HBOX);
 
       var icon = new GCompartmentBuilder(CommunicationTypes.ICON_LIFELINE)
-         .id(suffix.appendTo(HeaderIconSuffix.SUFFIX, idGenerator.getOrCreateId(umlLifeline))).build();
+         .id(idCountGenerator.getOrCreateId(source))
+         .build();
       builder.add(icon);
 
       var nameLabel = new GLabelBuilder(CoreTypes.LABEL_NAME)
-         .id(suffix.appendTo(HeaderLabelSuffix.SUFFIX, idGenerator.getOrCreateId(umlLifeline)))
-         .text(umlLifeline.getName()).build();
+         .id(suffix.appendTo(NameLabelSuffix.SUFFIX, idGenerator.getOrCreateId(source)))
+         .text(source.getName()).build();
       builder.add(nameLabel);
 
       return builder.build();

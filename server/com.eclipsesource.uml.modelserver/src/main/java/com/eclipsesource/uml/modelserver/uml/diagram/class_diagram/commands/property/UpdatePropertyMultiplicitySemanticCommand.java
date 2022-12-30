@@ -15,13 +15,13 @@ import org.eclipse.uml2.uml.Property;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.BaseSemanticElementCommand;
 
-public final class UpdatePropertyBoundsSemanticCommand extends BaseSemanticElementCommand {
+public final class UpdatePropertyMultiplicitySemanticCommand extends BaseSemanticElementCommand {
 
    protected final Property property;
    protected final int newLowerBound;
    protected final int newUpperBound;
 
-   public UpdatePropertyBoundsSemanticCommand(final ModelContext context,
+   public UpdatePropertyMultiplicitySemanticCommand(final ModelContext context,
       final Property property,
       final int newLowerBound, final int newUpperBound) {
       super(context);

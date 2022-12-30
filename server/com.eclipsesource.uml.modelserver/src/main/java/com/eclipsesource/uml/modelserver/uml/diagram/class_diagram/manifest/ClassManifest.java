@@ -30,7 +30,7 @@ import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.prim
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.primitive_type.DeletePrimitiveTypeContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.CreatePropertyContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.DeletePropertyContribution;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.UpdatePropertyBoundsContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.UpdatePropertyMultiplicityContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.UpdatePropertyTypeContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uclass.CreateClassContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uclass.DeleteClassContribution;
@@ -57,7 +57,7 @@ public final class ClassManifest extends DiagramManifest implements CommandCodec
       multibinder.addBinding(CreatePropertyContribution.TYPE).to(CreatePropertyContribution.class);
       multibinder.addBinding(DeletePropertyContribution.TYPE).to(DeletePropertyContribution.class);
       multibinder.addBinding(UpdatePropertyTypeContribution.TYPE).to(UpdatePropertyTypeContribution.class);
-      multibinder.addBinding(UpdatePropertyBoundsContribution.TYPE).to(UpdatePropertyBoundsContribution.class);
+      multibinder.addBinding(UpdatePropertyMultiplicityContribution.TYPE).to(UpdatePropertyMultiplicityContribution.class);
 
       // Association
       multibinder.addBinding(CreateAssociationContribution.TYPE).to(CreateAssociationContribution.class);

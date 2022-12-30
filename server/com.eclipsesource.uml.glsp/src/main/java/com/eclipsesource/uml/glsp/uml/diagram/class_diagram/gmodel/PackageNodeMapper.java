@@ -23,54 +23,51 @@ import org.eclipse.uml2.uml.Package;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
-import com.eclipsesource.uml.glsp.core.gmodel.suffix.CompartmentSuffix;
-import com.eclipsesource.uml.glsp.core.gmodel.suffix.HeaderIconSuffix;
-import com.eclipsesource.uml.glsp.core.gmodel.suffix.HeaderLabelSuffix;
-import com.eclipsesource.uml.glsp.core.gmodel.suffix.HeaderSuffix;
+import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGNodeMapper;
 
 public final class PackageNodeMapper extends BaseGNodeMapper<Package, GNode> {
 
    @Override
-   public GNode map(final Package upackage) {
+   public GNode map(final Package source) {
       var builder = new GNodeBuilder(ClassTypes.PACKAGE)
-         .id(idGenerator.getOrCreateId(upackage))
+         .id(idGenerator.getOrCreateId(source))
          .layout(GConstants.Layout.VBOX)
          .addCssClass(CoreCSS.NODE)
-         .add(buildHeader(upackage))
-         .add(buildCompartment(upackage));
+         .add(buildHeader(source))
+         .add(buildCompartment(source));
 
-      applyShapeNotation(upackage, builder);
+      applyShapeNotation(source, builder);
 
       return builder.build();
    }
 
-   protected GCompartment buildHeader(final Package upackage) {
+   protected GCompartment buildHeader(final Package source) {
       var builder = new GCompartmentBuilder(CoreTypes.COMPARTMENT_HEADER)
-         .id(suffix.appendTo(HeaderSuffix.SUFFIX, idGenerator.getOrCreateId(upackage)))
+         .id(idCountGenerator.getOrCreateId(source))
          .layout(GConstants.Layout.HBOX);
 
       var icon = new GCompartmentBuilder(ClassTypes.ICON_CLASS)
-         .id(suffix.appendTo(HeaderIconSuffix.SUFFIX, idGenerator.getOrCreateId(upackage)))
+         .id(idCountGenerator.getOrCreateId(source))
          .build();
       builder.add(icon);
 
       var nameLabel = new GLabelBuilder(CoreTypes.LABEL_NAME)
-         .id(suffix.appendTo(HeaderLabelSuffix.SUFFIX, idGenerator.getOrCreateId(upackage)))
-         .text(upackage.getName()).build();
+         .id(suffix.appendTo(NameLabelSuffix.SUFFIX, idGenerator.getOrCreateId(source)))
+         .text(source.getName()).build();
       builder.add(nameLabel);
 
       return builder.build();
    }
 
-   protected GCompartment buildCompartment(final Package upackage) {
+   protected GCompartment buildCompartment(final Package source) {
       return new GCompartmentBuilder(CoreTypes.COMPARTMENT)
-         .id(suffix.appendTo(CompartmentSuffix.SUFFIX, idGenerator.getOrCreateId(upackage)))
+         .id(idCountGenerator.getOrCreateId(source))
          .layout(GConstants.Layout.FREEFORM)
          .layoutOptions(new GLayoutOptions()
             .hAlign(GConstants.HAlign.LEFT))
-         .addAll(upackage.getPackagedElements().stream()
+         .addAll(source.getPackagedElements().stream()
             .map(mapHandler::handle)
             .collect(Collectors.toList()))
          .build();

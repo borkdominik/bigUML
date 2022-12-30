@@ -25,10 +25,7 @@ import org.eclipse.uml2.uml.Interaction;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
-import com.eclipsesource.uml.glsp.core.gmodel.suffix.CompartmentSuffix;
-import com.eclipsesource.uml.glsp.core.gmodel.suffix.HeaderIconSuffix;
-import com.eclipsesource.uml.glsp.core.gmodel.suffix.HeaderLabelSuffix;
-import com.eclipsesource.uml.glsp.core.gmodel.suffix.HeaderSuffix;
+import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGNodeMapper;
 
@@ -38,43 +35,43 @@ public class InteractionNodeMapper extends BaseGNodeMapper<Interaction, GNode> {
    private static final String H_ALIGN = "hAlign";
 
    @Override
-   public GNode map(final Interaction interaction) {
+   public GNode map(final Interaction source) {
       var layoutOptions = new HashMap<String, Object>();
       layoutOptions.put(H_ALIGN, GConstants.HAlign.CENTER);
       layoutOptions.put(H_GRAB, false);
       layoutOptions.put(V_GRAB, false);
 
       var builder = new GNodeBuilder(CommunicationTypes.INTERACTION)
-         .id(idGenerator.getOrCreateId(interaction))
+         .id(idGenerator.getOrCreateId(source))
          .layout(GConstants.Layout.VBOX)
          .layoutOptions(layoutOptions)
          .addCssClass(CoreCSS.NODE)
-         .add(buildHeader(interaction))
-         .add(buildCompartment(interaction));
+         .add(buildHeader(source))
+         .add(buildCompartment(source));
 
-      applyShapeNotation(interaction, builder);
+      applyShapeNotation(source, builder);
 
       return builder.build();
    }
 
-   protected GCompartment buildHeader(final Interaction umlInteraction) {
+   protected GCompartment buildHeader(final Interaction source) {
       return new GCompartmentBuilder(CoreTypes.COMPARTMENT_HEADER)
-         .id(suffix.appendTo(HeaderSuffix.SUFFIX, idGenerator.getOrCreateId(umlInteraction)))
+         .id(idCountGenerator.getOrCreateId(source))
          .layout(GConstants.Layout.HBOX)
          .add(new GCompartmentBuilder(CommunicationTypes.ICON_INTERACTION)
-            .id(suffix.appendTo(HeaderIconSuffix.SUFFIX, idGenerator.getOrCreateId(umlInteraction)))
+            .id(idCountGenerator.getOrCreateId(source))
             .build())
          .add(new GLabelBuilder(CoreTypes.LABEL_NAME)
-            .id(suffix.appendTo(HeaderLabelSuffix.SUFFIX, idGenerator.getOrCreateId(umlInteraction)))
-            .text(umlInteraction.getName())
+            .id(suffix.appendTo(NameLabelSuffix.SUFFIX, idGenerator.getOrCreateId(source)))
+            .text(source.getName())
             .build())
          .build();
    }
 
-   protected GCompartment buildCompartment(final Interaction interaction) {
+   protected GCompartment buildCompartment(final Interaction source) {
       var children = new LinkedList<EObject>();
-      children.addAll(interaction.getLifelines());
-      children.addAll(interaction.getMessages());
+      children.addAll(source.getLifelines());
+      children.addAll(source.getMessages());
 
       var layoutOptions = new HashMap<String, Object>();
       layoutOptions.put(H_ALIGN, GConstants.HAlign.LEFT);
@@ -82,7 +79,7 @@ public class InteractionNodeMapper extends BaseGNodeMapper<Interaction, GNode> {
       layoutOptions.put(V_GRAB, true);
 
       return new GCompartmentBuilder(CoreTypes.COMPARTMENT)
-         .id(suffix.appendTo(CompartmentSuffix.SUFFIX, idGenerator.getOrCreateId(interaction)))
+         .id(idCountGenerator.getOrCreateId(source))
          .layout(GConstants.Layout.FREEFORM)
          .layoutOptions(layoutOptions)
          .addAll(children.stream()

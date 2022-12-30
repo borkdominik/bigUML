@@ -14,7 +14,7 @@ import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperation;
 import org.eclipse.uml2.uml.Message;
 
-import com.eclipsesource.uml.glsp.core.gmodel.suffix.LabelSuffix;
+import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
 import com.eclipsesource.uml.glsp.uml.handler.operations.directediting.BaseLabelEditHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.message.RenameMessageContribution;
@@ -22,7 +22,7 @@ import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.comma
 public final class RenameMessageHandler extends BaseLabelEditHandler<Message> {
 
    public RenameMessageHandler() {
-      super(CommunicationTypes.MESSAGE_LABEL_ARROW_EDGE_NAME, LabelSuffix.SUFFIX);
+      super(CommunicationTypes.MESSAGE_LABEL_ARROW_EDGE_NAME, NameLabelSuffix.SUFFIX);
    }
 
    @Override

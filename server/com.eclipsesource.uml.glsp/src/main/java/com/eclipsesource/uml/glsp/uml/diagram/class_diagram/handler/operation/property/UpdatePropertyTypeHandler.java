@@ -15,14 +15,14 @@ import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperation;
 import org.eclipse.uml2.uml.Property;
 
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyLabelTypeSuffix;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyTypeLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.handler.operations.directediting.BaseLabelEditHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.UpdatePropertyTypeContribution;
 
 public final class UpdatePropertyTypeHandler extends BaseLabelEditHandler<Property> {
 
    public UpdatePropertyTypeHandler() {
-      super(ClassTypes.LABEL_PROPERTY_TYPE, PropertyLabelTypeSuffix.SUFFIX);
+      super(ClassTypes.LABEL_PROPERTY_TYPE, PropertyTypeLabelSuffix.SUFFIX);
    }
 
    @Override

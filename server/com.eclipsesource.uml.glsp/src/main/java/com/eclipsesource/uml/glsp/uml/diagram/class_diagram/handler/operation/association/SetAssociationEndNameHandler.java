@@ -15,14 +15,14 @@ import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperation;
 import org.eclipse.uml2.uml.Property;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
-import com.eclipsesource.uml.glsp.core.gmodel.suffix.LabelSuffix;
+import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.handler.operations.directediting.BaseLabelEditHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.common_diagram.commands.RenameElementContribution;
 
 public final class SetAssociationEndNameHandler extends BaseLabelEditHandler<Property> {
 
    public SetAssociationEndNameHandler() {
-      super(CoreTypes.LABEL_EDGE_NAME, LabelSuffix.SUFFIX);
+      super(CoreTypes.LABEL_EDGE_NAME, NameLabelSuffix.SUFFIX);
    }
 
    @Override

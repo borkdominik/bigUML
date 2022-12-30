@@ -7,15 +7,14 @@
           <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_crjZEoLiEe2CFbKMptkxiA" value="1"/>
           <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_crkAIILiEe2CFbKMptkxiA" value="1"/>
         </ownedAttribute>
-        <ownedAttribute xmi:id="_dhQ5EYLiEe2CFbKMptkxiA" name="newclass1" type="_Gx5xwILNEe2MPeiDDvtNXQ" association="_dhQ5EILiEe2CFbKMptkxiA">
+        <ownedAttribute xmi:id="_dhQ5EYLiEe2CFbKMptkxiA" name="a" type="_Gx5xwILNEe2MPeiDDvtNXQ" association="_dhQ5EILiEe2CFbKMptkxiA">
           <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_dhRgIILiEe2CFbKMptkxiA" value="1"/>
           <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_dhSHMILiEe2CFbKMptkxiA" value="1"/>
         </ownedAttribute>
       </packagedElement>
       <packagedElement xmi:type="uml:Association" xmi:id="_dhQ5EILiEe2CFbKMptkxiA" memberEnd="_dhQ5EYLiEe2CFbKMptkxiA _dhSuQILiEe2CFbKMptkxiA"/>
-      <packagedElement xmi:type="uml:Class" xmi:id="_OiB6kIh9Ee2ekuJspw8-cA" name="NewClass2"/>
     </packagedElement>
-    <packagedElement xmi:type="uml:Class" xmi:id="_Gx5xwILNEe2MPeiDDvtNXQ" name="NewClass1">
+    <packagedElement xmi:type="uml:Class" xmi:id="_Gx5xwILNEe2MPeiDDvtNXQ" name="test">
       <ownedAttribute xmi:id="_YXeUwILiEe2CFbKMptkxiA" name="test class" type="_dksEsYLbEe2kAegKDZEZLQ" association="_YXVK0YLiEe2CFbKMptkxiA">
         <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_YXgxAILiEe2CFbKMptkxiA" value="1"/>
         <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_YXhYEILiEe2CFbKMptkxiA" value="1"/>
@@ -28,7 +27,7 @@
     <packagedElement xmi:type="uml:Association" xmi:id="_YXVK0YLiEe2CFbKMptkxiA" memberEnd="_YXeUwILiEe2CFbKMptkxiA _YXimMILiEe2CFbKMptkxiA"/>
     <packagedElement xmi:type="uml:Class" xmi:id="_N68FYIh9Ee2ekuJspw8-cA" name="NewClass2"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Class" xmi:id="_dksEsYLbEe2kAegKDZEZLQ" name="Test Class">
+  <packagedElement xmi:type="uml:Class" xmi:id="_dksEsYLbEe2kAegKDZEZLQ" name="test2">
     <ownedAttribute xmi:id="_YXimMILiEe2CFbKMptkxiA" name="newclass1" type="_Gx5xwILNEe2MPeiDDvtNXQ" aggregation="shared" association="_YXVK0YLiEe2CFbKMptkxiA">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_YXimMYLiEe2CFbKMptkxiA" value="1"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_YXimMoLiEe2CFbKMptkxiA" value="1"/>
@@ -37,13 +36,14 @@
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_criyAYLiEe2CFbKMptkxiA" value="1"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_crjZEILiEe2CFbKMptkxiA" value="1"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="_sWmBcIh7Ee2x_sRESyH8bA" name="NewProperty3">
+    <ownedAttribute xmi:id="_sWmBcIh7Ee2x_sRESyH8bA" name="asd">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_sWmogIh7Ee2x_sRESyH8bA" value="1"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_sWmogYh7Ee2x_sRESyH8bA" value="1"/>
     </ownedAttribute>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="_criK8ILiEe2CFbKMptkxiA" memberEnd="_criyAILiEe2CFbKMptkxiA _crjZEYLiEe2CFbKMptkxiA"/>
-  <packagedElement xmi:type="uml:Package" xmi:id="_MFWcwIh9Ee2ekuJspw8-cA" name="NewPackage2">
-    <packagedElement xmi:type="uml:Class" xmi:id="_NQokIIh9Ee2ekuJspw8-cA" name="NewClass1"/>
+  <packagedElement xmi:type="uml:Package" xmi:id="_MFWcwIh9Ee2ekuJspw8-cA" name="2">
+    <packagedElement xmi:type="uml:Class" xmi:id="_pseLQIiAEe2DMdFHhGzYmQ" name="s"/>
   </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_m7c1IIiAEe2DMdFHhGzYmQ" name="no"/>
 </uml:Model>

@@ -12,10 +12,12 @@ package com.eclipsesource.uml.glsp.core.gmodel.suffix;
 
 import com.eclipsesource.uml.glsp.core.features.idgenerator.BaseSuffixIdAppender;
 
-public class HeaderSuffix extends BaseSuffixIdAppender {
-   public static final String SUFFIX = "_header";
+public final class NameLabelSuffix extends BaseSuffixIdAppender {
 
-   public HeaderSuffix() {
+   public static final String SUFFIX = "_name_label";
+
+   public NameLabelSuffix() {
       super(SUFFIX);
    }
+
 }

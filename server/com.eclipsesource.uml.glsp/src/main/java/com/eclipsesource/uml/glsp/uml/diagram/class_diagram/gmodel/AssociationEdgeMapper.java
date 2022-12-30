@@ -20,10 +20,10 @@ import org.eclipse.uml2.uml.Association;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
-import com.eclipsesource.uml.glsp.core.gmodel.suffix.LabelSuffix;
+import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
 import com.eclipsesource.uml.glsp.old.utils.property.PropertyUtil;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyLabelMultiplicitySuffix;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyMultiplicityLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.utils.AssociationTypeUtil;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGEdgeMapper;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.constants.AssociationType;
@@ -75,19 +75,19 @@ public final class AssociationEdgeMapper extends BaseGEdgeMapper<Association, GE
       var targetId = idGenerator.getOrCreateId(target);
 
       // Label at source
-      var sourceNameLabel = createEdgeNameLabel(target.getName(), suffix.appendTo(LabelSuffix.SUFFIX, targetId), 0.1d);
+      var sourceNameLabel = createEdgeNameLabel(target.getName(), suffix.appendTo(NameLabelSuffix.SUFFIX, targetId), 0.1d);
       builder.add(sourceNameLabel);
 
       var sourceMultiplicityLabel = createEdgeMultiplicityLabel(PropertyUtil.getMultiplicity(target),
-         suffix.appendTo(PropertyLabelMultiplicitySuffix.SUFFIX, targetId), 0.1d);
+         suffix.appendTo(PropertyMultiplicityLabelSuffix.SUFFIX, targetId), 0.1d);
       builder.add(sourceMultiplicityLabel);
 
       // Label at target
-      var targetNameLabel = createEdgeNameLabel(source.getName(), suffix.appendTo(LabelSuffix.SUFFIX, sourceId), 0.9d);
+      var targetNameLabel = createEdgeNameLabel(source.getName(), suffix.appendTo(NameLabelSuffix.SUFFIX, sourceId), 0.9d);
       builder.add(targetNameLabel);
 
       var targetMultiplicityLabel = createEdgeMultiplicityLabel(PropertyUtil.getMultiplicity(source),
-         suffix.appendTo(PropertyLabelMultiplicitySuffix.SUFFIX, sourceId), 0.9d);
+         suffix.appendTo(PropertyMultiplicityLabelSuffix.SUFFIX, sourceId), 0.9d);
       builder.add(targetMultiplicityLabel);
    }
 

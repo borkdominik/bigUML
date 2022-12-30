@@ -23,53 +23,50 @@ import org.eclipse.uml2.uml.PrimitiveType;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
-import com.eclipsesource.uml.glsp.core.gmodel.suffix.CompartmentSuffix;
-import com.eclipsesource.uml.glsp.core.gmodel.suffix.HeaderLabelSuffix;
-import com.eclipsesource.uml.glsp.core.gmodel.suffix.HeaderSuffix;
+import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.HeaderTypeSuffix;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGNodeMapper;
 
 public final class PrimitiveTypeNodeMapper extends BaseGNodeMapper<PrimitiveType, GNode> {
 
    @Override
-   public GNode map(final PrimitiveType primitiveType) {
+   public GNode map(final PrimitiveType source) {
       var builder = new GNodeBuilder(ClassTypes.PRIMITIVE_TYPE)
-         .id(idGenerator.getOrCreateId(primitiveType))
+         .id(idGenerator.getOrCreateId(source))
          .layout(GConstants.Layout.VBOX)
          .addCssClass(CoreCSS.NODE)
-         .add(buildHeader(primitiveType))
-         .add(buildCompartment(primitiveType));
+         .add(buildHeader(source))
+         .add(buildCompartment(source));
 
-      applyShapeNotation(primitiveType, builder);
+      applyShapeNotation(source, builder);
 
       return builder.build();
    }
 
-   protected GCompartment buildHeader(final PrimitiveType primitiveType) {
+   protected GCompartment buildHeader(final PrimitiveType source) {
       var builder = new GCompartmentBuilder(CoreTypes.COMPARTMENT_HEADER)
-         .id(suffix.appendTo(HeaderSuffix.SUFFIX, idGenerator.getOrCreateId(primitiveType)))
+         .id(idCountGenerator.getOrCreateId(source))
          .layout(GConstants.Layout.VBOX);
 
       var typeLabel = new GLabelBuilder(CoreTypes.LABEL_TEXT)
-         .id(suffix.appendTo(HeaderTypeSuffix.SUFFIX, idGenerator.getOrCreateId(primitiveType)))
+         .id(suffix.appendTo(NameLabelSuffix.SUFFIX, idGenerator.getOrCreateId(source)))
          .text("«PrimitiveType»")
          .build();
       builder.add(typeLabel);
 
       var nameLabel = new GLabelBuilder(CoreTypes.LABEL_NAME)
-         .id(suffix.appendTo(HeaderLabelSuffix.SUFFIX, idGenerator.getOrCreateId(primitiveType)))
-         .text(primitiveType.getName())
+         .id(suffix.appendTo(NameLabelSuffix.SUFFIX, idGenerator.getOrCreateId(source)))
+         .text(source.getName())
          .build();
       builder.add(nameLabel);
 
       return builder.build();
    }
 
-   protected GCompartment buildCompartment(final PrimitiveType primitiveType) {
+   protected GCompartment buildCompartment(final PrimitiveType source) {
 
       var builder = new GCompartmentBuilder(CoreTypes.COMPARTMENT)
-         .id(suffix.appendTo(CompartmentSuffix.SUFFIX, idGenerator.getOrCreateId(primitiveType)))
+         .id(idCountGenerator.getOrCreateId(source))
          .layout(GConstants.Layout.VBOX);
 
       var layoutOptions = new GLayoutOptions()
@@ -77,12 +74,12 @@ public final class PrimitiveTypeNodeMapper extends BaseGNodeMapper<PrimitiveType
          .resizeContainer(true);
       builder.layoutOptions(layoutOptions);
 
-      var propertyElements = primitiveType.getOwnedAttributes().stream()
+      var propertyElements = source.getOwnedAttributes().stream()
          .map(mapHandler::handle)
          .collect(Collectors.toList());
       builder.addAll(propertyElements);
 
-      var operationElements = primitiveType.getOwnedOperations().stream()
+      var operationElements = source.getOwnedOperations().stream()
          .map(mapHandler::handle)
          .collect(Collectors.toList());
       builder.addAll(operationElements);

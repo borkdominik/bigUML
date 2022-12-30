@@ -23,53 +23,53 @@ import org.eclipse.uml2.uml.Enumeration;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
-import com.eclipsesource.uml.glsp.core.gmodel.suffix.CompartmentSuffix;
-import com.eclipsesource.uml.glsp.core.gmodel.suffix.HeaderIconSuffix;
-import com.eclipsesource.uml.glsp.core.gmodel.suffix.HeaderLabelSuffix;
-import com.eclipsesource.uml.glsp.core.gmodel.suffix.HeaderSuffix;
+import com.eclipsesource.uml.glsp.core.features.idgenerator.IdCountContextGenerator;
+import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.HeaderOuterSuffix;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.HeaderTypeSuffix;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGNodeMapper;
+import com.google.inject.Inject;
 
 public final class EnumerationNodeMapper extends BaseGNodeMapper<Enumeration, GNode> {
+   @Inject
+   protected IdCountContextGenerator idCountGenerator;
+
    @Override
-   public GNode map(final Enumeration enumeration) {
+   public GNode map(final Enumeration source) {
       var builder = new GNodeBuilder(ClassTypes.ENUMERATION)
-         .id(idGenerator.getOrCreateId(enumeration))
+         .id(idGenerator.getOrCreateId(source))
          .layout(GConstants.Layout.VBOX)
          .addCssClass(CoreCSS.NODE)
-         .add(buildHeader(enumeration))
-         .add(buildLiterals(enumeration));
+         .add(buildHeader(source))
+         .add(buildLiterals(source));
 
-      applyShapeNotation(enumeration, builder);
+      applyShapeNotation(source, builder);
 
       return builder.build();
    }
 
-   protected GCompartment buildHeader(final Enumeration enumeration) {
+   protected GCompartment buildHeader(final Enumeration source) {
       var builder = new GCompartmentBuilder(CoreTypes.COMPARTMENT_HEADER)
-         .id(suffix.appendTo(HeaderOuterSuffix.SUFFIX, idGenerator.getOrCreateId(enumeration)))
+         .id(idCountGenerator.getOrCreateId(source))
          .layout(GConstants.Layout.VBOX);
 
       var typeLabel = new GLabelBuilder(CoreTypes.LABEL_TEXT)
-         .id(suffix.appendTo(HeaderTypeSuffix.SUFFIX, idGenerator.getOrCreateId(enumeration)))
+         .id(suffix.appendTo(NameLabelSuffix.SUFFIX, idGenerator.getOrCreateId(source)))
          .text("«Enumeration»")
          .build();
       builder.add(typeLabel);
 
       var compBuilder = new GCompartmentBuilder(CoreTypes.COMPARTMENT_HEADER)
-         .id(suffix.appendTo(HeaderSuffix.SUFFIX, idGenerator.getOrCreateId(enumeration)))
+         .id(idCountGenerator.getOrCreateId(source))
          .layout(GConstants.Layout.HBOX);
 
       var icon = new GCompartmentBuilder(ClassTypes.ICON_ENUMERATION)
-         .id(suffix.appendTo(HeaderIconSuffix.SUFFIX, idGenerator.getOrCreateId(enumeration)))
+         .id(idCountGenerator.getOrCreateId(source))
          .build();
       compBuilder.add(icon);
 
       var nameLabel = new GLabelBuilder(CoreTypes.LABEL_NAME)
-         .id(suffix.appendTo(HeaderLabelSuffix.SUFFIX, idGenerator.getOrCreateId(enumeration)))
-         .text(enumeration.getName())
+         .id(suffix.appendTo(NameLabelSuffix.SUFFIX, idGenerator.getOrCreateId(source)))
+         .text(source.getName())
          .build();
       compBuilder.add(nameLabel);
 
@@ -78,11 +78,11 @@ public final class EnumerationNodeMapper extends BaseGNodeMapper<Enumeration, GN
       return builder.build();
    }
 
-   protected GCompartment buildLiterals(final Enumeration enumeration) {
-      var literals = enumeration.getOwnedLiterals();
+   protected GCompartment buildLiterals(final Enumeration source) {
+      var literals = source.getOwnedLiterals();
 
       var builder = new GCompartmentBuilder(CoreTypes.COMPARTMENT)
-         .id(suffix.appendTo(CompartmentSuffix.SUFFIX, idGenerator.getOrCreateId(enumeration)))
+         .id(idCountGenerator.getOrCreateId(source))
          .layout(GConstants.Layout.VBOX);
 
       var layoutOptions = new GLayoutOptions()

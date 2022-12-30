@@ -15,18 +15,18 @@ import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperation;
 import org.eclipse.uml2.uml.Property;
 
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyLabelMultiplicitySuffix;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyMultiplicityLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.handler.operations.directediting.BaseLabelEditHandler;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.UpdatePropertyBoundsContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.UpdatePropertyMultiplicityContribution;
 
 public final class SetAssociationEndBoundsHandler extends BaseLabelEditHandler<Property> {
 
    public SetAssociationEndBoundsHandler() {
-      super(ClassTypes.LABEL_EDGE_MULTIPLICITY, PropertyLabelMultiplicitySuffix.SUFFIX);
+      super(ClassTypes.LABEL_EDGE_MULTIPLICITY, PropertyMultiplicityLabelSuffix.SUFFIX);
    }
 
    @Override
    protected CCommand createCommand(final ApplyLabelEditOperation operation, final Property element) {
-      return UpdatePropertyBoundsContribution.create(element, operation.getText());
+      return UpdatePropertyMultiplicityContribution.create(element, operation.getText());
    }
 }

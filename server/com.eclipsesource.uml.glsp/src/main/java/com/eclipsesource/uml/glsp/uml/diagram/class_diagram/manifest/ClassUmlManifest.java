@@ -36,12 +36,8 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.OperationComp
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.PackageNodeMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.PrimitiveTypeNodeMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.PropertyCompartmentMapper;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.HeaderOuterSuffix;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.HeaderTypeSuffix;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.LabelMultiplicitySuffix;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyLabelMultiplicitySuffix;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyLabelTypeSuffix;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertySuffix;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyMultiplicityLabelSuffix;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyTypeLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.association.CreateAggregationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.association.CreateAssociationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.association.CreateCompositionHandler;
@@ -68,7 +64,7 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.pr
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.property.CreatePropertyHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.property.DeletePropertyHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.property.RenamePropertyHandler;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.property.UpdatePropertyBoundsHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.property.UpdatePropertyMultiplicityHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.property.UpdatePropertyTypeHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.uclass.CreateAbstractClassHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.uclass.CreateClassHandler;
@@ -110,13 +106,9 @@ public final class ClassUmlManifest extends DiagramManifest
 
    public void contributeSuffixIdAppenders() {
       contributeSuffixIdAppenders(binder(), mapbinder -> {
-         mapbinder.addBinding(HeaderOuterSuffix.SUFFIX).to(HeaderOuterSuffix.class);
-         mapbinder.addBinding(HeaderTypeSuffix.SUFFIX).to(HeaderTypeSuffix.class);
-         mapbinder.addBinding(PropertyLabelMultiplicitySuffix.SUFFIX)
-            .to(PropertyLabelMultiplicitySuffix.class);
-         mapbinder.addBinding(PropertyLabelTypeSuffix.SUFFIX).to(PropertyLabelTypeSuffix.class);
-         mapbinder.addBinding(PropertySuffix.SUFFIX).to(PropertySuffix.class);
-         mapbinder.addBinding(LabelMultiplicitySuffix.SUFFIX).to(LabelMultiplicitySuffix.class);
+         mapbinder.addBinding(PropertyMultiplicityLabelSuffix.SUFFIX)
+            .to(PropertyMultiplicityLabelSuffix.class);
+         mapbinder.addBinding(PropertyTypeLabelSuffix.SUFFIX).to(PropertyTypeLabelSuffix.class);
       });
    }
 
@@ -171,7 +163,7 @@ public final class ClassUmlManifest extends DiagramManifest
       multibinder.addBinding().to(RenameEnumerationHandler.class);
       multibinder.addBinding().to(RenameEnumerationLiteralHandler.class);
       multibinder.addBinding().to(RenamePropertyHandler.class);
-      multibinder.addBinding().to(UpdatePropertyBoundsHandler.class);
+      multibinder.addBinding().to(UpdatePropertyMultiplicityHandler.class);
       multibinder.addBinding().to(UpdatePropertyTypeHandler.class);
       multibinder.addBinding().to(RenameClassHandler.class);
       multibinder.addBinding().to(RenameInterfaceHandler.class);

@@ -23,7 +23,7 @@ import com.eclipsesource.uml.modelserver.shared.codec.ContributionDecoder;
 import com.eclipsesource.uml.modelserver.shared.codec.ContributionEncoder;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.util.ClassSemanticCommandUtil;
 
-public final class UpdatePropertyBoundsContribution extends BasicCommandContribution<Command> {
+public final class UpdatePropertyMultiplicityContribution extends BasicCommandContribution<Command> {
 
    public static final String TYPE = "class:set_property_bounds";
    private static final String NEW_BOUNDS = "new_bounds";
@@ -44,7 +44,7 @@ public final class UpdatePropertyBoundsContribution extends BasicCommandContribu
       var newUpperBound = ClassSemanticCommandUtil.getUpper(newBounds);
 
       return element
-         .<Command> map(e -> new UpdatePropertyBoundsSemanticCommand(context, e, newLowerBound, newUpperBound))
+         .<Command> map(e -> new UpdatePropertyMultiplicitySemanticCommand(context, e, newLowerBound, newUpperBound))
          .orElse(new NoopCommand());
    }
 

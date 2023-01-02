@@ -10,56 +10,44 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.core.commands.change_routing_points;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.command.Command;
-import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
-import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
 import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
 import org.eclipse.emfcloud.modelserver.edit.command.BasicCommandContribution;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.emf.model.notation.Edge;
 import org.eclipse.glsp.server.types.ElementAndRoutingPoints;
 
-import com.eclipsesource.uml.modelserver.shared.constants.NotationKeys;
-import com.eclipsesource.uml.modelserver.shared.constants.SemanticKeys;
-import com.eclipsesource.uml.modelserver.shared.extension.NotationElementAccessor;
-import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
-import com.eclipsesource.uml.modelserver.shared.utils.UmlGraphUtil;
+import com.eclipsesource.uml.modelserver.shared.codec.ContributionDecoder;
+import com.eclipsesource.uml.modelserver.shared.codec.ContributionEncoder;
 
 public class UmlChangeRoutingPointsContribution extends BasicCommandContribution<Command> {
-   public static final String TYPE = "uml:changeRoutingPoints";
+   public static final String TYPE = "uml:change_routing_points";
 
-   public static CCommand create(final String semanticElementId, final List<GPoint> routingPoints) {
-      var command = CCommandFactory.eINSTANCE.createCompoundCommand();
-      command.setType(TYPE);
-      command.getProperties().put(SemanticKeys.SEMANTIC_ELEMENT_ID, semanticElementId);
+   protected static CCommand create(final String semanticElementId, final List<GPoint> routingPoints) {
+      var compoundCommand = new ContributionEncoder().type(TYPE).element(semanticElementId).ccompoundCommand();
 
       routingPoints.forEach(point -> {
-         var childCommand = CCommandFactory.eINSTANCE.createCommand();
-         childCommand.getProperties().put(NotationKeys.POSITION_X, String.valueOf(point.getX()));
-         childCommand.getProperties().put(NotationKeys.POSITION_Y, String.valueOf(point.getY()));
-         command.getCommands().add(childCommand);
+         var childCommand = new ContributionEncoder().position(point).ccommand();
+         compoundCommand.getCommands().add(childCommand);
       });
 
-      return command;
+      return compoundCommand;
    }
 
-   public static CCompoundCommand create(final Map<Edge, ElementAndRoutingPoints> changeRoutingPointsMap) {
-      var compoundCommand = CCommandFactory.eINSTANCE.createCompoundCommand();
-
-      compoundCommand.setType(TYPE);
+   public static CCommand create(final Map<Edge, ElementAndRoutingPoints> changeRoutingPointsMap) {
+      var compoundCommand = new ContributionEncoder().type(TYPE).ccompoundCommand();
 
       changeRoutingPointsMap.forEach((edge, elementAndRoutingPoints) -> {
-         var changeRoutingPointsCommand = create(edge.getSemanticElement().getElementId(),
+         var childCommand = create(
+            edge.getSemanticElement().getElementId(),
             elementAndRoutingPoints.getNewRoutingPoints());
-         compoundCommand.getCommands().add(changeRoutingPointsCommand);
+         compoundCommand.getCommands().add(childCommand);
       });
 
       return compoundCommand;
@@ -68,29 +56,10 @@ public class UmlChangeRoutingPointsContribution extends BasicCommandContribution
    @Override
    protected Command toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
       throws DecodingException {
-      var context = ModelContext.of(modelUri, domain, command);
-      var compoundCommand = new CompoundCommand();
+      var decoder = new ContributionDecoder(modelUri, domain, command);
 
-      if (command instanceof CCompoundCommand) {
-         var notationElementAccessor = new NotationElementAccessor(context);
+      var context = decoder.context();
 
-         ((CCompoundCommand) command).getCommands().forEach(changeRoutingPointCommand -> {
-            var semanticElementId = changeRoutingPointCommand.getProperties().get(SemanticKeys.SEMANTIC_ELEMENT_ID);
-            var newRoutingPoints = new ArrayList<GPoint>();
-
-            ((CCompoundCommand) changeRoutingPointCommand).getCommands().forEach(cmd -> {
-               var routingPoint = UmlGraphUtil.parseGPoint(
-                  cmd.getProperties().get(NotationKeys.POSITION_X), cmd.getProperties().get(NotationKeys.POSITION_Y));
-               newRoutingPoints.add(routingPoint);
-            });
-
-            var edge = notationElementAccessor.getElement(semanticElementId, Edge.class).get();
-
-            compoundCommand.append(
-               new UmlChangeRoutingPointsNotationCommand(context, edge, newRoutingPoints));
-         });
-
-      }
-      return compoundCommand;
+      return new UmlChangeRoutingPointsCompoundCommand(context);
    }
 }

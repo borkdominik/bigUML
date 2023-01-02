@@ -20,6 +20,6 @@ public final class DeleteInteractionHandler extends BaseDeleteElementHandler<Int
 
    @Override
    protected CCommand createCommand(final Interaction element) {
-      return DeleteInteractionContribution.create(element);
+      return DeleteInteractionContribution.create(element.getModel(), element);
    }
 }

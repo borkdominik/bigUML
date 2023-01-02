@@ -13,16 +13,18 @@ package com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.comm
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.util.GraphUtil;
+import org.eclipse.uml2.uml.Model;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.commands.AddShapeNotationCommand;
 
 public final class CreateInteractionCompoundCommand extends CompoundCommand {
 
-   public CreateInteractionCompoundCommand(final ModelContext context, final GPoint position) {
-      var command = new CreateInteractionSemanticCommand(context);
+   public CreateInteractionCompoundCommand(final ModelContext context, final Model parent, final GPoint position) {
+      var command = new CreateInteractionSemanticCommand(context, parent);
 
       this.append(command);
-      this.append(new AddShapeNotationCommand(context, command::getNewInteraction, position, GraphUtil.dimension(160, 50)));
+      this.append(
+         new AddShapeNotationCommand(context, command::getSemanticElement, position, GraphUtil.dimension(160, 50)));
    }
 }

@@ -11,46 +11,38 @@
 package com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.interaction;
 
 import org.eclipse.emf.common.command.Command;
-import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
-import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
 import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
 import org.eclipse.emfcloud.modelserver.edit.command.BasicCommandContribution;
 import org.eclipse.glsp.graph.GPoint;
+import org.eclipse.uml2.uml.Model;
 
-import com.eclipsesource.uml.modelserver.shared.constants.NotationKeys;
-import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
-import com.eclipsesource.uml.modelserver.shared.utils.UmlGraphUtil;
+import com.eclipsesource.uml.modelserver.core.commands.noop.NoopCommand;
+import com.eclipsesource.uml.modelserver.shared.codec.ContributionDecoder;
+import com.eclipsesource.uml.modelserver.shared.codec.ContributionEncoder;
 
 public final class CreateInteractionContribution extends BasicCommandContribution<Command> {
 
    public static final String TYPE = "communication:add_interaction";
 
-   public static CCommand create(final GPoint position) {
-      var command = CCommandFactory.eINSTANCE.createCompoundCommand();
-
-      command.setType(TYPE);
-      command.getProperties().put(NotationKeys.POSITION_X,
-         String.valueOf(position.getX()));
-      command.getProperties().put(NotationKeys.POSITION_Y,
-         String.valueOf(position.getY()));
-
-      return command;
+   public static CCommand create(final Model parent, final GPoint position) {
+      return new ContributionEncoder().type(TYPE).parent(parent).position(position).ccommand();
    }
 
    @Override
-   protected CompoundCommand toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
+   protected Command toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
       throws DecodingException {
-      var context = ModelContext.of(modelUri, domain, command);
+      var decoder = new ContributionDecoder(modelUri, domain, command);
 
-      var position = UmlGraphUtil.parseGPoint(
-         command.getProperties().get(NotationKeys.POSITION_X),
-         command.getProperties().get(NotationKeys.POSITION_Y));
+      var context = decoder.context();
+      var parent = decoder.parent(Model.class);
+      var position = decoder.position().get();
 
-      return new CreateInteractionCompoundCommand(context, position);
+      return parent
+         .<Command> map(p -> new CreateInteractionCompoundCommand(context, p, position))
+         .orElse(new NoopCommand());
    }
 
 }

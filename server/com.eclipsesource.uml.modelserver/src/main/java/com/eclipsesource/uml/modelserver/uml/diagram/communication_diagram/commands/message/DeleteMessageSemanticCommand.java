@@ -10,31 +10,30 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.message;
 
+import org.eclipse.uml2.uml.Interaction;
 import org.eclipse.uml2.uml.Message;
 import org.eclipse.uml2.uml.MessageOccurrenceSpecification;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
-import com.eclipsesource.uml.modelserver.shared.semantic.BaseSemanticExistenceCheckedCommand;
+import com.eclipsesource.uml.modelserver.shared.semantic.BaseDeleteSemanticChildCommand;
 
-public final class DeleteMessageSemanticCommand extends BaseSemanticExistenceCheckedCommand<Message> {
+public final class DeleteMessageSemanticCommand extends BaseDeleteSemanticChildCommand<Interaction, Message> {
 
-   public DeleteMessageSemanticCommand(final ModelContext context,
-      final Message message) {
-      super(context, message);
+   public DeleteMessageSemanticCommand(final ModelContext context, final Interaction parent,
+      final Message semanticElement) {
+      super(context, parent, semanticElement);
    }
 
    @Override
-   protected void doChanges(final Message semanticElement) {
-      var sendEvent = (MessageOccurrenceSpecification) semanticElement.getSendEvent();
+   protected void deleteSemanticElement(final Interaction parent, final Message child) {
+      var sendEvent = (MessageOccurrenceSpecification) child.getSendEvent();
       sendEvent.getCovereds().clear();
 
-      var receiveEvent = (MessageOccurrenceSpecification) semanticElement.getReceiveEvent();
+      var receiveEvent = (MessageOccurrenceSpecification) child.getReceiveEvent();
       receiveEvent.getCovereds().clear();
 
-      var interaction = semanticElement.getInteraction();
-      interaction.getFragments().remove(sendEvent);
-      interaction.getFragments().remove(receiveEvent);
-      interaction.getMessages().remove(semanticElement);
+      parent.getFragments().remove(sendEvent);
+      parent.getFragments().remove(receiveEvent);
+      parent.getMessages().remove(child);
    }
-
 }

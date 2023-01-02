@@ -14,54 +14,34 @@ import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
-import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
 import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
 import org.eclipse.emfcloud.modelserver.edit.command.BasicCommandContribution;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.uml2.uml.Interaction;
 
 import com.eclipsesource.uml.modelserver.core.commands.noop.NoopCommand;
-import com.eclipsesource.uml.modelserver.shared.constants.NotationKeys;
-import com.eclipsesource.uml.modelserver.shared.constants.SemanticKeys;
-import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
-import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
-import com.eclipsesource.uml.modelserver.shared.utils.UmlGraphUtil;
+import com.eclipsesource.uml.modelserver.shared.codec.ContributionDecoder;
+import com.eclipsesource.uml.modelserver.shared.codec.ContributionEncoder;
 
 public final class CreateLifelineContribution extends BasicCommandContribution<Command> {
 
    public static final String TYPE = "uml:add_lifeline";
 
-   public static CCommand create(final Interaction interaction, final GPoint position) {
-      var command = CCommandFactory.eINSTANCE.createCompoundCommand();
-
-      command.setType(TYPE);
-      command.getProperties().put(NotationKeys.POSITION_X,
-         String.valueOf(position.getX()));
-      command.getProperties().put(NotationKeys.POSITION_Y,
-         String.valueOf(position.getY()));
-      command.getProperties().put(SemanticKeys.PARENT_SEMANTIC_ELEMENT_ID,
-         SemanticElementAccessor.getId(interaction));
-
-      return command;
+   public static CCommand create(final Interaction parent, final GPoint position) {
+      return new ContributionEncoder().type(TYPE).parent(parent).position(position).ccommand();
    }
 
    @Override
    protected Command toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
       throws DecodingException {
-      var context = ModelContext.of(modelUri, domain, command);
-      var elementAccessor = new SemanticElementAccessor(context);
+      var decoder = new ContributionDecoder(modelUri, domain, command);
 
-      var position = UmlGraphUtil.parseGPoint(
-         command.getProperties().get(NotationKeys.POSITION_X),
-         command.getProperties().get(NotationKeys.POSITION_Y));
+      var context = decoder.context();
+      var parent = decoder.parent(Interaction.class);
+      var position = decoder.position().get();
 
-      var parentInteractionsemanticElementId = command.getProperties().get(SemanticKeys.PARENT_SEMANTIC_ELEMENT_ID);
-
-      var parentInteraction = elementAccessor.getElement(parentInteractionsemanticElementId, Interaction.class);
-
-      return parentInteraction
-         .<Command> map(p -> new CreateLifelineCompoundCommand(context, position, p))
+      return parent
+         .<Command> map(p -> new CreateLifelineCompoundCommand(context, p, position))
          .orElse(new NoopCommand());
    }
 

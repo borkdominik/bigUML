@@ -14,36 +14,42 @@ import java.util.Set;
 
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.uml2.uml.Model;
 
 import com.eclipsesource.uml.modelserver.shared.matcher.CrossReferenceMatcher;
+import com.eclipsesource.uml.modelserver.shared.matcher.MatcherContext;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
-import com.eclipsesource.uml.modelserver.shared.utils.UmlSemanticUtil;
 import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.lifeline.DeleteLifelineCompoundCommand;
 import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.message.DeleteMessageCompoundCommand;
 
 public final class CommunicationDiagramCrossReferenceRemover {
-   private final Model model;
+   public static String MATCHER_CONTEXT_KEY = "matcher_context";
+
+   private final ModelContext context;
    private final CrossReferenceMatcher<Command> matcher;
 
    public CommunicationDiagramCrossReferenceRemover(final ModelContext context) {
       super();
 
-      model = UmlSemanticUtil.getModel(context);
-      matcher = new CrossReferenceMatcher.Builder<Command>()
+      this.context = context;
+      this.matcher = new CrossReferenceMatcher.Builder<Command>()
          .match((setting, interest) -> LifelineMatcher
-            .ofUsage(setting, interest)
-            .map(lifeline -> new DeleteLifelineCompoundCommand(context, lifeline)))
+            .ofChildUsage(setting, interest)
+            .map(lifeline -> new DeleteLifelineCompoundCommand(context, lifeline.getInteraction(), lifeline)))
          .match((setting, interest) -> MessageMatcher
-            .ofUsage(setting, interest)
-            .map(message -> new DeleteMessageCompoundCommand(context, message)))
+            .ofChildUsage(setting, interest)
+            .map(message -> new DeleteMessageCompoundCommand(context, message.getInteraction(), message)))
          .match((setting, interest) -> MessageMatcher
             .ofInverseMessageUsageSpecificationUsage(setting, interest)
-            .map(specification -> new DeleteMessageCompoundCommand(context, specification.getMessage())))
+            .map(specification -> new DeleteMessageCompoundCommand(context, specification.getEnclosingInteraction(),
+               specification.getMessage())))
          .build();
+
+      context.data.putIfAbsent(MATCHER_CONTEXT_KEY, new MatcherContext());
    }
 
    public Set<Command> deleteCommandsFor(final EObject interest) {
-      return matcher.find(null, interest, model.eResource());
+      var matcherContext = context.get(MATCHER_CONTEXT_KEY, MatcherContext.class).get();
+
+      return matcher.find(matcherContext, interest, context.model.eResource());
    }
 }

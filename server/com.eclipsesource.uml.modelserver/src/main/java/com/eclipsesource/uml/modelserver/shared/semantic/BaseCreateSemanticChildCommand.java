@@ -31,6 +31,12 @@ public abstract class BaseCreateSemanticChildCommand<TParent, TChild> extends Ba
    @Override
    public TChild getSemanticElement() { return newSemanticElement; }
 
+   /**
+    * Creates the semantic element and adds it to the parent
+    *
+    * @param parent Parent to which the created element should be added to
+    * @return The new created semantic element
+    */
    abstract protected TChild createSemanticElement(TParent parent);
 
 }

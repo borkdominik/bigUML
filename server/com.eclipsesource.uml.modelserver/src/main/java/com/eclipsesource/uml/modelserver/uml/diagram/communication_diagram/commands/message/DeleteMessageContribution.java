@@ -14,44 +14,37 @@ import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
-import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
 import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
 import org.eclipse.emfcloud.modelserver.edit.command.BasicCommandContribution;
+import org.eclipse.uml2.uml.Interaction;
 import org.eclipse.uml2.uml.Message;
 
 import com.eclipsesource.uml.modelserver.core.commands.noop.NoopCommand;
-import com.eclipsesource.uml.modelserver.shared.constants.SemanticKeys;
-import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
-import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
+import com.eclipsesource.uml.modelserver.shared.codec.ContributionDecoder;
+import com.eclipsesource.uml.modelserver.shared.codec.ContributionEncoder;
 
 public final class DeleteMessageContribution extends BasicCommandContribution<Command> {
 
    public static final String TYPE = "communication:delete_message";
 
-   public static CCommand create(final Message message) {
-      var command = CCommandFactory.eINSTANCE.createCompoundCommand();
-
-      command.setType(TYPE);
-      command.getProperties().put(SemanticKeys.SEMANTIC_ELEMENT_ID,
-         SemanticElementAccessor.getId(message));
-
-      return command;
+   public static CCommand create(final Interaction parent, final Message semanticElement) {
+      return new ContributionEncoder().type(TYPE).parent(parent).element(semanticElement).ccommand();
    }
 
    @Override
    protected Command toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
       throws DecodingException {
-      var context = ModelContext.of(modelUri, domain, command);
-      var elementAccessor = new SemanticElementAccessor(context);
+      var decoder = new ContributionDecoder(modelUri, domain, command);
 
-      var semanticElementId = command.getProperties().get(SemanticKeys.SEMANTIC_ELEMENT_ID);
+      var context = decoder.context();
+      var parent = decoder.parent(Interaction.class);
+      var element = decoder.element(Message.class);
 
-      var message = elementAccessor.getElement(semanticElementId, Message.class);
+      if (parent.isPresent() && element.isPresent()) {
+         return new DeleteMessageCompoundCommand(context, parent.get(), element.get());
+      }
 
-      return message
-         .<Command> map(m -> new DeleteMessageCompoundCommand(context, m))
-         .orElse(new NoopCommand());
+      return new NoopCommand();
    }
 
 }

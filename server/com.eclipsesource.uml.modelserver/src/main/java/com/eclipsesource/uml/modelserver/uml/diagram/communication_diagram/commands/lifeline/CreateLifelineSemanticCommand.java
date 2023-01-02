@@ -12,32 +12,21 @@ package com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.comm
 
 import org.eclipse.uml2.uml.Interaction;
 import org.eclipse.uml2.uml.Lifeline;
-import org.eclipse.uml2.uml.UMLFactory;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
-import com.eclipsesource.uml.modelserver.shared.semantic.BaseSemanticElementCommand;
+import com.eclipsesource.uml.modelserver.shared.semantic.BaseCreateSemanticChildCommand;
 import com.eclipsesource.uml.modelserver.uml.generator.ListNameGenerator;
-import com.eclipsesource.uml.modelserver.uml.generator.NameGenerator;
 
-public final class CreateLifelineSemanticCommand extends BaseSemanticElementCommand {
+public final class CreateLifelineSemanticCommand extends BaseCreateSemanticChildCommand<Interaction, Lifeline> {
 
-   protected final Lifeline newLifeline;
-   protected final Interaction parentInteraction;
-   protected final NameGenerator nameGenerator;
-
-   public CreateLifelineSemanticCommand(final ModelContext context,
-      final Interaction parentInteraction) {
-      super(context);
-      this.newLifeline = UMLFactory.eINSTANCE.createLifeline();
-      this.parentInteraction = parentInteraction;
-      this.nameGenerator = new ListNameGenerator(Lifeline.class, parentInteraction.getLifelines());
+   public CreateLifelineSemanticCommand(final ModelContext context, final Interaction parent) {
+      super(context, parent);
    }
 
    @Override
-   protected void doExecute() {
-      newLifeline.setName(nameGenerator.newName());
-      parentInteraction.getLifelines().add(newLifeline);
-   }
+   protected Lifeline createSemanticElement(final Interaction parent) {
+      var nameGenerator = new ListNameGenerator(Lifeline.class, parent.getLifelines());
 
-   public Lifeline getNewLifeline() { return newLifeline; }
+      return parent.createLifeline(nameGenerator.newName());
+   }
 }

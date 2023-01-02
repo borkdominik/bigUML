@@ -37,5 +37,11 @@ public abstract class BaseDeleteSemanticChildCommand<TParent, TChild extends EOb
       return this.parent != null;
    }
 
+   /**
+    * Deletes the semantic element from the parent
+    *
+    * @param parent Parent that contains the child
+    * @param child  Child that needs to be deleted
+    */
    abstract protected void deleteSemanticElement(TParent parent, TChild child);
 }

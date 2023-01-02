@@ -12,40 +12,18 @@ package com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.comm
 
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.glsp.graph.GPoint;
-import org.eclipse.glsp.graph.impl.GPointImpl;
 import org.eclipse.glsp.graph.util.GraphUtil;
-import org.eclipse.glsp.server.emf.model.notation.Shape;
 import org.eclipse.uml2.uml.Interaction;
 
-import com.eclipsesource.uml.modelserver.shared.extension.NotationElementAccessor;
-import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.commands.AddShapeNotationCommand;
 
 public final class CreateLifelineCompoundCommand extends CompoundCommand {
-   private final NotationElementAccessor notationElementAccessor;
-
-   public CreateLifelineCompoundCommand(final ModelContext context,
-      final GPoint position, final Interaction parentInteraction) {
-      this.notationElementAccessor = new NotationElementAccessor(context);
-
-      var command = new CreateLifelineSemanticCommand(context, parentInteraction);
-      var destination = shift(parentInteraction, position);
+   public CreateLifelineCompoundCommand(final ModelContext context, final Interaction parent, final GPoint position) {
+      var command = new CreateLifelineSemanticCommand(context, parent);
 
       this.append(command);
-      this.append(new AddShapeNotationCommand(context, command::getNewLifeline, destination, GraphUtil.dimension(160, 50)));
-   }
-
-   protected GPoint shift(final Interaction interaction, final GPoint mousePosition) {
-      String semanticProxyUri = SemanticElementAccessor.getId(interaction);
-      var interactionShape = notationElementAccessor.getElement(semanticProxyUri, Shape.class).get();
-      var origin = interactionShape.getPosition();
-      var size = interactionShape.getSize();
-
-      var destination = new GPointImpl();
-      destination.setX(mousePosition.getX() - origin.getX());
-      destination.setY(mousePosition.getY() - origin.getY());
-
-      return destination;
+      this.append(
+         new AddShapeNotationCommand(context, command::getSemanticElement, position, GraphUtil.dimension(160, 50)));
    }
 }

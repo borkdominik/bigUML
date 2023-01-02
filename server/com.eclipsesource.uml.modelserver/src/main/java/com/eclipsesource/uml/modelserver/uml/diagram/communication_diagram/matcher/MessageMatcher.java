@@ -20,11 +20,15 @@ import org.eclipse.uml2.uml.MessageOccurrenceSpecification;
 
 public final class MessageMatcher {
 
-   public static Optional<Message> ofUsage(final Setting setting, final EObject interest) {
+   public static Optional<Message> ofChildUsage(final Setting setting, final EObject interest) {
       var eObject = setting.getEObject();
 
       if (eObject instanceof Message) {
-         return Optional.of((Message) eObject);
+         var element = (Message) eObject;
+
+         if (element.getInteraction().equals(interest)) {
+            return Optional.of(element);
+         }
       }
 
       return Optional.empty();

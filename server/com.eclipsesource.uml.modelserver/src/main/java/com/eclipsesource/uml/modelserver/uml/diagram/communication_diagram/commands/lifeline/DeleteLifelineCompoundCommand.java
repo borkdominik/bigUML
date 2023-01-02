@@ -11,8 +11,7 @@
 package com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.lifeline;
 
 import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.uml2.uml.Interaction;
 import org.eclipse.uml2.uml.Lifeline;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
@@ -20,13 +19,13 @@ import com.eclipsesource.uml.modelserver.shared.notation.commands.DeleteNotation
 import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.matcher.CommunicationDiagramCrossReferenceRemover;
 
 public final class DeleteLifelineCompoundCommand extends CompoundCommand {
-   public DeleteLifelineCompoundCommand(final ModelContext context,
-      final Lifeline lifeline) {
-      this.append(new DeleteLifelineSemanticCommand(context, lifeline));
-      this.append(new DeleteNotationElementCommand(context, lifeline));
+   public DeleteLifelineCompoundCommand(final ModelContext context, final Interaction parent,
+      final Lifeline semanticElement) {
+      this.append(new DeleteLifelineSemanticCommand(context, parent, semanticElement));
+      this.append(new DeleteNotationElementCommand(context, semanticElement));
 
       new CommunicationDiagramCrossReferenceRemover(context)
-         .deleteCommandsFor(lifeline)
+         .deleteCommandsFor(semanticElement)
          .forEach(this::append);
    }
 }

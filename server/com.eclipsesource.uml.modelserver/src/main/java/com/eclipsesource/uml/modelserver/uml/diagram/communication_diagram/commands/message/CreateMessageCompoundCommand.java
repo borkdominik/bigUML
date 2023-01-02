@@ -20,11 +20,10 @@ public final class CreateMessageCompoundCommand extends CompoundCommand {
 
    public CreateMessageCompoundCommand(final ModelContext context,
       final Lifeline source, final Lifeline target) {
-
       var command = new CreateMessageSemanticCommand(context, source, target);
 
       this.append(command);
-      this.append(new AddEdgeNotationCommand(context, () -> command.getNewMessage()));
+      this.append(new AddEdgeNotationCommand(context, command::getSemanticElement));
    }
 
 }

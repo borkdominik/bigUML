@@ -10,31 +10,29 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.interaction;
 
-import org.eclipse.uml2.uml.Enumeration;
 import org.eclipse.uml2.uml.Interaction;
+import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.UMLFactory;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
-import com.eclipsesource.uml.modelserver.shared.semantic.BaseSemanticElementCommand;
+import com.eclipsesource.uml.modelserver.shared.semantic.BaseCreateSemanticChildCommand;
 import com.eclipsesource.uml.modelserver.uml.generator.ListNameGenerator;
 
-public final class CreateInteractionSemanticCommand extends BaseSemanticElementCommand {
+public final class CreateInteractionSemanticCommand extends BaseCreateSemanticChildCommand<Model, Interaction> {
 
-   protected final Interaction newInteraction;
-
-   public CreateInteractionSemanticCommand(final ModelContext context) {
-      super(context);
-      this.newInteraction = UMLFactory.eINSTANCE.createInteraction();
+   public CreateInteractionSemanticCommand(final ModelContext context, final Model parent) {
+      super(context, parent);
    }
 
    @Override
-   protected void doExecute() {
-      var nameGenerator = new ListNameGenerator(Enumeration.class, context.model.getPackagedElements());
+   protected Interaction createSemanticElement(final Model parent) {
+      var nameGenerator = new ListNameGenerator(Interaction.class, parent.getPackagedElements());
 
-      newInteraction.setName(nameGenerator.newName());
-      context.model.getPackagedElements().add(newInteraction);
+      var interaction = UMLFactory.eINSTANCE.createInteraction();
+      interaction.setName(nameGenerator.newName());
+
+      parent.getPackagedElements().add(interaction);
+
+      return interaction;
    }
-
-   public Interaction getNewInteraction() { return newInteraction; }
-
 }

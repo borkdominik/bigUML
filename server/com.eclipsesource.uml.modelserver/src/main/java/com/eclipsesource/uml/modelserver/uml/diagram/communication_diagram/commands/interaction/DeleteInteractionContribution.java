@@ -14,43 +14,37 @@ import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
-import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
 import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
 import org.eclipse.emfcloud.modelserver.edit.command.BasicCommandContribution;
 import org.eclipse.uml2.uml.Interaction;
+import org.eclipse.uml2.uml.Model;
 
 import com.eclipsesource.uml.modelserver.core.commands.noop.NoopCommand;
-import com.eclipsesource.uml.modelserver.shared.constants.SemanticKeys;
-import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
-import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
+import com.eclipsesource.uml.modelserver.shared.codec.ContributionDecoder;
+import com.eclipsesource.uml.modelserver.shared.codec.ContributionEncoder;
 
 public final class DeleteInteractionContribution extends BasicCommandContribution<Command> {
 
    public static final String TYPE = "communication:delete_interaction";
 
-   public static CCommand create(final Interaction interaction) {
-      var command = CCommandFactory.eINSTANCE.createCompoundCommand();
-
-      command.setType(TYPE);
-      command.getProperties().put(SemanticKeys.SEMANTIC_ELEMENT_ID, SemanticElementAccessor.getId(interaction));
-
-      return command;
+   public static CCommand create(final Model parent, final Interaction semanticElement) {
+      return new ContributionEncoder().type(TYPE).parent(parent).element(semanticElement).ccommand();
    }
 
    @Override
    protected Command toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
       throws DecodingException {
-      var context = ModelContext.of(modelUri, domain, command);
-      var elementAccessor = new SemanticElementAccessor(context);
+      var decoder = new ContributionDecoder(modelUri, domain, command);
 
-      var semanticElementId = command.getProperties().get(SemanticKeys.SEMANTIC_ELEMENT_ID);
+      var context = decoder.context();
+      var parent = decoder.parent(Model.class);
+      var element = decoder.element(Interaction.class);
 
-      var interaction = elementAccessor.getElement(semanticElementId, Interaction.class);
+      if (parent.isPresent() && element.isPresent()) {
+         return new DeleteInteractionCompoundCommand(context, parent.get(), element.get());
+      }
 
-      return interaction
-         .<Command> map(i -> new DeleteInteractionCompoundCommand(context, i))
-         .orElse(new NoopCommand());
+      return new NoopCommand();
    }
 
 }

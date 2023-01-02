@@ -11,19 +11,21 @@
 package com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.interaction;
 
 import org.eclipse.uml2.uml.Interaction;
+import org.eclipse.uml2.uml.Model;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
-import com.eclipsesource.uml.modelserver.shared.semantic.BaseSemanticExistenceCheckedCommand;
+import com.eclipsesource.uml.modelserver.shared.semantic.BaseDeleteSemanticChildCommand;
 
-public final class DeleteInteractionSemanticCommand extends BaseSemanticExistenceCheckedCommand<Interaction> {
+public final class DeleteInteractionSemanticCommand extends BaseDeleteSemanticChildCommand<Model, Interaction> {
 
    public DeleteInteractionSemanticCommand(final ModelContext context,
-      final Interaction interaction) {
-      super(context, interaction);
+      final Model parent,
+      final Interaction semanticElement) {
+      super(context, parent, semanticElement);
    }
 
    @Override
-   protected void doChanges(final Interaction semanticElement) {
-      context.model.getPackagedElements().remove(semanticElement);
+   protected void deleteSemanticElement(final Model parent, final Interaction child) {
+      parent.getPackagedElements().remove(child);
    }
 }

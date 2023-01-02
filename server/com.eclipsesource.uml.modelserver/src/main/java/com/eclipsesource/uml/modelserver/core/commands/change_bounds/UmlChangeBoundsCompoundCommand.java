@@ -26,14 +26,16 @@ import com.eclipsesource.uml.modelserver.shared.codec.ContributionDecoder;
 import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 
-public final class UmlChangeBoundsCompoundCommand extends CompoundCommand {
+public class UmlChangeBoundsCompoundCommand extends CompoundCommand {
 
-   private final ModelContext context;
-   private final ContributionDecoder decoder;
+   protected final ModelContext context;
+   protected final ContributionDecoder decoder;
+   protected final SemanticElementAccessor semanticElementAccessor;
 
    public UmlChangeBoundsCompoundCommand(final ModelContext context) {
       this.context = context;
       this.decoder = new ContributionDecoder(context);
+      this.semanticElementAccessor = new SemanticElementAccessor(context);
 
       var command = context.command;
       var bounds = new ArrayList<ElementAndBounds>();
@@ -70,7 +72,6 @@ public final class UmlChangeBoundsCompoundCommand extends CompoundCommand {
    }
 
    private Command createCommand(final ElementAndBounds bound) {
-      var semanticElementAccessor = new SemanticElementAccessor(context);
       var element = semanticElementAccessor.getElement(bound.getElementId(), Element.class);
 
       return element

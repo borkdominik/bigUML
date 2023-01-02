@@ -11,6 +11,7 @@
 package com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.message;
 
 import org.eclipse.emf.common.command.CompoundCommand;
+import org.eclipse.uml2.uml.Interaction;
 import org.eclipse.uml2.uml.Message;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
@@ -18,10 +19,10 @@ import com.eclipsesource.uml.modelserver.shared.notation.commands.DeleteNotation
 
 public final class DeleteMessageCompoundCommand extends CompoundCommand {
 
-   public DeleteMessageCompoundCommand(final ModelContext context,
-      final Message message) {
-      this.append(new DeleteMessageSemanticCommand(context, message));
-      this.append(new DeleteNotationElementCommand(context, message));
+   public DeleteMessageCompoundCommand(final ModelContext context, final Interaction parent,
+      final Message semanticElement) {
+      this.append(new DeleteMessageSemanticCommand(context, parent, semanticElement));
+      this.append(new DeleteNotationElementCommand(context, semanticElement));
    }
 
 }

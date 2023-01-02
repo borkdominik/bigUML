@@ -10,22 +10,21 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.lifeline;
 
+import org.eclipse.uml2.uml.Interaction;
 import org.eclipse.uml2.uml.Lifeline;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
-import com.eclipsesource.uml.modelserver.shared.semantic.BaseSemanticExistenceCheckedCommand;
+import com.eclipsesource.uml.modelserver.shared.semantic.BaseDeleteSemanticChildCommand;
 
-public final class DeleteLifelineSemanticCommand extends BaseSemanticExistenceCheckedCommand<Lifeline> {
+public final class DeleteLifelineSemanticCommand extends BaseDeleteSemanticChildCommand<Interaction, Lifeline> {
 
-   public DeleteLifelineSemanticCommand(final ModelContext context,
-      final Lifeline lifeline) {
-      super(context, lifeline);
+   public DeleteLifelineSemanticCommand(final ModelContext context, final Interaction parent,
+      final Lifeline semanticElement) {
+      super(context, parent, semanticElement);
    }
 
    @Override
-   protected void doChanges(final Lifeline semanticElement) {
-      var interaction = semanticElement.getInteraction();
-      interaction.getLifelines().remove(semanticElement);
+   protected void deleteSemanticElement(final Interaction parent, final Lifeline child) {
+      parent.getLifelines().remove(child);
    }
-
 }

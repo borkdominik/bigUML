@@ -15,49 +15,39 @@ import org.eclipse.uml2.uml.Message;
 import org.eclipse.uml2.uml.UMLFactory;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
-import com.eclipsesource.uml.modelserver.shared.semantic.BaseSemanticElementCommand;
+import com.eclipsesource.uml.modelserver.shared.semantic.BaseCreateSemanticRelationCommand;
 import com.eclipsesource.uml.modelserver.uml.generator.ListNameGenerator;
-import com.eclipsesource.uml.modelserver.uml.generator.NameGenerator;
 
-public final class CreateMessageSemanticCommand extends BaseSemanticElementCommand {
-
-   protected final Message newMessage;
-   protected final Lifeline sourceLifeline;
-   protected final Lifeline targetLifeline;
-   protected final NameGenerator nameGenerator;
+public final class CreateMessageSemanticCommand extends BaseCreateSemanticRelationCommand<Lifeline, Lifeline, Message> {
 
    public CreateMessageSemanticCommand(final ModelContext context,
       final Lifeline source, final Lifeline target) {
-      super(context);
-      this.newMessage = UMLFactory.eINSTANCE.createMessage();
-      this.sourceLifeline = source;
-      this.targetLifeline = target;
-      this.nameGenerator = new ListNameGenerator(Message.class, source.getInteraction().getMessages());
+      super(context, source, target);
    }
 
    @Override
-   protected void doExecute() {
-      var interaction = sourceLifeline.getInteraction();
+   protected Message createSemanticElement(final Lifeline source, final Lifeline target) {
+      var interaction = source.getInteraction();
+      var nameGenerator = new ListNameGenerator(Message.class, interaction.getMessages());
 
-      newMessage.setName(nameGenerator.newName());
-      newMessage.setInteraction(interaction);
+      var message = interaction.createMessage(nameGenerator.newName());
 
       var sendEvent = UMLFactory.eINSTANCE.createMessageOccurrenceSpecification();
-      sendEvent.setName(newMessage.getName() + " - SendEvent");
-      sendEvent.setMessage(newMessage);
-      sendEvent.setCovered(sourceLifeline);
+      sendEvent.setName(message.getName() + " - SendEvent");
+      sendEvent.setMessage(message);
+      sendEvent.setCovered(source);
       sendEvent.setEnclosingInteraction(interaction);
 
       var receiveEvent = UMLFactory.eINSTANCE.createMessageOccurrenceSpecification();
-      receiveEvent.setName(newMessage.getName() + " - ReceiveEvent");
-      receiveEvent.setMessage(newMessage);
-      receiveEvent.setCovered(targetLifeline);
+      receiveEvent.setName(message.getName() + " - ReceiveEvent");
+      receiveEvent.setMessage(message);
+      receiveEvent.setCovered(target);
       receiveEvent.setEnclosingInteraction(interaction);
 
-      newMessage.setSendEvent(sendEvent);
-      newMessage.setReceiveEvent(receiveEvent);
-   }
+      message.setSendEvent(sendEvent);
+      message.setReceiveEvent(receiveEvent);
 
-   public Message getNewMessage() { return newMessage; }
+      return message;
+   }
 
 }

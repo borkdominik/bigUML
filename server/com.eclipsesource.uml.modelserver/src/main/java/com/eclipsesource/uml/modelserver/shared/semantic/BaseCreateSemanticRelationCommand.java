@@ -33,5 +33,12 @@ public abstract class BaseCreateSemanticRelationCommand<TSource, TTarget, TRelat
    @Override
    public TRelation getSemanticElement() { return newSemanticElement; }
 
+   /**
+    * Creates the semantic element and connects it with the source and target
+    *
+    * @param source Source of the relation
+    * @param target Target of the relation
+    * @return The new created semantic element
+    */
    abstract protected TRelation createSemanticElement(TSource source, TTarget target);
 }

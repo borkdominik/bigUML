@@ -14,47 +14,33 @@ import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
-import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
 import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
 import org.eclipse.emfcloud.modelserver.edit.command.BasicCommandContribution;
 import org.eclipse.uml2.uml.Lifeline;
 
 import com.eclipsesource.uml.modelserver.core.commands.noop.NoopCommand;
-import com.eclipsesource.uml.modelserver.shared.constants.SemanticKeys;
-import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
-import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
+import com.eclipsesource.uml.modelserver.shared.codec.ContributionDecoder;
+import com.eclipsesource.uml.modelserver.shared.codec.ContributionEncoder;
 
 public final class CreateMessageContribution extends BasicCommandContribution<Command> {
 
    public static final String TYPE = "communication:add_message";
 
-   public static CCommand create(final Lifeline sourceLifeline, final Lifeline targetLifeline) {
-      var command = CCommandFactory.eINSTANCE.createCompoundCommand();
-
-      command.setType(TYPE);
-      command.getProperties().put(SemanticKeys.SOURCE_SEMANTIC_ELEMENT_ID,
-         SemanticElementAccessor.getId(sourceLifeline));
-      command.getProperties().put(SemanticKeys.TARGET_SEMANTIC_ELEMENT_ID,
-         SemanticElementAccessor.getId(targetLifeline));
-
-      return command;
+   public static CCommand create(final Lifeline source, final Lifeline target) {
+      return new ContributionEncoder().type(TYPE).source(source).target(target).ccommand();
    }
 
    @Override
    protected Command toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
       throws DecodingException {
-      var context = ModelContext.of(modelUri, domain, command);
-      var elementAccessor = new SemanticElementAccessor(context);
+      var decoder = new ContributionDecoder(modelUri, domain, command);
 
-      var sourceLifelineUriFragment = command.getProperties().get(SemanticKeys.SOURCE_SEMANTIC_ELEMENT_ID);
-      var targetLifelineUriFragment = command.getProperties().get(SemanticKeys.TARGET_SEMANTIC_ELEMENT_ID);
+      var context = decoder.context();
+      var source = decoder.source(Lifeline.class);
+      var target = decoder.target(Lifeline.class);
 
-      var sourceLifeline = elementAccessor.getElement(sourceLifelineUriFragment, Lifeline.class);
-      var targetLifeline = elementAccessor.getElement(targetLifelineUriFragment, Lifeline.class);
-
-      if (sourceLifeline.isPresent() && targetLifeline.isPresent()) {
-         return new CreateMessageCompoundCommand(context, sourceLifeline.get(), targetLifeline.get());
+      if (source.isPresent() && target.isPresent()) {
+         return new CreateMessageCompoundCommand(context, source.get(), target.get());
       }
 
       return new NoopCommand();

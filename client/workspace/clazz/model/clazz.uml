@@ -2,6 +2,9 @@
 <uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_Cfp0UGmxEe2kLe5KTNzRtw" name="clazz">
   <packagedElement xmi:type="uml:Package" xmi:id="_MFWcwIh9Ee2ekuJspw8-cA" name="2">
     <packagedElement xmi:type="uml:Package" xmi:id="_NScJUYqeEe2ivZI76tgg9Q" name="NewPackage1">
+      <packagedElement xmi:type="uml:Package" xmi:id="_aFkckYqpEe2LnNSbuUmaGA" name="NewPackage1">
+        <packagedElement xmi:type="uml:Class" xmi:id="_ap2OUIqpEe2LnNSbuUmaGA" name="NewClass1"/>
+      </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_Oq-pkIqeEe2ivZI76tgg9Q" name="NewClass1">
         <ownedAttribute xmi:id="_0QaH4IqgEe2jA6D1258ThQ" name="NewClass2" type="_zUzbQYqgEe2jA6D1258ThQ" association="_0QRlAIqgEe2jA6D1258ThQ">
           <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_0QckIIqgEe2jA6D1258ThQ" value="1"/>

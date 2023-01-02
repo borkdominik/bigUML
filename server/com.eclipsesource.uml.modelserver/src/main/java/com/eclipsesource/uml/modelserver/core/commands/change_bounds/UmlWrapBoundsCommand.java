@@ -11,8 +11,6 @@
 package com.eclipsesource.uml.modelserver.core.commands.change_bounds;
 
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.eclipse.glsp.graph.GDimension;
 import org.eclipse.glsp.graph.GPoint;
@@ -27,14 +25,11 @@ import com.eclipsesource.uml.modelserver.shared.notation.BaseNotationElementComm
 
 public class UmlWrapBoundsCommand extends BaseNotationElementCommand {
    protected final List<ElementAndBounds> bounds;
-   protected final Map<String, GPoint> elementPositions;
 
    public UmlWrapBoundsCommand(final ModelContext context,
       final List<ElementAndBounds> bounds) {
       super(context);
       this.bounds = bounds;
-      this.elementPositions = bounds.stream()
-         .collect(Collectors.toMap(b -> b.getElementId(), b -> GraphUtil.copy(b.getNewPosition())));
    }
 
    @Override
@@ -52,7 +47,6 @@ public class UmlWrapBoundsCommand extends BaseNotationElementCommand {
          var position = notationElementAccessor.getElement(bound.getElementId(), Shape.class).get().getPosition();
          wrapPosition(p, position);
          wrapSize(p, position, bound.getNewSize());
-         recalculateElementPositions(bound);
 
          var parentId = SemanticElementAccessor.getId(p);
          var parentShape = notationElementAccessor.getElement(parentId, Shape.class).get();
@@ -161,18 +155,4 @@ public class UmlWrapBoundsCommand extends BaseNotationElementCommand {
       childPosition.setY(childPosition.getY() - y);
       shape.setPosition(childPosition);
    }
-
-   /*-
-    * This calculation is necessary if you move multiple elements
-    * so that any update / repositioning would be respected by the other bounds
-    */
-   protected void recalculateElementPositions(final ElementAndBounds bound) {
-      this.elementPositions.forEach((elementId, position) -> {
-         if (!elementId.equals(bound.getElementId())) {
-            position.setX(position.getX() - Math.min(0, bound.getNewPosition().getX()));
-            position.setY(position.getY() - Math.min(0, bound.getNewPosition().getY()));
-         }
-      });
-   }
-
 }

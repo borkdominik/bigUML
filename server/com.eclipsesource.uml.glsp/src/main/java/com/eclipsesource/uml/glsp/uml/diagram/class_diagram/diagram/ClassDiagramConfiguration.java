@@ -70,7 +70,7 @@ public final class ClassDiagramConfiguration implements DiagramConfiguration {
          List.of(ClassTypes.PROPERTY, ClassTypes.OPERATION)));
       hints.add(new ShapeTypeHint(ClassTypes.PRIMITIVE_TYPE, true, true, false, false,
          List.of(ClassTypes.PROPERTY, ClassTypes.OPERATION)));
-      hints.add(new ShapeTypeHint(ClassTypes.PACKAGE, true, true, false, false,
+      hints.add(new ShapeTypeHint(ClassTypes.PACKAGE, true, true, true, false,
          List.of(ClassTypes.CLASS,
             ClassTypes.ENUMERATION,
             ClassTypes.INTERFACE,

@@ -14,7 +14,6 @@ import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
 import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
 import org.eclipse.emfcloud.modelserver.edit.command.BasicCommandContribution;
 import org.eclipse.uml2.uml.Type;
@@ -29,7 +28,7 @@ public final class CreateAssociationContribution extends BasicCommandContributio
    public static final String TYPE = "class:add_association";
    private static final String TYPE_KEYWORD = "type_keyword";
 
-   public static CCompoundCommand create(final Type source, final Type target,
+   public static CCommand create(final Type source, final Type target,
       final AssociationType keyword) {
       return new ContributionEncoder().type(TYPE).source(source).target(target).extra(TYPE_KEYWORD, keyword.name())
          .ccommand();

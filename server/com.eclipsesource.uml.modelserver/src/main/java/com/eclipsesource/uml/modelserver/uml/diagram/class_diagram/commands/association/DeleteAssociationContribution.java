@@ -28,7 +28,7 @@ public final class DeleteAssociationContribution extends BasicCommandContributio
 
    public static final String TYPE = "class:delete_association";
 
-   public static CCompoundCommand create(final Package parent, final Association semanticElement) {
+   public static CCommand create(final Package parent, final Association semanticElement) {
       return new ContributionEncoder().type(TYPE).parent(parent).element(semanticElement).ccommand();
    }
 

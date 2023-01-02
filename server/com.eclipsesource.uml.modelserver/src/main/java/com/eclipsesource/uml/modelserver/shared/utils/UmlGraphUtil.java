@@ -19,15 +19,15 @@ import org.eclipse.glsp.graph.util.GraphUtil;
 public final class UmlGraphUtil {
    private UmlGraphUtil() {}
 
-   public static GPoint getGPoint(final Point2D.Double position) {
+   public static GPoint parseGPoint(final Point2D.Double position) {
       return GraphUtil.point(position.x, position.y);
    }
 
-   public static GPoint getGPoint(final String propertyX, final String propertyY) {
-      return GraphUtil.point(Double.parseDouble(propertyX), Double.parseDouble(propertyY));
+   public static GPoint parseGPoint(final String x, final String y) {
+      return GraphUtil.point(Double.parseDouble(x), Double.parseDouble(y));
    }
 
-   public static GDimension getGDimension(final String height, final String width) {
-      return GraphUtil.dimension(Double.parseDouble(height), Double.parseDouble(width));
+   public static GDimension parseGDimension(final String width, final String height) {
+      return GraphUtil.dimension(Double.parseDouble(width), Double.parseDouble(height));
    }
 }

@@ -29,7 +29,7 @@ public final class DeleteLifelineContribution extends BasicCommandContribution<C
 
    public static final String TYPE = "uml:delete_lifeline";
 
-   public static CCompoundCommand create(final Lifeline lifeline) {
+   public static CCommand create(final Lifeline lifeline) {
       var command = CCommandFactory.eINSTANCE.createCompoundCommand();
 
       command.setType(TYPE);

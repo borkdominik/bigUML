@@ -12,32 +12,32 @@ package com.eclipsesource.uml.modelserver.shared.codec.codecs;
 
 import java.util.Optional;
 
-import org.eclipse.glsp.graph.GPoint;
+import org.eclipse.glsp.graph.GDimension;
 
 import com.eclipsesource.uml.modelserver.shared.codec.CCommandProvider;
 import com.eclipsesource.uml.modelserver.shared.constants.NotationKeys;
 import com.eclipsesource.uml.modelserver.shared.utils.UmlGraphUtil;
 
-public interface PositionCodec {
+public interface DimensionCodec {
 
    interface Encoder<T> extends CCommandProvider {
-      default T position(final GPoint position) {
-         ccommand().getProperties().put(NotationKeys.POSITION_X,
-            String.valueOf(position.getX()));
-         ccommand().getProperties().put(NotationKeys.POSITION_Y,
-            String.valueOf(position.getY()));
+      default T dimension(final GDimension dimension) {
+         ccommand().getProperties().put(NotationKeys.WIDTH,
+            String.valueOf(dimension.getWidth()));
+         ccommand().getProperties().put(NotationKeys.HEIGHT,
+            String.valueOf(dimension.getHeight()));
 
          return (T) this;
       }
    }
 
    interface Decoder extends CCommandProvider {
-      default Optional<GPoint> position() {
-         var x = ccommand().getProperties().get(NotationKeys.POSITION_X);
-         var y = ccommand().getProperties().get(NotationKeys.POSITION_Y);
+      default Optional<GDimension> dimension() {
+         var width = ccommand().getProperties().get(NotationKeys.WIDTH);
+         var height = ccommand().getProperties().get(NotationKeys.HEIGHT);
 
-         if (x != null && y != null) {
-            return Optional.of(UmlGraphUtil.parseGPoint(x, y));
+         if (width != null && height != null) {
+            return Optional.of(UmlGraphUtil.parseGDimension(width, height));
          }
 
          return Optional.empty();

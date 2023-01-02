@@ -10,6 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.shared.codec.encoder;
 
+import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
 import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
 
@@ -23,7 +24,11 @@ public class BaseEncoder implements CCommandProvider {
    }
 
    @Override
-   public CCompoundCommand ccommand() {
+   public CCommand ccommand() {
+      return command;
+   }
+
+   public CCompoundCommand ccompoundCommand() {
       return command;
    }
 }

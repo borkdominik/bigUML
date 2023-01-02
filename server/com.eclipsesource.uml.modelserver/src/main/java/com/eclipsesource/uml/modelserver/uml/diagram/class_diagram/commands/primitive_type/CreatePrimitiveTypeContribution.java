@@ -28,7 +28,7 @@ public final class CreatePrimitiveTypeContribution extends BasicCommandContribut
 
    public static final String TYPE = "class:add_primitive_type";
 
-   public static CCompoundCommand create(final Package parent, final GPoint position) {
+   public static CCommand create(final Package parent, final GPoint position) {
       return new ContributionEncoder().type(TYPE).parent(parent).position(position).ccommand();
    }
 
@@ -39,7 +39,7 @@ public final class CreatePrimitiveTypeContribution extends BasicCommandContribut
 
       var context = decoder.context();
       var parent = decoder.parent(Package.class);
-      var position = decoder.position();
+      var position = decoder.position().get();
 
       return parent
          .<Command> map(p -> new CreatePrimitiveTypeCompoundCommand(context, p, position))

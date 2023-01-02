@@ -29,7 +29,7 @@ public final class DeleteMessageContribution extends BasicCommandContribution<Co
 
    public static final String TYPE = "communication:delete_message";
 
-   public static CCompoundCommand create(final Message message) {
+   public static CCommand create(final Message message) {
       var command = CCommandFactory.eINSTANCE.createCompoundCommand();
 
       command.setType(TYPE);

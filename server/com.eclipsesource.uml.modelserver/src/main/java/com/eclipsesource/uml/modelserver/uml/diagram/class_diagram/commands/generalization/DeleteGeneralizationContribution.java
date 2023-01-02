@@ -18,7 +18,7 @@ public final class DeleteGeneralizationContribution extends BasicCommandContribu
 
    public static final String TYPE = "class:delete_generalization";
 
-   public static CCompoundCommand create(final Classifier parent, final Generalization semanticElement) {
+   public static CCommand create(final Classifier parent, final Generalization semanticElement) {
       return new ContributionEncoder().type(TYPE).parent(parent).element(semanticElement).ccommand();
    }
 

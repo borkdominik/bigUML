@@ -28,7 +28,7 @@ public final class DeleteDataTypeContribution extends BasicCommandContribution<C
 
    public static final String TYPE = "class:delete_data_type";
 
-   public static CCompoundCommand create(final Package parent, final DataType semanticElement) {
+   public static CCommand create(final Package parent, final DataType semanticElement) {
       return new ContributionEncoder().type(TYPE).parent(parent).element(semanticElement).ccommand();
    }
 

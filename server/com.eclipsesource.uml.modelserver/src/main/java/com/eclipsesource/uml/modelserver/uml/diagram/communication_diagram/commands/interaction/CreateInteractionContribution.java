@@ -29,7 +29,7 @@ public final class CreateInteractionContribution extends BasicCommandContributio
 
    public static final String TYPE = "communication:add_interaction";
 
-   public static CCompoundCommand create(final GPoint position) {
+   public static CCommand create(final GPoint position) {
       var command = CCommandFactory.eINSTANCE.createCompoundCommand();
 
       command.setType(TYPE);
@@ -46,7 +46,7 @@ public final class CreateInteractionContribution extends BasicCommandContributio
       throws DecodingException {
       var context = ModelContext.of(modelUri, domain, command);
 
-      var position = UmlGraphUtil.getGPoint(
+      var position = UmlGraphUtil.parseGPoint(
          command.getProperties().get(NotationKeys.POSITION_X),
          command.getProperties().get(NotationKeys.POSITION_Y));
 

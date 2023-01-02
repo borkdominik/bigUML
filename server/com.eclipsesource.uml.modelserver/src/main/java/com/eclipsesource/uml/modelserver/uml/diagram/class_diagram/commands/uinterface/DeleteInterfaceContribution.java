@@ -18,7 +18,7 @@ public final class DeleteInterfaceContribution extends BasicCommandContribution<
 
    public static final String TYPE = "class:delete_interface";
 
-   public static CCompoundCommand create(final Package parent, final Interface semanticElement) {
+   public static CCommand create(final Package parent, final Interface semanticElement) {
       return new ContributionEncoder().type(TYPE).parent(parent).element(semanticElement).ccommand();
    }
 

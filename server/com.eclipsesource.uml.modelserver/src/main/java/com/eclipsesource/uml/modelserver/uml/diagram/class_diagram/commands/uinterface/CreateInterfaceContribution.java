@@ -18,7 +18,7 @@ public final class CreateInterfaceContribution extends BasicCommandContribution<
 
    public static final String TYPE = "class:add_interface";
 
-   public static CCompoundCommand create(final Package parent, final GPoint position) {
+   public static CCommand create(final Package parent, final GPoint position) {
       return new ContributionEncoder().type(TYPE).parent(parent).position(position).ccommand();
    }
 
@@ -29,7 +29,7 @@ public final class CreateInterfaceContribution extends BasicCommandContribution<
 
       var context = decoder.context();
       var parent = decoder.parent(Package.class);
-      var position = decoder.position();
+      var position = decoder.position().get();
 
       return parent
          .<Command> map(p -> new CreateInterfaceCompoundCommand(context, p, position))

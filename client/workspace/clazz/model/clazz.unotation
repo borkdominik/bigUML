@@ -2,58 +2,33 @@
 <unotation:UmlDiagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:notation="http://www.eclipse.org/glsp/notation" xmlns:unotation="http://www.eclipsesource.com/glsp/uml/unotation" diagramType="CLASS">
   <semanticElement elementId="_Cfp0UGmxEe2kLe5KTNzRtw"/>
   <elements xsi:type="notation:Shape">
-    <semanticElement elementId="_E_QvcILNEe2MPeiDDvtNXQ"/>
-    <position x="-985.4957027883323" y="-79.12620816510528"/>
-    <size width="626.4365085873308" height="258.1272294801614"/>
-  </elements>
-  <elements xsi:type="notation:Shape">
-    <semanticElement elementId="_FaZMQILNEe2MPeiDDvtNXQ"/>
-    <position y="78.5204846809126"/>
-    <size width="467.29306903283526" height="118.35634071319515"/>
-  </elements>
-  <elements xsi:type="notation:Shape">
-    <semanticElement elementId="_Gx5xwILNEe2MPeiDDvtNXQ"/>
-    <position x="466.43650858733076" y="208.1272294801614"/>
-    <size width="160.0" height="50.0"/>
-  </elements>
-  <elements xsi:type="notation:Shape">
-    <semanticElement elementId="_ISpLwILNEe2MPeiDDvtNXQ"/>
-    <position y="25.35634071319515"/>
-    <size width="160.0" height="50.0"/>
-  </elements>
-  <elements xsi:type="notation:Shape">
-    <semanticElement elementId="_dksEsYLbEe2kAegKDZEZLQ"/>
-    <position x="-752.9321731905391" y="328.4004478931512"/>
-    <size width="160.0" height="50.0"/>
-  </elements>
-  <elements xsi:type="notation:Edge">
-    <semanticElement elementId="_YXVK0YLiEe2CFbKMptkxiA"/>
-  </elements>
-  <elements xsi:type="notation:Edge">
-    <semanticElement elementId="_criK8ILiEe2CFbKMptkxiA"/>
-    <bendPoints x="-853.5871441915532" y="353.4004478931512"/>
-  </elements>
-  <elements xsi:type="notation:Edge">
-    <semanticElement elementId="_dhQ5EILiEe2CFbKMptkxiA"/>
-  </elements>
-  <elements xsi:type="notation:Shape">
     <semanticElement elementId="_MFWcwIh9Ee2ekuJspw8-cA"/>
-    <position x="-375.6296888841425" y="244.26326378631495"/>
-    <size width="241.90210361545252" height="233.9668091829087"/>
-  </elements>
-  <elements xsi:type="notation:Shape">
-    <semanticElement elementId="_N68FYIh9Ee2ekuJspw8-cA"/>
-    <position x="425.4564328487878" y="89.87560296048568"/>
-    <size width="160.0" height="50.0"/>
-  </elements>
-  <elements xsi:type="notation:Shape">
-    <semanticElement elementId="_m7c1IIiAEe2DMdFHhGzYmQ"/>
-    <position x="-17.967583835885986" y="231.91517603549516"/>
-    <size width="160.0" height="50.0"/>
+    <position x="-1077.6295005206648" y="-100.74883214336768"/>
+    <size width="1185.3809109515919" height="494.667643201366"/>
   </elements>
   <elements xsi:type="notation:Shape">
     <semanticElement elementId="_pseLQIiAEe2DMdFHhGzYmQ"/>
-    <position x="71.90210361545252" y="137.53075015134652"/>
+    <position x="843.1844092351915" y="244.46300312052432"/>
     <size width="160.0" height="50.0"/>
+  </elements>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_NScJUYqeEe2ivZI76tgg9Q"/>
+    <position x="80.6196293622873" y="59.20504031292977"/>
+    <size width="641.1984127561525" height="265.40557220236155"/>
+  </elements>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_Oq-pkIqeEe2ivZI76tgg9Q"/>
+    <position x="146.12307821914578" y="36.530769554786445"/>
+    <size width="160.0" height="50.0"/>
+  </elements>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_zUzbQYqgEe2jA6D1258ThQ"/>
+    <position x="396.7997382675079" y="25.19363417571476"/>
+    <size width="160.0" height="50.0"/>
+  </elements>
+  <elements xsi:type="notation:Edge">
+    <semanticElement elementId="_0QRlAIqgEe2jA6D1258ThQ"/>
+    <bendPoints x="360.279180204827" y="61.530769554786445"/>
+    <bendPoints x="360.279180204827" y="56.49204271964345"/>
   </elements>
 </unotation:UmlDiagram>

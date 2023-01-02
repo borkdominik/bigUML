@@ -27,7 +27,7 @@ public final class DeletePackageContribution extends BasicCommandContribution<Co
 
    public static final String TYPE = "class:delete_package";
 
-   public static CCompoundCommand create(final Package parent, final Package semanticElement) {
+   public static CCommand create(final Package parent, final Package semanticElement) {
       return new ContributionEncoder().type(TYPE).parent(parent).element(semanticElement).ccommand();
    }
 

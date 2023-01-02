@@ -29,7 +29,7 @@ public final class CreateMessageContribution extends BasicCommandContribution<Co
 
    public static final String TYPE = "communication:add_message";
 
-   public static CCompoundCommand create(final Lifeline sourceLifeline, final Lifeline targetLifeline) {
+   public static CCommand create(final Lifeline sourceLifeline, final Lifeline targetLifeline) {
       var command = CCommandFactory.eINSTANCE.createCompoundCommand();
 
       command.setType(TYPE);

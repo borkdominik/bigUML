@@ -10,8 +10,6 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.shared.codec.decoder;
 
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfcloud.modelserver.command.CCommand;
 
 import com.eclipsesource.uml.modelserver.shared.codec.CCommandProvider;
@@ -22,9 +20,9 @@ public class BaseDecoder implements CCommandProvider, ContextProvider {
    protected final CCommand command;
    protected final ModelContext context;
 
-   protected BaseDecoder(final URI modelUri, final EditingDomain domain, final CCommand command) {
-      this.command = command;
-      this.context = ModelContext.of(modelUri, domain, command);
+   protected BaseDecoder(final ModelContext context) {
+      this.context = context;
+      this.command = context.command;
    }
 
    @Override

@@ -22,16 +22,30 @@ import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccesso
 public interface ElementCodec {
 
    interface Encoder<T> extends CCommandProvider {
-      default T element(final EObject parent) {
-         ccommand().getProperties().put(SemanticKeys.SEMANTIC_ELEMENT_ID, SemanticElementAccessor.getId(parent));
+      default T element(final EObject element) {
+         ccommand().getProperties().put(SemanticKeys.SEMANTIC_ELEMENT_ID, SemanticElementAccessor.getId(element));
+         return (T) this;
+      }
+
+      default T element(final String elementId) {
+         ccommand().getProperties().put(SemanticKeys.SEMANTIC_ELEMENT_ID, elementId);
          return (T) this;
       }
    }
 
    interface Decoder extends CCommandProvider, ContextProvider {
       default <T> Optional<T> element(final Class<T> clazz) {
-         var semanticElementId = ccommand().getProperties().get(SemanticKeys.SEMANTIC_ELEMENT_ID);
-         return new SemanticElementAccessor(context()).getElement(semanticElementId, clazz);
+         var elementId = elementId();
+
+         if (elementId.isEmpty()) {
+            return Optional.empty();
+         }
+
+         return new SemanticElementAccessor(context()).getElement(elementId.get(), clazz);
+      }
+
+      default Optional<String> elementId() {
+         return Optional.of(ccommand().getProperties().get(SemanticKeys.SEMANTIC_ELEMENT_ID));
       }
    }
 }

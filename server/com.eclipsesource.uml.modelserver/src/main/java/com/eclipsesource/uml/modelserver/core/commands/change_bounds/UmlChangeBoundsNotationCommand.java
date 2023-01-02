@@ -39,6 +39,9 @@ public class UmlChangeBoundsNotationCommand extends BaseNotationElementCommand {
       this.shape = notationElementAccessor.getElement(semanticId(), Shape.class).get();
    }
 
+   /*-
+    * Copy is necessary because otherwise we would work on the same instance everywhere
+    */
    @Override
    protected void doExecute() {
       this.shapePosition.map(GraphUtil::copy).ifPresent(shape::setPosition);

@@ -17,7 +17,7 @@ public final class CreateGeneralizationContribution extends BasicCommandContribu
 
    public static final String TYPE = "class:add_generalization";
 
-   public static CCompoundCommand create(final Classifier source, final Classifier target) {
+   public static CCommand create(final Classifier source, final Classifier target) {
       return new ContributionEncoder().type(TYPE).source(source).target(target).ccommand();
    }
 

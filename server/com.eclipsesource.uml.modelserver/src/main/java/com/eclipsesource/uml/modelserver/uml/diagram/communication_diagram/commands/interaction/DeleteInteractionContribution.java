@@ -29,7 +29,7 @@ public final class DeleteInteractionContribution extends BasicCommandContributio
 
    public static final String TYPE = "communication:delete_interaction";
 
-   public static CCompoundCommand create(final Interaction interaction) {
+   public static CCommand create(final Interaction interaction) {
       var command = CCommandFactory.eINSTANCE.createCompoundCommand();
 
       command.setType(TYPE);

@@ -18,7 +18,7 @@ public final class DeleteEnumerationContribution extends BasicCommandContributio
 
    public static final String TYPE = "class:delete_enumeration";
 
-   public static CCompoundCommand create(final Package parent, final Enumeration semanticElement) {
+   public static CCommand create(final Package parent, final Enumeration semanticElement) {
       return new ContributionEncoder().type(TYPE).parent(parent).element(semanticElement).ccommand();
    }
 

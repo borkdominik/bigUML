@@ -29,7 +29,7 @@ public final class CreateClassContribution extends BasicCommandContribution<Comm
    public static final String TYPE = "class:add_class";
    private static final String IS_ABSTRACT = "is_abstract";
 
-   public static CCompoundCommand create(final Package parent, final GPoint position, final Boolean isAbstract) {
+   public static CCommand create(final Package parent, final GPoint position, final Boolean isAbstract) {
       return new ContributionEncoder()
          .type(TYPE)
          .parent(parent)
@@ -45,7 +45,7 @@ public final class CreateClassContribution extends BasicCommandContribution<Comm
 
       var context = decoder.context();
       var parent = decoder.parent(Package.class);
-      var position = decoder.position();
+      var position = decoder.position().get();
       var isAbstract = Boolean.parseBoolean(decoder.extra(IS_ABSTRACT));
 
       return parent

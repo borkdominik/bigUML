@@ -32,7 +32,7 @@ public final class CreateLifelineContribution extends BasicCommandContribution<C
 
    public static final String TYPE = "uml:add_lifeline";
 
-   public static CCompoundCommand create(final Interaction interaction, final GPoint position) {
+   public static CCommand create(final Interaction interaction, final GPoint position) {
       var command = CCommandFactory.eINSTANCE.createCompoundCommand();
 
       command.setType(TYPE);
@@ -52,7 +52,7 @@ public final class CreateLifelineContribution extends BasicCommandContribution<C
       var context = ModelContext.of(modelUri, domain, command);
       var elementAccessor = new SemanticElementAccessor(context);
 
-      var position = UmlGraphUtil.getGPoint(
+      var position = UmlGraphUtil.parseGPoint(
          command.getProperties().get(NotationKeys.POSITION_X),
          command.getProperties().get(NotationKeys.POSITION_Y));
 

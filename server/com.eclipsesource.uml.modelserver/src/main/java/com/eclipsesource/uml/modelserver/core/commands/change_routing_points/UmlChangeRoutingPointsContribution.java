@@ -79,7 +79,7 @@ public class UmlChangeRoutingPointsContribution extends BasicCommandContribution
             var newRoutingPoints = new ArrayList<GPoint>();
 
             ((CCompoundCommand) changeRoutingPointCommand).getCommands().forEach(cmd -> {
-               var routingPoint = UmlGraphUtil.getGPoint(
+               var routingPoint = UmlGraphUtil.parseGPoint(
                   cmd.getProperties().get(NotationKeys.POSITION_X), cmd.getProperties().get(NotationKeys.POSITION_Y));
                newRoutingPoints.add(routingPoint);
             });

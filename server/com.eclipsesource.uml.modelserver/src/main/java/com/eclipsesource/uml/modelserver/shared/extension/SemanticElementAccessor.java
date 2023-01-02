@@ -74,7 +74,7 @@ public final class SemanticElementAccessor {
 
       var container = element.eContainer();
 
-      while (!(clazz.isAssignableFrom(container.getClass())) && container != null) {
+      while (container != null && !(clazz.isAssignableFrom(container.getClass()))) {
          container = container.eContainer();
       }
 

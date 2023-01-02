@@ -28,7 +28,7 @@ public final class DeletePrimitiveTypeContribution extends BasicCommandContribut
 
    public static final String TYPE = "class:delete_primitive_type";
 
-   public static CCompoundCommand create(final Package parent, final PrimitiveType semanticElement) {
+   public static CCommand create(final Package parent, final PrimitiveType semanticElement) {
       return new ContributionEncoder().type(TYPE).parent(parent).element(semanticElement).ccommand();
    }
 

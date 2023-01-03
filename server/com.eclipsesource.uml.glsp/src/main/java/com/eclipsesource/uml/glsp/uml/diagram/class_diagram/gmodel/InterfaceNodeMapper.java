@@ -49,7 +49,7 @@ public final class InterfaceNodeMapper extends BaseGNodeMapper<Interface, GNode>
          .layout(GConstants.Layout.VBOX);
 
       var typeLabel = new GLabelBuilder(CoreTypes.LABEL_TEXT)
-         .id(suffix.appendTo(NameLabelSuffix.SUFFIX, idGenerator.getOrCreateId(source)))
+         .id(idCountGenerator.getOrCreateId(source))
          .text("«Interface»")
          .build();
       builder.add(typeLabel);

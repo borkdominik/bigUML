@@ -49,7 +49,7 @@ public final class DataTypeNodeMapper extends BaseGNodeMapper<DataType, GNode> {
          .layout(GConstants.Layout.VBOX);
 
       var typeLabel = new GLabelBuilder(CoreTypes.LABEL_TEXT)
-         .id(suffix.appendTo(NameLabelSuffix.SUFFIX, idGenerator.getOrCreateId(source)))
+         .id(idCountGenerator.getOrCreateId(source))
          .text("«DataType»")
          .build();
       builder.add(typeLabel);

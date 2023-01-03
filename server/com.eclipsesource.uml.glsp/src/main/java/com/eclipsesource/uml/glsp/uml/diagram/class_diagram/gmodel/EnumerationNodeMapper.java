@@ -53,7 +53,7 @@ public final class EnumerationNodeMapper extends BaseGNodeMapper<Enumeration, GN
          .layout(GConstants.Layout.VBOX);
 
       var typeLabel = new GLabelBuilder(CoreTypes.LABEL_TEXT)
-         .id(suffix.appendTo(NameLabelSuffix.SUFFIX, idGenerator.getOrCreateId(source)))
+         .id(idCountGenerator.getOrCreateId(source))
          .text("«Enumeration»")
          .build();
       builder.add(typeLabel);

@@ -49,7 +49,7 @@ public final class PrimitiveTypeNodeMapper extends BaseGNodeMapper<PrimitiveType
          .layout(GConstants.Layout.VBOX);
 
       var typeLabel = new GLabelBuilder(CoreTypes.LABEL_TEXT)
-         .id(suffix.appendTo(NameLabelSuffix.SUFFIX, idGenerator.getOrCreateId(source)))
+         .id(idCountGenerator.getOrCreateId(source))
          .text("«PrimitiveType»")
          .build();
       builder.add(typeLabel);

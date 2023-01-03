@@ -64,7 +64,7 @@ public final class ClassNodeMapper extends BaseGNodeMapper<Class, GNode> {
             .layout(GConstants.Layout.VBOX);
 
          var typeLabel = new GLabelBuilder(CoreTypes.LABEL_TEXT)
-            .id(suffix.appendTo(NameLabelSuffix.SUFFIX, idGenerator.getOrCreateId(source)))
+            .id(idCountGenerator.getOrCreateId(source))
             .text("{abstract}")
             .build();
          builder.add(typeLabel);

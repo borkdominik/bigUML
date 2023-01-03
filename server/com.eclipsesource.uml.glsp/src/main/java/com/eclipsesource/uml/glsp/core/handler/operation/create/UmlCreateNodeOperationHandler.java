@@ -34,8 +34,12 @@ public class UmlCreateNodeOperationHandler extends AbstractEMSOperationHandler<C
 
       handler
          .orElseThrow(
-            () -> new GLSPServerException("No create node handler found for element " + operation.getElementTypeId()))
-         .executeCreate(operation);
+            () -> {
+               registry.printContent();
+               return new GLSPServerException(
+                  "No create node handler found for element " + operation.getElementTypeId());
+            })
+         .handle(operation);
    }
 
    @Override

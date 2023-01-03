@@ -16,12 +16,16 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.uml2.uml.Lifeline;
 
-public class LifelineMatcher {
-   public static Optional<Lifeline> ofUsage(final Setting setting, final EObject interest) {
+public final class LifelineMatcher {
+   public static Optional<Lifeline> ofChildUsage(final Setting setting, final EObject interest) {
       var eObject = setting.getEObject();
 
       if (eObject instanceof Lifeline) {
-         return Optional.of((Lifeline) eObject);
+         var element = (Lifeline) eObject;
+
+         if (element.getInteraction().equals(interest)) {
+            return Optional.of(element);
+         }
       }
 
       return Optional.empty();

@@ -14,13 +14,13 @@ import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.uml2.uml.Lifeline;
 
 import com.eclipsesource.uml.glsp.uml.handler.operations.delete.BaseDeleteElementHandler;
-import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.lifeline.RemoveLifelineContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.lifeline.DeleteLifelineContribution;
 
-public class DeleteLifelineHandler extends BaseDeleteElementHandler<Lifeline> {
+public final class DeleteLifelineHandler extends BaseDeleteElementHandler<Lifeline> {
 
    @Override
-   protected CCommand command(final Lifeline element) {
-      return RemoveLifelineContribution.create(element);
+   protected CCommand createCommand(final Lifeline element) {
+      return DeleteLifelineContribution.create(element);
    }
 
 }

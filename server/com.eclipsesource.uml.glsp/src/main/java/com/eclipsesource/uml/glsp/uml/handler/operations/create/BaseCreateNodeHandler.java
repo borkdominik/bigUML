@@ -10,10 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.handler.operations.create;
 
-import java.util.Optional;
-
 import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.types.GLSPServerException;
 
@@ -30,8 +27,8 @@ public abstract class BaseCreateNodeHandler extends BaseCreateHandler<CreateNode
    }
 
    @Override
-   public void create(final CreateNodeOperation operation) {
-      var command = command(operation.getLocation());
+   public void execute(final CreateNodeOperation operation) {
+      var command = createCommand(operation);
       modelServerAccess.exec(command)
          .thenAccept(response -> {
             if (response.body() == null || response.body().isEmpty()) {
@@ -40,5 +37,5 @@ public abstract class BaseCreateNodeHandler extends BaseCreateHandler<CreateNode
          });
    }
 
-   protected abstract CCommand command(Optional<GPoint> location);
+   protected abstract CCommand createCommand(CreateNodeOperation operation);
 }

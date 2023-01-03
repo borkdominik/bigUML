@@ -32,6 +32,6 @@ public class DiagramCreateHandlerRegistry
          });
       });
 
-      // debug();
+      // printContent();
    }
 }

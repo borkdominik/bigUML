@@ -14,6 +14,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.server.emf.EMFIdGenerator;
 
+import com.eclipsesource.uml.glsp.core.features.idgenerator.IdCountContextGenerator;
 import com.eclipsesource.uml.glsp.core.gmodel.GModelMapHandler;
 import com.eclipsesource.uml.glsp.core.gmodel.GModelMapper;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.Suffix;
@@ -38,6 +39,9 @@ public abstract class BaseGModelMapper<Source extends EObject, Target extends GM
 
    @Inject
    protected GModelMapHandler mapHandler;
+
+   @Inject
+   protected IdCountContextGenerator idCountGenerator;
 
    public BaseGModelMapper() {
       this.sourceType = GenericsUtil.getClassParameter(getClass(), BaseGModelMapper.class, 0);

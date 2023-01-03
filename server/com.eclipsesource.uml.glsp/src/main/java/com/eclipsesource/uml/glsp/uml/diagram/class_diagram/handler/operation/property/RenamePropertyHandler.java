@@ -12,14 +12,13 @@ package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.p
 
 import org.eclipse.uml2.uml.Property;
 
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyLabelNameSuffix;
-import com.eclipsesource.uml.glsp.uml.handler.operations.directediting.DefaultRenameNamedElementHandler;
+import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
+import com.eclipsesource.uml.glsp.uml.handler.operations.directediting.RenameNamedElementHandler;
 
-public class RenamePropertyHandler extends DefaultRenameNamedElementHandler<Property> {
+public final class RenamePropertyHandler extends RenameNamedElementHandler<Property> {
 
    public RenamePropertyHandler() {
-      super(ClassTypes.LABEL_PROPERTY_NAME, PropertyLabelNameSuffix.SUFFIX);
+      super(NameLabelSuffix.SUFFIX);
    }
 
 }

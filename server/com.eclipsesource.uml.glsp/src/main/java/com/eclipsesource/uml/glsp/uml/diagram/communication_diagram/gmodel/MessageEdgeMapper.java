@@ -25,7 +25,7 @@ import org.eclipse.uml2.uml.Message;
 import org.eclipse.uml2.uml.MessageOccurrenceSpecification;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
-import com.eclipsesource.uml.glsp.core.gmodel.suffix.LabelSuffix;
+import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGModelMapper;
 
@@ -47,7 +47,7 @@ public class MessageEdgeMapper extends BaseGModelMapper<Message, GEdge> {
          .routerKind(GConstants.RouterKind.MANHATTAN);
 
       var nameLabel = createEdgeNameLabel(message.getName(),
-         suffix.appendTo(LabelSuffix.SUFFIX, idGenerator.getOrCreateId(message)), 0.6d);
+         suffix.appendTo(NameLabelSuffix.SUFFIX, idGenerator.getOrCreateId(message)), 0.6d);
       builder.add(nameLabel);
 
       applyNotation(message, builder);

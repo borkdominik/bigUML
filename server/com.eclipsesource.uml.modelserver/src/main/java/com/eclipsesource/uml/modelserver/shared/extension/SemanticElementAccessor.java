@@ -15,20 +15,19 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Model;
 
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.utils.UmlSemanticUtil;
 
 public final class SemanticElementAccessor {
    private final Model model;
 
-   public SemanticElementAccessor(final URI modelUri, final EditingDomain domain) {
-      this.model = UmlSemanticUtil.getModel(modelUri, domain);
+   public SemanticElementAccessor(final ModelContext context) {
+      this(UmlSemanticUtil.getModel(context));
    }
 
    public SemanticElementAccessor(final Model model) {
@@ -41,16 +40,20 @@ public final class SemanticElementAccessor {
       return EcoreUtil.getURI(element).fragment();
    }
 
+   public static String getUnsafeId(final Object element) {
+      return EcoreUtil.getURI((EObject) element).fragment();
+   }
+
    public Optional<EObject> getElement(final String semanticElementId) {
       return Optional.ofNullable(model.eResource().getEObject(semanticElementId));
    }
 
-   public <C extends EObject> Optional<C> getElement(final String semanticElementId,
+   public <C> Optional<C> getElement(final String semanticElementId,
       final Class<C> clazz) {
       return getElement(semanticElementId).map(element -> clazz.cast(element));
    }
 
-   public <T extends EObject> List<T> getElements(
+   public <T> List<T> getElements(
       final String[] semanticElementIds,
       final Class<T> type) {
 
@@ -71,7 +74,7 @@ public final class SemanticElementAccessor {
 
       var container = element.eContainer();
 
-      while (!(clazz.isAssignableFrom(container.getClass())) && container != null) {
+      while (container != null && !(clazz.isAssignableFrom(container.getClass()))) {
          container = container.eContainer();
       }
 

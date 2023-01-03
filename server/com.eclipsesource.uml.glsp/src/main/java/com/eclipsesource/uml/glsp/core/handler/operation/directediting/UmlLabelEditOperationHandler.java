@@ -58,9 +58,14 @@ public class UmlLabelEditOperationHandler
          .get(RepresentationKey.of(representation, TripleKey.of(semanticElement.getClass(), labelType, labelSuffix)));
 
       editLabelHandler
-         .orElseThrow(() -> new GLSPServerException(
-            "No handler found for label type " + labelType + " with suffix " + labelSuffix + " for labelId " + labelId))
-         .executeLabelEdit(operation);
+         .orElseThrow(() -> {
+            registry.printContent();
+            return new GLSPServerException(
+               "No handler found for element class " + semanticElement.getClass().getName() + " with label type "
+                  + labelType + " with suffix " + labelSuffix + " for labelId "
+                  + labelId);
+         })
+         .handle(operation);
    }
 
    @Override

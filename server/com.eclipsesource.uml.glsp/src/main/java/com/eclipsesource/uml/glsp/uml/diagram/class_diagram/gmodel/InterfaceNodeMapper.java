@@ -10,53 +10,80 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel;
 
+import java.util.stream.Collectors;
+
 import org.eclipse.glsp.graph.GCompartment;
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.builder.impl.GCompartmentBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
+import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.builder.impl.GNodeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.Interface;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
-import com.eclipsesource.uml.glsp.core.gmodel.suffix.HeaderLabelSuffix;
-import com.eclipsesource.uml.glsp.core.gmodel.suffix.HeaderSuffix;
+import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.HeaderTypeSuffix;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGNodeMapper;
 
-public class InterfaceNodeMapper extends BaseGNodeMapper<Interface, GNode> {
+public final class InterfaceNodeMapper extends BaseGNodeMapper<Interface, GNode> {
 
    @Override
-   public GNode map(final Interface umlInterface) {
+   public GNode map(final Interface source) {
       var builder = new GNodeBuilder(ClassTypes.INTERFACE)
-         .id(idGenerator.getOrCreateId(umlInterface))
+         .id(idGenerator.getOrCreateId(source))
          .layout(GConstants.Layout.VBOX)
          .addCssClass(CoreCSS.NODE)
-         .add(buildHeader(umlInterface));
+         .add(buildHeader(source))
+         .add(buildCompartment(source));
 
-      applyShapeNotation(umlInterface, builder);
+      applyShapeNotation(source, builder);
 
       return builder.build();
    }
 
-   protected GCompartment buildHeader(final Interface umlInterface) {
+   protected GCompartment buildHeader(final Interface source) {
       var builder = new GCompartmentBuilder(CoreTypes.COMPARTMENT_HEADER)
-         .id(suffix.appendTo(HeaderSuffix.SUFFIX, idGenerator.getOrCreateId(umlInterface)))
+         .id(idCountGenerator.getOrCreateId(source))
          .layout(GConstants.Layout.VBOX);
 
       var typeLabel = new GLabelBuilder(CoreTypes.LABEL_TEXT)
-         .id(suffix.appendTo(HeaderTypeSuffix.SUFFIX, idGenerator.getOrCreateId(umlInterface)))
+         .id(idCountGenerator.getOrCreateId(source))
          .text("«Interface»")
          .build();
       builder.add(typeLabel);
 
       var nameLabel = new GLabelBuilder(CoreTypes.LABEL_NAME)
-         .id(suffix.appendTo(HeaderLabelSuffix.SUFFIX, idGenerator.getOrCreateId(umlInterface)))
-         .text(umlInterface.getName())
+         .id(suffix.appendTo(NameLabelSuffix.SUFFIX, idGenerator.getOrCreateId(source)))
+         .text(source.getName())
          .build();
       builder.add(nameLabel);
+
+      return builder.build();
+   }
+
+   protected GCompartment buildCompartment(final Interface source) {
+
+      var builder = new GCompartmentBuilder(CoreTypes.COMPARTMENT)
+         .id(idCountGenerator.getOrCreateId(source))
+         .layout(GConstants.Layout.VBOX);
+
+      var layoutOptions = new GLayoutOptions()
+         .hAlign(GConstants.HAlign.LEFT)
+         .resizeContainer(true);
+      builder.layoutOptions(layoutOptions);
+
+      var propertyElements = source.getOwnedAttributes().stream()
+         .filter(p -> p.getAssociation() == null)
+         .map(mapHandler::handle)
+         .collect(Collectors.toList());
+      builder.addAll(propertyElements);
+
+      var operationElements = source.getOwnedOperations().stream()
+         .map(mapHandler::handle)
+         .collect(Collectors.toList());
+      builder.addAll(operationElements);
 
       return builder.build();
    }

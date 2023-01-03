@@ -10,26 +10,27 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.uclass;
 
-import java.util.Optional;
-
 import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.util.GraphUtil;
+import org.eclipse.glsp.server.operations.CreateNodeOperation;
+import org.eclipse.uml2.uml.Package;
 
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
-import com.eclipsesource.uml.glsp.uml.handler.operations.create.BaseCreateNodeHandler;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uclass.AddClassContribution;
+import com.eclipsesource.uml.glsp.uml.handler.operations.create.BaseCreateChildNodeHandler;
+import com.eclipsesource.uml.glsp.uml.handler.operations.create.CreateLocationAwareNodeHandler;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uclass.CreateClassContribution;
 
-public class CreateClassHandler
-   extends BaseCreateNodeHandler {
+public final class CreateClassHandler
+   extends BaseCreateChildNodeHandler<Package> implements CreateLocationAwareNodeHandler {
 
    public CreateClassHandler() {
       super(ClassTypes.CLASS);
    }
 
    @Override
-   protected CCommand command(final Optional<GPoint> location) {
-      return AddClassContribution
-         .create(location.orElse(GraphUtil.point(0, 0)), false);
+   protected CCommand createCommand(final CreateNodeOperation operation, final Package parent) {
+      return CreateClassContribution.create(
+         parent,
+         relativeLocationOf(modelState, operation).orElse(GraphUtil.point(0, 0)), false);
    }
 }

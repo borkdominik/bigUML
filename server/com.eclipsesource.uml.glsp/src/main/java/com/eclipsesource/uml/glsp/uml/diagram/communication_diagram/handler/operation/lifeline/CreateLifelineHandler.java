@@ -10,29 +10,28 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.handler.operation.lifeline;
 
-import java.util.Optional;
-
 import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.util.GraphUtil;
+import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.uml2.uml.Interaction;
 
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
 import com.eclipsesource.uml.glsp.uml.handler.operations.create.BaseCreateChildNodeHandler;
-import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.lifeline.AddLifelineContribution;
+import com.eclipsesource.uml.glsp.uml.handler.operations.create.CreateLocationAwareNodeHandler;
+import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.lifeline.CreateLifelineContribution;
 
-public class CreateLifelineHandler
-   extends BaseCreateChildNodeHandler<Interaction> {
+public final class CreateLifelineHandler
+   extends BaseCreateChildNodeHandler<Interaction> implements CreateLocationAwareNodeHandler {
 
    public CreateLifelineHandler() {
       super(CommunicationTypes.LIFELINE);
    }
 
    @Override
-   protected CCommand command(final Interaction container, final Optional<GPoint> location) {
-      return AddLifelineContribution.create(
+   protected CCommand createCommand(final CreateNodeOperation operation, final Interaction container) {
+      return CreateLifelineContribution.create(
          container,
-         location.orElse(GraphUtil.point(0, 0)));
+         relativeLocationOf(modelState, operation).orElse(GraphUtil.point(0, 0)));
    }
 
 }

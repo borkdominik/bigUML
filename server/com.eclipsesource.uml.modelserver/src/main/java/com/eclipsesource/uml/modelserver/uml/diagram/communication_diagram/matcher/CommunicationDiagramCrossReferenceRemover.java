@@ -10,41 +10,45 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.matcher;
 
-import java.util.List;
+import java.util.Set;
 
 import org.eclipse.emf.common.command.Command;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Model;
 
-import com.eclipsesource.uml.modelserver.shared.extension.CrossReferenceMatcher;
-import com.eclipsesource.uml.modelserver.shared.utils.UmlSemanticUtil;
-import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.lifeline.RemoveLifelineCompoundCommand;
-import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.message.RemoveMessageCompoundCommand;
+import com.eclipsesource.uml.modelserver.shared.matcher.CrossReferenceMatcher;
+import com.eclipsesource.uml.modelserver.shared.matcher.MatcherContext;
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
+import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.lifeline.DeleteLifelineCompoundCommand;
+import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.message.DeleteMessageCompoundCommand;
 
-public class CommunicationDiagramCrossReferenceRemover {
-   protected final Model model;
-   protected final CrossReferenceMatcher<Command> matcher;
+public final class CommunicationDiagramCrossReferenceRemover {
+   public static String MATCHER_CONTEXT_KEY = "matcher_context";
 
-   public CommunicationDiagramCrossReferenceRemover(final EditingDomain domain, final URI modelUri) {
+   private final ModelContext context;
+   private final CrossReferenceMatcher<Command> matcher;
+
+   public CommunicationDiagramCrossReferenceRemover(final ModelContext context) {
       super();
 
-      model = UmlSemanticUtil.getModel(modelUri, domain);
-      matcher = new CrossReferenceMatcher.Builder<Command>()
+      this.context = context;
+      this.matcher = new CrossReferenceMatcher.Builder<Command>()
          .match((setting, interest) -> LifelineMatcher
-            .ofUsage(setting, interest)
-            .map(lifeline -> new RemoveLifelineCompoundCommand(domain, modelUri, lifeline)))
+            .ofChildUsage(setting, interest)
+            .map(lifeline -> new DeleteLifelineCompoundCommand(context, lifeline)))
          .match((setting, interest) -> MessageMatcher
-            .ofUsage(setting, interest)
-            .map(message -> new RemoveMessageCompoundCommand(domain, modelUri, message)))
+            .ofChildUsage(setting, interest)
+            .map(message -> new DeleteMessageCompoundCommand(context, message)))
          .match((setting, interest) -> MessageMatcher
             .ofInverseMessageUsageSpecificationUsage(setting, interest)
-            .map(specification -> new RemoveMessageCompoundCommand(domain, modelUri, specification.getMessage())))
+            .map(message -> new DeleteMessageCompoundCommand(context, message)))
          .build();
+
+      context.data.putIfAbsent(MATCHER_CONTEXT_KEY, new MatcherContext());
    }
 
-   public List<Command> removeCommandsFor(final EObject elementToRemove) {
-      return matcher.find(elementToRemove, model.eResource());
+   public Set<Command> deleteCommandsFor(final EObject interest) {
+      var matcherContext = context.get(MATCHER_CONTEXT_KEY, MatcherContext.class).get();
+
+      return matcher.find(matcherContext, interest, context.model.eResource());
    }
 }

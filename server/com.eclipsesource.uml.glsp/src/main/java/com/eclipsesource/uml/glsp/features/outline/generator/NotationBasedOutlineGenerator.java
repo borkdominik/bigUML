@@ -15,10 +15,9 @@ import java.util.stream.Collectors;
 
 import org.eclipse.uml2.uml.Element;
 
-import com.eclipsesource.uml.glsp.features.outline.generator.StandardOutlineGenerator;
 import com.eclipsesource.uml.glsp.features.outline.model.OutlineTreeNode;
 
-public class NotationBasedOutlineGenerator extends StandardOutlineGenerator {
+public class NotationBasedOutlineGenerator extends BaseOutlineGenerator implements DefaultDiagramOutlineGenerator {
 
    @Override
    protected List<OutlineTreeNode> childrenOf(final Element element) {

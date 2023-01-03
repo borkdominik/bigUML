@@ -11,17 +11,15 @@
 package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.property;
 
 import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Property;
 
 import com.eclipsesource.uml.glsp.uml.handler.operations.delete.BaseDeleteElementHandler;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.RemovePropertyContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.DeletePropertyContribution;
 
-public class DeletePropertyHandler extends BaseDeleteElementHandler<Property> {
+public final class DeletePropertyHandler extends BaseDeleteElementHandler<Property> {
 
    @Override
-   protected CCommand command(final Property element) {
-      var container = (Class) element.eContainer();
-      return RemovePropertyContribution.create(container, element);
+   protected CCommand createCommand(final Property element) {
+      return DeletePropertyContribution.create(element);
    }
 }

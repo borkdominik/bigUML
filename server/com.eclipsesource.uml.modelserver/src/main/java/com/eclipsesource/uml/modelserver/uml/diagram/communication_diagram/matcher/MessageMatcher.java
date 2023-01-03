@@ -18,24 +18,29 @@ import org.eclipse.emf.ecore.util.EObjectWithInverseEList;
 import org.eclipse.uml2.uml.Message;
 import org.eclipse.uml2.uml.MessageOccurrenceSpecification;
 
-public class MessageMatcher {
+public final class MessageMatcher {
 
-   public static Optional<Message> ofUsage(final Setting setting, final EObject interest) {
+   public static Optional<Message> ofChildUsage(final Setting setting, final EObject interest) {
       var eObject = setting.getEObject();
 
       if (eObject instanceof Message) {
-         return Optional.of((Message) eObject);
+         var element = (Message) eObject;
+
+         if (element.getInteraction().equals(interest)) {
+            return Optional.of(element);
+         }
       }
 
       return Optional.empty();
    }
 
-   public static Optional<MessageOccurrenceSpecification> ofInverseMessageUsageSpecificationUsage(
+   public static Optional<Message> ofInverseMessageUsageSpecificationUsage(
       final Setting setting, final EObject interest) {
       var eObject = setting.getEObject();
 
       if (setting instanceof EObjectWithInverseEList && eObject instanceof MessageOccurrenceSpecification) {
-         return Optional.of((MessageOccurrenceSpecification) eObject);
+         var element = (MessageOccurrenceSpecification) eObject;
+         return Optional.of(element.getMessage());
       }
 
       return Optional.empty();

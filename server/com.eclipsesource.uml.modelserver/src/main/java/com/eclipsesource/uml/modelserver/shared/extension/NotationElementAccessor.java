@@ -12,22 +12,17 @@ package com.eclipsesource.uml.modelserver.shared.extension;
 
 import java.util.Optional;
 
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.glsp.server.emf.model.notation.NotationElement;
 
-import com.eclipsesource.uml.modelserver.core.resource.UmlNotationResource;
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
+import com.eclipsesource.uml.modelserver.shared.utils.UmlNotationUtil;
 import com.eclipsesource.uml.modelserver.unotation.UmlDiagram;
 
 public final class NotationElementAccessor {
    private final UmlDiagram diagram;
 
-   public NotationElementAccessor(final URI modelUri, final EditingDomain domain) {
-      var notationResource = domain.getResourceSet()
-         .getResource(modelUri.trimFileExtension().appendFileExtension(UmlNotationResource.FILE_EXTENSION), false);
-      var notationRoot = notationResource.getContents().get(0);
-
-      this.diagram = (UmlDiagram) notationRoot;
+   public NotationElementAccessor(final ModelContext context) {
+      this(UmlNotationUtil.getDiagram(context));
    }
 
    public NotationElementAccessor(final UmlDiagram diagram) {

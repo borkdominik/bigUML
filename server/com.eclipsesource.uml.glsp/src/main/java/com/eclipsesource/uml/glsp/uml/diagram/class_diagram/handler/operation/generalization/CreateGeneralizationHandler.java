@@ -13,13 +13,14 @@ package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.g
 import java.util.List;
 
 import org.eclipse.emfcloud.modelserver.command.CCommand;
+import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 import org.eclipse.uml2.uml.Classifier;
 
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
 import com.eclipsesource.uml.glsp.uml.handler.operations.create.BaseCreateEdgeBetweenNodesHandler;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.generalization.AddGeneralizationContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.generalization.CreateGeneralizationContribution;
 
-public class CreateGeneralizationHandler
+public final class CreateGeneralizationHandler
    extends BaseCreateEdgeBetweenNodesHandler<Classifier, Classifier> {
 
    public CreateGeneralizationHandler() {
@@ -37,8 +38,9 @@ public class CreateGeneralizationHandler
    }
 
    @Override
-   protected CCommand command(final Classifier source, final Classifier target) {
-      return AddGeneralizationContribution.create(source, target);
+   protected CCommand createCommand(final CreateEdgeOperation operation, final Classifier source,
+      final Classifier target) {
+      return CreateGeneralizationContribution.create(source, target);
    }
 
 }

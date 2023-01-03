@@ -24,7 +24,7 @@ import com.eclipsesource.uml.glsp.core.diagram.DiagramConfiguration;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
 import com.google.common.collect.Lists;
 
-public class ClassDiagramConfiguration implements DiagramConfiguration {
+public final class ClassDiagramConfiguration implements DiagramConfiguration {
 
    @Override
    public List<EdgeTypeHint> getEdgeTypeHints() {
@@ -48,7 +48,10 @@ public class ClassDiagramConfiguration implements DiagramConfiguration {
       return List.of(ClassTypes.CLASS,
          ClassTypes.ENUMERATION,
          ClassTypes.INTERFACE,
-         ClassTypes.ABSTRACT_CLASS);
+         ClassTypes.ABSTRACT_CLASS,
+         ClassTypes.DATA_TYPE,
+         ClassTypes.PRIMITIVE_TYPE,
+         ClassTypes.PACKAGE);
    }
 
    @Override
@@ -56,14 +59,31 @@ public class ClassDiagramConfiguration implements DiagramConfiguration {
       List<ShapeTypeHint> hints = new ArrayList<>();
 
       hints.add(new ShapeTypeHint(ClassTypes.CLASS, true, true, false, false,
-         List.of(ClassTypes.PROPERTY)));
+         List.of(ClassTypes.PROPERTY, ClassTypes.OPERATION)));
       hints.add(new ShapeTypeHint(ClassTypes.ABSTRACT_CLASS, true, true, false, false,
-         List.of(ClassTypes.PROPERTY)));
+         List.of(ClassTypes.PROPERTY, ClassTypes.OPERATION)));
       hints.add(new ShapeTypeHint(ClassTypes.INTERFACE, true, true, false, false,
-         List.of(ClassTypes.PROPERTY)));
+         List.of(ClassTypes.PROPERTY, ClassTypes.OPERATION)));
       hints.add(new ShapeTypeHint(ClassTypes.ENUMERATION, true, true, false, false,
-         List.of()));
+         List.of(ClassTypes.ENUMERATION_LITERAL)));
+      hints.add(new ShapeTypeHint(ClassTypes.DATA_TYPE, true, true, false, false,
+         List.of(ClassTypes.PROPERTY, ClassTypes.OPERATION)));
+      hints.add(new ShapeTypeHint(ClassTypes.PRIMITIVE_TYPE, true, true, false, false,
+         List.of(ClassTypes.PROPERTY, ClassTypes.OPERATION)));
+      hints.add(new ShapeTypeHint(ClassTypes.PACKAGE, true, true, true, false,
+         List.of(ClassTypes.CLASS,
+            ClassTypes.ENUMERATION,
+            ClassTypes.INTERFACE,
+            ClassTypes.ABSTRACT_CLASS,
+            ClassTypes.DATA_TYPE,
+            ClassTypes.PRIMITIVE_TYPE,
+            ClassTypes.PACKAGE)));
+
       hints.add(new ShapeTypeHint(ClassTypes.PROPERTY, false, true, false, true,
+         List.of()));
+      hints.add(new ShapeTypeHint(ClassTypes.ENUMERATION_LITERAL, false, true, false, true,
+         List.of()));
+      hints.add(new ShapeTypeHint(ClassTypes.OPERATION, false, true, false, true,
          List.of()));
 
       return hints;
@@ -77,21 +97,29 @@ public class ClassDiagramConfiguration implements DiagramConfiguration {
       mappings.put(ClassTypes.CLASS, GraphPackage.Literals.GNODE);
       mappings.put(ClassTypes.ICON_ENUMERATION, GraphPackage.Literals.GCOMPARTMENT);
       mappings.put(ClassTypes.ENUMERATION, GraphPackage.Literals.GNODE);
+      mappings.put(ClassTypes.ICON_ENUMERATION_LITERAL, GraphPackage.Literals.GCOMPARTMENT);
+      mappings.put(ClassTypes.ENUMERATION_LITERAL, GraphPackage.Literals.GCOMPARTMENT);
       mappings.put(ClassTypes.INTERFACE, GraphPackage.Literals.GNODE);
-      mappings.put(ClassTypes.PROPERTY, GraphPackage.Literals.GLABEL);
       mappings.put(ClassTypes.ASSOCIATION, GraphPackage.Literals.GEDGE);
       mappings.put(ClassTypes.AGGREGATION, GraphPackage.Literals.GEDGE);
       mappings.put(ClassTypes.COMPOSITION, GraphPackage.Literals.GEDGE);
       mappings.put(ClassTypes.CLASS_GENERALIZATION, GraphPackage.Literals.GEDGE);
+      mappings.put(ClassTypes.ICON_OPERATION, GraphPackage.Literals.GCOMPARTMENT);
+      mappings.put(ClassTypes.OPERATION, GraphPackage.Literals.GCOMPARTMENT);
+      mappings.put(ClassTypes.ICON_DATA_TYPE, GraphPackage.Literals.GCOMPARTMENT);
+      mappings.put(ClassTypes.DATA_TYPE, GraphPackage.Literals.GNODE);
+      mappings.put(ClassTypes.ICON_PRIMITIVE_TYPE, GraphPackage.Literals.GCOMPARTMENT);
+      mappings.put(ClassTypes.PRIMITIVE_TYPE, GraphPackage.Literals.GNODE);
+      mappings.put(ClassTypes.ICON_PACKAGE, GraphPackage.Literals.GCOMPARTMENT);
+      mappings.put(ClassTypes.PACKAGE, GraphPackage.Literals.GNODE);
 
       // SHARED WITH DEPLOYMENT AND USECASE
       mappings.put(ClassTypes.LABEL_EDGE_MULTIPLICITY, GraphPackage.Literals.GLABEL);
 
       // SHARED WITH OBJECT DIAGRAM
       mappings.put(ClassTypes.ATTRIBUTE, GraphPackage.Literals.GLABEL);
-      mappings.put(ClassTypes.PROPERTY, GraphPackage.Literals.GCOMPARTMENT);
       mappings.put(ClassTypes.ICON_PROPERTY, GraphPackage.Literals.GCOMPARTMENT);
-      mappings.put(ClassTypes.LABEL_PROPERTY_NAME, GraphPackage.Literals.GLABEL);
+      mappings.put(ClassTypes.PROPERTY, GraphPackage.Literals.GCOMPARTMENT);
       mappings.put(ClassTypes.LABEL_PROPERTY_TYPE, GraphPackage.Literals.GLABEL);
       mappings.put(ClassTypes.LABEL_PROPERTY_MULTIPLICITY, GraphPackage.Literals.GLABEL);
 

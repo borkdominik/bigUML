@@ -14,12 +14,12 @@ import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.uml2.uml.Enumeration;
 
 import com.eclipsesource.uml.glsp.uml.handler.operations.delete.BaseDeleteElementHandler;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.enumeration.RemoveEnumerationContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.enumeration.DeleteEnumerationContribution;
 
-public class DeleteEnumerationHandler extends BaseDeleteElementHandler<Enumeration> {
+public final class DeleteEnumerationHandler extends BaseDeleteElementHandler<Enumeration> {
 
    @Override
-   protected CCommand command(final Enumeration element) {
-      return RemoveEnumerationContribution.create(element);
+   protected CCommand createCommand(final Enumeration element) {
+      return DeleteEnumerationContribution.create(element);
    }
 }

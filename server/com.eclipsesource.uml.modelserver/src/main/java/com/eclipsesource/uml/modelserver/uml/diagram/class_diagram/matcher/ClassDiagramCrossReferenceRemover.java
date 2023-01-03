@@ -10,42 +10,94 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.matcher;
 
-import java.util.List;
+import java.util.Set;
 
 import org.eclipse.emf.common.command.Command;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.uml2.uml.Model;
 
-import com.eclipsesource.uml.modelserver.shared.extension.CrossReferenceMatcher;
-import com.eclipsesource.uml.modelserver.shared.utils.UmlSemanticUtil;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association.RemoveAssociationCompoundCommand;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.generalization.RemoveGeneralizationCompoundCommand;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.SetPropertyTypeSemanticCommand;
+import com.eclipsesource.uml.modelserver.shared.matcher.CrossReferenceMatcher;
+import com.eclipsesource.uml.modelserver.shared.matcher.MatcherContext;
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association.DeleteAssociationCompoundCommand;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.data_type.DeleteDataTypeCompoundCommand;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.enumeration.DeleteEnumerationCompoundCommand;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.enumeration_literal.DeleteEnumerationLiteralSemanticCommand;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.generalization.DeleteGeneralizationCompoundCommand;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.operation.DeleteOperationSemanticCommand;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.primitive_type.DeletePrimitiveTypeCompoundCommand;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.DeletePropertySemanticCommand;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.UpdatePropertyTypeSemanticCommand;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uclass.DeleteClassCompoundCommand;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uinterface.DeleteInterfaceCompoundCommand;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.upackage.DeletePackageCompoundCommand;
 
-public class ClassDiagramCrossReferenceRemover {
-   protected final Model model;
-   protected final CrossReferenceMatcher<Command> matcher;
+public final class ClassDiagramCrossReferenceRemover {
+   public static String MATCHER_CONTEXT_KEY = "matcher_context";
 
-   public ClassDiagramCrossReferenceRemover(final EditingDomain domain, final URI modelUri) {
+   private final ModelContext context;
+   private final CrossReferenceMatcher<Command> matcher;
+
+   public ClassDiagramCrossReferenceRemover(final ModelContext context) {
       super();
 
-      model = UmlSemanticUtil.getModel(modelUri, domain);
-      matcher = new CrossReferenceMatcher.Builder<Command>()
-         .match((setting, interest) -> PropertyMatcher
-            .ofClassUsage(setting, interest)
-            .map(property -> new SetPropertyTypeSemanticCommand(domain, modelUri, property, null)))
-         .match((setting, interest) -> PropertyMatcher
-            .ofAssociationUsage(setting, interest)
-            .map(property -> new RemoveAssociationCompoundCommand(domain, modelUri, property.getAssociation())))
+      this.context = context;
+      this.matcher = new CrossReferenceMatcher.Builder<Command>()
+         // Association
+         .match((setting, interest) -> AssociationMatcher
+            .ofUsage(setting, interest)
+            .map(association -> new DeleteAssociationCompoundCommand(context, association)))
+         // Class
+         .match((setting, interest) -> ClassMatcher
+            .ofChildUsage(setting, interest)
+            .map(uclass -> new DeleteClassCompoundCommand(context, uclass)))
+         // Data Type
+         .match((setting, interest) -> DataTypeMatcher
+            .ofChildUsage(setting, interest)
+            .map(dataType -> new DeleteDataTypeCompoundCommand(context, dataType)))
+         // Enumeration Literal
+         .match((setting, interest) -> EnumerationLiteralMatcher
+            .ofUsage(setting, interest)
+            .map(literal -> new DeleteEnumerationLiteralSemanticCommand(context, literal)))
+         // Enumeration
+         .match((setting, interest) -> EnumerationMatcher
+            .ofChildUsage(setting, interest)
+            .map(enumeration -> new DeleteEnumerationCompoundCommand(context, enumeration)))
+         // Generalization
          .match((setting, interest) -> GeneralizationMatcher
             .ofUsage(setting, interest)
-            .map(generalization -> new RemoveGeneralizationCompoundCommand(domain, modelUri, generalization)))
+            .map(generalization -> new DeleteGeneralizationCompoundCommand(context, generalization)))
+         // Interface
+         .match((setting, interest) -> InterfaceMatcher
+            .ofChildUsage(setting, interest)
+            .map(uinterface -> new DeleteInterfaceCompoundCommand(context, uinterface)))
+         // Operation
+         .match((setting, interest) -> OperationMatcher
+            .ofUsage(setting, interest)
+            .map(operation -> new DeleteOperationSemanticCommand(context, operation)))
+         // Package
+         .match((setting, interest) -> PackageMatcher
+            .ofChildUsage(setting, interest)
+            .map(upackage -> new DeletePackageCompoundCommand(context, upackage)))
+         // Primitive Type
+         .match((setting, interest) -> PrimitiveTypeMatcher
+            .ofChildUsage(setting, interest)
+            .map(primitiveType -> new DeletePrimitiveTypeCompoundCommand(context, primitiveType)))
+         // Property
+         .match((setting, interest) -> PropertyMatcher
+            .ofOwnedAttributeTypeUsage(setting, interest)
+            .map(property -> new UpdatePropertyTypeSemanticCommand(context, property, null)))
+         .match((setting, interest) -> PropertyMatcher
+            .ofOwnedAttributeAssociationUsage(setting, interest)
+            .map(
+               property -> new DeletePropertySemanticCommand(context, property)))
          .build();
+
+      context.data.putIfAbsent(MATCHER_CONTEXT_KEY, new MatcherContext());
    }
 
-   public List<Command> removeCommandsFor(final EObject elementToRemove) {
-      return matcher.find(elementToRemove, model.eResource());
+   public Set<Command> deleteCommandsFor(final EObject interest) {
+      var matcherContext = context.get(MATCHER_CONTEXT_KEY, MatcherContext.class).get();
+
+      return matcher.find(matcherContext, interest, context.model.eResource());
    }
 }

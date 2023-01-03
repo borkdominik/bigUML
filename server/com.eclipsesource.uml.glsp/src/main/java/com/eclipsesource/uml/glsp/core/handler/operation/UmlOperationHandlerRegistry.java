@@ -48,7 +48,7 @@ public class UmlOperationHandlerRegistry implements OperationHandlerRegistry {
             .ifPresent(operation -> register(operation, handler));
       });
 
-      // debug();
+      // printContent();
    }
 
    protected void debug() {

@@ -23,7 +23,7 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGEdgeMapper;
 
-public class GeneralizationEdgeMapper extends BaseGEdgeMapper<Generalization, GEdge> {
+public final class GeneralizationEdgeMapper extends BaseGEdgeMapper<Generalization, GEdge> {
 
    @Override
    public GEdge map(final Generalization generalization) {

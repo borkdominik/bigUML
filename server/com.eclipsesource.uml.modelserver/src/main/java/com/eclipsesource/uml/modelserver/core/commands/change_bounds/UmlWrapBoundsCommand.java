@@ -11,11 +11,7 @@
 package com.eclipsesource.uml.modelserver.core.commands.change_bounds;
 
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.glsp.graph.GDimension;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.util.GraphUtil;
@@ -24,78 +20,109 @@ import org.eclipse.glsp.server.types.ElementAndBounds;
 import org.eclipse.uml2.uml.Element;
 
 import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
-import com.eclipsesource.uml.modelserver.shared.notation.UmlNotationElementCommand;
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
+import com.eclipsesource.uml.modelserver.shared.notation.BaseNotationElementCommand;
 
-public class UmlWrapBoundsCommand extends UmlNotationElementCommand {
+public class UmlWrapBoundsCommand extends BaseNotationElementCommand {
    protected final List<ElementAndBounds> bounds;
-   protected final Map<String, GPoint> elementPositions;
 
-   public UmlWrapBoundsCommand(final EditingDomain domain, final URI modelUri,
+   public UmlWrapBoundsCommand(final ModelContext context,
       final List<ElementAndBounds> bounds) {
-      super(domain, modelUri);
+      super(context);
       this.bounds = bounds;
-      this.elementPositions = bounds.stream()
-         .collect(Collectors.toMap(b -> b.getElementId(), b -> GraphUtil.copy(b.getNewPosition())));
    }
 
    @Override
    protected void doExecute() {
-
       bounds.forEach(bound -> {
-         var element = semanticElementAccessor.getElement(bound.getElementId(), Element.class);
-         element.ifPresent(e -> {
-            var parent = semanticElementAccessor.getParent(e, Element.class);
-
-            parent.ifPresent(p -> {
-               var position = this.elementPositions.get(bound.getElementId());
-               wrapPositionBound(p, position);
-               wrapSizeBound(p, position, bound.getNewSize());
-               recalculateElementPositions(bound);
-            });
-         });
-
+         var element = semanticElementAccessor.getElement(bound.getElementId(), Element.class).get();
+         wrapParent(element, bound);
       });
    }
 
-   protected void recalculateElementPositions(final ElementAndBounds bound) {
-      this.elementPositions.forEach((elementId, position) -> {
-         if (!elementId.equals(bound.getElementId())) {
-            position.setX(position.getX() - Math.min(0, bound.getNewPosition().getX()));
-            position.setY(position.getY() - Math.min(0, bound.getNewPosition().getY()));
-         }
+   protected void wrapParent(final Element element, final ElementAndBounds bound) {
+      var parent = semanticElementAccessor.getParent(element, Element.class);
+
+      parent.ifPresent(p -> {
+         var position = notationElementAccessor.getElement(bound.getElementId(), Shape.class).get().getPosition();
+         wrapPosition(p, position);
+         wrapSize(p, position, bound.getNewSize());
+
+         var parentId = SemanticElementAccessor.getId(p);
+         var parentShape = notationElementAccessor.getElement(parentId, Shape.class).get();
+         var parentBounds = new ElementAndBounds();
+         parentBounds.setElementId(parentId);
+         parentBounds.setNewPosition(parentShape.getPosition());
+         parentBounds.setNewSize(parentShape.getSize());
+         wrapParent(p, parentBounds);
       });
    }
 
-   protected void wrapPositionBound(final Element parent, final GPoint position) {
-      var containerShape = notationElementAccessor.getElement(SemanticElementAccessor.getId(parent),
-         Shape.class).get();
-      var childElements = parent.getOwnedElements();
-
+   /**
+    * Wraps the parent based on the position by using the position of the element that caused the change
+    * This method also repositions the children of the parent
+    *
+    * @param parent   The parent which position should be changed
+    * @param position Position of the element that caused the wrapping
+    */
+   protected void wrapPosition(final Element parent, final GPoint position) {
       if (position.getX() < 0 || position.getY() < 0) {
-         shiftContainer(containerShape, position);
-         childElements.forEach(element -> {
-            alignChild(element, position);
-         });
+         notationElementAccessor
+            .getElement(SemanticElementAccessor.getId(parent), Shape.class)
+            .ifPresent(shape -> {
+               shiftContainer(shape, position);
+            });
+
+         parent
+            .getOwnedElements()
+            .stream()
+            .filter(e -> {
+               var notation = notationElementAccessor.getElement(SemanticElementAccessor.getId(e)).get();
+               return notation instanceof Shape;
+            })
+            .map(e -> {
+               return notationElementAccessor.getElement(SemanticElementAccessor.getId(e), Shape.class).get();
+            })
+            .forEach(shape -> {
+               alignChild(shape, position);
+            });
       }
    }
 
-   protected void wrapSizeBound(final Element parent, final GPoint position, final GDimension size) {
+   /**
+    * The parent calls this method with its own shape to include an out of bound child element
+    *
+    * The calculation only changes the dimension if a child is outside of the dimensions of the parent
+    *
+    * @param parent   The parent which size should be changed
+    * @param position Position of the element that caused the wrapping
+    * @param size     Size of the element that caused the wrapping
+    */
+   protected void wrapSize(final Element parent, final GPoint position, final GDimension size) {
       var containerShape = notationElementAccessor.getElement(SemanticElementAccessor.getId(parent),
          Shape.class).get();
-      var containerSize = containerShape.getSize();
+      var containerSize = GraphUtil.copy(containerShape.getSize());
 
       var width = Math.max(containerSize.getWidth(), position.getX() + size.getWidth());
       var height = Math.max(containerSize.getHeight(), position.getY() + size.getHeight());
 
       containerSize.setWidth(width);
       containerSize.setHeight(height);
-
       containerShape.setSize(containerSize);
    }
 
-   protected void shiftContainer(final Shape containerShape, final GPoint position) {
-      var containerPosition = containerShape.getPosition();
-      var containerSize = containerShape.getSize();
+   /**
+    * The parent calls this method with its own shape to shift itself to the new coordinates
+    * while respecting the current dimension
+    *
+    * The calculation only changes the positions or dimension if a child has a negative x or y value
+    *
+    * @param shape    Shape of the parent
+    * @param position Position of the element that caused the wrapping
+    */
+   protected void shiftContainer(final Shape shape, final GPoint position) {
+      var containerPosition = GraphUtil.copy(shape.getPosition());
+      var containerSize = GraphUtil.copy(shape.getSize());
 
       var x = Math.min(0, position.getX());
       var y = Math.min(0, position.getY());
@@ -105,22 +132,27 @@ public class UmlWrapBoundsCommand extends UmlNotationElementCommand {
 
       containerPosition.setX(containerPosition.getX() + x);
       containerPosition.setY(containerPosition.getY() + y);
-      containerShape.setPosition(containerPosition);
+      shape.setPosition(containerPosition);
 
       containerSize.setWidth(containerSize.getWidth() + (oldX - containerPosition.getX()));
       containerSize.setHeight(containerSize.getHeight() + (oldY - containerPosition.getY()));
-      containerShape.setSize(containerSize);
+      shape.setSize(containerSize);
    }
 
-   protected void alignChild(final Element element, final GPoint position) {
-      var elementShape = notationElementAccessor.getElement(SemanticElementAccessor.getId(element), Shape.class).get();
-      var elementPosition = elementShape.getPosition();
+   /**
+    * The parent calls this method to align the children
+    *
+    * @param shape    Shape of a child
+    * @param position Position of the element that caused the wrapping
+    */
+   protected void alignChild(final Shape shape, final GPoint position) {
+      var childPosition = GraphUtil.copy(shape.getPosition());
 
       var x = Math.min(0, position.getX());
       var y = Math.min(0, position.getY());
 
-      elementPosition.setX(elementPosition.getX() - x);
-      elementPosition.setY(elementPosition.getY() - y);
-      elementShape.setPosition(elementPosition);
+      childPosition.setX(childPosition.getX() - x);
+      childPosition.setY(childPosition.getY() - y);
+      shape.setPosition(childPosition);
    }
 }

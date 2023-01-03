@@ -19,8 +19,13 @@ import { IconLabelCompartment, SEditableLabel } from "../../model";
 import { UmlTypes } from "../../utils";
 import { NamedElement } from "../shared/named-element.model";
 import { NamedElementView } from "../shared/named-element.view";
+import { IconPackage } from "../usecase/model";
 import { IconClass } from "./elements/class";
+import { IconDataType } from "./elements/data_type";
 import { IconEnumeration } from "./elements/enumeration";
+import { IconEnumerationLiteral } from "./elements/enumeration_literal";
+import { IconPackage } from "./elements/package";
+import { IconPrimitiveType } from "./elements/primitive_type";
 import { IconProperty } from "./elements/property";
 
 export default function createClassModule(): ContainerModule {
@@ -61,6 +66,20 @@ export default function createClassModule(): ContainerModule {
             NamedElementView
         );
 
+        // Enumeration Literal
+        configureModelElement(
+            context,
+            UmlTypes.ICON_ENUMERATION_LITERAL,
+            IconEnumerationLiteral,
+            IconView
+        );
+        configureModelElement(
+            context,
+            UmlTypes.ENUMERATION_LITERAL,
+            IconLabelCompartment,
+            SCompartmentView
+        );
+
         // Interface
         configureModelElement(
             context,
@@ -97,6 +116,20 @@ export default function createClassModule(): ContainerModule {
             PolylineEdgeView
         );
 
+        // Operation
+        configureModelElement(
+            context,
+            UmlTypes.ICON_OPERATION,
+            IconProperty,
+            IconView
+        );
+        configureModelElement(
+            context,
+            UmlTypes.OPERATION,
+            IconLabelCompartment,
+            SCompartmentView
+        );
+
         // Property
         configureModelElement(
             context,
@@ -112,12 +145,6 @@ export default function createClassModule(): ContainerModule {
         );
         configureModelElement(
             context,
-            UmlTypes.LABEL_PROPERTY_NAME,
-            SEditableLabel,
-            SLabelView
-        );
-        configureModelElement(
-            context,
             UmlTypes.LABEL_PROPERTY_TYPE,
             SEditableLabel,
             SLabelView
@@ -127,6 +154,48 @@ export default function createClassModule(): ContainerModule {
             UmlTypes.LABEL_PROPERTY_MULTIPLICITY,
             SEditableLabel,
             SLabelView
+        );
+
+        // Data Type
+        configureModelElement(
+            context,
+            UmlTypes.ICON_DATA_TYPE,
+            IconDataType,
+            IconView
+        );
+        configureModelElement(
+            context,
+            UmlTypes.DATA_TYPE,
+            NamedElement,
+            NamedElementView
+        );
+
+        // Data Type
+        configureModelElement(
+            context,
+            UmlTypes.ICON_PRIMITIVE_TYPE,
+            IconPrimitiveType,
+            IconView
+        );
+        configureModelElement(
+            context,
+            UmlTypes.PRIMITIVE_TYPE,
+            NamedElement,
+            NamedElementView
+        );
+
+        // PACKAGE
+        configureModelElement(
+            context,
+            UmlTypes.ICON_PACKAGE,
+            IconPackage,
+            IconView
+        );
+        configureModelElement(
+            context,
+            UmlTypes.PACKAGE,
+            NamedElement,
+            NamedElementView
         );
 
         // Other

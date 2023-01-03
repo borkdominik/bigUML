@@ -61,10 +61,12 @@ public abstract class DiagramMultiKeyRegistry<K, V> implements Registry<Represen
       return keys.values().stream().collect(Collectors.toSet());
    }
 
-   protected void debug() {
+   public void printContent() {
       System.out.println("==== " + getClass().getName() + " ====");
       keys().forEach(key -> {
-         System.out.println("Key: " + deriveKey(key) + " | Value: " + get(key).get().getClass().getName());
+         System.out.println("Key:\t" + deriveKey(key));
+         System.out.println("Value:\t" + get(key).get().getClass().getName());
+         System.out.println();
       });
       System.out.println("==== END ====");
    }

@@ -16,7 +16,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.uml2.uml.Generalization;
 
-public class GeneralizationMatcher {
+public final class GeneralizationMatcher {
 
    public static Optional<Generalization> ofUsage(final Setting setting, final EObject interest) {
       var eObject = setting.getEObject();

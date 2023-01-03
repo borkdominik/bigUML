@@ -14,13 +14,11 @@ import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
 
 import java.util.List;
 
-import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 import org.eclipse.glsp.server.types.GLSPServerException;
-import org.eclipse.uml2.uml.Element;
 
-public abstract class BaseCreateEdgeBetweenNodesHandler<S extends Element, T extends Element>
+public abstract class BaseCreateEdgeBetweenNodesHandler<S, T>
    extends BaseCreateEdgeHandler<S, T> {
 
    public BaseCreateEdgeBetweenNodesHandler(final String typeId) {
@@ -28,7 +26,7 @@ public abstract class BaseCreateEdgeBetweenNodesHandler<S extends Element, T ext
    }
 
    @Override
-   public void create(final CreateEdgeOperation operation) {
+   public void execute(final CreateEdgeOperation operation) {
       var sourceId = operation.getSourceElementId();
       var targetId = operation.getTargetElementId();
 
@@ -47,12 +45,13 @@ public abstract class BaseCreateEdgeBetweenNodesHandler<S extends Element, T ext
       }
 
       var source = getOrThrow(modelState.getIndex().getEObject(sourceId),
-         sourceType, "No valid container with id " + sourceId + " found");
+         sourceType,
+         "No valid container with id " + sourceId + " for source type " + sourceType.getSimpleName() + " found.");
       var target = getOrThrow(modelState.getIndex().getEObject(targetId),
-         targetType, "No valid container with id " + targetId + " found");
+         targetType,
+         "No valid container with id " + targetId + " for target type " + targetType.getSimpleName() + " found.");
 
-      var command = command(source, target);
-
+      var command = createCommand(operation, source, target);
       modelServerAccess.exec(command)
          .thenAccept(response -> {
             if (response.body() == null || response.body().isEmpty()) {
@@ -64,8 +63,5 @@ public abstract class BaseCreateEdgeBetweenNodesHandler<S extends Element, T ext
    protected abstract List<String> sources();
 
    protected abstract List<String> targets();
-
-   @Override
-   protected abstract CCommand command(S source, T target);
 
 }

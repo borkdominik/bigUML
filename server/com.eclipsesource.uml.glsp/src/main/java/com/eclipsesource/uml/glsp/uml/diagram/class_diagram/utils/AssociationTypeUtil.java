@@ -13,7 +13,7 @@ package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.utils;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.constants.AssociationType;
 
-public class AssociationTypeUtil {
+public final class AssociationTypeUtil {
    public static String toClassType(final AssociationType type) {
       switch (type) {
          case AGGREGATION:

@@ -25,16 +25,25 @@ export namespace UmlTypes {
     export const ABSTRACT_CLASS = `${DefaultTypes.NODE}:abstract-class`;
     export const ICON_ENUMERATION = `${ICON}:enumeration`;
     export const ENUMERATION = `${DefaultTypes.NODE}:enumeration`;
+    export const ICON_ENUMERATION_LITERAL = `${ICON}:enumeration-literal`;
+    export const ENUMERATION_LITERAL = `${DefaultTypes.COMPARTMENT}:enumeration-literal`;
     export const INTERFACE = `${DefaultTypes.NODE}:interface`;
     export const ASSOCIATION = `${DefaultTypes.EDGE}:association`;
     export const AGGREGATION = `${DefaultTypes.EDGE}:aggregation`;
     export const COMPOSITION = `${DefaultTypes.EDGE}:composition`;
     export const CLASS_GENERALIZATION = `${DefaultTypes.EDGE}:class-generalization`;
-    export const PROPERTY = `${DefaultTypes.COMPARTMENT}:property`;
     export const ICON_PROPERTY = `${ICON}:property`;
-    export const LABEL_PROPERTY_NAME = `${DefaultTypes.LABEL}:property:name`;
+    export const PROPERTY = `${DefaultTypes.COMPARTMENT}:property`;
     export const LABEL_PROPERTY_TYPE = `${DefaultTypes.LABEL}:property:type`;
     export const LABEL_PROPERTY_MULTIPLICITY = `${DefaultTypes.LABEL}:property:multiplicity`;
+    export const ICON_OPERATION = `${ICON}:operation`;
+    export const OPERATION = `${DefaultTypes.COMPARTMENT}:operation`;
+    export const ICON_DATA_TYPE = `${ICON}:data-type`;
+    export const DATA_TYPE = `${DefaultTypes.NODE}:data-type`;
+    export const ICON_PRIMITIVE_TYPE = `${ICON}:primitive-type`;
+    export const PRIMITIVE_TYPE = `${DefaultTypes.NODE}:primitive-type`;
+    export const ICON_PACKAGE = `${ICON}:package`;
+    export const PACKAGE = `${DefaultTypes.NODE}:package`;
 
     // OBJECT DIAGRAM
     export const OBJECT = `${DefaultTypes.NODE}:object`;
@@ -77,9 +86,9 @@ export namespace UmlTypes {
     export const ICON_USECASE = `${ICON}:usecase`;
     export const ACTOR = `${DefaultTypes.NODE}:actor`;
     export const ICON_ACTOR = `${ICON}:actor`;
-    export const PACKAGE = `${DefaultTypes.NODE}:package`;
+    // export const PACKAGE = `${DefaultTypes.NODE}:package`;
     export const LABEL_PACKAGE_NAME = `${DefaultTypes.LABEL}:package:name`;
-    export const ICON_PACKAGE = `${ICON}:package`;
+    // export const ICON_PACKAGE = `${ICON}:package`;
     export const COMPONENT = `${DefaultTypes.NODE}:component`;
     export const EXTENSIONPOINT = `${DefaultTypes.NODE}:extensionpoint`;
     export const EXTEND = `${DefaultTypes.EDGE}:extend`;

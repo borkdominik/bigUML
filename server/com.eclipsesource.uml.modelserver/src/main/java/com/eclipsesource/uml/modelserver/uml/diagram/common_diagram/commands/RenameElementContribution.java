@@ -14,43 +14,34 @@ import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.emfcloud.modelserver.command.CCommandFactory;
 import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
 import org.eclipse.emfcloud.modelserver.edit.command.BasicCommandContribution;
 import org.eclipse.uml2.uml.NamedElement;
 
 import com.eclipsesource.uml.modelserver.core.commands.noop.NoopCommand;
-import com.eclipsesource.uml.modelserver.shared.constants.SemanticKeys;
-import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
+import com.eclipsesource.uml.modelserver.shared.codec.ContributionDecoder;
+import com.eclipsesource.uml.modelserver.shared.codec.ContributionEncoder;
 
-public class RenameElementContribution extends BasicCommandContribution<Command> {
+public final class RenameElementContribution extends BasicCommandContribution<Command> {
 
    public static final String TYPE = "uml:rename";
-
    private static final String NEW_NAME = "new_name";
 
-   public static CCommand create(final NamedElement namedElement, final String newName) {
-      var command = CCommandFactory.eINSTANCE.createCommand();
-      command.setType(TYPE);
-      command.getProperties().put(SemanticKeys.SEMANTIC_ELEMENT_ID,
-         SemanticElementAccessor.getId(namedElement));
-      command.getProperties().put(NEW_NAME, newName);
-      return command;
+   public static CCommand create(final NamedElement semanticElement, final String newName) {
+      return new ContributionEncoder().type(TYPE).element(semanticElement).extra(NEW_NAME, newName).ccommand();
    }
 
    @Override
    protected Command toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
       throws DecodingException {
+      var decoder = new ContributionDecoder(modelUri, domain, command);
 
-      var semanticElementId = command.getProperties().get(SemanticKeys.SEMANTIC_ELEMENT_ID);
-      var newName = command.getProperties().get(NEW_NAME);
+      var context = decoder.context();
+      var element = decoder.element(NamedElement.class);
+      var newName = decoder.extra(NEW_NAME);
 
-      var model = new SemanticElementAccessor(modelUri, domain);
-      var namedElement = model.getElement(semanticElementId,
-         NamedElement.class);
-
-      return namedElement
-         .<Command> map(n -> new RenameElementSemanticCommand(domain, modelUri, n, newName))
+      return element
+         .<Command> map(e -> new RenameElementSemanticCommand(context, e, newName))
          .orElse(new NoopCommand());
    }
 

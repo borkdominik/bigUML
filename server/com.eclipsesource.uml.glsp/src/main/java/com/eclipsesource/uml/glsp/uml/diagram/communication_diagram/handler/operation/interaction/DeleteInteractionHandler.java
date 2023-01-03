@@ -14,12 +14,12 @@ import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.uml2.uml.Interaction;
 
 import com.eclipsesource.uml.glsp.uml.handler.operations.delete.BaseDeleteElementHandler;
-import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.interaction.RemoveInteractionContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.interaction.DeleteInteractionContribution;
 
-public class DeleteInteractionHandler extends BaseDeleteElementHandler<Interaction> {
+public final class DeleteInteractionHandler extends BaseDeleteElementHandler<Interaction> {
 
    @Override
-   protected CCommand command(final Interaction element) {
-      return RemoveInteractionContribution.create(element);
+   protected CCommand createCommand(final Interaction element) {
+      return DeleteInteractionContribution.create(element);
    }
 }

@@ -12,13 +12,8 @@ package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.e
 
 import org.eclipse.uml2.uml.Enumeration;
 
-import com.eclipsesource.uml.glsp.core.gmodel.suffix.HeaderLabelSuffix;
-import com.eclipsesource.uml.glsp.uml.handler.operations.directediting.DefaultRenameNamedElementHandler;
+import com.eclipsesource.uml.glsp.uml.handler.operations.directediting.RenameNamedElementHandler;
 
-public class RenameEnumerationHandler extends DefaultRenameNamedElementHandler<Enumeration> {
-
-   public RenameEnumerationHandler() {
-      super(HeaderLabelSuffix.SUFFIX);
-   }
+public final class RenameEnumerationHandler extends RenameNamedElementHandler<Enumeration> {
 
 }

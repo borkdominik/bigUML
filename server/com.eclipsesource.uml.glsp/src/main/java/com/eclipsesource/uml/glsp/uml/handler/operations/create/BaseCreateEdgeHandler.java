@@ -15,14 +15,13 @@ import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
 import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 import org.eclipse.glsp.server.types.GLSPServerException;
-import org.eclipse.uml2.uml.Element;
 
 import com.eclipsesource.uml.glsp.core.model.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.eclipsesource.uml.glsp.core.utils.reflection.GenericsUtil;
 import com.google.inject.Inject;
 
-public abstract class BaseCreateEdgeHandler<S extends Element, T extends Element>
+public abstract class BaseCreateEdgeHandler<S, T>
    extends BaseCreateHandler<CreateEdgeOperation> {
    protected final Class<S> sourceType;
    protected final Class<T> targetType;
@@ -41,16 +40,18 @@ public abstract class BaseCreateEdgeHandler<S extends Element, T extends Element
    }
 
    @Override
-   public void create(final CreateEdgeOperation operation) {
+   public void execute(final CreateEdgeOperation operation) {
       var sourceId = operation.getSourceElementId();
       var targetId = operation.getTargetElementId();
 
       var source = getOrThrow(modelState.getIndex().getEObject(sourceId),
-         sourceType, "No valid container with id " + sourceId + " found");
+         sourceType,
+         "No valid container with id " + sourceId + " for source type " + sourceType.getSimpleName() + " found.");
       var target = getOrThrow(modelState.getIndex().getEObject(targetId),
-         targetType, "No valid container with id " + targetId + " found");
+         targetType,
+         "No valid container with id " + targetId + " for target type " + targetType.getSimpleName() + " found.");
 
-      var command = command(source, target);
+      var command = createCommand(operation, source, target);
       modelServerAccess.exec(command)
          .thenAccept(response -> {
             if (response.body() == null || response.body().isEmpty()) {
@@ -59,5 +60,5 @@ public abstract class BaseCreateEdgeHandler<S extends Element, T extends Element
          });
    }
 
-   protected abstract CCommand command(S source, T target);
+   protected abstract CCommand createCommand(CreateEdgeOperation operation, S source, T target);
 }

@@ -25,31 +25,26 @@ import org.eclipse.uml2.uml.Class;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
-import com.eclipsesource.uml.glsp.core.gmodel.suffix.CompartmentSuffix;
-import com.eclipsesource.uml.glsp.core.gmodel.suffix.HeaderIconSuffix;
-import com.eclipsesource.uml.glsp.core.gmodel.suffix.HeaderLabelSuffix;
-import com.eclipsesource.uml.glsp.core.gmodel.suffix.HeaderSuffix;
+import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.HeaderTypeSuffix;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGNodeMapper;
 
-public class ClassNodeMapper extends BaseGNodeMapper<Class, GNode> {
-
+public final class ClassNodeMapper extends BaseGNodeMapper<Class, GNode> {
    @Override
-   public GNode map(final Class umlClass) {
+   public GNode map(final Class source) {
       var builder = new GNodeBuilder(ClassTypes.CLASS);
 
-      if (umlClass.isAbstract()) {
+      if (source.isAbstract()) {
          builder = new GNodeBuilder(ClassTypes.ABSTRACT_CLASS);
       }
 
-      builder.id(idGenerator.getOrCreateId(umlClass))
+      builder.id(idGenerator.getOrCreateId(source))
          .layout(GConstants.Layout.VBOX)
          .addCssClass(CoreCSS.NODE)
-         .add(buildHeader(umlClass))
-         .add(buildCompartment(umlClass));
+         .add(buildHeader(source))
+         .add(buildCompartment(source));
 
-      applyShapeNotation(umlClass, builder);
+      applyShapeNotation(source, builder);
 
       return builder.build();
    }
@@ -59,16 +54,17 @@ public class ClassNodeMapper extends BaseGNodeMapper<Class, GNode> {
       return mapHandler.handle(source.getGeneralizations());
    }
 
-   protected GCompartment buildHeader(final Class umlClass) {
+   protected GCompartment buildHeader(final Class source) {
       var builder = new GCompartmentBuilder(CoreTypes.COMPARTMENT_HEADER)
-         .id(suffix.appendTo(HeaderSuffix.SUFFIX, idGenerator.getOrCreateId(umlClass)));
+         .id(idCountGenerator.getOrCreateId(source))
+         .layoutOptions(new GLayoutOptions().hAlign(GConstants.HAlign.CENTER));
 
-      if (umlClass.isAbstract()) {
+      if (source.isAbstract()) {
          builder
             .layout(GConstants.Layout.VBOX);
 
          var typeLabel = new GLabelBuilder(CoreTypes.LABEL_TEXT)
-            .id(suffix.appendTo(HeaderTypeSuffix.SUFFIX, idGenerator.getOrCreateId(umlClass)))
+            .id(idCountGenerator.getOrCreateId(source))
             .text("{abstract}")
             .build();
          builder.add(typeLabel);
@@ -78,24 +74,23 @@ public class ClassNodeMapper extends BaseGNodeMapper<Class, GNode> {
             .layout(GConstants.Layout.HBOX);
 
          var icon = new GCompartmentBuilder(ClassTypes.ICON_CLASS)
-            .id(suffix.appendTo(HeaderIconSuffix.SUFFIX, idGenerator.getOrCreateId(umlClass)))
+            .id(idCountGenerator.getOrCreateId(source))
             .build();
          builder.add(icon);
       }
 
       var nameLabel = new GLabelBuilder(CoreTypes.LABEL_NAME)
-         .id(suffix.appendTo(HeaderLabelSuffix.SUFFIX, idGenerator.getOrCreateId(umlClass)))
-         .text(umlClass.getName()).build();
+         .id(suffix.appendTo(NameLabelSuffix.SUFFIX, idGenerator.getOrCreateId(source)))
+         .text(source.getName()).build();
       builder.add(nameLabel);
 
       return builder.build();
    }
 
-   protected GCompartment buildCompartment(final Class umlClass) {
-      var properties = umlClass.getOwnedAttributes();
+   protected GCompartment buildCompartment(final Class source) {
 
       var builder = new GCompartmentBuilder(CoreTypes.COMPARTMENT)
-         .id(suffix.appendTo(CompartmentSuffix.SUFFIX, idGenerator.getOrCreateId(umlClass)))
+         .id(idCountGenerator.getOrCreateId(source))
          .layout(GConstants.Layout.VBOX);
 
       var layoutOptions = new GLayoutOptions()
@@ -103,10 +98,16 @@ public class ClassNodeMapper extends BaseGNodeMapper<Class, GNode> {
          .resizeContainer(true);
       builder.layoutOptions(layoutOptions);
 
-      var propertyElements = properties.stream()
+      var propertyElements = source.getOwnedAttributes().stream()
+         .filter(p -> p.getAssociation() == null)
          .map(mapHandler::handle)
          .collect(Collectors.toList());
       builder.addAll(propertyElements);
+
+      var operationElements = source.getOwnedOperations().stream()
+         .map(mapHandler::handle)
+         .collect(Collectors.toList());
+      builder.addAll(operationElements);
 
       return builder.build();
    }

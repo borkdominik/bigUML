@@ -12,7 +12,6 @@ package com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.comm
 
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.uml2.uml.Interaction;
-import org.eclipse.uml2.uml.Model;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.commands.DeleteNotationElementCommand;
@@ -20,9 +19,8 @@ import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.match
 
 public final class DeleteInteractionCompoundCommand extends CompoundCommand {
 
-   public DeleteInteractionCompoundCommand(final ModelContext context, final Model parent,
-      final Interaction semanticElement) {
-      this.append(new DeleteInteractionSemanticCommand(context, parent, semanticElement));
+   public DeleteInteractionCompoundCommand(final ModelContext context, final Interaction semanticElement) {
+      this.append(new DeleteInteractionSemanticCommand(context, semanticElement));
       this.append(new DeleteNotationElementCommand(context, semanticElement));
 
       new CommunicationDiagramCrossReferenceRemover(context).deleteCommandsFor(semanticElement)

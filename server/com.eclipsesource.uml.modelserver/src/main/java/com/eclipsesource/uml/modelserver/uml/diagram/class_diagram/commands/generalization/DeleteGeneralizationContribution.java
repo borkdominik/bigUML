@@ -4,10 +4,8 @@ import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
 import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
 import org.eclipse.emfcloud.modelserver.edit.command.BasicCommandContribution;
-import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.Generalization;
 
 import com.eclipsesource.uml.modelserver.core.commands.noop.NoopCommand;
@@ -18,8 +16,8 @@ public final class DeleteGeneralizationContribution extends BasicCommandContribu
 
    public static final String TYPE = "class:delete_generalization";
 
-   public static CCommand create(final Classifier parent, final Generalization semanticElement) {
-      return new ContributionEncoder().type(TYPE).parent(parent).element(semanticElement).ccommand();
+   public static CCommand create(final Generalization semanticElement) {
+      return new ContributionEncoder().type(TYPE).element(semanticElement).ccommand();
    }
 
    @Override
@@ -28,14 +26,11 @@ public final class DeleteGeneralizationContribution extends BasicCommandContribu
       var decoder = new ContributionDecoder(modelUri, domain, command);
 
       var context = decoder.context();
-      var parent = decoder.parent(Classifier.class);
       var element = decoder.element(Generalization.class);
 
-      if (parent.isPresent() && element.isPresent()) {
-         return new DeleteGeneralizationCompoundCommand(context, parent.get(), element.get());
-      }
-
-      return new NoopCommand();
+      return element
+         .<Command> map(e -> new DeleteGeneralizationCompoundCommand(context, e))
+         .orElse(new NoopCommand());
    }
 
 }

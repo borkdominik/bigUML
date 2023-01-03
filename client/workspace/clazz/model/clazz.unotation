@@ -13,7 +13,7 @@
   </elements>
   <elements xsi:type="notation:Shape">
     <semanticElement elementId="_NScJUYqeEe2ivZI76tgg9Q"/>
-    <position y="59.20504031292977"/>
+    <position x="28.40735551497287" y="50.14762261250363"/>
     <size width="1064.8420330985484" height="540.7908695599654"/>
   </elements>
   <elements xsi:type="notation:Shape">
@@ -40,5 +40,8 @@
     <semanticElement elementId="_ap2OUIqpEe2LnNSbuUmaGA"/>
     <position x="104.59230866435922" y="21.20504031292981"/>
     <size width="160.0" height="50.0"/>
+  </elements>
+  <elements xsi:type="notation:Edge">
+    <semanticElement elementId="_6p0oUYthEe2HOqFYNFa9oQ"/>
   </elements>
 </unotation:UmlDiagram>

@@ -34,12 +34,13 @@ public final class MessageMatcher {
       return Optional.empty();
    }
 
-   public static Optional<MessageOccurrenceSpecification> ofInverseMessageUsageSpecificationUsage(
+   public static Optional<Message> ofInverseMessageUsageSpecificationUsage(
       final Setting setting, final EObject interest) {
       var eObject = setting.getEObject();
 
       if (setting instanceof EObjectWithInverseEList && eObject instanceof MessageOccurrenceSpecification) {
-         return Optional.of((MessageOccurrenceSpecification) eObject);
+         var element = (MessageOccurrenceSpecification) eObject;
+         return Optional.of(element.getMessage());
       }
 
       return Optional.empty();

@@ -12,7 +12,6 @@ package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.o
 
 import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.uml2.uml.Operation;
-import org.eclipse.uml2.uml.OperationOwner;
 
 import com.eclipsesource.uml.glsp.uml.handler.operations.delete.BaseDeleteElementHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.operation.DeleteOperationContribution;
@@ -21,7 +20,6 @@ public final class DeleteOperationHandler extends BaseDeleteElementHandler<Opera
 
    @Override
    protected CCommand createCommand(final Operation element) {
-      var container = (OperationOwner) element.eContainer();
-      return DeleteOperationContribution.create(container, element);
+      return DeleteOperationContribution.create(element);
    }
 }

@@ -14,8 +14,6 @@ import java.util.Set;
 
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.uml2.uml.AttributeOwner;
-import org.eclipse.uml2.uml.OperationOwner;
 
 import com.eclipsesource.uml.modelserver.shared.matcher.CrossReferenceMatcher;
 import com.eclipsesource.uml.modelserver.shared.matcher.MatcherContext;
@@ -47,46 +45,43 @@ public final class ClassDiagramCrossReferenceRemover {
          // Association
          .match((setting, interest) -> AssociationMatcher
             .ofUsage(setting, interest)
-            .map(association -> new DeleteAssociationCompoundCommand(context, association.getPackage(), association)))
+            .map(association -> new DeleteAssociationCompoundCommand(context, association)))
          // Class
          .match((setting, interest) -> ClassMatcher
             .ofChildUsage(setting, interest)
-            .map(uclass -> new DeleteClassCompoundCommand(context, uclass.getPackage(), uclass)))
+            .map(uclass -> new DeleteClassCompoundCommand(context, uclass)))
          // Data Type
          .match((setting, interest) -> DataTypeMatcher
             .ofChildUsage(setting, interest)
-            .map(dataType -> new DeleteDataTypeCompoundCommand(context, dataType.getPackage(), dataType)))
+            .map(dataType -> new DeleteDataTypeCompoundCommand(context, dataType)))
          // Enumeration Literal
          .match((setting, interest) -> EnumerationLiteralMatcher
             .ofUsage(setting, interest)
-            .map(literal -> new DeleteEnumerationLiteralSemanticCommand(context, literal.getEnumeration(), literal)))
+            .map(literal -> new DeleteEnumerationLiteralSemanticCommand(context, literal)))
          // Enumeration
          .match((setting, interest) -> EnumerationMatcher
             .ofChildUsage(setting, interest)
-            .map(enumeration -> new DeleteEnumerationCompoundCommand(context, enumeration.getPackage(), enumeration)))
+            .map(enumeration -> new DeleteEnumerationCompoundCommand(context, enumeration)))
          // Generalization
          .match((setting, interest) -> GeneralizationMatcher
             .ofUsage(setting, interest)
-            .map(generalization -> new DeleteGeneralizationCompoundCommand(context, generalization.getSpecific(),
-               generalization)))
+            .map(generalization -> new DeleteGeneralizationCompoundCommand(context, generalization)))
          // Interface
          .match((setting, interest) -> InterfaceMatcher
             .ofChildUsage(setting, interest)
-            .map(uinterface -> new DeleteInterfaceCompoundCommand(context, uinterface.getPackage(), uinterface)))
+            .map(uinterface -> new DeleteInterfaceCompoundCommand(context, uinterface)))
          // Operation
          .match((setting, interest) -> OperationMatcher
             .ofUsage(setting, interest)
-            .map(operation -> new DeleteOperationSemanticCommand(context, (OperationOwner) operation.eContainer(),
-               operation)))
+            .map(operation -> new DeleteOperationSemanticCommand(context, operation)))
          // Package
          .match((setting, interest) -> PackageMatcher
             .ofChildUsage(setting, interest)
-            .map(upackage -> new DeletePackageCompoundCommand(context, upackage.getNestingPackage(), upackage)))
+            .map(upackage -> new DeletePackageCompoundCommand(context, upackage)))
          // Primitive Type
          .match((setting, interest) -> PrimitiveTypeMatcher
             .ofChildUsage(setting, interest)
-            .map(primitiveType -> new DeletePrimitiveTypeCompoundCommand(context, primitiveType.getPackage(),
-               primitiveType)))
+            .map(primitiveType -> new DeletePrimitiveTypeCompoundCommand(context, primitiveType)))
          // Property
          .match((setting, interest) -> PropertyMatcher
             .ofOwnedAttributeTypeUsage(setting, interest)
@@ -94,7 +89,7 @@ public final class ClassDiagramCrossReferenceRemover {
          .match((setting, interest) -> PropertyMatcher
             .ofOwnedAttributeAssociationUsage(setting, interest)
             .map(
-               property -> new DeletePropertySemanticCommand(context, (AttributeOwner) property.getOwner(), property)))
+               property -> new DeletePropertySemanticCommand(context, property)))
          .build();
 
       context.data.putIfAbsent(MATCHER_CONTEXT_KEY, new MatcherContext());

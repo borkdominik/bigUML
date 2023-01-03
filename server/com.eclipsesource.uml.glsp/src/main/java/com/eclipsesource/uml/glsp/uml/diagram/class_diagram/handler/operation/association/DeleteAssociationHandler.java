@@ -20,6 +20,6 @@ public final class DeleteAssociationHandler extends BaseDeleteElementHandler<Ass
 
    @Override
    protected CCommand createCommand(final Association element) {
-      return DeleteAssociationContribution.create(element.getPackage(), element);
+      return DeleteAssociationContribution.create(element);
    }
 }

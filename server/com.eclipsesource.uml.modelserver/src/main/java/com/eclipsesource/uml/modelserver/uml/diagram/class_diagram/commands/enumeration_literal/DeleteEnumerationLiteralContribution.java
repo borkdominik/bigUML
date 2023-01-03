@@ -16,7 +16,6 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
 import org.eclipse.emfcloud.modelserver.edit.command.BasicCommandContribution;
-import org.eclipse.uml2.uml.Enumeration;
 import org.eclipse.uml2.uml.EnumerationLiteral;
 
 import com.eclipsesource.uml.modelserver.core.commands.noop.NoopCommand;
@@ -27,8 +26,8 @@ public final class DeleteEnumerationLiteralContribution extends BasicCommandCont
 
    public static final String TYPE = "class:delete_enumeration_literal";
 
-   public static CCommand create(final Enumeration parent, final EnumerationLiteral semanticElement) {
-      return new ContributionEncoder().type(TYPE).parent(parent).element(semanticElement).ccommand();
+   public static CCommand create(final EnumerationLiteral semanticElement) {
+      return new ContributionEncoder().type(TYPE).element(semanticElement).ccommand();
    }
 
    @Override
@@ -37,14 +36,11 @@ public final class DeleteEnumerationLiteralContribution extends BasicCommandCont
       var decoder = new ContributionDecoder(modelUri, domain, command);
 
       var context = decoder.context();
-      var parent = decoder.parent(Enumeration.class);
       var element = decoder.element(EnumerationLiteral.class);
 
-      if (parent.isPresent() && element.isPresent()) {
-         return new DeleteEnumerationLiteralSemanticCommand(context, parent.get(), element.get());
-      }
-
-      return new NoopCommand();
+      return element
+         .<Command> map(e -> new DeleteEnumerationLiteralSemanticCommand(context, e))
+         .orElse(new NoopCommand());
    }
 
 }

@@ -20,6 +20,6 @@ public final class DeletePackageHandler extends BaseDeleteElementHandler<Package
 
    @Override
    protected CCommand createCommand(final Package element) {
-      return DeletePackageContribution.create(element.getNestingPackage(), element);
+      return DeletePackageContribution.create(element);
    }
 }

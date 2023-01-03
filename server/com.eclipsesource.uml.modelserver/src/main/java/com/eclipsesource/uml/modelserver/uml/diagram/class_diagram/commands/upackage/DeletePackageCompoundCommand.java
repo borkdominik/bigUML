@@ -19,10 +19,8 @@ import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.matcher.Class
 
 public final class DeletePackageCompoundCommand extends CompoundCommand {
 
-   public DeletePackageCompoundCommand(final ModelContext context,
-      final Package parent,
-      final Package semanticElement) {
-      this.append(new DeletePackageSemanticCommand(context, parent, semanticElement));
+   public DeletePackageCompoundCommand(final ModelContext context, final Package semanticElement) {
+      this.append(new DeletePackageSemanticCommand(context, semanticElement));
       this.append(new DeleteNotationElementCommand(context, semanticElement));
 
       new ClassDiagramCrossReferenceRemover(context).deleteCommandsFor(semanticElement)

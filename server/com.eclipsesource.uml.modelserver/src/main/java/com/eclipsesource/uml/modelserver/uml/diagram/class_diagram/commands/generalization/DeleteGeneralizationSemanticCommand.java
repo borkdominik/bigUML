@@ -6,11 +6,11 @@ import org.eclipse.uml2.uml.Generalization;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.BaseDeleteSemanticChildCommand;
 
-public final class DeleteGeneralizationSemanticCommand extends BaseDeleteSemanticChildCommand<Classifier, Generalization> {
+public final class DeleteGeneralizationSemanticCommand
+   extends BaseDeleteSemanticChildCommand<Classifier, Generalization> {
 
-   public DeleteGeneralizationSemanticCommand(final ModelContext context,
-      final Classifier parent, final Generalization semanticElement) {
-      super(context, parent, semanticElement);
+   public DeleteGeneralizationSemanticCommand(final ModelContext context, final Generalization semanticElement) {
+      super(context, semanticElement.getSpecific(), semanticElement);
    }
 
    @Override

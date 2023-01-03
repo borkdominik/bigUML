@@ -20,7 +20,7 @@ public final class DeleteLifelineHandler extends BaseDeleteElementHandler<Lifeli
 
    @Override
    protected CCommand createCommand(final Lifeline element) {
-      return DeleteLifelineContribution.create(element.getInteraction(), element);
+      return DeleteLifelineContribution.create(element);
    }
 
 }

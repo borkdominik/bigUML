@@ -20,9 +20,8 @@ public final class DeleteEnumerationLiteralSemanticCommand
    extends BaseDeleteSemanticChildCommand<Enumeration, EnumerationLiteral> {
 
    public DeleteEnumerationLiteralSemanticCommand(final ModelContext context,
-      final Enumeration parent,
       final EnumerationLiteral semanticElement) {
-      super(context, parent, semanticElement);
+      super(context, semanticElement.getEnumeration(), semanticElement);
    }
 
    @Override

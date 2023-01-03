@@ -7,10 +7,9 @@ import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.BaseDeleteSemanticChildCommand;
 
 public final class DeleteInterfaceSemanticCommand extends BaseDeleteSemanticChildCommand<Package, Interface> {
-   public DeleteInterfaceSemanticCommand(final ModelContext context,
-      final Package parent,
-      final Interface semanticElement) {
-      super(context, parent, semanticElement);
+
+   public DeleteInterfaceSemanticCommand(final ModelContext context, final Interface semanticElement) {
+      super(context, semanticElement.getPackage(), semanticElement);
    }
 
    @Override

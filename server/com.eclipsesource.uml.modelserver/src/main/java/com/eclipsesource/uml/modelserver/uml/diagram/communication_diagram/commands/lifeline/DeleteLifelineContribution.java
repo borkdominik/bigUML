@@ -16,7 +16,6 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
 import org.eclipse.emfcloud.modelserver.edit.command.BasicCommandContribution;
-import org.eclipse.uml2.uml.Interaction;
 import org.eclipse.uml2.uml.Lifeline;
 
 import com.eclipsesource.uml.modelserver.core.commands.noop.NoopCommand;
@@ -27,8 +26,8 @@ public final class DeleteLifelineContribution extends BasicCommandContribution<C
 
    public static final String TYPE = "uml:delete_lifeline";
 
-   public static CCommand create(final Interaction parent, final Lifeline semanticElement) {
-      return new ContributionEncoder().type(TYPE).parent(parent).element(semanticElement).ccommand();
+   public static CCommand create(final Lifeline semanticElement) {
+      return new ContributionEncoder().type(TYPE).element(semanticElement).ccommand();
 
    }
 
@@ -38,14 +37,11 @@ public final class DeleteLifelineContribution extends BasicCommandContribution<C
       var decoder = new ContributionDecoder(modelUri, domain, command);
 
       var context = decoder.context();
-      var parent = decoder.parent(Interaction.class);
       var element = decoder.element(Lifeline.class);
 
-      if (parent.isPresent() && element.isPresent()) {
-         return new DeleteLifelineCompoundCommand(context, parent.get(), element.get());
-      }
-
-      return new NoopCommand();
+      return element
+         .<Command> map(e -> new DeleteLifelineCompoundCommand(context, e))
+         .orElse(new NoopCommand());
    }
 
 }

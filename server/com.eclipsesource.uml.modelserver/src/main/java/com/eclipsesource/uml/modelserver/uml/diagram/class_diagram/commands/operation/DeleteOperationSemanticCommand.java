@@ -18,10 +18,8 @@ import com.eclipsesource.uml.modelserver.shared.semantic.BaseDeleteSemanticChild
 
 public final class DeleteOperationSemanticCommand extends BaseDeleteSemanticChildCommand<OperationOwner, Operation> {
 
-   public DeleteOperationSemanticCommand(final ModelContext context,
-      final OperationOwner parent,
-      final Operation child) {
-      super(context, parent, child);
+   public DeleteOperationSemanticCommand(final ModelContext context, final Operation semanticElement) {
+      super(context, (OperationOwner) semanticElement.getOwner(), semanticElement);
    }
 
    @Override

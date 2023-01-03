@@ -16,7 +16,6 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
 import org.eclipse.emfcloud.modelserver.edit.command.BasicCommandContribution;
-import org.eclipse.uml2.uml.Interaction;
 import org.eclipse.uml2.uml.Message;
 
 import com.eclipsesource.uml.modelserver.core.commands.noop.NoopCommand;
@@ -27,8 +26,8 @@ public final class DeleteMessageContribution extends BasicCommandContribution<Co
 
    public static final String TYPE = "communication:delete_message";
 
-   public static CCommand create(final Interaction parent, final Message semanticElement) {
-      return new ContributionEncoder().type(TYPE).parent(parent).element(semanticElement).ccommand();
+   public static CCommand create(final Message semanticElement) {
+      return new ContributionEncoder().type(TYPE).element(semanticElement).ccommand();
    }
 
    @Override
@@ -37,14 +36,11 @@ public final class DeleteMessageContribution extends BasicCommandContribution<Co
       var decoder = new ContributionDecoder(modelUri, domain, command);
 
       var context = decoder.context();
-      var parent = decoder.parent(Interaction.class);
       var element = decoder.element(Message.class);
 
-      if (parent.isPresent() && element.isPresent()) {
-         return new DeleteMessageCompoundCommand(context, parent.get(), element.get());
-      }
-
-      return new NoopCommand();
+      return element
+         .<Command> map(e -> new DeleteMessageCompoundCommand(context, e))
+         .orElse(new NoopCommand());
    }
 
 }

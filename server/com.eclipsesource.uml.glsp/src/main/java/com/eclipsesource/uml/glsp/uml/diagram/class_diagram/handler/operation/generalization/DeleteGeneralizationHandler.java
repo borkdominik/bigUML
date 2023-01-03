@@ -20,6 +20,6 @@ public final class DeleteGeneralizationHandler extends BaseDeleteElementHandler<
 
    @Override
    protected CCommand createCommand(final Generalization element) {
-      return DeleteGeneralizationContribution.create(element.getSpecific(), element);
+      return DeleteGeneralizationContribution.create(element);
    }
 }

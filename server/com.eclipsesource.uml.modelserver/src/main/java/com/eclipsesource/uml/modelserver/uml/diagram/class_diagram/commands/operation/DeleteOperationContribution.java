@@ -17,7 +17,6 @@ import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
 import org.eclipse.emfcloud.modelserver.edit.command.BasicCommandContribution;
 import org.eclipse.uml2.uml.Operation;
-import org.eclipse.uml2.uml.OperationOwner;
 
 import com.eclipsesource.uml.modelserver.core.commands.noop.NoopCommand;
 import com.eclipsesource.uml.modelserver.shared.codec.ContributionDecoder;
@@ -27,8 +26,8 @@ public final class DeleteOperationContribution extends BasicCommandContribution<
 
    public static final String TYPE = "class:delete_operation";
 
-   public static CCommand create(final OperationOwner parent, final Operation semanticElement) {
-      return new ContributionEncoder().type(TYPE).parent(parent).element(semanticElement).ccommand();
+   public static CCommand create(final Operation semanticElement) {
+      return new ContributionEncoder().type(TYPE).element(semanticElement).ccommand();
    }
 
    @Override
@@ -37,14 +36,11 @@ public final class DeleteOperationContribution extends BasicCommandContribution<
       var decoder = new ContributionDecoder(modelUri, domain, command);
 
       var context = decoder.context();
-      var parent = decoder.parent(OperationOwner.class);
       var element = decoder.element(Operation.class);
 
-      if (parent.isPresent() && element.isPresent()) {
-         return new DeleteOperationSemanticCommand(context, parent.get(), element.get());
-      }
-
-      return new NoopCommand();
+      return element
+         .<Command> map(e -> new DeleteOperationSemanticCommand(context, e))
+         .orElse(new NoopCommand());
    }
 
 }

@@ -18,9 +18,8 @@ import com.eclipsesource.uml.modelserver.shared.semantic.BaseDeleteSemanticChild
 
 public final class DeleteLifelineSemanticCommand extends BaseDeleteSemanticChildCommand<Interaction, Lifeline> {
 
-   public DeleteLifelineSemanticCommand(final ModelContext context, final Interaction parent,
-      final Lifeline semanticElement) {
-      super(context, parent, semanticElement);
+   public DeleteLifelineSemanticCommand(final ModelContext context, final Lifeline semanticElement) {
+      super(context, semanticElement.getInteraction(), semanticElement);
    }
 
    @Override

@@ -20,7 +20,6 @@ public final class DeleteEnumerationLiteralHandler extends BaseDeleteElementHand
 
    @Override
    protected CCommand createCommand(final EnumerationLiteral element) {
-      var container = element.getEnumeration();
-      return DeleteEnumerationLiteralContribution.create(container, element);
+      return DeleteEnumerationLiteralContribution.create(element);
    }
 }

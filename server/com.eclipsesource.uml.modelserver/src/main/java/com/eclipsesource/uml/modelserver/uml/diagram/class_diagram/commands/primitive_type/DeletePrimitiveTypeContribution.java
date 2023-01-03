@@ -14,10 +14,8 @@ import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
 import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
 import org.eclipse.emfcloud.modelserver.edit.command.BasicCommandContribution;
-import org.eclipse.uml2.uml.Package;
 import org.eclipse.uml2.uml.PrimitiveType;
 
 import com.eclipsesource.uml.modelserver.core.commands.noop.NoopCommand;
@@ -28,8 +26,8 @@ public final class DeletePrimitiveTypeContribution extends BasicCommandContribut
 
    public static final String TYPE = "class:delete_primitive_type";
 
-   public static CCommand create(final Package parent, final PrimitiveType semanticElement) {
-      return new ContributionEncoder().type(TYPE).parent(parent).element(semanticElement).ccommand();
+   public static CCommand create(final PrimitiveType semanticElement) {
+      return new ContributionEncoder().type(TYPE).element(semanticElement).ccommand();
    }
 
    @Override
@@ -38,14 +36,11 @@ public final class DeletePrimitiveTypeContribution extends BasicCommandContribut
       var decoder = new ContributionDecoder(modelUri, domain, command);
 
       var context = decoder.context();
-      var parent = decoder.parent(Package.class);
       var element = decoder.element(PrimitiveType.class);
 
-      if (parent.isPresent() && element.isPresent()) {
-         return new DeletePrimitiveTypeCompoundCommand(context, parent.get(), element.get());
-      }
-
-      return new NoopCommand();
+      return element
+         .<Command> map(e -> new DeletePrimitiveTypeCompoundCommand(context, e))
+         .orElse(new NoopCommand());
    }
 
 }

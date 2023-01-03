@@ -8,9 +8,8 @@ import com.eclipsesource.uml.modelserver.shared.semantic.BaseDeleteSemanticChild
 
 public final class DeleteEnumerationSemanticCommand extends BaseDeleteSemanticChildCommand<Package, Enumeration> {
 
-   public DeleteEnumerationSemanticCommand(final ModelContext context,
-      final Package parent, final Enumeration semanticElement) {
-      super(context, parent, semanticElement);
+   public DeleteEnumerationSemanticCommand(final ModelContext context, final Enumeration semanticElement) {
+      super(context, semanticElement.getPackage(), semanticElement);
    }
 
    @Override

@@ -12,7 +12,6 @@ package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.dat
 
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.uml2.uml.DataType;
-import org.eclipse.uml2.uml.Package;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.commands.DeleteNotationElementCommand;
@@ -20,10 +19,8 @@ import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.match
 
 public final class DeleteDataTypeCompoundCommand extends CompoundCommand {
 
-   public DeleteDataTypeCompoundCommand(final ModelContext context,
-      final Package parent,
-      final DataType semanticElement) {
-      this.append(new DeleteDataTypeSemanticCommand(context, parent, semanticElement));
+   public DeleteDataTypeCompoundCommand(final ModelContext context, final DataType semanticElement) {
+      this.append(new DeleteDataTypeSemanticCommand(context, semanticElement));
       this.append(new DeleteNotationElementCommand(context, semanticElement));
 
       new CommunicationDiagramCrossReferenceRemover(context).deleteCommandsFor(semanticElement)

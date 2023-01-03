@@ -16,7 +16,6 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
 import org.eclipse.emfcloud.modelserver.edit.command.BasicCommandContribution;
-import org.eclipse.uml2.uml.AttributeOwner;
 import org.eclipse.uml2.uml.Property;
 
 import com.eclipsesource.uml.modelserver.core.commands.noop.NoopCommand;
@@ -27,8 +26,8 @@ public final class DeletePropertyContribution extends BasicCommandContribution<C
 
    public static final String TYPE = "class:delete_property";
 
-   public static CCommand create(final AttributeOwner parent, final Property semanticElement) {
-      return new ContributionEncoder().type(TYPE).parent(parent).element(semanticElement).ccommand();
+   public static CCommand create(final Property semanticElement) {
+      return new ContributionEncoder().type(TYPE).element(semanticElement).ccommand();
    }
 
    @Override
@@ -37,14 +36,11 @@ public final class DeletePropertyContribution extends BasicCommandContribution<C
       var decoder = new ContributionDecoder(modelUri, domain, command);
 
       var context = decoder.context();
-      var parent = decoder.parent(AttributeOwner.class);
       var element = decoder.element(Property.class);
 
-      if (parent.isPresent() && element.isPresent()) {
-         return new DeletePropertySemanticCommand(context, parent.get(), element.get());
-      }
-
-      return new NoopCommand();
+      return element
+         .<Command> map(e -> new DeletePropertySemanticCommand(context, e))
+         .orElse(new NoopCommand());
    }
 
 }

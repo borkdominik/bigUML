@@ -20,7 +20,7 @@ public final class DeleteMessageHandler extends BaseDeleteElementHandler<Message
 
    @Override
    protected CCommand createCommand(final Message element) {
-      return DeleteMessageContribution.create(element.getInteraction(), element);
+      return DeleteMessageContribution.create(element);
    }
 
 }

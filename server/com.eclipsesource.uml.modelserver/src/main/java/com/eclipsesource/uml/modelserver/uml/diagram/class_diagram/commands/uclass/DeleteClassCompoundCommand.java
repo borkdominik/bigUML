@@ -12,7 +12,6 @@ package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.ucl
 
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.uml2.uml.Class;
-import org.eclipse.uml2.uml.Package;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.commands.DeleteNotationElementCommand;
@@ -20,8 +19,8 @@ import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.matcher.Class
 
 public final class DeleteClassCompoundCommand extends CompoundCommand {
 
-   public DeleteClassCompoundCommand(final ModelContext context, final Package parent, final Class semanticElement) {
-      this.append(new DeleteClassSemanticCommand(context, parent, semanticElement));
+   public DeleteClassCompoundCommand(final ModelContext context, final Class semanticElement) {
+      this.append(new DeleteClassSemanticCommand(context, semanticElement));
       this.append(new DeleteNotationElementCommand(context, semanticElement));
 
       new ClassDiagramCrossReferenceRemover(context).deleteCommandsFor(semanticElement)

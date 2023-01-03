@@ -3,12 +3,21 @@
   <packagedElement xmi:type="uml:Package" xmi:id="_MFWcwIh9Ee2ekuJspw8-cA" name="2">
     <packagedElement xmi:type="uml:Package" xmi:id="_NScJUYqeEe2ivZI76tgg9Q" name="NewPackage1">
       <packagedElement xmi:type="uml:Package" xmi:id="_aFkckYqpEe2LnNSbuUmaGA" name="NewPackage1">
-        <packagedElement xmi:type="uml:Class" xmi:id="_ap2OUIqpEe2LnNSbuUmaGA" name="NewClass1"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="_ap2OUIqpEe2LnNSbuUmaGA" name="NewClass1">
+          <ownedAttribute xmi:id="_6p-ZUothEe2HOqFYNFa9oQ" name="NewClass1" type="_Oq-pkIqeEe2ivZI76tgg9Q" association="_6p0oUYthEe2HOqFYNFa9oQ">
+            <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_6p-ZU4thEe2HOqFYNFa9oQ" value="1"/>
+            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_6p-ZVIthEe2HOqFYNFa9oQ" value="1"/>
+          </ownedAttribute>
+        </packagedElement>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_Oq-pkIqeEe2ivZI76tgg9Q" name="NewClass1">
         <ownedAttribute xmi:id="_0QaH4IqgEe2jA6D1258ThQ" name="NewClass2" type="_zUzbQYqgEe2jA6D1258ThQ" association="_0QRlAIqgEe2jA6D1258ThQ">
           <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_0QckIIqgEe2jA6D1258ThQ" value="1"/>
           <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_0QdLMIqgEe2jA6D1258ThQ" value="1"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:id="_6p9yQIthEe2HOqFYNFa9oQ" name="NewClass1" type="_ap2OUIqpEe2LnNSbuUmaGA" association="_6p0oUYthEe2HOqFYNFa9oQ">
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_6p-ZUIthEe2HOqFYNFa9oQ" value="1"/>
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_6p-ZUYthEe2HOqFYNFa9oQ" value="1"/>
         </ownedAttribute>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_zUzbQYqgEe2jA6D1258ThQ" name="NewClass2">
@@ -18,6 +27,7 @@
         </ownedAttribute>
       </packagedElement>
       <packagedElement xmi:type="uml:Association" xmi:id="_0QRlAIqgEe2jA6D1258ThQ" memberEnd="_0QaH4IqgEe2jA6D1258ThQ _0QeZUIqgEe2jA6D1258ThQ"/>
+      <packagedElement xmi:type="uml:Association" xmi:id="_6p0oUYthEe2HOqFYNFa9oQ" memberEnd="_6p9yQIthEe2HOqFYNFa9oQ _6p-ZUothEe2HOqFYNFa9oQ"/>
     </packagedElement>
     <packagedElement xmi:type="uml:Class" xmi:id="_pseLQIiAEe2DMdFHhGzYmQ" name="s"/>
   </packagedElement>

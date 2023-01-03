@@ -34,14 +34,13 @@ public final class CommunicationDiagramCrossReferenceRemover {
       this.matcher = new CrossReferenceMatcher.Builder<Command>()
          .match((setting, interest) -> LifelineMatcher
             .ofChildUsage(setting, interest)
-            .map(lifeline -> new DeleteLifelineCompoundCommand(context, lifeline.getInteraction(), lifeline)))
+            .map(lifeline -> new DeleteLifelineCompoundCommand(context, lifeline)))
          .match((setting, interest) -> MessageMatcher
             .ofChildUsage(setting, interest)
-            .map(message -> new DeleteMessageCompoundCommand(context, message.getInteraction(), message)))
+            .map(message -> new DeleteMessageCompoundCommand(context, message)))
          .match((setting, interest) -> MessageMatcher
             .ofInverseMessageUsageSpecificationUsage(setting, interest)
-            .map(specification -> new DeleteMessageCompoundCommand(context, specification.getEnclosingInteraction(),
-               specification.getMessage())))
+            .map(message -> new DeleteMessageCompoundCommand(context, message)))
          .build();
 
       context.data.putIfAbsent(MATCHER_CONTEXT_KEY, new MatcherContext());

@@ -14,7 +14,6 @@ import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
 import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
 import org.eclipse.emfcloud.modelserver.edit.command.BasicCommandContribution;
 import org.eclipse.uml2.uml.Package;
@@ -27,8 +26,8 @@ public final class DeletePackageContribution extends BasicCommandContribution<Co
 
    public static final String TYPE = "class:delete_package";
 
-   public static CCommand create(final Package parent, final Package semanticElement) {
-      return new ContributionEncoder().type(TYPE).parent(parent).element(semanticElement).ccommand();
+   public static CCommand create(final Package semanticElement) {
+      return new ContributionEncoder().type(TYPE).element(semanticElement).ccommand();
    }
 
    @Override
@@ -37,14 +36,11 @@ public final class DeletePackageContribution extends BasicCommandContribution<Co
       var decoder = new ContributionDecoder(modelUri, domain, command);
 
       var context = decoder.context();
-      var parent = decoder.parent(Package.class);
       var element = decoder.element(Package.class);
 
-      if (parent.isPresent() && element.isPresent()) {
-         return new DeletePackageCompoundCommand(context, parent.get(), element.get());
-      }
-
-      return new NoopCommand();
+      return element
+         .<Command> map(e -> new DeletePackageCompoundCommand(context, e))
+         .orElse(new NoopCommand());
    }
 
 }

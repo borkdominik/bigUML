@@ -18,8 +18,8 @@ import com.eclipsesource.uml.modelserver.shared.semantic.BaseDeleteSemanticChild
 
 public final class DeleteClassSemanticCommand extends BaseDeleteSemanticChildCommand<Package, Class> {
 
-   public DeleteClassSemanticCommand(final ModelContext context, final Package parent, final Class semanticElement) {
-      super(context, parent, semanticElement);
+   public DeleteClassSemanticCommand(final ModelContext context, final Class semanticElement) {
+      super(context, semanticElement.getPackage(), semanticElement);
    }
 
    @Override

@@ -2,7 +2,6 @@ package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.enu
 
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.uml2.uml.Enumeration;
-import org.eclipse.uml2.uml.Package;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.commands.DeleteNotationElementCommand;
@@ -10,10 +9,8 @@ import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.matcher.Class
 
 public final class DeleteEnumerationCompoundCommand extends CompoundCommand {
 
-   public DeleteEnumerationCompoundCommand(final ModelContext context,
-      final Package parent,
-      final Enumeration semanticElement) {
-      this.append(new DeleteEnumerationSemanticCommand(context, parent, semanticElement));
+   public DeleteEnumerationCompoundCommand(final ModelContext context, final Enumeration semanticElement) {
+      this.append(new DeleteEnumerationSemanticCommand(context, semanticElement));
       this.append(new DeleteNotationElementCommand(context, semanticElement));
 
       new ClassDiagramCrossReferenceRemover(context).deleteCommandsFor(semanticElement)

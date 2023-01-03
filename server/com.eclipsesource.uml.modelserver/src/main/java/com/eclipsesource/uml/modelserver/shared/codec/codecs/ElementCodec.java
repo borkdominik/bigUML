@@ -16,19 +16,19 @@ import org.eclipse.emf.ecore.EObject;
 
 import com.eclipsesource.uml.modelserver.shared.codec.CCommandProvider;
 import com.eclipsesource.uml.modelserver.shared.codec.ContextProvider;
-import com.eclipsesource.uml.modelserver.shared.constants.SemanticKeys;
 import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
 
 public interface ElementCodec {
+   String SEMANTIC_ELEMENT_ID = "semantic_element_id";
 
    interface Encoder<T> extends CCommandProvider {
       default T element(final EObject element) {
-         ccommand().getProperties().put(SemanticKeys.SEMANTIC_ELEMENT_ID, SemanticElementAccessor.getId(element));
+         ccommand().getProperties().put(ElementCodec.SEMANTIC_ELEMENT_ID, SemanticElementAccessor.getId(element));
          return (T) this;
       }
 
       default T element(final String elementId) {
-         ccommand().getProperties().put(SemanticKeys.SEMANTIC_ELEMENT_ID, elementId);
+         ccommand().getProperties().put(ElementCodec.SEMANTIC_ELEMENT_ID, elementId);
          return (T) this;
       }
    }
@@ -45,7 +45,7 @@ public interface ElementCodec {
       }
 
       default Optional<String> elementId() {
-         return Optional.of(ccommand().getProperties().get(SemanticKeys.SEMANTIC_ELEMENT_ID));
+         return Optional.of(ccommand().getProperties().get(ElementCodec.SEMANTIC_ELEMENT_ID));
       }
    }
 }

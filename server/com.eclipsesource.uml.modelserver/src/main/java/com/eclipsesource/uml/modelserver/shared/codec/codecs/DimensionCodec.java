@@ -15,16 +15,17 @@ import java.util.Optional;
 import org.eclipse.glsp.graph.GDimension;
 
 import com.eclipsesource.uml.modelserver.shared.codec.CCommandProvider;
-import com.eclipsesource.uml.modelserver.shared.constants.NotationKeys;
 import com.eclipsesource.uml.modelserver.shared.utils.UmlGraphUtil;
 
 public interface DimensionCodec {
+   String HEIGHT = "height";
+   String WIDTH = "width";
 
    interface Encoder<T> extends CCommandProvider {
       default T dimension(final GDimension dimension) {
-         ccommand().getProperties().put(NotationKeys.WIDTH,
+         ccommand().getProperties().put(DimensionCodec.WIDTH,
             String.valueOf(dimension.getWidth()));
-         ccommand().getProperties().put(NotationKeys.HEIGHT,
+         ccommand().getProperties().put(DimensionCodec.HEIGHT,
             String.valueOf(dimension.getHeight()));
 
          return (T) this;
@@ -33,8 +34,8 @@ public interface DimensionCodec {
 
    interface Decoder extends CCommandProvider {
       default Optional<GDimension> dimension() {
-         var width = ccommand().getProperties().get(NotationKeys.WIDTH);
-         var height = ccommand().getProperties().get(NotationKeys.HEIGHT);
+         var width = ccommand().getProperties().get(DimensionCodec.WIDTH);
+         var height = ccommand().getProperties().get(DimensionCodec.HEIGHT);
 
          if (width != null && height != null) {
             return Optional.of(UmlGraphUtil.parseGDimension(width, height));

@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.glsp.server.emf.EMFIdGenerator;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.NamedElement;
 
@@ -21,10 +22,13 @@ import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.eclipsesource.uml.glsp.features.outline.model.OutlineTreeNode;
 import com.google.inject.Inject;
 
-public class StandardOutlineGenerator implements DefaultDiagramOutlineGenerator {
+public abstract class BaseOutlineGenerator implements DiagramOutlineGenerator {
 
    @Inject
    protected UmlModelState modelState;
+
+   @Inject
+   protected EMFIdGenerator idGenerator;
 
    @Override
    public List<OutlineTreeNode> generate() {
@@ -48,10 +52,19 @@ public class StandardOutlineGenerator implements DefaultDiagramOutlineGenerator 
    }
 
    protected String labelOf(final Element element) {
+      var prefix = element.getClass().getSimpleName().split("Impl")[0];
+      var label = idGenerator.getOrCreateId(element);
+
       if (element instanceof NamedElement) {
-         return ((NamedElement) element).getName();
+         var namedElement = (NamedElement) element;
+         var name = namedElement.getName();
+
+         if (name != null) {
+            label = name;
+         }
       }
-      return EcoreUtil.getID(element);
+
+      return "[" + prefix + "] " + label;
    }
 
    protected String iconOf(final Element element) {

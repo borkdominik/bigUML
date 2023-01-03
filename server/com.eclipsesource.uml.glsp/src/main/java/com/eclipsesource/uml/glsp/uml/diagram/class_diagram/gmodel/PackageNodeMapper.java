@@ -10,6 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel;
 
+import java.util.Collection;
 import java.util.stream.Collectors;
 
 import org.eclipse.glsp.graph.GCompartment;
@@ -69,6 +70,10 @@ public final class PackageNodeMapper extends BaseGNodeMapper<Package, GNode> {
             .hAlign(GConstants.HAlign.LEFT))
          .addAll(source.getPackagedElements().stream()
             .map(mapHandler::handle)
+            .collect(Collectors.toList()))
+         .addAll(source.getPackagedElements().stream()
+            .map(mapHandler::handleSiblings)
+            .flatMap(Collection::stream)
             .collect(Collectors.toList()))
          .build();
    }

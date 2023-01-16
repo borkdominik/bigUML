@@ -8,17 +8,13 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.core.manifest.contributions;
+package com.eclipsesource.uml.glsp.core.features.toolpalette;
 
-import com.eclipsesource.uml.modelserver.unotation.Representation;
-import com.google.inject.name.Named;
-import com.google.inject.name.Names;
+import java.util.List;
+import java.util.Map;
 
-public interface BaseRepresentationContribution {
+import org.eclipse.glsp.server.features.toolpalette.PaletteItem;
 
-   Representation representation();
-
-   default Named representationNamed() {
-      return Names.named(representation().getName());
-   }
+public interface ToolPaletteConfiguration {
+   List<PaletteItem> getItems(Map<String, String> args);
 }

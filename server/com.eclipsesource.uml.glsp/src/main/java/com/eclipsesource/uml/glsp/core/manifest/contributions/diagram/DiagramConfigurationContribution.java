@@ -8,39 +8,32 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.features.outline.manifest.contributions;
+package com.eclipsesource.uml.glsp.core.manifest.contributions.diagram;
 
 import java.util.function.Supplier;
 
+import com.eclipsesource.uml.glsp.core.diagram.DiagramConfiguration;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.ContributionBinderSupplier;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.ContributionIdSupplier;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.ContributionRepresentationSupplier;
-import com.eclipsesource.uml.glsp.features.outline.generator.DiagramOutlineGenerator;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Key;
+import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.MapBinder;
 
-public interface OutlineGeneratorContribution
+public interface DiagramConfigurationContribution
    extends ContributionBinderSupplier, ContributionIdSupplier, ContributionRepresentationSupplier {
 
-   interface Definition extends ContributionBinderSupplier {
-      default void defineOutlineGeneratorContribution() {
-         var binder = contributionBinder();
-
-         MapBinder.newMapBinder(binder, Representation.class, DiagramOutlineGenerator.class);
-      }
-   }
-
-   default void contributeOutlineGenerator(final Supplier<Class<? extends DiagramOutlineGenerator>> supplier) {
+   default void contributeDiagramConfiguration(
+      final Supplier<Class<? extends DiagramConfiguration>> supplier) {
       var binder = contributionBinder();
 
-      binder.bind(DiagramOutlineGenerator.class)
+      binder.bind(DiagramConfiguration.class)
          .annotatedWith(idNamed())
          .to(supplier.get());
 
-      MapBinder.newMapBinder(binder, Representation.class, DiagramOutlineGenerator.class)
+      MapBinder.newMapBinder(binder, Representation.class, DiagramConfiguration.class)
          .addBinding(representation())
-         .to(Key.get(DiagramOutlineGenerator.class, idNamed()));
+         .to(Key.get(new TypeLiteral<DiagramConfiguration>() {}, idNamed()));
    }
-
 }

@@ -8,28 +8,22 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.core.manifest.contributions;
+package com.eclipsesource.uml.glsp.core.manifest.contributions.glsp;
+
+import java.util.function.Consumer;
 
 import org.eclipse.glsp.server.operations.OperationHandler;
 
-import com.google.inject.Binder;
+import com.eclipsesource.uml.glsp.core.manifest.contributions.ContributionBinderSupplier;
 import com.google.inject.multibindings.Multibinder;
 
 /*
  * Contributes to GLSP directly
  */
-public interface OperationHandlerContribution {
-   interface Creator {
-      default Multibinder<OperationHandler> createOperationHandlerBinding(final Binder binder) {
-         return Multibinder.newSetBinder(binder, OperationHandler.class);
-      }
-   }
+public interface OperationHandlerContribution extends ContributionBinderSupplier {
 
-   interface Contributor extends Creator {
-      default void contributeOperationHandler(final Binder binder) {
-         contributeOperationHandler(createOperationHandlerBinding(binder));
-      }
-
-      void contributeOperationHandler(Multibinder<OperationHandler> multibinder);
+   default void contributeOperationHandlers(
+      final Consumer<Multibinder<OperationHandler>> consumer) {
+      consumer.accept(Multibinder.newSetBinder(contributionBinder(), OperationHandler.class));
    }
 }

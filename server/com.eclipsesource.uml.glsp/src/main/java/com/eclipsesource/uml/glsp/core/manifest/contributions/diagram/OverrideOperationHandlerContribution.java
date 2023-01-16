@@ -8,39 +8,48 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.features.outline.manifest.contributions;
+package com.eclipsesource.uml.glsp.core.manifest.contributions.diagram;
 
-import java.util.function.Supplier;
+import java.util.Set;
+import java.util.function.Consumer;
+
+import org.eclipse.glsp.server.operations.OperationHandler;
 
 import com.eclipsesource.uml.glsp.core.manifest.contributions.ContributionBinderSupplier;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.ContributionIdSupplier;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.ContributionRepresentationSupplier;
-import com.eclipsesource.uml.glsp.features.outline.generator.DiagramOutlineGenerator;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Key;
+import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.MapBinder;
+import com.google.inject.multibindings.Multibinder;
 
-public interface OutlineGeneratorContribution
+/*
+ * Contributes to GLSP by replacing an operation handler provided by core for the specific diagram
+ */
+public interface OverrideOperationHandlerContribution
    extends ContributionBinderSupplier, ContributionIdSupplier, ContributionRepresentationSupplier {
 
    interface Definition extends ContributionBinderSupplier {
-      default void defineOutlineGeneratorContribution() {
+      default void defineOverrideOperationHandlerContribution() {
          var binder = contributionBinder();
 
-         MapBinder.newMapBinder(binder, Representation.class, DiagramOutlineGenerator.class);
+         MapBinder.newMapBinder(binder, new TypeLiteral<Representation>() {},
+            new TypeLiteral<Set<OperationHandler>>() {});
       }
    }
 
-   default void contributeOutlineGenerator(final Supplier<Class<? extends DiagramOutlineGenerator>> supplier) {
+   default void contributeOverrideOperationHandlers(
+      final Consumer<Multibinder<OperationHandler>> consumer) {
       var binder = contributionBinder();
 
-      binder.bind(DiagramOutlineGenerator.class)
-         .annotatedWith(idNamed())
-         .to(supplier.get());
+      var multibinder = Multibinder.newSetBinder(binder, OperationHandler.class, idNamed());
 
-      MapBinder.newMapBinder(binder, Representation.class, DiagramOutlineGenerator.class)
+      consumer.accept(multibinder);
+
+      MapBinder.newMapBinder(binder, new TypeLiteral<Representation>() {},
+         new TypeLiteral<Set<OperationHandler>>() {})
          .addBinding(representation())
-         .to(Key.get(DiagramOutlineGenerator.class, idNamed()));
+         .to(Key.get(new TypeLiteral<Set<OperationHandler>>() {}, idNamed()));
    }
-
 }

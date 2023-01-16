@@ -15,12 +15,12 @@ import java.util.Map;
 
 import org.eclipse.glsp.server.features.toolpalette.PaletteItem;
 
-import com.eclipsesource.uml.glsp.core.features.toolpalette.DiagramPalette;
+import com.eclipsesource.uml.glsp.core.features.toolpalette.ToolPaletteConfiguration;
 import com.eclipsesource.uml.glsp.core.features.toolpalette.PaletteItemUtil;
 import com.eclipsesource.uml.glsp.uml.diagram.common_diagram.constants.CommonTypes;
 import com.google.common.collect.Lists;
 
-public class CommonPalette implements DiagramPalette {
+public class CommonPalette implements ToolPaletteConfiguration {
 
    @Override
    public List<PaletteItem> getItems(final Map<String, String> args) {

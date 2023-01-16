@@ -10,52 +10,37 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.features.outline.manifest;
 
-import org.eclipse.glsp.server.actions.Action;
-import org.eclipse.glsp.server.actions.ActionHandler;
-
-import com.eclipsesource.uml.glsp.core.manifest.contributions.ActionHandlerContribution;
-import com.eclipsesource.uml.glsp.core.manifest.contributions.ClientActionContribution;
+import com.eclipsesource.uml.glsp.core.manifest.FeatureManifest;
+import com.eclipsesource.uml.glsp.core.manifest.contributions.glsp.ActionHandlerContribution;
+import com.eclipsesource.uml.glsp.core.manifest.contributions.glsp.ClientActionContribution;
 import com.eclipsesource.uml.glsp.features.outline.generator.DefaultDiagramOutlineGenerator;
 import com.eclipsesource.uml.glsp.features.outline.generator.NotationBasedOutlineGenerator;
 import com.eclipsesource.uml.glsp.features.outline.handler.action.DiagramOutlineGeneratorRegistry;
 import com.eclipsesource.uml.glsp.features.outline.handler.action.RequestOutlineHandler;
 import com.eclipsesource.uml.glsp.features.outline.handler.action.SetOutlineAction;
 import com.eclipsesource.uml.glsp.features.outline.manifest.contributions.OutlineGeneratorContribution;
-import com.google.inject.AbstractModule;
 import com.google.inject.Singleton;
-import com.google.inject.multibindings.Multibinder;
 import com.google.inject.multibindings.OptionalBinder;
 
-public class OutlineManifest extends AbstractModule
-   implements ClientActionContribution.Contributor, ActionHandlerContribution.Contributor,
-   OutlineGeneratorContribution.Creator {
+public class OutlineFeatureManifest extends FeatureManifest
+   implements ClientActionContribution, ActionHandlerContribution, OutlineGeneratorContribution.Definition {
 
    @Override
    protected void configure() {
       super.configure();
-      contributeClientAction(binder());
-      contributeActionHandler(binder());
-      createDiagramOutlineGeneratorBinding(binder());
+      contributeClientActions((contribution) -> {
+         contribution.addBinding().to(SetOutlineAction.class);
+      });
+      contributeActionHandlers((contribution) -> {
+         contribution.addBinding().to(RequestOutlineHandler.class);
+      });
+
+      defineOutlineGeneratorContribution();
 
       bind(DiagramOutlineGeneratorRegistry.class).in(Singleton.class);
       OptionalBinder.newOptionalBinder(binder(), DefaultDiagramOutlineGenerator.class)
          .setDefault()
          .to(NotationBasedOutlineGenerator.class)
          .in(Singleton.class);
-   }
-
-   @Override
-   public String id() {
-      return getClass().getSimpleName();
-   }
-
-   @Override
-   public void contributeClientAction(final Multibinder<Action> multibinder) {
-      multibinder.addBinding().to(SetOutlineAction.class);
-   }
-
-   @Override
-   public void contributeActionHandler(final Multibinder<ActionHandler> multibinder) {
-      multibinder.addBinding().to(RequestOutlineHandler.class);
    }
 }

@@ -10,21 +10,13 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.manifest;
 
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.glsp.graph.GModelElement;
-
-import com.eclipsesource.uml.glsp.core.diagram.DiagramConfiguration;
-import com.eclipsesource.uml.glsp.core.features.toolpalette.DiagramPalette;
-import com.eclipsesource.uml.glsp.core.gmodel.GModelMapper;
-import com.eclipsesource.uml.glsp.core.handler.operation.create.DiagramCreateHandler;
-import com.eclipsesource.uml.glsp.core.handler.operation.delete.DiagramDeleteHandler;
-import com.eclipsesource.uml.glsp.core.handler.operation.directediting.DiagramLabelEditHandler;
 import com.eclipsesource.uml.glsp.core.manifest.DiagramManifest;
-import com.eclipsesource.uml.glsp.core.manifest.contributions.CreateHandlerContribution;
-import com.eclipsesource.uml.glsp.core.manifest.contributions.DeleteHandlerContribution;
-import com.eclipsesource.uml.glsp.core.manifest.contributions.LabelEditHandlerContribution;
-import com.eclipsesource.uml.glsp.core.manifest.contributions.SuffixIdAppenderContribution;
+import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramCreateHandlerContribution;
+import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramDeleteHandlerContribution;
+import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramLabelEditHandlerContribution;
+import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.SuffixIdAppenderContribution;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.ClassDiagramConfiguration;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.toolpalette.ClassToolPaletteConfiguration;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.AssociationEdgeMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.ClassNodeMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.DataTypeNodeMapper;
@@ -76,13 +68,11 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.ui
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.upackage.CreatePackageHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.upackage.DeletePackageHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.upackage.RenamePackageHandler;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.palette.ClassPalette;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
-import com.google.inject.multibindings.Multibinder;
 
 public final class ClassUmlManifest extends DiagramManifest
-   implements CreateHandlerContribution.Contributor,
-   DeleteHandlerContribution.Contributor, LabelEditHandlerContribution.Contributor, SuffixIdAppenderContribution {
+   implements DiagramCreateHandlerContribution,
+   DiagramDeleteHandlerContribution, DiagramLabelEditHandlerContribution, SuffixIdAppenderContribution {
 
    @Override
    public String id() {
@@ -98,94 +88,72 @@ public final class ClassUmlManifest extends DiagramManifest
    protected void configure() {
       super.configure();
 
-      contributeCreateHandler(binder());
-      contributeDeleteHandler(binder());
-      contributeLabelEditHandler(binder());
-      contributeSuffixIdAppenders();
-   }
-
-   public void contributeSuffixIdAppenders() {
-      contributeSuffixIdAppenders(binder(), mapbinder -> {
-         mapbinder.addBinding(PropertyMultiplicityLabelSuffix.SUFFIX)
-            .to(PropertyMultiplicityLabelSuffix.class);
-         mapbinder.addBinding(PropertyTypeLabelSuffix.SUFFIX).to(PropertyTypeLabelSuffix.class);
+      contributeDiagramConfiguration(() -> ClassDiagramConfiguration.class);
+      contributeToolPaletteConfiguration((contribution) -> {
+         contribution.addBinding().to(ClassToolPaletteConfiguration.class);
       });
-   }
+      contributeSuffixIdAppenders((contribution) -> {
+         contribution.addBinding(PropertyMultiplicityLabelSuffix.SUFFIX)
+            .to(PropertyMultiplicityLabelSuffix.class);
+         contribution.addBinding(PropertyTypeLabelSuffix.SUFFIX).to(PropertyTypeLabelSuffix.class);
+      });
 
-   @Override
-   public void contributePalette(final Multibinder<DiagramPalette> multibinder) {
-      multibinder.addBinding().to(ClassPalette.class);
-   }
-
-   @Override
-   public Class<? extends DiagramConfiguration> contributeDiagramConfiguration() {
-      return ClassDiagramConfiguration.class;
-   }
-
-   @Override
-   public void contributeCreateHandler(final Multibinder<DiagramCreateHandler> multibinder) {
-      multibinder.addBinding().to(CreateAggregationHandler.class);
-      multibinder.addBinding().to(CreateAssociationHandler.class);
-      multibinder.addBinding().to(CreateCompositionHandler.class);
-      multibinder.addBinding().to(CreateEnumerationHandler.class);
-      multibinder.addBinding().to(CreateEnumerationLiteralHandler.class);
-      multibinder.addBinding().to(CreateGeneralizationHandler.class);
-      multibinder.addBinding().to(CreatePropertyHandler.class);
-      multibinder.addBinding().to(CreateAbstractClassHandler.class);
-      multibinder.addBinding().to(CreateClassHandler.class);
-      multibinder.addBinding().to(CreateInterfaceHandler.class);
-      multibinder.addBinding().to(CreateOperationHandler.class);
-      multibinder.addBinding().to(CreateDataTypeHandler.class);
-      multibinder.addBinding().to(CreatePrimitiveTypeHandler.class);
-      multibinder.addBinding().to(CreatePackageHandler.class);
-   }
-
-   @Override
-   public void contributeDeleteHandler(final Multibinder<DiagramDeleteHandler<? extends EObject>> multibinder) {
-      multibinder.addBinding().to(DeleteAssociationHandler.class);
-      multibinder.addBinding().to(DeleteEnumerationHandler.class);
-      multibinder.addBinding().to(DeleteEnumerationLiteralHandler.class);
-      multibinder.addBinding().to(DeleteGeneralizationHandler.class);
-      multibinder.addBinding().to(DeletePropertyHandler.class);
-      multibinder.addBinding().to(DeleteClassHandler.class);
-      multibinder.addBinding().to(DeleteInterfaceHandler.class);
-      multibinder.addBinding().to(DeleteOperationHandler.class);
-      multibinder.addBinding().to(DeleteDataTypeHandler.class);
-      multibinder.addBinding().to(DeletePrimitiveTypeHandler.class);
-      multibinder.addBinding().to(DeletePackageHandler.class);
-   }
-
-   @Override
-   public void contributeLabelEditHandler(
-      final Multibinder<DiagramLabelEditHandler<? extends EObject>> multibinder) {
-      multibinder.addBinding().to(SetAssociationEndBoundsHandler.class);
-      multibinder.addBinding().to(SetAssociationEndNameHandler.class);
-      multibinder.addBinding().to(RenameEnumerationHandler.class);
-      multibinder.addBinding().to(RenameEnumerationLiteralHandler.class);
-      multibinder.addBinding().to(RenamePropertyHandler.class);
-      multibinder.addBinding().to(UpdatePropertyMultiplicityHandler.class);
-      multibinder.addBinding().to(UpdatePropertyTypeHandler.class);
-      multibinder.addBinding().to(RenameClassHandler.class);
-      multibinder.addBinding().to(RenameInterfaceHandler.class);
-      multibinder.addBinding().to(RenameOperationHandler.class);
-      multibinder.addBinding().to(RenameDataTypeHandler.class);
-      multibinder.addBinding().to(RenamePrimitiveTypeHandler.class);
-      multibinder.addBinding().to(RenamePackageHandler.class);
-   }
-
-   @Override
-   public void contributeGModelMapper(
-      final Multibinder<GModelMapper<? extends EObject, ? extends GModelElement>> multibinder) {
-      multibinder.addBinding().to(AssociationEdgeMapper.class);
-      multibinder.addBinding().to(ClassNodeMapper.class);
-      multibinder.addBinding().to(EnumerationNodeMapper.class);
-      multibinder.addBinding().to(EnumerationLiteralCompartmentMapper.class);
-      multibinder.addBinding().to(GeneralizationEdgeMapper.class);
-      multibinder.addBinding().to(InterfaceNodeMapper.class);
-      multibinder.addBinding().to(PropertyCompartmentMapper.class);
-      multibinder.addBinding().to(OperationCompartmentMapper.class);
-      multibinder.addBinding().to(DataTypeNodeMapper.class);
-      multibinder.addBinding().to(PrimitiveTypeNodeMapper.class);
-      multibinder.addBinding().to(PackageNodeMapper.class);
+      contributeDiagramCreateHandlers((contribution) -> {
+         contribution.addBinding().to(CreateAggregationHandler.class);
+         contribution.addBinding().to(CreateAssociationHandler.class);
+         contribution.addBinding().to(CreateCompositionHandler.class);
+         contribution.addBinding().to(CreateEnumerationHandler.class);
+         contribution.addBinding().to(CreateEnumerationLiteralHandler.class);
+         contribution.addBinding().to(CreateGeneralizationHandler.class);
+         contribution.addBinding().to(CreatePropertyHandler.class);
+         contribution.addBinding().to(CreateAbstractClassHandler.class);
+         contribution.addBinding().to(CreateClassHandler.class);
+         contribution.addBinding().to(CreateInterfaceHandler.class);
+         contribution.addBinding().to(CreateOperationHandler.class);
+         contribution.addBinding().to(CreateDataTypeHandler.class);
+         contribution.addBinding().to(CreatePrimitiveTypeHandler.class);
+         contribution.addBinding().to(CreatePackageHandler.class);
+      });
+      contributeDiagramDeleteHandlers((contribution) -> {
+         contribution.addBinding().to(DeleteAssociationHandler.class);
+         contribution.addBinding().to(DeleteEnumerationHandler.class);
+         contribution.addBinding().to(DeleteEnumerationLiteralHandler.class);
+         contribution.addBinding().to(DeleteGeneralizationHandler.class);
+         contribution.addBinding().to(DeletePropertyHandler.class);
+         contribution.addBinding().to(DeleteClassHandler.class);
+         contribution.addBinding().to(DeleteInterfaceHandler.class);
+         contribution.addBinding().to(DeleteOperationHandler.class);
+         contribution.addBinding().to(DeleteDataTypeHandler.class);
+         contribution.addBinding().to(DeletePrimitiveTypeHandler.class);
+         contribution.addBinding().to(DeletePackageHandler.class);
+      });
+      contributeDiagramLabelEditHandlers((contribution) -> {
+         contribution.addBinding().to(SetAssociationEndBoundsHandler.class);
+         contribution.addBinding().to(SetAssociationEndNameHandler.class);
+         contribution.addBinding().to(RenameEnumerationHandler.class);
+         contribution.addBinding().to(RenameEnumerationLiteralHandler.class);
+         contribution.addBinding().to(RenamePropertyHandler.class);
+         contribution.addBinding().to(UpdatePropertyMultiplicityHandler.class);
+         contribution.addBinding().to(UpdatePropertyTypeHandler.class);
+         contribution.addBinding().to(RenameClassHandler.class);
+         contribution.addBinding().to(RenameInterfaceHandler.class);
+         contribution.addBinding().to(RenameOperationHandler.class);
+         contribution.addBinding().to(RenameDataTypeHandler.class);
+         contribution.addBinding().to(RenamePrimitiveTypeHandler.class);
+         contribution.addBinding().to(RenamePackageHandler.class);
+      });
+      contributeGModelMappers((contribution) -> {
+         contribution.addBinding().to(AssociationEdgeMapper.class);
+         contribution.addBinding().to(ClassNodeMapper.class);
+         contribution.addBinding().to(EnumerationNodeMapper.class);
+         contribution.addBinding().to(EnumerationLiteralCompartmentMapper.class);
+         contribution.addBinding().to(GeneralizationEdgeMapper.class);
+         contribution.addBinding().to(InterfaceNodeMapper.class);
+         contribution.addBinding().to(PropertyCompartmentMapper.class);
+         contribution.addBinding().to(OperationCompartmentMapper.class);
+         contribution.addBinding().to(DataTypeNodeMapper.class);
+         contribution.addBinding().to(PrimitiveTypeNodeMapper.class);
+         contribution.addBinding().to(PackageNodeMapper.class);
+      });
    }
 }

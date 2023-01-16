@@ -30,7 +30,7 @@ public class UmlToolPaletteItemProvider
    private static Logger LOGGER = LogManager.getLogger(UmlToolPaletteItemProvider.class.getSimpleName());
 
    @Inject
-   private Map<Representation, Set<DiagramPalette>> palettes;
+   private Map<Representation, Set<ToolPaletteConfiguration>> palettes;
 
    @Inject
    private UmlModelState modelState;

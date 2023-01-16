@@ -16,14 +16,14 @@ public class CommonUmlManifest extends AbstractModule {
    /*-
    @Override
    protected void configure() {
-      contributeDiagramConfiguration(binder());
-      contributePalette(binder());
-      contributeOperationHandler(binder());
-      // contributeDeleteHandler(binder());
-      contributeEditLabelOperationHandler(binder());
+      contributeDiagramConfiguration((contribution) -> {});
+      contributePalette((contribution) -> {});
+      contributeOperationHandler((contribution) -> {});
+      // contributeDeleteHandler((contribution) -> {});
+      contributeEditLabelOperationHandler((contribution) -> {});
    
       // Default
-      Multibinder.newSetBinder(binder(), CommonDiagramConfiguration.class);
+      Multibinder.newSetBinder(CommonDiagramConfiguration.class);
    }
    
    @Override

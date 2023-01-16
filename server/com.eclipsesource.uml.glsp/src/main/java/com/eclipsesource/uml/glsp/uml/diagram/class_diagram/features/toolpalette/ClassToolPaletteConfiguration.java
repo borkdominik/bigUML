@@ -8,18 +8,18 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.palette;
+package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.toolpalette;
 
 import java.util.List;
 import java.util.Map;
 
 import org.eclipse.glsp.server.features.toolpalette.PaletteItem;
 
-import com.eclipsesource.uml.glsp.core.features.toolpalette.DiagramPalette;
+import com.eclipsesource.uml.glsp.core.features.toolpalette.ToolPaletteConfiguration;
 import com.eclipsesource.uml.glsp.core.features.toolpalette.PaletteItemUtil;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
 
-public final class ClassPalette implements DiagramPalette {
+public final class ClassToolPaletteConfiguration implements ToolPaletteConfiguration {
    @Override
    public List<PaletteItem> getItems(final Map<String, String> args) {
       return List.of(containers(), relations(), features());

@@ -13,7 +13,7 @@ package com.eclipsesource.uml.glsp.core.manifest.contributions;
 import com.google.inject.name.Named;
 import com.google.inject.name.Names;
 
-public interface BaseContribution {
+public interface ContributionIdSupplier {
 
    String id();
 

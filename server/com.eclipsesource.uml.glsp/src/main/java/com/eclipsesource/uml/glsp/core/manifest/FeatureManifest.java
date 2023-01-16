@@ -8,21 +8,17 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.core.manifest.contributions;
+package com.eclipsesource.uml.glsp.core.manifest;
 
-import java.util.function.Consumer;
-
-import com.eclipsesource.uml.glsp.core.features.idgenerator.SuffixIdAppender;
+import com.eclipsesource.uml.glsp.core.manifest.contributions.ContributionBinderSupplier;
+import com.google.inject.AbstractModule;
 import com.google.inject.Binder;
-import com.google.inject.multibindings.MapBinder;
 
-public interface SuffixIdAppenderContribution {
+public abstract class FeatureManifest extends AbstractModule
+   implements ContributionBinderSupplier {
 
-   default void contributeSuffixIdAppenders(final Binder binder,
-      final Consumer<MapBinder<String, SuffixIdAppender>> consumer) {
-      var mapbinder = MapBinder.newMapBinder(binder, String.class, SuffixIdAppender.class);
-
-      consumer.accept(mapbinder);
+   @Override
+   public Binder contributionBinder() {
+      return binder();
    }
-
 }

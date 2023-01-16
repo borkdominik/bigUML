@@ -8,19 +8,19 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.palette;
+package com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.features.toolpalette;
 
 import java.util.List;
 import java.util.Map;
 
 import org.eclipse.glsp.server.features.toolpalette.PaletteItem;
 
-import com.eclipsesource.uml.glsp.core.features.toolpalette.DiagramPalette;
+import com.eclipsesource.uml.glsp.core.features.toolpalette.ToolPaletteConfiguration;
 import com.eclipsesource.uml.glsp.core.features.toolpalette.PaletteItemUtil;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
 import com.google.common.collect.Lists;
 
-public class CommunicationPalette implements DiagramPalette {
+public class CommunicationToolPaletteConfiguration implements ToolPaletteConfiguration {
 
    @Override
    public List<PaletteItem> getItems(final Map<String, String> args) {

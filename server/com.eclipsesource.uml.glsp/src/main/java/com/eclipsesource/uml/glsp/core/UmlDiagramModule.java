@@ -53,11 +53,11 @@ import com.eclipsesource.uml.glsp.core.handler.operation.delete.DiagramDeleteHan
 import com.eclipsesource.uml.glsp.core.handler.operation.delete.UmlDeleteOperationHandler;
 import com.eclipsesource.uml.glsp.core.handler.operation.directediting.DiagramLabelEditHandlerRegistry;
 import com.eclipsesource.uml.glsp.core.handler.operation.directediting.UmlLabelEditOperationHandler;
-import com.eclipsesource.uml.glsp.core.manifest.DefaultManifest;
+import com.eclipsesource.uml.glsp.core.manifest.CoreManifest;
 import com.eclipsesource.uml.glsp.core.model.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.eclipsesource.uml.glsp.core.model.UmlSourceModelStorage;
-import com.eclipsesource.uml.glsp.features.outline.manifest.OutlineManifest;
+import com.eclipsesource.uml.glsp.features.outline.manifest.OutlineFeatureManifest;
 import com.eclipsesource.uml.glsp.features.validation.UmlDiagramModelValidator;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.manifest.ClassUmlManifest;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.manifest.CommunicationUmlManifest;
@@ -196,8 +196,13 @@ public class UmlDiagramModule extends EMSGLSPNotationDiagramModule {
    protected void configureAdditionals() {
       super.configureAdditionals();
 
-      install(new DefaultManifest());
-      install(new OutlineManifest());
+      // Core
+      install(new CoreManifest());
+
+      // Feature
+      install(new OutlineFeatureManifest());
+
+      // Diagram
       // install(new CommonUmlManifest());
       install(new ClassUmlManifest());
       install(new CommunicationUmlManifest());

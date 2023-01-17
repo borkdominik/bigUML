@@ -15,7 +15,9 @@ import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramCre
 import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramDeleteHandlerContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramLabelEditHandlerContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.SuffixIdAppenderContribution;
+import com.eclipsesource.uml.glsp.features.property_palette.manifest.contributions.DiagramElementPropertyMapperContribution;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.ClassDiagramConfiguration;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.property_palette.PackagePropertyMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.toolpalette.ClassToolPaletteConfiguration;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.AssociationEdgeMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.ClassNodeMapper;
@@ -72,7 +74,8 @@ import com.eclipsesource.uml.modelserver.unotation.Representation;
 
 public final class ClassUmlManifest extends DiagramManifest
    implements DiagramCreateHandlerContribution,
-   DiagramDeleteHandlerContribution, DiagramLabelEditHandlerContribution, SuffixIdAppenderContribution {
+   DiagramDeleteHandlerContribution, DiagramLabelEditHandlerContribution, SuffixIdAppenderContribution,
+   DiagramElementPropertyMapperContribution {
 
    @Override
    public String id() {
@@ -154,6 +157,10 @@ public final class ClassUmlManifest extends DiagramManifest
          contribution.addBinding().to(DataTypeNodeMapper.class);
          contribution.addBinding().to(PrimitiveTypeNodeMapper.class);
          contribution.addBinding().to(PackageNodeMapper.class);
+      });
+
+      contributeDiagramElementPropertyMapper((contribution) -> {
+         contribution.addBinding().to(PackagePropertyMapper.class);
       });
    }
 }

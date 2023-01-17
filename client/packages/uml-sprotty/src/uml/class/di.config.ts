@@ -19,7 +19,6 @@ import { IconLabelCompartment, SEditableLabel } from "../../model";
 import { UmlTypes } from "../../utils";
 import { NamedElement } from "../shared/named-element.model";
 import { NamedElementView } from "../shared/named-element.view";
-import { IconPackage } from "../usecase/model";
 import { IconClass } from "./elements/class";
 import { IconDataType } from "./elements/data_type";
 import { IconEnumeration } from "./elements/enumeration";

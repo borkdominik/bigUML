@@ -58,6 +58,7 @@ import com.eclipsesource.uml.glsp.core.model.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.eclipsesource.uml.glsp.core.model.UmlSourceModelStorage;
 import com.eclipsesource.uml.glsp.features.outline.manifest.OutlineFeatureManifest;
+import com.eclipsesource.uml.glsp.features.property_palette.manifest.PropertyPaletteFeatureManifest;
 import com.eclipsesource.uml.glsp.features.validation.UmlDiagramModelValidator;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.manifest.ClassUmlManifest;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.manifest.CommunicationUmlManifest;
@@ -201,6 +202,7 @@ public class UmlDiagramModule extends EMSGLSPNotationDiagramModule {
 
       // Feature
       install(new OutlineFeatureManifest());
+      install(new PropertyPaletteFeatureManifest());
 
       // Diagram
       // install(new CommonUmlManifest());

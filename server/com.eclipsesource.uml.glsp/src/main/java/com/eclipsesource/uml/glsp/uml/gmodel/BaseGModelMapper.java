@@ -46,7 +46,6 @@ public abstract class BaseGModelMapper<Source extends EObject, Target extends GM
    public BaseGModelMapper() {
       this.sourceType = GenericsUtil.getClassParameter(getClass(), BaseGModelMapper.class, 0);
       this.targetType = GenericsUtil.getClassParameter(getClass(), BaseGModelMapper.class, 1);
-
    }
 
    @Override

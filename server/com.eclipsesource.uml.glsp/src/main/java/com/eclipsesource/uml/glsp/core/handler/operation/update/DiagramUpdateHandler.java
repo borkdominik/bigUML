@@ -8,18 +8,14 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.core.manifest;
+package com.eclipsesource.uml.glsp.core.handler.operation.update;
 
-import com.eclipsesource.uml.glsp.core.manifest.contributions.ContributionBinderSupplier;
-import com.eclipsesource.uml.glsp.core.manifest.contributions.ContributionIdSupplier;
-import com.google.inject.AbstractModule;
-import com.google.inject.Binder;
+import org.eclipse.emf.ecore.EObject;
 
-public abstract class FeatureManifest extends AbstractModule
-   implements ContributionBinderSupplier, ContributionIdSupplier {
+public interface DiagramUpdateHandler<T extends EObject> {
+   Class<T> getElementType();
 
-   @Override
-   public Binder contributionBinder() {
-      return binder();
-   }
+   String contextId();
+
+   void handle(final UpdateOperation operation);
 }

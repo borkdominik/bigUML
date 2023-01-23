@@ -42,3 +42,20 @@ export class RequestPropertyPaletteAction implements RequestAction<SetPropertyPa
         public elementId: string,
         public requestId: string = generateRequestId()) { }
 }
+
+export class UpdateElementPropertyAction implements Action {
+    static readonly KIND = "updateElementProperty";
+    kind = UpdateElementPropertyAction.KIND;
+
+    constructor(
+        public elementId: string,
+        public propertyId: string,
+        public value: string
+    ) { }
+}
+
+export function isUpdateElementPropertyAction(
+    action: Action
+): action is UpdateElementPropertyAction {
+    return action.kind === UpdateElementPropertyAction.KIND;
+}

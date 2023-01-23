@@ -25,6 +25,13 @@ import com.google.inject.multibindings.OptionalBinder;
 public class OutlineFeatureManifest extends FeatureManifest
    implements ClientActionContribution, ActionHandlerContribution, OutlineGeneratorContribution.Definition {
 
+   public static String ID = OutlineFeatureManifest.class.getSimpleName();
+
+   @Override
+   public String id() {
+      return ID;
+   }
+
    @Override
    protected void configure() {
       super.configure();

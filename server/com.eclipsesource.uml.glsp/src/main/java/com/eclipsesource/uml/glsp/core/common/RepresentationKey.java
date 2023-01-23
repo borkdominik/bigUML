@@ -14,22 +14,22 @@ import java.util.Objects;
 
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 
-public class RepresentationKey<K2> {
+public class RepresentationKey<Key> {
    public final Representation representation;
-   public final K2 key2;
+   public final Key key;
 
-   public RepresentationKey(final Representation representation, final K2 key2) {
+   public RepresentationKey(final Representation representation, final Key key) {
       this.representation = representation;
-      this.key2 = key2;
+      this.key = key;
    }
 
-   public static <K2> RepresentationKey<K2> of(final Representation representation, final K2 key2) {
-      return new RepresentationKey<>(representation, key2);
+   public static <Key> RepresentationKey<Key> of(final Representation representation, final Key key) {
+      return new RepresentationKey<>(representation, key);
    }
 
    @Override
    public int hashCode() {
-      return Objects.hash(representation, key2);
+      return Objects.hash(representation, key);
    }
 
    @Override
@@ -44,7 +44,7 @@ public class RepresentationKey<K2> {
          return false;
       }
       RepresentationKey other = (RepresentationKey) obj;
-      return Objects.equals(representation, other.representation) && Objects.equals(key2, other.key2);
+      return Objects.equals(representation, other.representation) && Objects.equals(key, other.key);
    }
 
 }

@@ -18,14 +18,14 @@ public abstract class DiagramClassRegistry<K extends Class<?>, V> extends Diagra
    @Override
    protected String deriveKey(final RepresentationKey<K> key) {
       var representation = key.representation;
-      var clazz = key.key2;
+      var clazz = key.key;
 
       if (clazz.isInterface()) {
          return representation.getName() + ":" + clazz;
       }
 
       var interfaces = List.of(clazz.getInterfaces());
-      var keys = keys().stream().filter(k -> k.representation.equals(representation)).map(k -> k.key2)
+      var keys = keys().stream().filter(k -> k.representation.equals(representation)).map(k -> k.key)
          .collect(Collectors.toSet());
 
       var found = keys.stream().filter(k -> interfaces.contains(k)).findFirst();

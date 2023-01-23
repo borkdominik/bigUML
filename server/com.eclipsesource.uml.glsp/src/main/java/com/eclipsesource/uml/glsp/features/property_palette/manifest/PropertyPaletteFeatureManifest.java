@@ -16,11 +16,19 @@ import com.eclipsesource.uml.glsp.core.manifest.contributions.glsp.ClientActionC
 import com.eclipsesource.uml.glsp.features.property_palette.handler.action.DiagramElementPropertyMapperRegistry;
 import com.eclipsesource.uml.glsp.features.property_palette.handler.action.RequestPropertyPaletteHandler;
 import com.eclipsesource.uml.glsp.features.property_palette.handler.action.SetPropertyPaletteAction;
+import com.eclipsesource.uml.glsp.features.property_palette.handler.action.UpdateElementPropertyHandler;
 import com.eclipsesource.uml.glsp.features.property_palette.manifest.contributions.DiagramElementPropertyMapperContribution;
 import com.google.inject.Singleton;
 
 public class PropertyPaletteFeatureManifest extends FeatureManifest
    implements ClientActionContribution, ActionHandlerContribution, DiagramElementPropertyMapperContribution.Definition {
+
+   public static String ID = PropertyPaletteFeatureManifest.class.getSimpleName();
+
+   @Override
+   public String id() {
+      return ID;
+   }
 
    @Override
    protected void configure() {
@@ -31,11 +39,12 @@ public class PropertyPaletteFeatureManifest extends FeatureManifest
       });
       contributeActionHandlers((contribution) -> {
          contribution.addBinding().to(RequestPropertyPaletteHandler.class);
+         contribution.addBinding().to(UpdateElementPropertyHandler.class);
       });
 
       defineDiagramElementPropertyMapperContribution();
 
       bind(DiagramElementPropertyMapperRegistry.class).in(Singleton.class);
-
    }
+
 }

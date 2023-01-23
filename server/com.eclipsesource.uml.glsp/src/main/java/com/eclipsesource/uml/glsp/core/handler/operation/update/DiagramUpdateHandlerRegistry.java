@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.core.handler.operation.directediting;
+package com.eclipsesource.uml.glsp.core.handler.operation.update;
 
 import java.util.List;
 import java.util.Map;
@@ -18,26 +18,25 @@ import java.util.stream.Collectors;
 import org.eclipse.emf.ecore.EObject;
 
 import com.eclipsesource.uml.glsp.core.common.DiagramMultiKeyRegistry;
+import com.eclipsesource.uml.glsp.core.common.DoubleKey;
 import com.eclipsesource.uml.glsp.core.common.RepresentationKey;
-import com.eclipsesource.uml.glsp.core.common.TripleKey;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 
-public class DiagramLabelEditHandlerRegistry
+public class DiagramUpdateHandlerRegistry
    extends
-   DiagramMultiKeyRegistry<TripleKey<Class<? extends EObject>, String, String>, DiagramLabelEditHandler<? extends EObject>> {
+   DiagramMultiKeyRegistry<DoubleKey<Class<? extends EObject>, String>, DiagramUpdateHandler<? extends EObject>> {
 
    @Inject
-   public DiagramLabelEditHandlerRegistry(
-      final Map<Representation, Set<DiagramLabelEditHandler<? extends EObject>>> handlers) {
+   public DiagramUpdateHandlerRegistry(
+      final Map<Representation, Set<DiagramUpdateHandler<? extends EObject>>> handlers) {
       handlers.entrySet().forEach(e -> {
          var representation = e.getKey();
 
          e.getValue().forEach(handler -> {
             var elementType = handler.getElementType();
-            var labelType = handler.getLabelType();
-            var labelSuffix = handler.getLabelSuffix();
-            register(RepresentationKey.of(representation, TripleKey.of(elementType, labelType, labelSuffix)), handler);
+            var origin = handler.contextId();
+            register(RepresentationKey.of(representation, DoubleKey.of(elementType, origin)), handler);
          });
       });
 
@@ -45,13 +44,15 @@ public class DiagramLabelEditHandlerRegistry
    }
 
    @Override
-   protected String deriveKey(final RepresentationKey<TripleKey<Class<? extends EObject>, String, String>> key) {
+   protected String deriveKey(final RepresentationKey<DoubleKey<Class<? extends EObject>, String>> key) {
       var representation = key.representation;
-      var tripleKey = key.key;
+      var doubleKey = key.key;
 
-      var clazz = tripleKey.key1;
+      var clazz = doubleKey.key1;
+      var origin = doubleKey.key2;
+
       if (clazz.isInterface()) {
-         return "[" + representation.getName() + "]\t\t" + clazz + "\t" + tripleKey.key2 + "\t" + tripleKey.key3;
+         return "[" + representation.getName() + "]\t\t" + clazz + "\t" + origin;
       }
 
       var interfaces = List.of(clazz.getInterfaces());
@@ -60,8 +61,7 @@ public class DiagramLabelEditHandlerRegistry
 
       var found = dkeys.stream().filter(k -> interfaces.contains(k.key1)).findFirst();
       if (found.isPresent()) {
-         return "[" + representation.getName() + "]\t\t" + found.get().key1 + "\t" + tripleKey.key2 + "\t"
-            + tripleKey.key3;
+         return "[" + representation.getName() + "]\t\t" + found.get().key1 + "\t" + origin;
       }
 
       return super.deriveKey(key);

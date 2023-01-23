@@ -16,7 +16,7 @@
 import { Action, GLSPActionDispatcher, IActionHandler, isSelectAction, TYPES } from "@eclipse-glsp/client";
 import { inject, injectable } from "inversify";
 
-import { RequestPropertyPaletteAction, SetPropertyPaletteAction } from "./actions";
+import { RequestPropertyPaletteAction, SetPropertyPaletteAction, UpdateElementPropertyAction } from "./actions";
 
 @injectable()
 export class PropertyPaletteActionHandler implements IActionHandler {
@@ -30,7 +30,7 @@ export class PropertyPaletteActionHandler implements IActionHandler {
                 .then(response => {
                     console.log("Response", response);
                 });
-
+            return new UpdateElementPropertyAction("_NScJUYqeEe2ivZI76tgg9Q", "name", "test");
         }
     }
 }

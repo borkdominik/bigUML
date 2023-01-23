@@ -27,7 +27,7 @@ public abstract class DiagramMultiKeyRegistry<K, V> implements Registry<Represen
    protected String deriveKey(final RepresentationKey<K> key) {
       var representation = key.representation;
 
-      return representation.getName() + ":" + key.key2;
+      return representation.getName() + ":" + key.key;
    }
 
    @Override

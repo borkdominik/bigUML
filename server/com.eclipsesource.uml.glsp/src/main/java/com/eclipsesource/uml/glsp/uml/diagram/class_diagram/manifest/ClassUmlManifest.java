@@ -14,6 +14,7 @@ import com.eclipsesource.uml.glsp.core.manifest.DiagramManifest;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramCreateHandlerContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramDeleteHandlerContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramLabelEditHandlerContribution;
+import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramUpdateHandlerContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.SuffixIdAppenderContribution;
 import com.eclipsesource.uml.glsp.features.property_palette.manifest.contributions.DiagramElementPropertyMapperContribution;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.ClassDiagramConfiguration;
@@ -70,12 +71,13 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.ui
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.upackage.CreatePackageHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.upackage.DeletePackageHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.upackage.RenamePackageHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.upackage.UpdatePackageNameHandler;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 
 public final class ClassUmlManifest extends DiagramManifest
    implements DiagramCreateHandlerContribution,
    DiagramDeleteHandlerContribution, DiagramLabelEditHandlerContribution, SuffixIdAppenderContribution,
-   DiagramElementPropertyMapperContribution {
+   DiagramElementPropertyMapperContribution, DiagramUpdateHandlerContribution {
 
    @Override
    public String id() {
@@ -144,6 +146,9 @@ public final class ClassUmlManifest extends DiagramManifest
          contribution.addBinding().to(RenameDataTypeHandler.class);
          contribution.addBinding().to(RenamePrimitiveTypeHandler.class);
          contribution.addBinding().to(RenamePackageHandler.class);
+      });
+      contributeDiagramUpdateHandlers((contribution) -> {
+         contribution.addBinding().to(UpdatePackageNameHandler.class);
       });
       contributeGModelMappers((contribution) -> {
          contribution.addBinding().to(AssociationEdgeMapper.class);

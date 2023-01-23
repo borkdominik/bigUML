@@ -53,6 +53,8 @@ import com.eclipsesource.uml.glsp.core.handler.operation.delete.DiagramDeleteHan
 import com.eclipsesource.uml.glsp.core.handler.operation.delete.UmlDeleteOperationHandler;
 import com.eclipsesource.uml.glsp.core.handler.operation.directediting.DiagramLabelEditHandlerRegistry;
 import com.eclipsesource.uml.glsp.core.handler.operation.directediting.UmlLabelEditOperationHandler;
+import com.eclipsesource.uml.glsp.core.handler.operation.update.DiagramUpdateHandlerRegistry;
+import com.eclipsesource.uml.glsp.core.handler.operation.update.UmlUpdateOperationHandler;
 import com.eclipsesource.uml.glsp.core.manifest.CoreManifest;
 import com.eclipsesource.uml.glsp.core.model.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
@@ -92,6 +94,7 @@ public class UmlDiagramModule extends EMSGLSPNotationDiagramModule {
       bind(DiagramCreateHandlerRegistry.class).in(Singleton.class);
       bind(DiagramDeleteHandlerRegistry.class).in(Singleton.class);
       bind(DiagramLabelEditHandlerRegistry.class).in(Singleton.class);
+      bind(DiagramUpdateHandlerRegistry.class).in(Singleton.class);
    }
 
    @Override
@@ -191,6 +194,7 @@ public class UmlDiagramModule extends EMSGLSPNotationDiagramModule {
       bindings.add(UmlCreateNodeOperationHandler.class);
       bindings.add(UmlCreateEdgeOperationHandler.class);
       bindings.add(UmlDeleteOperationHandler.class);
+      bindings.add(UmlUpdateOperationHandler.class);
    }
 
    @Override

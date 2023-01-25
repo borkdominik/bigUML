@@ -13,30 +13,29 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { configureActionHandler, SelectAction } from "@eclipse-glsp/client";
+import { configureActionHandler, SelectAction, TYPES } from "@eclipse-glsp/client";
 import { ContainerModule } from "inversify";
 
-import { RequestPropertyPaletteAction, SetPropertyPaletteAction } from "./actions";
-import { PropertyPaletteActionHandler } from "./handlers";
+import { EnablePropertyPaletteAction, SetPropertyPaletteAction } from "./actions";
+import { PropertyPalette } from "./property-palette";
 
 const umlPropertyPaletteModule = new ContainerModule(
     (bind, _unbind, isBound, rebind) => {
         const context = { bind, _unbind, isBound, rebind };
-        bind(PropertyPaletteActionHandler).toSelf().inSingletonScope();
-        configureActionHandler(
-            context,
-            RequestPropertyPaletteAction.KIND,
-            PropertyPaletteActionHandler
-        );
+
+        bind(PropertyPalette).toSelf().inSingletonScope();
+        bind(TYPES.IUIExtension).toService(PropertyPalette);
+
         configureActionHandler(
             context,
             SetPropertyPaletteAction.KIND,
-            PropertyPaletteActionHandler
+            PropertyPalette
         );
+        configureActionHandler(context, SelectAction.KIND, PropertyPalette);
         configureActionHandler(
             context,
-            SelectAction.KIND,
-            PropertyPaletteActionHandler
+            EnablePropertyPaletteAction.KIND,
+            PropertyPalette
         );
     }
 );

@@ -38,6 +38,10 @@ public class RequestPropertyPaletteHandler extends AbstractActionHandler<Request
    @Override
    protected List<Action> executeAction(final RequestPropertyPaletteAction action) {
       return modelState.getRepresentation().map(representation -> {
+         if (action.getElementId() == null) {
+            return List.<Action> of(new SetPropertyPaletteAction());
+         }
+
          var elementId = action.getElementId();
 
          var semanticElement = getOrThrow(modelState.getIndex().getEObject(elementId),

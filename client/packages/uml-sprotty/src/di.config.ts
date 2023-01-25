@@ -144,11 +144,11 @@ export default function createContainer(widgetId: string): Container {
     const classModule = createClassModule();
 
     const container = createClientContainer(
+        saveModule,
         coreDiagramModule,
         communicationModule,
         classModule,
         umlToolPaletteModule,
-        saveModule,
         umlDiagramOutlineViewModule,
         umlPropertyPaletteModule
     );

@@ -13,19 +13,19 @@ package com.eclipsesource.uml.glsp.features.property_palette.model;
 public abstract class ElementPropertyItem {
    private final String elementId;
    private final String propertyId;
-   private final ElementPropertyType type;
+   private final String type;
 
    public ElementPropertyItem(final String elementId, final String propertyId, final ElementPropertyType type) {
       super();
       this.elementId = elementId;
       this.propertyId = propertyId;
-      this.type = type;
+      this.type = type.name();
    }
 
    public String getElementId() { return elementId; }
 
    public String getPropertyId() { return propertyId; }
 
-   public ElementPropertyType getType() { return type; }
+   public String getType() { return type; }
 
 }

@@ -16,4 +16,3 @@
 
 export * from "./actions";
 export * from "./di.config";
-export * from "./handlers";

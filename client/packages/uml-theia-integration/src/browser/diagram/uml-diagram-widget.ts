@@ -8,12 +8,15 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-import "../css/diagram.css";
-import "reflect-metadata";
+import { GLSPDiagramWidget } from "@eclipse-glsp/theia-integration";
+import { EnablePropertyPaletteAction } from "@eclipsesource/uml-sprotty/lib/features/property-palette";
 
-import createUmlDiagramContainer from "./di.config";
+export class UmlDiagramWidget extends GLSPDiagramWidget {
 
-export * from "./model";
-export * from "./common/common";
-export * from "./features/edit-label";
-export { createUmlDiagramContainer };
+    protected override dispatchInitialActions(): void {
+        super.dispatchInitialActions();
+
+        this.actionDispatcher.dispatch(new EnablePropertyPaletteAction());
+    }
+
+}

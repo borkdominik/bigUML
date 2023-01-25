@@ -17,10 +17,10 @@
 export interface ElementPropertyItem {
     elementId: string;
     propertyId: string;
-    type: "text" | "bool";
+    type: "TEXT" | "BOOL";
 }
 
 export interface ElementTextPropertyItem extends ElementPropertyItem {
-    type: "text";
+    type: "TEXT";
     text: string;
 }

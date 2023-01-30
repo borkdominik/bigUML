@@ -13,7 +13,15 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
+import { ElementPropertyItem } from "../model";
 
-export * from "./actions";
-export * from "./di.config";
-export * from "./text";
+export interface ElementTextPropertyItem extends ElementPropertyItem {
+    type: "TEXT";
+    text: string;
+}
+
+export namespace ElementTextPropertyItem {
+    export function is(value: ElementPropertyItem): value is ElementTextPropertyItem {
+        return value.type === "TEXT";
+    }
+}

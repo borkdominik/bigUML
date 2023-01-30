@@ -46,6 +46,8 @@
 }
 
 .property-palette-body {
+    display: flex;
+    flex-direction: column;
     background: var(--theia-menu-background);
     padding: 0.4rem;
     height: 168px;
@@ -53,5 +55,9 @@
 
 .property-item {
     display: flex;
+    align-items: center;
+}
 
+.property-item label, .property-text-item input {
+    padding: 0.2rem;
 }

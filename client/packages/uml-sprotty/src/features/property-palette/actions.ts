@@ -16,7 +16,7 @@
 import { Action } from "@eclipse-glsp/client";
 import { generateRequestId, RequestAction, ResponseAction } from "@eclipse-glsp/protocol";
 
-import { ElementPropertyItem } from "./element-property-item";
+import { ElementPropertyItem } from "./model";
 
 export class SetPropertyPaletteAction implements ResponseAction {
     static readonly KIND = "setPropertyPalette";

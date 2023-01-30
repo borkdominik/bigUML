@@ -22,33 +22,44 @@ import {
     IActionHandler,
     ICommand,
     isSelectAction,
+    SelectAction,
     SetUIExtensionVisibilityAction,
+    SModelRoot,
+    SModelRootListener,
     TYPES
 } from "@eclipse-glsp/client";
 import { inject, injectable, postConstruct } from "inversify";
 
 import {
     EnablePropertyPaletteAction,
-    isSetPropertyPaletteAction,
     RequestPropertyPaletteAction,
-    SetPropertyPaletteAction
+    SetPropertyPaletteAction,
+    UpdateElementPropertyAction
 } from "./actions";
-import { ElementPropertyItem } from "./element-property-item";
+import { CreatedElementProperty, ElementPropertyItem, ElementPropertyUI } from "./model";
+import { createTextProperty, ElementTextPropertyItem } from "./text";
 
 @injectable()
-export class PropertyPalette extends AbstractUIExtension implements IActionHandler {
+export class PropertyPalette extends AbstractUIExtension implements IActionHandler, SModelRootListener {
     static readonly ID = "property-palette";
 
     @inject(TYPES.IActionDispatcher) protected readonly actionDispatcher: ActionDispatcher;
     @inject(EditorContextService) protected readonly editorContext: EditorContextService;
 
-    protected paletteItems: ElementPropertyItem[];
+    protected propertyItems: ElementPropertyItem[];
+    protected selectAction?: SelectAction;
+    protected uiElements: ElementPropertyUI[] = [];
+
     protected header: HTMLElement;
     protected body: HTMLElement;
     protected collapseButton: HTMLButtonElement;
 
     get isCollapsed(): boolean {
         return this.body.style.display === "none";
+    }
+
+    get selectedItems(): string[] {
+        return this.selectAction?.selectedElementsIDs ?? [];
     }
 
     id(): string {
@@ -60,7 +71,7 @@ export class PropertyPalette extends AbstractUIExtension implements IActionHandl
     }
 
     override initialize(): boolean {
-        if (!this.paletteItems) {
+        if (!this.propertyItems) {
             return false;
         }
         return super.initialize();
@@ -75,26 +86,24 @@ export class PropertyPalette extends AbstractUIExtension implements IActionHandl
         console.log("Handle action: ", action);
 
         if (action.kind === EnablePropertyPaletteAction.KIND) {
-            this.request().then(response => {
-                if (isSetPropertyPaletteAction(response)) {
-                    this.paletteItems = response.propertyItems;
-                    this.actionDispatcher.dispatch(
-                        new SetUIExtensionVisibilityAction(PropertyPalette.ID, !this.editorContext.isReadonly)
-                    );
-                }
+            this.refresh().then(() => {
+                this.actionDispatcher.dispatch(
+                    new SetUIExtensionVisibilityAction(PropertyPalette.ID, !this.editorContext.isReadonly)
+                );
             });
         } else if (isSelectAction(action)) {
-            this.request(action.selectedElementsIDs[0] ?? undefined)
-                .then(response => {
-                    console.log("Response", response);
-                    this.paletteItems = response.propertyItems;
-                    this.refreshItems(this.paletteItems);
-                });
+            this.selectAction = action;
+            this.refresh();
         }
     }
 
     editModeChanged(_oldValue: string, _newValue: string): void {
         this.actionDispatcher.dispatch(new SetUIExtensionVisibilityAction(PropertyPalette.ID, !this.editorContext.isReadonly));
+    }
+
+    modelRootChanged(root: Readonly<SModelRoot>): void {
+        this.refresh();
+        this.enable();
     }
 
     public toggle(): void {
@@ -129,7 +138,7 @@ export class PropertyPalette extends AbstractUIExtension implements IActionHandl
 
         // this.collapse();
 
-        this.refreshItems(this.paletteItems);
+        this.refreshItems(this.propertyItems);
     }
 
     protected initializeHeader(): void {
@@ -161,27 +170,58 @@ export class PropertyPalette extends AbstractUIExtension implements IActionHandl
         this.containerElement.appendChild(div);
     }
 
-    protected refreshItems(items: ElementPropertyItem[]): void {
-        console.log("Refresh items", items);
-        this.paletteItems = items;
-        this.body.innerHTML = "";
+    protected refreshItems(propertyItems: ElementPropertyItem[]): void {
+        if (this.body === undefined) {
+            return;
+        }
 
-        for (const item of items) {
-            let element: HTMLElement | undefined = undefined;
-            switch (item.type) {
-                case "TEXT":
-                    element = createTextProperty(item);
-                    break;
+        this.propertyItems = propertyItems;
+
+        this.body.innerHTML = "";
+        this.uiElements = [];
+
+        for (const propertyItem of propertyItems) {
+            let created: CreatedElementProperty | undefined = undefined;
+
+            if (ElementTextPropertyItem.is(propertyItem)) {
+                created = createTextProperty(propertyItem, {
+                    onblur: (item, input) => {
+                        this.update(item.elementId, item.propertyId, input.value);
+                    }
+                });
             }
 
-            if (element !== undefined) {
-                this.body.appendChild(element);
+            if (created !== undefined) {
+                this.body.appendChild(created.element);
+                this.uiElements.push(created.ui);
             }
         }
     }
 
+    protected async refresh(): Promise<SetPropertyPaletteAction> {
+        return this.request(this.selectedItems[0]).then(response => {
+            this.propertyItems = response.propertyItems;
+            this.refreshItems(this.propertyItems);
+
+            return response;
+        });
+    }
+
     protected async request(elementId?: string): Promise<SetPropertyPaletteAction> {
         return this.actionDispatcher.request<SetPropertyPaletteAction>(new RequestPropertyPaletteAction(elementId));
+    }
+
+    protected async update(elementId: string, propertyId: string, value: string): Promise<void> {
+        this.disable();
+        return this.actionDispatcher.dispatch(new UpdateElementPropertyAction(elementId, propertyId, value));
+    }
+
+    protected disable(): void {
+        this.uiElements.forEach(element => element.disable());
+    }
+
+    protected enable(): void {
+        this.uiElements.forEach(element => element.enable());
     }
 }
 
@@ -191,17 +231,3 @@ function createIcon(codiconId: string): HTMLElement {
     return icon;
 }
 
-function createTextProperty(propertyItem: ElementPropertyItem): HTMLElement {
-    const div = document.createElement("div");
-    div.classList.add("property-item", "property-text-item");
-
-    const label = document.createElement("label") as HTMLLabelElement;
-    label.textContent = propertyItem.propertyId;
-    div.appendChild(label);
-
-    const input = document.createElement("input") as HTMLInputElement;
-    input.type = "text";
-    div.appendChild(input);
-
-    return div;
-}

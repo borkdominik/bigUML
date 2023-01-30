@@ -20,7 +20,12 @@ export interface ElementPropertyItem {
     type: "TEXT" | "BOOL";
 }
 
-export interface ElementTextPropertyItem extends ElementPropertyItem {
-    type: "TEXT";
-    text: string;
+export interface CreatedElementProperty {
+    element: HTMLElement;
+    ui: ElementPropertyUI;
+}
+
+export interface ElementPropertyUI {
+    enable: () => void;
+    disable: () => void;
 }

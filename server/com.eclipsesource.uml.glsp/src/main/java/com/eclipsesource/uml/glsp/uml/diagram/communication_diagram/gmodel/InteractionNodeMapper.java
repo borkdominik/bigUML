@@ -26,7 +26,7 @@ import org.eclipse.uml2.uml.Interaction;
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
-import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
+import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.UmlCommunication_Interaction;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGNodeMapper;
 
 public class InteractionNodeMapper extends BaseGNodeMapper<Interaction, GNode> {
@@ -41,7 +41,7 @@ public class InteractionNodeMapper extends BaseGNodeMapper<Interaction, GNode> {
       layoutOptions.put(H_GRAB, false);
       layoutOptions.put(V_GRAB, false);
 
-      var builder = new GNodeBuilder(CommunicationTypes.INTERACTION)
+      var builder = new GNodeBuilder(UmlCommunication_Interaction.TYPE_ID)
          .id(idGenerator.getOrCreateId(source))
          .layout(GConstants.Layout.VBOX)
          .layoutOptions(layoutOptions)
@@ -58,7 +58,7 @@ public class InteractionNodeMapper extends BaseGNodeMapper<Interaction, GNode> {
       return new GCompartmentBuilder(CoreTypes.COMPARTMENT_HEADER)
          .id(idCountGenerator.getOrCreateId(source))
          .layout(GConstants.Layout.HBOX)
-         .add(new GCompartmentBuilder(CommunicationTypes.ICON_INTERACTION)
+         .add(new GCompartmentBuilder(UmlCommunication_Interaction.ICON)
             .id(idCountGenerator.getOrCreateId(source))
             .build())
          .add(new GLabelBuilder(CoreTypes.LABEL_NAME)

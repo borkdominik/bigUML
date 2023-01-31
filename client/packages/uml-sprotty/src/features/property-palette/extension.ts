@@ -180,20 +180,24 @@ export class PropertyPalette extends AbstractUIExtension implements IActionHandl
         this.body.innerHTML = "";
         this.uiElements = [];
 
-        for (const propertyItem of propertyItems) {
-            let created: CreatedElementProperty | undefined = undefined;
+        if (this.propertyItems.length === 0) {
+            this.body.appendChild(createEmptyPlaceholder());
+        } else {
+            for (const propertyItem of propertyItems) {
+                let created: CreatedElementProperty | undefined = undefined;
 
-            if (ElementTextPropertyItem.is(propertyItem)) {
-                created = createTextProperty(propertyItem, {
-                    onblur: (item, input) => {
-                        this.update(item.elementId, item.propertyId, input.value);
-                    }
-                });
-            }
+                if (ElementTextPropertyItem.is(propertyItem)) {
+                    created = createTextProperty(propertyItem, {
+                        onblur: (item, input) => {
+                            this.update(item.elementId, item.propertyId, input.value);
+                        }
+                    });
+                }
 
-            if (created !== undefined) {
-                this.body.appendChild(created.element);
-                this.uiElements.push(created.ui);
+                if (created !== undefined) {
+                    this.body.appendChild(created.element);
+                    this.uiElements.push(created.ui);
+                }
             }
         }
     }
@@ -231,3 +235,10 @@ function createIcon(codiconId: string): HTMLElement {
     return icon;
 }
 
+function createEmptyPlaceholder(): HTMLElement {
+    const div = document.createElement("div");
+
+    div.textContent = "No Properties found.";
+
+    return div;
+}

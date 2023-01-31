@@ -15,7 +15,7 @@ import java.util.Optional;
 
 import org.eclipse.glsp.server.types.GLSPServerException;
 
-import com.eclipsesource.uml.glsp.core.features.idgenerator.SuffixIdAppender;
+import com.eclipsesource.uml.glsp.core.features.id_generator.SuffixIdAppender;
 import com.google.inject.Inject;
 
 public class Suffix {

@@ -31,7 +31,7 @@ public class DiagramElementPropertyMapperRegistry
          var representation = e.getKey();
 
          e.getValue().forEach(mapper -> {
-            var key = mapper.getSourceType();
+            var key = mapper.getElementType();
             register(RepresentationKey.of(representation, key),
                (DiagramElementPropertyMapper<EObject>) mapper);
          });

@@ -11,23 +11,31 @@
 package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.property;
 
 import org.eclipse.emfcloud.modelserver.command.CCommand;
-import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperation;
 import org.eclipse.uml2.uml.Property;
 
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyTypeLabelSuffix;
-import com.eclipsesource.uml.glsp.uml.handler.operations.directediting.BaseLabelEditHandler;
+import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Property;
+import com.eclipsesource.uml.glsp.uml.handler.operations.update.BaseUpdateElementHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.UpdatePropertyTypeContribution;
 
-public final class UpdatePropertyTypeHandler extends BaseLabelEditHandler<Property> {
+public final class UpdatePropertyTypeHandler
+   extends BaseUpdateElementHandler<Property, UpdatePropertyTypeHandler.Args> {
 
    public UpdatePropertyTypeHandler() {
-      super(ClassTypes.LABEL_PROPERTY_TYPE, PropertyTypeLabelSuffix.SUFFIX);
+      super(UmlClass_Property.Property.TYPE);
+   }
+
+   public static class Args {
+      public String type;
+
+      public Args(final String type) {
+         this.type = type;
+      }
    }
 
    @Override
-   protected CCommand createCommand(final ApplyLabelEditOperation operation, final Property element) {
-      return UpdatePropertyTypeContribution.create(element, operation.getText());
+   protected CCommand createCommand(final UpdateOperation operation, final Property element, final Args args) {
+      return UpdatePropertyTypeContribution.create(element, args.type);
    }
 
 }

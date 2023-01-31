@@ -15,8 +15,8 @@ import java.util.Map;
 
 import org.eclipse.glsp.server.features.toolpalette.PaletteItem;
 
-import com.eclipsesource.uml.glsp.core.features.toolpalette.ToolPaletteConfiguration;
-import com.eclipsesource.uml.glsp.core.features.toolpalette.PaletteItemUtil;
+import com.eclipsesource.uml.glsp.core.features.tool_palette.PaletteItemUtil;
+import com.eclipsesource.uml.glsp.core.features.tool_palette.ToolPaletteConfiguration;
 import com.eclipsesource.uml.glsp.uml.diagram.common_diagram.constants.CommonTypes;
 import com.google.common.collect.Lists;
 

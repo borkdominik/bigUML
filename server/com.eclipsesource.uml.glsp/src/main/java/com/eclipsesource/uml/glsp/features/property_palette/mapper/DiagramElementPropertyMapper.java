@@ -19,10 +19,10 @@ import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
 import com.eclipsesource.uml.glsp.features.property_palette.handler.action.UpdateElementPropertyAction;
 import com.eclipsesource.uml.glsp.features.property_palette.model.ElementPropertyItem;
 
-public interface DiagramElementPropertyMapper<Source extends EObject> {
-   List<ElementPropertyItem> map(Source source);
+public interface DiagramElementPropertyMapper<TElementType extends EObject> {
+   List<ElementPropertyItem> map(TElementType source);
 
    Optional<UpdateOperation> map(UpdateElementPropertyAction action);
 
-   Class<Source> getSourceType();
+   Class<TElementType> getElementType();
 }

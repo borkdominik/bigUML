@@ -14,14 +14,13 @@ import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.uml2.uml.NamedElement;
 
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClassPackage;
 import com.eclipsesource.uml.modelserver.uml.diagram.common_diagram.commands.RenameElementContribution;
 
 public abstract class UpdateNamedElementNameHandler<T extends NamedElement>
    extends BaseUpdateElementHandler<T, UpdateNamedElementNameHandler.Args> {
 
-   public UpdateNamedElementNameHandler() {
-      super(UmlClassPackage.Property.NAME, UpdateNamedElementNameHandler.Args.class);
+   public UpdateNamedElementNameHandler(final String propertyId) {
+      super(propertyId);
    }
 
    public static class Args {

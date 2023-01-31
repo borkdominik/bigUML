@@ -10,15 +10,20 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.features.property_palette.model;
 
-public class ElementTextPropertyItem extends ElementPropertyItem {
+public final class ElementTextPropertyItem extends ElementPropertyItem {
 
+   private final String label;
    private final String text;
 
-   public ElementTextPropertyItem(final String elementId, final String propertyId, final String text) {
+   public ElementTextPropertyItem(final String elementId, final String propertyId, final String label,
+      final String text) {
       super(elementId, propertyId, ElementPropertyType.TEXT);
 
       this.text = text;
+      this.label = label;
    }
+
+   public String getLabel() { return label; }
 
    public String getText() { return text; }
 

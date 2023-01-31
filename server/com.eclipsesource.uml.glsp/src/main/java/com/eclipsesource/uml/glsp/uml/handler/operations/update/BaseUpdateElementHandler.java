@@ -12,9 +12,6 @@ package com.eclipsesource.uml.glsp.uml.handler.operations.update;
 
 import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.glsp.server.types.GLSPServerException;
@@ -24,14 +21,14 @@ import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
 import com.eclipsesource.uml.glsp.core.model.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.eclipsesource.uml.glsp.core.utils.reflection.GenericsUtil;
-import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.google.inject.Inject;
 
-public abstract class BaseUpdateElementHandler<TObject extends EObject, TArgs extends Object>
-   implements DiagramUpdateHandler<TObject> {
-   protected final Class<TObject> elementType;
+public abstract class BaseUpdateElementHandler<TElementType extends EObject, TArgs extends Object>
+   implements DiagramUpdateHandler<TElementType, TArgs> {
+   protected final Class<TElementType> elementType;
    protected final Class<TArgs> argsType;
+
    protected final String contextId;
    protected final Gson gson;
 
@@ -41,41 +38,31 @@ public abstract class BaseUpdateElementHandler<TObject extends EObject, TArgs ex
    @Inject
    protected UmlModelServerAccess modelServerAccess;
 
-   public BaseUpdateElementHandler(final String contextId, final Class<TArgs> argsType) {
+   public BaseUpdateElementHandler(final String contextId) {
       this.contextId = contextId;
-      this.argsType = argsType;
+
       this.elementType = GenericsUtil.getClassParameter(getClass(), BaseUpdateElementHandler.class, 0);
+      this.argsType = GenericsUtil.getClassParameter(getClass(), BaseUpdateElementHandler.class, 1);
 
       this.gson = new Gson();
    }
 
    @Override
-   public Class<TObject> getElementType() { return elementType; }
+   public Class<TElementType> getElementType() { return elementType; }
+
+   @Override
+   public Class<TArgs> getArgsType() { return argsType; }
 
    @Override
    public String contextId() {
       return contextId;
    }
 
-   public UpdateOperation asOperation(final String elementId, final TArgs args) {
-      return asOperation(elementId, args, new HashMap<>());
-   }
-
-   public UpdateOperation asOperation(final String elementId, final TArgs args, final Map<String, String> context) {
-      var type = new TypeToken<Map<String, String>>() {}.getType();
-
-      return new UpdateOperation(
-         elementId,
-         this.contextId,
-         context,
-         gson.fromJson(gson.toJsonTree(args), type));
-   }
-
    @Override
    public void handle(final UpdateOperation operation) {
       var elementId = operation.getElementId();
 
-      var semanticElement = getOrThrow(modelState.getIndex().getEObject(elementId),
+      TElementType semanticElement = getOrThrow(modelState.getIndex().getEObject(elementId),
          elementType,
          "Could not find semantic element for id '" + elementId + "'.");
 
@@ -90,5 +77,5 @@ public abstract class BaseUpdateElementHandler<TObject extends EObject, TArgs ex
          });
    }
 
-   protected abstract CCommand createCommand(UpdateOperation operation, TObject element, TArgs args);
+   protected abstract CCommand createCommand(UpdateOperation operation, TElementType element, TArgs args);
 }

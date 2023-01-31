@@ -14,7 +14,7 @@ import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.uml2.uml.Enumeration;
 
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_EnumerationLiteral;
 import com.eclipsesource.uml.glsp.uml.handler.operations.create.BaseCreateChildNodeHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.enumeration_literal.CreateEnumerationLiteralContribution;
 
@@ -22,7 +22,7 @@ public final class CreateEnumerationLiteralHandler
    extends BaseCreateChildNodeHandler<Enumeration> {
 
    public CreateEnumerationLiteralHandler() {
-      super(ClassTypes.ENUMERATION_LITERAL);
+      super(UmlClass_EnumerationLiteral.TYPE_ID);
    }
 
    @Override

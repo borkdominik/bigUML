@@ -21,7 +21,9 @@ import org.eclipse.glsp.server.types.EdgeTypeHint;
 import org.eclipse.glsp.server.types.ShapeTypeHint;
 
 import com.eclipsesource.uml.glsp.core.diagram.DiagramConfiguration;
-import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
+import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.UmlCommunication_Interaction;
+import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.UmlCommunication_Lifeline;
+import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.UmlCommunication_Message;
 import com.google.common.collect.Lists;
 
 public class CommunicationConfiguration implements DiagramConfiguration {
@@ -29,20 +31,21 @@ public class CommunicationConfiguration implements DiagramConfiguration {
    @Override
    public List<EdgeTypeHint> getEdgeTypeHints() {
       return Lists.newArrayList(
-         new EdgeTypeHint(CommunicationTypes.MESSAGE, true, true, true, List.of(CommunicationTypes.LIFELINE),
-            List.of(CommunicationTypes.LIFELINE)));
+         new EdgeTypeHint(UmlCommunication_Message.TYPE_ID, true, true, true,
+            List.of(UmlCommunication_Lifeline.TYPE_ID),
+            List.of(UmlCommunication_Lifeline.TYPE_ID)));
    }
 
    @Override
-   public List<String> getGraphContainableElements() { return List.of(CommunicationTypes.INTERACTION); }
+   public List<String> getGraphContainableElements() { return List.of(UmlCommunication_Interaction.TYPE_ID); }
 
    @Override
    public List<ShapeTypeHint> getShapeTypeHints() {
       List<ShapeTypeHint> hints = new ArrayList<>();
 
-      hints.add(new ShapeTypeHint(CommunicationTypes.INTERACTION, true, true, true, false,
-         List.of(CommunicationTypes.LIFELINE)));
-      hints.add(new ShapeTypeHint(CommunicationTypes.LIFELINE, true, true, false, false));
+      hints.add(new ShapeTypeHint(UmlCommunication_Interaction.TYPE_ID, true, true, true, false,
+         List.of(UmlCommunication_Lifeline.TYPE_ID)));
+      hints.add(new ShapeTypeHint(UmlCommunication_Lifeline.TYPE_ID, true, true, false, false));
 
       return hints;
    }
@@ -51,12 +54,11 @@ public class CommunicationConfiguration implements DiagramConfiguration {
    public Map<String, EClass> getTypeMappings() {
       Map<String, EClass> mappings = DefaultTypes.getDefaultTypeMappings();
 
-      mappings.put(CommunicationTypes.INTERACTION, GraphPackage.Literals.GNODE);
-      mappings.put(CommunicationTypes.ICON_INTERACTION, GraphPackage.Literals.GCOMPARTMENT);
-      mappings.put(CommunicationTypes.LIFELINE, GraphPackage.Literals.GNODE);
-      mappings.put(CommunicationTypes.ICON_LIFELINE, GraphPackage.Literals.GCOMPARTMENT);
-      mappings.put(CommunicationTypes.MESSAGE, GraphPackage.Literals.GEDGE);
-      mappings.put(CommunicationTypes.MESSAGE_LABEL_ARROW_EDGE_NAME, GraphPackage.Literals.GLABEL);
+      mappings.put(UmlCommunication_Interaction.TYPE_ID, GraphPackage.Literals.GNODE);
+      mappings.put(UmlCommunication_Interaction.ICON, GraphPackage.Literals.GCOMPARTMENT);
+      mappings.put(UmlCommunication_Lifeline.TYPE_ID, GraphPackage.Literals.GNODE);
+      mappings.put(UmlCommunication_Lifeline.ICON, GraphPackage.Literals.GCOMPARTMENT);
+      mappings.put(UmlCommunication_Message.TYPE_ID, GraphPackage.Literals.GEDGE);
 
       return mappings;
    }

@@ -13,7 +13,7 @@ package com.eclipsesource.uml.glsp.core.manifest.contributions.diagram;
 import java.util.Set;
 import java.util.function.Consumer;
 
-import com.eclipsesource.uml.glsp.core.features.toolpalette.ToolPaletteConfiguration;
+import com.eclipsesource.uml.glsp.core.features.tool_palette.ToolPaletteConfiguration;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.ContributionBinderSupplier;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.ContributionIdSupplier;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.ContributionRepresentationSupplier;

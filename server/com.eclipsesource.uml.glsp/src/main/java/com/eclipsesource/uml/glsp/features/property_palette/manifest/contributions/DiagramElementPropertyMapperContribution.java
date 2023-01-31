@@ -37,7 +37,7 @@ public interface DiagramElementPropertyMapperContribution
       }
    }
 
-   default void contributeDiagramElementPropertyMapper(
+   default void contributeDiagramElementPropertyMappers(
       final Consumer<Multibinder<DiagramElementPropertyMapper<? extends EObject>>> consumer) {
       var binder = contributionBinder();
 

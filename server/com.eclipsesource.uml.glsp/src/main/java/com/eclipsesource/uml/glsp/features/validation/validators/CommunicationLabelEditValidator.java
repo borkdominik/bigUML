@@ -22,13 +22,15 @@ import org.eclipse.uml2.uml.Lifeline;
 import org.eclipse.uml2.uml.Message;
 
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
-import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
+import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.UmlCommunication_Interaction;
+import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.UmlCommunication_Lifeline;
+import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.UmlCommunication_Message;
 import com.google.inject.Inject;
 
 public class CommunicationLabelEditValidator implements LabelEditValidator {
    private static Logger LOGGER = LogManager.getLogger(CommunicationLabelEditValidator.class.getSimpleName());
-   private static Set<String> supportedElements = Set.of(CommunicationTypes.LIFELINE,
-      CommunicationTypes.INTERACTION, CommunicationTypes.MESSAGE);
+   private static Set<String> supportedElements = Set.of(UmlCommunication_Lifeline.TYPE_ID,
+      UmlCommunication_Interaction.TYPE_ID, UmlCommunication_Message.TYPE_ID);
 
    @Inject
    protected UmlModelState modelState;
@@ -52,11 +54,11 @@ public class CommunicationLabelEditValidator implements LabelEditValidator {
          return ValidationStatus.ok();
       }
 
-      if (container.getType().equals(CommunicationTypes.INTERACTION)) {
+      if (container.getType().equals(UmlCommunication_Interaction.TYPE_ID)) {
          return ValidatorResultMapper.toValidationResult(interactionValidator.validateName(element.getId(), label));
-      } else if (container.getType().equals(CommunicationTypes.LIFELINE)) {
+      } else if (container.getType().equals(UmlCommunication_Lifeline.TYPE_ID)) {
          return ValidatorResultMapper.toValidationResult(lifelineValidator.validateName(element.getId(), label));
-      } else if (container.getType().equals(CommunicationTypes.MESSAGE)) {
+      } else if (container.getType().equals(UmlCommunication_Message.TYPE_ID)) {
          return ValidatorResultMapper.toValidationResult(messageValidator.validateName(element.getId(), label));
       }
 

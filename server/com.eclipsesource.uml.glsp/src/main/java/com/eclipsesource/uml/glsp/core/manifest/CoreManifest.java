@@ -10,9 +10,10 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.core.manifest;
 
-import com.eclipsesource.uml.glsp.core.features.idgenerator.IdCountContextGenerator;
+import com.eclipsesource.uml.glsp.core.features.id_generator.IdCountContextGenerator;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.Suffix;
+import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateHandlerOperationMapper;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.OverrideOperationHandlerContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.SuffixIdAppenderContribution;
 import com.google.inject.AbstractModule;
@@ -34,6 +35,7 @@ public class CoreManifest extends AbstractModule
 
       bind(Suffix.class).in(Singleton.class);
       bind(IdCountContextGenerator.class).in(Singleton.class);
+      bind(UpdateHandlerOperationMapper.class).in(Singleton.class);
    }
 
    @Override

@@ -13,13 +13,23 @@ package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.manifest;
 import com.eclipsesource.uml.glsp.core.manifest.DiagramManifest;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramCreateHandlerContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramDeleteHandlerContribution;
-import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramLabelEditHandlerContribution;
+import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramLabelEditMapperContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramUpdateHandlerContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.SuffixIdAppenderContribution;
 import com.eclipsesource.uml.glsp.features.property_palette.manifest.contributions.DiagramElementPropertyMapperContribution;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.ClassDiagramConfiguration;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.label_edit.AssociationLabelEditMapper;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.label_edit.ClassLabelEditMapper;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.label_edit.DataTypeLabelEditMapper;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.label_edit.EnumerationLabelEditMapper;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.label_edit.EnumerationLiteralLabelEditMapper;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.label_edit.InterfaceLabelEditMapper;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.label_edit.OperationLabelEditMapper;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.label_edit.PackageLabelEditMapper;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.label_edit.PrimitiveTypeLabelEditMapper;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.label_edit.PropertyLabelEditMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.property_palette.PackagePropertyMapper;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.toolpalette.ClassToolPaletteConfiguration;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.tool_palette.ClassToolPaletteConfiguration;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.AssociationEdgeMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.ClassNodeMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.DataTypeNodeMapper;
@@ -37,46 +47,44 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.as
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.association.CreateAssociationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.association.CreateCompositionHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.association.DeleteAssociationHandler;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.association.SetAssociationEndBoundsHandler;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.association.SetAssociationEndNameHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.association.UpdateAssociationBoundsHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.data_type.CreateDataTypeHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.data_type.DeleteDataTypeHandler;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.data_type.RenameDataTypeHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.data_type.UpdateDataTypeNameHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.enumeration.CreateEnumerationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.enumeration.DeleteEnumerationHandler;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.enumeration.RenameEnumerationHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.enumeration.UpdateEnumerationNameHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.enumeration_literal.CreateEnumerationLiteralHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.enumeration_literal.DeleteEnumerationLiteralHandler;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.enumeration_literal.RenameEnumerationLiteralHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.enumeration_literal.UpdateEnumerationLiteralNameHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.generalization.CreateGeneralizationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.generalization.DeleteGeneralizationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.operation.CreateOperationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.operation.DeleteOperationHandler;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.operation.RenameOperationHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.operation.UpdateOperationNameHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.primitive_type.CreatePrimitiveTypeHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.primitive_type.DeletePrimitiveTypeHandler;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.primitive_type.RenamePrimitiveTypeHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.primitive_type.UpdatePrimitiveTypeNameHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.property.CreatePropertyHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.property.DeletePropertyHandler;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.property.RenamePropertyHandler;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.property.UpdatePropertyMultiplicityHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.property.UpdatePropertyBoundsHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.property.UpdatePropertyNameHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.property.UpdatePropertyTypeHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.uclass.CreateAbstractClassHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.uclass.CreateClassHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.uclass.DeleteClassHandler;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.uclass.RenameClassHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.uclass.UpdateClassNameHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.uinterface.CreateInterfaceHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.uinterface.DeleteInterfaceHandler;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.uinterface.RenameInterfaceHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.uinterface.UpdateInterfaceNameHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.upackage.CreatePackageHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.upackage.DeletePackageHandler;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.upackage.RenamePackageHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.upackage.UpdatePackageNameHandler;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 
 public final class ClassUmlManifest extends DiagramManifest
    implements DiagramCreateHandlerContribution,
-   DiagramDeleteHandlerContribution, DiagramLabelEditHandlerContribution, SuffixIdAppenderContribution,
+   DiagramDeleteHandlerContribution, DiagramLabelEditMapperContribution, SuffixIdAppenderContribution,
    DiagramElementPropertyMapperContribution, DiagramUpdateHandlerContribution {
 
    @Override
@@ -132,22 +140,30 @@ public final class ClassUmlManifest extends DiagramManifest
          contribution.addBinding().to(DeletePrimitiveTypeHandler.class);
          contribution.addBinding().to(DeletePackageHandler.class);
       });
-      contributeDiagramLabelEditHandlers((contribution) -> {
-         contribution.addBinding().to(SetAssociationEndBoundsHandler.class);
-         contribution.addBinding().to(SetAssociationEndNameHandler.class);
-         contribution.addBinding().to(RenameEnumerationHandler.class);
-         contribution.addBinding().to(RenameEnumerationLiteralHandler.class);
-         contribution.addBinding().to(RenamePropertyHandler.class);
-         contribution.addBinding().to(UpdatePropertyMultiplicityHandler.class);
-         contribution.addBinding().to(UpdatePropertyTypeHandler.class);
-         contribution.addBinding().to(RenameClassHandler.class);
-         contribution.addBinding().to(RenameInterfaceHandler.class);
-         contribution.addBinding().to(RenameOperationHandler.class);
-         contribution.addBinding().to(RenameDataTypeHandler.class);
-         contribution.addBinding().to(RenamePrimitiveTypeHandler.class);
-         contribution.addBinding().to(RenamePackageHandler.class);
+      contributeDiagramLabelEditMappers((contribution) -> {
+         contribution.addBinding().to(AssociationLabelEditMapper.class);
+         contribution.addBinding().to(EnumerationLabelEditMapper.class);
+         contribution.addBinding().to(EnumerationLiteralLabelEditMapper.class);
+         contribution.addBinding().to(PropertyLabelEditMapper.class);
+         contribution.addBinding().to(ClassLabelEditMapper.class);
+         contribution.addBinding().to(InterfaceLabelEditMapper.class);
+         contribution.addBinding().to(OperationLabelEditMapper.class);
+         contribution.addBinding().to(DataTypeLabelEditMapper.class);
+         contribution.addBinding().to(PrimitiveTypeLabelEditMapper.class);
+         contribution.addBinding().to(PackageLabelEditMapper.class);
       });
       contributeDiagramUpdateHandlers((contribution) -> {
+         contribution.addBinding().to(UpdateAssociationBoundsHandler.class);
+         contribution.addBinding().to(UpdateDataTypeNameHandler.class);
+         contribution.addBinding().to(UpdateEnumerationNameHandler.class);
+         contribution.addBinding().to(UpdateEnumerationLiteralNameHandler.class);
+         contribution.addBinding().to(UpdateOperationNameHandler.class);
+         contribution.addBinding().to(UpdatePrimitiveTypeNameHandler.class);
+         contribution.addBinding().to(UpdatePropertyNameHandler.class);
+         contribution.addBinding().to(UpdatePropertyBoundsHandler.class);
+         contribution.addBinding().to(UpdatePropertyTypeHandler.class);
+         contribution.addBinding().to(UpdateClassNameHandler.class);
+         contribution.addBinding().to(UpdateInterfaceNameHandler.class);
          contribution.addBinding().to(UpdatePackageNameHandler.class);
       });
       contributeGModelMappers((contribution) -> {
@@ -164,7 +180,7 @@ public final class ClassUmlManifest extends DiagramManifest
          contribution.addBinding().to(PackageNodeMapper.class);
       });
 
-      contributeDiagramElementPropertyMapper((contribution) -> {
+      contributeDiagramElementPropertyMappers((contribution) -> {
          contribution.addBinding().to(PackagePropertyMapper.class);
       });
    }

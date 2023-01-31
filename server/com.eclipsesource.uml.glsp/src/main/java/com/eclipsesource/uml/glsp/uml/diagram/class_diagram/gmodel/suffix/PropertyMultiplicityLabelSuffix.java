@@ -10,7 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix;
 
-import com.eclipsesource.uml.glsp.core.features.idgenerator.BaseSuffixIdAppender;
+import com.eclipsesource.uml.glsp.core.features.id_generator.BaseSuffixIdAppender;
 
 public final class PropertyMultiplicityLabelSuffix extends BaseSuffixIdAppender {
    public static final String SUFFIX = "_property_multiplicity_label";

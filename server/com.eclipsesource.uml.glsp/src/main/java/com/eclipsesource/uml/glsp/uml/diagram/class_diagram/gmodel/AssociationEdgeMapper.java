@@ -22,7 +22,7 @@ import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
 import com.eclipsesource.uml.glsp.old.utils.property.PropertyUtil;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Property;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyMultiplicityLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.utils.AssociationTypeUtil;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGEdgeMapper;
@@ -75,7 +75,8 @@ public final class AssociationEdgeMapper extends BaseGEdgeMapper<Association, GE
       var targetId = idGenerator.getOrCreateId(target);
 
       // Label at source
-      var sourceNameLabel = createEdgeNameLabel(target.getName(), suffix.appendTo(NameLabelSuffix.SUFFIX, targetId), 0.1d);
+      var sourceNameLabel = createEdgeNameLabel(target.getName(), suffix.appendTo(NameLabelSuffix.SUFFIX, targetId),
+         0.1d);
       builder.add(sourceNameLabel);
 
       var sourceMultiplicityLabel = createEdgeMultiplicityLabel(PropertyUtil.getMultiplicity(target),
@@ -83,7 +84,8 @@ public final class AssociationEdgeMapper extends BaseGEdgeMapper<Association, GE
       builder.add(sourceMultiplicityLabel);
 
       // Label at target
-      var targetNameLabel = createEdgeNameLabel(source.getName(), suffix.appendTo(NameLabelSuffix.SUFFIX, sourceId), 0.9d);
+      var targetNameLabel = createEdgeNameLabel(source.getName(), suffix.appendTo(NameLabelSuffix.SUFFIX, sourceId),
+         0.9d);
       builder.add(targetNameLabel);
 
       var targetMultiplicityLabel = createEdgeMultiplicityLabel(PropertyUtil.getMultiplicity(source),
@@ -92,11 +94,11 @@ public final class AssociationEdgeMapper extends BaseGEdgeMapper<Association, GE
    }
 
    protected GLabel createEdgeMultiplicityLabel(final String value, final String id, final double position) {
-      return createEdgeLabel(value, position, id, ClassTypes.LABEL_EDGE_MULTIPLICITY, GConstants.EdgeSide.BOTTOM);
+      return createEdgeLabel(value, position, id, UmlClass_Property.LABEL_MULTIPLICITY, GConstants.EdgeSide.BOTTOM);
    }
 
    protected GLabel createEdgeNameLabel(final String name, final String id, final double position) {
-      return createEdgeLabel(name, position, id, CoreTypes.LABEL_EDGE_NAME, GConstants.EdgeSide.TOP);
+      return createEdgeLabel(name, position, id, CoreTypes.LABEL_NAME, GConstants.EdgeSide.TOP);
    }
 
    protected GLabel createEdgeLabel(final String name, final double position, final String id, final String type,

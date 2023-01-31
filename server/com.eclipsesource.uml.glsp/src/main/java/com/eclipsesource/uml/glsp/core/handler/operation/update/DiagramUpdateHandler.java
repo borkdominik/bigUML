@@ -12,8 +12,10 @@ package com.eclipsesource.uml.glsp.core.handler.operation.update;
 
 import org.eclipse.emf.ecore.EObject;
 
-public interface DiagramUpdateHandler<T extends EObject> {
-   Class<T> getElementType();
+public interface DiagramUpdateHandler<TElementType extends EObject, TArgs> {
+   Class<TElementType> getElementType();
+
+   Class<TArgs> getArgsType();
 
    String contextId();
 

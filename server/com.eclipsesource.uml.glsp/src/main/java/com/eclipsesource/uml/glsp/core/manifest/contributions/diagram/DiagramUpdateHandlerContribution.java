@@ -29,17 +29,18 @@ public interface DiagramUpdateHandlerContribution
    extends ContributionBinderSupplier, ContributionIdSupplier, ContributionRepresentationSupplier {
 
    default void contributeDiagramUpdateHandlers(
-      final Consumer<Multibinder<DiagramUpdateHandler<? extends EObject>>> consumer) {
+      final Consumer<Multibinder<DiagramUpdateHandler<? extends EObject, ?>>> consumer) {
       var binder = contributionBinder();
 
-      var multibinder = Multibinder.newSetBinder(binder, new TypeLiteral<DiagramUpdateHandler<? extends EObject>>() {},
+      var multibinder = Multibinder.newSetBinder(binder,
+         new TypeLiteral<DiagramUpdateHandler<? extends EObject, ?>>() {},
          idNamed());
 
       consumer.accept(multibinder);
 
       MapBinder.newMapBinder(binder, new TypeLiteral<Representation>() {},
-         new TypeLiteral<Set<DiagramUpdateHandler<? extends EObject>>>() {})
+         new TypeLiteral<Set<DiagramUpdateHandler<? extends EObject, ?>>>() {})
          .addBinding(representation())
-         .to(Key.get(new TypeLiteral<Set<DiagramUpdateHandler<? extends EObject>>>() {}, idNamed()));
+         .to(Key.get(new TypeLiteral<Set<DiagramUpdateHandler<? extends EObject, ?>>>() {}, idNamed()));
    }
 }

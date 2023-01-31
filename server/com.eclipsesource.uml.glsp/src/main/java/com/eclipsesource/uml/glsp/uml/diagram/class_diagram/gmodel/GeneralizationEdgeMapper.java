@@ -19,8 +19,8 @@ import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.Generalization;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
-import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
+import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Generalization;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGEdgeMapper;
 
 public final class GeneralizationEdgeMapper extends BaseGEdgeMapper<Generalization, GEdge> {
@@ -32,7 +32,7 @@ public final class GeneralizationEdgeMapper extends BaseGEdgeMapper<Generalizati
       var target = generalization.getSpecific();
       var targetId = idGenerator.getOrCreateId(target);
 
-      GEdgeBuilder builder = new GEdgeBuilder(ClassTypes.CLASS_GENERALIZATION)
+      GEdgeBuilder builder = new GEdgeBuilder(UmlClass_Generalization.TYPE_ID)
          .id(idGenerator.getOrCreateId(generalization))
          .addCssClass(CoreCSS.EDGE)
          .addCssClass(CoreCSS.MARKER_TRIANGLE_EMPTY)
@@ -47,7 +47,7 @@ public final class GeneralizationEdgeMapper extends BaseGEdgeMapper<Generalizati
    }
 
    protected GLabel createEdgeNameLabel(final String name, final String id, final double position) {
-      return createEdgeLabel(name, position, id, CommunicationTypes.MESSAGE_LABEL_ARROW_EDGE_NAME,
+      return createEdgeLabel(name, position, id, CoreTypes.LABEL_EDGE_NAME,
          GConstants.EdgeSide.TOP);
    }
 

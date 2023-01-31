@@ -25,11 +25,11 @@ import com.google.inject.Inject;
 
 public class DiagramUpdateHandlerRegistry
    extends
-   DiagramMultiKeyRegistry<DoubleKey<Class<? extends EObject>, String>, DiagramUpdateHandler<? extends EObject>> {
+   DiagramMultiKeyRegistry<DoubleKey<Class<? extends EObject>, String>, DiagramUpdateHandler<? extends EObject, ?>> {
 
    @Inject
    public DiagramUpdateHandlerRegistry(
-      final Map<Representation, Set<DiagramUpdateHandler<? extends EObject>>> handlers) {
+      final Map<Representation, Set<DiagramUpdateHandler<? extends EObject, ?>>> handlers) {
       handlers.entrySet().forEach(e -> {
          var representation = e.getKey();
 

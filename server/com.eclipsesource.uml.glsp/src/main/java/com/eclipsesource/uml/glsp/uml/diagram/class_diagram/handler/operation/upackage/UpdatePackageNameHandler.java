@@ -12,8 +12,12 @@ package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.u
 
 import org.eclipse.uml2.uml.Package;
 
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Package;
 import com.eclipsesource.uml.glsp.uml.handler.operations.update.UpdateNamedElementNameHandler;
 
 public final class UpdatePackageNameHandler extends UpdateNamedElementNameHandler<Package> {
+   public UpdatePackageNameHandler() {
+      super(UmlClass_Package.Property.NAME);
+   }
 
 }

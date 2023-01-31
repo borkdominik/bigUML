@@ -16,7 +16,10 @@ import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 import org.eclipse.uml2.uml.Type;
 
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_AbstractClass;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Association;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Class;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Interface;
 import com.eclipsesource.uml.glsp.uml.handler.operations.create.BaseCreateEdgeBetweenNodesHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association.CreateAssociationContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.constants.AssociationType;
@@ -25,17 +28,17 @@ public final class CreateAggregationHandler
    extends BaseCreateEdgeBetweenNodesHandler<Type, Type> {
 
    public CreateAggregationHandler() {
-      super(ClassTypes.AGGREGATION);
+      super(UmlClass_Association.AGGREGATION_TYPE_ID);
    }
 
    @Override
    protected List<String> sources() {
-      return List.of(ClassTypes.ABSTRACT_CLASS, ClassTypes.CLASS, ClassTypes.INTERFACE);
+      return List.of(UmlClass_AbstractClass.TYPE_ID, UmlClass_Class.TYPE_ID, UmlClass_Interface.TYPE_ID);
    }
 
    @Override
    protected List<String> targets() {
-      return List.of(ClassTypes.ABSTRACT_CLASS, ClassTypes.CLASS, ClassTypes.INTERFACE);
+      return List.of(UmlClass_AbstractClass.TYPE_ID, UmlClass_Class.TYPE_ID, UmlClass_Interface.TYPE_ID);
    }
 
    @Override

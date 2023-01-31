@@ -21,8 +21,8 @@ public class ElementPropertyBuilder {
       this.elementId = elementId;
    }
 
-   public ElementPropertyBuilder textProperty(final String propertyId, final String value) {
-      items.add(new ElementTextPropertyItem(elementId, propertyId, value));
+   public ElementPropertyBuilder text(final String propertyId, final String label, final String value) {
+      items.add(new ElementTextPropertyItem(elementId, propertyId, label, value));
       return this;
    }
 

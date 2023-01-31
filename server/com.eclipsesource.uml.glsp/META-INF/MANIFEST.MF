@@ -9,7 +9,7 @@ Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: com.eclipsesource.uml.glsp.core.diagram,
- com.eclipsesource.uml.glsp.core.features.toolpalette,
+ com.eclipsesource.uml.glsp.core.features.tool_palette,
  com.eclipsesource.uml.glsp.core.gmodel,
  com.eclipsesource.uml.glsp.core.handler.action,
  com.eclipsesource.uml.glsp.core.handler.operation,

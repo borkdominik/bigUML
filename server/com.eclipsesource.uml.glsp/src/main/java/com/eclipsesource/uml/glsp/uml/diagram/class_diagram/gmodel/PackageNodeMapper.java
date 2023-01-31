@@ -25,14 +25,14 @@ import org.eclipse.uml2.uml.Package;
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Package;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGNodeMapper;
 
 public final class PackageNodeMapper extends BaseGNodeMapper<Package, GNode> {
 
    @Override
    public GNode map(final Package source) {
-      var builder = new GNodeBuilder(ClassTypes.PACKAGE)
+      var builder = new GNodeBuilder(UmlClass_Package.TYPE_ID)
          .id(idGenerator.getOrCreateId(source))
          .layout(GConstants.Layout.VBOX)
          .addCssClass(CoreCSS.NODE)
@@ -49,7 +49,7 @@ public final class PackageNodeMapper extends BaseGNodeMapper<Package, GNode> {
          .id(idCountGenerator.getOrCreateId(source))
          .layout(GConstants.Layout.HBOX);
 
-      var icon = new GCompartmentBuilder(ClassTypes.ICON_CLASS)
+      var icon = new GCompartmentBuilder(UmlClass_Package.ICON)
          .id(idCountGenerator.getOrCreateId(source))
          .build();
       builder.add(icon);

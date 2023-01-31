@@ -10,9 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.diagram.common_diagram.manifest;
 
-import com.google.inject.AbstractModule;
-
-public class CommonUmlManifest extends AbstractModule {
+public class CommonUmlManifest {
    /*-
    @Override
    protected void configure() {
@@ -21,33 +19,33 @@ public class CommonUmlManifest extends AbstractModule {
       contributeOperationHandler((contribution) -> {});
       // contributeDeleteHandler((contribution) -> {});
       contributeEditLabelOperationHandler((contribution) -> {});
-   
+
       // Default
       Multibinder.newSetBinder(CommonDiagramConfiguration.class);
    }
-   
+
    @Override
    public void contributePalette(final Multibinder<DiagramPalette> multibinder) {
       multibinder.addBinding().to(CommonPalette.class);
    }
-   
+
    @Override
    public void contributeDiagramConfiguration(final Multibinder<DiagramConfiguration> multibinder) {
       multibinder.addBinding().to(CommonConfiguration.class);
    }
-   
+
    @Override
    public void contributeOperationHandler(final Multibinder<OperationHandler> multibinder) {
       multibinder.addBinding().to(CreateCommentEdgeOperationHandler.class);
       multibinder.addBinding().to(CreateCommentNodeOperationHandler.class);
    }
-   
+
    @Override
    public void contributeEditLabelOperationHandler(final Multibinder<DiagramEditLabelOperationHandler> multibinder) {
       multibinder.addBinding().to(CommonLabelEditOperationHandler.class);
    }
-   
-   
+
+
    @Override
    public void contributeDeleteHandler(final Multibinder<DiagramDeleteHandler> multibinder) {
       // multibinder.addBinding().to(CommonDeleteOperationHandler.class);

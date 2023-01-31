@@ -19,7 +19,7 @@ import org.eclipse.glsp.server.features.clipboard.RequestClipboardDataAction;
 import org.eclipse.glsp.server.features.clipboard.SetClipboardDataAction;
 import org.eclipse.glsp.server.gson.GraphGsonConfigurationFactory;
 
-import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
+import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.UmlCommunication_Message;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -28,7 +28,7 @@ import com.google.inject.Inject;
 public class UmlRequestClipboardDataActionHandler extends AbstractEMSActionHandler<RequestClipboardDataAction> {
    public static String CLIPBOARD_SELECTED_ELEMENTS = "selectedElements";
    public static String CLIPBOARD_ROOT = "root";
-   private final List<String> ignoreList = List.of(CommunicationTypes.MESSAGE);
+   private final List<String> ignoreList = List.of(UmlCommunication_Message.TYPE_ID);
 
    protected final Gson gson;
 

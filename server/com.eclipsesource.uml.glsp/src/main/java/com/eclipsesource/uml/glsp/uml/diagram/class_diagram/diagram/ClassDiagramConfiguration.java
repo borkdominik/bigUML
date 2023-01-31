@@ -118,7 +118,6 @@ public final class ClassDiagramConfiguration implements DiagramConfiguration {
       mappings.put(UmlClass_Association.ASSOCIATION_TYPE_ID, GraphPackage.Literals.GEDGE);
       mappings.put(UmlClass_Association.AGGREGATION_TYPE_ID, GraphPackage.Literals.GEDGE);
       mappings.put(UmlClass_Association.COMPOSITION_TYPE_ID, GraphPackage.Literals.GEDGE);
-      mappings.put(UmlClass_Association.LABEL_MULTIPLICITY, GraphPackage.Literals.GLABEL);
 
       mappings.put(UmlClass_Generalization.TYPE_ID, GraphPackage.Literals.GEDGE);
 

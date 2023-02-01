@@ -57,7 +57,7 @@ public class MessageEdgeMapper extends BaseGModelMapper<Message, GEdge> {
    }
 
    protected GLabel createEdgeNameLabel(final String name, final String id, final double position) {
-      return createEdgeLabel(name, position, id, CoreTypes.LABEL_EDGE_NAME,
+      return createEdgeLabel(name, position, id, CoreTypes.LABEL_NAME,
          GConstants.EdgeSide.TOP);
    }
 

@@ -19,7 +19,6 @@ import org.eclipse.glsp.server.actions.Action;
 
 import com.eclipsesource.uml.glsp.core.common.RepresentationKey;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
-import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalette;
 import com.google.inject.Inject;
 
 public class RequestPropertyPaletteHandler extends AbstractActionHandler<RequestPropertyPaletteAction> {
@@ -51,7 +50,7 @@ public class RequestPropertyPaletteHandler extends AbstractActionHandler<Request
 
          var propertyPalette = mapper
             .map(m -> m.map(semanticElement))
-            .orElse(new PropertyPalette(elementId, null, List.of()));
+            .orElse(null);
 
          return List.<Action> of(new SetPropertyPaletteAction(propertyPalette));
       }).orElse(List.of(new SetPropertyPaletteAction()));

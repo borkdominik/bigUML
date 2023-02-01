@@ -135,7 +135,7 @@ export class PropertyPalette implements IActionHandler, SModelRootListener, Edit
         this.content.innerHTML = "";
 
         if (palette === undefined) {
-            setEmptyPlaceholder(this.header);
+            setTextPlaceholder(this.header, "Properties not available.");
         } else {
             this.refreshHeader(palette);
             this.refreshContent(palette.items);
@@ -147,7 +147,7 @@ export class PropertyPalette implements IActionHandler, SModelRootListener, Edit
         if (label !== undefined) {
             this.header.textContent = label;
         } else {
-            setEmptyPlaceholder(this.header);
+            setTextPlaceholder(this.header, "No label provided.");
         }
     }
 
@@ -176,7 +176,7 @@ export class PropertyPalette implements IActionHandler, SModelRootListener, Edit
                 }
             }
         } else {
-            setEmptyPlaceholder(this.content);
+            setTextPlaceholder(this.content, "No properties provided.");
         }
     }
 
@@ -210,10 +210,10 @@ export class PropertyPalette implements IActionHandler, SModelRootListener, Edit
     }
 }
 
-function setEmptyPlaceholder(container: HTMLElement): void {
+function setTextPlaceholder(container: HTMLElement, text: string): void {
     const div = document.createElement("div");
 
-    div.textContent = "No Properties found.";
+    div.textContent = text;
 
     container.innerHTML = "";
     container.appendChild(div);

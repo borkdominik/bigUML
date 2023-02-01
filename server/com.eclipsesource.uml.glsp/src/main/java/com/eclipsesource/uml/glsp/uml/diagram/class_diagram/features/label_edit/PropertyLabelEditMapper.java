@@ -21,7 +21,7 @@ import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Property;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyMultiplicityLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyTypeLabelSuffix;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.property.UpdatePropertyBoundsHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.property.UpdatePropertyMultiplicityHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.property.UpdatePropertyNameHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.property.UpdatePropertyTypeHandler;
 import com.eclipsesource.uml.glsp.uml.features.label_edit.BaseLabelEditMapper;
@@ -38,9 +38,9 @@ public final class PropertyLabelEditMapper extends BaseLabelEditMapper<Property>
                new UpdatePropertyNameHandler.Args(op.getText())))
          .map(UmlClass_Property.LABEL_MULTIPLICITY, PropertyMultiplicityLabelSuffix.SUFFIX,
             (element, op) -> handlerMapper.asOperation(
-               UpdatePropertyBoundsHandler.class,
+               UpdatePropertyMultiplicityHandler.class,
                element,
-               new UpdatePropertyBoundsHandler.Args(op.getText())))
+               new UpdatePropertyMultiplicityHandler.Args(op.getText())))
          .map(UmlClass_Property.LABEL_TYPE, PropertyTypeLabelSuffix.SUFFIX,
             (element, op) -> handlerMapper.asOperation(
                UpdatePropertyTypeHandler.class,

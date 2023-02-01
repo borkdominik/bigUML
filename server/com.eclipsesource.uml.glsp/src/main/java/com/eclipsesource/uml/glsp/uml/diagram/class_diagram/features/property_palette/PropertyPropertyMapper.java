@@ -17,9 +17,10 @@ import org.eclipse.uml2.uml.Property;
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
 import com.eclipsesource.uml.glsp.features.property_palette.handler.action.UpdateElementPropertyAction;
 import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalette;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Package;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Property;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.property.UpdatePropertyMultiplicityHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.property.UpdatePropertyNameHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.utils.PropertyUtil;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.BaseDiagramElementPropertyMapper;
 
 public class PropertyPropertyMapper extends BaseDiagramElementPropertyMapper<Property> {
@@ -30,6 +31,7 @@ public class PropertyPropertyMapper extends BaseDiagramElementPropertyMapper<Pro
 
       var items = propertyBuilder(elementId)
          .text(UmlClass_Property.Property.NAME, "Name", source.getName())
+         .text(UmlClass_Property.Property.MULTIPLICITY, "Multiplicity", PropertyUtil.getMultiplicity(source))
          .items();
 
       return new PropertyPalette(elementId, source.getName(), items);
@@ -38,11 +40,16 @@ public class PropertyPropertyMapper extends BaseDiagramElementPropertyMapper<Pro
    @Override
    public Optional<UpdateOperation> map(final UpdateElementPropertyAction action) {
       return operationBuilder()
-         .map(UmlClass_Package.Property.NAME,
+         .map(UmlClass_Property.Property.NAME,
             (element, op) -> handlerMapper.asOperation(
                UpdatePropertyNameHandler.class,
                element,
                new UpdatePropertyNameHandler.Args(op.getValue())))
+         .map(UmlClass_Property.Property.MULTIPLICITY,
+            (element, op) -> handlerMapper.asOperation(
+               UpdatePropertyMultiplicityHandler.class,
+               element,
+               new UpdatePropertyMultiplicityHandler.Args(op.getValue())))
          .find(action);
    }
 

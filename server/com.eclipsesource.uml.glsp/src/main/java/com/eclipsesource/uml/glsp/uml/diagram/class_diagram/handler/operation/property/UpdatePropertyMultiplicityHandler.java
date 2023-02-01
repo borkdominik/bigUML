@@ -19,24 +19,24 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.utils.PropertyUtil;
 import com.eclipsesource.uml.glsp.uml.handler.operations.update.BaseUpdateElementHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.UpdatePropertyMultiplicityContribution;
 
-public final class UpdatePropertyBoundsHandler
-   extends BaseUpdateElementHandler<Property, UpdatePropertyBoundsHandler.Args> {
+public final class UpdatePropertyMultiplicityHandler
+   extends BaseUpdateElementHandler<Property, UpdatePropertyMultiplicityHandler.Args> {
 
-   public UpdatePropertyBoundsHandler() {
+   public UpdatePropertyMultiplicityHandler() {
       super(UmlClass_Property.Property.MULTIPLICITY);
    }
 
    public static class Args {
-      public String bounds;
+      public String multiplicity;
 
-      public Args(final String bounds) {
-         this.bounds = bounds;
+      public Args(final String multiplicity) {
+         this.multiplicity = multiplicity;
       }
    }
 
    @Override
    protected CCommand createCommand(final UpdateOperation operation, final Property element, final Args args) {
-      var bound = args.bounds;
+      var bound = args.multiplicity;
 
       return UpdatePropertyMultiplicityContribution.create(
          element,

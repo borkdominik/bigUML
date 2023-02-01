@@ -57,7 +57,9 @@ public class UpdateElementPropertyHandler extends AbstractActionHandler<UpdateEl
             .orElseThrow(
                () -> {
                   return new GLSPServerException(
-                     "No update operation found for property id " + action.getPropertyId());
+                     "No update operation found for property id " + action.getPropertyId() + " for element "
+                        + semanticElement.getClass().getSimpleName() + " in mapper "
+                        + mapper.getClass().getSimpleName());
                });
 
          return List.<Action> of(operation);

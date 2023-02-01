@@ -24,10 +24,10 @@ import org.eclipse.uml2.uml.Type;
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 import com.eclipsesource.uml.glsp.core.features.id_generator.IdCountContextGenerator;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
-import com.eclipsesource.uml.glsp.old.utils.property.PropertyUtil;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Property;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyMultiplicityLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyTypeLabelSuffix;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.utils.PropertyUtil;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGModelMapper;
 import com.google.inject.Inject;
 

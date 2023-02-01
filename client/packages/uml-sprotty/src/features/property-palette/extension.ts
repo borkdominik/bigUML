@@ -131,8 +131,10 @@ export class PropertyPalette implements IActionHandler, SModelRootListener, Edit
             return;
         }
 
+        this.header.innerHTML = "";
+        this.content.innerHTML = "";
+
         if (palette === undefined) {
-            this.content.innerHTML = "";
             setEmptyPlaceholder(this.header);
         } else {
             this.refreshHeader(palette);
@@ -153,7 +155,7 @@ export class PropertyPalette implements IActionHandler, SModelRootListener, Edit
         this.content.innerHTML = "";
         this.uiElements = [];
 
-        if (items !== undefined) {
+        if (items !== undefined && items.length > 0) {
             for (const propertyItem of items) {
                 let created: CreatedElementProperty | undefined = undefined;
 
@@ -173,11 +175,15 @@ export class PropertyPalette implements IActionHandler, SModelRootListener, Edit
                     this.uiElements.push(created.ui);
                 }
             }
+        } else {
+            setEmptyPlaceholder(this.content);
         }
     }
 
     protected async refresh(): Promise<SetPropertyPaletteAction> {
-        return this.request(this.selectedItems[0]).then(response => {
+        const id = this.selectedItems[0];
+
+        return this.request(id).then(response => {
             this.paletteAction = response;
 
             this.refreshUi(this.palette);

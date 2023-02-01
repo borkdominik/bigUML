@@ -76,6 +76,7 @@
   </elements>
   <elements xsi:type="notation:Edge">
     <semanticElement elementId="_iozNYItjEe2HOqFYNFa9oQ"/>
+    <bendPoints x="-190.45845134048923" y="46.20504031292981"/>
   </elements>
   <elements xsi:type="notation:Edge">
     <semanticElement elementId="_imOZgYtuEe2fhaid7suJkA"/>

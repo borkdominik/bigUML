@@ -28,7 +28,16 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.label_edit.
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.label_edit.PackageLabelEditMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.label_edit.PrimitiveTypeLabelEditMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.label_edit.PropertyLabelEditMapper;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.property_palette.AssociationPropertyMapper;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.property_palette.ClassPropertyMapper;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.property_palette.DataTypePropertyMapper;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.property_palette.EnumerationLiteralPropertyMapper;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.property_palette.EnumerationPropertyMapper;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.property_palette.GeneralizationPropertyMapper;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.property_palette.InterfacePropertyMapper;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.property_palette.OperationPropertyMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.property_palette.PackagePropertyMapper;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.property_palette.PrimitiveTypePropertyMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.property_palette.PropertyPropertyMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.tool_palette.ClassToolPaletteConfiguration;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.AssociationEdgeMapper;
@@ -180,7 +189,16 @@ public final class ClassUmlManifest extends DiagramManifest
       });
 
       contributeDiagramElementPropertyMappers((contribution) -> {
+         contribution.addBinding().to(AssociationPropertyMapper.class);
+         contribution.addBinding().to(ClassPropertyMapper.class);
+         contribution.addBinding().to(DataTypePropertyMapper.class);
+         contribution.addBinding().to(EnumerationLiteralPropertyMapper.class);
+         contribution.addBinding().to(EnumerationPropertyMapper.class);
+         contribution.addBinding().to(GeneralizationPropertyMapper.class);
+         contribution.addBinding().to(InterfacePropertyMapper.class);
+         contribution.addBinding().to(OperationPropertyMapper.class);
          contribution.addBinding().to(PackagePropertyMapper.class);
+         contribution.addBinding().to(PrimitiveTypePropertyMapper.class);
          contribution.addBinding().to(PropertyPropertyMapper.class);
       });
    }

@@ -22,6 +22,11 @@ public class ElementPropertyBuilder {
    }
 
    public ElementPropertyBuilder text(final String propertyId, final String label, final String value) {
+      return text(elementId, propertyId, label, value);
+   }
+
+   public ElementPropertyBuilder text(final String elementId, final String propertyId, final String label,
+      final String value) {
       items.add(new ElementTextPropertyItem(elementId, propertyId, label, value));
       return this;
    }

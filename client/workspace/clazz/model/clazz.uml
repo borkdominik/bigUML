@@ -11,7 +11,7 @@
           </ownedAttribute>
           <ownedAttribute xmi:id="_inN4AItuEe2fhaid7suJkA" name="NewClass2" type="_zUzbQYqgEe2jA6D1258ThQ" association="_imOZgYtuEe2fhaid7suJkA">
             <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_inOfEItuEe2fhaid7suJkA" value="1"/>
-            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_inOfEYtuEe2fhaid7suJkA" value="1"/>
+            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_inOfEYtuEe2fhaid7suJkA" value="2"/>
           </ownedAttribute>
         </packagedElement>
       </packagedElement>
@@ -30,7 +30,7 @@
           <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_0QeZUYqgEe2jA6D1258ThQ" value="1"/>
           <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_0QeZUoqgEe2jA6D1258ThQ" value="1"/>
         </ownedAttribute>
-        <ownedAttribute xmi:id="_inLbwItuEe2fhaid7suJkA" name="NewClass1" type="_ap2OUIqpEe2LnNSbuUmaGA" association="_imOZgYtuEe2fhaid7suJkA">
+        <ownedAttribute xmi:id="_inLbwItuEe2fhaid7suJkA" name="asd asd" type="_ap2OUIqpEe2LnNSbuUmaGA" association="_imOZgYtuEe2fhaid7suJkA">
           <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_inMp4ItuEe2fhaid7suJkA" value="1"/>
           <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_inNQ8ItuEe2fhaid7suJkA" value="1"/>
         </ownedAttribute>

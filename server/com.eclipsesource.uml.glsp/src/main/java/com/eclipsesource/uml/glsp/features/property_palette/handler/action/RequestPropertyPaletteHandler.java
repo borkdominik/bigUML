@@ -10,13 +10,10 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.features.property_palette.handler.action;
 
-import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
-
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.server.actions.AbstractActionHandler;
 import org.eclipse.glsp.server.actions.Action;
 
@@ -44,8 +41,11 @@ public class RequestPropertyPaletteHandler extends AbstractActionHandler<Request
             return List.<Action> of(new SetPropertyPaletteAction());
          }
 
-         var semanticElement = getOrThrow(modelState.getIndex().getEObject(elementId),
-            EObject.class, "Could not find semantic element for id '" + elementId + "', no property mapping executed.");
+         var semanticElementOpt = modelState.getIndex().getEObject(elementId);
+         if (semanticElementOpt.isEmpty()) {
+            return List.<Action> of(new SetPropertyPaletteAction());
+         }
+         var semanticElement = semanticElementOpt.get();
 
          var mapper = registry.get(RepresentationKey.of(representation, semanticElement.getClass()));
 

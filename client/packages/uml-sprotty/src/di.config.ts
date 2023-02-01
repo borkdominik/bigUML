@@ -43,6 +43,7 @@ import { UmlGraphView } from "./common/graph-view";
 import { CustomCopyPasteHandler, LastContainableElementTracker } from "./features/copy-paste/copy-paste";
 import umlDiagramOutlineViewModule from "./features/diagram-outline/di.config";
 import { EditLabelUIAutocomplete } from "./features/edit-label";
+import umlEditorPanelModule from "./features/editor-panel/di.config";
 import umlPropertyPaletteModule from "./features/property-palette/di.config";
 import umlToolPaletteModule from "./features/tool-palette/di.config";
 import { IconLabelCompartmentSelectionFeedback } from "./feedback";
@@ -148,6 +149,7 @@ export default function createContainer(widgetId: string): Container {
         coreDiagramModule,
         communicationModule,
         classModule,
+        umlEditorPanelModule,
         umlToolPaletteModule,
         umlDiagramOutlineViewModule,
         umlPropertyPaletteModule

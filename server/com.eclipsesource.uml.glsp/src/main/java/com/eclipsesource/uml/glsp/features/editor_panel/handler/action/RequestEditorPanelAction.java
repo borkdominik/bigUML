@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2021 EclipseSource and others.
+ * Copyright (c) 2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -8,15 +8,14 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-import { GLSPDiagramWidget } from "@eclipse-glsp/theia-integration";
-import { EnableEditorPanelAction } from "@eclipsesource/uml-sprotty/lib/features/editor-panel";
+package com.eclipsesource.uml.glsp.features.editor_panel.handler.action;
 
-export class UmlDiagramWidget extends GLSPDiagramWidget {
+import org.eclipse.glsp.server.actions.RequestAction;
 
-    protected override dispatchInitialActions(): void {
-        super.dispatchInitialActions();
+public class RequestEditorPanelAction extends RequestAction<SetEditorPanelAction> {
+   public static final String KIND = "requestEditorPanel";
 
-        this.actionDispatcher.dispatch(new EnableEditorPanelAction());
-    }
-
+   public RequestEditorPanelAction() {
+      super(KIND);
+   }
 }

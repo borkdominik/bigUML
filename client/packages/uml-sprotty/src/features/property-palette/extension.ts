@@ -14,28 +14,21 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 import {
-    AbstractUIExtension,
     Action,
     ActionDispatcher,
-    codiconCSSClasses,
     EditorContextService,
     IActionHandler,
     ICommand,
     isSelectAction,
     SelectAction,
-    SetUIExtensionVisibilityAction,
     SModelRoot,
     SModelRootListener,
     TYPES
 } from "@eclipse-glsp/client";
 import { inject, injectable, postConstruct } from "inversify";
 
-import {
-    EnablePropertyPaletteAction,
-    RequestPropertyPaletteAction,
-    SetPropertyPaletteAction,
-    UpdateElementPropertyAction
-} from "./actions";
+import { EditorPanelChild } from "../editor-panel/interfaces";
+import { RequestPropertyPaletteAction, SetPropertyPaletteAction, UpdateElementPropertyAction } from "./actions";
 import {
     CreatedElementProperty,
     ElementPropertyItem,
@@ -45,7 +38,7 @@ import {
 import { createTextProperty, ElementTextPropertyItem } from "./text";
 
 @injectable()
-export class PropertyPalette extends AbstractUIExtension implements IActionHandler, SModelRootListener {
+export class PropertyPalette implements IActionHandler, SModelRootListener, EditorPanelChild {
     static readonly ID = "property-palette";
 
     @inject(TYPES.IActionDispatcher) protected readonly actionDispatcher: ActionDispatcher;
@@ -55,17 +48,9 @@ export class PropertyPalette extends AbstractUIExtension implements IActionHandl
     protected selectAction?: SelectAction;
     protected uiElements: ElementPropertyUI[] = [];
 
+    protected containerElement: HTMLElement;
     protected header: HTMLElement;
-
-    protected body: HTMLElement;
-    protected bodyHeader: HTMLElement;
-    protected bodyContent: HTMLElement;
-
-    protected collapseButton: HTMLButtonElement;
-
-    get isCollapsed(): boolean {
-        return this.body.style.display === "none";
-    }
+    protected content: HTMLElement;
 
     get selectedItems(): string[] {
         return this.selectAction?.selectedElementsIDs ?? [];
@@ -75,19 +60,16 @@ export class PropertyPalette extends AbstractUIExtension implements IActionHandl
         return this.paletteAction?.palette;
     }
 
-    id(): string {
+    get id(): string {
         return PropertyPalette.ID;
     }
 
-    containerClass(): string {
-        return PropertyPalette.ID;
+    get tabLabel(): string {
+        return "Properties";
     }
 
-    override initialize(): boolean {
-        if (!this.paletteAction) {
-            return false;
-        }
-        return super.initialize();
+    get class(): string {
+        return PropertyPalette.ID;
     }
 
     @postConstruct()
@@ -96,22 +78,18 @@ export class PropertyPalette extends AbstractUIExtension implements IActionHandl
     }
 
     handle(action: Action): ICommand | Action | void {
-        console.log("Handle action: ", action);
-
-        if (action.kind === EnablePropertyPaletteAction.KIND) {
-            this.refresh().then(() => {
-                this.actionDispatcher.dispatch(
-                    new SetUIExtensionVisibilityAction(PropertyPalette.ID, !this.editorContext.isReadonly)
-                );
-            });
-        } else if (isSelectAction(action)) {
+        if (isSelectAction(action)) {
             this.selectAction = action;
             this.refresh();
         }
     }
 
     editModeChanged(_oldValue: string, _newValue: string): void {
-        this.actionDispatcher.dispatch(new SetUIExtensionVisibilityAction(PropertyPalette.ID, !this.editorContext.isReadonly));
+        if (this.editorContext.isReadonly) {
+            this.disable();
+        } else {
+            this.enable();
+        }
     }
 
     modelRootChanged(root: Readonly<SModelRoot>): void {
@@ -119,90 +97,43 @@ export class PropertyPalette extends AbstractUIExtension implements IActionHandl
         this.enable();
     }
 
-    public toggle(): void {
-        if (this.isCollapsed) {
-            this.expand();
-        } else {
-            this.collapse();
-        }
+    async prepare(): Promise<void> {
+        await this.refresh();
     }
 
-    public collapse(): void {
-        if (!this.isCollapsed) {
-            this.body.style.display = "none";
-            this.collapseButton.firstElementChild?.classList.remove("codicon-chevron-down");
-            this.collapseButton.firstElementChild?.classList.add("codicon-chevron-up");
-        }
-    }
-
-    public expand(): void {
-        if (this.isCollapsed) {
-            this.body.style.display = "flex";
-            this.collapseButton.firstElementChild?.classList.add("codicon-chevron-down");
-            this.collapseButton.firstElementChild?.classList.remove("codicon-chevron-up");
-        }
-    }
-
-    protected initializeContents(containerElement: HTMLElement): void {
-        containerElement.tabIndex = 0;
+    initializeContents(containerElement: HTMLElement): void {
+        this.containerElement = containerElement;
 
         this.initializeHeader();
         this.initializeBody();
-
-        // this.collapse();
 
         this.refreshUi(this.palette);
     }
 
     protected initializeHeader(): void {
-        const div = document.createElement("div");
-        div.classList.add("property-palette-header");
+        const header = document.createElement("div");
+        header.classList.add(`${PropertyPalette.ID}-header`);
 
-        const umlTab = document.createElement("div");
-        umlTab.classList.add("property-palette-tab-header");
-        umlTab.innerText = "UML";
-        div.appendChild(umlTab);
-
-        const collapse = document.createElement("button");
-        collapse.classList.add("property-palette-collapse");
-        collapse.appendChild(createIcon("chevron-down"));
-        collapse.addEventListener("click", () => this.toggle());
-        div.appendChild(collapse);
-
-        this.header = div;
-        this.collapseButton = collapse;
-        this.containerElement.appendChild(div);
+        this.header = header;
+        this.containerElement.appendChild(header);
     }
 
     protected initializeBody(): void {
-        const body = document.createElement("div");
-        body.classList.add("property-palette-body");
+        const content = document.createElement("div");
+        content.classList.add(`${PropertyPalette.ID}-content`);
 
-        this.body = body;
-        this.containerElement.appendChild(body);
-
-        const bodyHeader = document.createElement("div");
-        bodyHeader.classList.add("property-palette-body-header");
-
-        this.bodyHeader = bodyHeader;
-        this.body.appendChild(bodyHeader);
-
-        const bodyContent = document.createElement("div");
-        bodyContent.classList.add("property-palette-body-content");
-
-        this.bodyContent = bodyContent;
-        this.body.appendChild(bodyContent);
-
+        this.content = content;
+        this.containerElement.appendChild(content);
     }
 
     protected refreshUi(palette?: PropertyPaletteModel): void {
-        if (this.body === undefined) {
+        if (this.containerElement === undefined) {
             return;
         }
 
         if (palette === undefined) {
-            this.bodyContent.innerHTML = "";
-            setEmptyPlaceholder(this.bodyHeader);
+            this.content.innerHTML = "";
+            setEmptyPlaceholder(this.header);
         } else {
             this.refreshHeader(palette);
             this.refreshContent(palette.items);
@@ -212,14 +143,14 @@ export class PropertyPalette extends AbstractUIExtension implements IActionHandl
     protected refreshHeader(palette: PropertyPaletteModel): void {
         const label = palette.label;
         if (label !== undefined) {
-            this.bodyHeader.textContent = label;
+            this.header.textContent = label;
         } else {
-            setEmptyPlaceholder(this.bodyHeader);
+            setEmptyPlaceholder(this.header);
         }
     }
 
     protected refreshContent(items: ElementPropertyItem[]): void {
-        this.bodyContent.innerHTML = "";
+        this.content.innerHTML = "";
         this.uiElements = [];
 
         if (items !== undefined) {
@@ -238,7 +169,7 @@ export class PropertyPalette extends AbstractUIExtension implements IActionHandl
                 }
 
                 if (created !== undefined) {
-                    this.bodyContent.appendChild(created.element);
+                    this.content.appendChild(created.element);
                     this.uiElements.push(created.ui);
                 }
             }
@@ -271,12 +202,6 @@ export class PropertyPalette extends AbstractUIExtension implements IActionHandl
     protected enable(): void {
         this.uiElements.forEach(element => element.enable());
     }
-}
-
-function createIcon(codiconId: string): HTMLElement {
-    const icon = document.createElement("i");
-    icon.classList.add(...codiconCSSClasses(codiconId));
-    return icon;
 }
 
 function setEmptyPlaceholder(container: HTMLElement): void {

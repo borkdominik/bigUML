@@ -59,5 +59,6 @@ svg {
 
 
 @import "edit-label.css";
+@import "editor-panel.css";
 @import "tool-palette.css";
 @import "property-palette.css";

@@ -37,7 +37,7 @@ export function createTextProperty(propertyItem: ElementTextPropertyItem, events
     });
     input.addEventListener("keypress", ev => {
         if (ev.key === "Enter") {
-            ev.preventDefault();
+            ev.stopPropagation();
             events.onEnter?.(propertyItem, input, ev);
         }
     });

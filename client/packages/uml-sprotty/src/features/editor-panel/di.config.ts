@@ -13,22 +13,25 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { configureActionHandler, GLSP_TYPES, SelectAction } from "@eclipse-glsp/client";
+import { configureActionHandler, TYPES } from "@eclipse-glsp/client";
 import { ContainerModule } from "inversify";
 
-import { EDITOR_PANEL_TYPES } from "../editor-panel/di.types";
-import { PropertyPalette } from "./extension";
+import { EnableEditorPanelAction } from "./actions";
+import { EditorPanel } from "./extension";
 
-const umlPropertyPaletteModule = new ContainerModule(
+const umlEditorPanelModule = new ContainerModule(
     (bind, _unbind, isBound, rebind) => {
         const context = { bind, _unbind, isBound, rebind };
 
-        bind(PropertyPalette).toSelf().inSingletonScope();
-        bind(EDITOR_PANEL_TYPES.Child).toService(PropertyPalette);
-        bind(GLSP_TYPES.SModelRootListener).toService(PropertyPalette);
+        bind(EditorPanel).toSelf().inSingletonScope();
+        bind(TYPES.IUIExtension).toService(EditorPanel);
 
-        configureActionHandler(context, SelectAction.KIND, PropertyPalette);
+        configureActionHandler(
+            context,
+            EnableEditorPanelAction.KIND,
+            EditorPanel
+        );
     }
 );
 
-export default umlPropertyPaletteModule;
+export default umlEditorPanelModule;

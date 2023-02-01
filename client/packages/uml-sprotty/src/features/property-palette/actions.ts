@@ -59,15 +59,3 @@ export function isUpdateElementPropertyAction(
 ): action is UpdateElementPropertyAction {
     return action.kind === UpdateElementPropertyAction.KIND;
 }
-
-export class EnablePropertyPaletteAction implements Action {
-    static readonly KIND = "enablePropertyPalette";
-    kind = EnablePropertyPaletteAction.KIND;
-
-}
-
-export function isEnablePropertyPaletteAction(
-    action: Action
-): action is EnablePropertyPaletteAction {
-    return action.kind === EnablePropertyPaletteAction.KIND;
-}

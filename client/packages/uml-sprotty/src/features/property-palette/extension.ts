@@ -36,7 +36,12 @@ import {
     SetPropertyPaletteAction,
     UpdateElementPropertyAction
 } from "./actions";
-import { CreatedElementProperty, ElementPropertyItem, ElementPropertyUI } from "./model";
+import {
+    CreatedElementProperty,
+    ElementPropertyItem,
+    ElementPropertyUI,
+    PropertyPalette as PropertyPaletteModel
+} from "./model";
 import { createTextProperty, ElementTextPropertyItem } from "./text";
 
 @injectable()
@@ -46,12 +51,16 @@ export class PropertyPalette extends AbstractUIExtension implements IActionHandl
     @inject(TYPES.IActionDispatcher) protected readonly actionDispatcher: ActionDispatcher;
     @inject(EditorContextService) protected readonly editorContext: EditorContextService;
 
-    protected propertyItems: ElementPropertyItem[];
+    protected paletteAction?: SetPropertyPaletteAction;
     protected selectAction?: SelectAction;
     protected uiElements: ElementPropertyUI[] = [];
 
     protected header: HTMLElement;
+
     protected body: HTMLElement;
+    protected bodyHeader: HTMLElement;
+    protected bodyContent: HTMLElement;
+
     protected collapseButton: HTMLButtonElement;
 
     get isCollapsed(): boolean {
@@ -60,6 +69,10 @@ export class PropertyPalette extends AbstractUIExtension implements IActionHandl
 
     get selectedItems(): string[] {
         return this.selectAction?.selectedElementsIDs ?? [];
+    }
+
+    get palette(): PropertyPaletteModel | undefined {
+        return this.paletteAction?.palette;
     }
 
     id(): string {
@@ -71,7 +84,7 @@ export class PropertyPalette extends AbstractUIExtension implements IActionHandl
     }
 
     override initialize(): boolean {
-        if (!this.propertyItems) {
+        if (!this.paletteAction) {
             return false;
         }
         return super.initialize();
@@ -138,7 +151,7 @@ export class PropertyPalette extends AbstractUIExtension implements IActionHandl
 
         // this.collapse();
 
-        this.refreshItems(this.propertyItems);
+        this.refreshUi(this.palette);
     }
 
     protected initializeHeader(): void {
@@ -162,40 +175,70 @@ export class PropertyPalette extends AbstractUIExtension implements IActionHandl
     }
 
     protected initializeBody(): void {
-        const div = document.createElement("div");
-        div.classList.add("property-palette-body");
-        div.innerText = "Body";
+        const body = document.createElement("div");
+        body.classList.add("property-palette-body");
 
-        this.body = div;
-        this.containerElement.appendChild(div);
+        this.body = body;
+        this.containerElement.appendChild(body);
+
+        const bodyHeader = document.createElement("div");
+        bodyHeader.classList.add("property-palette-body-header");
+
+        this.bodyHeader = bodyHeader;
+        this.body.appendChild(bodyHeader);
+
+        const bodyContent = document.createElement("div");
+        bodyContent.classList.add("property-palette-body-content");
+
+        this.bodyContent = bodyContent;
+        this.body.appendChild(bodyContent);
+
     }
 
-    protected refreshItems(propertyItems: ElementPropertyItem[]): void {
+    protected refreshUi(palette?: PropertyPaletteModel): void {
         if (this.body === undefined) {
             return;
         }
 
-        this.propertyItems = propertyItems;
+        if (palette === undefined) {
+            this.bodyContent.innerHTML = "";
+            setEmptyPlaceholder(this.bodyHeader);
+        } else {
+            this.refreshHeader(palette);
+            this.refreshContent(palette.items);
+        }
+    }
 
-        this.body.innerHTML = "";
+    protected refreshHeader(palette: PropertyPaletteModel): void {
+        const label = palette.label;
+        if (label !== undefined) {
+            this.bodyHeader.textContent = label;
+        } else {
+            setEmptyPlaceholder(this.bodyHeader);
+        }
+    }
+
+    protected refreshContent(items: ElementPropertyItem[]): void {
+        this.bodyContent.innerHTML = "";
         this.uiElements = [];
 
-        if (this.propertyItems.length === 0) {
-            this.body.appendChild(createEmptyPlaceholder());
-        } else {
-            for (const propertyItem of propertyItems) {
+        if (items !== undefined) {
+            for (const propertyItem of items) {
                 let created: CreatedElementProperty | undefined = undefined;
 
                 if (ElementTextPropertyItem.is(propertyItem)) {
                     created = createTextProperty(propertyItem, {
-                        onblur: (item, input) => {
+                        onBlur: (item, input) => {
+                            this.update(item.elementId, item.propertyId, input.value);
+                        },
+                        onEnter: (item, input) => {
                             this.update(item.elementId, item.propertyId, input.value);
                         }
                     });
                 }
 
                 if (created !== undefined) {
-                    this.body.appendChild(created.element);
+                    this.bodyContent.appendChild(created.element);
                     this.uiElements.push(created.ui);
                 }
             }
@@ -204,8 +247,9 @@ export class PropertyPalette extends AbstractUIExtension implements IActionHandl
 
     protected async refresh(): Promise<SetPropertyPaletteAction> {
         return this.request(this.selectedItems[0]).then(response => {
-            this.propertyItems = response.propertyItems;
-            this.refreshItems(this.propertyItems);
+            this.paletteAction = response;
+
+            this.refreshUi(this.palette);
 
             return response;
         });
@@ -235,10 +279,11 @@ function createIcon(codiconId: string): HTMLElement {
     return icon;
 }
 
-function createEmptyPlaceholder(): HTMLElement {
+function setEmptyPlaceholder(container: HTMLElement): void {
     const div = document.createElement("div");
 
     div.textContent = "No Properties found.";
 
-    return div;
+    container.innerHTML = "";
+    container.appendChild(div);
 }

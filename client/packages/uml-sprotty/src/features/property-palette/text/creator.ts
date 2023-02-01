@@ -17,7 +17,8 @@ import { CreatedElementProperty } from "../model";
 import { ElementTextPropertyItem } from "./model";
 
 export interface TextPropertyEvents {
-    onblur: (item: ElementTextPropertyItem, input: HTMLInputElement, event: FocusEvent) => void;
+    onBlur?: (item: ElementTextPropertyItem, input: HTMLInputElement, event: FocusEvent) => void;
+    onEnter?: (item: ElementTextPropertyItem, input: HTMLInputElement, event: KeyboardEvent) => void;
 }
 
 export function createTextProperty(propertyItem: ElementTextPropertyItem, events: TextPropertyEvents): CreatedElementProperty {
@@ -25,14 +26,20 @@ export function createTextProperty(propertyItem: ElementTextPropertyItem, events
     div.classList.add("property-item", "property-text-item");
 
     const label = document.createElement("label") as HTMLLabelElement;
-    label.textContent = propertyItem.propertyId;
+    label.textContent = propertyItem.label;
     div.appendChild(label);
 
     const input = document.createElement("input") as HTMLInputElement;
     input.type = "text";
     input.value = propertyItem.text;
     input.addEventListener("blur", ev => {
-        events.onblur(propertyItem, input, ev);
+        events.onBlur?.(propertyItem, input, ev);
+    });
+    input.addEventListener("keypress", ev => {
+        if (ev.key === "Enter") {
+            ev.preventDefault();
+            events.onEnter?.(propertyItem, input, ev);
+        }
     });
     div.appendChild(input);
 

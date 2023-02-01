@@ -49,15 +49,36 @@
     display: flex;
     flex-direction: column;
     background: var(--theia-menu-background);
-    padding: 0.4rem;
     height: 168px;
 }
 
-.property-item {
-    display: flex;
-    align-items: center;
+.property-palette-body-header {
+    padding: 0.4rem;
+    background: var(--theia-activityBar-background);
 }
 
-.property-item label, .property-text-item input {
+.property-palette-body-content {
+    display: flex;
+    flex-direction: column;
+    margin-top: 0.5rem;
+}
+
+.property-item {
+    padding: 0.4rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 1rem;
+}
+
+.property-text-item label, .property-text-item input {
     padding: 0.2rem;
+}
+
+.property-text-item label {
+    flex: 20%;
+}
+
+.property-text-item input {
+    flex: 80%;
 }

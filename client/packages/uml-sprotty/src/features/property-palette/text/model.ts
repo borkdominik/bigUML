@@ -18,6 +18,7 @@ import { ElementPropertyItem } from "../model";
 export interface ElementTextPropertyItem extends ElementPropertyItem {
     type: "TEXT";
     text: string;
+    label: string;
 }
 
 export namespace ElementTextPropertyItem {

@@ -10,29 +10,26 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.features.property_palette.handler.action;
 
-import java.util.List;
-
 import org.eclipse.glsp.server.actions.ResponseAction;
 
-import com.eclipsesource.uml.glsp.features.property_palette.model.ElementPropertyItem;
+import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalette;
 
 public class SetPropertyPaletteAction extends ResponseAction {
-
-   private List<ElementPropertyItem> propertyItems = List.of();
-
    public static final String KIND = "setPropertyPalette";
+
+   private PropertyPalette palette;
 
    public SetPropertyPaletteAction() {
       super(KIND);
    }
 
-   public SetPropertyPaletteAction(final List<ElementPropertyItem> propertyItems) {
+   public SetPropertyPaletteAction(final PropertyPalette palette) {
       super(KIND);
-      this.propertyItems = propertyItems;
+      this.palette = palette;
    }
 
-   public List<ElementPropertyItem> getPropertyItems() { return propertyItems; }
+   public PropertyPalette getPalette() { return palette; }
 
-   public void setPropertyItems(final List<ElementPropertyItem> propertyItems) { this.propertyItems = propertyItems; }
+   public void setPalette(final PropertyPalette palette) { this.palette = palette; }
 
 }

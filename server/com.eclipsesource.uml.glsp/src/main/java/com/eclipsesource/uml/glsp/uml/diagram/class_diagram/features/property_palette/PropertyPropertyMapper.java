@@ -12,23 +12,24 @@ package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.property_p
 
 import java.util.Optional;
 
-import org.eclipse.uml2.uml.Package;
+import org.eclipse.uml2.uml.Property;
 
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
 import com.eclipsesource.uml.glsp.features.property_palette.handler.action.UpdateElementPropertyAction;
 import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalette;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Package;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.upackage.UpdatePackageNameHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Property;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.property.UpdatePropertyNameHandler;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.BaseDiagramElementPropertyMapper;
 
-public class PackagePropertyMapper extends BaseDiagramElementPropertyMapper<Package> {
+public class PropertyPropertyMapper extends BaseDiagramElementPropertyMapper<Property> {
 
    @Override
-   public PropertyPalette map(final Package source) {
+   public PropertyPalette map(final Property source) {
       var elementId = idGenerator.getOrCreateId(source);
 
       var items = propertyBuilder(elementId)
-         .text(UmlClass_Package.Property.NAME, "Name", source.getName())
+         .text(UmlClass_Property.Property.NAME, "Name", source.getName())
          .items();
 
       return new PropertyPalette(elementId, source.getName(), items);
@@ -39,9 +40,9 @@ public class PackagePropertyMapper extends BaseDiagramElementPropertyMapper<Pack
       return operationBuilder()
          .map(UmlClass_Package.Property.NAME,
             (element, op) -> handlerMapper.asOperation(
-               UpdatePackageNameHandler.class,
+               UpdatePropertyNameHandler.class,
                element,
-               new UpdatePackageNameHandler.Args(op.getValue())))
+               new UpdatePropertyNameHandler.Args(op.getValue())))
          .find(action);
    }
 

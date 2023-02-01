@@ -29,6 +29,7 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.label_edit.
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.label_edit.PrimitiveTypeLabelEditMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.label_edit.PropertyLabelEditMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.property_palette.PackagePropertyMapper;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.property_palette.PropertyPropertyMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.tool_palette.ClassToolPaletteConfiguration;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.AssociationEdgeMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.ClassNodeMapper;
@@ -180,6 +181,7 @@ public final class ClassUmlManifest extends DiagramManifest
 
       contributeDiagramElementPropertyMappers((contribution) -> {
          contribution.addBinding().to(PackagePropertyMapper.class);
+         contribution.addBinding().to(PropertyPropertyMapper.class);
       });
    }
 }

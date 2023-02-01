@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2022 EclipseSource and others.
+ * Copyright (c) 2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -10,22 +10,24 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.features.property_palette.model;
 
-public abstract class ElementPropertyItem {
-   protected final String elementId;
-   protected final String propertyId;
-   protected final String type;
+import java.util.List;
 
-   public ElementPropertyItem(final String elementId, final String propertyId, final ElementPropertyType type) {
+public class PropertyPalette {
+   protected String elementId;
+   protected String label;
+   protected List<ElementPropertyItem> items;
+
+   public PropertyPalette(final String elementId, final String label, final List<ElementPropertyItem> items) {
       super();
       this.elementId = elementId;
-      this.propertyId = propertyId;
-      this.type = type.name();
+      this.label = label;
+      this.items = items;
    }
 
    public String getElementId() { return elementId; }
 
-   public String getPropertyId() { return propertyId; }
+   public String getLabel() { return label; }
 
-   public String getType() { return type; }
+   public List<ElementPropertyItem> getItems() { return items; }
 
 }

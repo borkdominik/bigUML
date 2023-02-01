@@ -49,7 +49,7 @@
     display: flex;
     flex-direction: column;
     background: var(--theia-menu-background);
-    height: 168px;
+    height: 192px;
 }
 
 .property-palette-body-header {
@@ -61,6 +61,7 @@
     display: flex;
     flex-direction: column;
     margin-top: 0.5rem;
+    overflow: auto;
 }
 
 .property-item {
@@ -76,9 +77,10 @@
 }
 
 .property-text-item label {
-    flex: 20%;
+    width: 128px;
+    word-wrap: break-word;
 }
 
 .property-text-item input {
-    flex: 80%;
+    flex: 1;
 }

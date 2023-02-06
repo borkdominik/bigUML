@@ -16,12 +16,12 @@ import org.eclipse.emf.ecore.EObject;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 
-public abstract class BaseSemanticExistenceCheckedCommand<TSemantic extends EObject> extends BaseSemanticElementCommand {
+public abstract class BaseSemanticExistenceCheckedCommand<TSemanticElement extends EObject> extends BaseSemanticElementCommand {
    private static Logger LOGGER = LogManager.getLogger(BaseSemanticExistenceCheckedCommand.class.getSimpleName());
 
-   protected final TSemantic semanticElement;
+   protected final TSemanticElement semanticElement;
 
-   public BaseSemanticExistenceCheckedCommand(final ModelContext context, final TSemantic semanticElement) {
+   public BaseSemanticExistenceCheckedCommand(final ModelContext context, final TSemanticElement semanticElement) {
       super(context);
       this.semanticElement = semanticElement;
    }
@@ -37,6 +37,6 @@ public abstract class BaseSemanticExistenceCheckedCommand<TSemantic extends EObj
       return this.semanticElement.eContainer() != null;
    }
 
-   abstract protected void doChanges(TSemantic semanticElement);
+   abstract protected void doChanges(TSemanticElement semanticElement);
 
 }

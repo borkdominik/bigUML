@@ -18,8 +18,10 @@ import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
 import com.eclipsesource.uml.glsp.features.property_palette.handler.action.UpdateElementPropertyAction;
 import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalette;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Operation;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.operation.UpdateOperationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.operation.UpdateOperationNameHandler;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.BaseDiagramElementPropertyMapper;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.operation.UpdateOperationArgument;
 
 public class OperationPropertyMapper extends BaseDiagramElementPropertyMapper<Operation> {
 
@@ -29,6 +31,9 @@ public class OperationPropertyMapper extends BaseDiagramElementPropertyMapper<Op
 
       var items = propertyBuilder(elementId)
          .text(UmlClass_Operation.Property.NAME, "Name", source.getName())
+         .bool(UmlClass_Operation.Property.IS_ABSTRACT, "Is abstract", source.isAbstract())
+         .bool(UmlClass_Operation.Property.IS_STATIC, "Is static", source.isStatic())
+         .bool(UmlClass_Operation.Property.IS_QUERY, "Is query", source.isQuery())
          .items();
 
       return new PropertyPalette(elementId, source.getName(), items);
@@ -42,6 +47,27 @@ public class OperationPropertyMapper extends BaseDiagramElementPropertyMapper<Op
                UpdateOperationNameHandler.class,
                element,
                new UpdateOperationNameHandler.Args(op.getValue())))
+         .map(UmlClass_Operation.Property.IS_ABSTRACT,
+            (element, op) -> handlerMapper.asOperation(
+               UpdateOperationHandler.class,
+               element,
+               new UpdateOperationArgument.Builder()
+                  .isAbstract(Boolean.parseBoolean(op.getValue()))
+                  .build()))
+         .map(UmlClass_Operation.Property.IS_STATIC,
+            (element, op) -> handlerMapper.asOperation(
+               UpdateOperationHandler.class,
+               element,
+               new UpdateOperationArgument.Builder()
+                  .isStatic(Boolean.parseBoolean(op.getValue()))
+                  .build()))
+         .map(UmlClass_Operation.Property.IS_QUERY,
+            (element, op) -> handlerMapper.asOperation(
+               UpdateOperationHandler.class,
+               element,
+               new UpdateOperationArgument.Builder()
+                  .isQuery(Boolean.parseBoolean(op.getValue()))
+                  .build()))
          .find(action);
    }
 

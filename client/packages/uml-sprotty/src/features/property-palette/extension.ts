@@ -29,6 +29,7 @@ import { inject, injectable, postConstruct } from "inversify";
 
 import { EditorPanelChild } from "../editor-panel/interfaces";
 import { RequestPropertyPaletteAction, SetPropertyPaletteAction, UpdateElementPropertyAction } from "./actions";
+import { createBoolProperty, ElementBoolPropertyItem } from "./bool";
 import {
     CreatedElementProperty,
     ElementPropertyItem,
@@ -78,7 +79,7 @@ export class PropertyPalette implements IActionHandler, SModelRootListener, Edit
     }
 
     handle(action: Action): ICommand | Action | void {
-        if (isSelectAction(action)) {
+        if (isSelectAction(action) && action.selectedElementsIDs.length > 0) {
             this.selectAction = action;
             this.refresh();
         }
@@ -166,6 +167,12 @@ export class PropertyPalette implements IActionHandler, SModelRootListener, Edit
                         },
                         onEnter: (item, input) => {
                             this.update(item.elementId, item.propertyId, input.value);
+                        }
+                    });
+                } else if (ElementBoolPropertyItem.is(propertyItem)) {
+                    created = createBoolProperty(propertyItem, {
+                        onChange: (item, input) => {
+                            this.update(item.elementId, item.propertyId, input.checked + "");
                         }
                     });
                 }

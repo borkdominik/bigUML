@@ -21,6 +21,9 @@ public class UmlClass_Operation {
    public class Property {
 
       public static final String NAME = "name";
+      public static final String IS_ABSTRACT = "is_abstract";
+      public static final String IS_STATIC = "is_static";
+      public static final String IS_QUERY = "is_query";
 
       private Property() {}
    }

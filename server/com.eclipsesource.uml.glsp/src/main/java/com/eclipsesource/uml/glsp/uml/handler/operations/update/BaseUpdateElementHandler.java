@@ -24,10 +24,10 @@ import com.eclipsesource.uml.glsp.core.utils.reflection.GenericsUtil;
 import com.google.gson.Gson;
 import com.google.inject.Inject;
 
-public abstract class BaseUpdateElementHandler<TElementType extends EObject, TArgs extends Object>
-   implements DiagramUpdateHandler<TElementType, TArgs> {
+public abstract class BaseUpdateElementHandler<TElementType extends EObject, TUpdateArgument>
+   implements DiagramUpdateHandler<TElementType, TUpdateArgument> {
    protected final Class<TElementType> elementType;
-   protected final Class<TArgs> argsType;
+   protected final Class<TUpdateArgument> updateArgumentType;
 
    protected final String contextId;
    protected final Gson gson;
@@ -42,7 +42,7 @@ public abstract class BaseUpdateElementHandler<TElementType extends EObject, TAr
       this.contextId = contextId;
 
       this.elementType = GenericsUtil.getClassParameter(getClass(), BaseUpdateElementHandler.class, 0);
-      this.argsType = GenericsUtil.getClassParameter(getClass(), BaseUpdateElementHandler.class, 1);
+      this.updateArgumentType = GenericsUtil.getClassParameter(getClass(), BaseUpdateElementHandler.class, 1);
 
       this.gson = new Gson();
    }
@@ -51,7 +51,7 @@ public abstract class BaseUpdateElementHandler<TElementType extends EObject, TAr
    public Class<TElementType> getElementType() { return elementType; }
 
    @Override
-   public Class<TArgs> getArgsType() { return argsType; }
+   public Class<TUpdateArgument> getUpdateArgumentType() { return updateArgumentType; }
 
    @Override
    public String contextId() {
@@ -66,9 +66,9 @@ public abstract class BaseUpdateElementHandler<TElementType extends EObject, TAr
          elementType,
          "Could not find semantic element for id '" + elementId + "'.");
 
-      var args = gson.fromJson(gson.toJsonTree(operation.getArgs()), this.argsType);
+      TUpdateArgument updateArgument = gson.fromJson(gson.toJsonTree(operation.getArgs()), this.updateArgumentType);
 
-      var command = createCommand(operation, semanticElement, args);
+      var command = createCommand(operation, semanticElement, updateArgument);
       modelServerAccess.exec(command)
          .thenAccept(response -> {
             if (response.body() == null || response.body().isEmpty()) {
@@ -77,5 +77,5 @@ public abstract class BaseUpdateElementHandler<TElementType extends EObject, TAr
          });
    }
 
-   protected abstract CCommand createCommand(UpdateOperation operation, TElementType element, TArgs args);
+   protected abstract CCommand createCommand(UpdateOperation operation, TElementType element, TUpdateArgument updateArgument);
 }

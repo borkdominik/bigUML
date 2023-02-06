@@ -25,11 +25,11 @@
     margin-left: 1rem;
 }
 
-.property-text-item label, .property-text-item input {
+.property-item label, .property-text-item input {
     padding: 0.2rem;
 }
 
-.property-text-item label {
+.property-item label {
     width: 128px;
     word-wrap: break-word;
 }

@@ -26,6 +26,7 @@ import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.gene
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.generalization.DeleteGeneralizationContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.operation.CreateOperationContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.operation.DeleteOperationContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.operation.UpdateOperationContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.primitive_type.CreatePrimitiveTypeContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.primitive_type.DeletePrimitiveTypeContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.CreatePropertyContribution;
@@ -57,7 +58,8 @@ public final class ClassManifest extends DiagramManifest implements CommandCodec
       multibinder.addBinding(CreatePropertyContribution.TYPE).to(CreatePropertyContribution.class);
       multibinder.addBinding(DeletePropertyContribution.TYPE).to(DeletePropertyContribution.class);
       multibinder.addBinding(UpdatePropertyTypeContribution.TYPE).to(UpdatePropertyTypeContribution.class);
-      multibinder.addBinding(UpdatePropertyMultiplicityContribution.TYPE).to(UpdatePropertyMultiplicityContribution.class);
+      multibinder.addBinding(UpdatePropertyMultiplicityContribution.TYPE)
+         .to(UpdatePropertyMultiplicityContribution.class);
 
       // Association
       multibinder.addBinding(CreateAssociationContribution.TYPE).to(CreateAssociationContribution.class);
@@ -82,6 +84,7 @@ public final class ClassManifest extends DiagramManifest implements CommandCodec
       // Operation
       multibinder.addBinding(CreateOperationContribution.TYPE).to(CreateOperationContribution.class);
       multibinder.addBinding(DeleteOperationContribution.TYPE).to(DeleteOperationContribution.class);
+      multibinder.addBinding(UpdateOperationContribution.TYPE).to(UpdateOperationContribution.class);
 
       // Data Type
       multibinder.addBinding(CreateDataTypeContribution.TYPE).to(CreateDataTypeContribution.class);

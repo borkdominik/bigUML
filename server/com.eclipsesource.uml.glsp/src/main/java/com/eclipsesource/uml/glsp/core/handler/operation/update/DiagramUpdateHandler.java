@@ -12,10 +12,10 @@ package com.eclipsesource.uml.glsp.core.handler.operation.update;
 
 import org.eclipse.emf.ecore.EObject;
 
-public interface DiagramUpdateHandler<TElementType extends EObject, TArgs> {
+public interface DiagramUpdateHandler<TElementType extends EObject, TUpdateArgument> {
    Class<TElementType> getElementType();
 
-   Class<TArgs> getArgsType();
+   Class<TUpdateArgument> getUpdateArgumentType();
 
    String contextId();
 

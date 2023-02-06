@@ -17,6 +17,7 @@ import org.eclipse.emfcloud.modelserver.command.CCommand;
 import com.eclipsesource.uml.modelserver.shared.codec.codecs.DimensionCodec;
 import com.eclipsesource.uml.modelserver.shared.codec.codecs.EdgeCodec;
 import com.eclipsesource.uml.modelserver.shared.codec.codecs.ElementCodec;
+import com.eclipsesource.uml.modelserver.shared.codec.codecs.EmbeddedCodec;
 import com.eclipsesource.uml.modelserver.shared.codec.codecs.ExtraCodec;
 import com.eclipsesource.uml.modelserver.shared.codec.codecs.ParentCodec;
 import com.eclipsesource.uml.modelserver.shared.codec.codecs.PositionCodec;
@@ -25,7 +26,7 @@ import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 
 public final class ContributionDecoder extends BaseDecoder
    implements PositionCodec.Decoder, ParentCodec.Decoder, ExtraCodec.Decoder, ElementCodec.Decoder, EdgeCodec.Decoder,
-   DimensionCodec.Decoder {
+   DimensionCodec.Decoder, EmbeddedCodec.Decoder {
 
    public ContributionDecoder(final ModelContext context) {
       super(context);

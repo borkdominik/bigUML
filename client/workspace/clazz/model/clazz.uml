@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_Cfp0UGmxEe2kLe5KTNzRtw" name="clazz">
-  <packagedElement xmi:type="uml:Package" xmi:id="_MFWcwIh9Ee2ekuJspw8-cA" name="2">
+  <packagedElement xmi:type="uml:Package" xmi:id="_MFWcwIh9Ee2ekuJspw8-cA" name="2lkajsdlasd">
     <packagedElement xmi:type="uml:Package" xmi:id="_NScJUYqeEe2ivZI76tgg9Q" name="NewPackage1">
       <packagedElement xmi:type="uml:Package" xmi:id="_aFkckYqpEe2LnNSbuUmaGA" name="asd123">
         <packagedElement xmi:type="uml:Class" xmi:id="_ap2OUIqpEe2LnNSbuUmaGA" name="asd">
@@ -11,7 +11,7 @@
           </ownedAttribute>
           <ownedAttribute xmi:id="_inN4AItuEe2fhaid7suJkA" name="NewClass2" type="_zUzbQYqgEe2jA6D1258ThQ" association="_imOZgYtuEe2fhaid7suJkA">
             <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_inOfEItuEe2fhaid7suJkA" value="1"/>
-            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_inOfEYtuEe2fhaid7suJkA" value="2"/>
+            <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_inOfEYtuEe2fhaid7suJkA" value="10"/>
           </ownedAttribute>
         </packagedElement>
       </packagedElement>
@@ -42,15 +42,15 @@
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="_mBn_0ItiEe2HOqFYNFa9oQ" name="Abstract" isAbstract="true">
     <ownedOperation xmi:id="_C7YZYItjEe2HOqFYNFa9oQ" name="asd"/>
-    <ownedOperation xmi:id="_ESMbUItjEe2HOqFYNFa9oQ" name="NewOperation2"/>
+    <ownedOperation xmi:id="_ESMbUItjEe2HOqFYNFa9oQ" name="NewOperation2" isStatic="true"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="_miX8cItiEe2HOqFYNFa9oQ" name="asd">
     <generalization xmi:id="_UcmNYItjEe2HOqFYNFa9oQ" general="_mBn_0ItiEe2HOqFYNFa9oQ"/>
-    <ownedAttribute xmi:id="_DZht8ItjEe2HOqFYNFa9oQ" name="NewProperty12asd">
+    <ownedAttribute xmi:id="_DZht8ItjEe2HOqFYNFa9oQ" name="asd">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_DZht8YtjEe2HOqFYNFa9oQ" value="1"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_DZiVAItjEe2HOqFYNFa9oQ" value="3"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="_D3s3sItjEe2HOqFYNFa9oQ" name="NewProperty2">
+    <ownedAttribute xmi:id="_D3s3sItjEe2HOqFYNFa9oQ" name="asd2">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_D3s3sYtjEe2HOqFYNFa9oQ" value="1"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_D3s3sotjEe2HOqFYNFa9oQ" value="1"/>
     </ownedAttribute>

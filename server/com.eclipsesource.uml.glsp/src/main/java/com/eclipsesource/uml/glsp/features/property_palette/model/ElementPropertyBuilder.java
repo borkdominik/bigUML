@@ -31,6 +31,16 @@ public class ElementPropertyBuilder {
       return this;
    }
 
+   public ElementPropertyBuilder bool(final String propertyId, final String label, final boolean value) {
+      return bool(elementId, propertyId, label, value);
+   }
+
+   public ElementPropertyBuilder bool(final String elementId, final String propertyId, final String label,
+      final boolean value) {
+      items.add(new ElementBoolPropertyItem(elementId, propertyId, label, value));
+      return this;
+   }
+
    public List<ElementPropertyItem> items() {
       return items;
    }

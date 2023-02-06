@@ -40,6 +40,7 @@ import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.ucla
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uclass.UpdateClassContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uinterface.CreateInterfaceContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uinterface.DeleteInterfaceContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uinterface.UpdateInterfaceContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.upackage.CreatePackageContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.upackage.DeletePackageContribution;
 import com.google.inject.multibindings.MapBinder;
@@ -76,6 +77,7 @@ public final class ClassManifest extends DiagramManifest implements CommandCodec
       // Interface
       multibinder.addBinding(CreateInterfaceContribution.TYPE).to(CreateInterfaceContribution.class);
       multibinder.addBinding(DeleteInterfaceContribution.TYPE).to(DeleteInterfaceContribution.class);
+      multibinder.addBinding(UpdateInterfaceContribution.TYPE).to(UpdateInterfaceContribution.class);
 
       // Enumeration
       multibinder.addBinding(CreateEnumerationContribution.TYPE).to(CreateEnumerationContribution.class);

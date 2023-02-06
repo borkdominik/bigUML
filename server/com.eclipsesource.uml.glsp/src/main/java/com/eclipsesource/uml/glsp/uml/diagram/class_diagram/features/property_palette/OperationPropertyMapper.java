@@ -41,6 +41,7 @@ public class OperationPropertyMapper extends BaseDiagramElementPropertyMapper<Op
             "Visibility",
             VisibilityKind.VALUES.stream().map(v -> v.getLiteral()).collect(Collectors.toList()),
             source.getVisibility().getLiteral())
+
          .items();
 
       return new PropertyPalette(elementId, source.getName(), items);

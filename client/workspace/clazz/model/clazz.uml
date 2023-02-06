@@ -79,9 +79,9 @@
     <ownedLiteral xmi:id="_dbKksKF5Ee29brxj5TAeTA" name="asd"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Interface" xmi:id="__giDIItiEe2HOqFYNFa9oQ" name="NewInterface1">
-    <ownedAttribute xmi:id="_ExHL8ItjEe2HOqFYNFa9oQ" name="NewProperty1">
-      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_ExHL8YtjEe2HOqFYNFa9oQ" value="1"/>
-      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_ExHL8otjEe2HOqFYNFa9oQ" value="1"/>
+    <ownedAttribute xmi:id="_ExHL8ItjEe2HOqFYNFa9oQ" name="NewProperty1" isStatic="true" isOrdered="true" isReadOnly="true" isDerived="true" isDerivedUnion="true">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_ExHL8YtjEe2HOqFYNFa9oQ"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_ExHL8otjEe2HOqFYNFa9oQ"/>
     </ownedAttribute>
     <ownedOperation xmi:id="_FIejEItjEe2HOqFYNFa9oQ" name="NewOperation1"/>
   </packagedElement>

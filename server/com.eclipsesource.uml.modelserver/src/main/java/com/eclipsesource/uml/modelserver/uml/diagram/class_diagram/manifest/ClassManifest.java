@@ -24,6 +24,7 @@ import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.enum
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.enumeration.UpdateEnumerationContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.enumeration_literal.CreateEnumerationLiteralContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.enumeration_literal.DeleteEnumerationLiteralContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.enumeration_literal.UpdateEnumerationLiteralContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.generalization.CreateGeneralizationContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.generalization.DeleteGeneralizationContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.operation.CreateOperationContribution;
@@ -91,6 +92,7 @@ public final class ClassManifest extends DiagramManifest implements CommandCodec
       // Enumeration Literal
       multibinder.addBinding(CreateEnumerationLiteralContribution.TYPE).to(CreateEnumerationLiteralContribution.class);
       multibinder.addBinding(DeleteEnumerationLiteralContribution.TYPE).to(DeleteEnumerationLiteralContribution.class);
+      multibinder.addBinding(UpdateEnumerationLiteralContribution.TYPE).to(UpdateEnumerationLiteralContribution.class);
 
       // Operation
       multibinder.addBinding(CreateOperationContribution.TYPE).to(CreateOperationContribution.class);

@@ -21,6 +21,7 @@ public class UmlClass_EnumerationLiteral {
    public class Property {
 
       public static final String NAME = "name";
+      public static final String VISIBILITY_KIND = "visibility_kind";
 
       private Property() {}
    }

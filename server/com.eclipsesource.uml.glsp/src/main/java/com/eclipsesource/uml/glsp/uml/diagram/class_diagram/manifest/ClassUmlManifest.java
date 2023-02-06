@@ -67,6 +67,7 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.en
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.enumeration.UpdateEnumerationNameHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.enumeration_literal.CreateEnumerationLiteralHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.enumeration_literal.DeleteEnumerationLiteralHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.enumeration_literal.UpdateEnumerationLiteralHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.enumeration_literal.UpdateEnumerationLiteralNameHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.generalization.CreateGeneralizationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.generalization.DeleteGeneralizationHandler;
@@ -175,6 +176,7 @@ public final class ClassUmlManifest extends DiagramManifest
          contribution.addBinding().to(UpdateEnumerationNameHandler.class);
          contribution.addBinding().to(UpdateEnumerationHandler.class);
          contribution.addBinding().to(UpdateEnumerationLiteralNameHandler.class);
+         contribution.addBinding().to(UpdateEnumerationLiteralHandler.class);
          contribution.addBinding().to(UpdateOperationNameHandler.class);
          contribution.addBinding().to(UpdateOperationHandler.class);
          contribution.addBinding().to(UpdatePrimitiveTypeNameHandler.class);

@@ -83,6 +83,7 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.pr
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.uclass.CreateAbstractClassHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.uclass.CreateClassHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.uclass.DeleteClassHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.uclass.UpdateClassHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.uclass.UpdateClassNameHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.uinterface.CreateInterfaceHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.uinterface.DeleteInterfaceHandler;
@@ -173,6 +174,7 @@ public final class ClassUmlManifest extends DiagramManifest
          contribution.addBinding().to(UpdatePropertyMultiplicityHandler.class);
          contribution.addBinding().to(UpdatePropertyTypeHandler.class);
          contribution.addBinding().to(UpdateClassNameHandler.class);
+         contribution.addBinding().to(UpdateClassHandler.class);
          contribution.addBinding().to(UpdateInterfaceNameHandler.class);
          contribution.addBinding().to(UpdatePackageNameHandler.class);
       });

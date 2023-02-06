@@ -21,6 +21,9 @@ public class UmlClass_Class {
    public class Property {
 
       public static final String NAME = "name";
+      public static final String IS_ABSTRACT = "is_abstract";
+      public static final String IS_ACTIVE = "is_active";
+      public static final String VISIBILITY_KIND = "visibility_kind";
 
       private Property() {}
    }

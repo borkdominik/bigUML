@@ -35,6 +35,7 @@ import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.prop
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.UpdatePropertyTypeContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uclass.CreateClassContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uclass.DeleteClassContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uclass.UpdateClassContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uinterface.CreateInterfaceContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uinterface.DeleteInterfaceContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.upackage.CreatePackageContribution;
@@ -53,6 +54,7 @@ public final class ClassManifest extends DiagramManifest implements CommandCodec
       // Class
       multibinder.addBinding(CreateClassContribution.TYPE).to(CreateClassContribution.class);
       multibinder.addBinding(DeleteClassContribution.TYPE).to(DeleteClassContribution.class);
+      multibinder.addBinding(UpdateClassContribution.TYPE).to(UpdateClassContribution.class);
 
       // Property
       multibinder.addBinding(CreatePropertyContribution.TYPE).to(CreatePropertyContribution.class);

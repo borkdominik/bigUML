@@ -30,6 +30,7 @@ import { inject, injectable, postConstruct } from "inversify";
 import { EditorPanelChild } from "../editor-panel/interfaces";
 import { RequestPropertyPaletteAction, SetPropertyPaletteAction, UpdateElementPropertyAction } from "./actions";
 import { createBoolProperty, ElementBoolPropertyItem } from "./bool";
+import { createChoiceProperty, ElementChoicePropertyItem } from "./choice";
 import {
     CreatedElementProperty,
     ElementPropertyItem,
@@ -173,6 +174,12 @@ export class PropertyPalette implements IActionHandler, SModelRootListener, Edit
                     created = createBoolProperty(propertyItem, {
                         onChange: (item, input) => {
                             this.update(item.elementId, item.propertyId, input.checked + "");
+                        }
+                    });
+                } else if (ElementChoicePropertyItem.is(propertyItem)) {
+                    created = createChoiceProperty(propertyItem, {
+                        onChange: (item, input) => {
+                            this.update(item.elementId, item.propertyId, input.value);
                         }
                     });
                 }

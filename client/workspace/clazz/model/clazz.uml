@@ -42,7 +42,7 @@
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="_mBn_0ItiEe2HOqFYNFa9oQ" name="Abstract" isAbstract="true">
     <ownedOperation xmi:id="_C7YZYItjEe2HOqFYNFa9oQ" name="asd"/>
-    <ownedOperation xmi:id="_ESMbUItjEe2HOqFYNFa9oQ" name="NewOperation2" isStatic="true"/>
+    <ownedOperation xmi:id="_ESMbUItjEe2HOqFYNFa9oQ" name="NewOperation2" visibility="public" isStatic="true"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="_miX8cItiEe2HOqFYNFa9oQ" name="asd">
     <generalization xmi:id="_UcmNYItjEe2HOqFYNFa9oQ" general="_mBn_0ItiEe2HOqFYNFa9oQ"/>

@@ -41,6 +41,17 @@ public class ElementPropertyBuilder {
       return this;
    }
 
+   public ElementPropertyBuilder choice(final String propertyId, final String label, final List<String> choices,
+      final String choice) {
+      return choice(elementId, propertyId, label, choices, choice);
+   }
+
+   public ElementPropertyBuilder choice(final String elementId, final String propertyId, final String label,
+      final List<String> choices, final String choice) {
+      items.add(new ElementChoicePropertyItem(elementId, propertyId, label, choices, choice));
+      return this;
+   }
+
    public List<ElementPropertyItem> items() {
       return items;
    }

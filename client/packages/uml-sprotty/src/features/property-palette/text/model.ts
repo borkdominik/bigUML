@@ -16,13 +16,15 @@
 import { ElementPropertyItem } from "../model";
 
 export interface ElementTextPropertyItem extends ElementPropertyItem {
-    type: "TEXT";
+    type: typeof ElementTextPropertyItem.TYPE;
     text: string;
     label: string;
 }
 
 export namespace ElementTextPropertyItem {
+    export const TYPE = "TEXT";
+
     export function is(value: ElementPropertyItem): value is ElementTextPropertyItem {
-        return value.type === "TEXT";
+        return value.type === TYPE;
     }
 }

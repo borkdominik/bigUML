@@ -12,8 +12,8 @@ package com.eclipsesource.uml.glsp.features.property_palette.model;
 
 public final class ElementBoolPropertyItem extends ElementPropertyItem {
 
-   private final String label;
-   private final boolean value;
+   public final String label;
+   public final boolean value;
 
    public ElementBoolPropertyItem(final String elementId, final String propertyId, final String label,
       final Boolean value) {
@@ -22,9 +22,4 @@ public final class ElementBoolPropertyItem extends ElementPropertyItem {
       this.value = value;
       this.label = label;
    }
-
-   public String getLabel() { return label; }
-
-   public boolean getValue() { return value; }
-
 }

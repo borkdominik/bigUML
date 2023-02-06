@@ -24,11 +24,11 @@ export function createBoolProperty(propertyItem: ElementBoolPropertyItem, events
     const div = document.createElement("div");
     div.classList.add("property-item", "property-bool-item");
 
-    const label = document.createElement("label") as HTMLLabelElement;
+    const label = document.createElement("label");
     label.textContent = propertyItem.label;
     div.appendChild(label);
 
-    const input = document.createElement("input") as HTMLInputElement;
+    const input = document.createElement("input");
     input.type = "checkbox";
     input.checked = propertyItem.value;
     input.addEventListener("change", ev => {

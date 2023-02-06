@@ -23,7 +23,7 @@ export interface PropertyPalette {
 export interface ElementPropertyItem {
     elementId: string;
     propertyId: string;
-    type: "TEXT" | "BOOL";
+    type: "TEXT" | "BOOL" | "CHOICE";
 }
 
 export interface CreatedElementProperty {

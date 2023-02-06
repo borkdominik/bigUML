@@ -15,16 +15,17 @@
  ********************************************************************************/
 import { ElementPropertyItem } from "../model";
 
-export interface ElementBoolPropertyItem extends ElementPropertyItem {
-    type: typeof ElementBoolPropertyItem.TYPE;
-    value: boolean;
+export interface ElementChoicePropertyItem extends ElementPropertyItem {
+    type: typeof ElementChoicePropertyItem.TYPE;
+    choices: string[];
+    choice: string;
     label: string;
 }
 
-export namespace ElementBoolPropertyItem {
-    export const TYPE = "BOOL";
+export namespace ElementChoicePropertyItem {
+    export const TYPE = "CHOICE";
 
-    export function is(value: ElementPropertyItem): value is ElementBoolPropertyItem {
+    export function is(value: ElementPropertyItem): value is ElementChoicePropertyItem {
         return value.type === TYPE;
     }
 }

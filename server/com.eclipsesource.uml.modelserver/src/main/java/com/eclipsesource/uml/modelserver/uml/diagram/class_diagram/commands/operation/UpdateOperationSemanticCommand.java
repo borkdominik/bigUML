@@ -36,6 +36,10 @@ public final class UpdateOperationSemanticCommand
       updateArgument.isQuery().ifPresent(arg -> {
          semanticElement.setIsQuery(arg);
       });
+
+      updateArgument.visibilityKind().ifPresent(arg -> {
+         semanticElement.setVisibility(arg);
+      });
    }
 
 }

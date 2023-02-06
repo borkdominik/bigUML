@@ -11,9 +11,9 @@
 package com.eclipsesource.uml.glsp.features.property_palette.model;
 
 public abstract class ElementPropertyItem {
-   protected final String elementId;
-   protected final String propertyId;
-   protected final String type;
+   public final String elementId;
+   public final String propertyId;
+   public final String type;
 
    public ElementPropertyItem(final String elementId, final String propertyId, final ElementPropertyType type) {
       super();
@@ -21,11 +21,4 @@ public abstract class ElementPropertyItem {
       this.propertyId = propertyId;
       this.type = type.name();
    }
-
-   public String getElementId() { return elementId; }
-
-   public String getPropertyId() { return propertyId; }
-
-   public String getType() { return type; }
-
 }

@@ -11,8 +11,10 @@
 package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.property_palette;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.eclipse.uml2.uml.Operation;
+import org.eclipse.uml2.uml.VisibilityKind;
 
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
 import com.eclipsesource.uml.glsp.features.property_palette.handler.action.UpdateElementPropertyAction;
@@ -34,6 +36,11 @@ public class OperationPropertyMapper extends BaseDiagramElementPropertyMapper<Op
          .bool(UmlClass_Operation.Property.IS_ABSTRACT, "Is abstract", source.isAbstract())
          .bool(UmlClass_Operation.Property.IS_STATIC, "Is static", source.isStatic())
          .bool(UmlClass_Operation.Property.IS_QUERY, "Is query", source.isQuery())
+         .choice(
+            UmlClass_Operation.Property.VISIBILITY_KIND,
+            "Visibility",
+            VisibilityKind.VALUES.stream().map(v -> v.getLiteral()).collect(Collectors.toList()),
+            source.getVisibility().getLiteral())
          .items();
 
       return new PropertyPalette(elementId, source.getName(), items);
@@ -67,6 +74,13 @@ public class OperationPropertyMapper extends BaseDiagramElementPropertyMapper<Op
                element,
                new UpdateOperationArgument.Builder()
                   .isQuery(Boolean.parseBoolean(op.getValue()))
+                  .build()))
+         .map(UmlClass_Operation.Property.VISIBILITY_KIND,
+            (element, op) -> handlerMapper.asOperation(
+               UpdateOperationHandler.class,
+               element,
+               new UpdateOperationArgument.Builder()
+                  .visibilityKind(VisibilityKind.get(op.getValue()))
                   .build()))
          .find(action);
    }

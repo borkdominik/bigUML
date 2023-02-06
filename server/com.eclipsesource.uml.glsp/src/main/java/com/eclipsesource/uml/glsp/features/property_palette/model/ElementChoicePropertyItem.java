@@ -10,16 +10,21 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.features.property_palette.model;
 
-public final class ElementTextPropertyItem extends ElementPropertyItem {
+import java.util.List;
+
+public final class ElementChoicePropertyItem extends ElementPropertyItem {
 
    public final String label;
-   public final String text;
+   public final List<String> choices;
+   public final String choice;
 
-   public ElementTextPropertyItem(final String elementId, final String propertyId, final String label,
-      final String text) {
-      super(elementId, propertyId, ElementPropertyType.TEXT);
+   public ElementChoicePropertyItem(final String elementId, final String propertyId, final String label,
+      final List<String> choices, final String choice) {
+      super(elementId, propertyId, ElementPropertyType.CHOICE);
 
-      this.text = text;
+      this.choices = choices;
+      this.choice = choice;
       this.label = label;
    }
+
 }

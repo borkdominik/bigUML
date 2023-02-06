@@ -13,18 +13,5 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { ElementPropertyItem } from "../model";
-
-export interface ElementBoolPropertyItem extends ElementPropertyItem {
-    type: typeof ElementBoolPropertyItem.TYPE;
-    value: boolean;
-    label: string;
-}
-
-export namespace ElementBoolPropertyItem {
-    export const TYPE = "BOOL";
-
-    export function is(value: ElementPropertyItem): value is ElementBoolPropertyItem {
-        return value.type === TYPE;
-    }
-}
+export * from "./model";
+export * from "./creator";

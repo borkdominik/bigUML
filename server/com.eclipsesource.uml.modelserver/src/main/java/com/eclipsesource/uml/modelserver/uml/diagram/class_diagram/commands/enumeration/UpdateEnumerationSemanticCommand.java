@@ -8,33 +8,26 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.operation;
+package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.enumeration;
 
-import org.eclipse.uml2.uml.Operation;
+import org.eclipse.uml2.uml.Enumeration;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.BaseUpdateSemanticElementCommand;
 
-public final class UpdateOperationSemanticCommand
-   extends BaseUpdateSemanticElementCommand<Operation, UpdateOperationArgument> {
+public final class UpdateEnumerationSemanticCommand
+   extends BaseUpdateSemanticElementCommand<Enumeration, UpdateEnumerationArgument> {
 
-   public UpdateOperationSemanticCommand(final ModelContext context, final Operation semanticElement,
-      final UpdateOperationArgument updateArgument) {
+   public UpdateEnumerationSemanticCommand(final ModelContext context, final Enumeration semanticElement,
+      final UpdateEnumerationArgument updateArgument) {
       super(context, semanticElement, updateArgument);
    }
 
    @Override
-   protected void updateSemanticElement(final Operation semanticElement, final UpdateOperationArgument updateArgument) {
+   protected void updateSemanticElement(final Enumeration semanticElement,
+      final UpdateEnumerationArgument updateArgument) {
       updateArgument.isAbstract().ifPresent(arg -> {
          semanticElement.setIsAbstract(arg);
-      });
-
-      updateArgument.isStatic().ifPresent(arg -> {
-         semanticElement.setIsStatic(arg);
-      });
-
-      updateArgument.isQuery().ifPresent(arg -> {
-         semanticElement.setIsQuery(arg);
       });
 
       updateArgument.visibilityKind().ifPresent(arg -> {

@@ -19,8 +19,8 @@ public final class UpdateClassSemanticCommand
    extends BaseUpdateSemanticElementCommand<Class, UpdateClassArgument> {
 
    public UpdateClassSemanticCommand(final ModelContext context, final Class semanticElement,
-      final UpdateClassArgument args) {
-      super(context, semanticElement, args);
+      final UpdateClassArgument updateArgument) {
+      super(context, semanticElement, updateArgument);
    }
 
    @Override

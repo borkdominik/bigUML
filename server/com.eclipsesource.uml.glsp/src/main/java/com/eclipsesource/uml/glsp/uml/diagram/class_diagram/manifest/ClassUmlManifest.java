@@ -62,6 +62,7 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.da
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.data_type.UpdateDataTypeNameHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.enumeration.CreateEnumerationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.enumeration.DeleteEnumerationHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.enumeration.UpdateEnumerationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.enumeration.UpdateEnumerationNameHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.enumeration_literal.CreateEnumerationLiteralHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.enumeration_literal.DeleteEnumerationLiteralHandler;
@@ -166,6 +167,7 @@ public final class ClassUmlManifest extends DiagramManifest
       contributeDiagramUpdateHandlers((contribution) -> {
          contribution.addBinding().to(UpdateDataTypeNameHandler.class);
          contribution.addBinding().to(UpdateEnumerationNameHandler.class);
+         contribution.addBinding().to(UpdateEnumerationHandler.class);
          contribution.addBinding().to(UpdateEnumerationLiteralNameHandler.class);
          contribution.addBinding().to(UpdateOperationNameHandler.class);
          contribution.addBinding().to(UpdateOperationHandler.class);

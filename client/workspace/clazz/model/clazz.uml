@@ -73,7 +73,7 @@
     </ownedAttribute>
     <ownedOperation xmi:id="_HaisUItjEe2HOqFYNFa9oQ" name="NewOperation1"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Enumeration" xmi:id="_-93a8ItiEe2HOqFYNFa9oQ" name="NewEnumeration1">
+  <packagedElement xmi:type="uml:Enumeration" xmi:id="_-93a8ItiEe2HOqFYNFa9oQ" name="NewEnumeration1" visibility="public">
     <ownedLiteral xmi:id="_AQCNcItjEe2HOqFYNFa9oQ" name="NewEnumerationLiteral1"/>
     <ownedLiteral xmi:id="_BEB2MItjEe2HOqFYNFa9oQ" name="NewEnumerationLiteral2"/>
     <ownedLiteral xmi:id="_dbKksKF5Ee29brxj5TAeTA" name="asd"/>

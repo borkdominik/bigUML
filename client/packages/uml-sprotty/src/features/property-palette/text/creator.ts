@@ -31,7 +31,7 @@ export function createTextProperty(propertyItem: ElementTextPropertyItem, events
 
     const input = document.createElement("input");
     input.type = "text";
-    input.value = propertyItem.text;
+    input.value = propertyItem.text ?? "";
     input.addEventListener("blur", ev => {
         events.onBlur?.(propertyItem, input, ev);
     });

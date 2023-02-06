@@ -44,6 +44,7 @@ import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uint
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uinterface.UpdateInterfaceContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.upackage.CreatePackageContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.upackage.DeletePackageContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.upackage.UpdatePackageContribution;
 import com.google.inject.multibindings.MapBinder;
 
 public final class ClassManifest extends DiagramManifest implements CommandCodecContribution {
@@ -107,6 +108,7 @@ public final class ClassManifest extends DiagramManifest implements CommandCodec
       // Package
       multibinder.addBinding(CreatePackageContribution.TYPE).to(CreatePackageContribution.class);
       multibinder.addBinding(DeletePackageContribution.TYPE).to(DeletePackageContribution.class);
+      multibinder.addBinding(UpdatePackageContribution.TYPE).to(UpdatePackageContribution.class);
 
    }
 }

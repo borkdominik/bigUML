@@ -21,6 +21,8 @@ public class UmlClass_Package {
    public class Property {
 
       public static final String NAME = "name";
+      public static final String URI = "uri";
+      public static final String VISIBILITY_KIND = "visibility_kind";
 
       private Property() {}
    }

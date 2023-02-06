@@ -94,6 +94,7 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.ui
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.uinterface.UpdateInterfaceNameHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.upackage.CreatePackageHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.upackage.DeletePackageHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.upackage.UpdatePackageHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.upackage.UpdatePackageNameHandler;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 
@@ -185,6 +186,7 @@ public final class ClassUmlManifest extends DiagramManifest
          contribution.addBinding().to(UpdateInterfaceNameHandler.class);
          contribution.addBinding().to(UpdateInterfaceHandler.class);
          contribution.addBinding().to(UpdatePackageNameHandler.class);
+         contribution.addBinding().to(UpdatePackageHandler.class);
       });
       contributeGModelMappers((contribution) -> {
          contribution.addBinding().to(AssociationEdgeMapper.class);

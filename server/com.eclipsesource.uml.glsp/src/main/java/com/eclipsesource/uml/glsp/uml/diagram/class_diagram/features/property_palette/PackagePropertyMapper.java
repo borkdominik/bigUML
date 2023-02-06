@@ -11,15 +11,19 @@
 package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.property_palette;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.eclipse.uml2.uml.Package;
+import org.eclipse.uml2.uml.VisibilityKind;
 
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
 import com.eclipsesource.uml.glsp.features.property_palette.handler.action.UpdateElementPropertyAction;
 import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalette;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Package;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.upackage.UpdatePackageHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.upackage.UpdatePackageNameHandler;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.BaseDiagramElementPropertyMapper;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.upackage.UpdatePackageArgument;
 
 public class PackagePropertyMapper extends BaseDiagramElementPropertyMapper<Package> {
 
@@ -29,6 +33,13 @@ public class PackagePropertyMapper extends BaseDiagramElementPropertyMapper<Pack
 
       var items = propertyBuilder(elementId)
          .text(UmlClass_Package.Property.NAME, "Name", source.getName())
+         .text(UmlClass_Package.Property.URI, "Uri", source.getURI())
+         .choice(
+            UmlClass_Package.Property.VISIBILITY_KIND,
+            "Visibility",
+            VisibilityKind.VALUES.stream().map(v -> v.getLiteral()).collect(Collectors.toList()),
+            source.getVisibility().getLiteral())
+
          .items();
 
       return new PropertyPalette(elementId, source.getName(), items);
@@ -42,6 +53,21 @@ public class PackagePropertyMapper extends BaseDiagramElementPropertyMapper<Pack
                UpdatePackageNameHandler.class,
                element,
                new UpdatePackageNameHandler.Args(op.getValue())))
+         .map(UmlClass_Package.Property.URI,
+            (element, op) -> handlerMapper.asOperation(
+               UpdatePackageHandler.class,
+               element,
+               new UpdatePackageArgument.Builder()
+                  .uri(op.getValue())
+                  .build()))
+         .map(UmlClass_Package.Property.VISIBILITY_KIND,
+            (element, op) -> handlerMapper.asOperation(
+               UpdatePackageHandler.class,
+               element,
+               new UpdatePackageArgument.Builder()
+                  .visibilityKind(VisibilityKind.get(op.getValue()))
+                  .build()))
+
          .find(action);
    }
 

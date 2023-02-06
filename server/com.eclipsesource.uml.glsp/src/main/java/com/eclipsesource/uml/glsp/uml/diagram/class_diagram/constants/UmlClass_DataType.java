@@ -21,6 +21,8 @@ public class UmlClass_DataType {
    public class Property {
 
       public static final String NAME = "name";
+      public static final String IS_ABSTRACT = "is_abstract";
+      public static final String VISIBILITY_KIND = "visibility_kind";
 
       private Property() {}
    }

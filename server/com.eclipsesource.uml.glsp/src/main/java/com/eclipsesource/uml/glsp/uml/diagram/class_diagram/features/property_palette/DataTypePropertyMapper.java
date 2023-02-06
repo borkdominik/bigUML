@@ -11,15 +11,19 @@
 package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.property_palette;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.eclipse.uml2.uml.DataType;
+import org.eclipse.uml2.uml.VisibilityKind;
 
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
 import com.eclipsesource.uml.glsp.features.property_palette.handler.action.UpdateElementPropertyAction;
 import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalette;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_DataType;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.data_type.UpdateDataTypeHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.data_type.UpdateDataTypeNameHandler;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.BaseDiagramElementPropertyMapper;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.data_type.UpdateDataTypeArgument;
 
 public class DataTypePropertyMapper extends BaseDiagramElementPropertyMapper<DataType> {
 
@@ -29,6 +33,13 @@ public class DataTypePropertyMapper extends BaseDiagramElementPropertyMapper<Dat
 
       var items = propertyBuilder(elementId)
          .text(UmlClass_DataType.Property.NAME, "Name", source.getName())
+         .bool(UmlClass_DataType.Property.IS_ABSTRACT, "Is abstract", source.isAbstract())
+         .choice(
+            UmlClass_DataType.Property.VISIBILITY_KIND,
+            "Visibility",
+            VisibilityKind.VALUES.stream().map(v -> v.getLiteral()).collect(Collectors.toList()),
+            source.getVisibility().getLiteral())
+
          .items();
 
       return new PropertyPalette(elementId, source.getName(), items);
@@ -42,6 +53,21 @@ public class DataTypePropertyMapper extends BaseDiagramElementPropertyMapper<Dat
                UpdateDataTypeNameHandler.class,
                element,
                new UpdateDataTypeNameHandler.Args(op.getValue())))
+         .map(UmlClass_DataType.Property.IS_ABSTRACT,
+            (element, op) -> handlerMapper.asOperation(
+               UpdateDataTypeHandler.class,
+               element,
+               new UpdateDataTypeArgument.Builder()
+                  .isAbstract(Boolean.parseBoolean(op.getValue()))
+                  .build()))
+         .map(UmlClass_DataType.Property.VISIBILITY_KIND,
+            (element, op) -> handlerMapper.asOperation(
+               UpdateDataTypeHandler.class,
+               element,
+               new UpdateDataTypeArgument.Builder()
+                  .visibilityKind(VisibilityKind.get(op.getValue()))
+                  .build()))
+
          .find(action);
    }
 

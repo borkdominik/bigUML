@@ -39,6 +39,7 @@ public class EnumerationPropertyMapper extends BaseDiagramElementPropertyMapper<
             "Visibility",
             VisibilityKind.VALUES.stream().map(v -> v.getLiteral()).collect(Collectors.toList()),
             source.getVisibility().getLiteral())
+
          .items();
 
       return new PropertyPalette(elementId, source.getName(), items);

@@ -76,6 +76,7 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.op
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.operation.UpdateOperationNameHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.primitive_type.CreatePrimitiveTypeHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.primitive_type.DeletePrimitiveTypeHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.primitive_type.UpdatePrimitiveTypeHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.primitive_type.UpdatePrimitiveTypeNameHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.property.CreatePropertyHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.property.DeletePropertyHandler;
@@ -175,6 +176,7 @@ public final class ClassUmlManifest extends DiagramManifest
          contribution.addBinding().to(UpdateOperationNameHandler.class);
          contribution.addBinding().to(UpdateOperationHandler.class);
          contribution.addBinding().to(UpdatePrimitiveTypeNameHandler.class);
+         contribution.addBinding().to(UpdatePrimitiveTypeHandler.class);
          contribution.addBinding().to(UpdatePropertyNameHandler.class);
          contribution.addBinding().to(UpdatePropertyMultiplicityHandler.class);
          contribution.addBinding().to(UpdatePropertyTypeHandler.class);

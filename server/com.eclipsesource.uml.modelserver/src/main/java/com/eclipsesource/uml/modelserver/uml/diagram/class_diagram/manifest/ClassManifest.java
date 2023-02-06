@@ -31,6 +31,7 @@ import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.oper
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.operation.UpdateOperationContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.primitive_type.CreatePrimitiveTypeContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.primitive_type.DeletePrimitiveTypeContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.primitive_type.UpdatePrimitiveTypeContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.CreatePropertyContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.DeletePropertyContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.UpdatePropertyMultiplicityContribution;
@@ -98,9 +99,10 @@ public final class ClassManifest extends DiagramManifest implements CommandCodec
       multibinder.addBinding(DeleteDataTypeContribution.TYPE).to(DeleteDataTypeContribution.class);
       multibinder.addBinding(UpdateDataTypeContribution.TYPE).to(UpdateDataTypeContribution.class);
 
-      // Data Type
+      // Primitive Type
       multibinder.addBinding(CreatePrimitiveTypeContribution.TYPE).to(CreatePrimitiveTypeContribution.class);
       multibinder.addBinding(DeletePrimitiveTypeContribution.TYPE).to(DeletePrimitiveTypeContribution.class);
+      multibinder.addBinding(UpdatePrimitiveTypeContribution.TYPE).to(UpdatePrimitiveTypeContribution.class);
 
       // Package
       multibinder.addBinding(CreatePackageContribution.TYPE).to(CreatePackageContribution.class);

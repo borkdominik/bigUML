@@ -19,22 +19,13 @@ import org.eclipse.uml2.uml.VisibilityKind;
 import com.eclipsesource.uml.modelserver.shared.codec.codecs.EmbeddedCodec;
 
 public final class UpdatePackageArgument implements EmbeddedCodec.JsonEncodable {
-   private final String name;
-   private final String label;
-   private final String uri;
-   private final VisibilityKind visibilityKind;
-   private final List<PackageMerge> ownedPackageMerges;
+   private String name;
+   private String label;
+   private String uri;
+   private VisibilityKind visibilityKind;
 
-   public UpdatePackageArgument(final String name, final String label, final String uri,
-      final VisibilityKind visibilityKind,
-      final List<PackageMerge> ownedPackageMerges) {
-      super();
-      this.name = name;
-      this.label = label;
-      this.uri = uri;
-      this.visibilityKind = visibilityKind;
-      this.ownedPackageMerges = ownedPackageMerges;
-   }
+   // References
+   private List<PackageMerge> ownedPackageMerges;
 
    public Optional<String> name() {
       return Optional.ofNullable(name);
@@ -52,26 +43,31 @@ public final class UpdatePackageArgument implements EmbeddedCodec.JsonEncodable 
       return Optional.ofNullable(visibilityKind);
    }
 
-   public Optional<List<PackageMerge>> ownedPackageMerges() {
-      return Optional.ofNullable(ownedPackageMerges);
-   }
-
    public static final class Builder {
-      private String uri;
-      private VisibilityKind visibilityKind;
+      private final UpdatePackageArgument argument = new UpdatePackageArgument();
+
+      public Builder name(final String value) {
+         argument.name = value;
+         return this;
+      }
+
+      public Builder label(final String value) {
+         argument.label = value;
+         return this;
+      }
 
       public Builder uri(final String value) {
-         this.uri = value;
+         argument.uri = value;
          return this;
       }
 
       public Builder visibilityKind(final VisibilityKind value) {
-         this.visibilityKind = value;
+         argument.visibilityKind = value;
          return this;
       }
 
       public UpdatePackageArgument build() {
-         return new UpdatePackageArgument(null, null, uri, visibilityKind, null);
+         return argument;
       }
    }
 }

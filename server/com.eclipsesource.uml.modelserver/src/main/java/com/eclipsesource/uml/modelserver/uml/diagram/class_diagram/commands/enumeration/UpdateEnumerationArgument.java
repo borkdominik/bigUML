@@ -20,24 +20,14 @@ import org.eclipse.uml2.uml.VisibilityKind;
 import com.eclipsesource.uml.modelserver.shared.codec.codecs.EmbeddedCodec;
 
 public final class UpdateEnumerationArgument implements EmbeddedCodec.JsonEncodable {
-   private final String name;
-   private final String label;
-   private final Boolean isAbstract;
-   private final VisibilityKind visibilityKind;
-   private final List<EnumerationLiteral> ownedLiterals;
-   private final List<UseCase> ownedUseCases;
+   private String name;
+   private String label;
+   private Boolean isAbstract;
+   private VisibilityKind visibilityKind;
 
-   public UpdateEnumerationArgument(final String name, final String label, final Boolean isAbstract,
-      final VisibilityKind visibilityKind,
-      final List<EnumerationLiteral> ownedLiterals, final List<UseCase> ownedUseCases) {
-      super();
-      this.name = name;
-      this.label = label;
-      this.isAbstract = isAbstract;
-      this.visibilityKind = visibilityKind;
-      this.ownedLiterals = ownedLiterals;
-      this.ownedUseCases = ownedUseCases;
-   }
+   // References
+   private List<EnumerationLiteral> ownedLiterals;
+   private List<UseCase> ownedUseCases;
 
    public Optional<String> name() {
       return Optional.ofNullable(name);
@@ -62,21 +52,30 @@ public final class UpdateEnumerationArgument implements EmbeddedCodec.JsonEncoda
    }
 
    public static final class Builder {
-      private Boolean isAbstract;
-      private VisibilityKind visibilityKind;
+      private final UpdateEnumerationArgument argument = new UpdateEnumerationArgument();
+
+      public Builder name(final String value) {
+         argument.name = value;
+         return this;
+      }
+
+      public Builder label(final String value) {
+         argument.label = value;
+         return this;
+      }
 
       public Builder isAbstract(final boolean value) {
-         this.isAbstract = value;
+         argument.isAbstract = value;
          return this;
       }
 
       public Builder visibilityKind(final VisibilityKind value) {
-         this.visibilityKind = value;
+         argument.visibilityKind = value;
          return this;
       }
 
       public UpdateEnumerationArgument build() {
-         return new UpdateEnumerationArgument(null, null, isAbstract, visibilityKind, null, null);
+         return argument;
       }
    }
 }

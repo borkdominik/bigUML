@@ -22,48 +22,26 @@ import org.eclipse.uml2.uml.VisibilityKind;
 import com.eclipsesource.uml.modelserver.shared.codec.codecs.EmbeddedCodec;
 
 public final class UpdatePropertyArgument implements EmbeddedCodec.JsonEncodable {
-   private final String name;
-   private final String label;
-   private final Boolean isDerived;
-   private final Boolean isOrdered;
-   private final Boolean isStatic;
-   private final Boolean isDerivedUnion;
-   private final Boolean isReadOnly;
-   private final Boolean isUnique;
-   private final VisibilityKind visibilityKind;
-   private final Type type;
-   private final int lowerBound;
-   private final int upperBound;
-   private final ValueSpecification valueSpecification;
-   private final AggregationKind aggregation;
-   private final List<Property> subsettedProperties;
-   private final List<Property> redefinedProperties;
+   private String name;
+   private String label;
+   private Boolean isDerived;
+   private Boolean isOrdered;
+   private Boolean isStatic;
+   private Boolean isDerivedUnion;
+   private Boolean isReadOnly;
+   private Boolean isUnique;
+   private VisibilityKind visibilityKind;
+   private int lowerBound;
+   private int upperBound;
+   private AggregationKind aggregation;
 
-   public UpdatePropertyArgument(final String name, final String label, final Boolean isDerived,
-      final Boolean isOrdered, final Boolean isStatic,
-      final Boolean isDerivedUnion, final Boolean isReadOnly, final Boolean isUnique,
-      final VisibilityKind visibilityKind, final Type type,
-      final int lowerBound, final int upperBound, final ValueSpecification valueSpecification,
-      final AggregationKind aggregation,
-      final List<Property> subsettedProperties, final List<Property> redefinedProperties) {
-      super();
-      this.name = name;
-      this.label = label;
-      this.isDerived = isDerived;
-      this.isOrdered = isOrdered;
-      this.isStatic = isStatic;
-      this.isDerivedUnion = isDerivedUnion;
-      this.isReadOnly = isReadOnly;
-      this.isUnique = isUnique;
-      this.visibilityKind = visibilityKind;
-      this.type = type;
-      this.lowerBound = lowerBound;
-      this.upperBound = upperBound;
-      this.valueSpecification = valueSpecification;
-      this.aggregation = aggregation;
-      this.subsettedProperties = subsettedProperties;
-      this.redefinedProperties = redefinedProperties;
-   }
+   // Reference
+   private Type type;
+   private ValueSpecification defaultValue;
+
+   // References
+   private List<Property> subsettedProperties;
+   private List<Property> redefinedProperties;
 
    public Optional<String> name() {
       return Optional.ofNullable(name);
@@ -101,82 +79,89 @@ public final class UpdatePropertyArgument implements EmbeddedCodec.JsonEncodable
       return Optional.ofNullable(upperBound);
    }
 
-   public Optional<ValueSpecification> valueSpecification() {
-      return Optional.ofNullable(valueSpecification);
+   public Optional<ValueSpecification> defaultValue() {
+      return Optional.ofNullable(defaultValue);
    }
 
    public Optional<AggregationKind> aggregation() {
       return Optional.ofNullable(aggregation);
    }
 
-   public Optional<List<Property>> subsettedProperties() {
-      return Optional.ofNullable(subsettedProperties);
-   }
-
-   public Optional<List<Property>> redefinedProperties() {
-      return Optional.ofNullable(redefinedProperties);
-   }
-
    public static final class Builder {
-      private Boolean isDerived;
-      private Boolean isOrdered;
-      private Boolean isStatic;
-      private Boolean isDerivedUnion;
-      private Boolean isReadOnly;
-      private Boolean isUnique;
-      private VisibilityKind visibilityKind;
-      private int lowerBound;
-      private int upperBound;
+      private final UpdatePropertyArgument argument = new UpdatePropertyArgument();
+
+      public Builder name(final String value) {
+         argument.name = value;
+         return this;
+      }
+
+      public Builder label(final String value) {
+         argument.label = value;
+         return this;
+      }
 
       public Builder isDerived(final boolean value) {
-         this.isDerived = value;
+         argument.isDerived = value;
          return this;
       }
 
       public Builder isOrdered(final boolean value) {
-         this.isOrdered = value;
+         argument.isOrdered = value;
          return this;
       }
 
       public Builder isStatic(final boolean value) {
-         this.isStatic = value;
+         argument.isStatic = value;
          return this;
       }
 
       public Builder isDerivedUnion(final boolean value) {
-         this.isDerivedUnion = value;
+         argument.isDerivedUnion = value;
          return this;
       }
 
       public Builder isReadOnly(final boolean value) {
-         this.isReadOnly = value;
+         argument.isReadOnly = value;
          return this;
       }
 
       public Builder isUnique(final boolean value) {
-         this.isUnique = value;
+         argument.isUnique = value;
+         return this;
+      }
+
+      public Builder type(final Type value) {
+         argument.type = value;
          return this;
       }
 
       public Builder visibilityKind(final VisibilityKind value) {
-         this.visibilityKind = value;
+         argument.visibilityKind = value;
          return this;
       }
 
       public Builder lowerBound(final int value) {
-         this.lowerBound = value;
+         argument.lowerBound = value;
          return this;
       }
 
       public Builder upperBound(final int value) {
-         this.upperBound = value;
+         argument.upperBound = value;
+         return this;
+      }
+
+      public Builder defaultValue(final ValueSpecification value) {
+         argument.defaultValue = value;
+         return this;
+      }
+
+      public Builder aggregation(final AggregationKind value) {
+         argument.aggregation = value;
          return this;
       }
 
       public UpdatePropertyArgument build() {
-         return new UpdatePropertyArgument(null, null, isDerived, isOrdered, isStatic, isDerivedUnion, isReadOnly,
-            isUnique,
-            visibilityKind, null, lowerBound, upperBound, null, null, null, null);
+         return argument;
       }
    }
 }

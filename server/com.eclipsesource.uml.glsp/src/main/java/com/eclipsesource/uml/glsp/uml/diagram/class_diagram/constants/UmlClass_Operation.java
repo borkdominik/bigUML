@@ -25,6 +25,7 @@ public class UmlClass_Operation {
       public static final String IS_STATIC = "is_static";
       public static final String IS_QUERY = "is_query";
       public static final String VISIBILITY_KIND = "visibility_kind";
+      public static final String CONCURRENCY = "concurrency";
 
       private Property() {}
    }

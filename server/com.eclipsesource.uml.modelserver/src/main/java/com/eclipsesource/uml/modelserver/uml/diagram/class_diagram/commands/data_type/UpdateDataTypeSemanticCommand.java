@@ -26,6 +26,14 @@ public final class UpdateDataTypeSemanticCommand
    @Override
    protected void updateSemanticElement(final DataType semanticElement,
       final UpdateDataTypeArgument updateArgument) {
+      updateArgument.name().ifPresent(arg -> {
+         semanticElement.setName(arg);
+      });
+
+      updateArgument.label().ifPresent(arg -> {
+         throw new UnsupportedOperationException();
+      });
+
       updateArgument.isAbstract().ifPresent(arg -> {
          semanticElement.setIsAbstract(arg);
       });

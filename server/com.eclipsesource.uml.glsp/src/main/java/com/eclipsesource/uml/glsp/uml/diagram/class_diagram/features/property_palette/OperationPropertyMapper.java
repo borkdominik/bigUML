@@ -13,6 +13,7 @@ package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.property_p
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.eclipse.uml2.uml.CallConcurrencyKind;
 import org.eclipse.uml2.uml.Operation;
 import org.eclipse.uml2.uml.VisibilityKind;
 
@@ -41,6 +42,11 @@ public class OperationPropertyMapper extends BaseDiagramElementPropertyMapper<Op
             "Visibility",
             VisibilityKind.VALUES.stream().map(v -> v.getLiteral()).collect(Collectors.toList()),
             source.getVisibility().getLiteral())
+         .choice(
+            UmlClass_Operation.Property.CONCURRENCY,
+            "Concurrency",
+            CallConcurrencyKind.VALUES.stream().map(v -> v.getLiteral()).collect(Collectors.toList()),
+            source.getConcurrency().getLiteral())
 
          .items();
 
@@ -83,6 +89,14 @@ public class OperationPropertyMapper extends BaseDiagramElementPropertyMapper<Op
                new UpdateOperationArgument.Builder()
                   .visibilityKind(VisibilityKind.get(op.getValue()))
                   .build()))
+         .map(UmlClass_Operation.Property.CONCURRENCY,
+            (element, op) -> handlerMapper.asOperation(
+               UpdateOperationHandler.class,
+               element,
+               new UpdateOperationArgument.Builder()
+                  .concurrency(CallConcurrencyKind.get(op.getValue()))
+                  .build()))
+
          .find(action);
    }
 

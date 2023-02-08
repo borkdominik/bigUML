@@ -26,6 +26,14 @@ public final class UpdatePrimitiveTypeSemanticCommand
    @Override
    protected void updateSemanticElement(final PrimitiveType semanticElement,
       final UpdatePrimitiveTypeArgument updateArgument) {
+      updateArgument.name().ifPresent(arg -> {
+         semanticElement.setName(arg);
+      });
+
+      updateArgument.label().ifPresent(arg -> {
+         throw new UnsupportedOperationException();
+      });
+
       updateArgument.isAbstract().ifPresent(arg -> {
          semanticElement.setIsAbstract(arg);
       });

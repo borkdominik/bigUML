@@ -19,22 +19,13 @@ import org.eclipse.uml2.uml.VisibilityKind;
 import com.eclipsesource.uml.modelserver.shared.codec.codecs.EmbeddedCodec;
 
 public final class UpdateDataTypeArgument implements EmbeddedCodec.JsonEncodable {
-   private final String name;
-   private final String label;
-   private final Boolean isAbstract;
-   private final VisibilityKind visibilityKind;
-   private final List<Property> ownedAttributes;
+   private String name;
+   private String label;
+   private Boolean isAbstract;
+   private VisibilityKind visibilityKind;
 
-   public UpdateDataTypeArgument(final String name, final String label, final Boolean isAbstract,
-      final VisibilityKind visibilityKind,
-      final List<Property> ownedAttributes) {
-      super();
-      this.name = name;
-      this.label = label;
-      this.isAbstract = isAbstract;
-      this.visibilityKind = visibilityKind;
-      this.ownedAttributes = ownedAttributes;
-   }
+   // References
+   private List<Property> ownedAttributes;
 
    public Optional<String> name() {
       return Optional.ofNullable(name);
@@ -55,21 +46,30 @@ public final class UpdateDataTypeArgument implements EmbeddedCodec.JsonEncodable
    }
 
    public static final class Builder {
-      private Boolean isAbstract;
-      private VisibilityKind visibilityKind;
+      private final UpdateDataTypeArgument argument = new UpdateDataTypeArgument();
+
+      public Builder name(final String value) {
+         argument.name = value;
+         return this;
+      }
+
+      public Builder label(final String value) {
+         argument.label = value;
+         return this;
+      }
 
       public Builder isAbstract(final boolean value) {
-         this.isAbstract = value;
+         argument.isAbstract = value;
          return this;
       }
 
       public Builder visibilityKind(final VisibilityKind value) {
-         this.visibilityKind = value;
+         argument.visibilityKind = value;
          return this;
       }
 
       public UpdateDataTypeArgument build() {
-         return new UpdateDataTypeArgument(null, null, isAbstract, visibilityKind, null);
+         return argument;
       }
    }
 }

@@ -25,6 +25,14 @@ public final class UpdateOperationSemanticCommand
 
    @Override
    protected void updateSemanticElement(final Operation semanticElement, final UpdateOperationArgument updateArgument) {
+      updateArgument.name().ifPresent(arg -> {
+         semanticElement.setName(arg);
+      });
+
+      updateArgument.label().ifPresent(arg -> {
+         throw new UnsupportedOperationException();
+      });
+
       updateArgument.isAbstract().ifPresent(arg -> {
          semanticElement.setIsAbstract(arg);
       });
@@ -37,8 +45,16 @@ public final class UpdateOperationSemanticCommand
          semanticElement.setIsQuery(arg);
       });
 
+      updateArgument.bodyCondition().ifPresent(arg -> {
+         semanticElement.setBodyCondition(arg);
+      });
+
       updateArgument.visibilityKind().ifPresent(arg -> {
          semanticElement.setVisibility(arg);
+      });
+
+      updateArgument.concurrency().ifPresent(arg -> {
+         semanticElement.setConcurrency(arg);
       });
    }
 

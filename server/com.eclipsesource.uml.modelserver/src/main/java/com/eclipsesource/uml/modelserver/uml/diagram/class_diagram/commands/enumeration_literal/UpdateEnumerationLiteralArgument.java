@@ -18,19 +18,12 @@ import org.eclipse.uml2.uml.VisibilityKind;
 import com.eclipsesource.uml.modelserver.shared.codec.codecs.EmbeddedCodec;
 
 public final class UpdateEnumerationLiteralArgument implements EmbeddedCodec.JsonEncodable {
-   private final String name;
-   private final String label;
-   private final VisibilityKind visibilityKind;
-   private final ValueSpecification specification;
+   private String name;
+   private String label;
+   private VisibilityKind visibilityKind;
 
-   public UpdateEnumerationLiteralArgument(final String name, final String label, final VisibilityKind visibilityKind,
-      final ValueSpecification specification) {
-      super();
-      this.name = name;
-      this.label = label;
-      this.visibilityKind = visibilityKind;
-      this.specification = specification;
-   }
+   // Reference
+   private ValueSpecification specification;
 
    public Optional<String> name() {
       return Optional.ofNullable(name);
@@ -49,15 +42,30 @@ public final class UpdateEnumerationLiteralArgument implements EmbeddedCodec.Jso
    }
 
    public static final class Builder {
-      private VisibilityKind visibilityKind;
+      private final UpdateEnumerationLiteralArgument argument = new UpdateEnumerationLiteralArgument();
+
+      public Builder name(final String value) {
+         argument.name = value;
+         return this;
+      }
+
+      public Builder label(final String value) {
+         argument.label = value;
+         return this;
+      }
 
       public Builder visibilityKind(final VisibilityKind value) {
-         this.visibilityKind = value;
+         argument.visibilityKind = value;
+         return this;
+      }
+
+      public Builder specification(final ValueSpecification specification) {
+         argument.specification = specification;
          return this;
       }
 
       public UpdateEnumerationLiteralArgument build() {
-         return new UpdateEnumerationLiteralArgument(null, null, visibilityKind, null);
+         return argument;
       }
    }
 }

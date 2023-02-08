@@ -54,7 +54,10 @@ public class ApplyLabelEditUpdateOperationBuilder<TElementType extends EObject> 
    public ApplyLabelEditUpdateOperationBuilder<TElementType> map(final String type, final String suffix,
       final BiFunction<TElementType, ApplyLabelEditOperation, UpdateOperation> provider) {
       this.items.putIfAbsent(type, new HashMap<>());
-      this.items.get(type).put(suffix, provider);
+
+      this.items.get(type).merge(suffix, provider, (v1, v2) -> {
+         throw new IllegalArgumentException("Duplicate key '" + suffix + "'.");
+      });
 
       return this;
    }

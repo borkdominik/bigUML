@@ -22,29 +22,18 @@ import org.eclipse.uml2.uml.VisibilityKind;
 import com.eclipsesource.uml.modelserver.shared.codec.codecs.EmbeddedCodec;
 
 public final class UpdateInterfaceArgument implements EmbeddedCodec.JsonEncodable {
-   private final String name;
-   private final String label;
-   private final Boolean isAbstract;
-   private final ProtocolStateMachine protocol;
-   private final VisibilityKind visibilityKind;
-   private final List<Property> ownedAttributes;
-   private final List<Operation> ownedOperations;
-   private final List<Reception> ownedReceptions;
+   private String name;
+   private String label;
+   private Boolean isAbstract;
+   private VisibilityKind visibilityKind;
 
-   public UpdateInterfaceArgument(final String name, final String label, final Boolean isAbstract,
-      final ProtocolStateMachine protocol,
-      final VisibilityKind visibilityKind, final List<Property> ownedAttributes, final List<Operation> ownedOperations,
-      final List<Reception> ownedReceptions) {
-      super();
-      this.name = name;
-      this.label = label;
-      this.isAbstract = isAbstract;
-      this.protocol = protocol;
-      this.visibilityKind = visibilityKind;
-      this.ownedAttributes = ownedAttributes;
-      this.ownedOperations = ownedOperations;
-      this.ownedReceptions = ownedReceptions;
-   }
+   // Reference
+   private ProtocolStateMachine protocol;
+
+   // References
+   private List<Property> ownedAttributes;
+   private List<Operation> ownedOperations;
+   private List<Reception> ownedReceptions;
 
    public Optional<String> name() {
       return Optional.ofNullable(name);
@@ -64,34 +53,36 @@ public final class UpdateInterfaceArgument implements EmbeddedCodec.JsonEncodabl
       return Optional.ofNullable(visibilityKind);
    }
 
-   public Optional<List<Property>> ownedAttributes() {
-      return Optional.ofNullable(ownedAttributes);
-   }
-
-   public Optional<List<Operation>> ownedOperations() {
-      return Optional.ofNullable(ownedOperations);
-   }
-
-   public Optional<List<Reception>> ownedReceptions() {
-      return Optional.ofNullable(ownedReceptions);
-   }
-
    public static final class Builder {
-      private Boolean isAbstract;
-      private VisibilityKind visibilityKind;
+      private final UpdateInterfaceArgument argument = new UpdateInterfaceArgument();
+
+      public Builder name(final String value) {
+         argument.name = value;
+         return this;
+      }
+
+      public Builder label(final String value) {
+         argument.label = value;
+         return this;
+      }
 
       public Builder isAbstract(final boolean value) {
-         this.isAbstract = value;
+         argument.isAbstract = value;
+         return this;
+      }
+
+      public Builder protocol(final ProtocolStateMachine value) {
+         argument.protocol = value;
          return this;
       }
 
       public Builder visibilityKind(final VisibilityKind value) {
-         this.visibilityKind = value;
+         argument.visibilityKind = value;
          return this;
       }
 
       public UpdateInterfaceArgument build() {
-         return new UpdateInterfaceArgument(null, null, isAbstract, null, visibilityKind, null, null, null);
+         return argument;
       }
    }
 }

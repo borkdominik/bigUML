@@ -13,13 +13,13 @@ package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.property_p
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.eclipse.uml2.uml.AggregationKind;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.VisibilityKind;
 
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
 import com.eclipsesource.uml.glsp.features.property_palette.handler.action.UpdateElementPropertyAction;
 import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalette;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Operation;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Property;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.property.UpdatePropertyHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.property.UpdatePropertyMultiplicityHandler;
@@ -43,11 +43,16 @@ public class PropertyPropertyMapper extends BaseDiagramElementPropertyMapper<Pro
          .bool(UmlClass_Property.Property.IS_READ_ONLY, "Is read only", source.isReadOnly())
          .bool(UmlClass_Property.Property.IS_UNIQUE, "Is unique", source.isUnique())
          .choice(
-            UmlClass_Operation.Property.VISIBILITY_KIND,
+            UmlClass_Property.Property.VISIBILITY_KIND,
             "Visibility",
             VisibilityKind.VALUES.stream().map(v -> v.getLiteral()).collect(Collectors.toList()),
             source.getVisibility().getLiteral())
          .text(UmlClass_Property.Property.MULTIPLICITY, "Multiplicity", PropertyUtil.getMultiplicity(source))
+         .choice(
+            UmlClass_Property.Property.AGGREGATION,
+            "Aggregation",
+            AggregationKind.VALUES.stream().map(v -> v.getLiteral()).collect(Collectors.toList()),
+            source.getAggregation().getLiteral())
 
          .items();
 
@@ -116,6 +121,13 @@ public class PropertyPropertyMapper extends BaseDiagramElementPropertyMapper<Pro
                UpdatePropertyMultiplicityHandler.class,
                element,
                new UpdatePropertyMultiplicityHandler.Args(op.getValue())))
+         .map(UmlClass_Property.Property.AGGREGATION,
+            (element, op) -> handlerMapper.asOperation(
+               UpdatePropertyHandler.class,
+               element,
+               new UpdatePropertyArgument.Builder()
+                  .aggregation(AggregationKind.get(op.getValue()))
+                  .build()))
 
          .find(action);
    }

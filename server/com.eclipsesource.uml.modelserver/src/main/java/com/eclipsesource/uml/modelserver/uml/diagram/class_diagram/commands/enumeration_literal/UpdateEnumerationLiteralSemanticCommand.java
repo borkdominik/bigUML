@@ -26,9 +26,20 @@ public final class UpdateEnumerationLiteralSemanticCommand
    @Override
    protected void updateSemanticElement(final EnumerationLiteral semanticElement,
       final UpdateEnumerationLiteralArgument updateArgument) {
+      updateArgument.name().ifPresent(arg -> {
+         semanticElement.setName(arg);
+      });
+
+      updateArgument.label().ifPresent(arg -> {
+         throw new UnsupportedOperationException();
+      });
 
       updateArgument.visibilityKind().ifPresent(arg -> {
          semanticElement.setVisibility(arg);
+      });
+
+      updateArgument.specification().ifPresent(arg -> {
+         semanticElement.setSpecification(arg);
       });
    }
 

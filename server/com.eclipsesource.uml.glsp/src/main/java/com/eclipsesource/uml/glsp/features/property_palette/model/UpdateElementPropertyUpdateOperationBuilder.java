@@ -48,7 +48,9 @@ public class UpdateElementPropertyUpdateOperationBuilder<TElementType extends EO
 
    public UpdateElementPropertyUpdateOperationBuilder<TElementType> map(final String propertyId,
       final BiFunction<TElementType, UpdateElementPropertyAction, UpdateOperation> provider) {
-      this.items.put(propertyId, provider);
+      this.items.merge(propertyId, provider, (v1, v2) -> {
+         throw new IllegalArgumentException("Duplicate key '" + propertyId + "'.");
+      });
       return this;
    }
 

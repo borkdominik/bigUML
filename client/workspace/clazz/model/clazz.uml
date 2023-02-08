@@ -81,7 +81,7 @@
   <packagedElement xmi:type="uml:Interface" xmi:id="__giDIItiEe2HOqFYNFa9oQ" name="NewInterface1">
     <ownedAttribute xmi:id="_ExHL8ItjEe2HOqFYNFa9oQ" name="NewProperty1" isStatic="true" isOrdered="true" isReadOnly="true" isDerived="true" isDerivedUnion="true">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_ExHL8YtjEe2HOqFYNFa9oQ"/>
-      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_ExHL8otjEe2HOqFYNFa9oQ"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_ExHL8otjEe2HOqFYNFa9oQ" value="2"/>
     </ownedAttribute>
     <ownedOperation xmi:id="_FIejEItjEe2HOqFYNFa9oQ" name="NewOperation1"/>
   </packagedElement>

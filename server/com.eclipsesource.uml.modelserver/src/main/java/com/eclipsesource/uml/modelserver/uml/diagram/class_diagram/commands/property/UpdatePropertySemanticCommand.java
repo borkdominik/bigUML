@@ -25,32 +25,60 @@ public final class UpdatePropertySemanticCommand
 
    @Override
    protected void updateSemanticElement(final Property semanticElement, final UpdatePropertyArgument updateArgument) {
+      updateArgument.name().ifPresent(arg -> {
+         semanticElement.setName(arg);
+      });
+
+      updateArgument.label().ifPresent(arg -> {
+         throw new UnsupportedOperationException();
+      });
+
       updateArgument.isDerived().ifPresent(arg -> {
          semanticElement.setIsDerived(arg);
       });
+
       updateArgument.isOrdered().ifPresent(arg -> {
          semanticElement.setIsOrdered(arg);
       });
+
       updateArgument.isStatic().ifPresent(arg -> {
          semanticElement.setIsStatic(arg);
       });
+
       updateArgument.isDerivedUnion().ifPresent(arg -> {
          semanticElement.setIsDerivedUnion(arg);
       });
+
       updateArgument.isReadOnly().ifPresent(arg -> {
          semanticElement.setIsReadOnly(arg);
       });
+
       updateArgument.isUnique().ifPresent(arg -> {
          semanticElement.setIsUnique(arg);
       });
+
       updateArgument.visibilityKind().ifPresent(arg -> {
          semanticElement.setVisibility(arg);
       });
+
+      updateArgument.type().ifPresent(arg -> {
+         semanticElement.setType(arg);
+      });
+
       updateArgument.lowerBound().ifPresent(arg -> {
          semanticElement.setLower(arg);
       });
+
       updateArgument.upperBound().ifPresent(arg -> {
          semanticElement.setUpper(arg);
+      });
+
+      updateArgument.defaultValue().ifPresent(arg -> {
+         semanticElement.setDefaultValue(arg);
+      });
+
+      updateArgument.aggregation().ifPresent(arg -> {
+         semanticElement.setAggregation(arg);
       });
    }
 

@@ -32,6 +32,8 @@ public class UmlClass_Property {
       public static final String IS_UNIQUE = "is_unique";
       public static final String VISIBILITY_KIND = "visibility_kind";
       public static final String MULTIPLICITY = "multiplicity";
+      public static final String AGGREGATION = "aggregation";
+
       public static final String TYPE = "type";
 
       private Property() {}

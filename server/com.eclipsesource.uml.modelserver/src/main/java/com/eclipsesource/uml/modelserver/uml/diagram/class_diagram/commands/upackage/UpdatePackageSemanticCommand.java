@@ -25,6 +25,14 @@ public final class UpdatePackageSemanticCommand
 
    @Override
    protected void updateSemanticElement(final Package semanticElement, final UpdatePackageArgument updateArgument) {
+      updateArgument.name().ifPresent(arg -> {
+         semanticElement.setName(arg);
+      });
+
+      updateArgument.label().ifPresent(arg -> {
+         throw new UnsupportedOperationException();
+      });
+
       updateArgument.uri().ifPresent(arg -> {
          semanticElement.setURI(arg);
       });

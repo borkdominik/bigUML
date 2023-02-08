@@ -30,7 +30,7 @@ public class DataTypePropertyMapper extends BaseDiagramElementPropertyMapper<Dat
    public PropertyPalette map(final DataType source) {
       var elementId = idGenerator.getOrCreateId(source);
 
-      var items = propertyBuilder(elementId)
+      var items = this.<UmlClass_DataType.Property> propertyBuilder(elementId)
          .text(UmlClass_DataType.Property.NAME, "Name", source.getName())
          .bool(UmlClass_DataType.Property.IS_ABSTRACT, "Is abstract", source.isAbstract())
          .choice(
@@ -46,30 +46,33 @@ public class DataTypePropertyMapper extends BaseDiagramElementPropertyMapper<Dat
 
    @Override
    public Optional<UpdateOperation> map(final UpdateElementPropertyAction action) {
-      return operationBuilder()
-         .map(UmlClass_DataType.Property.NAME,
-            (element, op) -> handlerMapper.asOperation(
-               UpdateDataTypeHandler.class,
-               element,
-               new UpdateDataTypeArgument.Builder()
-                  .name(op.getValue())
-                  .build()))
-         .map(UmlClass_DataType.Property.IS_ABSTRACT,
-            (element, op) -> handlerMapper.asOperation(
-               UpdateDataTypeHandler.class,
-               element,
-               new UpdateDataTypeArgument.Builder()
-                  .isAbstract(Boolean.parseBoolean(op.getValue()))
-                  .build()))
-         .map(UmlClass_DataType.Property.VISIBILITY_KIND,
-            (element, op) -> handlerMapper.asOperation(
-               UpdateDataTypeHandler.class,
-               element,
-               new UpdateDataTypeArgument.Builder()
-                  .visibilityKind(VisibilityKind.get(op.getValue()))
-                  .build()))
+      var property = getProperty(UmlClass_DataType.Property.class, action);
+      var handler = getHandler(UpdateDataTypeHandler.class, action);
+      UpdateOperation operation = null;
 
-         .find(action);
+      switch (property) {
+         case NAME:
+            operation = handler.withArgument(
+               new UpdateDataTypeArgument.Builder()
+                  .name(action.getValue())
+                  .build());
+            break;
+         case IS_ABSTRACT:
+            operation = handler.withArgument(
+               new UpdateDataTypeArgument.Builder()
+                  .isAbstract(Boolean.parseBoolean(action.getValue()))
+                  .build());
+            break;
+         case VISIBILITY_KIND:
+            operation = handler.withArgument(
+               new UpdateDataTypeArgument.Builder()
+                  .visibilityKind(VisibilityKind.get(action.getValue()))
+                  .build());
+            break;
+      }
+
+      return withContext(operation);
+
    }
 
 }

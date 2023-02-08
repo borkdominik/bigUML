@@ -30,7 +30,7 @@ public class ClassPropertyMapper extends BaseDiagramElementPropertyMapper<Class>
    public PropertyPalette map(final Class source) {
       var elementId = idGenerator.getOrCreateId(source);
 
-      var items = propertyBuilder(elementId)
+      var items = this.<UmlClass_Class.Property> propertyBuilder(elementId)
          .text(UmlClass_Class.Property.NAME, "Name", source.getName())
          .bool(UmlClass_Class.Property.IS_ABSTRACT, "Is abstract", source.isAbstract())
          .bool(UmlClass_Class.Property.IS_ACTIVE, "Is active", source.isActive())
@@ -46,37 +46,39 @@ public class ClassPropertyMapper extends BaseDiagramElementPropertyMapper<Class>
 
    @Override
    public Optional<UpdateOperation> map(final UpdateElementPropertyAction action) {
-      return operationBuilder()
-         .map(UmlClass_Class.Property.NAME,
-            (element, op) -> handlerMapper.asOperation(
-               UpdateClassHandler.class,
-               element,
-               new UpdateClassArgument.Builder()
-                  .name(op.getValue())
-                  .build()))
-         .map(UmlClass_Class.Property.IS_ABSTRACT,
-            (element, op) -> handlerMapper.asOperation(
-               UpdateClassHandler.class,
-               element,
-               new UpdateClassArgument.Builder()
-                  .isAbstract(Boolean.parseBoolean(op.getValue()))
-                  .build()))
-         .map(UmlClass_Class.Property.IS_ACTIVE,
-            (element, op) -> handlerMapper.asOperation(
-               UpdateClassHandler.class,
-               element,
-               new UpdateClassArgument.Builder()
-                  .isActive(Boolean.parseBoolean(op.getValue()))
-                  .build()))
-         .map(UmlClass_Class.Property.VISIBILITY_KIND,
-            (element, op) -> handlerMapper.asOperation(
-               UpdateClassHandler.class,
-               element,
-               new UpdateClassArgument.Builder()
-                  .visibilityKind(VisibilityKind.get(op.getValue()))
-                  .build()))
+      var property = getProperty(UmlClass_Class.Property.class, action);
+      var handler = getHandler(UpdateClassHandler.class, action);
+      UpdateOperation operation = null;
 
-         .find(action);
+      switch (property) {
+         case NAME:
+            operation = handler.withArgument(
+               new UpdateClassArgument.Builder()
+                  .name(action.getValue())
+                  .build());
+            break;
+         case IS_ABSTRACT:
+            operation = handler.withArgument(
+               new UpdateClassArgument.Builder()
+                  .isAbstract(Boolean.parseBoolean(action.getValue()))
+                  .build());
+            break;
+         case IS_ACTIVE:
+            operation = handler.withArgument(
+               new UpdateClassArgument.Builder()
+                  .isActive(Boolean.parseBoolean(action.getValue()))
+                  .build());
+            break;
+         case VISIBILITY_KIND:
+            operation = handler.withArgument(
+               new UpdateClassArgument.Builder()
+                  .visibilityKind(VisibilityKind.get(action.getValue()))
+                  .build());
+            break;
+      }
+
+      return withContext(operation);
+
    }
 
 }

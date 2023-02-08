@@ -25,13 +25,15 @@ public final class MessageLabelEditMapper extends BaseLabelEditMapper<Message> {
 
    @Override
    public Optional<UpdateOperation> map(final ApplyLabelEditOperation operation) {
-      return operationBuilder()
-         .map(CoreTypes.LABEL_NAME, NameLabelSuffix.SUFFIX,
-            (element, op) -> handlerMapper.asOperation(
-               UpdateMessageNameHandler.class,
-               element,
-               new UpdateMessageNameHandler.Args(op.getText())))
-         .find(operation);
+      var handler = getHandler(UpdateMessageNameHandler.class, operation);
+      UpdateOperation update = null;
+
+      if (matches(operation, CoreTypes.LABEL_NAME, NameLabelSuffix.SUFFIX)) {
+         update = handler.withArgument(
+            new UpdateMessageNameHandler.Args(operation.getText()));
+      }
+
+      return withContext(update);
    }
 
 }

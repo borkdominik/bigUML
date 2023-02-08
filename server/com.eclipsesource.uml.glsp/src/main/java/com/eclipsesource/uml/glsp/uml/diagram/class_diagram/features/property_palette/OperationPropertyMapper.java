@@ -31,7 +31,7 @@ public class OperationPropertyMapper extends BaseDiagramElementPropertyMapper<Op
    public PropertyPalette map(final Operation source) {
       var elementId = idGenerator.getOrCreateId(source);
 
-      var items = propertyBuilder(elementId)
+      var items = this.<UmlClass_Operation.Property> propertyBuilder(elementId)
          .text(UmlClass_Operation.Property.NAME, "Name", source.getName())
          .bool(UmlClass_Operation.Property.IS_ABSTRACT, "Is abstract", source.isAbstract())
          .bool(UmlClass_Operation.Property.IS_STATIC, "Is static", source.isStatic())
@@ -54,51 +54,51 @@ public class OperationPropertyMapper extends BaseDiagramElementPropertyMapper<Op
 
    @Override
    public Optional<UpdateOperation> map(final UpdateElementPropertyAction action) {
-      return operationBuilder()
-         .map(UmlClass_Operation.Property.NAME,
-            (element, op) -> handlerMapper.asOperation(
-               UpdateOperationHandler.class,
-               element,
-               new UpdateOperationArgument.Builder()
-                  .name(op.getValue())
-                  .build()))
-         .map(UmlClass_Operation.Property.IS_ABSTRACT,
-            (element, op) -> handlerMapper.asOperation(
-               UpdateOperationHandler.class,
-               element,
-               new UpdateOperationArgument.Builder()
-                  .isAbstract(Boolean.parseBoolean(op.getValue()))
-                  .build()))
-         .map(UmlClass_Operation.Property.IS_STATIC,
-            (element, op) -> handlerMapper.asOperation(
-               UpdateOperationHandler.class,
-               element,
-               new UpdateOperationArgument.Builder()
-                  .isStatic(Boolean.parseBoolean(op.getValue()))
-                  .build()))
-         .map(UmlClass_Operation.Property.IS_QUERY,
-            (element, op) -> handlerMapper.asOperation(
-               UpdateOperationHandler.class,
-               element,
-               new UpdateOperationArgument.Builder()
-                  .isQuery(Boolean.parseBoolean(op.getValue()))
-                  .build()))
-         .map(UmlClass_Operation.Property.VISIBILITY_KIND,
-            (element, op) -> handlerMapper.asOperation(
-               UpdateOperationHandler.class,
-               element,
-               new UpdateOperationArgument.Builder()
-                  .visibilityKind(VisibilityKind.get(op.getValue()))
-                  .build()))
-         .map(UmlClass_Operation.Property.CONCURRENCY,
-            (element, op) -> handlerMapper.asOperation(
-               UpdateOperationHandler.class,
-               element,
-               new UpdateOperationArgument.Builder()
-                  .concurrency(CallConcurrencyKind.get(op.getValue()))
-                  .build()))
+      var property = getProperty(UmlClass_Operation.Property.class, action);
+      var handler = getHandler(UpdateOperationHandler.class, action);
+      UpdateOperation operation = null;
 
-         .find(action);
+      switch (property) {
+         case NAME:
+            operation = handler.withArgument(
+               new UpdateOperationArgument.Builder()
+                  .name(action.getValue())
+                  .build());
+            break;
+         case IS_ABSTRACT:
+            operation = handler.withArgument(
+               new UpdateOperationArgument.Builder()
+                  .isAbstract(Boolean.parseBoolean(action.getValue()))
+                  .build());
+            break;
+         case IS_STATIC:
+            operation = handler.withArgument(
+               new UpdateOperationArgument.Builder()
+                  .isStatic(Boolean.parseBoolean(action.getValue()))
+                  .build());
+            break;
+         case IS_QUERY:
+            operation = handler.withArgument(
+               new UpdateOperationArgument.Builder()
+                  .isQuery(Boolean.parseBoolean(action.getValue()))
+                  .build());
+            break;
+         case VISIBILITY_KIND:
+            operation = handler.withArgument(
+               new UpdateOperationArgument.Builder()
+                  .visibilityKind(VisibilityKind.get(action.getValue()))
+                  .build());
+            break;
+         case CONCURRENCY:
+            operation = handler.withArgument(
+               new UpdateOperationArgument.Builder()
+                  .concurrency(CallConcurrencyKind.get(action.getValue()))
+                  .build());
+            break;
+      }
+
+      return withContext(operation);
+
    }
 
 }

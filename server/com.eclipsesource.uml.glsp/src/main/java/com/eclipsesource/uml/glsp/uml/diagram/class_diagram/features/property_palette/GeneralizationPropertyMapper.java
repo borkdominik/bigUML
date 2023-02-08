@@ -17,6 +17,7 @@ import org.eclipse.uml2.uml.Generalization;
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
 import com.eclipsesource.uml.glsp.features.property_palette.handler.action.UpdateElementPropertyAction;
 import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalette;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Generalization;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.BaseDiagramElementPropertyMapper;
 
 public class GeneralizationPropertyMapper extends BaseDiagramElementPropertyMapper<Generalization> {
@@ -25,7 +26,7 @@ public class GeneralizationPropertyMapper extends BaseDiagramElementPropertyMapp
    public PropertyPalette map(final Generalization source) {
       var elementId = idGenerator.getOrCreateId(source);
 
-      var items = propertyBuilder(elementId)
+      var items = this.<UmlClass_Generalization.Property> propertyBuilder(elementId)
          .items();
 
       return new PropertyPalette(elementId, "Generalization", items);
@@ -33,8 +34,8 @@ public class GeneralizationPropertyMapper extends BaseDiagramElementPropertyMapp
 
    @Override
    public Optional<UpdateOperation> map(final UpdateElementPropertyAction action) {
-      return operationBuilder()
-         .find(action);
+      return withContext(null);
+
    }
 
 }

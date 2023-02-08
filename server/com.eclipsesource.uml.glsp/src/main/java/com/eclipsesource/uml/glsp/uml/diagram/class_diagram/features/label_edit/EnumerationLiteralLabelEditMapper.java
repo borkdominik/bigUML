@@ -26,14 +26,16 @@ public final class EnumerationLiteralLabelEditMapper extends BaseLabelEditMapper
 
    @Override
    public Optional<UpdateOperation> map(final ApplyLabelEditOperation operation) {
-      return operationBuilder()
-         .map(CoreTypes.LABEL_NAME, NameLabelSuffix.SUFFIX,
-            (element, op) -> handlerMapper.asOperation(
-               UpdateEnumerationLiteralHandler.class,
-               element,
-               new UpdateEnumerationLiteralArgument.Builder()
-                  .name(op.getText())
-                  .build()))
-         .find(operation);
+      var handler = getHandler(UpdateEnumerationLiteralHandler.class, operation);
+      UpdateOperation update = null;
+
+      if (matches(operation, CoreTypes.LABEL_NAME, NameLabelSuffix.SUFFIX)) {
+         update = handler.withArgument(
+            new UpdateEnumerationLiteralArgument.Builder()
+               .name(operation.getText())
+               .build());
+      }
+
+      return withContext(update);
    }
 }

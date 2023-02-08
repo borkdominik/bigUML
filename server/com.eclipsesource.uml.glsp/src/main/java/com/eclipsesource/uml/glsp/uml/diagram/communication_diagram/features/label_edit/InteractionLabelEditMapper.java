@@ -25,13 +25,15 @@ public final class InteractionLabelEditMapper extends BaseLabelEditMapper<Intera
 
    @Override
    public Optional<UpdateOperation> map(final ApplyLabelEditOperation operation) {
-      return operationBuilder()
-         .map(CoreTypes.LABEL_NAME, NameLabelSuffix.SUFFIX,
-            (element, op) -> handlerMapper.asOperation(
-               UpdateInteractionNameHandler.class,
-               element,
-               new UpdateInteractionNameHandler.Args(op.getText())))
-         .find(operation);
+      var handler = getHandler(UpdateInteractionNameHandler.class, operation);
+      UpdateOperation update = null;
+
+      if (matches(operation, CoreTypes.LABEL_NAME, NameLabelSuffix.SUFFIX)) {
+         update = handler.withArgument(
+            new UpdateInteractionNameHandler.Args(operation.getText()));
+      }
+
+      return withContext(update);
    }
 
 }

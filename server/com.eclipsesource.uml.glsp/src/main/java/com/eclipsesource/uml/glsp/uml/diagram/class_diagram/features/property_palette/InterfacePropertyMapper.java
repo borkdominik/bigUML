@@ -30,7 +30,7 @@ public class InterfacePropertyMapper extends BaseDiagramElementPropertyMapper<In
    public PropertyPalette map(final Interface source) {
       var elementId = idGenerator.getOrCreateId(source);
 
-      var items = propertyBuilder(elementId)
+      var items = this.<UmlClass_Interface.Property> propertyBuilder(elementId)
          .text(UmlClass_Interface.Property.NAME, "Name", source.getName())
          .bool(UmlClass_Interface.Property.IS_ABSTRACT, "Is abstract", source.isAbstract())
          .choice(
@@ -46,30 +46,33 @@ public class InterfacePropertyMapper extends BaseDiagramElementPropertyMapper<In
 
    @Override
    public Optional<UpdateOperation> map(final UpdateElementPropertyAction action) {
-      return operationBuilder()
-         .map(UmlClass_Interface.Property.NAME,
-            (element, op) -> handlerMapper.asOperation(
-               UpdateInterfaceHandler.class,
-               element,
-               new UpdateInterfaceArgument.Builder()
-                  .name(op.getValue())
-                  .build()))
-         .map(UmlClass_Interface.Property.IS_ABSTRACT,
-            (element, op) -> handlerMapper.asOperation(
-               UpdateInterfaceHandler.class,
-               element,
-               new UpdateInterfaceArgument.Builder()
-                  .isAbstract(Boolean.parseBoolean(op.getValue()))
-                  .build()))
-         .map(UmlClass_Interface.Property.VISIBILITY_KIND,
-            (element, op) -> handlerMapper.asOperation(
-               UpdateInterfaceHandler.class,
-               element,
-               new UpdateInterfaceArgument.Builder()
-                  .visibilityKind(VisibilityKind.get(op.getValue()))
-                  .build()))
+      var property = getProperty(UmlClass_Interface.Property.class, action);
+      var handler = getHandler(UpdateInterfaceHandler.class, action);
+      UpdateOperation operation = null;
 
-         .find(action);
+      switch (property) {
+         case NAME:
+            operation = handler.withArgument(
+               new UpdateInterfaceArgument.Builder()
+                  .name(action.getValue())
+                  .build());
+            break;
+         case IS_ABSTRACT:
+            operation = handler.withArgument(
+               new UpdateInterfaceArgument.Builder()
+                  .isAbstract(Boolean.parseBoolean(action.getValue()))
+                  .build());
+            break;
+         case VISIBILITY_KIND:
+            operation = handler.withArgument(
+               new UpdateInterfaceArgument.Builder()
+                  .visibilityKind(VisibilityKind.get(action.getValue()))
+                  .build());
+            break;
+      }
+
+      return withContext(operation);
+
    }
 
 }

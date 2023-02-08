@@ -30,7 +30,7 @@ public class EnumerationLiteralPropertyMapper extends BaseDiagramElementProperty
    public PropertyPalette map(final EnumerationLiteral source) {
       var elementId = idGenerator.getOrCreateId(source);
 
-      var items = propertyBuilder(elementId)
+      var items = this.<UmlClass_EnumerationLiteral.Property> propertyBuilder(elementId)
          .text(UmlClass_EnumerationLiteral.Property.NAME, "Name", source.getName())
          .choice(
             UmlClass_EnumerationLiteral.Property.VISIBILITY_KIND,
@@ -45,23 +45,27 @@ public class EnumerationLiteralPropertyMapper extends BaseDiagramElementProperty
 
    @Override
    public Optional<UpdateOperation> map(final UpdateElementPropertyAction action) {
-      return operationBuilder()
-         .map(UmlClass_EnumerationLiteral.Property.NAME,
-            (element, op) -> handlerMapper.asOperation(
-               UpdateEnumerationLiteralHandler.class,
-               element,
-               new UpdateEnumerationLiteralArgument.Builder()
-                  .name(op.getValue())
-                  .build()))
-         .map(UmlClass_EnumerationLiteral.Property.VISIBILITY_KIND,
-            (element, op) -> handlerMapper.asOperation(
-               UpdateEnumerationLiteralHandler.class,
-               element,
-               new UpdateEnumerationLiteralArgument.Builder()
-                  .visibilityKind(VisibilityKind.get(op.getValue()))
-                  .build()))
+      var property = getProperty(UmlClass_EnumerationLiteral.Property.class, action);
+      var handler = getHandler(UpdateEnumerationLiteralHandler.class, action);
+      UpdateOperation operation = null;
 
-         .find(action);
+      switch (property) {
+         case NAME:
+            operation = handler.withArgument(
+               new UpdateEnumerationLiteralArgument.Builder()
+                  .name(action.getValue())
+                  .build());
+            break;
+         case VISIBILITY_KIND:
+            operation = handler.withArgument(
+               new UpdateEnumerationLiteralArgument.Builder()
+                  .visibilityKind(VisibilityKind.get(action.getValue()))
+                  .build());
+            break;
+      }
+
+      return withContext(operation);
+
    }
 
 }

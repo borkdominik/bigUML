@@ -30,7 +30,7 @@ public class EnumerationPropertyMapper extends BaseDiagramElementPropertyMapper<
    public PropertyPalette map(final Enumeration source) {
       var elementId = idGenerator.getOrCreateId(source);
 
-      var items = propertyBuilder(elementId)
+      var items = this.<UmlClass_Enumeration.Property> propertyBuilder(elementId)
          .text(UmlClass_Enumeration.Property.NAME, "Name", source.getName())
          .bool(UmlClass_Enumeration.Property.IS_ABSTRACT, "Is abstract", source.isAbstract())
          .choice(
@@ -46,30 +46,33 @@ public class EnumerationPropertyMapper extends BaseDiagramElementPropertyMapper<
 
    @Override
    public Optional<UpdateOperation> map(final UpdateElementPropertyAction action) {
-      return operationBuilder()
-         .map(UmlClass_Enumeration.Property.NAME,
-            (element, op) -> handlerMapper.asOperation(
-               UpdateEnumerationHandler.class,
-               element,
-               new UpdateEnumerationArgument.Builder()
-                  .name(op.getValue())
-                  .build()))
-         .map(UmlClass_Enumeration.Property.IS_ABSTRACT,
-            (element, op) -> handlerMapper.asOperation(
-               UpdateEnumerationHandler.class,
-               element,
-               new UpdateEnumerationArgument.Builder()
-                  .isAbstract(Boolean.parseBoolean(op.getValue()))
-                  .build()))
-         .map(UmlClass_Enumeration.Property.VISIBILITY_KIND,
-            (element, op) -> handlerMapper.asOperation(
-               UpdateEnumerationHandler.class,
-               element,
-               new UpdateEnumerationArgument.Builder()
-                  .visibilityKind(VisibilityKind.get(op.getValue()))
-                  .build()))
+      var property = getProperty(UmlClass_Enumeration.Property.class, action);
+      var handler = getHandler(UpdateEnumerationHandler.class, action);
+      UpdateOperation operation = null;
 
-         .find(action);
+      switch (property) {
+         case NAME:
+            operation = handler.withArgument(
+               new UpdateEnumerationArgument.Builder()
+                  .name(action.getValue())
+                  .build());
+            break;
+         case IS_ABSTRACT:
+            operation = handler.withArgument(
+               new UpdateEnumerationArgument.Builder()
+                  .isAbstract(Boolean.parseBoolean(action.getValue()))
+                  .build());
+            break;
+         case VISIBILITY_KIND:
+            operation = handler.withArgument(
+               new UpdateEnumerationArgument.Builder()
+                  .visibilityKind(VisibilityKind.get(action.getValue()))
+                  .build());
+            break;
+      }
+
+      return withContext(operation);
+
    }
 
 }

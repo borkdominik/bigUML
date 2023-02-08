@@ -18,12 +18,9 @@ public class UmlClass_EnumerationLiteral {
    public static final String ICON = CoreTypes.PRE_ICON + ID;
    public static final String TYPE_ID = CoreTypes.PRE_COMP_BASE + ID;
 
-   public class Property {
-
-      public static final String NAME = "name";
-      public static final String VISIBILITY_KIND = "visibility_kind";
-
-      private Property() {}
+   public enum Property {
+      NAME,
+      VISIBILITY_KIND;
    }
 
    private UmlClass_EnumerationLiteral() {}

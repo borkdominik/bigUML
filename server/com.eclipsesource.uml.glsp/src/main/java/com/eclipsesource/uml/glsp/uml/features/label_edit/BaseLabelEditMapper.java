@@ -10,25 +10,34 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.features.label_edit;
 
-import org.eclipse.emf.ecore.EObject;
+import java.util.Optional;
 
-import com.eclipsesource.uml.glsp.core.features.label_edit.ApplyLabelEditUpdateOperationBuilder;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperation;
+
 import com.eclipsesource.uml.glsp.core.features.label_edit.DiagramLabelEditMapper;
+import com.eclipsesource.uml.glsp.core.features.label_edit.LabelExtractor;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.Suffix;
+import com.eclipsesource.uml.glsp.core.handler.operation.update.DiagramUpdateHandler;
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateHandlerOperationMapper;
+import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.eclipsesource.uml.glsp.core.utils.reflection.GenericsUtil;
+import com.eclipsesource.uml.glsp.features.property_palette.manifest.PropertyPaletteFeatureManifest;
 import com.google.inject.Inject;
 
-public abstract class BaseLabelEditMapper<TElementType extends EObject>
-   implements DiagramLabelEditMapper<TElementType> {
-   protected final Class<TElementType> elementType;
+public abstract class BaseLabelEditMapper<TElement extends EObject>
+   implements DiagramLabelEditMapper<TElement> {
+   protected final Class<TElement> elementType;
 
    @Inject
    protected UmlModelState modelState;
 
    @Inject
    protected Suffix suffix;
+
+   @Inject
+   protected LabelExtractor labelExtractor;
 
    @Inject
    protected UpdateHandlerOperationMapper handlerMapper;
@@ -38,9 +47,24 @@ public abstract class BaseLabelEditMapper<TElementType extends EObject>
    }
 
    @Override
-   public Class<TElementType> getElementType() { return elementType; }
+   public Class<TElement> getElementType() { return elementType; }
 
-   protected ApplyLabelEditUpdateOperationBuilder<TElementType> operationBuilder() {
-      return new ApplyLabelEditUpdateOperationBuilder<>(this.modelState, this.suffix, this.elementType);
+   protected <THandler extends DiagramUpdateHandler<TElement, TUpdateArgument>, TUpdateArgument> UpdateHandlerOperationMapper.Prepared<THandler, TElement, TUpdateArgument> getHandler(
+      final Class<THandler> handlerType, final ApplyLabelEditOperation operation) {
+      return handlerMapper.prepare(handlerType, labelExtractor.extractElement(operation, this.elementType));
+   }
+
+   protected boolean matches(final ApplyLabelEditOperation operation, final String type, final String suffix) {
+      var extractedLabel = labelExtractor.extractLabel(operation);
+      var extractedSuffix = labelExtractor.extractLabelSuffix(operation);
+
+      return extractedLabel.getType().equals(type) && extractedSuffix.equals(suffix);
+   }
+
+   protected Optional<UpdateOperation> withContext(final UpdateOperation operation) {
+      return Optional.ofNullable(operation).map(o -> {
+         o.getContext().put("origin", PropertyPaletteFeatureManifest.ID);
+         return o;
+      });
    }
 }

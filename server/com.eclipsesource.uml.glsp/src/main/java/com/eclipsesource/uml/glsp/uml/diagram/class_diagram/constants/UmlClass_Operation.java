@@ -18,16 +18,13 @@ public class UmlClass_Operation {
    public static final String ICON = CoreTypes.PRE_ICON + ID;
    public static final String TYPE_ID = CoreTypes.PRE_COMP_BASE + ID;
 
-   public class Property {
-
-      public static final String NAME = "name";
-      public static final String IS_ABSTRACT = "is_abstract";
-      public static final String IS_STATIC = "is_static";
-      public static final String IS_QUERY = "is_query";
-      public static final String VISIBILITY_KIND = "visibility_kind";
-      public static final String CONCURRENCY = "concurrency";
-
-      private Property() {}
+   public enum Property {
+      NAME,
+      IS_ABSTRACT,
+      IS_STATIC,
+      IS_QUERY,
+      VISIBILITY_KIND,
+      CONCURRENCY;
    }
 
    private UmlClass_Operation() {}

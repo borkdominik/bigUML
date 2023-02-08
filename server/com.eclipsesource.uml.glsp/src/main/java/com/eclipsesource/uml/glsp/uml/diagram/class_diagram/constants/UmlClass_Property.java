@@ -21,22 +21,18 @@ public class UmlClass_Property {
    public static final String LABEL_TYPE = CoreTypes.PRE_LABEL + ID + "-type";
    public static final String LABEL_MULTIPLICITY = CoreTypes.PRE_LABEL + ID + "-multiplicity";
 
-   public class Property {
-
-      public static final String NAME = "name";
-      public static final String IS_DERIVED = "is_dervied";
-      public static final String IS_ORDERED = "is_ordered";
-      public static final String IS_STATIC = "is_static";
-      public static final String IS_DERIVED_UNION = "is_derived_union";
-      public static final String IS_READ_ONLY = "is_read_only";
-      public static final String IS_UNIQUE = "is_unique";
-      public static final String VISIBILITY_KIND = "visibility_kind";
-      public static final String MULTIPLICITY = "multiplicity";
-      public static final String AGGREGATION = "aggregation";
-
-      public static final String TYPE = "type";
-
-      private Property() {}
+   public enum Property {
+      NAME,
+      IS_DERIVED,
+      IS_ORDERED,
+      IS_STATIC,
+      IS_DERIVED_UNION,
+      IS_READ_ONLY,
+      IS_UNIQUE,
+      VISIBILITY_KIND,
+      MULTIPLICITY,
+      AGGREGATION,
+      TYPE;
    }
 
    private UmlClass_Property() {}

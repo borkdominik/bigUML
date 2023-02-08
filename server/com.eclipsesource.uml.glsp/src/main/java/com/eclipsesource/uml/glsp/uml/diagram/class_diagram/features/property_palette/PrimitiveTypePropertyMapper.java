@@ -30,7 +30,7 @@ public class PrimitiveTypePropertyMapper extends BaseDiagramElementPropertyMappe
    public PropertyPalette map(final PrimitiveType source) {
       var elementId = idGenerator.getOrCreateId(source);
 
-      var items = propertyBuilder(elementId)
+      var items = this.<UmlClass_PrimitiveType.Property> propertyBuilder(elementId)
          .text(UmlClass_PrimitiveType.Property.NAME, "Name", source.getName())
          .bool(UmlClass_PrimitiveType.Property.IS_ABSTRACT, "Is abstract", source.isAbstract())
          .choice(
@@ -46,30 +46,33 @@ public class PrimitiveTypePropertyMapper extends BaseDiagramElementPropertyMappe
 
    @Override
    public Optional<UpdateOperation> map(final UpdateElementPropertyAction action) {
-      return operationBuilder()
-         .map(UmlClass_PrimitiveType.Property.NAME,
-            (element, op) -> handlerMapper.asOperation(
-               UpdatePrimitiveTypeHandler.class,
-               element,
-               new UpdatePrimitiveTypeArgument.Builder()
-                  .name(op.getValue())
-                  .build()))
-         .map(UmlClass_PrimitiveType.Property.IS_ABSTRACT,
-            (element, op) -> handlerMapper.asOperation(
-               UpdatePrimitiveTypeHandler.class,
-               element,
-               new UpdatePrimitiveTypeArgument.Builder()
-                  .isAbstract(Boolean.parseBoolean(op.getValue()))
-                  .build()))
-         .map(UmlClass_PrimitiveType.Property.VISIBILITY_KIND,
-            (element, op) -> handlerMapper.asOperation(
-               UpdatePrimitiveTypeHandler.class,
-               element,
-               new UpdatePrimitiveTypeArgument.Builder()
-                  .visibilityKind(VisibilityKind.get(op.getValue()))
-                  .build()))
+      var property = getProperty(UmlClass_PrimitiveType.Property.class, action);
+      var handler = getHandler(UpdatePrimitiveTypeHandler.class, action);
+      UpdateOperation operation = null;
 
-         .find(action);
+      switch (property) {
+         case NAME:
+            operation = handler.withArgument(
+               new UpdatePrimitiveTypeArgument.Builder()
+                  .name(action.getValue())
+                  .build());
+            break;
+         case IS_ABSTRACT:
+            operation = handler.withArgument(
+               new UpdatePrimitiveTypeArgument.Builder()
+                  .isAbstract(Boolean.parseBoolean(action.getValue()))
+                  .build());
+            break;
+         case VISIBILITY_KIND:
+            operation = handler.withArgument(
+               new UpdatePrimitiveTypeArgument.Builder()
+                  .visibilityKind(VisibilityKind.get(action.getValue()))
+                  .build());
+            break;
+      }
+
+      return withContext(operation);
+
    }
 
 }

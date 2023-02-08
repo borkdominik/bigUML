@@ -30,7 +30,7 @@ public class PackagePropertyMapper extends BaseDiagramElementPropertyMapper<Pack
    public PropertyPalette map(final Package source) {
       var elementId = idGenerator.getOrCreateId(source);
 
-      var items = propertyBuilder(elementId)
+      var items = this.<UmlClass_Package.Property> propertyBuilder(elementId)
          .text(UmlClass_Package.Property.NAME, "Name", source.getName())
          .text(UmlClass_Package.Property.URI, "Uri", source.getURI())
          .choice(
@@ -46,30 +46,33 @@ public class PackagePropertyMapper extends BaseDiagramElementPropertyMapper<Pack
 
    @Override
    public Optional<UpdateOperation> map(final UpdateElementPropertyAction action) {
-      return operationBuilder()
-         .map(UmlClass_Package.Property.NAME,
-            (element, op) -> handlerMapper.asOperation(
-               UpdatePackageHandler.class,
-               element,
-               new UpdatePackageArgument.Builder()
-                  .name(op.getValue())
-                  .build()))
-         .map(UmlClass_Package.Property.URI,
-            (element, op) -> handlerMapper.asOperation(
-               UpdatePackageHandler.class,
-               element,
-               new UpdatePackageArgument.Builder()
-                  .uri(op.getValue())
-                  .build()))
-         .map(UmlClass_Package.Property.VISIBILITY_KIND,
-            (element, op) -> handlerMapper.asOperation(
-               UpdatePackageHandler.class,
-               element,
-               new UpdatePackageArgument.Builder()
-                  .visibilityKind(VisibilityKind.get(op.getValue()))
-                  .build()))
+      var property = getProperty(UmlClass_Package.Property.class, action);
+      var handler = getHandler(UpdatePackageHandler.class, action);
+      UpdateOperation operation = null;
 
-         .find(action);
+      switch (property) {
+         case NAME:
+            operation = handler.withArgument(
+               new UpdatePackageArgument.Builder()
+                  .name(action.getValue())
+                  .build());
+            break;
+         case URI:
+            operation = handler.withArgument(
+               new UpdatePackageArgument.Builder()
+                  .uri(action.getValue())
+                  .build());
+            break;
+         case VISIBILITY_KIND:
+            operation = handler.withArgument(
+               new UpdatePackageArgument.Builder()
+                  .visibilityKind(VisibilityKind.get(action.getValue()))
+                  .build());
+            break;
+      }
+
+      return withContext(operation);
+
    }
 
 }

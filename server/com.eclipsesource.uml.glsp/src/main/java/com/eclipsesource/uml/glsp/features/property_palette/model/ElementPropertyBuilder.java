@@ -13,7 +13,7 @@ package com.eclipsesource.uml.glsp.features.property_palette.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ElementPropertyBuilder {
+public class ElementPropertyBuilder<TPropertyType extends Enum<TPropertyType>> {
    private final String elementId;
    private final List<ElementPropertyItem> items = new ArrayList<>();
 
@@ -21,34 +21,40 @@ public class ElementPropertyBuilder {
       this.elementId = elementId;
    }
 
-   public ElementPropertyBuilder text(final String propertyId, final String label, final String value) {
-      return text(elementId, propertyId, label, value);
-   }
-
-   public ElementPropertyBuilder text(final String elementId, final String propertyId, final String label,
+   public ElementPropertyBuilder<TPropertyType> text(final TPropertyType property, final String label,
       final String value) {
-      items.add(new ElementTextPropertyItem(elementId, propertyId, label, value));
+      return text(elementId, property, label, value);
+   }
+
+   public ElementPropertyBuilder<TPropertyType> text(final String elementId, final TPropertyType property,
+      final String label,
+      final String value) {
+      items.add(new ElementTextPropertyItem(elementId, property.name(), label, value));
       return this;
    }
 
-   public ElementPropertyBuilder bool(final String propertyId, final String label, final boolean value) {
-      return bool(elementId, propertyId, label, value);
-   }
-
-   public ElementPropertyBuilder bool(final String elementId, final String propertyId, final String label,
+   public ElementPropertyBuilder<TPropertyType> bool(final TPropertyType property, final String label,
       final boolean value) {
-      items.add(new ElementBoolPropertyItem(elementId, propertyId, label, value));
+      return bool(elementId, property, label, value);
+   }
+
+   public ElementPropertyBuilder<TPropertyType> bool(final String elementId, final TPropertyType property,
+      final String label,
+      final boolean value) {
+      items.add(new ElementBoolPropertyItem(elementId, property.name(), label, value));
       return this;
    }
 
-   public ElementPropertyBuilder choice(final String propertyId, final String label, final List<String> choices,
+   public ElementPropertyBuilder<TPropertyType> choice(final TPropertyType property, final String label,
+      final List<String> choices,
       final String choice) {
-      return choice(elementId, propertyId, label, choices, choice);
+      return choice(elementId, property, label, choices, choice);
    }
 
-   public ElementPropertyBuilder choice(final String elementId, final String propertyId, final String label,
+   public ElementPropertyBuilder<TPropertyType> choice(final String elementId, final TPropertyType property,
+      final String label,
       final List<String> choices, final String choice) {
-      items.add(new ElementChoicePropertyItem(elementId, propertyId, label, choices, choice));
+      items.add(new ElementChoicePropertyItem(elementId, property.name(), label, choices, choice));
       return this;
    }
 

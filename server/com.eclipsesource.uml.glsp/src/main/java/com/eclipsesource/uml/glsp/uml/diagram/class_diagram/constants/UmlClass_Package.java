@@ -18,13 +18,10 @@ public class UmlClass_Package {
    public static final String ICON = CoreTypes.PRE_ICON + ID;
    public static final String TYPE_ID = CoreTypes.PRE_NODE + ID;
 
-   public class Property {
-
-      public static final String NAME = "name";
-      public static final String URI = "uri";
-      public static final String VISIBILITY_KIND = "visibility_kind";
-
-      private Property() {}
+   public enum Property {
+      NAME,
+      URI,
+      VISIBILITY_KIND;
    }
 
    private UmlClass_Package() {}

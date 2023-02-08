@@ -18,10 +18,7 @@ public class UmlClass_Association {
    public static final String COMPOSITION_TYPE_ID = CoreTypes.PRE_EDGE + "composition";
    public static final String AGGREGATION_TYPE_ID = CoreTypes.PRE_EDGE + "aggregation";
 
-   public class Property {
-
-      private Property() {}
-   }
+   public enum Property {}
 
    private UmlClass_Association() {}
 }

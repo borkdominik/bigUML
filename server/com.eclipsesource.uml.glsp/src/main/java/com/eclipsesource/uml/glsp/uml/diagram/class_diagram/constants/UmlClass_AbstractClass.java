@@ -12,16 +12,13 @@ package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 
-public class UmlClass_AbstractClass {
+public final class UmlClass_AbstractClass {
 
    public static final String ID = "abstract-class";
    public static final String TYPE_ID = CoreTypes.PRE_NODE + ID;
 
-   public class Property {
-
-      public static final String NAME = "name";
-
-      private Property() {}
+   public enum Property {
+      NAME;
    }
 
    private UmlClass_AbstractClass() {}

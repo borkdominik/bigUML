@@ -26,14 +26,16 @@ public final class OperationLabelEditMapper extends BaseLabelEditMapper<Operatio
 
    @Override
    public Optional<UpdateOperation> map(final ApplyLabelEditOperation operation) {
-      return operationBuilder()
-         .map(CoreTypes.LABEL_NAME, NameLabelSuffix.SUFFIX,
-            (element, op) -> handlerMapper.asOperation(
-               UpdateOperationHandler.class,
-               element,
-               new UpdateOperationArgument.Builder()
-                  .name(op.getText())
-                  .build()))
-         .find(operation);
+      var handler = getHandler(UpdateOperationHandler.class, operation);
+      UpdateOperation update = null;
+
+      if (matches(operation, CoreTypes.LABEL_NAME, NameLabelSuffix.SUFFIX)) {
+         update = handler.withArgument(
+            new UpdateOperationArgument.Builder()
+               .name(operation.getText())
+               .build());
+      }
+
+      return withContext(update);
    }
 }

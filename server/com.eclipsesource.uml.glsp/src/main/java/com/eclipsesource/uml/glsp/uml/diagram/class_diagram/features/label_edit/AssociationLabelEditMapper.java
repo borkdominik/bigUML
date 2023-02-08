@@ -22,7 +22,6 @@ public final class AssociationLabelEditMapper extends BaseLabelEditMapper<Associ
 
    @Override
    public Optional<UpdateOperation> map(final ApplyLabelEditOperation operation) {
-      return operationBuilder()
-         .find(operation);
+      return withContext(null);
    }
 }

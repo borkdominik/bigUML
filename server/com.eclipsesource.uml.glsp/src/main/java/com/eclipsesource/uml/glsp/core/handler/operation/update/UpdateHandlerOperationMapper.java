@@ -23,37 +23,38 @@ import com.google.inject.Injector;
 
 public class UpdateHandlerOperationMapper {
 
-   @Inject
-   protected EMFIdGenerator idGenerator;
-
-   @Inject
-   protected Injector injector;
+   protected final EMFIdGenerator idGenerator;
+   protected final Injector injector;
 
    protected Gson gson;
 
-   public UpdateHandlerOperationMapper() {
+   @Inject
+   public UpdateHandlerOperationMapper(final EMFIdGenerator idGenerator, final Injector injector) {
+      this.idGenerator = idGenerator;
+      this.injector = injector;
+
       this.gson = new Gson();
    }
 
-   public <T extends DiagramUpdateHandler<TElementType, TArgs>, TElementType extends EObject, TArgs> UpdateOperation asOperation(
-      final Class<T> handler,
-      final TElementType element,
-      final TArgs args) {
-      var instance = injector.getInstance(handler);
+   public <THandler extends DiagramUpdateHandler<TElement, TUpdateArgument>, TElement extends EObject, TUpdateArgument> UpdateOperation asOperation(
+      final Class<THandler> handler,
+      final TElement element,
+      final TUpdateArgument args) {
+      THandler instance = injector.getInstance(handler);
       return asOperation(instance, element, args);
    }
 
-   public <T extends DiagramUpdateHandler<TElementType, TArgs>, TElementType extends EObject, TArgs> UpdateOperation asOperation(
-      final T handler,
-      final TElementType element,
-      final TArgs args) {
+   public <THandler extends DiagramUpdateHandler<TElement, TUpdateArgument>, TElement extends EObject, TUpdateArgument> UpdateOperation asOperation(
+      final THandler handler,
+      final TElement element,
+      final TUpdateArgument args) {
       return asOperation(handler, element, args, new HashMap<>());
    }
 
-   public <T extends DiagramUpdateHandler<TElementType, TArgs>, TElementType extends EObject, TArgs> UpdateOperation asOperation(
-      final T handler,
-      final TElementType element,
-      final TArgs args,
+   public <THandler extends DiagramUpdateHandler<TElement, TUpdateArgument>, TElement extends EObject, TUpdateArgument> UpdateOperation asOperation(
+      final THandler handler,
+      final TElement element,
+      final TUpdateArgument args,
       final Map<String, String> context) {
 
       var elementId = idGenerator.getOrCreateId(element);
@@ -66,4 +67,30 @@ public class UpdateHandlerOperationMapper {
          gson.fromJson(gson.toJsonTree(args), type));
    }
 
+   public <THandler extends DiagramUpdateHandler<TElement, TUpdateArgument>, TElement extends EObject, TUpdateArgument> Prepared<THandler, TElement, TUpdateArgument> prepare(
+      final Class<THandler> handlerType, final TElement element) {
+      return new Prepared<>(this.idGenerator, this.injector, handlerType, element);
+   }
+
+   public static class Prepared<THandler extends DiagramUpdateHandler<TElement, TUpdateArgument>, TElement extends EObject, TUpdateArgument>
+      extends UpdateHandlerOperationMapper {
+
+      protected final Class<THandler> handlerType;
+      protected final TElement element;
+
+      public Prepared(final EMFIdGenerator idGenerator, final Injector injector,
+         final Class<THandler> handlerType, final TElement element) {
+         super(idGenerator, injector);
+
+         this.handlerType = handlerType;
+         this.element = element;
+      }
+
+      public UpdateOperation withArgument(
+         final TUpdateArgument args) {
+         THandler instance = injector.getInstance(this.handlerType);
+         return asOperation(instance, element, args);
+      }
+
+   }
 }

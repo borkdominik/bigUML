@@ -17,13 +17,10 @@ public class UmlClass_Interface {
    public static final String ID = "interface";
    public static final String TYPE_ID = CoreTypes.PRE_NODE + ID;
 
-   public class Property {
-
-      public static final String NAME = "name";
-      public static final String IS_ABSTRACT = "is_abstract";
-      public static final String VISIBILITY_KIND = "visibility_kind";
-
-      private Property() {}
+   public enum Property {
+      NAME,
+      IS_ABSTRACT,
+      VISIBILITY_KIND;
    }
 
    private UmlClass_Interface() {}

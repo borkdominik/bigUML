@@ -29,29 +29,27 @@ public final class PropertyLabelEditMapper extends BaseLabelEditMapper<Property>
 
    @Override
    public Optional<UpdateOperation> map(final ApplyLabelEditOperation operation) {
-      return operationBuilder()
-         .map(CoreTypes.LABEL_NAME, NameLabelSuffix.SUFFIX,
-            (element, op) -> handlerMapper.asOperation(
-               UpdatePropertyHandler.class,
-               element,
-               new UpdatePropertyArgument.Builder()
-                  .name(op.getText())
-                  .build()))
-         .map(UmlClass_Property.LABEL_MULTIPLICITY, PropertyMultiplicityLabelSuffix.SUFFIX,
-            (element, op) -> handlerMapper.asOperation(
-               UpdatePropertyHandler.class,
-               element,
-               new UpdatePropertyArgument.Builder()
-                  .upperBound(PropertyUtil.getUpper(op.getText()))
-                  .lowerBound(PropertyUtil.getLower(op.getText()))
-                  .build()))
-         /*-
-         .map(UmlClass_Property.LABEL_TYPE, PropertyTypeLabelSuffix.SUFFIX,
-            (element, op) -> handlerMapper.asOperation(
-               UpdatePropertyTypeHandler.class,
-               element,
-               new UpdatePropertyTypeHandler.Args(op.getText())))
-               */
-         .find(operation);
+      var handler = getHandler(UpdatePropertyHandler.class, operation);
+      UpdateOperation update = null;
+
+      if (matches(operation, CoreTypes.LABEL_NAME, NameLabelSuffix.SUFFIX)) {
+         update = handler.withArgument(
+            new UpdatePropertyArgument.Builder()
+               .name(operation.getText())
+               .build());
+      } else if (matches(operation, UmlClass_Property.LABEL_MULTIPLICITY, PropertyMultiplicityLabelSuffix.SUFFIX)) {
+         update = handler.withArgument(
+            new UpdatePropertyArgument.Builder()
+               .upperBound(PropertyUtil.getUpper(operation.getText()))
+               .lowerBound(PropertyUtil.getLower(operation.getText()))
+               .build());
+      } /*-else if (matches(operation, UmlClass_Property.LABEL_TYPE, PropertyTypeLabelSuffix.SUFFIX)) {
+         update = handler.withArgument(
+            new UpdatePropertyArgument.Builder()
+               .name(operation.getText())
+               .build());
+      }*/
+
+      return withContext(update);
    }
 }

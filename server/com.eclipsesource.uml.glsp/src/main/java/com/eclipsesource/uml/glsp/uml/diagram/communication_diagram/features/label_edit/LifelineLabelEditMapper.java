@@ -25,13 +25,15 @@ public final class LifelineLabelEditMapper extends BaseLabelEditMapper<Lifeline>
 
    @Override
    public Optional<UpdateOperation> map(final ApplyLabelEditOperation operation) {
-      return operationBuilder()
-         .map(CoreTypes.LABEL_NAME, NameLabelSuffix.SUFFIX,
-            (element, op) -> handlerMapper.asOperation(
-               UpdateLifelineNameHandler.class,
-               element,
-               new UpdateLifelineNameHandler.Args(op.getText())))
-         .find(operation);
+      var handler = getHandler(UpdateLifelineNameHandler.class, operation);
+      UpdateOperation update = null;
+
+      if (matches(operation, CoreTypes.LABEL_NAME, NameLabelSuffix.SUFFIX)) {
+         update = handler.withArgument(
+            new UpdateLifelineNameHandler.Args(operation.getText()));
+      }
+
+      return withContext(update);
    }
 
 }

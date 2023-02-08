@@ -42,7 +42,7 @@ public class AssociationPropertyMapper extends BaseDiagramElementPropertyMapper<
       List<ElementPropertyItem> items = new ArrayList<>();
 
       if (associationType == AssociationType.ASSOCIATION) {
-         items = propertyBuilder(elementId)
+         items = this.<UmlClass_Property.Property> propertyBuilder(elementId)
             .text(sourceEndId, UmlClass_Property.Property.NAME, "Source Name", sourceEnd.getName())
             .text(sourceEndId, UmlClass_Property.Property.MULTIPLICITY, "Source Multiplicity",
                PropertyUtil.getMultiplicity(sourceEnd))
@@ -57,8 +57,7 @@ public class AssociationPropertyMapper extends BaseDiagramElementPropertyMapper<
 
    @Override
    public Optional<UpdateOperation> map(final UpdateElementPropertyAction action) {
-      return operationBuilder()
-         .find(action);
+      return withContext(null);
    }
 
 }

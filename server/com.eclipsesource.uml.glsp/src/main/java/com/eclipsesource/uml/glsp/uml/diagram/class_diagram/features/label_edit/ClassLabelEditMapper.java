@@ -25,14 +25,16 @@ import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.ucla
 public final class ClassLabelEditMapper extends BaseLabelEditMapper<Class> {
    @Override
    public Optional<UpdateOperation> map(final ApplyLabelEditOperation operation) {
-      return operationBuilder()
-         .map(CoreTypes.LABEL_NAME, NameLabelSuffix.SUFFIX,
-            (element, op) -> handlerMapper.asOperation(
-               UpdateClassHandler.class,
-               element,
-               new UpdateClassArgument.Builder()
-                  .name(op.getText())
-                  .build()))
-         .find(operation);
+      var handler = getHandler(UpdateClassHandler.class, operation);
+      UpdateOperation update = null;
+
+      if (matches(operation, CoreTypes.LABEL_NAME, NameLabelSuffix.SUFFIX)) {
+         update = handler.withArgument(
+            new UpdateClassArgument.Builder()
+               .name(operation.getText())
+               .build());
+      }
+
+      return withContext(update);
    }
 }

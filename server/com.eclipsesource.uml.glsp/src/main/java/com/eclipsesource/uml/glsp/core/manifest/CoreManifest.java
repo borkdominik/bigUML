@@ -11,6 +11,7 @@
 package com.eclipsesource.uml.glsp.core.manifest;
 
 import com.eclipsesource.uml.glsp.core.features.id_generator.IdCountContextGenerator;
+import com.eclipsesource.uml.glsp.core.features.label_edit.LabelExtractor;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.Suffix;
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateHandlerOperationMapper;
@@ -34,6 +35,7 @@ public class CoreManifest extends AbstractModule
       });
 
       bind(Suffix.class).in(Singleton.class);
+      bind(LabelExtractor.class).in(Singleton.class);
       bind(IdCountContextGenerator.class).in(Singleton.class);
       bind(UpdateHandlerOperationMapper.class).in(Singleton.class);
    }

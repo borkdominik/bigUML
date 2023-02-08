@@ -22,7 +22,6 @@ import com.eclipsesource.uml.glsp.features.property_palette.handler.action.Updat
 import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalette;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Operation;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.operation.UpdateOperationHandler;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.operation.UpdateOperationNameHandler;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.BaseDiagramElementPropertyMapper;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.operation.UpdateOperationArgument;
 
@@ -58,9 +57,11 @@ public class OperationPropertyMapper extends BaseDiagramElementPropertyMapper<Op
       return operationBuilder()
          .map(UmlClass_Operation.Property.NAME,
             (element, op) -> handlerMapper.asOperation(
-               UpdateOperationNameHandler.class,
+               UpdateOperationHandler.class,
                element,
-               new UpdateOperationNameHandler.Args(op.getValue())))
+               new UpdateOperationArgument.Builder()
+                  .name(op.getValue())
+                  .build()))
          .map(UmlClass_Operation.Property.IS_ABSTRACT,
             (element, op) -> handlerMapper.asOperation(
                UpdateOperationHandler.class,

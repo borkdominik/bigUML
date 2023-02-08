@@ -21,7 +21,6 @@ import com.eclipsesource.uml.glsp.features.property_palette.handler.action.Updat
 import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalette;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Package;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.upackage.UpdatePackageHandler;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.upackage.UpdatePackageNameHandler;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.BaseDiagramElementPropertyMapper;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.upackage.UpdatePackageArgument;
 
@@ -50,9 +49,11 @@ public class PackagePropertyMapper extends BaseDiagramElementPropertyMapper<Pack
       return operationBuilder()
          .map(UmlClass_Package.Property.NAME,
             (element, op) -> handlerMapper.asOperation(
-               UpdatePackageNameHandler.class,
+               UpdatePackageHandler.class,
                element,
-               new UpdatePackageNameHandler.Args(op.getValue())))
+               new UpdatePackageArgument.Builder()
+                  .name(op.getValue())
+                  .build()))
          .map(UmlClass_Package.Property.URI,
             (element, op) -> handlerMapper.asOperation(
                UpdatePackageHandler.class,

@@ -21,7 +21,6 @@ import com.eclipsesource.uml.glsp.features.property_palette.handler.action.Updat
 import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalette;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_EnumerationLiteral;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.enumeration_literal.UpdateEnumerationLiteralHandler;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.enumeration_literal.UpdateEnumerationLiteralNameHandler;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.BaseDiagramElementPropertyMapper;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.enumeration_literal.UpdateEnumerationLiteralArgument;
 
@@ -49,9 +48,11 @@ public class EnumerationLiteralPropertyMapper extends BaseDiagramElementProperty
       return operationBuilder()
          .map(UmlClass_EnumerationLiteral.Property.NAME,
             (element, op) -> handlerMapper.asOperation(
-               UpdateEnumerationLiteralNameHandler.class,
+               UpdateEnumerationLiteralHandler.class,
                element,
-               new UpdateEnumerationLiteralNameHandler.Args(op.getValue())))
+               new UpdateEnumerationLiteralArgument.Builder()
+                  .name(op.getValue())
+                  .build()))
          .map(UmlClass_EnumerationLiteral.Property.VISIBILITY_KIND,
             (element, op) -> handlerMapper.asOperation(
                UpdateEnumerationLiteralHandler.class,

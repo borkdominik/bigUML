@@ -18,8 +18,9 @@ import org.eclipse.uml2.uml.DataType;
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.data_type.UpdateDataTypeNameHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.data_type.UpdateDataTypeHandler;
 import com.eclipsesource.uml.glsp.uml.features.label_edit.BaseLabelEditMapper;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.data_type.UpdateDataTypeArgument;
 
 public final class DataTypeLabelEditMapper extends BaseLabelEditMapper<DataType> {
    @Override
@@ -27,9 +28,11 @@ public final class DataTypeLabelEditMapper extends BaseLabelEditMapper<DataType>
       return operationBuilder()
          .map(CoreTypes.LABEL_NAME, NameLabelSuffix.SUFFIX,
             (element, op) -> handlerMapper.asOperation(
-               UpdateDataTypeNameHandler.class,
+               UpdateDataTypeHandler.class,
                element,
-               new UpdateDataTypeNameHandler.Args(op.getText())))
+               new UpdateDataTypeArgument.Builder()
+                  .name(op.getText())
+                  .build()))
          .find(operation);
    }
 }

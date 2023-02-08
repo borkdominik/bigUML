@@ -18,8 +18,9 @@ import org.eclipse.uml2.uml.Enumeration;
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.enumeration.UpdateEnumerationNameHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.enumeration.UpdateEnumerationHandler;
 import com.eclipsesource.uml.glsp.uml.features.label_edit.BaseLabelEditMapper;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.enumeration.UpdateEnumerationArgument;
 
 public final class EnumerationLabelEditMapper extends BaseLabelEditMapper<Enumeration> {
    @Override
@@ -27,9 +28,11 @@ public final class EnumerationLabelEditMapper extends BaseLabelEditMapper<Enumer
       return operationBuilder()
          .map(CoreTypes.LABEL_NAME, NameLabelSuffix.SUFFIX,
             (element, op) -> handlerMapper.asOperation(
-               UpdateEnumerationNameHandler.class,
+               UpdateEnumerationHandler.class,
                element,
-               new UpdateEnumerationNameHandler.Args(op.getText())))
+               new UpdateEnumerationArgument.Builder()
+                  .name(op.getText())
+                  .build()))
          .find(operation);
    }
 }

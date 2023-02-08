@@ -21,7 +21,6 @@ import com.eclipsesource.uml.glsp.features.property_palette.handler.action.Updat
 import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalette;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_DataType;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.data_type.UpdateDataTypeHandler;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.data_type.UpdateDataTypeNameHandler;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.BaseDiagramElementPropertyMapper;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.data_type.UpdateDataTypeArgument;
 
@@ -50,9 +49,11 @@ public class DataTypePropertyMapper extends BaseDiagramElementPropertyMapper<Dat
       return operationBuilder()
          .map(UmlClass_DataType.Property.NAME,
             (element, op) -> handlerMapper.asOperation(
-               UpdateDataTypeNameHandler.class,
+               UpdateDataTypeHandler.class,
                element,
-               new UpdateDataTypeNameHandler.Args(op.getValue())))
+               new UpdateDataTypeArgument.Builder()
+                  .name(op.getValue())
+                  .build()))
          .map(UmlClass_DataType.Property.IS_ABSTRACT,
             (element, op) -> handlerMapper.asOperation(
                UpdateDataTypeHandler.class,

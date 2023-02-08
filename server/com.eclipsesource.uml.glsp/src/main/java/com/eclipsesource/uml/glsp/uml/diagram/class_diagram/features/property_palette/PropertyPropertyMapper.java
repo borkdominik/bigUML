@@ -22,8 +22,6 @@ import com.eclipsesource.uml.glsp.features.property_palette.handler.action.Updat
 import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalette;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Property;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.property.UpdatePropertyHandler;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.property.UpdatePropertyMultiplicityHandler;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.property.UpdatePropertyNameHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.utils.PropertyUtil;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.BaseDiagramElementPropertyMapper;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.UpdatePropertyArgument;
@@ -64,9 +62,11 @@ public class PropertyPropertyMapper extends BaseDiagramElementPropertyMapper<Pro
       return operationBuilder()
          .map(UmlClass_Property.Property.NAME,
             (element, op) -> handlerMapper.asOperation(
-               UpdatePropertyNameHandler.class,
+               UpdatePropertyHandler.class,
                element,
-               new UpdatePropertyNameHandler.Args(op.getValue())))
+               new UpdatePropertyArgument.Builder()
+                  .name(op.getValue())
+                  .build()))
          .map(UmlClass_Property.Property.IS_DERIVED,
             (element, op) -> handlerMapper.asOperation(
                UpdatePropertyHandler.class,
@@ -118,9 +118,12 @@ public class PropertyPropertyMapper extends BaseDiagramElementPropertyMapper<Pro
                   .build()))
          .map(UmlClass_Property.Property.MULTIPLICITY,
             (element, op) -> handlerMapper.asOperation(
-               UpdatePropertyMultiplicityHandler.class,
+               UpdatePropertyHandler.class,
                element,
-               new UpdatePropertyMultiplicityHandler.Args(op.getValue())))
+               new UpdatePropertyArgument.Builder()
+                  .upperBound(PropertyUtil.getUpper(op.getValue()))
+                  .lowerBound(PropertyUtil.getLower(op.getValue()))
+                  .build()))
          .map(UmlClass_Property.Property.AGGREGATION,
             (element, op) -> handlerMapper.asOperation(
                UpdatePropertyHandler.class,

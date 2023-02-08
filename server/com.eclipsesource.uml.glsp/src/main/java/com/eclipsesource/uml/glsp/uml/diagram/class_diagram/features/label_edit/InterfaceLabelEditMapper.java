@@ -18,8 +18,9 @@ import org.eclipse.uml2.uml.Interface;
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.uinterface.UpdateInterfaceNameHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.uinterface.UpdateInterfaceHandler;
 import com.eclipsesource.uml.glsp.uml.features.label_edit.BaseLabelEditMapper;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uinterface.UpdateInterfaceArgument;
 
 public final class InterfaceLabelEditMapper extends BaseLabelEditMapper<Interface> {
    @Override
@@ -27,9 +28,11 @@ public final class InterfaceLabelEditMapper extends BaseLabelEditMapper<Interfac
       return operationBuilder()
          .map(CoreTypes.LABEL_NAME, NameLabelSuffix.SUFFIX,
             (element, op) -> handlerMapper.asOperation(
-               UpdateInterfaceNameHandler.class,
+               UpdateInterfaceHandler.class,
                element,
-               new UpdateInterfaceNameHandler.Args(op.getText())))
+               new UpdateInterfaceArgument.Builder()
+                  .name(op.getText())
+                  .build()))
          .find(operation);
    }
 }

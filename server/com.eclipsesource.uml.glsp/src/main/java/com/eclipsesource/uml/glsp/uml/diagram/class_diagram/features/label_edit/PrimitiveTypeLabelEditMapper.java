@@ -18,8 +18,9 @@ import org.eclipse.uml2.uml.PrimitiveType;
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.primitive_type.UpdatePrimitiveTypeNameHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.primitive_type.UpdatePrimitiveTypeHandler;
 import com.eclipsesource.uml.glsp.uml.features.label_edit.BaseLabelEditMapper;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.primitive_type.UpdatePrimitiveTypeArgument;
 
 public final class PrimitiveTypeLabelEditMapper extends BaseLabelEditMapper<PrimitiveType> {
    @Override
@@ -27,9 +28,11 @@ public final class PrimitiveTypeLabelEditMapper extends BaseLabelEditMapper<Prim
       return operationBuilder()
          .map(CoreTypes.LABEL_NAME, NameLabelSuffix.SUFFIX,
             (element, op) -> handlerMapper.asOperation(
-               UpdatePrimitiveTypeNameHandler.class,
+               UpdatePrimitiveTypeHandler.class,
                element,
-               new UpdatePrimitiveTypeNameHandler.Args(op.getText())))
+               new UpdatePrimitiveTypeArgument.Builder()
+                  .name(op.getText())
+                  .build()))
          .find(operation);
    }
 }

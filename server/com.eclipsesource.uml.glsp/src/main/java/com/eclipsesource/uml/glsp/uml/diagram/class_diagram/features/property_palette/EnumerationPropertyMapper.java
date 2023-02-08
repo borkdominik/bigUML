@@ -21,7 +21,6 @@ import com.eclipsesource.uml.glsp.features.property_palette.handler.action.Updat
 import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalette;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Enumeration;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.enumeration.UpdateEnumerationHandler;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.enumeration.UpdateEnumerationNameHandler;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.BaseDiagramElementPropertyMapper;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.enumeration.UpdateEnumerationArgument;
 
@@ -50,9 +49,11 @@ public class EnumerationPropertyMapper extends BaseDiagramElementPropertyMapper<
       return operationBuilder()
          .map(UmlClass_Enumeration.Property.NAME,
             (element, op) -> handlerMapper.asOperation(
-               UpdateEnumerationNameHandler.class,
+               UpdateEnumerationHandler.class,
                element,
-               new UpdateEnumerationNameHandler.Args(op.getValue())))
+               new UpdateEnumerationArgument.Builder()
+                  .name(op.getValue())
+                  .build()))
          .map(UmlClass_Enumeration.Property.IS_ABSTRACT,
             (element, op) -> handlerMapper.asOperation(
                UpdateEnumerationHandler.class,

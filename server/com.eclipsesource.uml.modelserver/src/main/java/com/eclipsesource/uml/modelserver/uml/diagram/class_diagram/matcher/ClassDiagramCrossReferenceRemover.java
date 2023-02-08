@@ -26,7 +26,8 @@ import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.gene
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.operation.DeleteOperationSemanticCommand;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.primitive_type.DeletePrimitiveTypeCompoundCommand;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.DeletePropertySemanticCommand;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.UpdatePropertyTypeSemanticCommand;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.UpdatePropertyArgument;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.UpdatePropertySemanticCommand;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uclass.DeleteClassCompoundCommand;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uinterface.DeleteInterfaceCompoundCommand;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.upackage.DeletePackageCompoundCommand;
@@ -85,7 +86,12 @@ public final class ClassDiagramCrossReferenceRemover {
          // Property
          .match((setting, interest) -> PropertyMatcher
             .ofOwnedAttributeTypeUsage(setting, interest)
-            .map(property -> new UpdatePropertyTypeSemanticCommand(context, property, null)))
+            .map(property -> new UpdatePropertySemanticCommand(
+               context,
+               property,
+               new UpdatePropertyArgument.Builder()
+                  .type(null)
+                  .build())))
          .match((setting, interest) -> PropertyMatcher
             .ofOwnedAttributeAssociationUsage(setting, interest)
             .map(

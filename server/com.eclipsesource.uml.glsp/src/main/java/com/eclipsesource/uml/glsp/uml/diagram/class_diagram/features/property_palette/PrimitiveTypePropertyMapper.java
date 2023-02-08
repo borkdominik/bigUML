@@ -21,7 +21,6 @@ import com.eclipsesource.uml.glsp.features.property_palette.handler.action.Updat
 import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalette;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_PrimitiveType;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.primitive_type.UpdatePrimitiveTypeHandler;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.primitive_type.UpdatePrimitiveTypeNameHandler;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.BaseDiagramElementPropertyMapper;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.primitive_type.UpdatePrimitiveTypeArgument;
 
@@ -50,9 +49,11 @@ public class PrimitiveTypePropertyMapper extends BaseDiagramElementPropertyMappe
       return operationBuilder()
          .map(UmlClass_PrimitiveType.Property.NAME,
             (element, op) -> handlerMapper.asOperation(
-               UpdatePrimitiveTypeNameHandler.class,
+               UpdatePrimitiveTypeHandler.class,
                element,
-               new UpdatePrimitiveTypeNameHandler.Args(op.getValue())))
+               new UpdatePrimitiveTypeArgument.Builder()
+                  .name(op.getValue())
+                  .build()))
          .map(UmlClass_PrimitiveType.Property.IS_ABSTRACT,
             (element, op) -> handlerMapper.asOperation(
                UpdatePrimitiveTypeHandler.class,

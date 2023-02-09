@@ -37,10 +37,10 @@ public class AssociationPropertyMapper extends BaseDiagramElementPropertyMapper<
       var elementId = idGenerator.getOrCreateId(source);
 
       var memberEnds = source.getMemberEnds();
-      var memberEndSource = memberEnds.get(0);
-      var memberEndSourceId = idGenerator.getOrCreateId(memberEndSource);
-      var memberEndTarget = memberEnds.get(1);
-      var memberEndTargetId = idGenerator.getOrCreateId(memberEndTarget);
+      var memberEndFirst = memberEnds.get(0);
+      var memberEndFirstId = idGenerator.getOrCreateId(memberEndFirst);
+      var memberEndSecond = memberEnds.get(1);
+      var memberEndSecondId = idGenerator.getOrCreateId(memberEndSecond);
 
       List<ElementPropertyItem> items = new ArrayList<>();
 
@@ -53,30 +53,30 @@ public class AssociationPropertyMapper extends BaseDiagramElementPropertyMapper<
             source.getVisibility().getLiteral())
          .items());
 
-      items.addAll(this.<UmlClass_Property.Property> propertyBuilder(memberEndSourceId)
-         .text(UmlClass_Property.Property.NAME, "Source Name", memberEndSource.getName())
-         .text(UmlClass_Property.Property.MULTIPLICITY, "Source Multiplicity",
-            PropertyUtil.getMultiplicity(memberEndSource))
-         .bool(UmlClass_Property.Property.IS_NAVIGABLE, "Source Navigable",
-            memberEndSource.isNavigable())
+      items.addAll(this.<UmlClass_Property.Property> propertyBuilder(memberEndFirstId)
+         .text(UmlClass_Property.Property.NAME, "Member End Name", memberEndFirst.getName())
+         .text(UmlClass_Property.Property.MULTIPLICITY, "Member End Multiplicity",
+            PropertyUtil.getMultiplicity(memberEndFirst))
+         .bool(UmlClass_Property.Property.IS_NAVIGABLE, "Member End Navigable",
+            memberEndFirst.isNavigable())
          .choice(
             UmlClass_Property.Property.AGGREGATION,
-            "Source Aggregation",
+            "Member End Aggregation",
             AggregationKind.VALUES.stream().map(v -> v.getLiteral()).collect(Collectors.toList()),
-            memberEndSource.getAggregation().getLiteral())
+            memberEndFirst.getAggregation().getLiteral())
          .items());
 
-      items.addAll(this.<UmlClass_Property.Property> propertyBuilder(memberEndTargetId)
-         .text(UmlClass_Property.Property.NAME, "Target Name", memberEndTarget.getName())
-         .text(UmlClass_Property.Property.MULTIPLICITY, "Target Multiplicity",
-            PropertyUtil.getMultiplicity(memberEndTarget))
-         .bool(UmlClass_Property.Property.IS_NAVIGABLE, "Target Navigable",
-            memberEndTarget.isNavigable())
+      items.addAll(this.<UmlClass_Property.Property> propertyBuilder(memberEndSecondId)
+         .text(UmlClass_Property.Property.NAME, "Member End Name", memberEndSecond.getName())
+         .text(UmlClass_Property.Property.MULTIPLICITY, "Member End Multiplicity",
+            PropertyUtil.getMultiplicity(memberEndSecond))
+         .bool(UmlClass_Property.Property.IS_NAVIGABLE, "Member End Navigable",
+            memberEndSecond.isNavigable())
          .choice(
             UmlClass_Property.Property.AGGREGATION,
-            "Target Aggregation",
+            "Member End Aggregation",
             AggregationKind.VALUES.stream().map(v -> v.getLiteral()).collect(Collectors.toList()),
-            memberEndTarget.getAggregation().getLiteral())
+            memberEndSecond.getAggregation().getLiteral())
          .items());
 
       return new PropertyPalette(elementId, "Association", items);

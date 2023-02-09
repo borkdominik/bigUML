@@ -46,15 +46,15 @@ public final class AssociationEdgeMapper extends BaseGEdgeMapper<Association, GE
 
    protected void applyMemberEnds(final Association source, final GEdgeBuilder builder) {
       var memberEnds = source.getMemberEnds();
-      var memberEndSource = memberEnds.get(0);
-      var memberEndTarget = memberEnds.get(1);
+      var memberEndFirst = memberEnds.get(0);
+      var memberEndSecond = memberEnds.get(1);
 
       builder
-         .sourceId(idGenerator.getOrCreateId(memberEndSource.getOwner()))
-         .targetId(idGenerator.getOrCreateId(memberEndTarget.getOwner()));
+         .sourceId(idGenerator.getOrCreateId(memberEndFirst.getOwner()))
+         .targetId(idGenerator.getOrCreateId(memberEndSecond.getOwner()));
 
-      applyMemberEnd(memberEndSource, builder, 0.9d);
-      applyMemberEnd(memberEndTarget, builder, 0.1d);
+      applyMemberEnd(memberEndFirst, builder, 0.9d);
+      applyMemberEnd(memberEndSecond, builder, 0.1d);
    }
 
    protected void applyMemberEnd(final Property memberEnd, final GEdgeBuilder builder, final double position) {

@@ -1,0 +1,39 @@
+.property-palette {
+    display: flex;
+    flex-direction: column;
+    background: var(--theia-menu-background);
+    height: 192px;
+}
+
+.property-palette-header {
+    padding: 0.4rem;
+    background: var(--theia-activityBar-background);
+}
+
+.property-palette-content {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    overflow: auto;
+}
+
+.property-item {
+    padding: 0.4rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 1rem;
+}
+
+.property-item label, .property-text-item input {
+    padding: 0.2rem;
+}
+
+.property-item label {
+    width: 128px;
+    word-wrap: break-word;
+}
+
+.property-text-item input {
+    flex: 1;
+}

@@ -18,7 +18,7 @@ import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.BaseCreateSemanticRelationCommand;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.constants.AssociationType;
 
-public final class CreateAssociationSemanticCommand extends BaseCreateSemanticRelationCommand<Type, Type, Association> {
+public final class CreateAssociationSemanticCommand extends BaseCreateSemanticRelationCommand<Association, Type, Type> {
 
    protected final AssociationType type;
 
@@ -31,12 +31,12 @@ public final class CreateAssociationSemanticCommand extends BaseCreateSemanticRe
    @Override
    protected Association createSemanticElement(final Type source, final Type target) {
       return source.createAssociation(true,
-         AggregationKind.NONE_LITERAL,
+         type.toAggregationKind(),
          target.getName(),
          1, 1,
          target,
          true,
-         type.toAggregationKind(),
+         AggregationKind.NONE_LITERAL,
          source.getName(),
          1, 1);
    }

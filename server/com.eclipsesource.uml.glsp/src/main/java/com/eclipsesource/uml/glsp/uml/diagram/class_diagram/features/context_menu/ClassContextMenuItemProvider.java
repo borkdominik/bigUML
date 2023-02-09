@@ -42,12 +42,12 @@ public class ClassContextMenuItemProvider {
    
    // CLASS DIAGRAM
    public List<MenuItem> classDiagramNodes(final GPoint position) {
-      MenuItem createClass = new MenuItem(ClassTypes.CLASS, "Class",
-         List.of(new CreateNodeOperation(ClassTypes.CLASS, position)), true);
-      MenuItem createEnumeration = new MenuItem(ClassTypes.ENUMERATION, "Enumeration",
-         List.of(new CreateNodeOperation(ClassTypes.ENUMERATION, position)), true);
-      MenuItem createInterface = new MenuItem(ClassTypes.INTERFACE, "Interface",
-         List.of(new CreateNodeOperation(ClassTypes.INTERFACE, position)), true);
+      MenuItem createClass = new MenuItem(UmlClass_Class.TYPE_ID, "Class",
+         List.of(new CreateNodeOperation(UmlClass_Class.TYPE_ID, position)), true);
+      MenuItem createEnumeration = new MenuItem(UmlClass_Enumeration.TYPE_ID, "Enumeration",
+         List.of(new CreateNodeOperation(UmlClass_Enumeration.TYPE_ID, position)), true);
+      MenuItem createInterface = new MenuItem(UmlClass_Interface.TYPE_ID, "Interface",
+         List.of(new CreateNodeOperation(UmlClass_Interface.TYPE_ID, position)), true);
    
       MenuItem classDiagramNodes = new MenuItem("classDiagramNodes", "Nodes",
          Arrays.asList(createClass, createEnumeration, createInterface), "classDiagramNodes");
@@ -58,9 +58,9 @@ public class ClassContextMenuItemProvider {
       Optional<GModelElement> element = umlModelState.getIndex().get(elementId);
       String type = element.get().getType();
    
-      if (Objects.equals(type, ClassTypes.CLASS)) {
-         MenuItem createProperty = new MenuItem(ClassTypes.PROPERTY, "Property",
-            List.of(new CreateNodeOperation(ClassTypes.PROPERTY, elementId)), true);
+      if (Objects.equals(type, UmlClass_Class.TYPE_ID)) {
+         MenuItem createProperty = new MenuItem(UmlClass_Property.TYPE_ID, "Property",
+            List.of(new CreateNodeOperation(UmlClass_Property.TYPE_ID, elementId)), true);
    
          MenuItem childNodes = new MenuItem("classDiagramChildNodes", "Child Nodes",
             List.of(createProperty), "classDiagramChildNodes");
@@ -72,8 +72,8 @@ public class ClassContextMenuItemProvider {
    public List<MenuItem> classDiagramEdges(final String sourceElementId, final String targetElementId) {
       MenuItem createAssociation = new MenuItem(ClassTypes.ASSOCIATION, "Association",
          List.of(new CreateEdgeOperation(ClassTypes.ASSOCIATION, sourceElementId, targetElementId)), true);
-      MenuItem createGeneralization = new MenuItem(ClassTypes.CLASS_GENERALIZATION, "Generalization",
-         List.of(new CreateEdgeOperation(ClassTypes.CLASS_GENERALIZATION, sourceElementId, targetElementId)), true);
+      MenuItem createGeneralization = new MenuItem(UmlClass_Generalization.TYPE_ID, "Generalization",
+         List.of(new CreateEdgeOperation(UmlClass_Generalization.TYPE_ID, sourceElementId, targetElementId)), true);
    
       MenuItem classDiagramEdges = new MenuItem("classDiagramEdges", "Edges",
          Arrays.asList(createAssociation, createGeneralization), "classDiagramEdges");

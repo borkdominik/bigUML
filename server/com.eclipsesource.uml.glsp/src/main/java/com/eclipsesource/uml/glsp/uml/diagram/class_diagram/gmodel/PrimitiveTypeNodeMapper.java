@@ -24,14 +24,14 @@ import org.eclipse.uml2.uml.PrimitiveType;
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_PrimitiveType;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGNodeMapper;
 
 public final class PrimitiveTypeNodeMapper extends BaseGNodeMapper<PrimitiveType, GNode> {
 
    @Override
    public GNode map(final PrimitiveType source) {
-      var builder = new GNodeBuilder(ClassTypes.PRIMITIVE_TYPE)
+      var builder = new GNodeBuilder(UmlClass_PrimitiveType.TYPE_ID)
          .id(idGenerator.getOrCreateId(source))
          .layout(GConstants.Layout.VBOX)
          .addCssClass(CoreCSS.NODE)

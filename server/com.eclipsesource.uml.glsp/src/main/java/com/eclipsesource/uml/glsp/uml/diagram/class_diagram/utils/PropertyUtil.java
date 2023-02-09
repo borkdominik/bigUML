@@ -13,6 +13,8 @@ package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.utils;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.eclipse.uml2.uml.Property;
+
 public final class PropertyUtil {
    public static int getLower(final String multiplicityString) {
       return getBound(multiplicityString, 0);
@@ -30,6 +32,13 @@ public final class PropertyUtil {
          result = multiplicityString.split(multiplicityRegex())[index];
       }
       return result.isEmpty() ? 1 : (result.equals("*") ? -1 : Integer.parseInt(result, 10));
+   }
+
+   public static String getMultiplicity(final Property property) {
+      if (property.getLower() == property.getUpper()) {
+         return String.format("%s", property.getUpper() == -1 ? "*" : property.getUpper());
+      }
+      return String.format("%s..%s", property.getLower(), property.getUpper() == -1 ? "*" : property.getUpper());
    }
 
    private static String multiplicityRegex() {

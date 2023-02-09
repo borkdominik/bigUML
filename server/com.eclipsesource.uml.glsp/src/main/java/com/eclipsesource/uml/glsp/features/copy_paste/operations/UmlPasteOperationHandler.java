@@ -38,7 +38,7 @@ public class UmlPasteOperationHandler {/*-
       var selectedElements = getCopiedElements(
          operation.getClipboardData().get(UmlRequestClipboardDataActionHandler.CLIPBOARD_SELECTED_ELEMENTS));
       var interactionElements = GModelFilterUtil
-         .filterByType(selectedElements, CommunicationTypes.INTERACTION, GModelElement.class)
+         .filterByType(selectedElements, UmlCommunication_Interaction.TYPE_ID, GModelElement.class)
          .collect(Collectors.toUnmodifiableList());
 
       if (interactionElements.size() > 0) {
@@ -55,7 +55,7 @@ public class UmlPasteOperationHandler {/*-
             var root = getCopiedElement(
                operation.getClipboardData().get(UmlRequestClipboardDataActionHandler.CLIPBOARD_ROOT));
             var lifelineElements = GModelFilterUtil
-               .filterByType(selectedElements, CommunicationTypes.LIFELINE, GModelElement.class)
+               .filterByType(selectedElements, UmlCommunication_Lifeline.TYPE_ID, GModelElement.class)
                .collect(Collectors.toUnmodifiableList());
 
             var lifelineProperties = getLifelineProperties(lifelineElements);
@@ -80,23 +80,23 @@ public class UmlPasteOperationHandler {/*-
    }
 
    protected List<InteractionCopyableProperties> getInteractionProperties(final List<GModelElement> elements) {
-      return GModelFilterUtil.filterByType(elements, CommunicationTypes.INTERACTION, GNode.class)
+      return GModelFilterUtil.filterByType(elements, UmlCommunication_Interaction.TYPE_ID, GNode.class)
          .map(interaction -> InteractionPropertiesFactory.from(interaction))
          .collect(Collectors.toUnmodifiableList());
    }
 
    protected List<LifelineCopyableProperties> getLifelineProperties(final List<GModelElement> elements) {
-      return GModelFilterUtil.filterByType(elements, CommunicationTypes.LIFELINE, GNode.class)
+      return GModelFilterUtil.filterByType(elements, UmlCommunication_Lifeline.TYPE_ID, GNode.class)
          .map(lifeline -> LifelinePropertiesFactory.from(lifeline))
          .collect(Collectors.toUnmodifiableList());
    }
 
    protected List<MessageCopyableProperties> getMessageProperties(final List<GModelElement> elements,
       final GModelElement root) {
-      var lifelineMappings = GModelFilterUtil.filterByType(elements, CommunicationTypes.LIFELINE, GNode.class)
+      var lifelineMappings = GModelFilterUtil.filterByType(elements, UmlCommunication_Lifeline.TYPE_ID, GNode.class)
          .collect(Collectors.toUnmodifiableMap(value -> value.getId(), value -> value));
 
-      return GModelFilterUtil.flatFilterByType(root, CommunicationTypes.MESSAGE, GEdge.class)
+      return GModelFilterUtil.flatFilterByType(root, UmlCommunication_Message.TYPE_ID, GEdge.class)
          .filter(edge -> lifelineMappings.containsKey(edge.getSourceId())
             && lifelineMappings.containsKey(edge.getTargetId()))
          .map(message -> MessagePropertiesFactory.from(message))

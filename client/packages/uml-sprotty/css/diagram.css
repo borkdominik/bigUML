@@ -56,3 +56,9 @@ svg {
 @import "uml/node.css";
 @import "uml/edge.css";
 @import "uml/marker.css";
+
+
+@import "edit-label.css";
+@import "editor-panel.css";
+@import "tool-palette.css";
+@import "property-palette.css";

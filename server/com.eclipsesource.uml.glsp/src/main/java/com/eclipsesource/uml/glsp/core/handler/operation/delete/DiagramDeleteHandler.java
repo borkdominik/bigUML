@@ -12,8 +12,8 @@ package com.eclipsesource.uml.glsp.core.handler.operation.delete;
 
 import org.eclipse.emf.ecore.EObject;
 
-public interface DiagramDeleteHandler<T extends EObject> {
-   Class<T> getElementType();
+public interface DiagramDeleteHandler<TElementType extends EObject> {
+   Class<TElementType> getElementType();
 
    void handle(EObject object);
 }

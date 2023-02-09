@@ -22,10 +22,10 @@ public class InteractionPropertiesFactory {
       semantic.id = element.getId();
       GModelFilterUtil.flatFilterById(element, suffix.appendTo(HeaderLabelSuffix.SUFFIX, element.getId()), GLabel.class).findFirst()
          .ifPresent(label -> semantic.name = label.getText());
-      GModelFilterUtil.flatFilterByType(element, CommunicationTypes.LIFELINE, GNode.class).forEach(lifeline -> {
+      GModelFilterUtil.flatFilterByType(element, UmlCommunication_Lifeline.TYPE_ID, GNode.class).forEach(lifeline -> {
          semantic.lifelines.add(LifelinePropertiesFactory.from(lifeline));
       });
-      GModelFilterUtil.flatFilterByType(element, CommunicationTypes.MESSAGE, GEdge.class).forEach(message -> {
+      GModelFilterUtil.flatFilterByType(element, UmlCommunication_Message.TYPE_ID, GEdge.class).forEach(message -> {
          semantic.messages.add(MessagePropertiesFactory.from(message));
       });
    

@@ -43,6 +43,8 @@ import { UmlGraphView } from "./common/graph-view";
 import { CustomCopyPasteHandler, LastContainableElementTracker } from "./features/copy-paste/copy-paste";
 import umlDiagramOutlineViewModule from "./features/diagram-outline/di.config";
 import { EditLabelUIAutocomplete } from "./features/edit-label";
+import umlEditorPanelModule from "./features/editor-panel/di.config";
+import umlPropertyPaletteModule from "./features/property-palette/di.config";
 import umlToolPaletteModule from "./features/tool-palette/di.config";
 import { IconLabelCompartmentSelectionFeedback } from "./feedback";
 import { LabeledNode, SEditableLabel } from "./model";
@@ -143,12 +145,14 @@ export default function createContainer(widgetId: string): Container {
     const classModule = createClassModule();
 
     const container = createClientContainer(
+        saveModule,
         coreDiagramModule,
         communicationModule,
         classModule,
+        umlEditorPanelModule,
         umlToolPaletteModule,
-        saveModule,
-        umlDiagramOutlineViewModule
+        umlDiagramOutlineViewModule,
+        umlPropertyPaletteModule
     );
     container.unload(toolPaletteModule);
     container.bind(LastContainableElementTracker).toSelf().inSingletonScope();

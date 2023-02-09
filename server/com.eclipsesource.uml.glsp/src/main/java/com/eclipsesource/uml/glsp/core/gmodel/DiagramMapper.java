@@ -18,7 +18,7 @@ import org.eclipse.glsp.server.emf.EMFIdGenerator;
 import org.eclipse.glsp.server.emf.model.notation.Diagram;
 import org.eclipse.uml2.uml.Model;
 
-import com.eclipsesource.uml.glsp.core.features.idgenerator.IdCountContextGenerator;
+import com.eclipsesource.uml.glsp.core.features.id_generator.IdCountContextGenerator;
 import com.google.inject.Inject;
 
 public class DiagramMapper {

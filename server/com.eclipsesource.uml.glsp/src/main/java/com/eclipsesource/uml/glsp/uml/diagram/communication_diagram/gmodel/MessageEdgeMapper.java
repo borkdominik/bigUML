@@ -25,8 +25,9 @@ import org.eclipse.uml2.uml.Message;
 import org.eclipse.uml2.uml.MessageOccurrenceSpecification;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
+import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
-import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
+import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.UmlCommunication_Message;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGModelMapper;
 
 public class MessageEdgeMapper extends BaseGModelMapper<Message, GEdge> {
@@ -39,7 +40,7 @@ public class MessageEdgeMapper extends BaseGModelMapper<Message, GEdge> {
       var source = sendEvent.getCovered();
       var target = receiveEvent.getCovered();
 
-      var builder = new GEdgeBuilder(CommunicationTypes.MESSAGE)
+      var builder = new GEdgeBuilder(UmlCommunication_Message.TYPE_ID)
          .id(idGenerator.getOrCreateId(message))
          .addCssClass(CoreCSS.EDGE)
          .sourceId(idGenerator.getOrCreateId(source))
@@ -56,7 +57,7 @@ public class MessageEdgeMapper extends BaseGModelMapper<Message, GEdge> {
    }
 
    protected GLabel createEdgeNameLabel(final String name, final String id, final double position) {
-      return createEdgeLabel(name, position, id, CommunicationTypes.MESSAGE_LABEL_ARROW_EDGE_NAME,
+      return createEdgeLabel(name, position, id, CoreTypes.LABEL_NAME,
          GConstants.EdgeSide.TOP);
    }
 

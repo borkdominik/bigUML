@@ -35,8 +35,10 @@ import org.eclipse.uml2.uml.UMLPackage;
 import org.eclipse.uml2.uml.resource.UMLResource;
 
 import com.eclipsesource.uml.glsp.core.diagram.UmlToolDiagramConfiguration;
-import com.eclipsesource.uml.glsp.core.features.contextmenu.UmlContextMenuItemProvider;
-import com.eclipsesource.uml.glsp.core.features.toolpalette.UmlToolPaletteItemProvider;
+import com.eclipsesource.uml.glsp.core.features.context_menu.UmlContextMenuItemProvider;
+import com.eclipsesource.uml.glsp.core.features.label_edit.DiagramLabelEditMapperRegistry;
+import com.eclipsesource.uml.glsp.core.features.label_edit.UmlLabelEditOperationHandler;
+import com.eclipsesource.uml.glsp.core.features.tool_palette.UmlToolPaletteItemProvider;
 import com.eclipsesource.uml.glsp.core.gmodel.DiagramMapper;
 import com.eclipsesource.uml.glsp.core.gmodel.GModelMapHandler;
 import com.eclipsesource.uml.glsp.core.gmodel.GModelMapperRegistry;
@@ -51,13 +53,15 @@ import com.eclipsesource.uml.glsp.core.handler.operation.create.UmlCreateEdgeOpe
 import com.eclipsesource.uml.glsp.core.handler.operation.create.UmlCreateNodeOperationHandler;
 import com.eclipsesource.uml.glsp.core.handler.operation.delete.DiagramDeleteHandlerRegistry;
 import com.eclipsesource.uml.glsp.core.handler.operation.delete.UmlDeleteOperationHandler;
-import com.eclipsesource.uml.glsp.core.handler.operation.directediting.DiagramLabelEditHandlerRegistry;
-import com.eclipsesource.uml.glsp.core.handler.operation.directediting.UmlLabelEditOperationHandler;
-import com.eclipsesource.uml.glsp.core.manifest.DefaultManifest;
+import com.eclipsesource.uml.glsp.core.handler.operation.update.DiagramUpdateHandlerRegistry;
+import com.eclipsesource.uml.glsp.core.handler.operation.update.UmlUpdateOperationHandler;
+import com.eclipsesource.uml.glsp.core.manifest.CoreManifest;
 import com.eclipsesource.uml.glsp.core.model.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.eclipsesource.uml.glsp.core.model.UmlSourceModelStorage;
-import com.eclipsesource.uml.glsp.features.outline.manifest.OutlineManifest;
+import com.eclipsesource.uml.glsp.features.editor_panel.manifest.EditorPanelFeatureManifest;
+import com.eclipsesource.uml.glsp.features.outline.manifest.OutlineFeatureManifest;
+import com.eclipsesource.uml.glsp.features.property_palette.manifest.PropertyPaletteFeatureManifest;
 import com.eclipsesource.uml.glsp.features.validation.UmlDiagramModelValidator;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.manifest.ClassUmlManifest;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.manifest.CommunicationUmlManifest;
@@ -90,7 +94,8 @@ public class UmlDiagramModule extends EMSGLSPNotationDiagramModule {
       bind(UmlOverrideOperationHandlerRegistry.class).in(Singleton.class);
       bind(DiagramCreateHandlerRegistry.class).in(Singleton.class);
       bind(DiagramDeleteHandlerRegistry.class).in(Singleton.class);
-      bind(DiagramLabelEditHandlerRegistry.class).in(Singleton.class);
+      bind(DiagramLabelEditMapperRegistry.class).in(Singleton.class);
+      bind(DiagramUpdateHandlerRegistry.class).in(Singleton.class);
    }
 
    @Override
@@ -190,14 +195,22 @@ public class UmlDiagramModule extends EMSGLSPNotationDiagramModule {
       bindings.add(UmlCreateNodeOperationHandler.class);
       bindings.add(UmlCreateEdgeOperationHandler.class);
       bindings.add(UmlDeleteOperationHandler.class);
+      bindings.add(UmlUpdateOperationHandler.class);
    }
 
    @Override
    protected void configureAdditionals() {
       super.configureAdditionals();
 
-      install(new DefaultManifest());
-      install(new OutlineManifest());
+      // Core
+      install(new CoreManifest());
+
+      // Feature
+      install(new OutlineFeatureManifest());
+      install(new EditorPanelFeatureManifest());
+      install(new PropertyPaletteFeatureManifest());
+
+      // Diagram
       // install(new CommonUmlManifest());
       install(new ClassUmlManifest());
       install(new CommunicationUmlManifest());

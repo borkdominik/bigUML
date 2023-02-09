@@ -8,6 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
+import { configureServerActions } from "@eclipse-glsp/client";
 import {
     DiagramWidget,
     GLSPDiagramManager,
@@ -22,6 +23,7 @@ import { inject, injectable, postConstruct } from "inversify";
 import { DiagramWidgetOptions } from "sprotty-theia";
 
 import { UmlLanguage } from "../../common/uml-language";
+import { UmlDiagramWidget } from "./uml-diagram-widget";
 
 export interface UmlDiagramWidgetOptions extends DiagramWidgetOptions, GLSPWidgetOptions {
     workspaceRoot: string;
@@ -143,6 +145,31 @@ export class UmlDiagramManager extends GLSPDiagramManager {
             workspaceRoot: this.workspaceRoot
         } as UmlDiagramWidgetOptions;
     }
+
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    override async createWidget(options?: any): Promise<DiagramWidget> {
+        if (DiagramWidgetOptions.is(options)) {
+            const clientId = this.createClientId();
+            const widgetId = this.createWidgetId(options);
+            const config = this.getDiagramConfiguration(options);
+            const diContainer = config.createContainer(clientId);
+            const initializeResult = await this.diagramConnector.initializeResult;
+            await configureServerActions(initializeResult, this.diagramType, diContainer);
+            const widget = new UmlDiagramWidget(
+                options,
+                widgetId,
+                diContainer,
+                this.editorPreferences,
+                this.storage,
+                this.theiaSelectionService,
+                this.diagramConnector
+            );
+            widget.listenToFocusState(this.shell);
+            return widget;
+        }
+        throw Error("DiagramWidgetFactory needs DiagramWidgetOptions but got " + JSON.stringify(options));
+    }
+
 }
 
 export function belongsToDiagramWidget(widget: DiagramWidget | undefined, clientId: string): widget is DiagramWidget {

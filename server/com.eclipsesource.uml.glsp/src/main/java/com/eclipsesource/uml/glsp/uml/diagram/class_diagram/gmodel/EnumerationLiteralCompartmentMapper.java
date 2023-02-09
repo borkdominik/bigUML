@@ -19,9 +19,9 @@ import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.EnumerationLiteral;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
-import com.eclipsesource.uml.glsp.core.features.idgenerator.IdCountContextGenerator;
+import com.eclipsesource.uml.glsp.core.features.id_generator.IdCountContextGenerator;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_EnumerationLiteral;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGModelMapper;
 import com.google.inject.Inject;
 
@@ -31,7 +31,7 @@ public final class EnumerationLiteralCompartmentMapper extends BaseGModelMapper<
 
    @Override
    public GCompartment map(final EnumerationLiteral source) {
-      var builder = new GCompartmentBuilder(ClassTypes.ENUMERATION_LITERAL)
+      var builder = new GCompartmentBuilder(UmlClass_EnumerationLiteral.TYPE_ID)
          .id(idGenerator.getOrCreateId(source))
          .layout(GConstants.Layout.HBOX)
          .layoutOptions(new GLayoutOptions()
@@ -44,7 +44,7 @@ public final class EnumerationLiteralCompartmentMapper extends BaseGModelMapper<
    }
 
    protected GCompartment buildIcon(final EnumerationLiteral source) {
-      return new GCompartmentBuilder(ClassTypes.ICON_ENUMERATION_LITERAL)
+      return new GCompartmentBuilder(UmlClass_EnumerationLiteral.ICON)
          .id(idCountGenerator.getOrCreateId(source))
          .build();
    }

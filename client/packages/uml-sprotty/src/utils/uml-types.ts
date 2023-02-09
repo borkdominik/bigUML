@@ -16,7 +16,7 @@ export namespace UmlTypes {
     export const LABEL_NAME = `${DefaultTypes.LABEL}:name`;
     export const LABEL_TEXT = `${DefaultTypes.LABEL}:text`;
     export const LABEL_EDGE_NAME = `${DefaultTypes.LABEL}:edge-name`;
-    export const LABEL_EDGE_MULTIPLICITY = `${DefaultTypes.LABEL}:edge-multiplicity`;
+    export const LABEL_EDGE_MULTIPLICITY = `${DefaultTypes.LABEL}:association-multiplicity`;
     export const STRUCTURE = "struct";
 
     // CLASS DIAGRAM
@@ -31,11 +31,11 @@ export namespace UmlTypes {
     export const ASSOCIATION = `${DefaultTypes.EDGE}:association`;
     export const AGGREGATION = `${DefaultTypes.EDGE}:aggregation`;
     export const COMPOSITION = `${DefaultTypes.EDGE}:composition`;
-    export const CLASS_GENERALIZATION = `${DefaultTypes.EDGE}:class-generalization`;
+    export const CLASS_GENERALIZATION = `${DefaultTypes.EDGE}:generalization`;
     export const ICON_PROPERTY = `${ICON}:property`;
     export const PROPERTY = `${DefaultTypes.COMPARTMENT}:property`;
-    export const LABEL_PROPERTY_TYPE = `${DefaultTypes.LABEL}:property:type`;
-    export const LABEL_PROPERTY_MULTIPLICITY = `${DefaultTypes.LABEL}:property:multiplicity`;
+    export const LABEL_PROPERTY_TYPE = `${DefaultTypes.LABEL}:property-type`;
+    export const LABEL_PROPERTY_MULTIPLICITY = `${DefaultTypes.LABEL}:property-multiplicity`;
     export const ICON_OPERATION = `${ICON}:operation`;
     export const OPERATION = `${DefaultTypes.COMPARTMENT}:operation`;
     export const ICON_DATA_TYPE = `${ICON}:data-type`;

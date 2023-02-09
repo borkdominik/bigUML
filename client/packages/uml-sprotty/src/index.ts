@@ -9,8 +9,6 @@
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
 import "../css/diagram.css";
-import "../css/edit-label.css";
-import "../css/tool-palette.css";
 import "reflect-metadata";
 
 import createUmlDiagramContainer from "./di.config";

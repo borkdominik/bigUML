@@ -14,7 +14,7 @@ import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.uml2.uml.OperationOwner;
 
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Operation;
 import com.eclipsesource.uml.glsp.uml.handler.operations.create.BaseCreateChildNodeHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.operation.CreateOperationContribution;
 
@@ -22,7 +22,7 @@ public final class CreateOperationHandler
    extends BaseCreateChildNodeHandler<OperationOwner> {
 
    public CreateOperationHandler() {
-      super(ClassTypes.OPERATION);
+      super(UmlClass_Operation.TYPE_ID);
    }
 
    @Override

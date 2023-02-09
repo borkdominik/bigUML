@@ -24,14 +24,14 @@ import org.eclipse.uml2.uml.DataType;
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_DataType;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGNodeMapper;
 
 public final class DataTypeNodeMapper extends BaseGNodeMapper<DataType, GNode> {
 
    @Override
    public GNode map(final DataType source) {
-      var builder = new GNodeBuilder(ClassTypes.DATA_TYPE)
+      var builder = new GNodeBuilder(UmlClass_DataType.TYPE_ID)
          .id(idGenerator.getOrCreateId(source))
          .layout(GConstants.Layout.VBOX)
          .addCssClass(CoreCSS.NODE)

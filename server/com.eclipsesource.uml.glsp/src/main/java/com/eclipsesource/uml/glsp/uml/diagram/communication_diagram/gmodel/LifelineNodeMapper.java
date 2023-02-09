@@ -21,14 +21,14 @@ import org.eclipse.uml2.uml.Lifeline;
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
-import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.CommunicationTypes;
+import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants.UmlCommunication_Lifeline;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGNodeMapper;
 
 public class LifelineNodeMapper extends BaseGNodeMapper<Lifeline, GNode> {
 
    @Override
    public GNode map(final Lifeline source) {
-      var builder = new GNodeBuilder(CommunicationTypes.LIFELINE)
+      var builder = new GNodeBuilder(UmlCommunication_Lifeline.TYPE_ID)
          .id(idGenerator.getOrCreateId(source))
          .layout(GConstants.Layout.VBOX)
          .addCssClass(CoreCSS.NODE)
@@ -44,7 +44,7 @@ public class LifelineNodeMapper extends BaseGNodeMapper<Lifeline, GNode> {
          .id(idCountGenerator.getOrCreateId(source))
          .layout(GConstants.Layout.HBOX);
 
-      var icon = new GCompartmentBuilder(CommunicationTypes.ICON_LIFELINE)
+      var icon = new GCompartmentBuilder(UmlCommunication_Lifeline.ICON)
          .id(idCountGenerator.getOrCreateId(source))
          .build();
       builder.add(icon);

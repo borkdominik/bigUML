@@ -19,15 +19,30 @@ public class CoreCSS {
    public static final String EDGE_DOTTED = "uml-edge-dotted";
    public static final String EDGE_DASHED = "uml-edge-dashed";
 
-   public static final String MARKER_TRIANGLE = "marker-triangle";
-   public static final String MARKER_TRIANGLE_EMPTY = "marker-triangle-empty";
-   public static final String MARKER_TENT = "marker-tent";
-   public static final String MARKER_DIAMOND = "marker-diamond";
-   public static final String MARKER_DIAMOND_EMPTY = "marker-diamond-empty";
-   public static final String MARKER_START = "marker-start";
-   public static final String MARKER_END = "marker-end";
-
    public static final String LABEL_TRANSPARENT = "label-transparent";
+
+   public enum Marker {
+      NONE("marker-none"),
+      TRIANGLE("marker-triangle"),
+      TRIANGLE_EMPTY("marker-triangle-empty"),
+      TENT("marker-tent"),
+      DIAMOND("marker-diamond"),
+      DIAMOND_EMPTY("marker-diamond-empty");
+
+      public String css;
+
+      Marker(final String css) {
+         this.css = css;
+      }
+
+      public String start() {
+         return css + "-start";
+      }
+
+      public String end() {
+         return css + "-end";
+      }
+   }
 
    private CoreCSS() {}
 }

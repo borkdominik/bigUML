@@ -10,7 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.core.gmodel.suffix;
 
-import com.eclipsesource.uml.glsp.core.features.idgenerator.BaseSuffixIdAppender;
+import com.eclipsesource.uml.glsp.core.features.id_generator.BaseSuffixIdAppender;
 
 public final class NameLabelSuffix extends BaseSuffixIdAppender {
 

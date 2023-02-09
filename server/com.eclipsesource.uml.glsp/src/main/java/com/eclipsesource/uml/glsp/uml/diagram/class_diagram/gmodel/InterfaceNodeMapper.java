@@ -24,14 +24,14 @@ import org.eclipse.uml2.uml.Interface;
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Interface;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGNodeMapper;
 
 public final class InterfaceNodeMapper extends BaseGNodeMapper<Interface, GNode> {
 
    @Override
    public GNode map(final Interface source) {
-      var builder = new GNodeBuilder(ClassTypes.INTERFACE)
+      var builder = new GNodeBuilder(UmlClass_Interface.TYPE_ID)
          .id(idGenerator.getOrCreateId(source))
          .layout(GConstants.Layout.VBOX)
          .addCssClass(CoreCSS.NODE)

@@ -12,7 +12,7 @@ package com.eclipsesource.uml.modelserver.shared.semantic;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 
-public abstract class BaseCreateSemanticRelationCommand<TSource, TTarget, TRelation> extends BaseSemanticElementCommand
+public abstract class BaseCreateSemanticRelationCommand<TRelation, TSource, TTarget> extends BaseSemanticElementCommand
    implements SemanticElementSupplier<TRelation> {
 
    protected TRelation newSemanticElement;

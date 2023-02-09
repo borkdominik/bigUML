@@ -16,7 +16,9 @@ import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 import org.eclipse.uml2.uml.Classifier;
 
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_AbstractClass;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Class;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Generalization;
 import com.eclipsesource.uml.glsp.uml.handler.operations.create.BaseCreateEdgeBetweenNodesHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.generalization.CreateGeneralizationContribution;
 
@@ -24,17 +26,17 @@ public final class CreateGeneralizationHandler
    extends BaseCreateEdgeBetweenNodesHandler<Classifier, Classifier> {
 
    public CreateGeneralizationHandler() {
-      super(ClassTypes.CLASS_GENERALIZATION);
+      super(UmlClass_Generalization.TYPE_ID);
    }
 
    @Override
    protected List<String> sources() {
-      return List.of(ClassTypes.CLASS, ClassTypes.ABSTRACT_CLASS);
+      return List.of(UmlClass_Class.TYPE_ID, UmlClass_AbstractClass.TYPE_ID);
    }
 
    @Override
    protected List<String> targets() {
-      return List.of(ClassTypes.CLASS, ClassTypes.ABSTRACT_CLASS);
+      return List.of(UmlClass_Class.TYPE_ID, UmlClass_AbstractClass.TYPE_ID);
    }
 
    @Override

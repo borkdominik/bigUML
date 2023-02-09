@@ -22,12 +22,12 @@ import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Type;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
-import com.eclipsesource.uml.glsp.core.features.idgenerator.IdCountContextGenerator;
+import com.eclipsesource.uml.glsp.core.features.id_generator.IdCountContextGenerator;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
-import com.eclipsesource.uml.glsp.old.utils.property.PropertyUtil;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Property;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyMultiplicityLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyTypeLabelSuffix;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.utils.PropertyUtil;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGModelMapper;
 import com.google.inject.Inject;
 
@@ -37,7 +37,7 @@ public final class PropertyCompartmentMapper extends BaseGModelMapper<Property, 
 
    @Override
    public GCompartment map(final Property source) {
-      var builder = new GCompartmentBuilder(ClassTypes.PROPERTY)
+      var builder = new GCompartmentBuilder(UmlClass_Property.TYPE_ID)
          .id(idGenerator.getOrCreateId(source))
          .layout(GConstants.Layout.HBOX)
          .layoutOptions(new GLayoutOptions()
@@ -71,7 +71,7 @@ public final class PropertyCompartmentMapper extends BaseGModelMapper<Property, 
    }
 
    protected GCompartment buildIcon(final Property source) {
-      return new GCompartmentBuilder(ClassTypes.ICON_PROPERTY)
+      return new GCompartmentBuilder(UmlClass_Property.ICON)
          .id(idCountGenerator.getOrCreateId(source))
          .build();
    }
@@ -84,14 +84,14 @@ public final class PropertyCompartmentMapper extends BaseGModelMapper<Property, 
    }
 
    protected GLabel buildTypeName(final Property source, final Type type) {
-      return new GLabelBuilder(ClassTypes.LABEL_PROPERTY_TYPE)
+      return new GLabelBuilder(UmlClass_Property.LABEL_TYPE)
          .id(suffix.appendTo(PropertyTypeLabelSuffix.SUFFIX, idGenerator.getOrCreateId(source)))
          .text(type.getName())
          .build();
    }
 
    protected GLabel buildTypeMultiplicity(final Property source, final String multiplicity) {
-      return new GLabelBuilder(ClassTypes.LABEL_PROPERTY_MULTIPLICITY)
+      return new GLabelBuilder(UmlClass_Property.LABEL_MULTIPLICITY)
          .id(suffix.appendTo(PropertyMultiplicityLabelSuffix.SUFFIX, idGenerator.getOrCreateId(source)))
          .text(multiplicity)
          .build();

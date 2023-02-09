@@ -12,7 +12,7 @@ package com.eclipsesource.uml.glsp.features.copy_paste.operations;
 
 public class UmlCutOperationHandler {/*-
    extends AbstractEMSOperationHandler<CutOperation> {
-   private final List<String> ignoreList = List.of(CommunicationTypes.MESSAGE);
+   private final List<String> ignoreList = List.of(UmlCommunication_Message.TYPE_ID);
 
    @Inject
    protected ActionDispatcher actionDispatcher;
@@ -34,7 +34,7 @@ public class UmlCutOperationHandler {/*-
       var selectedElements = index.getAll(elementIds);
 
       var interactionIds = GModelFilterUtil
-         .filterByType(selectedElements, CommunicationTypes.INTERACTION, GModelElement.class)
+         .filterByType(selectedElements, UmlCommunication_Interaction.TYPE_ID, GModelElement.class)
          .map(element -> element.getId())
          .collect(Collectors.toUnmodifiableList());
 

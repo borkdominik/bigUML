@@ -23,9 +23,9 @@ import org.eclipse.uml2.uml.Enumeration;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
-import com.eclipsesource.uml.glsp.core.features.idgenerator.IdCountContextGenerator;
+import com.eclipsesource.uml.glsp.core.features.id_generator.IdCountContextGenerator;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Enumeration;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGNodeMapper;
 import com.google.inject.Inject;
 
@@ -35,7 +35,7 @@ public final class EnumerationNodeMapper extends BaseGNodeMapper<Enumeration, GN
 
    @Override
    public GNode map(final Enumeration source) {
-      var builder = new GNodeBuilder(ClassTypes.ENUMERATION)
+      var builder = new GNodeBuilder(UmlClass_Enumeration.TYPE_ID)
          .id(idGenerator.getOrCreateId(source))
          .layout(GConstants.Layout.VBOX)
          .addCssClass(CoreCSS.NODE)
@@ -62,7 +62,7 @@ public final class EnumerationNodeMapper extends BaseGNodeMapper<Enumeration, GN
          .id(idCountGenerator.getOrCreateId(source))
          .layout(GConstants.Layout.HBOX);
 
-      var icon = new GCompartmentBuilder(ClassTypes.ICON_ENUMERATION)
+      var icon = new GCompartmentBuilder(UmlClass_Enumeration.ICON)
          .id(idCountGenerator.getOrCreateId(source))
          .build();
       compBuilder.add(icon);

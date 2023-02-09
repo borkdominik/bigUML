@@ -26,16 +26,17 @@ import org.eclipse.uml2.uml.Class;
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.ClassTypes;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_AbstractClass;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Class;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGNodeMapper;
 
 public final class ClassNodeMapper extends BaseGNodeMapper<Class, GNode> {
    @Override
    public GNode map(final Class source) {
-      var builder = new GNodeBuilder(ClassTypes.CLASS);
+      var builder = new GNodeBuilder(UmlClass_Class.TYPE_ID);
 
       if (source.isAbstract()) {
-         builder = new GNodeBuilder(ClassTypes.ABSTRACT_CLASS);
+         builder = new GNodeBuilder(UmlClass_AbstractClass.TYPE_ID);
       }
 
       builder.id(idGenerator.getOrCreateId(source))
@@ -73,7 +74,7 @@ public final class ClassNodeMapper extends BaseGNodeMapper<Class, GNode> {
          builder
             .layout(GConstants.Layout.HBOX);
 
-         var icon = new GCompartmentBuilder(ClassTypes.ICON_CLASS)
+         var icon = new GCompartmentBuilder(UmlClass_Class.ICON)
             .id(idCountGenerator.getOrCreateId(source))
             .build();
          builder.add(icon);

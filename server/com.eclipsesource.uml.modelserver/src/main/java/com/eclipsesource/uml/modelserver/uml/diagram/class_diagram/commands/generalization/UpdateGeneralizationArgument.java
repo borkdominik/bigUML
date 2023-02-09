@@ -27,7 +27,7 @@ public final class UpdateGeneralizationArgument implements EmbeddedCodec.JsonEnc
          return this;
       }
 
-      public UpdateGeneralizationArgument build() {
+      public UpdateGeneralizationArgument get() {
          return argument;
       }
    }

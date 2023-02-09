@@ -18,7 +18,7 @@ import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.BaseCreateSemanticRelationCommand;
 import com.eclipsesource.uml.modelserver.uml.generator.ListNameGenerator;
 
-public final class CreateMessageSemanticCommand extends BaseCreateSemanticRelationCommand<Lifeline, Lifeline, Message> {
+public final class CreateMessageSemanticCommand extends BaseCreateSemanticRelationCommand<Message, Lifeline, Lifeline> {
 
    public CreateMessageSemanticCommand(final ModelContext context,
       final Lifeline source, final Lifeline target) {

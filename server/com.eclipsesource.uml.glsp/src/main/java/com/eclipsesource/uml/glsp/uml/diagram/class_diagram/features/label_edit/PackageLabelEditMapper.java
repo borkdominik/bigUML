@@ -33,7 +33,7 @@ public final class PackageLabelEditMapper extends BaseLabelEditMapper<Package> {
          update = handler.withArgument(
             new UpdatePackageArgument.Builder()
                .name(operation.getText())
-               .build());
+               .get());
       }
 
       return withContext(update);

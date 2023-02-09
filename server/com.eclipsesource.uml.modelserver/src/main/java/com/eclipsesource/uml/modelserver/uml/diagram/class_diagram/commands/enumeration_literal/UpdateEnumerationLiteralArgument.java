@@ -64,7 +64,7 @@ public final class UpdateEnumerationLiteralArgument implements EmbeddedCodec.Jso
          return this;
       }
 
-      public UpdateEnumerationLiteralArgument build() {
+      public UpdateEnumerationLiteralArgument get() {
          return argument;
       }
    }

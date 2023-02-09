@@ -7,7 +7,7 @@ import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.BaseCreateSemanticRelationCommand;
 
 public final class CreateGeneralizationSemanticCommand
-   extends BaseCreateSemanticRelationCommand<Classifier, Classifier, Generalization> {
+   extends BaseCreateSemanticRelationCommand<Generalization, Classifier, Classifier> {
 
    public CreateGeneralizationSemanticCommand(final ModelContext context,
       final Classifier source, final Classifier target) {

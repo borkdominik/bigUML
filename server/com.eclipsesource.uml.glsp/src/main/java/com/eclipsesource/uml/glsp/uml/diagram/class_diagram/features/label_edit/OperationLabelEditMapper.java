@@ -33,7 +33,7 @@ public final class OperationLabelEditMapper extends BaseLabelEditMapper<Operatio
          update = handler.withArgument(
             new UpdateOperationArgument.Builder()
                .name(operation.getText())
-               .build());
+               .get());
       }
 
       return withContext(update);

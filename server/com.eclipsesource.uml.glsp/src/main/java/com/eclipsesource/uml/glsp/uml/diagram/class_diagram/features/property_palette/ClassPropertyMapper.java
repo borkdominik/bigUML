@@ -11,7 +11,6 @@
 package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.property_palette;
 
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.VisibilityKind;
@@ -22,6 +21,7 @@ import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalett
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Class;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.uclass.UpdateClassHandler;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.BaseDiagramElementPropertyMapper;
+import com.eclipsesource.uml.glsp.uml.utils.VisibilityKindUtils;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uclass.UpdateClassArgument;
 
 public class ClassPropertyMapper extends BaseDiagramElementPropertyMapper<Class> {
@@ -30,14 +30,14 @@ public class ClassPropertyMapper extends BaseDiagramElementPropertyMapper<Class>
    public PropertyPalette map(final Class source) {
       var elementId = idGenerator.getOrCreateId(source);
 
-      var items = this.<UmlClass_Class.Property> propertyBuilder(elementId)
+      var items = this.propertyBuilder(UmlClass_Class.Property.class, elementId)
          .text(UmlClass_Class.Property.NAME, "Name", source.getName())
          .bool(UmlClass_Class.Property.IS_ABSTRACT, "Is abstract", source.isAbstract())
          .bool(UmlClass_Class.Property.IS_ACTIVE, "Is active", source.isActive())
          .choice(
             UmlClass_Class.Property.VISIBILITY_KIND,
             "Visibility",
-            VisibilityKind.VALUES.stream().map(v -> v.getLiteral()).collect(Collectors.toList()),
+            VisibilityKindUtils.literals(),
             source.getVisibility().getLiteral())
          .items();
 
@@ -55,25 +55,25 @@ public class ClassPropertyMapper extends BaseDiagramElementPropertyMapper<Class>
             operation = handler.withArgument(
                new UpdateClassArgument.Builder()
                   .name(action.getValue())
-                  .build());
+                  .get());
             break;
          case IS_ABSTRACT:
             operation = handler.withArgument(
                new UpdateClassArgument.Builder()
                   .isAbstract(Boolean.parseBoolean(action.getValue()))
-                  .build());
+                  .get());
             break;
          case IS_ACTIVE:
             operation = handler.withArgument(
                new UpdateClassArgument.Builder()
                   .isActive(Boolean.parseBoolean(action.getValue()))
-                  .build());
+                  .get());
             break;
          case VISIBILITY_KIND:
             operation = handler.withArgument(
                new UpdateClassArgument.Builder()
                   .visibilityKind(VisibilityKind.get(action.getValue()))
-                  .build());
+                  .get());
             break;
       }
 

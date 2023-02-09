@@ -32,7 +32,7 @@ public final class PrimitiveTypeLabelEditMapper extends BaseLabelEditMapper<Prim
          update = handler.withArgument(
             new UpdatePrimitiveTypeArgument.Builder()
                .name(operation.getText())
-               .build());
+               .get());
       }
 
       return withContext(update);

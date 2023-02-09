@@ -33,7 +33,7 @@ public final class EnumerationLiteralLabelEditMapper extends BaseLabelEditMapper
          update = handler.withArgument(
             new UpdateEnumerationLiteralArgument.Builder()
                .name(operation.getText())
-               .build());
+               .get());
       }
 
       return withContext(update);

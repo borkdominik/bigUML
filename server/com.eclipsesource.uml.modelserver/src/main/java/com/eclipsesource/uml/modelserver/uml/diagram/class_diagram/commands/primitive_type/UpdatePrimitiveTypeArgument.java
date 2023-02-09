@@ -64,7 +64,7 @@ public final class UpdatePrimitiveTypeArgument implements EmbeddedCodec.JsonEnco
          return this;
       }
 
-      public UpdatePrimitiveTypeArgument build() {
+      public UpdatePrimitiveTypeArgument get() {
          return argument;
       }
    }

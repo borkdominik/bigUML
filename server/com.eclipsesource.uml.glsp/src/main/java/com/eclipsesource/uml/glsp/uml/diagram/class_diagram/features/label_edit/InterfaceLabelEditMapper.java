@@ -32,7 +32,7 @@ public final class InterfaceLabelEditMapper extends BaseLabelEditMapper<Interfac
          update = handler.withArgument(
             new UpdateInterfaceArgument.Builder()
                .name(operation.getText())
-               .build());
+               .get());
       }
 
       return withContext(update);

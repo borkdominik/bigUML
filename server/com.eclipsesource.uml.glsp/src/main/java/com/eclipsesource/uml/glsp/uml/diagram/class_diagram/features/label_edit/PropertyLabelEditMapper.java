@@ -36,13 +36,13 @@ public final class PropertyLabelEditMapper extends BaseLabelEditMapper<Property>
          update = handler.withArgument(
             new UpdatePropertyArgument.Builder()
                .name(operation.getText())
-               .build());
+               .get());
       } else if (matches(operation, UmlClass_Property.LABEL_MULTIPLICITY, PropertyMultiplicityLabelSuffix.SUFFIX)) {
          update = handler.withArgument(
             new UpdatePropertyArgument.Builder()
                .upperBound(PropertyUtil.getUpper(operation.getText()))
                .lowerBound(PropertyUtil.getLower(operation.getText()))
-               .build());
+               .get());
       } /*-else if (matches(operation, UmlClass_Property.LABEL_TYPE, PropertyTypeLabelSuffix.SUFFIX)) {
          update = handler.withArgument(
             new UpdatePropertyArgument.Builder()

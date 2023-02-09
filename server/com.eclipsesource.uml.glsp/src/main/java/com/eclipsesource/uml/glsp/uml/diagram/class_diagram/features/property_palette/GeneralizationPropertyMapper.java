@@ -28,7 +28,7 @@ public class GeneralizationPropertyMapper extends BaseDiagramElementPropertyMapp
    public PropertyPalette map(final Generalization source) {
       var elementId = idGenerator.getOrCreateId(source);
 
-      var items = this.<UmlClass_Generalization.Property> propertyBuilder(elementId)
+      var items = this.propertyBuilder(UmlClass_Generalization.Property.class, elementId)
          .bool(UmlClass_Generalization.Property.IS_SUBSTITUTABLE, "Is substitutable", source.isSubstitutable())
          .items();
 
@@ -46,7 +46,7 @@ public class GeneralizationPropertyMapper extends BaseDiagramElementPropertyMapp
             operation = handler.withArgument(
                new UpdateGeneralizationArgument.Builder()
                   .isSubstitutable(Boolean.parseBoolean(action.getValue()))
-                  .build());
+                  .get());
             break;
       }
 

@@ -50,6 +50,7 @@ public abstract class BaseDiagramElementPropertyMapper<TElement extends EObject>
    public Class<TElement> getElementType() { return elementType; }
 
    protected <TProperty extends Enum<TProperty>> ElementPropertyBuilder<TProperty> propertyBuilder(
+      final Class<TProperty> property,
       final String elementId) {
       return new ElementPropertyBuilder<>(elementId);
    }

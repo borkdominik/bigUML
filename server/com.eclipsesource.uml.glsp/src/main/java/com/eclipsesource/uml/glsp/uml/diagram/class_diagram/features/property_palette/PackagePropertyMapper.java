@@ -11,7 +11,6 @@
 package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.property_palette;
 
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.eclipse.uml2.uml.Package;
 import org.eclipse.uml2.uml.VisibilityKind;
@@ -22,6 +21,7 @@ import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalett
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Package;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.upackage.UpdatePackageHandler;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.BaseDiagramElementPropertyMapper;
+import com.eclipsesource.uml.glsp.uml.utils.VisibilityKindUtils;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.upackage.UpdatePackageArgument;
 
 public class PackagePropertyMapper extends BaseDiagramElementPropertyMapper<Package> {
@@ -30,13 +30,13 @@ public class PackagePropertyMapper extends BaseDiagramElementPropertyMapper<Pack
    public PropertyPalette map(final Package source) {
       var elementId = idGenerator.getOrCreateId(source);
 
-      var items = this.<UmlClass_Package.Property> propertyBuilder(elementId)
+      var items = this.propertyBuilder(UmlClass_Package.Property.class, elementId)
          .text(UmlClass_Package.Property.NAME, "Name", source.getName())
          .text(UmlClass_Package.Property.URI, "Uri", source.getURI())
          .choice(
             UmlClass_Package.Property.VISIBILITY_KIND,
             "Visibility",
-            VisibilityKind.VALUES.stream().map(v -> v.getLiteral()).collect(Collectors.toList()),
+            VisibilityKindUtils.literals(),
             source.getVisibility().getLiteral())
 
          .items();
@@ -55,19 +55,19 @@ public class PackagePropertyMapper extends BaseDiagramElementPropertyMapper<Pack
             operation = handler.withArgument(
                new UpdatePackageArgument.Builder()
                   .name(action.getValue())
-                  .build());
+                  .get());
             break;
          case URI:
             operation = handler.withArgument(
                new UpdatePackageArgument.Builder()
                   .uri(action.getValue())
-                  .build());
+                  .get());
             break;
          case VISIBILITY_KIND:
             operation = handler.withArgument(
                new UpdatePackageArgument.Builder()
                   .visibilityKind(VisibilityKind.get(action.getValue()))
-                  .build());
+                  .get());
             break;
       }
 

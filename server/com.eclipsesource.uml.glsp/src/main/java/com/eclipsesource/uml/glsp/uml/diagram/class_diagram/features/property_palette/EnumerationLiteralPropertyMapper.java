@@ -11,7 +11,6 @@
 package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.property_palette;
 
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.eclipse.uml2.uml.EnumerationLiteral;
 import org.eclipse.uml2.uml.VisibilityKind;
@@ -22,6 +21,7 @@ import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalett
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_EnumerationLiteral;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.enumeration_literal.UpdateEnumerationLiteralHandler;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.BaseDiagramElementPropertyMapper;
+import com.eclipsesource.uml.glsp.uml.utils.VisibilityKindUtils;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.enumeration_literal.UpdateEnumerationLiteralArgument;
 
 public class EnumerationLiteralPropertyMapper extends BaseDiagramElementPropertyMapper<EnumerationLiteral> {
@@ -30,12 +30,12 @@ public class EnumerationLiteralPropertyMapper extends BaseDiagramElementProperty
    public PropertyPalette map(final EnumerationLiteral source) {
       var elementId = idGenerator.getOrCreateId(source);
 
-      var items = this.<UmlClass_EnumerationLiteral.Property> propertyBuilder(elementId)
+      var items = this.propertyBuilder(UmlClass_EnumerationLiteral.Property.class, elementId)
          .text(UmlClass_EnumerationLiteral.Property.NAME, "Name", source.getName())
          .choice(
             UmlClass_EnumerationLiteral.Property.VISIBILITY_KIND,
             "Visibility",
-            VisibilityKind.VALUES.stream().map(v -> v.getLiteral()).collect(Collectors.toList()),
+            VisibilityKindUtils.literals(),
             source.getVisibility().getLiteral())
 
          .items();
@@ -54,13 +54,13 @@ public class EnumerationLiteralPropertyMapper extends BaseDiagramElementProperty
             operation = handler.withArgument(
                new UpdateEnumerationLiteralArgument.Builder()
                   .name(action.getValue())
-                  .build());
+                  .get());
             break;
          case VISIBILITY_KIND:
             operation = handler.withArgument(
                new UpdateEnumerationLiteralArgument.Builder()
                   .visibilityKind(VisibilityKind.get(action.getValue()))
-                  .build());
+                  .get());
             break;
       }
 

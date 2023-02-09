@@ -32,7 +32,7 @@ public final class DataTypeLabelEditMapper extends BaseLabelEditMapper<DataType>
          update = handler.withArgument(
             new UpdateDataTypeArgument.Builder()
                .name(operation.getText())
-               .build());
+               .get());
       }
 
       return withContext(update);

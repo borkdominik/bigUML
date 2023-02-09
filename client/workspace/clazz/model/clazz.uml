@@ -92,7 +92,7 @@
     </ownedAttribute>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="_HNgLIKiJEe2QqKN8Act2TA" name="Source">
-    <ownedAttribute xmi:id="_OFU9kaiUEe2EhZ63bgDBIw" name="Target" type="_G5aKcaiJEe2QqKN8Act2TA" association="_OFU9kKiUEe2EhZ63bgDBIw">
+    <ownedAttribute xmi:id="_OFU9kaiUEe2EhZ63bgDBIw" name="Target" type="_G5aKcaiJEe2QqKN8Act2TA" aggregation="shared" association="_OFU9kKiUEe2EhZ63bgDBIw">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_OFU9kqiUEe2EhZ63bgDBIw" value="1"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_OFVkoKiUEe2EhZ63bgDBIw" value="1"/>
     </ownedAttribute>

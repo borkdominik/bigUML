@@ -32,7 +32,7 @@ public final class ClassLabelEditMapper extends BaseLabelEditMapper<Class> {
          update = handler.withArgument(
             new UpdateClassArgument.Builder()
                .name(operation.getText())
-               .build());
+               .get());
       }
 
       return withContext(update);

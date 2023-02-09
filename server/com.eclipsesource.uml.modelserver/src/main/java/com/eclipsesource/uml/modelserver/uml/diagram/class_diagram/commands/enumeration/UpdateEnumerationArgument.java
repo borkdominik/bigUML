@@ -74,7 +74,7 @@ public final class UpdateEnumerationArgument implements EmbeddedCodec.JsonEncoda
          return this;
       }
 
-      public UpdateEnumerationArgument build() {
+      public UpdateEnumerationArgument get() {
          return argument;
       }
    }

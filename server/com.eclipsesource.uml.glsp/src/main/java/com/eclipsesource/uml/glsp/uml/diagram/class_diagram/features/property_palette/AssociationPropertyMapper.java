@@ -13,9 +13,7 @@ package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.property_p
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
-import org.eclipse.uml2.uml.AggregationKind;
 import org.eclipse.uml2.uml.Association;
 import org.eclipse.uml2.uml.VisibilityKind;
 
@@ -28,6 +26,8 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_P
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.association.UpdateAssociationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.utils.PropertyUtil;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.BaseDiagramElementPropertyMapper;
+import com.eclipsesource.uml.glsp.uml.utils.AggregationKindUtils;
+import com.eclipsesource.uml.glsp.uml.utils.VisibilityKindUtils;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association.UpdateAssociationArgument;
 
 public class AssociationPropertyMapper extends BaseDiagramElementPropertyMapper<Association> {
@@ -44,16 +44,16 @@ public class AssociationPropertyMapper extends BaseDiagramElementPropertyMapper<
 
       List<ElementPropertyItem> items = new ArrayList<>();
 
-      items.addAll(this.<UmlClass_Association.Property> propertyBuilder(elementId)
+      items.addAll(this.propertyBuilder(UmlClass_Association.Property.class, elementId)
          .text(UmlClass_Association.Property.NAME, "Name", source.getName())
          .choice(
             UmlClass_Association.Property.VISIBILITY_KIND,
             "Visibility",
-            VisibilityKind.VALUES.stream().map(v -> v.getLiteral()).collect(Collectors.toList()),
+            VisibilityKindUtils.literals(),
             source.getVisibility().getLiteral())
          .items());
 
-      items.addAll(this.<UmlClass_Property.Property> propertyBuilder(memberEndFirstId)
+      items.addAll(this.propertyBuilder(UmlClass_Property.Property.class, memberEndFirstId)
          .text(UmlClass_Property.Property.NAME, "Member End Name", memberEndFirst.getName())
          .text(UmlClass_Property.Property.MULTIPLICITY, "Member End Multiplicity",
             PropertyUtil.getMultiplicity(memberEndFirst))
@@ -62,11 +62,11 @@ public class AssociationPropertyMapper extends BaseDiagramElementPropertyMapper<
          .choice(
             UmlClass_Property.Property.AGGREGATION,
             "Member End Aggregation",
-            AggregationKind.VALUES.stream().map(v -> v.getLiteral()).collect(Collectors.toList()),
+            AggregationKindUtils.literals(),
             memberEndFirst.getAggregation().getLiteral())
          .items());
 
-      items.addAll(this.<UmlClass_Property.Property> propertyBuilder(memberEndSecondId)
+      items.addAll(this.propertyBuilder(UmlClass_Property.Property.class, memberEndSecondId)
          .text(UmlClass_Property.Property.NAME, "Member End Name", memberEndSecond.getName())
          .text(UmlClass_Property.Property.MULTIPLICITY, "Member End Multiplicity",
             PropertyUtil.getMultiplicity(memberEndSecond))
@@ -75,7 +75,7 @@ public class AssociationPropertyMapper extends BaseDiagramElementPropertyMapper<
          .choice(
             UmlClass_Property.Property.AGGREGATION,
             "Member End Aggregation",
-            AggregationKind.VALUES.stream().map(v -> v.getLiteral()).collect(Collectors.toList()),
+            AggregationKindUtils.literals(),
             memberEndSecond.getAggregation().getLiteral())
          .items());
 
@@ -93,13 +93,13 @@ public class AssociationPropertyMapper extends BaseDiagramElementPropertyMapper<
             operation = handler.withArgument(
                new UpdateAssociationArgument.Builder()
                   .name(action.getValue())
-                  .build());
+                  .get());
             break;
          case VISIBILITY_KIND:
             operation = handler.withArgument(
                new UpdateAssociationArgument.Builder()
                   .visibilityKind(VisibilityKind.get(action.getValue()))
-                  .build());
+                  .get());
             break;
       }
 

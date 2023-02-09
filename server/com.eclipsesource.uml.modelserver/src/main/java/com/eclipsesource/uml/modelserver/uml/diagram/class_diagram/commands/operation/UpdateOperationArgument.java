@@ -110,7 +110,7 @@ public final class UpdateOperationArgument implements EmbeddedCodec.JsonEncodabl
          return this;
       }
 
-      public UpdateOperationArgument build() {
+      public UpdateOperationArgument get() {
          return argument;
       }
    }

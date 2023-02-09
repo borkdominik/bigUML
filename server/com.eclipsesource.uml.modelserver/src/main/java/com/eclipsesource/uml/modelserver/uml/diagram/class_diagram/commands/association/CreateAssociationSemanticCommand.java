@@ -18,7 +18,7 @@ import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.BaseCreateSemanticRelationCommand;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.constants.AssociationType;
 
-public final class CreateAssociationSemanticCommand extends BaseCreateSemanticRelationCommand<Type, Type, Association> {
+public final class CreateAssociationSemanticCommand extends BaseCreateSemanticRelationCommand<Association, Type, Type> {
 
    protected final AssociationType type;
 

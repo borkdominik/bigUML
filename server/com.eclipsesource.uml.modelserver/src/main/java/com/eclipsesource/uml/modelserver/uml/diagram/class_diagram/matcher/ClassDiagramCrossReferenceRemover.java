@@ -91,7 +91,7 @@ public final class ClassDiagramCrossReferenceRemover {
                property,
                new UpdatePropertyArgument.Builder()
                   .type(null)
-                  .build())))
+                  .get())))
          .match((setting, interest) -> PropertyMatcher
             .ofOwnedAttributeAssociationUsage(setting, interest)
             .map(

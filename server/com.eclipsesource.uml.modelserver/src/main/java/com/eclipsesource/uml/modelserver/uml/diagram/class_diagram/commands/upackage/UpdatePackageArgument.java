@@ -66,7 +66,7 @@ public final class UpdatePackageArgument implements EmbeddedCodec.JsonEncodable 
          return this;
       }
 
-      public UpdatePackageArgument build() {
+      public UpdatePackageArgument get() {
          return argument;
       }
    }

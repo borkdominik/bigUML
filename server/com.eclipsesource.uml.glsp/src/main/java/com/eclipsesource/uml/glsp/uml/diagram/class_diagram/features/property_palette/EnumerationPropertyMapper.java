@@ -11,7 +11,6 @@
 package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.property_palette;
 
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.eclipse.uml2.uml.Enumeration;
 import org.eclipse.uml2.uml.VisibilityKind;
@@ -22,6 +21,7 @@ import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalett
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Enumeration;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.enumeration.UpdateEnumerationHandler;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.BaseDiagramElementPropertyMapper;
+import com.eclipsesource.uml.glsp.uml.utils.VisibilityKindUtils;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.enumeration.UpdateEnumerationArgument;
 
 public class EnumerationPropertyMapper extends BaseDiagramElementPropertyMapper<Enumeration> {
@@ -30,13 +30,13 @@ public class EnumerationPropertyMapper extends BaseDiagramElementPropertyMapper<
    public PropertyPalette map(final Enumeration source) {
       var elementId = idGenerator.getOrCreateId(source);
 
-      var items = this.<UmlClass_Enumeration.Property> propertyBuilder(elementId)
+      var items = this.propertyBuilder(UmlClass_Enumeration.Property.class, elementId)
          .text(UmlClass_Enumeration.Property.NAME, "Name", source.getName())
          .bool(UmlClass_Enumeration.Property.IS_ABSTRACT, "Is abstract", source.isAbstract())
          .choice(
             UmlClass_Enumeration.Property.VISIBILITY_KIND,
             "Visibility",
-            VisibilityKind.VALUES.stream().map(v -> v.getLiteral()).collect(Collectors.toList()),
+            VisibilityKindUtils.literals(),
             source.getVisibility().getLiteral())
 
          .items();
@@ -55,19 +55,19 @@ public class EnumerationPropertyMapper extends BaseDiagramElementPropertyMapper<
             operation = handler.withArgument(
                new UpdateEnumerationArgument.Builder()
                   .name(action.getValue())
-                  .build());
+                  .get());
             break;
          case IS_ABSTRACT:
             operation = handler.withArgument(
                new UpdateEnumerationArgument.Builder()
                   .isAbstract(Boolean.parseBoolean(action.getValue()))
-                  .build());
+                  .get());
             break;
          case VISIBILITY_KIND:
             operation = handler.withArgument(
                new UpdateEnumerationArgument.Builder()
                   .visibilityKind(VisibilityKind.get(action.getValue()))
-                  .build());
+                  .get());
             break;
       }
 

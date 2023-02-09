@@ -51,7 +51,7 @@ public final class UpdateAssociationArgument implements EmbeddedCodec.JsonEncoda
          return this;
       }
 
-      public UpdateAssociationArgument build() {
+      public UpdateAssociationArgument get() {
          return argument;
       }
    }

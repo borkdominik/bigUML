@@ -11,7 +11,6 @@
 package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.property_palette;
 
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.eclipse.uml2.uml.CallConcurrencyKind;
 import org.eclipse.uml2.uml.Operation;
@@ -23,6 +22,8 @@ import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalett
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Operation;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.operation.UpdateOperationHandler;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.BaseDiagramElementPropertyMapper;
+import com.eclipsesource.uml.glsp.uml.utils.CallConcurrencyKindUtils;
+import com.eclipsesource.uml.glsp.uml.utils.VisibilityKindUtils;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.operation.UpdateOperationArgument;
 
 public class OperationPropertyMapper extends BaseDiagramElementPropertyMapper<Operation> {
@@ -31,7 +32,7 @@ public class OperationPropertyMapper extends BaseDiagramElementPropertyMapper<Op
    public PropertyPalette map(final Operation source) {
       var elementId = idGenerator.getOrCreateId(source);
 
-      var items = this.<UmlClass_Operation.Property> propertyBuilder(elementId)
+      var items = this.propertyBuilder(UmlClass_Operation.Property.class, elementId)
          .text(UmlClass_Operation.Property.NAME, "Name", source.getName())
          .bool(UmlClass_Operation.Property.IS_ABSTRACT, "Is abstract", source.isAbstract())
          .bool(UmlClass_Operation.Property.IS_STATIC, "Is static", source.isStatic())
@@ -39,12 +40,12 @@ public class OperationPropertyMapper extends BaseDiagramElementPropertyMapper<Op
          .choice(
             UmlClass_Operation.Property.VISIBILITY_KIND,
             "Visibility",
-            VisibilityKind.VALUES.stream().map(v -> v.getLiteral()).collect(Collectors.toList()),
+            VisibilityKindUtils.literals(),
             source.getVisibility().getLiteral())
          .choice(
             UmlClass_Operation.Property.CONCURRENCY,
             "Concurrency",
-            CallConcurrencyKind.VALUES.stream().map(v -> v.getLiteral()).collect(Collectors.toList()),
+            CallConcurrencyKindUtils.literals(),
             source.getConcurrency().getLiteral())
 
          .items();
@@ -63,37 +64,37 @@ public class OperationPropertyMapper extends BaseDiagramElementPropertyMapper<Op
             operation = handler.withArgument(
                new UpdateOperationArgument.Builder()
                   .name(action.getValue())
-                  .build());
+                  .get());
             break;
          case IS_ABSTRACT:
             operation = handler.withArgument(
                new UpdateOperationArgument.Builder()
                   .isAbstract(Boolean.parseBoolean(action.getValue()))
-                  .build());
+                  .get());
             break;
          case IS_STATIC:
             operation = handler.withArgument(
                new UpdateOperationArgument.Builder()
                   .isStatic(Boolean.parseBoolean(action.getValue()))
-                  .build());
+                  .get());
             break;
          case IS_QUERY:
             operation = handler.withArgument(
                new UpdateOperationArgument.Builder()
                   .isQuery(Boolean.parseBoolean(action.getValue()))
-                  .build());
+                  .get());
             break;
          case VISIBILITY_KIND:
             operation = handler.withArgument(
                new UpdateOperationArgument.Builder()
                   .visibilityKind(VisibilityKind.get(action.getValue()))
-                  .build());
+                  .get());
             break;
          case CONCURRENCY:
             operation = handler.withArgument(
                new UpdateOperationArgument.Builder()
                   .concurrency(CallConcurrencyKind.get(action.getValue()))
-                  .build());
+                  .get());
             break;
       }
 

@@ -11,7 +11,6 @@
 package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.property_palette;
 
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.eclipse.uml2.uml.Interface;
 import org.eclipse.uml2.uml.VisibilityKind;
@@ -22,6 +21,7 @@ import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalett
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Interface;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.uinterface.UpdateInterfaceHandler;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.BaseDiagramElementPropertyMapper;
+import com.eclipsesource.uml.glsp.uml.utils.VisibilityKindUtils;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uinterface.UpdateInterfaceArgument;
 
 public class InterfacePropertyMapper extends BaseDiagramElementPropertyMapper<Interface> {
@@ -30,13 +30,13 @@ public class InterfacePropertyMapper extends BaseDiagramElementPropertyMapper<In
    public PropertyPalette map(final Interface source) {
       var elementId = idGenerator.getOrCreateId(source);
 
-      var items = this.<UmlClass_Interface.Property> propertyBuilder(elementId)
+      var items = this.propertyBuilder(UmlClass_Interface.Property.class, elementId)
          .text(UmlClass_Interface.Property.NAME, "Name", source.getName())
          .bool(UmlClass_Interface.Property.IS_ABSTRACT, "Is abstract", source.isAbstract())
          .choice(
             UmlClass_Interface.Property.VISIBILITY_KIND,
             "Visibility",
-            VisibilityKind.VALUES.stream().map(v -> v.getLiteral()).collect(Collectors.toList()),
+            VisibilityKindUtils.literals(),
             source.getVisibility().getLiteral())
 
          .items();
@@ -55,19 +55,19 @@ public class InterfacePropertyMapper extends BaseDiagramElementPropertyMapper<In
             operation = handler.withArgument(
                new UpdateInterfaceArgument.Builder()
                   .name(action.getValue())
-                  .build());
+                  .get());
             break;
          case IS_ABSTRACT:
             operation = handler.withArgument(
                new UpdateInterfaceArgument.Builder()
                   .isAbstract(Boolean.parseBoolean(action.getValue()))
-                  .build());
+                  .get());
             break;
          case VISIBILITY_KIND:
             operation = handler.withArgument(
                new UpdateInterfaceArgument.Builder()
                   .visibilityKind(VisibilityKind.get(action.getValue()))
-                  .build());
+                  .get());
             break;
       }
 

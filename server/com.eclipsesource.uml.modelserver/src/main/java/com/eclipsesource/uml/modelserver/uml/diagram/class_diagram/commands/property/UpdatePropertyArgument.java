@@ -168,7 +168,7 @@ public final class UpdatePropertyArgument implements EmbeddedCodec.JsonEncodable
          return this;
       }
 
-      public UpdatePropertyArgument build() {
+      public UpdatePropertyArgument get() {
          return argument;
       }
    }

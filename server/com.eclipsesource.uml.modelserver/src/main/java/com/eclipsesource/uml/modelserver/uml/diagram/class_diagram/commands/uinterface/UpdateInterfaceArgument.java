@@ -81,7 +81,7 @@ public final class UpdateInterfaceArgument implements EmbeddedCodec.JsonEncodabl
          return this;
       }
 
-      public UpdateInterfaceArgument build() {
+      public UpdateInterfaceArgument get() {
          return argument;
       }
    }

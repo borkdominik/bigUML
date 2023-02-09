@@ -31,12 +31,12 @@ public final class CreateAssociationSemanticCommand extends BaseCreateSemanticRe
    @Override
    protected Association createSemanticElement(final Type source, final Type target) {
       return source.createAssociation(true,
-         AggregationKind.NONE_LITERAL,
+         type.toAggregationKind(),
          target.getName(),
          1, 1,
          target,
          true,
-         type.toAggregationKind(),
+         AggregationKind.NONE_LITERAL,
          source.getName(),
          1, 1);
    }

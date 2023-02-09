@@ -16,98 +16,90 @@ import org.eclipse.glsp.graph.builder.impl.GEdgeBuilder;
 import org.eclipse.glsp.graph.builder.impl.GEdgePlacementBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
+import org.eclipse.uml2.uml.AggregationKind;
 import org.eclipse.uml2.uml.Association;
+import org.eclipse.uml2.uml.Property;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Association;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Property;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyMultiplicityLabelSuffix;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.utils.AssociationTypeUtil;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.utils.PropertyUtil;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGEdgeMapper;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.constants.AssociationType;
 
 public final class AssociationEdgeMapper extends BaseGEdgeMapper<Association, GEdge> {
 
    @Override
-   public GEdge map(final Association association) {
-      var memberEnds = association.getMemberEnds();
-      var source = memberEnds.get(0);
-      var target = memberEnds.get(1);
-      var associationType = AssociationType.from(target.getAggregation());
-
-      var builder = new GEdgeBuilder(AssociationTypeUtil.toClassType(associationType))
-         .id(idGenerator.getOrCreateId(association))
+   public GEdge map(final Association source) {
+      var builder = new GEdgeBuilder(UmlClass_Association.TYPE_ID)
+         .id(idGenerator.getOrCreateId(source))
          .addCssClass(CoreCSS.EDGE)
-         .sourceId(idGenerator.getOrCreateId(source.getOwner()))
-         .targetId(idGenerator.getOrCreateId(target.getOwner()))
          .routerKind(GConstants.RouterKind.MANHATTAN);
 
-      if (associationType == AssociationType.COMPOSITION) {
-         applyComposition(association, builder);
-      } else if (associationType == AssociationType.AGGREGATION) {
-         applyAggregation(association, builder);
-      } else {
-         applyAssociation(association, builder);
-      }
-
-      applyEdgeNotation(association, builder);
+      applyMemberEnds(source, builder);
+      applyEdgeNotation(source, builder);
 
       return builder.build();
    }
 
-   protected void applyComposition(final Association association, final GEdgeBuilder builder) {
-      builder.addCssClass(CoreCSS.MARKER_DIAMOND)
-         .addCssClass(CoreCSS.MARKER_START);
+   protected void applyMemberEnds(final Association source, final GEdgeBuilder builder) {
+      var memberEnds = source.getMemberEnds();
+      var memberEndSource = memberEnds.get(0);
+      var memberEndTarget = memberEnds.get(1);
+
+      builder
+         .sourceId(idGenerator.getOrCreateId(memberEndSource.getOwner()))
+         .targetId(idGenerator.getOrCreateId(memberEndTarget.getOwner()));
+
+      applyMemberEnd(memberEndSource, builder, 0.9d);
+      applyMemberEnd(memberEndTarget, builder, 0.1d);
    }
 
-   protected void applyAggregation(final Association association, final GEdgeBuilder builder) {
-      builder.addCssClass(CoreCSS.MARKER_DIAMOND_EMPTY)
-         .addCssClass(CoreCSS.MARKER_START);
+   protected void applyMemberEnd(final Property memberEnd, final GEdgeBuilder builder, final double position) {
+      var memberEndId = idGenerator.getOrCreateId(memberEnd);
+
+      var nameLabel = createEdgeNameLabel(memberEnd.getName(),
+         suffix.appendTo(NameLabelSuffix.SUFFIX, memberEndId),
+         position);
+      builder.add(nameLabel);
+
+      var multiplicityLabel = createEdgeMultiplicityLabel(PropertyUtil.getMultiplicity(memberEnd),
+         suffix.appendTo(PropertyMultiplicityLabelSuffix.SUFFIX, memberEndId), position);
+      builder.add(multiplicityLabel);
+
+      var marker = marker(memberEnd.getAggregation());
+      builder.addCssClass(position < 0.5d ? marker.start() : marker.end());
    }
 
-   protected void applyAssociation(final Association association, final GEdgeBuilder builder) {
-      var memberEnds = association.getMemberEnds();
-      var source = memberEnds.get(0);
-      var sourceId = idGenerator.getOrCreateId(source);
-      var target = memberEnds.get(1);
-      var targetId = idGenerator.getOrCreateId(target);
-
-      // Label at source
-      var sourceNameLabel = createEdgeNameLabel(target.getName(), suffix.appendTo(NameLabelSuffix.SUFFIX, targetId),
-         0.1d);
-      builder.add(sourceNameLabel);
-
-      var sourceMultiplicityLabel = createEdgeMultiplicityLabel(PropertyUtil.getMultiplicity(target),
-         suffix.appendTo(PropertyMultiplicityLabelSuffix.SUFFIX, targetId), 0.1d);
-      builder.add(sourceMultiplicityLabel);
-
-      // Label at target
-      var targetNameLabel = createEdgeNameLabel(source.getName(), suffix.appendTo(NameLabelSuffix.SUFFIX, sourceId),
-         0.9d);
-      builder.add(targetNameLabel);
-
-      var targetMultiplicityLabel = createEdgeMultiplicityLabel(PropertyUtil.getMultiplicity(source),
-         suffix.appendTo(PropertyMultiplicityLabelSuffix.SUFFIX, sourceId), 0.9d);
-      builder.add(targetMultiplicityLabel);
+   protected CoreCSS.Marker marker(final AggregationKind aggregationKind) {
+      switch (aggregationKind) {
+         case COMPOSITE_LITERAL:
+            return CoreCSS.Marker.DIAMOND;
+         case SHARED_LITERAL:
+            return CoreCSS.Marker.DIAMOND_EMPTY;
+         default:
+            return CoreCSS.Marker.NONE;
+      }
    }
 
    protected GLabel createEdgeMultiplicityLabel(final String value, final String id, final double position) {
-      return createEdgeLabel(value, position, id, UmlClass_Property.LABEL_MULTIPLICITY, GConstants.EdgeSide.BOTTOM);
+      return createEdgeLabel(value, position, id, UmlClass_Property.LABEL_MULTIPLICITY, GConstants.EdgeSide.BOTTOM,
+         10d);
    }
 
    protected GLabel createEdgeNameLabel(final String name, final String id, final double position) {
-      return createEdgeLabel(name, position, id, CoreTypes.LABEL_NAME, GConstants.EdgeSide.TOP);
+      return createEdgeLabel(name, position, id, CoreTypes.LABEL_NAME, GConstants.EdgeSide.TOP, 2d);
    }
 
    protected GLabel createEdgeLabel(final String name, final double position, final String id, final String type,
-      final String side) {
+      final String side, final double offset) {
       return new GLabelBuilder(type)
          .edgePlacement(new GEdgePlacementBuilder()
             .side(side)
             .position(position)
-            .offset(2d)
+            .offset(offset)
             .rotate(false)
             .build())
          .id(id)

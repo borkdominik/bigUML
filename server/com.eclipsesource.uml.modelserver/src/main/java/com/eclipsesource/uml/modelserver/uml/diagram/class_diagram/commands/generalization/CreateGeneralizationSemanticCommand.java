@@ -16,7 +16,7 @@ public final class CreateGeneralizationSemanticCommand
 
    @Override
    protected Generalization createSemanticElement(final Classifier source, final Classifier target) {
-      return target.createGeneralization(source);
+      return source.createGeneralization(target);
    }
 
 }

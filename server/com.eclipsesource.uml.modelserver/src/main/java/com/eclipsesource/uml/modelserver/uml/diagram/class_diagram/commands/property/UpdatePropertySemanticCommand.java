@@ -57,6 +57,10 @@ public final class UpdatePropertySemanticCommand
          semanticElement.setIsUnique(arg);
       });
 
+      updateArgument.isNavigable().ifPresent(arg -> {
+         semanticElement.setIsNavigable(arg);
+      });
+
       updateArgument.visibilityKind().ifPresent(arg -> {
          semanticElement.setVisibility(arg);
       });

@@ -30,9 +30,10 @@ public final class UpdatePropertyArgument implements EmbeddedCodec.JsonEncodable
    private Boolean isDerivedUnion;
    private Boolean isReadOnly;
    private Boolean isUnique;
+   private Boolean isNavigable;
+   private Integer lowerBound;
+   private Integer upperBound;
    private VisibilityKind visibilityKind;
-   private int lowerBound;
-   private int upperBound;
    private AggregationKind aggregation;
 
    // Reference
@@ -62,6 +63,8 @@ public final class UpdatePropertyArgument implements EmbeddedCodec.JsonEncodable
    public Optional<Boolean> isReadOnly() { return Optional.ofNullable(isReadOnly); }
 
    public Optional<Boolean> isUnique() { return Optional.ofNullable(isUnique); }
+
+   public Optional<Boolean> isNavigable() { return Optional.ofNullable(isNavigable); }
 
    public Optional<VisibilityKind> visibilityKind() {
       return Optional.ofNullable(visibilityKind);
@@ -127,6 +130,11 @@ public final class UpdatePropertyArgument implements EmbeddedCodec.JsonEncodable
 
       public Builder isUnique(final boolean value) {
          argument.isUnique = value;
+         return this;
+      }
+
+      public Builder isNavigable(final boolean value) {
+         argument.isNavigable = value;
          return this;
       }
 

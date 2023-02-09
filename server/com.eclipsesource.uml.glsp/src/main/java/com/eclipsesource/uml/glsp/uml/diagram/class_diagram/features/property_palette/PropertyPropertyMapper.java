@@ -106,6 +106,12 @@ public class PropertyPropertyMapper extends BaseDiagramElementPropertyMapper<Pro
                   .isUnique(Boolean.parseBoolean(action.getValue()))
                   .build());
             break;
+         case IS_NAVIGABLE:
+            operation = handler.withArgument(
+               new UpdatePropertyArgument.Builder()
+                  .isNavigable(Boolean.parseBoolean(action.getValue()))
+                  .build());
+            break;
          case VISIBILITY_KIND:
             operation = handler.withArgument(
                new UpdatePropertyArgument.Builder()

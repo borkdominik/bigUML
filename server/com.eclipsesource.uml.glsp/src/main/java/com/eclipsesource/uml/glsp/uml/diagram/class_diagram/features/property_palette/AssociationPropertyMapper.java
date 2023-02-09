@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.eclipse.uml2.uml.AggregationKind;
 import org.eclipse.uml2.uml.Association;
 import org.eclipse.uml2.uml.VisibilityKind;
 
@@ -28,7 +29,6 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.as
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.utils.PropertyUtil;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.BaseDiagramElementPropertyMapper;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association.UpdateAssociationArgument;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.constants.AssociationType;
 
 public class AssociationPropertyMapper extends BaseDiagramElementPropertyMapper<Association> {
 
@@ -37,37 +37,47 @@ public class AssociationPropertyMapper extends BaseDiagramElementPropertyMapper<
       var elementId = idGenerator.getOrCreateId(source);
 
       var memberEnds = source.getMemberEnds();
-      var sourceEnd = memberEnds.get(0);
-      var sourceEndId = idGenerator.getOrCreateId(sourceEnd);
-      var targetEnd = memberEnds.get(1);
-      var targetEndId = idGenerator.getOrCreateId(targetEnd);
-
-      var associationType = AssociationType.from(targetEnd.getAggregation());
+      var memberEndSource = memberEnds.get(0);
+      var memberEndSourceId = idGenerator.getOrCreateId(memberEndSource);
+      var memberEndTarget = memberEnds.get(1);
+      var memberEndTargetId = idGenerator.getOrCreateId(memberEndTarget);
 
       List<ElementPropertyItem> items = new ArrayList<>();
 
-      if (associationType == AssociationType.ASSOCIATION) {
-         items.addAll(this.<UmlClass_Association.Property> propertyBuilder(elementId)
-            .text(UmlClass_Association.Property.NAME, "Name", source.getName())
-            .choice(
-               UmlClass_Association.Property.VISIBILITY_KIND,
-               "Visibility",
-               VisibilityKind.VALUES.stream().map(v -> v.getLiteral()).collect(Collectors.toList()),
-               source.getVisibility().getLiteral())
-            .items());
+      items.addAll(this.<UmlClass_Association.Property> propertyBuilder(elementId)
+         .text(UmlClass_Association.Property.NAME, "Name", source.getName())
+         .choice(
+            UmlClass_Association.Property.VISIBILITY_KIND,
+            "Visibility",
+            VisibilityKind.VALUES.stream().map(v -> v.getLiteral()).collect(Collectors.toList()),
+            source.getVisibility().getLiteral())
+         .items());
 
-         items.addAll(this.<UmlClass_Property.Property> propertyBuilder(sourceEndId)
-            .text(UmlClass_Property.Property.NAME, "Source Name", sourceEnd.getName())
-            .text(UmlClass_Property.Property.MULTIPLICITY, "Source Multiplicity",
-               PropertyUtil.getMultiplicity(sourceEnd))
-            .items());
+      items.addAll(this.<UmlClass_Property.Property> propertyBuilder(memberEndSourceId)
+         .text(UmlClass_Property.Property.NAME, "Source Name", memberEndSource.getName())
+         .text(UmlClass_Property.Property.MULTIPLICITY, "Source Multiplicity",
+            PropertyUtil.getMultiplicity(memberEndSource))
+         .bool(UmlClass_Property.Property.IS_NAVIGABLE, "Source Navigable",
+            memberEndSource.isNavigable())
+         .choice(
+            UmlClass_Property.Property.AGGREGATION,
+            "Source Aggregation",
+            AggregationKind.VALUES.stream().map(v -> v.getLiteral()).collect(Collectors.toList()),
+            memberEndSource.getAggregation().getLiteral())
+         .items());
 
-         items.addAll(this.<UmlClass_Property.Property> propertyBuilder(targetEndId)
-            .text(UmlClass_Property.Property.NAME, "Target Name", targetEnd.getName())
-            .text(UmlClass_Property.Property.MULTIPLICITY, "Target Multiplicity",
-               PropertyUtil.getMultiplicity(targetEnd))
-            .items());
-      }
+      items.addAll(this.<UmlClass_Property.Property> propertyBuilder(memberEndTargetId)
+         .text(UmlClass_Property.Property.NAME, "Target Name", memberEndTarget.getName())
+         .text(UmlClass_Property.Property.MULTIPLICITY, "Target Multiplicity",
+            PropertyUtil.getMultiplicity(memberEndTarget))
+         .bool(UmlClass_Property.Property.IS_NAVIGABLE, "Target Navigable",
+            memberEndTarget.isNavigable())
+         .choice(
+            UmlClass_Property.Property.AGGREGATION,
+            "Target Aggregation",
+            AggregationKind.VALUES.stream().map(v -> v.getLiteral()).collect(Collectors.toList()),
+            memberEndTarget.getAggregation().getLiteral())
+         .items());
 
       return new PropertyPalette(elementId, "Association", items);
    }

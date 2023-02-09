@@ -31,6 +31,7 @@ public class UmlClass_Property {
       IS_UNIQUE,
       VISIBILITY_KIND,
       MULTIPLICITY,
+      IS_NAVIGABLE,
       AGGREGATION,
       TYPE;
    }

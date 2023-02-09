@@ -96,7 +96,7 @@ export class EditorPanel extends AbstractUIExtension implements IActionHandler {
         this.initializeHeader();
         this.initializeBody();
 
-        // this.collapse();
+        this.collapse();
     }
 
     protected initializeHeader(): void {

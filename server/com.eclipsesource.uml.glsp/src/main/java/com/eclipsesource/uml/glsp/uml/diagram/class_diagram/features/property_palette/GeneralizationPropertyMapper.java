@@ -18,7 +18,9 @@ import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
 import com.eclipsesource.uml.glsp.features.property_palette.handler.action.UpdateElementPropertyAction;
 import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalette;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Generalization;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.generalization.UpdateGeneralizationHandler;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.BaseDiagramElementPropertyMapper;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.generalization.UpdateGeneralizationArgument;
 
 public class GeneralizationPropertyMapper extends BaseDiagramElementPropertyMapper<Generalization> {
 
@@ -27,6 +29,7 @@ public class GeneralizationPropertyMapper extends BaseDiagramElementPropertyMapp
       var elementId = idGenerator.getOrCreateId(source);
 
       var items = this.<UmlClass_Generalization.Property> propertyBuilder(elementId)
+         .bool(UmlClass_Generalization.Property.IS_SUBSTITUTABLE, "Is substitutable", source.isSubstitutable())
          .items();
 
       return new PropertyPalette(elementId, "Generalization", items);
@@ -34,8 +37,20 @@ public class GeneralizationPropertyMapper extends BaseDiagramElementPropertyMapp
 
    @Override
    public Optional<UpdateOperation> map(final UpdateElementPropertyAction action) {
-      return withContext(null);
+      var property = getProperty(UmlClass_Generalization.Property.class, action);
+      var handler = getHandler(UpdateGeneralizationHandler.class, action);
+      UpdateOperation operation = null;
 
+      switch (property) {
+         case IS_SUBSTITUTABLE:
+            operation = handler.withArgument(
+               new UpdateGeneralizationArgument.Builder()
+                  .isSubstitutable(Boolean.parseBoolean(action.getValue()))
+                  .build());
+            break;
+      }
+
+      return withContext(operation);
    }
 
 }

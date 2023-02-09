@@ -72,7 +72,6 @@ public class EnumerationPropertyMapper extends BaseDiagramElementPropertyMapper<
       }
 
       return withContext(operation);
-
    }
 
 }

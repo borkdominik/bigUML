@@ -17,7 +17,9 @@ public class UmlClass_Generalization {
    public static final String ID = "generalization";
    public static final String TYPE_ID = CoreTypes.PRE_EDGE + ID;
 
-   public enum Property {}
+   public enum Property {
+      IS_SUBSTITUTABLE
+   }
 
    private UmlClass_Generalization() {}
 }

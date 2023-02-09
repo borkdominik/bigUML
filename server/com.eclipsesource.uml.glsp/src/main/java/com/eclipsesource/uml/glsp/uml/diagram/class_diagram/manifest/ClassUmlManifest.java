@@ -57,6 +57,7 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.as
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.association.CreateAssociationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.association.CreateCompositionHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.association.DeleteAssociationHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.association.UpdateAssociationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.data_type.CreateDataTypeHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.data_type.DeleteDataTypeHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.data_type.UpdateDataTypeHandler;
@@ -68,6 +69,7 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.en
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.enumeration_literal.UpdateEnumerationLiteralHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.generalization.CreateGeneralizationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.generalization.DeleteGeneralizationHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.generalization.UpdateGeneralizationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.operation.CreateOperationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.operation.DeleteOperationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.operation.UpdateOperationHandler;
@@ -160,9 +162,11 @@ public final class ClassUmlManifest extends DiagramManifest
          contribution.addBinding().to(PackageLabelEditMapper.class);
       });
       contributeDiagramUpdateHandlers((contribution) -> {
+         contribution.addBinding().to(UpdateAssociationHandler.class);
          contribution.addBinding().to(UpdateDataTypeHandler.class);
          contribution.addBinding().to(UpdateEnumerationHandler.class);
          contribution.addBinding().to(UpdateEnumerationLiteralHandler.class);
+         contribution.addBinding().to(UpdateGeneralizationHandler.class);
          contribution.addBinding().to(UpdateOperationHandler.class);
          contribution.addBinding().to(UpdatePrimitiveTypeHandler.class);
          contribution.addBinding().to(UpdatePropertyHandler.class);

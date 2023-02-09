@@ -14,11 +14,16 @@ import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 
 public class UmlClass_Association {
 
+   public static final String ID = CoreTypes.PRE_EDGE + "association";
+
    public static final String ASSOCIATION_TYPE_ID = CoreTypes.PRE_EDGE + "association";
    public static final String COMPOSITION_TYPE_ID = CoreTypes.PRE_EDGE + "composition";
    public static final String AGGREGATION_TYPE_ID = CoreTypes.PRE_EDGE + "aggregation";
 
-   public enum Property {}
+   public enum Property {
+      NAME,
+      VISIBILITY_KIND
+   }
 
    private UmlClass_Association() {}
 }

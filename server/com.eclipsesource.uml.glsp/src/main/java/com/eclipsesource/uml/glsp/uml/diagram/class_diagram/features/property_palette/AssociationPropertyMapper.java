@@ -13,16 +13,21 @@ package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.property_p
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.eclipse.uml2.uml.Association;
+import org.eclipse.uml2.uml.VisibilityKind;
 
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
 import com.eclipsesource.uml.glsp.features.property_palette.handler.action.UpdateElementPropertyAction;
 import com.eclipsesource.uml.glsp.features.property_palette.model.ElementPropertyItem;
 import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalette;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Association;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Property;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.association.UpdateAssociationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.utils.PropertyUtil;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.BaseDiagramElementPropertyMapper;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association.UpdateAssociationArgument;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.constants.AssociationType;
 
 public class AssociationPropertyMapper extends BaseDiagramElementPropertyMapper<Association> {
@@ -42,14 +47,26 @@ public class AssociationPropertyMapper extends BaseDiagramElementPropertyMapper<
       List<ElementPropertyItem> items = new ArrayList<>();
 
       if (associationType == AssociationType.ASSOCIATION) {
-         items = this.<UmlClass_Property.Property> propertyBuilder(elementId)
-            .text(sourceEndId, UmlClass_Property.Property.NAME, "Source Name", sourceEnd.getName())
-            .text(sourceEndId, UmlClass_Property.Property.MULTIPLICITY, "Source Multiplicity",
+         items.addAll(this.<UmlClass_Association.Property> propertyBuilder(elementId)
+            .text(UmlClass_Association.Property.NAME, "Name", source.getName())
+            .choice(
+               UmlClass_Association.Property.VISIBILITY_KIND,
+               "Visibility",
+               VisibilityKind.VALUES.stream().map(v -> v.getLiteral()).collect(Collectors.toList()),
+               source.getVisibility().getLiteral())
+            .items());
+
+         items.addAll(this.<UmlClass_Property.Property> propertyBuilder(sourceEndId)
+            .text(UmlClass_Property.Property.NAME, "Source Name", sourceEnd.getName())
+            .text(UmlClass_Property.Property.MULTIPLICITY, "Source Multiplicity",
                PropertyUtil.getMultiplicity(sourceEnd))
-            .text(targetEndId, UmlClass_Property.Property.NAME, "Target Name", targetEnd.getName())
-            .text(targetEndId, UmlClass_Property.Property.MULTIPLICITY, "Target Multiplicity",
+            .items());
+
+         items.addAll(this.<UmlClass_Property.Property> propertyBuilder(targetEndId)
+            .text(UmlClass_Property.Property.NAME, "Target Name", targetEnd.getName())
+            .text(UmlClass_Property.Property.MULTIPLICITY, "Target Multiplicity",
                PropertyUtil.getMultiplicity(targetEnd))
-            .items();
+            .items());
       }
 
       return new PropertyPalette(elementId, "Association", items);
@@ -57,7 +74,26 @@ public class AssociationPropertyMapper extends BaseDiagramElementPropertyMapper<
 
    @Override
    public Optional<UpdateOperation> map(final UpdateElementPropertyAction action) {
-      return withContext(null);
+      var property = getProperty(UmlClass_Association.Property.class, action);
+      var handler = getHandler(UpdateAssociationHandler.class, action);
+      UpdateOperation operation = null;
+
+      switch (property) {
+         case NAME:
+            operation = handler.withArgument(
+               new UpdateAssociationArgument.Builder()
+                  .name(action.getValue())
+                  .build());
+            break;
+         case VISIBILITY_KIND:
+            operation = handler.withArgument(
+               new UpdateAssociationArgument.Builder()
+                  .visibilityKind(VisibilityKind.get(action.getValue()))
+                  .build());
+            break;
+      }
+
+      return withContext(operation);
    }
 
 }

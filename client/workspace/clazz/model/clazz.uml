@@ -36,7 +36,7 @@
         </ownedAttribute>
       </packagedElement>
       <packagedElement xmi:type="uml:Association" xmi:id="_0QRlAIqgEe2jA6D1258ThQ" memberEnd="_0QaH4IqgEe2jA6D1258ThQ _0QeZUIqgEe2jA6D1258ThQ"/>
-      <packagedElement xmi:type="uml:Association" xmi:id="_6p0oUYthEe2HOqFYNFa9oQ" memberEnd="_6p9yQIthEe2HOqFYNFa9oQ _6p-ZUothEe2HOqFYNFa9oQ"/>
+      <packagedElement xmi:type="uml:Association" xmi:id="_6p0oUYthEe2HOqFYNFa9oQ" visibility="public" memberEnd="_6p9yQIthEe2HOqFYNFa9oQ _6p-ZUothEe2HOqFYNFa9oQ"/>
       <packagedElement xmi:type="uml:Association" xmi:id="_imOZgYtuEe2fhaid7suJkA" memberEnd="_inLbwItuEe2fhaid7suJkA _inN4AItuEe2fhaid7suJkA"/>
     </packagedElement>
   </packagedElement>

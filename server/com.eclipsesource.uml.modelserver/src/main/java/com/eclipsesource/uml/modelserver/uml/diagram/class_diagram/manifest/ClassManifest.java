@@ -16,6 +16,7 @@ import com.eclipsesource.uml.modelserver.core.manifest.DiagramManifest;
 import com.eclipsesource.uml.modelserver.core.manifest.contributions.CommandCodecContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association.CreateAssociationContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association.DeleteAssociationContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association.UpdateAssociationContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.data_type.CreateDataTypeContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.data_type.DeleteDataTypeContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.data_type.UpdateDataTypeContribution;
@@ -27,6 +28,7 @@ import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.enum
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.enumeration_literal.UpdateEnumerationLiteralContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.generalization.CreateGeneralizationContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.generalization.DeleteGeneralizationContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.generalization.UpdateGeneralizationContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.operation.CreateOperationContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.operation.DeleteOperationContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.operation.UpdateOperationContribution;
@@ -69,10 +71,12 @@ public final class ClassManifest extends DiagramManifest implements CommandCodec
       // Association
       multibinder.addBinding(CreateAssociationContribution.TYPE).to(CreateAssociationContribution.class);
       multibinder.addBinding(DeleteAssociationContribution.TYPE).to(DeleteAssociationContribution.class);
+      multibinder.addBinding(UpdateAssociationContribution.TYPE).to(UpdateAssociationContribution.class);
 
       // Generalization
       multibinder.addBinding(CreateGeneralizationContribution.TYPE).to(CreateGeneralizationContribution.class);
       multibinder.addBinding(DeleteGeneralizationContribution.TYPE).to(DeleteGeneralizationContribution.class);
+      multibinder.addBinding(UpdateGeneralizationContribution.TYPE).to(UpdateGeneralizationContribution.class);
 
       // Interface
       multibinder.addBinding(CreateInterfaceContribution.TYPE).to(CreateInterfaceContribution.class);

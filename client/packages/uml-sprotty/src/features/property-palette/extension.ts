@@ -20,6 +20,7 @@ import {
     IActionHandler,
     ICommand,
     isSelectAction,
+    isSetDirtyStateAction,
     SelectAction,
     SModelRoot,
     SModelRootListener,
@@ -80,9 +81,13 @@ export class PropertyPalette implements IActionHandler, SModelRootListener, Edit
     }
 
     handle(action: Action): ICommand | Action | void {
+        console.log("New action", action);
         if (isSelectAction(action) && action.selectedElementsIDs.length > 0) {
             this.selectAction = action;
             this.refresh();
+        } else if (isSetDirtyStateAction(action)) {
+            this.refresh();
+            this.enable();
         }
     }
 

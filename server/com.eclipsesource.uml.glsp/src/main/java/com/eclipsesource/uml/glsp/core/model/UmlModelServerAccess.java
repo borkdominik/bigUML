@@ -11,6 +11,7 @@
 package com.eclipsesource.uml.glsp.core.model;
 
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -26,6 +27,8 @@ import org.eclipse.glsp.server.emf.model.notation.Shape;
 import org.eclipse.glsp.server.types.ElementAndBounds;
 import org.eclipse.glsp.server.types.GLSPServerException;
 
+import com.eclipsesource.uml.modelserver.core.UmlModelServerClient;
+import com.eclipsesource.uml.modelserver.core.models.TypeInformation;
 import com.eclipsesource.uml.modelserver.core.routing.UmlModelServerPaths;
 import com.eclipsesource.uml.modelserver.unotation.UmlDiagram;
 
@@ -45,6 +48,7 @@ public class UmlModelServerAccess extends EMSNotationModelServerAccess {
       try {
          return getModelServerClient().get(getSemanticURI(), UmlModelServerPaths.FORMAT_UML)
             .thenApply(res -> res.body()).get();
+
       } catch (InterruptedException | ExecutionException e) {
          LOGGER.error(e);
          throw new GLSPServerException("Error during model loading", e);
@@ -59,10 +63,21 @@ public class UmlModelServerAccess extends EMSNotationModelServerAccess {
       try {
          var notationModel = getModelServerClient().get(getNotationURI(), notationFormat)
             .thenApply(res -> res.body()).get();
+
          if (notationModel instanceof UmlDiagram) {
             return (Diagram) notationModel;
          }
          throw new GLSPServerException("Error during model loading, notation model is not a UmlDiagram!");
+      } catch (InterruptedException | ExecutionException e) {
+         LOGGER.error(e);
+         throw new GLSPServerException("Error during model loading", e);
+      }
+   }
+
+   public Set<TypeInformation> getUmlTypeInformation() {
+      try {
+         return getModelServerClient().getUmlTypeInformation(getSemanticURI())
+            .thenApply(res -> res.body()).get();
       } catch (InterruptedException | ExecutionException e) {
          LOGGER.error(e);
          throw new GLSPServerException("Error during model loading", e);
@@ -89,4 +104,7 @@ public class UmlModelServerAccess extends EMSNotationModelServerAccess {
    public CompletableFuture<Response<String>> exec(final CCommand command) {
       return super.edit(command);
    }
+
+   @Override
+   protected UmlModelServerClient getModelServerClient() { return (UmlModelServerClient) super.getModelServerClient(); }
 }

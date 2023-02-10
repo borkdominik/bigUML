@@ -15,8 +15,12 @@ import java.util.stream.Collectors;
 
 import org.eclipse.uml2.uml.AggregationKind;
 
+import com.eclipsesource.uml.glsp.features.property_palette.model.ElementChoicePropertyItem;
+
 public class AggregationKindUtils {
-   public static List<String> literals() {
-      return AggregationKind.VALUES.stream().map(v -> v.getLiteral()).collect(Collectors.toList());
+   public static List<ElementChoicePropertyItem.Choice> asChoices() {
+      return AggregationKind.VALUES.stream()
+         .map(v -> new ElementChoicePropertyItem.Choice(v.getLiteral(), v.getLiteral()))
+         .collect(Collectors.toList());
    }
 }

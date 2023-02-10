@@ -36,7 +36,7 @@ public class DataTypePropertyMapper extends BaseDiagramElementPropertyMapper<Dat
          .choice(
             UmlClass_DataType.Property.VISIBILITY_KIND,
             "Visibility",
-            VisibilityKindUtils.literals(),
+            VisibilityKindUtils.asChoices(),
             source.getVisibility().getLiteral())
 
          .items();

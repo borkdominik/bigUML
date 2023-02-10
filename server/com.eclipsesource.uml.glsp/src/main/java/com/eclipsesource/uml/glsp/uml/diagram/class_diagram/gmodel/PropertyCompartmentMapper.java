@@ -19,7 +19,6 @@ import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.Property;
-import org.eclipse.uml2.uml.Type;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 import com.eclipsesource.uml.glsp.core.features.id_generator.IdCountContextGenerator;
@@ -52,9 +51,9 @@ public final class PropertyCompartmentMapper extends BaseGModelMapper<Property, 
          .build();
       builder.add(separatorLabel);
 
-      Optional.ofNullable(source.getType()).ifPresent(type -> {
-         builder.add(buildTypeName(source, type));
-      });
+      Optional.ofNullable(source.getType()).ifPresentOrElse(type -> {
+         builder.add(buildTypeName(source, type.getName()));
+      }, () -> builder.add(buildTypeName(source, "<Undefined>")));
 
       var propertyMultiplicity = PropertyUtil.getMultiplicity(source);
       builder.add(
@@ -83,10 +82,10 @@ public final class PropertyCompartmentMapper extends BaseGModelMapper<Property, 
          .build();
    }
 
-   protected GLabel buildTypeName(final Property source, final Type type) {
-      return new GLabelBuilder(UmlClass_Property.LABEL_TYPE)
+   protected GLabel buildTypeName(final Property source, final String text) {
+      return new GLabelBuilder(CoreTypes.LABEL_TEXT)
          .id(suffix.appendTo(PropertyTypeLabelSuffix.SUFFIX, idGenerator.getOrCreateId(source)))
-         .text(type.getName())
+         .text(text)
          .build();
    }
 

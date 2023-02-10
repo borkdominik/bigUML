@@ -11,16 +11,23 @@
 package com.eclipsesource.uml.glsp.uml.utils;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.eclipse.uml2.uml.VisibilityKind;
-
 import com.eclipsesource.uml.glsp.features.property_palette.model.ElementChoicePropertyItem;
+import com.eclipsesource.uml.modelserver.core.models.TypeInformation;
 
-public class VisibilityKindUtils {
-   public static List<ElementChoicePropertyItem.Choice> asChoices() {
-      return VisibilityKind.VALUES.stream()
-         .map(v -> new ElementChoicePropertyItem.Choice(v.getLiteral(), v.getLiteral()))
+public class TypeUtils {
+   public static List<ElementChoicePropertyItem.Choice> asChoices(final Set<TypeInformation> typeInformation) {
+      var choices = typeInformation.stream()
+         .map(v -> {
+            var label = String.format("[%s] %s", v.type, v.name == null ? "No name" : v.name);
+            return new ElementChoicePropertyItem.Choice(label, v.id);
+         })
          .collect(Collectors.toList());
+
+      choices.add(new ElementChoicePropertyItem.Choice("<Undefined>", ""));
+      choices.sort((arg0, arg1) -> arg0.label.compareTo(arg1.label));
+      return choices;
    }
 }

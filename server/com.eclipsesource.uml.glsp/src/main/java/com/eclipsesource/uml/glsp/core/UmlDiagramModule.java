@@ -13,24 +13,17 @@ package com.eclipsesource.uml.glsp.core;
 import org.eclipse.emfcloud.modelserver.glsp.EMSModelState;
 import org.eclipse.emfcloud.modelserver.glsp.actions.handlers.EMSOperationActionHandler;
 import org.eclipse.emfcloud.modelserver.glsp.notation.integration.EMSGLSPNotationDiagramModule;
-import org.eclipse.emfcloud.modelserver.glsp.notation.integration.EMSNotationModelServerAccess;
 import org.eclipse.emfcloud.modelserver.glsp.notation.integration.EMSNotationModelState;
-import org.eclipse.emfcloud.modelserver.glsp.notation.integration.EMSNotationSourceModelStorage;
 import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSChangeBoundsOperationHandler;
 import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSChangeRoutingPointsOperationHandler;
-import org.eclipse.glsp.graph.GraphExtension;
 import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.ActionHandler;
 import org.eclipse.glsp.server.di.MultiBinding;
-import org.eclipse.glsp.server.diagram.DiagramConfiguration;
 import org.eclipse.glsp.server.emf.EMFIdGenerator;
 import org.eclipse.glsp.server.emf.idgen.FragmentIdGenerator;
 import org.eclipse.glsp.server.features.contextmenu.ContextMenuItemProvider;
-import org.eclipse.glsp.server.features.core.model.GModelFactory;
-import org.eclipse.glsp.server.features.toolpalette.ToolPaletteItemProvider;
 import org.eclipse.glsp.server.features.validation.ModelValidator;
 import org.eclipse.glsp.server.operations.OperationHandler;
-import org.eclipse.glsp.server.operations.OperationHandlerRegistry;
 import org.eclipse.uml2.uml.UMLPackage;
 import org.eclipse.uml2.uml.resource.UMLResource;
 
@@ -111,37 +104,37 @@ public class UmlDiagramModule extends EMSGLSPNotationDiagramModule {
    }
 
    @Override
-   protected Class<? extends EMSNotationModelState> bindGModelState() {
+   protected Class<? extends UmlModelState> bindGModelState() {
       return UmlModelState.class;
    }
 
    @Override
-   protected Class<? extends EMSNotationSourceModelStorage> bindSourceModelStorage() {
+   protected Class<? extends UmlSourceModelStorage> bindSourceModelStorage() {
       return UmlSourceModelStorage.class;
    }
 
    @Override
-   public Class<? extends GModelFactory> bindGModelFactory() {
+   public Class<? extends UmlGModelFactory> bindGModelFactory() {
       return UmlGModelFactory.class;
    }
 
    @Override
-   protected Class<? extends EMSNotationModelServerAccess> bindModelServerAccess() {
+   protected Class<? extends UmlModelServerAccess> bindModelServerAccess() {
       return UmlModelServerAccess.class;
    }
 
    @Override
-   protected Class<? extends GraphExtension> bindGraphExtension() {
+   protected Class<? extends UmlGraphExtension> bindGraphExtension() {
       return UmlGraphExtension.class;
    }
 
    @Override
-   protected Class<? extends ToolPaletteItemProvider> bindToolPaletteItemProvider() {
+   protected Class<? extends UmlToolPaletteItemProvider> bindToolPaletteItemProvider() {
       return UmlToolPaletteItemProvider.class;
    }
 
    @Override
-   protected Class<? extends DiagramConfiguration> bindDiagramConfiguration() {
+   protected Class<? extends UmlToolDiagramConfiguration> bindDiagramConfiguration() {
       return UmlToolDiagramConfiguration.class;
    }
 
@@ -156,7 +149,7 @@ public class UmlDiagramModule extends EMSGLSPNotationDiagramModule {
    }
 
    @Override
-   protected Class<? extends OperationHandlerRegistry> bindOperationHandlerRegistry() {
+   protected Class<? extends UmlOperationHandlerRegistry> bindOperationHandlerRegistry() {
       return UmlOperationHandlerRegistry.class;
    }
 

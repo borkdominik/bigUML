@@ -12,11 +12,14 @@ package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.property_p
 
 import java.util.Optional;
 
+import javax.inject.Inject;
+
 import org.eclipse.uml2.uml.AggregationKind;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.VisibilityKind;
 
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
+import com.eclipsesource.uml.glsp.core.model.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.features.property_palette.handler.action.UpdateElementPropertyAction;
 import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalette;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Property;
@@ -24,10 +27,14 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.pr
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.utils.PropertyUtil;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.BaseDiagramElementPropertyMapper;
 import com.eclipsesource.uml.glsp.uml.utils.AggregationKindUtils;
+import com.eclipsesource.uml.glsp.uml.utils.TypeUtils;
 import com.eclipsesource.uml.glsp.uml.utils.VisibilityKindUtils;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.UpdatePropertyArgument;
 
 public class PropertyPropertyMapper extends BaseDiagramElementPropertyMapper<Property> {
+
+   @Inject
+   private UmlModelServerAccess modelServerAccess;
 
    @Override
    public PropertyPalette map(final Property source) {
@@ -44,13 +51,18 @@ public class PropertyPropertyMapper extends BaseDiagramElementPropertyMapper<Pro
          .choice(
             UmlClass_Property.Property.VISIBILITY_KIND,
             "Visibility",
-            VisibilityKindUtils.literals(),
+            VisibilityKindUtils.asChoices(),
             source.getVisibility().getLiteral())
          .text(UmlClass_Property.Property.MULTIPLICITY, "Multiplicity", PropertyUtil.getMultiplicity(source))
          .choice(
+            UmlClass_Property.Property.TYPE,
+            "Type",
+            TypeUtils.asChoices(modelServerAccess.getUmlTypeInformation()),
+            source.getType() == null ? "" : idGenerator.getOrCreateId(source.getType()))
+         .choice(
             UmlClass_Property.Property.AGGREGATION,
             "Aggregation",
-            AggregationKindUtils.literals(),
+            AggregationKindUtils.asChoices(),
             source.getAggregation().getLiteral())
 
          .items();
@@ -130,6 +142,12 @@ public class PropertyPropertyMapper extends BaseDiagramElementPropertyMapper<Pro
             operation = handler.withArgument(
                new UpdatePropertyArgument.Builder()
                   .aggregation(AggregationKind.get(action.getValue()))
+                  .get());
+            break;
+         case TYPE:
+            operation = handler.withArgument(
+               new UpdatePropertyArgument.Builder()
+                  .typeId(action.getValue())
                   .get());
             break;
       }

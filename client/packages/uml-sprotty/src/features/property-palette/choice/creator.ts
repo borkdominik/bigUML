@@ -33,8 +33,8 @@ export function createChoiceProperty(propertyItem: ElementChoicePropertyItem, ev
     propertyItem.choices.forEach(choice => {
         const option = document.createElement("option");
 
-        option.text = choice;
-        option.value = choice;
+        option.text = choice.label;
+        option.value = choice.value;
 
         if (option.value === propertyItem.choice) {
             option.selected = true;

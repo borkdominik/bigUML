@@ -46,14 +46,14 @@ public class ElementPropertyBuilder<TPropertyType extends Enum<TPropertyType>> {
    }
 
    public ElementPropertyBuilder<TPropertyType> choice(final TPropertyType property, final String label,
-      final List<String> choices,
+      final List<ElementChoicePropertyItem.Choice> choices,
       final String choice) {
       return choice(elementId, property, label, choices, choice);
    }
 
    public ElementPropertyBuilder<TPropertyType> choice(final String elementId, final TPropertyType property,
       final String label,
-      final List<String> choices, final String choice) {
+      final List<ElementChoicePropertyItem.Choice> choices, final String choice) {
       items.add(new ElementChoicePropertyItem(elementId, property.name(), label, choices, choice));
       return this;
    }

@@ -36,7 +36,7 @@ public class PrimitiveTypePropertyMapper extends BaseDiagramElementPropertyMappe
          .choice(
             UmlClass_PrimitiveType.Property.VISIBILITY_KIND,
             "Visibility",
-            VisibilityKindUtils.literals(),
+            VisibilityKindUtils.asChoices(),
             source.getVisibility().getLiteral())
 
          .items();

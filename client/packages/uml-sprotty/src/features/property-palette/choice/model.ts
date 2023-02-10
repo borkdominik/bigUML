@@ -17,7 +17,10 @@ import { ElementPropertyItem } from "../model";
 
 export interface ElementChoicePropertyItem extends ElementPropertyItem {
     type: typeof ElementChoicePropertyItem.TYPE;
-    choices: string[];
+    choices: {
+        label: string;
+        value: string;
+    }[];
     choice: string;
     label: string;
 }

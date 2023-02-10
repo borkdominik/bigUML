@@ -8,15 +8,16 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.core.routing;
+package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.action;
 
-import org.eclipse.emfcloud.modelserver.common.ModelServerPathsV2;
+import org.eclipse.glsp.server.actions.RequestAction;
 
-public interface UmlModelServerPaths {
-   String PATH = "uml";
-   String BASE_PATH = ModelServerPathsV2.BASE_PATH + "/" + PATH;
-   String FORMAT_UML = "uml";
+public class RequestTypeInformationAction extends RequestAction<SetTypeInformationAction> {
 
-   String UML_TYPES = "types";
-   String UML_CREATE = "create";
+   public static String TYPE = "requestTypeInformation";
+
+   public RequestTypeInformationAction() {
+      super(TYPE);
+   }
+
 }

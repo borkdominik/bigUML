@@ -176,8 +176,10 @@ public class UmlModelResourceManager extends RecordingModelResourceManager {
                   that.modelUri = modelUri;
                   that.id = SemanticElementAccessor.getId(type);
 
-                  that.name = type.getName() == null ? type.getClass().getSimpleName() : type.getName();
-                  that.type = type.getClass().getSimpleName().replace("Impl", "");
+                  var simpleName = type.getClass().getSimpleName().replace("Impl", "");
+
+                  that.name = type.getName() == null || type.getName().isBlank() ? simpleName : type.getName();
+                  that.type = simpleName;
                }));
             }
          }

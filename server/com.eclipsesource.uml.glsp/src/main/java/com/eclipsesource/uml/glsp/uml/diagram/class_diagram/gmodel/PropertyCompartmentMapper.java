@@ -75,7 +75,7 @@ public final class PropertyCompartmentMapper extends BaseGModelMapper<Property, 
    }
 
    protected GLabel buildTypeName(final Property source, final String text) {
-      return new GLabelBuilder(CoreTypes.LABEL_TEXT)
+      return new GLabelBuilder(UmlClass_Property.LABEL_TYPE)
          .id(suffix.appendTo(PropertyTypeLabelSuffix.SUFFIX, idGenerator.getOrCreateId(source)))
          .text(text)
          .build();
@@ -90,7 +90,10 @@ public final class PropertyCompartmentMapper extends BaseGModelMapper<Property, 
 
    protected void applyType(final Property source, final GCompartmentBuilder builder) {
       Optional.ofNullable(source.getType()).ifPresentOrElse(type -> {
-         builder.add(buildTypeName(source, type.getName()));
+         var name = type.getName() == null || type.getName().isBlank()
+            ? type.getClass().getSimpleName().replace("Impl", "")
+            : type.getName();
+         builder.add(buildTypeName(source, name));
       }, () -> builder.add(buildTypeName(source, "<Undefined>")));
    }
 

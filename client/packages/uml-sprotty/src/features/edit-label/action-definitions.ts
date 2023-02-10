@@ -10,18 +10,24 @@
  ********************************************************************************/
 import { Action, generateRequestId, RequestAction, ResponseAction } from "@eclipse-glsp/client";
 
-export class GetTypesAction implements RequestAction<ReturnTypesAction> {
-    static readonly KIND = "getTypes";
-    kind = GetTypesAction.KIND;
+export interface TypeInformation {
+    modelUri: string;
+    id: string;
+    type: string;
+    name: string;
+}
+
+export class RequestTypeInformationAction implements RequestAction<SetTypeInformationAction> {
+    static readonly KIND = "requestTypeInformation";
+    kind = RequestTypeInformationAction.KIND;
     constructor(public readonly requestId: string = generateRequestId()) { }
 }
 
-export class ReturnTypesAction implements ResponseAction {
-    static readonly KIND = "returnTypes";
-    kind = ReturnTypesAction.KIND;
-    types: string[];
-    constructor(public readonly actions: string[], public readonly responseId: string = "") {
-        this.types = actions;
+export class SetTypeInformationAction implements ResponseAction {
+    static readonly KIND = "setTypeInformation";
+    kind = SetTypeInformationAction.KIND;
+
+    constructor(public readonly typeInformation: TypeInformation[], public readonly responseId: string = "") {
     }
 }
 

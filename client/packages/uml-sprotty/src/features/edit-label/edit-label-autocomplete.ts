@@ -10,10 +10,11 @@
  ********************************************************************************/
 import { GLSPActionDispatcher, TYPES } from "@eclipse-glsp/client/lib";
 import { inject, injectable } from "inversify";
-import { EditLabelUI, SModelRoot } from "sprotty/lib";
+import { EditLabelUI, EditLabelValidationResult, SModelRoot } from "sprotty/lib";
 import { matchesKeystroke } from "sprotty/lib/utils/keyboard";
 
 import { UmlTypes } from "../../utils";
+import { RequestTypeInformationAction, SetTypeInformationAction, TypeInformation } from "./action-definitions";
 
 @injectable()
 export class EditLabelUIAutocomplete extends EditLabelUI {
@@ -21,7 +22,7 @@ export class EditLabelUIAutocomplete extends EditLabelUI {
     protected outerDiv: HTMLElement;
     protected listContainer: HTMLElement;
     protected currentFocus: number;
-    protected types: string[] = [];
+    protected typeInformation: TypeInformation[] = [];
 
     constructor(
         @inject(TYPES.IActionDispatcher)
@@ -35,7 +36,25 @@ export class EditLabelUIAutocomplete extends EditLabelUI {
         super.initializeContents(containerElement);
     }
 
-    protected configureAndAdd(
+    protected override async validateLabel(value: string): Promise<EditLabelValidationResult> {
+        if (this.isAutoCompleteLabel()) {
+            let result: EditLabelValidationResult = {
+                severity: "error", message: "Please select from the dropdown (strg + space)"
+            };
+            if (this.typeInformation.some(t => t.id === value)) {
+                result = { severity: "ok" };
+            }
+
+            this.isCurrentLabelValid = "error" !== result.severity;
+            this.showValidationResult(result);
+
+            return result;
+        }
+
+        return super.validateLabel(value);
+    }
+
+    protected override configureAndAdd(
         element: HTMLInputElement | HTMLTextAreaElement,
         containerElement: HTMLElement
     ): void {
@@ -63,7 +82,7 @@ export class EditLabelUIAutocomplete extends EditLabelUI {
         if (this.editControl.value) {
             window.setTimeout(() => this.applyLabelEdit(), 200);
         } else {
-            this.hide();
+            window.setTimeout(() => this.hide(), 200);
         }
     }
 
@@ -101,7 +120,6 @@ export class EditLabelUIAutocomplete extends EditLabelUI {
 
     protected createAutocomplete(): void {
         const input = this.inputElement.value;
-
         this.closeAllLists();
         this.currentFocus = -1;
 
@@ -114,25 +132,29 @@ export class EditLabelUIAutocomplete extends EditLabelUI {
         this.outerDiv.appendChild(this.listContainer);
 
         // create autocomplete items starting with input
-        for (let i = 0; i < this.types.length; i++) {
+        for (let i = 0; i < this.typeInformation.length; i++) {
+            const type = this.typeInformation[i];
+            const label = type.name;
             if (
-                this.types[i].substring(0, input.length).toLowerCase() ===
+                label.substring(0, input.length).toLowerCase() ===
                 input.toLowerCase()
             ) {
                 const element = document.createElement("div");
                 element.setAttribute("class", "autocomplete-item");
                 element.innerHTML =
                     "<strong>" +
-                    this.types[i].substring(0, input.length) +
+                    label.substring(0, input.length) +
                     "</strong>";
-                element.innerHTML += this.types[i].substring(input.length);
+                element.innerHTML += label.substring(input.length);
+                element.innerHTML += `</br><small> - ${type.type}</small>`;
                 element.innerHTML +=
-                    "<input type='hidden' value='" + this.types[i] + "'>";
-                element.addEventListener("click", () => {
+                    "<input type='hidden' value='" + type.id + "'>";
+                element.addEventListener("click", event => {
                     // change the type of the label
-                    this.inputElement.value =
-                        element.getElementsByTagName("input")[0].value;
-                    this.closeAllLists();
+                    event.stopPropagation();
+
+                    this.inputElement.value = type.id;
+                    this.inputElement.blur();
                 });
                 this.listContainer.appendChild(element);
             }
@@ -189,24 +211,25 @@ export class EditLabelUIAutocomplete extends EditLabelUI {
         super.onBeforeShow(containerElement, root, ...contextElementIds);
 
         // request possible element types
-        /* TODO: Not Supported currently
-        this.actionDispatcher.requestUntil(new GetTypesAction()).then(response => {
+        this.actionDispatcher.requestUntil<SetTypeInformationAction>(new RequestTypeInformationAction()).then(response => {
             if (response) {
-                const action: ReturnTypesAction = response as ReturnTypesAction;
-                this.types = action.types;
+                this.typeInformation = response.typeInformation.sort((a, b) => a.name.localeCompare(b.name));
             }
         });
-        */
     }
 
     protected isAutoCompleteEnabled(): boolean {
         if (this.label) {
             return (
-                this.label.type === UmlTypes.LABEL_PROPERTY_TYPE &&
+                this.isAutoCompleteLabel() &&
                 this.showAutocomplete
             );
         }
         return false;
+    }
+
+    protected isAutoCompleteLabel(): boolean {
+        return this.label?.type === UmlTypes.LABEL_PROPERTY_TYPE;
     }
 
     public hide(): void {

@@ -16,6 +16,7 @@ import org.eclipse.glsp.graph.builder.impl.GCompartmentBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.util.GConstants;
+import org.eclipse.uml2.uml.NamedElement;
 import org.eclipse.uml2.uml.Operation;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
@@ -23,6 +24,7 @@ import com.eclipsesource.uml.glsp.core.features.id_generator.IdCountContextGener
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Operation;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGModelMapper;
+import com.eclipsesource.uml.glsp.uml.utils.VisibilityKindUtils;
 import com.google.inject.Inject;
 
 public final class OperationCompartmentMapper extends BaseGModelMapper<Operation, GCompartment> {
@@ -38,6 +40,7 @@ public final class OperationCompartmentMapper extends BaseGModelMapper<Operation
             .hGap(3)
             .resizeContainer(true))
          .add(buildIcon(source))
+         .add(buildVisibility(source))
          .add(buildName(source));
 
       return builder.build();
@@ -53,6 +56,13 @@ public final class OperationCompartmentMapper extends BaseGModelMapper<Operation
       return new GLabelBuilder(CoreTypes.LABEL_NAME)
          .id(suffix.appendTo(NameLabelSuffix.SUFFIX, idGenerator.getOrCreateId(operation)))
          .text(operation.getName())
+         .build();
+   }
+
+   protected GLabel buildVisibility(final NamedElement source) {
+      return new GLabelBuilder(CoreTypes.LABEL_NAME)
+         .id(idCountGenerator.getOrCreateId(source))
+         .text(VisibilityKindUtils.asAscii(source.getVisibility()))
          .build();
    }
 }

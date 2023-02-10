@@ -43,7 +43,7 @@
     <ownedOperation xmi:id="_C7YZYItjEe2HOqFYNFa9oQ" name="asd" isAbstract="true"/>
     <ownedOperation xmi:id="_ESMbUItjEe2HOqFYNFa9oQ" name="NewOperation2" visibility="public" isStatic="true"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Class" xmi:id="_miX8cItiEe2HOqFYNFa9oQ" name="asd">
+  <packagedElement xmi:type="uml:Class" xmi:id="_miX8cItiEe2HOqFYNFa9oQ" name="asd" visibility="public">
     <generalization xmi:id="_UcmNYItjEe2HOqFYNFa9oQ" general="_mBn_0ItiEe2HOqFYNFa9oQ"/>
     <ownedAttribute xmi:id="_DZht8ItjEe2HOqFYNFa9oQ" name="asd">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_DZht8YtjEe2HOqFYNFa9oQ" value="1"/>
@@ -78,7 +78,7 @@
     <ownedLiteral xmi:id="_dbKksKF5Ee29brxj5TAeTA" name="asd"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Interface" xmi:id="__giDIItiEe2HOqFYNFa9oQ" name="a">
-    <ownedAttribute xmi:id="_ExHL8ItjEe2HOqFYNFa9oQ" name="NewProperty1asd" isStatic="true" type="_mBn_0ItiEe2HOqFYNFa9oQ" isOrdered="true" isReadOnly="true" isDerived="true" isDerivedUnion="true">
+    <ownedAttribute xmi:id="_ExHL8ItjEe2HOqFYNFa9oQ" name="NewProperty1asd" visibility="package" isStatic="true" type="_mBn_0ItiEe2HOqFYNFa9oQ" isOrdered="true" isReadOnly="true" isDerived="true" isDerivedUnion="true">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_ExHL8YtjEe2HOqFYNFa9oQ"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_ExHL8otjEe2HOqFYNFa9oQ" value="2"/>
     </ownedAttribute>

@@ -23,4 +23,19 @@ public class VisibilityKindUtils {
          .map(v -> new ElementChoicePropertyItem.Choice(v.getLiteral(), v.getLiteral()))
          .collect(Collectors.toList());
    }
+
+   public static String asAscii(final VisibilityKind kind) {
+      switch (kind) {
+         case PACKAGE_LITERAL:
+            return "~";
+         case PRIVATE_LITERAL:
+            return "-";
+         case PROTECTED_LITERAL:
+            return "#";
+         case PUBLIC_LITERAL:
+            return "+";
+      }
+
+      return "<unknown>";
+   }
 }

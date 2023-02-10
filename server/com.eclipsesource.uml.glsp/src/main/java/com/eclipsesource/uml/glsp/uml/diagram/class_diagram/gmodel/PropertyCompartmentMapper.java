@@ -28,6 +28,7 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.Proper
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyTypeLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.utils.PropertyUtil;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGModelMapper;
+import com.eclipsesource.uml.glsp.uml.utils.VisibilityKindUtils;
 import com.google.inject.Inject;
 
 public final class PropertyCompartmentMapper extends BaseGModelMapper<Property, GCompartment> {
@@ -43,28 +44,12 @@ public final class PropertyCompartmentMapper extends BaseGModelMapper<Property, 
             .hGap(3)
             .resizeContainer(true))
          .add(buildIcon(source))
-         .add(buildName(source));
+         .add(buildVisibility(source))
+         .add(buildName(source))
+         .add(buildSeparator(source, ":"));
 
-      var separatorLabel = new GLabelBuilder(CoreTypes.LABEL_TEXT)
-         .id(idCountGenerator.getOrCreateId(source))
-         .text(":")
-         .build();
-      builder.add(separatorLabel);
-
-      Optional.ofNullable(source.getType()).ifPresentOrElse(type -> {
-         builder.add(buildTypeName(source, type.getName()));
-      }, () -> builder.add(buildTypeName(source, "<Undefined>")));
-
-      var propertyMultiplicity = PropertyUtil.getMultiplicity(source);
-      builder.add(
-         new GLabelBuilder(CoreTypes.LABEL_TEXT).text("[")
-            .id(idCountGenerator.getOrCreateId(source))
-            .build())
-         .add(buildTypeMultiplicity(source, propertyMultiplicity))
-         .add(
-            new GLabelBuilder(CoreTypes.LABEL_TEXT).text("]")
-               .id(idCountGenerator.getOrCreateId(source))
-               .build());
+      applyType(source, builder);
+      applyMultiplicity(source, builder);
 
       return builder.build();
    }
@@ -72,6 +57,13 @@ public final class PropertyCompartmentMapper extends BaseGModelMapper<Property, 
    protected GCompartment buildIcon(final Property source) {
       return new GCompartmentBuilder(UmlClass_Property.ICON)
          .id(idCountGenerator.getOrCreateId(source))
+         .build();
+   }
+
+   protected GLabel buildVisibility(final Property source) {
+      return new GLabelBuilder(CoreTypes.LABEL_NAME)
+         .id(idCountGenerator.getOrCreateId(source))
+         .text(VisibilityKindUtils.asAscii(source.getVisibility()))
          .build();
    }
 
@@ -89,10 +81,29 @@ public final class PropertyCompartmentMapper extends BaseGModelMapper<Property, 
          .build();
    }
 
-   protected GLabel buildTypeMultiplicity(final Property source, final String multiplicity) {
-      return new GLabelBuilder(UmlClass_Property.LABEL_MULTIPLICITY)
-         .id(suffix.appendTo(PropertyMultiplicityLabelSuffix.SUFFIX, idGenerator.getOrCreateId(source)))
-         .text(multiplicity)
+   protected GLabel buildSeparator(final Property source, final String text) {
+      return new GLabelBuilder(CoreTypes.LABEL_TEXT)
+         .id(idCountGenerator.getOrCreateId(source))
+         .text(text)
          .build();
+   }
+
+   protected void applyType(final Property source, final GCompartmentBuilder builder) {
+      Optional.ofNullable(source.getType()).ifPresentOrElse(type -> {
+         builder.add(buildTypeName(source, type.getName()));
+      }, () -> builder.add(buildTypeName(source, "<Undefined>")));
+   }
+
+   protected void applyMultiplicity(final Property source,
+      final GCompartmentBuilder builder) {
+      var multiplicity = PropertyUtil.getMultiplicity(source);
+
+      builder
+         .add(buildSeparator(source, "["))
+         .add(new GLabelBuilder(UmlClass_Property.LABEL_MULTIPLICITY)
+            .id(suffix.appendTo(PropertyMultiplicityLabelSuffix.SUFFIX, idGenerator.getOrCreateId(source)))
+            .text(multiplicity)
+            .build())
+         .add(buildSeparator(source, "]"));
    }
 }

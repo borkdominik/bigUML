@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.eclipse.glsp.graph.GCompartment;
+import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.builder.impl.GCompartmentBuilder;
@@ -29,6 +30,7 @@ import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_AbstractClass;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Class;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGNodeMapper;
+import com.eclipsesource.uml.glsp.uml.utils.VisibilityKindUtils;
 
 public final class ClassNodeMapper extends BaseGNodeMapper<Class, GNode> {
    @Override
@@ -80,12 +82,20 @@ public final class ClassNodeMapper extends BaseGNodeMapper<Class, GNode> {
          builder.add(icon);
       }
 
+      builder.add(buildVisibility(source));
       var nameLabel = new GLabelBuilder(CoreTypes.LABEL_NAME)
          .id(suffix.appendTo(NameLabelSuffix.SUFFIX, idGenerator.getOrCreateId(source)))
          .text(source.getName()).build();
       builder.add(nameLabel);
 
       return builder.build();
+   }
+
+   protected GLabel buildVisibility(final Class source) {
+      return new GLabelBuilder(CoreTypes.LABEL_NAME)
+         .id(idCountGenerator.getOrCreateId(source))
+         .text(VisibilityKindUtils.asAscii(source.getVisibility()))
+         .build();
    }
 
    protected GCompartment buildCompartment(final Class source) {

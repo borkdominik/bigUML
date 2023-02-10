@@ -16,6 +16,8 @@ import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramDel
 import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramLabelEditMapperContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramUpdateHandlerContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.SuffixIdAppenderContribution;
+import com.eclipsesource.uml.glsp.core.manifest.contributions.glsp.ActionHandlerContribution;
+import com.eclipsesource.uml.glsp.core.manifest.contributions.glsp.ClientActionContribution;
 import com.eclipsesource.uml.glsp.features.property_palette.manifest.contributions.DiagramElementPropertyMapperContribution;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.ClassDiagramConfiguration;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.label_edit.AssociationLabelEditMapper;
@@ -53,6 +55,8 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.PrimitiveType
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.PropertyCompartmentMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyMultiplicityLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyTypeLabelSuffix;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.action.RequestTypeInformationHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.action.SetTypeInformationAction;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.association.CreateAggregationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.association.CreateAssociationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.association.CreateCompositionHandler;
@@ -94,7 +98,8 @@ import com.eclipsesource.uml.modelserver.unotation.Representation;
 public final class ClassUmlManifest extends DiagramManifest
    implements DiagramCreateHandlerContribution,
    DiagramDeleteHandlerContribution, DiagramLabelEditMapperContribution, SuffixIdAppenderContribution,
-   DiagramElementPropertyMapperContribution, DiagramUpdateHandlerContribution {
+   DiagramElementPropertyMapperContribution, DiagramUpdateHandlerContribution,
+   ClientActionContribution, ActionHandlerContribution {
 
    @Override
    public String id() {
@@ -118,6 +123,13 @@ public final class ClassUmlManifest extends DiagramManifest
          contribution.addBinding(PropertyMultiplicityLabelSuffix.SUFFIX)
             .to(PropertyMultiplicityLabelSuffix.class);
          contribution.addBinding(PropertyTypeLabelSuffix.SUFFIX).to(PropertyTypeLabelSuffix.class);
+      });
+
+      contributeClientActions((contribution) -> {
+         contribution.addBinding().to(SetTypeInformationAction.class);
+      });
+      contributeActionHandlers((contribution) -> {
+         contribution.addBinding().to(RequestTypeInformationHandler.class);
       });
 
       contributeDiagramCreateHandlers((contribution) -> {

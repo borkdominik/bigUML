@@ -36,7 +36,7 @@ public class InterfacePropertyMapper extends BaseDiagramElementPropertyMapper<In
          .choice(
             UmlClass_Interface.Property.VISIBILITY_KIND,
             "Visibility",
-            VisibilityKindUtils.literals(),
+            VisibilityKindUtils.asChoices(),
             source.getVisibility().getLiteral())
 
          .items();

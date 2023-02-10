@@ -11,6 +11,7 @@
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property;
 
 import org.eclipse.uml2.uml.Property;
+import org.eclipse.uml2.uml.Type;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.BaseUpdateSemanticElementCommand;
@@ -65,8 +66,10 @@ public final class UpdatePropertySemanticCommand
          semanticElement.setVisibility(arg);
       });
 
-      updateArgument.type().ifPresent(arg -> {
-         semanticElement.setType(arg);
+      updateArgument.typeId().ifPresent(arg -> {
+         semanticElementAccessor.getElement(arg, Type.class).ifPresentOrElse(type -> {
+            semanticElement.setType(type);
+         }, () -> semanticElement.setType(null));
       });
 
       updateArgument.lowerBound().ifPresent(arg -> {

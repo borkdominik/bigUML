@@ -15,7 +15,6 @@ import java.util.Optional;
 
 import org.eclipse.uml2.uml.AggregationKind;
 import org.eclipse.uml2.uml.Property;
-import org.eclipse.uml2.uml.Type;
 import org.eclipse.uml2.uml.ValueSpecification;
 import org.eclipse.uml2.uml.VisibilityKind;
 
@@ -37,7 +36,7 @@ public final class UpdatePropertyArgument implements EmbeddedCodec.JsonEncodable
    private AggregationKind aggregation;
 
    // Reference
-   private Type type;
+   private String typeId;
    private ValueSpecification defaultValue;
 
    // References
@@ -70,8 +69,8 @@ public final class UpdatePropertyArgument implements EmbeddedCodec.JsonEncodable
       return Optional.ofNullable(visibilityKind);
    }
 
-   public Optional<Type> type() {
-      return Optional.ofNullable(type);
+   public Optional<String> typeId() {
+      return Optional.ofNullable(typeId);
    }
 
    public Optional<Integer> lowerBound() {
@@ -138,8 +137,8 @@ public final class UpdatePropertyArgument implements EmbeddedCodec.JsonEncodable
          return this;
       }
 
-      public Builder type(final Type value) {
-         argument.type = value;
+      public Builder typeId(final String value) {
+         argument.typeId = value;
          return this;
       }
 

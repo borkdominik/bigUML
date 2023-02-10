@@ -40,12 +40,12 @@ public class OperationPropertyMapper extends BaseDiagramElementPropertyMapper<Op
          .choice(
             UmlClass_Operation.Property.VISIBILITY_KIND,
             "Visibility",
-            VisibilityKindUtils.literals(),
+            VisibilityKindUtils.asChoices(),
             source.getVisibility().getLiteral())
          .choice(
             UmlClass_Operation.Property.CONCURRENCY,
             "Concurrency",
-            CallConcurrencyKindUtils.literals(),
+            CallConcurrencyKindUtils.asChoices(),
             source.getConcurrency().getLiteral())
 
          .items();

@@ -8,19 +8,23 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.uml.utils;
+package com.eclipsesource.uml.modelserver.core.models;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.function.Consumer;
 
-import org.eclipse.uml2.uml.AggregationKind;
+public class TypeInformation {
+   public String modelUri;
+   public String id;
 
-import com.eclipsesource.uml.glsp.features.property_palette.model.ElementChoicePropertyItem;
+   public String name;
+   public String type;
 
-public class AggregationKindUtils {
-   public static List<ElementChoicePropertyItem.Choice> asChoices() {
-      return AggregationKind.VALUES.stream()
-         .map(v -> new ElementChoicePropertyItem.Choice(v.getLiteral(), v.getLiteral()))
-         .collect(Collectors.toList());
+   public TypeInformation() {
+
+   }
+
+   public TypeInformation(final Consumer<TypeInformation> init) {
+      super();
+      init.accept(this);
    }
 }

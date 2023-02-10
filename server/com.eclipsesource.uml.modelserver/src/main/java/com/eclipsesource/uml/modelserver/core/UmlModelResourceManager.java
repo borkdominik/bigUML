@@ -13,6 +13,7 @@ package com.eclipsesource.uml.modelserver.core;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -30,9 +31,12 @@ import org.eclipse.emfcloud.modelserver.integration.SemanticFileExtension;
 import org.eclipse.emfcloud.modelserver.notation.integration.NotationFileExtension;
 import org.eclipse.glsp.server.emf.model.notation.NotationFactory;
 import org.eclipse.uml2.uml.Model;
+import org.eclipse.uml2.uml.Type;
 import org.eclipse.uml2.uml.UMLFactory;
 import org.eclipse.uml2.uml.resource.UMLResource;
 
+import com.eclipsesource.uml.modelserver.core.models.TypeInformation;
+import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
 import com.eclipsesource.uml.modelserver.shared.utils.UmlNotationUtil;
 import com.eclipsesource.uml.modelserver.unotation.UmlDiagram;
 import com.eclipsesource.uml.modelserver.unotation.UnotationFactory;
@@ -60,20 +64,35 @@ public class UmlModelResourceManager extends RecordingModelResourceManager {
       if (directoryPath == null || directoryPath.isEmpty()) {
          return;
       }
-      File directory = new File(directoryPath);
-      File[] list = directory.listFiles();
+      var directory = new File(directoryPath);
+      var list = directory.listFiles();
       Arrays.sort(list);
-      for (File file : list) {
+
+      for (var file : list) {
          if (isSourceDirectory(file)) {
             loadSourceResources(file.getAbsolutePath());
          } else if (file.isFile()) {
-            URI absolutePath = URI.createFileURI(file.getAbsolutePath());
-            if (UMLResource.FILE_EXTENSION.equals(absolutePath.fileExtension())) {
-               getUmlResourceSet(absolutePath);
+            var resourceURI = URI.createFileURI(file.getAbsolutePath());
+
+            if (UMLResource.FILE_EXTENSION.equals(resourceURI.fileExtension())) {
+               getUmlResourceSet(resourceURI);
             }
-            loadResource(absolutePath.toString());
+
+            loadResource(resourceURI.toString());
          }
       }
+   }
+
+   @Override
+   public ResourceSet getResourceSet(final String modeluri) {
+      var resourceURI = createURI(modeluri);
+
+      if (notationFileExtension.equals(resourceURI.fileExtension())) {
+         var semanticUri = resourceURI.trimFileExtension().appendFileExtension(semanticFileExtension);
+         return getUmlResourceSet(semanticUri);
+      }
+
+      return resourceSets.get(resourceURI);
    }
 
    /**
@@ -83,23 +102,13 @@ public class UmlModelResourceManager extends RecordingModelResourceManager {
     * @param modelURI a UML semantic model resource URI
     * @return its resource set
     */
-   protected ResourceSet getUmlResourceSet(final URI modelURI) {
+   public ResourceSet getUmlResourceSet(final URI modelURI) {
       var result = resourceSets.get(modelURI);
       if (result == null) {
          result = resourceSetFactory.createResourceSet(modelURI);
          resourceSets.put(modelURI, result);
       }
       return result;
-   }
-
-   @Override
-   public ResourceSet getResourceSet(final String modeluri) {
-      var resourceURI = createURI(modeluri);
-      if (notationFileExtension.equals(resourceURI.fileExtension())) {
-         var semanticUri = resourceURI.trimFileExtension().appendFileExtension(semanticFileExtension);
-         return getUmlResourceSet(semanticUri);
-      }
-      return resourceSets.get(resourceURI);
    }
 
    @Override
@@ -127,23 +136,7 @@ public class UmlModelResourceManager extends RecordingModelResourceManager {
       return false;
    }
 
-   /*-
-    * TODO: Why is this necessary?
-   public Set<String> getUmlTypes(final String modeluri) {
-      ResourceSet resourceSet = getResourceSet(modeluri);
-      Set<String> listOfClassifiers = new HashSet<>();
-      TreeIterator<Notifier> resourceSetContent = resourceSet.getAllContents();
-      while (resourceSetContent.hasNext()) {
-         Notifier res = resourceSetContent.next();
-         if (res instanceof DataType || res instanceof org.eclipse.uml2.uml.Class) {
-            listOfClassifiers.add(((NamedElement) res).getName());
-         }
-      }
-      return listOfClassifiers;
-   }
-   */
-
-   public boolean addUmlResources(final String modeluri, final String diagramType) {
+   public boolean createUmlModel(final String modeluri, final String diagramType) {
       var umlModelUri = createURI(modeluri);
       var resourceSet = resourceSetFactory.createResourceSet(umlModelUri);
       resourceSets.put(umlModelUri, resourceSet);
@@ -168,6 +161,31 @@ public class UmlModelResourceManager extends RecordingModelResourceManager {
       }
 
       return true;
+   }
+
+   public Set<TypeInformation> getUmlTypeInformation(final String modelUri) {
+      return modelRepository.loadResource(modelUri).map(resource -> {
+         var types = new HashSet<TypeInformation>();
+         var contents = resource.getAllContents();
+
+         while (contents.hasNext()) {
+            var res = contents.next();
+            if (res instanceof Type) {
+               var type = (Type) res;
+               types.add(new TypeInformation((that) -> {
+                  that.modelUri = modelUri;
+                  that.id = SemanticElementAccessor.getId(type);
+
+                  var simpleName = type.getClass().getSimpleName().replace("Impl", "");
+
+                  that.name = type.getName() == null || type.getName().isBlank() ? simpleName : type.getName();
+                  that.type = simpleName;
+               }));
+            }
+         }
+
+         return types;
+      }).orElse(new HashSet<>());
    }
 
    protected Model createNewModel(final URI modelUri) {

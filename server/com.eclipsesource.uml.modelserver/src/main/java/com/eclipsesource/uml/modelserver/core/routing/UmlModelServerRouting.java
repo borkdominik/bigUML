@@ -15,13 +15,15 @@ import static io.javalin.apibuilder.ApiBuilder.path;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emfcloud.modelserver.common.ModelServerPathParametersV2;
 import org.eclipse.emfcloud.modelserver.common.Routing;
+import org.eclipse.emfcloud.modelserver.common.codecs.EncodingException;
 import org.eclipse.emfcloud.modelserver.emf.common.JsonResponse;
-import org.eclipse.emfcloud.modelserver.emf.common.ModelResourceManager;
 import org.eclipse.emfcloud.modelserver.emf.common.ModelURIConverter;
+import org.eclipse.emfcloud.modelserver.emf.common.codecs.JsonCodec;
 import org.eclipse.emfcloud.modelserver.emf.common.util.ContextRequest;
 import org.eclipse.emfcloud.modelserver.emf.common.util.ContextResponse;
 
 import com.eclipsesource.uml.modelserver.core.UmlModelResourceManager;
+import com.eclipsesource.uml.modelserver.core.codec.UmlCodec;
 import com.google.inject.Inject;
 
 import io.javalin.Javalin;
@@ -32,11 +34,13 @@ import io.javalin.http.Context;
 public class UmlModelServerRouting implements Routing {
 
    @Inject
-   protected ModelResourceManager resourceManager;
+   protected UmlModelResourceManager resourceManager;
    @Inject
    protected ModelURIConverter uriConverter;
    @Inject
    protected Javalin javalin;
+
+   protected UmlCodec umlCodec = new UmlCodec();
 
    @Override
    public void bindRoutes() {
@@ -53,6 +57,7 @@ public class UmlModelServerRouting implements Routing {
 
    private void apiEndpoints() {
       ApiBuilder.get(UmlModelServerPaths.UML_CREATE, this::createUmlModel);
+      ApiBuilder.get(UmlModelServerPaths.UML_TYPES, this::getUmlTypes);
    }
 
    private void createUmlModel(final Context ctx) {
@@ -60,7 +65,7 @@ public class UmlModelServerRouting implements Routing {
          uri -> {
             ContextRequest.getParam(ctx, UmlModelServerPathsParameters.UML_DIAGRAM_TYPE).ifPresentOrElse(
                typeParam -> {
-                  boolean result = ((UmlModelResourceManager) resourceManager).addUmlResources(uri, typeParam);
+                  boolean result = resourceManager.createUmlModel(uri, typeParam);
                   ctx.json(result ? JsonResponse.success() : JsonResponse.error());
                },
                () -> ContextResponse.missingParameter(ctx, UmlModelServerPathsParameters.UML_DIAGRAM_TYPE));
@@ -68,20 +73,20 @@ public class UmlModelServerRouting implements Routing {
          () -> ContextResponse.missingParameter(ctx, ModelServerPathParametersV2.MODEL_URI));
    }
 
-   /*- TODO: Enable it later
    protected void getUmlTypes(final Context ctx) {
       uriConverter.resolveModelURI(ctx).map(URI::toString).ifPresentOrElse(
          uri -> {
             try {
                ctx.json(JsonResponse
-                  .success(JsonCodec.encode(((UmlModelResourceManager) resourceManager).getUmlTypes(uri))));
+                  .success(JsonCodec.encode(resourceManager.getUmlTypeInformation(uri))));
             } catch (EncodingException e) {
-               encodingError(ctx, e);
+               ContextResponse.encodingError(ctx, e);
             }
          },
-         () -> missingParameter(ctx, ModelServerPathParametersV1.MODEL_URI));
+         () -> ContextResponse.missingParameter(ctx, ModelServerPathParametersV2.MODEL_URI));
    }
 
+   /*- TODO: Enable it later
    protected void getUmlBehaviors(final Context ctx) {
       uriConverter.resolveModelURI(ctx).map(URI::toString).ifPresentOrElse(
          uri -> {

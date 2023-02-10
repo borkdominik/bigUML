@@ -15,11 +15,11 @@ import java.util.List;
 public final class ElementChoicePropertyItem extends ElementPropertyItem {
 
    public final String label;
-   public final List<String> choices;
+   public final List<ElementChoicePropertyItem.Choice> choices;
    public final String choice;
 
    public ElementChoicePropertyItem(final String elementId, final String propertyId, final String label,
-      final List<String> choices, final String choice) {
+      final List<ElementChoicePropertyItem.Choice> choices, final String choice) {
       super(elementId, propertyId, ElementPropertyType.CHOICE);
 
       this.choices = choices;
@@ -27,4 +27,15 @@ public final class ElementChoicePropertyItem extends ElementPropertyItem {
       this.label = label;
    }
 
+   public static class Choice {
+      public final String label;
+      public final String value;
+
+      public Choice(final String label, final String value) {
+         super();
+         this.label = label;
+         this.value = value;
+      }
+
+   }
 }

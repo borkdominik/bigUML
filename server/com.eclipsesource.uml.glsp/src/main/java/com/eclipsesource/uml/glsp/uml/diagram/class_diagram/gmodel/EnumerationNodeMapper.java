@@ -13,6 +13,7 @@ package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel;
 import java.util.stream.Collectors;
 
 import org.eclipse.glsp.graph.GCompartment;
+import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.builder.impl.GCompartmentBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
@@ -20,6 +21,7 @@ import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.builder.impl.GNodeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.Enumeration;
+import org.eclipse.uml2.uml.NamedElement;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
@@ -27,6 +29,7 @@ import com.eclipsesource.uml.glsp.core.features.id_generator.IdCountContextGener
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Enumeration;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGNodeMapper;
+import com.eclipsesource.uml.glsp.uml.utils.VisibilityKindUtils;
 import com.google.inject.Inject;
 
 public final class EnumerationNodeMapper extends BaseGNodeMapper<Enumeration, GNode> {
@@ -67,6 +70,8 @@ public final class EnumerationNodeMapper extends BaseGNodeMapper<Enumeration, GN
          .build();
       compBuilder.add(icon);
 
+      compBuilder.add(buildVisibility(source));
+
       var nameLabel = new GLabelBuilder(CoreTypes.LABEL_NAME)
          .id(suffix.appendTo(NameLabelSuffix.SUFFIX, idGenerator.getOrCreateId(source)))
          .text(source.getName())
@@ -76,6 +81,13 @@ public final class EnumerationNodeMapper extends BaseGNodeMapper<Enumeration, GN
       builder.add(compBuilder.build());
 
       return builder.build();
+   }
+
+   protected GLabel buildVisibility(final NamedElement source) {
+      return new GLabelBuilder(CoreTypes.LABEL_NAME)
+         .id(idCountGenerator.getOrCreateId(source))
+         .text(VisibilityKindUtils.asAscii(source.getVisibility()))
+         .build();
    }
 
    protected GCompartment buildLiterals(final Enumeration source) {

@@ -49,7 +49,7 @@ public class AssociationPropertyMapper extends BaseDiagramElementPropertyMapper<
          .choice(
             UmlClass_Association.Property.VISIBILITY_KIND,
             "Visibility",
-            VisibilityKindUtils.literals(),
+            VisibilityKindUtils.asChoices(),
             source.getVisibility().getLiteral())
          .items());
 
@@ -62,7 +62,7 @@ public class AssociationPropertyMapper extends BaseDiagramElementPropertyMapper<
          .choice(
             UmlClass_Property.Property.AGGREGATION,
             "Member End Aggregation",
-            AggregationKindUtils.literals(),
+            AggregationKindUtils.asChoices(),
             memberEndFirst.getAggregation().getLiteral())
          .items());
 
@@ -75,7 +75,7 @@ public class AssociationPropertyMapper extends BaseDiagramElementPropertyMapper<
          .choice(
             UmlClass_Property.Property.AGGREGATION,
             "Member End Aggregation",
-            AggregationKindUtils.literals(),
+            AggregationKindUtils.asChoices(),
             memberEndSecond.getAggregation().getLiteral())
          .items());
 

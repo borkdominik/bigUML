@@ -35,7 +35,7 @@ public class EnumerationLiteralPropertyMapper extends BaseDiagramElementProperty
          .choice(
             UmlClass_EnumerationLiteral.Property.VISIBILITY_KIND,
             "Visibility",
-            VisibilityKindUtils.literals(),
+            VisibilityKindUtils.asChoices(),
             source.getVisibility().getLiteral())
 
          .items();

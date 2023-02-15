@@ -51,6 +51,7 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.EnumerationLi
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.EnumerationNodeMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.GeneralizationEdgeMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.InterfaceNodeMapper;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.InterfaceRealizationEdgeMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.OperationCompartmentMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.PackageNodeMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.PrimitiveTypeNodeMapper;
@@ -82,6 +83,9 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.en
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.generalization.CreateGeneralizationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.generalization.DeleteGeneralizationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.generalization.UpdateGeneralizationHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.interface_realization.CreateInterfaceRealizationHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.interface_realization.DeleteInterfaceRealizationHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.interface_realization.UpdateInterfaceRealizationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.operation.CreateOperationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.operation.DeleteOperationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.operation.UpdateOperationHandler;
@@ -153,6 +157,7 @@ public final class ClassUmlManifest extends DiagramManifest
          contribution.addBinding().to(CreateEnumerationLiteralHandler.class);
          contribution.addBinding().to(CreateGeneralizationHandler.class);
          contribution.addBinding().to(CreateInterfaceHandler.class);
+         contribution.addBinding().to(CreateInterfaceRealizationHandler.class);
          contribution.addBinding().to(CreateOperationHandler.class);
          contribution.addBinding().to(CreatePackageHandler.class);
          contribution.addBinding().to(CreatePrimitiveTypeHandler.class);
@@ -168,6 +173,7 @@ public final class ClassUmlManifest extends DiagramManifest
          contribution.addBinding().to(DeleteEnumerationLiteralHandler.class);
          contribution.addBinding().to(DeleteGeneralizationHandler.class);
          contribution.addBinding().to(DeleteInterfaceHandler.class);
+         contribution.addBinding().to(DeleteInterfaceRealizationHandler.class);
          contribution.addBinding().to(DeleteOperationHandler.class);
          contribution.addBinding().to(DeletePackageHandler.class);
          contribution.addBinding().to(DeletePrimitiveTypeHandler.class);
@@ -194,8 +200,9 @@ public final class ClassUmlManifest extends DiagramManifest
          contribution.addBinding().to(UpdateEnumerationHandler.class);
          contribution.addBinding().to(UpdateEnumerationLiteralHandler.class);
          contribution.addBinding().to(UpdateGeneralizationHandler.class);
-         contribution.addBinding().to(UpdateOperationHandler.class);
          contribution.addBinding().to(UpdateInterfaceHandler.class);
+         contribution.addBinding().to(UpdateInterfaceRealizationHandler.class);
+         contribution.addBinding().to(UpdateOperationHandler.class);
          contribution.addBinding().to(UpdatePackageHandler.class);
          contribution.addBinding().to(UpdatePrimitiveTypeHandler.class);
          contribution.addBinding().to(UpdatePropertyHandler.class);
@@ -210,6 +217,7 @@ public final class ClassUmlManifest extends DiagramManifest
          contribution.addBinding().to(EnumerationLiteralCompartmentMapper.class);
          contribution.addBinding().to(GeneralizationEdgeMapper.class);
          contribution.addBinding().to(InterfaceNodeMapper.class);
+         contribution.addBinding().to(InterfaceRealizationEdgeMapper.class);
          contribution.addBinding().to(OperationCompartmentMapper.class);
          contribution.addBinding().to(PackageNodeMapper.class);
          contribution.addBinding().to(PrimitiveTypeNodeMapper.class);

@@ -31,6 +31,7 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_E
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_EnumerationLiteral;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Generalization;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Interface;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_InterfaceRealization;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Operation;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Package;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_PrimitiveType;
@@ -59,7 +60,10 @@ public final class ClassDiagramConfiguration implements DiagramConfiguration {
             List.of(UmlClass_AbstractClass.TYPE_ID, UmlClass_Class.TYPE_ID, UmlClass_Interface.TYPE_ID)),
          new EdgeTypeHint(UmlClass_Dependency.TYPE_ID, true, true, true,
             List.of(UmlClass_AbstractClass.TYPE_ID, UmlClass_Class.TYPE_ID, UmlClass_Interface.TYPE_ID),
-            List.of(UmlClass_AbstractClass.TYPE_ID, UmlClass_Class.TYPE_ID, UmlClass_Interface.TYPE_ID)));
+            List.of(UmlClass_AbstractClass.TYPE_ID, UmlClass_Class.TYPE_ID, UmlClass_Interface.TYPE_ID)),
+         new EdgeTypeHint(UmlClass_InterfaceRealization.TYPE_ID, true, true, true,
+            List.of(UmlClass_AbstractClass.TYPE_ID, UmlClass_Class.TYPE_ID),
+            List.of(UmlClass_Interface.TYPE_ID)));
    }
 
    @Override
@@ -135,6 +139,7 @@ public final class ClassDiagramConfiguration implements DiagramConfiguration {
       mappings.put(UmlClass_Generalization.TYPE_ID, GraphPackage.Literals.GEDGE);
 
       mappings.put(UmlClass_Interface.TYPE_ID, GraphPackage.Literals.GNODE);
+      mappings.put(UmlClass_InterfaceRealization.TYPE_ID, GraphPackage.Literals.GEDGE);
 
       mappings.put(UmlClass_Operation.ICON, GraphPackage.Literals.GCOMPARTMENT);
       mappings.put(UmlClass_Operation.TYPE_ID, GraphPackage.Literals.GCOMPARTMENT);

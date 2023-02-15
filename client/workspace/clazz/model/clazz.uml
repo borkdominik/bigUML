@@ -85,5 +85,8 @@
     <ownedOperation xmi:id="_FIejEItjEe2HOqFYNFa9oQ" name="NewOperation1"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="_G5aKcaiJEe2QqKN8Act2TA" name="asd"/>
-  <packagedElement xmi:type="uml:Class" xmi:id="_HNgLIKiJEe2QqKN8Act2TA" name="Source"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="_HNgLIKiJEe2QqKN8Act2TA" name="Source">
+    <interfaceRealization xmi:id="_HFeNIK1CEe2aRpknoLk0Wg" client="_HNgLIKiJEe2QqKN8Act2TA" supplier="_AFdHAK1CEe2aRpknoLk0Wg" contract="_AFdHAK1CEe2aRpknoLk0Wg"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Interface" xmi:id="_AFdHAK1CEe2aRpknoLk0Wg" name="NewInterface1"/>
 </uml:Model>

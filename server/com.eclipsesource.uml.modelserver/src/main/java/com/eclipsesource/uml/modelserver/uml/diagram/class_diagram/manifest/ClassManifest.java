@@ -35,6 +35,9 @@ import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.enum
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.generalization.CreateGeneralizationContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.generalization.DeleteGeneralizationContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.generalization.UpdateGeneralizationContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.interface_realization.CreateInterfaceRealizationContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.interface_realization.DeleteInterfaceRealizationContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.interface_realization.UpdateInterfaceRealizationContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.operation.CreateOperationContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.operation.DeleteOperationContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.operation.UpdateOperationContribution;
@@ -109,6 +112,14 @@ public final class ClassManifest extends DiagramManifest implements CommandCodec
       multibinder.addBinding(CreateInterfaceContribution.TYPE).to(CreateInterfaceContribution.class);
       multibinder.addBinding(DeleteInterfaceContribution.TYPE).to(DeleteInterfaceContribution.class);
       multibinder.addBinding(UpdateInterfaceContribution.TYPE).to(UpdateInterfaceContribution.class);
+
+      // Interface Realization
+      multibinder.addBinding(CreateInterfaceRealizationContribution.TYPE)
+         .to(CreateInterfaceRealizationContribution.class);
+      multibinder.addBinding(DeleteInterfaceRealizationContribution.TYPE)
+         .to(DeleteInterfaceRealizationContribution.class);
+      multibinder.addBinding(UpdateInterfaceRealizationContribution.TYPE)
+         .to(UpdateInterfaceRealizationContribution.class);
 
       // Operation
       multibinder.addBinding(CreateOperationContribution.TYPE).to(CreateOperationContribution.class);

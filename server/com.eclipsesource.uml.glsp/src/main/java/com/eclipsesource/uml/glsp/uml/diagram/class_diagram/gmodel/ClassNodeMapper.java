@@ -10,6 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -54,7 +55,12 @@ public final class ClassNodeMapper extends BaseGNodeMapper<Class, GNode> {
 
    @Override
    public List<GModelElement> mapSiblings(final Class source) {
-      return mapHandler.handle(source.getGeneralizations());
+      var siblings = new ArrayList<GModelElement>();
+
+      siblings.addAll(mapHandler.handle(source.getGeneralizations()));
+      siblings.addAll(mapHandler.handle(source.getInterfaceRealizations()));
+
+      return siblings;
    }
 
    protected GCompartment buildHeader(final Class source) {

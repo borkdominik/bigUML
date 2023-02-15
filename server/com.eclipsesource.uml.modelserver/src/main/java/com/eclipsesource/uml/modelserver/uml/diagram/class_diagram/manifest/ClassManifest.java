@@ -47,6 +47,9 @@ import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.prim
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.CreatePropertyContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.DeletePropertyContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.UpdatePropertyContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.realization.CreateRealizationContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.realization.DeleteRealizationContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.realization.UpdateRealizationContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uclass.CreateClassContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uclass.DeleteClassContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uclass.UpdateClassContribution;
@@ -140,6 +143,11 @@ public final class ClassManifest extends DiagramManifest implements CommandCodec
       multibinder.addBinding(CreatePackageContribution.TYPE).to(CreatePackageContribution.class);
       multibinder.addBinding(DeletePackageContribution.TYPE).to(DeletePackageContribution.class);
       multibinder.addBinding(UpdatePackageContribution.TYPE).to(UpdatePackageContribution.class);
+
+      // Realization
+      multibinder.addBinding(CreateRealizationContribution.TYPE).to(CreateRealizationContribution.class);
+      multibinder.addBinding(DeleteRealizationContribution.TYPE).to(DeleteRealizationContribution.class);
+      multibinder.addBinding(UpdateRealizationContribution.TYPE).to(UpdateRealizationContribution.class);
 
    }
 }

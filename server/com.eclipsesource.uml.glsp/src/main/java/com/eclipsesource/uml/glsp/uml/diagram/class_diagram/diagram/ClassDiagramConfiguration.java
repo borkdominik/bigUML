@@ -36,6 +36,7 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_O
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Package;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_PrimitiveType;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Property;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Realization;
 import com.google.common.collect.Lists;
 
 public final class ClassDiagramConfiguration implements DiagramConfiguration {
@@ -63,7 +64,10 @@ public final class ClassDiagramConfiguration implements DiagramConfiguration {
             List.of(UmlClass_AbstractClass.TYPE_ID, UmlClass_Class.TYPE_ID, UmlClass_Interface.TYPE_ID)),
          new EdgeTypeHint(UmlClass_InterfaceRealization.TYPE_ID, true, true, true,
             List.of(UmlClass_AbstractClass.TYPE_ID, UmlClass_Class.TYPE_ID),
-            List.of(UmlClass_Interface.TYPE_ID)));
+            List.of(UmlClass_Interface.TYPE_ID)),
+         new EdgeTypeHint(UmlClass_Realization.TYPE_ID, true, true, true,
+            List.of(UmlClass_AbstractClass.TYPE_ID, UmlClass_Class.TYPE_ID, UmlClass_Interface.TYPE_ID),
+            List.of(UmlClass_AbstractClass.TYPE_ID, UmlClass_Class.TYPE_ID, UmlClass_Interface.TYPE_ID)));
    }
 
    @Override

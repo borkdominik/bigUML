@@ -213,10 +213,18 @@ export default function createClassModule(): ContainerModule {
             PolylineEdgeView
         );
 
-        // Abstraction
+        // Interface Realization
         configureModelElement(
             context,
             UmlTypes.INTERFACE_REALIZATION,
+            SEdge,
+            PolylineEdgeView
+        );
+
+        // Realization
+        configureModelElement(
+            context,
+            UmlTypes.REALIZATION,
             SEdge,
             PolylineEdgeView
         );

@@ -14,6 +14,9 @@ import org.eclipse.emfcloud.modelserver.edit.CommandContribution;
 
 import com.eclipsesource.uml.modelserver.core.manifest.DiagramManifest;
 import com.eclipsesource.uml.modelserver.core.manifest.contributions.CommandCodecContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.abstraction.CreateAbstractionContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.abstraction.DeleteAbstractionContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.abstraction.UpdateAbstractionContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association.CreateAssociationContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association.DeleteAssociationContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association.UpdateAssociationContribution;
@@ -58,6 +61,12 @@ public final class ClassManifest extends DiagramManifest implements CommandCodec
 
    @Override
    public void contributeCommandCodec(final MapBinder<String, CommandContribution> multibinder) {
+
+      // Abstraction
+      multibinder.addBinding(CreateAbstractionContribution.TYPE).to(CreateAbstractionContribution.class);
+      multibinder.addBinding(DeleteAbstractionContribution.TYPE).to(DeleteAbstractionContribution.class);
+      multibinder.addBinding(UpdateAbstractionContribution.TYPE).to(UpdateAbstractionContribution.class);
+
       // Class
       multibinder.addBinding(CreateClassContribution.TYPE).to(CreateClassContribution.class);
       multibinder.addBinding(DeleteClassContribution.TYPE).to(DeleteClassContribution.class);

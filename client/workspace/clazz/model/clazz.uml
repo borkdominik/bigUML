@@ -84,17 +84,7 @@
     </ownedAttribute>
     <ownedOperation xmi:id="_FIejEItjEe2HOqFYNFa9oQ" name="NewOperation1"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Class" xmi:id="_G5aKcaiJEe2QqKN8Act2TA" name="asd">
-    <ownedAttribute xmi:id="_OFVkoaiUEe2EhZ63bgDBIw" name="Source" type="_HNgLIKiJEe2QqKN8Act2TA" association="_OFU9kKiUEe2EhZ63bgDBIw">
-      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_OFVkoqiUEe2EhZ63bgDBIw" value="1"/>
-      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_OFVko6iUEe2EhZ63bgDBIw" value="1"/>
-    </ownedAttribute>
-  </packagedElement>
-  <packagedElement xmi:type="uml:Class" xmi:id="_HNgLIKiJEe2QqKN8Act2TA" name="Source">
-    <ownedAttribute xmi:id="_OFU9kaiUEe2EhZ63bgDBIw" name="Target" type="_G5aKcaiJEe2QqKN8Act2TA" aggregation="shared" association="_OFU9kKiUEe2EhZ63bgDBIw">
-      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_OFU9kqiUEe2EhZ63bgDBIw" value="1"/>
-      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_OFVkoKiUEe2EhZ63bgDBIw" value="1"/>
-    </ownedAttribute>
-  </packagedElement>
-  <packagedElement xmi:type="uml:Association" xmi:id="_OFU9kKiUEe2EhZ63bgDBIw" memberEnd="_OFU9kaiUEe2EhZ63bgDBIw _OFVkoaiUEe2EhZ63bgDBIw"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="_G5aKcaiJEe2QqKN8Act2TA" name="asd"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="_HNgLIKiJEe2QqKN8Act2TA" name="Source"/>
+  <packagedElement xmi:type="uml:Abstraction" xmi:id="_BTcoUK07Ee2SWIjWU5WfVA" client="_HNgLIKiJEe2QqKN8Act2TA" supplier="_G5aKcaiJEe2QqKN8Act2TA"/>
 </uml:Model>

@@ -18,6 +18,7 @@ import org.eclipse.glsp.server.features.toolpalette.PaletteItem;
 import com.eclipsesource.uml.glsp.core.features.tool_palette.PaletteItemUtil;
 import com.eclipsesource.uml.glsp.core.features.tool_palette.ToolPaletteConfiguration;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_AbstractClass;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Abstraction;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Association;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Class;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_DataType;
@@ -51,6 +52,7 @@ public final class ClassToolPaletteConfiguration implements ToolPaletteConfigura
 
    private PaletteItem relations() {
       var relations = List.of(
+         PaletteItemUtil.edge(UmlClass_Abstraction.TYPE_ID, "Abstraction", "umlabstraction"),
          PaletteItemUtil.edge(UmlClass_Association.ASSOCIATION_TYPE_ID, "Association", "umlassociation"),
          PaletteItemUtil.edge(UmlClass_Association.COMPOSITION_TYPE_ID, "Composition", "umlassociation"),
          PaletteItemUtil.edge(UmlClass_Association.AGGREGATION_TYPE_ID, "Aggregation", "umlassociation"),

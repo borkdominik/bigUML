@@ -42,6 +42,7 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.property_pa
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.property_palette.PrimitiveTypePropertyMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.property_palette.PropertyPropertyMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.tool_palette.ClassToolPaletteConfiguration;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.AbstractionEdgeMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.AssociationEdgeMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.ClassNodeMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.DataTypeNodeMapper;
@@ -57,6 +58,9 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.Proper
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyTypeLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.action.RequestTypeInformationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.action.SetTypeInformationAction;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.abstraction.CreateAbstractionHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.abstraction.DeleteAbstractionHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.abstraction.UpdateAbstractionHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.association.CreateAggregationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.association.CreateAssociationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.association.CreateCompositionHandler;
@@ -133,6 +137,7 @@ public final class ClassUmlManifest extends DiagramManifest
       });
 
       contributeDiagramCreateHandlers((contribution) -> {
+         contribution.addBinding().to(CreateAbstractionHandler.class);
          contribution.addBinding().to(CreateAggregationHandler.class);
          contribution.addBinding().to(CreateAssociationHandler.class);
          contribution.addBinding().to(CreateCompositionHandler.class);
@@ -149,6 +154,7 @@ public final class ClassUmlManifest extends DiagramManifest
          contribution.addBinding().to(CreatePackageHandler.class);
       });
       contributeDiagramDeleteHandlers((contribution) -> {
+         contribution.addBinding().to(DeleteAbstractionHandler.class);
          contribution.addBinding().to(DeleteAssociationHandler.class);
          contribution.addBinding().to(DeleteEnumerationHandler.class);
          contribution.addBinding().to(DeleteEnumerationLiteralHandler.class);
@@ -174,6 +180,7 @@ public final class ClassUmlManifest extends DiagramManifest
          contribution.addBinding().to(PackageLabelEditMapper.class);
       });
       contributeDiagramUpdateHandlers((contribution) -> {
+         contribution.addBinding().to(UpdateAbstractionHandler.class);
          contribution.addBinding().to(UpdateAssociationHandler.class);
          contribution.addBinding().to(UpdateDataTypeHandler.class);
          contribution.addBinding().to(UpdateEnumerationHandler.class);
@@ -187,6 +194,7 @@ public final class ClassUmlManifest extends DiagramManifest
          contribution.addBinding().to(UpdatePackageHandler.class);
       });
       contributeGModelMappers((contribution) -> {
+         contribution.addBinding().to(AbstractionEdgeMapper.class);
          contribution.addBinding().to(AssociationEdgeMapper.class);
          contribution.addBinding().to(ClassNodeMapper.class);
          contribution.addBinding().to(EnumerationNodeMapper.class);

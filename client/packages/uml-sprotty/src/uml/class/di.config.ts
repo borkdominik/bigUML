@@ -197,6 +197,14 @@ export default function createClassModule(): ContainerModule {
             NamedElementView
         );
 
+        // Abstraction
+        configureModelElement(
+            context,
+            UmlTypes.ABSTRACTION,
+            SEdge,
+            PolylineEdgeView
+        );
+
         // Other
         configureModelElement(
             context,

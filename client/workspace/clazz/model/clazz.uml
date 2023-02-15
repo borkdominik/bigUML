@@ -86,5 +86,4 @@
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="_G5aKcaiJEe2QqKN8Act2TA" name="asd"/>
   <packagedElement xmi:type="uml:Class" xmi:id="_HNgLIKiJEe2QqKN8Act2TA" name="Source"/>
-  <packagedElement xmi:type="uml:Abstraction" xmi:id="_BTcoUK07Ee2SWIjWU5WfVA" client="_HNgLIKiJEe2QqKN8Act2TA" supplier="_G5aKcaiJEe2QqKN8Act2TA"/>
 </uml:Model>

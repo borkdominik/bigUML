@@ -46,6 +46,7 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.AbstractionEd
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.AssociationEdgeMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.ClassNodeMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.DataTypeNodeMapper;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.DependencyEdgeMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.EnumerationLiteralCompartmentMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.EnumerationNodeMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.GeneralizationEdgeMapper;
@@ -69,6 +70,9 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.as
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.data_type.CreateDataTypeHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.data_type.DeleteDataTypeHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.data_type.UpdateDataTypeHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.dependency.CreateDependencyHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.dependency.DeleteDependencyHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.dependency.UpdateDependencyHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.enumeration.CreateEnumerationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.enumeration.DeleteEnumerationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.enumeration.UpdateEnumerationHandler;
@@ -138,34 +142,36 @@ public final class ClassUmlManifest extends DiagramManifest
 
       contributeDiagramCreateHandlers((contribution) -> {
          contribution.addBinding().to(CreateAbstractionHandler.class);
+         contribution.addBinding().to(CreateAbstractClassHandler.class);
          contribution.addBinding().to(CreateAggregationHandler.class);
          contribution.addBinding().to(CreateAssociationHandler.class);
+         contribution.addBinding().to(CreateClassHandler.class);
          contribution.addBinding().to(CreateCompositionHandler.class);
+         contribution.addBinding().to(CreateDataTypeHandler.class);
+         contribution.addBinding().to(CreateDependencyHandler.class);
          contribution.addBinding().to(CreateEnumerationHandler.class);
          contribution.addBinding().to(CreateEnumerationLiteralHandler.class);
          contribution.addBinding().to(CreateGeneralizationHandler.class);
-         contribution.addBinding().to(CreatePropertyHandler.class);
-         contribution.addBinding().to(CreateAbstractClassHandler.class);
-         contribution.addBinding().to(CreateClassHandler.class);
          contribution.addBinding().to(CreateInterfaceHandler.class);
          contribution.addBinding().to(CreateOperationHandler.class);
-         contribution.addBinding().to(CreateDataTypeHandler.class);
-         contribution.addBinding().to(CreatePrimitiveTypeHandler.class);
          contribution.addBinding().to(CreatePackageHandler.class);
+         contribution.addBinding().to(CreatePrimitiveTypeHandler.class);
+         contribution.addBinding().to(CreatePropertyHandler.class);
       });
       contributeDiagramDeleteHandlers((contribution) -> {
          contribution.addBinding().to(DeleteAbstractionHandler.class);
          contribution.addBinding().to(DeleteAssociationHandler.class);
+         contribution.addBinding().to(DeleteClassHandler.class);
+         contribution.addBinding().to(DeleteDataTypeHandler.class);
+         contribution.addBinding().to(DeleteDependencyHandler.class);
          contribution.addBinding().to(DeleteEnumerationHandler.class);
          contribution.addBinding().to(DeleteEnumerationLiteralHandler.class);
          contribution.addBinding().to(DeleteGeneralizationHandler.class);
-         contribution.addBinding().to(DeletePropertyHandler.class);
-         contribution.addBinding().to(DeleteClassHandler.class);
          contribution.addBinding().to(DeleteInterfaceHandler.class);
          contribution.addBinding().to(DeleteOperationHandler.class);
-         contribution.addBinding().to(DeleteDataTypeHandler.class);
-         contribution.addBinding().to(DeletePrimitiveTypeHandler.class);
          contribution.addBinding().to(DeletePackageHandler.class);
+         contribution.addBinding().to(DeletePrimitiveTypeHandler.class);
+         contribution.addBinding().to(DeletePropertyHandler.class);
       });
       contributeDiagramLabelEditMappers((contribution) -> {
          contribution.addBinding().to(AssociationLabelEditMapper.class);
@@ -182,30 +188,32 @@ public final class ClassUmlManifest extends DiagramManifest
       contributeDiagramUpdateHandlers((contribution) -> {
          contribution.addBinding().to(UpdateAbstractionHandler.class);
          contribution.addBinding().to(UpdateAssociationHandler.class);
+         contribution.addBinding().to(UpdateClassHandler.class);
          contribution.addBinding().to(UpdateDataTypeHandler.class);
+         contribution.addBinding().to(UpdateDependencyHandler.class);
          contribution.addBinding().to(UpdateEnumerationHandler.class);
          contribution.addBinding().to(UpdateEnumerationLiteralHandler.class);
          contribution.addBinding().to(UpdateGeneralizationHandler.class);
          contribution.addBinding().to(UpdateOperationHandler.class);
-         contribution.addBinding().to(UpdatePrimitiveTypeHandler.class);
-         contribution.addBinding().to(UpdatePropertyHandler.class);
-         contribution.addBinding().to(UpdateClassHandler.class);
          contribution.addBinding().to(UpdateInterfaceHandler.class);
          contribution.addBinding().to(UpdatePackageHandler.class);
+         contribution.addBinding().to(UpdatePrimitiveTypeHandler.class);
+         contribution.addBinding().to(UpdatePropertyHandler.class);
       });
       contributeGModelMappers((contribution) -> {
          contribution.addBinding().to(AbstractionEdgeMapper.class);
          contribution.addBinding().to(AssociationEdgeMapper.class);
          contribution.addBinding().to(ClassNodeMapper.class);
+         contribution.addBinding().to(DataTypeNodeMapper.class);
+         contribution.addBinding().to(DependencyEdgeMapper.class);
          contribution.addBinding().to(EnumerationNodeMapper.class);
          contribution.addBinding().to(EnumerationLiteralCompartmentMapper.class);
          contribution.addBinding().to(GeneralizationEdgeMapper.class);
          contribution.addBinding().to(InterfaceNodeMapper.class);
-         contribution.addBinding().to(PropertyCompartmentMapper.class);
          contribution.addBinding().to(OperationCompartmentMapper.class);
-         contribution.addBinding().to(DataTypeNodeMapper.class);
-         contribution.addBinding().to(PrimitiveTypeNodeMapper.class);
          contribution.addBinding().to(PackageNodeMapper.class);
+         contribution.addBinding().to(PrimitiveTypeNodeMapper.class);
+         contribution.addBinding().to(PropertyCompartmentMapper.class);
       });
 
       contributeDiagramElementPropertyMappers((contribution) -> {

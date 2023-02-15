@@ -45,6 +45,7 @@ export namespace UmlTypes {
     export const ICON_PACKAGE = `${ICON}:package`;
     export const PACKAGE = `${DefaultTypes.NODE}:package`;
     export const ABSTRACTION = `${DefaultTypes.EDGE}:abstraction`;
+    export const DEPENDENCY = `${DefaultTypes.EDGE}:dependency`;
 
     // OBJECT DIAGRAM
     export const OBJECT = `${DefaultTypes.NODE}:object`;

@@ -22,6 +22,7 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_A
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Association;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Class;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_DataType;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Dependency;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Enumeration;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_EnumerationLiteral;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Generalization;
@@ -56,6 +57,7 @@ public final class ClassToolPaletteConfiguration implements ToolPaletteConfigura
          PaletteItemUtil.edge(UmlClass_Association.ASSOCIATION_TYPE_ID, "Association", "umlassociation"),
          PaletteItemUtil.edge(UmlClass_Association.COMPOSITION_TYPE_ID, "Composition", "umlassociation"),
          PaletteItemUtil.edge(UmlClass_Association.AGGREGATION_TYPE_ID, "Aggregation", "umlassociation"),
+         PaletteItemUtil.edge(UmlClass_Dependency.TYPE_ID, "Dependency", "umldependency"),
          PaletteItemUtil.edge(UmlClass_Generalization.TYPE_ID, "Generalization", "umlgeneralization"));
 
       return PaletteItem.createPaletteGroup("uml.classifier", "Relation", relations, "symbol-property");

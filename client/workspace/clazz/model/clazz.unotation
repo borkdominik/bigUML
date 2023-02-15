@@ -89,7 +89,4 @@
     <position x="-254.5966410269114" y="-613.8835275676045"/>
     <size width="160.0" height="50.0"/>
   </elements>
-  <elements xsi:type="notation:Edge">
-    <semanticElement elementId="_BTcoUK07Ee2SWIjWU5WfVA"/>
-  </elements>
 </unotation:UmlDiagram>

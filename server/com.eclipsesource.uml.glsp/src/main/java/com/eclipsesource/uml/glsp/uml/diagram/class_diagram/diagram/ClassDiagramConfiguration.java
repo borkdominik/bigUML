@@ -26,6 +26,7 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_A
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Association;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Class;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_DataType;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Dependency;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Enumeration;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_EnumerationLiteral;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Generalization;
@@ -54,6 +55,9 @@ public final class ClassDiagramConfiguration implements DiagramConfiguration {
             List.of(UmlClass_AbstractClass.TYPE_ID, UmlClass_Class.TYPE_ID, UmlClass_Interface.TYPE_ID),
             List.of(UmlClass_AbstractClass.TYPE_ID, UmlClass_Class.TYPE_ID, UmlClass_Interface.TYPE_ID)),
          new EdgeTypeHint(UmlClass_Association.AGGREGATION_TYPE_ID, true, true, true,
+            List.of(UmlClass_AbstractClass.TYPE_ID, UmlClass_Class.TYPE_ID, UmlClass_Interface.TYPE_ID),
+            List.of(UmlClass_AbstractClass.TYPE_ID, UmlClass_Class.TYPE_ID, UmlClass_Interface.TYPE_ID)),
+         new EdgeTypeHint(UmlClass_Dependency.TYPE_ID, true, true, true,
             List.of(UmlClass_AbstractClass.TYPE_ID, UmlClass_Class.TYPE_ID, UmlClass_Interface.TYPE_ID),
             List.of(UmlClass_AbstractClass.TYPE_ID, UmlClass_Class.TYPE_ID, UmlClass_Interface.TYPE_ID)));
    }
@@ -108,8 +112,19 @@ public final class ClassDiagramConfiguration implements DiagramConfiguration {
    public Map<String, EClass> getTypeMappings() {
       Map<String, EClass> mappings = DefaultTypes.getDefaultTypeMappings();
 
+      mappings.put(UmlClass_Abstraction.TYPE_ID, GraphPackage.Literals.GEDGE);
+
+      mappings.put(UmlClass_Association.ASSOCIATION_TYPE_ID, GraphPackage.Literals.GEDGE);
+      mappings.put(UmlClass_Association.AGGREGATION_TYPE_ID, GraphPackage.Literals.GEDGE);
+      mappings.put(UmlClass_Association.COMPOSITION_TYPE_ID, GraphPackage.Literals.GEDGE);
+
       mappings.put(UmlClass_Class.ICON, GraphPackage.Literals.GCOMPARTMENT);
       mappings.put(UmlClass_Class.TYPE_ID, GraphPackage.Literals.GNODE);
+
+      mappings.put(UmlClass_DataType.ICON, GraphPackage.Literals.GCOMPARTMENT);
+      mappings.put(UmlClass_DataType.TYPE_ID, GraphPackage.Literals.GNODE);
+
+      mappings.put(UmlClass_Dependency.TYPE_ID, GraphPackage.Literals.GEDGE);
 
       mappings.put(UmlClass_Enumeration.ICON, GraphPackage.Literals.GCOMPARTMENT);
       mappings.put(UmlClass_Enumeration.TYPE_ID, GraphPackage.Literals.GNODE);
@@ -117,19 +132,12 @@ public final class ClassDiagramConfiguration implements DiagramConfiguration {
       mappings.put(UmlClass_EnumerationLiteral.ICON, GraphPackage.Literals.GCOMPARTMENT);
       mappings.put(UmlClass_EnumerationLiteral.TYPE_ID, GraphPackage.Literals.GCOMPARTMENT);
 
-      mappings.put(UmlClass_Interface.TYPE_ID, GraphPackage.Literals.GNODE);
-
-      mappings.put(UmlClass_Association.ASSOCIATION_TYPE_ID, GraphPackage.Literals.GEDGE);
-      mappings.put(UmlClass_Association.AGGREGATION_TYPE_ID, GraphPackage.Literals.GEDGE);
-      mappings.put(UmlClass_Association.COMPOSITION_TYPE_ID, GraphPackage.Literals.GEDGE);
-
       mappings.put(UmlClass_Generalization.TYPE_ID, GraphPackage.Literals.GEDGE);
+
+      mappings.put(UmlClass_Interface.TYPE_ID, GraphPackage.Literals.GNODE);
 
       mappings.put(UmlClass_Operation.ICON, GraphPackage.Literals.GCOMPARTMENT);
       mappings.put(UmlClass_Operation.TYPE_ID, GraphPackage.Literals.GCOMPARTMENT);
-
-      mappings.put(UmlClass_DataType.ICON, GraphPackage.Literals.GCOMPARTMENT);
-      mappings.put(UmlClass_DataType.TYPE_ID, GraphPackage.Literals.GNODE);
 
       mappings.put(UmlClass_PrimitiveType.ICON, GraphPackage.Literals.GCOMPARTMENT);
       mappings.put(UmlClass_PrimitiveType.TYPE_ID, GraphPackage.Literals.GNODE);
@@ -141,8 +149,6 @@ public final class ClassDiagramConfiguration implements DiagramConfiguration {
       mappings.put(UmlClass_Property.TYPE_ID, GraphPackage.Literals.GCOMPARTMENT);
       mappings.put(UmlClass_Property.LABEL_TYPE, GraphPackage.Literals.GLABEL);
       mappings.put(UmlClass_Property.LABEL_MULTIPLICITY, GraphPackage.Literals.GLABEL);
-
-      mappings.put(UmlClass_Abstraction.TYPE_ID, GraphPackage.Literals.GEDGE);
 
       return mappings;
    }

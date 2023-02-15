@@ -23,6 +23,9 @@ import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.asso
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.data_type.CreateDataTypeContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.data_type.DeleteDataTypeContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.data_type.UpdateDataTypeContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.dependency.CreateDependencyContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.dependency.DeleteDependencyContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.dependency.UpdateDependencyContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.enumeration.CreateEnumerationContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.enumeration.DeleteEnumerationContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.enumeration.UpdateEnumerationContribution;
@@ -67,30 +70,25 @@ public final class ClassManifest extends DiagramManifest implements CommandCodec
       multibinder.addBinding(DeleteAbstractionContribution.TYPE).to(DeleteAbstractionContribution.class);
       multibinder.addBinding(UpdateAbstractionContribution.TYPE).to(UpdateAbstractionContribution.class);
 
-      // Class
-      multibinder.addBinding(CreateClassContribution.TYPE).to(CreateClassContribution.class);
-      multibinder.addBinding(DeleteClassContribution.TYPE).to(DeleteClassContribution.class);
-      multibinder.addBinding(UpdateClassContribution.TYPE).to(UpdateClassContribution.class);
-
-      // Property
-      multibinder.addBinding(CreatePropertyContribution.TYPE).to(CreatePropertyContribution.class);
-      multibinder.addBinding(DeletePropertyContribution.TYPE).to(DeletePropertyContribution.class);
-      multibinder.addBinding(UpdatePropertyContribution.TYPE).to(UpdatePropertyContribution.class);
-
       // Association
       multibinder.addBinding(CreateAssociationContribution.TYPE).to(CreateAssociationContribution.class);
       multibinder.addBinding(DeleteAssociationContribution.TYPE).to(DeleteAssociationContribution.class);
       multibinder.addBinding(UpdateAssociationContribution.TYPE).to(UpdateAssociationContribution.class);
 
-      // Generalization
-      multibinder.addBinding(CreateGeneralizationContribution.TYPE).to(CreateGeneralizationContribution.class);
-      multibinder.addBinding(DeleteGeneralizationContribution.TYPE).to(DeleteGeneralizationContribution.class);
-      multibinder.addBinding(UpdateGeneralizationContribution.TYPE).to(UpdateGeneralizationContribution.class);
+      // Class
+      multibinder.addBinding(CreateClassContribution.TYPE).to(CreateClassContribution.class);
+      multibinder.addBinding(DeleteClassContribution.TYPE).to(DeleteClassContribution.class);
+      multibinder.addBinding(UpdateClassContribution.TYPE).to(UpdateClassContribution.class);
 
-      // Interface
-      multibinder.addBinding(CreateInterfaceContribution.TYPE).to(CreateInterfaceContribution.class);
-      multibinder.addBinding(DeleteInterfaceContribution.TYPE).to(DeleteInterfaceContribution.class);
-      multibinder.addBinding(UpdateInterfaceContribution.TYPE).to(UpdateInterfaceContribution.class);
+      // Data Type
+      multibinder.addBinding(CreateDataTypeContribution.TYPE).to(CreateDataTypeContribution.class);
+      multibinder.addBinding(DeleteDataTypeContribution.TYPE).to(DeleteDataTypeContribution.class);
+      multibinder.addBinding(UpdateDataTypeContribution.TYPE).to(UpdateDataTypeContribution.class);
+
+      // Dependency
+      multibinder.addBinding(CreateDependencyContribution.TYPE).to(CreateDependencyContribution.class);
+      multibinder.addBinding(DeleteDependencyContribution.TYPE).to(DeleteDependencyContribution.class);
+      multibinder.addBinding(UpdateDependencyContribution.TYPE).to(UpdateDependencyContribution.class);
 
       // Enumeration
       multibinder.addBinding(CreateEnumerationContribution.TYPE).to(CreateEnumerationContribution.class);
@@ -102,20 +100,30 @@ public final class ClassManifest extends DiagramManifest implements CommandCodec
       multibinder.addBinding(DeleteEnumerationLiteralContribution.TYPE).to(DeleteEnumerationLiteralContribution.class);
       multibinder.addBinding(UpdateEnumerationLiteralContribution.TYPE).to(UpdateEnumerationLiteralContribution.class);
 
+      // Generalization
+      multibinder.addBinding(CreateGeneralizationContribution.TYPE).to(CreateGeneralizationContribution.class);
+      multibinder.addBinding(DeleteGeneralizationContribution.TYPE).to(DeleteGeneralizationContribution.class);
+      multibinder.addBinding(UpdateGeneralizationContribution.TYPE).to(UpdateGeneralizationContribution.class);
+
+      // Interface
+      multibinder.addBinding(CreateInterfaceContribution.TYPE).to(CreateInterfaceContribution.class);
+      multibinder.addBinding(DeleteInterfaceContribution.TYPE).to(DeleteInterfaceContribution.class);
+      multibinder.addBinding(UpdateInterfaceContribution.TYPE).to(UpdateInterfaceContribution.class);
+
       // Operation
       multibinder.addBinding(CreateOperationContribution.TYPE).to(CreateOperationContribution.class);
       multibinder.addBinding(DeleteOperationContribution.TYPE).to(DeleteOperationContribution.class);
       multibinder.addBinding(UpdateOperationContribution.TYPE).to(UpdateOperationContribution.class);
 
-      // Data Type
-      multibinder.addBinding(CreateDataTypeContribution.TYPE).to(CreateDataTypeContribution.class);
-      multibinder.addBinding(DeleteDataTypeContribution.TYPE).to(DeleteDataTypeContribution.class);
-      multibinder.addBinding(UpdateDataTypeContribution.TYPE).to(UpdateDataTypeContribution.class);
-
       // Primitive Type
       multibinder.addBinding(CreatePrimitiveTypeContribution.TYPE).to(CreatePrimitiveTypeContribution.class);
       multibinder.addBinding(DeletePrimitiveTypeContribution.TYPE).to(DeletePrimitiveTypeContribution.class);
       multibinder.addBinding(UpdatePrimitiveTypeContribution.TYPE).to(UpdatePrimitiveTypeContribution.class);
+
+      // Property
+      multibinder.addBinding(CreatePropertyContribution.TYPE).to(CreatePropertyContribution.class);
+      multibinder.addBinding(DeletePropertyContribution.TYPE).to(DeletePropertyContribution.class);
+      multibinder.addBinding(UpdatePropertyContribution.TYPE).to(UpdatePropertyContribution.class);
 
       // Package
       multibinder.addBinding(CreatePackageContribution.TYPE).to(CreatePackageContribution.class);

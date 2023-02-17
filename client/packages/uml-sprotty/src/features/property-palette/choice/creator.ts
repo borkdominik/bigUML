@@ -25,6 +25,7 @@ export function createChoiceProperty(propertyItem: ElementChoicePropertyItem, ev
     div.classList.add("property-item", "property-choice-item");
 
     const label = document.createElement("label");
+    label.classList.add("property-item-label");
     label.textContent = propertyItem.label;
     div.appendChild(label);
 

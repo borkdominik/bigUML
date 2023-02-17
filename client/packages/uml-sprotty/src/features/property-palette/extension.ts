@@ -16,12 +16,12 @@
 import {
     Action,
     ActionDispatcher,
+    DeleteElementOperation,
     EditorContextService,
     IActionHandler,
     ICommand,
     isSelectAction,
     isSetDirtyStateAction,
-    SelectAction,
     SModelRoot,
     SModelRootListener,
     TYPES
@@ -38,6 +38,7 @@ import {
     ElementPropertyUI,
     PropertyPalette as PropertyPaletteModel
 } from "./model";
+import { createReferenceProperty, ElementReferencePropertyItem } from "./reference";
 import { createTextProperty, ElementTextPropertyItem } from "./text";
 
 @injectable()
@@ -48,16 +49,12 @@ export class PropertyPalette implements IActionHandler, SModelRootListener, Edit
     @inject(EditorContextService) protected readonly editorContext: EditorContextService;
 
     protected paletteAction?: SetPropertyPaletteAction;
-    protected selectAction?: SelectAction;
+    protected activeElementId?: string;
     protected uiElements: ElementPropertyUI[] = [];
 
     protected containerElement: HTMLElement;
     protected header: HTMLElement;
     protected content: HTMLElement;
-
-    get selectedItems(): string[] {
-        return this.selectAction?.selectedElementsIDs ?? [];
-    }
 
     get palette(): PropertyPaletteModel | undefined {
         return this.paletteAction?.palette;
@@ -82,8 +79,7 @@ export class PropertyPalette implements IActionHandler, SModelRootListener, Edit
 
     handle(action: Action): ICommand | Action | void {
         if (isSelectAction(action) && action.selectedElementsIDs.length > 0) {
-            this.selectAction = action;
-            this.refresh();
+            this.refresh(action.selectedElementsIDs[0]);
         } else if (isSetDirtyStateAction(action)) {
             this.refresh();
             this.enable();
@@ -186,6 +182,21 @@ export class PropertyPalette implements IActionHandler, SModelRootListener, Edit
                             this.update(item.elementId, item.propertyId, input.value);
                         }
                     });
+                } else if (ElementReferencePropertyItem.is(propertyItem)) {
+                    created = createReferenceProperty(propertyItem, {
+                        onCreate: async (item, create) => {
+                            await this.actionDispatcher.dispatch(create.action);
+                        },
+                        onDelete: async (item, references) => {
+                            if (references.length > 0) {
+                                await this.actionDispatcher.dispatch(new DeleteElementOperation(references.map(r => r.elementId)));
+                            }
+                        },
+                        onNavigate: async (item, reference) => {
+                            this.content.scrollTop = 0;
+                            this.refresh(reference.elementId);
+                        }
+                    });
                 }
 
                 if (created !== undefined) {
@@ -198,10 +209,10 @@ export class PropertyPalette implements IActionHandler, SModelRootListener, Edit
         }
     }
 
-    protected async refresh(): Promise<SetPropertyPaletteAction> {
-        const id = this.selectedItems[0];
+    protected async refresh(elementId?: string): Promise<SetPropertyPaletteAction> {
+        this.activeElementId = elementId ?? this.activeElementId;
 
-        return this.request(id).then(response => {
+        return this.request(this.activeElementId).then(response => {
             this.paletteAction = response;
 
             this.refreshUi(this.palette);

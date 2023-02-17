@@ -22,7 +22,8 @@ public class UmlClass_Class {
       NAME,
       IS_ABSTRACT,
       IS_ACTIVE,
-      VISIBILITY_KIND;
+      VISIBILITY_KIND,
+      OWNED_ATTRIBUTES;
 
    }
 

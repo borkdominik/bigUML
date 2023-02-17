@@ -13,25 +13,5 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-
-export interface PropertyPalette {
-    elementId: string;
-    label?: string;
-    items: ElementPropertyItem[];
-}
-
-export interface ElementPropertyItem {
-    elementId: string;
-    propertyId: string;
-    type: "TEXT" | "BOOL" | "CHOICE" | "REFERENCE";
-}
-
-export interface CreatedElementProperty {
-    element: HTMLElement;
-    ui: ElementPropertyUI;
-}
-
-export interface ElementPropertyUI {
-    enable: () => void;
-    disable: () => void;
-}
+export * from "./model";
+export * from "./creator";

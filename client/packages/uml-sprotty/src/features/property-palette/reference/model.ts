@@ -13,25 +13,31 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
+import { Action } from "@eclipse-glsp/protocol";
 
-export interface PropertyPalette {
-    elementId: string;
-    label?: string;
-    items: ElementPropertyItem[];
+import { ElementPropertyItem } from "../model";
+
+export interface ElementReferencePropertyItem extends ElementPropertyItem {
+    type: typeof ElementReferencePropertyItem.TYPE;
+    label: string;
+    references: ElementReferencePropertyItem.Reference[];
+    creates: ElementReferencePropertyItem.CreateReference[];
 }
 
-export interface ElementPropertyItem {
-    elementId: string;
-    propertyId: string;
-    type: "TEXT" | "BOOL" | "CHOICE" | "REFERENCE";
-}
+export namespace ElementReferencePropertyItem {
+    export const TYPE = "REFERENCE";
 
-export interface CreatedElementProperty {
-    element: HTMLElement;
-    ui: ElementPropertyUI;
-}
+    export interface Reference {
+        label: string;
+        elementId: string;
+    }
 
-export interface ElementPropertyUI {
-    enable: () => void;
-    disable: () => void;
+    export interface CreateReference {
+        label: string;
+        action: Action;
+    }
+
+    export function is(value: ElementPropertyItem): value is ElementReferencePropertyItem {
+        return value.type === TYPE;
+    }
 }

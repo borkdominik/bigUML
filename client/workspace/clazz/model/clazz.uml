@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_Cfp0UGmxEe2kLe5KTNzRtw" name="clazz">
-  <packagedElement xmi:type="uml:Class" xmi:id="_QE0EkK7gEe2EZoZ5sgiBCg" name="NewClass2"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="_QE0EkK7gEe2EZoZ5sgiBCg" name="NewClass2">
+    <ownedAttribute xmi:id="_bM_S4K7gEe2EZoZ5sgiBCg" name="NewProperty1">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_bM_58K7gEe2EZoZ5sgiBCg" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_bNAhAK7gEe2EZoZ5sgiBCg" value="1"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_g69BoK7oEe2EZoZ5sgiBCg" name="NewProperty2">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_g69Boa7oEe2EZoZ5sgiBCg" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_g69Boq7oEe2EZoZ5sgiBCg" value="1"/>
+    </ownedAttribute>
+    <ownedOperation xmi:id="_bqmb8K7gEe2EZoZ5sgiBCg" name="NewOperation1"/>
+  </packagedElement>
 </uml:Model>

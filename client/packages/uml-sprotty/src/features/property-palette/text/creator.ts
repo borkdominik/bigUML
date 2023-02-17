@@ -26,10 +26,12 @@ export function createTextProperty(propertyItem: ElementTextPropertyItem, events
     div.classList.add("property-item", "property-text-item");
 
     const label = document.createElement("label");
+    label.classList.add("property-item-label");
     label.textContent = propertyItem.label;
     div.appendChild(label);
 
     const input = document.createElement("input");
+    input.classList.add("property-item-full");
     input.type = "text";
     input.value = propertyItem.text ?? "";
     input.addEventListener("blur", ev => {

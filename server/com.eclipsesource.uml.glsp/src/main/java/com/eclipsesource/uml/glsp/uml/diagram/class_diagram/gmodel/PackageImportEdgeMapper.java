@@ -40,7 +40,10 @@ public final class PackageImportEdgeMapper extends BaseGEdgeMapper<PackageImport
          .addCssClass(CoreCSS.Marker.TENT.end())
          .sourceId(nearestPackageId)
          .targetId(importedPackageId)
-         .routerKind(GConstants.RouterKind.MANHATTAN);
+         .routerKind(GConstants.RouterKind.MANHATTAN)
+         .add(
+            createEdgeLabel("<<import>>", 0.5d, idCountGenerator.getOrCreateId(source), CoreTypes.LABEL_TEXT,
+               GConstants.EdgeSide.TOP));
 
       applyEdgeNotation(source, builder);
 

@@ -40,7 +40,10 @@ public final class UsageEdgeMapper extends BaseGEdgeMapper<Usage, GEdge> {
          .addCssClass(CoreCSS.Marker.TENT.end())
          .sourceId(clientId)
          .targetId(supplierId)
-         .routerKind(GConstants.RouterKind.MANHATTAN);
+         .routerKind(GConstants.RouterKind.MANHATTAN)
+         .add(
+            createEdgeLabel("<<use>>", 0.5d, idCountGenerator.getOrCreateId(source), CoreTypes.LABEL_TEXT,
+               GConstants.EdgeSide.TOP));
 
       applyEdgeNotation(source, builder);
 

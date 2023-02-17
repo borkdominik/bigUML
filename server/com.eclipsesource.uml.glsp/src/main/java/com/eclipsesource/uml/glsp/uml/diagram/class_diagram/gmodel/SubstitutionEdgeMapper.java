@@ -40,7 +40,10 @@ public final class SubstitutionEdgeMapper extends BaseGEdgeMapper<Substitution, 
          .addCssClass(CoreCSS.Marker.TENT.end())
          .sourceId(substitutingClassifierId)
          .targetId(contractId)
-         .routerKind(GConstants.RouterKind.MANHATTAN);
+         .routerKind(GConstants.RouterKind.MANHATTAN)
+         .add(
+            createEdgeLabel("<<substitution>>", 0.5d, idCountGenerator.getOrCreateId(source), CoreTypes.LABEL_TEXT,
+               GConstants.EdgeSide.TOP));
 
       applyEdgeNotation(source, builder);
 

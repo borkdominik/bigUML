@@ -40,7 +40,10 @@ public final class PackageMergeEdgeMapper extends BaseGEdgeMapper<PackageMerge, 
          .addCssClass(CoreCSS.Marker.TENT.end())
          .sourceId(nearestPackageId)
          .targetId(mergedPackageId)
-         .routerKind(GConstants.RouterKind.MANHATTAN);
+         .routerKind(GConstants.RouterKind.MANHATTAN)
+         .add(
+            createEdgeLabel("<<merge>>", 0.5d, idCountGenerator.getOrCreateId(source), CoreTypes.LABEL_TEXT,
+               GConstants.EdgeSide.TOP));
 
       applyEdgeNotation(source, builder);
 

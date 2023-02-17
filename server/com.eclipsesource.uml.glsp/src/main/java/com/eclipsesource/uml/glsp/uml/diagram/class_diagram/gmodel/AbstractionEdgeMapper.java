@@ -40,7 +40,10 @@ public final class AbstractionEdgeMapper extends BaseGEdgeMapper<Abstraction, GE
          .addCssClass(CoreCSS.Marker.TENT.end())
          .sourceId(clientId)
          .targetId(supplierId)
-         .routerKind(GConstants.RouterKind.MANHATTAN);
+         .routerKind(GConstants.RouterKind.MANHATTAN)
+         .add(
+            createEdgeLabel("<<abstraction>>", 0.5d, idCountGenerator.getOrCreateId(source), CoreTypes.LABEL_TEXT,
+               GConstants.EdgeSide.TOP));
 
       applyEdgeNotation(source, builder);
 

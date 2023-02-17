@@ -38,6 +38,7 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_P
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Property;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Realization;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Substitution;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Usage;
 import com.google.common.collect.Lists;
 
 public final class ClassDiagramConfiguration implements DiagramConfiguration {
@@ -70,6 +71,9 @@ public final class ClassDiagramConfiguration implements DiagramConfiguration {
             List.of(UmlClass_AbstractClass.TYPE_ID, UmlClass_Class.TYPE_ID, UmlClass_Interface.TYPE_ID),
             List.of(UmlClass_AbstractClass.TYPE_ID, UmlClass_Class.TYPE_ID, UmlClass_Interface.TYPE_ID)),
          new EdgeTypeHint(UmlClass_Substitution.TYPE_ID, true, true, true,
+            List.of(UmlClass_AbstractClass.TYPE_ID, UmlClass_Class.TYPE_ID, UmlClass_Interface.TYPE_ID),
+            List.of(UmlClass_AbstractClass.TYPE_ID, UmlClass_Class.TYPE_ID, UmlClass_Interface.TYPE_ID)),
+         new EdgeTypeHint(UmlClass_Usage.TYPE_ID, true, true, true,
             List.of(UmlClass_AbstractClass.TYPE_ID, UmlClass_Class.TYPE_ID, UmlClass_Interface.TYPE_ID),
             List.of(UmlClass_AbstractClass.TYPE_ID, UmlClass_Class.TYPE_ID, UmlClass_Interface.TYPE_ID)));
    }
@@ -166,6 +170,8 @@ public final class ClassDiagramConfiguration implements DiagramConfiguration {
       mappings.put(UmlClass_Realization.TYPE_ID, GraphPackage.Literals.GEDGE);
 
       mappings.put(UmlClass_Substitution.TYPE_ID, GraphPackage.Literals.GEDGE);
+
+      mappings.put(UmlClass_Usage.TYPE_ID, GraphPackage.Literals.GEDGE);
 
       return mappings;
    }

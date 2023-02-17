@@ -62,6 +62,9 @@ import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uint
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.upackage.CreatePackageContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.upackage.DeletePackageContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.upackage.UpdatePackageContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.usage.CreateUsageContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.usage.DeleteUsageContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.usage.UpdateUsageContribution;
 import com.google.inject.multibindings.MapBinder;
 
 public final class ClassManifest extends DiagramManifest implements CommandCodecContribution {
@@ -156,6 +159,11 @@ public final class ClassManifest extends DiagramManifest implements CommandCodec
       multibinder.addBinding(CreateSubstitutionContribution.TYPE).to(CreateSubstitutionContribution.class);
       multibinder.addBinding(DeleteSubstitutionContribution.TYPE).to(DeleteSubstitutionContribution.class);
       multibinder.addBinding(UpdateSubstitutionContribution.TYPE).to(UpdateSubstitutionContribution.class);
+
+      // Usage
+      multibinder.addBinding(CreateUsageContribution.TYPE).to(CreateUsageContribution.class);
+      multibinder.addBinding(DeleteUsageContribution.TYPE).to(DeleteUsageContribution.class);
+      multibinder.addBinding(UpdateUsageContribution.TYPE).to(UpdateUsageContribution.class);
 
    }
 }

@@ -22,7 +22,7 @@ import org.eclipse.uml2.uml.Substitution;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Abstraction;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Substitution;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGEdgeMapper;
 
 public final class SubstitutionEdgeMapper extends BaseGEdgeMapper<Substitution, GEdge> {
@@ -34,7 +34,7 @@ public final class SubstitutionEdgeMapper extends BaseGEdgeMapper<Substitution, 
       var contract = source.getContract();
       var contractId = idGenerator.getOrCreateId(contract);
 
-      GEdgeBuilder builder = new GEdgeBuilder(UmlClass_Abstraction.TYPE_ID)
+      GEdgeBuilder builder = new GEdgeBuilder(UmlClass_Substitution.TYPE_ID)
          .id(idGenerator.getOrCreateId(source))
          .addCssClasses(List.of(CoreCSS.EDGE, CoreCSS.EDGE_DASHED))
          .addCssClass(CoreCSS.Marker.TENT.end())

@@ -34,6 +34,7 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_P
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Property;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Realization;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Substitution;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Usage;
 
 public final class ClassToolPaletteConfiguration implements ToolPaletteConfiguration {
    @Override
@@ -65,7 +66,8 @@ public final class ClassToolPaletteConfiguration implements ToolPaletteConfigura
          PaletteItemUtil.edge(UmlClass_InterfaceRealization.TYPE_ID, "Interface Realization",
             "umlinterfacerealization"),
          PaletteItemUtil.edge(UmlClass_Realization.TYPE_ID, "Realization", "umlrealization"),
-         PaletteItemUtil.edge(UmlClass_Substitution.TYPE_ID, "Substitution", "umlsubstitution"));
+         PaletteItemUtil.edge(UmlClass_Substitution.TYPE_ID, "Substitution", "umlsubstitution"),
+         PaletteItemUtil.edge(UmlClass_Usage.TYPE_ID, "Usage", "umlusage"));
 
       return PaletteItem.createPaletteGroup("uml.classifier", "Relation", relations, "symbol-property");
    }

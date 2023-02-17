@@ -18,23 +18,23 @@ import org.eclipse.glsp.graph.builder.impl.GEdgeBuilder;
 import org.eclipse.glsp.graph.builder.impl.GEdgePlacementBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
-import org.eclipse.uml2.uml.Dependency;
+import org.eclipse.uml2.uml.Usage;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Dependency;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Usage;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGEdgeMapper;
 
-public final class DependencyEdgeMapper extends BaseGEdgeMapper<Dependency, GEdge> {
+public final class UsageEdgeMapper extends BaseGEdgeMapper<Usage, GEdge> {
 
    @Override
-   public GEdge map(final Dependency source) {
+   public GEdge map(final Usage source) {
       var client = source.getClients().get(0);
       var clientId = idGenerator.getOrCreateId(client);
       var supplier = source.getSuppliers().get(0);
       var supplierId = idGenerator.getOrCreateId(supplier);
 
-      GEdgeBuilder builder = new GEdgeBuilder(UmlClass_Dependency.TYPE_ID)
+      GEdgeBuilder builder = new GEdgeBuilder(UmlClass_Usage.TYPE_ID)
          .id(idGenerator.getOrCreateId(source))
          .addCssClasses(List.of(CoreCSS.EDGE, CoreCSS.EDGE_DASHED))
          .addCssClass(CoreCSS.Marker.TENT.end())

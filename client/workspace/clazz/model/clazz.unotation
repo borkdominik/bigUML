@@ -94,15 +94,4 @@
     <position x="-478.786905914402" y="-786.4115810211546"/>
     <size width="160.0" height="50.0"/>
   </elements>
-  <elements xsi:type="notation:Edge">
-    <semanticElement elementId="_HFeNIK1CEe2aRpknoLk0Wg"/>
-  </elements>
-  <elements xsi:type="notation:Edge">
-    <semanticElement elementId="_Pkrb0K1HEe2b6PDFLyO2Tg"/>
-    <bendPoints x="-105.97008467240609" y="-723.6717263431208"/>
-    <bendPoints x="-148.59667578490513" y="-723.6717263431208"/>
-  </elements>
-  <elements xsi:type="notation:Edge">
-    <semanticElement elementId="_jxyYwK7QEe2AGYFqWu-dCg"/>
-  </elements>
 </unotation:UmlDiagram>

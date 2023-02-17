@@ -22,7 +22,7 @@ import org.eclipse.uml2.uml.Realization;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Abstraction;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Substitution;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGEdgeMapper;
 
 public final class RealizationEdgeMapper extends BaseGEdgeMapper<Realization, GEdge> {
@@ -34,7 +34,7 @@ public final class RealizationEdgeMapper extends BaseGEdgeMapper<Realization, GE
       var supplier = source.getSuppliers().get(0);
       var supplierId = idGenerator.getOrCreateId(supplier);
 
-      GEdgeBuilder builder = new GEdgeBuilder(UmlClass_Abstraction.TYPE_ID)
+      GEdgeBuilder builder = new GEdgeBuilder(UmlClass_Substitution.TYPE_ID)
          .id(idGenerator.getOrCreateId(source))
          .addCssClasses(List.of(CoreCSS.EDGE, CoreCSS.EDGE_DASHED))
          .addCssClass(CoreCSS.Marker.TRIANGLE_EMPTY.end())

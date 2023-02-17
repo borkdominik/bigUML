@@ -49,6 +49,7 @@ export namespace UmlTypes {
     export const INTERFACE_REALIZATION = `${DefaultTypes.EDGE}:interface-realization`;
     export const REALIZATION = `${DefaultTypes.EDGE}:realization`;
     export const SUBSTITUTION = `${DefaultTypes.EDGE}:substitution`;
+    export const USAGE = `${DefaultTypes.EDGE}:usage`;
 
     // OBJECT DIAGRAM
     export const OBJECT = `${DefaultTypes.NODE}:object`;

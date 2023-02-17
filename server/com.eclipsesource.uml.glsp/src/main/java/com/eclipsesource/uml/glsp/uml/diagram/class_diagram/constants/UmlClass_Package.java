@@ -21,7 +21,9 @@ public class UmlClass_Package {
    public enum Property {
       NAME,
       URI,
-      VISIBILITY_KIND;
+      VISIBILITY_KIND,
+      PACKAGE_IMPORTS,
+      PACKAGE_MERGES;
    }
 
    private UmlClass_Package() {}

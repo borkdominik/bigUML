@@ -14,24 +14,17 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.eclipse.glsp.server.emf.EMFIdGenerator;
-import org.eclipse.uml2.uml.Property;
+import org.eclipse.uml2.uml.Operation;
 
 import com.eclipsesource.uml.glsp.features.property_palette.model.ElementReferencePropertyItem;
 
-public class PropertyUtils {
-   public static List<ElementReferencePropertyItem.Reference> asReferences(final List<Property> properties,
+public class OperationUtils {
+   public static List<ElementReferencePropertyItem.Reference> asReferences(final List<Operation> operations,
       final EMFIdGenerator idGenerator) {
-      var references = properties.stream()
+      var references = operations.stream()
          .map(v -> {
-            var label = v.getName() == null ? "Property" : v.getName();
-
-            var association = v.getAssociation();
-            if (association == null) {
-               return new ElementReferencePropertyItem.Reference(label, idGenerator.getOrCreateId(v), false);
-            }
-
-            return new ElementReferencePropertyItem.Reference(String.format("<Association> %s", label),
-               idGenerator.getOrCreateId(association));
+            var label = v.getName() == null ? "Operation" : v.getName();
+            return new ElementReferencePropertyItem.Reference(label, idGenerator.getOrCreateId(v), false);
          })
          .collect(Collectors.toList());
 

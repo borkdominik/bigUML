@@ -79,7 +79,9 @@ export class PropertyPalette implements IActionHandler, SModelRootListener, Edit
 
     handle(action: Action): ICommand | Action | void {
         if (isSelectAction(action) && action.selectedElementsIDs.length > 0) {
-            this.refresh(action.selectedElementsIDs[0]);
+            this.refresh(action.selectedElementsIDs[0]).then(() => {
+                this.content.scrollTop = 0;
+            });
         } else if (isSetDirtyStateAction(action)) {
             this.refresh();
             this.enable();
@@ -185,16 +187,20 @@ export class PropertyPalette implements IActionHandler, SModelRootListener, Edit
                 } else if (ElementReferencePropertyItem.is(propertyItem)) {
                     created = createReferenceProperty(propertyItem, {
                         onCreate: async (item, create) => {
+                            this.disable();
                             await this.actionDispatcher.dispatch(create.action);
+                            this.enable();
                         },
                         onDelete: async (item, references) => {
                             if (references.length > 0) {
+                                this.disable();
                                 await this.actionDispatcher.dispatch(new DeleteElementOperation(references.map(r => r.elementId)));
+                                this.enable();
                             }
                         },
                         onNavigate: async (item, reference) => {
+                            await this.refresh(reference.elementId);
                             this.content.scrollTop = 0;
-                            this.refresh(reference.elementId);
                         }
                     });
                 }

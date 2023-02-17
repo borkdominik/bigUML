@@ -21,7 +21,9 @@ public class UmlClass_PrimitiveType {
    public enum Property {
       NAME,
       IS_ABSTRACT,
-      VISIBILITY_KIND;
+      VISIBILITY_KIND,
+      OWNED_ATTRIBUTES,
+      OWNED_OPERATIONS;
    }
 
    private UmlClass_PrimitiveType() {}

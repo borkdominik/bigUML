@@ -30,6 +30,7 @@ export namespace ElementReferencePropertyItem {
     export interface Reference {
         label: string;
         elementId: string;
+        isReadonly: boolean;
     }
 
     export interface CreateReference {

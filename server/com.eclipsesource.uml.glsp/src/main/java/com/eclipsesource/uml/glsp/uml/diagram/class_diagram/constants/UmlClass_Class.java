@@ -23,7 +23,8 @@ public class UmlClass_Class {
       IS_ABSTRACT,
       IS_ACTIVE,
       VISIBILITY_KIND,
-      OWNED_ATTRIBUTES;
+      OWNED_ATTRIBUTES,
+      OWNED_OPERATIONS;
 
    }
 

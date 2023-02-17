@@ -6,4 +6,12 @@
     <position x="-869.5732402586661" y="-606.2553991749278"/>
     <size width="160.0" height="50.0"/>
   </elements>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_OSuH8K74Ee2EZoZ5sgiBCg"/>
+    <position x="-255.16208730637302" y="-447.9783836536727"/>
+    <size width="160.0" height="50.0"/>
+  </elements>
+  <elements xsi:type="notation:Edge">
+    <semanticElement elementId="_PFx8kK74Ee2EZoZ5sgiBCg"/>
+  </elements>
 </unotation:UmlDiagram>

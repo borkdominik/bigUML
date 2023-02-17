@@ -19,9 +19,11 @@ import { CreatedElementProperty } from "../model";
 import { ElementReferencePropertyItem } from "./model";
 
 interface State {
+    isReadOnly: boolean;
     propertyItem: ElementReferencePropertyItem;
     events: ReferencePropertyEvents;
     selectedElements: ElementReferencePropertyItem.Reference[];
+    interactableElements: { [key: string]: HTMLButtonElement };
 }
 
 export interface ReferencePropertyEvents {
@@ -32,7 +34,9 @@ export interface ReferencePropertyEvents {
 
 export function createReferenceProperty(propertyItem: ElementReferencePropertyItem, events: ReferencePropertyEvents): CreatedElementProperty {
     const state: State = {
+        isReadOnly: propertyItem.creates.length === 0,
         selectedElements: [],
+        interactableElements: {},
         propertyItem,
         events
     };
@@ -56,10 +60,10 @@ export function createReferenceProperty(propertyItem: ElementReferencePropertyIt
         element: div,
         ui: {
             disable: () => {
-                // NOOP
+                Object.values(state.interactableElements).forEach(e => e.disabled = true);
             },
             enable: () => {
-                // NOOP
+                Object.values(state.interactableElements).forEach(e => e.disabled = false);
             }
         }
     };
@@ -72,18 +76,24 @@ function createReferenceHeader(state: State): HTMLDivElement {
     const create = state.propertyItem.creates[0];
 
     if (create !== undefined) {
+        state.isReadOnly = false;
+
         const createReferenceButton = document.createElement("button");
         createReferenceButton.classList.add("reference-create-reference");
         createReferenceButton.appendChild(createIcon("plus"));
         createReferenceButton.addEventListener("click", async () => state.events.onCreate?.(state.propertyItem, create));
         header.appendChild(createReferenceButton);
-    }
 
-    const deleteButton = document.createElement("button");
-    deleteButton.classList.add("reference-delete");
-    deleteButton.appendChild(createIcon("close"));
-    deleteButton.addEventListener("click", async () => state.events.onDelete?.(state.propertyItem, state.selectedElements));
-    header.appendChild(deleteButton);
+        state.interactableElements["create-reference-button"] = createReferenceButton;
+
+        const deleteButton = document.createElement("button");
+        deleteButton.classList.add("reference-delete");
+        deleteButton.appendChild(createIcon("close"));
+        deleteButton.addEventListener("click", async () => state.events.onDelete?.(state.propertyItem, state.selectedElements));
+        header.appendChild(deleteButton);
+
+        state.interactableElements["delete-button"] = deleteButton;
+    }
 
     return header;
 }
@@ -96,15 +106,28 @@ function createReferenceBody(state: State): HTMLDivElement {
     state.propertyItem.references.forEach(reference => {
         const referenceElement = document.createElement("div");
         referenceElement.classList.add("reference-element");
-        referenceElement.addEventListener("click", () => {
-            if (referenceElement.classList.contains(selectedClass)) {
-                referenceElement.classList.remove(selectedClass);
-                state.selectedElements = state.selectedElements.filter(s => s.elementId !== reference.elementId);
-            } else {
-                referenceElement.classList.add(selectedClass);
-                state.selectedElements.push(reference);
-            }
-        });
+
+        if (reference.isReadonly) {
+            referenceElement.classList.add("reference-readonly");
+        }
+
+        if (!(state.isReadOnly || reference.isReadonly)) {
+            const checkState = createIcon("circle-large-outline");
+            checkState.classList.add("reference-check-state");
+            referenceElement.appendChild(checkState);
+
+            referenceElement.addEventListener("click", () => {
+                if (referenceElement.classList.contains(selectedClass)) {
+                    referenceElement.classList.remove(selectedClass);
+                    checkState.classList.replace("codicon-pass", "codicon-circle-large-outline");
+                    state.selectedElements = state.selectedElements.filter(s => s.elementId !== reference.elementId);
+                } else {
+                    checkState.classList.replace("codicon-circle-large-outline", "codicon-pass");
+                    referenceElement.classList.add(selectedClass);
+                    state.selectedElements.push(reference);
+                }
+            });
+        }
 
         const referenceLabel = document.createElement("label");
         referenceLabel.textContent = reference.label;

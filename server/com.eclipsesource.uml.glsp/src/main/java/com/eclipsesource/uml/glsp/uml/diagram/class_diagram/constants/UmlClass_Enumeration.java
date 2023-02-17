@@ -21,7 +21,8 @@ public class UmlClass_Enumeration {
    public enum Property {
       NAME,
       IS_ABSTRACT,
-      VISIBILITY_KIND;
+      VISIBILITY_KIND,
+      OWNED_LITERALS;
    }
 
    private UmlClass_Enumeration() {}

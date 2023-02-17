@@ -59,16 +59,21 @@ public class ElementPropertyBuilder<TPropertyType extends Enum<TPropertyType>> {
    }
 
    public ElementPropertyBuilder<TPropertyType> reference(final TPropertyType property, final String label,
+      final List<ElementReferencePropertyItem.Reference> references) {
+      return reference(elementId, property, label, references, List.of());
+   }
+
+   public ElementPropertyBuilder<TPropertyType> reference(final TPropertyType property, final String label,
       final List<ElementReferencePropertyItem.Reference> references,
-      final List<ElementReferencePropertyItem.CreateReference> createTypes) {
-      return reference(elementId, property, label, references, createTypes);
+      final List<ElementReferencePropertyItem.CreateReference> creates) {
+      return reference(elementId, property, label, references, creates);
    }
 
    public ElementPropertyBuilder<TPropertyType> reference(final String elementId, final TPropertyType property,
       final String label,
       final List<ElementReferencePropertyItem.Reference> references,
-      final List<ElementReferencePropertyItem.CreateReference> createTypes) {
-      items.add(new ElementReferencePropertyItem(elementId, property.name(), label, references, createTypes));
+      final List<ElementReferencePropertyItem.CreateReference> creates) {
+      items.add(new ElementReferencePropertyItem(elementId, property.name(), label, references, creates));
       return this;
    }
 

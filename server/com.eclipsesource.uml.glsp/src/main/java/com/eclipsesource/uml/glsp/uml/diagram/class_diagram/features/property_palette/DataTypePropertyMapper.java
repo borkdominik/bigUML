@@ -10,17 +10,24 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.property_palette;
 
+import java.util.List;
 import java.util.Optional;
 
+import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.uml2.uml.DataType;
 import org.eclipse.uml2.uml.VisibilityKind;
 
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
 import com.eclipsesource.uml.glsp.features.property_palette.handler.action.UpdateElementPropertyAction;
+import com.eclipsesource.uml.glsp.features.property_palette.model.ElementReferencePropertyItem;
 import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalette;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_DataType;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Operation;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Property;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.data_type.UpdateDataTypeHandler;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.BaseDiagramElementPropertyMapper;
+import com.eclipsesource.uml.glsp.uml.utils.OperationUtils;
+import com.eclipsesource.uml.glsp.uml.utils.PropertyUtils;
 import com.eclipsesource.uml.glsp.uml.utils.VisibilityKindUtils;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.data_type.UpdateDataTypeArgument;
 
@@ -38,6 +45,20 @@ public class DataTypePropertyMapper extends BaseDiagramElementPropertyMapper<Dat
             "Visibility",
             VisibilityKindUtils.asChoices(),
             source.getVisibility().getLiteral())
+         .reference(
+            UmlClass_DataType.Property.OWNED_ATTRIBUTES,
+            "Owned Attribute",
+            PropertyUtils.asReferences(source.getOwnedAttributes(), idGenerator),
+            List.of(
+               new ElementReferencePropertyItem.CreateReference("Property",
+                  new CreateNodeOperation(UmlClass_Property.TYPE_ID, elementId))))
+         .reference(
+            UmlClass_DataType.Property.OWNED_ATTRIBUTES,
+            "Owned Operation",
+            OperationUtils.asReferences(source.getOwnedOperations(), idGenerator),
+            List.of(
+               new ElementReferencePropertyItem.CreateReference("Operation",
+                  new CreateNodeOperation(UmlClass_Operation.TYPE_ID, elementId))))
 
          .items();
 

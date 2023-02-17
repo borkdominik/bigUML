@@ -50,31 +50,30 @@
     padding-left: 0.5rem;
 }
 
-.property-reference-item .reference-element:hover {
+.property-reference-item .reference-element:not(.reference-readonly):hover {
     background: var(--theia-menubar-selectionBackground);
     cursor: pointer;
 }
 
 .property-reference-item .reference-element-selected {
     background: var(--theia-activityBar-background);
-    padding-left: 1rem;
 }
 
-.property-reference-item .reference-element>label {
-    cursor: inherit;
+.property-reference-item .reference-check-state {
+    margin-right: 0.5rem;
 }
 
 .property-reference-item .reference-element-navigate {
     border: none;
     margin-left: auto;
     padding: 0.4rem;
-    background: inherit;
+    background: var(--theia-menu-background);
     color: inherit;
-    cursor: pointer;
 }
 
 .property-reference-item .reference-element-navigate:hover {
-    background: var(--theia-menubar-selectionBackground)
+    background: var(--theia-menubar-selectionBackground);
+    cursor: pointer;
 }
 
 .property-reference-item .reference-create-reference, .property-reference-item .reference-delete {
@@ -82,7 +81,6 @@
     padding: 0.4rem;
     background: inherit;
     color: inherit;
-    cursor: pointer;
 }
 
 .property-reference-item .reference-container-header {
@@ -92,7 +90,8 @@
 }
 
 .property-reference-item .reference-create-reference:hover, .property-reference-item .reference-delete:hover {
-    background: var(--theia-menubar-selectionBackground)
+    background: var(--theia-menubar-selectionBackground);
+    cursor: pointer;
 }
 
 .property-reference-item .reference-create-reference {

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_Cfp0UGmxEe2kLe5KTNzRtw" name="clazz">
+  <packagedElement xmi:type="uml:Package" xmi:id="_Zm4KgK79Ee2EZoZ5sgiBCg" name="NewPackage1"/>
   <packagedElement xmi:type="uml:Class" xmi:id="_QE0EkK7gEe2EZoZ5sgiBCg" name="asd">
     <ownedAttribute xmi:id="_bM_S4K7gEe2EZoZ5sgiBCg" name="NewProperty1">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_bM_58K7gEe2EZoZ5sgiBCg" value="1"/>
@@ -23,4 +24,8 @@
     </ownedAttribute>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="_PFx8kK74Ee2EZoZ5sgiBCg" memberEnd="_PGl04K74Ee2EZoZ5sgiBCg _PGmb8a74Ee2EZoZ5sgiBCg"/>
+  <packagedElement xmi:type="uml:DataType" xmi:id="_W7vZ8K79Ee2EZoZ5sgiBCg" name="NewDataType1"/>
+  <packagedElement xmi:type="uml:Package" xmi:id="_Z5-ssK79Ee2EZoZ5sgiBCg" name="NewPackage2">
+    <packageImport xmi:id="_ayMHEK79Ee2EZoZ5sgiBCg" importedPackage="_Zm4KgK79Ee2EZoZ5sgiBCg"/>
+  </packagedElement>
 </uml:Model>

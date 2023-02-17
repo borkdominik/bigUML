@@ -16,6 +16,7 @@
 import {
     Action,
     ActionDispatcher,
+    createIcon,
     DeleteElementOperation,
     EditorContextService,
     IActionHandler,
@@ -50,6 +51,7 @@ export class PropertyPalette implements IActionHandler, SModelRootListener, Edit
 
     protected paletteAction?: SetPropertyPaletteAction;
     protected activeElementId?: string;
+    protected lastPalettes: SetPropertyPaletteAction[] = [];
     protected uiElements: ElementPropertyUI[] = [];
 
     protected containerElement: HTMLElement;
@@ -79,6 +81,7 @@ export class PropertyPalette implements IActionHandler, SModelRootListener, Edit
 
     handle(action: Action): ICommand | Action | void {
         if (isSelectAction(action) && action.selectedElementsIDs.length > 0) {
+            this.lastPalettes = [];
             this.refresh(action.selectedElementsIDs[0]).then(() => {
                 this.content.scrollTop = 0;
             });
@@ -147,9 +150,35 @@ export class PropertyPalette implements IActionHandler, SModelRootListener, Edit
     }
 
     protected refreshHeader(palette: PropertyPaletteModel): void {
-        const label = palette.label;
-        if (label !== undefined) {
-            this.header.textContent = label;
+        if (palette.label !== undefined) {
+            const breadcrumbs = document.createElement("span");
+            breadcrumbs.classList.add("property-palette-breadcrumbs");
+
+            const lastPalettes = this.lastPalettes;
+
+            if (lastPalettes.length > 0) {
+                const backButton = document.createElement("button");
+                backButton.classList.add("property-palette-back");
+                backButton.appendChild(createIcon("chevron-left"));
+                backButton.addEventListener("click", async () => {
+                    const returnTo = lastPalettes.pop();
+                    this.refresh(returnTo?.palette.elementId);
+                });
+
+                this.header.appendChild(backButton);
+
+                const items = Array.from(new Set([lastPalettes[0], lastPalettes[lastPalettes.length - 1]]));
+                if (items.length === 1) {
+                    breadcrumbs.textContent = `${items[0].palette.label} > `;
+                } else {
+                    breadcrumbs.textContent = `${items[0].palette.label} > ... ${items[1].palette.label} > `;
+                }
+
+            }
+
+            breadcrumbs.textContent = `${breadcrumbs.textContent}${palette.label}`;
+
+            this.header.appendChild(breadcrumbs);
         } else {
             setTextPlaceholder(this.header, "No label provided.");
         }
@@ -199,6 +228,7 @@ export class PropertyPalette implements IActionHandler, SModelRootListener, Edit
                             }
                         },
                         onNavigate: async (item, reference) => {
+                            this.lastPalettes.push(this.paletteAction!);
                             await this.refresh(reference.elementId);
                             this.content.scrollTop = 0;
                         }

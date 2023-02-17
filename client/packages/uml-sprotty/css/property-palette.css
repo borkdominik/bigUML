@@ -6,8 +6,26 @@
 }
 
 .property-palette-header {
+    display: flex;
     padding: 0.4rem;
+    align-items: center;
     background: var(--theia-activityBar-background);
+}
+
+.property-palette-header .property-palette-back {
+    border: none;
+    background: inherit;
+    color: inherit;
+    margin-right: 0.5rem;
+}
+
+.property-palette-header .property-palette-back:hover {
+    cursor: pointer;
+    background: var(--theia-menubar-selectionBackground);
+}
+
+.property-palette-header .property-palette-breadcrumbs {
+    margin-right: 0.5rem;
 }
 
 .property-palette-content {

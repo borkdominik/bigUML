@@ -14,4 +14,25 @@
   <elements xsi:type="notation:Edge">
     <semanticElement elementId="_PFx8kK74Ee2EZoZ5sgiBCg"/>
   </elements>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_W7vZ8K79Ee2EZoZ5sgiBCg"/>
+    <position x="-347.47271447830366" y="-731.2765153192529"/>
+    <size width="160.0" height="50.0"/>
+  </elements>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_Zm4KgK79Ee2EZoZ5sgiBCg"/>
+    <position x="-498.6711555357762" y="-206.06087796171659"/>
+    <size width="160.0" height="50.0"/>
+  </elements>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_Z5-ssK79Ee2EZoZ5sgiBCg"/>
+    <position x="-807.4342878005097" y="-317.4702555830122"/>
+    <size width="169.96875" height="50.0"/>
+  </elements>
+  <elements xsi:type="notation:Edge">
+    <semanticElement elementId="_ayMHEK79Ee2EZoZ5sgiBCg"/>
+    <bendPoints x="-722.4499128005097" y="-163.55369004979872"/>
+    <bendPoints x="-512.3636578574951" y="-163.55369004979872"/>
+    <bendPoints x="-512.3636578574951" y="-181.06087796171659"/>
+  </elements>
 </unotation:UmlDiagram>

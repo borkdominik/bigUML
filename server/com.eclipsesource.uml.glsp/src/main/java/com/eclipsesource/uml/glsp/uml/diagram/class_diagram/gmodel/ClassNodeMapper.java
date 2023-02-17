@@ -59,6 +59,7 @@ public final class ClassNodeMapper extends BaseGNodeMapper<Class, GNode> {
 
       siblings.addAll(mapHandler.handle(source.getGeneralizations()));
       siblings.addAll(mapHandler.handle(source.getInterfaceRealizations()));
+      siblings.addAll(mapHandler.handle(source.getSubstitutions()));
 
       return siblings;
    }

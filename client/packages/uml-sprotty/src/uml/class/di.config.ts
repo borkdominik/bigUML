@@ -229,6 +229,14 @@ export default function createClassModule(): ContainerModule {
             PolylineEdgeView
         );
 
+        // Substitution
+        configureModelElement(
+            context,
+            UmlTypes.SUBSTITUTION,
+            SEdge,
+            PolylineEdgeView
+        );
+
         // Other
         configureModelElement(
             context,

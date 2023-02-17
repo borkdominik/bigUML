@@ -57,6 +57,7 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.PackageNodeMa
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.PrimitiveTypeNodeMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.PropertyCompartmentMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.RealizationEdgeMapper;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.SubstitutionEdgeMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyMultiplicityLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyTypeLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.action.RequestTypeInformationHandler;
@@ -99,6 +100,9 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.pr
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.realization.CreateRealizationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.realization.DeleteRealizationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.realization.UpdateRealizationHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.substitution.CreateSubstitutionHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.substitution.DeleteSubstitutionHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.substitution.UpdateSubstitutionHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.uclass.CreateAbstractClassHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.uclass.CreateClassHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.uclass.DeleteClassHandler;
@@ -167,6 +171,7 @@ public final class ClassUmlManifest extends DiagramManifest
          contribution.addBinding().to(CreatePrimitiveTypeHandler.class);
          contribution.addBinding().to(CreatePropertyHandler.class);
          contribution.addBinding().to(CreateRealizationHandler.class);
+         contribution.addBinding().to(CreateSubstitutionHandler.class);
       });
       contributeDiagramDeleteHandlers((contribution) -> {
          contribution.addBinding().to(DeleteAbstractionHandler.class);
@@ -184,6 +189,7 @@ public final class ClassUmlManifest extends DiagramManifest
          contribution.addBinding().to(DeletePrimitiveTypeHandler.class);
          contribution.addBinding().to(DeletePropertyHandler.class);
          contribution.addBinding().to(DeleteRealizationHandler.class);
+         contribution.addBinding().to(DeleteSubstitutionHandler.class);
       });
       contributeDiagramUpdateHandlers((contribution) -> {
          contribution.addBinding().to(UpdateAbstractionHandler.class);
@@ -201,6 +207,7 @@ public final class ClassUmlManifest extends DiagramManifest
          contribution.addBinding().to(UpdatePrimitiveTypeHandler.class);
          contribution.addBinding().to(UpdatePropertyHandler.class);
          contribution.addBinding().to(UpdateRealizationHandler.class);
+         contribution.addBinding().to(UpdateSubstitutionHandler.class);
       });
 
       contributeGModelMappers((contribution) -> {
@@ -219,6 +226,7 @@ public final class ClassUmlManifest extends DiagramManifest
          contribution.addBinding().to(PrimitiveTypeNodeMapper.class);
          contribution.addBinding().to(PropertyCompartmentMapper.class);
          contribution.addBinding().to(RealizationEdgeMapper.class);
+         contribution.addBinding().to(SubstitutionEdgeMapper.class);
       });
       contributeDiagramLabelEditMappers((contribution) -> {
          contribution.addBinding().to(AssociationLabelEditMapper.class);

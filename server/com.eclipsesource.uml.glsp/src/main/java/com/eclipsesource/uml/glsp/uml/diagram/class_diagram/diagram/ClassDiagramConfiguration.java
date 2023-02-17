@@ -37,6 +37,7 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_P
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_PrimitiveType;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Property;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Realization;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Substitution;
 import com.google.common.collect.Lists;
 
 public final class ClassDiagramConfiguration implements DiagramConfiguration {
@@ -66,6 +67,9 @@ public final class ClassDiagramConfiguration implements DiagramConfiguration {
             List.of(UmlClass_AbstractClass.TYPE_ID, UmlClass_Class.TYPE_ID),
             List.of(UmlClass_Interface.TYPE_ID)),
          new EdgeTypeHint(UmlClass_Realization.TYPE_ID, true, true, true,
+            List.of(UmlClass_AbstractClass.TYPE_ID, UmlClass_Class.TYPE_ID, UmlClass_Interface.TYPE_ID),
+            List.of(UmlClass_AbstractClass.TYPE_ID, UmlClass_Class.TYPE_ID, UmlClass_Interface.TYPE_ID)),
+         new EdgeTypeHint(UmlClass_Substitution.TYPE_ID, true, true, true,
             List.of(UmlClass_AbstractClass.TYPE_ID, UmlClass_Class.TYPE_ID, UmlClass_Interface.TYPE_ID),
             List.of(UmlClass_AbstractClass.TYPE_ID, UmlClass_Class.TYPE_ID, UmlClass_Interface.TYPE_ID)));
    }
@@ -158,6 +162,10 @@ public final class ClassDiagramConfiguration implements DiagramConfiguration {
       mappings.put(UmlClass_Property.TYPE_ID, GraphPackage.Literals.GCOMPARTMENT);
       mappings.put(UmlClass_Property.LABEL_TYPE, GraphPackage.Literals.GLABEL);
       mappings.put(UmlClass_Property.LABEL_MULTIPLICITY, GraphPackage.Literals.GLABEL);
+
+      mappings.put(UmlClass_Realization.TYPE_ID, GraphPackage.Literals.GEDGE);
+
+      mappings.put(UmlClass_Substitution.TYPE_ID, GraphPackage.Literals.GEDGE);
 
       return mappings;
    }

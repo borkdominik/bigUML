@@ -34,6 +34,8 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_I
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_InterfaceRealization;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Operation;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Package;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_PackageImport;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_PackageMerge;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_PrimitiveType;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Property;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Realization;
@@ -67,6 +69,12 @@ public final class ClassDiagramConfiguration implements DiagramConfiguration {
          new EdgeTypeHint(UmlClass_InterfaceRealization.TYPE_ID, true, true, true,
             List.of(UmlClass_AbstractClass.TYPE_ID, UmlClass_Class.TYPE_ID),
             List.of(UmlClass_Interface.TYPE_ID)),
+         new EdgeTypeHint(UmlClass_PackageImport.TYPE_ID, true, true, true,
+            List.of(UmlClass_Package.TYPE_ID),
+            List.of(UmlClass_Package.TYPE_ID)),
+         new EdgeTypeHint(UmlClass_PackageMerge.TYPE_ID, true, true, true,
+            List.of(UmlClass_Package.TYPE_ID),
+            List.of(UmlClass_Package.TYPE_ID)),
          new EdgeTypeHint(UmlClass_Realization.TYPE_ID, true, true, true,
             List.of(UmlClass_AbstractClass.TYPE_ID, UmlClass_Class.TYPE_ID, UmlClass_Interface.TYPE_ID),
             List.of(UmlClass_AbstractClass.TYPE_ID, UmlClass_Class.TYPE_ID, UmlClass_Interface.TYPE_ID)),
@@ -161,6 +169,10 @@ public final class ClassDiagramConfiguration implements DiagramConfiguration {
 
       mappings.put(UmlClass_Package.ICON, GraphPackage.Literals.GCOMPARTMENT);
       mappings.put(UmlClass_Package.TYPE_ID, GraphPackage.Literals.GNODE);
+
+      mappings.put(UmlClass_PackageImport.TYPE_ID, GraphPackage.Literals.GEDGE);
+
+      mappings.put(UmlClass_PackageMerge.TYPE_ID, GraphPackage.Literals.GEDGE);
 
       mappings.put(UmlClass_Property.ICON, GraphPackage.Literals.GCOMPARTMENT);
       mappings.put(UmlClass_Property.TYPE_ID, GraphPackage.Literals.GCOMPARTMENT);

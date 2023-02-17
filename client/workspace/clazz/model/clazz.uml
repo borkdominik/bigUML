@@ -87,4 +87,6 @@
   <packagedElement xmi:type="uml:Class" xmi:id="_G5aKcaiJEe2QqKN8Act2TA" name="asd"/>
   <packagedElement xmi:type="uml:Class" xmi:id="_HNgLIKiJEe2QqKN8Act2TA" name="Source"/>
   <packagedElement xmi:type="uml:Interface" xmi:id="_AFdHAK1CEe2aRpknoLk0Wg" name="NewInterface1"/>
+  <packagedElement xmi:type="uml:Package" xmi:id="_f4h5Ia7ZEe2OKKjB1h0usw" name="NewPackage1"/>
+  <packagedElement xmi:type="uml:Package" xmi:id="_gS_AgK7ZEe2OKKjB1h0usw" name="NewPackage2"/>
 </uml:Model>

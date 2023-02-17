@@ -10,10 +10,13 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import org.eclipse.glsp.graph.GCompartment;
+import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.builder.impl.GCompartmentBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
@@ -42,6 +45,16 @@ public final class PackageNodeMapper extends BaseGNodeMapper<Package, GNode> {
       applyShapeNotation(source, builder);
 
       return builder.build();
+   }
+
+   @Override
+   public List<GModelElement> mapSiblings(final Package source) {
+      var siblings = new ArrayList<GModelElement>();
+
+      siblings.addAll(mapHandler.handle(source.getPackageImports()));
+      siblings.addAll(mapHandler.handle(source.getPackageMerges()));
+
+      return siblings;
    }
 
    protected GCompartment buildHeader(final Package source) {

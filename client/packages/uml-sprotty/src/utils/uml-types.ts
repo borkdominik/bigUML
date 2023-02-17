@@ -50,6 +50,8 @@ export namespace UmlTypes {
     export const REALIZATION = `${DefaultTypes.EDGE}:realization`;
     export const SUBSTITUTION = `${DefaultTypes.EDGE}:substitution`;
     export const USAGE = `${DefaultTypes.EDGE}:usage`;
+    export const PACKAGE_IMPORT = `${DefaultTypes.EDGE}:package-import`;
+    export const PACKAGE_MERGE = `${DefaultTypes.EDGE}:package-merge`;
 
     // OBJECT DIAGRAM
     export const OBJECT = `${DefaultTypes.NODE}:object`;

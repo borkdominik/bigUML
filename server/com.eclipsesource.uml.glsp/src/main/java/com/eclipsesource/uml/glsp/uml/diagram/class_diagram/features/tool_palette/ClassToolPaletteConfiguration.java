@@ -30,6 +30,8 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_I
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_InterfaceRealization;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Operation;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Package;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_PackageImport;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_PackageMerge;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_PrimitiveType;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Property;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Realization;
@@ -65,6 +67,8 @@ public final class ClassToolPaletteConfiguration implements ToolPaletteConfigura
          PaletteItemUtil.edge(UmlClass_Generalization.TYPE_ID, "Generalization", "umlgeneralization"),
          PaletteItemUtil.edge(UmlClass_InterfaceRealization.TYPE_ID, "Interface Realization",
             "umlinterfacerealization"),
+         PaletteItemUtil.edge(UmlClass_PackageImport.TYPE_ID, "Package Import", "umlpackageimport"),
+         PaletteItemUtil.edge(UmlClass_PackageMerge.TYPE_ID, "Package Merge", "umlpackagemerge"),
          PaletteItemUtil.edge(UmlClass_Realization.TYPE_ID, "Realization", "umlrealization"),
          PaletteItemUtil.edge(UmlClass_Substitution.TYPE_ID, "Substitution", "umlsubstitution"),
          PaletteItemUtil.edge(UmlClass_Usage.TYPE_ID, "Usage", "umlusage"));

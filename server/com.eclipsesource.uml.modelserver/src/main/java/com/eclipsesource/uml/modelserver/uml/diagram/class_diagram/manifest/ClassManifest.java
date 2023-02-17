@@ -41,6 +41,12 @@ import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.inte
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.operation.CreateOperationContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.operation.DeleteOperationContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.operation.UpdateOperationContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.package_import.CreatePackageImportContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.package_import.DeletePackageImportContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.package_import.UpdatePackageImportContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.package_merge.CreatePackageMergeContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.package_merge.DeletePackageMergeContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.package_merge.UpdatePackageMergeContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.primitive_type.CreatePrimitiveTypeContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.primitive_type.DeletePrimitiveTypeContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.primitive_type.UpdatePrimitiveTypeContribution;
@@ -135,6 +141,21 @@ public final class ClassManifest extends DiagramManifest implements CommandCodec
       multibinder.addBinding(DeleteOperationContribution.TYPE).to(DeleteOperationContribution.class);
       multibinder.addBinding(UpdateOperationContribution.TYPE).to(UpdateOperationContribution.class);
 
+      // Package
+      multibinder.addBinding(CreatePackageContribution.TYPE).to(CreatePackageContribution.class);
+      multibinder.addBinding(DeletePackageContribution.TYPE).to(DeletePackageContribution.class);
+      multibinder.addBinding(UpdatePackageContribution.TYPE).to(UpdatePackageContribution.class);
+
+      // Package Import
+      multibinder.addBinding(CreatePackageImportContribution.TYPE).to(CreatePackageImportContribution.class);
+      multibinder.addBinding(DeletePackageImportContribution.TYPE).to(DeletePackageImportContribution.class);
+      multibinder.addBinding(UpdatePackageImportContribution.TYPE).to(UpdatePackageImportContribution.class);
+
+      // Package Merge
+      multibinder.addBinding(CreatePackageMergeContribution.TYPE).to(CreatePackageMergeContribution.class);
+      multibinder.addBinding(DeletePackageMergeContribution.TYPE).to(DeletePackageMergeContribution.class);
+      multibinder.addBinding(UpdatePackageMergeContribution.TYPE).to(UpdatePackageMergeContribution.class);
+
       // Primitive Type
       multibinder.addBinding(CreatePrimitiveTypeContribution.TYPE).to(CreatePrimitiveTypeContribution.class);
       multibinder.addBinding(DeletePrimitiveTypeContribution.TYPE).to(DeletePrimitiveTypeContribution.class);
@@ -144,11 +165,6 @@ public final class ClassManifest extends DiagramManifest implements CommandCodec
       multibinder.addBinding(CreatePropertyContribution.TYPE).to(CreatePropertyContribution.class);
       multibinder.addBinding(DeletePropertyContribution.TYPE).to(DeletePropertyContribution.class);
       multibinder.addBinding(UpdatePropertyContribution.TYPE).to(UpdatePropertyContribution.class);
-
-      // Package
-      multibinder.addBinding(CreatePackageContribution.TYPE).to(CreatePackageContribution.class);
-      multibinder.addBinding(DeletePackageContribution.TYPE).to(DeletePackageContribution.class);
-      multibinder.addBinding(UpdatePackageContribution.TYPE).to(UpdatePackageContribution.class);
 
       // Realization
       multibinder.addBinding(CreateRealizationContribution.TYPE).to(CreateRealizationContribution.class);

@@ -53,6 +53,8 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.Generalizatio
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.InterfaceNodeMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.InterfaceRealizationEdgeMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.OperationCompartmentMapper;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.PackageImportEdgeMapper;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.PackageMergeEdgeMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.PackageNodeMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.PrimitiveTypeNodeMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.PropertyCompartmentMapper;
@@ -92,6 +94,12 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.in
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.operation.CreateOperationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.operation.DeleteOperationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.operation.UpdateOperationHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.package_import.CreatePackageImportHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.package_import.DeletePackageImportHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.package_import.UpdatePackageImportHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.package_merge.CreatePackageMergeHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.package_merge.DeletePackageMergeHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.package_merge.UpdatePackageMergeHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.primitive_type.CreatePrimitiveTypeHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.primitive_type.DeletePrimitiveTypeHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.primitive_type.UpdatePrimitiveTypeHandler;
@@ -172,6 +180,8 @@ public final class ClassUmlManifest extends DiagramManifest
          contribution.addBinding().to(CreateInterfaceRealizationHandler.class);
          contribution.addBinding().to(CreateOperationHandler.class);
          contribution.addBinding().to(CreatePackageHandler.class);
+         contribution.addBinding().to(CreatePackageImportHandler.class);
+         contribution.addBinding().to(CreatePackageMergeHandler.class);
          contribution.addBinding().to(CreatePrimitiveTypeHandler.class);
          contribution.addBinding().to(CreatePropertyHandler.class);
          contribution.addBinding().to(CreateRealizationHandler.class);
@@ -191,6 +201,8 @@ public final class ClassUmlManifest extends DiagramManifest
          contribution.addBinding().to(DeleteInterfaceRealizationHandler.class);
          contribution.addBinding().to(DeleteOperationHandler.class);
          contribution.addBinding().to(DeletePackageHandler.class);
+         contribution.addBinding().to(DeletePackageImportHandler.class);
+         contribution.addBinding().to(DeletePackageMergeHandler.class);
          contribution.addBinding().to(DeletePrimitiveTypeHandler.class);
          contribution.addBinding().to(DeletePropertyHandler.class);
          contribution.addBinding().to(DeleteRealizationHandler.class);
@@ -210,6 +222,8 @@ public final class ClassUmlManifest extends DiagramManifest
          contribution.addBinding().to(UpdateInterfaceRealizationHandler.class);
          contribution.addBinding().to(UpdateOperationHandler.class);
          contribution.addBinding().to(UpdatePackageHandler.class);
+         contribution.addBinding().to(UpdatePackageImportHandler.class);
+         contribution.addBinding().to(UpdatePackageMergeHandler.class);
          contribution.addBinding().to(UpdatePrimitiveTypeHandler.class);
          contribution.addBinding().to(UpdatePropertyHandler.class);
          contribution.addBinding().to(UpdateRealizationHandler.class);
@@ -230,6 +244,8 @@ public final class ClassUmlManifest extends DiagramManifest
          contribution.addBinding().to(InterfaceRealizationEdgeMapper.class);
          contribution.addBinding().to(OperationCompartmentMapper.class);
          contribution.addBinding().to(PackageNodeMapper.class);
+         contribution.addBinding().to(PackageImportEdgeMapper.class);
+         contribution.addBinding().to(PackageMergeEdgeMapper.class);
          contribution.addBinding().to(PrimitiveTypeNodeMapper.class);
          contribution.addBinding().to(PropertyCompartmentMapper.class);
          contribution.addBinding().to(RealizationEdgeMapper.class);

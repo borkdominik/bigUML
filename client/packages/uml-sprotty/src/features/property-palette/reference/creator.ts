@@ -107,6 +107,10 @@ function createReferenceBody(state: State): HTMLDivElement {
         const referenceElement = document.createElement("div");
         referenceElement.classList.add("reference-element");
 
+        const labelContainer = document.createElement("div");
+        labelContainer.classList.add("reference-label-container");
+        referenceElement.appendChild(labelContainer);
+
         if (reference.isReadonly) {
             referenceElement.classList.add("reference-readonly");
         }
@@ -114,9 +118,11 @@ function createReferenceBody(state: State): HTMLDivElement {
         if (!(state.isReadOnly || reference.isReadonly)) {
             const checkState = createIcon("circle-large-outline");
             checkState.classList.add("reference-check-state");
-            referenceElement.appendChild(checkState);
+            labelContainer.appendChild(checkState);
 
-            referenceElement.addEventListener("click", () => {
+            labelContainer.addEventListener("click", event => {
+                event.stopPropagation();
+
                 if (referenceElement.classList.contains(selectedClass)) {
                     referenceElement.classList.remove(selectedClass);
                     checkState.classList.replace("codicon-pass", "codicon-circle-large-outline");
@@ -131,7 +137,7 @@ function createReferenceBody(state: State): HTMLDivElement {
 
         const referenceLabel = document.createElement("label");
         referenceLabel.textContent = reference.label;
-        referenceElement.appendChild(referenceLabel);
+        labelContainer.appendChild(referenceLabel);
 
         const referenceNavigate = document.createElement("button");
         referenceNavigate.classList.add("reference-element-navigate");

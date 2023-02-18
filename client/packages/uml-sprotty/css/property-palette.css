@@ -1,9 +1,13 @@
+/* === Property Palette === */
+
 .property-palette {
     display: flex;
     flex-direction: column;
     background: var(--theia-menu-background);
     height: 192px;
 }
+
+/* === Property Header === */
 
 .property-palette-header {
     display: flex;
@@ -28,6 +32,8 @@
     margin-right: 0.5rem;
 }
 
+/* === Property Content === */
+
 .property-palette-content {
     display: flex;
     flex-direction: column;
@@ -38,6 +44,8 @@
 .property-palette-content>.property-item {
     margin-bottom: 0.2rem;
 }
+
+/* === Property Item === */
 
 .property-item {
     padding: 0.4rem;
@@ -56,6 +64,8 @@
     padding-right: 0.2rem;
 }
 
+/* === Property Reference Item === */
+
 .property-reference-item .reference-container {
     display: flex;
     flex-direction: column;
@@ -64,17 +74,18 @@
 .property-reference-item .reference-element {
     display: flex;
     flex-direction: row;
-    align-items: center;
-    padding-left: 0.5rem;
 }
 
-.property-reference-item .reference-element:not(.reference-readonly):hover {
+.property-reference-item .reference-label-container {
+    padding-left: 0.5rem;
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.property-reference-item .reference-element:not(.reference-readonly) .reference-label-container:hover {
     background: var(--theia-menubar-selectionBackground);
     cursor: pointer;
-}
-
-.property-reference-item .reference-element-selected {
-    background: var(--theia-activityBar-background);
 }
 
 .property-reference-item .reference-check-state {

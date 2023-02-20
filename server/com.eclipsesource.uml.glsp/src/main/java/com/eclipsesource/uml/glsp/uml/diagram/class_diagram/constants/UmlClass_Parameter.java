@@ -12,21 +12,23 @@ package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 
-public class UmlClass_Operation {
+public class UmlClass_Parameter {
 
-   public static final String ID = "operation";
-   public static final String ICON = CoreTypes.PRE_ICON + ID;
+   public static final String ID = "parameter";
    public static final String TYPE_ID = CoreTypes.PRE_COMP_BASE + ID;
 
    public enum Property {
       NAME,
-      IS_ABSTRACT,
-      IS_STATIC,
-      IS_QUERY,
+      IS_EXCEPTION,
+      IS_STREAM,
+      IS_ORDERED,
+      IS_UNIQUE,
+      DIRECTION_KIND,
+      EFFECT_KIND,
       VISIBILITY_KIND,
-      CONCURRENCY,
-      OWNED_PARAMETERS;
+      TYPE,
+      MULTIPLICITY
    }
 
-   private UmlClass_Operation() {}
+   private UmlClass_Parameter() {}
 }

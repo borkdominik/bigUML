@@ -23,7 +23,7 @@ import com.eclipsesource.uml.glsp.core.utils.reflection.GenericsUtil;
 import com.google.inject.Inject;
 
 public abstract class BaseGModelMapper<Source extends EObject, Target extends GModelElement>
-   implements GModelMapper<Source, Target> {
+   implements GModelMapper<Source, Target>, IdContextGeneratorProvider {
 
    protected final Class<Source> sourceType;
    protected final Class<Target> targetType;
@@ -53,5 +53,10 @@ public abstract class BaseGModelMapper<Source extends EObject, Target extends GM
 
    @Override
    public Class<Target> getTargetType() { return targetType; }
+
+   @Override
+   public IdCountContextGenerator idContextGenerator() {
+      return idCountGenerator;
+   }
 
 }

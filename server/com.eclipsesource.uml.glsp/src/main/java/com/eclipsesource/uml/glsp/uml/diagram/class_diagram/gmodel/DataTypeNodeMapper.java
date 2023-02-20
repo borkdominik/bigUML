@@ -71,7 +71,7 @@ public final class DataTypeNodeMapper extends BaseGNodeMapper<DataType, GNode> {
    protected GLabel buildVisibility(final NamedElement source) {
       return new GLabelBuilder(CoreTypes.LABEL_NAME)
          .id(idCountGenerator.getOrCreateId(source))
-         .text(VisibilityKindUtils.asAscii(source.getVisibility()))
+         .text(VisibilityKindUtils.asSingleLabel(source.getVisibility()))
          .build();
    }
 

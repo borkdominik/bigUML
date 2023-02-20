@@ -101,7 +101,7 @@ public final class ClassNodeMapper extends BaseGNodeMapper<Class, GNode> {
    protected GLabel buildVisibility(final Class source) {
       return new GLabelBuilder(CoreTypes.LABEL_NAME)
          .id(idCountGenerator.getOrCreateId(source))
-         .text(VisibilityKindUtils.asAscii(source.getVisibility()))
+         .text(VisibilityKindUtils.asSingleLabel(source.getVisibility()))
          .build();
    }
 

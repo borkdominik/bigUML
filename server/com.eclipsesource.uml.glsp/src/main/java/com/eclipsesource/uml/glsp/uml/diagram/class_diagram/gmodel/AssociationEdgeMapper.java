@@ -26,7 +26,7 @@ import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Association;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Property;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyMultiplicityLabelSuffix;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.utils.PropertyUtil;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.utils.MultiplicityUtil;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGEdgeMapper;
 
 public final class AssociationEdgeMapper extends BaseGEdgeMapper<Association, GEdge> {
@@ -65,7 +65,7 @@ public final class AssociationEdgeMapper extends BaseGEdgeMapper<Association, GE
          position);
       builder.add(nameLabel);
 
-      var multiplicityLabel = createEdgeMultiplicityLabel(PropertyUtil.getMultiplicity(memberEnd),
+      var multiplicityLabel = createEdgeMultiplicityLabel(MultiplicityUtil.getMultiplicity(memberEnd),
          suffix.appendTo(PropertyMultiplicityLabelSuffix.SUFFIX, memberEndId), position);
       builder.add(multiplicityLabel);
 

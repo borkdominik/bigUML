@@ -24,7 +24,7 @@ import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalett
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Association;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Property;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.association.UpdateAssociationHandler;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.utils.PropertyUtil;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.utils.MultiplicityUtil;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.BaseDiagramElementPropertyMapper;
 import com.eclipsesource.uml.glsp.uml.utils.AggregationKindUtils;
 import com.eclipsesource.uml.glsp.uml.utils.VisibilityKindUtils;
@@ -56,7 +56,7 @@ public class AssociationPropertyMapper extends BaseDiagramElementPropertyMapper<
       items.addAll(this.propertyBuilder(UmlClass_Property.Property.class, memberEndFirstId)
          .text(UmlClass_Property.Property.NAME, "Member End Name", memberEndFirst.getName())
          .text(UmlClass_Property.Property.MULTIPLICITY, "Member End Multiplicity",
-            PropertyUtil.getMultiplicity(memberEndFirst))
+            MultiplicityUtil.getMultiplicity(memberEndFirst))
          .bool(UmlClass_Property.Property.IS_NAVIGABLE, "Member End Navigable",
             memberEndFirst.isNavigable())
          .choice(
@@ -69,7 +69,7 @@ public class AssociationPropertyMapper extends BaseDiagramElementPropertyMapper<
       items.addAll(this.propertyBuilder(UmlClass_Property.Property.class, memberEndSecondId)
          .text(UmlClass_Property.Property.NAME, "Member End Name", memberEndSecond.getName())
          .text(UmlClass_Property.Property.MULTIPLICITY, "Member End Multiplicity",
-            PropertyUtil.getMultiplicity(memberEndSecond))
+            MultiplicityUtil.getMultiplicity(memberEndSecond))
          .bool(UmlClass_Property.Property.IS_NAVIGABLE, "Member End Navigable",
             memberEndSecond.isNavigable())
          .choice(

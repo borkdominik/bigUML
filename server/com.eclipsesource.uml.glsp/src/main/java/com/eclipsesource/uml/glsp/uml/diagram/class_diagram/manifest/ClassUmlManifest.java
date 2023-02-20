@@ -39,6 +39,7 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.property_pa
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.property_palette.InterfacePropertyMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.property_palette.OperationPropertyMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.property_palette.PackagePropertyMapper;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.property_palette.ParameterPropertyMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.property_palette.PrimitiveTypePropertyMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.property_palette.PropertyPropertyMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.tool_palette.ClassToolPaletteConfiguration;
@@ -100,6 +101,9 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.pa
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.package_merge.CreatePackageMergeHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.package_merge.DeletePackageMergeHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.package_merge.UpdatePackageMergeHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.parameter.CreateParameterHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.parameter.DeleteParameterHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.parameter.UpdateParameterHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.primitive_type.CreatePrimitiveTypeHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.primitive_type.DeletePrimitiveTypeHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.primitive_type.UpdatePrimitiveTypeHandler;
@@ -182,6 +186,7 @@ public final class ClassUmlManifest extends DiagramManifest
          contribution.addBinding().to(CreatePackageHandler.class);
          contribution.addBinding().to(CreatePackageImportHandler.class);
          contribution.addBinding().to(CreatePackageMergeHandler.class);
+         contribution.addBinding().to(CreateParameterHandler.class);
          contribution.addBinding().to(CreatePrimitiveTypeHandler.class);
          contribution.addBinding().to(CreatePropertyHandler.class);
          contribution.addBinding().to(CreateRealizationHandler.class);
@@ -203,6 +208,7 @@ public final class ClassUmlManifest extends DiagramManifest
          contribution.addBinding().to(DeletePackageHandler.class);
          contribution.addBinding().to(DeletePackageImportHandler.class);
          contribution.addBinding().to(DeletePackageMergeHandler.class);
+         contribution.addBinding().to(DeleteParameterHandler.class);
          contribution.addBinding().to(DeletePrimitiveTypeHandler.class);
          contribution.addBinding().to(DeletePropertyHandler.class);
          contribution.addBinding().to(DeleteRealizationHandler.class);
@@ -224,6 +230,7 @@ public final class ClassUmlManifest extends DiagramManifest
          contribution.addBinding().to(UpdatePackageHandler.class);
          contribution.addBinding().to(UpdatePackageImportHandler.class);
          contribution.addBinding().to(UpdatePackageMergeHandler.class);
+         contribution.addBinding().to(UpdateParameterHandler.class);
          contribution.addBinding().to(UpdatePrimitiveTypeHandler.class);
          contribution.addBinding().to(UpdatePropertyHandler.class);
          contribution.addBinding().to(UpdateRealizationHandler.class);
@@ -274,6 +281,7 @@ public final class ClassUmlManifest extends DiagramManifest
          contribution.addBinding().to(InterfacePropertyMapper.class);
          contribution.addBinding().to(OperationPropertyMapper.class);
          contribution.addBinding().to(PackagePropertyMapper.class);
+         contribution.addBinding().to(ParameterPropertyMapper.class);
          contribution.addBinding().to(PrimitiveTypePropertyMapper.class);
          contribution.addBinding().to(PropertyPropertyMapper.class);
       });

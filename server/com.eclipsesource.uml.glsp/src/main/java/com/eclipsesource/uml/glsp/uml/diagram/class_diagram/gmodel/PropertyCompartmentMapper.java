@@ -26,12 +26,14 @@ import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Property;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyMultiplicityLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyTypeLabelSuffix;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.utils.PropertyUtil;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.utils.MultiplicityUtil;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGModelMapper;
+import com.eclipsesource.uml.glsp.uml.gmodel.SeparatorBuilder;
 import com.eclipsesource.uml.glsp.uml.utils.VisibilityKindUtils;
 import com.google.inject.Inject;
 
-public final class PropertyCompartmentMapper extends BaseGModelMapper<Property, GCompartment> {
+public final class PropertyCompartmentMapper extends BaseGModelMapper<Property, GCompartment>
+   implements SeparatorBuilder {
    @Inject
    protected IdCountContextGenerator idCountGenerator;
 
@@ -63,7 +65,7 @@ public final class PropertyCompartmentMapper extends BaseGModelMapper<Property, 
    protected GLabel buildVisibility(final Property source) {
       return new GLabelBuilder(CoreTypes.LABEL_NAME)
          .id(idCountGenerator.getOrCreateId(source))
-         .text(VisibilityKindUtils.asAscii(source.getVisibility()))
+         .text(VisibilityKindUtils.asSingleLabel(source.getVisibility()))
          .build();
    }
 
@@ -81,13 +83,6 @@ public final class PropertyCompartmentMapper extends BaseGModelMapper<Property, 
          .build();
    }
 
-   protected GLabel buildSeparator(final Property source, final String text) {
-      return new GLabelBuilder(CoreTypes.LABEL_TEXT)
-         .id(idCountGenerator.getOrCreateId(source))
-         .text(text)
-         .build();
-   }
-
    protected void applyType(final Property source, final GCompartmentBuilder builder) {
       Optional.ofNullable(source.getType()).ifPresentOrElse(type -> {
          var name = type.getName() == null || type.getName().isBlank()
@@ -99,7 +94,7 @@ public final class PropertyCompartmentMapper extends BaseGModelMapper<Property, 
 
    protected void applyMultiplicity(final Property source,
       final GCompartmentBuilder builder) {
-      var multiplicity = PropertyUtil.getMultiplicity(source);
+      var multiplicity = MultiplicityUtil.getMultiplicity(source);
 
       builder
          .add(buildSeparator(source, "["))

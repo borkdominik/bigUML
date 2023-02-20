@@ -3,16 +3,18 @@
   <semanticElement elementId="_Cfp0UGmxEe2kLe5KTNzRtw"/>
   <elements xsi:type="notation:Shape">
     <semanticElement elementId="_QE0EkK7gEe2EZoZ5sgiBCg"/>
-    <position x="-869.5732402586661" y="-606.2553991749278"/>
-    <size width="160.0" height="50.0"/>
+    <position x="-1046.8697369119263" y="-601.0788591266574"/>
+    <size width="586.625" height="184.0"/>
   </elements>
   <elements xsi:type="notation:Shape">
     <semanticElement elementId="_OSuH8K74Ee2EZoZ5sgiBCg"/>
-    <position x="-255.16208730637302" y="-447.9783836536727"/>
+    <position x="-169.7491765099119" y="-212.44581145737084"/>
     <size width="160.0" height="50.0"/>
   </elements>
   <elements xsi:type="notation:Edge">
     <semanticElement elementId="_PFx8kK74Ee2EZoZ5sgiBCg"/>
+    <bendPoints x="-602.1353619119263" y="-352.2922506419743"/>
+    <bendPoints x="-166.10314222189987" y="-352.2922506419743"/>
   </elements>
   <elements xsi:type="notation:Shape">
     <semanticElement elementId="_W7vZ8K79Ee2EZoZ5sgiBCg"/>

@@ -47,6 +47,9 @@ import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.pack
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.package_merge.CreatePackageMergeContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.package_merge.DeletePackageMergeContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.package_merge.UpdatePackageMergeContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.parameter.CreateParameterContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.parameter.DeleteParameterContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.parameter.UpdateParameterContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.primitive_type.CreatePrimitiveTypeContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.primitive_type.DeletePrimitiveTypeContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.primitive_type.UpdatePrimitiveTypeContribution;
@@ -155,6 +158,11 @@ public final class ClassManifest extends DiagramManifest implements CommandCodec
       multibinder.addBinding(CreatePackageMergeContribution.TYPE).to(CreatePackageMergeContribution.class);
       multibinder.addBinding(DeletePackageMergeContribution.TYPE).to(DeletePackageMergeContribution.class);
       multibinder.addBinding(UpdatePackageMergeContribution.TYPE).to(UpdatePackageMergeContribution.class);
+
+      // Parameter
+      multibinder.addBinding(CreateParameterContribution.TYPE).to(CreateParameterContribution.class);
+      multibinder.addBinding(DeleteParameterContribution.TYPE).to(DeleteParameterContribution.class);
+      multibinder.addBinding(UpdateParameterContribution.TYPE).to(UpdateParameterContribution.class);
 
       // Primitive Type
       multibinder.addBinding(CreatePrimitiveTypeContribution.TYPE).to(CreatePrimitiveTypeContribution.class);

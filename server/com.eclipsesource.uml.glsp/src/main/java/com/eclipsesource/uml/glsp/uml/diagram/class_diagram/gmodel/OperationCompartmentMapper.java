@@ -10,6 +10,8 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel;
 
+import java.util.stream.Collectors;
+
 import org.eclipse.glsp.graph.GCompartment;
 import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.builder.impl.GCompartmentBuilder;
@@ -18,18 +20,20 @@ import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.NamedElement;
 import org.eclipse.uml2.uml.Operation;
+import org.eclipse.uml2.uml.Parameter;
+import org.eclipse.uml2.uml.ParameterDirectionKind;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
-import com.eclipsesource.uml.glsp.core.features.id_generator.IdCountContextGenerator;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Operation;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGModelMapper;
+import com.eclipsesource.uml.glsp.uml.gmodel.SeparatorBuilder;
+import com.eclipsesource.uml.glsp.uml.utils.ParameterUtils;
+import com.eclipsesource.uml.glsp.uml.utils.TypeUtils;
 import com.eclipsesource.uml.glsp.uml.utils.VisibilityKindUtils;
-import com.google.inject.Inject;
 
-public final class OperationCompartmentMapper extends BaseGModelMapper<Operation, GCompartment> {
-   @Inject
-   protected IdCountContextGenerator idCountGenerator;
+public final class OperationCompartmentMapper extends BaseGModelMapper<Operation, GCompartment>
+   implements SeparatorBuilder {
 
    @Override
    public GCompartment map(final Operation source) {
@@ -42,6 +46,9 @@ public final class OperationCompartmentMapper extends BaseGModelMapper<Operation
          .add(buildIcon(source))
          .add(buildVisibility(source))
          .add(buildName(source));
+
+      applyParameters(source, builder);
+      applyReturns(source, builder);
 
       return builder.build();
    }
@@ -62,7 +69,56 @@ public final class OperationCompartmentMapper extends BaseGModelMapper<Operation
    protected GLabel buildVisibility(final NamedElement source) {
       return new GLabelBuilder(CoreTypes.LABEL_NAME)
          .id(idCountGenerator.getOrCreateId(source))
-         .text(VisibilityKindUtils.asAscii(source.getVisibility()))
+         .text(VisibilityKindUtils.asSingleLabel(source.getVisibility()))
+         .build();
+   }
+
+   protected void applyParameters(final Operation source, final GCompartmentBuilder builder) {
+      var parameters = source.getOwnedParameters().stream()
+         .filter(p -> p.getDirection() != ParameterDirectionKind.RETURN_LITERAL).collect(Collectors.toList());
+
+      builder.add(buildSeparator(source, "("));
+
+      for (int i = 0; i < parameters.size(); i++) {
+         if (i > 0) {
+            builder.add(buildSeparator(source, ","));
+         }
+         builder.add(buildParameter(source, parameters.get(i)));
+      }
+
+      builder.add(buildSeparator(source, ")"));
+   }
+
+   protected void applyReturns(final Operation source, final GCompartmentBuilder builder) {
+      var parameters = source.getOwnedParameters().stream()
+         .filter(p -> p.getDirection() == ParameterDirectionKind.RETURN_LITERAL).collect(Collectors.toList());
+
+      if (parameters.size() > 0) {
+         builder.add(buildSeparator(source, ":"));
+
+         for (int i = 0; i < parameters.size(); i++) {
+            if (i > 0) {
+               builder.add(buildSeparator(source, ","));
+            }
+            builder.add(buildReturn(source, parameters.get(i)));
+         }
+      }
+   }
+
+   protected GLabel buildParameter(final Operation source, final Parameter parameter) {
+
+      return new GLabelBuilder(CoreTypes.LABEL_TEXT)
+         .id(idContextGenerator().getOrCreateId(source))
+         .text(ParameterUtils.asText(parameter))
+         .build();
+   }
+
+   protected GLabel buildReturn(final Operation source, final Parameter parameter) {
+      var type = TypeUtils.name(parameter.getType());
+
+      return new GLabelBuilder(CoreTypes.LABEL_TEXT)
+         .id(idContextGenerator().getOrCreateId(source))
+         .text(String.format("%s", type))
          .build();
    }
 }

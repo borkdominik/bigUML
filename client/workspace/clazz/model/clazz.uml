@@ -15,7 +15,11 @@
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_PGmb8K74Ee2EZoZ5sgiBCg" value="1"/>
     </ownedAttribute>
     <ownedOperation xmi:id="_Cr6ZsK70Ee2EZoZ5sgiBCg" name="NewOperation3"/>
-    <ownedOperation xmi:id="_r0YL0K70Ee2EZoZ5sgiBCg" name="NewOperation1"/>
+    <ownedOperation xmi:id="_r0YL0K70Ee2EZoZ5sgiBCg" name="NewOperation1">
+      <ownedParameter xmi:id="_Pf5kMbFSEe2z_s-Al402-w" name="NewParameter1" type="_QE0EkK7gEe2EZoZ5sgiBCg" direction="return"/>
+      <ownedParameter xmi:id="_TnD78LFUEe2z_s-Al402-w" name="NewParameter2" type="_W7vZ8K79Ee2EZoZ5sgiBCg"/>
+      <ownedParameter xmi:id="_YG02YLFVEe2z_s-Al402-w" name="NewParameter3"/>
+    </ownedOperation>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="_OSuH8K74Ee2EZoZ5sgiBCg" name="NewClass1">
     <ownedAttribute xmi:id="_PGmb8a74Ee2EZoZ5sgiBCg" name="asd" type="_QE0EkK7gEe2EZoZ5sgiBCg" association="_PFx8kK74Ee2EZoZ5sgiBCg">

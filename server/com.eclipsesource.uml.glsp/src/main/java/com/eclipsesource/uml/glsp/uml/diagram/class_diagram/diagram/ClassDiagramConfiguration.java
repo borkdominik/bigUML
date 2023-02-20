@@ -36,6 +36,7 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_O
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Package;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_PackageImport;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_PackageMerge;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Parameter;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_PrimitiveType;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Property;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Realization;
@@ -127,6 +128,8 @@ public final class ClassDiagramConfiguration implements DiagramConfiguration {
       hints.add(new ShapeTypeHint(UmlClass_EnumerationLiteral.TYPE_ID, false, true, false, true,
          List.of()));
       hints.add(new ShapeTypeHint(UmlClass_Operation.TYPE_ID, false, true, false, true,
+         List.of(UmlClass_Parameter.TYPE_ID)));
+      hints.add(new ShapeTypeHint(UmlClass_Parameter.TYPE_ID, false, true, false, true,
          List.of()));
 
       return hints;
@@ -173,6 +176,8 @@ public final class ClassDiagramConfiguration implements DiagramConfiguration {
       mappings.put(UmlClass_PackageImport.TYPE_ID, GraphPackage.Literals.GEDGE);
 
       mappings.put(UmlClass_PackageMerge.TYPE_ID, GraphPackage.Literals.GEDGE);
+
+      mappings.put(UmlClass_Parameter.TYPE_ID, GraphPackage.Literals.GCOMPARTMENT);
 
       mappings.put(UmlClass_Property.ICON, GraphPackage.Literals.GCOMPARTMENT);
       mappings.put(UmlClass_Property.TYPE_ID, GraphPackage.Literals.GCOMPARTMENT);

@@ -8,25 +8,20 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants;
+package com.eclipsesource.uml.glsp.uml.gmodel;
+
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.glsp.graph.GLabel;
+import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 
-public class UmlClass_Operation {
+public interface SeparatorBuilder extends IdContextGeneratorProvider {
 
-   public static final String ID = "operation";
-   public static final String ICON = CoreTypes.PRE_ICON + ID;
-   public static final String TYPE_ID = CoreTypes.PRE_COMP_BASE + ID;
-
-   public enum Property {
-      NAME,
-      IS_ABSTRACT,
-      IS_STATIC,
-      IS_QUERY,
-      VISIBILITY_KIND,
-      CONCURRENCY,
-      OWNED_PARAMETERS;
+   default GLabel buildSeparator(final EObject source, final String text) {
+      return new GLabelBuilder(CoreTypes.LABEL_TEXT)
+         .id(idContextGenerator().getOrCreateId(source))
+         .text(text)
+         .build();
    }
-
-   private UmlClass_Operation() {}
 }

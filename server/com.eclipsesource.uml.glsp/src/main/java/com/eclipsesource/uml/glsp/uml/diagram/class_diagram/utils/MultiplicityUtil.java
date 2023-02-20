@@ -13,9 +13,9 @@ package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.utils;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.eclipse.uml2.uml.Property;
+import org.eclipse.uml2.uml.MultiplicityElement;
 
-public final class PropertyUtil {
+public final class MultiplicityUtil {
    public static int getLower(final String multiplicityString) {
       return getBound(multiplicityString, 0);
    }
@@ -34,11 +34,11 @@ public final class PropertyUtil {
       return result.isEmpty() ? 1 : (result.equals("*") ? -1 : Integer.parseInt(result, 10));
    }
 
-   public static String getMultiplicity(final Property property) {
-      if (property.getLower() == property.getUpper()) {
-         return String.format("%s", property.getUpper() == -1 ? "*" : property.getUpper());
+   public static String getMultiplicity(final MultiplicityElement element) {
+      if (element.getLower() == element.getUpper()) {
+         return String.format("%s", element.getUpper() == -1 ? "*" : element.getUpper());
       }
-      return String.format("%s..%s", property.getLower(), property.getUpper() == -1 ? "*" : property.getUpper());
+      return String.format("%s..%s", element.getLower(), element.getUpper() == -1 ? "*" : element.getUpper());
    }
 
    private static String multiplicityRegex() {

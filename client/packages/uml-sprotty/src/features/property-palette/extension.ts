@@ -42,6 +42,12 @@ import {
 import { createReferenceProperty, ElementReferencePropertyItem } from "./reference";
 import { createTextProperty, ElementTextPropertyItem } from "./text";
 
+interface Cache {
+    [elementId: string]: {
+        [propertyId: string]: any
+    };
+}
+
 @injectable()
 export class PropertyPalette implements IActionHandler, SModelRootListener, EditorPanelChild {
     static readonly ID = "property-palette";
@@ -49,6 +55,7 @@ export class PropertyPalette implements IActionHandler, SModelRootListener, Edit
     @inject(TYPES.IActionDispatcher) protected readonly actionDispatcher: ActionDispatcher;
     @inject(EditorContextService) protected readonly editorContext: EditorContextService;
 
+    protected cache: Cache = {};
     protected paletteAction?: SetPropertyPaletteAction;
     protected activeElementId?: string;
     protected lastPalettes: SetPropertyPaletteAction[] = [];
@@ -162,16 +169,16 @@ export class PropertyPalette implements IActionHandler, SModelRootListener, Edit
                 backButton.appendChild(createIcon("chevron-left"));
                 backButton.addEventListener("click", async () => {
                     const returnTo = lastPalettes.pop();
-                    this.refresh(returnTo?.palette.elementId);
+                    this.refresh(returnTo?.palette?.elementId);
                 });
 
                 this.header.appendChild(backButton);
 
                 const items = Array.from(new Set([lastPalettes[0], lastPalettes[lastPalettes.length - 1]]));
                 if (items.length === 1) {
-                    breadcrumbs.textContent = `${items[0].palette.label} > `;
+                    breadcrumbs.textContent = `${items[0].palette?.label} > `;
                 } else {
-                    breadcrumbs.textContent = `${items[0].palette.label} > ... ${items[1].palette.label} > `;
+                    breadcrumbs.textContent = `${items[0].palette?.label} > ... ${items[1].palette?.label} > `;
                 }
 
             }
@@ -220,10 +227,10 @@ export class PropertyPalette implements IActionHandler, SModelRootListener, Edit
                             await this.actionDispatcher.dispatch(create.action);
                             this.enable();
                         },
-                        onDelete: async (item, references) => {
-                            if (references.length > 0) {
+                        onDelete: async (item, selectedReferences) => {
+                            if (selectedReferences.length > 0) {
                                 this.disable();
-                                await this.actionDispatcher.dispatch(new DeleteElementOperation(references.map(r => r.elementId)));
+                                await this.actionDispatcher.dispatch(new DeleteElementOperation(selectedReferences.map(r => r.reference.elementId)));
                                 this.enable();
                             }
                         },
@@ -231,8 +238,26 @@ export class PropertyPalette implements IActionHandler, SModelRootListener, Edit
                             this.lastPalettes.push(this.paletteAction!);
                             await this.refresh(reference.elementId);
                             this.content.scrollTop = 0;
+                        },
+                        onMove: async (item, selectedReferences, direction, state) => {
+                            const updates: {
+                                oldPosition: number,
+                                newPosition: number
+                            }[] = [];
+
+                            selectedReferences.forEach(r => {
+                                updates.push({
+                                    oldPosition: r.originIndex,
+                                    newPosition: direction === "UP" ? --r.originIndex : ++r.originIndex
+                                });
+                            });
+
+                            if (selectedReferences.length > 0) {
+                                this.cache[item.elementId][item.propertyId] = state;
+                                this.update(item.elementId, `${item.propertyId}_ORDER`, JSON.stringify(updates));
+                            }
                         }
-                    });
+                    }, this.cache[propertyItem.elementId]?.[propertyItem.propertyId]);
                 }
 
                 if (created !== undefined) {
@@ -250,6 +275,15 @@ export class PropertyPalette implements IActionHandler, SModelRootListener, Edit
 
         return this.request(this.activeElementId).then(response => {
             this.paletteAction = response;
+
+            if (response.palette) {
+                if (this.cache[response.palette.elementId] === undefined) {
+                    this.cache = {};
+                    this.cache[response.palette.elementId] = {};
+                }
+            } else {
+                this.cache = {};
+            }
 
             this.refreshUi(this.palette);
 

@@ -19,6 +19,7 @@
       <ownedParameter xmi:id="_Pf5kMbFSEe2z_s-Al402-w" name="NewParameter1" type="_QE0EkK7gEe2EZoZ5sgiBCg" direction="return"/>
       <ownedParameter xmi:id="_TnD78LFUEe2z_s-Al402-w" name="NewParameter2" type="_W7vZ8K79Ee2EZoZ5sgiBCg"/>
       <ownedParameter xmi:id="_YG02YLFVEe2z_s-Al402-w" name="NewParameter3"/>
+      <ownedParameter xmi:id="_huGJQbFuEe21bf9NlKs9Kg" name="NewParameter4"/>
     </ownedOperation>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="_OSuH8K74Ee2EZoZ5sgiBCg" name="NewClass1">

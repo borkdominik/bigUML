@@ -22,7 +22,7 @@ public class UpdateOperation extends Operation {
    private String contextId;
 
    private Map<String, String> context;
-   private Map<String, String> args;
+   private Map<String, Object> args;
 
    public UpdateOperation() {
       this(null);
@@ -37,7 +37,7 @@ public class UpdateOperation extends Operation {
    }
 
    public UpdateOperation(final String elementId, final String contextId, final Map<String, String> context,
-      final Map<String, String> args) {
+      final Map<String, Object> args) {
       super(KIND);
       this.elementId = elementId;
       this.contextId = contextId;
@@ -49,9 +49,9 @@ public class UpdateOperation extends Operation {
 
    public void setElementId(final String elementId) { this.elementId = elementId; }
 
-   public Map<String, String> getArgs() { return args; }
+   public Map<String, Object> getArgs() { return args; }
 
-   public void setArgs(final Map<String, String> args) { this.args = args; }
+   public void setArgs(final Map<String, Object> args) { this.args = args; }
 
    public Map<String, String> getContext() { return context; }
 

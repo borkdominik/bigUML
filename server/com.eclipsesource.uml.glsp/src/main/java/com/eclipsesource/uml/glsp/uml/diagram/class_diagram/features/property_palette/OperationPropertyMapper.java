@@ -10,6 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.property_palette;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,7 +30,9 @@ import com.eclipsesource.uml.glsp.uml.features.property_palette.BaseDiagramEleme
 import com.eclipsesource.uml.glsp.uml.utils.CallConcurrencyKindUtils;
 import com.eclipsesource.uml.glsp.uml.utils.ParameterUtils;
 import com.eclipsesource.uml.glsp.uml.utils.VisibilityKindUtils;
+import com.eclipsesource.uml.modelserver.shared.model.OrderPosition;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.operation.UpdateOperationArgument;
+import com.google.common.reflect.TypeToken;
 
 public class OperationPropertyMapper extends BaseDiagramElementPropertyMapper<Operation> {
 
@@ -58,7 +61,8 @@ public class OperationPropertyMapper extends BaseDiagramElementPropertyMapper<Op
             ParameterUtils.asReferences(source.getOwnedParameters(), idGenerator),
             List.of(
                new ElementReferencePropertyItem.CreateReference("Parameter",
-                  new CreateNodeOperation(UmlClass_Parameter.TYPE_ID, elementId))))
+                  new CreateNodeOperation(UmlClass_Parameter.TYPE_ID, elementId))),
+            true)
 
          .items();
 
@@ -106,6 +110,13 @@ public class OperationPropertyMapper extends BaseDiagramElementPropertyMapper<Op
             operation = handler.withArgument(
                new UpdateOperationArgument.Builder()
                   .concurrency(CallConcurrencyKind.get(action.getValue()))
+                  .get());
+            break;
+         case OWNED_PARAMETERS_ORDER:
+            operation = handler.withArgument(
+               new UpdateOperationArgument.Builder()
+                  .parameterOrders(
+                     gson.fromJson(action.getValue(), new TypeToken<ArrayList<OrderPosition>>() {}.getType()))
                   .get());
             break;
       }

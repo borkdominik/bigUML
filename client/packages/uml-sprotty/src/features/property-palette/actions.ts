@@ -33,7 +33,7 @@ export class SetPropertyPaletteAction implements ResponseAction {
 
     constructor(
         public responseId = "",
-        public palette: PropertyPalette
+        public palette?: PropertyPalette
     ) { }
 }
 

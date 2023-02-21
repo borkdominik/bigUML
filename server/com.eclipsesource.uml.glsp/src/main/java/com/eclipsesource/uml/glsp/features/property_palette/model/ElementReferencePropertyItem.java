@@ -19,14 +19,16 @@ public final class ElementReferencePropertyItem extends ElementPropertyItem {
    public final String label;
    public final List<Reference> references;
    public final List<CreateReference> creates;
+   public final Boolean isOrderable;
 
    public ElementReferencePropertyItem(final String elementId, final String propertyId, final String label,
-      final List<Reference> references, final List<CreateReference> creates) {
+      final List<Reference> references, final List<CreateReference> creates, final Boolean isOrderable) {
       super(elementId, propertyId, ElementPropertyType.REFERENCE);
 
       this.label = label;
       this.references = references;
       this.creates = creates;
+      this.isOrderable = isOrderable;
    }
 
    public static class Reference {

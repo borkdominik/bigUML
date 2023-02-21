@@ -22,6 +22,7 @@ export interface ElementReferencePropertyItem extends ElementPropertyItem {
     label: string;
     references: ElementReferencePropertyItem.Reference[];
     creates: ElementReferencePropertyItem.CreateReference[];
+    isOrderable: boolean;
 }
 
 export namespace ElementReferencePropertyItem {

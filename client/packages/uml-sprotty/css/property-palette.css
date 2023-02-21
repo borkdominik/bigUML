@@ -64,6 +64,18 @@
     padding-right: 0.2rem;
 }
 
+.property-item .property-button {
+    border: none;
+    padding: 0.4rem;
+    background: var(--theia-menu-background);
+    color: inherit;
+}
+
+.property-item .property-button:hover {
+    background: var(--theia-menubar-selectionBackground);
+    cursor: pointer;
+}
+
 /* === Property Reference Item === */
 
 .property-reference-item .reference-container {
@@ -93,11 +105,7 @@
 }
 
 .property-reference-item .reference-element-navigate {
-    border: none;
     margin-left: auto;
-    padding: 0.4rem;
-    background: var(--theia-menu-background);
-    color: inherit;
 }
 
 .property-reference-item .reference-element-navigate:hover {
@@ -106,10 +114,7 @@
 }
 
 .property-reference-item .reference-create-reference, .property-reference-item .reference-delete {
-    border: none;
-    padding: 0.4rem;
     background: inherit;
-    color: inherit;
 }
 
 .property-reference-item .reference-container-header {
@@ -118,9 +123,8 @@
     margin-bottom: 0.5rem;
 }
 
-.property-reference-item .reference-create-reference:hover, .property-reference-item .reference-delete:hover {
-    background: var(--theia-menubar-selectionBackground);
-    cursor: pointer;
+.property-reference-item .reference-container-header>*:not(:first-child) {
+    margin-left: 0.5rem;
 }
 
 .property-reference-item .reference-create-reference {
@@ -129,5 +133,4 @@
 
 .property-reference-item .reference-delete {
     color: var(--theia-errorForeground);
-    margin-left: 0.5rem;
 }

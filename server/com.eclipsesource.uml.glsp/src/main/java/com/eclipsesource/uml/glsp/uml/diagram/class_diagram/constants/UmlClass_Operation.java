@@ -25,7 +25,8 @@ public class UmlClass_Operation {
       IS_QUERY,
       VISIBILITY_KIND,
       CONCURRENCY,
-      OWNED_PARAMETERS;
+      OWNED_PARAMETERS,
+      OWNED_PARAMETERS_ORDER;
    }
 
    private UmlClass_Operation() {}

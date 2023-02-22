@@ -16,12 +16,13 @@
 import {
     Action,
     ActionDispatcher,
+    createIcon,
+    DeleteElementOperation,
     EditorContextService,
     IActionHandler,
     ICommand,
     isSelectAction,
     isSetDirtyStateAction,
-    SelectAction,
     SModelRoot,
     SModelRootListener,
     TYPES
@@ -38,7 +39,14 @@ import {
     ElementPropertyUI,
     PropertyPalette as PropertyPaletteModel
 } from "./model";
+import { createReferenceProperty, ElementReferencePropertyItem } from "./reference";
 import { createTextProperty, ElementTextPropertyItem } from "./text";
+
+interface Cache {
+    [elementId: string]: {
+        [propertyId: string]: any
+    };
+}
 
 @injectable()
 export class PropertyPalette implements IActionHandler, SModelRootListener, EditorPanelChild {
@@ -47,17 +55,15 @@ export class PropertyPalette implements IActionHandler, SModelRootListener, Edit
     @inject(TYPES.IActionDispatcher) protected readonly actionDispatcher: ActionDispatcher;
     @inject(EditorContextService) protected readonly editorContext: EditorContextService;
 
+    protected cache: Cache = {};
     protected paletteAction?: SetPropertyPaletteAction;
-    protected selectAction?: SelectAction;
+    protected activeElementId?: string;
+    protected lastPalettes: SetPropertyPaletteAction[] = [];
     protected uiElements: ElementPropertyUI[] = [];
 
     protected containerElement: HTMLElement;
     protected header: HTMLElement;
     protected content: HTMLElement;
-
-    get selectedItems(): string[] {
-        return this.selectAction?.selectedElementsIDs ?? [];
-    }
 
     get palette(): PropertyPaletteModel | undefined {
         return this.paletteAction?.palette;
@@ -82,8 +88,10 @@ export class PropertyPalette implements IActionHandler, SModelRootListener, Edit
 
     handle(action: Action): ICommand | Action | void {
         if (isSelectAction(action) && action.selectedElementsIDs.length > 0) {
-            this.selectAction = action;
-            this.refresh();
+            this.lastPalettes = [];
+            this.refresh(action.selectedElementsIDs[0]).then(() => {
+                this.content.scrollTop = 0;
+            });
         } else if (isSetDirtyStateAction(action)) {
             this.refresh();
             this.enable();
@@ -149,9 +157,35 @@ export class PropertyPalette implements IActionHandler, SModelRootListener, Edit
     }
 
     protected refreshHeader(palette: PropertyPaletteModel): void {
-        const label = palette.label;
-        if (label !== undefined) {
-            this.header.textContent = label;
+        if (palette.label !== undefined) {
+            const breadcrumbs = document.createElement("span");
+            breadcrumbs.classList.add("property-palette-breadcrumbs");
+
+            const lastPalettes = this.lastPalettes;
+
+            if (lastPalettes.length > 0) {
+                const backButton = document.createElement("button");
+                backButton.classList.add("property-palette-back");
+                backButton.appendChild(createIcon("chevron-left"));
+                backButton.addEventListener("click", async () => {
+                    const returnTo = lastPalettes.pop();
+                    this.refresh(returnTo?.palette?.elementId);
+                });
+
+                this.header.appendChild(backButton);
+
+                const items = Array.from(new Set([lastPalettes[0], lastPalettes[lastPalettes.length - 1]]));
+                if (items.length === 1) {
+                    breadcrumbs.textContent = `${items[0].palette?.label} > `;
+                } else {
+                    breadcrumbs.textContent = `${items[0].palette?.label} > ... > ${items[1].palette?.label} > `;
+                }
+
+            }
+
+            breadcrumbs.textContent = `${breadcrumbs.textContent}${palette.label}`;
+
+            this.header.appendChild(breadcrumbs);
         } else {
             setTextPlaceholder(this.header, "No label provided.");
         }
@@ -186,6 +220,44 @@ export class PropertyPalette implements IActionHandler, SModelRootListener, Edit
                             this.update(item.elementId, item.propertyId, input.value);
                         }
                     });
+                } else if (ElementReferencePropertyItem.is(propertyItem)) {
+                    created = createReferenceProperty(propertyItem, {
+                        onCreate: async (item, create) => {
+                            this.disable();
+                            await this.actionDispatcher.dispatch(create.action);
+                            this.enable();
+                        },
+                        onDelete: async (item, selectedReferences) => {
+                            if (selectedReferences.length > 0) {
+                                this.disable();
+                                await this.actionDispatcher.dispatch(new DeleteElementOperation(selectedReferences.map(r => r.reference.elementId)));
+                                this.enable();
+                            }
+                        },
+                        onNavigate: async (item, reference) => {
+                            this.lastPalettes.push(this.paletteAction!);
+                            await this.refresh(reference.elementId);
+                            this.content.scrollTop = 0;
+                        },
+                        onMove: async (item, selectedReferences, direction, state) => {
+                            const updates: {
+                                oldPosition: number,
+                                newPosition: number
+                            }[] = [];
+
+                            selectedReferences.forEach(r => {
+                                updates.push({
+                                    oldPosition: r.originIndex,
+                                    newPosition: direction === "UP" ? --r.originIndex : ++r.originIndex
+                                });
+                            });
+
+                            if (selectedReferences.length > 0) {
+                                this.cache[item.elementId][item.propertyId] = state;
+                                this.update(item.elementId, `${item.propertyId}_ORDER`, JSON.stringify(updates));
+                            }
+                        }
+                    }, this.cache[propertyItem.elementId]?.[propertyItem.propertyId]);
                 }
 
                 if (created !== undefined) {
@@ -198,11 +270,20 @@ export class PropertyPalette implements IActionHandler, SModelRootListener, Edit
         }
     }
 
-    protected async refresh(): Promise<SetPropertyPaletteAction> {
-        const id = this.selectedItems[0];
+    protected async refresh(elementId?: string): Promise<SetPropertyPaletteAction> {
+        this.activeElementId = elementId ?? this.activeElementId;
 
-        return this.request(id).then(response => {
+        return this.request(this.activeElementId).then(response => {
             this.paletteAction = response;
+
+            if (response.palette) {
+                if (this.cache[response.palette.elementId] === undefined) {
+                    this.cache = {};
+                    this.cache[response.palette.elementId] = {};
+                }
+            } else {
+                this.cache = {};
+            }
 
             this.refreshUi(this.palette);
 

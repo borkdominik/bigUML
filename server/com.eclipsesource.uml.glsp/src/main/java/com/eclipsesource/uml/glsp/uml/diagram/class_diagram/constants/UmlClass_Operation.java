@@ -15,7 +15,6 @@ import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 public class UmlClass_Operation {
 
    public static final String ID = "operation";
-   public static final String ICON = CoreTypes.PRE_ICON + ID;
    public static final String TYPE_ID = CoreTypes.PRE_COMP_BASE + ID;
 
    public enum Property {
@@ -24,7 +23,9 @@ public class UmlClass_Operation {
       IS_STATIC,
       IS_QUERY,
       VISIBILITY_KIND,
-      CONCURRENCY;
+      CONCURRENCY,
+      OWNED_PARAMETERS,
+      OWNED_PARAMETERS_ORDER;
    }
 
    private UmlClass_Operation() {}

@@ -15,13 +15,14 @@ import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 public class UmlClass_PrimitiveType {
 
    public static final String ID = "primitive-type";
-   public static final String ICON = CoreTypes.PRE_ICON + ID;
    public static final String TYPE_ID = CoreTypes.PRE_NODE + ID;
 
    public enum Property {
       NAME,
       IS_ABSTRACT,
-      VISIBILITY_KIND;
+      VISIBILITY_KIND,
+      OWNED_ATTRIBUTES,
+      OWNED_OPERATIONS;
    }
 
    private UmlClass_PrimitiveType() {}

@@ -15,13 +15,13 @@ import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 public class UmlClass_Enumeration {
 
    public static final String ID = "enumeration";
-   public static final String ICON = CoreTypes.PRE_ICON + ID;
    public static final String TYPE_ID = CoreTypes.PRE_NODE + ID;
 
    public enum Property {
       NAME,
       IS_ABSTRACT,
-      VISIBILITY_KIND;
+      VISIBILITY_KIND,
+      OWNED_LITERALS;
    }
 
    private UmlClass_Enumeration() {}

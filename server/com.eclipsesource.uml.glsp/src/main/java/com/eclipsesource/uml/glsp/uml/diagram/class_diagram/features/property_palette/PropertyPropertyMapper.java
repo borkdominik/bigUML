@@ -24,7 +24,7 @@ import com.eclipsesource.uml.glsp.features.property_palette.handler.action.Updat
 import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalette;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Property;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.property.UpdatePropertyHandler;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.utils.PropertyUtil;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.utils.MultiplicityUtil;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.BaseDiagramElementPropertyMapper;
 import com.eclipsesource.uml.glsp.uml.utils.AggregationKindUtils;
 import com.eclipsesource.uml.glsp.uml.utils.TypeUtils;
@@ -53,7 +53,7 @@ public class PropertyPropertyMapper extends BaseDiagramElementPropertyMapper<Pro
             "Visibility",
             VisibilityKindUtils.asChoices(),
             source.getVisibility().getLiteral())
-         .text(UmlClass_Property.Property.MULTIPLICITY, "Multiplicity", PropertyUtil.getMultiplicity(source))
+         .text(UmlClass_Property.Property.MULTIPLICITY, "Multiplicity", MultiplicityUtil.getMultiplicity(source))
          .choice(
             UmlClass_Property.Property.TYPE,
             "Type",
@@ -134,8 +134,8 @@ public class PropertyPropertyMapper extends BaseDiagramElementPropertyMapper<Pro
          case MULTIPLICITY:
             operation = handler.withArgument(
                new UpdatePropertyArgument.Builder()
-                  .upperBound(PropertyUtil.getUpper(action.getValue()))
-                  .lowerBound(PropertyUtil.getLower(action.getValue()))
+                  .upperBound(MultiplicityUtil.getUpper(action.getValue()))
+                  .lowerBound(MultiplicityUtil.getLower(action.getValue()))
                   .get());
             break;
          case AGGREGATION:

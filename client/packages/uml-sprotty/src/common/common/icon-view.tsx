@@ -9,11 +9,12 @@
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
 /* eslint-disable react/jsx-key */
+import { hasArguments } from "@eclipse-glsp/client";
 import { injectable } from "inversify";
 import { VNode } from "snabbdom";
 import { IView, RenderingContext, svg } from "sprotty/lib";
 
-import { Icon } from "../../model";
+import { Icon, IconCSS } from "../../model";
 
 /* eslint-disable react/react-in-jsx-scope */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -23,8 +24,36 @@ const JSX = { createElement: svg };
 export class IconView implements IView {
     render(element: Icon, context: RenderingContext): VNode {
         let image;
-        if (element.iconImageName) {
-            image = require("../../../images/" + element.iconImageName);
+
+        if (hasArguments(element)) {
+            const property = window
+                .getComputedStyle(document.body)
+                .getPropertyValue(element.args["property"].toLocaleString());
+            const url = property.match(/url\(([^)]+)\)/i)![1].replace(/\\/g, "");
+            image = url;
+        }
+
+        const iconView: any = (
+            <g>
+                <image class-sprotty-icon={true} href={image} x={-2} y={-1} width={20} height={20}></image>
+                {context.renderChildren(element)}
+            </g>);
+        return iconView;
+    }
+}
+
+@injectable()
+export class IconCSSView implements IView {
+    render(element: IconCSS, context: RenderingContext): VNode {
+        let image;
+
+        const propertyArg = element.args["property"];
+        if (propertyArg !== undefined) {
+            const property = window
+                .getComputedStyle(document.body)
+                .getPropertyValue(propertyArg.toLocaleString());
+            const url = property.match(/url\(([^)]+)\)/i)![1].replace(/\\/g, "");
+            image = url;
         }
 
         const iconView: any = (

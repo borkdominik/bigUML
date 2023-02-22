@@ -13,5 +13,6 @@ package com.eclipsesource.uml.glsp.features.property_palette.model;
 public enum ElementPropertyType {
    TEXT,
    BOOL,
-   CHOICE
+   CHOICE,
+   REFERENCE
 }

@@ -18,22 +18,6 @@ import { generateRequestId, RequestAction, ResponseAction } from "@eclipse-glsp/
 
 import { PropertyPalette } from "./model";
 
-export class SetPropertyPaletteAction implements ResponseAction {
-    static readonly KIND = "setPropertyPalette";
-    kind = SetPropertyPaletteAction.KIND;
-
-    constructor(
-        public responseId = "",
-        public palette: PropertyPalette
-    ) { }
-}
-
-export function isSetPropertyPaletteAction(
-    action: Action
-): action is SetPropertyPaletteAction {
-    return action.kind === SetPropertyPaletteAction.KIND;
-}
-
 export class RequestPropertyPaletteAction implements RequestAction<SetPropertyPaletteAction> {
     static readonly KIND = "requestPropertyPalette";
     kind = RequestPropertyPaletteAction.KIND;
@@ -41,6 +25,22 @@ export class RequestPropertyPaletteAction implements RequestAction<SetPropertyPa
     constructor(
         public elementId?: string,
         public requestId: string = generateRequestId()) { }
+}
+
+export class SetPropertyPaletteAction implements ResponseAction {
+    static readonly KIND = "setPropertyPalette";
+    kind = SetPropertyPaletteAction.KIND;
+
+    constructor(
+        public responseId = "",
+        public palette?: PropertyPalette
+    ) { }
+}
+
+export function isSetPropertyPaletteAction(
+    action: Action
+): action is SetPropertyPaletteAction {
+    return action.kind === SetPropertyPaletteAction.KIND;
 }
 
 export class UpdateElementPropertyAction implements Action {

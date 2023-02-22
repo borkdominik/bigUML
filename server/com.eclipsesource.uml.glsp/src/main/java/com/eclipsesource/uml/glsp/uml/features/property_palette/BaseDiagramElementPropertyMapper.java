@@ -26,12 +26,15 @@ import com.eclipsesource.uml.glsp.features.property_palette.handler.action.Updat
 import com.eclipsesource.uml.glsp.features.property_palette.manifest.PropertyPaletteFeatureManifest;
 import com.eclipsesource.uml.glsp.features.property_palette.mapper.DiagramElementPropertyMapper;
 import com.eclipsesource.uml.glsp.features.property_palette.model.ElementPropertyBuilder;
+import com.google.gson.Gson;
 import com.google.inject.Inject;
 
 public abstract class BaseDiagramElementPropertyMapper<TElement extends EObject>
    implements DiagramElementPropertyMapper<TElement> {
 
    protected final Class<TElement> elementType;
+
+   protected final Gson gson;
 
    @Inject
    protected UmlModelState modelState;
@@ -44,6 +47,8 @@ public abstract class BaseDiagramElementPropertyMapper<TElement extends EObject>
 
    public BaseDiagramElementPropertyMapper() {
       this.elementType = GenericsUtil.getClassParameter(getClass(), BaseDiagramElementPropertyMapper.class, 0);
+
+      this.gson = new Gson();
    }
 
    @Override

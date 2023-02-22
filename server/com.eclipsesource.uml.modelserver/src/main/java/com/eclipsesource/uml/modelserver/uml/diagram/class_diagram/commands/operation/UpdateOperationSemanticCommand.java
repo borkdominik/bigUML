@@ -14,9 +14,11 @@ import org.eclipse.uml2.uml.Operation;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.BaseUpdateSemanticElementCommand;
+import com.eclipsesource.uml.modelserver.shared.semantic.OrderablePositionSemantic;
 
 public final class UpdateOperationSemanticCommand
-   extends BaseUpdateSemanticElementCommand<Operation, UpdateOperationArgument> {
+   extends BaseUpdateSemanticElementCommand<Operation, UpdateOperationArgument>
+   implements OrderablePositionSemantic {
 
    public UpdateOperationSemanticCommand(final ModelContext context, final Operation semanticElement,
       final UpdateOperationArgument updateArgument) {
@@ -55,6 +57,10 @@ public final class UpdateOperationSemanticCommand
 
       updateArgument.concurrency().ifPresent(arg -> {
          semanticElement.setConcurrency(arg);
+      });
+
+      updateArgument.parameterPosition().ifPresent(arg -> {
+         reorder(semanticElement.getOwnedParameters(), arg);
       });
    }
 

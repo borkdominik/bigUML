@@ -15,7 +15,7 @@ import org.eclipse.uml2.uml.Class;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.commands.DeleteNotationElementCommand;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.matcher.ClassDiagramCrossReferenceRemover;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.reference.ClassDiagramCrossReferenceRemover;
 
 public final class DeleteClassCompoundCommand extends CompoundCommand {
 

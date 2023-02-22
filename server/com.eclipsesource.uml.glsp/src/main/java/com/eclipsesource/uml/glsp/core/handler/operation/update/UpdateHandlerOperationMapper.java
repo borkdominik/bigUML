@@ -58,7 +58,7 @@ public class UpdateHandlerOperationMapper {
       final Map<String, String> context) {
 
       var elementId = idGenerator.getOrCreateId(element);
-      var type = new TypeToken<Map<String, String>>() {}.getType();
+      var type = new TypeToken<Map<String, Object>>() {}.getType();
 
       return new UpdateOperation(
          elementId,

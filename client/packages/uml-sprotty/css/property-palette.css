@@ -1,3 +1,5 @@
+/* === Property Palette === */
+
 .property-palette {
     display: flex;
     flex-direction: column;
@@ -5,10 +7,32 @@
     height: 192px;
 }
 
+/* === Property Header === */
+
 .property-palette-header {
+    display: flex;
     padding: 0.4rem;
+    align-items: center;
     background: var(--theia-activityBar-background);
 }
+
+.property-palette-header .property-palette-back {
+    border: none;
+    background: inherit;
+    color: inherit;
+    margin-right: 0.5rem;
+}
+
+.property-palette-header .property-palette-back:hover {
+    cursor: pointer;
+    background: var(--theia-menubar-selectionBackground);
+}
+
+.property-palette-header .property-palette-breadcrumbs {
+    margin-right: 0.5rem;
+}
+
+/* === Property Content === */
 
 .property-palette-content {
     display: flex;
@@ -17,23 +41,96 @@
     overflow: auto;
 }
 
+.property-palette-content>.property-item {
+    margin-bottom: 0.2rem;
+}
+
+/* === Property Item === */
+
 .property-item {
     padding: 0.4rem;
     display: flex;
     flex-direction: row;
-    align-items: center;
     margin-left: 1rem;
 }
 
-.property-item label, .property-text-item input {
-    padding: 0.2rem;
+.property-item>.property-item-full {
+    flex: 1;
 }
 
-.property-item label {
+.property-item .property-item-label {
     width: 128px;
     word-wrap: break-word;
+    padding-right: 0.2rem;
 }
 
-.property-text-item input {
+.property-item .property-button {
+    border: none;
+    padding: 0.4rem;
+    background: var(--theia-menu-background);
+    color: inherit;
+}
+
+.property-item .property-button:hover {
+    background: var(--theia-menubar-selectionBackground);
+    cursor: pointer;
+}
+
+/* === Property Reference Item === */
+
+.property-reference-item .reference-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.property-reference-item .reference-element {
+    display: flex;
+    flex-direction: row;
+}
+
+.property-reference-item .reference-label-container {
+    padding-left: 0.5rem;
+    display: flex;
+    align-items: center;
     flex: 1;
+}
+
+.property-reference-item .reference-element:not(.reference-readonly) .reference-label-container:hover {
+    background: var(--theia-menubar-selectionBackground);
+    cursor: pointer;
+}
+
+.property-reference-item .reference-check-state {
+    margin-right: 0.5rem;
+}
+
+.property-reference-item .reference-element-navigate {
+    margin-left: auto;
+}
+
+.property-reference-item .reference-element-navigate:hover {
+    background: var(--theia-menubar-selectionBackground);
+    cursor: pointer;
+}
+
+.property-reference-item .reference-create-reference, .property-reference-item .reference-delete {
+    background: inherit;
+}
+
+.property-reference-item .reference-container-header {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 0.5rem;
+}
+
+.property-reference-item .reference-container-header>*:not(:first-child) {
+    margin-left: 0.5rem;
+}
+
+.property-reference-item .reference-create-reference {
+    color: var(--theia-successBackground)
+}
+
+.property-reference-item .reference-delete {
+    color: var(--theia-errorForeground);
 }

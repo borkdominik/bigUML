@@ -24,7 +24,7 @@ public class VisibilityKindUtils {
          .collect(Collectors.toList());
    }
 
-   public static String asAscii(final VisibilityKind kind) {
+   public static String asSingleLabel(final VisibilityKind kind) {
       switch (kind) {
          case PACKAGE_LITERAL:
             return "~";

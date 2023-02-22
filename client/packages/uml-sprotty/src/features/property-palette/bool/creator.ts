@@ -25,6 +25,7 @@ export function createBoolProperty(propertyItem: ElementBoolPropertyItem, events
     div.classList.add("property-item", "property-bool-item");
 
     const label = document.createElement("label");
+    label.classList.add("property-item-label");
     label.textContent = propertyItem.label;
     div.appendChild(label);
 

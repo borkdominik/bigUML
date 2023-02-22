@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil.UsageCrossReferencer;
 
 import com.eclipsesource.uml.modelserver.shared.utils.StreamUtil;
 
+@Deprecated
 public class CrossReferenceMatcher<T> {
    protected final List<BiFunction<Setting, EObject, Optional<T>>> matchers;
 

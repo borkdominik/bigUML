@@ -11,25 +11,21 @@
 package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel;
 
 import org.eclipse.glsp.graph.GEdge;
-import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.builder.impl.GEdgeBuilder;
 import org.eclipse.glsp.graph.builder.impl.GEdgePlacementBuilder;
-import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
-import org.eclipse.uml2.uml.AggregationKind;
 import org.eclipse.uml2.uml.Association;
 import org.eclipse.uml2.uml.Property;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
-import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
-import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Association;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Property;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyMultiplicityLabelSuffix;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.utils.PropertyUtil;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.utils.MultiplicityUtil;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGEdgeMapper;
+import com.eclipsesource.uml.glsp.uml.gmodel.element.EdgeGBuilder;
 
-public final class AssociationEdgeMapper extends BaseGEdgeMapper<Association, GEdge> {
+public final class AssociationEdgeMapper extends BaseGEdgeMapper<Association, GEdge> implements EdgeGBuilder {
 
    @Override
    public GEdge map(final Association source) {
@@ -60,49 +56,26 @@ public final class AssociationEdgeMapper extends BaseGEdgeMapper<Association, GE
    protected void applyMemberEnd(final Property memberEnd, final GEdgeBuilder builder, final double position) {
       var memberEndId = idGenerator.getOrCreateId(memberEnd);
 
-      var nameLabel = createEdgeNameLabel(memberEnd.getName(),
-         suffix.appendTo(NameLabelSuffix.SUFFIX, memberEndId),
-         position);
-      builder.add(nameLabel);
-
-      var multiplicityLabel = createEdgeMultiplicityLabel(PropertyUtil.getMultiplicity(memberEnd),
-         suffix.appendTo(PropertyMultiplicityLabelSuffix.SUFFIX, memberEndId), position);
-      builder.add(multiplicityLabel);
-
-      var marker = marker(memberEnd.getAggregation());
-      builder.addCssClass(position < 0.5d ? marker.start() : marker.end());
-   }
-
-   protected CoreCSS.Marker marker(final AggregationKind aggregationKind) {
-      switch (aggregationKind) {
-         case COMPOSITE_LITERAL:
-            return CoreCSS.Marker.DIAMOND;
-         case SHARED_LITERAL:
-            return CoreCSS.Marker.DIAMOND_EMPTY;
-         default:
-            return CoreCSS.Marker.NONE;
-      }
-   }
-
-   protected GLabel createEdgeMultiplicityLabel(final String value, final String id, final double position) {
-      return createEdgeLabel(value, position, id, UmlClass_Property.LABEL_MULTIPLICITY, GConstants.EdgeSide.BOTTOM,
-         10d);
-   }
-
-   protected GLabel createEdgeNameLabel(final String name, final String id, final double position) {
-      return createEdgeLabel(name, position, id, CoreTypes.LABEL_NAME, GConstants.EdgeSide.TOP, 2d);
-   }
-
-   protected GLabel createEdgeLabel(final String name, final double position, final String id, final String type,
-      final String side, final double offset) {
-      return new GLabelBuilder(type)
-         .edgePlacement(new GEdgePlacementBuilder()
-            .side(side)
+      builder.add(nameBuilder(memberEnd,
+         new GEdgePlacementBuilder()
+            .side(GConstants.EdgeSide.TOP)
             .position(position)
-            .offset(offset)
             .rotate(false)
-            .build())
-         .id(id)
-         .text(name).build();
+            .build()).build());
+
+      builder.add(
+         textEdgeBuilder(
+            UmlClass_Property.LABEL_MULTIPLICITY,
+            suffix.appendTo(PropertyMultiplicityLabelSuffix.SUFFIX, memberEndId),
+            MultiplicityUtil.getMultiplicity(memberEnd),
+            new GEdgePlacementBuilder()
+               .side(GConstants.EdgeSide.BOTTOM)
+               .position(position)
+               .offset(10d)
+               .rotate(false)
+               .build()).build());
+
+      var marker = CoreCSS.Marker.from(memberEnd.getAggregation());
+      builder.addCssClass(position < 0.5d ? marker.start() : marker.end());
    }
 }

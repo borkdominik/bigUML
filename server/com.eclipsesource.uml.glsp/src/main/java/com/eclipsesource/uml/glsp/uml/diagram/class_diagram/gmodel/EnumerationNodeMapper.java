@@ -13,28 +13,18 @@ package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel;
 import java.util.stream.Collectors;
 
 import org.eclipse.glsp.graph.GCompartment;
-import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.GNode;
-import org.eclipse.glsp.graph.builder.impl.GCompartmentBuilder;
-import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
-import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.builder.impl.GNodeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.Enumeration;
-import org.eclipse.uml2.uml.NamedElement;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
-import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
-import com.eclipsesource.uml.glsp.core.features.id_generator.IdCountContextGenerator;
-import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Enumeration;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGNodeMapper;
-import com.eclipsesource.uml.glsp.uml.utils.VisibilityKindUtils;
-import com.google.inject.Inject;
+import com.eclipsesource.uml.glsp.uml.gmodel.element.NamedElementGBuilder;
 
-public final class EnumerationNodeMapper extends BaseGNodeMapper<Enumeration, GNode> {
-   @Inject
-   protected IdCountContextGenerator idCountGenerator;
+public final class EnumerationNodeMapper extends BaseGNodeMapper<Enumeration, GNode>
+   implements NamedElementGBuilder<Enumeration> {
 
    @Override
    public GNode map(final Enumeration source) {
@@ -51,63 +41,24 @@ public final class EnumerationNodeMapper extends BaseGNodeMapper<Enumeration, GN
    }
 
    protected GCompartment buildHeader(final Enumeration source) {
-      var builder = new GCompartmentBuilder(CoreTypes.COMPARTMENT_HEADER)
-         .id(idCountGenerator.getOrCreateId(source))
+      var header = compartmentHeaderBuilder(source)
          .layout(GConstants.Layout.VBOX);
 
-      var typeLabel = new GLabelBuilder(CoreTypes.LABEL_TEXT)
-         .id(idCountGenerator.getOrCreateId(source))
-         .text("«Enumeration»")
-         .build();
-      builder.add(typeLabel);
+      header.add(textBuilder(source, "<<Enumeration>>").build());
+      header.add(buildIconVisibilityName(source, "--uml-enumeration-icon"));
 
-      var compBuilder = new GCompartmentBuilder(CoreTypes.COMPARTMENT_HEADER)
-         .id(idCountGenerator.getOrCreateId(source))
-         .layout(GConstants.Layout.HBOX);
-
-      var icon = new GCompartmentBuilder(UmlClass_Enumeration.ICON)
-         .id(idCountGenerator.getOrCreateId(source))
-         .build();
-      compBuilder.add(icon);
-
-      compBuilder.add(buildVisibility(source));
-
-      var nameLabel = new GLabelBuilder(CoreTypes.LABEL_NAME)
-         .id(suffix.appendTo(NameLabelSuffix.SUFFIX, idGenerator.getOrCreateId(source)))
-         .text(source.getName())
-         .build();
-      compBuilder.add(nameLabel);
-
-      builder.add(compBuilder.build());
-
-      return builder.build();
-   }
-
-   protected GLabel buildVisibility(final NamedElement source) {
-      return new GLabelBuilder(CoreTypes.LABEL_NAME)
-         .id(idCountGenerator.getOrCreateId(source))
-         .text(VisibilityKindUtils.asAscii(source.getVisibility()))
-         .build();
+      return header.build();
    }
 
    protected GCompartment buildLiterals(final Enumeration source) {
-      var literals = source.getOwnedLiterals();
+      var compartment = fixedChildrenCompartmentBuilder(source);
 
-      var builder = new GCompartmentBuilder(CoreTypes.COMPARTMENT)
-         .id(idCountGenerator.getOrCreateId(source))
-         .layout(GConstants.Layout.VBOX);
-
-      var layoutOptions = new GLayoutOptions()
-         .hAlign(GConstants.HAlign.LEFT)
-         .resizeContainer(true);
-      builder.layoutOptions(layoutOptions);
-
-      var literalElements = literals.stream()
+      var literalElements = source.getOwnedLiterals().stream()
          .map(mapHandler::handle)
          .collect(Collectors.toList());
-      builder.addAll(literalElements);
+      compartment.addAll(literalElements);
 
-      return builder.build();
+      return compartment.build();
 
    }
 }

@@ -15,7 +15,6 @@ import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 public class UmlClass_EnumerationLiteral {
 
    public static final String ID = "enumeration-literal";
-   public static final String ICON = CoreTypes.PRE_ICON + ID;
    public static final String TYPE_ID = CoreTypes.PRE_COMP_BASE + ID;
 
    public enum Property {

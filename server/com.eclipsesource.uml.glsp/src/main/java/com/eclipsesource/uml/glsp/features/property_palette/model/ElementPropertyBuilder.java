@@ -58,6 +58,33 @@ public class ElementPropertyBuilder<TPropertyType extends Enum<TPropertyType>> {
       return this;
    }
 
+   public ElementPropertyBuilder<TPropertyType> reference(final TPropertyType property, final String label,
+      final List<ElementReferencePropertyItem.Reference> references) {
+      return reference(elementId, property, label, references, List.of(), false);
+   }
+
+   public ElementPropertyBuilder<TPropertyType> reference(final TPropertyType property, final String label,
+      final List<ElementReferencePropertyItem.Reference> references,
+      final List<ElementReferencePropertyItem.CreateReference> creates) {
+      return reference(elementId, property, label, references, creates, false);
+   }
+
+   public ElementPropertyBuilder<TPropertyType> reference(final TPropertyType property, final String label,
+      final List<ElementReferencePropertyItem.Reference> references,
+      final List<ElementReferencePropertyItem.CreateReference> creates,
+      final Boolean isOrderable) {
+      return reference(elementId, property, label, references, creates, isOrderable);
+   }
+
+   public ElementPropertyBuilder<TPropertyType> reference(final String elementId, final TPropertyType property,
+      final String label,
+      final List<ElementReferencePropertyItem.Reference> references,
+      final List<ElementReferencePropertyItem.CreateReference> creates,
+      final Boolean isOrderable) {
+      items.add(new ElementReferencePropertyItem(elementId, property.name(), label, references, creates, isOrderable));
+      return this;
+   }
+
    public List<ElementPropertyItem> items() {
       return items;
    }

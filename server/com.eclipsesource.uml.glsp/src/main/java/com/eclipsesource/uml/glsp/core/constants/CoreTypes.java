@@ -28,7 +28,7 @@ public class CoreTypes {
    public static final String LABEL_EDGE_NAME = PRE_LABEL + "edge-name";
    public static final String COMP = PRE_COMP_BASE + "comp";
    // public static final String COMP_HEADER = COMP_BASE + "header";
-   public static final String LABEL_ICON = PRE_LABEL + "icon";
+   public static final String ICON_CSS = PRE_ICON + "css";
 
    private CoreTypes() {}
 }

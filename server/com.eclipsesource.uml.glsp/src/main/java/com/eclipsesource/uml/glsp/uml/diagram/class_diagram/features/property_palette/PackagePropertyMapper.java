@@ -21,6 +21,8 @@ import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalett
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Package;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.upackage.UpdatePackageHandler;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.BaseDiagramElementPropertyMapper;
+import com.eclipsesource.uml.glsp.uml.utils.PackageImportUtils;
+import com.eclipsesource.uml.glsp.uml.utils.PackageMergeUtils;
 import com.eclipsesource.uml.glsp.uml.utils.VisibilityKindUtils;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.upackage.UpdatePackageArgument;
 
@@ -38,6 +40,14 @@ public class PackagePropertyMapper extends BaseDiagramElementPropertyMapper<Pack
             "Visibility",
             VisibilityKindUtils.asChoices(),
             source.getVisibility().getLiteral())
+         .reference(
+            UmlClass_Package.Property.PACKAGE_IMPORTS,
+            "Package Import",
+            PackageImportUtils.asReferenceFromPackageImport(source.getPackageImports(), idGenerator))
+         .reference(
+            UmlClass_Package.Property.PACKAGE_IMPORTS,
+            "Package Merge",
+            PackageMergeUtils.asReferences(source.getPackageMerges(), idGenerator))
 
          .items();
 

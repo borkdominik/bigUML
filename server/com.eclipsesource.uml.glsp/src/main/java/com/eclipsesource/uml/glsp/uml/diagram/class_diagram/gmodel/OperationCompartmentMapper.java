@@ -10,26 +10,23 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel;
 
+import java.util.stream.Collectors;
+
 import org.eclipse.glsp.graph.GCompartment;
-import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.builder.impl.GCompartmentBuilder;
-import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.util.GConstants;
-import org.eclipse.uml2.uml.NamedElement;
 import org.eclipse.uml2.uml.Operation;
+import org.eclipse.uml2.uml.ParameterDirectionKind;
 
-import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
-import com.eclipsesource.uml.glsp.core.features.id_generator.IdCountContextGenerator;
-import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Operation;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGModelMapper;
-import com.eclipsesource.uml.glsp.uml.utils.VisibilityKindUtils;
-import com.google.inject.Inject;
+import com.eclipsesource.uml.glsp.uml.gmodel.element.NamedElementGBuilder;
+import com.eclipsesource.uml.glsp.uml.utils.ParameterUtils;
+import com.eclipsesource.uml.glsp.uml.utils.TypeUtils;
 
-public final class OperationCompartmentMapper extends BaseGModelMapper<Operation, GCompartment> {
-   @Inject
-   protected IdCountContextGenerator idCountGenerator;
+public final class OperationCompartmentMapper extends BaseGModelMapper<Operation, GCompartment>
+   implements NamedElementGBuilder<Operation> {
 
    @Override
    public GCompartment map(final Operation source) {
@@ -39,30 +36,45 @@ public final class OperationCompartmentMapper extends BaseGModelMapper<Operation
          .layoutOptions(new GLayoutOptions()
             .hGap(3)
             .resizeContainer(true))
-         .add(buildIcon(source))
-         .add(buildVisibility(source))
-         .add(buildName(source));
+         .add(buildIconVisibilityName(source, "--uml-operation-icon"));
+
+      applyParameters(source, builder);
+      applyReturns(source, builder);
 
       return builder.build();
    }
 
-   protected GCompartment buildIcon(final Operation source) {
-      return new GCompartmentBuilder(UmlClass_Operation.ICON)
-         .id(idCountGenerator.getOrCreateId(source))
-         .build();
+   protected void applyParameters(final Operation source, final GCompartmentBuilder builder) {
+      var parameters = source.getOwnedParameters().stream()
+         .filter(p -> p.getDirection() != ParameterDirectionKind.RETURN_LITERAL).collect(Collectors.toList());
+
+      builder.add(separatorBuilder(source, "(").build());
+
+      for (int i = 0; i < parameters.size(); i++) {
+         if (i > 0) {
+            builder.add(separatorBuilder(source, ",").build());
+         }
+
+         builder.add(textBuilder(source, ParameterUtils.asText(parameters.get(i))).build());
+      }
+
+      builder.add(separatorBuilder(source, ")").build());
    }
 
-   protected GLabel buildName(final Operation operation) {
-      return new GLabelBuilder(CoreTypes.LABEL_NAME)
-         .id(suffix.appendTo(NameLabelSuffix.SUFFIX, idGenerator.getOrCreateId(operation)))
-         .text(operation.getName())
-         .build();
-   }
+   protected void applyReturns(final Operation source, final GCompartmentBuilder builder) {
+      var parameters = source.getOwnedParameters().stream()
+         .filter(p -> p.getDirection() == ParameterDirectionKind.RETURN_LITERAL).collect(Collectors.toList());
 
-   protected GLabel buildVisibility(final NamedElement source) {
-      return new GLabelBuilder(CoreTypes.LABEL_NAME)
-         .id(idCountGenerator.getOrCreateId(source))
-         .text(VisibilityKindUtils.asAscii(source.getVisibility()))
-         .build();
+      if (parameters.size() > 0) {
+         builder.add(separatorBuilder(source, ":").build());
+
+         for (int i = 0; i < parameters.size(); i++) {
+            if (i > 0) {
+               builder.add(separatorBuilder(source, ",").build());
+            }
+
+            builder.add(textBuilder(source, String.format("%s", TypeUtils.name(parameters.get(i).getType()))).build());
+         }
+      }
    }
 }

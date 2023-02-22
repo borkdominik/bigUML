@@ -8,20 +8,19 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.uml.gmodel;
+package com.eclipsesource.uml.glsp.uml.gmodel.builder;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
+import com.eclipsesource.uml.glsp.uml.gmodel.provider.IdContextGeneratorGProvider;
 
-public interface IconCssBuilder extends IdContextGeneratorProvider {
+public interface IconCssGBuilder extends IdContextGeneratorGProvider {
 
-   default GLabel buildIconFromCssProperty(final EObject source, final String cssProperty) {
+   default GLabelBuilder iconFromCssPropertyBuilder(final EObject source, final String cssProperty) {
       return new GLabelBuilder(CoreTypes.ICON_CSS)
-         .id(idCountContextGenerator().getOrCreateId(source))
-         .addArgument("property", cssProperty)
-         .build();
+         .id(idContextGenerator().getOrCreateId(source))
+         .addArgument("property", cssProperty);
    }
 }

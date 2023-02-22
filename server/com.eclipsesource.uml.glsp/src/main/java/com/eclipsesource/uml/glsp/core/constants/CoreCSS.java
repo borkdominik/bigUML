@@ -10,6 +10,8 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.core.constants;
 
+import org.eclipse.uml2.uml.AggregationKind;
+
 public class CoreCSS {
    public static final String NODE = "uml-node";
    public static final String EDGE = "uml-edge";
@@ -41,6 +43,17 @@ public class CoreCSS {
 
       public String end() {
          return css + "-end";
+      }
+
+      public static Marker from(final AggregationKind aggregationKind) {
+         switch (aggregationKind) {
+            case COMPOSITE_LITERAL:
+               return CoreCSS.Marker.DIAMOND;
+            case SHARED_LITERAL:
+               return CoreCSS.Marker.DIAMOND_EMPTY;
+            default:
+               return CoreCSS.Marker.NONE;
+         }
       }
    }
 

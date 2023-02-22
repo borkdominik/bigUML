@@ -13,19 +13,17 @@ package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel;
 import java.util.List;
 
 import org.eclipse.glsp.graph.GEdge;
-import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.builder.impl.GEdgeBuilder;
-import org.eclipse.glsp.graph.builder.impl.GEdgePlacementBuilder;
-import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.InterfaceRealization;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
-import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_InterfaceRealization;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGEdgeMapper;
+import com.eclipsesource.uml.glsp.uml.gmodel.element.EdgeGBuilder;
 
-public final class InterfaceRealizationEdgeMapper extends BaseGEdgeMapper<InterfaceRealization, GEdge> {
+public final class InterfaceRealizationEdgeMapper extends BaseGEdgeMapper<InterfaceRealization, GEdge>
+   implements EdgeGBuilder {
 
    @Override
    public GEdge map(final InterfaceRealization source) {
@@ -45,22 +43,5 @@ public final class InterfaceRealizationEdgeMapper extends BaseGEdgeMapper<Interf
       applyEdgeNotation(source, builder);
 
       return builder.build();
-   }
-
-   protected GLabel createEdgeNameLabel(final String name, final String id, final double position) {
-      return createEdgeLabel(name, position, id, CoreTypes.LABEL_EDGE_NAME,
-         GConstants.EdgeSide.TOP);
-   }
-
-   protected GLabel createEdgeLabel(final String name, final double position, final String id, final String type,
-      final String side) {
-      return new GLabelBuilder(type)
-         .edgePlacement(new GEdgePlacementBuilder()
-            .side(side)
-            .position(position)
-            .rotate(false)
-            .build())
-         .id(id)
-         .text(name).build();
    }
 }

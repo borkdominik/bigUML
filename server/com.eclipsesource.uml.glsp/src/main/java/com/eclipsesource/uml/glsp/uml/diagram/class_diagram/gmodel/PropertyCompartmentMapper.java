@@ -20,20 +20,17 @@ import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.Property;
 
-import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 import com.eclipsesource.uml.glsp.core.features.id_generator.IdCountContextGenerator;
-import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Property;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyMultiplicityLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyTypeLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.utils.MultiplicityUtil;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGModelMapper;
-import com.eclipsesource.uml.glsp.uml.gmodel.SeparatorBuilder;
-import com.eclipsesource.uml.glsp.uml.utils.VisibilityKindUtils;
+import com.eclipsesource.uml.glsp.uml.gmodel.element.NamedElementGBuilder;
 import com.google.inject.Inject;
 
 public final class PropertyCompartmentMapper extends BaseGModelMapper<Property, GCompartment>
-   implements SeparatorBuilder {
+   implements NamedElementGBuilder<Property> {
    @Inject
    protected IdCountContextGenerator idCountGenerator;
 
@@ -45,29 +42,13 @@ public final class PropertyCompartmentMapper extends BaseGModelMapper<Property, 
          .layoutOptions(new GLayoutOptions()
             .hGap(3)
             .resizeContainer(true))
-         .add(buildIconFromCssProperty(source, "--uml-property-icon"))
-         .add(buildVisibility(source))
-         .add(buildName(source))
-         .add(buildSeparator(source, ":"));
+         .add(buildIconVisibilityName(source, "--uml-property-icon"))
+         .add(separatorBuilder(source, ":").build());
 
       applyType(source, builder);
       applyMultiplicity(source, builder);
 
       return builder.build();
-   }
-
-   protected GLabel buildVisibility(final Property source) {
-      return new GLabelBuilder(CoreTypes.LABEL_NAME)
-         .id(idCountGenerator.getOrCreateId(source))
-         .text(VisibilityKindUtils.asSingleLabel(source.getVisibility()))
-         .build();
-   }
-
-   protected GLabel buildName(final Property source) {
-      return new GLabelBuilder(CoreTypes.LABEL_NAME)
-         .id(suffix.appendTo(NameLabelSuffix.SUFFIX, idGenerator.getOrCreateId(source)))
-         .text(source.getName())
-         .build();
    }
 
    protected GLabel buildTypeName(final Property source, final String text) {
@@ -91,11 +72,11 @@ public final class PropertyCompartmentMapper extends BaseGModelMapper<Property, 
       var multiplicity = MultiplicityUtil.getMultiplicity(source);
 
       builder
-         .add(buildSeparator(source, "["))
+         .add(separatorBuilder(source, "[").build())
          .add(new GLabelBuilder(UmlClass_Property.LABEL_MULTIPLICITY)
             .id(suffix.appendTo(PropertyMultiplicityLabelSuffix.SUFFIX, idGenerator.getOrCreateId(source)))
             .text(multiplicity)
             .build())
-         .add(buildSeparator(source, "]"));
+         .add(separatorBuilder(source, "]").build());
    }
 }

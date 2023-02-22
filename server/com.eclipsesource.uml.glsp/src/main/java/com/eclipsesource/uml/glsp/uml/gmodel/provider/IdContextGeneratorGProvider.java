@@ -8,10 +8,10 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.uml.gmodel;
+package com.eclipsesource.uml.glsp.uml.gmodel.provider;
 
 import com.eclipsesource.uml.glsp.core.features.id_generator.IdCountContextGenerator;
 
-public interface IdContextGeneratorProvider {
-   IdCountContextGenerator idCountContextGenerator();
+public interface IdContextGeneratorGProvider {
+   IdCountContextGenerator idContextGenerator();
 }

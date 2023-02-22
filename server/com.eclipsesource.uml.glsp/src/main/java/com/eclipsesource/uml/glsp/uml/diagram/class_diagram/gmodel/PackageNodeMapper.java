@@ -18,20 +18,17 @@ import java.util.stream.Collectors;
 import org.eclipse.glsp.graph.GCompartment;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GNode;
-import org.eclipse.glsp.graph.builder.impl.GCompartmentBuilder;
-import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
-import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.builder.impl.GNodeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.Package;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
-import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
-import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Package;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGNodeMapper;
+import com.eclipsesource.uml.glsp.uml.gmodel.element.NamedElementGBuilder;
 
-public final class PackageNodeMapper extends BaseGNodeMapper<Package, GNode> {
+public final class PackageNodeMapper extends BaseGNodeMapper<Package, GNode>
+   implements NamedElementGBuilder<Package> {
 
    @Override
    public GNode map(final Package source) {
@@ -58,26 +55,16 @@ public final class PackageNodeMapper extends BaseGNodeMapper<Package, GNode> {
    }
 
    protected GCompartment buildHeader(final Package source) {
-      var builder = new GCompartmentBuilder(CoreTypes.COMPARTMENT_HEADER)
-         .id(idCountGenerator.getOrCreateId(source))
+      var builder = compartmentHeaderBuilder(source)
          .layout(GConstants.Layout.HBOX);
 
-      builder.add(buildIconFromCssProperty(source, "--uml-package-icon"));
-
-      var nameLabel = new GLabelBuilder(CoreTypes.LABEL_NAME)
-         .id(suffix.appendTo(NameLabelSuffix.SUFFIX, idGenerator.getOrCreateId(source)))
-         .text(source.getName()).build();
-      builder.add(nameLabel);
+      builder.add(buildIconVisibilityName(source, "--uml-package-icon"));
 
       return builder.build();
    }
 
    protected GCompartment buildCompartment(final Package source) {
-      return new GCompartmentBuilder(CoreTypes.COMPARTMENT)
-         .id(idCountGenerator.getOrCreateId(source))
-         .layout(GConstants.Layout.FREEFORM)
-         .layoutOptions(new GLayoutOptions()
-            .hAlign(GConstants.HAlign.LEFT))
+      return freeformChildrenCompartmentBuilder(source)
          .addAll(source.getPackagedElements().stream()
             .map(mapHandler::handle)
             .collect(Collectors.toList()))

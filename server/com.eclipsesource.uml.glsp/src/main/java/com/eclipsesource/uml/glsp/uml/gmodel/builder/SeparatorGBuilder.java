@@ -8,20 +8,19 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.uml.gmodel;
+package com.eclipsesource.uml.glsp.uml.gmodel.builder;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
+import com.eclipsesource.uml.glsp.uml.gmodel.provider.IdContextGeneratorGProvider;
 
-public interface SeparatorBuilder extends IdContextGeneratorProvider {
+public interface SeparatorGBuilder extends IdContextGeneratorGProvider {
 
-   default GLabel buildSeparator(final EObject source, final String text) {
+   default GLabelBuilder separatorBuilder(final EObject source, final String text) {
       return new GLabelBuilder(CoreTypes.LABEL_TEXT)
-         .id(idCountContextGenerator().getOrCreateId(source))
-         .text(text)
-         .build();
+         .id(idContextGenerator().getOrCreateId(source))
+         .text(text);
    }
 }

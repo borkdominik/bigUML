@@ -23,6 +23,8 @@ public class CoreCSS {
 
    public static final String LABEL_TRANSPARENT = "label-transparent";
 
+   public static final String TEXT_UNDERLINE = "text-underline";
+
    public enum Marker {
       NONE("marker-none"),
       TRIANGLE("marker-triangle"),

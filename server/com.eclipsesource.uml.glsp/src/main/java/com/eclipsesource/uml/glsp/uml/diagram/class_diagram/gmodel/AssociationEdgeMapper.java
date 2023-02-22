@@ -60,6 +60,7 @@ public final class AssociationEdgeMapper extends BaseGEdgeMapper<Association, GE
          new GEdgePlacementBuilder()
             .side(GConstants.EdgeSide.TOP)
             .position(position)
+            .rotate(false)
             .build()).build());
 
       builder.add(
@@ -71,6 +72,7 @@ public final class AssociationEdgeMapper extends BaseGEdgeMapper<Association, GE
                .side(GConstants.EdgeSide.BOTTOM)
                .position(position)
                .offset(10d)
+               .rotate(false)
                .build()).build());
 
       var marker = CoreCSS.Marker.from(memberEnd.getAggregation());

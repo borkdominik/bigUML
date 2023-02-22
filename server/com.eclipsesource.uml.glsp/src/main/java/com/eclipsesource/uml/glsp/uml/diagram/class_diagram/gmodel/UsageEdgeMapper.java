@@ -45,6 +45,7 @@ public final class UsageEdgeMapper extends BaseGEdgeMapper<Usage, GEdge> impleme
             new GEdgePlacementBuilder()
                .side(GConstants.EdgeSide.TOP)
                .position(0.5d)
+               .rotate(false)
                .build()).build());
 
       applyEdgeNotation(source, builder);

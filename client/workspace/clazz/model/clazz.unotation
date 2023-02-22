@@ -90,11 +90,13 @@
   </elements>
   <elements xsi:type="notation:Shape">
     <semanticElement elementId="_dDtuMLK1Ee24ffphK9Na6g"/>
-    <position x="431.51823530936406" y="-772.0599944807851"/>
-    <size width="160.0" height="50.0"/>
+    <position x="408.3741854662199" y="-783.6320194023572"/>
+    <size width="192.65625" height="53.0"/>
   </elements>
   <elements xsi:type="notation:Edge">
     <semanticElement elementId="_dxJb8LK1Ee24ffphK9Na6g"/>
+    <bendPoints x="408.27142214105055" y="-674.4690288806654"/>
+    <bendPoints x="504.70231046621984" y="-674.4690288806654"/>
   </elements>
   <elements xsi:type="notation:Shape">
     <semanticElement elementId="_ed5NMLK1Ee24ffphK9Na6g"/>

@@ -20,6 +20,7 @@ import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.Property;
 
+import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.features.id_generator.IdCountContextGenerator;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Property;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyMultiplicityLabelSuffix;
@@ -42,11 +43,18 @@ public final class PropertyCompartmentMapper extends BaseGModelMapper<Property, 
          .layoutOptions(new GLayoutOptions()
             .hGap(3)
             .resizeContainer(true))
-         .add(buildIconVisibilityName(source, "--uml-property-icon"))
+         .add(iconFromCssPropertyBuilder(source, "--uml-property-icon").build())
+         .add(visibilityBuilder(source).build());
+
+      applyIsDerived(source, builder);
+
+      builder
+         .add(nameBuilder(source).build())
          .add(separatorBuilder(source, ":").build());
 
       applyType(source, builder);
       applyMultiplicity(source, builder);
+      applyIsStatic(source, builder);
 
       return builder.build();
    }
@@ -78,5 +86,17 @@ public final class PropertyCompartmentMapper extends BaseGModelMapper<Property, 
             .text(multiplicity)
             .build())
          .add(separatorBuilder(source, "]").build());
+   }
+
+   protected void applyIsDerived(final Property source, final GCompartmentBuilder builder) {
+      if (source.isDerived()) {
+         builder.add(textBuilder(source, "/").build());
+      }
+   }
+
+   protected void applyIsStatic(final Property source, final GCompartmentBuilder builder) {
+      if (source.isStatic()) {
+         builder.addCssClass(CoreCSS.TEXT_UNDERLINE);
+      }
    }
 }

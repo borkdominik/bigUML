@@ -45,6 +45,7 @@ public final class PackageImportEdgeMapper extends BaseGEdgeMapper<PackageImport
             new GEdgePlacementBuilder()
                .side(GConstants.EdgeSide.TOP)
                .position(0.5d)
+               .rotate(false)
                .build()).build());
 
       applyEdgeNotation(source, builder);

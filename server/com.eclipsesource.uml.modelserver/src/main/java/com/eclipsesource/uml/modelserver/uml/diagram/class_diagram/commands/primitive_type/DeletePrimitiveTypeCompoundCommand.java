@@ -15,7 +15,7 @@ import org.eclipse.uml2.uml.PrimitiveType;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.commands.DeleteNotationElementCommand;
-import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.matcher.CommunicationDiagramCrossReferenceRemover;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.reference.ClassDiagramCrossReferenceRemover;
 
 public final class DeletePrimitiveTypeCompoundCommand extends CompoundCommand {
 
@@ -23,7 +23,7 @@ public final class DeletePrimitiveTypeCompoundCommand extends CompoundCommand {
       this.append(new DeletePrimitiveTypeSemanticCommand(context, semanticElement));
       this.append(new DeleteNotationElementCommand(context, semanticElement));
 
-      new CommunicationDiagramCrossReferenceRemover(context).deleteCommandsFor(semanticElement)
+      new ClassDiagramCrossReferenceRemover(context).deleteCommandsFor(semanticElement)
          .forEach(this::append);
    }
 }

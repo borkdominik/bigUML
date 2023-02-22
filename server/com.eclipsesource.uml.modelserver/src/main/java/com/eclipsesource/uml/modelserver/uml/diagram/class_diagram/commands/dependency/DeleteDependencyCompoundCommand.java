@@ -5,6 +5,7 @@ import org.eclipse.uml2.uml.Dependency;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.commands.DeleteNotationElementCommand;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.reference.ClassDiagramCrossReferenceRemover;
 
 public final class DeleteDependencyCompoundCommand extends CompoundCommand {
 
@@ -12,6 +13,8 @@ public final class DeleteDependencyCompoundCommand extends CompoundCommand {
       this.append(new DeleteDependencySemanticCommand(context, semanticElement));
       this.append(new DeleteNotationElementCommand(context, semanticElement));
 
+      new ClassDiagramCrossReferenceRemover(context).deleteCommandsFor(semanticElement)
+         .forEach(this::append);
    }
 
 }

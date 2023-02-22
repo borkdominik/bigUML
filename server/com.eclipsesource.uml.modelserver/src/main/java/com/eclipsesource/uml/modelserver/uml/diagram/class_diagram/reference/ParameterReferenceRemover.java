@@ -25,6 +25,15 @@ import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.para
 public final class ParameterReferenceRemover extends BaseCrossReferenceProcessor<Parameter> {
 
    @Override
+   public List<Command> process(final ModelContext context, final Setting setting, final EObject interest) {
+      if (selfType.isInstance(setting.getEObject())) {
+         return process(context, setting, selfType.cast(setting.getEObject()), interest);
+      }
+
+      return List.of();
+   }
+
+   @Override
    protected List<Command> process(final ModelContext context, final Setting setting, final Parameter self,
       final EObject interest) {
       if (interest.equals(self.getType())) {

@@ -12,11 +12,7 @@ package com.eclipsesource.uml.modelserver.shared.matcher;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
 import java.util.Set;
-import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
 import org.eclipse.emf.ecore.EObject;
@@ -24,26 +20,30 @@ import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil.UsageCrossReferencer;
 
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.utils.StreamUtil;
 
-@Deprecated
-public class CrossReferenceMatcher<T> {
-   protected final List<BiFunction<Setting, EObject, Optional<T>>> matchers;
+public class CrossReferenceFinder<TProcessedResult> {
+   protected final ModelContext modelContext;
+   protected final Set<CrossReferenceProcessor<TProcessedResult>> processors;
 
-   protected CrossReferenceMatcher(
-      final List<BiFunction<Setting, EObject, Optional<T>>> matchers) {
-      this.matchers = matchers;
+   public CrossReferenceFinder(
+      final ModelContext modelContext,
+      final Set<CrossReferenceProcessor<TProcessedResult>> processors) {
+      this.modelContext = modelContext;
+      this.processors = processors;
    }
 
-   public Set<T> find(final MatcherContext context, final EObject interest, final Resource resource) {
+   public Set<TProcessedResult> find(final MatcherContext context, final EObject interest, final Resource resource) {
       var settings = UsageCrossReferencer
          .find(interest, resource);
 
       return find(context, interest, settings);
    }
 
-   protected Set<T> find(final MatcherContext context, final EObject interest, final Collection<Setting> settings) {
-      var matches = new HashSet<T>();
+   protected Set<TProcessedResult> find(final MatcherContext context, final EObject interest,
+      final Collection<Setting> settings) {
+      var results = new HashSet<TProcessedResult>();
       var filteredSettings = settings.stream()
          .filter(StreamUtil.distinctByKey(Setting::getEObject))
          .filter(setting -> !context.processedSettings.contains(setting))
@@ -52,25 +52,11 @@ public class CrossReferenceMatcher<T> {
       for (var setting : filteredSettings) {
          context.processedSettings.add(setting);
 
-         for (var matcher : matchers) {
-            matcher.apply(setting, interest).ifPresent(matches::add);
+         for (var processor : processors) {
+            results.addAll(processor.process(modelContext, setting, interest));
          }
       }
 
-      return matches;
-
-   }
-
-   public static class Builder<T> {
-      private final List<BiFunction<Setting, EObject, Optional<T>>> matchers = new LinkedList<>();
-
-      public Builder<T> match(final BiFunction<Setting, EObject, Optional<T>> match) {
-         matchers.add(match);
-         return this;
-      }
-
-      public CrossReferenceMatcher<T> build() {
-         return new CrossReferenceMatcher<>(matchers);
-      }
+      return results;
    }
 }

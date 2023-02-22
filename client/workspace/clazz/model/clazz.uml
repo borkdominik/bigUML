@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_Cfp0UGmxEe2kLe5KTNzRtw" name="clazz">
   <packagedElement xmi:type="uml:Class" xmi:id="_QE0EkK7gEe2EZoZ5sgiBCg" name="asd">
-    <ownedAttribute xmi:id="_bM_S4K7gEe2EZoZ5sgiBCg" name="NewProperty1" type="_QE0EkK7gEe2EZoZ5sgiBCg">
+    <ownedAttribute xmi:id="_bM_S4K7gEe2EZoZ5sgiBCg" name="NewProperty1" type="_9pVK8LK0Ee24ffphK9Na6g">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_bM_58K7gEe2EZoZ5sgiBCg" value="1"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_bNAhAK7gEe2EZoZ5sgiBCg" value="1"/>
     </ownedAttribute>
@@ -26,7 +26,7 @@
     <ownedOperation xmi:id="_r0YL0K70Ee2EZoZ5sgiBCg" name="NewOperation1">
       <ownedParameter xmi:id="_Pf5kMbFSEe2z_s-Al402-w" name="NewParameter1" type="_QE0EkK7gEe2EZoZ5sgiBCg" direction="return"/>
       <ownedParameter xmi:id="_TnD78LFUEe2z_s-Al402-w" name="NewParameter2" type="_W7vZ8K79Ee2EZoZ5sgiBCg" direction="return"/>
-      <ownedParameter xmi:id="_YG02YLFVEe2z_s-Al402-w" name="NewParameter3"/>
+      <ownedParameter xmi:id="_YG02YLFVEe2z_s-Al402-w" name="NewParameter3" type="_9pVK8LK0Ee24ffphK9Na6g"/>
       <ownedParameter xmi:id="_huGJQbFuEe21bf9NlKs9Kg" name="NewParameter4"/>
     </ownedOperation>
   </packagedElement>

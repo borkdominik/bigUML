@@ -43,3 +43,6 @@
 
 @import "uml/communication/diagram.css";
 @import "uml/class/diagram.css";
+
+@import "uml/papyrus/variables.css";
+@import "uml/papyrus/classes.css";

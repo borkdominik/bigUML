@@ -20,7 +20,7 @@ public interface SeparatorBuilder extends IdContextGeneratorProvider {
 
    default GLabel buildSeparator(final EObject source, final String text) {
       return new GLabelBuilder(CoreTypes.LABEL_TEXT)
-         .id(idContextGenerator().getOrCreateId(source))
+         .id(idCountContextGenerator().getOrCreateId(source))
          .text(text)
          .build();
    }

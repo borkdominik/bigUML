@@ -73,7 +73,7 @@ public class UmlToolDiagramConfiguration extends BaseDiagramConfiguration {
       mappings.put(CoreTypes.LABEL_EDGE_NAME, GraphPackage.Literals.GLABEL);
       mappings.put(CoreTypes.COMP, GraphPackage.Literals.GCOMPARTMENT);
       // mappings.put(Types.COMP_HEADER, GraphPackage.Literals.GCOMPARTMENT);
-      mappings.put(CoreTypes.LABEL_ICON, GraphPackage.Literals.GCOMPARTMENT);
+      mappings.put(CoreTypes.ICON_CSS, GraphPackage.Literals.GCOMPARTMENT);
       mappings.put(CoreTypes.COMPARTMENT, GraphPackage.Literals.GCOMPARTMENT);
       mappings.put(CoreTypes.COMPARTMENT_HEADER, GraphPackage.Literals.GCOMPARTMENT);
 

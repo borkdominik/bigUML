@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-import { SChildElement, selectFeature } from "@eclipse-glsp/client";
+import { Args, SArgumentable, SChildElement, selectFeature } from "@eclipse-glsp/client";
 import {
     boundsFeature,
     Connectable,
@@ -75,6 +75,10 @@ export class Icon extends SShapeElement {
     hasFeature(feature: symbol): boolean {
         return feature === boundsFeature || feature === layoutContainerFeature || feature === layoutableChildFeature || feature === fadeFeature;
     }
+}
+
+export class IconCSS extends Icon implements SArgumentable {
+    args: Args;
 }
 
 export class IconLabelCompartment extends SCompartment implements Selectable, Deletable, Hoverable {

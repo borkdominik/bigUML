@@ -45,7 +45,7 @@ public final class PropertyCompartmentMapper extends BaseGModelMapper<Property, 
          .layoutOptions(new GLayoutOptions()
             .hGap(3)
             .resizeContainer(true))
-         .add(buildIcon(source))
+         .add(buildIconFromCssProperty(source, "--uml-property-icon"))
          .add(buildVisibility(source))
          .add(buildName(source))
          .add(buildSeparator(source, ":"));
@@ -54,12 +54,6 @@ public final class PropertyCompartmentMapper extends BaseGModelMapper<Property, 
       applyMultiplicity(source, builder);
 
       return builder.build();
-   }
-
-   protected GCompartment buildIcon(final Property source) {
-      return new GCompartmentBuilder(UmlClass_Property.ICON)
-         .id(idCountGenerator.getOrCreateId(source))
-         .build();
    }
 
    protected GLabel buildVisibility(final Property source) {

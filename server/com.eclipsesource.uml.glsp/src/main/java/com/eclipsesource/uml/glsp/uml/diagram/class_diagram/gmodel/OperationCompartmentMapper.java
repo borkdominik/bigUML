@@ -43,7 +43,7 @@ public final class OperationCompartmentMapper extends BaseGModelMapper<Operation
          .layoutOptions(new GLayoutOptions()
             .hGap(3)
             .resizeContainer(true))
-         .add(buildIcon(source))
+         .add(buildIconFromCssProperty(source, "--uml-operation-icon"))
          .add(buildVisibility(source))
          .add(buildName(source));
 
@@ -51,12 +51,6 @@ public final class OperationCompartmentMapper extends BaseGModelMapper<Operation
       applyReturns(source, builder);
 
       return builder.build();
-   }
-
-   protected GCompartment buildIcon(final Operation source) {
-      return new GCompartmentBuilder(UmlClass_Operation.ICON)
-         .id(idCountGenerator.getOrCreateId(source))
-         .build();
    }
 
    protected GLabel buildName(final Operation operation) {
@@ -108,7 +102,7 @@ public final class OperationCompartmentMapper extends BaseGModelMapper<Operation
    protected GLabel buildParameter(final Operation source, final Parameter parameter) {
 
       return new GLabelBuilder(CoreTypes.LABEL_TEXT)
-         .id(idContextGenerator().getOrCreateId(source))
+         .id(idCountContextGenerator().getOrCreateId(source))
          .text(ParameterUtils.asText(parameter))
          .build();
    }
@@ -117,7 +111,7 @@ public final class OperationCompartmentMapper extends BaseGModelMapper<Operation
       var type = TypeUtils.name(parameter.getType());
 
       return new GLabelBuilder(CoreTypes.LABEL_TEXT)
-         .id(idContextGenerator().getOrCreateId(source))
+         .id(idCountContextGenerator().getOrCreateId(source))
          .text(String.format("%s", type))
          .build();
    }

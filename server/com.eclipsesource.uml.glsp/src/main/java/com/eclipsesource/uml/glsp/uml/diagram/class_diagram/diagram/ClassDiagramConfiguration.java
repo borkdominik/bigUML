@@ -145,32 +145,26 @@ public final class ClassDiagramConfiguration implements DiagramConfiguration {
       mappings.put(UmlClass_Association.AGGREGATION_TYPE_ID, GraphPackage.Literals.GEDGE);
       mappings.put(UmlClass_Association.COMPOSITION_TYPE_ID, GraphPackage.Literals.GEDGE);
 
-      mappings.put(UmlClass_Class.ICON, GraphPackage.Literals.GCOMPARTMENT);
       mappings.put(UmlClass_Class.TYPE_ID, GraphPackage.Literals.GNODE);
 
-      mappings.put(UmlClass_DataType.ICON, GraphPackage.Literals.GCOMPARTMENT);
       mappings.put(UmlClass_DataType.TYPE_ID, GraphPackage.Literals.GNODE);
 
       mappings.put(UmlClass_Dependency.TYPE_ID, GraphPackage.Literals.GEDGE);
 
-      mappings.put(UmlClass_Enumeration.ICON, GraphPackage.Literals.GCOMPARTMENT);
       mappings.put(UmlClass_Enumeration.TYPE_ID, GraphPackage.Literals.GNODE);
 
-      mappings.put(UmlClass_EnumerationLiteral.ICON, GraphPackage.Literals.GCOMPARTMENT);
       mappings.put(UmlClass_EnumerationLiteral.TYPE_ID, GraphPackage.Literals.GCOMPARTMENT);
 
       mappings.put(UmlClass_Generalization.TYPE_ID, GraphPackage.Literals.GEDGE);
 
       mappings.put(UmlClass_Interface.TYPE_ID, GraphPackage.Literals.GNODE);
+
       mappings.put(UmlClass_InterfaceRealization.TYPE_ID, GraphPackage.Literals.GEDGE);
 
-      mappings.put(UmlClass_Operation.ICON, GraphPackage.Literals.GCOMPARTMENT);
       mappings.put(UmlClass_Operation.TYPE_ID, GraphPackage.Literals.GCOMPARTMENT);
 
-      mappings.put(UmlClass_PrimitiveType.ICON, GraphPackage.Literals.GCOMPARTMENT);
       mappings.put(UmlClass_PrimitiveType.TYPE_ID, GraphPackage.Literals.GNODE);
 
-      mappings.put(UmlClass_Package.ICON, GraphPackage.Literals.GCOMPARTMENT);
       mappings.put(UmlClass_Package.TYPE_ID, GraphPackage.Literals.GNODE);
 
       mappings.put(UmlClass_PackageImport.TYPE_ID, GraphPackage.Literals.GEDGE);
@@ -179,7 +173,6 @@ public final class ClassDiagramConfiguration implements DiagramConfiguration {
 
       mappings.put(UmlClass_Parameter.TYPE_ID, GraphPackage.Literals.GCOMPARTMENT);
 
-      mappings.put(UmlClass_Property.ICON, GraphPackage.Literals.GCOMPARTMENT);
       mappings.put(UmlClass_Property.TYPE_ID, GraphPackage.Literals.GCOMPARTMENT);
       mappings.put(UmlClass_Property.LABEL_TYPE, GraphPackage.Literals.GLABEL);
       mappings.put(UmlClass_Property.LABEL_MULTIPLICITY, GraphPackage.Literals.GLABEL);

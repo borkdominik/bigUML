@@ -10,8 +10,18 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.gmodel;
 
-import com.eclipsesource.uml.glsp.core.features.id_generator.IdCountContextGenerator;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.glsp.graph.GLabel;
+import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 
-public interface IdContextGeneratorProvider {
-   IdCountContextGenerator idCountContextGenerator();
+import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
+
+public interface IconCssBuilder extends IdContextGeneratorProvider {
+
+   default GLabel buildIconFromCssProperty(final EObject source, final String cssProperty) {
+      return new GLabelBuilder(CoreTypes.ICON_CSS)
+         .id(idCountContextGenerator().getOrCreateId(source))
+         .addArgument("property", cssProperty)
+         .build();
+   }
 }

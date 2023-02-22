@@ -38,7 +38,7 @@ import { DefaultTypes } from "@eclipse-glsp/protocol";
 import { Container, ContainerModule } from "inversify";
 import { EditLabelUI } from "sprotty/lib";
 
-import { CommentLinkEdgeView, CommentNodeView } from "./common/common";
+import { CommentLinkEdgeView, CommentNodeView, IconCSSView } from "./common/common";
 import { UmlGraphView } from "./common/graph-view";
 import { CustomCopyPasteHandler, LastContainableElementTracker } from "./features/copy-paste/copy-paste";
 import umlDiagramOutlineViewModule from "./features/diagram-outline/di.config";
@@ -47,7 +47,7 @@ import umlEditorPanelModule from "./features/editor-panel/di.config";
 import umlPropertyPaletteModule from "./features/property-palette/di.config";
 import umlToolPaletteModule from "./features/tool-palette/di.config";
 import { IconLabelCompartmentSelectionFeedback } from "./feedback";
-import { LabeledNode, SEditableLabel } from "./model";
+import { IconCSS, LabeledNode, SEditableLabel } from "./model";
 import createClassModule from "./uml/class/di.config";
 import createCommunicationModule from "./uml/communication/di.config";
 import { BaseTypes, UmlTypes } from "./utils";
@@ -64,6 +64,7 @@ export default function createContainer(widgetId: string): Container {
 
             const context = { bind, unbind, isBound, rebind };
             configureDefaultModelElements(context);
+
             configureModelElement(
                 context,
                 DefaultTypes.GRAPH,
@@ -90,7 +91,6 @@ export default function createContainer(widgetId: string): Container {
                 SLabelView
             );
 
-            // configureModelElement(context, UmlTypes.LABEL_ICON, SLabel, SLabelView);
             configureModelElement(
                 context,
                 BaseTypes.COMPARTMENT,
@@ -133,6 +133,13 @@ export default function createContainer(widgetId: string): Container {
                 UmlTypes.COMMENT_LINK,
                 SEdge,
                 CommentLinkEdgeView
+            );
+
+            configureModelElement(
+                context,
+                UmlTypes.ICON_CSS,
+                IconCSS,
+                IconCSSView
             );
 
             configureViewerOptions(context, {

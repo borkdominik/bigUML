@@ -37,16 +37,10 @@ public final class EnumerationLiteralCompartmentMapper extends BaseGModelMapper<
          .layoutOptions(new GLayoutOptions()
             .hGap(3)
             .resizeContainer(true))
-         .add(buildIcon(source))
+         .add(buildIconFromCssProperty(source, "--uml-enumeration-literal-icon"))
          .add(buildName(source));
 
       return builder.build();
-   }
-
-   protected GCompartment buildIcon(final EnumerationLiteral source) {
-      return new GCompartmentBuilder(UmlClass_EnumerationLiteral.ICON)
-         .id(idCountGenerator.getOrCreateId(source))
-         .build();
    }
 
    protected GLabel buildName(final EnumerationLiteral source) {

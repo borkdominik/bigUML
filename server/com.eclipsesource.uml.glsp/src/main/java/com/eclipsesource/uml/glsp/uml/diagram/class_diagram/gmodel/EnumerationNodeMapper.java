@@ -65,10 +65,7 @@ public final class EnumerationNodeMapper extends BaseGNodeMapper<Enumeration, GN
          .id(idCountGenerator.getOrCreateId(source))
          .layout(GConstants.Layout.HBOX);
 
-      var icon = new GCompartmentBuilder(UmlClass_Enumeration.ICON)
-         .id(idCountGenerator.getOrCreateId(source))
-         .build();
-      compBuilder.add(icon);
+      compBuilder.add(buildIconFromCssProperty(source, "--uml-enumeration-icon"));
 
       compBuilder.add(buildVisibility(source));
 

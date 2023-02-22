@@ -15,7 +15,6 @@ import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 public class UmlClass_Property {
 
    public static final String ID = "property";
-   public static final String ICON = CoreTypes.PRE_ICON + ID;
    public static final String TYPE_ID = CoreTypes.PRE_COMP_BASE + ID;
 
    public static final String LABEL_TYPE = CoreTypes.PRE_LABEL + ID + "-type";

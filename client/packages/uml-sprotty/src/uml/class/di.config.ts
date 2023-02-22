@@ -14,30 +14,16 @@ import "sprotty/css/edit-label.css";
 import { configureModelElement, PolylineEdgeView, SCompartmentView, SEdge, SLabelView } from "@eclipse-glsp/client/lib";
 import { ContainerModule } from "inversify";
 
-import { IconView } from "../../common/common";
 import { IconLabelCompartment, SEditableLabel } from "../../model";
 import { UmlTypes } from "../../utils";
 import { NamedElement } from "../shared/named-element.model";
 import { NamedElementView } from "../shared/named-element.view";
-import { IconClass } from "./elements/class";
-import { IconDataType } from "./elements/data_type";
-import { IconEnumeration } from "./elements/enumeration";
-import { IconEnumerationLiteral } from "./elements/enumeration_literal";
-import { IconPackage } from "./elements/package";
-import { IconPrimitiveType } from "./elements/primitive_type";
-import { IconProperty } from "./elements/property";
 
 export default function createClassModule(): ContainerModule {
     const classModule = new ContainerModule((bind, unbind, isBound, rebind) => {
         const context = { bind, unbind, isBound, rebind };
 
         // Class
-        configureModelElement(
-            context,
-            UmlTypes.ICON_CLASS,
-            IconClass,
-            IconView
-        );
         configureModelElement(
             context,
             UmlTypes.CLASS,
@@ -54,24 +40,12 @@ export default function createClassModule(): ContainerModule {
         // Enumeration
         configureModelElement(
             context,
-            UmlTypes.ICON_ENUMERATION,
-            IconEnumeration,
-            IconView
-        );
-        configureModelElement(
-            context,
             UmlTypes.ENUMERATION,
             NamedElement,
             NamedElementView
         );
 
         // Enumeration Literal
-        configureModelElement(
-            context,
-            UmlTypes.ICON_ENUMERATION_LITERAL,
-            IconEnumerationLiteral,
-            IconView
-        );
         configureModelElement(
             context,
             UmlTypes.ENUMERATION_LITERAL,
@@ -118,24 +92,12 @@ export default function createClassModule(): ContainerModule {
         // Operation
         configureModelElement(
             context,
-            UmlTypes.ICON_OPERATION,
-            IconProperty,
-            IconView
-        );
-        configureModelElement(
-            context,
             UmlTypes.OPERATION,
             IconLabelCompartment,
             SCompartmentView
         );
 
         // Property
-        configureModelElement(
-            context,
-            UmlTypes.ICON_PROPERTY,
-            IconProperty,
-            IconView
-        );
         configureModelElement(
             context,
             UmlTypes.PROPERTY,
@@ -158,12 +120,6 @@ export default function createClassModule(): ContainerModule {
         // Data Type
         configureModelElement(
             context,
-            UmlTypes.ICON_DATA_TYPE,
-            IconDataType,
-            IconView
-        );
-        configureModelElement(
-            context,
             UmlTypes.DATA_TYPE,
             NamedElement,
             NamedElementView
@@ -172,24 +128,12 @@ export default function createClassModule(): ContainerModule {
         // Data Type
         configureModelElement(
             context,
-            UmlTypes.ICON_PRIMITIVE_TYPE,
-            IconPrimitiveType,
-            IconView
-        );
-        configureModelElement(
-            context,
             UmlTypes.PRIMITIVE_TYPE,
             NamedElement,
             NamedElementView
         );
 
         // PACKAGE
-        configureModelElement(
-            context,
-            UmlTypes.ICON_PACKAGE,
-            IconPackage,
-            IconView
-        );
         configureModelElement(
             context,
             UmlTypes.PACKAGE,

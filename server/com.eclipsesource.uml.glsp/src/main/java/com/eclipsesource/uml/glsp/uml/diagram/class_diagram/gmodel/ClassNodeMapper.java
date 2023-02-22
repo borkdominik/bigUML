@@ -34,6 +34,7 @@ import com.eclipsesource.uml.glsp.uml.gmodel.BaseGNodeMapper;
 import com.eclipsesource.uml.glsp.uml.utils.VisibilityKindUtils;
 
 public final class ClassNodeMapper extends BaseGNodeMapper<Class, GNode> {
+
    @Override
    public GNode map(final Class source) {
       var builder = new GNodeBuilder(UmlClass_Class.TYPE_ID);
@@ -81,12 +82,8 @@ public final class ClassNodeMapper extends BaseGNodeMapper<Class, GNode> {
 
       } else {
          builder
-            .layout(GConstants.Layout.HBOX);
-
-         var icon = new GCompartmentBuilder(UmlClass_Class.ICON)
-            .id(idCountGenerator.getOrCreateId(source))
-            .build();
-         builder.add(icon);
+            .layout(GConstants.Layout.HBOX)
+            .add(buildIconFromCssProperty(source, "--uml-class-icon"));
       }
 
       builder.add(buildVisibility(source));

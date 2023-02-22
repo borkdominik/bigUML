@@ -62,10 +62,7 @@ public final class PackageNodeMapper extends BaseGNodeMapper<Package, GNode> {
          .id(idCountGenerator.getOrCreateId(source))
          .layout(GConstants.Layout.HBOX);
 
-      var icon = new GCompartmentBuilder(UmlClass_Package.ICON)
-         .id(idCountGenerator.getOrCreateId(source))
-         .build();
-      builder.add(icon);
+      builder.add(buildIconFromCssProperty(source, "--uml-package-icon"));
 
       var nameLabel = new GLabelBuilder(CoreTypes.LABEL_NAME)
          .id(suffix.appendTo(NameLabelSuffix.SUFFIX, idGenerator.getOrCreateId(source)))

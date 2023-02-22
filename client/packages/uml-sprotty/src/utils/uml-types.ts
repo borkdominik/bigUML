@@ -18,31 +18,24 @@ export namespace UmlTypes {
     export const LABEL_EDGE_NAME = `${DefaultTypes.LABEL}:edge-name`;
     export const LABEL_EDGE_MULTIPLICITY = `${DefaultTypes.LABEL}:association-multiplicity`;
     export const STRUCTURE = "struct";
+    export const ICON_CSS = `${ICON}:css`;
 
     // CLASS DIAGRAM
-    export const ICON_CLASS = `${ICON}:class`;
     export const CLASS = `${DefaultTypes.NODE}:class`;
     export const ABSTRACT_CLASS = `${DefaultTypes.NODE}:abstract-class`;
-    export const ICON_ENUMERATION = `${ICON}:enumeration`;
     export const ENUMERATION = `${DefaultTypes.NODE}:enumeration`;
-    export const ICON_ENUMERATION_LITERAL = `${ICON}:enumeration-literal`;
     export const ENUMERATION_LITERAL = `${DefaultTypes.COMPARTMENT}:enumeration-literal`;
     export const INTERFACE = `${DefaultTypes.NODE}:interface`;
     export const ASSOCIATION = `${DefaultTypes.EDGE}:association`;
     export const AGGREGATION = `${DefaultTypes.EDGE}:aggregation`;
     export const COMPOSITION = `${DefaultTypes.EDGE}:composition`;
     export const CLASS_GENERALIZATION = `${DefaultTypes.EDGE}:generalization`;
-    export const ICON_PROPERTY = `${ICON}:property`;
     export const PROPERTY = `${DefaultTypes.COMPARTMENT}:property`;
     export const LABEL_PROPERTY_TYPE = `${DefaultTypes.LABEL}:property-type`;
     export const LABEL_PROPERTY_MULTIPLICITY = `${DefaultTypes.LABEL}:property-multiplicity`;
-    export const ICON_OPERATION = `${ICON}:operation`;
     export const OPERATION = `${DefaultTypes.COMPARTMENT}:operation`;
-    export const ICON_DATA_TYPE = `${ICON}:data-type`;
     export const DATA_TYPE = `${DefaultTypes.NODE}:data-type`;
-    export const ICON_PRIMITIVE_TYPE = `${ICON}:primitive-type`;
     export const PRIMITIVE_TYPE = `${DefaultTypes.NODE}:primitive-type`;
-    export const ICON_PACKAGE = `${ICON}:package`;
     export const PACKAGE = `${DefaultTypes.NODE}:package`;
     export const ABSTRACTION = `${DefaultTypes.EDGE}:abstraction`;
     export const DEPENDENCY = `${DefaultTypes.EDGE}:dependency`;

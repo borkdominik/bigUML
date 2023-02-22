@@ -26,6 +26,18 @@ public final class UpdateSubstitutionSemanticCommand
 
    @Override
    protected void updateSemanticElement(final Substitution semanticElement,
-      final UpdateSubstitutionArgument updateArgument) {}
+      final UpdateSubstitutionArgument updateArgument) {
+      updateArgument.name().ifPresent(arg -> {
+         semanticElement.setName(arg);
+      });
+
+      updateArgument.label().ifPresent(arg -> {
+         throw new UnsupportedOperationException();
+      });
+
+      updateArgument.visibilityKind().ifPresent(arg -> {
+         semanticElement.setVisibility(arg);
+      });
+   }
 
 }

@@ -17,7 +17,10 @@ public class UmlClass_PackageMerge {
    public static final String ID = "package-merge";
    public static final String TYPE_ID = CoreTypes.PRE_EDGE + ID;
 
-   public enum Property {}
+   public enum Property {
+      VISIBILITY_KIND,
+      MERGED_PACKAGE;
+   }
 
    private UmlClass_PackageMerge() {}
 }

@@ -12,77 +12,58 @@ package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.property_p
 
 import java.util.Optional;
 
-import org.eclipse.uml2.uml.Package;
+import org.eclipse.uml2.uml.InterfaceRealization;
 import org.eclipse.uml2.uml.VisibilityKind;
 
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
 import com.eclipsesource.uml.glsp.features.property_palette.handler.action.UpdateElementPropertyAction;
 import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalette;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Package;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.upackage.UpdatePackageHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_InterfaceRealization;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.interface_realization.UpdateInterfaceRealizationHandler;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.BaseDiagramElementPropertyMapper;
-import com.eclipsesource.uml.glsp.uml.utils.PackageImportUtils;
-import com.eclipsesource.uml.glsp.uml.utils.PackageMergeUtils;
 import com.eclipsesource.uml.glsp.uml.utils.VisibilityKindUtils;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.upackage.UpdatePackageArgument;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.interface_realization.UpdateInterfaceRealizationArgument;
 
-public class PackagePropertyMapper extends BaseDiagramElementPropertyMapper<Package> {
+public class InterfaceRealizationPropertyMapper extends BaseDiagramElementPropertyMapper<InterfaceRealization> {
 
    @Override
-   public PropertyPalette map(final Package source) {
+   public PropertyPalette map(final InterfaceRealization source) {
       var elementId = idGenerator.getOrCreateId(source);
 
-      var items = this.propertyBuilder(UmlClass_Package.Property.class, elementId)
-         .text(UmlClass_Package.Property.NAME, "Name", source.getName())
-         .text(UmlClass_Package.Property.URI, "Uri", source.getURI())
+      var items = this.propertyBuilder(UmlClass_InterfaceRealization.Property.class, elementId)
+         .text(UmlClass_InterfaceRealization.Property.NAME, "Name", source.getName())
          .choice(
-            UmlClass_Package.Property.VISIBILITY_KIND,
+            UmlClass_InterfaceRealization.Property.VISIBILITY_KIND,
             "Visibility",
             VisibilityKindUtils.asChoices(),
             source.getVisibility().getLiteral())
-         .reference(
-            UmlClass_Package.Property.PACKAGE_IMPORTS,
-            "Package Import",
-            PackageImportUtils.asReferenceFromPackageImport(source.getPackageImports(), idGenerator))
-         .reference(
-            UmlClass_Package.Property.PACKAGE_IMPORTS,
-            "Package Merge",
-            PackageMergeUtils.asReferences(source.getPackageMerges(), idGenerator))
-
          .items();
 
-      return new PropertyPalette(elementId, source.getName(), items);
+      return new PropertyPalette(elementId, "InterfaceRealization", items);
    }
 
    @Override
    public Optional<UpdateOperation> map(final UpdateElementPropertyAction action) {
-      var property = getProperty(UmlClass_Package.Property.class, action);
-      var handler = getHandler(UpdatePackageHandler.class, action);
+      var property = getProperty(UmlClass_InterfaceRealization.Property.class, action);
+      var handler = getHandler(UpdateInterfaceRealizationHandler.class, action);
       UpdateOperation operation = null;
 
       switch (property) {
          case NAME:
             operation = handler.withArgument(
-               new UpdatePackageArgument.Builder()
+               new UpdateInterfaceRealizationArgument.Builder()
                   .name(action.getValue())
-                  .get());
-            break;
-         case URI:
-            operation = handler.withArgument(
-               new UpdatePackageArgument.Builder()
-                  .uri(action.getValue())
                   .get());
             break;
          case VISIBILITY_KIND:
             operation = handler.withArgument(
-               new UpdatePackageArgument.Builder()
+               new UpdateInterfaceRealizationArgument.Builder()
                   .visibilityKind(VisibilityKind.get(action.getValue()))
                   .get());
             break;
       }
 
       return withContext(operation);
-
    }
 
 }

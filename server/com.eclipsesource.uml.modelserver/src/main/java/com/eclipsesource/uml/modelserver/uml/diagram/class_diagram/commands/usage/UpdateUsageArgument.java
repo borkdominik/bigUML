@@ -10,11 +10,46 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.usage;
 
+import java.util.Optional;
+
+import org.eclipse.uml2.uml.VisibilityKind;
+
 import com.eclipsesource.uml.modelserver.shared.codec.codecs.EmbeddedCodec;
 
 public final class UpdateUsageArgument implements EmbeddedCodec.JsonEncodable {
+   private String name;
+   private String label;
+   private VisibilityKind visibilityKind;
+
+   public Optional<String> name() {
+      return Optional.ofNullable(name);
+   }
+
+   public Optional<String> label() {
+      return Optional.ofNullable(label);
+   }
+
+   public Optional<VisibilityKind> visibilityKind() {
+      return Optional.ofNullable(visibilityKind);
+   }
+
    public static final class Builder {
       private final UpdateUsageArgument argument = new UpdateUsageArgument();
+
+      public Builder name(final String value) {
+         argument.name = value;
+         return this;
+      }
+
+      public Builder label(final String value) {
+         argument.label = value;
+         return this;
+      }
+
+      public Builder visibilityKind(final VisibilityKind value) {
+         argument.visibilityKind = value;
+         return this;
+      }
 
       public UpdateUsageArgument get() {
          return argument;

@@ -17,7 +17,10 @@ public class UmlClass_PackageImport {
    public static final String ID = "package-import";
    public static final String TYPE_ID = CoreTypes.PRE_EDGE + ID;
 
-   public enum Property {}
+   public enum Property {
+      VISIBILITY_KIND,
+      IMPORTED_PACKAGE;
+   }
 
    private UmlClass_PackageImport() {}
 }

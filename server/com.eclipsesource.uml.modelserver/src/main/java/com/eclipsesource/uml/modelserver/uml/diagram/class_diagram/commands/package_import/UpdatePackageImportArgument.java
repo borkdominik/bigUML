@@ -10,11 +10,26 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.package_import;
 
+import java.util.Optional;
+
+import org.eclipse.uml2.uml.VisibilityKind;
+
 import com.eclipsesource.uml.modelserver.shared.codec.codecs.EmbeddedCodec;
 
 public final class UpdatePackageImportArgument implements EmbeddedCodec.JsonEncodable {
+   private VisibilityKind visibilityKind;
+
+   public Optional<VisibilityKind> visibilityKind() {
+      return Optional.ofNullable(visibilityKind);
+   }
+
    public static final class Builder {
       private final UpdatePackageImportArgument argument = new UpdatePackageImportArgument();
+
+      public Builder visibilityKind(final VisibilityKind value) {
+         argument.visibilityKind = value;
+         return this;
+      }
 
       public UpdatePackageImportArgument get() {
          return argument;

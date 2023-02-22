@@ -17,7 +17,10 @@ public class UmlClass_Substitution {
    public static final String ID = "substitution";
    public static final String TYPE_ID = CoreTypes.PRE_EDGE + ID;
 
-   public enum Property {}
+   public enum Property {
+      NAME,
+      VISIBILITY_KIND;
+   }
 
    private UmlClass_Substitution() {}
 }

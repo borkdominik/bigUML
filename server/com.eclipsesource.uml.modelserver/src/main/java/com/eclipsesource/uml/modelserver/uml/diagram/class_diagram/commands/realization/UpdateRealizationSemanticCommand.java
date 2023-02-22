@@ -26,6 +26,18 @@ public final class UpdateRealizationSemanticCommand
 
    @Override
    protected void updateSemanticElement(final Realization semanticElement,
-      final UpdateRealizationArgument updateArgument) {}
+      final UpdateRealizationArgument updateArgument) {
+      updateArgument.name().ifPresent(arg -> {
+         semanticElement.setName(arg);
+      });
+
+      updateArgument.label().ifPresent(arg -> {
+         throw new UnsupportedOperationException();
+      });
+
+      updateArgument.visibilityKind().ifPresent(arg -> {
+         semanticElement.setVisibility(arg);
+      });
+   }
 
 }

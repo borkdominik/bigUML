@@ -25,6 +25,18 @@ public final class UpdateDependencySemanticCommand
 
    @Override
    protected void updateSemanticElement(final Dependency semanticElement,
-      final UpdateDependencyArgument updateArgument) {}
+      final UpdateDependencyArgument updateArgument) {
+      updateArgument.name().ifPresent(arg -> {
+         semanticElement.setName(arg);
+      });
+
+      updateArgument.label().ifPresent(arg -> {
+         throw new UnsupportedOperationException();
+      });
+
+      updateArgument.visibilityKind().ifPresent(arg -> {
+         semanticElement.setVisibility(arg);
+      });
+   }
 
 }

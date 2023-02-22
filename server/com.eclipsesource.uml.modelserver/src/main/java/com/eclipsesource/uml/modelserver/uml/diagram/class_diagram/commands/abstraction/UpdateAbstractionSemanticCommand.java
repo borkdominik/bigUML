@@ -25,6 +25,18 @@ public final class UpdateAbstractionSemanticCommand
 
    @Override
    protected void updateSemanticElement(final Abstraction semanticElement,
-      final UpdateAbstractionArgument updateArgument) {}
+      final UpdateAbstractionArgument updateArgument) {
+      updateArgument.name().ifPresent(arg -> {
+         semanticElement.setName(arg);
+      });
+
+      updateArgument.label().ifPresent(arg -> {
+         throw new UnsupportedOperationException();
+      });
+
+      updateArgument.visibilityKind().ifPresent(arg -> {
+         semanticElement.setVisibility(arg);
+      });
+   }
 
 }

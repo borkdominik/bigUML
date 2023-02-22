@@ -109,7 +109,8 @@
   </elements>
   <elements xsi:type="notation:Edge">
     <semanticElement elementId="_ghLTkLK1Ee24ffphK9Na6g"/>
-    <bendPoints x="25.09812165045762" y="-381.2122733702022"/>
+    <bendPoints x="-85.27864146259883" y="-344.15522477805587"/>
+    <bendPoints x="25.09812165045762" y="-344.15522477805587"/>
     <bendPoints x="25.09812165045762" y="-286.38308770321265"/>
   </elements>
   <elements xsi:type="notation:Shape">
@@ -127,5 +128,9 @@
   </elements>
   <elements xsi:type="notation:Edge">
     <semanticElement elementId="_Gt7igLK2Ee24ffphK9Na6g"/>
+  </elements>
+  <elements xsi:type="notation:Edge">
+    <semanticElement elementId="_wZ60QLK9Ee2fn9jN03lZYw"/>
+    <bendPoints x="803.9454300980668" y="-757.1320194023572"/>
   </elements>
 </unotation:UmlDiagram>

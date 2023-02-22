@@ -26,6 +26,10 @@ public final class UpdatePackageImportSemanticCommand
 
    @Override
    protected void updateSemanticElement(final PackageImport semanticElement,
-      final UpdatePackageImportArgument updateArgument) {}
+      final UpdatePackageImportArgument updateArgument) {
+      updateArgument.visibilityKind().ifPresent(arg -> {
+         semanticElement.setVisibility(arg);
+      });
+   }
 
 }

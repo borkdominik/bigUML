@@ -178,7 +178,7 @@ export class PropertyPalette implements IActionHandler, SModelRootListener, Edit
                 if (items.length === 1) {
                     breadcrumbs.textContent = `${items[0].palette?.label} > `;
                 } else {
-                    breadcrumbs.textContent = `${items[0].palette?.label} > ... ${items[1].palette?.label} > `;
+                    breadcrumbs.textContent = `${items[0].palette?.label} > ... > ${items[1].palette?.label} > `;
                 }
 
             }

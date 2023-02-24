@@ -8,9 +8,9 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-import { Icon } from "../../model";
+import { Icon } from '../../model';
 
 // OBJECT
 export class IconObject extends Icon {
-    iconImageName = "object/Object.svg";
+    override iconImageName = 'object/Object.svg';
 }

@@ -8,13 +8,13 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-import { ActionHandlerRegistry } from "@eclipse-glsp/client/lib";
-import { GLSPTheiaDiagramServer } from "@eclipse-glsp/theia-integration/lib/browser";
-import { injectable } from "inversify";
+import { ActionHandlerRegistry } from '@eclipse-glsp/client';
+import { GLSPTheiaDiagramServer } from '@eclipse-glsp/theia-integration/lib/browser';
+import { injectable } from 'inversify';
 
 @injectable()
 export class UmlTheiaDiagramServer extends GLSPTheiaDiagramServer {
-    initialize(registry: ActionHandlerRegistry): void {
+    override initialize(registry: ActionHandlerRegistry): void {
         super.initialize(registry);
 
         // TODO: Check them
@@ -23,5 +23,4 @@ export class UmlTheiaDiagramServer extends GLSPTheiaDiagramServer {
         // registry.register(GetBehaviorsAction.KIND, this);
         // registry.register(CallBehaviorsAction.KIND, this);
     }
-
 }

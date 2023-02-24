@@ -8,28 +8,29 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-/* eslint-disable react/jsx-key */
-import { injectable } from "inversify";
-import { VNode } from "snabbdom";
-import {
-    RectangularNodeView,
-    RectangularNode,
-    RenderingContext,
-    svg
-} from "sprotty/lib";
+import { RectangularNode, RectangularNodeView, RenderingContext, svg } from '@eclipse-glsp/client';
+import { injectable } from 'inversify';
+import { VNode } from 'snabbdom';
 
-/* eslint-disable react/react-in-jsx-scope */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const JSX = { createElement: svg };
 
 @injectable()
 export class JoinNodeView extends RectangularNodeView {
-    render(node: RectangularNode, context: RenderingContext): VNode {
+    override render(node: RectangularNode, context: RenderingContext): VNode {
         const joinNode: any = (
             <g class-node={true} class-selected={node.selected} class-mouseover={node.hoverFeedback}>
-                <rect x={0} y={0} rx={0} ry={0} fill="#4E81B4" width={Math.max(0, node.bounds.width)}
-                    height={Math.max(0, node.bounds.height)} />
-            </g>);
+                <rect
+                    x={0}
+                    y={0}
+                    rx={0}
+                    ry={0}
+                    fill='#4E81B4'
+                    width={Math.max(0, node.bounds.width)}
+                    height={Math.max(0, node.bounds.height)}
+                />
+            </g>
+        );
         return joinNode;
     }
 }

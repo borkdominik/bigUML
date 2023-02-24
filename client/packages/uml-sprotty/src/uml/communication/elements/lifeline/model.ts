@@ -8,9 +8,8 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-import { Icon } from "../../../../model";
+import { Icon } from '../../../../model';
 
 export class IconLifeline extends Icon {
-    iconImageName = "communication/Lifeline.gif";
+    override iconImageName = 'communication/Lifeline.gif';
 }
-

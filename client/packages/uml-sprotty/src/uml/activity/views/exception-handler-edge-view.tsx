@@ -8,26 +8,16 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-/* eslint-disable react/jsx-key */
-import { injectable } from "inversify";
-import { VNode } from "snabbdom";
-import {
-    toDegrees,
-    angleOfPoint,
-    SEdge,
-    Point,
-    PolylineEdgeView,
-    RenderingContext,
-    svg
-} from "sprotty/lib";
+import { angleOfPoint, Point, PolylineEdgeView, RenderingContext, SEdge, svg, toDegrees } from '@eclipse-glsp/client';
+import { injectable } from 'inversify';
+import { VNode } from 'snabbdom';
 
-/* eslint-disable react/react-in-jsx-scope */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const JSX = { createElement: svg };
 
 @injectable()
 export class ExceptionHandlerEdgeView extends PolylineEdgeView {
-    protected renderLine(edge: SEdge, segments: Point[], context: RenderingContext): VNode {
+    protected override renderLine(edge: SEdge, segments: Point[], context: RenderingContext): VNode {
         const source = segments[0];
         const target = segments[segments.length - 1];
 
@@ -46,17 +36,24 @@ export class ExceptionHandlerEdgeView extends PolylineEdgeView {
         path += ` L ${p1.x},${p1.y}`;
         path += ` L ${p2.x},${p2.y}`;
         path += ` L ${target.x},${target.y}`;
-        const exceptionHandlerEdge: any =(<path d={path} />);
+        const exceptionHandlerEdge: any = <path d={path} />;
         return exceptionHandlerEdge;
     }
 
-    protected renderAdditionals(edge: SEdge, segments: Point[], context: RenderingContext): VNode[] {
+    protected override renderAdditionals(edge: SEdge, segments: Point[], context: RenderingContext): VNode[] {
         const p1 = segments[segments.length - 2];
         const p2 = segments[segments.length - 1];
-        const additionals: any = ([
-            <path key={edge.id} class-sprotty-edge={true} class-arrow={true} d="M 1.5,0 L 10,-4 L 10,4 Z"
-                transform={`rotate(${toDegrees(angleOfPoint({ x: p1.x - p2.x, y: p1.y - p2.y }))} ${p2.x} ${p2.y}) translate(${p2.x} ${p2.y})`} />
-        ]);
+        const additionals: any = [
+            <path
+                key={edge.id}
+                class-sprotty-edge={true}
+                class-arrow={true}
+                d='M 1.5,0 L 10,-4 L 10,4 Z'
+                transform={`rotate(${toDegrees(angleOfPoint({ x: p1.x - p2.x, y: p1.y - p2.y }))} ${p2.x} ${p2.y}) translate(${p2.x} ${
+                    p2.y
+                })`}
+            />
+        ];
         return additionals;
     }
 }
@@ -68,7 +65,7 @@ export class ExceptionHandlerEdgeView extends PolylineEdgeView {
  * @param deg Angle given in degree.
  */
 function rotate(center: Point, point: Point, deg: number): Point {
-    const rad = deg * Math.PI / 180;
+    const rad = (deg * Math.PI) / 180;
     const s = Math.sin(rad);
     const c = Math.cos(rad);
     return {
@@ -87,7 +84,7 @@ export function angle(p1: Point, p2: Point): number {
     if (theta < 0) {
         theta += Math.PI * 2;
     }
-    return theta * 180 / Math.PI;
+    return (theta * 180) / Math.PI;
 }
 
 /**
@@ -97,7 +94,7 @@ export function angle(p1: Point, p2: Point): number {
  * @param len Distance to the center point.
  */
 export function scale(center: Point, deg: number, len: number): Point {
-    const rad = deg * Math.PI / 180;
+    const rad = (deg * Math.PI) / 180;
     const nx = Math.cos(rad) * len + center.x;
     const ny = Math.sin(rad) * len + center.y;
     return { x: nx, y: ny };

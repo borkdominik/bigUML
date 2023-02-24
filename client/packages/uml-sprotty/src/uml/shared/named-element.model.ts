@@ -8,7 +8,6 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-import { LabeledNode } from "../../model";
+import { LabeledNode } from '../../model';
 
-export class NamedElement extends LabeledNode {
-}
+export class NamedElement extends LabeledNode {}

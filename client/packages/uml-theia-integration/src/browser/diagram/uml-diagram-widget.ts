@@ -8,15 +8,13 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-import { GLSPDiagramWidget } from "@eclipse-glsp/theia-integration";
-import { EnableEditorPanelAction } from "@eclipsesource/uml-sprotty/lib/features/editor-panel";
+import { GLSPDiagramWidget } from '@eclipse-glsp/theia-integration';
+import { EnableEditorPanelAction } from '@eclipsesource/uml-sprotty/lib/features/editor-panel';
 
 export class UmlDiagramWidget extends GLSPDiagramWidget {
-
     protected override dispatchInitialActions(): void {
         super.dispatchInitialActions();
 
         this.actionDispatcher.dispatch(new EnableEditorPanelAction());
     }
-
 }

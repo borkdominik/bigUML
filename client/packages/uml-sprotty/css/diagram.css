@@ -49,16 +49,16 @@ svg {
     margin-bottom: 10px;
 }
 
-.sprotty-popup-body>p {
+.sprotty-popup-body > p {
     margin-bottom: 2px;
 }
 
-@import "uml/node.css";
-@import "uml/edge.css";
-@import "uml/marker.css";
+@import 'uml/node.css';
+@import 'uml/edge.css';
+@import 'uml/marker.css';
 
-@import "text.css";
-@import "edit-label.css";
-@import "editor-panel.css";
-@import "tool-palette.css";
-@import "property-palette.css";
+@import 'text.css';
+@import 'edit-label.css';
+@import 'editor-panel.css';
+@import 'tool-palette.css';
+@import 'property-palette.css';

@@ -8,22 +8,21 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-import { ModelServerMessage, Response } from "@eclipse-emfcloud/modelserver-theia";
-import { DefaultModelServerClient } from "@eclipse-emfcloud/modelserver-theia/lib/node";
-import { injectable } from "inversify";
+import { ModelServerMessage } from '@eclipse-emfcloud/modelserver-client/lib/model-server-message';
+import { TheiaBackendModelServerClientV2 } from '@eclipse-emfcloud/modelserver-theia/lib/node';
+import { injectable } from 'inversify';
+import { AxiosResponse } from 'axios';
 
-import { UmlDiagramType, UmlModelServerClient } from "../common/uml-model-server-client";
+import { UmlDiagramType } from '../common/uml-language';
 
 export namespace UmlModelServerPaths {
-    export const CREATE_UML = "uml/create";
+    export const CREATE_UML = 'uml/create';
 }
 
 @injectable()
-export class UmlModelServerClientImpl extends DefaultModelServerClient implements UmlModelServerClient {
-
-    async createUmlResource(modelName: string, diagramType: UmlDiagramType): Promise<Response<ModelServerMessage>> {
+export class UmlModelServerClient extends TheiaBackendModelServerClientV2 {
+    async createUmlResource(modelName: string, diagramType: UmlDiagramType): Promise<AxiosResponse<ModelServerMessage>> {
         const newModelUri = `${modelName}/model/${modelName}.uml`;
         return this.restClient.get(`${UmlModelServerPaths.CREATE_UML}?modeluri=${newModelUri}&diagramtype=${diagramType}`);
     }
 }
-

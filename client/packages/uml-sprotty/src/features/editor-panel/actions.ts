@@ -13,39 +13,31 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { Action, generateRequestId, RequestAction, ResponseAction } from "@eclipse-glsp/client";
+import { Action, RequestAction, ResponseAction } from '@eclipse-glsp/client';
 
 export class EnableEditorPanelAction implements Action {
-    static readonly KIND = "enableEditorPanel";
+    static readonly KIND = 'enableEditorPanel';
     kind = EnableEditorPanelAction.KIND;
 }
 
-export function isEnableEditorPanelAction(
-    action: Action
-): action is EnableEditorPanelAction {
+export function isEnableEditorPanelAction(action: Action): action is EnableEditorPanelAction {
     return action.kind === EnableEditorPanelAction.KIND;
 }
 
 export class RequestEditorPanelAction implements RequestAction<SetEditorPanelAction> {
-    static readonly KIND = "requestEditorPanel";
+    static readonly KIND = 'requestEditorPanel';
     kind = RequestEditorPanelAction.KIND;
 
-    constructor(
-        public requestId: string = generateRequestId()) { }
+    constructor(public requestId: string = RequestAction.generateRequestId()) {}
 }
 
 export class SetEditorPanelAction implements ResponseAction {
-    static readonly KIND = "setEditorPanel";
+    static readonly KIND = 'setEditorPanel';
     kind = SetEditorPanelAction.KIND;
 
-    constructor(
-        public responseId = "",
-        public children: string[]
-    ) { }
+    constructor(public responseId = '', public children: string[]) {}
 }
 
-export function isSetEditorPanelAction(
-    action: Action
-): action is SetEditorPanelAction {
+export function isSetEditorPanelAction(action: Action): action is SetEditorPanelAction {
     return action.kind === SetEditorPanelAction.KIND;
 }

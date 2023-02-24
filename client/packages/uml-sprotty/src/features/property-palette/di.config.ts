@@ -13,23 +13,21 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { configureActionHandler, GLSP_TYPES, SelectAction, SetDirtyStateAction } from "@eclipse-glsp/client";
-import { ContainerModule } from "inversify";
+import { configureActionHandler, SelectAction, SetDirtyStateAction, TYPES } from '@eclipse-glsp/client';
+import { ContainerModule } from 'inversify';
 
-import { EDITOR_PANEL_TYPES } from "../editor-panel/di.types";
-import { PropertyPalette } from "./extension";
+import { EDITOR_PANEL_TYPES } from '../editor-panel/di.types';
+import { PropertyPalette } from './extension';
 
-const umlPropertyPaletteModule = new ContainerModule(
-    (bind, _unbind, isBound, rebind) => {
-        const context = { bind, _unbind, isBound, rebind };
+const umlPropertyPaletteModule = new ContainerModule((bind, _unbind, isBound, rebind) => {
+    const context = { bind, _unbind, isBound, rebind };
 
-        bind(PropertyPalette).toSelf().inSingletonScope();
-        bind(EDITOR_PANEL_TYPES.Child).toService(PropertyPalette);
-        bind(GLSP_TYPES.SModelRootListener).toService(PropertyPalette);
+    bind(PropertyPalette).toSelf().inSingletonScope();
+    bind(EDITOR_PANEL_TYPES.Child).toService(PropertyPalette);
+    bind(TYPES.SModelRootListener).toService(PropertyPalette);
 
-        configureActionHandler(context, SelectAction.KIND, PropertyPalette);
-        configureActionHandler(context, SetDirtyStateAction.KIND, PropertyPalette);
-    }
-);
+    configureActionHandler(context, SelectAction.KIND, PropertyPalette);
+    configureActionHandler(context, SetDirtyStateAction.KIND, PropertyPalette);
+});
 
 export default umlPropertyPaletteModule;

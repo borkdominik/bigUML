@@ -8,22 +8,17 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-import { configureServerActions } from "@eclipse-glsp/client";
-import {
-    DiagramWidget,
-    GLSPDiagramManager,
-    GLSPWidgetOpenerOptions,
-    GLSPWidgetOptions
-} from "@eclipse-glsp/theia-integration/lib/browser";
-import { Emitter, Event, SelectionService } from "@theia/core";
-import { Widget } from "@theia/core/lib/browser";
-import URI from "@theia/core/lib/common/uri";
-import { WorkspaceService } from "@theia/workspace/lib/browser";
-import { inject, injectable, postConstruct } from "inversify";
-import { DiagramWidgetOptions } from "sprotty-theia";
+import { configureServerActions } from '@eclipse-glsp/client';
+import { DiagramWidget, GLSPDiagramManager, GLSPWidgetOpenerOptions, GLSPWidgetOptions } from '@eclipse-glsp/theia-integration/lib/browser';
+import { Emitter, Event, SelectionService } from '@theia/core';
+import { Widget } from '@theia/core/lib/browser';
+import URI from '@theia/core/lib/common/uri';
+import { WorkspaceService } from '@theia/workspace/lib/browser';
+import { inject, injectable, postConstruct } from 'inversify';
+import { DiagramWidgetOptions } from 'sprotty-theia';
 
-import { UmlLanguage } from "../../common/uml-language";
-import { UmlDiagramWidget } from "./uml-diagram-widget";
+import { UmlLanguage } from '../../common/uml-language';
+import { UmlDiagramWidget } from './uml-diagram-widget';
 
 export interface UmlDiagramWidgetOptions extends DiagramWidgetOptions, GLSPWidgetOptions {
     workspaceRoot: string;
@@ -46,11 +41,11 @@ export class UmlDiagramManager extends GLSPDiagramManager {
 
     protected get recentlyVisible(): DiagramWidget | undefined {
         const id = this.recentlyVisibleIds[0];
-        return id && this.all.find(w => w.id === id) || undefined;
+        return (id && this.all.find(w => w.id === id)) || undefined;
     }
 
     readonly diagramType = UmlLanguage.diagramType;
-    readonly label = UmlLanguage.label + " Editor";
+    readonly label = UmlLanguage.label + ' Editor';
 
     get currentEditor(): DiagramWidget | undefined {
         return this._currentEditor;
@@ -60,7 +55,7 @@ export class UmlDiagramManager extends GLSPDiagramManager {
         return UmlLanguage.fileExtensions;
     }
 
-    get iconClass(): string {
+    override get iconClass(): string {
         return UmlLanguage.iconClass!;
     }
 
@@ -69,12 +64,13 @@ export class UmlDiagramManager extends GLSPDiagramManager {
     }
 
     @postConstruct()
-    protected async initialize(): Promise<void> {
+    protected override async initialize(): Promise<void> {
         super.init();
         super.initialize();
 
         this.workspaceService.roots.then(roots => (this.workspaceRoot = roots[0].resource.toString()));
 
+        // Necessary for editor switches
         this.shell.onDidChangeCurrentWidget(() => {
             this.updateCurrentEditor();
         });
@@ -124,7 +120,6 @@ export class UmlDiagramManager extends GLSPDiagramManager {
         } else if (!this._currentEditor || !this._currentEditor.isVisible || this.currentEditor !== this.recentlyVisible) {
             this.setCurrentEditor(this.recentlyVisible);
         }
-
     }
 
     protected addRecentlyVisible(widget: DiagramWidget): void {
@@ -139,7 +134,7 @@ export class UmlDiagramManager extends GLSPDiagramManager {
         }
     }
 
-    protected createWidgetOptions(uri: URI, options?: GLSPWidgetOpenerOptions): UmlDiagramWidgetOptions {
+    protected override createWidgetOptions(uri: URI, options?: GLSPWidgetOpenerOptions): UmlDiagramWidgetOptions {
         return {
             ...super.createWidgetOptions(uri, options),
             workspaceRoot: this.workspaceRoot
@@ -167,12 +162,10 @@ export class UmlDiagramManager extends GLSPDiagramManager {
             widget.listenToFocusState(this.shell);
             return widget;
         }
-        throw Error("DiagramWidgetFactory needs DiagramWidgetOptions but got " + JSON.stringify(options));
+        throw Error('DiagramWidgetFactory needs DiagramWidgetOptions but got ' + JSON.stringify(options));
     }
-
 }
 
 export function belongsToDiagramWidget(widget: DiagramWidget | undefined, clientId: string): widget is DiagramWidget {
-    return widget !== undefined
-        && widget.widgetId === clientId;
+    return widget !== undefined && widget.widgetId === clientId;
 }

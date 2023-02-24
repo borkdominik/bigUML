@@ -14,14 +14,14 @@
     stroke-dasharray: none;
 }
 
-.uml-edge>.sprotty-routing-handle {
+.uml-edge > .sprotty-routing-handle {
     fill: var(--uml-edge);
     stroke: var(--uml-edge);
     stroke-width: 2;
     z-index: 1000;
 }
 
-.uml-edge>.sprotty-routing-handle.mouseover {
+.uml-edge > .sprotty-routing-handle.mouseover {
     stroke-width: 3;
 }
 

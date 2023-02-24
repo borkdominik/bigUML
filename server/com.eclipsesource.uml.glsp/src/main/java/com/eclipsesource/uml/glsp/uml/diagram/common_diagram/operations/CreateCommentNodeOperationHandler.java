@@ -10,19 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.diagram.common_diagram.operations;
 
-import java.util.List;
-
-import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.AbstractEMSOperationHandler;
-import org.eclipse.glsp.server.operations.CreateNodeOperation;
-import org.eclipse.glsp.server.operations.Operation;
-
-import com.eclipsesource.uml.glsp.core.model.UmlModelServerAccess;
-import com.eclipsesource.uml.glsp.core.model.UmlModelState;
-import com.eclipsesource.uml.glsp.uml.diagram.common_diagram.constants.CommonTypes;
-import com.google.common.collect.Lists;
-import com.google.inject.Inject;
-
-public class CreateCommentNodeOperationHandler
+public class CreateCommentNodeOperationHandler { /*-
    extends AbstractEMSOperationHandler<CreateNodeOperation> {
    private static List<String> handledElementTypeIds = Lists.newArrayList(CommonTypes.COMMENT);
 
@@ -44,11 +32,11 @@ public class CreateCommentNodeOperationHandler
    @Override
    public void executeOperation(final CreateNodeOperation operation) {
       /*-
-      
+
       if (!CommonTypes.COMMENT.equals(operation.getElementTypeId())) {
          throw new GLSPServerException("Unknown operation type for");
       }
-      
+
       String objectId = operation.getContainerId();
       EObject container = getOrThrow(modelState.getIndex().getEObject(objectId),
          "No valid element with id " + objectId + " found");
@@ -60,10 +48,10 @@ public class CreateCommentNodeOperationHandler
                throw new GLSPServerException("Could not execute create operation on new Comment node");
             }
          });
-         */
+         *
    }
 
    @Override
    public String getLabel() { return "Create comment node"; }
-
+   */
 }

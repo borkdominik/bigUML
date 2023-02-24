@@ -9,7 +9,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
 
-export * from "./theia-diagram-outline-contribution";
-export * from "./theia-diagram-outline-frontend-module";
-export * from "./theia-diagram-outline-service";
-export * from "./theia-diagram-outline-manager";
+export * from './theia-diagram-outline-contribution';
+export * from './theia-diagram-outline-frontend-module';
+export * from './theia-diagram-outline-service';
+export * from './theia-diagram-outline-manager';

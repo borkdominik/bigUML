@@ -8,25 +8,24 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-import { DiamondNode } from "@eclipse-glsp/client";
+import { DiamondNode } from '@eclipse-glsp/client';
 
-import { Icon } from "../../model";
+import { Icon } from '../../model';
 
 // ACTIVITY
 export class IconActivity extends Icon {
-    iconImageName = "activity/Activity.svg";
+    override iconImageName = 'activity/Activity.svg';
 }
 
 // TODO: Missing?
 export class IconAction extends Icon {
-    iconImageName = "OpaqueAction.gif";
+    override iconImageName = 'OpaqueAction.gif';
 }
 
 export class ControlNode extends DiamondNode {
-    size = {
+    override size = {
         width: 32,
         height: 32
     };
-    strokeWidth = 1;
+    override strokeWidth = 1;
 }
-

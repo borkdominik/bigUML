@@ -1,31 +1,29 @@
 {
-  "private": true,
   "name": "@eclipsesource/uml-glsp-common",
-  "version": "0.1.0",
+  "version": "1.0.0",
+  "private": true,
   "description": "Common utilities",
   "keywords": [
     "theia-extension"
   ],
-  "dependencies": {
-    "@theia/core": "^1.0.0"
-  },
-  "devDependencies": {
-    "rimraf": "^2.6.1",
-    "typescript": "~4.5.5",
-    "endent": "^2.1.0"
-  },
-  "scripts": {
-    "prepare": "yarn run clean && yarn run build",
-    "clean": "rimraf lib",
-    "build": "tsc && yarn run lint",
-    "lint": "eslint -c ./.eslintrc.js --ext .ts ./src",
-    "watch": "tsc -w",
-    "icons": "npx ts-node ./scripts/icons.ts"
-  },
   "files": [
     "lib",
     "src"
   ],
+  "scripts": {
+    "build": "npx tsc -b && yarn run lint",
+    "clean": "npx rimraf lib tsconfig.tsbuildinfo",
+    "icons": "npx ts-node ./scripts/icons.ts",
+    "lint": "npx eslint -c ./.eslintrc.js --ext .ts ./src",
+    "prepare": "yarn run clean && yarn run build",
+    "watch": "npx tsc -w"
+  },
+  "dependencies": {
+    "@theia/core": "^1.34.0"
+  },
+  "devDependencies": {
+    "endent": "^2.1.0"
+  },
   "theiaExtensions": [
     {
       "frontend": "lib/browser/common-frontend-module"

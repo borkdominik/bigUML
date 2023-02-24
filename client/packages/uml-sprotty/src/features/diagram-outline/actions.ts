@@ -13,16 +13,16 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { Action } from "@eclipse-glsp/client";
-import { generateRequestId, RequestAction, ResponseAction } from "@eclipse-glsp/protocol";
+import { Action } from '@eclipse-glsp/client';
+import { RequestAction, ResponseAction } from '@eclipse-glsp/protocol';
 
-import { OutlineTreeNode } from "./outline-tree-node";
+import { OutlineTreeNode } from './outline-tree-node';
 
 export class SetOutlineAction implements ResponseAction {
-    static readonly KIND = "setOutlineAction";
+    static readonly KIND = 'setOutlineAction';
     kind = SetOutlineAction.KIND;
 
-    constructor(public responseId = "", public outlineTreeNodes: OutlineTreeNode[]) { }
+    constructor(public responseId = '', public outlineTreeNodes: OutlineTreeNode[]) {}
 }
 
 export function isSetOutlineAction(action: Action): action is SetOutlineAction {
@@ -30,10 +30,8 @@ export function isSetOutlineAction(action: Action): action is SetOutlineAction {
 }
 
 export class RequestOutlineAction implements RequestAction<SetOutlineAction> {
-    static readonly KIND = "requestOutlineView";
+    static readonly KIND = 'requestOutlineView';
     kind = RequestOutlineAction.KIND;
 
-    constructor(public requestId: string = generateRequestId()) {
-
-    }
+    constructor(public requestId: string = RequestAction.generateRequestId()) {}
 }

@@ -8,8 +8,8 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-import "@eclipse-glsp/client/css/glsp-sprotty.css";
-import "sprotty/css/edit-label.css";
+import '@eclipse-glsp/client/css/glsp-sprotty.css';
+import 'sprotty/css/edit-label.css';
 
 /*
 export default function createContainer(widgetId: string): Container {

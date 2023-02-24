@@ -8,29 +8,30 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-/* eslint-disable react/jsx-key */
-import { injectable } from "inversify";
-import { VNode } from "snabbdom";
-import {
-    CircularNodeView,
-    CircularNode,
-    RenderingContext,
-    svg
-} from "sprotty/lib";
+import { CircularNode, CircularNodeView, RenderingContext, svg } from '@eclipse-glsp/client';
+import { injectable } from 'inversify';
+import { VNode } from 'snabbdom';
 
-/* eslint-disable react/react-in-jsx-scope */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const JSX = { createElement: svg };
 
 @injectable()
 export class EntryPointNodeView extends CircularNodeView {
-    render(node: CircularNode, context: RenderingContext): VNode {
+    override render(node: CircularNode, context: RenderingContext): VNode {
         const radius = this.getRadius(node);
         const entryPointNode: any = (
-            <g transform="translate(1.000000, 0.000000)" stroke="#4E81B4">
-                <ellipse class-node={true} class-mouseover={node.hoverFeedback}
-                    class-selected={node.selected} cx={radius} cy={radius} rx={radius} ry={radius}/>
-            </g>);
+            <g transform='translate(1.000000, 0.000000)' stroke='#4E81B4'>
+                <ellipse
+                    class-node={true}
+                    class-mouseover={node.hoverFeedback}
+                    class-selected={node.selected}
+                    cx={radius}
+                    cy={radius}
+                    rx={radius}
+                    ry={radius}
+                />
+            </g>
+        );
         return entryPointNode;
     }
 }

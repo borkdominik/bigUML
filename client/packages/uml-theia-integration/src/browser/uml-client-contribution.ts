@@ -8,12 +8,13 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-import { ModelServerClient } from "@eclipse-emfcloud/modelserver-theia/lib/common";
-import { Args, MaybePromise } from "@eclipse-glsp/client";
-import { BaseGLSPClientContribution } from "@eclipse-glsp/theia-integration/lib/browser";
-import { inject, injectable } from "inversify";
+import { Args, ClientState, ConnectionProvider, GLSPClient, JsonrpcGLSPClient, MaybePromise } from '@eclipse-glsp/client';
+import { BaseGLSPClientContribution } from '@eclipse-glsp/theia-integration/lib/browser';
+import { TheiaJsonrpcGLSPClient } from '@eclipse-glsp/theia-integration/lib/browser/theia-jsonrpc-glsp-client';
+import { injectable } from 'inversify';
+import { MessageConnection } from 'vscode-jsonrpc';
 
-import { UmlLanguage } from "../common/uml-language";
+import { UmlLanguage } from '../common/uml-language';
 
 export interface UmlInitializeOptions {
     timestamp: Date;
@@ -22,16 +23,47 @@ export interface UmlInitializeOptions {
 
 @injectable()
 export class UmlGLSPClientContribution extends BaseGLSPClientContribution {
-    @inject(ModelServerClient)
-    protected readonly modelServerClient: ModelServerClient;
-
     readonly id = UmlLanguage.contributionId;
     readonly fileExtensions = UmlLanguage.fileExtensions;
 
-    protected createInitializeOptions(): MaybePromise<Args | undefined> {
+    protected override createInitializeOptions(): MaybePromise<Args | undefined> {
         return {
-            ["timestamp"]: new Date().toString(),
-            ["modelServerURL"]: "http://localhost:8081/api/v2/"
+            ['timestamp']: new Date().toString(),
+            ['modelServerURL']: 'http://localhost:8081/api/v2/'
         };
+    }
+
+    protected override createGLSPCLient(connectionProvider: ConnectionProvider): GLSPClient {
+        console.log('Create GLSP CLient');
+
+        return new UmlCLient({
+            id: this.id,
+            connectionProvider,
+            messageService: this.messageService
+        });
+    }
+}
+
+class UmlCLient extends TheiaJsonrpcGLSPClient {
+    override async start(): Promise<void> {
+        try {
+            this.state = ClientState.Starting;
+            const connection = await this.resolveConnection2();
+            connection.listen();
+            console.log('Test', connection);
+            connection.inspect();
+            this.resolvedConnection = connection;
+            this.state = ClientState.Running;
+        } catch (error) {
+            JsonrpcGLSPClient.error('Failed to start connection to server', error);
+            this.state = ClientState.StartFailed;
+        }
+    }
+
+    protected resolveConnection2(): Promise<MessageConnection> {
+        if (!this.connectionPromise) {
+            this.connectionPromise = this.doCreateConnection();
+        }
+        return this.connectionPromise;
     }
 }

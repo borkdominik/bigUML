@@ -29,14 +29,14 @@ import com.google.inject.Inject;
 @SuppressWarnings("restriction")
 public class UmlOperationHandlerRegistry implements OperationHandlerRegistry {
 
-   private final MapRegistry<String, OperationHandler> internalRegistry;
+   private final MapRegistry<String, OperationHandler<?>> internalRegistry;
    private final Map<String, Operation> operations;
 
    private final UmlModelState modelState;
    private final UmlOverrideOperationHandlerRegistry overrideRegistry;
 
    @Inject
-   public UmlOperationHandlerRegistry(final Set<OperationHandler> handlers, final UmlModelState modelState,
+   public UmlOperationHandlerRegistry(final Set<OperationHandler<?>> handlers, final UmlModelState modelState,
       final UmlOverrideOperationHandlerRegistry overrideRegsitry) {
       this.modelState = modelState;
       this.overrideRegistry = overrideRegsitry;
@@ -64,7 +64,7 @@ public class UmlOperationHandlerRegistry implements OperationHandlerRegistry {
    }
 
    @Override
-   public boolean register(final Operation key, final OperationHandler handler) {
+   public boolean register(final Operation key, final OperationHandler<?> handler) {
       final String strKey = deriveKey(key);
       operations.put(strKey, key);
       return internalRegistry.register(strKey, handler);
@@ -81,7 +81,7 @@ public class UmlOperationHandlerRegistry implements OperationHandlerRegistry {
    }
 
    @Override
-   public Optional<OperationHandler> get(final Operation key) {
+   public Optional<OperationHandler<?>> get(final Operation key) {
       var diagramHandler = this.modelState.getRepresentation().flatMap(representation -> {
          var overrideKey = RepresentationKey.<Class<? extends Operation>> of(representation,
             key.getClass());
@@ -90,14 +90,14 @@ public class UmlOperationHandlerRegistry implements OperationHandlerRegistry {
             return overrideRegistry.get(overrideKey);
          }
 
-         return Optional.<OperationHandler> empty();
+         return Optional.<OperationHandler<?>> empty();
       });
 
       return diagramHandler.or(() -> internalRegistry.get(deriveKey(key)));
    }
 
    @Override
-   public Set<OperationHandler> getAll() { return internalRegistry.getAll(); }
+   public Set<OperationHandler<?>> getAll() { return internalRegistry.getAll(); }
 
    @Override
    public Set<Operation> keys() {

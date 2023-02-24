@@ -15,5 +15,5 @@
  ********************************************************************************/
 
 export const EDITOR_PANEL_TYPES = {
-    Child: Symbol("Child")
+    Child: Symbol('Child')
 };

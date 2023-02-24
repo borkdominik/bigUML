@@ -14,8 +14,8 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 
-export * from "./actions";
-export * from "./di.config";
-export * from "./diagram-outline-service";
-export * from "./handlers";
-export * from "./outline-tree-node";
+export * from './actions';
+export * from './di.config';
+export * from './diagram-outline-service';
+export * from './handlers';
+export * from './outline-tree-node';

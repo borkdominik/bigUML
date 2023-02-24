@@ -8,53 +8,30 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-/* eslint-disable react/jsx-key */
-import { SCompartment } from "@eclipse-glsp/client";
-import { DefaultTypes } from "@eclipse-glsp/protocol";
-import { injectable } from "inversify";
-import { VNode } from "snabbdom";
-import { RectangularNodeView, RenderingContext, svg } from "sprotty/lib";
+import { RectangularNodeView, RenderingContext, SCompartment, svg } from '@eclipse-glsp/client';
+import { DefaultTypes } from '@eclipse-glsp/protocol';
+import { injectable } from 'inversify';
+import { VNode } from 'snabbdom';
 
-import { NamedElement } from "./named-element.model";
+import { NamedElement } from './named-element.model';
 
-/* eslint-disable react/react-in-jsx-scope */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const JSX = { createElement: svg };
 
-// Due to typing issues (if we create elements we get an JSX.Element in return, not a VNode) we use a workaround and type the VNode elements with any to avoid compiling problems.
-// Please also see for example: https://github.com/eclipse/sprotty/issues/178
-// All described possible solutions did not work in our case.
-
 @injectable()
 export class NamedElementView extends RectangularNodeView {
-    render(
-        element: NamedElement,
-        context: RenderingContext
-    ): VNode | undefined {
+    override render(element: NamedElement, context: RenderingContext): VNode | undefined {
         if (!this.isVisible(element, context)) {
             return undefined;
         }
 
         const compartment = element.children.find(
-            c =>
-                c instanceof SCompartment &&
-                c.type !== DefaultTypes.COMPARTMENT_HEADER &&
-                c.children.length > 0
+            c => c instanceof SCompartment && c.type !== DefaultTypes.COMPARTMENT_HEADER && c.children.length > 0
         ) as SCompartment | undefined;
 
         return (
-            <g
-                class-selected={element.selected}
-                class-mouseover={element.hoverFeedback}
-            >
-                <rect
-                    x={0}
-                    y={0}
-                    rx={2}
-                    ry={2}
-                    width={Math.max(0, element.bounds.width)}
-                    height={Math.max(0, element.bounds.height)}
-                />
+            <g class-selected={element.selected} class-mouseover={element.hoverFeedback}>
+                <rect x={0} y={0} rx={2} ry={2} width={Math.max(0, element.bounds.width)} height={Math.max(0, element.bounds.height)} />
 
                 {compartment && (
                     <path

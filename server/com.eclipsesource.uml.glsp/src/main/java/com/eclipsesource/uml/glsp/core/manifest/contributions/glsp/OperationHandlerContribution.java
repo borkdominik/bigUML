@@ -15,6 +15,7 @@ import java.util.function.Consumer;
 import org.eclipse.glsp.server.operations.OperationHandler;
 
 import com.eclipsesource.uml.glsp.core.manifest.contributions.ContributionBinderSupplier;
+import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.Multibinder;
 
 /*
@@ -23,7 +24,7 @@ import com.google.inject.multibindings.Multibinder;
 public interface OperationHandlerContribution extends ContributionBinderSupplier {
 
    default void contributeOperationHandlers(
-      final Consumer<Multibinder<OperationHandler>> consumer) {
-      consumer.accept(Multibinder.newSetBinder(contributionBinder(), OperationHandler.class));
+      final Consumer<Multibinder<OperationHandler<?>>> consumer) {
+      consumer.accept(Multibinder.newSetBinder(contributionBinder(), new TypeLiteral<OperationHandler<?>>() {}));
    }
 }

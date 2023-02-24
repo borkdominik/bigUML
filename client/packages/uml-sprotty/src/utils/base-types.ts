@@ -10,16 +10,16 @@
  ********************************************************************************/
 
 export namespace BaseTypes {
-    export const COMP = "comp";
+    export const COMP = 'comp';
     export const COMPARTMENT = `${COMP}:${COMP}`;
     export const COMPARTMENT_HEADER = `${COMP}:header`;
-    export const EDGE = "edge";
-    export const GRAPH = "graph";
-    export const ICON = "icon";
-    export const HTML = "html";
-    export const LABEL = "label";
-    export const NODE = "node";
-    export const PRE_RENDERED = "pre-rendered";
-    export const ROUTING_POINT = "routing-point";
+    export const EDGE = 'edge';
+    export const GRAPH = 'graph';
+    export const ICON = 'icon';
+    export const HTML = 'html';
+    export const LABEL = 'label';
+    export const NODE = 'node';
+    export const PRE_RENDERED = 'pre-rendered';
+    export const ROUTING_POINT = 'routing-point';
     export const VOLATILE_ROUTING_POINT = `volatile-${ROUTING_POINT}`;
 }

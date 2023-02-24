@@ -54,7 +54,7 @@
 }
 
 .editor-panel-collapse:hover {
-    background: var(--theia-menubar-selectionBackground)
+    background: var(--theia-menubar-selectionBackground);
 }
 
 .editor-panel-content {

@@ -8,41 +8,39 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-/* eslint-disable react/jsx-key */
-import { injectable } from "inversify";
-import { VNode } from "snabbdom";
-import { getSubType, RenderingContext, setAttr, SLabelView, svg } from "sprotty/lib";
+import { getSubType, RenderingContext, setAttr, SLabelView, svg } from '@eclipse-glsp/client';
+import { injectable } from 'inversify';
+import { VNode } from 'snabbdom';
 
-import { SLabelNode } from "../../../model";
-import { UmlTypes } from "../../../utils";
+import { SLabelNode } from '../../../model';
+import { UmlTypes } from '../../../utils';
 
-/* eslint-disable react/react-in-jsx-scope */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const JSX = { createElement: svg };
 
 @injectable()
 export class StateActivityNodeView extends SLabelView {
-    render(labelNode: Readonly<SLabelNode>, context: RenderingContext): VNode {
+    override render(labelNode: Readonly<SLabelNode>, context: RenderingContext): VNode {
         let image;
         if (labelNode.imageName) {
-            image = require("../../../images/" + labelNode.imageName);
+            image = require('../../../images/' + labelNode.imageName);
         }
 
         const vnode: any = (
-            <g
-                class-selected={labelNode.selected}
-                class-mouseover={labelNode.hoverFeedback}
-                class-sprotty-label-node={true}
-            >
-                {!!image && <image class-sprotty-icon={true} href={image} y={-8} width={22} height={15}/>}
-                <text class-sprotty-label={true} x={image ? 30 : 0}>{this.getActivityLabelPrefix(labelNode.type)}</text>
-                <text class-sprotty-label={true} x={this.getActivityLabelPosition(labelNode.type)}>{labelNode.text}</text>
+            <g class-selected={labelNode.selected} class-mouseover={labelNode.hoverFeedback} class-sprotty-label-node={true}>
+                {!!image && <image class-sprotty-icon={true} href={image} y={-8} width={22} height={15} />}
+                <text class-sprotty-label={true} x={image ? 30 : 0}>
+                    {this.getActivityLabelPrefix(labelNode.type)}
+                </text>
+                <text class-sprotty-label={true} x={this.getActivityLabelPosition(labelNode.type)}>
+                    {labelNode.text}
+                </text>
             </g>
         );
 
         const subType = getSubType(labelNode);
         if (subType) {
-            setAttr(vnode, "class", subType);
+            setAttr(vnode, 'class', subType);
         }
         return vnode;
     }
@@ -50,13 +48,13 @@ export class StateActivityNodeView extends SLabelView {
     private getActivityLabelPrefix(activityType: string): string {
         switch (activityType) {
             case UmlTypes.STATE_ENTRY_ACTIVITY:
-                return "/entry";
+                return '/entry';
             case UmlTypes.STATE_DO_ACTIVITY:
-                return "/do";
+                return '/do';
             case UmlTypes.STATE_EXIT_ACTIVITY:
-                return "/exit";
+                return '/exit';
             default:
-                return "";
+                return '';
         }
     }
 

@@ -7,41 +7,41 @@
 }
 
 .marker-triangle-start {
-    marker-start: url("#marker-triangle");
+    marker-start: url('#marker-triangle');
 }
 
 .marker-triangle-end {
-    marker-end: url("#marker-triangle");
+    marker-end: url('#marker-triangle');
 }
 
 .marker-triangle-empty-start {
-    marker-start: url("#marker-triangle-empty");
+    marker-start: url('#marker-triangle-empty');
 }
 
 .marker-triangle-empty-end {
-    marker-end: url("#marker-triangle-empty");
+    marker-end: url('#marker-triangle-empty');
 }
 
 .marker-tent-start {
-    marker-start: url("#marker-tent");
+    marker-start: url('#marker-tent');
 }
 
 .marker-tent-end {
-    marker-end: url("#marker-tent");
+    marker-end: url('#marker-tent');
 }
 
 .marker-diamond-start {
-    marker-start: url("#marker-diamond");
+    marker-start: url('#marker-diamond');
 }
 
 .marker-diamond-end {
-    marker-end: url("#marker-diamond");
+    marker-end: url('#marker-diamond');
 }
 
 .marker-diamond-empty-start {
-    marker-start: url("#marker-diamond-empty");
+    marker-start: url('#marker-diamond-empty');
 }
 
 .marker-diamond-empty-end {
-    marker-end: url("#marker-diamond-empty");
+    marker-end: url('#marker-diamond-empty');
 }

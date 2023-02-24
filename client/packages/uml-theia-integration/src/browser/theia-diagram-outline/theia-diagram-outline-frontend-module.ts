@@ -13,10 +13,10 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { interfaces } from "@theia/core/shared/inversify";
+import { interfaces } from '@theia/core/shared/inversify';
 
-import { TheiaDiagramOutlineManager } from "./theia-diagram-outline-manager";
-import { TheiaDiagramOutlineFactory, TheiaDiagramOutlineService } from "./theia-diagram-outline-service";
+import { TheiaDiagramOutlineManager } from './theia-diagram-outline-manager';
+import { TheiaDiagramOutlineFactory, TheiaDiagramOutlineService } from './theia-diagram-outline-service';
 
 export function registerTheiaDiagramOutlineView(bind: interfaces.Bind): void {
     bind(TheiaDiagramOutlineManager).toSelf().inSingletonScope();

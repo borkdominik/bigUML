@@ -8,25 +8,25 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-import { UriSelection } from "@theia/core";
-import { LabelProviderContribution } from "@theia/core/lib/browser";
-import URI from "@theia/core/lib/common/uri";
-import { FileStat } from "@theia/filesystem/lib/common";
-import { injectable } from "inversify";
+import { UriSelection } from '@theia/core';
+import { LabelProviderContribution } from '@theia/core/lib/browser';
+import URI from '@theia/core/lib/common/uri';
+import { FileStat } from '@theia/filesystem/lib/common/files';
+import { injectable } from 'inversify';
 
-import { AnyObject } from "./util";
+import { AnyObject } from './util';
 
 @injectable()
 export class UmlTreeLabelProviderContribution implements LabelProviderContribution {
     canHandle(uri: AnyObject): number {
         let toCheck: any = uri;
         if (FileStat.is(toCheck)) {
-            toCheck = new URI(toCheck.uri);
+            toCheck = toCheck.resource;
         } else if (UriSelection.is(uri)) {
             toCheck = UriSelection.getUri(uri);
         }
         if (toCheck instanceof URI) {
-            if (toCheck.path.ext === ".uml") {
+            if (toCheck.path.ext === '.uml') {
                 return 1000;
             }
         }
@@ -34,6 +34,6 @@ export class UmlTreeLabelProviderContribution implements LabelProviderContributi
     }
 
     getIcon(): string {
-        return "umlmodelfile";
+        return 'umlmodelfile';
     }
 }

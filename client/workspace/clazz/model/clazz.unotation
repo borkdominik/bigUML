@@ -133,4 +133,9 @@
     <semanticElement elementId="_wZ60QLK9Ee2fn9jN03lZYw"/>
     <bendPoints x="803.9454300980668" y="-757.1320194023572"/>
   </elements>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_LjfcIbSLEe2pkZx4lGC8Ew"/>
+    <position x="141.23486620558185" y="-122.41817964233411"/>
+    <size width="160.0" height="50.0"/>
+  </elements>
 </unotation:UmlDiagram>

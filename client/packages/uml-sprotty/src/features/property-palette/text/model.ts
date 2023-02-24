@@ -13,7 +13,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { ElementPropertyItem } from "../model";
+import { ElementPropertyItem } from '../model';
 
 export interface ElementTextPropertyItem extends ElementPropertyItem {
     type: typeof ElementTextPropertyItem.TYPE;
@@ -22,7 +22,7 @@ export interface ElementTextPropertyItem extends ElementPropertyItem {
 }
 
 export namespace ElementTextPropertyItem {
-    export const TYPE = "TEXT";
+    export const TYPE = 'TEXT';
 
     export function is(value: ElementPropertyItem): value is ElementTextPropertyItem {
         return value.type === TYPE;

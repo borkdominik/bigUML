@@ -21,36 +21,31 @@ import {
     EditorContextService,
     IActionHandler,
     ICommand,
-    isSelectAction,
-    isSetDirtyStateAction,
+    SelectAction,
+    SetDirtyStateAction,
     SModelRoot,
     SModelRootListener,
     TYPES
-} from "@eclipse-glsp/client";
-import { inject, injectable, postConstruct } from "inversify";
+} from '@eclipse-glsp/client';
+import { inject, injectable, postConstruct } from 'inversify';
 
-import { EditorPanelChild } from "../editor-panel/interfaces";
-import { RequestPropertyPaletteAction, SetPropertyPaletteAction, UpdateElementPropertyAction } from "./actions";
-import { createBoolProperty, ElementBoolPropertyItem } from "./bool";
-import { createChoiceProperty, ElementChoicePropertyItem } from "./choice";
-import {
-    CreatedElementProperty,
-    ElementPropertyItem,
-    ElementPropertyUI,
-    PropertyPalette as PropertyPaletteModel
-} from "./model";
-import { createReferenceProperty, ElementReferencePropertyItem } from "./reference";
-import { createTextProperty, ElementTextPropertyItem } from "./text";
+import { EditorPanelChild } from '../editor-panel/interfaces';
+import { RequestPropertyPaletteAction, SetPropertyPaletteAction, UpdateElementPropertyAction } from './actions';
+import { createBoolProperty, ElementBoolPropertyItem } from './bool';
+import { createChoiceProperty, ElementChoicePropertyItem } from './choice';
+import { CreatedElementProperty, ElementPropertyItem, ElementPropertyUI, PropertyPalette as PropertyPaletteModel } from './model';
+import { createReferenceProperty, ElementReferencePropertyItem } from './reference';
+import { createTextProperty, ElementTextPropertyItem } from './text';
 
 interface Cache {
     [elementId: string]: {
-        [propertyId: string]: any
+        [propertyId: string]: any;
     };
 }
 
 @injectable()
 export class PropertyPalette implements IActionHandler, SModelRootListener, EditorPanelChild {
-    static readonly ID = "property-palette";
+    static readonly ID = 'property-palette';
 
     @inject(TYPES.IActionDispatcher) protected readonly actionDispatcher: ActionDispatcher;
     @inject(EditorContextService) protected readonly editorContext: EditorContextService;
@@ -74,7 +69,7 @@ export class PropertyPalette implements IActionHandler, SModelRootListener, Edit
     }
 
     get tabLabel(): string {
-        return "Properties";
+        return 'Properties';
     }
 
     get class(): string {
@@ -87,12 +82,12 @@ export class PropertyPalette implements IActionHandler, SModelRootListener, Edit
     }
 
     handle(action: Action): ICommand | Action | void {
-        if (isSelectAction(action) && action.selectedElementsIDs.length > 0) {
+        if (SelectAction.is(action) && action.selectedElementsIDs.length > 0) {
             this.lastPalettes = [];
             this.refresh(action.selectedElementsIDs[0]).then(() => {
                 this.content.scrollTop = 0;
             });
-        } else if (isSetDirtyStateAction(action)) {
+        } else if (SetDirtyStateAction.is(action)) {
             this.refresh();
             this.enable();
         }
@@ -125,7 +120,7 @@ export class PropertyPalette implements IActionHandler, SModelRootListener, Edit
     }
 
     protected initializeHeader(): void {
-        const header = document.createElement("div");
+        const header = document.createElement('div');
         header.classList.add(`${PropertyPalette.ID}-header`);
 
         this.header = header;
@@ -133,7 +128,7 @@ export class PropertyPalette implements IActionHandler, SModelRootListener, Edit
     }
 
     protected initializeBody(): void {
-        const content = document.createElement("div");
+        const content = document.createElement('div');
         content.classList.add(`${PropertyPalette.ID}-content`);
 
         this.content = content;
@@ -145,11 +140,11 @@ export class PropertyPalette implements IActionHandler, SModelRootListener, Edit
             return;
         }
 
-        this.header.innerHTML = "";
-        this.content.innerHTML = "";
+        this.header.innerHTML = '';
+        this.content.innerHTML = '';
 
         if (palette === undefined) {
-            setTextPlaceholder(this.header, "Properties not available.");
+            setTextPlaceholder(this.header, 'Properties not available.');
         } else {
             this.refreshHeader(palette);
             this.refreshContent(palette.items);
@@ -158,16 +153,16 @@ export class PropertyPalette implements IActionHandler, SModelRootListener, Edit
 
     protected refreshHeader(palette: PropertyPaletteModel): void {
         if (palette.label !== undefined) {
-            const breadcrumbs = document.createElement("span");
-            breadcrumbs.classList.add("property-palette-breadcrumbs");
+            const breadcrumbs = document.createElement('span');
+            breadcrumbs.classList.add('property-palette-breadcrumbs');
 
             const lastPalettes = this.lastPalettes;
 
             if (lastPalettes.length > 0) {
-                const backButton = document.createElement("button");
-                backButton.classList.add("property-palette-back");
-                backButton.appendChild(createIcon("chevron-left"));
-                backButton.addEventListener("click", async () => {
+                const backButton = document.createElement('button');
+                backButton.classList.add('property-palette-back');
+                backButton.appendChild(createIcon('chevron-left'));
+                backButton.addEventListener('click', async () => {
                     const returnTo = lastPalettes.pop();
                     this.refresh(returnTo?.palette?.elementId);
                 });
@@ -180,19 +175,18 @@ export class PropertyPalette implements IActionHandler, SModelRootListener, Edit
                 } else {
                     breadcrumbs.textContent = `${items[0].palette?.label} > ... > ${items[1].palette?.label} > `;
                 }
-
             }
 
             breadcrumbs.textContent = `${breadcrumbs.textContent}${palette.label}`;
 
             this.header.appendChild(breadcrumbs);
         } else {
-            setTextPlaceholder(this.header, "No label provided.");
+            setTextPlaceholder(this.header, 'No label provided.');
         }
     }
 
     protected refreshContent(items: ElementPropertyItem[]): void {
-        this.content.innerHTML = "";
+        this.content.innerHTML = '';
         this.uiElements = [];
 
         if (items !== undefined && items.length > 0) {
@@ -211,7 +205,7 @@ export class PropertyPalette implements IActionHandler, SModelRootListener, Edit
                 } else if (ElementBoolPropertyItem.is(propertyItem)) {
                     created = createBoolProperty(propertyItem, {
                         onChange: (item, input) => {
-                            this.update(item.elementId, item.propertyId, input.checked + "");
+                            this.update(item.elementId, item.propertyId, input.checked + '');
                         }
                     });
                 } else if (ElementChoicePropertyItem.is(propertyItem)) {
@@ -221,43 +215,49 @@ export class PropertyPalette implements IActionHandler, SModelRootListener, Edit
                         }
                     });
                 } else if (ElementReferencePropertyItem.is(propertyItem)) {
-                    created = createReferenceProperty(propertyItem, {
-                        onCreate: async (item, create) => {
-                            this.disable();
-                            await this.actionDispatcher.dispatch(create.action);
-                            this.enable();
-                        },
-                        onDelete: async (item, selectedReferences) => {
-                            if (selectedReferences.length > 0) {
+                    created = createReferenceProperty(
+                        propertyItem,
+                        {
+                            onCreate: async (item, create) => {
                                 this.disable();
-                                await this.actionDispatcher.dispatch(new DeleteElementOperation(selectedReferences.map(r => r.reference.elementId)));
+                                await this.actionDispatcher.dispatch(create.action);
                                 this.enable();
-                            }
-                        },
-                        onNavigate: async (item, reference) => {
-                            this.lastPalettes.push(this.paletteAction!);
-                            await this.refresh(reference.elementId);
-                            this.content.scrollTop = 0;
-                        },
-                        onMove: async (item, selectedReferences, direction, state) => {
-                            const updates: {
-                                oldPosition: number,
-                                newPosition: number
-                            }[] = [];
+                            },
+                            onDelete: async (item, selectedReferences) => {
+                                if (selectedReferences.length > 0) {
+                                    this.disable();
+                                    await this.actionDispatcher.dispatch(
+                                        DeleteElementOperation.create(selectedReferences.map(r => r.reference.elementId))
+                                    );
+                                    this.enable();
+                                }
+                            },
+                            onNavigate: async (item, reference) => {
+                                this.lastPalettes.push(this.paletteAction!);
+                                await this.refresh(reference.elementId);
+                                this.content.scrollTop = 0;
+                            },
+                            onMove: async (item, selectedReferences, direction, state) => {
+                                const updates: {
+                                    oldPosition: number;
+                                    newPosition: number;
+                                }[] = [];
 
-                            selectedReferences.forEach(r => {
-                                updates.push({
-                                    oldPosition: r.originIndex,
-                                    newPosition: direction === "UP" ? --r.originIndex : ++r.originIndex
+                                selectedReferences.forEach(r => {
+                                    updates.push({
+                                        oldPosition: r.originIndex,
+                                        newPosition: direction === 'UP' ? --r.originIndex : ++r.originIndex
+                                    });
                                 });
-                            });
 
-                            if (selectedReferences.length > 0) {
-                                this.cache[item.elementId][item.propertyId] = state;
-                                this.update(item.elementId, `${item.propertyId}_ORDER`, JSON.stringify(updates));
+                                if (selectedReferences.length > 0) {
+                                    this.cache[item.elementId][item.propertyId] = state;
+                                    this.update(item.elementId, `${item.propertyId}_ORDER`, JSON.stringify(updates));
+                                }
                             }
-                        }
-                    }, this.cache[propertyItem.elementId]?.[propertyItem.propertyId]);
+                        },
+                        this.cache[propertyItem.elementId]?.[propertyItem.propertyId]
+                    );
                 }
 
                 if (created !== undefined) {
@@ -266,7 +266,7 @@ export class PropertyPalette implements IActionHandler, SModelRootListener, Edit
                 }
             }
         } else {
-            setTextPlaceholder(this.content, "No properties provided.");
+            setTextPlaceholder(this.content, 'No properties provided.');
         }
     }
 
@@ -310,10 +310,10 @@ export class PropertyPalette implements IActionHandler, SModelRootListener, Edit
 }
 
 function setTextPlaceholder(container: HTMLElement, text: string): void {
-    const div = document.createElement("div");
+    const div = document.createElement('div');
 
     div.textContent = text;
 
-    container.innerHTML = "";
+    container.innerHTML = '';
     container.appendChild(div);
 }

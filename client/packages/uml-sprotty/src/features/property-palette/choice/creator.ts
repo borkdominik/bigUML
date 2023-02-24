@@ -13,26 +13,26 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { CreatedElementProperty } from "../model";
-import { ElementChoicePropertyItem } from "./model";
+import { CreatedElementProperty } from '../model';
+import { ElementChoicePropertyItem } from './model';
 
 export interface ChoicePropertyEvents {
     onChange?: (item: ElementChoicePropertyItem, input: HTMLSelectElement, event: Event) => void;
 }
 
 export function createChoiceProperty(propertyItem: ElementChoicePropertyItem, events: ChoicePropertyEvents): CreatedElementProperty {
-    const div = document.createElement("div");
-    div.classList.add("property-item", "property-choice-item");
+    const div = document.createElement('div');
+    div.classList.add('property-item', 'property-choice-item');
 
-    const label = document.createElement("label");
-    label.classList.add("property-item-label");
+    const label = document.createElement('label');
+    label.classList.add('property-item-label');
     label.textContent = propertyItem.label;
     div.appendChild(label);
 
-    const select = document.createElement("select");
+    const select = document.createElement('select');
 
     propertyItem.choices.forEach(choice => {
-        const option = document.createElement("option");
+        const option = document.createElement('option');
 
         option.text = choice.label;
         option.value = choice.value;
@@ -44,7 +44,7 @@ export function createChoiceProperty(propertyItem: ElementChoicePropertyItem, ev
         select.appendChild(option);
     });
 
-    select.addEventListener("change", ev => {
+    select.addEventListener('change', ev => {
         events.onChange?.(propertyItem, select, ev);
     });
     div.appendChild(select);

@@ -13,23 +13,26 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { DiagramWidget, GLSPDiagramWidget } from "@eclipse-glsp/theia-integration";
-import { DisposableCollection } from "@theia/core";
-import { FrontendApplication, FrontendApplicationContribution } from "@theia/core/lib/browser/frontend-application";
-import { AbstractViewContribution } from "@theia/core/lib/browser/shell/view-contribution";
-import { OS } from "@theia/core/lib/common/os";
-import { inject, injectable } from "@theia/core/shared/inversify";
-import { EditorManager } from "@theia/editor/lib/browser";
+import { DiagramWidget, GLSPDiagramWidget } from '@eclipse-glsp/theia-integration';
+import { DisposableCollection } from '@theia/core';
+import { FrontendApplication, FrontendApplicationContribution } from '@theia/core/lib/browser/frontend-application';
+import { AbstractViewContribution } from '@theia/core/lib/browser/shell/view-contribution';
+import { OS } from '@theia/core/lib/common/os';
+import { inject, injectable } from '@theia/core/shared/inversify';
+import { EditorManager } from '@theia/editor/lib/browser';
 
-import { IChangedArgs, UmlDiagramManager } from "../diagram/uml-diagram-manager";
-import { TheiaDiagramOutlineManager } from "../theia-diagram-outline";
-import { DiagramOutlineViewService } from "./diagram-outline-view-service";
-import { DiagramOutlineViewWidget } from "./diagram-outline-view-widget";
+import { IChangedArgs, UmlDiagramManager } from '../diagram/uml-diagram-manager';
+import { TheiaDiagramOutlineManager } from '../theia-diagram-outline';
+import { DiagramOutlineViewService } from './diagram-outline-view-service';
+import { DiagramOutlineViewWidget } from './diagram-outline-view-widget';
 
-export const DIAGRAM_OUTLINE_VIEW_WIDGET_FACTORY_ID = "diagram-outline-view";
+export const DIAGRAM_OUTLINE_VIEW_WIDGET_FACTORY_ID = 'diagram-outline-view';
 
 @injectable()
-export class DiagramOutlineViewContribution extends AbstractViewContribution<DiagramOutlineViewWidget> implements FrontendApplicationContribution {
+export class DiagramOutlineViewContribution
+    extends AbstractViewContribution<DiagramOutlineViewWidget>
+    implements FrontendApplicationContribution
+{
     protected readonly toDisposeOnClose = new DisposableCollection();
     protected readonly toDisposeOnEditor = new DisposableCollection();
     protected canUpdateOutline = true;
@@ -50,13 +53,11 @@ export class DiagramOutlineViewContribution extends AbstractViewContribution<Dia
             widgetId: DIAGRAM_OUTLINE_VIEW_WIDGET_FACTORY_ID,
             widgetName: DiagramOutlineViewWidget.LABEL,
             defaultWidgetOptions: {
-                area: "right",
+                area: 'right',
                 rank: 500
             },
-            toggleCommandId: "diagramOutlineView:toggle",
-            toggleKeybinding: OS.type() !== OS.Type.Linux
-                ? "ctrlcmd+shift+o"
-                : undefined
+            toggleCommandId: 'diagramOutlineView:toggle',
+            toggleKeybinding: OS.type() !== OS.Type.Linux ? 'ctrlcmd+shift+o' : undefined
         });
     }
 

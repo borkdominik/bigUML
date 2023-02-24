@@ -8,14 +8,14 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-import { Icon } from "../../model";
+import { Icon } from '../../model';
 
 // STATE MACHINE
 export class IconState extends Icon {
-    iconImageName = "state-machine/State.svg";
+    override iconImageName = 'state-machine/State.svg';
 }
 
 export class IconStateMachine extends Icon {
     // TODO: set StateMachine.svg
-    iconImageName = "class/Class.svg";
+    override iconImageName = 'class/Class.svg';
 }

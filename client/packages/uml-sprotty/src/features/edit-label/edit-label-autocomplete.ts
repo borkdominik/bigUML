@@ -8,13 +8,12 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-import { GLSPActionDispatcher, TYPES } from "@eclipse-glsp/client/lib";
-import { inject, injectable } from "inversify";
-import { EditLabelUI, EditLabelValidationResult, SModelRoot } from "sprotty/lib";
-import { matchesKeystroke } from "sprotty/lib/utils/keyboard";
+import { EditLabelUI, EditLabelValidationResult, GLSPActionDispatcher, SModelRoot, TYPES } from '@eclipse-glsp/client';
+import { inject, injectable } from 'inversify';
+import { matchesKeystroke } from 'sprotty/lib/utils/keyboard';
 
-import { UmlTypes } from "../../utils";
-import { RequestTypeInformationAction, SetTypeInformationAction, TypeInformation } from "./action-definitions";
+import { UmlTypes } from '../../utils';
+import { RequestTypeInformationAction, SetTypeInformationAction, TypeInformation } from './action-definitions';
 
 @injectable()
 export class EditLabelUIAutocomplete extends EditLabelUI {
@@ -31,7 +30,7 @@ export class EditLabelUIAutocomplete extends EditLabelUI {
         super();
     }
 
-    protected initializeContents(containerElement: HTMLElement): void {
+    protected override initializeContents(containerElement: HTMLElement): void {
         this.outerDiv = containerElement;
         super.initializeContents(containerElement);
     }
@@ -39,13 +38,14 @@ export class EditLabelUIAutocomplete extends EditLabelUI {
     protected override async validateLabel(value: string): Promise<EditLabelValidationResult> {
         if (this.isAutoCompleteLabel()) {
             let result: EditLabelValidationResult = {
-                severity: "error", message: "Please select from the dropdown (strg + space)"
+                severity: 'error',
+                message: 'Please select from the dropdown (strg + space)'
             };
             if (this.typeInformation.some(t => t.id === value)) {
-                result = { severity: "ok" };
+                result = { severity: 'ok' };
             }
 
-            this.isCurrentLabelValid = "error" !== result.severity;
+            this.isCurrentLabelValid = 'error' !== result.severity;
             this.showValidationResult(result);
 
             return result;
@@ -54,22 +54,15 @@ export class EditLabelUIAutocomplete extends EditLabelUI {
         return super.validateLabel(value);
     }
 
-    protected override configureAndAdd(
-        element: HTMLInputElement | HTMLTextAreaElement,
-        containerElement: HTMLElement
-    ): void {
+    protected override configureAndAdd(element: HTMLInputElement | HTMLTextAreaElement, containerElement: HTMLElement): void {
         super.configureAndAdd(element, containerElement);
-        element.addEventListener("keydown", (event: KeyboardEvent) =>
-            this.handleKeyDown(event)
-        );
-        element.removeEventListener("blur", () =>
-            window.setTimeout(() => this.applyLabelEdit(), 200)
-        );
-        element.addEventListener("blur", () => this.handleBlur());
+        element.addEventListener('keydown', event => this.handleKeyDown(event as KeyboardEvent));
+        element.removeEventListener('blur', () => window.setTimeout(() => this.applyLabelEdit(), 200));
+        element.addEventListener('blur', () => this.handleBlur());
     }
 
     protected handleKeyDown(event: KeyboardEvent): void {
-        if (matchesKeystroke(event, "Space", "ctrl")) {
+        if (matchesKeystroke(event, 'Space', 'ctrl')) {
             this.showAutocomplete = true;
             if (this.isAutoCompleteEnabled()) {
                 this.createAutocomplete();
@@ -86,14 +79,8 @@ export class EditLabelUIAutocomplete extends EditLabelUI {
         }
     }
 
-    protected validateLabelIfContentChange(
-        event: KeyboardEvent,
-        value: string
-    ): void {
-        if (
-            this.isAutoCompleteEnabled() &&
-            this.previousLabelContent !== value
-        ) {
+    protected override validateLabelIfContentChange(event: KeyboardEvent, value: string): void {
+        if (this.isAutoCompleteEnabled() && this.previousLabelContent !== value) {
             // recreate autocomplete list if value changed
             this.createAutocomplete();
         }
@@ -101,13 +88,13 @@ export class EditLabelUIAutocomplete extends EditLabelUI {
     }
 
     protected updateAutocomplete(event: KeyboardEvent): void {
-        if (matchesKeystroke(event, "ArrowDown")) {
+        if (matchesKeystroke(event, 'ArrowDown')) {
             this.currentFocus++;
             this.addActive();
-        } else if (matchesKeystroke(event, "ArrowUp")) {
+        } else if (matchesKeystroke(event, 'ArrowUp')) {
             this.currentFocus--;
             this.addActive();
-        } else if (matchesKeystroke(event, "Enter")) {
+        } else if (matchesKeystroke(event, 'Enter')) {
             event.preventDefault();
             if (this.currentFocus > -1) {
                 if (this.listContainer) {
@@ -123,33 +110,23 @@ export class EditLabelUIAutocomplete extends EditLabelUI {
         this.closeAllLists();
         this.currentFocus = -1;
 
-        this.listContainer = document.createElement("div");
-        this.listContainer.setAttribute(
-            "id",
-            this.inputElement.id + "autocomplete-list"
-        );
-        this.listContainer.setAttribute("class", "autocomplete-items");
+        this.listContainer = document.createElement('div');
+        this.listContainer.setAttribute('id', this.inputElement.id + 'autocomplete-list');
+        this.listContainer.setAttribute('class', 'autocomplete-items');
         this.outerDiv.appendChild(this.listContainer);
 
         // create autocomplete items starting with input
         for (let i = 0; i < this.typeInformation.length; i++) {
             const type = this.typeInformation[i];
             const label = type.name;
-            if (
-                label.substring(0, input.length).toLowerCase() ===
-                input.toLowerCase()
-            ) {
-                const element = document.createElement("div");
-                element.setAttribute("class", "autocomplete-item");
-                element.innerHTML =
-                    "<strong>" +
-                    label.substring(0, input.length) +
-                    "</strong>";
+            if (label.substring(0, input.length).toLowerCase() === input.toLowerCase()) {
+                const element = document.createElement('div');
+                element.setAttribute('class', 'autocomplete-item');
+                element.innerHTML = '<strong>' + label.substring(0, input.length) + '</strong>';
                 element.innerHTML += label.substring(input.length);
                 element.innerHTML += `</br><small> - ${type.type}</small>`;
-                element.innerHTML +=
-                    "<input type='hidden' value='" + type.id + "'>";
-                element.addEventListener("click", event => {
+                element.innerHTML += "<input type='hidden' value='" + type.id + "'>";
+                element.addEventListener('click', event => {
                     // change the type of the label
                     event.stopPropagation();
 
@@ -165,8 +142,7 @@ export class EditLabelUIAutocomplete extends EditLabelUI {
         if (parent) {
             const parentHeight = parent.offsetHeight;
             const parentPosY = parent.offsetTop;
-            const posY =
-                this.outerDiv.offsetTop + this.inputElement.offsetHeight;
+            const posY = this.outerDiv.offsetTop + this.inputElement.offsetHeight;
             const maxHeight = parentHeight - (posY - parentPosY);
             this.listContainer.style.maxHeight = `${maxHeight}px`;
         }
@@ -185,29 +161,25 @@ export class EditLabelUIAutocomplete extends EditLabelUI {
             if (this.currentFocus < 0) {
                 this.currentFocus = children.length - 1;
             }
-            children[this.currentFocus].classList.add("autocomplete-active");
+            children[this.currentFocus].classList.add('autocomplete-active');
         }
     }
 
     protected removeActive(): void {
         const children = this.listContainer.children;
         for (let i = 0; i < children.length; i++) {
-            children[i].classList.remove("autocomplete-active");
+            children[i].classList.remove('autocomplete-active');
         }
     }
 
     protected closeAllLists(): void {
-        const x = this.outerDiv.getElementsByClassName("autocomplete-items");
+        const x = this.outerDiv.getElementsByClassName('autocomplete-items');
         for (let i = 0; i < x.length; i++) {
             this.outerDiv.removeChild(x[i]);
         }
     }
 
-    protected onBeforeShow(
-        containerElement: HTMLElement,
-        root: Readonly<SModelRoot>,
-        ...contextElementIds: string[]
-    ): void {
+    protected override onBeforeShow(containerElement: HTMLElement, root: Readonly<SModelRoot>, ...contextElementIds: string[]): void {
         super.onBeforeShow(containerElement, root, ...contextElementIds);
 
         // request possible element types
@@ -220,10 +192,7 @@ export class EditLabelUIAutocomplete extends EditLabelUI {
 
     protected isAutoCompleteEnabled(): boolean {
         if (this.label) {
-            return (
-                this.isAutoCompleteLabel() &&
-                this.showAutocomplete
-            );
+            return this.isAutoCompleteLabel() && this.showAutocomplete;
         }
         return false;
     }
@@ -232,7 +201,7 @@ export class EditLabelUIAutocomplete extends EditLabelUI {
         return this.label?.type === UmlTypes.LABEL_PROPERTY_TYPE;
     }
 
-    public hide(): void {
+    public override hide(): void {
         super.hide();
         this.showAutocomplete = false;
         this.currentFocus = -1;

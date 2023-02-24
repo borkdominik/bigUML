@@ -13,13 +13,12 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import "@eclipse-glsp/client/css/tool-palette.css";
+import '@eclipse-glsp/client/css/tool-palette.css';
 
-import { EnableToolPaletteAction } from "@eclipse-glsp/client";
-import { ContainerModule } from "inversify";
-import { configureActionHandler, EnableDefaultToolsAction, TYPES } from "sprotty";
+import { configureActionHandler, EnableDefaultToolsAction, EnableToolPaletteAction, TYPES } from '@eclipse-glsp/client';
+import { ContainerModule } from 'inversify';
 
-import { UmlToolPalette } from "./tool-palette";
+import { UmlToolPalette } from './tool-palette';
 
 const umlToolPaletteModule = new ContainerModule((bind, _unbind, isBound) => {
     bind(UmlToolPalette).toSelf().inSingletonScope();

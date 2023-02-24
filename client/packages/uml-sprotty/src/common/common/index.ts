@@ -9,6 +9,6 @@
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
 
-export * from "./icon-view";
-export * from "./label-node-view";
-export * from "./comment-node-view";
+export * from './icon-view';
+export * from './label-node-view';
+export * from './comment-node-view';

@@ -23,7 +23,7 @@
     stroke: var(--uml-edge);
 }
 
-.uml-packageable-node>.struct {
+.uml-packageable-node > .struct {
     fill: none;
     stroke: none;
 }

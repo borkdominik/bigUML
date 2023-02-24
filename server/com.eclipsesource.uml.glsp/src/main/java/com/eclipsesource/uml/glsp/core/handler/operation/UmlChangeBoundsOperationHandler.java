@@ -12,7 +12,7 @@ package com.eclipsesource.uml.glsp.core.handler.operation;
 
 import java.util.HashMap;
 
-import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.AbstractEMSOperationHandler;
+import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSOperationHandler;
 import org.eclipse.glsp.server.emf.model.notation.Shape;
 import org.eclipse.glsp.server.operations.ChangeBoundsOperation;
 import org.eclipse.glsp.server.types.ElementAndBounds;
@@ -23,7 +23,7 @@ import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.eclipsesource.uml.modelserver.core.commands.change_bounds.UmlChangeBoundsContribution;
 import com.google.inject.Inject;
 
-public class UmlChangeBoundsOperationHandler extends AbstractEMSOperationHandler<ChangeBoundsOperation> {
+public class UmlChangeBoundsOperationHandler extends EMSOperationHandler<ChangeBoundsOperation> {
 
    @Inject
    protected UmlModelState modelState;

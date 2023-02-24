@@ -12,7 +12,7 @@ package com.eclipsesource.uml.glsp.core.handler.operation;
 
 import java.util.HashMap;
 
-import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.AbstractEMSOperationHandler;
+import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSOperationHandler;
 import org.eclipse.glsp.server.emf.model.notation.Edge;
 import org.eclipse.glsp.server.operations.ChangeRoutingPointsOperation;
 import org.eclipse.glsp.server.types.ElementAndRoutingPoints;
@@ -23,7 +23,7 @@ import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.eclipsesource.uml.modelserver.core.commands.change_routing_points.UmlChangeRoutingPointsContribution;
 import com.google.inject.Inject;
 
-public class UmlChangeRoutingPointsOperationHandler extends AbstractEMSOperationHandler<ChangeRoutingPointsOperation> {
+public class UmlChangeRoutingPointsOperationHandler extends EMSOperationHandler<ChangeRoutingPointsOperation> {
 
    @Inject
    protected UmlModelState modelState;

@@ -8,14 +8,14 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-import "../../src/browser/style/common.css";
-import "../../src/browser/style/uml/uml-colors.css";
+import '../../src/browser/style/common.css';
+import '../../src/browser/style/uml/uml-colors.css';
 
-import { FrontendApplicationContribution, LabelProviderContribution } from "@theia/core/lib/browser";
-import { ContainerModule } from "inversify";
+import { FrontendApplicationContribution, LabelProviderContribution } from '@theia/core/lib/browser';
+import { ContainerModule } from 'inversify';
 
-import { UmlFrontendContribution } from "./frontend-contribution";
-import { UmlTreeLabelProviderContribution } from "./label-provider";
+import { UmlFrontendContribution } from './frontend-contribution';
+import { UmlTreeLabelProviderContribution } from './label-provider';
 
 export default new ContainerModule(bind => {
     bind(FrontendApplicationContribution).to(UmlFrontendContribution).inSingletonScope();

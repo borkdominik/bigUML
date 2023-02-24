@@ -8,9 +8,6 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-/* eslint-disable react/jsx-key */
-import { inject, injectable } from "inversify";
-import { VNode } from "snabbdom";
 import {
     EdgeRouterRegistry,
     getSubType,
@@ -21,11 +18,12 @@ import {
     setAttr,
     SLabelView,
     svg
-} from "sprotty/lib";
+} from '@eclipse-glsp/client';
+import { inject, injectable } from 'inversify';
+import { VNode } from 'snabbdom';
 
-import { SEditableLabel } from "../../../../model";
+import { SEditableLabel } from '../../../../model';
 
-/* eslint-disable react/react-in-jsx-scope */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const JSX = { createElement: svg };
 
@@ -33,7 +31,7 @@ const JSX = { createElement: svg };
 export class MessageArrowLabelView extends SLabelView {
     @inject(EdgeRouterRegistry) edgeRouterRegistry: EdgeRouterRegistry;
 
-    render(labelNode: Readonly<SEditableLabel>, context: RenderingContext): VNode {
+    override render(labelNode: Readonly<SEditableLabel>, context: RenderingContext): VNode {
         let rotation = 0;
         if (labelNode.edgePlacement !== undefined) {
             const parent = labelNode.parent as SEdge;
@@ -47,28 +45,29 @@ export class MessageArrowLabelView extends SLabelView {
         }
 
         const vnode: any = (
-            <g
-                class-selected={labelNode.selected}
-                class-sprotty-label-node={true}
-            >
+            <g class-selected={labelNode.selected} class-sprotty-label-node={true}>
                 <defs>
-                    <g id="arrow-right">
-                        <path d="M21.883 12l-7.527 6.235.644.765 9-7.521-9-7.479-.645.764 7.529 6.236h-21.884v1h21.883z"/>
+                    <g id='arrow-right'>
+                        <path d='M21.883 12l-7.527 6.235.644.765 9-7.521-9-7.479-.645.764 7.529 6.236h-21.884v1h21.883z' />
                     </g>
                 </defs>
 
-                <text class-sprotty-label={true} x={0} y={-8}>{labelNode.text}</text>
+                <text class-sprotty-label={true} x={0} y={-8}>
+                    {labelNode.text}
+                </text>
 
-                <use href="#arrow-right"
-                    style={{transformBox: "fill-box", transformOrigin: "center"}}
+                <use
+                    href='#arrow-right'
+                    style={{ transformBox: 'fill-box', transformOrigin: 'center' }}
                     transform={`translate(-12) rotate(${rotation})`}
-                    transform-origin="12 12"/>
+                    transform-origin='12 12'
+                />
             </g>
         );
 
         const subType = getSubType(labelNode);
         if (subType) {
-            setAttr(vnode, "class", subType);
+            setAttr(vnode, 'class', subType);
         }
         return vnode;
     }
@@ -79,7 +78,7 @@ export class MessageArrowLabelView extends SLabelView {
 
         if (sameX.length === 2) {
             return sameX[0].y > sameX[1].y ? -90 : 90;
-        } else if(sameY.length === 2) {
+        } else if (sameY.length === 2) {
             return sameY[0].x > sameY[1].x ? -180 : 0;
         } else {
             return 0;

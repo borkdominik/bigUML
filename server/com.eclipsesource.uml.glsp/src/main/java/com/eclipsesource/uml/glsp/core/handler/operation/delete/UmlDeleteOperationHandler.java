@@ -13,7 +13,7 @@ package com.eclipsesource.uml.glsp.core.handler.operation.delete;
 import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.AbstractEMSOperationHandler;
+import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSOperationHandler;
 import org.eclipse.glsp.server.operations.DeleteOperation;
 import org.eclipse.glsp.server.types.GLSPServerException;
 
@@ -21,7 +21,7 @@ import com.eclipsesource.uml.glsp.core.common.RepresentationKey;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.google.inject.Inject;
 
-public class UmlDeleteOperationHandler extends AbstractEMSOperationHandler<DeleteOperation> {
+public class UmlDeleteOperationHandler extends EMSOperationHandler<DeleteOperation> {
 
    @Inject
    private DiagramDeleteHandlerRegistry registry;

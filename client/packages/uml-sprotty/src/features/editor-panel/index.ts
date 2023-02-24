@@ -14,6 +14,6 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 
-export * from "./actions";
-export * from "./di.config";
-export * from "./di.types";
+export * from './actions';
+export * from './di.config';
+export * from './di.types';

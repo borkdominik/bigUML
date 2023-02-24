@@ -8,16 +8,16 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-import { DefaultTypes } from "@eclipse-glsp/protocol";
+import { DefaultTypes } from '@eclipse-glsp/protocol';
 
 export namespace UmlTypes {
     // COMMONS
-    export const ICON = "icon";
+    export const ICON = 'icon';
     export const LABEL_NAME = `${DefaultTypes.LABEL}:name`;
     export const LABEL_TEXT = `${DefaultTypes.LABEL}:text`;
     export const LABEL_EDGE_NAME = `${DefaultTypes.LABEL}:edge-name`;
     export const LABEL_EDGE_MULTIPLICITY = `${DefaultTypes.LABEL}:association-multiplicity`;
-    export const STRUCTURE = "struct";
+    export const STRUCTURE = 'struct';
     export const ICON_CSS = `${ICON}:css`;
 
     // CLASS DIAGRAM

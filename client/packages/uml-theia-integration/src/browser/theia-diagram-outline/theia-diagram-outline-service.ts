@@ -13,19 +13,18 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { DiagramOutlineService, OutlineTreeNode } from "@eclipsesource/uml-sprotty/lib/features/diagram-outline";
-import { inject, injectable, postConstruct } from "@theia/core/shared/inversify";
+import { DiagramOutlineService, OutlineTreeNode } from '@eclipsesource/uml-sprotty/lib/features/diagram-outline';
+import { inject, injectable, postConstruct } from '@theia/core/shared/inversify';
 
-import { DiagramOutlineViewService } from "../diagram-outline-view/diagram-outline-view-service";
-import { DiagramOutlineSymbolInformationNode } from "../diagram-outline-view/diagram-outline-view-widget";
-import { belongsToDiagramWidget, UmlDiagramManager } from "../diagram/uml-diagram-manager";
+import { DiagramOutlineViewService } from '../diagram-outline-view/diagram-outline-view-service';
+import { DiagramOutlineSymbolInformationNode } from '../diagram-outline-view/diagram-outline-view-widget';
+import { belongsToDiagramWidget, UmlDiagramManager } from '../diagram/uml-diagram-manager';
 
 export type TheiaDiagramOutlineFactory = () => TheiaDiagramOutlineService;
-export const TheiaDiagramOutlineFactory = Symbol("TheiaDiagramOutlineFactory");
+export const TheiaDiagramOutlineFactory = Symbol('TheiaDiagramOutlineFactory');
 
 @injectable()
 export class TheiaDiagramOutlineService extends DiagramOutlineService {
-
     @inject(DiagramOutlineViewService)
     protected readonly diagramOutlineViewService: DiagramOutlineViewService;
 
@@ -48,7 +47,10 @@ export class TheiaDiagramOutlineService extends DiagramOutlineService {
 
         const mappedNodes = outlineNodes.map(outlineNode => this.cachedMap(outlineNode));
 
-        if (belongsToDiagramWidget(this.diagramManager.currentEditor, this.diagramServer.clientId)) {
+        if (
+            this.diagramServerProxy !== undefined &&
+            belongsToDiagramWidget(this.diagramManager.currentEditor, this.diagramServerProxy.clientId)
+        ) {
             this.diagramOutlineViewService.publish(mappedNodes);
         }
     }
@@ -67,7 +69,8 @@ export class TheiaDiagramOutlineService extends DiagramOutlineService {
         if (outlineTreeNode.children.length === 0) {
             informationNode = {
                 id: outlineTreeNode.semanticUri,
-                children: [], parent: undefined,
+                children: [],
+                parent: undefined,
                 iconClass: outlineTreeNode.iconClass,
                 expanded: true,
                 selected: false,

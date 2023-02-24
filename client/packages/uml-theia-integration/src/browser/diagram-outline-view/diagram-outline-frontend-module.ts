@@ -13,21 +13,19 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { bindViewContribution, createTreeContainer, FrontendApplicationContribution } from "@theia/core/lib/browser";
-import { WidgetFactory } from "@theia/core/lib/browser/widget-manager";
-import { bindContributionProvider } from "@theia/core/lib/common/contribution-provider";
-import { interfaces } from "@theia/core/shared/inversify";
+import { bindViewContribution, createTreeContainer, FrontendApplicationContribution } from '@theia/core/lib/browser';
+import { WidgetFactory } from '@theia/core/lib/browser/widget-manager';
+import { bindContributionProvider } from '@theia/core/lib/common/contribution-provider';
+import { interfaces } from '@theia/core/shared/inversify';
 
-import { DiagramOutlineViewContribution } from "./diagram-outline-contribution";
-import { DiagramOutlineDecoratorService, DiagramOutlineTreeDecorator } from "./diagram-outline-decorator";
-import { DiagramOutlineViewTreeModel } from "./diagram-outline-view-model";
-import { DiagramOutlineViewService } from "./diagram-outline-view-service";
-import { DiagramOutlineViewWidget, DiagramOutlineViewWidgetFactory } from "./diagram-outline-view-widget";
+import { DiagramOutlineViewContribution } from './diagram-outline-contribution';
+import { DiagramOutlineDecoratorService, DiagramOutlineTreeDecorator } from './diagram-outline-decorator';
+import { DiagramOutlineViewTreeModel } from './diagram-outline-view-model';
+import { DiagramOutlineViewService } from './diagram-outline-view-service';
+import { DiagramOutlineViewWidget, DiagramOutlineViewWidgetFactory } from './diagram-outline-view-widget';
 
 export function registerDiagramOutlineViewWidget(bind: interfaces.Bind): void {
-    bind(DiagramOutlineViewWidgetFactory).toFactory(ctx =>
-        () => createDiagramOutlineViewWidget(ctx.container)
-    );
+    bind(DiagramOutlineViewWidgetFactory).toFactory(ctx => () => createDiagramOutlineViewWidget(ctx.container));
 
     bind(DiagramOutlineViewService).toSelf().inSingletonScope();
     bind(WidgetFactory).toService(DiagramOutlineViewService);

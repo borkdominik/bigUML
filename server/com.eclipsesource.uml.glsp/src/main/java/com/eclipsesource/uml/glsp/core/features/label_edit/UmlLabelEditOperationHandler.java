@@ -13,7 +13,7 @@ package com.eclipsesource.uml.glsp.core.features.label_edit;
 import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.AbstractEMSOperationHandler;
+import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSOperationHandler;
 import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
@@ -26,7 +26,7 @@ import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.google.inject.Inject;
 
 public class UmlLabelEditOperationHandler
-   extends AbstractEMSOperationHandler<ApplyLabelEditOperation> {
+   extends EMSOperationHandler<ApplyLabelEditOperation> {
 
    @Inject
    private DiagramLabelEditMapperRegistry registry;

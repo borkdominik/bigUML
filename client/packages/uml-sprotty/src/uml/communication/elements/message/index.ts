@@ -8,5 +8,5 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-export * from "./message-arrow-label.view";
-export * from "./message-edge.view";
+export * from './message-arrow-label.view';
+export * from './message-edge.view';

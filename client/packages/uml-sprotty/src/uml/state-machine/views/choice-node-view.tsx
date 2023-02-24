@@ -8,18 +8,13 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-/* eslint-disable react/jsx-key */
-import { injectable } from "inversify";
-import { VNode } from "snabbdom";
-import {
-    DiamondNodeView,
-    DiamondNode,
-    RenderingContext
-} from "sprotty/lib";
+import { DiamondNode, DiamondNodeView, RenderingContext } from '@eclipse-glsp/client';
+import { injectable } from 'inversify';
+import { VNode } from 'snabbdom';
 
 @injectable()
 export class ChoiceNodeView extends DiamondNodeView {
-    render(node: DiamondNode, context: RenderingContext): VNode {
+    override render(node: DiamondNode, context: RenderingContext): VNode {
         return super.render(node, context) as VNode;
     }
 }

@@ -1,11 +1,7 @@
 {
   "name": "@eclipsesource/uml-sprotty",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Sprotty diagrams for UML",
-  "author": {
-    "name": "EclipseSource"
-  },
-  "license": "(EPL-2.0 OR MIT)",
   "keywords": [
     "sprotty",
     "workflow",
@@ -17,27 +13,29 @@
     "type": "git",
     "url": "https://github.com/eclipsesource/uml-glsp.git"
   },
-  "dependencies": {
-    "@eclipsesource/uml-glsp-common": "0.1.0",
-    "@eclipse-glsp/client": "next",
-    "reflect-metadata": "^0.1.10",
-    "balloon-css": "^0.5.0"
-  },
-  "devDependencies": {
-    "rimraf": "^2.6.1",
-    "typescript": "~4.5.5"
-  },
-  "scripts": {
-    "prepare": "yarn run clean && yarn run build",
-    "clean": "rimraf lib",
-    "build": "tsc && yarn run lint",
-    "lint": "eslint -c ./.eslintrc.js --ext .ts,.tsx ./src",
-    "watch": "tsc -w"
+  "license": "(EPL-2.0 OR MIT)",
+  "author": {
+    "name": "EclipseSource"
   },
   "files": [
     "lib",
     "src",
     "css",
     "images"
-  ]
+  ],
+  "scripts": {
+    "build": "npx tsc -b && yarn run lint",
+    "clean": "npx rimraf lib tsconfig.tsbuildinfo",
+    "lint": "npx eslint -c ./.eslintrc.js --ext .ts,.tsx ./src",
+    "lint:fix": "npx eslint --fix -c ./.eslintrc.js --ext .ts,.tsx ./src",
+    "prepare": "yarn run clean && yarn run build",
+    "watch": "npx tsc -w"
+  },
+  "dependencies": {
+    "@eclipse-glsp/client": "next",
+    "@eclipsesource/uml-glsp-common": "1.0.0",
+    "balloon-css": "^0.5.0",
+    "reflect-metadata": "^0.1.10"
+  },
+  "devDependencies": {}
 }

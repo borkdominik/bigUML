@@ -8,8 +8,8 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-import { Args, SArgumentable, SChildElement, selectFeature } from "@eclipse-glsp/client";
 import {
+    Args,
     boundsFeature,
     Connectable,
     connectableFeature,
@@ -28,22 +28,24 @@ import {
     nameFeature,
     popupFeature,
     RectangularNode,
+    SArgumentable,
+    SChildElement,
     SCompartment,
     SEdge,
     Selectable,
+    selectFeature,
     SLabel,
     SRoutableElement,
     SShapeElement,
     WithEditableLabel,
     withEditLabelFeature
-} from "sprotty/lib";
+} from '@eclipse-glsp/client';
 
 export class LabeledNode extends RectangularNode implements WithEditableLabel, Nameable {
-
     get editableLabel(): (SChildElement & EditableLabel) | undefined {
-        const headerComp = this.children.find(element => element.type === "comp:header");
+        const headerComp = this.children.find(element => element.type === 'comp:header');
         if (headerComp) {
-            const label = headerComp.children.find(element => element.type === "label:heading");
+            const label = headerComp.children.find(element => element.type === 'label:heading');
             if (label && isEditableLabel(label)) {
                 return label;
             }
@@ -58,13 +60,13 @@ export class LabeledNode extends RectangularNode implements WithEditableLabel, N
         return this.id;
     }
 
-    hasFeature(feature: symbol): boolean {
+    override hasFeature(feature: symbol): boolean {
         return super.hasFeature(feature) || feature === nameFeature || feature === withEditLabelFeature;
     }
 }
 
 export class SEditableLabel extends SLabel implements EditableLabel {
-    hasFeature(feature: symbol): boolean {
+    override hasFeature(feature: symbol): boolean {
         return feature === editLabelFeature || super.hasFeature(feature);
     }
 }
@@ -72,8 +74,10 @@ export class SEditableLabel extends SLabel implements EditableLabel {
 export class Icon extends SShapeElement {
     iconImageName: string;
 
-    hasFeature(feature: symbol): boolean {
-        return feature === boundsFeature || feature === layoutContainerFeature || feature === layoutableChildFeature || feature === fadeFeature;
+    override hasFeature(feature: symbol): boolean {
+        return (
+            feature === boundsFeature || feature === layoutContainerFeature || feature === layoutableChildFeature || feature === fadeFeature
+        );
     }
 }
 
@@ -85,7 +89,7 @@ export class IconLabelCompartment extends SCompartment implements Selectable, De
     selected = false;
     hoverFeedback = false;
 
-    hasFeature(feature: symbol): boolean {
+    override hasFeature(feature: symbol): boolean {
         return super.hasFeature(feature) || feature === selectFeature || feature === deletableFeature || feature === hoverFeedbackFeature;
     }
 }
@@ -94,9 +98,15 @@ export class SLabelNode extends SLabel implements EditableLabel {
     hoverFeedback = false;
     imageName: string;
 
-    hasFeature(feature: symbol): boolean {
-        return (feature === selectFeature || feature === editLabelFeature || feature === popupFeature || feature === deletableFeature ||
-            feature === hoverFeedbackFeature || super.hasFeature(feature));
+    override hasFeature(feature: symbol): boolean {
+        return (
+            feature === selectFeature ||
+            feature === editLabelFeature ||
+            feature === popupFeature ||
+            feature === deletableFeature ||
+            feature === hoverFeedbackFeature ||
+            super.hasFeature(feature)
+        );
     }
 }
 
@@ -106,27 +116,32 @@ export class ConnectableEditableLabel extends SLabel implements EditableLabel, C
         ConnectableEditableLabel.DEFAULT_FEATURES.push(connectableFeature);
     }
 
-    canConnect(routable: SRoutableElement, role: "source" | "target"): boolean {
+    canConnect(routable: SRoutableElement, role: 'source' | 'target'): boolean {
         return true;
         // TODO: If neccessary return false under some conditions
     }
 
-    hasFeature(feature: symbol): boolean {
+    override hasFeature(feature: symbol): boolean {
         return feature === editLabelFeature || super.hasFeature(feature);
     }
 }
 
 export class ConnectableEdge extends SEdge implements Connectable {
-    canConnect(routable: SRoutableElement, role: "source" | "target"): boolean {
+    canConnect(routable: SRoutableElement, role: 'source' | 'target'): boolean {
         return true;
         // TODO: If neccessary return false under some conditions
     }
 
-    static readonly DEFAULT_FEATURES = [editFeature, deletableFeature, selectFeature, fadeFeature,
-        hoverFeedbackFeature, connectableFeature];
+    static override readonly DEFAULT_FEATURES = [
+        editFeature,
+        deletableFeature,
+        selectFeature,
+        fadeFeature,
+        hoverFeedbackFeature,
+        connectableFeature
+    ];
 
-    selected = false;
-    hoverFeedback = true;
-    opacity = 1;
+    override selected = false;
+    override hoverFeedback = true;
+    override opacity = 1;
 }
-

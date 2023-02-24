@@ -8,4 +8,4 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-export * from "./model";
+export * from './model';

@@ -13,30 +13,30 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { compare, createToolGroup, PaletteItem, ToolPalette } from "@eclipse-glsp/client";
-import { injectable } from "inversify";
+import { compare, createToolGroup, PaletteItem, ToolPalette } from '@eclipse-glsp/client';
+import { injectable } from 'inversify';
 
 @injectable()
 export class UmlToolPalette extends ToolPalette {
-
-    protected createBody(): void {
-        const bodyDiv = document.createElement("div");
-        bodyDiv.classList.add("palette-body");
+    protected override createBody(): void {
+        const bodyDiv = document.createElement('div');
+        bodyDiv.classList.add('palette-body');
         let tabIndex = 0;
-        this.paletteItems.sort(compare)
-            .forEach(item => {
-                if (item.children) {
-                    const group = createToolGroup(item);
-                    item.children.sort(compare).forEach(child => group.appendChild(this.createUmlToolButton(child, tabIndex++, child.icon || "")));
-                    bodyDiv.appendChild(group);
-                } else {
-                    bodyDiv.appendChild(this.createUmlToolButton(item, tabIndex++, item.icon || "umlclass"));
-                }
-            });
+        this.paletteItems.sort(compare).forEach(item => {
+            if (item.children) {
+                const group = createToolGroup(item);
+                item.children
+                    .sort(compare)
+                    .forEach(child => group.appendChild(this.createUmlToolButton(child, tabIndex++, child.icon || '')));
+                bodyDiv.appendChild(group);
+            } else {
+                bodyDiv.appendChild(this.createUmlToolButton(item, tabIndex++, item.icon || 'umlclass'));
+            }
+        });
         if (this.paletteItems.length === 0) {
-            const noResultsDiv = document.createElement("div");
-            noResultsDiv.innerText = "No results found.";
-            noResultsDiv.classList.add("tool-button");
+            const noResultsDiv = document.createElement('div');
+            noResultsDiv.innerText = 'No results found.';
+            noResultsDiv.classList.add('tool-button');
             bodyDiv.appendChild(noResultsDiv);
         }
         // Remove existing body to refresh filtered entries
@@ -48,21 +48,20 @@ export class UmlToolPalette extends ToolPalette {
     }
 
     protected createUmlToolButton(item: PaletteItem, index: number, icon: string): HTMLElement {
-        const button = document.createElement("div");
+        const button = document.createElement('div');
         button.appendChild(this.createUmlIcon(icon));
         button.tabIndex = index;
-        button.classList.add("tool-button");
-        button.classList.add("uml-tool-button");
-        button.insertAdjacentText("beforeend", item.label);
+        button.classList.add('tool-button');
+        button.classList.add('uml-tool-button');
+        button.insertAdjacentText('beforeend', item.label);
         button.onclick = super.onClickCreateToolButton(button, item);
         button.onkeydown = ev => this.clearToolOnEscape(ev);
         return button;
     }
 
     protected createUmlIcon(cssClass: string): HTMLDivElement {
-        const icon = document.createElement("div");
-        icon.classList.add(...["umlimg", cssClass]);
+        const icon = document.createElement('div');
+        icon.classList.add(...['umlimg', cssClass]);
         return icon;
     }
-
 }

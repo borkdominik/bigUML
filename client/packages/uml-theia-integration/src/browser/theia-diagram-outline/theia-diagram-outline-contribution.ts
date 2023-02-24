@@ -13,12 +13,11 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { GLSP_TYPES, IActionDispatcher, TYPES } from "@eclipse-glsp/client";
-import { DiagramOutlineService } from "@eclipsesource/uml-sprotty/lib/features/diagram-outline";
-import { Container } from "@theia/core/shared/inversify";
+import { IActionDispatcher, ModelSource, TYPES } from '@eclipse-glsp/client';
+import { DiagramOutlineService } from '@eclipsesource/uml-sprotty/lib/features/diagram-outline';
+import { Container } from '@theia/core/shared/inversify';
 
-import { UmlTheiaDiagramServer } from "../diagram/uml-diagram-server";
-import { TheiaDiagramOutlineService } from "./theia-diagram-outline-service";
+import { TheiaDiagramOutlineService } from './theia-diagram-outline-service';
 
 export function connectTheiaDiagramOutlineView(
     container: Container,
@@ -27,9 +26,12 @@ export function connectTheiaDiagramOutlineView(
     const theiaDiagramOutlineService = theiaDiagramOutlineServiceFactory();
     container.bind(DiagramOutlineService).toConstantValue(theiaDiagramOutlineService);
     container.bind(TheiaDiagramOutlineService).toConstantValue(theiaDiagramOutlineService);
-    container.bind(GLSP_TYPES.SModelRootListener).toConstantValue(theiaDiagramOutlineService);
+    container.bind(TYPES.SModelRootListener).toConstantValue(theiaDiagramOutlineService);
 
     if (theiaDiagramOutlineService instanceof DiagramOutlineService) {
-        theiaDiagramOutlineService.connect(container.get(UmlTheiaDiagramServer), container.get<IActionDispatcher>(TYPES.IActionDispatcher));
+        theiaDiagramOutlineService.connect(
+            container.get<ModelSource>(TYPES.ModelSource),
+            container.get<IActionDispatcher>(TYPES.IActionDispatcher)
+        );
     }
 }

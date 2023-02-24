@@ -2,6 +2,7 @@ node_modules
 .browser_modules
 lib
 *.log
-*-app/*
-!*-app/package.json
+/environments/*-app/*
+!/environments/*-app/package.json
 build/
+*.tsbuildinfo

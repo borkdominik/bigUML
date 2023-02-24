@@ -8,33 +8,42 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-/* eslint-disable react/jsx-key */
-import { injectable } from "inversify";
-import { VNode } from "snabbdom";
-import {
-    CircularNodeView,
-    CircularNode,
-    RenderingContext,
-    svg
-} from "sprotty/lib";
+import { CircularNode, CircularNodeView, RenderingContext, svg } from '@eclipse-glsp/client';
+import { injectable } from 'inversify';
+import { VNode } from 'snabbdom';
 
-/* eslint-disable react/react-in-jsx-scope */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const JSX = { createElement: svg };
 
 @injectable()
 export class FinalNodeView extends CircularNodeView {
-    render(node: CircularNode, context: RenderingContext): VNode {
+    override render(node: CircularNode, context: RenderingContext): VNode {
         const radius = this.getRadius(node);
-        const finalNode: any = (<g>
-            <circle stroke="#4E81B4" fill="#4E81B4" class-node={true} class-mouseover={node.hoverFeedback}
-                class-selected={node.selected}
-                r={radius} cx={radius} cy={radius}></circle>
-            <circle stroke="#205c99" fill="#205c99" class-node={true} class-mouseover={node.hoverFeedback}
-                class-selected={node.selected}
-                r={radius / 1.8} cx={radius} cy={radius}></circle>
-            {context.renderChildren(node)}
-        </g>);
+        const finalNode: any = (
+            <g>
+                <circle
+                    stroke='#4E81B4'
+                    fill='#4E81B4'
+                    class-node={true}
+                    class-mouseover={node.hoverFeedback}
+                    class-selected={node.selected}
+                    r={radius}
+                    cx={radius}
+                    cy={radius}
+                ></circle>
+                <circle
+                    stroke='#205c99'
+                    fill='#205c99'
+                    class-node={true}
+                    class-mouseover={node.hoverFeedback}
+                    class-selected={node.selected}
+                    r={radius / 1.8}
+                    cx={radius}
+                    cy={radius}
+                ></circle>
+                {context.renderChildren(node)}
+            </g>
+        );
         return finalNode;
     }
 }

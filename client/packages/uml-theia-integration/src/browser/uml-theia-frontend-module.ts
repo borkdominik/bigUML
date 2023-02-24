@@ -8,36 +8,32 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-import { ModelServerClient } from "@eclipse-emfcloud/modelserver-theia";
 import {
     ContainerContext,
     GLSPClientContribution,
     GLSPTheiaFrontendModule,
     registerDiagramManager,
     TheiaGLSPConnector
-} from "@eclipse-glsp/theia-integration/lib/browser";
-import { CommandContribution, MenuContribution } from "@theia/core";
-import { DiagramConfiguration } from "sprotty-theia/lib";
+} from '@eclipse-glsp/theia-integration/lib/browser';
+import { CommandContribution, MenuContribution } from '@theia/core';
+import { DiagramConfiguration } from 'sprotty-theia/lib';
 
-import { UmlLanguage } from "../common/uml-language";
-import { UmlModelServerClient } from "../common/uml-model-server-client";
-import { registerDiagramOutlineViewWidget } from "./diagram-outline-view/diagram-outline-frontend-module";
-import { UmlTheiaGLSPConnector } from "./diagram/theia-glsp-connector";
-import { UmlDiagramConfiguration } from "./diagram/uml-diagram-configuration";
-import { UmlDiagramManager } from "./diagram/uml-diagram-manager";
-import { registerTheiaDiagramOutlineView } from "./theia-diagram-outline/theia-diagram-outline-frontend-module";
-import { UmlGLSPClientContribution } from "./uml-client-contribution";
-import { UmlModelContribution } from "./uml-command-contribution";
+import { UmlLanguage } from '../common/uml-language';
+import { registerDiagramOutlineViewWidget } from './diagram-outline-view/diagram-outline-frontend-module';
+import { UmlTheiaGLSPConnector } from './diagram/theia-glsp-connector';
+import { UmlDiagramConfiguration } from './diagram/uml-diagram-configuration';
+import { UmlDiagramManager } from './diagram/uml-diagram-manager';
+import { registerTheiaDiagramOutlineView } from './theia-diagram-outline/theia-diagram-outline-frontend-module';
+import { UmlGLSPClientContribution } from './uml-client-contribution';
+import { UmlModelContribution } from './uml-command-contribution';
 
 export class UmlTheiaFrontendModule extends GLSPTheiaFrontendModule {
-    protected enableCopyPaste = true;
+    protected override enableCopyPaste = true;
     readonly diagramLanguage = UmlLanguage;
 
-    bindTheiaGLSPConnector(context: ContainerContext): void {
+    override bindTheiaGLSPConnector(context: ContainerContext): void {
         context.bind(TheiaGLSPConnector).toDynamicValue(dynamicContext => {
-            const connector = dynamicContext.container.resolve(
-                UmlTheiaGLSPConnector
-            );
+            const connector = dynamicContext.container.resolve(UmlTheiaGLSPConnector);
             connector.doConfigure(this.diagramLanguage);
             return connector;
         });
@@ -47,21 +43,20 @@ export class UmlTheiaFrontendModule extends GLSPTheiaFrontendModule {
         context.bind(DiagramConfiguration).to(UmlDiagramConfiguration);
     }
 
-    bindGLSPClientContribution(context: ContainerContext): void {
+    override bindGLSPClientContribution(context: ContainerContext): void {
         context.bind(GLSPClientContribution).to(UmlGLSPClientContribution);
     }
 
-    configure(context: ContainerContext): void {
+    override configure(context: ContainerContext): void {
         context.bind(UmlModelContribution).toSelf().inSingletonScope();
         context.bind(CommandContribution).toService(UmlModelContribution);
         context.bind(MenuContribution).toService(UmlModelContribution);
-        context.bind(UmlModelServerClient).toService(ModelServerClient);
 
         registerTheiaDiagramOutlineView(context.bind);
         registerDiagramOutlineViewWidget(context.bind);
     }
 
-    configureDiagramManager(context: ContainerContext): void {
+    override configureDiagramManager(context: ContainerContext): void {
         registerDiagramManager(context.bind, UmlDiagramManager);
     }
 }

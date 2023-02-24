@@ -8,19 +8,26 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
+import {
+    Args,
+    containerFeature,
+    MouseListener,
+    PasteOperation,
+    SChildElement,
+    ServerCopyPasteHandler,
+    SModelElement
+} from '@eclipse-glsp/client';
+import { Action } from '@eclipse-glsp/protocol';
+import { inject, injectable } from 'inversify';
 
-import { containerFeature, MouseListener, PasteOperation, Args, SChildElement, ServerCopyPasteHandler, SModelElement } from "@eclipse-glsp/client";
-import { Action } from "@eclipse-glsp/protocol";
-import { injectable, inject } from "inversify";
-
-const CLIPBOARD_DATA_FORMAT = "text/plain";
+const CLIPBOARD_DATA_FORMAT = 'text/plain';
 
 interface ClipboardId {
     readonly clipboardId: string;
 }
 
 function isClipboardId(jsonData: any): jsonData is ClipboardId {
-    return jsonData !== undefined && "clipboardId" in jsonData;
+    return jsonData !== undefined && 'clipboardId' in jsonData;
 }
 function getClipboardIdFromDataTransfer(dataTransfer: DataTransfer): string | undefined {
     const jsonString = dataTransfer.getData(CLIPBOARD_DATA_FORMAT);
@@ -36,7 +43,7 @@ export class LastContainableElementTracker extends MouseListener {
         return this.lastContainableElement;
     }
 
-    mouseOver(target: SModelElement, event: MouseEvent): Action[] {
+    override mouseOver(target: SModelElement, event: MouseEvent): Action[] {
         let container = target;
         while (!container.hasFeature(containerFeature) && container instanceof SChildElement) {
             container = container.parent;
@@ -55,7 +62,7 @@ export class LastContainableElementTracker extends MouseListener {
 export class CustomCopyPasteHandler extends ServerCopyPasteHandler {
     @inject(LastContainableElementTracker) protected containableElementTracker: LastContainableElementTracker;
 
-    handlePaste(event: ClipboardEvent): void {
+    override handlePaste(event: ClipboardEvent): void {
         if (event.clipboardData && this.shouldPaste(event)) {
             const clipboardId = getClipboardIdFromDataTransfer(event.clipboardData);
             const clipboardData = this.clipboadService.get(clipboardId);
@@ -65,14 +72,18 @@ export class CustomCopyPasteHandler extends ServerCopyPasteHandler {
                 let args: Args | undefined = undefined;
                 if (containableElement !== undefined) {
                     args = {
-                        "lastContainableId": containableElement.id
+                        lastContainableId: containableElement.id
                     };
                 }
 
-                this.actionDispatcher.dispatch(new PasteOperation(clipboardData, this.editorContext.get(args)));
+                this.actionDispatcher.dispatch(
+                    PasteOperation.create({
+                        clipboardData,
+                        editorContext: this.editorContext.get(args)
+                    })
+                );
             }
             event.preventDefault();
         }
     }
 }
-

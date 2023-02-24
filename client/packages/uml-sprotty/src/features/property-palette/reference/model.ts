@@ -13,9 +13,9 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { Action } from "@eclipse-glsp/protocol";
+import { Action } from '@eclipse-glsp/protocol';
 
-import { ElementPropertyItem } from "../model";
+import { ElementPropertyItem } from '../model';
 
 export interface ElementReferencePropertyItem extends ElementPropertyItem {
     type: typeof ElementReferencePropertyItem.TYPE;
@@ -26,7 +26,7 @@ export interface ElementReferencePropertyItem extends ElementPropertyItem {
 }
 
 export namespace ElementReferencePropertyItem {
-    export const TYPE = "REFERENCE";
+    export const TYPE = 'REFERENCE';
 
     export interface Reference {
         label: string;

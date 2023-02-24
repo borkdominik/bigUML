@@ -13,49 +13,36 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { Action } from "@eclipse-glsp/client";
-import { generateRequestId, RequestAction, ResponseAction } from "@eclipse-glsp/protocol";
+import { Action } from '@eclipse-glsp/client';
+import { RequestAction, ResponseAction } from '@eclipse-glsp/protocol';
 
-import { PropertyPalette } from "./model";
+import { PropertyPalette } from './model';
 
 export class RequestPropertyPaletteAction implements RequestAction<SetPropertyPaletteAction> {
-    static readonly KIND = "requestPropertyPalette";
+    static readonly KIND = 'requestPropertyPalette';
     kind = RequestPropertyPaletteAction.KIND;
 
-    constructor(
-        public elementId?: string,
-        public requestId: string = generateRequestId()) { }
+    constructor(public elementId?: string, public requestId: string = RequestAction.generateRequestId()) {}
 }
 
 export class SetPropertyPaletteAction implements ResponseAction {
-    static readonly KIND = "setPropertyPalette";
+    static readonly KIND = 'setPropertyPalette';
     kind = SetPropertyPaletteAction.KIND;
 
-    constructor(
-        public responseId = "",
-        public palette?: PropertyPalette
-    ) { }
+    constructor(public responseId = '', public palette?: PropertyPalette) {}
 }
 
-export function isSetPropertyPaletteAction(
-    action: Action
-): action is SetPropertyPaletteAction {
+export function isSetPropertyPaletteAction(action: Action): action is SetPropertyPaletteAction {
     return action.kind === SetPropertyPaletteAction.KIND;
 }
 
 export class UpdateElementPropertyAction implements Action {
-    static readonly KIND = "updateElementProperty";
+    static readonly KIND = 'updateElementProperty';
     kind = UpdateElementPropertyAction.KIND;
 
-    constructor(
-        public elementId: string,
-        public propertyId: string,
-        public value: string
-    ) { }
+    constructor(public elementId: string, public propertyId: string, public value: string) {}
 }
 
-export function isUpdateElementPropertyAction(
-    action: Action
-): action is UpdateElementPropertyAction {
+export function isUpdateElementPropertyAction(action: Action): action is UpdateElementPropertyAction {
     return action.kind === UpdateElementPropertyAction.KIND;
 }

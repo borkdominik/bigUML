@@ -8,26 +8,26 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-/* eslint-disable react/jsx-key */
-import { injectable } from "inversify";
-import { VNode } from "snabbdom";
-import { CircularNodeView, RenderingContext, svg } from "sprotty/lib";
+import { CircularNodeView, RenderingContext, svg } from '@eclipse-glsp/client';
+import { injectable } from 'inversify';
+import { VNode } from 'snabbdom';
 
-import { LabeledNode } from "../../../model";
+import { LabeledNode } from '../../../model';
 
-/* eslint-disable react/react-in-jsx-scope */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const JSX = { createElement: svg };
 
 @injectable()
 export class FinalStateNodeView extends CircularNodeView {
-    render(node: LabeledNode, context: RenderingContext): VNode {
+    override render(node: LabeledNode, context: RenderingContext): VNode {
         const radius = this.getRadius(node);
 
-        const finalStateNode: any = ( <g class-node={true} class-selected={node.selected} class-mouseover={node.hoverFeedback}>
-            <circle r={radius} cx={radius} cy={radius}/>
-            <circle fill="#4E81B4" r={radius / 2} cx={radius} cy={radius}/>
-        </g>);
+        const finalStateNode: any = (
+            <g class-node={true} class-selected={node.selected} class-mouseover={node.hoverFeedback}>
+                <circle r={radius} cx={radius} cy={radius} />
+                <circle fill='#4E81B4' r={radius / 2} cx={radius} cy={radius} />
+            </g>
+        );
         return finalStateNode;
     }
 }

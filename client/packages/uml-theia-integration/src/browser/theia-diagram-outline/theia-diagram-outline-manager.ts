@@ -13,12 +13,12 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { GLSPDiagramWidget } from "@eclipse-glsp/theia-integration";
-import { ApplicationShell } from "@theia/core/lib/browser";
-import { inject, injectable } from "@theia/core/shared/inversify";
+import { GLSPDiagramWidget } from '@eclipse-glsp/theia-integration';
+import { ApplicationShell } from '@theia/core/lib/browser';
+import { inject, injectable } from '@theia/core/shared/inversify';
 
-import { DiagramOutlineViewService } from "../diagram-outline-view/diagram-outline-view-service";
-import { TheiaDiagramOutlineService } from "./theia-diagram-outline-service";
+import { DiagramOutlineViewService } from '../diagram-outline-view/diagram-outline-view-service';
+import { TheiaDiagramOutlineService } from './theia-diagram-outline-service';
 
 @injectable()
 export class TheiaDiagramOutlineManager {
@@ -36,4 +36,3 @@ export class TheiaDiagramOutlineManager {
         this.diagramOutlineViewService.publish([]);
     }
 }
-

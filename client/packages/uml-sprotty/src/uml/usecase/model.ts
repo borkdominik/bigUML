@@ -8,30 +8,30 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-import { Connectable, SLabel, SRoutableElement } from "@eclipse-glsp/client";
+import { Connectable, SLabel, SRoutableElement } from '@eclipse-glsp/client';
 
-import { Icon } from "../../model";
+import { Icon } from '../../model';
 
 // USECASE
 export class IconUseCase extends Icon {
-    iconImageName = "usecase/UseCase.gif";
+    override iconImageName = 'usecase/UseCase.gif';
 }
 
 export class IconActor extends Icon {
-    iconImageName = "usecase/Actor.gif";
+    override iconImageName = 'usecase/Actor.gif';
 }
 
 export class IconPackage extends Icon {
-    iconImageName = "usecase/Package.gif";
+    override iconImageName = 'usecase/Package.gif';
 }
 
 export class ConnectionPoint extends SLabel implements Connectable {
-    canConnect(routable: SRoutableElement, role: "source" | "target"): boolean {
+    canConnect(routable: SRoutableElement, role: 'source' | 'target'): boolean {
         return true;
         // TODO: If neccessary return false under some conditions
     }
 
-    selected = false;
+    override selected = false;
     hoverFeedback = false;
-    opacity = 1;
+    override opacity = 1;
 }

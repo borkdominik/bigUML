@@ -8,13 +8,13 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-import * as glob from "glob";
-import * as path from "path";
+import * as glob from 'glob';
+import * as path from 'path';
 
 export function findEquinoxLauncher(productPath: string): string {
-    const jarPaths = glob.sync("**/plugins/org.eclipse.equinox.launcher_*.jar", { cwd: productPath });
+    const jarPaths = glob.sync('**/plugins/org.eclipse.equinox.launcher_*.jar', { cwd: productPath });
     if (jarPaths.length === 0) {
-        throw new Error("The eclipse.equinox.launcher is not found. ");
+        throw new Error('The eclipse.equinox.launcher is not found. ');
     }
     const jarPath = path.resolve(productPath, jarPaths[0]);
     return jarPath;

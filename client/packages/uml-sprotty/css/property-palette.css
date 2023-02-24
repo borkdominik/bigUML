@@ -41,7 +41,7 @@
     overflow: auto;
 }
 
-.property-palette-content>.property-item {
+.property-palette-content > .property-item {
     margin-bottom: 0.2rem;
 }
 
@@ -54,7 +54,7 @@
     margin-left: 1rem;
 }
 
-.property-item>.property-item-full {
+.property-item > .property-item-full {
     flex: 1;
 }
 
@@ -113,7 +113,8 @@
     cursor: pointer;
 }
 
-.property-reference-item .reference-create-reference, .property-reference-item .reference-delete {
+.property-reference-item .reference-create-reference,
+.property-reference-item .reference-delete {
     background: inherit;
 }
 
@@ -123,12 +124,12 @@
     margin-bottom: 0.5rem;
 }
 
-.property-reference-item .reference-container-header>*:not(:first-child) {
+.property-reference-item .reference-container-header > *:not(:first-child) {
     margin-left: 0.5rem;
 }
 
 .property-reference-item .reference-create-reference {
-    color: var(--theia-successBackground)
+    color: var(--theia-successBackground);
 }
 
 .property-reference-item .reference-delete {

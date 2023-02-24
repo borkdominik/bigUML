@@ -13,7 +13,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { ElementPropertyItem } from "../model";
+import { ElementPropertyItem } from '../model';
 
 export interface ElementChoicePropertyItem extends ElementPropertyItem {
     type: typeof ElementChoicePropertyItem.TYPE;
@@ -26,7 +26,7 @@ export interface ElementChoicePropertyItem extends ElementPropertyItem {
 }
 
 export namespace ElementChoicePropertyItem {
-    export const TYPE = "CHOICE";
+    export const TYPE = 'CHOICE';
 
     export function is(value: ElementPropertyItem): value is ElementChoicePropertyItem {
         return value.type === TYPE;

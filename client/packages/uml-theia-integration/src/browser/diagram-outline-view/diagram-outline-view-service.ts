@@ -13,25 +13,23 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { inject, injectable } from "@theia/core/shared/inversify";
-import { OutlineViewService } from "@theia/outline-view/lib/browser/outline-view-service";
+import { inject, injectable } from '@theia/core/shared/inversify';
+import { OutlineViewService } from '@theia/outline-view/lib/browser/outline-view-service';
 
-import { DiagramOutlineSymbolInformationNode, DiagramOutlineViewWidgetFactory } from "./diagram-outline-view-widget";
+import { DiagramOutlineSymbolInformationNode, DiagramOutlineViewWidgetFactory } from './diagram-outline-view-widget';
 
 @injectable()
 export class DiagramOutlineViewService extends OutlineViewService {
+    override id = 'diagram-outline-view';
 
-    id = "diagram-outline-view";
-
-    constructor(@inject(DiagramOutlineViewWidgetFactory) protected factory: DiagramOutlineViewWidgetFactory) {
+    constructor(@inject(DiagramOutlineViewWidgetFactory) protected override factory: DiagramOutlineViewWidgetFactory) {
         super(factory);
     }
 
-    publish(roots: DiagramOutlineSymbolInformationNode[]): void {
+    override publish(roots: DiagramOutlineSymbolInformationNode[]): void {
         if (this.widget) {
             this.widget.setOutlineTree(roots);
         }
         this.onDidChangeOutlineEmitter.fire(roots);
     }
 }
-

@@ -8,5 +8,5 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-export * from "./base-types";
-export * from "./uml-types";
+export * from './base-types';
+export * from './uml-types';

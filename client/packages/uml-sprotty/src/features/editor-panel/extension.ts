@@ -22,16 +22,16 @@ import {
     ICommand,
     SetUIExtensionVisibilityAction,
     TYPES
-} from "@eclipse-glsp/client";
-import { inject, injectable, multiInject } from "inversify";
+} from '@eclipse-glsp/client';
+import { inject, injectable, multiInject } from 'inversify';
 
-import { EnableEditorPanelAction, RequestEditorPanelAction, SetEditorPanelAction } from "./actions";
-import { EDITOR_PANEL_TYPES } from "./di.types";
-import { EditorPanelChild } from "./interfaces";
+import { EnableEditorPanelAction, RequestEditorPanelAction, SetEditorPanelAction } from './actions';
+import { EDITOR_PANEL_TYPES } from './di.types';
+import { EditorPanelChild } from './interfaces';
 
 @injectable()
 export class EditorPanel extends AbstractUIExtension implements IActionHandler {
-    static readonly ID = "editor-panel";
+    static readonly ID = 'editor-panel';
 
     @inject(TYPES.IActionDispatcher) protected readonly actionDispatcher: ActionDispatcher;
     @multiInject(EDITOR_PANEL_TYPES.Child) protected readonly children: EditorPanelChild[];
@@ -43,7 +43,7 @@ export class EditorPanel extends AbstractUIExtension implements IActionHandler {
     protected collapseButton: HTMLButtonElement;
 
     get isCollapsed(): boolean {
-        return this.body.style.display === "none";
+        return this.body.style.display === 'none';
     }
 
     id(): string {
@@ -60,7 +60,10 @@ export class EditorPanel extends AbstractUIExtension implements IActionHandler {
                 this.editorAction = response;
 
                 this.actionDispatcher.dispatch(
-                    new SetUIExtensionVisibilityAction(EditorPanel.ID, true)
+                    SetUIExtensionVisibilityAction.create({
+                        extensionId: EditorPanel.ID,
+                        visible: true
+                    })
                 );
             });
         }
@@ -76,17 +79,17 @@ export class EditorPanel extends AbstractUIExtension implements IActionHandler {
 
     collapse(): void {
         if (!this.isCollapsed) {
-            this.body.style.display = "none";
-            this.collapseButton.firstElementChild?.classList.remove("codicon-chevron-down");
-            this.collapseButton.firstElementChild?.classList.add("codicon-chevron-up");
+            this.body.style.display = 'none';
+            this.collapseButton.firstElementChild?.classList.remove('codicon-chevron-down');
+            this.collapseButton.firstElementChild?.classList.add('codicon-chevron-up');
         }
     }
 
     expand(): void {
         if (this.isCollapsed) {
-            this.body.style.display = "flex";
-            this.collapseButton.firstElementChild?.classList.add("codicon-chevron-down");
-            this.collapseButton.firstElementChild?.classList.remove("codicon-chevron-up");
+            this.body.style.display = 'flex';
+            this.collapseButton.firstElementChild?.classList.add('codicon-chevron-down');
+            this.collapseButton.firstElementChild?.classList.remove('codicon-chevron-up');
         }
     }
 
@@ -100,28 +103,28 @@ export class EditorPanel extends AbstractUIExtension implements IActionHandler {
     }
 
     protected initializeHeader(): void {
-        const header = document.createElement("div");
+        const header = document.createElement('div');
         header.classList.add(`${EditorPanel.ID}-header`);
-        header.addEventListener("click", event => {
+        header.addEventListener('click', event => {
             event.stopPropagation();
             this.toggle();
         });
 
         this.children.forEach(child => {
-            const tab = document.createElement("div");
-            tab.classList.add(`${EditorPanel.ID}-tab-header`, "active");
+            const tab = document.createElement('div');
+            tab.classList.add(`${EditorPanel.ID}-tab-header`, 'active');
             tab.innerText = child.tabLabel;
-            tab.addEventListener("click", event => {
+            tab.addEventListener('click', event => {
                 event.stopPropagation();
             });
 
             header.appendChild(tab);
         });
 
-        const collapse = document.createElement("button");
+        const collapse = document.createElement('button');
         collapse.classList.add(`${EditorPanel.ID}-collapse`);
-        collapse.appendChild(createIcon("chevron-down"));
-        collapse.addEventListener("click", () => this.toggle());
+        collapse.appendChild(createIcon('chevron-down'));
+        collapse.addEventListener('click', () => this.toggle());
         header.appendChild(collapse);
 
         this.header = header;
@@ -130,7 +133,7 @@ export class EditorPanel extends AbstractUIExtension implements IActionHandler {
     }
 
     protected initializeBody(): void {
-        const body = document.createElement("div");
+        const body = document.createElement('div');
         body.classList.add(`${EditorPanel.ID}-body`);
 
         this.body = body;
@@ -142,9 +145,9 @@ export class EditorPanel extends AbstractUIExtension implements IActionHandler {
     }
 
     protected async initializeChild(child: EditorPanelChild): Promise<void> {
-        this.body.innerHTML = "";
+        this.body.innerHTML = '';
 
-        const content = document.createElement("div");
+        const content = document.createElement('div');
         content.classList.add(`${EditorPanel.ID}-content`, child.class);
 
         await child.prepare?.();
@@ -156,11 +159,10 @@ export class EditorPanel extends AbstractUIExtension implements IActionHandler {
     protected async request(): Promise<SetEditorPanelAction> {
         return this.actionDispatcher.request<SetEditorPanelAction>(new RequestEditorPanelAction());
     }
-
 }
 
 function createIcon(codiconId: string): HTMLElement {
-    const icon = document.createElement("i");
+    const icon = document.createElement('i');
     icon.classList.add(...codiconCSSClasses(codiconId));
     return icon;
 }

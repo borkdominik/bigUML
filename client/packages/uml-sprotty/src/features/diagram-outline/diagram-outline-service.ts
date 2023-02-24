@@ -15,26 +15,32 @@
  ********************************************************************************/
 import {
     CenterAction,
-    DiagramServer,
+    DiagramServerProxy,
     GLSPGraph,
     IActionDispatcher,
+    ModelSource,
     SModelRoot,
     SModelRootListener
-} from "@eclipse-glsp/client";
-import { injectable } from "inversify";
+} from '@eclipse-glsp/client';
+import { injectable } from 'inversify';
 
-import { RequestOutlineAction, SetOutlineAction } from "./actions";
-import { OutlineTreeNode } from "./outline-tree-node";
+import { RequestOutlineAction, SetOutlineAction } from './actions';
+import { OutlineTreeNode } from './outline-tree-node';
 
 @injectable()
 export abstract class DiagramOutlineService implements SModelRootListener {
     protected actionDispatcher: IActionDispatcher;
-    protected diagramServer: DiagramServer;
+    protected modelSource: ModelSource;
+    protected diagramServerProxy?: DiagramServerProxy;
     protected outlineNodes: OutlineTreeNode[] = [];
 
-    connect(diagramServer: DiagramServer, actionDispatcher: IActionDispatcher): void {
-        this.diagramServer = diagramServer;
+    connect(modelSource: ModelSource, actionDispatcher: IActionDispatcher): void {
+        this.modelSource = modelSource;
         this.actionDispatcher = actionDispatcher;
+
+        if (modelSource instanceof DiagramServerProxy) {
+            this.diagramServerProxy = modelSource;
+        }
     }
 
     get nodes(): OutlineTreeNode[] {
@@ -59,9 +65,8 @@ export abstract class DiagramOutlineService implements SModelRootListener {
     }
 
     async center(outlineNode: OutlineTreeNode): Promise<void> {
-        await this.actionDispatcher.dispatch(new CenterAction([outlineNode.semanticUri]));
+        await this.actionDispatcher.dispatch(CenterAction.create([outlineNode.semanticUri]));
     }
 
     abstract updateOutline(outlineNodes: OutlineTreeNode[]): void;
 }
-

@@ -1,7 +1,8 @@
 {
-  "extends": "./configs/base.tsconfig",
+  "extends": "@eclipse-glsp/ts-config/tsconfig.json",
   "compilerOptions": {
     "baseUrl": ".",
+    "reactNamespace": "JSX",
     "paths": {
       "@eclipsesource/uml-glsp-common": [
         "packages/common/src/*"
@@ -9,12 +10,12 @@
       "@eclipsesource/uml-sprotty": [
         "packages/uml-sprotty/src/*"
       ],
-      "@eclipsesource/uml-theia": [
+      "@eclipsesource/uml-theia-integration": [
         "packages/uml-theia-integration/src/*"
       ],
     }
   },
-  "include": [
-    "packages/*/src"
-  ]
+
+  "exclude": ["**/node_modules", "**/.eslintrc.js"],
+  "include": ["packages/*/src", "packages/*/scripts"]
 }

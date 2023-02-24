@@ -8,27 +8,26 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-import { MenuContribution, MenuModelRegistry } from "@theia/core";
-import { CommonMenus, OpenerService, QuickInputService } from "@theia/core/lib/browser";
-import { Command, CommandContribution, CommandRegistry, CommandService } from "@theia/core/lib/common/command";
-import URI from "@theia/core/lib/common/uri";
-import { FileService } from "@theia/filesystem/lib/browser/file-service";
-import { FileNavigatorCommands, NavigatorContextMenu } from "@theia/navigator/lib/browser/navigator-contribution";
-import { WorkspaceService } from "@theia/workspace/lib/browser";
-import { inject, injectable } from "inversify";
+import { MenuContribution, MenuModelRegistry } from '@theia/core';
+import { CommonMenus, OpenerService, QuickInputService } from '@theia/core/lib/browser';
+import { Command, CommandContribution, CommandRegistry, CommandService } from '@theia/core/lib/common/command';
+import URI from '@theia/core/lib/common/uri';
+import { FileService } from '@theia/filesystem/lib/browser/file-service';
+import { NavigatorContextMenu } from '@theia/navigator/lib/browser/navigator-contribution';
+import { WorkspaceService } from '@theia/workspace/lib/browser';
+import { inject, injectable } from 'inversify';
 
-import { UmlDiagramType, UmlModelServerClient } from "../common/uml-model-server-client";
+import { UmlDiagramType } from '../common/uml-language';
 
 export const NEW_UML_DIAGRAM_COMMAND: Command = {
-    id: "file.newUmlDiagram",
-    category: "File",
-    label: "New UML Diagram",
-    iconClass: "umlmodelfile"
+    id: 'file.newUmlDiagram',
+    category: 'File',
+    label: 'New UML Diagram',
+    iconClass: 'umlmodelfile'
 };
 
 @injectable()
-export class UmlModelContribution
-    implements CommandContribution, MenuContribution {
+export class UmlModelContribution implements CommandContribution, MenuContribution {
     @inject(FileService) protected readonly fileService: FileService;
     @inject(CommandService) protected readonly commandService: CommandService;
     @inject(OpenerService) protected readonly openerService: OpenerService;
@@ -36,32 +35,23 @@ export class UmlModelContribution
     protected readonly quickInputService: QuickInputService;
     @inject(WorkspaceService)
     protected readonly workspaceService: WorkspaceService;
+    /* TODO: Enable it again
     @inject(UmlModelServerClient)
     protected readonly modelServerClient: UmlModelServerClient;
+    */
 
     registerCommands(registry: CommandRegistry): void {
         registry.registerCommand(NEW_UML_DIAGRAM_COMMAND, {
             execute: async () => {
                 let workspaceUri: URI = new URI();
                 if (this.workspaceService.tryGetRoots().length) {
-                    workspaceUri =
-                        this.workspaceService.tryGetRoots()[0].resource;
+                    workspaceUri = this.workspaceService.tryGetRoots()[0].resource;
 
-                    this.showInput(
-                        "Enter Name of UML Diagram",
-                        "Diagram name"
-                    ).then(nameOfUmlModel => {
+                    this.showInput('Enter Name of UML Diagram', 'Diagram name').then(nameOfUmlModel => {
                         if (nameOfUmlModel) {
-                            this.showInput(
-                                "Enter UML Diagram Type",
-                                "class | communication"
-                            ).then(diagramType => {
+                            this.showInput('Enter UML Diagram Type', 'class | communication').then(diagramType => {
                                 if (diagramType) {
-                                    this.createUmlDiagram(
-                                        nameOfUmlModel,
-                                        workspaceUri,
-                                        diagramType
-                                    );
+                                    this.createUmlDiagram(nameOfUmlModel, workspaceUri, diagramType);
                                 }
                             });
                         }
@@ -84,50 +74,32 @@ export class UmlModelContribution
                 if (inputCheck) {
                     return inputCheck(input);
                 }
-                return !input
-                    ? `Please enter a valid string for '${prefix}'`
-                    : undefined;
+                return !input ? `Please enter a valid string for '${prefix}'` : undefined;
             }
         });
     }
 
-    protected createUmlDiagram(
-        diagramName: string,
-        workspaceUri: URI,
-        diagramType: string
-    ): void {
+    protected createUmlDiagram(diagramName: string, workspaceUri: URI, diagramType: string): void {
         if (diagramName) {
-            this.modelServerClient
-                .createUmlResource(
-                    diagramName,
-                    this.getUmlDiagramType(diagramType)
-                )
-                .then(() => {
-                    this.quickInputService.hide();
-                    const modelUri = new URI(
-                        workspaceUri.path.toString() +
-                        `/${diagramName}/model/${diagramName}.uml`
-                    );
-                    this.commandService.executeCommand(
-                        FileNavigatorCommands.REFRESH_NAVIGATOR.id
-                    );
-                    this.openerService
-                        .getOpener(modelUri)
-                        .then(openHandler => {
-                            openHandler.open(modelUri);
-                            this.commandService.executeCommand(
-                                FileNavigatorCommands.REVEAL_IN_NAVIGATOR.id
-                            );
-                        });
+            /*
+            this.modelServerClient.createUmlResource(diagramName, this.getUmlDiagramType(diagramType)).then(() => {
+                this.quickInputService.hide();
+                const modelUri = new URI(workspaceUri.path.toString() + `/${diagramName}/model/${diagramName}.uml`);
+                this.commandService.executeCommand(FileNavigatorCommands.REFRESH_NAVIGATOR.id);
+                this.openerService.getOpener(modelUri).then(openHandler => {
+                    openHandler.open(modelUri);
+                    this.commandService.executeCommand(FileNavigatorCommands.REVEAL_IN_NAVIGATOR.id);
                 });
+            });
+            */
         }
     }
 
     protected getUmlDiagramType(diagramType: string): UmlDiagramType {
         switch (diagramType.toLowerCase()) {
-            case "class":
+            case 'class':
                 return UmlDiagramType.CLASS;
-            case "communication":
+            case 'communication':
                 return UmlDiagramType.COMMUNICATION;
         }
         /*
@@ -148,14 +120,14 @@ export class UmlModelContribution
             commandId: NEW_UML_DIAGRAM_COMMAND.id,
             label: NEW_UML_DIAGRAM_COMMAND.label,
             icon: NEW_UML_DIAGRAM_COMMAND.iconClass,
-            order: "0"
+            order: '0'
         });
 
         menus.registerMenuAction(NavigatorContextMenu.NAVIGATION, {
             commandId: NEW_UML_DIAGRAM_COMMAND.id,
             label: NEW_UML_DIAGRAM_COMMAND.label,
             icon: NEW_UML_DIAGRAM_COMMAND.iconClass,
-            order: "0"
+            order: '0'
         });
     }
 }

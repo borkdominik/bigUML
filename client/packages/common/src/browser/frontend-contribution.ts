@@ -8,20 +8,20 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-import { FrontendApplicationContribution } from "@theia/core/lib/browser/frontend-application";
-import { ThemeService, ThemeType } from "@theia/core/lib/browser/theming";
-import { inject, injectable } from "inversify";
+import { FrontendApplicationContribution } from '@theia/core/lib/browser/frontend-application';
+import { ThemeService } from '@theia/core/lib/browser/theming';
+import { inject, injectable } from 'inversify';
 
 @injectable()
 export class UmlFrontendContribution implements FrontendApplicationContribution {
 
     @inject(ThemeService) protected readonly themeService: ThemeService;
 
-    static readonly darkColorsCss = require("../../src/browser/style/uml/uml-colors-dark.useable.css");
-    static readonly darkIconsCss = require("../../src/browser/style/icons-dark.useable.css");
+    static readonly darkColorsCss = require('../../src/browser/style/uml/uml-colors-dark.useable.css');
+    static readonly darkIconsCss = require('../../src/browser/style/icons-dark.useable.css');
 
-    static readonly lightColorsCss = require("../../src/browser/style/uml/uml-colors-light.useable.css");
-    static readonly lightIconsCss = require("../../src/browser/style/icons-light.useable.css");
+    static readonly lightColorsCss = require('../../src/browser/style/uml/uml-colors-light.useable.css');
+    static readonly lightIconsCss = require('../../src/browser/style/icons-light.useable.css');
 
     onStart(): void {
         this.updateTheme();
@@ -29,15 +29,15 @@ export class UmlFrontendContribution implements FrontendApplicationContribution 
     }
 
     protected updateTheme(): void {
-        const themeType: ThemeType = this.themeService.getCurrentTheme().type;
-        if (themeType === "dark" || themeType === "hc") {
+        const themeType = this.themeService.getCurrentTheme().type;
+        if (themeType === 'dark' || themeType === 'hc') {
             // unload light
             UmlFrontendContribution.lightColorsCss.unuse();
             UmlFrontendContribution.lightIconsCss.unuse();
             // load dark
             UmlFrontendContribution.darkColorsCss.use();
             UmlFrontendContribution.darkIconsCss.use();
-        } else if (themeType === "light") {
+        } else if (themeType === 'light') {
             // unload dark
             UmlFrontendContribution.darkColorsCss.unuse();
             UmlFrontendContribution.darkIconsCss.unuse();

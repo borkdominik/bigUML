@@ -23,6 +23,6 @@ export namespace AnyObject {
      */
     export function is(object: unknown): object is AnyObject {
         // eslint-disable-next-line no-null/no-null
-        return object !== null && typeof object === "object";
+        return object !== null && typeof object === 'object';
     }
 }

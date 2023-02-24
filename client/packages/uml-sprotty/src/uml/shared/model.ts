@@ -25,9 +25,9 @@ import {
     selectFeature,
     WithEditableLabel,
     withEditLabelFeature
-} from "@eclipse-glsp/client";
+} from '@eclipse-glsp/client';
 
-import { UmlTypes } from "../../utils";
+import { UmlTypes } from '../../utils';
 
 // Activity and Deployment
 export class PackageNode extends RectangularNode implements Nameable, WithEditableLabel {
@@ -44,7 +44,7 @@ export class PackageNode extends RectangularNode implements Nameable, WithEditab
         withEditLabelFeature
     ];
 
-    name = "";
+    name = '';
 
     get editableLabel(): (SChildElement & EditableLabel) | undefined {
         const label = this.children.find(element => element.type === UmlTypes.LABEL_PACKAGE_NAME);

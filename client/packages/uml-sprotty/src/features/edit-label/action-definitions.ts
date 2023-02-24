@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-import { Action, generateRequestId, RequestAction, ResponseAction } from "@eclipse-glsp/client";
+import { Action, RequestAction, ResponseAction } from '@eclipse-glsp/client';
 
 export interface TypeInformation {
     modelUri: string;
@@ -18,41 +18,38 @@ export interface TypeInformation {
 }
 
 export class RequestTypeInformationAction implements RequestAction<SetTypeInformationAction> {
-    static readonly KIND = "requestTypeInformation";
+    static readonly KIND = 'requestTypeInformation';
     kind = RequestTypeInformationAction.KIND;
-    constructor(public readonly requestId: string = generateRequestId()) { }
+    constructor(public readonly requestId: string = RequestAction.generateRequestId()) {}
 }
 
 export class SetTypeInformationAction implements ResponseAction {
-    static readonly KIND = "setTypeInformation";
+    static readonly KIND = 'setTypeInformation';
     kind = SetTypeInformationAction.KIND;
 
-    constructor(public readonly typeInformation: TypeInformation[], public readonly responseId: string = "") {
-    }
+    constructor(public readonly typeInformation: TypeInformation[], public readonly responseId: string = '') {}
 }
 
 export class GetBehaviorsAction implements RequestAction<CallBehaviorsAction> {
-    static readonly KIND = "getBehaviors";
+    static readonly KIND = 'getBehaviors';
     kind = GetBehaviorsAction.KIND;
-    constructor(public readonly requestId: string = generateRequestId()) { }
+    constructor(public readonly requestId: string = RequestAction.generateRequestId()) {}
 }
 
 export class CallBehaviorsAction implements ResponseAction {
-    static readonly KIND = "callBehaviors";
+    static readonly KIND = 'callBehaviors';
     kind = CallBehaviorsAction.KIND;
-    constructor(public readonly behaviors: string[], public readonly responseId: string = "") {
-
-    }
+    constructor(public readonly behaviors: string[], public readonly responseId: string = '') {}
 }
 
 export class CreateGuardAction implements Action {
-    static readonly KIND = "createGuard";
+    static readonly KIND = 'createGuard';
     kind = CreateGuardAction.KIND;
-    constructor(public elementTypeId: string) { }
+    constructor(public elementTypeId: string) {}
 }
 
 export class CreateWeightAction implements Action {
-    static readonly KIND = "createWeight";
+    static readonly KIND = 'createWeight';
     kind = CreateWeightAction.KIND;
-    constructor(public elementTypeId: string) { }
+    constructor(public elementTypeId: string) {}
 }

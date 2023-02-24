@@ -8,26 +8,25 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-import { Icon } from "../../model";
+import { Icon } from '../../model';
 
 // DEPLOYMENT
 export class IconArtifact extends Icon {
-    iconImageName = "deployment/Artifact.svg";
+    override iconImageName = 'deployment/Artifact.svg';
 }
 
 export class IconDevice extends Icon {
-    iconImageName = "deployment/Device.svg";
+    override iconImageName = 'deployment/Device.svg';
 }
 
 export class IconExecutionEnvironment extends Icon {
-    iconImageName = "deployment/ExecutionEnvironment.svg";
+    override iconImageName = 'deployment/ExecutionEnvironment.svg';
 }
 
 export class IconDeploymentNode extends Icon {
-    iconImageName = "deployment/DeploymentNode.svg";
+    override iconImageName = 'deployment/DeploymentNode.svg';
 }
 
 export class IconDeploymentSpecification extends Icon {
-    iconImageName = "deployment/DeploymentSpecification.svg";
+    override iconImageName = 'deployment/DeploymentSpecification.svg';
 }
-

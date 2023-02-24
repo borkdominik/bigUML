@@ -8,37 +8,32 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-/* eslint-disable react/jsx-key */
-import { injectable } from "inversify";
-import { VNode } from "snabbdom";
-import { getSubType, RenderingContext, setAttr, SLabelView, svg } from "sprotty/lib";
+import { getSubType, RenderingContext, setAttr, SLabelView, svg } from '@eclipse-glsp/client';
+import { injectable } from 'inversify';
+import { VNode } from 'snabbdom';
 
-import { SLabelNode } from "../../../model";
+import { SLabelNode } from '../../../model';
 
-/* eslint-disable react/react-in-jsx-scope */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const JSX = { createElement: svg };
 
 @injectable()
 export class TransitionEffectView extends SLabelView {
-    render(labelNode: Readonly<SLabelNode>, context: RenderingContext): VNode {
-
+    override render(labelNode: Readonly<SLabelNode>, context: RenderingContext): VNode {
         const vnode: any = (
-            <g
-                class-selected={labelNode.selected}
-                class-mouseover={labelNode.hoverFeedback}
-                class-sprotty-label-node={true}
-            >
-                <text id="effectType" fill="#000000">
+            <g class-selected={labelNode.selected} class-mouseover={labelNode.hoverFeedback} class-sprotty-label-node={true}>
+                <text id='effectType' fill='#000000'>
                     <tspan x={0}> / Activity: </tspan>
                 </text>
-                <text class-sprotty-label={true} x={85} y={-4}>{labelNode.text}</text>
+                <text class-sprotty-label={true} x={85} y={-4}>
+                    {labelNode.text}
+                </text>
             </g>
         );
 
         const subType = getSubType(labelNode);
         if (subType) {
-            setAttr(vnode, "class", subType);
+            setAttr(vnode, 'class', subType);
         }
         return vnode;
     }

@@ -1,0 +1,220 @@
+{
+  "name": "uml-vscode-extension",
+  "displayName": "Workflow GLSP Example",
+  "version": "1.1.0-next",
+  "private": "true",
+  "description": "An example graphical language used for modeling workflows",
+  "categories": [
+    "Programming Languages"
+  ],
+  "homepage": "https://www.eclipse.org/glsp/",
+  "bugs": "https://github.com/eclipse-glsp/glsp/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eclipse-glsp/glsp-vscode-integration.git"
+  },
+  "author": {
+    "name": "EclipseGLSP"
+  },
+  "contributors": [
+    {
+      "name": "Eclipse GLSP Project",
+      "email": "glsp-dev@eclipse.org",
+      "url": "https://projects.eclipse.org/projects/ecd.glsp"
+    }
+  ],
+  "publisher": "Eclipse-GLSP",
+  "main": "./lib/index",
+  "files": [
+    "lib",
+    "extension",
+    "server",
+    "webview",
+    "pack"
+  ],
+  "workspaces": {
+    "nohoist": [
+      "**/@vscode/codicons",
+      "**/@vscode/codicons/**"
+    ]
+  },
+  "scripts": {
+    "build": "npx tsc -b",
+    "clean": "npx rimraf lib tsconfig.tsbuildinfo ",
+    "download:Server": "npx ts-node scripts/download.ts",
+    "esbuild": "yarn esbuild-base -- --sourcemap",
+    "esbuild-base": "npx esbuild ./src/extension.ts --bundle --outfile=out/main.js --external:vscode --format=cjs --platform=node",
+    "esbuild-watch": "npx esbuild-base -- --sourcemap --watch",
+    "lint": "npx eslint --ext .ts,.tsx ./src",
+    "lint:ci": "npx yarn lint -o eslint.xml -f checkstyle",
+    "lint:fix": "npx eslint --fix --ext .ts,.tsx ./src",
+    "package": "npx vsce package --yarn",
+    "prepare": "yarn clean && yarn build",
+    "vscode:prepublish": "yarn esbuild-base -- --minify",
+    "watch": "npx tsc -w"
+  },
+  "contributes": {
+    "commands": [
+      {
+        "command": "uml.fit",
+        "title": "Fit to Screen",
+        "category": "Workflow Diagram",
+        "enablement": "activeCustomEditorId == 'uml.glspDiagram'"
+      },
+      {
+        "command": "uml.center",
+        "title": "Center selection",
+        "category": "Workflow Diagram",
+        "enablement": "activeCustomEditorId == 'uml.glspDiagram'"
+      },
+      {
+        "command": "uml.layout",
+        "title": "Layout diagram",
+        "category": "Workflow Diagram",
+        "enablement": "activeCustomEditorId == 'uml.glspDiagram'"
+      },
+      {
+        "command": "uml.goToNextNode",
+        "title": "Go to next Node",
+        "category": "Workflow Navigation",
+        "enablement": "activeCustomEditorId == 'uml.glspDiagram' && uml.editorSelectedElementsAmount == 1"
+      },
+      {
+        "command": "uml.goToPreviousNode",
+        "title": "Go to previous Node",
+        "category": "Workflow Navigation",
+        "enablement": "activeCustomEditorId == 'uml.glspDiagram' && uml.editorSelectedElementsAmount == 1"
+      },
+      {
+        "command": "uml.showDocumentation",
+        "title": "Show documentation...",
+        "category": "Workflow Diagram",
+        "enablement": "activeCustomEditorId == 'uml.glspDiagram' && uml.editorSelectedElementsAmount == 1"
+      },
+      {
+        "command": "uml.exportAsSVG",
+        "title": "Export as SVG",
+        "category": "Workflow Diagram",
+        "enablement": "activeCustomEditorId == 'uml.glspDiagram'"
+      }
+    ],
+    "customEditors": [
+      {
+        "viewType": "uml.glspDiagram",
+        "displayName": "Workflow Diagram Editor",
+        "selector": [
+          {
+            "filenamePattern": "*.uml"
+          }
+        ]
+      }
+    ],
+    "keybindings": [
+      {
+        "key": "alt+f",
+        "mac": "alt+f",
+        "command": "uml.fit",
+        "when": "activeCustomEditorId == 'uml.glspDiagram'"
+      },
+      {
+        "key": "alt+c",
+        "mac": "alt+c",
+        "command": "uml.center",
+        "when": "activeCustomEditorId == 'uml.glspDiagram'"
+      },
+      {
+        "key": "ctrl+a",
+        "mac": "ctrl+a",
+        "command": "uml.selectAll",
+        "when": "activeCustomEditorId == 'uml.glspDiagram'"
+      },
+      {
+        "key": "alt+l",
+        "mac": "alt+l",
+        "command": "uml.layout",
+        "when": "activeCustomEditorId == 'uml.glspDiagram'"
+      },
+      {
+        "key": "Ctrl+4",
+        "mac": "cmd+4",
+        "command": "uml.goToNextNode",
+        "when": "activeCustomEditorId == 'uml.glspDiagram' && uml.editorSelectedElementsAmount == 1"
+      },
+      {
+        "key": "Ctrl+3",
+        "mac": "cmd+3",
+        "command": "uml.goToPreviousNode",
+        "when": "activeCustomEditorId == 'uml.glspDiagram' && uml.editorSelectedElementsAmount == 1"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "submenu": "uml.editor.title",
+          "group": "bookmarks"
+        },
+        {
+          "command": "uml.goToNextNode",
+          "group": "navigation",
+          "when": "activeCustomEditorId == 'uml.glspDiagram' && uml.editorSelectedElementsAmount == 1"
+        },
+        {
+          "command": "uml.goToPreviousNode",
+          "group": "navigation",
+          "when": "activeCustomEditorId == 'uml.glspDiagram' && uml.editorSelectedElementsAmount == 1"
+        },
+        {
+          "command": "uml.showDocumentation",
+          "group": "navigation",
+          "when": "activeCustomEditorId == 'uml.glspDiagram' && uml.editorSelectedElementsAmount == 1"
+        }
+      ],
+      "uml.editor.title": [
+        {
+          "command": "uml.fit",
+          "group": "navigation",
+          "when": "activeCustomEditorId == 'uml.glspDiagram'"
+        },
+        {
+          "command": "uml.center",
+          "group": "navigation",
+          "when": "activeCustomEditorId == 'uml.glspDiagram'"
+        },
+        {
+          "command": "uml.layout",
+          "group": "navigation",
+          "when": "activeCustomEditorId == 'uml.glspDiagram'"
+        },
+        {
+          "command": "uml.exportAsSVG",
+          "when": "activeCustomEditorId == 'uml.glspDiagram'"
+        }
+      ]
+    },
+    "submenus": [
+      {
+        "id": "uml.editor.title",
+        "label": "Diagram"
+      }
+    ]
+  },
+  "activationEvents": [
+    "*"
+  ],
+  "dependencies": {
+    "@eclipse-glsp/vscode-integration": "next",
+    "@eclipsesource/uml-glsp": "1.0.0",
+    "@vscode/codicons": "^0.0.25",
+    "reflect-metadata": "^0.1.13"
+  },
+  "devDependencies": {
+    "@eclipsesource/uml-vscode-integration-webview": "1.0.0",
+    "@types/vscode": "^1.54.0",
+    "@vscode/vsce": "^2.15.0",
+    "esbuild": "^0.17.10",
+    "ts-node": "^10.8.2"
+  },
+  "engines": {
+    "vscode": "^1.54.0"
+  }
+}

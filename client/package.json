@@ -2,7 +2,8 @@
   "private": true,
   "workspaces": [
     "environments/*",
-    "packages/*"
+    "packages/*",
+    "packages/uml-vscode-integration/*"
   ],
   "scripts": {
     "prepare": "lerna run prepare",
@@ -15,6 +16,8 @@
     "**/@eclipse-glsp/client": "1.1.0-next.40987f7.225",
     "**/@eclipse-glsp/protocol": "1.1.0-next.40987f7.225",
     "**/@eclipse-glsp/theia-integration": "1.1.0-RC05",
+    "**/@eclipse-glsp/vscode-integration": "1.1.0-RC05",
+    "**/@eclipse-glsp/vscode-integration-webview": "1.1.0-RC05",
     "**/@theia/application-manager": "1.34.0",
     "**/@theia/application-package": "1.34.0",
     "**/@theia/cli": "1.34.0",
@@ -47,8 +50,9 @@
     "**/inversify": "5.1.1",
     "**/snabbdom": "3.0.3",
     "**/snabbdom-jsx": "^0.4.2",
-    "**/sprotty": "0.14.0-next.f0c9821.10",
-    "**/sprotty-theia": "0.13.0-next.9cbedec"
+    "**/sprotty": "0.13.0-next.f4445dd.342",
+    "**/sprotty-theia": "0.13.0-next.9cbedec",
+    "**/vscode-jsonrpc": "8.0.2"
   },
   "devDependencies": {
     "@eclipse-glsp/dev": "^1.1.0-next.28fb493.121",

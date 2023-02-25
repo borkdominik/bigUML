@@ -56,7 +56,7 @@ import { IconLabelCompartmentSelectionFeedback } from './views/feedback.postproc
 export default function createContainer(widgetId: string): Container {
     const coreDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
         rebind(TYPES.ILogger).to(ConsoleLogger).inSingletonScope();
-        rebind(TYPES.LogLevel).toConstantValue(LogLevel.info);
+        rebind(TYPES.LogLevel).toConstantValue(LogLevel.log);
         rebind(EditLabelUI).to(EditLabelUIAutocomplete);
         rebind(TYPES.ICopyPasteHandler).to(CustomCopyPasteHandler);
 

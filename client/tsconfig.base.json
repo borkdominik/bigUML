@@ -6,13 +6,10 @@
     "paths": {
       "@eclipsesource/uml-glsp": [
         "packages/uml-glsp/src/*"
-      ],
-      "@eclipsesource/uml-theia-integration": [
-        "packages/uml-theia-integration/src/*"
-      ],
+      ]
     }
   },
 
   "exclude": ["**/node_modules", "**/.eslintrc.js"],
-  "include": ["packages/*/src", "packages/*/scripts"]
+  "include": ["packages/*/src", "packages/*/scripts", "packages/uml-vscode-integration/*/src", "packages/uml-vscode-integration/*/scripts"]
 }

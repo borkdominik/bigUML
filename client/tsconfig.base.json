@@ -4,11 +4,8 @@
     "baseUrl": ".",
     "reactNamespace": "JSX",
     "paths": {
-      "@eclipsesource/uml-glsp-common": [
-        "packages/common/src/*"
-      ],
-      "@eclipsesource/uml-sprotty": [
-        "packages/uml-sprotty/src/*"
+      "@eclipsesource/uml-glsp": [
+        "packages/uml-glsp/src/*"
       ],
       "@eclipsesource/uml-theia-integration": [
         "packages/uml-theia-integration/src/*"

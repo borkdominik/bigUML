@@ -12,7 +12,6 @@
     "watch": "theia build --watch --mode development"
   },
   "dependencies": {
-    "@eclipsesource/uml-glsp-common": "1.0.0",
     "@eclipsesource/uml-theia-integration": "1.0.0",
     "@theia/core": "^1.34.0",
     "@theia/editor": "^1.34.0",
@@ -42,7 +41,18 @@
     "@theia/cli": "^1.34.0"
   },
   "theia": {
-    "target": "browser"
+    "target": "browser",
+    "frontend": {
+      "config": {
+        "applicationName": "bigUML - UML Editor",
+        "defaultIconTheme": "theia-file-icons",
+        "preferences": {
+          "security.workspace.trust.startupPrompt": "never",
+          "security.workspace.trust.enabled": false,
+          "files.autoSave": "off"
+        }
+      }
+    }
   },
   "theiaPlugins": {
     "vscode-builtin-json": "https://open-vsx.org/api/vscode/json/1.46.1/file/vscode.json-1.46.1.vsix",

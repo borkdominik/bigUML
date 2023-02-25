@@ -1,9 +1,0 @@
-:root {
-
-    /* COMMENT */
-    --uml-icon-comment: url(../../../resources/icons/light/comment/Comment.gif);
-    --uml-icon-comment-edge: url(../../../resources/icons/light/comment/CommentEdge.gif);
-}
-
-@import "uml/communication/icons-light.css";
-@import "uml/class/icons-dark.css";

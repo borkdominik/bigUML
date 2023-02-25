@@ -1,9 +1,0 @@
-:root {
-
-    /* CLASS DIAGRAM */
-    --uml-icon-class: url(../../../../../resources/icons/light/class/Class.gif);
-    --uml-icon-association: url(../../../../../resources/icons/light/class/Association.gif);
-    --uml-icon-property: url(../../../../../resources/icons/light/class/Property.gif);
-    --uml-icon-enumeration: url(../../../../../resources/icons/light/class/Enumeration.gif);
-
-}

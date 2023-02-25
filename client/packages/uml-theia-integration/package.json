@@ -30,8 +30,7 @@
     "@eclipse-emfcloud/modelserver-theia": "next",
     "@eclipse-glsp/client": "next",
     "@eclipse-glsp/theia-integration": "next",
-    "@eclipsesource/uml-glsp-common": "1.0.0",
-    "@eclipsesource/uml-sprotty": "1.0.0",
+    "@eclipsesource/uml-glsp": "1.0.0",
     "@theia/core": "^1.34.0",
     "@theia/navigator": "^1.34.0",
     "@theia/outline-view": "^1.34.0",
@@ -40,7 +39,7 @@
   "devDependencies": {},
   "theiaExtensions": [
     {
-      "frontend": "lib/browser/uml-theia-frontend-module",
+      "frontend": "lib/browser/uml-frontend-module",
       "backend": "lib/node/uml-backend-module"
     }
   ]

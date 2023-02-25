@@ -34,8 +34,6 @@ export class UmlGLSPClientContribution extends BaseGLSPClientContribution {
     }
 
     protected override createGLSPCLient(connectionProvider: ConnectionProvider): GLSPClient {
-        console.log('Create GLSP CLient');
-
         return new UmlCLient({
             id: this.id,
             connectionProvider,
@@ -50,8 +48,6 @@ class UmlCLient extends TheiaJsonrpcGLSPClient {
             this.state = ClientState.Starting;
             const connection = await this.resolveConnection2();
             connection.listen();
-            console.log('Test', connection);
-            connection.inspect();
             this.resolvedConnection = connection;
             this.state = ClientState.Running;
         } catch (error) {

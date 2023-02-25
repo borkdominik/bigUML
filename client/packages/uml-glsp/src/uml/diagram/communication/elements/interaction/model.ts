@@ -8,13 +8,9 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-import { GLSPDiagramWidget } from '@eclipse-glsp/theia-integration';
-import { EnableEditorPanelAction } from '@eclipsesource/uml-glsp/lib/features/editor-panel';
 
-export class UmlDiagramWidget extends GLSPDiagramWidget {
-    protected override dispatchInitialActions(): void {
-        super.dispatchInitialActions();
+import { Icon } from '../../../../../graph';
 
-        this.actionDispatcher.dispatch(new EnableEditorPanelAction());
-    }
+export class IconInteraction extends Icon {
+    override iconImageName = 'communication/Interaction.gif';
 }

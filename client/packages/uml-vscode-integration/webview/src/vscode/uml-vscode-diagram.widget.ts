@@ -15,7 +15,19 @@
  ********************************************************************************/
 
 import { GLSPVscodeDiagramWidget } from '@eclipse-glsp/vscode-integration-webview/lib/glsp-vscode-diagram-widget';
-import { injectable } from 'inversify';
+import { EnableEditorPanelAction } from '@eclipsesource/uml-glsp/lib/features/editor-panel';
+import { injectable, postConstruct } from 'inversify';
 
 @injectable()
-export class UmlVscodeDiagramWidget extends GLSPVscodeDiagramWidget {}
+export class UmlVscodeDiagramWidget extends GLSPVscodeDiagramWidget {
+    @postConstruct()
+    override initialize(): void {
+        super.initialize();
+
+        this.dispatchInitialActions();
+    }
+
+    protected dispatchInitialActions(): void {
+        this.actionDispatcher.dispatch(new EnableEditorPanelAction());
+    }
+}

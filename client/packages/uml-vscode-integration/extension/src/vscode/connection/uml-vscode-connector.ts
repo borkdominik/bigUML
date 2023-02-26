@@ -14,19 +14,6 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 
-import { GlspVscodeClient, GlspVscodeConnector, InitializeClientSessionParameters } from '@eclipse-glsp/vscode-integration';
-import { CustomDocument } from 'vscode';
+import { GlspVscodeConnector } from '@eclipse-glsp/vscode-integration';
 
-export class UmlVscodeConnector extends GlspVscodeConnector {
-    protected override async createInitializeClientSessionParams(
-        client: GlspVscodeClient<CustomDocument>
-    ): Promise<InitializeClientSessionParameters> {
-        return {
-            ...(await super.createInitializeClientSessionParams(client)),
-            args: {
-                timestamp: new Date().toString(),
-                modelServerURL: 'http://localhost:8081/api/v2/'
-            }
-        };
-    }
-}
+export class UmlVscodeConnector extends GlspVscodeConnector {}

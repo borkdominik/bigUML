@@ -10,13 +10,13 @@
     margin-right: auto;
     max-width: 800px;
     outline: none;
-    box-shadow: 0px 1px 6px var(--theia-widget-shadow);
+    box-shadow: 0px 1px 6px var(--uml-widget-shadow);
 }
 
 .editor-panel-header {
-    border-top: 1px solid var(--theia-tab-unfocusedActiveBorderTop);
-    background: var(--theia-titleBar-activeBackground);
-    color: var(--theia-titleBar-activeForeground);
+    border-top: 1px solid var(--uml-tab-unfocusedActiveBorderTop);
+    background: var(--uml-titleBar-activeBackground);
+    color: var(--uml-titleBar-activeForeground);
     display: flex;
     flex-direction: row;
 }
@@ -26,7 +26,7 @@
 }
 
 .editor-panel:focus-within .editor-panel-header {
-    border-top-color: var(--theia-focusBorder);
+    border-top-color: var(--uml-focusBorder);
 }
 
 .editor-panel-tab-header {
@@ -37,11 +37,11 @@
 }
 
 .editor-panel-tab-header.active {
-    background: var(--theia-activityBar-background);
+    background: var(--uml-activityBar-background);
 }
 
 .editor-panel-tab-header:hover {
-    background: var(--theia-menubar-selectionBackground);
+    background: var(--uml-menubar-selectionBackground);
 }
 
 .editor-panel-collapse {
@@ -54,7 +54,7 @@
 }
 
 .editor-panel-collapse:hover {
-    background: var(--theia-menubar-selectionBackground);
+    background: var(--uml-menubar-selectionBackground);
 }
 
 .editor-panel-content {

@@ -13,9 +13,8 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.01
  ********************************************************************************/
-import { ActionMessage, GLSPDiagramIdentifier, GlspVscodeConnector } from '@eclipse-glsp/vscode-integration';
+import { GlspVscodeConnector } from '@eclipse-glsp/vscode-integration';
 import { GlspEditorProvider } from '@eclipse-glsp/vscode-integration/lib/quickstart-components';
-import { isWebviewReadyMessage } from 'sprotty-vscode-protocol';
 import * as vscode from 'vscode';
 import { ThemeManager } from '../theme-manager/theme-manager';
 
@@ -72,90 +71,4 @@ export default class UmlEditorProvider extends GlspEditorProvider {
                 </body>
             </html>`;
     }
-
-    override async resolveCustomEditor(
-        document: vscode.CustomDocument,
-        webviewPanel: vscode.WebviewPanel,
-        token: vscode.CancellationToken
-    ): Promise<void> {
-        // This is used to initialize GLSP for our diagram
-        const diagramIdentifier: GLSPDiagramIdentifier = {
-            diagramType: this.diagramType,
-            uri: serializeUri(document.uri),
-            clientId: `${this.diagramType}:${serializeUri(document.uri)}`
-        };
-
-        // Promise that resolves when sprotty sends its ready-message
-        const webviewReadyPromise = new Promise<void>(resolve => {
-            const messageListener = webviewPanel.webview.onDidReceiveMessage((message: unknown) => {
-                if (isWebviewReadyMessage(message)) {
-                    resolve();
-                    messageListener.dispose();
-                }
-            });
-        });
-
-        const sendMessageToWebview = async (message: unknown): Promise<void> => {
-            webviewReadyPromise.then(() => {
-                if (webviewPanel.active) {
-                    webviewPanel.webview.postMessage(message);
-                } else {
-                    console.log('Message stalled for webview:', document.uri.path, message);
-                    const viewStateListener = webviewPanel.onDidChangeViewState(() => {
-                        viewStateListener.dispose();
-                        sendMessageToWebview(message);
-                    });
-                }
-            });
-        };
-
-        const receiveMessageFromServerEmitter = new vscode.EventEmitter<unknown>();
-        const sendMessageToServerEmitter = new vscode.EventEmitter<unknown>();
-
-        webviewPanel.onDidDispose(() => {
-            receiveMessageFromServerEmitter.dispose();
-            sendMessageToServerEmitter.dispose();
-        });
-
-        // Listen for Messages from webview (only after ready-message has been received)
-        webviewReadyPromise.then(() => {
-            webviewPanel.webview.onDidReceiveMessage((message: unknown) => {
-                if (ActionMessage.is(message)) {
-                    sendMessageToServerEmitter.fire(message);
-                }
-            });
-        });
-
-        // Listen for Messages from server
-        receiveMessageFromServerEmitter.event(message => {
-            if (ActionMessage.is(message)) {
-                sendMessageToWebview(message);
-            }
-        });
-
-        // Register document/diagram panel/model in vscode connector
-        const initializeResult = await this.glspVscodeConnector.registerClient({
-            clientId: diagramIdentifier.clientId,
-            diagramType: diagramIdentifier.diagramType,
-            document: document,
-            webviewPanel: webviewPanel,
-            onClientMessage: sendMessageToServerEmitter.event,
-            onSendToClientEmitter: receiveMessageFromServerEmitter
-        });
-
-        diagramIdentifier.initializeResult = initializeResult;
-        // Initialize diagram
-        sendMessageToWebview(diagramIdentifier);
-
-        this.setUpWebview(document, webviewPanel, token, diagramIdentifier.clientId);
-    }
-}
-
-function serializeUri(uri: vscode.Uri): string {
-    let uriString = uri.toString();
-    const match = uriString.match(/file:\/\/\/([a-z])%3A/i);
-    if (match) {
-        uriString = 'file:///' + match[1] + ':' + uriString.substring(match[0].length);
-    }
-    return uriString;
 }

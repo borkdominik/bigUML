@@ -17,19 +17,6 @@
     background-repeat: no-repeat;
 }
 
-.p-TabBar.theia-app-centers .p-TabBar-tabIcon.umlmodelfileTabIcon {
-    background-image: url(../resources/icons/UMLModelFile.gif);
-    height: 16px;
-    width: 16px;
-    background-color: transparent;
-    background-repeat: no-repeat;
-}
-
-.p-Menu-itemIcon.umlmodelfile {
-    background-repeat: no-repeat;
-    background-position: center;
-}
-
 .umlimg {
     background-size: 16px 16px;
     height: 16px;

@@ -1,0 +1,4 @@
+:root {
+    --uml-editor-background: var(--theia-editor-background);
+    --uml-editor-foreground: var(--theia-editor-foreground);
+}

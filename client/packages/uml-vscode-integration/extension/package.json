@@ -24,7 +24,7 @@
     }
   ],
   "publisher": "Eclipse-GLSP",
-  "main": "./lib/index",
+  "main": "./lib/main",
   "files": [
     "lib",
     "extension",
@@ -39,19 +39,17 @@
     ]
   },
   "scripts": {
-    "build": "npx tsc -b",
+    "build": "yarn esbuild-base -- --sourcemap",
     "clean": "npx rimraf lib tsconfig.tsbuildinfo ",
     "download:Server": "npx ts-node scripts/download.ts",
-    "esbuild": "yarn esbuild-base -- --sourcemap",
-    "esbuild-base": "npx esbuild ./src/extension.ts --bundle --outfile=out/main.js --external:vscode --format=cjs --platform=node",
-    "esbuild-watch": "npx esbuild-base -- --sourcemap --watch",
+    "esbuild-base": "npx esbuild ./src/index.ts --bundle --outfile=lib/main.js --external:vscode --format=cjs --platform=node",
     "lint": "npx eslint --ext .ts,.tsx ./src",
     "lint:ci": "npx yarn lint -o eslint.xml -f checkstyle",
     "lint:fix": "npx eslint --fix --ext .ts,.tsx ./src",
     "package": "npx vsce package --yarn",
     "prepare": "yarn clean && yarn build",
     "vscode:prepublish": "yarn esbuild-base -- --minify",
-    "watch": "npx tsc -w"
+    "watch": "yarn esbuild-base -- --sourcemap --watch"
   },
   "contributes": {
     "commands": [

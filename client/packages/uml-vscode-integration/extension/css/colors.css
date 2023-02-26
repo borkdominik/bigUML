@@ -1,0 +1,4 @@
+:root {
+    --uml-editor-background: var(--vscode-editor-background);
+    --uml-editor-foreground: var(--vscode-editor-foreground);
+}

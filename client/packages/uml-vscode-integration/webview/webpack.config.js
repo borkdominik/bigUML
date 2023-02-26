@@ -10,7 +10,8 @@ const config = {
     entry: path.resolve(__dirname, 'src/index.ts'),
     output: {
         filename: 'webview.js',
-        path: outputPath
+        path: outputPath,
+        clean: true
     },
     devtool: 'eval-source-map',
     mode: 'development',
@@ -18,7 +19,7 @@ const config = {
     resolve: {
         fallback: {
             fs: false,
-            net: false,
+            net: false
         },
         extensions: ['.ts', '.tsx', '.js']
     },
@@ -29,17 +30,13 @@ const config = {
                 use: ['ts-loader']
             },
             {
-                test: /\.gif?$/,
-                use: ['file-loader']
-            },
-            {
-                test: /\.svg?$/,
-                use: ['file-loader']
-            },
-            {
                 test: /\.js$/,
                 use: ['source-map-loader'],
                 enforce: 'pre'
+            },
+            {
+                test: /\.(png|svg|jpg|jpeg|gif)$/i,
+                type: 'asset/resource'
             },
             {
                 test: /\.css$/,
@@ -52,7 +49,7 @@ const config = {
             }
         ]
     },
-    ignoreWarnings: [/Failed to parse source map/, /Can't resolve .* in '.*ws\/lib'/],
+    ignoreWarnings: [/Failed to parse source map/, /Can't resolve .* in '.*ws\/lib'/]
 };
 
 module.exports = config;

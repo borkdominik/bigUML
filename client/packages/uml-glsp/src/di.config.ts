@@ -12,9 +12,9 @@ import '@eclipse-glsp/client/css/glsp-sprotty.css';
 import 'balloon-css/balloon.min.css';
 import 'sprotty/css/edit-label.css';
 
-import '@eclipsesource/uml-glsp/css/style.css';
+import '../css/style.css';
 
-import '@eclipsesource/uml-glsp/css/extensions/edit-label.css';
+import '../css/extensions/edit-label.css';
 
 import {
     configureDefaultModelElements,
@@ -56,7 +56,7 @@ import { IconLabelCompartmentSelectionFeedback } from './views/feedback.postproc
 export default function createContainer(widgetId: string): Container {
     const coreDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
         rebind(TYPES.ILogger).to(ConsoleLogger).inSingletonScope();
-        rebind(TYPES.LogLevel).toConstantValue(LogLevel.log);
+        rebind(TYPES.LogLevel).toConstantValue(LogLevel.info);
         rebind(EditLabelUI).to(EditLabelUIAutocomplete);
         rebind(TYPES.ICopyPasteHandler).to(CustomCopyPasteHandler);
 

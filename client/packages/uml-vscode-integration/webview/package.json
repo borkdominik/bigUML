@@ -28,7 +28,7 @@
     }
   ],
   "scripts": {
-    "build": "npx tsc -b && webpack --mode=development",
+    "build": "npx webpack --mode=development",
     "clean": "npx rimraf lib tsconfig.tsbuildinfo ",
     "lint": "npx eslint --ext .ts,.tsx ./src",
     "lint:ci": "yarn lint -o eslint.xml -f checkstyle",

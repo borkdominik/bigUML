@@ -17,9 +17,12 @@ import { ActionMessage, GLSPDiagramIdentifier, GlspVscodeConnector } from '@ecli
 import { GlspEditorProvider } from '@eclipse-glsp/vscode-integration/lib/quickstart-components';
 import { isWebviewReadyMessage } from 'sprotty-vscode-protocol';
 import * as vscode from 'vscode';
+import { ThemeManager } from '../theme-manager/theme-manager';
 
 export default class UmlEditorProvider extends GlspEditorProvider {
     diagramType = 'umldiagram';
+
+    protected readonly themeManager = new ThemeManager();
 
     constructor(
         protected readonly extensionContext: vscode.ExtensionContext,
@@ -40,6 +43,11 @@ export default class UmlEditorProvider extends GlspEditorProvider {
         const codiconsUri = webview.asWebviewUri(
             vscode.Uri.joinPath(extensionUri, 'node_modules', '@vscode/codicons', 'dist', 'codicon.css')
         );
+        const mainCSSUri = webview.asWebviewUri(vscode.Uri.joinPath(extensionUri, 'lib', 'main.css'));
+
+        this.themeManager.dispose();
+        this.themeManager.initialize();
+        this.themeManager.onChange(e => this.themeManager.updateTheme(vscode.window.activeColorTheme.kind));
 
         webviewPanel.webview.options = {
             enableScripts: true
@@ -55,6 +63,7 @@ export default class UmlEditorProvider extends GlspEditorProvider {
                 default-src http://*.fontawesome.com  ${webview.cspSource} 'unsafe-inline' 'unsafe-eval';
                 ">
 				<link href="${codiconsUri}" rel="stylesheet" />
+				<link href="${mainCSSUri}" rel="stylesheet" />
 
                 </head>
                 <body>

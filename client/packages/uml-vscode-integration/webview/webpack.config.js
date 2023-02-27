@@ -26,17 +26,15 @@ const config = {
     module: {
         rules: [
             {
-                test: /\.tsx?$/,
-                use: ['ts-loader']
-            },
-            {
-                test: /\.js$/,
-                use: ['source-map-loader'],
-                enforce: 'pre'
+                test: /\.[jt]sx?$/,
+                loader: 'esbuild-loader'
             },
             {
                 test: /\.(png|svg|jpg|jpeg|gif)$/i,
-                type: 'asset/resource'
+                type: 'asset/resource',
+                generator: {
+                    filename: 'resources/images/[hash][ext][query]'
+                }
             },
             {
                 test: /\.css$/,

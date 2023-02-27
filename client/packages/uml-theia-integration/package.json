@@ -20,11 +20,11 @@
     "src"
   ],
   "scripts": {
-    "build": "npx tsc && yarn run lint",
-    "clean": "npx rimraf lib tsconfig.tsbuildinfo",
-    "lint": "npx eslint -c ./.eslintrc.js --ext .ts ./src",
+    "build": "tsc && yarn run lint",
+    "clean": "rimraf lib tsconfig.tsbuildinfo",
+    "lint": "eslint -c ./.eslintrc.js --ext .ts ./src",
     "prepare": "yarn run clean && yarn run build",
-    "watch": "npx tsc -w"
+    "watch": "tsc -w"
   },
   "dependencies": {
     "@eclipse-emfcloud/modelserver-theia": "next",

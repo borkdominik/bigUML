@@ -39,17 +39,17 @@
     ]
   },
   "scripts": {
-    "build": "yarn esbuild-base -- --sourcemap",
-    "clean": "npx rimraf lib tsconfig.tsbuildinfo ",
-    "download:Server": "npx ts-node scripts/download.ts",
-    "esbuild-base": "npx esbuild ./src/index.ts --bundle --outfile=lib/main.js --external:vscode --format=cjs --platform=node",
-    "lint": "npx eslint --ext .ts,.tsx ./src",
-    "lint:ci": "npx yarn lint -o eslint.xml -f checkstyle",
-    "lint:fix": "npx eslint --fix --ext .ts,.tsx ./src",
-    "package": "npx vsce package --yarn",
+    "build": "yarn esbuild-base --sourcemap",
+    "clean": "rimraf lib tsconfig.tsbuildinfo ",
+    "download:Server": "ts-node scripts/download.ts",
+    "esbuild-base": "esbuild ./src/index.ts --bundle --outfile=lib/main.js --external:vscode --format=cjs --platform=node",
+    "lint": "eslint --ext .ts,.tsx ./src",
+    "lint:ci": "yarn lint -o eslint.xml -f checkstyle",
+    "lint:fix": "eslint --fix --ext .ts,.tsx ./src",
+    "package": "vsce package --yarn",
     "prepare": "yarn clean && yarn build",
-    "vscode:prepublish": "yarn esbuild-base -- --minify",
-    "watch": "yarn esbuild-base -- --sourcemap --watch"
+    "vscode:prepublish": "yarn esbuild-base --minify",
+    "watch": "yarn esbuild-base --sourcemap --watch"
   },
   "contributes": {
     "commands": [
@@ -209,8 +209,7 @@
     "@eclipsesource/uml-vscode-integration-webview": "*",
     "@types/vscode": "^1.54.0",
     "@vscode/vsce": "^2.15.0",
-    "esbuild": "^0.17.10",
-    "ts-node": "^10.8.2"
+    "esbuild": "^0.17.10"
   },
   "engines": {
     "vscode": "^1.54.0"

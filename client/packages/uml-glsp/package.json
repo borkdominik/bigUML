@@ -24,18 +24,18 @@
     "images"
   ],
   "scripts": {
-    "build": "npx tsc -b && yarn run lint",
-    "clean": "npx rimraf lib tsconfig.tsbuildinfo",
-    "icons": "npx ts-node ./scripts/icons.ts",
-    "lint": "npx eslint -c ./.eslintrc.js --ext .ts,.tsx ./src",
-    "lint:fix": "npx eslint --fix -c ./.eslintrc.js --ext .ts,.tsx ./src",
+    "build": "tsc -b && yarn run lint",
+    "clean": "rimraf lib tsconfig.tsbuildinfo",
+    "icons": "tsx ./scripts/icons.ts",
+    "lint": "eslint -c ./.eslintrc.js --ext .ts,.tsx ./src",
+    "lint:fix": "eslint --fix -c ./.eslintrc.js --ext .ts,.tsx ./src",
     "prepare": "yarn run clean && yarn run build",
-    "watch": "npx tsc -w"
+    "watch": "tsc -w"
   },
   "dependencies": {
     "@eclipse-glsp/client": "next",
     "balloon-css": "^0.5.0",
-    "reflect-metadata": "^0.1.10"
+    "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
     "endent": "^2.1.0"

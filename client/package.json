@@ -62,10 +62,7 @@
   },
   "devDependencies": {
     "@eclipse-glsp/dev": "^1.1.0-next.28fb493.121",
-    "@types/node": "16.x",
-    "eslint-import-resolver-typescript": "^3.5.3",
-    "eslint-plugin-react": "^7.29.3",
-    "ts-node": "^10.9.1",
+    "tsx": "^3.12.3",
     "typescript": "^4.9.5"
   },
   "engines": {

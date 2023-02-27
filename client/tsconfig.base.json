@@ -3,6 +3,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "reactNamespace": "JSX",
+    "esModuleInterop": true,
     "paths": {
       "@eclipsesource/uml-glsp": [
         "packages/uml-glsp/src/*"

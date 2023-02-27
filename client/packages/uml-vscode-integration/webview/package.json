@@ -28,25 +28,23 @@
     }
   ],
   "scripts": {
-    "build": "npx webpack --mode=development",
-    "clean": "npx rimraf lib tsconfig.tsbuildinfo ",
-    "lint": "npx eslint --ext .ts,.tsx ./src",
+    "build": "webpack --mode=development",
+    "clean": "rimraf lib tsconfig.tsbuildinfo ",
+    "lint": "eslint --ext .ts,.tsx ./src",
     "lint:ci": "yarn lint -o eslint.xml -f checkstyle",
     "prepare": "yarn clean && yarn build",
-    "watch": "npx tsc -w"
+    "watch": "webpack --watch"
   },
+  "dependencies": {},
   "devDependencies": {
     "@eclipse-glsp/vscode-integration-webview": "next",
     "@eclipsesource/uml-glsp": "*",
     "@vscode/codicons": "^0.0.25",
-    "circular-dependency-plugin": "^5.2.2",
     "css-loader": "^6.7.1",
-    "file-loader": "^6.2.0",
+    "esbuild-loader": "^3.0.1",
     "ignore-loader": "^0.1.2",
-    "reflect-metadata": "^0.1.13",
     "source-map-loader": "^4.0.1",
     "style-loader": "^3.3.1",
-    "ts-loader": "^9.4.2",
     "webpack": "^5.75.0",
     "webpack-cli": "^5.0.1"
   }

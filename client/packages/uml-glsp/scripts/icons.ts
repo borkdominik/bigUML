@@ -9,9 +9,9 @@
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
 import endent from 'endent';
-import * as fs from 'fs';
-import * as glob from 'glob';
-import * as path from 'path';
+import fs from 'fs';
+import glob from 'glob';
+import path from 'path';
 
 const settings = {
     input: './resources/papyrus/**/*',

@@ -2,7 +2,6 @@
   "name": "@eclipsesource/uml-vscode-extension",
   "displayName": "Workflow GLSP Example",
   "version": "1.1.0-next",
-  "private": "true",
   "description": "An example graphical language used for modeling workflows",
   "categories": [
     "Programming Languages"
@@ -32,12 +31,6 @@
     "webview",
     "pack"
   ],
-  "workspaces": {
-    "nohoist": [
-      "**/@vscode/codicons",
-      "**/@vscode/codicons/**"
-    ]
-  },
   "scripts": {
     "build": "yarn esbuild-base --sourcemap",
     "clean": "rimraf lib tsconfig.tsbuildinfo ",

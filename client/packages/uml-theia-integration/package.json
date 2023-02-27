@@ -36,7 +36,6 @@
     "@theia/outline-view": "next",
     "sprotty-theia": "next"
   },
-  "devDependencies": {},
   "theiaExtensions": [
     {
       "frontend": "lib/browser/uml-frontend-module",

@@ -1,7 +1,6 @@
 {
   "name": "@eclipsesource/uml-vscode-integration-webview",
   "version": "1.0.0",
-  "private": "true",
   "description": "UML GLSP diagram in a VS Code extensions (WebView part)",
   "keywords": [
     "vscode",
@@ -35,7 +34,6 @@
     "prepare": "yarn clean && yarn build",
     "watch": "webpack --watch"
   },
-  "dependencies": {},
   "devDependencies": {
     "@eclipse-glsp/vscode-integration-webview": "next",
     "@eclipsesource/uml-glsp": "*",

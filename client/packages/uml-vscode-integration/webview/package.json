@@ -37,7 +37,7 @@
   },
   "devDependencies": {
     "@eclipse-glsp/vscode-integration-webview": "next",
-    "@eclipsesource/uml-glsp": "1.0.0",
+    "@eclipsesource/uml-glsp": "*",
     "@vscode/codicons": "^0.0.25",
     "circular-dependency-plugin": "^5.2.2",
     "css-loader": "^6.7.1",

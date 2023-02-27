@@ -135,7 +135,7 @@
   </elements>
   <elements xsi:type="notation:Shape">
     <semanticElement elementId="_LjfcIbSLEe2pkZx4lGC8Ew"/>
-    <position x="141.23486620558185" y="-122.41817964233411"/>
-    <size width="160.0" height="50.0"/>
+    <position x="279.2931975707403" y="88.06419440618606"/>
+    <size width="164.8255157470703" height="52.5"/>
   </elements>
 </unotation:UmlDiagram>

@@ -1,5 +1,5 @@
 {
-  "name": "uml-vscode-extension",
+  "name": "@eclipsesource/uml-vscode-extension",
   "displayName": "Workflow GLSP Example",
   "version": "1.1.0-next",
   "private": "true",
@@ -56,19 +56,19 @@
       {
         "command": "uml.fit",
         "title": "Fit to Screen",
-        "category": "Workflow Diagram",
+        "category": "UML Diagram",
         "enablement": "activeCustomEditorId == 'uml.glspDiagram'"
       },
       {
         "command": "uml.center",
         "title": "Center selection",
-        "category": "Workflow Diagram",
+        "category": "UML Diagram",
         "enablement": "activeCustomEditorId == 'uml.glspDiagram'"
       },
       {
         "command": "uml.layout",
         "title": "Layout diagram",
-        "category": "Workflow Diagram",
+        "category": "UML Diagram",
         "enablement": "activeCustomEditorId == 'uml.glspDiagram'"
       },
       {
@@ -86,20 +86,20 @@
       {
         "command": "uml.showDocumentation",
         "title": "Show documentation...",
-        "category": "Workflow Diagram",
+        "category": "UML Diagram",
         "enablement": "activeCustomEditorId == 'uml.glspDiagram' && uml.editorSelectedElementsAmount == 1"
       },
       {
         "command": "uml.exportAsSVG",
         "title": "Export as SVG",
-        "category": "Workflow Diagram",
+        "category": "UML Diagram",
         "enablement": "activeCustomEditorId == 'uml.glspDiagram'"
       }
     ],
     "customEditors": [
       {
         "viewType": "uml.glspDiagram",
-        "displayName": "Workflow Diagram Editor",
+        "displayName": "UML Diagram Editor",
         "selector": [
           {
             "filenamePattern": "*.uml"
@@ -201,12 +201,12 @@
   ],
   "dependencies": {
     "@eclipse-glsp/vscode-integration": "next",
-    "@eclipsesource/uml-glsp": "1.0.0",
+    "@eclipsesource/uml-glsp": "*",
     "@vscode/codicons": "^0.0.25",
     "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
-    "@eclipsesource/uml-vscode-integration-webview": "1.0.0",
+    "@eclipsesource/uml-vscode-integration-webview": "*",
     "@types/vscode": "^1.54.0",
     "@vscode/vsce": "^2.15.0",
     "esbuild": "^0.17.10",

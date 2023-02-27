@@ -30,11 +30,11 @@
     "@eclipse-emfcloud/modelserver-theia": "next",
     "@eclipse-glsp/client": "next",
     "@eclipse-glsp/theia-integration": "next",
-    "@eclipsesource/uml-glsp": "1.0.0",
-    "@theia/core": "^1.34.0",
-    "@theia/navigator": "^1.34.0",
-    "@theia/outline-view": "^1.34.0",
-    "sprotty-theia": "^0.13.0-next.9cbedec"
+    "@eclipsesource/uml-glsp": "*",
+    "@theia/core": "next",
+    "@theia/navigator": "next",
+    "@theia/outline-view": "next",
+    "sprotty-theia": "next"
   },
   "devDependencies": {},
   "theiaExtensions": [

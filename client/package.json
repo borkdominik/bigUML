@@ -8,7 +8,9 @@
     ],
     "nohoist": [
       "**/path",
-      "**/path/**"
+      "**/path/**",
+      "@eclipsesource/uml-vscode-extension/@vscode/codicons",
+      "@eclipsesource/uml-vscode-extension/@vscode/codicons/**"
     ]
   },
   "scripts": {
@@ -58,7 +60,8 @@
     "**/@theia/workspace": "1.35.0",
     "**/inversify": "5.1.1",
     "**/sprotty": "0.13.0-next.f4445dd.342",
-    "**/sprotty-theia": "0.13.0-next.9cbedec"
+    "**/sprotty-theia": "0.13.0-next.9cbedec",
+    "**/vscode-jsonrpc": "8.1.0"
   },
   "devDependencies": {
     "@eclipse-glsp/dev": "^1.1.0-next.28fb493.121",

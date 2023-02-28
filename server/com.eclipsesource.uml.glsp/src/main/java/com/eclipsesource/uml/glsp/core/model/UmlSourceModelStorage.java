@@ -10,7 +10,9 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.core.model;
 
+import org.eclipse.emfcloud.modelserver.client.SubscriptionListener;
 import org.eclipse.emfcloud.modelserver.glsp.notation.integration.EMSNotationSourceModelStorage;
+import org.eclipse.glsp.server.actions.ActionDispatcher;
 
 import com.google.inject.Inject;
 
@@ -24,5 +26,11 @@ public class UmlSourceModelStorage extends EMSNotationSourceModelStorage {
       super.doSubscribe();
       modelServerAccess.subscribe(modelServerAccess.getNotationURI(),
          createSubscriptionListener(modelServerAccess.getNotationURI(), actionDispatcher));
+   }
+
+   @Override
+   protected SubscriptionListener createSubscriptionListener(final String modelUri,
+      final ActionDispatcher actionDispatcher) {
+      return new UmlSubscriptionListener(modelUri, actionDispatcher);
    }
 }

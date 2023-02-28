@@ -24,6 +24,7 @@ import org.eclipse.uml2.uml.resource.UMLResource;
 import com.eclipsesource.uml.modelserver.core.codec.UmlCodecProvider;
 import com.eclipsesource.uml.modelserver.core.commands.change_bounds.UmlChangeBoundsContribution;
 import com.eclipsesource.uml.modelserver.core.commands.change_routing_points.UmlChangeRoutingPointsContribution;
+import com.eclipsesource.uml.modelserver.core.controller.UmlSessionController;
 import com.eclipsesource.uml.modelserver.core.resource.UmlNotationPackageConfiguration;
 import com.eclipsesource.uml.modelserver.core.resource.UmlNotationResource;
 import com.eclipsesource.uml.modelserver.core.resource.UmlPackageConfiguration;
@@ -50,6 +51,11 @@ public class UmlModelServerModule extends EMSNotationModelServerModule {
    @Override
    protected Class<? extends UmlResourceSetFactory> bindResourceSetFactory() {
       return UmlResourceSetFactory.class;
+   }
+
+   @Override
+   protected Class<? extends UmlSessionController> bindSessionController() {
+      return UmlSessionController.class;
    }
 
    @Override

@@ -51,6 +51,7 @@ Bundle-ActivationPolicy: lazy
 Export-Package: com.eclipsesource.uml.modelserver.core,
  com.eclipsesource.uml.modelserver.core.commands.change_bounds,
  com.eclipsesource.uml.modelserver.core.commands.change_routing_points,
+ com.eclipsesource.uml.modelserver.core.controller,
  com.eclipsesource.uml.modelserver.core.models,
  com.eclipsesource.uml.modelserver.core.resource,
  com.eclipsesource.uml.modelserver.core.routing,

@@ -12,6 +12,7 @@ package com.eclipsesource.uml.glsp.core;
 
 import org.eclipse.emfcloud.modelserver.glsp.EMSModelState;
 import org.eclipse.emfcloud.modelserver.glsp.actions.handlers.EMSOperationActionHandler;
+import org.eclipse.emfcloud.modelserver.glsp.actions.handlers.EMSRefreshModelActionHandler;
 import org.eclipse.emfcloud.modelserver.glsp.notation.integration.EMSGLSPNotationDiagramModule;
 import org.eclipse.emfcloud.modelserver.glsp.notation.integration.EMSNotationModelState;
 import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSChangeBoundsOperationHandler;
@@ -37,6 +38,7 @@ import com.eclipsesource.uml.glsp.core.gmodel.GModelMapHandler;
 import com.eclipsesource.uml.glsp.core.gmodel.GModelMapperRegistry;
 import com.eclipsesource.uml.glsp.core.gmodel.UmlGModelFactory;
 import com.eclipsesource.uml.glsp.core.handler.action.UmlOperationActionHandler;
+import com.eclipsesource.uml.glsp.core.handler.action.UmlRefreshModelActionHandler;
 import com.eclipsesource.uml.glsp.core.handler.operation.UmlChangeBoundsOperationHandler;
 import com.eclipsesource.uml.glsp.core.handler.operation.UmlChangeRoutingPointsOperationHandler;
 import com.eclipsesource.uml.glsp.core.handler.operation.UmlOperationHandlerRegistry;
@@ -176,6 +178,7 @@ public class UmlDiagramModule extends EMSGLSPNotationDiagramModule {
       // bindings.rebind(RequestMarkersHandler.class, UmlRequestMarkersHandler.class);
 
       bindings.rebind(EMSOperationActionHandler.class, UmlOperationActionHandler.class);
+      bindings.rebind(EMSRefreshModelActionHandler.class, UmlRefreshModelActionHandler.class);
    }
 
    @Override

@@ -10,6 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp;
 
+import java.util.List;
 import java.util.function.Predicate;
 
 import org.apache.commons.cli.ParseException;
@@ -27,9 +28,10 @@ public class UmlGLSPServerLauncher {
 
    public static void main(final String[] args) {
       var processName = "UMLGLSPServer";
+      var debugArgs = List.<String> of("--logLevel=debug").toArray(new String[0]);
       try {
          ElkLayoutEngine.initialize(new LayeredMetaDataProvider());
-         var parser = new DefaultCLIParser(args, processName);
+         var parser = new DefaultCLIParser(debugArgs, processName);
          LaunchUtil.configure(parser);
 
          Predicate<Integer> validator = (port) -> LaunchUtil.isValidPort(port);

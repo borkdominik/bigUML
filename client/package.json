@@ -65,7 +65,7 @@
     "tsx": "^3.12.3",
     "typescript": "^4.9.5"
   },
-  "packageManager": "yarn@1.22.1",
+  "packageManager": "yarn@1.22.19",
   "engines": {
     "node": ">=16.15.1 < 18",
     "yarn": ">=1.7.0 <2"

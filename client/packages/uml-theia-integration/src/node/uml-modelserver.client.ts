@@ -11,12 +11,12 @@
 import { ModelServerMessage } from '@eclipse-emfcloud/modelserver-client/lib/model-server-message';
 import { TheiaBackendModelServerClientV2 } from '@eclipse-emfcloud/modelserver-theia/lib/node';
 import { UmlDiagramType } from '@eclipsesource/uml-glsp/lib/common/uml-language';
-import { UmlModelServerPaths } from '@eclipsesource/uml-glsp/lib/modelserver/paths';
+import { UmlModelServerPaths } from '@eclipsesource/uml-modelserver/lib/modelserver.path';
 import { AxiosResponse } from 'axios';
 import { injectable } from 'inversify';
 
 @injectable()
-export class UmlModelServerClient extends TheiaBackendModelServerClientV2 {
+export class UmlModelServerClient extends TheiaBackendModelServerClientV2 implements UmlModelServerClient {
     async createUmlResource(modelName: string, diagramType: UmlDiagramType): Promise<AxiosResponse<ModelServerMessage>> {
         const newModelUri = `${modelName}/model/${modelName}.uml`;
         return this.restClient.get(`${UmlModelServerPaths.CREATE_UML}?modeluri=${newModelUri}&diagramtype=${diagramType}`);

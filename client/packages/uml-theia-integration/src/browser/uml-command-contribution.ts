@@ -13,11 +13,12 @@ import { CommonMenus, OpenerService, QuickInputService } from '@theia/core/lib/b
 import { Command, CommandContribution, CommandRegistry, CommandService } from '@theia/core/lib/common/command';
 import URI from '@theia/core/lib/common/uri';
 import { FileService } from '@theia/filesystem/lib/browser/file-service';
-import { NavigatorContextMenu } from '@theia/navigator/lib/browser/navigator-contribution';
+import { FileNavigatorCommands, NavigatorContextMenu } from '@theia/navigator/lib/browser/navigator-contribution';
 import { WorkspaceService } from '@theia/workspace/lib/browser';
 import { inject, injectable } from 'inversify';
 
 import { UmlDiagramType } from '@eclipsesource/uml-glsp/lib/common/uml-language';
+import { UmlModelServerClient } from '../common/uml-modelserver.client';
 
 export const NEW_UML_DIAGRAM_COMMAND: Command = {
     id: 'file.newUmlDiagram',
@@ -35,10 +36,8 @@ export class UmlModelContribution implements CommandContribution, MenuContributi
     protected readonly quickInputService: QuickInputService;
     @inject(WorkspaceService)
     protected readonly workspaceService: WorkspaceService;
-    /* TODO: Enable it again
     @inject(UmlModelServerClient)
     protected readonly modelServerClient: UmlModelServerClient;
-    */
 
     registerCommands(registry: CommandRegistry): void {
         registry.registerCommand(NEW_UML_DIAGRAM_COMMAND, {
@@ -81,7 +80,7 @@ export class UmlModelContribution implements CommandContribution, MenuContributi
 
     protected createUmlDiagram(diagramName: string, workspaceUri: URI, diagramType: string): void {
         if (diagramName) {
-            /*
+            console.log('CreateUmlDiagram');
             this.modelServerClient.createUmlResource(diagramName, this.getUmlDiagramType(diagramType)).then(() => {
                 this.quickInputService.hide();
                 const modelUri = new URI(workspaceUri.path.toString() + `/${diagramName}/model/${diagramName}.uml`);
@@ -91,7 +90,6 @@ export class UmlModelContribution implements CommandContribution, MenuContributi
                     this.commandService.executeCommand(FileNavigatorCommands.REVEAL_IN_NAVIGATOR.id);
                 });
             });
-            */
         }
     }
 

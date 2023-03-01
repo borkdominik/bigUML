@@ -15,12 +15,12 @@
   },
   "scripts": {
     "prepare": "lerna run prepare",
-    "prepare:theia": "yarn prepare --include-dependencies=true --scope=@eclipsesource/uml-theia-*",
+    "prepare:theia": "yarn prepare --include-dependencies=true --scope=@eclipsesource/theia-app",
     "prepare:vscode": "yarn prepare --include-dependencies=true --scope=@eclipsesource/uml-vscode-*",
     "start:theia": "cd environments/theia-app && yarn start",
     "start:theia:debug": "cd environments/theia-app && yarn start:debug",
     "watch": "lerna run --parallel watch",
-    "watch:theia": "yarn watch --include-dependencies=true --scope=@eclipsesource/uml-vscode-*",
+    "watch:theia": "yarn watch --include-dependencies=true --scope=@eclipsesource/theia-app",
     "watch:vscode": "yarn watch --include-dependencies=true --scope=@eclipsesource/uml-vscode-*"
   },
   "resolutions": {

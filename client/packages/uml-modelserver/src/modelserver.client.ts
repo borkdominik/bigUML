@@ -21,7 +21,11 @@ import URI from 'urijs';
 import { ModelServerConfig } from './config';
 import { UmlModelServerPaths } from './modelserver.path';
 
-export class UmlModelServerClient extends ModelServerClientV2 {
+export interface UmlModelServerApi {
+    createUmlResource(modelName: string, diagramType: UmlDiagramType): Promise<AxiosResponse<ModelServerMessage>>;
+}
+
+export class UmlModelServerClient extends ModelServerClientV2 implements UmlModelServerApi {
     constructor(protected readonly config: ModelServerConfig) {
         super();
         this.initialize(new URI(this.config.url));

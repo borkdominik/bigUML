@@ -31,6 +31,7 @@
     "@eclipse-glsp/client": "next",
     "@eclipse-glsp/theia-integration": "next",
     "@eclipsesource/uml-glsp": "*",
+    "@eclipsesource/uml-modelserver": "*",
     "@theia/core": "next",
     "@theia/navigator": "next",
     "@theia/outline-view": "next",

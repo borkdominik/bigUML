@@ -15,8 +15,8 @@ import { ContainerModule, injectable } from 'inversify';
 import { join, resolve } from 'path';
 
 import { findEquinoxLauncher } from './equinox';
-import { UmlModelServerClient } from './model-server-client';
 import { UmlGLSPServerContribution } from './uml-glsp-server-contribution';
+import { UmlModelServerClient } from './uml-modelserver.client';
 
 @injectable()
 export class UmlModelServerLaunchOptions implements LaunchOptions {

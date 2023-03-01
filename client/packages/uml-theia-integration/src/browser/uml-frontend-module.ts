@@ -22,7 +22,9 @@ import { FrontendApplicationContribution } from '@theia/core/lib/browser/fronten
 import { LabelProviderContribution } from '@theia/core/lib/browser/label-provider';
 import { DiagramConfiguration } from 'sprotty-theia/lib';
 
+import { TheiaModelServerClientV2 } from '@eclipse-emfcloud/modelserver-theia';
 import { UmlLanguage } from '../common/uml-language';
+import { UmlModelServerClient } from '../common/uml-modelserver.client';
 import { UmlDiagramConfiguration } from './diagram/uml-diagram-configuration';
 import { UmlDiagramManager } from './diagram/uml-diagram-manager';
 import { UmlGLSPConnector } from './diagram/uml-glsp-connector';
@@ -59,6 +61,9 @@ export class UmlTheiaFrontendModule extends GLSPTheiaFrontendModule {
         context.bind(MenuContribution).toService(UmlModelContribution);
         context.bind(FrontendApplicationContribution).to(UmlFrontendContribution).inSingletonScope();
         context.bind(LabelProviderContribution).to(UmlTreeLabelProviderContribution).inSingletonScope();
+
+        // Workaround
+        context.bind(UmlModelServerClient).toService(TheiaModelServerClientV2);
 
         registerOutlineIntegration(context.bind);
         registerOutlineWidget(context.bind);

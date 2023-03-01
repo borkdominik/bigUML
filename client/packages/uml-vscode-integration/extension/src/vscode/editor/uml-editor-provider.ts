@@ -15,7 +15,10 @@
  ********************************************************************************/
 import { GlspVscodeConnector } from '@eclipse-glsp/vscode-integration';
 import { GlspEditorProvider } from '@eclipse-glsp/vscode-integration/lib/quickstart-components';
+import { UmlModelServerClient } from '@eclipsesource/uml-modelserver/lib/modelserver.client';
+import URI from 'urijs';
 import * as vscode from 'vscode';
+import { MODEL_SERVER_CONFIG } from '../../modelserver/modelserver.config';
 import { ThemeManager } from '../theme-manager/theme-manager';
 
 export default class UmlEditorProvider extends GlspEditorProvider {
@@ -28,6 +31,8 @@ export default class UmlEditorProvider extends GlspEditorProvider {
         protected override readonly glspVscodeConnector: GlspVscodeConnector
     ) {
         super(glspVscodeConnector);
+
+        this.setUpModelServer();
     }
 
     setUpWebview(
@@ -36,6 +41,8 @@ export default class UmlEditorProvider extends GlspEditorProvider {
         _token: vscode.CancellationToken,
         clientId: string
     ): void {
+        this.setUpTheme();
+
         const webview = webviewPanel.webview;
         const extensionUri = this.extensionContext.extensionUri;
         const webviewScriptSourceUri = webview.asWebviewUri(vscode.Uri.joinPath(extensionUri, 'pack', 'webview.js'));
@@ -43,10 +50,6 @@ export default class UmlEditorProvider extends GlspEditorProvider {
             vscode.Uri.joinPath(extensionUri, 'node_modules', '@vscode/codicons', 'dist', 'codicon.css')
         );
         const mainCSSUri = webview.asWebviewUri(vscode.Uri.joinPath(extensionUri, 'lib', 'main.css'));
-
-        this.themeManager.dispose();
-        this.themeManager.initialize();
-        this.themeManager.onChange(e => this.themeManager.updateTheme(vscode.window.activeColorTheme.kind));
 
         webviewPanel.webview.options = {
             enableScripts: true
@@ -70,5 +73,26 @@ export default class UmlEditorProvider extends GlspEditorProvider {
                     <script src="${webviewScriptSourceUri}"></script>
                 </body>
             </html>`;
+    }
+
+    protected setUpTheme(): void {
+        this.themeManager.dispose();
+        this.themeManager.initialize();
+        this.themeManager.onChange(e => this.themeManager.updateTheme(vscode.window.activeColorTheme.kind));
+    }
+
+    protected setUpModelServer(): void {
+        const workspaces = vscode.workspace.workspaceFolders;
+        if (workspaces && workspaces.length > 0) {
+            const workspaceRoot = new URI(workspaces[0].uri.toString());
+            const uiSchemaFolder = workspaceRoot.clone().segment('.ui-schemas');
+
+            console.log('Workspace', workspaceRoot, uiSchemaFolder);
+
+            new UmlModelServerClient(MODEL_SERVER_CONFIG).configureServer({
+                workspaceRoot,
+                uiSchemaFolder
+            });
+        }
     }
 }

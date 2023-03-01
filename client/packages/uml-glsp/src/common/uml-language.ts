@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2021 EclipseSource and others.
+ * Copyright (c) 2021-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -8,12 +8,17 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-import { GLSPDiagramLanguage } from '@eclipse-glsp/theia-integration';
 
-export const UmlLanguage: GLSPDiagramLanguage = {
-    contributionId: 'uml',
-    label: 'UML diagram',
-    diagramType: 'umldiagram',
-    iconClass: 'codicon codicon-type-hierarchy-sub',
-    fileExtensions: ['.uml']
-};
+export enum UmlDiagramType {
+    NONE = '',
+    ACTIVITY = 'ACTIVITY',
+    CLASS = 'CLASS',
+    COMPONENT = 'COMPONENT',
+    DEPLOYMENT = 'DEPLOYMENT',
+    PACKAGE = 'PACKAGE',
+    SEQUENCE = 'SEQUENCE',
+    STATEMACHINE = 'STATEMACHINE',
+    USECASE = 'USECASE',
+    OBJECT = 'OBJECT',
+    COMMUNICATION = 'COMMUNICATION'
+}

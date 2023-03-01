@@ -946,6 +946,18 @@
     urijs "^1.19.11"
     ws "^7.1.2"
 
+"@eclipse-emfcloud/modelserver-client@next":
+  version "0.8.0-next.d7db15a.92"
+  resolved "https://registry.yarnpkg.com/@eclipse-emfcloud/modelserver-client/-/modelserver-client-0.8.0-next.d7db15a.92.tgz#a79d4bf52deccbe0a038af612fb8981faaf04ce4"
+  integrity sha512-a4NrHVlSX84APNYBclljWKppV9qoZ2N6I5uhqdUSU0oqqkL8b2G5wvRbnSIZBbqADtjD8Ijx+39ynA3mBXy27g==
+  dependencies:
+    axios "^0.24.0"
+    events "^3.3.0"
+    fast-json-patch "^3.1.0"
+    isomorphic-ws "^4.0.1"
+    urijs "^1.19.11"
+    ws "^7.1.2"
+
 "@eclipse-emfcloud/modelserver-theia@0.8.0-theia-cr02", "@eclipse-emfcloud/modelserver-theia@next":
   version "0.8.0-theia-cr02"
   resolved "https://registry.yarnpkg.com/@eclipse-emfcloud/modelserver-theia/-/modelserver-theia-0.8.0-theia-cr02.tgz#eb715ffd57f7e72e9fd1376ea285f2ee1cf8a135"
@@ -3056,6 +3068,11 @@
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/@types/trusted-types/-/trusted-types-2.0.3.tgz#a136f83b0758698df454e328759dbd3d44555311"
   integrity sha512-NfQ4gyz38SL8sDNrSixxU2Os1a5xcdFxipAFxYEuLUlvU2uDwS4NUpsImcf1//SlWItCVMMLiylsxbmNMToV/g==
+
+"@types/urijs@1.19.19":
+  version "1.19.19"
+  resolved "https://registry.yarnpkg.com/@types/urijs/-/urijs-1.19.19.tgz#2789369799907fc11e2bc6e3a00f6478c2281b95"
+  integrity sha512-FDJNkyhmKLw7uEvTxx5tSXfPeQpO0iy73Ry+PmYZJvQy0QIWX8a7kJ4kLWRf+EbTPJEPDSgPXHaM7pzr5lmvCg==
 
 "@types/uuid@^7.0.3":
   version "7.0.5"

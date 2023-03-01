@@ -21,9 +21,9 @@ import * as path from 'path';
 import * as process from 'process';
 import 'reflect-metadata';
 import * as vscode from 'vscode';
+import { UmlGlspConnector } from './glsp/connection/uml-glsp-connector';
+import { UmlGlspServer } from './glsp/connection/uml-glsp-server';
 import * as config from './server-config.json';
-import { UmlVscodeConnector } from './vscode/connection/uml-vscode-connector';
-import { UmlVscodeServer } from './vscode/connection/uml-vscode-server';
 import UmlEditorProvider from './vscode/editor/uml-editor-provider';
 
 const DEFAULT_SERVER_PORT = '5007';
@@ -45,41 +45,41 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     }
 
     // Wrap server with quickstart component
-    const umlServer = new UmlVscodeServer({
+    const umlGlspServer = new UmlGlspServer({
         clientId: 'glsp.uml',
         clientName: 'uml',
         serverPort: JSON.parse(process.env.GLSP_SERVER_PORT || DEFAULT_SERVER_PORT)
     });
 
     // Initialize GLSP-VSCode connector with server wrapper
-    const glspVscodeConnector = new UmlVscodeConnector({
-        server: umlServer,
+    const umlGlspConnector = new UmlGlspConnector({
+        server: umlGlspServer,
         logging: false
     });
 
     const customEditorProvider = vscode.window.registerCustomEditorProvider(
         'uml.glspDiagram',
-        new UmlEditorProvider(context, glspVscodeConnector),
+        new UmlEditorProvider(context, umlGlspConnector),
         {
             webviewOptions: { retainContextWhenHidden: true },
             supportsMultipleEditorsPerDocument: false
         }
     );
 
-    context.subscriptions.push(umlServer, glspVscodeConnector, customEditorProvider);
-    umlServer.start();
+    context.subscriptions.push(umlGlspServer, umlGlspConnector, customEditorProvider);
+    umlGlspServer.start();
 
-    configureDefaultCommands({ extensionContext: context, connector: glspVscodeConnector, diagramPrefix: 'uml' });
+    configureDefaultCommands({ extensionContext: context, connector: umlGlspConnector, diagramPrefix: 'uml' });
 
     context.subscriptions.push(
         vscode.commands.registerCommand('uml.goToNextNode', () => {
-            glspVscodeConnector.sendActionToActiveClient(NavigateAction.create('next'));
+            umlGlspConnector.sendActionToActiveClient(NavigateAction.create('next'));
         }),
         vscode.commands.registerCommand('uml.goToPreviousNode', () => {
-            glspVscodeConnector.sendActionToActiveClient(NavigateAction.create('previous'));
+            umlGlspConnector.sendActionToActiveClient(NavigateAction.create('previous'));
         }),
         vscode.commands.registerCommand('uml.showDocumentation', () => {
-            glspVscodeConnector.sendActionToActiveClient(NavigateAction.create('documentation'));
+            umlGlspConnector.sendActionToActiveClient(NavigateAction.create('documentation'));
         })
     );
 }

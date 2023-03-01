@@ -10,14 +10,10 @@
  ********************************************************************************/
 import { ModelServerMessage } from '@eclipse-emfcloud/modelserver-client/lib/model-server-message';
 import { TheiaBackendModelServerClientV2 } from '@eclipse-emfcloud/modelserver-theia/lib/node';
-import { injectable } from 'inversify';
+import { UmlDiagramType } from '@eclipsesource/uml-glsp/lib/common/uml-language';
+import { UmlModelServerPaths } from '@eclipsesource/uml-glsp/lib/modelserver/paths';
 import { AxiosResponse } from 'axios';
-
-import { UmlDiagramType } from '../common/uml-language';
-
-export namespace UmlModelServerPaths {
-    export const CREATE_UML = 'uml/create';
-}
+import { injectable } from 'inversify';
 
 @injectable()
 export class UmlModelServerClient extends TheiaBackendModelServerClientV2 {

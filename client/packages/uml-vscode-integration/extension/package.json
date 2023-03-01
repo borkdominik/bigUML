@@ -195,11 +195,13 @@
   "dependencies": {
     "@eclipse-glsp/vscode-integration": "next",
     "@eclipsesource/uml-glsp": "*",
+    "@eclipsesource/uml-modelserver": "*",
     "@vscode/codicons": "^0.0.25",
     "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
     "@eclipsesource/uml-vscode-integration-webview": "*",
+    "@types/urijs": "1.19.19",
     "@types/vscode": "^1.54.0",
     "@vscode/vsce": "^2.15.0",
     "esbuild": "^0.17.10"

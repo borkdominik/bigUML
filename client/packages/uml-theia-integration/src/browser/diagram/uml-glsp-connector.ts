@@ -16,7 +16,7 @@ import { injectable } from 'inversify';
 import { UmlLanguage } from '../../common/uml-language';
 
 @injectable()
-export class UmlTheiaGLSPConnector extends BaseTheiaGLSPConnector {
+export class UmlGLSPConnector extends BaseTheiaGLSPConnector {
     private _diagramType: string = UmlLanguage.diagramType;
     private _contributionId: string = UmlLanguage.contributionId;
 

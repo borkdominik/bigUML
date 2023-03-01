@@ -17,7 +17,7 @@ import { NavigatorContextMenu } from '@theia/navigator/lib/browser/navigator-con
 import { WorkspaceService } from '@theia/workspace/lib/browser';
 import { inject, injectable } from 'inversify';
 
-import { UmlDiagramType } from '../common/uml-language';
+import { UmlDiagramType } from '@eclipsesource/uml-glsp/lib/common/uml-language';
 
 export const NEW_UML_DIAGRAM_COMMAND: Command = {
     id: 'file.newUmlDiagram',

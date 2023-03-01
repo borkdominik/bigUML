@@ -23,9 +23,9 @@ import { LabelProviderContribution } from '@theia/core/lib/browser/label-provide
 import { DiagramConfiguration } from 'sprotty-theia/lib';
 
 import { UmlLanguage } from '../common/uml-language';
-import { UmlTheiaGLSPConnector } from './diagram/theia-glsp-connector';
 import { UmlDiagramConfiguration } from './diagram/uml-diagram-configuration';
 import { UmlDiagramManager } from './diagram/uml-diagram-manager';
+import { UmlGLSPConnector } from './diagram/uml-glsp-connector';
 import { registerOutlineIntegration } from './features/outline/integration/outline-integration.module';
 import { registerOutlineWidget } from './features/outline/widget/outline-widget.module';
 import { UmlTreeLabelProviderContribution } from './label-provider';
@@ -39,7 +39,7 @@ export class UmlTheiaFrontendModule extends GLSPTheiaFrontendModule {
 
     override bindTheiaGLSPConnector(context: ContainerContext): void {
         context.bind(TheiaGLSPConnector).toDynamicValue(dynamicContext => {
-            const connector = dynamicContext.container.resolve(UmlTheiaGLSPConnector);
+            const connector = dynamicContext.container.resolve(UmlGLSPConnector);
             connector.doConfigure(this.diagramLanguage);
             return connector;
         });

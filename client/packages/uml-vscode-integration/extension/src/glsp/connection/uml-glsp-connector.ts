@@ -26,7 +26,7 @@ import {
 } from '@eclipse-glsp/vscode-integration';
 import * as vscode from 'vscode';
 
-export class UmlVscodeConnector<D extends vscode.CustomDocument = vscode.CustomDocument> extends GlspVscodeConnector<D> {
+export class UmlGlspConnector<D extends vscode.CustomDocument = vscode.CustomDocument> extends GlspVscodeConnector<D> {
     protected override handleSetDirtyStateAction(
         message: ActionMessage<SetDirtyStateAction>,
         client: GlspVscodeClient<D> | undefined,

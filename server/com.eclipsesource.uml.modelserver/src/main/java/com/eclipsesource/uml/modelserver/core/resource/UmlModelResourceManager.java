@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.core;
+package com.eclipsesource.uml.modelserver.core.resource;
 
 import java.io.File;
 import java.io.IOException;

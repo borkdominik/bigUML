@@ -60,7 +60,7 @@ import com.eclipsesource.uml.glsp.features.property_palette.manifest.PropertyPal
 import com.eclipsesource.uml.glsp.features.validation.UmlDiagramModelValidator;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.manifest.ClassUmlManifest;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.manifest.CommunicationUmlManifest;
-import com.eclipsesource.uml.modelserver.core.resource.UmlNotationResource;
+import com.eclipsesource.uml.modelserver.core.resource.notation.UmlNotationResource;
 import com.eclipsesource.uml.modelserver.unotation.UnotationPackage;
 import com.google.inject.Singleton;
 

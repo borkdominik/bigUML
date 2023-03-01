@@ -22,8 +22,8 @@ import org.eclipse.emfcloud.modelserver.emf.common.codecs.JsonCodec;
 import org.eclipse.emfcloud.modelserver.emf.common.util.ContextRequest;
 import org.eclipse.emfcloud.modelserver.emf.common.util.ContextResponse;
 
-import com.eclipsesource.uml.modelserver.core.UmlModelResourceManager;
 import com.eclipsesource.uml.modelserver.core.codec.UmlCodec;
+import com.eclipsesource.uml.modelserver.core.resource.UmlModelResourceManager;
 import com.google.inject.Inject;
 
 import io.javalin.Javalin;

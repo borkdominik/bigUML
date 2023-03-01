@@ -13,7 +13,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.core.resource;
+package com.eclipsesource.uml.modelserver.core.resource.notation;
 
 import java.util.Collection;
 import java.util.List;

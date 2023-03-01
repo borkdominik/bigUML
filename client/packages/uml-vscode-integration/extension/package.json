@@ -1,6 +1,6 @@
 {
   "name": "@eclipsesource/uml-vscode-extension",
-  "displayName": "Workflow GLSP Example",
+  "displayName": "UML",
   "version": "1.1.0-next",
   "description": "An example graphical language used for modeling workflows",
   "categories": [
@@ -46,6 +46,11 @@
   },
   "contributes": {
     "commands": [
+      {
+        "command": "uml.createDiagram",
+        "title": "Create Diagram",
+        "category": "UML Diagram"
+      },
       {
         "command": "uml.fit",
         "title": "Fit to Screen",
@@ -139,6 +144,11 @@
       }
     ],
     "menus": {
+      "file/newFile": [
+        {
+          "command": "uml.createDiagram"
+        }
+      ],
       "editor/title": [
         {
           "submenu": "uml.editor.title",

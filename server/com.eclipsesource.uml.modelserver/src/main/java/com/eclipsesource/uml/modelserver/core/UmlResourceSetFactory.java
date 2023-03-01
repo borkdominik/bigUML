@@ -21,7 +21,7 @@ import org.eclipse.emfcloud.modelserver.notation.integration.NotationResource;
 import org.eclipse.uml2.uml.resource.UMLResource;
 import org.eclipse.uml2.uml.resources.util.UMLResourcesUtil;
 
-import com.eclipsesource.uml.modelserver.core.resource.UmlNotationResource;
+import com.eclipsesource.uml.modelserver.core.resource.notation.UmlNotationResource;
 import com.google.inject.Inject;
 
 public class UmlResourceSetFactory extends DefaultResourceSetFactory {

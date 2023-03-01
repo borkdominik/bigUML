@@ -25,9 +25,11 @@ import com.eclipsesource.uml.modelserver.core.codec.UmlCodecProvider;
 import com.eclipsesource.uml.modelserver.core.commands.change_bounds.UmlChangeBoundsContribution;
 import com.eclipsesource.uml.modelserver.core.commands.change_routing_points.UmlChangeRoutingPointsContribution;
 import com.eclipsesource.uml.modelserver.core.controller.UmlSessionController;
-import com.eclipsesource.uml.modelserver.core.resource.UmlNotationPackageConfiguration;
-import com.eclipsesource.uml.modelserver.core.resource.UmlNotationResource;
-import com.eclipsesource.uml.modelserver.core.resource.UmlPackageConfiguration;
+import com.eclipsesource.uml.modelserver.core.repository.UmlModelRepository;
+import com.eclipsesource.uml.modelserver.core.resource.UmlModelResourceManager;
+import com.eclipsesource.uml.modelserver.core.resource.notation.UmlNotationPackageConfiguration;
+import com.eclipsesource.uml.modelserver.core.resource.notation.UmlNotationResource;
+import com.eclipsesource.uml.modelserver.core.resource.uml.UmlPackageConfiguration;
 import com.eclipsesource.uml.modelserver.core.routing.UmlModelServerRouting;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.manifest.ClassManifest;
 import com.eclipsesource.uml.modelserver.uml.diagram.common_diagram.manifest.CommonManifest;
@@ -56,6 +58,11 @@ public class UmlModelServerModule extends EMSNotationModelServerModule {
    @Override
    protected Class<? extends UmlSessionController> bindSessionController() {
       return UmlSessionController.class;
+   }
+
+   @Override
+   protected Class<? extends UmlModelRepository> bindModelRepository() {
+      return UmlModelRepository.class;
    }
 
    @Override

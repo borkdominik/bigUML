@@ -17,13 +17,17 @@ import '../css/colors.css';
 
 import { NavigateAction } from '@eclipse-glsp/vscode-integration';
 import { configureDefaultCommands, GlspServerLauncher } from '@eclipse-glsp/vscode-integration/lib/quickstart-components';
+import { UmlDiagramType } from '@eclipsesource/uml-glsp/lib/common/uml-language';
+import { UmlModelServerClient } from '@eclipsesource/uml-modelserver/lib/modelserver.client';
 import * as path from 'path';
 import * as process from 'process';
 import 'reflect-metadata';
 import * as vscode from 'vscode';
 import { UmlGlspConnector } from './glsp/connection/uml-glsp-connector';
 import { UmlGlspServer } from './glsp/connection/uml-glsp-server';
+import { MODEL_SERVER_CONFIG } from './modelserver/modelserver.config';
 import * as config from './server-config.json';
+import { DiagramCreator } from './vscode/create-diagram/create-diagram';
 import UmlEditorProvider from './vscode/editor/uml-editor-provider';
 
 const DEFAULT_SERVER_PORT = '5007';
@@ -57,16 +61,22 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
         logging: false
     });
 
-    const customEditorProvider = vscode.window.registerCustomEditorProvider(
+    const modelServerClient = new UmlModelServerClient(MODEL_SERVER_CONFIG);
+
+    const editorProvider = vscode.window.registerCustomEditorProvider(
         'uml.glspDiagram',
-        new UmlEditorProvider(context, umlGlspConnector),
+        new UmlEditorProvider(context, umlGlspConnector, modelServerClient),
         {
             webviewOptions: { retainContextWhenHidden: true },
             supportsMultipleEditorsPerDocument: false
         }
     );
 
-    context.subscriptions.push(umlGlspServer, umlGlspConnector, customEditorProvider);
+    const diagramCreator = new DiagramCreator(modelServerClient, {
+        allowedTypes: [UmlDiagramType.CLASS.toLowerCase(), UmlDiagramType.COMMUNICATION.toLocaleLowerCase()]
+    });
+
+    context.subscriptions.push(umlGlspServer, umlGlspConnector, editorProvider);
     umlGlspServer.start();
 
     configureDefaultCommands({ extensionContext: context, connector: umlGlspConnector, diagramPrefix: 'uml' });
@@ -80,6 +90,9 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
         }),
         vscode.commands.registerCommand('uml.showDocumentation', () => {
             umlGlspConnector.sendActionToActiveClient(NavigateAction.create('documentation'));
+        }),
+        vscode.commands.registerCommand('uml.createDiagram', () => {
+            diagramCreator.openDialog();
         })
     );
 }

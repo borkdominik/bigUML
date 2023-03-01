@@ -18,7 +18,6 @@ import { GlspEditorProvider } from '@eclipse-glsp/vscode-integration/lib/quickst
 import { UmlModelServerClient } from '@eclipsesource/uml-modelserver/lib/modelserver.client';
 import URI from 'urijs';
 import * as vscode from 'vscode';
-import { MODEL_SERVER_CONFIG } from '../../modelserver/modelserver.config';
 import { ThemeManager } from '../theme-manager/theme-manager';
 
 export default class UmlEditorProvider extends GlspEditorProvider {
@@ -28,7 +27,8 @@ export default class UmlEditorProvider extends GlspEditorProvider {
 
     constructor(
         protected readonly extensionContext: vscode.ExtensionContext,
-        protected override readonly glspVscodeConnector: GlspVscodeConnector
+        protected override readonly glspVscodeConnector: GlspVscodeConnector,
+        protected readonly modelServerClient: UmlModelServerClient
     ) {
         super(glspVscodeConnector);
 
@@ -89,7 +89,7 @@ export default class UmlEditorProvider extends GlspEditorProvider {
 
             console.log('Workspace', workspaceRoot, uiSchemaFolder);
 
-            new UmlModelServerClient(MODEL_SERVER_CONFIG).configureServer({
+            this.modelServerClient.configureServer({
                 workspaceRoot,
                 uiSchemaFolder
             });

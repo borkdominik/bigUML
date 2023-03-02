@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2021 EclipseSource and others.
+ * Copyright (c) 2021-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -13,10 +13,20 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import 'reflect-metadata';
-import * as vscode from 'vscode';
-import { activate as extensionActivate } from './extension';
 
-export function activate(context: vscode.ExtensionContext): Promise<void> {
-    return extensionActivate(context);
+import { inject, injectable } from 'inversify';
+import { NewDiagramFileCreator } from '../new-file/new-diagram-file.creator';
+import { VSCodeCommand } from './command';
+
+@injectable()
+export class NewDiagramCommand implements VSCodeCommand {
+    constructor(@inject(NewDiagramFileCreator) private creator: NewDiagramFileCreator) {}
+
+    get id() {
+        return 'uml.newDiagram';
+    }
+
+    execute(...args: any[]) {
+        this.creator.start();
+    }
 }

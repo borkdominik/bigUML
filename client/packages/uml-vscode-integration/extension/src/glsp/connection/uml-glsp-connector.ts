@@ -18,15 +18,26 @@ import {
     ActionMessage,
     GlspVscodeClient,
     GlspVscodeConnector,
+    GlspVscodeServer,
     MessageOrigin,
     MessageProcessingResult,
     RedoAction,
     SetDirtyStateAction,
     UndoAction
 } from '@eclipse-glsp/vscode-integration';
+import { inject, injectable } from 'inversify';
 import * as vscode from 'vscode';
+import { TYPES } from '../../di.types';
 
+@injectable()
 export class UmlGlspConnector<D extends vscode.CustomDocument = vscode.CustomDocument> extends GlspVscodeConnector<D> {
+    constructor(@inject(TYPES.GlspServer) readonly glspServer: GlspVscodeServer) {
+        super({
+            server: glspServer,
+            logging: false
+        });
+    }
+
     protected override handleSetDirtyStateAction(
         message: ActionMessage<SetDirtyStateAction>,
         client: GlspVscodeClient<D> | undefined,

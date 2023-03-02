@@ -16,9 +16,20 @@
 
 import { InitializeParameters } from '@eclipse-glsp/vscode-integration';
 import { SocketGlspVscodeServer } from '@eclipse-glsp/vscode-integration/lib/quickstart-components/socket-glsp-vscode-server';
+import { injectable } from 'inversify';
 import { MODEL_SERVER_CONFIG } from '../../modelserver/modelserver.config';
+import { DEFAULT_SERVER_PORT } from '../server/launcher';
 
+@injectable()
 export class UmlGlspServer extends SocketGlspVscodeServer {
+    constructor() {
+        super({
+            clientId: 'glsp.uml',
+            clientName: 'uml',
+            serverPort: JSON.parse(process.env.GLSP_SERVER_PORT || DEFAULT_SERVER_PORT)
+        });
+    }
+
     protected override async createInitializeParameters(): Promise<InitializeParameters> {
         return {
             ...(await super.createInitializeParameters()),

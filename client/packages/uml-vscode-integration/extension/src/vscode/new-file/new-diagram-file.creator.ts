@@ -13,48 +13,58 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { parseDiagramType } from '@eclipsesource/uml-glsp/lib/common/uml-language';
-import { UmlModelServerClient } from '@eclipsesource/uml-modelserver/lib/modelserver.client';
+import { parseDiagramType, UmlDiagramType } from '@eclipsesource/uml-glsp/lib/common/uml-language';
+import { inject, injectable } from 'inversify';
 import * as vscode from 'vscode';
+import { TYPES } from '../../di.types';
+import { VSCodeModelServerClient } from '../../modelserver/modelserver.client';
 
-export class DiagramCreator {
+@injectable()
+export class NewDiagramFileCreator {
+    readonly options;
+
     constructor(
-        protected readonly client: UmlModelServerClient,
-        protected readonly options: {
-            allowedTypes: string[];
-        }
-    ) {}
+        @inject(TYPES.ModelServerClient)
+        protected readonly client: VSCodeModelServerClient
+    ) {
+        this.options = {
+            allowedTypes: [UmlDiagramType.CLASS.toLowerCase(), UmlDiagramType.COMMUNICATION.toLocaleLowerCase()]
+        };
+    }
 
-    async openDialog(): Promise<void> {
-        const diagramName = await this.showInput('Enter name of UML diagram', 'Diagram name', async input =>
+    async start(): Promise<void> {
+        const diagramName = await this.showInput('Diagram name', 'Enter name of UML diagram', async input =>
             input ? undefined : 'Diagram name can not be empty'
         );
 
-        const diagramType = await this.showInput('Enter UML diagram type', this.options.allowedTypes.join(' | '), async input =>
-            this.options.allowedTypes.includes(input) ? undefined : `${input} is not a valid value`
-        );
+        if (diagramName !== undefined) {
+            const diagramType = await this.showInput(this.options.allowedTypes.join(' | '), 'Enter UML diagram type', async input =>
+                this.options.allowedTypes.includes(input) ? undefined : `${input} is not a valid value`
+            );
 
-        this.createUmlDiagram(diagramName, diagramType);
+            if (diagramType !== undefined) {
+                this.createUmlDiagram(diagramName, diagramType);
+            }
+        }
     }
 
     protected createUmlDiagram(diagramName: string, diagramType: string): void {
         this.client.createUmlResource(diagramName, parseDiagramType(diagramType));
     }
 
-    protected async showInput(prefix: string, hint: string, inputCheck: (input: string) => Promise<string | undefined>): Promise<string>;
     protected async showInput(
-        prefix: string,
+        placeHolder: string,
         hint: string,
         inputCheck?: (input: string) => Promise<string | undefined>
     ): Promise<string | undefined> {
         return vscode.window.showInputBox({
-            prompt: prefix,
-            placeHolder: hint,
+            prompt: hint,
+            placeHolder: placeHolder,
             validateInput: async input => {
                 if (inputCheck) {
                     return inputCheck(input);
                 }
-                return !input ? `Please enter a valid string for '${prefix}'` : undefined;
+                return !input ? 'Please enter a valid string' : undefined;
             }
         });
     }

@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2021 EclipseSource and others.
+ * Copyright (c) 2021-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -13,10 +13,24 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import 'reflect-metadata';
-import * as vscode from 'vscode';
-import { activate as extensionActivate } from './extension';
 
-export function activate(context: vscode.ExtensionContext): Promise<void> {
-    return extensionActivate(context);
+import { inject, injectable, multiInject, postConstruct } from 'inversify';
+import * as vscode from 'vscode';
+import { VSCODE_TYPES } from '../../di.types';
+
+export interface Disposable {
+    dispose(): any;
+}
+
+@injectable()
+export class DisposableManager {
+    constructor(
+        @inject(VSCODE_TYPES.ExtensionContext) protected readonly context: vscode.ExtensionContext,
+        @multiInject(VSCODE_TYPES.Disposable) protected readonly disposables: Disposable[]
+    ) {}
+
+    @postConstruct()
+    initialize(): void {
+        this.disposables.forEach(d => this.context.subscriptions.push(d));
+    }
 }

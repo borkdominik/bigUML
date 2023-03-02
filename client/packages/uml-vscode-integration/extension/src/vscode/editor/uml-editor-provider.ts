@@ -16,23 +16,35 @@
 import { GlspVscodeConnector } from '@eclipse-glsp/vscode-integration';
 import { GlspEditorProvider } from '@eclipse-glsp/vscode-integration/lib/quickstart-components';
 import { UmlModelServerClient } from '@eclipsesource/uml-modelserver/lib/modelserver.client';
+import { inject, injectable, postConstruct } from 'inversify';
 import URI from 'urijs';
 import * as vscode from 'vscode';
+import { TYPES, VSCODE_TYPES } from '../../di.types';
 import { ThemeManager } from '../theme-manager/theme-manager';
 
+@injectable()
 export default class UmlEditorProvider extends GlspEditorProvider {
     diagramType = 'umldiagram';
 
     protected readonly themeManager = new ThemeManager();
 
     constructor(
-        protected readonly extensionContext: vscode.ExtensionContext,
-        protected override readonly glspVscodeConnector: GlspVscodeConnector,
-        protected readonly modelServerClient: UmlModelServerClient
+        @inject(VSCODE_TYPES.ExtensionContext) protected readonly context: vscode.ExtensionContext,
+        @inject(TYPES.Connector) glspVscodeConnector: GlspVscodeConnector,
+        @inject(TYPES.ModelServerClient) protected readonly modelServerClient: UmlModelServerClient
     ) {
         super(glspVscodeConnector);
 
         this.setUpModelServer();
+    }
+
+    @postConstruct()
+    initialize(): void {
+        const disposable = vscode.window.registerCustomEditorProvider('uml.glspDiagram', this, {
+            webviewOptions: { retainContextWhenHidden: true },
+            supportsMultipleEditorsPerDocument: false
+        });
+        this.context.subscriptions.push(disposable);
     }
 
     setUpWebview(
@@ -44,7 +56,7 @@ export default class UmlEditorProvider extends GlspEditorProvider {
         this.setUpTheme();
 
         const webview = webviewPanel.webview;
-        const extensionUri = this.extensionContext.extensionUri;
+        const extensionUri = this.context.extensionUri;
         const webviewScriptSourceUri = webview.asWebviewUri(vscode.Uri.joinPath(extensionUri, 'pack', 'webview.js'));
         const codiconsUri = webview.asWebviewUri(
             vscode.Uri.joinPath(extensionUri, 'node_modules', '@vscode/codicons', 'dist', 'codicon.css')

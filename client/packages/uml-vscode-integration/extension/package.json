@@ -47,8 +47,8 @@
   "contributes": {
     "commands": [
       {
-        "command": "uml.createDiagram",
-        "title": "Create Diagram",
+        "command": "uml.newDiagram",
+        "title": "New Diagram",
         "category": "UML Diagram"
       },
       {
@@ -68,24 +68,6 @@
         "title": "Layout diagram",
         "category": "UML Diagram",
         "enablement": "activeCustomEditorId == 'uml.glspDiagram'"
-      },
-      {
-        "command": "uml.goToNextNode",
-        "title": "Go to next Node",
-        "category": "Workflow Navigation",
-        "enablement": "activeCustomEditorId == 'uml.glspDiagram' && uml.editorSelectedElementsAmount == 1"
-      },
-      {
-        "command": "uml.goToPreviousNode",
-        "title": "Go to previous Node",
-        "category": "Workflow Navigation",
-        "enablement": "activeCustomEditorId == 'uml.glspDiagram' && uml.editorSelectedElementsAmount == 1"
-      },
-      {
-        "command": "uml.showDocumentation",
-        "title": "Show documentation...",
-        "category": "UML Diagram",
-        "enablement": "activeCustomEditorId == 'uml.glspDiagram' && uml.editorSelectedElementsAmount == 1"
       },
       {
         "command": "uml.exportAsSVG",
@@ -129,45 +111,18 @@
         "mac": "alt+l",
         "command": "uml.layout",
         "when": "activeCustomEditorId == 'uml.glspDiagram'"
-      },
-      {
-        "key": "Ctrl+4",
-        "mac": "cmd+4",
-        "command": "uml.goToNextNode",
-        "when": "activeCustomEditorId == 'uml.glspDiagram' && uml.editorSelectedElementsAmount == 1"
-      },
-      {
-        "key": "Ctrl+3",
-        "mac": "cmd+3",
-        "command": "uml.goToPreviousNode",
-        "when": "activeCustomEditorId == 'uml.glspDiagram' && uml.editorSelectedElementsAmount == 1"
       }
     ],
     "menus": {
       "file/newFile": [
         {
-          "command": "uml.createDiagram"
+          "command": "uml.newDiagram"
         }
       ],
       "editor/title": [
         {
           "submenu": "uml.editor.title",
           "group": "bookmarks"
-        },
-        {
-          "command": "uml.goToNextNode",
-          "group": "navigation",
-          "when": "activeCustomEditorId == 'uml.glspDiagram' && uml.editorSelectedElementsAmount == 1"
-        },
-        {
-          "command": "uml.goToPreviousNode",
-          "group": "navigation",
-          "when": "activeCustomEditorId == 'uml.glspDiagram' && uml.editorSelectedElementsAmount == 1"
-        },
-        {
-          "command": "uml.showDocumentation",
-          "group": "navigation",
-          "when": "activeCustomEditorId == 'uml.glspDiagram' && uml.editorSelectedElementsAmount == 1"
         }
       ],
       "uml.editor.title": [
@@ -207,6 +162,7 @@
     "@eclipsesource/uml-glsp": "*",
     "@eclipsesource/uml-modelserver": "*",
     "@vscode/codicons": "^0.0.25",
+    "inversify": "5.1.1",
     "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {

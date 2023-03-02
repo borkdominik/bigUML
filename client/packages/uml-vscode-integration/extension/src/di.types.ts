@@ -26,5 +26,6 @@ export const VSCODE_TYPES = {
     Disposable: Symbol('Disposable'),
     DisposableManager: Symbol('DisposableManager'),
     EditorProvider: Symbol('EditorProvider'),
-    ExtensionContext: Symbol('ExtensionContext')
+    ExtensionContext: Symbol('ExtensionContext'),
+    ThemeManager: Symbol('ThemeManager')
 };

@@ -15,23 +15,22 @@
  ********************************************************************************/
 import { GlspVscodeConnector } from '@eclipse-glsp/vscode-integration';
 import { GlspEditorProvider } from '@eclipse-glsp/vscode-integration/lib/quickstart-components';
-import { UmlModelServerClient } from '@eclipsesource/uml-modelserver/lib/modelserver.client';
 import { inject, injectable, postConstruct } from 'inversify';
 import URI from 'urijs';
 import * as vscode from 'vscode';
 import { TYPES, VSCODE_TYPES } from '../../di.types';
+import { VSCodeModelServerClient } from '../../modelserver/modelserver.client';
 import { ThemeManager } from '../theme-manager/theme-manager';
 
 @injectable()
 export default class UmlEditorProvider extends GlspEditorProvider {
     diagramType = 'umldiagram';
 
-    protected readonly themeManager = new ThemeManager();
-
     constructor(
         @inject(VSCODE_TYPES.ExtensionContext) protected readonly context: vscode.ExtensionContext,
         @inject(TYPES.Connector) glspVscodeConnector: GlspVscodeConnector,
-        @inject(TYPES.ModelServerClient) protected readonly modelServerClient: UmlModelServerClient
+        @inject(TYPES.ModelServerClient) protected readonly modelServerClient: VSCodeModelServerClient,
+        @inject(VSCODE_TYPES.ThemeManager) protected readonly themeManager: ThemeManager
     ) {
         super(glspVscodeConnector);
 
@@ -98,8 +97,6 @@ export default class UmlEditorProvider extends GlspEditorProvider {
         if (workspaces && workspaces.length > 0) {
             const workspaceRoot = new URI(workspaces[0].uri.toString());
             const uiSchemaFolder = workspaceRoot.clone().segment('.ui-schemas');
-
-            console.log('Workspace', workspaceRoot, uiSchemaFolder);
 
             this.modelServerClient.configureServer({
                 workspaceRoot,

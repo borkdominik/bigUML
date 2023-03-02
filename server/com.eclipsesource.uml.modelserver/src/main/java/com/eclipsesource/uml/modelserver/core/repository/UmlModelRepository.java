@@ -16,9 +16,14 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emfcloud.modelserver.emf.common.DefaultModelRepository;
 import org.eclipse.emfcloud.modelserver.emf.configuration.ServerConfiguration;
 
+import com.eclipsesource.uml.modelserver.core.resource.UmlModelResourceManager;
+import com.eclipsesource.uml.modelserver.model.NewDiagramRequest;
 import com.google.inject.Inject;
 
 public class UmlModelRepository extends DefaultModelRepository {
+
+   @Inject
+   protected UmlModelResourceManager modelResourceManager;
 
    @Inject
    public UmlModelRepository(final ServerConfiguration serverConfiguration) {
@@ -27,6 +32,12 @@ public class UmlModelRepository extends DefaultModelRepository {
 
    @Override
    public void addModel(final String modeluri, final EObject model) throws IOException {
-      super.addModel(modeluri, model);
+      if (model instanceof NewDiagramRequest) {
+         var request = (NewDiagramRequest) model;
+         modelResourceManager.createUmlModel(modeluri, request.getDiagramType());
+      } else {
+         super.addModel(modeluri, model);
+      }
    }
+
 }

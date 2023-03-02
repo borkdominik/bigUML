@@ -27,6 +27,7 @@
     "watch": "tsc -w"
   },
   "dependencies": {
+    "@eclipse-emfcloud/modelserver-client": "next",
     "@eclipse-emfcloud/modelserver-theia": "next",
     "@eclipse-glsp/client": "next",
     "@eclipse-glsp/theia-integration": "next",

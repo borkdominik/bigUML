@@ -27,6 +27,7 @@ import com.eclipsesource.uml.modelserver.core.commands.change_routing_points.Uml
 import com.eclipsesource.uml.modelserver.core.controller.UmlSessionController;
 import com.eclipsesource.uml.modelserver.core.repository.UmlModelRepository;
 import com.eclipsesource.uml.modelserver.core.resource.UmlModelResourceManager;
+import com.eclipsesource.uml.modelserver.core.resource.model.UmlModelPackageConfiguration;
 import com.eclipsesource.uml.modelserver.core.resource.notation.UmlNotationPackageConfiguration;
 import com.eclipsesource.uml.modelserver.core.resource.notation.UmlNotationResource;
 import com.eclipsesource.uml.modelserver.core.resource.uml.UmlPackageConfiguration;
@@ -76,6 +77,7 @@ public class UmlModelServerModule extends EMSNotationModelServerModule {
       super.configureEPackages(binding);
       binding.add(UmlPackageConfiguration.class);
       binding.add(UmlNotationPackageConfiguration.class);
+      binding.add(UmlModelPackageConfiguration.class);
    }
 
    @Override

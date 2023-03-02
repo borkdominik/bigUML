@@ -13,8 +13,9 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { parseDiagramType, UmlDiagramType } from '@eclipsesource/uml-glsp/lib/common/uml-language';
+import { UmlDiagramType } from '@eclipsesource/uml-glsp/lib/common/uml-language';
 import { inject, injectable } from 'inversify';
+import URI from 'urijs';
 import * as vscode from 'vscode';
 import { TYPES } from '../../di.types';
 import { VSCodeModelServerClient } from '../../modelserver/modelserver.client';
@@ -49,7 +50,23 @@ export class NewDiagramFileCreator {
     }
 
     protected createUmlDiagram(diagramName: string, diagramType: string): void {
-        this.client.createUmlResource(diagramName, parseDiagramType(diagramType));
+        const workspaces = vscode.workspace.workspaceFolders;
+        if (workspaces && workspaces.length > 0) {
+            const workspaceRoot = new URI(workspaces[0].uri.toString());
+            const modelUri = new URI(workspaceRoot + `/${diagramName}/model/${diagramName}.uml`);
+
+            this.client.create(
+                modelUri,
+                {
+                    data: {
+                        $type: 'com.eclipsesource.uml.modelserver.model.impl.NewDiagramRequestImpl',
+                        diagramType
+                    }
+                },
+                undefined,
+                'raw-json'
+            );
+        }
     }
 
     protected async showInput(

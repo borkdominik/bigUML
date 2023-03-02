@@ -14,16 +14,18 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 
-import { ModelServerClientV2, ModelServerMessage } from '@eclipse-emfcloud/modelserver-client';
-import { UmlDiagramType } from '@eclipsesource/uml-glsp/lib/common/uml-language';
-import { AxiosResponse } from 'axios';
+import {
+    AnyObject,
+    Format,
+    MessageDataMapper,
+    ModelServerClientV2,
+    ModelServerPaths,
+    TypeGuard
+} from '@eclipse-emfcloud/modelserver-client';
 import URI from 'urijs';
 import { ModelServerConfig } from './config';
-import { UmlModelServerPaths } from './modelserver.path';
 
-export interface UmlModelServerApi {
-    createUmlResource(modelName: string, diagramType: UmlDiagramType): Promise<AxiosResponse<ModelServerMessage>>;
-}
+export interface UmlModelServerApi {}
 
 export class UmlModelServerClient extends ModelServerClientV2 implements UmlModelServerApi {
     constructor(protected readonly config: ModelServerConfig) {
@@ -31,8 +33,23 @@ export class UmlModelServerClient extends ModelServerClientV2 implements UmlMode
         this.initialize(new URI(this.config.url));
     }
 
-    async createUmlResource(modelName: string, diagramType: UmlDiagramType): Promise<AxiosResponse<ModelServerMessage>> {
-        const newModelUri = `${modelName}/model/${modelName}.uml`;
-        return this.restClient.get(`${UmlModelServerPaths.CREATE_UML}?modeluri=${newModelUri}&diagramtype=${diagramType}`);
+    override create<M>(
+        modeluri: URI,
+        model: AnyObject | string,
+        formatOrGuard?: FormatOrGuard<M>,
+        format?: Format
+    ): Promise<AnyObject | M> {
+        if (format === 'raw-json') {
+            return this.process(
+                this.restClient.post(ModelServerPaths.MODEL_CRUD, model, {
+                    params: { modeluri: modeluri.toString(), format }
+                }),
+                MessageDataMapper.asObject
+            );
+        } else {
+            return super.create(modeluri, model, formatOrGuard as any, format);
+        }
     }
 }
+
+type FormatOrGuard<M> = Format | TypeGuard<M>;

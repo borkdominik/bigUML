@@ -11,13 +11,13 @@
 import { MenuContribution, MenuModelRegistry } from '@theia/core';
 import { CommonMenus, OpenerService, QuickInputService } from '@theia/core/lib/browser';
 import { Command, CommandContribution, CommandRegistry, CommandService } from '@theia/core/lib/common/command';
-import URI from '@theia/core/lib/common/uri';
+import { URI as TheiaURI } from '@theia/core/lib/common/uri';
 import { FileService } from '@theia/filesystem/lib/browser/file-service';
 import { FileNavigatorCommands, NavigatorContextMenu } from '@theia/navigator/lib/browser/navigator-contribution';
 import { WorkspaceService } from '@theia/workspace/lib/browser';
 import { inject, injectable } from 'inversify';
+import URI from 'urijs';
 
-import { UmlDiagramType } from '@eclipsesource/uml-glsp/lib/common/uml-language';
 import { UmlModelServerClient } from '../common/uml-modelserver.client';
 
 export const NEW_UML_DIAGRAM_COMMAND: Command = {
@@ -42,15 +42,14 @@ export class UmlModelContribution implements CommandContribution, MenuContributi
     registerCommands(registry: CommandRegistry): void {
         registry.registerCommand(NEW_UML_DIAGRAM_COMMAND, {
             execute: async () => {
-                let workspaceUri: URI = new URI();
                 if (this.workspaceService.tryGetRoots().length) {
-                    workspaceUri = this.workspaceService.tryGetRoots()[0].resource;
+                    const workspaceUri = this.workspaceService.tryGetRoots()[0].resource;
 
                     this.showInput('Enter Name of UML Diagram', 'Diagram name').then(nameOfUmlModel => {
                         if (nameOfUmlModel) {
                             this.showInput('Enter UML Diagram Type', 'class | communication').then(diagramType => {
                                 if (diagramType) {
-                                    this.createUmlDiagram(nameOfUmlModel, workspaceUri, diagramType);
+                                    this.createUmlDiagram(nameOfUmlModel, workspaceUri.path.toString(), diagramType);
                                 }
                             });
                         }
@@ -78,39 +77,33 @@ export class UmlModelContribution implements CommandContribution, MenuContributi
         });
     }
 
-    protected createUmlDiagram(diagramName: string, workspaceUri: URI, diagramType: string): void {
+    protected createUmlDiagram(diagramName: string, workspaceUri: string, diagramType: string): void {
         if (diagramName) {
-            console.log('CreateUmlDiagram');
-            this.modelServerClient.createUmlResource(diagramName, this.getUmlDiagramType(diagramType)).then(() => {
-                this.quickInputService.hide();
-                const modelUri = new URI(workspaceUri.path.toString() + `/${diagramName}/model/${diagramName}.uml`);
-                this.commandService.executeCommand(FileNavigatorCommands.REFRESH_NAVIGATOR.id);
-                this.openerService.getOpener(modelUri).then(openHandler => {
-                    openHandler.open(modelUri);
-                    this.commandService.executeCommand(FileNavigatorCommands.REVEAL_IN_NAVIGATOR.id);
-                });
-            });
-        }
-    }
+            const uri = workspaceUri + `/${diagramName}/model/${diagramName}.uml`;
+            const theiaUri = new TheiaURI(uri);
+            const uriJs = new URI(uri);
 
-    protected getUmlDiagramType(diagramType: string): UmlDiagramType {
-        switch (diagramType.toLowerCase()) {
-            case 'class':
-                return UmlDiagramType.CLASS;
-            case 'communication':
-                return UmlDiagramType.COMMUNICATION;
+            this.modelServerClient
+                .create(
+                    uriJs,
+                    {
+                        data: {
+                            $type: 'com.eclipsesource.uml.modelserver.model.impl.NewDiagramRequestImpl',
+                            diagramType
+                        }
+                    },
+                    undefined as any,
+                    'raw-json'
+                )
+                .then(() => {
+                    this.quickInputService.hide();
+                    this.commandService.executeCommand(FileNavigatorCommands.REFRESH_NAVIGATOR.id);
+                    this.openerService.getOpener(theiaUri).then(openHandler => {
+                        openHandler.open(theiaUri);
+                        this.commandService.executeCommand(FileNavigatorCommands.REVEAL_IN_NAVIGATOR.id);
+                    });
+                });
         }
-        /*
-            case ("activity"): return UmlDiagramType.ACTIVITY;
-            case ("component"): return UmlDiagramType.COMPONENT;
-            case ("deployment"): return UmlDiagramType.DEPLOYMENT;
-            case ("package"): return UmlDiagramType.PACKAGE;
-            case ("sequence"): return UmlDiagramType.SEQUENCE;
-            case ("statemachine"): return UmlDiagramType.STATEMACHINE;
-            case ("usecase"): return UmlDiagramType.USECASE;
-            case ("object"): return UmlDiagramType.OBJECT;
-        */
-        return UmlDiagramType.NONE;
     }
 
     registerMenus(menus: MenuModelRegistry): void {

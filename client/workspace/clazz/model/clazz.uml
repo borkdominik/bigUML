@@ -80,5 +80,5 @@
   <packagedElement xmi:type="uml:Class" xmi:id="_D0YigLK2Ee24ffphK9Na6g" name="NewClass6"/>
   <packagedElement xmi:type="uml:Class" xmi:id="_EWMPELK2Ee24ffphK9Na6g" name="NewClass7"/>
   <packagedElement xmi:type="uml:Usage" xmi:id="_FGLhkLK2Ee24ffphK9Na6g" client="_Mg74YLK1Ee24ffphK9Na6g" supplier="_D0YigLK2Ee24ffphK9Na6g"/>
-  <packagedElement xmi:type="uml:Class" xmi:id="_LjfcIbSLEe2pkZx4lGC8Ew" name="NewClass8"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="_LjfcIbSLEe2pkZx4lGC8Ew" name="asd"/>
 </uml:Model>

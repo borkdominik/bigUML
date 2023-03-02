@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2021 EclipseSource and others.
+ * Copyright (c) 2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -8,15 +8,14 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.core.routing;
+package com.eclipsesource.uml.modelserver.core.resource.model;
 
-import org.eclipse.emfcloud.modelserver.common.ModelServerPathsV2;
+import org.eclipse.emf.ecore.resource.Resource;
 
-public interface UmlModelServerPaths {
-   String PATH = "uml";
-   String BASE_PATH = ModelServerPathsV2.BASE_PATH + "/" + PATH;
-   String FORMAT_UML = "uml";
-   String FORMAT_RAW_JSON = "raw-json";
+import com.eclipsesource.uml.modelserver.model.util.ModelResourceFactoryImpl;
 
-   String UML_TYPES = "types";
+public interface UmlModelResource {
+
+   Resource.Factory FACTORY = new ModelResourceFactoryImpl();
+
 }

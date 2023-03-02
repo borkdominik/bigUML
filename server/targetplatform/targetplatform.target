@@ -48,10 +48,12 @@
 		<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 			<repository location="https://download.eclipse.org/emfcloud/modelserver/p2/integration/0.8.0.I20230217/"/>
 			<unit id="org.eclipse.emfcloud.modelserver.feature.feature.group" version="0.8.0.I20230217"/>
+			<unit id="org.eclipse.emfcloud.modelserver.feature.source.feature.group" version="0.8.0.I20230217"/>
 		</location>
 		<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 			<repository location="https://download.eclipse.org/emfcloud/modelserver-glsp-integration/p2/integration/0.8.0.I20230217/"/>
 			<unit id="org.eclipse.emfcloud.modelserver.glsp.feature.feature.group" version="0.8.0.I20230217"/>
+			<unit id="org.eclipse.emfcloud.modelserver.glsp.feature.source.feature.group" version="0.8.0.I20230217"/>
 		</location>
 		<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 			<repository location="https://download.eclipse.org/glsp/server/p2/nightly/1.1/1.1.0.202302221634/"/>

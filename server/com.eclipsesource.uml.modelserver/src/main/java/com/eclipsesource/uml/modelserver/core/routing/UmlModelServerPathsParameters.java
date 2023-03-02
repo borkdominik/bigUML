@@ -12,6 +12,4 @@ package com.eclipsesource.uml.modelserver.core.routing;
 
 public interface UmlModelServerPathsParameters {
 
-   String UML_DIAGRAM_TYPE = "diagramtype";
-
 }

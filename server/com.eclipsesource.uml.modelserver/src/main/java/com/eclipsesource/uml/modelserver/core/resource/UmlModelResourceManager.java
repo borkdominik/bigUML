@@ -136,33 +136,6 @@ public class UmlModelResourceManager extends RecordingModelResourceManager {
       return false;
    }
 
-   public boolean createUmlModel(final String modeluri, final String diagramType) {
-      var umlModelUri = createURI(modeluri);
-      var resourceSet = resourceSetFactory.createResourceSet(umlModelUri);
-      resourceSets.put(umlModelUri, resourceSet);
-
-      final var umlModel = createNewModel(umlModelUri);
-
-      try {
-         final var umlResource = resourceSet.createResource(umlModelUri);
-         resourceSet.getResources().add(umlResource);
-         umlResource.getContents().add(umlModel);
-         umlResource.save(null);
-
-         final var umlNotationResource = resourceSet
-            .createResource(umlModelUri.trimFileExtension().appendFileExtension(notationFileExtension));
-         resourceSet.getResources().add(umlNotationResource);
-         umlNotationResource.getContents().add(createNewDiagram(umlModel, diagramType));
-         umlNotationResource.save(null);
-         createEditingDomain(resourceSet);
-
-      } catch (IOException e) {
-         return false;
-      }
-
-      return true;
-   }
-
    public Set<TypeInformation> getUmlTypeInformation(final String modelUri) {
       return modelRepository.loadResource(modelUri).map(resource -> {
          var types = new HashSet<TypeInformation>();
@@ -188,16 +161,53 @@ public class UmlModelResourceManager extends RecordingModelResourceManager {
       }).orElse(new HashSet<>());
    }
 
-   protected Model createNewModel(final URI modelUri) {
+   public boolean createUmlModel(final String modeluri, final String diagramType) {
+      try {
+         resourceSetsLock.lock();
+
+         var umlUri = createURI(modeluri);
+         var resourceSet = resourceSetFactory.createResourceSet(umlUri);
+
+         resourceSets.put(umlUri, resourceSet);
+
+         var umlModel = newUml(umlUri);
+         var umlResource = resourceSet.createResource(umlUri);
+
+         resourceSet.getResources().add(umlResource);
+         umlResource.getContents().add(umlModel);
+
+         var unotationUri = umlUri.trimFileExtension().appendFileExtension(notationFileExtension);
+         var unotationModel = newUnotation(umlModel, diagramType);
+
+         var umlNotationResource = resourceSet.createResource(unotationUri);
+         resourceSet.getResources().add(umlNotationResource);
+         umlNotationResource.getContents().add(unotationModel);
+
+         createEditingDomain(resourceSet);
+
+         umlResource.save(null);
+         umlNotationResource.save(null);
+         watchResourceModifications(umlResource);
+         watchResourceModifications(umlNotationResource);
+      } catch (IOException e) {
+         return false;
+      } finally {
+         resourceSetsLock.unlock();
+      }
+
+      return true;
+   }
+
+   protected Model newUml(final URI uri) {
       var newModel = UMLFactory.eINSTANCE.createModel();
-      var modelName = modelUri.lastSegment().split("." + modelUri.fileExtension())[0];
+      var modelName = uri.lastSegment().split("." + uri.fileExtension())[0];
 
       newModel.setName(modelName);
 
       return newModel;
    }
 
-   protected UmlDiagram createNewDiagram(final Model model, final String diagramType) {
+   protected UmlDiagram newUnotation(final Model model, final String diagramType) {
       var newDiagram = UnotationFactory.eINSTANCE.createUmlDiagram();
       var semanticProxy = NotationFactory.eINSTANCE.createSemanticElementReference();
 
@@ -208,4 +218,5 @@ public class UmlModelResourceManager extends RecordingModelResourceManager {
 
       return newDiagram;
    }
+
 }

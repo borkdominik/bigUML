@@ -15,8 +15,10 @@
  ********************************************************************************/
 
 import '@eclipsesource/uml-glsp/css/colors/colors-dark.useable.css';
+import { injectable } from 'inversify';
 import * as vscode from 'vscode';
 
+@injectable()
 export class ThemeManager {
     /*
     static readonly darkColorsCss = require('@eclipsesource/uml-glsp/css/colors/colors-dark.useable.css');

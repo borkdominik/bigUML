@@ -13,12 +13,14 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { UmlDiagramType } from '@eclipsesource/uml-glsp/lib/common/uml-language';
+import { UmlDiagramType } from '@eclipsesource/uml-common';
 import { inject, injectable } from 'inversify';
 import URI from 'urijs';
 import * as vscode from 'vscode';
-import { TYPES } from '../../di.types';
+import { TYPES, VSCODE_TYPES } from '../../di.types';
+import { UmlLanguageVSCodeEnvironment, VSCodeSettings } from '../../language';
 import { VSCodeModelServerClient } from '../../modelserver/modelserver.client';
+import { UmlEditorProvider } from '../editor/uml-editor-provider';
 
 @injectable()
 export class NewDiagramFileCreator {
@@ -26,7 +28,9 @@ export class NewDiagramFileCreator {
 
     constructor(
         @inject(TYPES.ModelServerClient)
-        protected readonly client: VSCodeModelServerClient
+        protected readonly client: VSCodeModelServerClient,
+        @inject(VSCODE_TYPES.EditorProvider)
+        protected readonly editor: UmlEditorProvider
     ) {
         this.options = {
             allowedTypes: [UmlDiagramType.CLASS.toLowerCase(), UmlDiagramType.COMMUNICATION.toLocaleLowerCase()]
@@ -39,8 +43,13 @@ export class NewDiagramFileCreator {
         );
 
         if (diagramName !== undefined) {
-            const diagramType = await this.showInput(this.options.allowedTypes.join(' | '), 'Enter UML diagram type', async input =>
-                this.options.allowedTypes.includes(input) ? undefined : `${input} is not a valid value`
+            const diagramType = await this.showInput(
+                UmlLanguageVSCodeEnvironment.supportedTypes.map(t => t.toLowerCase()).join(' | '),
+                'Enter UML diagram type',
+                async input =>
+                    UmlLanguageVSCodeEnvironment.supportedTypes.includes(UmlDiagramType.parseString(input))
+                        ? undefined
+                        : `${input} is not a valid value`
             );
 
             if (diagramType !== undefined) {
@@ -55,17 +64,23 @@ export class NewDiagramFileCreator {
             const workspaceRoot = new URI(workspaces[0].uri.toString());
             const modelUri = new URI(workspaceRoot + `/${diagramName}/model/${diagramName}.uml`);
 
-            this.client.create(
-                modelUri,
-                {
-                    data: {
-                        $type: 'com.eclipsesource.uml.modelserver.model.impl.NewDiagramRequestImpl',
-                        diagramType
-                    }
-                },
-                undefined,
-                'raw-json'
-            );
+            this.client
+                .create(
+                    modelUri,
+                    {
+                        data: {
+                            $type: 'com.eclipsesource.uml.modelserver.model.impl.NewDiagramRequestImpl',
+                            diagramType
+                        }
+                    },
+                    undefined,
+                    'raw-json'
+                )
+                .then(async () => {
+                    await vscode.commands.executeCommand('workbench.files.action.refreshFilesExplorer');
+                    const filePath = vscode.Uri.file(modelUri.path().toString());
+                    vscode.commands.executeCommand('vscode.openWith', filePath, VSCodeSettings.editor.viewType);
+                });
         }
     }
 

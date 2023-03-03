@@ -13,12 +13,12 @@ import { GLSPDiagramLanguage, TheiaDiagramServer } from '@eclipse-glsp/theia-int
 import { BaseTheiaGLSPConnector } from '@eclipse-glsp/theia-integration/lib/browser/diagram/base-theia-glsp-connector';
 import { injectable } from 'inversify';
 
-import { UmlLanguage } from '../../common/uml-language';
+import { UmlDiagramLanguage } from '../../common/uml-language';
 
 @injectable()
 export class UmlGLSPConnector extends BaseTheiaGLSPConnector {
-    private _diagramType: string = UmlLanguage.diagramType;
-    private _contributionId: string = UmlLanguage.contributionId;
+    private _diagramType: string = UmlDiagramLanguage.diagramType;
+    private _contributionId: string = UmlDiagramLanguage.contributionId;
 
     doConfigure(diagramLanguage: GLSPDiagramLanguage): void {
         this._contributionId = diagramLanguage.contributionId;

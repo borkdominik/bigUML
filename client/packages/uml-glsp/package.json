@@ -34,6 +34,7 @@
   },
   "dependencies": {
     "@eclipse-glsp/client": "next",
+    "@eclipsesource/uml-common": "*",
     "balloon-css": "^0.5.0",
     "reflect-metadata": "^0.1.13"
   },

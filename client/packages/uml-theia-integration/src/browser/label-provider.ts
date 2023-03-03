@@ -8,13 +8,13 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
+import { AnyObject } from '@eclipse-glsp/client';
 import { UriSelection } from '@theia/core';
 import { LabelProviderContribution } from '@theia/core/lib/browser';
 import URI from '@theia/core/lib/common/uri';
 import { FileStat } from '@theia/filesystem/lib/common/files';
 import { injectable } from 'inversify';
-
-import { AnyObject } from './util';
+import { UmlDiagramLanguage } from '../common/uml-language';
 
 @injectable()
 export class UmlTreeLabelProviderContribution implements LabelProviderContribution {
@@ -26,7 +26,7 @@ export class UmlTreeLabelProviderContribution implements LabelProviderContributi
             toCheck = UriSelection.getUri(uri);
         }
         if (toCheck instanceof URI) {
-            if (toCheck.path.ext === '.uml') {
+            if (UmlDiagramLanguage.fileExtensions.includes(toCheck.path.ext)) {
                 return 1000;
             }
         }

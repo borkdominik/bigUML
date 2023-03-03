@@ -12,7 +12,7 @@ import { configureDiagramServer, GLSPDiagramConfiguration } from '@eclipse-glsp/
 import { createUmlDiagramContainer } from '@eclipsesource/uml-glsp/lib';
 import { Container, inject, injectable } from 'inversify';
 
-import { UmlLanguage } from '../../common/uml-language';
+import { UmlDiagramLanguage } from '../../common/uml-language';
 import { connectOutlineIntegration, OutlineIntegrationFactory, OutlineIntegrationService } from '../features/outline/integration';
 import { UmlTheiaDiagramServer } from './uml-diagram-server';
 
@@ -20,7 +20,7 @@ import { UmlTheiaDiagramServer } from './uml-diagram-server';
 export class UmlDiagramConfiguration extends GLSPDiagramConfiguration {
     @inject(OutlineIntegrationFactory) protected readonly outlineIntegrationWidgetFactory: () => OutlineIntegrationService;
 
-    diagramType: string = UmlLanguage.diagramType;
+    diagramType: string = UmlDiagramLanguage.diagramType;
 
     doCreateContainer(widgetId: string): Container {
         const container = createUmlDiagramContainer(widgetId);

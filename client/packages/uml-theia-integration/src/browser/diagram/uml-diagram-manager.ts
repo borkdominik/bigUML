@@ -17,7 +17,7 @@ import { WorkspaceService } from '@theia/workspace/lib/browser';
 import { inject, injectable, postConstruct } from 'inversify';
 import { DiagramWidgetOptions } from 'sprotty-theia';
 
-import { UmlLanguage } from '../../common/uml-language';
+import { UmlDiagramLanguage } from '../../common/uml-language';
 import { UmlDiagramWidget } from './uml-diagram-widget';
 
 export interface UmlDiagramWidgetOptions extends DiagramWidgetOptions, GLSPWidgetOptions {
@@ -44,19 +44,19 @@ export class UmlDiagramManager extends GLSPDiagramManager {
         return (id && this.all.find(w => w.id === id)) || undefined;
     }
 
-    readonly diagramType = UmlLanguage.diagramType;
-    readonly label = UmlLanguage.label + ' Editor';
+    readonly diagramType = UmlDiagramLanguage.diagramType;
+    readonly label = UmlDiagramLanguage.label + ' Editor';
 
     get currentEditor(): DiagramWidget | undefined {
         return this._currentEditor;
     }
 
     get fileExtensions(): string[] {
-        return UmlLanguage.fileExtensions;
+        return UmlDiagramLanguage.fileExtensions;
     }
 
     override get iconClass(): string {
-        return UmlLanguage.iconClass!;
+        return UmlDiagramLanguage.iconClass!;
     }
 
     get onCurrentEditorChanged(): Event<IChangedArgs<DiagramWidget>> {

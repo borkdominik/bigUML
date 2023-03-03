@@ -12,7 +12,7 @@ import { getPort, GLSPSocketServerContribution, GLSPSocketServerContributionOpti
 import { injectable } from 'inversify';
 import { join } from 'path';
 
-import { UmlLanguage } from '../common/uml-language';
+import { UmlDiagramLanguage } from '../common/uml-language';
 
 export const PORT_ARG_KEY = 'UML_GLSP';
 export const SERVER_DIR = join(__dirname, '..', '..', 'build');
@@ -20,7 +20,7 @@ export const JAR_FILE = join(SERVER_DIR, 'com.eclipsesource.uml.glsp.product-0.1
 
 @injectable()
 export class UmlGLSPServerContribution extends GLSPSocketServerContribution {
-    readonly id = UmlLanguage.contributionId;
+    readonly id = UmlDiagramLanguage.contributionId;
 
     createContributionOptions(): Partial<GLSPSocketServerContributionOptions> {
         return {

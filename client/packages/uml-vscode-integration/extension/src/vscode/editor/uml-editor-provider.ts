@@ -19,11 +19,12 @@ import { inject, injectable, postConstruct } from 'inversify';
 import URI from 'urijs';
 import * as vscode from 'vscode';
 import { TYPES, VSCODE_TYPES } from '../../di.types';
+import { VSCodeSettings } from '../../language';
 import { VSCodeModelServerClient } from '../../modelserver/modelserver.client';
 import { ThemeManager } from '../theme-manager/theme-manager';
 
 @injectable()
-export default class UmlEditorProvider extends GlspEditorProvider {
+export class UmlEditorProvider extends GlspEditorProvider {
     diagramType = 'umldiagram';
 
     constructor(
@@ -39,7 +40,7 @@ export default class UmlEditorProvider extends GlspEditorProvider {
 
     @postConstruct()
     initialize(): void {
-        const disposable = vscode.window.registerCustomEditorProvider('uml.glspDiagram', this, {
+        const disposable = vscode.window.registerCustomEditorProvider(VSCodeSettings.editor.viewType, this, {
             webviewOptions: { retainContextWhenHidden: true },
             supportsMultipleEditorsPerDocument: false
         });

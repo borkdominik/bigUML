@@ -159,6 +159,7 @@
   ],
   "dependencies": {
     "@eclipse-glsp/vscode-integration": "next",
+    "@eclipsesource/uml-common": "*",
     "@eclipsesource/uml-glsp": "*",
     "@eclipsesource/uml-modelserver": "*",
     "@vscode/codicons": "^0.0.25",

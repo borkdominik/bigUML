@@ -30,17 +30,13 @@ export class UmlFrontendContribution implements FrontendApplicationContribution 
         if (themeType === 'dark' || themeType === 'hc') {
             // unload light
             UmlFrontendContribution.lightColorsCss.unuse();
-            // UmlFrontendContribution.lightIconsCss.unuse();
             // load dark
             UmlFrontendContribution.darkColorsCss.use();
-            // UmlFrontendContribution.darkIconsCss.use();
         } else if (themeType === 'light') {
             // unload dark
             UmlFrontendContribution.darkColorsCss.unuse();
-            // UmlFrontendContribution.darkIconsCss.unuse();
             // load light
             UmlFrontendContribution.lightColorsCss.use();
-            // UmlFrontendContribution.lightIconsCss.use();
         }
     }
 }

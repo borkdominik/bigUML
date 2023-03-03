@@ -23,6 +23,7 @@ import { createContainer } from './di.config';
 import { TYPES, VSCODE_TYPES } from './di.types';
 import { UmlGlspServer } from './glsp/connection/uml-glsp-server';
 import { launchServer } from './glsp/server/launcher';
+import { VSCodeSettings } from './language';
 
 export async function activate(context: vscode.ExtensionContext): Promise<void> {
     const container = createContainer(context);
@@ -33,7 +34,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     configureDefaultCommands({
         extensionContext: context,
         connector: container.get<GlspVscodeConnector>(TYPES.Connector),
-        diagramPrefix: 'uml'
+        diagramPrefix: VSCodeSettings.commands.prefix
     });
 
     container.get<any>(VSCODE_TYPES.EditorProvider);

@@ -1,5 +1,5 @@
 {
-  "name": "@eclipsesource/uml-modelserver",
+  "name": "@eclipsesource/uml-common",
   "version": "1.0.0",
   "description": "Sprotty diagrams for UML",
   "keywords": [
@@ -17,6 +17,7 @@
   "author": {
     "name": "EclipseSource"
   },
+  "main": "lib/index",
   "files": [
     "lib",
     "src",
@@ -32,11 +33,6 @@
     "prepare": "yarn run clean && yarn run build",
     "watch": "tsc -w"
   },
-  "dependencies": {
-    "@eclipse-emfcloud/modelserver-client": "next",
-    "@eclipse-glsp/client": "next",
-    "@eclipsesource/uml-common": "*",
-    "@eclipsesource/uml-glsp": "*"
-  },
+  "dependencies": {},
   "devDependencies": {}
 }

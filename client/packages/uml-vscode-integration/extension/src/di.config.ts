@@ -23,7 +23,7 @@ import { VSCodeModelServerClient } from './modelserver/modelserver.client';
 import { CommandManager } from './vscode/command/command.manager';
 import { NewDiagramCommand } from './vscode/command/new-diagram.command';
 import { DisposableManager } from './vscode/disposable/disposable.manager';
-import UmlEditorProvider from './vscode/editor/uml-editor-provider';
+import { UmlEditorProvider } from './vscode/editor/uml-editor-provider';
 import { NewDiagramFileCreator } from './vscode/new-file/new-diagram-file.creator';
 import { ThemeManager } from './vscode/theme-manager/theme-manager';
 

@@ -10,6 +10,7 @@
  ********************************************************************************/
 import '../../css/colors.css';
 
+import { TheiaModelServerClientV2 } from '@eclipse-emfcloud/modelserver-theia';
 import {
     ContainerContext,
     GLSPClientContribution,
@@ -21,9 +22,7 @@ import { CommandContribution, MenuContribution } from '@theia/core';
 import { FrontendApplicationContribution } from '@theia/core/lib/browser/frontend-application';
 import { LabelProviderContribution } from '@theia/core/lib/browser/label-provider';
 import { DiagramConfiguration } from 'sprotty-theia/lib';
-
-import { TheiaModelServerClientV2 } from '@eclipse-emfcloud/modelserver-theia';
-import { UmlLanguage } from '../common/uml-language';
+import { UmlDiagramLanguage } from '../common/uml-language';
 import { UmlModelServerClient } from '../common/uml-modelserver.client';
 import { UmlDiagramConfiguration } from './diagram/uml-diagram-configuration';
 import { UmlDiagramManager } from './diagram/uml-diagram-manager';
@@ -36,8 +35,7 @@ import { UmlModelContribution } from './uml-command-contribution';
 import { UmlFrontendContribution } from './uml-frontend-contribution';
 
 export class UmlTheiaFrontendModule extends GLSPTheiaFrontendModule {
-    protected override enableCopyPaste = true;
-    readonly diagramLanguage = UmlLanguage;
+    readonly diagramLanguage = UmlDiagramLanguage;
 
     override bindTheiaGLSPConnector(context: ContainerContext): void {
         context.bind(TheiaGLSPConnector).toDynamicValue(dynamicContext => {

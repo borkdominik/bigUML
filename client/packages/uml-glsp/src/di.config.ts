@@ -20,7 +20,6 @@ import {
     configureDefaultModelElements,
     configureModelElement,
     configureViewerOptions,
-    ConsoleLogger,
     createDiagramContainer,
     EditLabelUI,
     GLSPGraph,
@@ -32,11 +31,13 @@ import {
 import toolPaletteModule from '@eclipse-glsp/client/lib/features/tool-palette/di.config';
 import { DefaultTypes } from '@eclipse-glsp/protocol';
 import { Container, ContainerModule } from 'inversify';
+import { FixedLogger } from './common/fixed-logger';
 import { CustomCopyPasteHandler, LastContainableElementTracker } from './features/copy-paste/copy-paste';
 import { EditLabelUIAutocomplete } from './features/edit-label';
 import editorPanelModule from './features/editor-panel/di.config';
 import outlineModule from './features/outline/di.config';
 import propertyPaletteModule from './features/property-palette/di.config';
+import { FixedFeedbackActionDispatcher } from './features/tool-feedback/feedback-action-dispatcher';
 import umlToolPaletteModule from './features/tool-palette/di.config';
 import { UmlGraphView } from './graph/graph.view';
 import { umlDiagramModules } from './uml/index';
@@ -46,9 +47,10 @@ export default function createContainer(widgetId: string): Container {
     const coreDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
         const context = { bind, unbind, isBound, rebind };
 
-        rebind(TYPES.ILogger).to(ConsoleLogger).inSingletonScope();
+        rebind(TYPES.ILogger).to(FixedLogger).inSingletonScope();
         rebind(TYPES.LogLevel).toConstantValue(LogLevel.info);
         rebind(TYPES.ICopyPasteHandler).to(CustomCopyPasteHandler);
+        rebind(TYPES.IFeedbackActionDispatcher).to(FixedFeedbackActionDispatcher).inSingletonScope();
 
         rebind(EditLabelUI).to(EditLabelUIAutocomplete);
 

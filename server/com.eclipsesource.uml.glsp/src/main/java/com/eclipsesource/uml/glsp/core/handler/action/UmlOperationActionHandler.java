@@ -26,7 +26,7 @@ public class UmlOperationActionHandler extends OperationActionHandler {
 
    @Override
    public List<Action> executeAction(final Operation operation) {
-      Optional<? extends OperationHandler> operationHandler = operationHandlerRegistry.get(operation);
+      Optional<? extends OperationHandler<?>> operationHandler = operationHandlerRegistry.get(operation);
       if (operationHandler.isPresent()) {
          return executeHandler(operation, operationHandler.get());
       }

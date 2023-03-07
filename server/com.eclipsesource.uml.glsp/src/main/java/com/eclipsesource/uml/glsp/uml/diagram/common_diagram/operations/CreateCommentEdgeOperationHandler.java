@@ -1,18 +1,6 @@
 package com.eclipsesource.uml.glsp.uml.diagram.common_diagram.operations;
 
-import java.util.List;
-
-import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.AbstractEMSOperationHandler;
-import org.eclipse.glsp.server.operations.CreateEdgeOperation;
-import org.eclipse.glsp.server.operations.Operation;
-
-import com.eclipsesource.uml.glsp.core.model.UmlModelServerAccess;
-import com.eclipsesource.uml.glsp.core.model.UmlModelState;
-import com.eclipsesource.uml.glsp.uml.diagram.common_diagram.constants.CommonTypes;
-import com.google.common.collect.Lists;
-import com.google.inject.Inject;
-
-public class CreateCommentEdgeOperationHandler
+public class CreateCommentEdgeOperationHandler { /*-
    extends AbstractEMSOperationHandler<CreateEdgeOperation> {
    public static List<String> handledElementTypeIds = Lists.newArrayList(CommonTypes.COMMENT_EDGE);
 
@@ -34,16 +22,16 @@ public class CreateCommentEdgeOperationHandler
    @Override
    public void executeOperation(final CreateEdgeOperation operation) {
       /*-
-      
+
       String sourceId = operation.getSourceElementId();
       String targetId = operation.getTargetElementId();
-      
+
       if (CommonTypes.COMMENT_EDGE.equals(operation.getElementTypeId())) {
          Comment source = getOrThrow(modelState.getIndex().getEObject(sourceId), Comment.class,
             "No valid source comment with id " + sourceId + " found");
          Element target = getOrThrow(modelState.getIndex().getEObject(targetId), Element.class,
             "No valid target element with id " + sourceId + " found");
-      
+
          modelServerAccess.exec(LinkCommentCommandContribution.create(source, target))
             .thenAccept(response -> {
                if (response.body() == null || response.body().isEmpty()) {
@@ -51,9 +39,10 @@ public class CreateCommentEdgeOperationHandler
                }
             });
       }
-      */
+      *
    }
 
    @Override
    public String getLabel() { return "Create comment edge"; }
+   */
 }

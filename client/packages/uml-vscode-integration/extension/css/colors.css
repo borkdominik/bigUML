@@ -1,0 +1,21 @@
+:root {
+    --uml-focusBorder: var(--vscode-focusBorder);
+
+    --uml-successBackground: var(--vscode-charts-green);
+    --uml-errorForeground: var(--vscode-errorForeground);
+
+    --uml-activityBar-background: var(--vscode-activityBar-background);
+
+    --uml-editor-background: var(--vscode-editor-background);
+    --uml-editor-foreground: var(--vscode-editor-foreground);
+
+    --uml-menu-background: var(--vscode-menu-background);
+    --uml-menubar-selectionBackground: var(--vscode-menubar-selectionBackground);
+
+    --uml-tab-unfocusedActiveBorderTop: var(--vscode-tab-unfocusedActiveBorderTop);
+
+    --uml-titleBar-activeBackground: var(--vscode-titleBar-activeBackground);
+    --uml-titleBar-activeForeground: var(--vscode-titleBar-activeForeground);
+
+    --uml-widget-shadow: var(--vscode-widget-shadow);
+}

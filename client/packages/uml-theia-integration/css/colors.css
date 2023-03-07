@@ -1,0 +1,21 @@
+:root {
+    --uml-focusBorder: var(--theia-focusBorder);
+
+    --uml-successBackground: var(--theia-successBackground);
+    --uml-errorForeground: var(--theia-errorForeground);
+
+    --uml-activityBar-background: var(--theia-activityBar-background);
+
+    --uml-editor-background: var(--theia-editor-background);
+    --uml-editor-foreground: var(--theia-editor-foreground);
+
+    --uml-menu-background: var(--theia-menu-background);
+    --uml-menubar-selectionBackground: var(--theia-menubar-selectionBackground);
+
+    --uml-tab-unfocusedActiveBorderTop: var(--theia-tab-unfocusedActiveBorderTop);
+
+    --uml-titleBar-activeBackground: var(--theia-titleBar-activeBackground);
+    --uml-titleBar-activeForeground: var(--theia-titleBar-activeForeground);
+
+    --uml-widget-shadow: var(--theia-widget-shadow);
+}

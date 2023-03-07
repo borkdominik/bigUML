@@ -1,0 +1,16 @@
+{
+  "extends": "@eclipse-glsp/ts-config/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "reactNamespace": "JSX",
+    "esModuleInterop": true,
+    "paths": {
+      "@eclipsesource/uml-glsp": [
+        "packages/uml-glsp/src/*"
+      ]
+    }
+  },
+
+  "exclude": ["**/node_modules", "**/.eslintrc.js"],
+  "include": ["packages/*/src", "packages/*/scripts", "packages/uml-vscode-integration/*/src", "packages/uml-vscode-integration/*/scripts"]
+}

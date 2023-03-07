@@ -16,7 +16,7 @@ public interface UmlModelServerPaths {
    String PATH = "uml";
    String BASE_PATH = ModelServerPathsV2.BASE_PATH + "/" + PATH;
    String FORMAT_UML = "uml";
+   String FORMAT_RAW_JSON = "raw-json";
 
    String UML_TYPES = "types";
-   String UML_CREATE = "create";
 }

@@ -12,6 +12,7 @@ package com.eclipsesource.uml.glsp.core;
 
 import org.eclipse.emfcloud.modelserver.glsp.EMSModelState;
 import org.eclipse.emfcloud.modelserver.glsp.actions.handlers.EMSOperationActionHandler;
+import org.eclipse.emfcloud.modelserver.glsp.actions.handlers.EMSRefreshModelActionHandler;
 import org.eclipse.emfcloud.modelserver.glsp.notation.integration.EMSGLSPNotationDiagramModule;
 import org.eclipse.emfcloud.modelserver.glsp.notation.integration.EMSNotationModelState;
 import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSChangeBoundsOperationHandler;
@@ -37,6 +38,7 @@ import com.eclipsesource.uml.glsp.core.gmodel.GModelMapHandler;
 import com.eclipsesource.uml.glsp.core.gmodel.GModelMapperRegistry;
 import com.eclipsesource.uml.glsp.core.gmodel.UmlGModelFactory;
 import com.eclipsesource.uml.glsp.core.handler.action.UmlOperationActionHandler;
+import com.eclipsesource.uml.glsp.core.handler.action.UmlRefreshModelActionHandler;
 import com.eclipsesource.uml.glsp.core.handler.operation.UmlChangeBoundsOperationHandler;
 import com.eclipsesource.uml.glsp.core.handler.operation.UmlChangeRoutingPointsOperationHandler;
 import com.eclipsesource.uml.glsp.core.handler.operation.UmlOperationHandlerRegistry;
@@ -58,7 +60,7 @@ import com.eclipsesource.uml.glsp.features.property_palette.manifest.PropertyPal
 import com.eclipsesource.uml.glsp.features.validation.UmlDiagramModelValidator;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.manifest.ClassUmlManifest;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.manifest.CommunicationUmlManifest;
-import com.eclipsesource.uml.modelserver.core.resource.UmlNotationResource;
+import com.eclipsesource.uml.modelserver.core.resource.notation.UmlNotationResource;
 import com.eclipsesource.uml.modelserver.unotation.UnotationPackage;
 import com.google.inject.Singleton;
 
@@ -176,10 +178,11 @@ public class UmlDiagramModule extends EMSGLSPNotationDiagramModule {
       // bindings.rebind(RequestMarkersHandler.class, UmlRequestMarkersHandler.class);
 
       bindings.rebind(EMSOperationActionHandler.class, UmlOperationActionHandler.class);
+      bindings.rebind(EMSRefreshModelActionHandler.class, UmlRefreshModelActionHandler.class);
    }
 
    @Override
-   protected void configureOperationHandlers(final MultiBinding<OperationHandler> bindings) {
+   protected void configureOperationHandlers(final MultiBinding<OperationHandler<?>> bindings) {
       super.configureOperationHandlers(bindings);
       bindings.rebind(EMSChangeBoundsOperationHandler.class, UmlChangeBoundsOperationHandler.class);
       bindings.rebind(EMSChangeRoutingPointsOperationHandler.class, UmlChangeRoutingPointsOperationHandler.class);

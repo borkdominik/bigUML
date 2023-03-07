@@ -4,16 +4,9 @@
 // - Linux: $HOME/.config/Code/User/settings.json
 // - Mac: $HOME/Library/Application Support/Code/User/settings.json
 {
-  "typescriptHero.imports.organizeOnSave": true,
-  "typescriptHero.imports.disableImportsSorting": false,
-  "typescriptHero.imports.stringQuoteStyle": "\"",
-  "typescriptHero.imports.insertSemicolons": true,
-  "typescriptHero.imports.multiLineTrailingComma": false,
-  "typescriptHero.imports.ignoredFromRemoval": [
-    "react"
-  ],
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
+    "source.organizeImports": true,
     "source.fixAll.eslint": true
   },
   "search.exclude": {
@@ -22,14 +15,13 @@
   },
   "editor.insertSpaces": true,
   "[typescript]": {
-    "editor.tabSize": 4,
-    "editor.defaultFormatter": "vscode.typescript-language-features",
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[json]": {
-    "editor.tabSize": 2
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[css]": {
-    "editor.defaultFormatter": "aeschli.vscode-css-formatter"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.preferences.importModuleSpecifier": "relative",

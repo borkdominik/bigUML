@@ -10,7 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.core.handler.operation.create;
 
-import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.AbstractEMSOperationHandler;
+import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSOperationHandler;
 import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 import org.eclipse.glsp.server.types.GLSPServerException;
 
@@ -18,7 +18,7 @@ import com.eclipsesource.uml.glsp.core.common.RepresentationKey;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.google.inject.Inject;
 
-public class UmlCreateEdgeOperationHandler extends AbstractEMSOperationHandler<CreateEdgeOperation> {
+public class UmlCreateEdgeOperationHandler extends EMSOperationHandler<CreateEdgeOperation> {
 
    @Inject
    private DiagramCreateHandlerRegistry registry;

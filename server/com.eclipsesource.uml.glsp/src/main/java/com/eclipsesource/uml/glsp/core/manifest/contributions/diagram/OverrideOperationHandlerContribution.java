@@ -35,21 +35,21 @@ public interface OverrideOperationHandlerContribution
          var binder = contributionBinder();
 
          MapBinder.newMapBinder(binder, new TypeLiteral<Representation>() {},
-            new TypeLiteral<Set<OperationHandler>>() {});
+            new TypeLiteral<Set<OperationHandler<?>>>() {});
       }
    }
 
    default void contributeOverrideOperationHandlers(
-      final Consumer<Multibinder<OperationHandler>> consumer) {
+      final Consumer<Multibinder<OperationHandler<?>>> consumer) {
       var binder = contributionBinder();
 
-      var multibinder = Multibinder.newSetBinder(binder, OperationHandler.class, idNamed());
+      var multibinder = Multibinder.newSetBinder(binder, new TypeLiteral<OperationHandler<?>>() {}, idNamed());
 
       consumer.accept(multibinder);
 
       MapBinder.newMapBinder(binder, new TypeLiteral<Representation>() {},
-         new TypeLiteral<Set<OperationHandler>>() {})
+         new TypeLiteral<Set<OperationHandler<?>>>() {})
          .addBinding(representation())
-         .to(Key.get(new TypeLiteral<Set<OperationHandler>>() {}, idNamed()));
+         .to(Key.get(new TypeLiteral<Set<OperationHandler<?>>>() {}, idNamed()));
    }
 }

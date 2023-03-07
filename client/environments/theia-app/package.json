@@ -1,0 +1,60 @@
+{
+  "name": "@eclipsesource/theia-app",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "theia build --mode development",
+    "clean": "theia clean",
+    "download:plugins": "theia download:plugins",
+    "prepare": "yarn clean && yarn build && yarn download:plugins",
+    "start": "theia start --UML_GLSP=5007 --hostname=0.0.0.0 --root-dir=../workspace",
+    "start:debug": "theia start --UML_GLSP=5007 --hostname=0.0.0.0 --loglevel=debug --root-dir=../../workspace --debug",
+    "watch": "theia build --watch --mode development"
+  },
+  "dependencies": {
+    "@eclipsesource/uml-theia-integration": "*",
+    "@theia/core": "next",
+    "@theia/editor": "next",
+    "@theia/file-search": "next",
+    "@theia/filesystem": "next",
+    "@theia/keymaps": "next",
+    "@theia/markers": "next",
+    "@theia/messages": "next",
+    "@theia/monaco": "next",
+    "@theia/navigator": "next",
+    "@theia/outline-view": "next",
+    "@theia/output": "next",
+    "@theia/plugin-ext": "next",
+    "@theia/plugin-ext-vscode": "next",
+    "@theia/plugin-metrics": "next",
+    "@theia/preferences": "next",
+    "@theia/process": "next",
+    "@theia/search-in-workspace": "next",
+    "@theia/task": "next",
+    "@theia/terminal": "next",
+    "@theia/userstorage": "next",
+    "@theia/variable-resolver": "next",
+    "@theia/vsx-registry": "next",
+    "@theia/workspace": "next"
+  },
+  "devDependencies": {
+    "@theia/cli": "next"
+  },
+  "theia": {
+    "target": "browser",
+    "frontend": {
+      "config": {
+        "applicationName": "bigUML - UML Editor",
+        "defaultIconTheme": "theia-file-icons",
+        "preferences": {
+          "files.autoSave": "off"
+        }
+      }
+    }
+  },
+  "theiaPlugins": {
+    "vscode-builtin-json": "https://open-vsx.org/api/vscode/json/1.46.1/file/vscode.json-1.46.1.vsix",
+    "vscode-builtin-json-language-features": "https://open-vsx.org/api/vscode/json-language-features/1.46.1/file/vscode.json-language-features-1.46.1.vsix"
+  },
+  "theiaPluginsDir": "plugins"
+}

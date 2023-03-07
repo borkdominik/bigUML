@@ -10,7 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.shared.utils;
 
-import com.eclipsesource.uml.modelserver.core.resource.UmlNotationResource;
+import com.eclipsesource.uml.modelserver.core.resource.notation.UmlNotationResource;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.eclipsesource.uml.modelserver.unotation.UmlDiagram;

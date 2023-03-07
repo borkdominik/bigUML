@@ -10,22 +10,39 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.core.model;
 
+import java.net.HttpURLConnection;
 import java.util.Optional;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emfcloud.modelserver.glsp.notation.integration.EMSNotationModelState;
 import org.eclipse.glsp.graph.GModelIndex;
 import org.eclipse.glsp.graph.GModelRoot;
+import org.eclipse.glsp.server.session.ClientSession;
 import org.eclipse.glsp.server.types.GLSPServerException;
 
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.eclipsesource.uml.modelserver.unotation.UmlDiagram;
 
 public class UmlModelState extends EMSNotationModelState {
+   private static final Logger LOGGER = LogManager.getLogger(UmlModelState.class);
 
    @Override
-   protected GModelIndex getOrUpdateIndex(final GModelRoot newRoot) {
-      return UmlModelIndex.getOrCreate(getRoot(), semanticIdConverter);
+   public void sessionDisposed(final ClientSession clientSession) {
+      if (this.semanticModel != null) {
+         this.semanticModel = null;
+         modelServerAccess.close().thenAccept(response -> {
+            if (response.getStatusCode() == HttpURLConnection.HTTP_OK
+               || response.getStatusCode() == HttpURLConnection.HTTP_NOT_FOUND) {
+               LOGGER.debug("Disposing modelServer session succeeded");
+            } else {
+               LOGGER.error("Disposing modelServer session failed: " + response.getMessage());
+            }
+         });
+         modelServerAccess.unsubscribe();
+      }
+      super.sessionDisposed(clientSession);
    }
 
    public Optional<UmlDiagram> getUmlNotationModel() { return super.getNotationModel(UmlDiagram.class); }
@@ -49,5 +66,10 @@ public class UmlModelState extends EMSNotationModelState {
 
    public boolean hasSemantic(final String elementId) {
       return getIndex().getEObject(elementId).isPresent();
+   }
+
+   @Override
+   protected GModelIndex getOrUpdateIndex(final GModelRoot newRoot) {
+      return UmlModelIndex.getOrCreate(getRoot(), semanticIdConverter);
    }
 }

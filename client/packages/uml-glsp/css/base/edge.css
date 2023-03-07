@@ -1,0 +1,30 @@
+.uml-edge {
+    fill: none;
+    stroke-width: 1;
+    stroke: var(--uml-edge) !important;
+}
+
+.uml-edge.mouseover:not(.selected) {
+    stroke-width: 2;
+    opacity: 1;
+}
+
+.uml-edge.selected {
+    stroke-width: 3;
+    stroke-dasharray: none;
+}
+
+.uml-edge > .sprotty-routing-handle {
+    fill: var(--uml-edge);
+    stroke: var(--uml-edge);
+    stroke-width: 2;
+    z-index: 1000;
+}
+
+.uml-edge > .sprotty-routing-handle.mouseover {
+    stroke-width: 3;
+}
+
+.uml-edge-dashed {
+    stroke-dasharray: 15 10;
+}

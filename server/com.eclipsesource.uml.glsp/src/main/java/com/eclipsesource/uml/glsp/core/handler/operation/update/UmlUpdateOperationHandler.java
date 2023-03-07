@@ -13,7 +13,7 @@ package com.eclipsesource.uml.glsp.core.handler.operation.update;
 import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.AbstractEMSOperationHandler;
+import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSOperationHandler;
 import org.eclipse.glsp.server.types.GLSPServerException;
 
 import com.eclipsesource.uml.glsp.core.common.DoubleKey;
@@ -22,7 +22,7 @@ import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.google.inject.Inject;
 
 public class UmlUpdateOperationHandler
-   extends AbstractEMSOperationHandler<UpdateOperation> {
+   extends EMSOperationHandler<UpdateOperation> {
 
    @Inject
    private DiagramUpdateHandlerRegistry registry;

@@ -21,7 +21,9 @@ import com.eclipsesource.uml.modelserver.core.routing.UmlModelServerPaths;
 public class UmlCodecProvider implements CodecProvider {
 
    @Override
-   public Set<String> getAllFormats() { return Set.of(UmlModelServerPaths.FORMAT_UML); }
+   public Set<String> getAllFormats() {
+      return Set.of(UmlModelServerPaths.FORMAT_UML, UmlModelServerPaths.FORMAT_RAW_JSON);
+   }
 
    @Override
    public int getPriority(final String modelUri, final String format) {
@@ -30,7 +32,13 @@ public class UmlCodecProvider implements CodecProvider {
 
    @Override
    public Optional<Codec> getCodec(final String modelUri, final String format) {
-      return Optional.of(new UmlCodec());
+      if (format.equals(UmlModelServerPaths.FORMAT_UML)) {
+         return Optional.of(new UmlCodec());
+      } else if (format.equals(UmlModelServerPaths.FORMAT_RAW_JSON)) {
+         return Optional.of(new UmlRawJsonCodec());
+      }
+
+      return Optional.empty();
    }
 
 }

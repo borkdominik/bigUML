@@ -3,13 +3,6 @@
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl --><target name="Uml GLSP Editor Targetplatform 2022-03" sequenceNumber="1647851159">
 	<locations>
 		<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-			<unit id="org.eclipse.glsp.graph" version="1.1.0.202207140749"/>
-			<unit id="org.eclipse.glsp.layout" version="1.1.0.202207140749"/>
-			<unit id="org.eclipse.glsp.server" version="1.1.0.202207140749"/>
-			<unit id="org.eclipse.glsp.server.emf" version="1.1.0.202207140749"/>
-			<repository location="https://download.eclipse.org/glsp/server/p2/nightly/1.1/1.1.0.202207140749"/>
-		</location>
-		<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 			<unit id="org.eclipse.emf.edit" version="2.17.0.v20220201-1551"/>
 			<unit id="org.eclipse.equinox.executable.feature.group" version="3.8.1500.v20220210-1108"/>
 			<unit id="org.eclipse.core.runtime.feature.feature.group" version="1.2.1600.v20220215-2237"/>
@@ -37,15 +30,6 @@
 			<repository location="https://download.eclipse.org/tools/orbit/downloads/drops/R20220302172233/repository/"/>
 		</location>
 		<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-			<unit id="org.eclipse.emfcloud.modelserver.feature.feature.group" version="0.8.0.I20220803"/>
-			<repository location="https://download.eclipse.org/emfcloud/modelserver/p2/integration/0.8.0.I20220803/"/>
-		</location>
-		<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-			<unit id="org.eclipse.emfcloud.modelserver.glsp.integration" version="0.8.0.I20220803"/>
-			<unit id="org.eclipse.emfcloud.modelserver.glsp.notation.commands" version="0.8.0.I20220803"/>
-			<repository location="https://download.eclipse.org/emfcloud/modelserver-glsp-integration/p2/integration/0.8.0.I20220803/"/>
-		</location>
-		<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 			<unit id="org.eclipse.emfcloud.emfjson-jackson" version="2.0.0"/>
 			<repository location="https://download.eclipse.org/emfcloud/emfjson-jackson/p2/releases/2.0.0/"/>
 		</location>
@@ -60,6 +44,28 @@
 			<unit id="org.eclipse.elk.graph" version="0.8.1"/>
 			<unit id="org.eclipse.elk.graph.text" version="0.8.1"/>
 			<unit id="org.eclipse.elk.alg.layered" version="0.8.1"/>
+		</location>
+		<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+			<repository location="https://download.eclipse.org/emfcloud/modelserver/p2/integration/0.8.0.I20230217/"/>
+			<unit id="org.eclipse.emfcloud.modelserver.feature.feature.group" version="0.8.0.I20230217"/>
+			<unit id="org.eclipse.emfcloud.modelserver.feature.source.feature.group" version="0.8.0.I20230217"/>
+		</location>
+		<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+			<repository location="https://download.eclipse.org/emfcloud/modelserver-glsp-integration/p2/integration/0.8.0.I20230217/"/>
+			<unit id="org.eclipse.emfcloud.modelserver.glsp.feature.feature.group" version="0.8.0.I20230217"/>
+			<unit id="org.eclipse.emfcloud.modelserver.glsp.feature.source.feature.group" version="0.8.0.I20230217"/>
+		</location>
+		<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+			<repository location="https://download.eclipse.org/glsp/server/p2/nightly/1.1/1.1.0.202302221634/"/>
+			<unit id="org.eclipse.glsp.graph" version="1.1.0.202302221634"/>
+			<unit id="org.eclipse.glsp.layout" version="1.1.0.202302221634"/>
+			<unit id="org.eclipse.glsp.server" version="1.1.0.202302221634"/>
+			<unit id="org.eclipse.glsp.server.emf" version="1.1.0.202302221634"/>
+			<unit id="org.eclipse.glsp.server.websocket" version="1.1.0.202302221634"/>
+		</location>
+		<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+			<repository location="mvn:org.eclipse.jetty:jetty-p2:10.0.13:zip:p2site"/>
+			<unit id="org.eclipse.jetty.websocket.servlet" version="10.0.13"/>
 		</location>
 	</locations>
 </target>

@@ -22,11 +22,11 @@ import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 
 public class UmlOverrideOperationHandlerRegistry
-   extends DiagramClassRegistry<Class<? extends Operation>, OperationHandler> {
+   extends DiagramClassRegistry<Class<? extends Operation>, OperationHandler<?>> {
 
    @Inject
    public UmlOverrideOperationHandlerRegistry(
-      final Map<Representation, Set<OperationHandler>> handlers) {
+      final Map<Representation, Set<OperationHandler<?>>> handlers) {
       handlers.entrySet().forEach(e -> {
          var representation = e.getKey();
 

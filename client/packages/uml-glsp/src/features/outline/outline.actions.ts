@@ -16,13 +16,13 @@
 import { Action } from '@eclipse-glsp/client';
 import { RequestAction, ResponseAction } from '@eclipse-glsp/protocol';
 
-import { UmlOutlineTreeNode } from './outline-tree-node.model';
+import { OutlineTreeNode } from './outline-tree-node.model';
 
 export class SetOutlineAction implements ResponseAction {
     static readonly KIND = 'setOutlineAction';
     kind = SetOutlineAction.KIND;
 
-    constructor(public responseId = '', public outlineTreeNodes: UmlOutlineTreeNode[]) {}
+    constructor(public responseId = '', public outlineTreeNodes: OutlineTreeNode[]) {}
 }
 
 export function isSetOutlineAction(action: Action): action is SetOutlineAction {

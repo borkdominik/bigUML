@@ -11,41 +11,6 @@
 import { DefaultTypes } from '@eclipse-glsp/protocol';
 
 export namespace UmlTypes {
-    // COMMONS
-    export const ICON = 'icon';
-    export const LABEL_NAME = `${DefaultTypes.LABEL}:name`;
-    export const LABEL_TEXT = `${DefaultTypes.LABEL}:text`;
-    export const LABEL_EDGE_NAME = `${DefaultTypes.LABEL}:edge-name`;
-    export const LABEL_EDGE_MULTIPLICITY = `${DefaultTypes.LABEL}:association-multiplicity`;
-    export const STRUCTURE = 'struct';
-    export const ICON_CSS = `${ICON}:css`;
-
-    // CLASS DIAGRAM
-    export const CLASS = `${DefaultTypes.NODE}:class`;
-    export const ABSTRACT_CLASS = `${DefaultTypes.NODE}:abstract-class`;
-    export const ENUMERATION = `${DefaultTypes.NODE}:enumeration`;
-    export const ENUMERATION_LITERAL = `${DefaultTypes.COMPARTMENT}:enumeration-literal`;
-    export const INTERFACE = `${DefaultTypes.NODE}:interface`;
-    export const ASSOCIATION = `${DefaultTypes.EDGE}:association`;
-    export const AGGREGATION = `${DefaultTypes.EDGE}:aggregation`;
-    export const COMPOSITION = `${DefaultTypes.EDGE}:composition`;
-    export const CLASS_GENERALIZATION = `${DefaultTypes.EDGE}:generalization`;
-    export const PROPERTY = `${DefaultTypes.COMPARTMENT}:property`;
-    export const LABEL_PROPERTY_TYPE = `${DefaultTypes.LABEL}:property-type`;
-    export const LABEL_PROPERTY_MULTIPLICITY = `${DefaultTypes.LABEL}:property-multiplicity`;
-    export const OPERATION = `${DefaultTypes.COMPARTMENT}:operation`;
-    export const DATA_TYPE = `${DefaultTypes.NODE}:data-type`;
-    export const PRIMITIVE_TYPE = `${DefaultTypes.NODE}:primitive-type`;
-    export const PACKAGE = `${DefaultTypes.NODE}:package`;
-    export const ABSTRACTION = `${DefaultTypes.EDGE}:abstraction`;
-    export const DEPENDENCY = `${DefaultTypes.EDGE}:dependency`;
-    export const INTERFACE_REALIZATION = `${DefaultTypes.EDGE}:interface-realization`;
-    export const REALIZATION = `${DefaultTypes.EDGE}:realization`;
-    export const SUBSTITUTION = `${DefaultTypes.EDGE}:substitution`;
-    export const USAGE = `${DefaultTypes.EDGE}:usage`;
-    export const PACKAGE_IMPORT = `${DefaultTypes.EDGE}:package-import`;
-    export const PACKAGE_MERGE = `${DefaultTypes.EDGE}:package-merge`;
-
     // OBJECT DIAGRAM
     export const OBJECT = `${DefaultTypes.NODE}:object`;
     export const LINK = `${DefaultTypes.EDGE}:link`;
@@ -139,12 +104,4 @@ export namespace UmlTypes {
     export const LABEL_TRANSITION_GUARD = `${DefaultTypes.LABEL}:transition-guard`;
     export const LABEL_TRANSITION_EFFECT = `${DefaultTypes.LABEL}:transition-effect`;
     export const LABEL_TRANSITION_TRIGGER = `${DefaultTypes.LABEL}:transition-trigger`;
-
-    // COMMUNICATION DIAGRAM
-    export const ICON_INTERACTION = `${ICON}:interaction`;
-    export const ICON_LIFELINE = `${ICON}:lifeline`;
-    export const INTERACTION = `${DefaultTypes.NODE}:interaction`;
-    export const LIFELINE = `${DefaultTypes.NODE}:lifeline`;
-    export const MESSAGE = `${DefaultTypes.EDGE}:message`;
-    export const MESSAGE_LABEL_ARROW_EDGE_NAME = `${DefaultTypes.LABEL}:message-arrow-edge-name`;
 }

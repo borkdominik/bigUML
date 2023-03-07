@@ -13,7 +13,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { UmlDiagramOutlineService, UmlOutlineTreeNode } from '@eclipsesource/uml-glsp/lib/features/outline';
+import { OutlineService, OutlineTreeNode } from '@eclipsesource/uml-glsp/lib/features/outline';
 import { inject, injectable, postConstruct } from '@theia/core/shared/inversify';
 
 import { belongsToDiagramWidget, UTDiagramManager } from '../../../glsp/diagram/ut-diagram.manager';
@@ -24,14 +24,14 @@ export type OutlineIntegrationFactory = () => OutlineIntegrationService;
 export const OutlineIntegrationFactory = Symbol('OutlineIntegrationFactory');
 
 @injectable()
-export class OutlineIntegrationService extends UmlDiagramOutlineService {
+export class OutlineIntegrationService extends OutlineService {
     @inject(OutlineWidgetService)
     protected readonly outlineWidgetService: OutlineWidgetService;
 
     @inject(UTDiagramManager)
     protected readonly diagramManager: UTDiagramManager;
 
-    protected readonly mappings = new Map<string, [UmlOutlineTreeNode, OutlineWidgetSymbolInformationNode]>();
+    protected readonly mappings = new Map<string, [OutlineTreeNode, OutlineWidgetSymbolInformationNode]>();
 
     @postConstruct()
     init(): void {
@@ -42,7 +42,7 @@ export class OutlineIntegrationService extends UmlDiagramOutlineService {
         });
     }
 
-    updateOutline(outlineNodes: UmlOutlineTreeNode[]): void {
+    updateOutline(outlineNodes: OutlineTreeNode[]): void {
         this.mappings.clear();
 
         const mappedNodes = outlineNodes.map(outlineNode => this.cachedMap(outlineNode));
@@ -63,7 +63,7 @@ export class OutlineIntegrationService extends UmlDiagramOutlineService {
         }
     }
 
-    protected cachedMap(outlineTreeNode: UmlOutlineTreeNode): OutlineWidgetSymbolInformationNode {
+    protected cachedMap(outlineTreeNode: OutlineTreeNode): OutlineWidgetSymbolInformationNode {
         let informationNode: OutlineWidgetSymbolInformationNode;
 
         if (outlineTreeNode.children.length === 0) {

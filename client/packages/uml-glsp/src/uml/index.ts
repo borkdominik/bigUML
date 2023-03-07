@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2021 EclipseSource and others.
+ * Copyright (c) 2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -14,9 +14,8 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 
-export interface OutlineTreeNode {
-    label: string;
-    semanticUri: string;
-    children: OutlineTreeNode[];
-    iconClass: string;
-}
+import { umlModule } from './di.config';
+import { umlClassDiagramModule } from './diagram/class/di.config';
+import { umlCommunicationDiagramModule } from './diagram/communication/di.config';
+
+export const umlDiagramModules = [umlModule, umlClassDiagramModule, umlCommunicationDiagramModule];

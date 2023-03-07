@@ -18,7 +18,7 @@ import '@eclipse-glsp/vscode-integration-webview/css/glsp-vscode.css';
 import { GLSPDiagramIdentifier } from '@eclipse-glsp/vscode-integration-webview/lib/diagram-identifer';
 import { GLSPVscodeDiagramWidget } from '@eclipse-glsp/vscode-integration-webview/lib/glsp-vscode-diagram-widget';
 import { createUmlDiagramContainer } from '@eclipsesource/uml-glsp/lib';
-import { UmlDiagramOutlineService } from '@eclipsesource/uml-glsp/lib/features/outline';
+import { OutlineService } from '@eclipsesource/uml-glsp/lib/features/outline';
 import { Container } from 'inversify';
 import { SprottyDiagramIdentifier } from 'sprotty-vscode-webview';
 import { OutlineIntegrationService } from './features/outline/integration/outline-integration.service';
@@ -28,7 +28,7 @@ class UVStarter extends GLSPStarter {
     createContainer(diagramIdentifier: SprottyDiagramIdentifier): Container {
         const container = createUmlDiagramContainer(diagramIdentifier.clientId);
 
-        container.bind(UmlDiagramOutlineService).to(OutlineIntegrationService).inSingletonScope();
+        container.bind(OutlineService).to(OutlineIntegrationService).inSingletonScope();
 
         return container;
     }

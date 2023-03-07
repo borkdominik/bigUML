@@ -17,12 +17,12 @@ import { configureActionHandler } from '@eclipse-glsp/client';
 import { ContainerModule } from 'inversify';
 
 import { SetOutlineAction } from './outline.actions';
-import { UmlDiagramOutlineActionHandler } from './outline.handlers';
+import { OutlineActionHandler } from './outline.handlers';
 
-const umlDiagramOutlineModule = new ContainerModule((bind, _unbind, isBound, rebind) => {
+const outlineModule = new ContainerModule((bind, _unbind, isBound, rebind) => {
     const context = { bind, _unbind, isBound, rebind };
-    bind(UmlDiagramOutlineActionHandler).toSelf().inSingletonScope();
-    configureActionHandler(context, SetOutlineAction.KIND, UmlDiagramOutlineActionHandler);
+    bind(OutlineActionHandler).toSelf().inSingletonScope();
+    configureActionHandler(context, SetOutlineAction.KIND, OutlineActionHandler);
 });
 
-export default umlDiagramOutlineModule;
+export default outlineModule;

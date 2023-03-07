@@ -11,8 +11,8 @@
 import { EditLabelUI, EditLabelValidationResult, GLSPActionDispatcher, SModelRoot, TYPES } from '@eclipse-glsp/client';
 import { inject, injectable } from 'inversify';
 import { matchesKeystroke } from 'sprotty/lib/utils/keyboard';
+import { UmlClassTypes } from '../../uml/diagram/class/class.types';
 
-import { UmlTypes } from '../../utils';
 import { RequestTypeInformationAction, SetTypeInformationAction, TypeInformation } from './edit-label.actions';
 
 @injectable()
@@ -198,7 +198,7 @@ export class EditLabelUIAutocomplete extends EditLabelUI {
     }
 
     protected isAutoCompleteLabel(): boolean {
-        return this.label?.type === UmlTypes.LABEL_PROPERTY_TYPE;
+        return this.label?.type === UmlClassTypes.LABEL_PROPERTY_TYPE;
     }
 
     public override hide(): void {

@@ -21,7 +21,7 @@ import { ContainerModule } from 'inversify';
 import { EDITOR_PANEL_TYPES } from '../editor-panel/di.types';
 import { PropertyPalette } from './property-palette.extension';
 
-const umlPropertyPaletteModule = new ContainerModule((bind, _unbind, isBound, rebind) => {
+const propertyPaletteModule = new ContainerModule((bind, _unbind, isBound, rebind) => {
     const context = { bind, _unbind, isBound, rebind };
 
     bind(PropertyPalette).toSelf().inSingletonScope();
@@ -32,4 +32,4 @@ const umlPropertyPaletteModule = new ContainerModule((bind, _unbind, isBound, re
     configureActionHandler(context, SetDirtyStateAction.KIND, PropertyPalette);
 });
 
-export default umlPropertyPaletteModule;
+export default propertyPaletteModule;

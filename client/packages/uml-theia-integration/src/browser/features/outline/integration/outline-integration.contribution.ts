@@ -14,7 +14,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 import { IActionDispatcher, ModelSource, TYPES } from '@eclipse-glsp/client';
-import { UmlDiagramOutlineService } from '@eclipsesource/uml-glsp/lib/features/outline/index';
+import { OutlineService } from '@eclipsesource/uml-glsp/lib/features/outline/index';
 import { Container } from '@theia/core/shared/inversify';
 
 import { OutlineIntegrationService } from './outline-integration.service';
@@ -22,11 +22,11 @@ import { OutlineIntegrationService } from './outline-integration.service';
 export function connectOutlineIntegration(container: Container, outlineIntegrationServiceFactory: () => OutlineIntegrationService): void {
     const outlineIntegrationService = outlineIntegrationServiceFactory();
 
-    container.bind(UmlDiagramOutlineService).toConstantValue(outlineIntegrationService);
+    container.bind(OutlineService).toConstantValue(outlineIntegrationService);
     container.bind(OutlineIntegrationService).toConstantValue(outlineIntegrationService);
     container.bind(TYPES.SModelRootListener).toConstantValue(outlineIntegrationService);
 
-    if (outlineIntegrationService instanceof UmlDiagramOutlineService) {
+    if (outlineIntegrationService instanceof OutlineService) {
         outlineIntegrationService.connect(
             container.get<ModelSource>(TYPES.ModelSource),
             container.get<IActionDispatcher>(TYPES.IActionDispatcher)

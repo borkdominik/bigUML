@@ -12,73 +12,74 @@ import { configureModelElement, PolylineEdgeView, SCompartmentView, SEdge, SLabe
 import { ContainerModule } from 'inversify';
 
 import { IconLabelCompartment, SEditableLabel } from '../../../graph';
-import { UmlTypes } from '../../../utils';
 import { NamedElement, NamedElementView } from '../../elements';
+import { UmlTypes } from '../../uml.types';
+import { UmlClassTypes } from './class.types';
 
 export const umlClassDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
     const context = { bind, unbind, isBound, rebind };
 
     // Class
-    configureModelElement(context, UmlTypes.CLASS, NamedElement, NamedElementView);
-    configureModelElement(context, UmlTypes.ABSTRACT_CLASS, NamedElement, NamedElementView);
+    configureModelElement(context, UmlClassTypes.CLASS, NamedElement, NamedElementView);
+    configureModelElement(context, UmlClassTypes.ABSTRACT_CLASS, NamedElement, NamedElementView);
 
     // Enumeration
-    configureModelElement(context, UmlTypes.ENUMERATION, NamedElement, NamedElementView);
+    configureModelElement(context, UmlClassTypes.ENUMERATION, NamedElement, NamedElementView);
 
     // Enumeration Literal
-    configureModelElement(context, UmlTypes.ENUMERATION_LITERAL, IconLabelCompartment, SCompartmentView);
+    configureModelElement(context, UmlClassTypes.ENUMERATION_LITERAL, IconLabelCompartment, SCompartmentView);
 
     // Interface
-    configureModelElement(context, UmlTypes.INTERFACE, NamedElement, NamedElementView);
+    configureModelElement(context, UmlClassTypes.INTERFACE, NamedElement, NamedElementView);
 
     // Association
-    configureModelElement(context, UmlTypes.ASSOCIATION, SEdge, PolylineEdgeView);
-    configureModelElement(context, UmlTypes.AGGREGATION, SEdge, PolylineEdgeView);
-    configureModelElement(context, UmlTypes.COMPOSITION, SEdge, PolylineEdgeView);
+    configureModelElement(context, UmlClassTypes.ASSOCIATION, SEdge, PolylineEdgeView);
+    configureModelElement(context, UmlClassTypes.AGGREGATION, SEdge, PolylineEdgeView);
+    configureModelElement(context, UmlClassTypes.COMPOSITION, SEdge, PolylineEdgeView);
 
     // Generalization
-    configureModelElement(context, UmlTypes.CLASS_GENERALIZATION, SEdge, PolylineEdgeView);
+    configureModelElement(context, UmlClassTypes.CLASS_GENERALIZATION, SEdge, PolylineEdgeView);
 
     // Operation
-    configureModelElement(context, UmlTypes.OPERATION, IconLabelCompartment, SCompartmentView);
+    configureModelElement(context, UmlClassTypes.OPERATION, IconLabelCompartment, SCompartmentView);
 
     // Property
-    configureModelElement(context, UmlTypes.PROPERTY, IconLabelCompartment, SCompartmentView);
-    configureModelElement(context, UmlTypes.LABEL_PROPERTY_TYPE, SEditableLabel, SLabelView);
-    configureModelElement(context, UmlTypes.LABEL_PROPERTY_MULTIPLICITY, SEditableLabel, SLabelView);
+    configureModelElement(context, UmlClassTypes.PROPERTY, IconLabelCompartment, SCompartmentView);
+    configureModelElement(context, UmlClassTypes.LABEL_PROPERTY_TYPE, SEditableLabel, SLabelView);
+    configureModelElement(context, UmlClassTypes.LABEL_PROPERTY_MULTIPLICITY, SEditableLabel, SLabelView);
 
     // Data Type
-    configureModelElement(context, UmlTypes.DATA_TYPE, NamedElement, NamedElementView);
+    configureModelElement(context, UmlClassTypes.DATA_TYPE, NamedElement, NamedElementView);
 
     // Data Type
-    configureModelElement(context, UmlTypes.PRIMITIVE_TYPE, NamedElement, NamedElementView);
+    configureModelElement(context, UmlClassTypes.PRIMITIVE_TYPE, NamedElement, NamedElementView);
 
     // PACKAGE
-    configureModelElement(context, UmlTypes.PACKAGE, NamedElement, NamedElementView);
+    configureModelElement(context, UmlClassTypes.PACKAGE, NamedElement, NamedElementView);
 
     // Abstraction
-    configureModelElement(context, UmlTypes.ABSTRACTION, SEdge, PolylineEdgeView);
+    configureModelElement(context, UmlClassTypes.ABSTRACTION, SEdge, PolylineEdgeView);
 
     // Abstraction
-    configureModelElement(context, UmlTypes.DEPENDENCY, SEdge, PolylineEdgeView);
+    configureModelElement(context, UmlClassTypes.DEPENDENCY, SEdge, PolylineEdgeView);
 
     // Interface Realization
-    configureModelElement(context, UmlTypes.INTERFACE_REALIZATION, SEdge, PolylineEdgeView);
+    configureModelElement(context, UmlClassTypes.INTERFACE_REALIZATION, SEdge, PolylineEdgeView);
 
     // Realization
-    configureModelElement(context, UmlTypes.REALIZATION, SEdge, PolylineEdgeView);
+    configureModelElement(context, UmlClassTypes.REALIZATION, SEdge, PolylineEdgeView);
 
     // Substitution
-    configureModelElement(context, UmlTypes.SUBSTITUTION, SEdge, PolylineEdgeView);
+    configureModelElement(context, UmlClassTypes.SUBSTITUTION, SEdge, PolylineEdgeView);
 
     // Usage
-    configureModelElement(context, UmlTypes.USAGE, SEdge, PolylineEdgeView);
+    configureModelElement(context, UmlClassTypes.USAGE, SEdge, PolylineEdgeView);
 
     // Package Import
-    configureModelElement(context, UmlTypes.PACKAGE_IMPORT, SEdge, PolylineEdgeView);
+    configureModelElement(context, UmlClassTypes.PACKAGE_IMPORT, SEdge, PolylineEdgeView);
 
     // Package Merge
-    configureModelElement(context, UmlTypes.PACKAGE_MERGE, SEdge, PolylineEdgeView);
+    configureModelElement(context, UmlClassTypes.PACKAGE_MERGE, SEdge, PolylineEdgeView);
 
     // Other
     configureModelElement(context, UmlTypes.LABEL_EDGE_MULTIPLICITY, SEditableLabel, SLabelView);

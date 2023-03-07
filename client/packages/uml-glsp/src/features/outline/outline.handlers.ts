@@ -17,16 +17,16 @@ import { Action, IActionHandler } from '@eclipse-glsp/client';
 import { inject, injectable } from 'inversify';
 
 import { isSetOutlineAction } from './outline.actions';
-import { UmlDiagramOutlineService } from './outline.service';
+import { OutlineService } from './outline.service';
 
 @injectable()
-export class UmlDiagramOutlineActionHandler implements IActionHandler {
-    @inject(UmlDiagramOutlineService)
-    protected readonly diagramOutlineService: UmlDiagramOutlineService;
+export class OutlineActionHandler implements IActionHandler {
+    @inject(OutlineService)
+    protected readonly outlineService: OutlineService;
 
     handle(action: Action): void | Action {
         if (isSetOutlineAction(action)) {
-            this.diagramOutlineService.updateOutline(action.outlineTreeNodes);
+            this.outlineService.updateOutline(action.outlineTreeNodes);
         }
     }
 }

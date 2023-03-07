@@ -28,8 +28,8 @@ export class OutlineIntegrationManager {
     protected readonly outlineWidgetService: OutlineWidgetService;
 
     async refresh(widget: GLSPDiagramWidget): Promise<void> {
-        const diagramOutlineService = widget.diContainer.get(OutlineIntegrationService);
-        await diagramOutlineService.refresh();
+        const outlineIntegrationService = widget.diContainer.get(OutlineIntegrationService);
+        await outlineIntegrationService.refresh();
     }
 
     clear(): void {

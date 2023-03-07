@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2021 EclipseSource and others.
+ * Copyright (c) 2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -14,9 +14,14 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 
-export interface OutlineTreeNode {
-    label: string;
-    semanticUri: string;
-    children: OutlineTreeNode[];
-    iconClass: string;
+import { DefaultTypes } from '@eclipse-glsp/client';
+
+export namespace UmlTypes {
+    // COMMONS
+    export const ICON = 'icon';
+    export const LABEL_NAME = `${DefaultTypes.LABEL}:name`;
+    export const LABEL_TEXT = `${DefaultTypes.LABEL}:text`;
+    export const LABEL_EDGE_NAME = `${DefaultTypes.LABEL}:edge-name`;
+    export const LABEL_EDGE_MULTIPLICITY = `${DefaultTypes.LABEL}:association-multiplicity`;
+    export const ICON_CSS = `${ICON}:css`;
 }

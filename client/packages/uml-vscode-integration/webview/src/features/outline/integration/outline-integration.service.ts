@@ -13,12 +13,12 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { UmlDiagramOutlineService, UmlOutlineTreeNode } from '@eclipsesource/uml-glsp/lib/features/outline';
+import { OutlineService, OutlineTreeNode } from '@eclipsesource/uml-glsp/lib/features/outline';
 import { injectable } from '@theia/core/shared/inversify';
 
 @injectable()
-export class OutlineIntegrationService extends UmlDiagramOutlineService {
-    updateOutline(outlineNodes: UmlOutlineTreeNode[]): void {
+export class OutlineIntegrationService extends OutlineService {
+    updateOutline(outlineNodes: OutlineTreeNode[]): void {
         console.log('[OutlineIntegrationService]', outlineNodes);
     }
 }

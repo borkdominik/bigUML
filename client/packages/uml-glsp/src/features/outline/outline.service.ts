@@ -24,15 +24,15 @@ import {
 } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 
-import { UmlOutlineTreeNode } from './outline-tree-node.model';
+import { OutlineTreeNode } from './outline-tree-node.model';
 import { RequestOutlineAction, SetOutlineAction } from './outline.actions';
 
 @injectable()
-export abstract class UmlDiagramOutlineService implements SModelRootListener {
+export abstract class OutlineService implements SModelRootListener {
     protected actionDispatcher: IActionDispatcher;
     protected modelSource: ModelSource;
     protected diagramServerProxy?: DiagramServerProxy;
-    protected outlineNodes: UmlOutlineTreeNode[] = [];
+    protected outlineNodes: OutlineTreeNode[] = [];
 
     connect(modelSource: ModelSource, actionDispatcher: IActionDispatcher): void {
         this.modelSource = modelSource;
@@ -43,7 +43,7 @@ export abstract class UmlDiagramOutlineService implements SModelRootListener {
         }
     }
 
-    get nodes(): UmlOutlineTreeNode[] {
+    get nodes(): OutlineTreeNode[] {
         return this.outlineNodes;
     }
 
@@ -64,9 +64,9 @@ export abstract class UmlDiagramOutlineService implements SModelRootListener {
         this.updateOutline(outlineTreeNodes);
     }
 
-    async center(outlineNode: UmlOutlineTreeNode): Promise<void> {
+    async center(outlineNode: OutlineTreeNode): Promise<void> {
         await this.actionDispatcher.dispatch(CenterAction.create([outlineNode.semanticUri]));
     }
 
-    abstract updateOutline(outlineNodes: UmlOutlineTreeNode[]): void;
+    abstract updateOutline(outlineNodes: OutlineTreeNode[]): void;
 }

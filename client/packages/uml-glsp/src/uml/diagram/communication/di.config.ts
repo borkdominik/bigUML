@@ -12,9 +12,9 @@ import { configureModelElement, SEdge } from '@eclipse-glsp/client/lib';
 import { ContainerModule } from 'inversify';
 
 import { IconView, SEditableLabel } from '../../../index';
-import { UmlTypes } from '../../../utils/uml-types';
 import { NamedElement } from '../../elements/named-element.model';
 import { NamedElementView } from '../../elements/named-element.view';
+import { UmlCommunicationTypes } from './communication.types';
 import { IconInteraction } from './elements/interaction/model';
 import { IconLifeline } from './elements/lifeline';
 import { MessageArrowLabelView, MessageEdgeView } from './elements/message';
@@ -23,14 +23,14 @@ export const umlCommunicationDiagramModule = new ContainerModule((bind, unbind, 
     const context = { bind, unbind, isBound, rebind };
 
     // Interaction
-    configureModelElement(context, UmlTypes.ICON_INTERACTION, IconInteraction, IconView);
-    configureModelElement(context, UmlTypes.INTERACTION, NamedElement, NamedElementView);
+    configureModelElement(context, UmlCommunicationTypes.ICON_INTERACTION, IconInteraction, IconView);
+    configureModelElement(context, UmlCommunicationTypes.INTERACTION, NamedElement, NamedElementView);
 
     // Lifeline
-    configureModelElement(context, UmlTypes.ICON_LIFELINE, IconLifeline, IconView);
-    configureModelElement(context, UmlTypes.LIFELINE, NamedElement, NamedElementView);
+    configureModelElement(context, UmlCommunicationTypes.ICON_LIFELINE, IconLifeline, IconView);
+    configureModelElement(context, UmlCommunicationTypes.LIFELINE, NamedElement, NamedElementView);
 
     // Message
-    configureModelElement(context, UmlTypes.MESSAGE, SEdge, MessageEdgeView);
-    configureModelElement(context, UmlTypes.MESSAGE_LABEL_ARROW_EDGE_NAME, SEditableLabel, MessageArrowLabelView);
+    configureModelElement(context, UmlCommunicationTypes.MESSAGE, SEdge, MessageEdgeView);
+    configureModelElement(context, UmlCommunicationTypes.MESSAGE_LABEL_ARROW_EDGE_NAME, SEditableLabel, MessageArrowLabelView);
 });

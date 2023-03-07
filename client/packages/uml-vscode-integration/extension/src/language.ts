@@ -25,6 +25,7 @@ export const VSCodeSettings = {
         prefix: 'uml'
     },
     editor: {
+        extension: 'uml',
         viewType: 'uml.glspDiagram'
     }
 };

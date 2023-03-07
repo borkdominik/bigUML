@@ -28,7 +28,6 @@ export class ThemeManager {
     protected disposables: vscode.Disposable[] = [];
 
     initialize(): void {
-        console.log('======= Initializing THEME');
         this.updateTheme(vscode.window.activeColorTheme.kind);
     }
 

@@ -13,12 +13,12 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.01
  ********************************************************************************/
-import { GlspVscodeConnector } from '@eclipse-glsp/vscode-integration';
 import { GlspEditorProvider } from '@eclipse-glsp/vscode-integration/lib/quickstart-components';
 import { inject, injectable, postConstruct } from 'inversify';
 import URI from 'urijs';
 import * as vscode from 'vscode';
 import { TYPES, VSCODE_TYPES } from '../../di.types';
+import { UmlGlspConnector } from '../../glsp/connection/uml-glsp-connector';
 import { VSCodeSettings } from '../../language';
 import { VSCodeModelServerClient } from '../../modelserver/modelserver.client';
 import { ThemeManager } from '../theme-manager/theme-manager';
@@ -27,9 +27,11 @@ import { ThemeManager } from '../theme-manager/theme-manager';
 export class UmlEditorProvider extends GlspEditorProvider {
     diagramType = 'umldiagram';
 
+    private viewId = 1;
+
     constructor(
         @inject(VSCODE_TYPES.ExtensionContext) protected readonly context: vscode.ExtensionContext,
-        @inject(TYPES.Connector) glspVscodeConnector: GlspVscodeConnector,
+        @inject(TYPES.Connector) protected override readonly glspVscodeConnector: UmlGlspConnector,
         @inject(TYPES.ModelServerClient) protected readonly modelServerClient: VSCodeModelServerClient,
         @inject(VSCODE_TYPES.ThemeManager) protected readonly themeManager: ThemeManager
     ) {
@@ -105,4 +107,13 @@ export class UmlEditorProvider extends GlspEditorProvider {
             });
         }
     }
+}
+
+function serializeUri(uri: vscode.Uri): string {
+    let uriString = uri.toString();
+    const match = uriString.match(/file:\/\/\/([a-z])%3A/i);
+    if (match) {
+        uriString = 'file:///' + match[1] + ':' + uriString.substring(match[0].length);
+    }
+    return uriString;
 }

@@ -29,9 +29,9 @@ import { UmlDiagramManager } from './diagram/uml-diagram-manager';
 import { UmlGLSPConnector } from './diagram/uml-glsp-connector';
 import { registerOutlineIntegration } from './features/outline/integration/outline-integration.module';
 import { registerOutlineWidget } from './features/outline/widget/outline-widget.module';
-import { UmlTreeLabelProviderContribution } from './label-provider';
-import { UmlGLSPClientContribution } from './uml-client-contribution';
-import { UmlModelContribution } from './uml-command-contribution';
+import { UmlGLSPClientContribution } from './glsp/connection/uml-client-contribution';
+import { UmlModelContribution } from './theia/command/uml-command-contribution';
+import { UmlTreeLabelProviderContribution } from './theia/editor/label-provider';
 import { UmlFrontendContribution } from './uml-frontend-contribution';
 
 export class UmlTheiaFrontendModule extends GLSPTheiaFrontendModule {

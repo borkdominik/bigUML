@@ -26,6 +26,7 @@ import { DisposableManager } from './vscode/disposable/disposable.manager';
 import { UmlEditorProvider } from './vscode/editor/uml-editor-provider';
 import { NewDiagramFileCreator } from './vscode/new-file/new-diagram-file.creator';
 import { ThemeManager } from './vscode/theme-manager/theme-manager';
+import { WorkspaceWatcher } from './vscode/workspace/workspace.watcher';
 
 export function createContainer(context: vscode.ExtensionContext): Container {
     const vscodeModule = new ContainerModule((bind, unbind, isBound, rebind) => {
@@ -40,12 +41,15 @@ export function createContainer(context: vscode.ExtensionContext): Container {
         bind(NewDiagramFileCreator).toSelf().inSingletonScope();
 
         bind(VSCODE_TYPES.DisposableManager).to(DisposableManager).inSingletonScope();
+        bind(VSCODE_TYPES.Disposable).toService(TYPES.ModelServerClient);
         bind(VSCODE_TYPES.Disposable).toService(TYPES.GlspServer);
         bind(VSCODE_TYPES.Disposable).toService(TYPES.Connector);
 
         bind(VSCODE_TYPES.EditorProvider).to(UmlEditorProvider).inSingletonScope();
 
         bind(VSCODE_TYPES.ThemeManager).to(ThemeManager).inSingletonScope();
+
+        bind(VSCODE_TYPES.Watcher).to(WorkspaceWatcher).inSingletonScope();
     });
 
     const container = new Container({

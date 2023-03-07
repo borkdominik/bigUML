@@ -19,8 +19,8 @@ import { WorkspaceService } from '@theia/workspace/lib/browser';
 import { inject, injectable } from 'inversify';
 import URI from 'urijs';
 
-import { UmlLanguageTheiaEnvironment } from '../common/uml-language';
-import { UmlModelServerClient } from '../common/uml-modelserver.client';
+import { UmlLanguageTheiaEnvironment } from '../../../common/uml-language';
+import { UmlModelServerClient } from '../../../common/uml-modelserver.client';
 
 export const NEW_UML_DIAGRAM_COMMAND: Command = {
     id: 'file.newUmlDiagram',

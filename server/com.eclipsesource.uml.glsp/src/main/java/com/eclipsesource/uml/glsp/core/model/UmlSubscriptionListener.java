@@ -62,8 +62,12 @@ public class UmlSubscriptionListener extends EMSSubscriptionListener {
 
    @Override
    public void onFullUpdate(final String fullUpdate) {
-      logResponse("Full <JsonString> update from model server received: " + fullUpdate);
-      this.refresh();
+      if (fullUpdate == null || fullUpdate.equals("null")) {
+         logResponse("Full <JsonString> update from model server will be ignored: " + fullUpdate);
+      } else {
+         logResponse("Full <JsonString> update from model server received: " + fullUpdate);
+         this.refresh();
+      }
    }
 
    public void onDirtyChange(final boolean isDirty, final String reason) {

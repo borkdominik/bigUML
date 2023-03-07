@@ -33,6 +33,10 @@ export class UmlModelServerClient extends ModelServerClientV2 implements UmlMode
         this.initialize(new URI(this.config.url));
     }
 
+    dispose(): void {
+        Array.from(this.openSockets.values()).forEach(openSocket => openSocket.close());
+    }
+
     override create<M>(
         modeluri: URI,
         model: AnyObject | string,

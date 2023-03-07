@@ -14,7 +14,7 @@ import { LabelProviderContribution } from '@theia/core/lib/browser';
 import URI from '@theia/core/lib/common/uri';
 import { FileStat } from '@theia/filesystem/lib/common/files';
 import { injectable } from 'inversify';
-import { UmlDiagramLanguage } from '../common/uml-language';
+import { UmlDiagramLanguage } from '../../../common/uml-language';
 
 @injectable()
 export class UmlTreeLabelProviderContribution implements LabelProviderContribution {

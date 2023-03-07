@@ -37,6 +37,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
         diagramPrefix: VSCodeSettings.commands.prefix
     });
 
+    container.getAll<any>(VSCODE_TYPES.Watcher);
     container.get<any>(VSCODE_TYPES.EditorProvider);
     container.get<any>(VSCODE_TYPES.CommandManager);
     container.get<any>(VSCODE_TYPES.DisposableManager);

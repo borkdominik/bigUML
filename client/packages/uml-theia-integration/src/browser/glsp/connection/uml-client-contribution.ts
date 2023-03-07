@@ -12,7 +12,7 @@ import { Args, MaybePromise } from '@eclipse-glsp/client';
 import { BaseGLSPClientContribution } from '@eclipse-glsp/theia-integration/lib/browser';
 import { injectable } from 'inversify';
 
-import { UmlDiagramLanguage } from '../common/uml-language';
+import { UmlDiagramLanguage } from '../../../common/uml-language';
 
 export interface UmlInitializeOptions {
     timestamp: Date;

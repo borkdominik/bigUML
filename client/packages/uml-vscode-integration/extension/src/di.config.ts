@@ -17,35 +17,35 @@
 import { Container, ContainerModule } from 'inversify';
 import * as vscode from 'vscode';
 import { TYPES, VSCODE_TYPES } from './di.types';
-import { UmlGlspConnector } from './glsp/connection/uml-glsp-connector';
-import { UmlGlspServer } from './glsp/connection/uml-glsp-server';
-import { VSCodeModelServerClient } from './modelserver/modelserver.client';
+import { UVGlspConnector } from './glsp/connection/uv-glsp-connector';
+import { UVGlspServer } from './glsp/connection/uv-glsp-server';
+import { UVModelServerClient } from './modelserver/uv-modelserver.client';
 import { CommandManager } from './vscode/command/command.manager';
-import { NewDiagramCommand } from './vscode/command/new-diagram.command';
 import { DisposableManager } from './vscode/disposable/disposable.manager';
-import { UmlEditorProvider } from './vscode/editor/uml-editor-provider';
-import { NewDiagramFileCreator } from './vscode/new-file/new-diagram-file.creator';
+import { EditorProvider } from './vscode/editor/editor.provider';
+import { NewFileCommand } from './vscode/new-file/new-file.command';
+import { NewFileCreator } from './vscode/new-file/new-file.creator';
 import { ThemeManager } from './vscode/theme-manager/theme-manager';
 import { WorkspaceWatcher } from './vscode/workspace/workspace.watcher';
 
 export function createContainer(context: vscode.ExtensionContext): Container {
     const vscodeModule = new ContainerModule((bind, unbind, isBound, rebind) => {
-        bind(TYPES.GlspServer).to(UmlGlspServer).inSingletonScope();
-        bind(TYPES.Connector).to(UmlGlspConnector).inSingletonScope();
+        bind(TYPES.GlspServer).to(UVGlspServer).inSingletonScope();
+        bind(TYPES.Connector).to(UVGlspConnector).inSingletonScope();
 
         bind(VSCODE_TYPES.CommandManager).to(CommandManager).inSingletonScope();
-        bind(VSCODE_TYPES.Command).to(NewDiagramCommand);
 
-        bind(TYPES.ModelServerClient).to(VSCodeModelServerClient).inSingletonScope();
+        bind(TYPES.ModelServerClient).to(UVModelServerClient).inSingletonScope();
 
-        bind(NewDiagramFileCreator).toSelf().inSingletonScope();
+        bind(NewFileCreator).toSelf().inSingletonScope();
+        bind(VSCODE_TYPES.Command).to(NewFileCommand);
 
         bind(VSCODE_TYPES.DisposableManager).to(DisposableManager).inSingletonScope();
         bind(VSCODE_TYPES.Disposable).toService(TYPES.ModelServerClient);
         bind(VSCODE_TYPES.Disposable).toService(TYPES.GlspServer);
         bind(VSCODE_TYPES.Disposable).toService(TYPES.Connector);
 
-        bind(VSCODE_TYPES.EditorProvider).to(UmlEditorProvider).inSingletonScope();
+        bind(VSCODE_TYPES.EditorProvider).to(EditorProvider).inSingletonScope();
 
         bind(VSCODE_TYPES.ThemeManager).to(ThemeManager).inSingletonScope();
 

@@ -15,7 +15,7 @@ import { IconLabelCompartment, SEditableLabel } from '../../../graph';
 import { UmlTypes } from '../../../utils';
 import { NamedElement, NamedElementView } from '../../elements';
 
-export const classDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
+export const umlClassDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
     const context = { bind, unbind, isBound, rebind };
 
     // Class

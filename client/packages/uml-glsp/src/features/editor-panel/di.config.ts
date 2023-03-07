@@ -18,8 +18,8 @@ import '@eclipsesource/uml-glsp/css/extensions/editor-panel.css';
 import { configureActionHandler, TYPES } from '@eclipse-glsp/client';
 import { ContainerModule } from 'inversify';
 
-import { EnableEditorPanelAction } from './actions';
-import { EditorPanel } from './extension';
+import { EnableEditorPanelAction } from './editor-panel.actions';
+import { EditorPanel } from './editor-panel.extension';
 
 const umlEditorPanelModule = new ContainerModule((bind, _unbind, isBound, rebind) => {
     const context = { bind, _unbind, isBound, rebind };

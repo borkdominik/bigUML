@@ -9,7 +9,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
 
+export * from './di.config';
 export * from './outline-integration.contribution';
 export * from './outline-integration.manager';
-export * from './outline-integration.module';
 export * from './outline-integration.service';

@@ -21,7 +21,7 @@ import { OS } from '@theia/core/lib/common/os';
 import { inject, injectable } from '@theia/core/shared/inversify';
 import { EditorManager } from '@theia/editor/lib/browser';
 
-import { IChangedArgs, UmlDiagramManager } from '../../../diagram/uml-diagram-manager';
+import { IChangedArgs, UTDiagramManager } from '../../../glsp/diagram/ut-diagram.manager';
 import { OutlineIntegrationManager } from '../integration/index';
 import { OutlineWidgetService } from './outline-widget.service';
 import { OutlineWidget } from './outline-widget.widget';
@@ -40,8 +40,8 @@ export class OutlineWidgetContribution extends AbstractViewContribution<OutlineW
     @inject(OutlineIntegrationManager)
     protected readonly outlineIntegrationManager: OutlineIntegrationManager;
 
-    @inject(UmlDiagramManager)
-    protected readonly diagramManager: UmlDiagramManager;
+    @inject(UTDiagramManager)
+    protected readonly diagramManager: UTDiagramManager;
     @inject(EditorManager)
     protected readonly editorManager: EditorManager;
 

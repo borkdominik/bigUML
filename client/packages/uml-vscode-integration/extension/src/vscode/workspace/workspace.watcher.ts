@@ -19,11 +19,11 @@ import URI from 'urijs';
 import * as vscode from 'vscode';
 import { TYPES } from '../../di.types';
 import { VSCodeSettings } from '../../language';
-import { VSCodeModelServerClient } from '../../modelserver/modelserver.client';
+import { UVModelServerClient } from '../../modelserver/uv-modelserver.client';
 
 @injectable()
 export class WorkspaceWatcher {
-    constructor(@inject(TYPES.ModelServerClient) protected readonly modelServerClient: VSCodeModelServerClient) {}
+    constructor(@inject(TYPES.ModelServerClient) protected readonly modelServerClient: UVModelServerClient) {}
 
     @postConstruct()
     initialize(): void {

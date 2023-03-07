@@ -13,10 +13,10 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { UmlDiagramOutlineService, UmlOutlineTreeNode } from '@eclipsesource/uml-glsp/lib/features/diagram-outline';
+import { UmlDiagramOutlineService, UmlOutlineTreeNode } from '@eclipsesource/uml-glsp/lib/features/outline';
 import { inject, injectable, postConstruct } from '@theia/core/shared/inversify';
 
-import { belongsToDiagramWidget, UmlDiagramManager } from '../../../diagram/uml-diagram-manager';
+import { belongsToDiagramWidget, UTDiagramManager } from '../../../glsp/diagram/ut-diagram.manager';
 import { OutlineWidgetService } from '../widget/outline-widget.service';
 import { OutlineWidgetSymbolInformationNode } from '../widget/outline-widget.widget';
 
@@ -28,8 +28,8 @@ export class OutlineIntegrationService extends UmlDiagramOutlineService {
     @inject(OutlineWidgetService)
     protected readonly outlineWidgetService: OutlineWidgetService;
 
-    @inject(UmlDiagramManager)
-    protected readonly diagramManager: UmlDiagramManager;
+    @inject(UTDiagramManager)
+    protected readonly diagramManager: UTDiagramManager;
 
     protected readonly mappings = new Map<string, [UmlOutlineTreeNode, OutlineWidgetSymbolInformationNode]>();
 

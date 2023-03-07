@@ -41,15 +41,15 @@ import { DefaultTypes } from '@eclipse-glsp/protocol';
 import { Container, ContainerModule } from 'inversify';
 
 import { CustomCopyPasteHandler, LastContainableElementTracker } from './features/copy-paste/copy-paste';
-import umlDiagramOutlineModule from './features/diagram-outline/di.config';
 import { EditLabelUIAutocomplete } from './features/edit-label';
 import umlEditorPanelModule from './features/editor-panel/di.config';
+import umlDiagramOutlineModule from './features/outline/di.config';
 import umlPropertyPaletteModule from './features/property-palette/di.config';
 import umlToolPaletteModule from './features/tool-palette/di.config';
 import { UmlGraphView } from './graph/graph.view';
 import { IconCSS, IconCSSView, SEditableLabel } from './graph/index';
-import { classDiagramModule } from './uml/diagram/class/di.config';
-import { communicationDiagramModule } from './uml/diagram/communication/di.config';
+import { umlClassDiagramModule } from './uml/diagram/class/di.config';
+import { umlCommunicationDiagramModule } from './uml/diagram/communication/di.config';
 import { BaseTypes, UmlTypes } from './utils';
 import { IconLabelCompartmentSelectionFeedback } from './views/feedback.postprocessor';
 
@@ -90,8 +90,8 @@ export default function createContainer(widgetId: string): Container {
     const container = createDiagramContainer(
         saveModule,
         coreDiagramModule,
-        classDiagramModule,
-        communicationDiagramModule,
+        umlClassDiagramModule,
+        umlCommunicationDiagramModule,
         umlEditorPanelModule,
         umlToolPaletteModule,
         umlDiagramOutlineModule,

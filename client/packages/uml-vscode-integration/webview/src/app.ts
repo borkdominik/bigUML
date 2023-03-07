@@ -18,13 +18,13 @@ import '@eclipse-glsp/vscode-integration-webview/css/glsp-vscode.css';
 import { GLSPDiagramIdentifier } from '@eclipse-glsp/vscode-integration-webview/lib/diagram-identifer';
 import { GLSPVscodeDiagramWidget } from '@eclipse-glsp/vscode-integration-webview/lib/glsp-vscode-diagram-widget';
 import { createUmlDiagramContainer } from '@eclipsesource/uml-glsp/lib';
-import { UmlDiagramOutlineService } from '@eclipsesource/uml-glsp/lib/features/diagram-outline/diagram-outline-service';
+import { UmlDiagramOutlineService } from '@eclipsesource/uml-glsp/lib/features/outline';
 import { Container } from 'inversify';
 import { SprottyDiagramIdentifier } from 'sprotty-vscode-webview';
 import { OutlineIntegrationService } from './features/outline/integration/outline-integration.service';
-import { UmlVscodeDiagramWidget } from './vscode/uml-vscode-diagram.widget';
+import { UVDiagramWidget } from './vscode/uv-diagram.widget';
 
-class UmlGLSPStarter extends GLSPStarter {
+class UVStarter extends GLSPStarter {
     createContainer(diagramIdentifier: SprottyDiagramIdentifier): Container {
         const container = createUmlDiagramContainer(diagramIdentifier.clientId);
 
@@ -37,11 +37,11 @@ class UmlGLSPStarter extends GLSPStarter {
         super.addVscodeBindings(container, diagramIdentifier);
         container.unbind(GLSPVscodeDiagramWidget);
 
-        container.bind(UmlVscodeDiagramWidget).toSelf().inSingletonScope();
-        container.bind(GLSPVscodeDiagramWidget).toService(UmlVscodeDiagramWidget);
+        container.bind(UVDiagramWidget).toSelf().inSingletonScope();
+        container.bind(GLSPVscodeDiagramWidget).toService(UVDiagramWidget);
     }
 }
 
 export function launch(): void {
-    new UmlGLSPStarter();
+    new UVStarter();
 }

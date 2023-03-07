@@ -19,7 +19,7 @@ import { configureActionHandler, SelectAction, SetDirtyStateAction, TYPES } from
 import { ContainerModule } from 'inversify';
 
 import { EDITOR_PANEL_TYPES } from '../editor-panel/di.types';
-import { PropertyPalette } from './extension';
+import { PropertyPalette } from './property-palette.extension';
 
 const umlPropertyPaletteModule = new ContainerModule((bind, _unbind, isBound, rebind) => {
     const context = { bind, _unbind, isBound, rebind };

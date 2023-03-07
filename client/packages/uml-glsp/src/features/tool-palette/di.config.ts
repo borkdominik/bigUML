@@ -19,7 +19,7 @@ import '@eclipsesource/uml-glsp/css/extensions/tool-palette.css';
 import { configureActionHandler, EnableDefaultToolsAction, EnableToolPaletteAction, TYPES } from '@eclipse-glsp/client';
 import { ContainerModule } from 'inversify';
 
-import { UmlToolPalette } from './tool-palette';
+import { UmlToolPalette } from './tool-palette.extension';
 
 const umlToolPaletteModule = new ContainerModule((bind, _unbind, isBound) => {
     bind(UmlToolPalette).toSelf().inSingletonScope();

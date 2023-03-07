@@ -14,7 +14,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 import { IActionDispatcher, ModelSource, TYPES } from '@eclipse-glsp/client';
-import { UmlDiagramOutlineService } from '@eclipsesource/uml-glsp/lib/features/diagram-outline';
+import { UmlDiagramOutlineService } from '@eclipsesource/uml-glsp/lib/features/outline/index';
 import { Container } from '@theia/core/shared/inversify';
 
 import { OutlineIntegrationService } from './outline-integration.service';

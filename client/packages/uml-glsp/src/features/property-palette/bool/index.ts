@@ -13,5 +13,5 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-export * from './model';
-export * from './creator';
+export * from './bool.creator';
+export * from './bool.model';

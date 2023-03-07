@@ -19,7 +19,7 @@ import { IconInteraction } from './elements/interaction/model';
 import { IconLifeline } from './elements/lifeline';
 import { MessageArrowLabelView, MessageEdgeView } from './elements/message';
 
-export const communicationDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
+export const umlCommunicationDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
     const context = { bind, unbind, isBound, rebind };
 
     // Interaction

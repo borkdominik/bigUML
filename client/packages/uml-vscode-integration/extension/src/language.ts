@@ -16,7 +16,7 @@
 
 import { UmlDiagramType, UmlLanguageEnvironment } from '@eclipsesource/uml-common';
 
-export const UmlLanguageVSCodeEnvironment: UmlLanguageEnvironment = {
+export const UVLangugageEnvironment: UmlLanguageEnvironment = {
     supportedTypes: UmlDiagramType.all
 };
 

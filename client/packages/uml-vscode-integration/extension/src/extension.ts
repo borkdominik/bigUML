@@ -21,8 +21,8 @@ import * as process from 'process';
 import * as vscode from 'vscode';
 import { createContainer } from './di.config';
 import { TYPES, VSCODE_TYPES } from './di.types';
-import { UmlGlspServer } from './glsp/connection/uml-glsp-server';
-import { launchServer } from './glsp/server/launcher';
+import { UVGlspServer } from './glsp/connection/uv-glsp-server';
+import { launchServer } from './glsp/launcher/launcher';
 import { VSCodeSettings } from './language';
 
 export async function activate(context: vscode.ExtensionContext): Promise<void> {
@@ -41,5 +41,5 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     container.get<any>(VSCODE_TYPES.EditorProvider);
     container.get<any>(VSCODE_TYPES.CommandManager);
     container.get<any>(VSCODE_TYPES.DisposableManager);
-    container.get<UmlGlspServer>(TYPES.GlspServer).start();
+    container.get<UVGlspServer>(TYPES.GlspServer).start();
 }

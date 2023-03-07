@@ -135,7 +135,12 @@
   </elements>
   <elements xsi:type="notation:Shape">
     <semanticElement elementId="_LjfcIbSLEe2pkZx4lGC8Ew"/>
-    <position x="254.128951384269" y="86.82299512022"/>
+    <position x="261.5068651609661" y="36.099837905427606"/>
+    <size width="164.8255157470703" height="52.5"/>
+  </elements>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_OHQAkL0WEe2besM683MlUA"/>
+    <position x="66.62166615448528" y="189.94302383980693"/>
     <size width="164.8255157470703" height="52.5"/>
   </elements>
 </unotation:UmlDiagram>

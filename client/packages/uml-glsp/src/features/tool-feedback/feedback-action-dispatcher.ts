@@ -28,7 +28,7 @@ export class FixedFeedbackActionDispatcher extends FeedbackActionDispatcher {
     private fixedDispatch(actions: Action[], feedbackEmitter: IFeedbackEmitter): void {
         this.actionDispatcher()
             .then(dispatcher => dispatcher.dispatchAll(actions))
-            .then(() => this.logger.info(this, 'Dispatched feedback actions for', feedbackEmitter))
+            .then(() => this.logger.log(this, 'Dispatched feedback actions for', feedbackEmitter))
             .catch(reason => this.logger.error(this, 'Failed to dispatch feedback actions', reason));
     }
 }

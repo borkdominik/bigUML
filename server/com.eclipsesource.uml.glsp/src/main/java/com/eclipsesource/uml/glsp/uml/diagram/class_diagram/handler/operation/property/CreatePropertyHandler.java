@@ -14,7 +14,7 @@ import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.uml2.uml.AttributeOwner;
 
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Property;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_Property;
 import com.eclipsesource.uml.glsp.uml.handler.operations.create.BaseCreateChildNodeHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.CreatePropertyContribution;
 
@@ -22,7 +22,7 @@ public final class CreatePropertyHandler
    extends BaseCreateChildNodeHandler<AttributeOwner> {
 
    public CreatePropertyHandler() {
-      super(UmlClass_Property.TYPE_ID);
+      super(UmlClass_Property.typeId());
    }
 
    @Override

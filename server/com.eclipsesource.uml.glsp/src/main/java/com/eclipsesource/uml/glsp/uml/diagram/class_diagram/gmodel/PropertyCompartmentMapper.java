@@ -22,7 +22,7 @@ import org.eclipse.uml2.uml.Property;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.features.id_generator.IdCountContextGenerator;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Property;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_Property;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyMultiplicityLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyTypeLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.utils.MultiplicityUtil;
@@ -37,7 +37,7 @@ public final class PropertyCompartmentMapper extends BaseGModelMapper<Property, 
 
    @Override
    public GCompartment map(final Property source) {
-      var builder = new GCompartmentBuilder(UmlClass_Property.TYPE_ID)
+      var builder = new GCompartmentBuilder(UmlClass_Property.typeId())
          .id(idGenerator.getOrCreateId(source))
          .layout(GConstants.Layout.HBOX)
          .layoutOptions(new GLayoutOptions()
@@ -60,7 +60,7 @@ public final class PropertyCompartmentMapper extends BaseGModelMapper<Property, 
    }
 
    protected GLabel buildTypeName(final Property source, final String text) {
-      return new GLabelBuilder(UmlClass_Property.LABEL_TYPE)
+      return new GLabelBuilder(UmlClass_Property.Label.typeTypeId())
          .id(suffix.appendTo(PropertyTypeLabelSuffix.SUFFIX, idGenerator.getOrCreateId(source)))
          .text(text)
          .build();
@@ -81,7 +81,7 @@ public final class PropertyCompartmentMapper extends BaseGModelMapper<Property, 
 
       builder
          .add(separatorBuilder(source, "[").build())
-         .add(new GLabelBuilder(UmlClass_Property.LABEL_MULTIPLICITY)
+         .add(new GLabelBuilder(UmlClass_Property.Label.multiplicityTypeId())
             .id(suffix.appendTo(PropertyMultiplicityLabelSuffix.SUFFIX, idGenerator.getOrCreateId(source)))
             .text(multiplicity)
             .build())

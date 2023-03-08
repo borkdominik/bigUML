@@ -23,14 +23,14 @@ import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
 import com.eclipsesource.uml.glsp.core.model.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.features.property_palette.handler.action.UpdateElementPropertyAction;
 import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalette;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Parameter;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_Parameter;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.parameter.UpdateParameterHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.utils.MultiplicityUtil;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.BaseDiagramElementPropertyMapper;
-import com.eclipsesource.uml.glsp.uml.utils.ParameterDirectionKindUtils;
-import com.eclipsesource.uml.glsp.uml.utils.ParameterEffectKindUtils;
-import com.eclipsesource.uml.glsp.uml.utils.TypeUtils;
-import com.eclipsesource.uml.glsp.uml.utils.VisibilityKindUtils;
+import com.eclipsesource.uml.glsp.uml.utils.element.ParameterDirectionKindUtils;
+import com.eclipsesource.uml.glsp.uml.utils.element.ParameterEffectKindUtils;
+import com.eclipsesource.uml.glsp.uml.utils.element.TypeUtils;
+import com.eclipsesource.uml.glsp.uml.utils.element.VisibilityKindUtils;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.parameter.UpdateParameterArgument;
 
 public class ParameterPropertyMapper extends BaseDiagramElementPropertyMapper<Parameter> {

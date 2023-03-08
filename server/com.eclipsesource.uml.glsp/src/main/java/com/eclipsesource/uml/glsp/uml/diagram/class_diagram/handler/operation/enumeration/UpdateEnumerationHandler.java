@@ -14,7 +14,7 @@ import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.uml2.uml.Enumeration;
 
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Enumeration;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_Enumeration;
 import com.eclipsesource.uml.glsp.uml.handler.operations.update.BaseUpdateElementHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.enumeration.UpdateEnumerationArgument;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.enumeration.UpdateEnumerationContribution;
@@ -22,7 +22,7 @@ import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.enum
 public final class UpdateEnumerationHandler extends BaseUpdateElementHandler<Enumeration, UpdateEnumerationArgument> {
 
    public UpdateEnumerationHandler() {
-      super(UmlClass_Enumeration.ID);
+      super(UmlClass_Enumeration.typeId());
    }
 
    @Override

@@ -14,7 +14,7 @@ import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 import org.eclipse.uml2.uml.NamedElement;
 
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Usage;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_Usage;
 import com.eclipsesource.uml.glsp.uml.handler.operations.create.BaseCreateEdgeHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.usage.CreateUsageContribution;
 
@@ -22,7 +22,7 @@ public final class CreateUsageHandler
    extends BaseCreateEdgeHandler<NamedElement, NamedElement> {
 
    public CreateUsageHandler() {
-      super(UmlClass_Usage.TYPE_ID);
+      super(UmlClass_Usage.typeId());
    }
 
    @Override

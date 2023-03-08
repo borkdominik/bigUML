@@ -10,33 +10,19 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.generalization;
 
-import java.util.List;
-
 import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 import org.eclipse.uml2.uml.Classifier;
 
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_AbstractClass;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Class;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Generalization;
-import com.eclipsesource.uml.glsp.uml.handler.operations.create.BaseCreateEdgeBetweenNodesHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_Generalization;
+import com.eclipsesource.uml.glsp.uml.handler.operations.create.BaseCreateEdgeHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.generalization.CreateGeneralizationContribution;
 
 public final class CreateGeneralizationHandler
-   extends BaseCreateEdgeBetweenNodesHandler<Classifier, Classifier> {
+   extends BaseCreateEdgeHandler<Classifier, Classifier> {
 
    public CreateGeneralizationHandler() {
-      super(UmlClass_Generalization.TYPE_ID);
-   }
-
-   @Override
-   protected List<String> sources() {
-      return List.of(UmlClass_Class.TYPE_ID, UmlClass_AbstractClass.TYPE_ID);
-   }
-
-   @Override
-   protected List<String> targets() {
-      return List.of(UmlClass_Class.TYPE_ID, UmlClass_AbstractClass.TYPE_ID);
+      super(UmlClass_Generalization.typeId());
    }
 
    @Override

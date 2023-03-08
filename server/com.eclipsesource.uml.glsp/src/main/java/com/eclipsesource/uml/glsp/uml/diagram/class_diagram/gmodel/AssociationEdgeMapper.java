@@ -18,8 +18,8 @@ import org.eclipse.uml2.uml.Association;
 import org.eclipse.uml2.uml.Property;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Association;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Property;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_Association;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_Property;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyMultiplicityLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.utils.MultiplicityUtil;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGEdgeMapper;
@@ -29,7 +29,7 @@ public final class AssociationEdgeMapper extends BaseGEdgeMapper<Association, GE
 
    @Override
    public GEdge map(final Association source) {
-      var builder = new GEdgeBuilder(UmlClass_Association.TYPE_ID)
+      var builder = new GEdgeBuilder(UmlClass_Association.typeId())
          .id(idGenerator.getOrCreateId(source))
          .addCssClass(CoreCSS.EDGE)
          .routerKind(GConstants.RouterKind.MANHATTAN);
@@ -65,7 +65,7 @@ public final class AssociationEdgeMapper extends BaseGEdgeMapper<Association, GE
 
       builder.add(
          textEdgeBuilder(
-            UmlClass_Property.LABEL_MULTIPLICITY,
+            UmlClass_Property.Label.multiplicityTypeId(),
             suffix.appendTo(PropertyMultiplicityLabelSuffix.SUFFIX, memberEndId),
             MultiplicityUtil.getMultiplicity(memberEnd),
             new GEdgePlacementBuilder()

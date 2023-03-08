@@ -18,7 +18,7 @@ import org.eclipse.uml2.uml.Property;
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Property;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_Property;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyMultiplicityLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyTypeLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.property.UpdatePropertyHandler;
@@ -38,13 +38,14 @@ public final class PropertyLabelEditMapper extends BaseLabelEditMapper<Property>
             new UpdatePropertyArgument.Builder()
                .name(operation.getText())
                .get());
-      } else if (matches(operation, UmlClass_Property.LABEL_MULTIPLICITY, PropertyMultiplicityLabelSuffix.SUFFIX)) {
+      } else if (matches(operation, UmlClass_Property.Label.multiplicityTypeId(),
+         PropertyMultiplicityLabelSuffix.SUFFIX)) {
          update = handler.withArgument(
             new UpdatePropertyArgument.Builder()
                .upperBound(MultiplicityUtil.getUpper(operation.getText()))
                .lowerBound(MultiplicityUtil.getLower(operation.getText()))
                .get());
-      } else if (matches(operation, UmlClass_Property.LABEL_TYPE, PropertyTypeLabelSuffix.SUFFIX)) {
+      } else if (matches(operation, UmlClass_Property.Label.typeTypeId(), PropertyTypeLabelSuffix.SUFFIX)) {
          update = handler.withArgument(
             new UpdatePropertyArgument.Builder()
                .typeId(operation.getText())

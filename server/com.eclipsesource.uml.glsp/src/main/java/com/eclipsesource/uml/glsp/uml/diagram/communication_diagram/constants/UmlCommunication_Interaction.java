@@ -10,13 +10,15 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.constants;
 
+import org.eclipse.glsp.graph.DefaultTypes;
+
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 
 public class UmlCommunication_Interaction {
 
    public static final String ID = "interaction";
-   public static final String ICON = CoreTypes.PRE_ICON + ID;
-   public static final String TYPE_ID = CoreTypes.PRE_NODE + ID;
+   public static final String ICON = CoreTypes.ICON + ":" + ID;
+   public static final String TYPE_ID = DefaultTypes.NODE + ":" + ID;
 
    public class Property {
 

@@ -14,7 +14,7 @@ import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 import org.eclipse.uml2.uml.Package;
 
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_PackageMerge;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_PackageMerge;
 import com.eclipsesource.uml.glsp.uml.handler.operations.create.BaseCreateEdgeHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.package_merge.CreatePackageMergeContribution;
 
@@ -22,7 +22,7 @@ public final class CreatePackageMergeHandler
    extends BaseCreateEdgeHandler<Package, Package> {
 
    public CreatePackageMergeHandler() {
-      super(UmlClass_PackageMerge.TYPE_ID);
+      super(UmlClass_PackageMerge.typeId());
    }
 
    @Override

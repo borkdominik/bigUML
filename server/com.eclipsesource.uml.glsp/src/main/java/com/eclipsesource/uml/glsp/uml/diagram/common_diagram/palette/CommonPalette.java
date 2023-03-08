@@ -10,17 +10,8 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.diagram.common_diagram.palette;
 
-import java.util.List;
-import java.util.Map;
-
-import org.eclipse.glsp.server.features.toolpalette.PaletteItem;
-
-import com.eclipsesource.uml.glsp.core.features.tool_palette.PaletteItemUtil;
-import com.eclipsesource.uml.glsp.core.features.tool_palette.ToolPaletteConfiguration;
-import com.eclipsesource.uml.glsp.uml.diagram.common_diagram.constants.CommonTypes;
-import com.google.common.collect.Lists;
-
-public class CommonPalette implements ToolPaletteConfiguration {
+public class CommonPalette { /*-
+implements ToolPaletteConfiguration {
 
    @Override
    public List<PaletteItem> getItems(final Map<String, String> args) {
@@ -34,4 +25,5 @@ public class CommonPalette implements ToolPaletteConfiguration {
       List<PaletteItem> comment = Lists.newArrayList(createCommentNode);
       return PaletteItem.createPaletteGroup("uml.comment", "Comment", comment, "symbol-property");
    }
+   */
 }

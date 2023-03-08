@@ -23,7 +23,7 @@ import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.Package;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Package;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_Package;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGNodeMapper;
 import com.eclipsesource.uml.glsp.uml.gmodel.element.NamedElementGBuilder;
 
@@ -32,7 +32,7 @@ public final class PackageNodeMapper extends BaseGNodeMapper<Package, GNode>
 
    @Override
    public GNode map(final Package source) {
-      var builder = new GNodeBuilder(UmlClass_Package.TYPE_ID)
+      var builder = new GNodeBuilder(UmlClass_Package.typeId())
          .id(idGenerator.getOrCreateId(source))
          .layout(GConstants.Layout.VBOX)
          .addCssClass(CoreCSS.NODE)

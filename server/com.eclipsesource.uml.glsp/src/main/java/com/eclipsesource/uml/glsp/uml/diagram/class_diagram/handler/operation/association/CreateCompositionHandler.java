@@ -10,35 +10,20 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.association;
 
-import java.util.List;
-
 import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 import org.eclipse.uml2.uml.Type;
 
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_AbstractClass;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Association;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Class;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Interface;
-import com.eclipsesource.uml.glsp.uml.handler.operations.create.BaseCreateEdgeBetweenNodesHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_Association;
+import com.eclipsesource.uml.glsp.uml.handler.operations.create.BaseCreateEdgeHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association.CreateAssociationContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.constants.AssociationType;
 
 public final class CreateCompositionHandler
-   extends BaseCreateEdgeBetweenNodesHandler<Type, Type> {
+   extends BaseCreateEdgeHandler<Type, Type> {
 
    public CreateCompositionHandler() {
-      super(UmlClass_Association.COMPOSITION_TYPE_ID);
-   }
-
-   @Override
-   protected List<String> sources() {
-      return List.of(UmlClass_AbstractClass.TYPE_ID, UmlClass_Class.TYPE_ID, UmlClass_Interface.TYPE_ID);
-   }
-
-   @Override
-   protected List<String> targets() {
-      return List.of(UmlClass_AbstractClass.TYPE_ID, UmlClass_Class.TYPE_ID, UmlClass_Interface.TYPE_ID);
+      super(UmlClass_Association.Template.compositionTypeId());
    }
 
    @Override

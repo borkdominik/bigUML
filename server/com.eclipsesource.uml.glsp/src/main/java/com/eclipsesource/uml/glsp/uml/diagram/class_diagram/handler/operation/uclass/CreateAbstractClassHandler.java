@@ -15,7 +15,7 @@ import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.uml2.uml.Package;
 
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_AbstractClass;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_Class;
 import com.eclipsesource.uml.glsp.uml.handler.operations.create.BaseCreateChildNodeHandler;
 import com.eclipsesource.uml.glsp.uml.handler.operations.create.CreateLocationAwareNodeHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uclass.CreateClassContribution;
@@ -24,7 +24,7 @@ public final class CreateAbstractClassHandler
    extends BaseCreateChildNodeHandler<Package> implements CreateLocationAwareNodeHandler {
 
    public CreateAbstractClassHandler() {
-      super(UmlClass_AbstractClass.TYPE_ID);
+      super(UmlClass_Class.Template.abstractTypeId());
    }
 
    @Override

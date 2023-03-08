@@ -15,6 +15,7 @@ import java.util.LinkedList;
 import java.util.stream.Collectors;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.glsp.graph.DefaultTypes;
 import org.eclipse.glsp.graph.GCompartment;
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.builder.impl.GCompartmentBuilder;
@@ -55,7 +56,7 @@ public class InteractionNodeMapper extends BaseGNodeMapper<Interaction, GNode> {
    }
 
    protected GCompartment buildHeader(final Interaction source) {
-      return new GCompartmentBuilder(CoreTypes.COMPARTMENT_HEADER)
+      return new GCompartmentBuilder(DefaultTypes.COMPARTMENT_HEADER)
          .id(idCountGenerator.getOrCreateId(source))
          .layout(GConstants.Layout.HBOX)
          .add(new GCompartmentBuilder(UmlCommunication_Interaction.ICON)
@@ -78,7 +79,7 @@ public class InteractionNodeMapper extends BaseGNodeMapper<Interaction, GNode> {
       layoutOptions.put(H_GRAB, true);
       layoutOptions.put(V_GRAB, true);
 
-      return new GCompartmentBuilder(CoreTypes.COMPARTMENT)
+      return new GCompartmentBuilder(DefaultTypes.COMPARTMENT)
          .id(idCountGenerator.getOrCreateId(source))
          .layout(GConstants.Layout.FREEFORM)
          .layoutOptions(layoutOptions)

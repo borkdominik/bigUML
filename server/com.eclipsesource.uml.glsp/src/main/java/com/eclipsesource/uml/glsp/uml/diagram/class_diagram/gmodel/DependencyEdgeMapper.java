@@ -18,7 +18,7 @@ import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.Dependency;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Dependency;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_Dependency;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGEdgeMapper;
 import com.eclipsesource.uml.glsp.uml.gmodel.element.EdgeGBuilder;
 
@@ -31,7 +31,7 @@ public final class DependencyEdgeMapper extends BaseGEdgeMapper<Dependency, GEdg
       var supplier = source.getSuppliers().get(0);
       var supplierId = idGenerator.getOrCreateId(supplier);
 
-      GEdgeBuilder builder = new GEdgeBuilder(UmlClass_Dependency.TYPE_ID)
+      GEdgeBuilder builder = new GEdgeBuilder(UmlClass_Dependency.typeId())
          .id(idGenerator.getOrCreateId(source))
          .addCssClasses(List.of(CoreCSS.EDGE, CoreCSS.EDGE_DASHED))
          .addCssClass(CoreCSS.Marker.TENT.end())

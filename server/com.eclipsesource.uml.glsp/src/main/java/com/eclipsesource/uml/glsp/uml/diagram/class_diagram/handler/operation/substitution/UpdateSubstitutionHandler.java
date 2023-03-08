@@ -14,7 +14,7 @@ import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.uml2.uml.Substitution;
 
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Substitution;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_Substitution;
 import com.eclipsesource.uml.glsp.uml.handler.operations.update.BaseUpdateElementHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.substitution.UpdateSubstitutionArgument;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.substitution.UpdateSubstitutionContribution;
@@ -23,7 +23,7 @@ public final class UpdateSubstitutionHandler
    extends BaseUpdateElementHandler<Substitution, UpdateSubstitutionArgument> {
 
    public UpdateSubstitutionHandler() {
-      super(UmlClass_Substitution.ID);
+      super(UmlClass_Substitution.typeId());
    }
 
    @Override

@@ -17,11 +17,9 @@
 import { DefaultTypes } from '@eclipse-glsp/client';
 
 export namespace UmlTypes {
-    // COMMONS
     export const ICON = 'icon';
     export const LABEL_NAME = `${DefaultTypes.LABEL}:name`;
     export const LABEL_TEXT = `${DefaultTypes.LABEL}:text`;
     export const LABEL_EDGE_NAME = `${DefaultTypes.LABEL}:edge-name`;
-    export const LABEL_EDGE_MULTIPLICITY = `${DefaultTypes.LABEL}:association-multiplicity`;
     export const ICON_CSS = `${ICON}:css`;
 }

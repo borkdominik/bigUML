@@ -11,27 +11,27 @@
 package com.eclipsesource.uml.glsp.uml.gmodel.builder;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.glsp.graph.DefaultTypes;
 import org.eclipse.glsp.graph.builder.impl.GCompartmentBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.util.GConstants;
 
-import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.IdContextGeneratorGProvider;
 
 public interface CompartmentGBuilder extends IdContextGeneratorGProvider {
 
    default GCompartmentBuilder compartmentHeaderBuilder(final EObject source) {
-      return new GCompartmentBuilder(CoreTypes.COMPARTMENT_HEADER)
+      return new GCompartmentBuilder(DefaultTypes.COMPARTMENT_HEADER)
          .id(idContextGenerator().getOrCreateId(source));
    }
 
    default GCompartmentBuilder compartmentBuilder(final EObject source) {
-      return new GCompartmentBuilder(CoreTypes.COMPARTMENT)
+      return new GCompartmentBuilder(DefaultTypes.COMPARTMENT)
          .id(idContextGenerator().getOrCreateId(source));
    }
 
    default GCompartmentBuilder fixedChildrenCompartmentBuilder(final EObject source) {
-      return new GCompartmentBuilder(CoreTypes.COMPARTMENT)
+      return new GCompartmentBuilder(DefaultTypes.COMPARTMENT)
          .id(idContextGenerator().getOrCreateId(source))
          .layout(GConstants.Layout.VBOX)
          .layoutOptions(new GLayoutOptions()
@@ -40,7 +40,7 @@ public interface CompartmentGBuilder extends IdContextGeneratorGProvider {
    }
 
    default GCompartmentBuilder freeformChildrenCompartmentBuilder(final EObject source) {
-      return new GCompartmentBuilder(CoreTypes.COMPARTMENT)
+      return new GCompartmentBuilder(DefaultTypes.COMPARTMENT)
          .id(idContextGenerator().getOrCreateId(source))
          .layout(GConstants.Layout.FREEFORM)
          .layoutOptions(new GLayoutOptions()

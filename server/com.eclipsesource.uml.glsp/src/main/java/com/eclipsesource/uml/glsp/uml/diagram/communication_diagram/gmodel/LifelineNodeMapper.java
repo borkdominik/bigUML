@@ -10,6 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.gmodel;
 
+import org.eclipse.glsp.graph.DefaultTypes;
 import org.eclipse.glsp.graph.GCompartment;
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.builder.impl.GCompartmentBuilder;
@@ -40,7 +41,7 @@ public class LifelineNodeMapper extends BaseGNodeMapper<Lifeline, GNode> {
    }
 
    protected GCompartment buildHeader(final Lifeline source) {
-      var builder = new GCompartmentBuilder(CoreTypes.COMPARTMENT_HEADER)
+      var builder = new GCompartmentBuilder(DefaultTypes.COMPARTMENT_HEADER)
          .id(idCountGenerator.getOrCreateId(source))
          .layout(GConstants.Layout.HBOX);
 

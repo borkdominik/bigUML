@@ -10,11 +10,8 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.old.diagram.activity_diagram.constants;
 
-import java.util.List;
-
-import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
-
 public final class ActivityTypes {
+   /*-
    // ACTIVITY DIAGRAM
    public static final String ICON_ACTIVITY = CoreTypes.PRE_ICON + "activity";
    public static final String ACTIVITY = CoreTypes.PRE_NODE + "activity";
@@ -45,9 +42,10 @@ public final class ActivityTypes {
    public static final String DATASTORE = CoreTypes.PRE_NODE + "datastore";
    public static final String EXCEPTIONHANDLER = CoreTypes.PRE_EDGE + "exceptionhandler";
    public static final String INTERRUPTIBLEREGION = CoreTypes.PRE_NODE + "interruptibleregion";
-
+   
    // COMMON CANDIDATE
    public static final String STRUCTURE = "struct";
-
+   
    private ActivityTypes() {}
+   */
 }

@@ -10,21 +10,12 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.old.diagram.deployment_diagram;
 
-import java.util.List;
-import java.util.Map;
-
-import org.eclipse.glsp.server.actions.TriggerEdgeCreationAction;
-import org.eclipse.glsp.server.actions.TriggerNodeCreationAction;
-import org.eclipse.glsp.server.features.toolpalette.PaletteItem;
-
-import com.eclipsesource.uml.glsp.old.diagram.deployment_diagram.constants.DeploymentTypes;
-import com.google.common.collect.Lists;
-
 public class DeploymentPalette {
+   /*-
    public List<PaletteItem> getItems(final Map<String, String> args) {
       return Lists.newArrayList(classifiersDeployment(), relationsDeployment());
    }
-
+   
    private PaletteItem classifiersDeployment() {
       PaletteItem createDeploymentNode = node(DeploymentTypes.DEPLOYMENT_NODE, "Node", "umldeploymentnode");
       PaletteItem createArtifact = node(DeploymentTypes.ARTIFACT, "Artifact", "umlartifact");
@@ -35,28 +26,28 @@ public class DeploymentPalette {
          "Deployment Specification",
          "umldeploymentspecification");
       PaletteItem createComponent = node(DeploymentTypes.DEPLOYMENT_COMPONENT, "Component", "umlcomponent");
-
+   
       List<PaletteItem> classifiers = Lists.newArrayList(
          createDeploymentNode, createArtifact, createDevice, createExecutionEnvironment,
          createDeploymentSpecification, createComponent);
       return PaletteItem.createPaletteGroup("uml.classifier", "Container", classifiers, "symbol-property");
    }
-
+   
    private PaletteItem relationsDeployment() {
       PaletteItem createCommunicationPath = edge(DeploymentTypes.COMMUNICATION_PATH, "Communication Path",
          "umlcommunicationpath");
       PaletteItem createDeployment = edge(DeploymentTypes.DEPLOYMENT, "Deployment", "umldeployment");
-
+   
       List<PaletteItem> relations = Lists.newArrayList(createCommunicationPath, createDeployment);
       return PaletteItem.createPaletteGroup("uml.relation", "Relations", relations, "symbol-property");
    }
-
+   
    private PaletteItem node(final String elementTypeId, final String label, final String icon) {
       return new PaletteItem(elementTypeId, label, new TriggerNodeCreationAction(elementTypeId), icon);
    }
-
+   
    private PaletteItem edge(final String elementTypeId, final String label, final String icon) {
       return new PaletteItem(elementTypeId, label, new TriggerEdgeCreationAction(elementTypeId), icon);
    }
-
+   */
 }

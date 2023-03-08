@@ -10,17 +10,14 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.diagram.common_diagram.constants;
 
-import java.util.Arrays;
-import java.util.List;
-
-import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
-
 public final class CommonTypes {
-
+   /*-
+   
    // COMMENT
    public static final String COMMENT = CoreTypes.PRE_NODE + "comment";
    public static final String COMMENT_EDGE = CoreTypes.PRE_EDGE + "commentlink";
    public static final List<String> LINKS_TO_COMMENT = Arrays.asList(COMMENT);
-
+   
    private CommonTypes() {}
+   */
 }

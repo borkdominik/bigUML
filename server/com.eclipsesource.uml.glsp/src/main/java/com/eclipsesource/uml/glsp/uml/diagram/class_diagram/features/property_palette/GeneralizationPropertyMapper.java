@@ -17,7 +17,7 @@ import org.eclipse.uml2.uml.Generalization;
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
 import com.eclipsesource.uml.glsp.features.property_palette.handler.action.UpdateElementPropertyAction;
 import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalette;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Generalization;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_Generalization;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.generalization.UpdateGeneralizationHandler;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.BaseDiagramElementPropertyMapper;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.generalization.UpdateGeneralizationArgument;

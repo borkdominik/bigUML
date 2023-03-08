@@ -10,25 +10,14 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.core.constants;
 
+import org.eclipse.glsp.graph.DefaultTypes;
+
 public class CoreTypes {
-   // PREFIXES
-   public static final String PRE_NODE = "node:";
-   public static final String PRE_EDGE = "edge:";
-   public static final String PRE_LABEL = "label:";
-   public static final String PRE_COMP_BASE = "comp:";
-   public static final String PRE_ICON = "icon:";
-
-   public static final String LABEL_COMP = PRE_COMP_BASE + "label";
-   public static final String COMPARTMENT = "comp";
-   public static final String COMPARTMENT_HEADER = PRE_COMP_BASE + "header";
-
-   // COMMONS
-   public static final String LABEL_NAME = PRE_LABEL + "name"; // Editable
-   public static final String LABEL_TEXT = PRE_LABEL + "text"; // Readonly
-   public static final String LABEL_EDGE_NAME = PRE_LABEL + "edge-name";
-   public static final String COMP = PRE_COMP_BASE + "comp";
-   // public static final String COMP_HEADER = COMP_BASE + "header";
-   public static final String ICON_CSS = PRE_ICON + "css";
+   public static final String ICON = "icon";
+   public static final String LABEL_NAME = DefaultTypes.LABEL + ":name"; // Editable
+   public static final String LABEL_TEXT = DefaultTypes.LABEL + ":text"; // Readonly
+   public static final String LABEL_EDGE_NAME = DefaultTypes.LABEL + ":edge-name";
+   public static final String ICON_CSS = ICON + ":css";
 
    private CoreTypes() {}
 }

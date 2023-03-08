@@ -23,13 +23,13 @@ import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
 import com.eclipsesource.uml.glsp.features.property_palette.handler.action.UpdateElementPropertyAction;
 import com.eclipsesource.uml.glsp.features.property_palette.model.ElementReferencePropertyItem;
 import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalette;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Operation;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Parameter;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_Operation;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_Parameter;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.operation.UpdateOperationHandler;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.BaseDiagramElementPropertyMapper;
-import com.eclipsesource.uml.glsp.uml.utils.CallConcurrencyKindUtils;
-import com.eclipsesource.uml.glsp.uml.utils.ParameterUtils;
-import com.eclipsesource.uml.glsp.uml.utils.VisibilityKindUtils;
+import com.eclipsesource.uml.glsp.uml.utils.element.CallConcurrencyKindUtils;
+import com.eclipsesource.uml.glsp.uml.utils.element.ParameterUtils;
+import com.eclipsesource.uml.glsp.uml.utils.element.VisibilityKindUtils;
 import com.eclipsesource.uml.modelserver.shared.model.OrderPosition;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.operation.UpdateOperationArgument;
 import com.google.common.reflect.TypeToken;
@@ -61,7 +61,7 @@ public class OperationPropertyMapper extends BaseDiagramElementPropertyMapper<Op
             ParameterUtils.asReferences(source.getOwnedParameters(), idGenerator),
             List.of(
                new ElementReferencePropertyItem.CreateReference("Parameter",
-                  new CreateNodeOperation(UmlClass_Parameter.TYPE_ID, elementId))),
+                  new CreateNodeOperation(UmlClass_Parameter.typeId(), elementId))),
             true)
 
          .items();

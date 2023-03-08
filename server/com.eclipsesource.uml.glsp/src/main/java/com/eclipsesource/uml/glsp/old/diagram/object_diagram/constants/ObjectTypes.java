@@ -10,18 +10,18 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.old.diagram.object_diagram.constants;
 
-import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
-
 public final class ObjectTypes {
-
+   /*-
+   
    // OBJECT DIAGRAM
    public static final String ICON_OBJECT = CoreTypes.PRE_ICON + "object";
    public static final String OBJECT = CoreTypes.PRE_NODE + "object";
    public static final String LINK = CoreTypes.PRE_EDGE + "link";
-
+   
    // SHARED WITH CLASS DIAGRAM
    public static final String ATTRIBUTE = CoreTypes.PRE_NODE + "attribute";
    public static final String PROPERTY = CoreTypes.PRE_COMP_BASE + "property";
-
+   
    private ObjectTypes() {}
+   */
 }

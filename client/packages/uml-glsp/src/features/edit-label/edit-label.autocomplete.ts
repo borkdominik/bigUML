@@ -198,7 +198,7 @@ export class EditLabelUIAutocomplete extends EditLabelUI {
     }
 
     protected isAutoCompleteLabel(): boolean {
-        return this.label?.type === UmlClassTypes.LABEL_PROPERTY_TYPE;
+        return this.label?.type === UmlClassTypes.PROPERTY_LABEL_TYPE;
     }
 
     public override hide(): void {

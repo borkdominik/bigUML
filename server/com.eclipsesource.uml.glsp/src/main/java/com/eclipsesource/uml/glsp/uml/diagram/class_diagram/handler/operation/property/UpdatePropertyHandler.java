@@ -14,7 +14,7 @@ import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.uml2.uml.Property;
 
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Property;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_Property;
 import com.eclipsesource.uml.glsp.uml.handler.operations.update.BaseUpdateElementHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.UpdatePropertyArgument;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.property.UpdatePropertyContribution;
@@ -22,7 +22,7 @@ import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.prop
 public final class UpdatePropertyHandler extends BaseUpdateElementHandler<Property, UpdatePropertyArgument> {
 
    public UpdatePropertyHandler() {
-      super(UmlClass_Property.ID);
+      super(UmlClass_Property.typeId());
    }
 
    @Override

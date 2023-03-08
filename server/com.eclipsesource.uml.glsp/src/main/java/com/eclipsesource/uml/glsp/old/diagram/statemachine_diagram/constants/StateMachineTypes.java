@@ -10,13 +10,8 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.old.diagram.statemachine_diagram.constants;
 
-import java.util.Arrays;
-import java.util.List;
-
-import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
-
 public final class StateMachineTypes {
-
+   /*-
    // STATE MACHINE
    public static final String ICON_STATE_MACHINE = CoreTypes.PRE_ICON + "state-machine";
    public static final String STATE_MACHINE = CoreTypes.PRE_NODE + "state-machine";
@@ -41,7 +36,7 @@ public final class StateMachineTypes {
    public static final String ENTRY_POINT = CoreTypes.PRE_NODE + "entry-point";
    public static final String EXIT_POINT = CoreTypes.PRE_NODE + "exit-point";
    public static final String TERMINATE = CoreTypes.PRE_NODE + "terminate";
-
+   
    public static final String TRANSITION = CoreTypes.PRE_EDGE + "transition";
    public static final String LABEL_TRANSITION_NAME = CoreTypes.PRE_LABEL + "transition-name";
    public static final String LABEL_TRANSITION_GUARD = CoreTypes.PRE_LABEL + "transition-guard";
@@ -49,9 +44,10 @@ public final class StateMachineTypes {
    public static final String LABEL_TRANSITION_TRIGGER = CoreTypes.PRE_LABEL + "transition-trigger";
    public static final List<String> PSEUDOSTATES = Arrays.asList(INITIAL_STATE, DEEP_HISTORY, SHALLOW_HISTORY, JOIN,
       FORK, JUNCTION, CHOICE, ENTRY_POINT, EXIT_POINT, TERMINATE);
-
+   
    // COMMON CANDIDATE
    public static final String STRUCTURE = "struct";
-
+   
    private StateMachineTypes() {}
+   */
 }

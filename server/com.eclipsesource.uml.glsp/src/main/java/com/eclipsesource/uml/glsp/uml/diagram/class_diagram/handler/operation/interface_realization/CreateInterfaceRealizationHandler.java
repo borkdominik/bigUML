@@ -15,7 +15,7 @@ import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Interface;
 
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_InterfaceRealization;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_InterfaceRealization;
 import com.eclipsesource.uml.glsp.uml.handler.operations.create.BaseCreateEdgeHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.interface_realization.CreateInterfaceRealizationContribution;
 
@@ -23,7 +23,7 @@ public final class CreateInterfaceRealizationHandler
    extends BaseCreateEdgeHandler<Class, Interface> {
 
    public CreateInterfaceRealizationHandler() {
-      super(UmlClass_InterfaceRealization.TYPE_ID);
+      super(UmlClass_InterfaceRealization.typeId());
    }
 
    @Override

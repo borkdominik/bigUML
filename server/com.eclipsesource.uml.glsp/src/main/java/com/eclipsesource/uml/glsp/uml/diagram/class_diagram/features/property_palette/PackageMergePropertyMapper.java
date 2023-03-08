@@ -18,9 +18,9 @@ import org.eclipse.uml2.uml.PackageMerge;
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
 import com.eclipsesource.uml.glsp.features.property_palette.handler.action.UpdateElementPropertyAction;
 import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalette;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_PackageMerge;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_PackageMerge;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.BaseDiagramElementPropertyMapper;
-import com.eclipsesource.uml.glsp.uml.utils.PackageImportUtils;
+import com.eclipsesource.uml.glsp.uml.utils.element.PackageImportUtils;
 
 public class PackageMergePropertyMapper extends BaseDiagramElementPropertyMapper<PackageMerge> {
 

@@ -21,6 +21,11 @@ import com.google.inject.Key;
 import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.MapBinder;
 
+/**
+ * Deprecated: Please use {@link DiagramElementConfigurationContribution} instead
+ *
+ */
+@Deprecated(forRemoval = true)
 public interface DiagramConfigurationContribution
    extends ContributionBinderSupplier, ContributionIdSupplier, ContributionRepresentationSupplier {
 

@@ -19,7 +19,7 @@ import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.Enumeration;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Enumeration;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_Enumeration;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGNodeMapper;
 import com.eclipsesource.uml.glsp.uml.gmodel.element.NamedElementGBuilder;
 
@@ -28,7 +28,7 @@ public final class EnumerationNodeMapper extends BaseGNodeMapper<Enumeration, GN
 
    @Override
    public GNode map(final Enumeration source) {
-      var builder = new GNodeBuilder(UmlClass_Enumeration.TYPE_ID)
+      var builder = new GNodeBuilder(UmlClass_Enumeration.typeId())
          .id(idGenerator.getOrCreateId(source))
          .layout(GConstants.Layout.VBOX)
          .addCssClass(CoreCSS.NODE)

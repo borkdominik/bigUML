@@ -15,33 +15,42 @@
  ********************************************************************************/
 
 import { DefaultTypes } from '@eclipse-glsp/client';
+import { UmlDiagramType } from '@eclipsesource/uml-common';
+import { QualifiedUtil } from '../../qualified.utils';
 
 export namespace UmlClassTypes {
-    export const CLASS = `${DefaultTypes.NODE}:class`;
-    export const ABSTRACT_CLASS = `${DefaultTypes.NODE}:abstract-class`;
+    export const CLASS = QualifiedUtil.representationTypeId(UmlDiagramType.CLASS, DefaultTypes.NODE, 'Class');
+    export const DATA_TYPE = QualifiedUtil.representationTypeId(UmlDiagramType.CLASS, DefaultTypes.NODE, 'DataType');
+    export const ENUMERATION = QualifiedUtil.representationTypeId(UmlDiagramType.CLASS, DefaultTypes.NODE, 'Enumeration');
+    export const ENUMERATION_LITERAL = QualifiedUtil.representationTypeId(
+        UmlDiagramType.CLASS,
+        DefaultTypes.COMPARTMENT,
+        'EnumerationLiteral'
+    );
+    export const INTERFACE = QualifiedUtil.representationTypeId(UmlDiagramType.CLASS, DefaultTypes.NODE, 'Interface');
+    export const OPERATION = QualifiedUtil.representationTypeId(UmlDiagramType.CLASS, DefaultTypes.COMPARTMENT, 'Operation');
+    export const PROPERTY = QualifiedUtil.representationTypeId(UmlDiagramType.CLASS, DefaultTypes.COMPARTMENT, 'Property');
+    export const PROPERTY_LABEL_TYPE = QualifiedUtil.representationTypeId(UmlDiagramType.CLASS, DefaultTypes.LABEL, 'Property-type');
+    export const PROPERTY_LABEL_MULTIPLICITY = QualifiedUtil.representationTypeId(
+        UmlDiagramType.CLASS,
+        DefaultTypes.LABEL,
+        'Property-multiplicity'
+    );
+    export const PACKAGE = QualifiedUtil.representationTypeId(UmlDiagramType.CLASS, DefaultTypes.NODE, 'Package');
+    export const PRIMITIVE_TYPE = QualifiedUtil.representationTypeId(UmlDiagramType.CLASS, DefaultTypes.NODE, 'PrimitiveType');
 
-    export const ENUMERATION = `${DefaultTypes.NODE}:enumeration`;
-    export const ENUMERATION_LITERAL = `${DefaultTypes.COMPARTMENT}:enumeration-literal`;
-
-    export const INTERFACE = `${DefaultTypes.NODE}:interface`;
-
-    export const ASSOCIATION = `${DefaultTypes.EDGE}:association`;
-    export const AGGREGATION = `${DefaultTypes.EDGE}:aggregation`;
-    export const COMPOSITION = `${DefaultTypes.EDGE}:composition`;
-    export const CLASS_GENERALIZATION = `${DefaultTypes.EDGE}:generalization`;
-    export const PROPERTY = `${DefaultTypes.COMPARTMENT}:property`;
-    export const LABEL_PROPERTY_TYPE = `${DefaultTypes.LABEL}:property-type`;
-    export const LABEL_PROPERTY_MULTIPLICITY = `${DefaultTypes.LABEL}:property-multiplicity`;
-    export const OPERATION = `${DefaultTypes.COMPARTMENT}:operation`;
-    export const DATA_TYPE = `${DefaultTypes.NODE}:data-type`;
-    export const PRIMITIVE_TYPE = `${DefaultTypes.NODE}:primitive-type`;
-    export const PACKAGE = `${DefaultTypes.NODE}:package`;
-    export const ABSTRACTION = `${DefaultTypes.EDGE}:abstraction`;
-    export const DEPENDENCY = `${DefaultTypes.EDGE}:dependency`;
-    export const INTERFACE_REALIZATION = `${DefaultTypes.EDGE}:interface-realization`;
-    export const REALIZATION = `${DefaultTypes.EDGE}:realization`;
-    export const SUBSTITUTION = `${DefaultTypes.EDGE}:substitution`;
-    export const USAGE = `${DefaultTypes.EDGE}:usage`;
-    export const PACKAGE_IMPORT = `${DefaultTypes.EDGE}:package-import`;
-    export const PACKAGE_MERGE = `${DefaultTypes.EDGE}:package-merge`;
+    export const ABSTRACTION = QualifiedUtil.representationTypeId(UmlDiagramType.CLASS, DefaultTypes.EDGE, 'Abstraction');
+    export const ASSOCIATION = QualifiedUtil.representationTypeId(UmlDiagramType.CLASS, DefaultTypes.EDGE, 'Association');
+    export const DEPENDENCY = QualifiedUtil.representationTypeId(UmlDiagramType.CLASS, DefaultTypes.EDGE, 'Dependency');
+    export const GENERALIZATION = QualifiedUtil.representationTypeId(UmlDiagramType.CLASS, DefaultTypes.EDGE, 'Generalization');
+    export const INTERFACE_REALIZATION = QualifiedUtil.representationTypeId(
+        UmlDiagramType.CLASS,
+        DefaultTypes.EDGE,
+        'InterfaceRealization'
+    );
+    export const REALIZATION = QualifiedUtil.representationTypeId(UmlDiagramType.CLASS, DefaultTypes.EDGE, 'Realization');
+    export const SUBSTITUTION = QualifiedUtil.representationTypeId(UmlDiagramType.CLASS, DefaultTypes.EDGE, 'Substitution');
+    export const USAGE = QualifiedUtil.representationTypeId(UmlDiagramType.CLASS, DefaultTypes.EDGE, 'Usage');
+    export const PACKAGE_IMPORT = QualifiedUtil.representationTypeId(UmlDiagramType.CLASS, DefaultTypes.EDGE, 'PackageImport');
+    export const PACKAGE_MERGE = QualifiedUtil.representationTypeId(UmlDiagramType.CLASS, DefaultTypes.EDGE, 'PackageMerge');
 }

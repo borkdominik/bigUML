@@ -19,7 +19,26 @@ import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.SuffixIdAp
 import com.eclipsesource.uml.glsp.core.manifest.contributions.glsp.ActionHandlerContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.glsp.ClientActionContribution;
 import com.eclipsesource.uml.glsp.features.property_palette.manifest.contributions.DiagramElementPropertyMapperContribution;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.ClassDiagramConfiguration;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_Abstraction;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_Association;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_Class;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_DataType;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_Dependency;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_Enumeration;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_EnumerationLiteral;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_Generalization;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_Interface;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_InterfaceRealization;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_Operation;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_Package;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_PackageImport;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_PackageMerge;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_Parameter;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_PrimitiveType;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_Property;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_Realization;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_Substitution;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_Usage;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.label_edit.AssociationLabelEditMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.label_edit.ClassLabelEditMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.label_edit.DataTypeLabelEditMapper;
@@ -159,7 +178,30 @@ public final class ClassUmlManifest extends DiagramManifest
    protected void configure() {
       super.configure();
 
-      contributeDiagramConfiguration(() -> ClassDiagramConfiguration.class);
+      contributeDiagramElementConfiguration((nodes) -> {
+         nodes.addBinding().to(UmlClass_Class.DiagramConfiguration.class);
+         nodes.addBinding().to(UmlClass_DataType.DiagramConfiguration.class);
+         nodes.addBinding().to(UmlClass_Enumeration.DiagramConfiguration.class);
+         nodes.addBinding().to(UmlClass_EnumerationLiteral.DiagramConfiguration.class);
+         nodes.addBinding().to(UmlClass_Interface.DiagramConfiguration.class);
+         nodes.addBinding().to(UmlClass_Operation.DiagramConfiguration.class);
+         nodes.addBinding().to(UmlClass_Package.DiagramConfiguration.class);
+         nodes.addBinding().to(UmlClass_Parameter.DiagramConfiguration.class);
+         nodes.addBinding().to(UmlClass_PrimitiveType.DiagramConfiguration.class);
+         nodes.addBinding().to(UmlClass_Property.DiagramConfiguration.class);
+      }, (edges) -> {
+         edges.addBinding().to(UmlClass_Abstraction.DiagramConfiguration.class);
+         edges.addBinding().to(UmlClass_Association.DiagramConfiguration.class);
+         edges.addBinding().to(UmlClass_Dependency.DiagramConfiguration.class);
+         edges.addBinding().to(UmlClass_Generalization.DiagramConfiguration.class);
+         edges.addBinding().to(UmlClass_InterfaceRealization.DiagramConfiguration.class);
+         edges.addBinding().to(UmlClass_PackageImport.DiagramConfiguration.class);
+         edges.addBinding().to(UmlClass_PackageMerge.DiagramConfiguration.class);
+         edges.addBinding().to(UmlClass_Realization.DiagramConfiguration.class);
+         edges.addBinding().to(UmlClass_Substitution.DiagramConfiguration.class);
+         edges.addBinding().to(UmlClass_Usage.DiagramConfiguration.class);
+      });
+
       contributeToolPaletteConfiguration((contribution) -> {
          contribution.addBinding().to(ClassToolPaletteConfiguration.class);
       });

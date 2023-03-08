@@ -10,21 +10,8 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.diagram.common_diagram.diagram;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.glsp.graph.DefaultTypes;
-import org.eclipse.glsp.graph.GraphPackage;
-import org.eclipse.glsp.server.types.EdgeTypeHint;
-import org.eclipse.glsp.server.types.ShapeTypeHint;
-
-import com.eclipsesource.uml.glsp.core.diagram.DiagramConfiguration;
-import com.eclipsesource.uml.glsp.uml.diagram.common_diagram.constants.CommonTypes;
-import com.google.common.collect.Lists;
-
-public class CommonConfiguration implements DiagramConfiguration {
+public class CommonConfiguration { /*-
+ implements DiagramConfiguration {
 
    @Override
    public List<EdgeTypeHint> getEdgeTypeHints() {
@@ -72,4 +59,5 @@ public class CommonConfiguration implements DiagramConfiguration {
 
       return mappings;
    }
+   */
 }

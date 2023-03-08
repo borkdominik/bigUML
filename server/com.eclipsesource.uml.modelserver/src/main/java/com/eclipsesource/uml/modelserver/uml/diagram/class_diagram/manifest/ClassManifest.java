@@ -80,10 +80,9 @@ public final class ClassManifest extends DiagramManifest implements CommandCodec
    @Override
    protected void configure() {
       super.configure();
-      contributeCommandCodec(binder());
+      contributeCommandCodec(binder(), this::contributeCommandCodec);
    }
 
-   @Override
    public void contributeCommandCodec(final MapBinder<String, CommandContribution> multibinder) {
 
       // Abstraction

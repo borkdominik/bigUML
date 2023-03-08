@@ -27,10 +27,9 @@ public final class CommunicationManifest extends DiagramManifest implements Comm
    @Override
    protected void configure() {
       super.configure();
-      contributeCommandCodec(binder());
+      contributeCommandCodec(binder(), this::contributeCommandCodec);
    }
 
-   @Override
    public void contributeCommandCodec(final MapBinder<String, CommandContribution> multibinder) {
       multibinder.addBinding(CreateInteractionContribution.TYPE).to(CreateInteractionContribution.class);
       multibinder.addBinding(DeleteInteractionContribution.TYPE).to(DeleteInteractionContribution.class);

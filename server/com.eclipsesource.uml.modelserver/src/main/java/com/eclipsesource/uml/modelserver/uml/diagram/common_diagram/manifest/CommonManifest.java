@@ -21,10 +21,9 @@ public class CommonManifest extends DiagramManifest implements CommandCodecContr
    @Override
    protected void configure() {
       super.configure();
-      contributeCommandCodec(binder());
+      contributeCommandCodec(binder(), this::contributeCommandCodec);
    }
 
-   @Override
    public void contributeCommandCodec(final MapBinder<String, CommandContribution> multibinder) {
       multibinder.addBinding(RenameElementContribution.TYPE).to(RenameElementContribution.class);
    }

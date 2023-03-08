@@ -10,22 +10,8 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.old.diagram.statemachine_diagram;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.glsp.graph.DefaultTypes;
-import org.eclipse.glsp.graph.GraphPackage;
-import org.eclipse.glsp.server.diagram.BaseDiagramConfiguration;
-import org.eclipse.glsp.server.layout.ServerLayoutKind;
-import org.eclipse.glsp.server.types.EdgeTypeHint;
-import org.eclipse.glsp.server.types.ShapeTypeHint;
-
-import com.eclipsesource.uml.glsp.old.diagram.statemachine_diagram.constants.StateMachineTypes;
-import com.google.common.collect.Lists;
-
-public class StateMachineDiagramConfiguration extends BaseDiagramConfiguration {
+public class StateMachineDiagramConfiguration { /*-
+ extends BaseDiagramConfiguration {
 
    @Override
    public String getDiagramType() { return "umldiagram"; }
@@ -146,5 +132,5 @@ public class StateMachineDiagramConfiguration extends BaseDiagramConfiguration {
 
    @Override
    public ServerLayoutKind getLayoutKind() { return ServerLayoutKind.MANUAL; }
-
+   */
 }

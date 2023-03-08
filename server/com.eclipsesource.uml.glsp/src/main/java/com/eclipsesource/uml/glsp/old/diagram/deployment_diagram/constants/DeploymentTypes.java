@@ -10,10 +10,9 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.old.diagram.deployment_diagram.constants;
 
-import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
-
 public final class DeploymentTypes {
-
+   /*-
+   
    // DEPLOYMENT DIAGRAM
    public static final String ICON_DEPLOYMENT_NODE = CoreTypes.PRE_ICON + "node";
    public static final String DEPLOYMENT_NODE = CoreTypes.PRE_NODE + "node";
@@ -29,12 +28,13 @@ public final class DeploymentTypes {
    public static final String ICON_DEPLOYMENT_SPECIFICATION = CoreTypes.PRE_ICON + "deploymentspecification";
    public static final String DEPLOYMENT_SPECIFICATION = CoreTypes.PRE_NODE + "deploymentspecification";
    public static final String DEPLOYMENT_COMPONENT = CoreTypes.PRE_NODE + "deploymentcomponent";
-
+   
    // COMMON CANDIDATE
    public static final String STRUCTURE = "struct";
-
+   
    // SHARED WITH CLASS AND USECASE
    public static final String LABEL_EDGE_MULTIPLICITY = CoreTypes.PRE_LABEL + "edge-multiplicity";
-
+   
    private DeploymentTypes() {}
+   */
 }

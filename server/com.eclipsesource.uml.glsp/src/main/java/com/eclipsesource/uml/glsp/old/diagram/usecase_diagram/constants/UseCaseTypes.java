@@ -10,9 +10,8 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.old.diagram.usecase_diagram.constants;
 
-import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
-
 public final class UseCaseTypes {
+   /*-
    // USECASE DIAGRAM
    public static final String ICON_USECASE = CoreTypes.PRE_ICON + "usecase";
    public static final String USECASE = CoreTypes.PRE_NODE + "usecase";
@@ -29,12 +28,13 @@ public final class UseCaseTypes {
    public static final String GENERALIZATION = CoreTypes.PRE_EDGE + "generalization";
    public static final String CONNECTIONPOINT = CoreTypes.PRE_LABEL + "connectionpoint";
    public static final String USECASE_ASSOCIATION = CoreTypes.PRE_EDGE + "usecase-association";
-
+   
    // COMMON CANDIDATE
    public static final String STRUCTURE = "struct";
-
+   
    // SHARED WITH CLASS AND DEPLOYMENT
    public static final String LABEL_EDGE_MULTIPLICITY = CoreTypes.PRE_LABEL + "edge-multiplicity";
-
+   
    private UseCaseTypes() {}
+   */
 }

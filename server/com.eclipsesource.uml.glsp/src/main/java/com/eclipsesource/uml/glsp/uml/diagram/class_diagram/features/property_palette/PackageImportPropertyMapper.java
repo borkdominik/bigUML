@@ -19,11 +19,11 @@ import org.eclipse.uml2.uml.VisibilityKind;
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
 import com.eclipsesource.uml.glsp.features.property_palette.handler.action.UpdateElementPropertyAction;
 import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalette;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_PackageImport;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_PackageImport;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.package_import.UpdatePackageImportHandler;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.BaseDiagramElementPropertyMapper;
-import com.eclipsesource.uml.glsp.uml.utils.PackageImportUtils;
-import com.eclipsesource.uml.glsp.uml.utils.VisibilityKindUtils;
+import com.eclipsesource.uml.glsp.uml.utils.element.PackageImportUtils;
+import com.eclipsesource.uml.glsp.uml.utils.element.VisibilityKindUtils;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.package_import.UpdatePackageImportArgument;
 
 public class PackageImportPropertyMapper extends BaseDiagramElementPropertyMapper<PackageImport> {

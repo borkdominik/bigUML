@@ -16,7 +16,7 @@ import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.EnumerationLiteral;
 
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_EnumerationLiteral;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_EnumerationLiteral;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGModelMapper;
 import com.eclipsesource.uml.glsp.uml.gmodel.element.NamedElementGBuilder;
 
@@ -25,7 +25,7 @@ public final class EnumerationLiteralCompartmentMapper extends BaseGModelMapper<
 
    @Override
    public GCompartment map(final EnumerationLiteral source) {
-      var builder = new GCompartmentBuilder(UmlClass_EnumerationLiteral.TYPE_ID)
+      var builder = new GCompartmentBuilder(UmlClass_EnumerationLiteral.typeId())
          .id(idGenerator.getOrCreateId(source))
          .layout(GConstants.Layout.HBOX)
          .layoutOptions(new GLayoutOptions()

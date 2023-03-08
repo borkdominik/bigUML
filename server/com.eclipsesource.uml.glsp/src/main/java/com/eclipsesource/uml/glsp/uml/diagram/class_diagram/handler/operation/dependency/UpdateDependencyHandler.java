@@ -14,7 +14,7 @@ import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.uml2.uml.Dependency;
 
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Dependency;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_Dependency;
 import com.eclipsesource.uml.glsp.uml.handler.operations.update.BaseUpdateElementHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.dependency.UpdateDependencyArgument;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.dependency.UpdateDependencyContribution;
@@ -23,7 +23,7 @@ public final class UpdateDependencyHandler
    extends BaseUpdateElementHandler<Dependency, UpdateDependencyArgument> {
 
    public UpdateDependencyHandler() {
-      super(UmlClass_Dependency.ID);
+      super(UmlClass_Dependency.typeId());
    }
 
    @Override

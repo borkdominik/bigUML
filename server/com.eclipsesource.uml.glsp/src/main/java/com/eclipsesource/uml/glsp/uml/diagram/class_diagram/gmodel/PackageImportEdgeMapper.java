@@ -19,7 +19,7 @@ import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.PackageImport;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_PackageImport;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_PackageImport;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGEdgeMapper;
 import com.eclipsesource.uml.glsp.uml.gmodel.element.EdgeGBuilder;
 
@@ -32,7 +32,7 @@ public final class PackageImportEdgeMapper extends BaseGEdgeMapper<PackageImport
       var importedPackage = source.getImportedPackage();
       var importedPackageId = idGenerator.getOrCreateId(importedPackage);
 
-      GEdgeBuilder builder = new GEdgeBuilder(UmlClass_PackageImport.TYPE_ID)
+      GEdgeBuilder builder = new GEdgeBuilder(UmlClass_PackageImport.typeId())
          .id(idGenerator.getOrCreateId(source))
          .addCssClasses(List.of(CoreCSS.EDGE, CoreCSS.EDGE_DASHED))
          .addCssClass(CoreCSS.Marker.TENT.end())
@@ -46,7 +46,8 @@ public final class PackageImportEdgeMapper extends BaseGEdgeMapper<PackageImport
                .side(GConstants.EdgeSide.TOP)
                .position(0.5d)
                .rotate(false)
-               .build()).build());
+               .build())
+            .build());
 
       applyEdgeNotation(source, builder);
 

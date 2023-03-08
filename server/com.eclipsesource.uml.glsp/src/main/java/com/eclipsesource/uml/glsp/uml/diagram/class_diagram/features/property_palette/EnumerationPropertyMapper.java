@@ -21,12 +21,12 @@ import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
 import com.eclipsesource.uml.glsp.features.property_palette.handler.action.UpdateElementPropertyAction;
 import com.eclipsesource.uml.glsp.features.property_palette.model.ElementReferencePropertyItem;
 import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalette;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Enumeration;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_EnumerationLiteral;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_Enumeration;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_EnumerationLiteral;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.enumeration.UpdateEnumerationHandler;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.BaseDiagramElementPropertyMapper;
-import com.eclipsesource.uml.glsp.uml.utils.EnumerationLiteralUtils;
-import com.eclipsesource.uml.glsp.uml.utils.VisibilityKindUtils;
+import com.eclipsesource.uml.glsp.uml.utils.element.EnumerationLiteralUtils;
+import com.eclipsesource.uml.glsp.uml.utils.element.VisibilityKindUtils;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.enumeration.UpdateEnumerationArgument;
 
 public class EnumerationPropertyMapper extends BaseDiagramElementPropertyMapper<Enumeration> {
@@ -49,7 +49,7 @@ public class EnumerationPropertyMapper extends BaseDiagramElementPropertyMapper<
             EnumerationLiteralUtils.asReferences(source.getOwnedLiterals(), idGenerator),
             List.of(
                new ElementReferencePropertyItem.CreateReference("Enumeration Literal",
-                  new CreateNodeOperation(UmlClass_EnumerationLiteral.TYPE_ID, elementId))))
+                  new CreateNodeOperation(UmlClass_EnumerationLiteral.typeId(), elementId))))
 
          .items();
 

@@ -10,18 +10,18 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.utils;
 
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Association;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_Association;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.constants.AssociationType;
 
 public final class AssociationTypeUtil {
    public static String toClassType(final AssociationType type) {
       switch (type) {
          case AGGREGATION:
-            return UmlClass_Association.AGGREGATION_TYPE_ID;
+            return UmlClass_Association.Variant.aggregationTypeId();
          case ASSOCIATION:
-            return UmlClass_Association.ASSOCIATION_TYPE_ID;
+            return UmlClass_Association.typeId();
          case COMPOSITION:
-            return UmlClass_Association.COMPOSITION_TYPE_ID;
+            return UmlClass_Association.Variant.compositionTypeId();
          default:
             throw new IllegalArgumentException();
       }

@@ -14,7 +14,7 @@ import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.uml2.uml.PackageImport;
 
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_PackageImport;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_PackageImport;
 import com.eclipsesource.uml.glsp.uml.handler.operations.update.BaseUpdateElementHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.package_import.UpdatePackageImportArgument;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.package_import.UpdatePackageImportContribution;
@@ -23,7 +23,7 @@ public final class UpdatePackageImportHandler
    extends BaseUpdateElementHandler<PackageImport, UpdatePackageImportArgument> {
 
    public UpdatePackageImportHandler() {
-      super(UmlClass_PackageImport.ID);
+      super(UmlClass_PackageImport.typeId());
    }
 
    @Override

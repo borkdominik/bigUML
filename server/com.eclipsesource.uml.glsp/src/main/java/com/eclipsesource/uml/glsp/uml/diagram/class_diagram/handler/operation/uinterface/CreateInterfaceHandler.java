@@ -15,7 +15,7 @@ import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.uml2.uml.Package;
 
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Interface;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_Interface;
 import com.eclipsesource.uml.glsp.uml.handler.operations.create.BaseCreateChildNodeHandler;
 import com.eclipsesource.uml.glsp.uml.handler.operations.create.CreateLocationAwareNodeHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.uinterface.CreateInterfaceContribution;
@@ -24,7 +24,7 @@ public final class CreateInterfaceHandler
    extends BaseCreateChildNodeHandler<Package> implements CreateLocationAwareNodeHandler {
 
    public CreateInterfaceHandler() {
-      super(UmlClass_Interface.TYPE_ID);
+      super(UmlClass_Interface.typeId());
    }
 
    @Override

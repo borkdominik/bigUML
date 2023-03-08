@@ -14,7 +14,7 @@ import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 import org.eclipse.uml2.uml.Package;
 
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_PackageImport;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_PackageImport;
 import com.eclipsesource.uml.glsp.uml.handler.operations.create.BaseCreateEdgeHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.package_import.CreatePackageImportContribution;
 
@@ -22,7 +22,7 @@ public final class CreatePackageImportHandler
    extends BaseCreateEdgeHandler<Package, Package> {
 
    public CreatePackageImportHandler() {
-      super(UmlClass_PackageImport.TYPE_ID);
+      super(UmlClass_PackageImport.typeId());
    }
 
    @Override

@@ -21,7 +21,7 @@ import com.eclipsesource.uml.glsp.uml.gmodel.builder.CompartmentGBuilder;
 import com.eclipsesource.uml.glsp.uml.gmodel.builder.IconCssGBuilder;
 import com.eclipsesource.uml.glsp.uml.gmodel.builder.LabelGBuilder;
 import com.eclipsesource.uml.glsp.uml.gmodel.builder.SeparatorGBuilder;
-import com.eclipsesource.uml.glsp.uml.utils.VisibilityKindUtils;
+import com.eclipsesource.uml.glsp.uml.utils.element.VisibilityKindUtils;
 
 public interface NamedElementGBuilder<TSource extends NamedElement>
    extends LabelGBuilder, IconCssGBuilder, SeparatorGBuilder, CompartmentGBuilder {

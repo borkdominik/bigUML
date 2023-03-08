@@ -15,7 +15,7 @@ import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramCre
 import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramDeleteHandlerContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramLabelEditMapperContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramUpdateHandlerContribution;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.ClassDiagramConfiguration;
+import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.diagram.CommunicationConfiguration;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.features.label_edit.InteractionLabelEditMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.features.label_edit.LifelineLabelEditMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.features.label_edit.MessageLabelEditMapper;
@@ -52,7 +52,7 @@ public class CommunicationUmlManifest extends DiagramManifest
    protected void configure() {
       super.configure();
 
-      contributeDiagramConfiguration(() -> ClassDiagramConfiguration.class);
+      contributeDiagramConfiguration(() -> CommunicationConfiguration.class);
       contributeToolPaletteConfiguration((contribution) -> {
          contribution.addBinding().to(CommunicationToolPaletteConfiguration.class);
       });

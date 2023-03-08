@@ -10,23 +10,8 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.old.diagram.activity_diagram;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.glsp.graph.DefaultTypes;
-import org.eclipse.glsp.graph.GraphPackage;
-import org.eclipse.glsp.server.diagram.BaseDiagramConfiguration;
-import org.eclipse.glsp.server.layout.ServerLayoutKind;
-import org.eclipse.glsp.server.types.EdgeTypeHint;
-import org.eclipse.glsp.server.types.ShapeTypeHint;
-
-import com.eclipsesource.uml.glsp.old.diagram.activity_diagram.constants.ActivityTypes;
-import com.eclipsesource.uml.glsp.old.diagram.usecase_diagram.constants.UseCaseTypes;
-import com.google.common.collect.Lists;
-
-public class ActivityDiagramConfiguration extends BaseDiagramConfiguration {
+public class ActivityDiagramConfiguration { /*-
+ extends BaseDiagramConfiguration {
 
    @Override
    public String getDiagramType() { return "umldiagram"; }
@@ -162,5 +147,5 @@ public class ActivityDiagramConfiguration extends BaseDiagramConfiguration {
 
    @Override
    public ServerLayoutKind getLayoutKind() { return ServerLayoutKind.MANUAL; }
-
+   */
 }

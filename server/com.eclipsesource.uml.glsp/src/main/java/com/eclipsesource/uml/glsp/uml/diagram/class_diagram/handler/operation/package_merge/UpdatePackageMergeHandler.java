@@ -14,7 +14,7 @@ import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.uml2.uml.PackageMerge;
 
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_PackageMerge;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_PackageMerge;
 import com.eclipsesource.uml.glsp.uml.handler.operations.update.BaseUpdateElementHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.package_merge.UpdatePackageMergeArgument;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.package_merge.UpdatePackageMergeContribution;
@@ -23,7 +23,7 @@ public final class UpdatePackageMergeHandler
    extends BaseUpdateElementHandler<PackageMerge, UpdatePackageMergeArgument> {
 
    public UpdatePackageMergeHandler() {
-      super(UmlClass_PackageMerge.ID);
+      super(UmlClass_PackageMerge.typeId());
    }
 
    @Override

@@ -14,7 +14,7 @@ import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.uml2.uml.EnumerationLiteral;
 
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_EnumerationLiteral;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_EnumerationLiteral;
 import com.eclipsesource.uml.glsp.uml.handler.operations.update.BaseUpdateElementHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.enumeration_literal.UpdateEnumerationLiteralArgument;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.enumeration_literal.UpdateEnumerationLiteralContribution;
@@ -23,7 +23,7 @@ public final class UpdateEnumerationLiteralHandler
    extends BaseUpdateElementHandler<EnumerationLiteral, UpdateEnumerationLiteralArgument> {
 
    public UpdateEnumerationLiteralHandler() {
-      super(UmlClass_EnumerationLiteral.ID);
+      super(UmlClass_EnumerationLiteral.typeId());
    }
 
    @Override

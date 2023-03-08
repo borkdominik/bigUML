@@ -14,7 +14,7 @@ import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.uml2.uml.Association;
 
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Association;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_Association;
 import com.eclipsesource.uml.glsp.uml.handler.operations.update.BaseUpdateElementHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association.UpdateAssociationArgument;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association.UpdateAssociationContribution;
@@ -22,7 +22,7 @@ import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.asso
 public final class UpdateAssociationHandler extends BaseUpdateElementHandler<Association, UpdateAssociationArgument> {
 
    public UpdateAssociationHandler() {
-      super(UmlClass_Association.ID);
+      super(UmlClass_Association.typeId());
    }
 
    @Override

@@ -19,7 +19,7 @@ import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.DataType;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_DataType;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_DataType;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGNodeMapper;
 import com.eclipsesource.uml.glsp.uml.gmodel.element.NamedElementGBuilder;
 
@@ -28,7 +28,7 @@ public final class DataTypeNodeMapper extends BaseGNodeMapper<DataType, GNode>
 
    @Override
    public GNode map(final DataType source) {
-      var builder = new GNodeBuilder(UmlClass_DataType.TYPE_ID)
+      var builder = new GNodeBuilder(UmlClass_DataType.typeId())
          .id(idGenerator.getOrCreateId(source))
          .layout(GConstants.Layout.VBOX)
          .addCssClass(CoreCSS.NODE)

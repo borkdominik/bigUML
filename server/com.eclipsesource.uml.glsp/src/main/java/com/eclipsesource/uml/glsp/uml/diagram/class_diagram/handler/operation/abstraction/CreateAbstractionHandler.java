@@ -14,20 +14,20 @@ import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 import org.eclipse.uml2.uml.NamedElement;
 
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Abstraction;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_Abstraction;
 import com.eclipsesource.uml.glsp.uml.handler.operations.create.BaseCreateEdgeHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.abstraction.CreateAbstractionContribution;
 
 public final class CreateAbstractionHandler
-   extends BaseCreateEdgeHandler<NamedElement, NamedElement> {
+      extends BaseCreateEdgeHandler<NamedElement, NamedElement> {
 
    public CreateAbstractionHandler() {
-      super(UmlClass_Abstraction.TYPE_ID);
+      super(UmlClass_Abstraction.typeId());
    }
 
    @Override
    protected CCommand createCommand(final CreateEdgeOperation operation, final NamedElement source,
-      final NamedElement target) {
+         final NamedElement target) {
       return CreateAbstractionContribution.create(source, target);
    }
 

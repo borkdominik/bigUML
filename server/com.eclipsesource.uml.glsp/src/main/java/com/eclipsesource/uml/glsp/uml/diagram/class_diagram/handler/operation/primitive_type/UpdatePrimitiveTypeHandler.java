@@ -14,7 +14,7 @@ import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.uml2.uml.PrimitiveType;
 
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_PrimitiveType;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_PrimitiveType;
 import com.eclipsesource.uml.glsp.uml.handler.operations.update.BaseUpdateElementHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.primitive_type.UpdatePrimitiveTypeArgument;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.primitive_type.UpdatePrimitiveTypeContribution;
@@ -23,7 +23,7 @@ public final class UpdatePrimitiveTypeHandler
    extends BaseUpdateElementHandler<PrimitiveType, UpdatePrimitiveTypeArgument> {
 
    public UpdatePrimitiveTypeHandler() {
-      super(UmlClass_PrimitiveType.ID);
+      super(UmlClass_PrimitiveType.typeId());
    }
 
    @Override

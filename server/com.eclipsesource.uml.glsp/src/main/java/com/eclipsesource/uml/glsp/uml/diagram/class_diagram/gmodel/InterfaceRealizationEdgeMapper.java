@@ -18,7 +18,7 @@ import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.InterfaceRealization;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_InterfaceRealization;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_InterfaceRealization;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGEdgeMapper;
 import com.eclipsesource.uml.glsp.uml.gmodel.element.EdgeGBuilder;
 
@@ -32,7 +32,7 @@ public final class InterfaceRealizationEdgeMapper extends BaseGEdgeMapper<Interf
       var contract = source.getContract();
       var contractId = idGenerator.getOrCreateId(contract);
 
-      GEdgeBuilder builder = new GEdgeBuilder(UmlClass_InterfaceRealization.TYPE_ID)
+      GEdgeBuilder builder = new GEdgeBuilder(UmlClass_InterfaceRealization.typeId())
          .id(idGenerator.getOrCreateId(source))
          .addCssClasses(List.of(CoreCSS.EDGE, CoreCSS.EDGE_DASHED))
          .addCssClass(CoreCSS.Marker.TRIANGLE_EMPTY.end())

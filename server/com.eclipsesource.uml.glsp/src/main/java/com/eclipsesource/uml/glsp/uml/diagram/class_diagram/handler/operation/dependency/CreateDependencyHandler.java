@@ -14,7 +14,7 @@ import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 import org.eclipse.uml2.uml.NamedElement;
 
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Dependency;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_Dependency;
 import com.eclipsesource.uml.glsp.uml.handler.operations.create.BaseCreateEdgeHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.dependency.CreateDependencyContribution;
 
@@ -22,7 +22,7 @@ public final class CreateDependencyHandler
    extends BaseCreateEdgeHandler<NamedElement, NamedElement> {
 
    public CreateDependencyHandler() {
-      super(UmlClass_Dependency.TYPE_ID);
+      super(UmlClass_Dependency.typeId());
    }
 
    @Override

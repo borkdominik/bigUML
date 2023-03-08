@@ -19,18 +19,18 @@ import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.Operation;
 import org.eclipse.uml2.uml.ParameterDirectionKind;
 
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Operation;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_Operation;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGModelMapper;
 import com.eclipsesource.uml.glsp.uml.gmodel.element.NamedElementGBuilder;
-import com.eclipsesource.uml.glsp.uml.utils.ParameterUtils;
-import com.eclipsesource.uml.glsp.uml.utils.TypeUtils;
+import com.eclipsesource.uml.glsp.uml.utils.element.ParameterUtils;
+import com.eclipsesource.uml.glsp.uml.utils.element.TypeUtils;
 
 public final class OperationCompartmentMapper extends BaseGModelMapper<Operation, GCompartment>
    implements NamedElementGBuilder<Operation> {
 
    @Override
    public GCompartment map(final Operation source) {
-      var builder = new GCompartmentBuilder(UmlClass_Operation.TYPE_ID)
+      var builder = new GCompartmentBuilder(UmlClass_Operation.typeId())
          .id(idGenerator.getOrCreateId(source))
          .layout(GConstants.Layout.HBOX)
          .layoutOptions(new GLayoutOptions()

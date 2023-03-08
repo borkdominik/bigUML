@@ -14,7 +14,7 @@ import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.uml2.uml.Generalization;
 
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Generalization;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_Generalization;
 import com.eclipsesource.uml.glsp.uml.handler.operations.update.BaseUpdateElementHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.generalization.UpdateGeneralizationArgument;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.generalization.UpdateGeneralizationContribution;
@@ -23,7 +23,7 @@ public final class UpdateGeneralizationHandler
    extends BaseUpdateElementHandler<Generalization, UpdateGeneralizationArgument> {
 
    public UpdateGeneralizationHandler() {
-      super(UmlClass_Generalization.ID);
+      super(UmlClass_Generalization.typeId());
    }
 
    @Override

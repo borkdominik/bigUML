@@ -28,7 +28,7 @@ import org.eclipse.glsp.server.operations.OperationHandler;
 import org.eclipse.uml2.uml.UMLPackage;
 import org.eclipse.uml2.uml.resource.UMLResource;
 
-import com.eclipsesource.uml.glsp.core.diagram.UmlToolDiagramConfiguration;
+import com.eclipsesource.uml.glsp.core.diagram.UmlDiagramConfiguration;
 import com.eclipsesource.uml.glsp.core.features.context_menu.UmlContextMenuItemProvider;
 import com.eclipsesource.uml.glsp.core.features.label_edit.DiagramLabelEditMapperRegistry;
 import com.eclipsesource.uml.glsp.core.features.label_edit.UmlLabelEditOperationHandler;
@@ -136,8 +136,8 @@ public class UmlDiagramModule extends EMSGLSPNotationDiagramModule {
    }
 
    @Override
-   protected Class<? extends UmlToolDiagramConfiguration> bindDiagramConfiguration() {
-      return UmlToolDiagramConfiguration.class;
+   protected Class<? extends UmlDiagramConfiguration> bindDiagramConfiguration() {
+      return UmlDiagramConfiguration.class;
    }
 
    @Override

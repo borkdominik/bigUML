@@ -14,7 +14,7 @@ import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.uml2.uml.Usage;
 
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Usage;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_Usage;
 import com.eclipsesource.uml.glsp.uml.handler.operations.update.BaseUpdateElementHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.usage.UpdateUsageArgument;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.usage.UpdateUsageContribution;
@@ -23,7 +23,7 @@ public final class UpdateUsageHandler
    extends BaseUpdateElementHandler<Usage, UpdateUsageArgument> {
 
    public UpdateUsageHandler() {
-      super(UmlClass_Usage.ID);
+      super(UmlClass_Usage.typeId());
    }
 
    @Override

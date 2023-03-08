@@ -16,7 +16,7 @@ import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.Generalization;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Generalization;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_Generalization;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGEdgeMapper;
 import com.eclipsesource.uml.glsp.uml.gmodel.element.EdgeGBuilder;
 
@@ -29,7 +29,7 @@ public final class GeneralizationEdgeMapper extends BaseGEdgeMapper<Generalizati
       var general = source.getGeneral();
       var generalId = idGenerator.getOrCreateId(general);
 
-      GEdgeBuilder builder = new GEdgeBuilder(UmlClass_Generalization.TYPE_ID)
+      GEdgeBuilder builder = new GEdgeBuilder(UmlClass_Generalization.typeId())
          .id(idGenerator.getOrCreateId(source))
          .addCssClass(CoreCSS.EDGE)
          .addCssClass(CoreCSS.Marker.TRIANGLE_EMPTY.end())

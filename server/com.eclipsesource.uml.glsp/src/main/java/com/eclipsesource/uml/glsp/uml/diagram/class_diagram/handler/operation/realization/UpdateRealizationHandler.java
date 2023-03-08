@@ -14,7 +14,7 @@ import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.uml2.uml.Realization;
 
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Realization;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_Realization;
 import com.eclipsesource.uml.glsp.uml.handler.operations.update.BaseUpdateElementHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.realization.UpdateRealizationArgument;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.realization.UpdateRealizationContribution;
@@ -23,7 +23,7 @@ public final class UpdateRealizationHandler
    extends BaseUpdateElementHandler<Realization, UpdateRealizationArgument> {
 
    public UpdateRealizationHandler() {
-      super(UmlClass_Realization.ID);
+      super(UmlClass_Realization.typeId());
    }
 
    @Override

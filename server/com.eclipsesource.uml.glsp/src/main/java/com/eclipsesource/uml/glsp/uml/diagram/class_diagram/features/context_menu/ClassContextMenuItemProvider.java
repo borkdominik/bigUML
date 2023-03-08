@@ -44,10 +44,10 @@ public class ClassContextMenuItemProvider {
    public List<MenuItem> classDiagramNodes(final GPoint position) {
       MenuItem createClass = new MenuItem(UmlClass_Class.TYPE_ID, "Class",
          List.of(new CreateNodeOperation(UmlClass_Class.TYPE_ID, position)), true);
-      MenuItem createEnumeration = new MenuItem(UmlClass_Enumeration.TYPE_ID, "Enumeration",
-         List.of(new CreateNodeOperation(UmlClass_Enumeration.TYPE_ID, position)), true);
-      MenuItem createInterface = new MenuItem(UmlClass_Interface.TYPE_ID, "Interface",
-         List.of(new CreateNodeOperation(UmlClass_Interface.TYPE_ID, position)), true);
+      MenuItem createEnumeration = new MenuItem(UmlClass_Enumeration.typeId(), "Enumeration",
+         List.of(new CreateNodeOperation(UmlClass_Enumeration.typeId(), position)), true);
+      MenuItem createInterface = new MenuItem(UmlClass_Interface.typeId(), "Interface",
+         List.of(new CreateNodeOperation(UmlClass_Interface.typeId(), position)), true);
    
       MenuItem classDiagramNodes = new MenuItem("classDiagramNodes", "Nodes",
          Arrays.asList(createClass, createEnumeration, createInterface), "classDiagramNodes");
@@ -59,8 +59,8 @@ public class ClassContextMenuItemProvider {
       String type = element.get().getType();
    
       if (Objects.equals(type, UmlClass_Class.TYPE_ID)) {
-         MenuItem createProperty = new MenuItem(UmlClass_Property.TYPE_ID, "Property",
-            List.of(new CreateNodeOperation(UmlClass_Property.TYPE_ID, elementId)), true);
+         MenuItem createProperty = new MenuItem(UmlClass_Property.typeId(), "Property",
+            List.of(new CreateNodeOperation(UmlClass_Property.typeId(), elementId)), true);
    
          MenuItem childNodes = new MenuItem("classDiagramChildNodes", "Child Nodes",
             List.of(createProperty), "classDiagramChildNodes");
@@ -72,8 +72,8 @@ public class ClassContextMenuItemProvider {
    public List<MenuItem> classDiagramEdges(final String sourceElementId, final String targetElementId) {
       MenuItem createAssociation = new MenuItem(ClassTypes.ASSOCIATION, "Association",
          List.of(new CreateEdgeOperation(ClassTypes.ASSOCIATION, sourceElementId, targetElementId)), true);
-      MenuItem createGeneralization = new MenuItem(UmlClass_Generalization.TYPE_ID, "Generalization",
-         List.of(new CreateEdgeOperation(UmlClass_Generalization.TYPE_ID, sourceElementId, targetElementId)), true);
+      MenuItem createGeneralization = new MenuItem(UmlClass_Generalization.typeId(), "Generalization",
+         List.of(new CreateEdgeOperation(UmlClass_Generalization.typeId(), sourceElementId, targetElementId)), true);
    
       MenuItem classDiagramEdges = new MenuItem("classDiagramEdges", "Edges",
          Arrays.asList(createAssociation, createGeneralization), "classDiagramEdges");

@@ -14,7 +14,7 @@ import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 import org.eclipse.uml2.uml.Classifier;
 
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Substitution;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_Substitution;
 import com.eclipsesource.uml.glsp.uml.handler.operations.create.BaseCreateEdgeHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.substitution.CreateSubstitutionContribution;
 
@@ -22,7 +22,7 @@ public final class CreateSubstitutionHandler
    extends BaseCreateEdgeHandler<Classifier, Classifier> {
 
    public CreateSubstitutionHandler() {
-      super(UmlClass_Substitution.TYPE_ID);
+      super(UmlClass_Substitution.typeId());
    }
 
    @Override

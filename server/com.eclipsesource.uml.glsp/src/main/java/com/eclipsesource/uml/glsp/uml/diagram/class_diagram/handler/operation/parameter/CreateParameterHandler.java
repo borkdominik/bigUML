@@ -14,7 +14,7 @@ import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.uml2.uml.Operation;
 
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.constants.UmlClass_Parameter;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_Parameter;
 import com.eclipsesource.uml.glsp.uml.handler.operations.create.BaseCreateChildNodeHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.parameter.CreateParameterContribution;
 
@@ -22,7 +22,7 @@ public final class CreateParameterHandler
    extends BaseCreateChildNodeHandler<Operation> {
 
    public CreateParameterHandler() {
-      super(UmlClass_Parameter.TYPE_ID);
+      super(UmlClass_Parameter.typeId());
    }
 
    @Override

@@ -29,7 +29,7 @@ public final class UmlClass_Class {
       return QualifiedUtil.representationTypeId(Representation.CLASS, DefaultTypes.NODE, Class.class.getSimpleName());
    }
 
-   public static class Template {
+   public static class Variant {
       public static String abstractTypeId() {
          return QualifiedUtil.representationTemplateTypeId(Representation.CLASS, DefaultTypes.NODE, "abstract",
             Class.class.getSimpleName());
@@ -52,7 +52,7 @@ public final class UmlClass_Class {
          typeId(), GraphPackage.Literals.GNODE); }
 
       @Override
-      public Set<String> getGraphContainableElements() { return Set.of(typeId(), Template.abstractTypeId()); }
+      public Set<String> getGraphContainableElements() { return Set.of(typeId(), Variant.abstractTypeId()); }
 
       @Override
       public Set<ShapeTypeHint> getShapeTypeHints() {

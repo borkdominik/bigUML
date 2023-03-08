@@ -51,6 +51,8 @@ public class UmlClass_Package {
          return Set.of(
             new ShapeTypeHint(typeId(), true, true, true, false,
                List.of(UmlClass_Class.typeId(),
+                  UmlClass_Class.Variant.abstractTypeId(), // Required because the client checks for the type id before
+                                                           // create
                   UmlClass_Enumeration.typeId(),
                   UmlClass_Interface.typeId(),
                   UmlClass_DataType.typeId(),

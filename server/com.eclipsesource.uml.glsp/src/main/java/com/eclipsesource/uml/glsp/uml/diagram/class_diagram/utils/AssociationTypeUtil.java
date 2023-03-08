@@ -17,11 +17,11 @@ public final class AssociationTypeUtil {
    public static String toClassType(final AssociationType type) {
       switch (type) {
          case AGGREGATION:
-            return UmlClass_Association.Template.aggregationTypeId();
+            return UmlClass_Association.Variant.aggregationTypeId();
          case ASSOCIATION:
             return UmlClass_Association.typeId();
          case COMPOSITION:
-            return UmlClass_Association.Template.compositionTypeId();
+            return UmlClass_Association.Variant.compositionTypeId();
          default:
             throw new IllegalArgumentException();
       }

@@ -46,7 +46,7 @@ public final class ClassToolPaletteConfiguration implements ToolPaletteConfigura
    private PaletteItem containers() {
       var containers = List.of(
          PaletteItemUtil.node(UmlClass_Class.typeId(), "Class", "uml-class-icon"),
-         PaletteItemUtil.node(UmlClass_Class.Template.abstractTypeId(), "Abstract Class", "uml-class-icon"),
+         PaletteItemUtil.node(UmlClass_Class.Variant.abstractTypeId(), "Abstract Class", "uml-class-icon"),
          PaletteItemUtil.node(UmlClass_Interface.typeId(), "Interface", "uml-interface-icon"),
          PaletteItemUtil.node(UmlClass_Enumeration.typeId(), "Enumeration", "uml-enumeration-icon"),
          PaletteItemUtil.node(UmlClass_DataType.typeId(), "Data Type", "uml-data-type-icon"),
@@ -61,9 +61,9 @@ public final class ClassToolPaletteConfiguration implements ToolPaletteConfigura
          PaletteItemUtil.edge(UmlClass_Abstraction.typeId(), "Abstraction", "uml-abstraction-icon"),
          PaletteItemUtil.edge(UmlClass_Association.typeId(), "Association",
             "uml-association-none-icon"),
-         PaletteItemUtil.edge(UmlClass_Association.Template.compositionTypeId(), "Composition",
+         PaletteItemUtil.edge(UmlClass_Association.Variant.compositionTypeId(), "Composition",
             "uml-association-composite-icon"),
-         PaletteItemUtil.edge(UmlClass_Association.Template.aggregationTypeId(), "Aggregation",
+         PaletteItemUtil.edge(UmlClass_Association.Variant.aggregationTypeId(), "Aggregation",
             "uml-association-shared-icon"),
          PaletteItemUtil.edge(UmlClass_Dependency.typeId(), "Dependency", "uml-dependency-icon"),
          PaletteItemUtil.edge(UmlClass_Generalization.typeId(), "Generalization", "uml-generalization-icon"),

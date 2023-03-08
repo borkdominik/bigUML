@@ -23,7 +23,7 @@ public final class CreateCompositionHandler
    extends BaseCreateEdgeHandler<Type, Type> {
 
    public CreateCompositionHandler() {
-      super(UmlClass_Association.Template.compositionTypeId());
+      super(UmlClass_Association.Variant.compositionTypeId());
    }
 
    @Override

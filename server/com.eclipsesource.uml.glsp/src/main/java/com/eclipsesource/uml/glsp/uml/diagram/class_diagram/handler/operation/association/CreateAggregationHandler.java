@@ -23,7 +23,7 @@ public final class CreateAggregationHandler
    extends BaseCreateEdgeHandler<Type, Type> {
 
    public CreateAggregationHandler() {
-      super(UmlClass_Association.Template.aggregationTypeId());
+      super(UmlClass_Association.Variant.aggregationTypeId());
    }
 
    @Override

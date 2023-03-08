@@ -41,6 +41,18 @@ export namespace UmlClassTypes {
 
     export const ABSTRACTION = QualifiedUtil.representationTypeId(UmlDiagramType.CLASS, DefaultTypes.EDGE, 'Abstraction');
     export const ASSOCIATION = QualifiedUtil.representationTypeId(UmlDiagramType.CLASS, DefaultTypes.EDGE, 'Association');
+    export const ASSOCIATION_AGGREGATION = QualifiedUtil.representationTemplateTypeId(
+        UmlDiagramType.CLASS,
+        DefaultTypes.EDGE,
+        'aggregation',
+        'Association'
+    );
+    export const ASSOCIATION_COMPOSITION = QualifiedUtil.representationTemplateTypeId(
+        UmlDiagramType.CLASS,
+        DefaultTypes.EDGE,
+        'composition',
+        'Association'
+    );
     export const DEPENDENCY = QualifiedUtil.representationTypeId(UmlDiagramType.CLASS, DefaultTypes.EDGE, 'Dependency');
     export const GENERALIZATION = QualifiedUtil.representationTypeId(UmlDiagramType.CLASS, DefaultTypes.EDGE, 'Generalization');
     export const INTERFACE_REALIZATION = QualifiedUtil.representationTypeId(

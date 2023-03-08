@@ -30,7 +30,7 @@ public class UmlClass_Association {
          Association.class.getSimpleName());
    }
 
-   public static class Template {
+   public static class Variant {
       public static String compositionTypeId() {
          return QualifiedUtil.representationTemplateTypeId(Representation.CLASS, DefaultTypes.EDGE, "composition",
             Association.class.getSimpleName());
@@ -50,12 +50,25 @@ public class UmlClass_Association {
    public static class DiagramConfiguration implements DiagramElementConfiguration.Edge {
 
       @Override
-      public Map<String, EClass> getTypeMappings() { return Map.of(typeId(), GraphPackage.Literals.GEDGE); }
+      public Map<String, EClass> getTypeMappings() {
+         return Map.of(
+            typeId(), GraphPackage.Literals.GEDGE,
+            Variant.aggregationTypeId(), GraphPackage.Literals.GEDGE, // Required because the client shows a preview
+                                                                      // version
+            Variant.compositionTypeId(), GraphPackage.Literals.GEDGE);
+      }
 
       @Override
       public Set<EdgeTypeHint> getEdgeTypeHints() {
          return Set.of(
             new EdgeTypeHint(typeId(), true, true, true,
+               List.of(UmlClass_Class.typeId(), UmlClass_Interface.typeId()),
+               List.of(UmlClass_Class.typeId(), UmlClass_Interface.typeId())),
+            new EdgeTypeHint(Variant.aggregationTypeId(), true, true, true, // Required because the client needs to
+                                                                            // differentiate between the variants
+               List.of(UmlClass_Class.typeId(), UmlClass_Interface.typeId()),
+               List.of(UmlClass_Class.typeId(), UmlClass_Interface.typeId())),
+            new EdgeTypeHint(Variant.compositionTypeId(), true, true, true,
                List.of(UmlClass_Class.typeId(), UmlClass_Interface.typeId()),
                List.of(UmlClass_Class.typeId(), UmlClass_Interface.typeId())));
       }

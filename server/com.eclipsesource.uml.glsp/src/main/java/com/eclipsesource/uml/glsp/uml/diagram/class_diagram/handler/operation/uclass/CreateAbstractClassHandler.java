@@ -24,7 +24,7 @@ public final class CreateAbstractClassHandler
    extends BaseCreateChildNodeHandler<Package> implements CreateLocationAwareNodeHandler {
 
    public CreateAbstractClassHandler() {
-      super(UmlClass_Class.Template.abstractTypeId());
+      super(UmlClass_Class.Variant.abstractTypeId());
    }
 
    @Override

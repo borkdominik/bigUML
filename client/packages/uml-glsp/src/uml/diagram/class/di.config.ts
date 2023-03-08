@@ -32,6 +32,8 @@ export const umlClassDiagramModule = new ContainerModule((bind, unbind, isBound,
 
     configureModelElement(context, UmlClassTypes.ABSTRACTION, SEdge, PolylineEdgeView);
     configureModelElement(context, UmlClassTypes.ASSOCIATION, SEdge, PolylineEdgeView);
+    configureModelElement(context, UmlClassTypes.ASSOCIATION_AGGREGATION, SEdge, PolylineEdgeView);
+    configureModelElement(context, UmlClassTypes.ASSOCIATION_COMPOSITION, SEdge, PolylineEdgeView);
     configureModelElement(context, UmlClassTypes.DEPENDENCY, SEdge, PolylineEdgeView);
     configureModelElement(context, UmlClassTypes.INTERFACE_REALIZATION, SEdge, PolylineEdgeView);
     configureModelElement(context, UmlClassTypes.GENERALIZATION, SEdge, PolylineEdgeView);

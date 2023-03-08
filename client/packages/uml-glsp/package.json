@@ -27,8 +27,12 @@
   "dependencies": {
     "@borkdominik-bigUML/uml-common": "*",
     "@eclipse-glsp/client": "next",
+    "@eclipse-glsp/protocol": "next",
     "balloon-css": "^0.5.0",
-    "reflect-metadata": "^0.1.13"
+    "inversify": "^5.1.1",
+    "reflect-metadata": "^0.1.13",
+    "snabbdom": "^3.5.1",
+    "sprotty": "next"
   },
   "devDependencies": {
     "endent": "^2.1.0"

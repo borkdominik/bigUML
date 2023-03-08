@@ -23,10 +23,10 @@
     "watch": "tsc -w"
   },
   "dependencies": {
-    "@borkdominik-bigUML/uml-common": "*",
-    "@borkdominik-bigUML/uml-glsp": "*",
     "@eclipse-emfcloud/modelserver-client": "next",
-    "@eclipse-glsp/client": "next"
+    "urijs": "^1.19.11"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@types/urijs": "1.19.11"
+  }
 }

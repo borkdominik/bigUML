@@ -14,6 +14,7 @@
     ]
   },
   "scripts": {
+    "depcheck": "npx depcheck --config .depcheck.yml",
     "prepare": "lerna run prepare",
     "prepare:theia": "yarn prepare --include-dependencies=true --scope=@borkdominik-bigUML/theia-app",
     "prepare:vscode": "yarn prepare --include-dependencies=true --scope=@borkdominik-bigUML/uml-vscode-*",

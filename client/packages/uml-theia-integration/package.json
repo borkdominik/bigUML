@@ -27,11 +27,21 @@
     "@eclipse-emfcloud/modelserver-client": "next",
     "@eclipse-emfcloud/modelserver-theia": "next",
     "@eclipse-glsp/client": "next",
+    "@eclipse-glsp/protocol": "next",
     "@eclipse-glsp/theia-integration": "next",
     "@theia/core": "next",
+    "@theia/editor": "next",
+    "@theia/file-search": "next",
+    "@theia/filesystem": "next",
     "@theia/navigator": "next",
     "@theia/outline-view": "next",
-    "sprotty-theia": "next"
+    "@theia/workspace": "next",
+    "inversify": "^5.1.1",
+    "sprotty-theia": "next",
+    "urijs": "^1.19.11"
+  },
+  "devDependencies": {
+    "@types/urijs": "1.19.11"
   },
   "theiaExtensions": [
     {

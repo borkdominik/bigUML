@@ -13,8 +13,9 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import '@borkdominik-bigUML/uml-glsp/css/extensions/tool-palette.css';
 import '@eclipse-glsp/client/css/tool-palette.css';
+
+import '../../../css/extensions/tool-palette.css';
 
 import { configureActionHandler, EnableDefaultToolsAction, EnableToolPaletteAction, TYPES } from '@eclipse-glsp/client';
 import { ContainerModule } from 'inversify';

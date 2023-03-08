@@ -1,6 +1,6 @@
 {
-  "name": "@eclipsesource/theia-app",
-  "version": "1.0.0",
+  "name": "@borkdominik-bigUML/theia-app",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "build": "theia build --mode development",
@@ -12,7 +12,7 @@
     "watch": "theia build --watch --mode development"
   },
   "dependencies": {
-    "@eclipsesource/uml-theia-integration": "*",
+    "@borkdominik-bigUML/uml-theia-integration": "*",
     "@theia/core": "next",
     "@theia/editor": "next",
     "@theia/file-search": "next",

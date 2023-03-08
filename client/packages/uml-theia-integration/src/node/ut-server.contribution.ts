@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-import { getPort, GLSPSocketServerContribution, GLSPSocketServerContributionOptions } from '@eclipse-glsp/theia-integration/lib/node';
+import { GLSPSocketServerContribution, GLSPSocketServerContributionOptions } from '@eclipse-glsp/theia-integration/lib/node';
 import { injectable } from 'inversify';
 import { join } from 'path';
 
@@ -23,6 +23,7 @@ export class UTServerContribution extends GLSPSocketServerContribution {
     readonly id = UTDiagramLanguage.contributionId;
 
     createContributionOptions(): Partial<GLSPSocketServerContributionOptions> {
+        /*
         return {
             executable: JAR_FILE,
             additionalArgs: ['--consoleLog', 'true'],
@@ -30,6 +31,8 @@ export class UTServerContribution extends GLSPSocketServerContribution {
                 port: getPort(PORT_ARG_KEY)
             }
         };
+        */
+        return {};
     }
 
     /* TODO: Enable this again

@@ -28,11 +28,13 @@ export class UTModelServerLaunchOptions implements LaunchOptions {
 }
 
 export default new ContainerModule((bind, _unbind, isBound, rebind) => {
+    /*
     if (isBound(LaunchOptions)) {
         rebind(LaunchOptions).to(UTModelServerLaunchOptions).inSingletonScope();
     } else {
         bind(LaunchOptions).to(UTModelServerLaunchOptions).inSingletonScope();
     }
+    */
 
     bind(UTBackendModelServerClient).toSelf().inSingletonScope();
     rebind(TheiaModelServerClientV2).toService(UTBackendModelServerClient);

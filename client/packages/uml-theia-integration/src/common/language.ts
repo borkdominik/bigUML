@@ -8,8 +8,8 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
+import { UmlDiagramType, UmlLanguageEnvironment } from '@borkdominik-bigUML/uml-common';
 import { GLSPDiagramLanguage } from '@eclipse-glsp/theia-integration';
-import { UmlDiagramType, UmlLanguageEnvironment } from '@eclipsesource/uml-common';
 
 export const UTDiagramLanguage: GLSPDiagramLanguage = {
     contributionId: 'uml',

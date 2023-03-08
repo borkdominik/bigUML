@@ -1,27 +1,19 @@
 {
-  "name": "@eclipsesource/uml-glsp",
-  "version": "1.0.0",
-  "description": "Sprotty diagrams for UML",
-  "keywords": [
-    "sprotty",
-    "workflow",
-    "diagram"
-  ],
-  "homepage": "https://github.com/eclipsesource/uml-glsp",
-  "bugs": "https://github.com/eclipsesource/uml-glsp/issues",
+  "name": "@borkdominik-bigUML/uml-glsp",
+  "version": "0.1.0",
+  "description": "UML-GLSP",
+  "homepage": "https://github.com/borkdominik/bigUML",
+  "bugs": "https://github.com/borkdominik/bigUML/issues",
   "repository": {
     "type": "git",
-    "url": "https://github.com/eclipsesource/uml-glsp.git"
+    "url": "https://github.com/borkdominik/bigUML.git"
   },
   "license": "(EPL-2.0 OR MIT)",
-  "author": {
-    "name": "EclipseSource"
-  },
   "files": [
     "lib",
     "src",
     "css",
-    "images"
+    "resources"
   ],
   "scripts": {
     "build": "tsc -b && yarn run lint",
@@ -33,8 +25,8 @@
     "watch": "tsc -w"
   },
   "dependencies": {
+    "@borkdominik-bigUML/uml-common": "*",
     "@eclipse-glsp/client": "next",
-    "@eclipsesource/uml-common": "*",
     "balloon-css": "^0.5.0",
     "reflect-metadata": "^0.1.13"
   },

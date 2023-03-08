@@ -10,6 +10,7 @@
  ********************************************************************************/
 import { TheiaModelServerClientV2 } from '@eclipse-emfcloud/modelserver-theia';
 import { LaunchOptions } from '@eclipse-emfcloud/modelserver-theia/lib/node';
+import { ContainerContext } from '@eclipse-glsp/theia-integration';
 import { getPort, GLSPServerContribution } from '@eclipse-glsp/theia-integration/lib/node';
 import { ContainerModule, injectable } from 'inversify';
 
@@ -25,16 +26,18 @@ export class UTModelServerLaunchOptions implements LaunchOptions {
     hostname = 'localhost';
 }
 
-export default new ContainerModule((bind, _unbind, isBound, rebind) => {
-    if (isBound(LaunchOptions)) {
-        rebind(LaunchOptions).to(UTModelServerLaunchOptions).inSingletonScope();
+export default new ContainerModule((bind, unbind, isBound, rebind) => {
+    const context: ContainerContext = { bind, unbind, isBound, rebind };
+
+    if (context.isBound(LaunchOptions)) {
+        context.rebind(LaunchOptions).to(UTModelServerLaunchOptions).inSingletonScope();
     } else {
-        bind(LaunchOptions).to(UTModelServerLaunchOptions).inSingletonScope();
+        context.bind(LaunchOptions).to(UTModelServerLaunchOptions).inSingletonScope();
     }
 
-    bind(UTBackendModelServerClient).toSelf().inSingletonScope();
-    rebind(TheiaModelServerClientV2).toService(UTBackendModelServerClient);
+    context.bind(UTBackendModelServerClient).toSelf().inSingletonScope();
+    context.rebind(TheiaModelServerClientV2).toService(UTBackendModelServerClient);
 
-    bind(UTServerContribution).toSelf().inSingletonScope();
-    bind(GLSPServerContribution).toService(UTServerContribution);
+    context.bind(UTServerContribution).toSelf().inSingletonScope();
+    context.bind(GLSPServerContribution).toService(UTServerContribution);
 });

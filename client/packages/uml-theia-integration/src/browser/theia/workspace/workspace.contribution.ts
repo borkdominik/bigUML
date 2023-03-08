@@ -14,14 +14,17 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 
-import { ContainerContext } from '@eclipse-glsp/theia-integration';
-import { CommandContribution, MenuContribution } from '@theia/core';
-import { NewFileCommandContribution } from './new-file.command-contribution';
-import { NewFileCreator } from './new-file.creator';
-import { NewFileMenuContribution } from './new-file.menu-contribution';
+import { MaybePromise } from '@theia/core';
+import { FrontendApplication, FrontendApplicationContribution } from '@theia/core/lib/browser/frontend-application';
+import { inject, injectable } from 'inversify';
+import { WorkspaceWatcher } from './workspace.watcher';
 
-export function registerNewFileModule(context: ContainerContext): void {
-    context.bind(CommandContribution).to(NewFileCommandContribution);
-    context.bind(MenuContribution).to(NewFileMenuContribution);
-    context.bind(NewFileCreator).toSelf();
+@injectable()
+export class WorkspaceContribution implements FrontendApplicationContribution {
+    @inject(WorkspaceWatcher)
+    protected readonly watcher: WorkspaceWatcher;
+
+    onStart(app: FrontendApplication): MaybePromise<void> {
+        this.watcher.watch();
+    }
 }

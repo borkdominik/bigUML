@@ -15,13 +15,11 @@
  ********************************************************************************/
 
 import { ContainerContext } from '@eclipse-glsp/theia-integration';
-import { CommandContribution, MenuContribution } from '@theia/core';
-import { NewFileCommandContribution } from './new-file.command-contribution';
-import { NewFileCreator } from './new-file.creator';
-import { NewFileMenuContribution } from './new-file.menu-contribution';
+import { FrontendApplicationContribution } from '@theia/core/lib/browser/frontend-application';
+import { WorkspaceContribution } from './workspace.contribution';
+import { WorkspaceWatcher } from './workspace.watcher';
 
-export function registerNewFileModule(context: ContainerContext): void {
-    context.bind(CommandContribution).to(NewFileCommandContribution);
-    context.bind(MenuContribution).to(NewFileMenuContribution);
-    context.bind(NewFileCreator).toSelf();
+export function registerWorkspaceModule(context: ContainerContext): void {
+    context.bind(FrontendApplicationContribution).to(WorkspaceContribution);
+    context.bind(WorkspaceWatcher).toSelf().inSingletonScope();
 }

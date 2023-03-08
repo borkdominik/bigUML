@@ -17,19 +17,19 @@ import '../css/colors.css';
 
 import { GlspVscodeConnector } from '@eclipse-glsp/vscode-integration';
 import { configureDefaultCommands } from '@eclipse-glsp/vscode-integration/lib/quickstart-components';
-import * as process from 'process';
 import * as vscode from 'vscode';
 import { createContainer } from './di.config';
 import { TYPES, VSCODE_TYPES } from './di.types';
 import { UVGlspServer } from './glsp/connection/uv-glsp-server';
-import { launchServer } from './glsp/launcher/launcher';
 import { VSCodeSettings } from './language';
 
 export async function activate(context: vscode.ExtensionContext): Promise<void> {
     const container = createContainer(context);
-    if (process.env.GLSP_SERVER_DEBUG !== 'true') {
+    /*
+    if (process.env.UML_GLSP_SERVER_DEBUG !== 'true') {
         await launchServer(context);
     }
+    */
 
     configureDefaultCommands({
         extensionContext: context,

@@ -26,7 +26,7 @@ export class UVGlspServer extends SocketGlspVscodeServer {
         super({
             clientId: 'glsp.uml',
             clientName: 'uml',
-            serverPort: JSON.parse(process.env.GLSP_SERVER_PORT || DEFAULT_SERVER_PORT)
+            serverPort: JSON.parse(process.env.UML_GLSP_SERVER_PORT || DEFAULT_SERVER_PORT)
         });
     }
 

@@ -7,8 +7,8 @@
     "clean": "theia clean",
     "download:plugins": "theia download:plugins",
     "prepare": "yarn clean && yarn build && yarn download:plugins",
-    "start": "theia start --UML_GLSP=5007 --hostname=0.0.0.0 --root-dir=../workspace",
-    "start:debug": "theia start --UML_GLSP=5007 --hostname=0.0.0.0 --loglevel=debug --root-dir=../../workspace --debug",
+    "start": "theia start --UML_GLSP_PORT=5007 --UML_MODELSERVER_PORT=8081 --hostname=0.0.0.0 --root-dir=../workspace",
+    "start:debug": "theia start --UML_GLSP_PORT=5007 --UML_MODELSERVER_PORT=8081 --hostname=0.0.0.0 --loglevel=debug --root-dir=../../workspace --debug",
     "watch": "theia build --watch --mode development"
   },
   "dependencies": {

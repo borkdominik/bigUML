@@ -14,7 +14,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 
-import { ModelServerConfig } from '@eclipsesource/uml-modelserver/lib/config';
+import { ModelServerConfig } from '@borkdominik-biguml/uml-modelserver/lib/config';
 
 export const MODEL_SERVER_CONFIG: ModelServerConfig = {
     url: 'http://localhost:8081/api/v2/'

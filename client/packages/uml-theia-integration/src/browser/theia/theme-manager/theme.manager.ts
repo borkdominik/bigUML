@@ -16,8 +16,8 @@ import { inject, injectable } from 'inversify';
 export class ThemeManager implements FrontendApplicationContribution {
     @inject(ThemeService) protected readonly themeService: ThemeService;
 
-    static readonly darkColorsCss = require('@eclipsesource/uml-glsp/css/colors/colors-dark.useable.css');
-    static readonly lightColorsCss = require('@eclipsesource/uml-glsp/css/colors/colors-light.useable.css');
+    static readonly darkColorsCss = require('@borkdominik-biguml/uml-glsp/css/colors/colors-dark.useable.css');
+    static readonly lightColorsCss = require('@borkdominik-biguml/uml-glsp/css/colors/colors-light.useable.css');
 
     onStart(): void {
         this.updateTheme();

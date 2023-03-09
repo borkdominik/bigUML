@@ -14,7 +14,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 
-import { UmlModelServerClient } from '@eclipsesource/uml-modelserver/lib/modelserver.client';
+import { UmlModelServerClient } from '@borkdominik-biguml/uml-modelserver/lib/modelserver.client';
 import { injectable } from 'inversify';
 import { MODEL_SERVER_CONFIG } from './uv-modelserver.config';
 

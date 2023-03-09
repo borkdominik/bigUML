@@ -18,7 +18,6 @@ import { DefaultTypes } from '@eclipse-glsp/client';
 import { UmlTypes } from '../../uml.types';
 
 export namespace UmlCommunicationTypes {
-    // COMMUNICATION DIAGRAM
     export const ICON_INTERACTION = `${UmlTypes.ICON}:interaction`;
     export const ICON_LIFELINE = `${UmlTypes.ICON}:lifeline`;
     export const INTERACTION = `${DefaultTypes.NODE}:interaction`;

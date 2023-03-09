@@ -19,5 +19,5 @@ import { LabelProviderContribution } from '@theia/core/lib/browser/label-provide
 import { LabelProvider } from './label.provider';
 
 export function registerEditorModule(context: ContainerContext): void {
-    context.bind(LabelProviderContribution).to(LabelProvider).inSingletonScope();
+    context.bind(LabelProviderContribution).to(LabelProvider);
 }

@@ -18,7 +18,7 @@ public class UmlCommunication_Message {
 
    public static final String ID = "message";
    public static final String ICON = CoreTypes.ICON + ":" + ID;
-   public static final String TYPE_ID = DefaultTypes.NODE + ":" + ID;
+   public static final String TYPE_ID = DefaultTypes.EDGE + ":" + ID;
 
    public class Property {
 

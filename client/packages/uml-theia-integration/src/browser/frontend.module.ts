@@ -29,6 +29,7 @@ import { registerModelServerModule } from './modelserver/di.config';
 import { registerEditorModule } from './theia/editor/di.config';
 import { registerNewFileModule } from './theia/new-file/di.config';
 import { registerThemeManagerModule } from './theia/theme-manager/di.config';
+import { registerWorkspaceModule } from './theia/workspace/di.config';
 
 export class UTFrontendModule extends GLSPTheiaFrontendModule {
     readonly diagramLanguage = UTDiagramLanguage;
@@ -54,6 +55,7 @@ export class UTFrontendModule extends GLSPTheiaFrontendModule {
         registerThemeManagerModule(context);
         registerEditorModule(context);
         registerNewFileModule(context);
+        registerWorkspaceModule(context);
 
         registerOutlineIntegration(context.bind);
         registerOutlineWidget(context.bind);

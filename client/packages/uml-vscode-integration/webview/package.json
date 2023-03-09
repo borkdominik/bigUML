@@ -1,31 +1,14 @@
 {
-  "name": "@eclipsesource/uml-vscode-integration-webview",
-  "version": "1.0.0",
+  "name": "@borkdominik-biguml/uml-vscode-integration-webview",
+  "version": "0.1.0",
   "description": "UML GLSP diagram in a VS Code extensions (WebView part)",
-  "keywords": [
-    "vscode",
-    "graph",
-    "diagram",
-    "layout",
-    "glsp"
-  ],
-  "homepage": "https://www.eclipse.org/glsp/",
-  "bugs": "https://github.com/eclipse-glsp/glsp/issues",
+  "homepage": "https://github.com/borkdominik/bigUML",
+  "bugs": "https://github.com/borkdominik/bigUML/issues",
   "repository": {
     "type": "git",
-    "url": "https://github.com/eclipse-glsp/glsp-vscode-integration.git"
+    "url": "https://github.com/borkdominik/bigUML.git"
   },
   "license": "(EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0)",
-  "author": {
-    "name": "Eclipse GLSP"
-  },
-  "contributors": [
-    {
-      "name": "Eclipse GLSP Project",
-      "email": "glsp-dev@eclipse.org",
-      "url": "https://projects.eclipse.org/projects/ecd.glsp"
-    }
-  ],
   "scripts": {
     "build": "webpack --mode=development",
     "clean": "rimraf lib tsconfig.tsbuildinfo ",
@@ -35,15 +18,16 @@
     "watch": "webpack --watch"
   },
   "devDependencies": {
+    "@borkdominik-biguml/uml-glsp": "*",
     "@eclipse-glsp/vscode-integration-webview": "next",
-    "@eclipsesource/uml-glsp": "*",
     "@vscode/codicons": "^0.0.25",
     "css-loader": "^6.7.1",
     "esbuild-loader": "^3.0.1",
     "ignore-loader": "^0.1.2",
-    "source-map-loader": "^4.0.1",
+    "inversify": "^5.1.1",
+    "reflect-metadata": "^0.1.13",
+    "sprotty-vscode-webview": "next",
     "style-loader": "^3.3.1",
-    "webpack": "^5.75.0",
-    "webpack-cli": "^5.0.1"
+    "webpack": "^5.75.0"
   }
 }

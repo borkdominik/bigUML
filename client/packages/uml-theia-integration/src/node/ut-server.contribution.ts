@@ -10,13 +10,10 @@
  ********************************************************************************/
 import { getPort, GLSPSocketServerContribution, GLSPSocketServerContributionOptions } from '@eclipse-glsp/theia-integration/lib/node';
 import { injectable } from 'inversify';
-import { join } from 'path';
 
 import { UTDiagramLanguage } from '../common/language';
 
-export const PORT_ARG_KEY = 'UML_GLSP';
-export const SERVER_DIR = join(__dirname, '..', '..', 'build');
-export const JAR_FILE = join(SERVER_DIR, 'com.eclipsesource.uml.glsp.product-0.1.0');
+const PORT_ARG_KEY = 'UML_GLSP_PORT';
 
 @injectable()
 export class UTServerContribution extends GLSPSocketServerContribution {
@@ -24,15 +21,13 @@ export class UTServerContribution extends GLSPSocketServerContribution {
 
     createContributionOptions(): Partial<GLSPSocketServerContributionOptions> {
         return {
-            executable: JAR_FILE,
-            additionalArgs: ['--consoleLog', 'true'],
             socketConnectionOptions: {
                 port: getPort(PORT_ARG_KEY)
             }
         };
     }
 
-    /* TODO: Enable this again
+    /* TODO: Enable again after we add support to auto start
     @inject(ILogger) private readonly logger: ILogger;
 
     override async launch(): Promise<void> {

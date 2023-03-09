@@ -9,19 +9,19 @@
     "nohoist": [
       "**/path",
       "**/path/**",
-      "@eclipsesource/uml-vscode-extension/@vscode/codicons",
-      "@eclipsesource/uml-vscode-extension/@vscode/codicons/**"
+      "@borkdominik-biguml/uml-vscode-integration-extension/@vscode/codicons",
+      "@borkdominik-biguml/uml-vscode-integration-extension/@vscode/codicons/**"
     ]
   },
   "scripts": {
+    "depcheck": "npx depcheck --config .depcheck.yml",
     "prepare": "lerna run prepare",
-    "prepare:theia": "yarn prepare --include-dependencies=true --scope=@eclipsesource/theia-app",
-    "prepare:vscode": "yarn prepare --include-dependencies=true --scope=@eclipsesource/uml-vscode-*",
-    "start:theia": "cd environments/theia-app && yarn start",
+    "prepare:theia": "yarn prepare --include-dependencies=true --scope=@borkdominik-biguml/theia-app",
+    "prepare:vscode": "yarn prepare --include-dependencies=true --scope=@borkdominik-biguml/uml-vscode-*",
     "start:theia:debug": "cd environments/theia-app && yarn start:debug",
     "watch": "lerna run --parallel watch",
-    "watch:theia": "yarn watch --include-dependencies=true --scope=@eclipsesource/theia-app",
-    "watch:vscode": "yarn watch --include-dependencies=true --scope=@eclipsesource/uml-vscode-*"
+    "watch:theia": "yarn watch --include-dependencies=true --scope=@borkdominik-biguml/theia-app",
+    "watch:vscode": "yarn watch --include-dependencies=true --scope=@borkdominik-biguml/uml-vscode-*"
   },
   "resolutions": {
     "**/@eclipse-emfcloud/modelserver-theia": "0.8.0-theia-cr02",

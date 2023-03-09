@@ -31,15 +31,17 @@ public class CommunicationToolPaletteConfiguration implements ToolPaletteConfigu
 
    private PaletteItem nodes() {
       PaletteItem createInteraction = PaletteItemUtil.node(UmlCommunication_Interaction.TYPE_ID, "Interaction",
-         "umlInteraction");
-      PaletteItem createLifeline = PaletteItemUtil.node(UmlCommunication_Lifeline.TYPE_ID, "Lifeline", "umlLifeline");
+         "uml-interaction-icon");
+      PaletteItem createLifeline = PaletteItemUtil.node(UmlCommunication_Lifeline.TYPE_ID, "Lifeline",
+         "uml-lifeline-icon");
 
       List<PaletteItem> classifiers = Lists.newArrayList(createInteraction, createLifeline);
       return PaletteItem.createPaletteGroup("uml.classifier", "Nodes", classifiers, "versions");
    }
 
    private PaletteItem edges() {
-      PaletteItem createAssociation = PaletteItemUtil.edge(UmlCommunication_Message.TYPE_ID, "Message", "umlMessage");
+      PaletteItem createAssociation = PaletteItemUtil.edge(UmlCommunication_Message.TYPE_ID, "Message",
+         "uml-message-icon");
 
       List<PaletteItem> edges = Lists.newArrayList(createAssociation);
       return PaletteItem.createPaletteGroup("uml.relation", "Edges", edges, "export");

@@ -13,7 +13,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import '@eclipsesource/uml-glsp/css/extensions/editor-panel.css';
+import '../../../css/extensions/editor-panel.css';
 
 import { configureActionHandler, TYPES } from '@eclipse-glsp/client';
 import { ContainerModule } from 'inversify';

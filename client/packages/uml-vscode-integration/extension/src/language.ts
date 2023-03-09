@@ -14,7 +14,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 
-import { UmlDiagramType, UmlLanguageEnvironment } from '@eclipsesource/uml-common';
+import { UmlDiagramType, UmlLanguageEnvironment } from '@borkdominik-biguml/uml-common';
 
 export const UVLangugageEnvironment: UmlLanguageEnvironment = {
     supportedTypes: UmlDiagramType.all

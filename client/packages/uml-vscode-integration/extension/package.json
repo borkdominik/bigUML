@@ -1,40 +1,27 @@
 {
-  "name": "@eclipsesource/uml-vscode-extension",
-  "displayName": "UML",
-  "version": "1.1.0-next",
-  "description": "An example graphical language used for modeling workflows",
+  "name": "@borkdominik-biguml/uml-vscode-integration-extension",
+  "displayName": "bigUML",
+  "version": "0.1.0",
+  "description": "UML-VSCode extension",
   "categories": [
     "Programming Languages"
   ],
-  "homepage": "https://www.eclipse.org/glsp/",
-  "bugs": "https://github.com/eclipse-glsp/glsp/issues",
+  "homepage": "https://github.com/borkdominik/bigUML",
+  "bugs": "https://github.com/borkdominik/bigUML/issues",
   "repository": {
     "type": "git",
-    "url": "https://github.com/eclipse-glsp/glsp-vscode-integration.git"
+    "url": "https://github.com/borkdominik/bigUML.git"
   },
-  "author": {
-    "name": "EclipseGLSP"
-  },
-  "contributors": [
-    {
-      "name": "Eclipse GLSP Project",
-      "email": "glsp-dev@eclipse.org",
-      "url": "https://projects.eclipse.org/projects/ecd.glsp"
-    }
-  ],
-  "publisher": "Eclipse-GLSP",
   "main": "./lib/main",
   "files": [
     "lib",
-    "extension",
-    "server",
-    "webview",
+    "src",
+    "css",
     "pack"
   ],
   "scripts": {
     "build": "yarn esbuild-base --sourcemap",
     "clean": "rimraf lib tsconfig.tsbuildinfo ",
-    "download:Server": "ts-node scripts/download.ts",
     "esbuild-base": "esbuild ./src/index.ts --bundle --outfile=lib/main.js --external:vscode --format=cjs --platform=node",
     "lint": "eslint --ext .ts,.tsx ./src",
     "lint:ci": "yarn lint -o eslint.xml -f checkstyle",
@@ -158,17 +145,18 @@
     "*"
   ],
   "dependencies": {
+    "@borkdominik-biguml/uml-common": "*",
+    "@borkdominik-biguml/uml-glsp": "*",
+    "@borkdominik-biguml/uml-modelserver": "*",
     "@eclipse-glsp/vscode-integration": "next",
-    "@eclipsesource/uml-common": "*",
-    "@eclipsesource/uml-glsp": "*",
-    "@eclipsesource/uml-modelserver": "*",
     "@vscode/codicons": "^0.0.25",
     "inversify": "5.1.1",
-    "reflect-metadata": "^0.1.13"
+    "reflect-metadata": "^0.1.13",
+    "urijs": "^1.19.11"
   },
   "devDependencies": {
-    "@eclipsesource/uml-vscode-integration-webview": "*",
-    "@types/urijs": "1.19.19",
+    "@borkdominik-biguml/uml-vscode-integration-webview": "*",
+    "@types/urijs": "1.19.11",
     "@types/vscode": "^1.54.0",
     "@vscode/vsce": "^2.15.0",
     "esbuild": "^0.17.10"

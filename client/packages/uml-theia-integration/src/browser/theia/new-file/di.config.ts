@@ -21,7 +21,7 @@ import { NewFileCreator } from './new-file.creator';
 import { NewFileMenuContribution } from './new-file.menu-contribution';
 
 export function registerNewFileModule(context: ContainerContext): void {
-    context.bind(CommandContribution).to(NewFileCommandContribution).inSingletonScope();
-    context.bind(MenuContribution).to(NewFileMenuContribution).inSingletonScope();
-    context.bind(NewFileCreator).toSelf().inSingletonScope();
+    context.bind(CommandContribution).to(NewFileCommandContribution);
+    context.bind(MenuContribution).to(NewFileMenuContribution);
+    context.bind(NewFileCreator).toSelf();
 }

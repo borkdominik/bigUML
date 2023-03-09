@@ -1,20 +1,14 @@
 {
-  "name": "@eclipsesource/uml-theia-integration",
-  "version": "1.0.0",
-  "description": "Glue code to integrate UML GLSP sprotty client into Eclipse Theia",
-  "keywords": [
-    "theia-extension"
-  ],
-  "homepage": "https://github.com/eclipsesource/uml-glsp",
-  "bugs": "https://github.com/eclipsesource/uml-glsp/issues",
+  "name": "@borkdominik-biguml/uml-theia-integration",
+  "version": "0.1.0",
+  "description": "UML-Theia integration",
+  "homepage": "https://github.com/borkdominik/bigUML",
+  "bugs": "https://github.com/borkdominik/bigUML/issues",
   "repository": {
     "type": "git",
-    "url": "https://github.com/eclipsesource/uml-glsp.git"
+    "url": "https://github.com/borkdominik/bigUML.git"
   },
   "license": "(EPL-2.0 OR MIT)",
-  "author": {
-    "name": "EclipseSource"
-  },
   "files": [
     "lib",
     "src"
@@ -27,17 +21,27 @@
     "watch": "tsc -w"
   },
   "dependencies": {
+    "@borkdominik-biguml/uml-common": "*",
+    "@borkdominik-biguml/uml-glsp": "*",
+    "@borkdominik-biguml/uml-modelserver": "*",
     "@eclipse-emfcloud/modelserver-client": "next",
     "@eclipse-emfcloud/modelserver-theia": "next",
     "@eclipse-glsp/client": "next",
+    "@eclipse-glsp/protocol": "next",
     "@eclipse-glsp/theia-integration": "next",
-    "@eclipsesource/uml-common": "*",
-    "@eclipsesource/uml-glsp": "*",
-    "@eclipsesource/uml-modelserver": "*",
     "@theia/core": "next",
+    "@theia/editor": "next",
+    "@theia/file-search": "next",
+    "@theia/filesystem": "next",
     "@theia/navigator": "next",
     "@theia/outline-view": "next",
-    "sprotty-theia": "next"
+    "@theia/workspace": "next",
+    "inversify": "^5.1.1",
+    "sprotty-theia": "next",
+    "urijs": "^1.19.11"
+  },
+  "devDependencies": {
+    "@types/urijs": "1.19.11"
   },
   "theiaExtensions": [
     {

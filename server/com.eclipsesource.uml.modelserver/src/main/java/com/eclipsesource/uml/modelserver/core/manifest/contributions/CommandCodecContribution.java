@@ -10,6 +10,8 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.core.manifest.contributions;
 
+import java.util.function.Consumer;
+
 import org.eclipse.emfcloud.modelserver.edit.CommandContribution;
 
 import com.google.inject.Binder;
@@ -17,11 +19,12 @@ import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.MapBinder;
 
 public interface CommandCodecContribution {
-   default void contributeCommandCodec(final Binder binder) {
-      var provider = MapBinder.newMapBinder(binder, TypeLiteral.get(String.class),
-         TypeLiteral.get(CommandContribution.class));
-      contributeCommandCodec(provider);
-   }
+   default void contributeCommandCodec(final Binder binder,
+      final Consumer<MapBinder<String, CommandContribution>> consumer) {
 
-   void contributeCommandCodec(MapBinder<String, CommandContribution> multibinder);
+      var mapBinder = MapBinder.newMapBinder(binder, TypeLiteral.get(String.class),
+         TypeLiteral.get(CommandContribution.class));
+
+      consumer.accept(mapBinder);
+   }
 }

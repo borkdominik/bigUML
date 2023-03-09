@@ -18,7 +18,6 @@ const JSX = { createElement: svg };
 @injectable()
 export class MessageEdgeView extends PolylineEdgeView {
     protected override renderAdditionals(edge: SEdge, segments: Point[], context: RenderingContext): VNode[] {
-        // TODO: Remove this section before merging it to master
         const p1 = segments[segments.length - 2];
         const p2 = segments[segments.length - 1];
         const flowEdge: any = [

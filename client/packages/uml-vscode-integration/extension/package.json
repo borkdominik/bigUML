@@ -1,5 +1,5 @@
 {
-  "name": "@borkdominik-bigUML/uml-vscode-integration-extension",
+  "name": "@borkdominik-biguml/uml-vscode-integration-extension",
   "displayName": "bigUML",
   "version": "0.1.0",
   "description": "UML-VSCode extension",
@@ -145,9 +145,9 @@
     "*"
   ],
   "dependencies": {
-    "@borkdominik-bigUML/uml-common": "*",
-    "@borkdominik-bigUML/uml-glsp": "*",
-    "@borkdominik-bigUML/uml-modelserver": "*",
+    "@borkdominik-biguml/uml-common": "*",
+    "@borkdominik-biguml/uml-glsp": "*",
+    "@borkdominik-biguml/uml-modelserver": "*",
     "@eclipse-glsp/vscode-integration": "next",
     "@vscode/codicons": "^0.0.25",
     "inversify": "5.1.1",
@@ -155,7 +155,7 @@
     "urijs": "^1.19.11"
   },
   "devDependencies": {
-    "@borkdominik-bigUML/uml-vscode-integration-webview": "*",
+    "@borkdominik-biguml/uml-vscode-integration-webview": "*",
     "@types/urijs": "1.19.11",
     "@types/vscode": "^1.54.0",
     "@vscode/vsce": "^2.15.0",

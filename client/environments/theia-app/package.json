@@ -1,5 +1,5 @@
 {
-  "name": "@borkdominik-bigUML/theia-app",
+  "name": "@borkdominik-biguml/theia-app",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -12,7 +12,7 @@
     "watch": "theia build --watch --mode development"
   },
   "dependencies": {
-    "@borkdominik-bigUML/uml-theia-integration": "*",
+    "@borkdominik-biguml/uml-theia-integration": "*",
     "@theia/core": "next",
     "@theia/editor": "next",
     "@theia/file-search": "next",

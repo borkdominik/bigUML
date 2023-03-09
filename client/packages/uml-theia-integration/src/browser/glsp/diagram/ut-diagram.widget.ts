@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-import { EnableEditorPanelAction } from '@borkdominik-bigUML/uml-glsp/lib/features/editor-panel';
+import { EnableEditorPanelAction } from '@borkdominik-biguml/uml-glsp/lib/features/editor-panel';
 import { GLSPDiagramWidget } from '@eclipse-glsp/theia-integration';
 
 export class UTDiagramWidget extends GLSPDiagramWidget {

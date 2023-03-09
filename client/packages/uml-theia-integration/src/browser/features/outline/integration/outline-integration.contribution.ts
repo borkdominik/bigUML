@@ -13,7 +13,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { OutlineService } from '@borkdominik-bigUML/uml-glsp/lib/features/outline/index';
+import { OutlineService } from '@borkdominik-biguml/uml-glsp/lib/features/outline/index';
 import { IActionDispatcher, ModelSource, TYPES } from '@eclipse-glsp/client';
 import { Container } from '@theia/core/shared/inversify';
 

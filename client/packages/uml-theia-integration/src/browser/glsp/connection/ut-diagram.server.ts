@@ -17,7 +17,7 @@ export class UTDiagramServer extends GLSPTheiaDiagramServer {
     override initialize(registry: ActionHandlerRegistry): void {
         super.initialize(registry);
 
-        // TODO: Check them
+        // TODO: Enable them after the old diagrams are integrated again
         // registry.register(GetTypesAction.KIND, this);
         // registry.register(ReturnTypesAction.KIND, this);
         // registry.register(GetBehaviorsAction.KIND, this);

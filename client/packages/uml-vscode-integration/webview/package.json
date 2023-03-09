@@ -1,5 +1,5 @@
 {
-  "name": "@borkdominik-bigUML/uml-vscode-integration-webview",
+  "name": "@borkdominik-biguml/uml-vscode-integration-webview",
   "version": "0.1.0",
   "description": "UML GLSP diagram in a VS Code extensions (WebView part)",
   "homepage": "https://github.com/borkdominik/bigUML",
@@ -18,7 +18,7 @@
     "watch": "webpack --watch"
   },
   "devDependencies": {
-    "@borkdominik-bigUML/uml-glsp": "*",
+    "@borkdominik-biguml/uml-glsp": "*",
     "@eclipse-glsp/vscode-integration-webview": "next",
     "@vscode/codicons": "^0.0.25",
     "css-loader": "^6.7.1",

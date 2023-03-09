@@ -1,5 +1,5 @@
 {
-  "name": "@borkdominik-bigUML/uml-glsp",
+  "name": "@borkdominik-biguml/uml-glsp",
   "version": "0.1.0",
   "description": "UML-GLSP",
   "homepage": "https://github.com/borkdominik/bigUML",
@@ -25,7 +25,7 @@
     "watch": "tsc -w"
   },
   "dependencies": {
-    "@borkdominik-bigUML/uml-common": "*",
+    "@borkdominik-biguml/uml-common": "*",
     "@eclipse-glsp/client": "next",
     "@eclipse-glsp/protocol": "next",
     "balloon-css": "^0.5.0",

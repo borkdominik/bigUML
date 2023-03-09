@@ -14,7 +14,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 
-import { UmlDiagramType } from '@borkdominik-bigUML/uml-common';
+import { UmlDiagramType } from '@borkdominik-biguml/uml-common';
 
 export namespace QualifiedUtil {
     export function representationName(representation: UmlDiagramType, name: string): string {

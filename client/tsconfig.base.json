@@ -5,7 +5,7 @@
     "reactNamespace": "JSX",
     "esModuleInterop": true,
     "paths": {
-      "@borkdominik-bigUML/uml-glsp": [
+      "@borkdominik-biguml/uml-glsp": [
         "packages/uml-glsp/src/*"
       ]
     }

@@ -207,7 +207,6 @@ public class UmlDiagramModule extends EMSGLSPNotationDiagramModule {
       install(new PropertyPaletteFeatureManifest());
 
       // Diagram
-      // install(new CommonUmlManifest());
       install(new ClassUmlManifest());
       install(new CommunicationUmlManifest());
    }

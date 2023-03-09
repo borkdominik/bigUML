@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-import { createUmlDiagramContainer } from '@borkdominik-bigUML/uml-glsp/lib';
+import { createUmlDiagramContainer } from '@borkdominik-biguml/uml-glsp/lib';
 import { configureDiagramServer, GLSPDiagramConfiguration } from '@eclipse-glsp/theia-integration/lib/browser';
 import { Container, inject, injectable } from 'inversify';
 

@@ -27,7 +27,7 @@ export class UTServerContribution extends GLSPSocketServerContribution {
         };
     }
 
-    /* TODO: Enable this again
+    /* TODO: Enable again after we add support to auto start
     @inject(ILogger) private readonly logger: ILogger;
 
     override async launch(): Promise<void> {

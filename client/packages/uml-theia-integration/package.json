@@ -1,5 +1,5 @@
 {
-  "name": "@borkdominik-bigUML/uml-theia-integration",
+  "name": "@borkdominik-biguml/uml-theia-integration",
   "version": "0.1.0",
   "description": "UML-Theia integration",
   "homepage": "https://github.com/borkdominik/bigUML",
@@ -21,9 +21,9 @@
     "watch": "tsc -w"
   },
   "dependencies": {
-    "@borkdominik-bigUML/uml-common": "*",
-    "@borkdominik-bigUML/uml-glsp": "*",
-    "@borkdominik-bigUML/uml-modelserver": "*",
+    "@borkdominik-biguml/uml-common": "*",
+    "@borkdominik-biguml/uml-glsp": "*",
+    "@borkdominik-biguml/uml-modelserver": "*",
     "@eclipse-emfcloud/modelserver-client": "next",
     "@eclipse-emfcloud/modelserver-theia": "next",
     "@eclipse-glsp/client": "next",

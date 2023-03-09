@@ -9,7 +9,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
 
-import { UmlModelServerApi } from '@borkdominik-bigUML/uml-modelserver/lib/modelserver.client';
+import { UmlModelServerApi } from '@borkdominik-biguml/uml-modelserver/lib/modelserver.client';
 import { TheiaBackendModelServerClientV2 } from '@eclipse-emfcloud/modelserver-theia/lib/node/theia-model-server-client-v2';
 
 export const UTModelServerClient = Symbol('UTModelServerClient');

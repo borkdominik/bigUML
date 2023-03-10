@@ -28,4 +28,3 @@ Welcome to the bigUML wiki!
 
 1. [Overview](./tutorial/ReadMe.md)
 2. [Creating Nodes](./tutorial/1_CreatingNodes.md)
-3. [Creating Edges](./tutorial/2_CreatingEdges.md)

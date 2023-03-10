@@ -1,4 +1,4 @@
-# Creating nodes
+# Creating Nodes
 
 Here we will learn how to create nodes. This tutorial is the follow-up of [Preparations](./0_Preparations.md).
 
@@ -59,7 +59,7 @@ public class CreateArtifactSemanticCommand extends BaseCreateSemanticChildComman
 
 Here some interesting things happen. First, our command extends `BaseCreateSemanticChildCommand`. This base class makes our lives easier by abstracting everything away we don't need to know. Further, we say that we expect that our parent is the `Model` itself and that we will create a `Artifact` object with our command. In the `createSemanticElement` method, we create our object, assign a new name, and then add it to our parent. The result is then returned for further use.
 
-#### MS-Step1: Important Knowledge
+#### MS-Step1: Important
 
 - Every element has a parent. Therefore, find out about your element (i.e., use papyrus), then implement.
 - You could hardcode the name, but `ListNameGenerator` generates a new name for us (it appends a number to the end)
@@ -100,7 +100,7 @@ public final class CreateArtifactCompoundCommand extends CompoundCommand {
 
 Whereas the semantic command creates the object itself, the `CompoundCommand` defines all the commands that should execute. Here we see that we want to execute `CreateArtifactSemanticCommand`, which will create our `Artifact`, and we also want to execute `AddShapeNotationCommand`. This command is provided by bigUML, and it generates the shape structure for our `Artifact`. The shape has meta information like the element's position or size. The former is called the semantic, and the latter the notation of an element. In other words, we now execute two commands - namely, create the semantic and the notation of a `Artifact` object.
 
-#### MS-Step2: Important Knowledge
+#### MS-Step2: Important
 
 - Sometimes, the `CompoundCommand` can be skipped. Such cases are, for example, if you just want to execute a single command. Can you think about such a case?
 
@@ -160,7 +160,7 @@ The static `create` method will be called by UML-GLSP-Server. We create a reques
 
 The incoming request is then decoded in `toServer` with `ContributionDecoder`. We then read the content of our request (e.g., the `parent`, `position`) and execute our `CreateArtifactCompoundCommand`.
 
-#### MS-Step3: Important Knowledge
+#### MS-Step3: Important
 
 - We encode our requests, send them, decode them, and execute our commands.
 - The encoder and decoder have more methods; check them out.
@@ -188,7 +188,7 @@ By implementing the interface, we say that our manifest wants to make a `Command
 
 Now, our UML-ModelServer is ready to listen to `commands`. If a `command` of type `CreateArtifactContribution.TYPE` arrives, the core will map it to the correct place (== `CreateArtifactContribution`). There, we will create our child `commands`, and they will create the semantics and notation of our `Artifact`.
 
-#### MS-Step4: Important Knowledge
+#### MS-Step4: Important
 
 - `Contributions` (e.g., `CommandCodecContribution`) are interfaces that provide a default implementation. The default implementation setups in the background the necessary bindings so that you only have to provide your _Classes_. Everything else is done for you.
 - Again, `Command Contributions` are different from `Manifest Contributions`.
@@ -261,7 +261,7 @@ The file `UmlDemo_Artifact` aims to configure or provide constants concerning an
 - The `property` is used to differentiate between the properties of an element (e.g., `name`, `isAbstract`)
 - The `DiagramConfiguration`, which implements the `.Node` version of the `DiagramElementConfiguration`, provides some meta information to the application. For example, the `Artifact` can be added to the graph's root and is defined under `getGraphContainableElements`. The method `getTypeMappings` defines to which `GModel` the element will be mapped to and `getShapeTypeHints` returns some information concerning deletable, resizeable and so on.
 
-#### GS-Step1: Important Knowledge
+#### GS-Step1: Important
 
 - Every element has its diagram file and thus configuration. You can define your constants for a element in this file.
 
@@ -356,7 +356,7 @@ public class ArtifactNodeMapper extends BaseGNodeMapper<Artifact, GNode>
 
 This file maps the `Artifact` to a `GNode`. The GModel is the structure that the client understands and renders. Here we define that we want to use a `GNodeBuilder` as the base.
 
-#### GS-Step3: Important Knowledge
+#### GS-Step3: Important
 
 - Every element needs to have its own `GModelMapper`.
 - The GLSP documentation explains how to create the GModels.
@@ -409,7 +409,7 @@ Here, you map the `CreateNodeOperation` + `UmlDemo_Artifact.typeId()` to the `Cr
 
 Now the UML-GLSP-Server will send the `CreateArtifactContribution` to the UML-ModelServer if it receives the correct `typeId` and the `component` diagram is open.
 
-#### GS-Step4: Important Knowledge
+#### GS-Step4: Important
 
 - You need to export your `CreateArtifactContribution`. The icon in the left by the line number can do this. Click on it and then on export. Afterward, you can import it.
 - There are different base classes like `BaseCreateChildNodeHandler` to make our lives easier. Go find them. :)
@@ -451,7 +451,7 @@ You need to bind all the classes you have created previously. You are now contri
 
 Now the UML-GLSP-Server is also ready.
 
-#### GS-Step5: Important Knowledge
+#### GS-Step5: Important
 
 - There are different contributions. You can check them out in the `core` package.
 - You have to make sure that you bind YOUR class and not someone else's; otherwise, you will have a hard time figuring out why it does not work.
@@ -520,7 +520,7 @@ This file now binds our `UmlDemoTypes.ARTIFACT` with the model `NamedElement` an
 
 Now start the servers and either Theia or VSCode and create your diagram with `File -> New File` or `File -> New UML Diagram`.
 
-#### CL-Step2: Important Knowledge
+#### CL-Step2: Important
 
 - `umlDemoDiagramModule` is the module where you put all of your bindings.
 - The third (e.g., `NamedElement`) and fourth (e.g., `NamedElementView`) parameters of `configureModelElement` define how the element should be rendered.

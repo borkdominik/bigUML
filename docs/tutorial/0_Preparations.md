@@ -34,7 +34,7 @@ public class DemoManifest extends DiagramManifest {
 
 The `Class` does not do much, but that will change later.
 
-#### MS-Step1: Important Knowledge
+#### MS-Step1: Important
 
 - Manifests extend a predefined base manifest (e.g., `DiagramManifest`).
 - You will provide your custom implementations to the' core' package here (in the next tutorials) through a `Contribution`.
@@ -58,7 +58,7 @@ In the method `configure()`, you need to install your `DemoManifest`.
 
 This was it! Your module is now connected with the core package, and you can now use contribution points in your manifest.
 
-#### MS-Step2: Important Knowledge
+#### MS-Step2: Important
 
 - The `UmlModelServerModule.java` is the root container that manages all the dependencies in the model server.
 
@@ -102,7 +102,7 @@ public class DemoManifest extends DiagramManifest {
 
 Every manifest in GLSP has an id and also a representation. Both of those are necessary to differentiate between the UML modules. Here we say the `DemoManifest` should represent the _composite_ diagram.
 
-#### GS-Step1: Important Knowledge
+#### GS-Step1: Important
 
 - Manifests extend a predefined base manifest (e.g., `DiagramManifest`).
 - You will provide your custom implementations to the' core' package here (in the next tutorials) through a `Contribution`.
@@ -126,7 +126,7 @@ In the method `configureAdditionals()`, you need to install your `DemoManifest`.
 
 This was it! Your module is now connected with the core package, and you can now use contribution points in your manifest.
 
-#### GS-Step2: Important Knowledge
+#### GS-Step2: Important
 
 - The `UmlDiagramModule.java` is the root container that manages all the dependencies in the model server.
 
@@ -155,7 +155,7 @@ export const umlDemoDiagramModule = new ContainerModule(
 
 Currently, the `module` does not do much, but that will change later.
 
-#### CL-Step1: Important Knowledge
+#### CL-Step1: Important
 
 - Client-side you do not have manifests. You work directly with dependency injection, meaning you will bind your elements later.
 
@@ -178,7 +178,7 @@ export const umlDiagramModules = [
 
 This was it! Your module is now connected with the root module.
 
-#### CL-Step2: Important Knowledge
+#### CL-Step2: Important
 
 - The list `umlDiagramModules` is just a helper variable. This variable is used in `packages/uml-glsp/src/di.config.ts` to load all diagram modules.
 

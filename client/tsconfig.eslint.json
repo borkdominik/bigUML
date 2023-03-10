@@ -4,5 +4,5 @@
     "noEmit": true,
   },
   "exclude": ["**/node_modules", "**/.eslintrc.js"],
-  "include": ["packages/*/src", "packages/*/scripts"]
+  "include": ["packages/*/src", "packages/*/scripts", "packages/uml-vscode-integration/*/src"]
 }

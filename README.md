@@ -36,8 +36,8 @@ You want to try bigUML out? The VSCode extension will come out soon!
 Get started with bigUML, learn fundementals, explore advanced topics or go through tutorials with our documentation.
 
 - [Getting Started](./docs/GettingStarted.md)
-- [Documentation](./docs/README.md)
-- [Tutorials](./docs/tutorial/Overview.md)
+- [Documentation](./docs/ReadMe.md)
+- [Tutorials](./docs/tutorial/ReadMe.md)
 
 Advanced Topics
 

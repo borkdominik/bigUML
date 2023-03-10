@@ -6,7 +6,7 @@ Welcome to the bigUML wiki!
 
 ## Architecture
 
-- [Overview](./architecture/Overview.md)
+- [Overview](./architecture/ReadMe.md)
   - [Client](./architecture/client/Client.md)
   - [GLSP](./architecture/server/GLSP.md)
   - [ModelServer](./architecture/server/ModelServer.md)
@@ -25,6 +25,6 @@ Welcome to the bigUML wiki!
 
 ### Tutorials
 
-1. [Overview](./tutorial/Overview.md)
+1. [Overview](./tutorial/ReadMe.md)
 2. [Creating Nodes](./tutorial/1_CreatingNodes.md)
 3. [Creating Edges](./tutorial/2_CreatingEdges.md)

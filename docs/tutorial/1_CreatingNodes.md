@@ -228,7 +228,7 @@ import com.eclipsesource.uml.glsp.core.diagram.DiagramElementConfiguration;
 import com.eclipsesource.uml.glsp.uml.utils.QualifiedUtil;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 
-public class UmlComponent_Artifact {
+public class UmlDemo_Artifact {
    public static String typeId() {
       return QualifiedUtil.representationTypeId(Representation.COMPONENT, DefaultTypes.NODE,
          Artifact.class.getSimpleName());
@@ -255,7 +255,7 @@ public class UmlComponent_Artifact {
 }
 ```
 
-The file `UmlComponent_Artifact` aims to configure or provide constants concerning an element in a diagram.
+The file `UmlDemo_Artifact` aims to configure or provide constants concerning an element in a diagram.
 
 - The `typeId` is a unique id that points to this element alone. It should be unique for all diagrams.
 - The `property` is used to differentiate between the properties of an element (e.g., `name`, `isAbstract`)
@@ -284,7 +284,7 @@ import org.eclipse.glsp.server.features.toolpalette.PaletteItem;
 
 import com.eclipsesource.uml.glsp.core.features.tool_palette.PaletteItemUtil;
 import com.eclipsesource.uml.glsp.core.features.tool_palette.ToolPaletteConfiguration;
-import com.eclipsesource.uml.glsp.uml.diagram.demo_diagram.diagram.UmlComponent_Artifact;
+import com.eclipsesource.uml.glsp.uml.diagram.demo_diagram.diagram.UmlDemo_Artifact;
 
 public class DemoToolPaletteConfiguration implements ToolPaletteConfiguration {
    @Override
@@ -294,7 +294,7 @@ public class DemoToolPaletteConfiguration implements ToolPaletteConfiguration {
 
    private PaletteItem containers() {
       var containers = List.of(
-         PaletteItemUtil.node(UmlComponent_Artifact.typeId(), "Artifact", "uml-artifact-icon"));
+         PaletteItemUtil.node(UmlDemo_Artifact.typeId(), "Artifact", "uml-artifact-icon"));
 
       return PaletteItem.createPaletteGroup("uml.classifier", "Container", containers, "symbol-property");
    }
@@ -322,7 +322,7 @@ import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.Artifact;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
-import com.eclipsesource.uml.glsp.uml.diagram.demo_diagram.diagram.UmlComponent_Artifact;
+import com.eclipsesource.uml.glsp.uml.diagram.demo_diagram.diagram.UmlDemo_Artifact;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGNodeMapper;
 import com.eclipsesource.uml.glsp.uml.gmodel.element.NamedElementGBuilder;
 
@@ -331,7 +331,7 @@ public class ArtifactNodeMapper extends BaseGNodeMapper<Artifact, GNode>
 
    @Override
    public GNode map(final Artifact source) {
-      var builder = new GNodeBuilder(UmlComponent_Artifact.typeId())
+      var builder = new GNodeBuilder(UmlDemo_Artifact.typeId())
          .id(idGenerator.getOrCreateId(source))
          .layout(GConstants.Layout.VBOX)
          .addCssClass(CoreCSS.NODE)
@@ -382,7 +382,7 @@ import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.uml2.uml.Model;
 
-import com.eclipsesource.uml.glsp.uml.diagram.demo_diagram.diagram.UmlComponent_Artifact;
+import com.eclipsesource.uml.glsp.uml.diagram.demo_diagram.diagram.UmlDemo_Artifact;
 import com.eclipsesource.uml.glsp.uml.handler.operations.create.BaseCreateChildNodeHandler;
 import com.eclipsesource.uml.glsp.uml.handler.operations.create.CreateLocationAwareNodeHandler;
 import com.eclipsesource.uml.modelserver.uml.diagram.demo_diagram.commands.artifact.CreateArtifactContribution;
@@ -391,7 +391,7 @@ public class CreateArtifactHandler extends BaseCreateChildNodeHandler<Model>
    implements CreateLocationAwareNodeHandler {
 
    public CreateArtifactHandler() {
-      super(UmlComponent_Artifact.typeId());
+      super(UmlDemo_Artifact.typeId());
    }
 
    @Override
@@ -403,9 +403,9 @@ public class CreateArtifactHandler extends BaseCreateChildNodeHandler<Model>
 }
 ```
 
-Do you remember the step where we created the tool palette? There was a line where you used `UmlComponent_Artifact.typeId()`; go recheck it. The client sends that `typeId` if you create a new element through the tool palette in the `Create*Operation`. Consequently, the `CreateNodeOperation` has the `typeId` and the `position` of the mouse in the graph.
+Do you remember the step where we created the tool palette? There was a line where you used `UmlDemo_Artifact.typeId()`; go recheck it. The client sends that `typeId` if you create a new element through the tool palette in the `Create*Operation`. Consequently, the `CreateNodeOperation` has the `typeId` and the `position` of the mouse in the graph.
 
-Here, you map the `CreateNodeOperation` + `UmlComponent_Artifact.typeId()` to the `CreateArtifactContribution`.
+Here, you map the `CreateNodeOperation` + `UmlDemo_Artifact.typeId()` to the `CreateArtifactContribution`.
 
 Now the UML-GLSP-Server will send the `CreateArtifactContribution` to the UML-ModelServer if it receives the correct `typeId` and the `component` diagram is open.
 
@@ -430,7 +430,7 @@ Extend the `configure` method as follows:
       super.configure();
 
       contributeDiagramElementConfiguration((nodes) -> {
-         nodes.addBinding().to(UmlComponent_Artifact.DiagramConfiguration.class);
+         nodes.addBinding().to(UmlDemo_Artifact.DiagramConfiguration.class);
       }, (edges) -> {});
 
       contributeToolPaletteConfiguration((contribution) -> {
@@ -458,3 +458,73 @@ Now the UML-GLSP-Server is also ready.
 - Every class you define needs to be used somehow, so you probably need to bind it.
 
 ---
+
+## UML-Client
+
+The final step is to register the `Artifact` in the client.
+
+### CL-Step1: Create the types
+
+Create the following `TypeScript` file:
+
+- Name: `demo.types.ts`
+- Path: `packages/uml-glsp/src/uml/diagram/demo/demo.types.ts` (create folders if necessary)
+
+Put the following content into the file.
+
+```ts
+import { UmlDiagramType } from "@borkdominik-biguml/uml-common";
+import { DefaultTypes } from "@eclipse-glsp/client";
+import { QualifiedUtil } from "../../qualified.utils";
+
+export namespace UmlDemoTypes {
+  export const ARTIFACT = QualifiedUtil.representationTypeId(
+    UmlDiagramType.COMPONENT,
+    DefaultTypes.NODE,
+    "Artifact"
+  );
+}
+```
+
+This file is the opposite of the `UmlDemo_Artifact.java`. The variable `ARTIFACT` needs to have the same `typeId` as in the server.
+
+### CL-Step2: Bind the type
+
+Open the file `di.config.ts`
+
+- Path: `packages/uml-glsp/src/uml/diagram/demo/di.config.ts`
+
+Put the following content into the file.
+
+```ts
+import { configureModelElement } from "@eclipse-glsp/client";
+import { ContainerModule } from "inversify";
+import { NamedElement } from "../../elements/named-element.model";
+import { NamedElementView } from "../../elements/named-element.view";
+import { UmlDemoTypes } from "./demo.types";
+
+export const umlDemoDiagramModule = new ContainerModule(
+  (bind, unbind, isBound, rebind) => {
+    const context = { bind, unbind, isBound, rebind };
+    configureModelElement(
+      context,
+      UmlDemoTypes.ARTIFACT,
+      NamedElement,
+      NamedElementView
+    );
+  }
+);
+```
+
+This file now binds our `UmlDemoTypes.ARTIFACT` with the model `NamedElement` and together with the view `NamedElementView`
+
+Now start the servers and either Theia or VSCode and create your diagram with `File -> New File` or `File -> New UML Diagram`.
+
+#### CL-Step2: Important Knowledge
+
+- `umlDemoDiagramModule` is the module where you put all of your bindings.
+- The third (e.g., `NamedElement`) and fourth (e.g., `NamedElementView`) parameters of `configureModelElement` define how the element should be rendered.
+- `NamedElement` is a subtype of `GNode`. Do you remember that we said that the `Artifact` should be mapped to a `GNode`?
+- `NamedElementView` is the view that renders into an SVG.
+- You can create custom views by changing the view part in the binding.
+- Read the GLSP documentation for more.

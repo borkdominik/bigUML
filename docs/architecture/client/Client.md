@@ -4,6 +4,8 @@ An overview of the dependencies can be seen as follows.
 
 ![Dependencies](../../resources/ClientDependencies.drawio.svg)
 
+---
+
 ## Structure of this repository
 
 - `environments/theia-app`: Local Theia instance.

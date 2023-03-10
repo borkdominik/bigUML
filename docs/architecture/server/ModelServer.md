@@ -2,9 +2,9 @@
 
 Project: `com.eclipsesource.uml.modelserver`
 
----
-
 The UML-Modelserver has the necessary code for running the [EMF.cloud Model Server](https://github.com/eclipse-emfcloud/emfcloud-modelserver) together with the [ModelServer-GLSP integration](https://github.com/eclipse-emfcloud/modelserver-glsp-integration) and consists of UML-specific extensions and features.
+
+---
 
 ## Structure of this repository
 

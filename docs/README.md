@@ -2,15 +2,18 @@
 
 Welcome to the bigUML wiki!
 
+---
+
 ## Architecture
 
 - [Overview](./architecture/Overview.md)
+  - [Client](./architecture/client/Client.md)
+  - [GLSP](./architecture/server/GLSP.md)
+  - [ModelServer](./architecture/server/ModelServer.md)
 
 ## Features
 
 - Coming Soon
-
----
 
 ## Using bigUML
 

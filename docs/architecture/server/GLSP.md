@@ -2,9 +2,9 @@
 
 Project: `com.eclipsesource.uml.glsp`
 
----
-
 The UML-GLSP server has the necessary code for running the [GLSP-Server](https://github.com/eclipse-glsp/glsp-server) and consists of UML-specific extensions and features.
+
+---
 
 ## Structure of this repository
 

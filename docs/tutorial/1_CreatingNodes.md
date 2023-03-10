@@ -1,0 +1,1 @@
+- `Contributions` (e.g., `CommandCodecContribution`) are interfaces that provide a default implementation. The default implementation setups in the background the necessary bindings so that you only have to provide your _Classes_. Everything else is done for you.

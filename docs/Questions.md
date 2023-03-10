@@ -23,6 +23,10 @@ Exception in thread "main" java.lang.Error: Unresolved compilation problems:
 
 If you get this or a similar exception after you restart a server, then that means (most of the time) that Eclipse failed to build correctly. Triggering a `Clean` (`Project > Clean`) should fix the exception. It is recommended to bind the `Clean` task to a shortcut.
 
+> Eclipse shows that my code is invalid, but that is not the case?
+
+Execute the `Clean` task (see question before)
+
 ## Client
 
 > VSCode can not find the dependencies anymore after building/watching - VSCode says that the dependency does not exist but it does

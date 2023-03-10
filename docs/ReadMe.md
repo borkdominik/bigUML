@@ -14,6 +14,7 @@ Welcome to the bigUML wiki!
 ## Features
 
 - Outline (Coming Soon)
+- Editor Panel (Coming Soon)
 - Property Palette (Coming Soon)
 
 ## Using bigUML

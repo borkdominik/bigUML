@@ -1,12 +1,12 @@
 # Preparations
 
-This tutorial gives a step by step description on how to create UML modules and how to provide those modules to the core package. Here we will create a `demo` module, which will be the basis for our other tutorials.
+This tutorial gives a detailed description of how to create UML modules and how to provide those modules to the core package. Here we will create a `demo` module, which will be the basis for our other tutorials.
 
 ---
 
-We always start with the `UML-ModelServer`, continue with the `UML-GLSP-Server` and finish at the `UML-Client`.
+We always start with the `UML-ModelServer`, continue with the `UML-GLSP-Server`, and finish at the `UML-Client`.
 
-The reason is simple. The model server manages the source files, therefore, we need to define the commands which will be used later. But first, we need modules.
+The reason is simple. The model server manages the source files. Therefore, we need to define the commands which will be used later. But first, we need modules.
 
 ## UML-ModelServer
 
@@ -32,12 +32,12 @@ public class DemoManifest extends DiagramManifest {
 }
 ```
 
-Currently the `Class` does not do much, but that will change later.
+The `Class` does not do much, but that will change later.
 
 #### MS-Step1: Important Knowledge
 
 - Manifests extend a predefined base manifest (e.g., `DiagramManifest`).
-- You will provide here (in the next tutorials) through a `Contribution` your custom implementations to the `core` package.
+- You will provide your custom implementations to the' core' package here (in the next tutorials) through a `Contribution`.
 
 ### MS-Step 2: Installing the DemoManifest in core
 
@@ -45,7 +45,7 @@ Open the file `UmlModelServerModule.java`.
 
 - path: `/com.eclipsesource.uml.modelserver/src/main/java/com/eclipsesource/uml/modelserver/core/UmlModelServerModule.java`
 
-Here in the method `configure()` you need to install your `DemoManifest`.
+In the method `configure()`, you need to install your `DemoManifest`.
 
 ```java
    @Override
@@ -56,7 +56,7 @@ Here in the method `configure()` you need to install your `DemoManifest`.
    }
 ```
 
-This was it! Your Module is now connected with the core package and you now can use contribution points in your manifest.
+This was it! Your module is now connected with the core package, and you can now use contribution points in your manifest.
 
 #### MS-Step2: Important Knowledge
 
@@ -100,12 +100,12 @@ public class DemoManifest extends DiagramManifest {
 }
 ```
 
-Every manifest in GLSP has an id and also a representation. Both of those are necessary to differentiate between the UML modules. Here we are saying, that the `DemoManifest` should represent the _composite_ diagram.
+Every manifest in GLSP has an id and also a representation. Both of those are necessary to differentiate between the UML modules. Here we say the `DemoManifest` should represent the _composite_ diagram.
 
 #### GS-Step1: Important Knowledge
 
 - Manifests extend a predefined base manifest (e.g., `DiagramManifest`).
-- You will provide here (in the next tutorials) through a `Contribution` your custom implementations to the `core` package.
+- You will provide your custom implementations to the' core' package here (in the next tutorials) through a `Contribution`.
 
 ### GS-Step 2: Installing the DemoManifest in core
 
@@ -113,7 +113,7 @@ Open the file `UmlDiagramModule.java`.
 
 - path: `/com.eclipsesource.uml.glsp/src/main/java/com/eclipsesource/uml/glsp/core/UmlDiagramModule.java`
 
-Here in the method `configureAdditionals()` you need to install your `DemoManifest`.
+In the method `configureAdditionals()`, you need to install your `DemoManifest`.
 
 ```java
    @Override
@@ -124,7 +124,7 @@ Here in the method `configureAdditionals()` you need to install your `DemoManife
    }
 ```
 
-This was it! Your Module is now connected with the core package and you now can use contribution points in your manifest.
+This was it! Your module is now connected with the core package, and you can now use contribution points in your manifest.
 
 #### GS-Step2: Important Knowledge
 
@@ -153,11 +153,11 @@ export const umlDemoDiagramModule = new ContainerModule(
 );
 ```
 
-Currently the `module` does not do much, but that will change later.
+Currently, the `module` does not do much, but that will change later.
 
 #### CL-Step1: Important Knowledge
 
-- Client side you do not have manifests. You work directly with dependency injection - that means you will directly bind your elements later.
+- Client-side you do not have manifests. You work directly with dependency injection, meaning you will bind your elements later.
 
 ### GL-Step 2: Loading the DemoDiagramModule
 
@@ -176,7 +176,7 @@ export const umlDiagramModules = [
 ];
 ```
 
-This was it! Your Module is now connected with the root module.
+This was it! Your module is now connected with the root module.
 
 #### CL-Step2: Important Knowledge
 
@@ -184,6 +184,6 @@ This was it! Your Module is now connected with the root module.
 
 ## Summary
 
-All your modules are now ready, you just need to start extending them :)
+All your modules are now ready; you need to start extending them :)
 
 Next tutorial is [Creating Nodes](./1_CreatingNodes.md)

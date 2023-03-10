@@ -9,6 +9,7 @@
 3. [Documentation](#documentation)
 4. [Development Setup](#development-setup)
 5. [Issues](#issues)
+6. [Contributing](#contributing)
 
 <br />
 
@@ -34,9 +35,9 @@ You want to try bigUML out? The VSCode extension will come out soon!
 
 Get started with bigUML, learn fundementals, explore advanced topics or go through tutorials with our documentation.
 
-- [Getting Started](https://github.com/borkdominik/bigUML/docs/GettingStarted.md)
-- [Documentation](https://github.com/borkdominik/bigUML/docs/README.md)
-- [Tutorials](https://github.com/borkdominik/bigUML/docs/tutorial/Tutorial.md)
+- [Getting Started](./docs/GettingStarted.md)
+- [Documentation](./docs/README.md)
+- [Tutorials](./docs/tutorial/Overview.md)
 
 Advanced Topics
 
@@ -44,11 +45,11 @@ Advanced Topics
 
 ## Development Setup
 
-Need help concerning the setup? Then go right to [Requirements](https://github.com/borkdominik/bigUML/docs/Requirements.md) and continue with [Getting Started](https://github.com/borkdominik/bigUML/docs/GettingStarted.md).
+Need help concerning the setup? Then go right to [Requirements](./docs/Requirements.md) and continue with [Getting Started](./docs/GettingStarted.md).
 
 ## Issues
 
-Project issues are managed on GitHub, see [Open Issues](https://github.com/borkdominik/bigUML/issues) for the currently tracked issues. Do not hesitate to report a bug or request a feature.
+Project issues are managed on GitHub, see [Open Issues](./issues) for the currently tracked issues. Do not hesitate to report a bug or request a feature.
 
 ## Contributing
 
@@ -60,4 +61,4 @@ Contributions to the project are always welcome!
 - [Julian Weiß](https://github.com/deweiiss) (former main-developer)
 - [Dominik Bork](https://github.com/borkdominik)
 
-See [Contributors](https://github.com/borkdominik/bigUML/docs/Contributors.md) for the list of the previous contributors.
+See [Contributors](./docs/Contributors.md) for the list of the previous contributors.

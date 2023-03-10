@@ -13,7 +13,8 @@ Welcome to the bigUML wiki!
 
 ## Features
 
-- Coming Soon
+- Outline (Coming Soon)
+- Property Palette (Coming Soon)
 
 ## Using bigUML
 
@@ -21,6 +22,9 @@ Welcome to the bigUML wiki!
 - [Getting Started](./GettingStarted.md)
 - [Questions](./Questions.md)
 - [Resources](./Resources.md)
-- Tutorials
-  1. [Creating Nodes](./tutorial/1_CreatingNodes.md)
-  2. [Creating Edges](./tutorial/2_CreatingEdges.md)
+
+### Tutorials
+
+1. [Overview](./tutorial/Overview.md)
+2. [Creating Nodes](./tutorial/1_CreatingNodes.md)
+3. [Creating Edges](./tutorial/2_CreatingEdges.md)

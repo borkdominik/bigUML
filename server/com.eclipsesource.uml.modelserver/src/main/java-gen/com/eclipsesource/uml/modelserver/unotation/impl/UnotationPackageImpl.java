@@ -219,14 +219,18 @@ public class UnotationPackageImpl extends EPackageImpl implements UnotationPacka
       initEEnum(representationEEnum, Representation.class, "Representation");
       addEEnumLiteral(representationEEnum, Representation.ACTIVITY);
       addEEnumLiteral(representationEEnum, Representation.CLASS);
-      addEEnumLiteral(representationEEnum, Representation.PACKAGE);
-      addEEnumLiteral(representationEEnum, Representation.SEQUENCE);
-      addEEnumLiteral(representationEEnum, Representation.STATEMACHINE);
-      addEEnumLiteral(representationEEnum, Representation.USECASE);
-      addEEnumLiteral(representationEEnum, Representation.DEPLOYMENT);
-      addEEnumLiteral(representationEEnum, Representation.OBJECT);
-      addEEnumLiteral(representationEEnum, Representation.COMPONENT);
       addEEnumLiteral(representationEEnum, Representation.COMMUNICATION);
+      addEEnumLiteral(representationEEnum, Representation.COMPONENT);
+      addEEnumLiteral(representationEEnum, Representation.COMPOSITE);
+      addEEnumLiteral(representationEEnum, Representation.DEPLOYMENT);
+      addEEnumLiteral(representationEEnum, Representation.INTERACTION);
+      addEEnumLiteral(representationEEnum, Representation.OBJECT);
+      addEEnumLiteral(representationEEnum, Representation.PACKAGE);
+      addEEnumLiteral(representationEEnum, Representation.PROFILE);
+      addEEnumLiteral(representationEEnum, Representation.SEQUENCE);
+      addEEnumLiteral(representationEEnum, Representation.STATE_MACHINE);
+      addEEnumLiteral(representationEEnum, Representation.TIMING);
+      addEEnumLiteral(representationEEnum, Representation.USE_CASE);
 
       // Create resource
       createResource(eNS_URI);

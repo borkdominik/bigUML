@@ -13,7 +13,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { UmlDiagramType } from '@borkdominik-biguml/uml-common';
+import { UmlDiagramTypeUtil } from '@borkdominik-biguml/uml-common';
 import { inject, injectable } from 'inversify';
 import URI from 'urijs';
 import * as vscode from 'vscode';
@@ -24,18 +24,12 @@ import { EditorProvider } from '../editor/editor.provider';
 
 @injectable()
 export class NewFileCreator {
-    readonly options;
-
     constructor(
         @inject(TYPES.ModelServerClient)
         protected readonly client: UVModelServerClient,
         @inject(VSCODE_TYPES.EditorProvider)
         protected readonly editor: EditorProvider
-    ) {
-        this.options = {
-            allowedTypes: [UmlDiagramType.CLASS.toLowerCase(), UmlDiagramType.COMMUNICATION.toLocaleLowerCase()]
-        };
-    }
+    ) {}
 
     async create(): Promise<void> {
         const diagramName = await this.showInput('Diagram name', 'Enter name of UML diagram', async input =>
@@ -47,7 +41,7 @@ export class NewFileCreator {
                 UVLangugageEnvironment.supportedTypes.map(t => t.toLowerCase()).join(' | '),
                 'Enter UML diagram type',
                 async input =>
-                    UVLangugageEnvironment.supportedTypes.includes(UmlDiagramType.parseString(input))
+                    UVLangugageEnvironment.supportedTypes.includes(UmlDiagramTypeUtil.parseString(input))
                         ? undefined
                         : `${input} is not a valid value`
             );

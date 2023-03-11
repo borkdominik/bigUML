@@ -60,5 +60,6 @@ Contributions to the project are always welcome!
 - [Haydar Metin](https://github.com/haydar-metin) (main-developer)
 - [Julian Weiß](https://github.com/deweiiss) (former main-developer)
 - [Dominik Bork](https://github.com/borkdominik)
+- EclipseSource
 
 See [Contributors](./docs/Contributors.md) for the list of the previous contributors.

@@ -11,20 +11,26 @@
 
 export enum UmlDiagramType {
     NONE = '',
+    ACTIVITY = 'ACTIVITY',
     CLASS = 'CLASS',
-    COMMUNICATION = 'COMMUNICATION'
+    COMMUNICATION = 'COMMUNICATION',
+    COMPONENT = 'COMPONENT',
+    COMPOSITE = 'COMPOSITE',
+    DEPLOYMENT = 'DEPLOYMENT',
+    INTERACTION = 'INTERACTION',
+    OBJECT = 'OBJECT',
+    PACKAGE = 'PACKAGE',
+    PROFILE = 'PROFILE',
+    SEQUENCE = 'SEQUENCE',
+    STATE_MACHINE = 'STATE_MACHINE',
+    TIMING = 'TIMING',
+    USE_CASE = 'USE_CASE'
 }
 
-export namespace UmlDiagramType {
-    export const all: UmlDiagramType[] = [UmlDiagramType.CLASS, UmlDiagramType.COMMUNICATION];
+export namespace UmlDiagramTypeUtil {
+    export const supported: UmlDiagramType[] = [UmlDiagramType.CLASS, UmlDiagramType.COMMUNICATION];
 
     export function parseString(diagramType: string): UmlDiagramType {
-        switch (diagramType.toLowerCase()) {
-            case 'class':
-                return UmlDiagramType.CLASS;
-            case 'communication':
-                return UmlDiagramType.COMMUNICATION;
-        }
-        return UmlDiagramType.NONE;
+        return Object.values(UmlDiagramType).find(u => u.toUpperCase() === diagramType.toUpperCase()) ?? UmlDiagramType.NONE;
     }
 }

@@ -528,3 +528,21 @@ Now start the servers and either Theia or VSCode and create your diagram with `F
 - `NamedElementView` is the view that renders into an SVG.
 - You can create custom views by changing the view part in the binding.
 - Read the GLSP documentation for more.
+
+### CL-Step3: Extend supported diagrams
+
+Open the file `language.ts`
+
+- Path: `packages/uml-common/src/language/language.ts`
+
+Update the variable `supported` to have your diagram in it.
+
+```ts
+export const supported: UmlDiagramType[] = [
+  UmlDiagramType.CLASS,
+  UmlDiagramType.COMMUNICATION,
+  UmlDiagramType.COMPONENT, // <-- Here
+];
+```
+
+Now start the servers and either Theia or VSCode and create your diagram with `File -> New File` or `File -> New UML Diagram`.

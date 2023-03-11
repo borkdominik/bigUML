@@ -22,29 +22,7 @@ public final class UmlNotationUtil {
    public static final String NOTATION_EXTENSION = "unotation";
 
    public static Representation getRepresentation(final String representation) {
-      switch (representation.toLowerCase()) {
-         case "activity":
-            return Representation.ACTIVITY;
-         case "class":
-            return Representation.CLASS;
-         case "component":
-            return Representation.COMPONENT;
-         case "deployment":
-            return Representation.DEPLOYMENT;
-         case "package":
-            return Representation.PACKAGE;
-         case "sequence":
-            return Representation.SEQUENCE;
-         case "statemachine":
-            return Representation.STATEMACHINE;
-         case "usecase":
-            return Representation.USECASE;
-         case "object":
-            return Representation.OBJECT;
-         case "communication":
-            return Representation.COMMUNICATION;
-      }
-      return Representation.CLASS;
+      return Representation.valueOf(representation.toUpperCase());
    }
 
    public static UmlDiagram getDiagram(final ModelContext context) {

@@ -14,7 +14,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 
-import { UmlDiagramType } from '@borkdominik-biguml/uml-common';
+import { UmlDiagramTypeUtil } from '@borkdominik-biguml/uml-common';
 import { CommandService, QuickInputService } from '@theia/core';
 import { OpenerService } from '@theia/core/lib/browser/opener-service';
 import { URI as TheiaURI } from '@theia/core/lib/common/uri';
@@ -49,7 +49,7 @@ export class NewFileCreator {
                     UTLanguageEnvironment.supportedTypes.map(t => t.toLowerCase()).join(' | '),
                     'Enter UML diagram type',
                     async input =>
-                        UTLanguageEnvironment.supportedTypes.includes(UmlDiagramType.parseString(input))
+                        UTLanguageEnvironment.supportedTypes.includes(UmlDiagramTypeUtil.parseString(input))
                             ? undefined
                             : `${input} is not a valid value`
                 );

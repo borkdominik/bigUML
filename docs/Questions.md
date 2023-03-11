@@ -32,3 +32,7 @@ Execute the `Clean` task (see question before)
 > VSCode can not find the dependencies anymore after building/watching - VSCode says that the dependency does not exist but it does
 
 This problem sometimes occurs after you rebuild your project in the background (e.g., `yarn prepare`, `yarn watch`). In some cases, the `TypeScript Server` fails to detect your changes. The solution is to restart the `TypeScript Server`. You can fix that by opening a TypeScript file and triggering `default: Ctrl + Shift + p` and selecting `>TypeScript: Restart TS server`.
+
+> Sometimes the browser (Theia) stucks in the loading screen
+
+Check the developer tools console. If there are no errors, open the page in inkognito or do a hard refresh (`ctrl + shift + r`).

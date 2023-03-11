@@ -47,76 +47,6 @@ public enum Representation implements Enumerator {
    CLASS(1, "CLASS", "CLASS"),
 
    /**
-    * The '<em><b>PACKAGE</b></em>' literal object.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @see #PACKAGE_VALUE
-    * @generated
-    * @ordered
-    */
-   PACKAGE(2, "PACKAGE", "PACKAGE"),
-
-   /**
-    * The '<em><b>SEQUENCE</b></em>' literal object.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @see #SEQUENCE_VALUE
-    * @generated
-    * @ordered
-    */
-   SEQUENCE(3, "SEQUENCE", "SEQUENCE"),
-
-   /**
-    * The '<em><b>STATEMACHINE</b></em>' literal object.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @see #STATEMACHINE_VALUE
-    * @generated
-    * @ordered
-    */
-   STATEMACHINE(4, "STATEMACHINE", "STATEMACHINE"),
-
-   /**
-    * The '<em><b>USECASE</b></em>' literal object.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @see #USECASE_VALUE
-    * @generated
-    * @ordered
-    */
-   USECASE(5, "USECASE", "USECASE"),
-
-   /**
-    * The '<em><b>DEPLOYMENT</b></em>' literal object.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @see #DEPLOYMENT_VALUE
-    * @generated
-    * @ordered
-    */
-   DEPLOYMENT(6, "DEPLOYMENT", "DEPLOYMENT"),
-
-   /**
-    * The '<em><b>OBJECT</b></em>' literal object.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @see #OBJECT_VALUE
-    * @generated
-    * @ordered
-    */
-   OBJECT(7, "OBJECT", "OBJECT"),
-
-   /**
-    * The '<em><b>COMPONENT</b></em>' literal object.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @see #COMPONENT_VALUE
-    * @generated
-    * @ordered
-    */
-   COMPONENT(8, "COMPONENT", "COMPONENT"),
-
-   /**
     * The '<em><b>COMMUNICATION</b></em>' literal object.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
@@ -124,7 +54,95 @@ public enum Representation implements Enumerator {
     * @generated
     * @ordered
     */
-   COMMUNICATION(9, "COMMUNICATION", "COMMUNICATION");
+   COMMUNICATION(2, "COMMUNICATION", "COMMUNICATION"), /**
+    * The '<em><b>COMPONENT</b></em>' literal object.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @see #COMPONENT_VALUE
+    * @generated
+    * @ordered
+    */
+   COMPONENT(3, "COMPONENT", "COMPONENT"), /**
+    * The '<em><b>COMPOSITE</b></em>' literal object.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @see #COMPOSITE_VALUE
+    * @generated
+    * @ordered
+    */
+   COMPOSITE(4, "COMPOSITE", "COMPOSITE"), /**
+    * The '<em><b>DEPLOYMENT</b></em>' literal object.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @see #DEPLOYMENT_VALUE
+    * @generated
+    * @ordered
+    */
+   DEPLOYMENT(5, "DEPLOYMENT", "DEPLOYMENT"), /**
+    * The '<em><b>INTERACTION</b></em>' literal object.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @see #INTERACTION_VALUE
+    * @generated
+    * @ordered
+    */
+   INTERACTION(6, "INTERACTION", "INTERACTION"), /**
+    * The '<em><b>OBJECT</b></em>' literal object.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @see #OBJECT_VALUE
+    * @generated
+    * @ordered
+    */
+   OBJECT(7, "OBJECT", "OBJECT"), /**
+    * The '<em><b>PACKAGE</b></em>' literal object.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @see #PACKAGE_VALUE
+    * @generated
+    * @ordered
+    */
+   PACKAGE(8, "PACKAGE", "PACKAGE"), /**
+    * The '<em><b>PROFILE</b></em>' literal object.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @see #PROFILE_VALUE
+    * @generated
+    * @ordered
+    */
+   PROFILE(9, "PROFILE", "PROFILE"), /**
+    * The '<em><b>SEQUENCE</b></em>' literal object.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @see #SEQUENCE_VALUE
+    * @generated
+    * @ordered
+    */
+   SEQUENCE(10, "SEQUENCE", "SEQUENCE"), /**
+    * The '<em><b>STATE MACHINE</b></em>' literal object.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @see #STATE_MACHINE_VALUE
+    * @generated
+    * @ordered
+    */
+   STATE_MACHINE(11, "STATE_MACHINE", "STATE_MACHINE"), /**
+    * The '<em><b>TIMING</b></em>' literal object.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @see #TIMING_VALUE
+    * @generated
+    * @ordered
+    */
+   TIMING(12, "TIMING", "TIMING"), /**
+    * The '<em><b>USE CASE</b></em>' literal object.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @see #USE_CASE_VALUE
+    * @generated
+    * @ordered
+    */
+   USE_CASE(13, "USE_CASE", "USE_CASE");
 
    /**
     * The '<em><b>ACTIVITY</b></em>' literal value.
@@ -149,48 +167,37 @@ public enum Representation implements Enumerator {
    public static final int CLASS_VALUE = 1;
 
    /**
-    * The '<em><b>PACKAGE</b></em>' literal value.
+    * The '<em><b>COMMUNICATION</b></em>' literal value.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @see #PACKAGE
+    * @see #COMMUNICATION
     * @model
     * @generated
     * @ordered
     */
-   public static final int PACKAGE_VALUE = 2;
+   public static final int COMMUNICATION_VALUE = 2;
 
    /**
-    * The '<em><b>SEQUENCE</b></em>' literal value.
+    * The '<em><b>COMPONENT</b></em>' literal value.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @see #SEQUENCE
+    * @see #COMPONENT
     * @model
     * @generated
     * @ordered
     */
-   public static final int SEQUENCE_VALUE = 3;
+   public static final int COMPONENT_VALUE = 3;
 
    /**
-    * The '<em><b>STATEMACHINE</b></em>' literal value.
+    * The '<em><b>COMPOSITE</b></em>' literal value.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @see #STATEMACHINE
+    * @see #COMPOSITE
     * @model
     * @generated
     * @ordered
     */
-   public static final int STATEMACHINE_VALUE = 4;
-
-   /**
-    * The '<em><b>USECASE</b></em>' literal value.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @see #USECASE
-    * @model
-    * @generated
-    * @ordered
-    */
-   public static final int USECASE_VALUE = 5;
+   public static final int COMPOSITE_VALUE = 4;
 
    /**
     * The '<em><b>DEPLOYMENT</b></em>' literal value.
@@ -201,7 +208,18 @@ public enum Representation implements Enumerator {
     * @generated
     * @ordered
     */
-   public static final int DEPLOYMENT_VALUE = 6;
+   public static final int DEPLOYMENT_VALUE = 5;
+
+   /**
+    * The '<em><b>INTERACTION</b></em>' literal value.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @see #INTERACTION
+    * @model
+    * @generated
+    * @ordered
+    */
+   public static final int INTERACTION_VALUE = 6;
 
    /**
     * The '<em><b>OBJECT</b></em>' literal value.
@@ -215,26 +233,70 @@ public enum Representation implements Enumerator {
    public static final int OBJECT_VALUE = 7;
 
    /**
-    * The '<em><b>COMPONENT</b></em>' literal value.
+    * The '<em><b>PACKAGE</b></em>' literal value.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @see #COMPONENT
+    * @see #PACKAGE
     * @model
     * @generated
     * @ordered
     */
-   public static final int COMPONENT_VALUE = 8;
+   public static final int PACKAGE_VALUE = 8;
 
    /**
-    * The '<em><b>COMMUNICATION</b></em>' literal value.
+    * The '<em><b>PROFILE</b></em>' literal value.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @see #COMMUNICATION
+    * @see #PROFILE
     * @model
     * @generated
     * @ordered
     */
-   public static final int COMMUNICATION_VALUE = 9;
+   public static final int PROFILE_VALUE = 9;
+
+   /**
+    * The '<em><b>SEQUENCE</b></em>' literal value.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @see #SEQUENCE
+    * @model
+    * @generated
+    * @ordered
+    */
+   public static final int SEQUENCE_VALUE = 10;
+
+   /**
+    * The '<em><b>STATE MACHINE</b></em>' literal value.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @see #STATE_MACHINE
+    * @model
+    * @generated
+    * @ordered
+    */
+   public static final int STATE_MACHINE_VALUE = 11;
+
+   /**
+    * The '<em><b>TIMING</b></em>' literal value.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @see #TIMING
+    * @model
+    * @generated
+    * @ordered
+    */
+   public static final int TIMING_VALUE = 12;
+
+   /**
+    * The '<em><b>USE CASE</b></em>' literal value.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @see #USE_CASE
+    * @model
+    * @generated
+    * @ordered
+    */
+   public static final int USE_CASE_VALUE = 13;
 
    /**
     * An array of all the '<em><b>Representation</b></em>' enumerators.
@@ -246,14 +308,18 @@ public enum Representation implements Enumerator {
       new Representation[] {
          ACTIVITY,
          CLASS,
-         PACKAGE,
-         SEQUENCE,
-         STATEMACHINE,
-         USECASE,
-         DEPLOYMENT,
-         OBJECT,
-         COMPONENT,
          COMMUNICATION,
+         COMPONENT,
+         COMPOSITE,
+         DEPLOYMENT,
+         INTERACTION,
+         OBJECT,
+         PACKAGE,
+         PROFILE,
+         SEQUENCE,
+         STATE_MACHINE,
+         TIMING,
+         USE_CASE,
       };
 
    /**
@@ -312,14 +378,18 @@ public enum Representation implements Enumerator {
       switch (value) {
          case ACTIVITY_VALUE: return ACTIVITY;
          case CLASS_VALUE: return CLASS;
-         case PACKAGE_VALUE: return PACKAGE;
-         case SEQUENCE_VALUE: return SEQUENCE;
-         case STATEMACHINE_VALUE: return STATEMACHINE;
-         case USECASE_VALUE: return USECASE;
-         case DEPLOYMENT_VALUE: return DEPLOYMENT;
-         case OBJECT_VALUE: return OBJECT;
-         case COMPONENT_VALUE: return COMPONENT;
          case COMMUNICATION_VALUE: return COMMUNICATION;
+         case COMPONENT_VALUE: return COMPONENT;
+         case COMPOSITE_VALUE: return COMPOSITE;
+         case DEPLOYMENT_VALUE: return DEPLOYMENT;
+         case INTERACTION_VALUE: return INTERACTION;
+         case OBJECT_VALUE: return OBJECT;
+         case PACKAGE_VALUE: return PACKAGE;
+         case PROFILE_VALUE: return PROFILE;
+         case SEQUENCE_VALUE: return SEQUENCE;
+         case STATE_MACHINE_VALUE: return STATE_MACHINE;
+         case TIMING_VALUE: return TIMING;
+         case USE_CASE_VALUE: return USE_CASE;
       }
       return null;
    }

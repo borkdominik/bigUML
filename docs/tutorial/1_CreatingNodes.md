@@ -131,7 +131,7 @@ import com.eclipsesource.uml.modelserver.shared.codec.ContributionEncoder;
 
 public final class CreateArtifactContribution extends BasicCommandContribution<Command> {
 
-   public static final String TYPE = "artifact:add_artifact";
+   public static final String TYPE = "component:add_artifact";
 
    public static CCommand create(final Model parent, final GPoint position) {
       return new ContributionEncoder().type(TYPE).parent(parent).position(position).ccommand();

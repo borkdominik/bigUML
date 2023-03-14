@@ -206,8 +206,8 @@ The UML-GLSP-Server now needs to
 
 Create the following `Java Class` file:
 
-- Name: `UmlArtifact_Artifact`
-- Path: `/com.eclipsesource.uml.glsp/src/main/java/com/eclipsesource/uml/glsp/uml/diagram/demo_diagram/diagram/UmlArtifact_Artifact.java` (create packages if necessary)
+- Name: `UmlDemo_Artifact`
+- Path: `/com.eclipsesource.uml.glsp/src/main/java/com/eclipsesource/uml/glsp/uml/diagram/demo_diagram/diagram/UmlDemo_Artifact.java` (create packages if necessary)
 
 Put the following content into the file.
 

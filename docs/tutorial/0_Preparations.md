@@ -15,12 +15,12 @@ The reason is simple. The model server manages the source files. Therefore, we n
 Create the following `Java Class` file:
 
 - Name: `DemoManifest`
-- Path: `/com.eclipsesource.uml.modelserver/src/main/java/com/eclipsesource/uml/modelserver/uml/diagram/demo_diagram/manifest/DemoManifest.java` (create packages if necessary)
+- Path: `/com.eclipsesource.uml.modelserver/src/main/java/com/eclipsesource/uml/modelserver/uml/diagram/demo/manifest/DemoManifest.java` (create packages if necessary)
 
 Put the following content into the file.
 
 ```java
-package com.eclipsesource.uml.modelserver.uml.diagram.demo_diagram.manifest;
+package com.eclipsesource.uml.modelserver.uml.diagram.demo.manifest;
 
 import com.eclipsesource.uml.modelserver.core.manifest.DiagramManifest;
 
@@ -71,12 +71,12 @@ This was it! Your module is now connected with the core package, and you can now
 Create the following `Java Class` file:
 
 - Name: `DemoManifest`
-- Path: `/com.eclipsesource.uml.modelserver/src/main/java/com/eclipsesource/uml/modelserver/uml/diagram/demo_diagram/manifest/DemoManifest.java` (create packages if necessary)
+- Path: `/com.eclipsesource.uml.modelserver/src/main/java/com/eclipsesource/uml/modelserver/uml/diagram/demo/manifest/DemoManifest.java` (create packages if necessary)
 
 Put the following content into the file.
 
 ```java
-package com.eclipsesource.uml.glsp.uml.diagram.demo_diagram.manifest;
+package com.eclipsesource.uml.glsp.uml.diagram.demo.manifest;
 
 import com.eclipsesource.uml.glsp.core.manifest.DiagramManifest;
 import com.eclipsesource.uml.modelserver.unotation.Representation;

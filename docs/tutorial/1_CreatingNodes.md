@@ -22,7 +22,7 @@ The goal is to create for the `Component` diagram the element called `artifact`.
 Create the following `Java Class` file:
 
 - Name: `CreateArtifactSemanticCommand`
-- Path: `/com.eclipsesource.uml.modelserver/src/main/java/com/eclipsesource/uml/modelserver/uml/diagram/demo_diagram/commands/artifact/CreateArtifactSemanticCommand.java` (create packages if necessary)
+- Path: `/com.eclipsesource.uml.modelserver/src/main/java/com/eclipsesource/uml/modelserver/uml/diagram/demo/commands/artifact/CreateArtifactSemanticCommand.java` (create packages if necessary)
 
 Put the following content into the file.
 
@@ -70,7 +70,7 @@ Here some interesting things happen. First, our command extends `BaseCreateSeman
 Create the following `Java Class` file:
 
 - Name: `CreateArtifactCompoundCommand`
-- Path: `/com.eclipsesource.uml.modelserver/src/main/java/com/eclipsesource/uml/modelserver/uml/diagram/demo_diagram/commands/artifact/CreateArtifactCompoundCommand.java` (create packages if necessary)
+- Path: `/com.eclipsesource.uml.modelserver/src/main/java/com/eclipsesource/uml/modelserver/uml/diagram/demo/commands/artifact/CreateArtifactCompoundCommand.java` (create packages if necessary)
 
 Put the following content into the file.
 
@@ -109,7 +109,7 @@ Whereas the semantic command creates the object itself, the `CompoundCommand` de
 Create the following `Java Class` file:
 
 - Name: `CreateArtifactContribution`
-- Path: `/com.eclipsesource.uml.modelserver/src/main/java/com/eclipsesource/uml/modelserver/uml/diagram/demo_diagram/commands/artifact/CreateArtifactContribution.java` (create packages if necessary)
+- Path: `/com.eclipsesource.uml.modelserver/src/main/java/com/eclipsesource/uml/modelserver/uml/diagram/demo/commands/artifact/CreateArtifactContribution.java` (create packages if necessary)
 
 Put the following content into the file.
 
@@ -170,7 +170,7 @@ The incoming request is then decoded in `toServer` with `ContributionDecoder`. W
 
 Open the file `DemoManifest.java`.
 
-- path: `/com.eclipsesource.uml.modelserver/src/main/java/com/eclipsesource/uml/modelserver/uml/diagram/demo_diagram/manifest/DemoManifest.java`
+- path: `/com.eclipsesource.uml.modelserver/src/main/java/com/eclipsesource/uml/modelserver/uml/diagram/demo/manifest/DemoManifest.java`
 
 Implement the interface `CommandCodecContribution` and extend the method to be like
 
@@ -207,12 +207,12 @@ The UML-GLSP-Server now needs to
 Create the following `Java Class` file:
 
 - Name: `UmlDemo_Artifact`
-- Path: `/com.eclipsesource.uml.glsp/src/main/java/com/eclipsesource/uml/glsp/uml/diagram/demo_diagram/diagram/UmlDemo_Artifact.java` (create packages if necessary)
+- Path: `/com.eclipsesource.uml.glsp/src/main/java/com/eclipsesource/uml/glsp/uml/diagram/demo/diagram/UmlDemo_Artifact.java` (create packages if necessary)
 
 Put the following content into the file.
 
 ```java
-package com.eclipsesource.uml.glsp.uml.diagram.demo_diagram.diagram;
+package com.eclipsesource.uml.glsp.uml.diagram.demo.diagram;
 
 import java.util.List;
 import java.util.Map;
@@ -270,12 +270,12 @@ The file `UmlDemo_Artifact` aims to configure or provide constants concerning an
 Create the following `Java Class` file:
 
 - Name: `DemoToolPaletteConfiguration`
-- Path: `/com.eclipsesource.uml.glsp/src/main/java/com/eclipsesource/uml/glsp/uml/diagram/demo_diagram/features/tool_palette/DemoToolPaletteConfiguration.java` (create packages if necessary)
+- Path: `/com.eclipsesource.uml.glsp/src/main/java/com/eclipsesource/uml/glsp/uml/diagram/demo/features/tool_palette/DemoToolPaletteConfiguration.java` (create packages if necessary)
 
 Put the following content into the file.
 
 ```java
-package com.eclipsesource.uml.glsp.uml.diagram.demo_diagram.features.tool_palette;
+package com.eclipsesource.uml.glsp.uml.diagram.demo.features.tool_palette;
 
 import java.util.List;
 import java.util.Map;
@@ -284,7 +284,7 @@ import org.eclipse.glsp.server.features.toolpalette.PaletteItem;
 
 import com.eclipsesource.uml.glsp.core.features.tool_palette.PaletteItemUtil;
 import com.eclipsesource.uml.glsp.core.features.tool_palette.ToolPaletteConfiguration;
-import com.eclipsesource.uml.glsp.uml.diagram.demo_diagram.diagram.UmlDemo_Artifact;
+import com.eclipsesource.uml.glsp.uml.diagram.demo.diagram.UmlDemo_Artifact;
 
 public class DemoToolPaletteConfiguration implements ToolPaletteConfiguration {
    @Override
@@ -308,12 +308,12 @@ The `DemoToolPaletteConfiguration` provides the core package with information ab
 Create the following `Java Class` file:
 
 - Name: `DemoToolPaletteConfiguration`
-- Path: `/com.eclipsesource.uml.glsp/src/main/java/com/eclipsesource/uml/glsp/uml/diagram/demo_diagram/features/tool_palette/DemoToolPaletteConfiguration.java` (create packages if necessary)
+- Path: `/com.eclipsesource.uml.glsp/src/main/java/com/eclipsesource/uml/glsp/uml/diagram/demo/features/tool_palette/DemoToolPaletteConfiguration.java` (create packages if necessary)
 
 Put the following content into the file.
 
 ```java
-package com.eclipsesource.uml.glsp.uml.diagram.demo_diagram.gmodel;
+package com.eclipsesource.uml.glsp.uml.diagram.demo.gmodel;
 
 import org.eclipse.glsp.graph.GCompartment;
 import org.eclipse.glsp.graph.GNode;
@@ -322,7 +322,7 @@ import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.Artifact;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
-import com.eclipsesource.uml.glsp.uml.diagram.demo_diagram.diagram.UmlDemo_Artifact;
+import com.eclipsesource.uml.glsp.uml.diagram.demo.diagram.UmlDemo_Artifact;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGNodeMapper;
 import com.eclipsesource.uml.glsp.uml.gmodel.element.NamedElementGBuilder;
 
@@ -370,22 +370,22 @@ This file maps the `Artifact` to a `GNode`. The GModel is the structure that the
 Create the following `Java Class` file:
 
 - Name: `CreateArtifactHandler`
-- Path: `/com.eclipsesource.uml.glsp/src/main/java/com/eclipsesource/uml/glsp/uml/diagram/demo_diagram/handler/operation/artifact/CreateArtifactHandler.java` (create packages if necessary)
+- Path: `/com.eclipsesource.uml.glsp/src/main/java/com/eclipsesource/uml/glsp/uml/diagram/demo/handler/operation/artifact/CreateArtifactHandler.java` (create packages if necessary)
 
 Put the following content into the file.
 
 ```java
-package com.eclipsesource.uml.glsp.uml.diagram.demo_diagram.handler.operation.artifact;
+package com.eclipsesource.uml.glsp.uml.diagram.demo.handler.operation.artifact;
 
 import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.uml2.uml.Model;
 
-import com.eclipsesource.uml.glsp.uml.diagram.demo_diagram.diagram.UmlDemo_Artifact;
+import com.eclipsesource.uml.glsp.uml.diagram.demo.diagram.UmlDemo_Artifact;
 import com.eclipsesource.uml.glsp.uml.handler.operations.create.BaseCreateChildNodeHandler;
 import com.eclipsesource.uml.glsp.uml.handler.operations.create.CreateLocationAwareNodeHandler;
-import com.eclipsesource.uml.modelserver.uml.diagram.demo_diagram.commands.artifact.CreateArtifactContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.demo.commands.artifact.CreateArtifactContribution;
 
 public class CreateArtifactHandler extends BaseCreateChildNodeHandler<Model>
    implements CreateLocationAwareNodeHandler {
@@ -418,7 +418,7 @@ Now the UML-GLSP-Server will send the `CreateArtifactContribution` to the UML-Mo
 
 Open the file `DemoManifest.java`.
 
-- path: `/com.eclipsesource.uml.glsp/src/main/java/com/eclipsesource/uml/glsp/uml/diagram/demo_diagram/manifest/DemoManifest.java`
+- path: `/com.eclipsesource.uml.glsp/src/main/java/com/eclipsesource/uml/glsp/uml/diagram/demo/manifest/DemoManifest.java`
 
 Implement the interface `DiagramCreateHandlerContribution`. The other contributions (e.g., `DiagramElementConfigurationContribution`, `ToolPaletteConfigurationContribution`, `GModelMapperContribution`) are already implemented by the base class `DiagramManifest`, so can use the methods directly.
 

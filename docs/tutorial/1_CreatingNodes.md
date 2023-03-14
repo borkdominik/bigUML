@@ -307,8 +307,8 @@ The `DemoToolPaletteConfiguration` provides the core package with information ab
 
 Create the following `Java Class` file:
 
-- Name: `DemoToolPaletteConfiguration`
-- Path: `/com.eclipsesource.uml.glsp/src/main/java/com/eclipsesource/uml/glsp/uml/diagram/demo/features/tool_palette/DemoToolPaletteConfiguration.java` (create packages if necessary)
+- Name: `ArtifactNodeMapper`
+- Path: `/com.eclipsesource.uml.glsp/src/main/java/com/eclipsesource/uml/glsp/uml/diagram/demo/gmodel/ArtifactNodeMapper.java` (create packages if necessary)
 
 Put the following content into the file.
 

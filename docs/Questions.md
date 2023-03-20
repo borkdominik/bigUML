@@ -36,3 +36,10 @@ This problem sometimes occurs after you rebuild your project in the background (
 > Sometimes the browser (Theia) stucks in the loading screen
 
 Check the developer tools console. If there are no errors, open the page in inkognito or do a hard refresh (`ctrl + shift + r`).
+
+> After running `yarn watch` or `yarn watch:theia` I got a `Error: ENOSPC: System limit for number of file watchers reached`
+
+You have reached your OS `inotify` limit. Please check the resources:
+
+- <https://github.com/eclipse-theia/theia/discussions/7942>
+- <https://github.com/eclipse-theia/theia/blob/bda9ff9d4cf15b28b5ffc2e984f11834adfc8f33/doc/Developing.md#linux>

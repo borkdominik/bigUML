@@ -124,7 +124,10 @@ export class EditorPanel extends AbstractUIExtension implements IActionHandler {
         const collapse = document.createElement('button');
         collapse.classList.add(`${EditorPanel.ID}-collapse`);
         collapse.appendChild(createIcon('chevron-down'));
-        collapse.addEventListener('click', () => this.toggle());
+        collapse.addEventListener('click', event => {
+            event.stopPropagation();
+            this.toggle();
+        });
         header.appendChild(collapse);
 
         this.header = header;

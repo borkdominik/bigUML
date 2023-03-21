@@ -18,7 +18,7 @@ import { InitializeParameters } from '@eclipse-glsp/vscode-integration';
 import { SocketGlspVscodeServer } from '@eclipse-glsp/vscode-integration/lib/quickstart-components/socket-glsp-vscode-server';
 import { injectable } from 'inversify';
 import { MODEL_SERVER_CONFIG } from '../../modelserver/uv-modelserver.config';
-import { DEFAULT_SERVER_PORT } from '../launcher/launcher';
+import { GLSP_SERVER_PORT } from '../launcher/launcher';
 
 @injectable()
 export class UVGlspServer extends SocketGlspVscodeServer {
@@ -26,7 +26,7 @@ export class UVGlspServer extends SocketGlspVscodeServer {
         super({
             clientId: 'glsp.uml',
             clientName: 'uml',
-            serverPort: JSON.parse(process.env.UML_GLSP_SERVER_PORT || DEFAULT_SERVER_PORT)
+            serverPort: JSON.parse(GLSP_SERVER_PORT)
         });
     }
 
@@ -35,7 +35,7 @@ export class UVGlspServer extends SocketGlspVscodeServer {
             ...(await super.createInitializeParameters()),
             args: {
                 timestamp: new Date().toString(),
-                modelServerURL: MODEL_SERVER_CONFIG.url
+                modelServerURL: `http://localhost:${MODEL_SERVER_CONFIG.port}${MODEL_SERVER_CONFIG.route}`
             }
         };
     }

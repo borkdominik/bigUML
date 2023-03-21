@@ -21,13 +21,18 @@ import * as vscode from 'vscode';
 import { createContainer } from './di.config';
 import { TYPES, VSCODE_TYPES } from './di.types';
 import { UVGlspServer } from './glsp/connection/uv-glsp-server';
-import { launchServer } from './glsp/launcher/launcher';
+import { launchGLSPServer } from './glsp/launcher/launcher';
 import { VSCodeSettings } from './language';
+import { launchModelServer } from './modelserver/launcher/launcher';
 
 export async function activate(context: vscode.ExtensionContext): Promise<void> {
     const container = createContainer(context);
+    if (process.env.UML_MODEL_SERVER_DEBUG !== 'true') {
+        await launchModelServer(context);
+    }
+
     if (process.env.UML_GLSP_SERVER_DEBUG !== 'true') {
-        await launchServer(context);
+        await launchGLSPServer(context);
     }
 
     configureDefaultCommands({

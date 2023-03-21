@@ -15,5 +15,7 @@
  ********************************************************************************/
 
 export interface ModelServerConfig {
+    port: string;
+    route: string;
     url: string;
 }

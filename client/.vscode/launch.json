@@ -19,7 +19,9 @@
       "sourceMaps": true,
       "env": {
         "UML_GLSP_SERVER_DEBUG": "false",
-        "UML_GLSP_SERVER_PORT": "5007"
+        "UML_GLSP_SERVER_PORT": "5007",
+        "UML_MODEL_SERVER_DEBUG": "false",
+        "UML_MODEL_SERVER_PORT": "8081"
       }
     }
   ]

@@ -16,6 +16,11 @@
 
 import { ModelServerConfig } from '@borkdominik-biguml/uml-modelserver/lib/config';
 
+const port = process.env.UML_MODEL_SERVER_PORT ?? '8081';
+const route = '/api/v2/';
+
 export const MODEL_SERVER_CONFIG: ModelServerConfig = {
-    url: 'http://localhost:8081/api/v2/'
+    port,
+    route,
+    url: `http://localhost:${port}${route}`
 };

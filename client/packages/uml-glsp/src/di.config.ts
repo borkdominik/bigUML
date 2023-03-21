@@ -40,6 +40,7 @@ import propertyPaletteModule from './features/property-palette/di.config';
 import { FixedFeedbackActionDispatcher } from './features/tool-feedback/feedback-action-dispatcher';
 import umlToolPaletteModule from './features/tool-palette/di.config';
 import { UmlGraphView } from './graph/graph.view';
+import { SVGIdCreatorService } from './graph/svg-id-creator.service';
 import { umlDiagramModules } from './uml/index';
 import { IconLabelCompartmentSelectionFeedback } from './views/feedback.postprocessor';
 
@@ -57,6 +58,7 @@ export default function createContainer(widgetId: string): Container {
         bind(LastContainableElementTracker).toSelf().inSingletonScope();
         bind(TYPES.MouseListener).toService(LastContainableElementTracker);
         bind(TYPES.IVNodePostprocessor).to(IconLabelCompartmentSelectionFeedback);
+        bind(SVGIdCreatorService).toSelf().inSingletonScope();
 
         configureDefaultModelElements(context);
 

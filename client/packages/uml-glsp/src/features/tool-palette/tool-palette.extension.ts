@@ -16,8 +16,25 @@
 import { compare, createToolGroup, PaletteItem, ToolPalette } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 
+const CLICKED_CSS_CLASS = 'clicked';
+
 @injectable()
 export class UmlToolPalette extends ToolPalette {
+    protected override defaultToolsButton: HTMLElement;
+
+    override changeActiveButton(button?: HTMLElement): void {
+        if (this.lastActivebutton) {
+            this.lastActivebutton.classList.remove(CLICKED_CSS_CLASS);
+        }
+        if (button) {
+            button.classList.add(CLICKED_CSS_CLASS);
+            this.lastActivebutton = button;
+        } else {
+            this.defaultToolsButton?.classList.add(CLICKED_CSS_CLASS);
+            this.lastActivebutton = this.defaultToolsButton;
+        }
+    }
+
     protected override createBody(): void {
         const bodyDiv = document.createElement('div');
         bodyDiv.classList.add('palette-body');

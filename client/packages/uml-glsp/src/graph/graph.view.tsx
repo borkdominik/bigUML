@@ -9,19 +9,43 @@
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
 import { RenderingContext, SGraph, SGraphView, svg } from '@eclipse-glsp/client';
-import { injectable } from 'inversify';
-import { VNode } from 'snabbdom';
+import { inject, injectable } from 'inversify';
+import { VNode, VNodeStyle } from 'snabbdom';
+import { SVGIdCreatorService } from './svg-id-creator.service';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const JSX = { createElement: svg };
 
+const MARKER_TRIANGLE_ID = 'marker-triangle';
+const MARKER_TRIANGLE_EMPTY_ID = 'marker-triangle-empty';
+const MARKER_TENT_ID = 'marker-tent';
+const MARKER_DIAMOND_ID = 'marker-diamond';
+const MARKER_DIAMONG_EMPTY_ID = 'marker-diamond-empty';
+const FILTER_DROP_SHADOW_ID = 'filter-drop-shadow';
+
 @injectable()
 export class UmlGraphView<IRenderingArgs> extends SGraphView {
+    @inject(SVGIdCreatorService)
+    protected svgIdCreator: SVGIdCreatorService;
+
+    override render(model: Readonly<SGraph>, context: RenderingContext, args?: IRenderingArgs): VNode {
+        const edgeRouting = this.edgeRouterRegistry.routeAllChildren(model);
+        const transform = `scale(${model.zoom}) translate(${-model.scroll.x},${-model.scroll.y})`;
+        return (
+            <svg class-sprotty-graph={true} style={this.renderStyle(context)}>
+                <g transform={transform} class-svg-defs>
+                    {this.renderAdditionals(context)}
+                    {context.renderChildren(model, { edgeRouting })}
+                </g>
+            </svg>
+        ) as any;
+    }
+
     protected renderAdditionals(context: RenderingContext): VNode[] {
         const directedEdgeAdds: any = [
             <defs>
                 <marker
-                    id='marker-triangle'
+                    id={this.svgIdCreator.createDefId(MARKER_TRIANGLE_ID)}
                     viewBox='0 0 10 10'
                     refX='10'
                     refY='5'
@@ -33,7 +57,7 @@ export class UmlGraphView<IRenderingArgs> extends SGraphView {
                     <path d='M 0 0 L 10 5 L 0 10 L 0 0 z' fill='var(--uml-edge)' />
                 </marker>
                 <marker
-                    id='marker-triangle-empty'
+                    id={this.svgIdCreator.createDefId(MARKER_TRIANGLE_EMPTY_ID)}
                     viewBox='0 0 10 10'
                     refX='10'
                     refY='5'
@@ -42,10 +66,10 @@ export class UmlGraphView<IRenderingArgs> extends SGraphView {
                     markerHeight='10'
                     orient='auto-start-reverse'
                 >
-                    <path d='M 0 0 L 10 5 L 0 10 L 0 0 z' stroke='var(--uml-edge)' fill='var(--theia-editor-background)' />
+                    <path d='M 0 0 L 10 5 L 0 10 L 0 0 z' stroke='var(--uml-edge)' fill='var(--uml-editor-background)' />
                 </marker>
                 <marker
-                    id='marker-tent'
+                    id={this.svgIdCreator.createDefId(MARKER_TENT_ID)}
                     viewBox='0 0 10 10'
                     refX='10'
                     refY='5'
@@ -54,10 +78,10 @@ export class UmlGraphView<IRenderingArgs> extends SGraphView {
                     markerHeight='10'
                     orient='auto-start-reverse'
                 >
-                    <path d='M 0 0 L 10 5 L 0 10' stroke='var(--uml-edge)' fill='var(--theia-editor-background)' />
+                    <path d='M 0 0 L 10 5 L 0 10' stroke='var(--uml-edge)' fill='var(--uml-editor-background)' />
                 </marker>
                 <marker
-                    id='marker-diamond'
+                    id={this.svgIdCreator.createDefId(MARKER_DIAMOND_ID)}
                     viewBox='0 0 20 10'
                     refX='20'
                     refY='5'
@@ -69,7 +93,7 @@ export class UmlGraphView<IRenderingArgs> extends SGraphView {
                     <path d='M 0 5 L 10 10 L 20 5 L 10 0 L 0 5 z' fill='var(--uml-edge)' />
                 </marker>
                 <marker
-                    id='marker-diamond-empty'
+                    id={this.svgIdCreator.createDefId(MARKER_DIAMONG_EMPTY_ID)}
                     viewBox='0 0 20 10'
                     refX='20'
                     refY='5'
@@ -78,9 +102,9 @@ export class UmlGraphView<IRenderingArgs> extends SGraphView {
                     markerHeight='10'
                     orient='auto-start-reverse'
                 >
-                    <path d='M 0 5 L 10 10 L 20 5 L 10 0 L 0 5 z' stroke='var(--uml-edge)' fill='var(--theia-editor-background)' />
+                    <path d='M 0 5 L 10 10 L 20 5 L 10 0 L 0 5 z' stroke='var(--uml-edge)' fill='var(--uml-editor-background)' />
                 </marker>
-                <filter id='filter-drop-shadow'>
+                <filter id={this.svgIdCreator.createDefId(FILTER_DROP_SHADOW_ID)}>
                     <feDropShadow
                         dx='1.5'
                         dy='1.5'
@@ -95,16 +119,14 @@ export class UmlGraphView<IRenderingArgs> extends SGraphView {
         return directedEdgeAdds;
     }
 
-    override render(model: Readonly<SGraph>, context: RenderingContext, args?: IRenderingArgs): VNode {
-        const edgeRouting = this.edgeRouterRegistry.routeAllChildren(model);
-        const transform = `scale(${model.zoom}) translate(${-model.scroll.x},${-model.scroll.y})`;
-        return (
-            <svg class-sprotty-graph={true}>
-                <g transform={transform}>
-                    {this.renderAdditionals(context)}
-                    {context.renderChildren(model, { edgeRouting })}
-                </g>
-            </svg>
-        ) as any;
+    protected renderStyle(context: RenderingContext): VNodeStyle {
+        return {
+            '--svg-def-marker-triangle': `url(#${this.svgIdCreator.createDefId(MARKER_TRIANGLE_ID)})`,
+            '--svg-def-marker-empty': `url(#${this.svgIdCreator.createDefId(MARKER_TRIANGLE_EMPTY_ID)})`,
+            '--svg-def-marker-tent': `url(#${this.svgIdCreator.createDefId(MARKER_TENT_ID)})`,
+            '--svg-def-marker-diamond': `url(#${this.svgIdCreator.createDefId(MARKER_DIAMOND_ID)})`,
+            '--svg-def-marker-diamond-empty': `url(#${this.svgIdCreator.createDefId(MARKER_DIAMONG_EMPTY_ID)})`,
+            '--svg-def-filter-drop-shadow': `url(#${this.svgIdCreator.createDefId(FILTER_DROP_SHADOW_ID)})`
+        };
     }
 }

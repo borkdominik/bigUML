@@ -1,6 +1,6 @@
 .uml-node {
     fill: var(--uml-node);
-    filter: url(#filter-drop-shadow);
+    filter: var(--svg-def-filter-drop-shadow);
     stroke-width: 1;
     stroke: var(--uml-border);
 }

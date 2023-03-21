@@ -14,6 +14,8 @@
     ]
   },
   "scripts": {
+    "build:server": "cd ../server && mvn clean install && yarn copy:server",
+    "copy:server": "tsx ./scripts/copy-server.ts",
     "depcheck": "npx depcheck --config .depcheck.yml",
     "prepare": "lerna run prepare",
     "prepare:theia": "yarn prepare --include-dependencies=true --scope=@borkdominik-biguml/theia-app",

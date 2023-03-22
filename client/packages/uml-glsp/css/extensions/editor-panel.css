@@ -37,7 +37,7 @@
 }
 
 .editor-panel-tab-header.active {
-    background: var(--uml-activityBar-background);
+    background: var(--uml-secondaryBar-background);
 }
 
 .editor-panel-tab-header:hover {

@@ -14,10 +14,32 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 
-import { ContainerContext } from '@eclipse-glsp/theia-integration';
-import { FrontendApplicationContribution } from '@theia/core/lib/browser/frontend-application';
-import { ThemeManager } from './theme.manager';
+import { ThemeManager, UmlThemeType } from '@borkdominik-biguml/uml-glsp/lib/features/theme';
+import { Theme, ThemeType } from '@theia/core/lib/common/theme';
+import { injectable } from 'inversify';
 
-export function registerThemeManagerModule(context: ContainerContext): void {
-    context.bind(FrontendApplicationContribution).to(ThemeManager).inSingletonScope();
+export type ThemeIntegrationFactory = () => ThemeIntegration;
+export const ThemeIntegrationFactory = Symbol('ThemeIntegrationFactory');
+
+@injectable()
+export class ThemeIntegration {
+    protected themeManager?: ThemeManager;
+
+    connect(themeManager: ThemeManager): void {
+        this.themeManager = themeManager;
+    }
+
+    updateTheme(theme: Theme): void {
+        this.themeManager?.updateTheme(mapTheme(theme.type));
+    }
+}
+
+function mapTheme(type: ThemeType): UmlThemeType {
+    switch (type) {
+        case 'dark':
+        case 'hc':
+            return 'dark';
+        default:
+            return 'light';
+    }
 }

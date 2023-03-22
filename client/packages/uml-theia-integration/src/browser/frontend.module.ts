@@ -21,6 +21,7 @@ import { DiagramConfiguration } from 'sprotty-theia/lib';
 import { UTDiagramLanguage } from '../common/language';
 import { registerOutlineIntegration } from './features/outline/integration/di.config';
 import { registerOutlineWidget } from './features/outline/widget/di.config';
+import { registerThemeIntegration } from './features/theme/di.config';
 import { UTClientContribution } from './glsp/connection/ut-client.contribution';
 import { UTGLSPConnector } from './glsp/connection/ut-glsp.connector';
 import { UTDiagramConfiguration } from './glsp/diagram/ut-diagram.configuration';
@@ -28,7 +29,6 @@ import { UTDiagramManager } from './glsp/diagram/ut-diagram.manager';
 import { registerModelServerModule } from './modelserver/di.config';
 import { registerEditorModule } from './theia/editor/di.config';
 import { registerNewFileModule } from './theia/new-file/di.config';
-import { registerThemeManagerModule } from './theia/theme-manager/di.config';
 import { registerWorkspaceModule } from './theia/workspace/di.config';
 
 export class UTFrontendModule extends GLSPTheiaFrontendModule {
@@ -52,13 +52,14 @@ export class UTFrontendModule extends GLSPTheiaFrontendModule {
 
     override configure(context: ContainerContext): void {
         registerModelServerModule(context);
-        registerThemeManagerModule(context);
         registerEditorModule(context);
         registerNewFileModule(context);
         registerWorkspaceModule(context);
 
-        registerOutlineIntegration(context.bind);
-        registerOutlineWidget(context.bind);
+        registerOutlineIntegration(context);
+        registerOutlineWidget(context);
+
+        registerThemeIntegration(context);
     }
 
     override configureDiagramManager(context: ContainerContext): void {

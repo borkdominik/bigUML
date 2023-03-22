@@ -28,7 +28,7 @@ export async function launchGLSPServer(context: vscode.ExtensionContext): Promis
         executable: JAVA_EXECUTABLE,
         socketConnectionOptions: { port: JSON.parse(GLSP_SERVER_PORT) },
         additionalArgs: ['--fileLog', 'true', '--logDir', path.join(__dirname, GLSP_SERVER_PATH)],
-        logging: true,
+        logging: false,
         serverType: 'java'
     });
     context.subscriptions.push(serverProcess);

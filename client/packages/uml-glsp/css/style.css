@@ -1,4 +1,6 @@
 @import 'colors/colors.css';
+@import 'colors/uml-dark.theme.css';
+@import 'colors/uml-light.theme.css';
 
 @import 'papyrus/variables.css';
 @import 'papyrus/classes.css';

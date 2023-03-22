@@ -14,17 +14,14 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 
-import '@borkdominik-biguml/uml-glsp/css/colors/colors-dark.useable.css';
 import { injectable } from 'inversify';
 import * as vscode from 'vscode';
 
 @injectable()
 export class ThemeManager {
-    /*
-    static readonly darkColorsCss = require('@borkdominik-biguml/uml-glsp/css/colors/colors-dark.useable.css');
+    // static readonly darkColorsCss = require('@borkdominik-biguml/uml-glsp/css/colors/colors-dark.useable.css');
+    // static readonly lightColorsCss = require('@borkdominik-biguml/uml-glsp/css/colors/colors-light.useable.css');
 
-    static readonly lightColorsCss = require('@borkdominik-biguml/uml-glsp/css/colors/colors-light.useable.css');
-    */
     protected disposables: vscode.Disposable[] = [];
 
     initialize(): void {
@@ -34,19 +31,11 @@ export class ThemeManager {
     updateTheme(themeType: vscode.ColorThemeKind): void {
         /*
         if (themeType === vscode.ColorThemeKind.Dark || themeType === vscode.ColorThemeKind.HighContrast) {
-            // unload light
             ThemeManager.lightColorsCss.unuse();
-            // UmlFrontendContribution.lightIconsCss.unuse();
-            // load dark
             ThemeManager.darkColorsCss.use();
-            // UmlFrontendContribution.darkIconsCss.use();
-        } else if (themeType === vscode.ColorThemeKind.Light) {
-            // unload dark
+        } else if (themeType === vscode.ColorThemeKind.Light || themeType === vscode.ColorThemeKind.HighContrastLight) {
             ThemeManager.darkColorsCss.unuse();
-            // UmlFrontendContribution.darkIconsCss.unuse();
-            // load light
             ThemeManager.lightColorsCss.use();
-            // UmlFrontendContribution.lightIconsCss.use();
         }
         */
     }

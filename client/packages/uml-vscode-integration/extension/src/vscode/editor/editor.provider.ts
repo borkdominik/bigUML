@@ -57,7 +57,7 @@ export class EditorProvider extends GlspEditorProvider {
 
         const webview = webviewPanel.webview;
         const extensionUri = this.context.extensionUri;
-        const webviewScriptSourceUri = webview.asWebviewUri(vscode.Uri.joinPath(extensionUri, 'pack', 'webview.js'));
+        const webviewScriptSourceUri = webview.asWebviewUri(vscode.Uri.joinPath(extensionUri, 'webview', 'webview.js'));
         const codiconsUri = webview.asWebviewUri(
             vscode.Uri.joinPath(extensionUri, 'node_modules', '@vscode/codicons', 'dist', 'codicon.css')
         );

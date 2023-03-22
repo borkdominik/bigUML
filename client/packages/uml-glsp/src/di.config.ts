@@ -37,6 +37,7 @@ import { EditLabelUIAutocomplete } from './features/edit-label';
 import editorPanelModule from './features/editor-panel/di.config';
 import outlineModule from './features/outline/di.config';
 import propertyPaletteModule from './features/property-palette/di.config';
+import { themeModule } from './features/theme/di.config';
 import { FixedFeedbackActionDispatcher } from './features/tool-feedback/feedback-action-dispatcher';
 import umlToolPaletteModule from './features/tool-palette/di.config';
 import { UmlGraphView } from './graph/graph.view';
@@ -73,6 +74,7 @@ export default function createContainer(widgetId: string): Container {
     const container = createDiagramContainer(
         saveModule,
         coreDiagramModule,
+        themeModule,
         editorPanelModule,
         umlToolPaletteModule,
         outlineModule,

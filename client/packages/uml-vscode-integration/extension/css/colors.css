@@ -4,8 +4,6 @@
     --uml-successBackground: var(--vscode-charts-green);
     --uml-errorForeground: var(--vscode-errorForeground);
 
-    --uml-activityBar-background: var(--vscode-activityBar-background);
-
     --uml-editor-background: var(--vscode-editor-background);
     --uml-editor-foreground: var(--vscode-editor-foreground);
 
@@ -16,6 +14,7 @@
 
     --uml-titleBar-activeBackground: var(--vscode-titleBar-activeBackground);
     --uml-titleBar-activeForeground: var(--vscode-titleBar-activeForeground);
+    --uml-secondaryBar-background: var(--vscode-editorHoverWidget-statusBarBackground);
 
     --uml-widget-shadow: var(--vscode-widget-shadow);
 }

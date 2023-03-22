@@ -1,4 +1,4 @@
-:root {
+.uml-dark-theme {
     --uml-border: var(--uml-light-blue);
     --uml-diagram-background: var(--uml-editor-background);
     --uml-drop-shadow: lightgrey;

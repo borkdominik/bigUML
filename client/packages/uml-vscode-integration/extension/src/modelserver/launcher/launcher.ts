@@ -28,7 +28,7 @@ export async function launchModelServer(context: vscode.ExtensionContext): Promi
         executable: JAVA_EXECUTABLE,
         socketConnectionOptions: { port: JSON.parse(MODEL_SERVER_CONFIG.port) },
         additionalArgs: [],
-        logging: true,
+        logging: false,
         serverType: 'java'
     });
     context.subscriptions.push(serverProcess);

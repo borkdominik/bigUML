@@ -14,11 +14,14 @@ import { Container, inject, injectable } from 'inversify';
 
 import { UTDiagramLanguage } from '../../../common/language';
 import { connectOutlineIntegration, OutlineIntegrationFactory, OutlineIntegrationService } from '../../features/outline/integration';
+import { ThemeIntegration, ThemeIntegrationFactory } from '../../features/theme/theme-integration';
+import { connectThemeIntegration } from '../../features/theme/theme-integration.contribution';
 import { UTDiagramServer } from '../connection/ut-diagram.server';
 
 @injectable()
 export class UTDiagramConfiguration extends GLSPDiagramConfiguration {
-    @inject(OutlineIntegrationFactory) protected readonly outlineIntegrationWidgetFactory: () => OutlineIntegrationService;
+    @inject(OutlineIntegrationFactory) protected readonly outlineIntegrationFactory: () => OutlineIntegrationService;
+    @inject(ThemeIntegrationFactory) protected readonly themeIntegrationFactory: () => ThemeIntegration;
 
     diagramType: string = UTDiagramLanguage.diagramType;
 
@@ -27,7 +30,8 @@ export class UTDiagramConfiguration extends GLSPDiagramConfiguration {
 
         configureDiagramServer(container, UTDiagramServer);
 
-        connectOutlineIntegration(container, this.outlineIntegrationWidgetFactory);
+        connectOutlineIntegration(container, this.outlineIntegrationFactory);
+        connectThemeIntegration(container, this.themeIntegrationFactory);
 
         return container;
     }

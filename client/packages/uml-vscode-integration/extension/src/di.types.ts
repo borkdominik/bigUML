@@ -27,6 +27,9 @@ export const VSCODE_TYPES = {
     DisposableManager: Symbol('DisposableManager'),
     EditorProvider: Symbol('EditorProvider'),
     ExtensionContext: Symbol('ExtensionContext'),
-    ThemeManager: Symbol('ThemeManager'),
     Watcher: Symbol('Watcher')
+};
+
+export const FEATURE_TYPES = {
+    Theme: Symbol('Theme')
 };

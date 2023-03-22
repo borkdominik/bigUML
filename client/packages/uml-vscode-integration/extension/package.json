@@ -20,7 +20,8 @@
     "pack"
   ],
   "scripts": {
-    "build": "yarn esbuild-base --sourcemap",
+    "build": "yarn build-base",
+    "build-base": "tsx .esbuild.mts",
     "clean": "rimraf lib tsconfig.tsbuildinfo ",
     "esbuild-base": "esbuild ./src/index.ts --bundle --outfile=lib/main.js --external:vscode --format=cjs --platform=node",
     "lint": "eslint --ext .ts,.tsx ./src",
@@ -28,8 +29,8 @@
     "lint:fix": "eslint --fix --ext .ts,.tsx ./src",
     "package": "vsce package --yarn",
     "prepare": "yarn clean && yarn build",
-    "vscode:prepublish": "yarn esbuild-base --minify",
-    "watch": "yarn esbuild-base --sourcemap --watch"
+    "vscode:prepublish": "yarn build-base --minify",
+    "watch": "ES_WATCH=true yarn build-base"
   },
   "contributes": {
     "commands": [

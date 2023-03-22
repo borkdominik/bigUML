@@ -14,30 +14,25 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 
-import { injectable } from 'inversify';
+import { SetUmlThemeAction, UmlTheme } from '@borkdominik-biguml/uml-glsp/lib/features/theme';
+import { GlspVscodeConnector } from '@eclipse-glsp/vscode-integration';
+import { inject, injectable } from 'inversify';
 import * as vscode from 'vscode';
+import { TYPES } from '../../di.types';
 
 @injectable()
-export class ThemeManager {
-    // static readonly darkColorsCss = require('@borkdominik-biguml/uml-glsp/css/colors/colors-dark.useable.css');
-    // static readonly lightColorsCss = require('@borkdominik-biguml/uml-glsp/css/colors/colors-light.useable.css');
+export class ThemeIntegration {
+    @inject(TYPES.Connector)
+    protected readonly connector: GlspVscodeConnector;
 
     protected disposables: vscode.Disposable[] = [];
 
     initialize(): void {
-        this.updateTheme(vscode.window.activeColorTheme.kind);
+        this.updateTheme(vscode.window.activeColorTheme);
     }
 
-    updateTheme(themeType: vscode.ColorThemeKind): void {
-        /*
-        if (themeType === vscode.ColorThemeKind.Dark || themeType === vscode.ColorThemeKind.HighContrast) {
-            ThemeManager.lightColorsCss.unuse();
-            ThemeManager.darkColorsCss.use();
-        } else if (themeType === vscode.ColorThemeKind.Light || themeType === vscode.ColorThemeKind.HighContrastLight) {
-            ThemeManager.darkColorsCss.unuse();
-            ThemeManager.lightColorsCss.use();
-        }
-        */
+    updateTheme(theme: vscode.ColorTheme): void {
+        this.connector.sendActionToActiveClient(SetUmlThemeAction.create(mapTheme(theme)));
     }
 
     onChange(cb: (e: vscode.ColorTheme) => void): void {
@@ -46,5 +41,15 @@ export class ThemeManager {
 
     dispose(): void {
         this.disposables.forEach(d => d.dispose());
+    }
+}
+
+function mapTheme(theme: vscode.ColorTheme): UmlTheme {
+    switch (theme.kind) {
+        case vscode.ColorThemeKind.Dark:
+        case vscode.ColorThemeKind.HighContrast:
+            return 'dark';
+        default:
+            return 'light';
     }
 }

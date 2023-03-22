@@ -16,7 +16,8 @@
 
 import { Container, ContainerModule } from 'inversify';
 import * as vscode from 'vscode';
-import { TYPES, VSCODE_TYPES } from './di.types';
+import { FEATURE_TYPES, TYPES, VSCODE_TYPES } from './di.types';
+import { ThemeIntegration } from './features/theme/theme-integration';
 import { UVGlspConnector } from './glsp/connection/uv-glsp-connector';
 import { UVGlspServer } from './glsp/connection/uv-glsp-server';
 import { UVModelServerClient } from './modelserver/uv-modelserver.client';
@@ -25,17 +26,15 @@ import { DisposableManager } from './vscode/disposable/disposable.manager';
 import { EditorProvider } from './vscode/editor/editor.provider';
 import { NewFileCommand } from './vscode/new-file/new-file.command';
 import { NewFileCreator } from './vscode/new-file/new-file.creator';
-import { ThemeManager } from './vscode/theme-manager/theme-manager';
 import { WorkspaceWatcher } from './vscode/workspace/workspace.watcher';
 
 export function createContainer(context: vscode.ExtensionContext): Container {
     const vscodeModule = new ContainerModule((bind, unbind, isBound, rebind) => {
         bind(TYPES.GlspServer).to(UVGlspServer).inSingletonScope();
         bind(TYPES.Connector).to(UVGlspConnector).inSingletonScope();
+        bind(TYPES.ModelServerClient).to(UVModelServerClient).inSingletonScope();
 
         bind(VSCODE_TYPES.CommandManager).to(CommandManager).inSingletonScope();
-
-        bind(TYPES.ModelServerClient).to(UVModelServerClient).inSingletonScope();
 
         bind(NewFileCreator).toSelf().inSingletonScope();
         bind(VSCODE_TYPES.Command).to(NewFileCommand);
@@ -47,9 +46,9 @@ export function createContainer(context: vscode.ExtensionContext): Container {
 
         bind(VSCODE_TYPES.EditorProvider).to(EditorProvider).inSingletonScope();
 
-        bind(VSCODE_TYPES.ThemeManager).to(ThemeManager).inSingletonScope();
-
         bind(VSCODE_TYPES.Watcher).to(WorkspaceWatcher).inSingletonScope();
+
+        bind(FEATURE_TYPES.Theme).to(ThemeIntegration).inSingletonScope();
     });
 
     const container = new Container({

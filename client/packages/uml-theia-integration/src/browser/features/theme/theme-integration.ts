@@ -16,7 +16,7 @@
 
 import { SetUmlThemeAction, UmlTheme } from '@borkdominik-biguml/uml-glsp/lib/features/theme';
 import { IActionDispatcher } from '@eclipse-glsp/client';
-import { Theme, ThemeType } from '@theia/core/lib/common/theme';
+import { Theme } from '@theia/core/lib/common/theme';
 import { injectable } from 'inversify';
 
 export type ThemeIntegrationFactory = () => ThemeIntegration;
@@ -31,12 +31,12 @@ export class ThemeIntegration {
     }
 
     updateTheme(theme: Theme): void {
-        this.actionDispatcher?.dispatch(SetUmlThemeAction.create(mapTheme(theme.type)));
+        this.actionDispatcher?.dispatch(SetUmlThemeAction.create(mapTheme(theme)));
     }
 }
 
-function mapTheme(type: ThemeType): UmlTheme {
-    switch (type) {
+function mapTheme(theme: Theme): UmlTheme {
+    switch (theme.type) {
         case 'dark':
         case 'hc':
             return 'dark';

@@ -17,11 +17,11 @@ import { GlspEditorProvider } from '@eclipse-glsp/vscode-integration/lib/quickst
 import { inject, injectable, postConstruct } from 'inversify';
 import URI from 'urijs';
 import * as vscode from 'vscode';
-import { TYPES, VSCODE_TYPES } from '../../di.types';
+import { FEATURE_TYPES, TYPES, VSCODE_TYPES } from '../../di.types';
+import { ThemeIntegration } from '../../features/theme/theme-integration';
 import { UVGlspConnector } from '../../glsp/connection/uv-glsp-connector';
 import { VSCodeSettings } from '../../language';
 import { UVModelServerClient } from '../../modelserver/uv-modelserver.client';
-import { ThemeManager } from '../theme-manager/theme-manager';
 
 @injectable()
 export class EditorProvider extends GlspEditorProvider {
@@ -31,7 +31,7 @@ export class EditorProvider extends GlspEditorProvider {
         @inject(VSCODE_TYPES.ExtensionContext) protected readonly context: vscode.ExtensionContext,
         @inject(TYPES.Connector) protected override readonly glspVscodeConnector: UVGlspConnector,
         @inject(TYPES.ModelServerClient) protected readonly modelServerClient: UVModelServerClient,
-        @inject(VSCODE_TYPES.ThemeManager) protected readonly themeManager: ThemeManager
+        @inject(FEATURE_TYPES.Theme) protected readonly themeIntegration: ThemeIntegration
     ) {
         super(glspVscodeConnector);
 
@@ -88,9 +88,9 @@ export class EditorProvider extends GlspEditorProvider {
     }
 
     protected setUpTheme(): void {
-        this.themeManager.dispose();
-        this.themeManager.initialize();
-        this.themeManager.onChange(e => this.themeManager.updateTheme(vscode.window.activeColorTheme.kind));
+        this.themeIntegration.dispose();
+        this.themeIntegration.initialize();
+        this.themeIntegration.onChange(e => this.themeIntegration.updateTheme(vscode.window.activeColorTheme));
     }
 
     protected setUpModelServer(): void {
@@ -105,13 +105,4 @@ export class EditorProvider extends GlspEditorProvider {
             });
         }
     }
-}
-
-function serializeUri(uri: vscode.Uri): string {
-    let uriString = uri.toString();
-    const match = uriString.match(/file:\/\/\/([a-z])%3A/i);
-    if (match) {
-        uriString = 'file:///' + match[1] + ':' + uriString.substring(match[0].length);
-    }
-    return uriString;
 }

@@ -14,7 +14,8 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 
-import { ThemeManager, UmlThemeType } from '@borkdominik-biguml/uml-glsp/lib/features/theme';
+import { SetUmlThemeAction, UmlTheme } from '@borkdominik-biguml/uml-glsp/lib/features/theme';
+import { IActionDispatcher } from '@eclipse-glsp/client';
 import { Theme, ThemeType } from '@theia/core/lib/common/theme';
 import { injectable } from 'inversify';
 
@@ -23,18 +24,18 @@ export const ThemeIntegrationFactory = Symbol('ThemeIntegrationFactory');
 
 @injectable()
 export class ThemeIntegration {
-    protected themeManager?: ThemeManager;
+    protected actionDispatcher?: IActionDispatcher;
 
-    connect(themeManager: ThemeManager): void {
-        this.themeManager = themeManager;
+    connect(actionDispatcher: IActionDispatcher): void {
+        this.actionDispatcher = actionDispatcher;
     }
 
     updateTheme(theme: Theme): void {
-        this.themeManager?.updateTheme(mapTheme(theme.type));
+        this.actionDispatcher?.dispatch(SetUmlThemeAction.create(mapTheme(theme.type)));
     }
 }
 
-function mapTheme(type: ThemeType): UmlThemeType {
+function mapTheme(type: ThemeType): UmlTheme {
     switch (type) {
         case 'dark':
         case 'hc':

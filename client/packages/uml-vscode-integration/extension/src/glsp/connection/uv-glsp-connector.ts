@@ -32,8 +32,8 @@ import * as vscode from 'vscode';
 import { TYPES } from '../../di.types';
 
 @injectable()
-export class UVGlspConnector<D extends vscode.CustomDocument = vscode.CustomDocument> extends GlspVscodeConnector<D> {
-    get documents(): D[] {
+export class UVGlspConnector<TDocument extends vscode.CustomDocument = vscode.CustomDocument> extends GlspVscodeConnector<TDocument> {
+    get documents(): TDocument[] {
         return Array.from(this.documentMap.keys());
     }
 
@@ -44,11 +44,11 @@ export class UVGlspConnector<D extends vscode.CustomDocument = vscode.CustomDocu
         });
     }
 
-    clientIdByDocument(document: D): string | undefined {
+    clientIdByDocument(document: TDocument): string | undefined {
         return this.documentMap.get(document);
     }
 
-    public override async registerClient(client: GlspVscodeClient<D>): Promise<InitializeResult> {
+    public override async registerClient(client: GlspVscodeClient<TDocument>): Promise<InitializeResult> {
         this.clientMap.set(client.clientId, client);
         this.documentMap.set(client.document, client.clientId);
 
@@ -73,7 +73,7 @@ export class UVGlspConnector<D extends vscode.CustomDocument = vscode.CustomDocu
 
     protected override handleSetDirtyStateAction(
         message: ActionMessage<SetDirtyStateAction>,
-        client: GlspVscodeClient<D> | undefined,
+        client: GlspVscodeClient<TDocument> | undefined,
         _origin: MessageOrigin
     ): MessageProcessingResult {
         if (client) {
@@ -97,7 +97,7 @@ export class UVGlspConnector<D extends vscode.CustomDocument = vscode.CustomDocu
         return { processedMessage: GlspVscodeConnector.NO_PROPAGATION_MESSAGE, messageChanged: true };
     }
 
-    protected onClientMessage(client: GlspVscodeClient<D>, message: unknown) {
+    protected onClientMessage(client: GlspVscodeClient<TDocument>, message: unknown): void {
         if (this.options.logging) {
             if (ActionMessage.is(message)) {
                 console.log(`Client (${message.clientId}): ${message.action.kind}`, message.action);
@@ -120,13 +120,13 @@ export class UVGlspConnector<D extends vscode.CustomDocument = vscode.CustomDocu
         });
     }
 
-    protected onClientViewStateChange(client: GlspVscodeClient<D>, event: vscode.WebviewPanelOnDidChangeViewStateEvent) {
+    protected onClientViewStateChange(client: GlspVscodeClient<TDocument>, event: vscode.WebviewPanelOnDidChangeViewStateEvent): void {
         if (event.webviewPanel.active) {
             this.selectionUpdateEmitter.fire(this.clientSelectionMap.get(client.clientId) || []);
         }
     }
 
-    protected onClientDispose(client: GlspVscodeClient<D>, disposables: vscode.Disposable[]) {
+    protected onClientDispose(client: GlspVscodeClient<TDocument>, disposables: vscode.Disposable[]): void {
         this.diagnostics.set(client.document.uri, undefined); // this clears the diagnostics for the file
         this.clientMap.delete(client.clientId);
         this.documentMap.delete(client.document);
@@ -142,7 +142,7 @@ export class UVGlspConnector<D extends vscode.CustomDocument = vscode.CustomDocu
         disposables.forEach(d => d.dispose());
     }
 
-    protected disposeClientSessionArgs(client: GlspVscodeClient<D>): Args | undefined {
+    protected disposeClientSessionArgs(client: GlspVscodeClient<TDocument>): Args | undefined {
         return {
             ['sourceUri']: client.document.uri.path
         };

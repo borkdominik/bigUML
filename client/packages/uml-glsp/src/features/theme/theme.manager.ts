@@ -14,16 +14,17 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 
-import { TYPES, ViewerOptions } from '@eclipse-glsp/client';
+import { Action, IActionHandler, ICommand, TYPES, ViewerOptions } from '@eclipse-glsp/client';
 import { inject, injectable } from 'inversify';
+import { SetUmlThemeAction } from './theme.actions';
 
-export type UmlThemeType = 'dark' | 'light';
+export type UmlTheme = 'dark' | 'light';
 
 @injectable()
-export class ThemeManager {
+export class ThemeManager implements IActionHandler {
     @inject(TYPES.ViewerOptions) protected readonly viewerOptions: ViewerOptions;
 
-    updateTheme(theme: UmlThemeType): void {
+    updateTheme(theme: UmlTheme): void {
         if (theme === 'dark') {
             document.getElementById(this.viewerOptions.baseDiv)?.classList.remove('uml-light-theme');
             document.getElementById(this.viewerOptions.baseDiv)?.classList.add('uml-dark-theme');
@@ -32,6 +33,12 @@ export class ThemeManager {
             document.getElementById(this.viewerOptions.baseDiv)?.classList.add('uml-light-theme');
         } else {
             console.error('Unknown theme: ', theme);
+        }
+    }
+
+    handle(action: Action): void | Action | ICommand {
+        if (SetUmlThemeAction.is(action)) {
+            this.updateTheme(action.theme);
         }
     }
 }

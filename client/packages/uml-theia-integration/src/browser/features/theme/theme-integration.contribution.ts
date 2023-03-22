@@ -13,7 +13,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { ThemeManager } from '@borkdominik-biguml/uml-glsp/lib/features/theme/theme.manager';
+import { IActionDispatcher, TYPES } from '@eclipse-glsp/client';
 import { GLSPDiagramWidget } from '@eclipse-glsp/theia-integration';
 import { FrontendApplicationContribution } from '@theia/core/lib/browser/frontend-application';
 import { ThemeService } from '@theia/core/lib/browser/theming';
@@ -26,7 +26,7 @@ export function connectThemeIntegration(container: Container, themeIntegrationFa
 
     container.bind(ThemeIntegration).toConstantValue(themeIntegration);
 
-    themeIntegration.connect(container.get(ThemeManager));
+    themeIntegration.connect(container.get<IActionDispatcher>(TYPES.IActionDispatcher));
 }
 
 @injectable()

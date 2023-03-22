@@ -15,4 +15,5 @@
  ********************************************************************************/
 
 export * from './di.config';
+export * from './theme.actions';
 export * from './theme.manager';

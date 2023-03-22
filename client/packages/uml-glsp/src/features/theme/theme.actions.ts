@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2021 EclipseSource and others.
+ * Copyright (c) 2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -13,14 +13,23 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { configureActionHandler } from '@eclipse-glsp/client';
-import { ContainerModule } from 'inversify';
-import { SetUmlThemeAction } from './theme.actions';
-import { ThemeManager } from './theme.manager';
 
-export const themeModule = new ContainerModule((bind, _unbind, isBound, rebind) => {
-    const context = { bind, _unbind, isBound, rebind };
+import { Action, hasStringProp } from '@eclipse-glsp/protocol';
+import type { UmlTheme } from './theme.manager';
 
-    bind(ThemeManager).toSelf().inSingletonScope();
-    configureActionHandler(context, SetUmlThemeAction.KIND, ThemeManager);
-});
+export interface SetUmlThemeAction extends Action {
+    kind: typeof SetUmlThemeAction.KIND;
+    theme: UmlTheme;
+}
+
+export namespace SetUmlThemeAction {
+    export const KIND = 'setUmlTheme';
+
+    export function is(object: any): object is SetUmlThemeAction {
+        return Action.hasKind(object, KIND) && hasStringProp(object, 'theme');
+    }
+
+    export function create(theme: UmlTheme): SetUmlThemeAction {
+        return { kind: KIND, theme };
+    }
+}

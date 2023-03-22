@@ -15,15 +15,15 @@
  ********************************************************************************/
 
 import { SetUmlThemeAction, UmlTheme } from '@borkdominik-biguml/uml-glsp/lib/features/theme';
-import { GlspVscodeConnector } from '@eclipse-glsp/vscode-integration';
 import { inject, injectable } from 'inversify';
 import * as vscode from 'vscode';
 import { TYPES } from '../../di.types';
+import { UVGlspConnector } from '../../glsp/connection/uv-glsp-connector';
 
 @injectable()
 export class ThemeIntegration {
     @inject(TYPES.Connector)
-    protected readonly connector: GlspVscodeConnector;
+    protected readonly connector: UVGlspConnector;
 
     protected disposables: vscode.Disposable[] = [];
 

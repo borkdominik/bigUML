@@ -8,9 +8,13 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-import '@eclipse-glsp/client/css/glsp-sprotty.css';
 import 'balloon-css/balloon.min.css';
+
+import 'sprotty/css/sprotty.css';
+
 import 'sprotty/css/edit-label.css';
+
+import '@eclipse-glsp/client/css/glsp-sprotty.css';
 
 import '../css/style.css';
 
@@ -40,8 +44,8 @@ import propertyPaletteModule from './features/property-palette/di.config';
 import { themeModule } from './features/theme/di.config';
 import { FixedFeedbackActionDispatcher } from './features/tool-feedback/feedback-action-dispatcher';
 import umlToolPaletteModule from './features/tool-palette/di.config';
-import { UmlGraphView } from './graph/graph.view';
 import { SVGIdCreatorService } from './graph/svg-id-creator.service';
+import { UmlGraphProjectionView } from './graph/uml-graph-projection.view';
 import { umlDiagramModules } from './uml/index';
 import { IconLabelCompartmentSelectionFeedback } from './views/feedback.postprocessor';
 
@@ -63,7 +67,7 @@ export default function createContainer(widgetId: string): Container {
 
         configureDefaultModelElements(context);
 
-        configureModelElement(context, DefaultTypes.GRAPH, GLSPGraph, UmlGraphView);
+        configureModelElement(context, DefaultTypes.GRAPH, GLSPGraph, UmlGraphProjectionView);
 
         configureViewerOptions(context, {
             needsClientLayout: true,

@@ -52,3 +52,11 @@ svg {
 .sprotty-popup-body > p {
     margin-bottom: 2px;
 }
+
+.sprotty-projection-bar.vertical.bordered-projection-bar {
+    width: var(--uml-scrollbar-rail-width);
+}
+
+.sprotty-projection-bar.horizontal.bordered-projection-bar {
+    height: var(--uml-scrollbar-rail-width);
+}

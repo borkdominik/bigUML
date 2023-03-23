@@ -6,7 +6,7 @@
 @import 'papyrus/classes.css';
 
 @import 'common.css';
-@import 'graph.css';
+@import 'uml-sprotty.css';
 
 @import 'base/edge.css';
 @import 'base/node.css';

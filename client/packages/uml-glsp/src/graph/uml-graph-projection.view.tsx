@@ -8,9 +8,9 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-import { RenderingContext, SGraph, SGraphView, svg } from '@eclipse-glsp/client';
+import { EdgeRouterRegistry, GLSPProjectionView, IViewArgs, RenderingContext, svg, ViewportRootElement } from '@eclipse-glsp/client';
 import { inject, injectable } from 'inversify';
-import { VNode, VNodeStyle } from 'snabbdom';
+import { h, VNode, VNodeStyle } from 'snabbdom';
 import { SVGIdCreatorService } from './svg-id-creator.service';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -24,21 +24,25 @@ const MARKER_DIAMONG_EMPTY_ID = 'marker-diamond-empty';
 const FILTER_DROP_SHADOW_ID = 'filter-drop-shadow';
 
 @injectable()
-export class UmlGraphView<IRenderingArgs> extends SGraphView {
+export class UmlGraphProjectionView extends GLSPProjectionView {
+    @inject(EdgeRouterRegistry)
+    protected edgeRouterRegistry: EdgeRouterRegistry;
+
     @inject(SVGIdCreatorService)
     protected svgIdCreator: SVGIdCreatorService;
 
-    override render(model: Readonly<SGraph>, context: RenderingContext, args?: IRenderingArgs): VNode {
+    protected override renderSvg(model: Readonly<ViewportRootElement>, context: RenderingContext, args?: IViewArgs): VNode {
         const edgeRouting = this.edgeRouterRegistry.routeAllChildren(model);
         const transform = `scale(${model.zoom}) translate(${-model.scroll.x},${-model.scroll.y})`;
-        return (
-            <svg class-sprotty-graph={true} style={this.renderStyle(context)}>
-                <g transform={transform} class-svg-defs>
-                    {this.renderAdditionals(context)}
-                    {context.renderChildren(model, { edgeRouting })}
-                </g>
-            </svg>
-        ) as any;
+        const ns = 'http://www.w3.org/2000/svg';
+        return h(
+            'svg',
+            { ns, style: this.renderStyle(context) },
+            h('g', { ns, attrs: { transform }, class: { 'svg-defs': true } }, [
+                ...this.renderAdditionals(context),
+                ...context.renderChildren(model, { edgeRouting })
+            ])
+        );
     }
 
     protected renderAdditionals(context: RenderingContext): VNode[] {
@@ -121,6 +125,7 @@ export class UmlGraphView<IRenderingArgs> extends SGraphView {
 
     protected renderStyle(context: RenderingContext): VNodeStyle {
         return {
+            height: '100%',
             '--svg-def-marker-triangle': `url(#${this.svgIdCreator.createDefId(MARKER_TRIANGLE_ID)})`,
             '--svg-def-marker-empty': `url(#${this.svgIdCreator.createDefId(MARKER_TRIANGLE_EMPTY_ID)})`,
             '--svg-def-marker-tent': `url(#${this.svgIdCreator.createDefId(MARKER_TENT_ID)})`,

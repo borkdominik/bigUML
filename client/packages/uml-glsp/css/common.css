@@ -9,6 +9,10 @@
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
 
+:root {
+    --uml-scrollbar-rail-width: 10px;
+}
+
 .umlmodelfile {
     background-image: url(../resources/icons/UMLModelFile.gif);
     height: 16px;

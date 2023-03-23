@@ -80,7 +80,7 @@ export class EditorProvider extends GlspEditorProvider {
 				<link href="${mainCSSUri}" rel="stylesheet" />
 
                 </head>
-                <body>
+                <body style="overflow: hidden;">
                     <div id="${clientId}_container" style="height: 100%;"></div>
                     <script src="${webviewScriptSourceUri}"></script>
                 </body>

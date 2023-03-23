@@ -14,7 +14,7 @@ public class DirtyStateReason {
    public static String CREATE = "create";
    public static String UPDATE = "update";
    public static String SAVE = "save";
-   public static String INCREMENTAL_UPDATE = "incremental_update";
-   public static String UNDO = "redo";
-   public static String REDO = "undo";
+   public static String OPERATION = "operation";
+   public static String UNDO = "undo";
+   public static String REDO = "redo";
 }

@@ -20,7 +20,6 @@ import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.actions.SetDirtyStateAction;
 
 import com.eclipsesource.uml.glsp.core.handler.action.UmlRefreshModelAction;
-import com.eclipsesource.uml.glsp.core.utils.DirtyStateUtils;
 import com.eclipsesource.uml.glsp.core.utils.JsonUtils;
 import com.google.gson.Gson;
 
@@ -37,18 +36,19 @@ public class UmlSubscriptionListener extends EMSSubscriptionListener {
    @Override
    public void onNotification(final ModelServerNotification notification) {
       switch (notification.getType()) {
-         case JsonResponseType.DIRTYSTATE:
+         case JsonResponseType.DIRTYSTATE: {
             var data = notification.getData()
                .orElseThrow(() -> new RuntimeException("Could not parse 'data' field"));
 
             JsonUtils.parse(data, DirtyState.class).ifPresentOrElse(dirtyState -> {
-               onDirtyChange(dirtyState.isDirty, DirtyStateUtils.convert(dirtyState));
+               onDirtyChange(dirtyState.isDirty, dirtyState.reason);
             }, () -> {
                var isDirty = Boolean.parseBoolean(data);
                onDirtyChange(isDirty);
             });
 
             break;
+         }
          default:
             super.onNotification(notification);
       }
@@ -57,7 +57,7 @@ public class UmlSubscriptionListener extends EMSSubscriptionListener {
    @Override
    public void onIncrementalUpdate(final String incrementalUpdate) {
       logResponse("Incremental <JsonPatch> update from model server received: " + incrementalUpdate);
-      this.refresh(SetDirtyStateAction.Reason.OPERATION);
+      this.refresh(SetDirtyStateAction.Reason.EXTERNAL);
    }
 
    @Override

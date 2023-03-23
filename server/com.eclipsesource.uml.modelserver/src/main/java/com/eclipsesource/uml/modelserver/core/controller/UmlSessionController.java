@@ -79,7 +79,19 @@ public class UmlSessionController extends DefaultSessionController {
       broadcastIncrementalUpdatesV1(modeluri, execution);
       broadcastIncrementalUpdatesV2(patches);
 
-      broadcastDirtyState(modeluri, modelRepository.getDirtyState(modeluri), DirtyStateReason.INCREMENTAL_UPDATE);
+      var type = execution.get().getType();
+      switch (type) {
+         case "undo":
+            broadcastDirtyState(modeluri, modelRepository.getDirtyState(modeluri), DirtyStateReason.UNDO);
+            break;
+         case "redo":
+            broadcastDirtyState(modeluri, modelRepository.getDirtyState(modeluri), DirtyStateReason.REDO);
+            break;
+         default:
+            broadcastDirtyState(modeluri, modelRepository.getDirtyState(modeluri), DirtyStateReason.OPERATION);
+            break;
+      }
+
       broadcastValidation(modeluri);
    }
 

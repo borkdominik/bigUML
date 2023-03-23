@@ -80,7 +80,7 @@ export class UVGlspConnector<TDocument extends vscode.CustomDocument = vscode.Cu
             const reason = message.action.reason || '';
             if (reason === 'save') {
                 this.onDocumentSavedEmitter.fire(client.document);
-            } else if (message.action.isDirty) {
+            } else if (message.action.isDirty && message.action.reason === 'operation') {
                 this.onDidChangeCustomDocumentEventEmitter.fire({
                     document: client.document,
                     undo: () => {

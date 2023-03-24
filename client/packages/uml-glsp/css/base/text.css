@@ -1,3 +1,11 @@
-.text-underline {
+.uml-text-underline {
     text-decoration: underline;
+}
+
+.uml-font-bold {
+    font-weight: bold;
+}
+
+.uml-font-italic {
+    font-style: italic;
 }

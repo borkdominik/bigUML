@@ -23,6 +23,7 @@ import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.Class;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
+import com.eclipsesource.uml.glsp.core.constants.QuotationMark;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_Class;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGNodeMapper;
 import com.eclipsesource.uml.glsp.uml.gmodel.element.NamedElementGBuilder;
@@ -61,10 +62,10 @@ public final class ClassNodeMapper extends BaseGNodeMapper<Class, GNode> impleme
          .layoutOptions(new GLayoutOptions().hAlign(GConstants.HAlign.CENTER));
 
       if (source.isAbstract()) {
-         header.add(textBuilder(source, "<<Abstract>>").build());
+         header.add(buildHeaderAnnotation(source, QuotationMark.quoteDoubleAngle("Abstract")));
       }
 
-      header.add(buildIconVisibilityName(source, "--uml-class-icon"));
+      header.add(buildHeaderName(source, "--uml-class-icon"));
 
       return header.build();
    }

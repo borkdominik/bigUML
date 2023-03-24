@@ -58,7 +58,7 @@ public final class PackageNodeMapper extends BaseGNodeMapper<Package, GNode>
       var builder = compartmentHeaderBuilder(source)
          .layout(GConstants.Layout.HBOX);
 
-      builder.add(buildIconVisibilityName(source, "--uml-package-icon"));
+      builder.add(buildHeaderName(source, "--uml-package-icon"));
 
       return builder.build();
    }

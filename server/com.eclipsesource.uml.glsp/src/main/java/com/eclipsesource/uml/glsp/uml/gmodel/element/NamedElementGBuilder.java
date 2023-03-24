@@ -11,10 +11,13 @@
 package com.eclipsesource.uml.glsp.uml.gmodel.element;
 
 import org.eclipse.glsp.graph.GCompartment;
+import org.eclipse.glsp.graph.GLabel;
+import org.eclipse.glsp.graph.builder.impl.GCompartmentBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.NamedElement;
 
+import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.gmodel.builder.CompartmentGBuilder;
@@ -36,12 +39,27 @@ public interface NamedElementGBuilder<TSource extends NamedElement>
       return textBuilder(source, VisibilityKindUtils.asSingleLabel(source.getVisibility()));
    }
 
-   default GCompartment buildIconVisibilityName(final NamedElement source, final String cssProperty) {
+   default GCompartmentBuilder iconVisibilityNameBuilder(final NamedElement source, final String iconCSS) {
       return compartmentBuilder(source)
          .layout(GConstants.Layout.HBOX)
-         .add(iconFromCssPropertyBuilder(source, cssProperty).build())
+         .add(iconFromCssPropertyBuilder(source, iconCSS).build())
          .add(visibilityBuilder(source).build())
-         .add(nameBuilder(source).build())
+         .add(nameBuilder(source).build());
+   }
+
+   default GCompartment buildHeaderName(final NamedElement source, final String iconCSS) {
+      return iconVisibilityNameBuilder(source, iconCSS)
+         .addCssClass(CoreCSS.FONT_BOLD)
          .build();
+   }
+
+   default GLabel buildHeaderAnnotation(final NamedElement source, final String annotation) {
+      return textBuilder(source, annotation)
+         .addCssClass(CoreCSS.FONT_ITALIC)
+         .build();
+   }
+
+   default GCompartment buildIconVisibilityName(final NamedElement source, final String iconCSS) {
+      return iconVisibilityNameBuilder(source, iconCSS).build();
    }
 }

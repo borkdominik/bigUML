@@ -19,6 +19,7 @@ import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.Interface;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
+import com.eclipsesource.uml.glsp.core.constants.QuotationMark;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_Interface;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGNodeMapper;
 import com.eclipsesource.uml.glsp.uml.gmodel.element.NamedElementGBuilder;
@@ -44,8 +45,8 @@ public final class InterfaceNodeMapper extends BaseGNodeMapper<Interface, GNode>
       var header = compartmentHeaderBuilder(source)
          .layout(GConstants.Layout.VBOX);
 
-      header.add(textBuilder(source, "<<Interface>>").build());
-      header.add(buildIconVisibilityName(source, "--uml-interface-icon"));
+      header.add(buildHeaderAnnotation(source, QuotationMark.quoteDoubleAngle("Interface")));
+      header.add(buildHeaderName(source, "--uml-interface-icon"));
 
       return header.build();
    }

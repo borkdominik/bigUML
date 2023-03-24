@@ -19,6 +19,7 @@ import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.Substitution;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
+import com.eclipsesource.uml.glsp.core.constants.QuotationMark;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_Substitution;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGEdgeMapper;
 import com.eclipsesource.uml.glsp.uml.gmodel.element.EdgeGBuilder;
@@ -41,13 +42,13 @@ public final class SubstitutionEdgeMapper extends BaseGEdgeMapper<Substitution, 
          .routerKind(GConstants.RouterKind.MANHATTAN)
          .add(textEdgeBuilder(
             source,
-            "<<substitution>>",
+            QuotationMark.quoteDoubleAngle("substitution"),
             new GEdgePlacementBuilder()
                .side(GConstants.EdgeSide.TOP)
                .position(0.5d)
                .rotate(false)
                .build())
-            .build());
+                  .build());
 
       applyEdgeNotation(source, builder);
 

@@ -1,6 +1,6 @@
 {
   "name": "@borkdominik-biguml/uml-vscode-integration-extension",
-  "displayName": "bigUML",
+  "displayName": "bigUML Modeling Tool",
   "version": "0.1.0",
   "description": "UML-VSCode extension",
   "categories": [
@@ -12,6 +12,7 @@
     "type": "git",
     "url": "https://github.com/borkdominik/bigUML.git"
   },
+  "publisher": "BIGModelingTools",
   "main": "./lib/main",
   "files": [
     "lib",
@@ -34,38 +35,38 @@
   "contributes": {
     "commands": [
       {
-        "command": "uml.newDiagram",
+        "command": "bigUML.newDiagram",
         "title": "New Diagram",
         "category": "UML Diagram"
       },
       {
-        "command": "uml.fit",
+        "command": "bigUML.fit",
         "title": "Fit to Screen",
         "category": "UML Diagram",
-        "enablement": "activeCustomEditorId == 'uml.glspDiagram'"
+        "enablement": "activeCustomEditorId == 'bigUML.diagramView'"
       },
       {
-        "command": "uml.center",
+        "command": "bigUML.center",
         "title": "Center selection",
         "category": "UML Diagram",
-        "enablement": "activeCustomEditorId == 'uml.glspDiagram'"
+        "enablement": "activeCustomEditorId == 'bigUML.diagramView'"
       },
       {
-        "command": "uml.layout",
+        "command": "bigUML.layout",
         "title": "Layout diagram",
         "category": "UML Diagram",
-        "enablement": "activeCustomEditorId == 'uml.glspDiagram'"
+        "enablement": "activeCustomEditorId == 'bigUML.diagramView'"
       },
       {
-        "command": "uml.exportAsSVG",
+        "command": "bigUML.exportAsSVG",
         "title": "Export as SVG",
         "category": "UML Diagram",
-        "enablement": "activeCustomEditorId == 'uml.glspDiagram'"
+        "enablement": "activeCustomEditorId == 'bigUML.diagramView'"
       }
     ],
     "customEditors": [
       {
-        "viewType": "uml.glspDiagram",
+        "viewType": "bigUML.diagramView",
         "displayName": "UML Diagram Editor",
         "selector": [
           {
@@ -78,65 +79,65 @@
       {
         "key": "alt+f",
         "mac": "alt+f",
-        "command": "uml.fit",
-        "when": "activeCustomEditorId == 'uml.glspDiagram'"
+        "command": "bigUML.fit",
+        "when": "activeCustomEditorId == 'bigUML.diagramView'"
       },
       {
         "key": "alt+c",
         "mac": "alt+c",
-        "command": "uml.center",
-        "when": "activeCustomEditorId == 'uml.glspDiagram'"
+        "command": "bigUML.center",
+        "when": "activeCustomEditorId == 'bigUML.diagramView'"
       },
       {
         "key": "ctrl+a",
         "mac": "ctrl+a",
-        "command": "uml.selectAll",
-        "when": "activeCustomEditorId == 'uml.glspDiagram'"
+        "command": "bigUML.selectAll",
+        "when": "activeCustomEditorId == 'bigUML.diagramView'"
       },
       {
         "key": "alt+l",
         "mac": "alt+l",
-        "command": "uml.layout",
-        "when": "activeCustomEditorId == 'uml.glspDiagram'"
+        "command": "bigUML.layout",
+        "when": "activeCustomEditorId == 'bigUML.diagramView'"
       }
     ],
     "menus": {
       "file/newFile": [
         {
-          "command": "uml.newDiagram"
+          "command": "bigUML.newDiagram"
         }
       ],
       "editor/title": [
         {
-          "submenu": "uml.editor.title",
+          "submenu": "bigUML.editor.title",
           "group": "bookmarks"
         }
       ],
-      "uml.editor.title": [
+      "bigUML.editor.title": [
         {
-          "command": "uml.fit",
+          "command": "bigUML.fit",
           "group": "navigation",
-          "when": "activeCustomEditorId == 'uml.glspDiagram'"
+          "when": "activeCustomEditorId == 'bigUML.diagramView'"
         },
         {
-          "command": "uml.center",
+          "command": "bigUML.center",
           "group": "navigation",
-          "when": "activeCustomEditorId == 'uml.glspDiagram'"
+          "when": "activeCustomEditorId == 'bigUML.diagramView'"
         },
         {
-          "command": "uml.layout",
+          "command": "bigUML.layout",
           "group": "navigation",
-          "when": "activeCustomEditorId == 'uml.glspDiagram'"
+          "when": "activeCustomEditorId == 'bigUML.diagramView'"
         },
         {
-          "command": "uml.exportAsSVG",
-          "when": "activeCustomEditorId == 'uml.glspDiagram'"
+          "command": "bigUML.exportAsSVG",
+          "when": "activeCustomEditorId == 'bigUML.diagramView'"
         }
       ]
     },
     "submenus": [
       {
-        "id": "uml.editor.title",
+        "id": "bigUML.editor.title",
         "label": "Diagram"
       }
     ]

@@ -22,11 +22,11 @@ import { NewFileCreator } from './new-file.creator';
 export class NewFileCommand implements VSCodeCommand {
     constructor(@inject(NewFileCreator) private creator: NewFileCreator) {}
 
-    get id() {
-        return 'uml.newDiagram';
+    get id(): string {
+        return 'bigUML.newDiagram';
     }
 
-    execute(...args: any[]) {
+    execute(...args: any[]): void {
         this.creator.create();
     }
 }

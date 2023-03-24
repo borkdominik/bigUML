@@ -22,10 +22,10 @@ export const UVLangugageEnvironment: UmlLanguageEnvironment = {
 
 export const VSCodeSettings = {
     commands: {
-        prefix: 'uml'
+        prefix: 'bigUML'
     },
     editor: {
         extension: 'uml',
-        viewType: 'uml.glspDiagram'
+        viewType: 'bigUML.diagramView'
     }
 };

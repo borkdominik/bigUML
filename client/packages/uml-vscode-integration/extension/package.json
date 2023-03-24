@@ -101,6 +101,31 @@
         "when": "activeCustomEditorId == 'bigUML.diagramView'"
       }
     ],
+    "languages": [
+      {
+        "id": "bigUML.uml",
+        "extensions": [
+          ".uml"
+        ],
+        "icon": {
+          "light": "./resources/file_icons/light/uml.svg",
+          "dark": "./resources/file_icons/dark/uml.svg"
+        }
+      },
+      {
+        "id": "bigUML.unotation",
+        "extensions": [
+          ".unotation"
+        ],
+        "mimetypes": [
+          "xml"
+        ],
+        "icon": {
+          "light": "./resources/file_icons/light/unotation.svg",
+          "dark": "./resources/file_icons/dark/unotation.svg"
+        }
+      }
+    ],
     "menus": {
       "file/newFile": [
         {

@@ -219,4 +219,19 @@ public class UmlModelResourceManager extends RecordingModelResourceManager {
       return newDiagram;
    }
 
+   @Override
+   public void deleteResource(final String modeluri) throws IOException {
+      var resourceSet = getResourceSet(modeluri);
+
+      var umlResource = resourceSet.getResource(createURI(modeluri), false);
+      if (umlResource != null) {
+         umlResource.delete(null);
+      }
+
+      var notationResource = resourceSet
+         .getResource(createURI(modeluri).trimFileExtension().appendFileExtension(notationFileExtension), false);
+      if (notationResource != null) {
+         notationResource.delete(null);
+      }
+   }
 }

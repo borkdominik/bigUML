@@ -16,6 +16,7 @@
 
 import { FileSearchService } from '@theia/file-search/lib/common/file-search-service';
 import { FileService } from '@theia/filesystem/lib/browser/file-service';
+import { FileOperation } from '@theia/filesystem/lib/common/files';
 import { WorkspaceService } from '@theia/workspace/lib/browser';
 import { inject, injectable } from 'inversify';
 import URI from 'urijs';
@@ -33,20 +34,26 @@ export class WorkspaceWatcher {
     protected readonly modelServerClient: UTModelServerClient;
 
     async watch(): Promise<void> {
-        let umlFiles = await this.getUmlFiles();
-        this.fileService.onDidFilesChange(async e => {
-            if (e.gotDeleted()) {
-                e.getDeleted().forEach(d => {
-                    const path = `${d.resource.scheme}://${d.resource.path.fsPath()}`;
-                    umlFiles
-                        .filter(f => f.startsWith(path))
-                        .forEach(f => {
-                            this.modelServerClient.delete(new URI(f));
-                        });
-                });
-            }
+        this.fileService.onWillRunUserOperation(async e => {
+            let resolve: undefined | ((value: any) => void);
+            const promise = new Promise(res => {
+                resolve = res;
+            });
 
-            umlFiles = await this.getUmlFiles();
+            if (resolve !== undefined) {
+                e.waitUntil(promise);
+
+                const umlFiles = await this.getUmlFiles();
+
+                if (e.operation === FileOperation.DELETE) {
+                    const promises = umlFiles
+                        .filter(uf => uf.startsWith(e.target.toString()))
+                        .map(uf => this.modelServerClient.delete(new URI(decodeURIComponent(uf))));
+                    Promise.all(promises).then(() => resolve!(''));
+                } else {
+                    resolve('');
+                }
+            }
         });
     }
 

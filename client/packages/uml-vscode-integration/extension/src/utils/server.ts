@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2021-2022 EclipseSource and others.
+ * Copyright (c) 2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -14,13 +14,18 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 
-import { ModelServerConfig } from '@borkdominik-biguml/uml-modelserver/lib/config';
+import net from 'net';
 
-const port = process.env.UML_MODEL_SERVER_PORT ?? '8081';
-const route = '/api/v2/';
+export async function freePort(): Promise<number> {
+    return new Promise((res, rej) => {
+        const srv = net.createServer();
+        srv.listen(0, () => {
+            if (srv.address()) {
+                const port = (srv.address() as net.AddressInfo).port;
+                srv.close(err => res(port));
+            }
 
-export const MODEL_SERVER_CONFIG: ModelServerConfig = {
-    port,
-    route,
-    url: `http://localhost:${port}${route}`
-};
+            srv.close(err => rej());
+        });
+    });
+}

@@ -14,19 +14,19 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 
+import { ModelServerConfig } from '@borkdominik-biguml/uml-modelserver/lib/config';
 import * as path from 'path';
 import * as vscode from 'vscode';
-import { MODEL_SERVER_CONFIG } from '../uv-modelserver.config';
 import { ModelServerLauncher } from './modelserver-launcher';
 
 const MODEL_SERVER_PATH = '../server/modelserver';
 const MODEL_SERVER_VERSION = '0.1.0-SNAPSHOT';
 const JAVA_EXECUTABLE = path.join(__dirname, MODEL_SERVER_PATH, `com.eclipsesource.uml.modelserver-${MODEL_SERVER_VERSION}-standalone.jar`);
 
-export async function launchModelServer(context: vscode.ExtensionContext): Promise<void> {
+export async function launchModelServer(context: vscode.ExtensionContext, config: ModelServerConfig): Promise<void> {
     const serverProcess = new ModelServerLauncher({
         executable: JAVA_EXECUTABLE,
-        socketConnectionOptions: { port: JSON.parse(MODEL_SERVER_CONFIG.port) },
+        socketConnectionOptions: { port: config.port },
         additionalArgs: [],
         logging: false,
         serverType: 'java'

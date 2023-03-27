@@ -60,3 +60,7 @@ svg {
 .sprotty-projection-bar.horizontal.bordered-projection-bar {
     height: var(--uml-scrollbar-rail-width);
 }
+
+.sprotty-projection-bar .projection-scroll-bar {
+    cursor: pointer;
+}

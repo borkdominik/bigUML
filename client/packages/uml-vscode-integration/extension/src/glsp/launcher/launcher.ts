@@ -18,15 +18,18 @@ import { GlspServerLauncher } from '@eclipse-glsp/vscode-integration/lib/quickst
 import * as path from 'path';
 import * as vscode from 'vscode';
 
-export const GLSP_SERVER_PORT = process.env.UML_GLSP_SERVER_PORT ?? '5007';
 const GLSP_SERVER_PATH = '../server/glsp';
 const GLSP_SERVER_VERSION = '0.1.0-SNAPSHOT';
 const JAVA_EXECUTABLE = path.join(__dirname, GLSP_SERVER_PATH, `com.eclipsesource.uml.glsp-${GLSP_SERVER_VERSION}-glsp.jar`);
 
-export async function launchGLSPServer(context: vscode.ExtensionContext): Promise<void> {
+export interface GlspServerConfig {
+    port: number;
+}
+
+export async function launchGLSPServer(context: vscode.ExtensionContext, config: GlspServerConfig): Promise<void> {
     const serverProcess = new GlspServerLauncher({
         executable: JAVA_EXECUTABLE,
-        socketConnectionOptions: { port: JSON.parse(GLSP_SERVER_PORT) },
+        socketConnectionOptions: { port: config.port },
         additionalArgs: ['--fileLog', 'true', '--logDir', path.join(__dirname, GLSP_SERVER_PATH)],
         logging: false,
         serverType: 'java'

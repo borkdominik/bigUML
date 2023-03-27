@@ -17,7 +17,9 @@
 export const TYPES = {
     Connector: Symbol('Connector'),
     GlspServer: Symbol('GlspServer'),
-    ModelServerClient: Symbol('ModelServerClient')
+    ModelServerClient: Symbol('ModelServerClient'),
+    GlspServerConfig: Symbol('GlspServerConfig'),
+    ModelServerConfig: Symbol('ModelServerConfig')
 };
 
 export const VSCODE_TYPES = {

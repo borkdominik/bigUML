@@ -35,7 +35,7 @@ export class WorkspaceWatcher {
 
     async watch(): Promise<void> {
         this.fileService.onWillRunUserOperation(async e => {
-            let resolve: undefined | ((value: any) => void);
+            let resolve: undefined | ((value: unknown) => void);
             const promise = new Promise(res => {
                 resolve = res;
             });
@@ -49,9 +49,9 @@ export class WorkspaceWatcher {
                     const promises = umlFiles
                         .filter(uf => uf.startsWith(e.target.toString()))
                         .map(uf => this.modelServerClient.delete(new URI(decodeURIComponent(uf))));
-                    Promise.all(promises).then(() => resolve!(''));
+                    Promise.all(promises).then(() => resolve!(undefined));
                 } else {
-                    resolve('');
+                    resolve(undefined);
                 }
             }
         });

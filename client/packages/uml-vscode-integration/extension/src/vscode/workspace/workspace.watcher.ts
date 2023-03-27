@@ -36,13 +36,14 @@ export class WorkspaceWatcher {
             e.waitUntil(promise);
 
             const workspaceUmlFiles = await vscode.workspace.findFiles(`**/*.${VSCodeSettings.editor.extension}`);
-            const jobs: Promise<any>[] = [];
+            const jobs: Promise<unknown>[] = [];
 
             e.files.forEach(df => {
                 const umlFiles = workspaceUmlFiles.filter(uf => uf.path.startsWith(df.path));
 
                 umlFiles.forEach(uf => {
-                    jobs.push(this.modelServerClient.delete(new URI(uf.path)));
+                    const uri = new URI(decodeURIComponent(uf.toString()));
+                    jobs.push(this.modelServerClient.delete(uri));
                 });
             });
 

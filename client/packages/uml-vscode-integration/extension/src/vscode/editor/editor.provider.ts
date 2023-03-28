@@ -74,7 +74,7 @@ export class EditorProvider extends GlspEditorProvider {
                     <meta charset="UTF-8">
                     <meta name="viewport" content="width=device-width, height=device-height">
 					<meta http-equiv="Content-Security-Policy" content="
-                default-src http://*.fontawesome.com  ${webview.cspSource} 'unsafe-inline' 'unsafe-eval';
+                default-src http://*.fontawesome.com  ${webview.cspSource} data: 'unsafe-inline' 'unsafe-eval';
                 ">
 				<link href="${codiconsUri}" rel="stylesheet" />
 				<link href="${mainCSSUri}" rel="stylesheet" />

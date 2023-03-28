@@ -14,6 +14,7 @@ import com.eclipsesource.uml.glsp.core.manifest.DiagramManifest;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramCreateHandlerContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramDeleteHandlerContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramLabelEditMapperContribution;
+import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramLabelEditValidatorContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramUpdateHandlerContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.SuffixIdAppenderContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.glsp.ActionHandlerContribution;
@@ -49,6 +50,8 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.label_edit.
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.label_edit.PackageLabelEditMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.label_edit.PrimitiveTypeLabelEditMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.label_edit.PropertyLabelEditMapper;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.label_edit.validation.BlankLabelEditValidator;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.label_edit.validation.PropertyLabelEditValidator;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.property_palette.AbstractionPropertyMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.property_palette.AssociationPropertyMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.property_palette.ClassPropertyMapper;
@@ -162,7 +165,7 @@ public final class ClassUmlManifest extends DiagramManifest
    implements DiagramCreateHandlerContribution,
    DiagramDeleteHandlerContribution, DiagramLabelEditMapperContribution, SuffixIdAppenderContribution,
    DiagramElementPropertyMapperContribution, DiagramUpdateHandlerContribution,
-   ClientActionContribution, ActionHandlerContribution {
+   ClientActionContribution, ActionHandlerContribution, DiagramLabelEditValidatorContribution {
 
    @Override
    public String id() {
@@ -343,5 +346,10 @@ public final class ClassUmlManifest extends DiagramManifest
          contribution.addBinding().to(SubstitutionPropertyMapper.class);
          contribution.addBinding().to(UsagePropertyMapper.class);
       });
+
+      contributeDiagramLabelEditValidators((contribution -> {
+         contribution.addBinding().to(BlankLabelEditValidator.class);
+         contribution.addBinding().to(PropertyLabelEditValidator.class);
+      }));
    }
 }

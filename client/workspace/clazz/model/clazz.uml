@@ -2,12 +2,12 @@
 <uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_Cfp0UGmxEe2kLe5KTNzRtw" name="clazz">
   <packagedElement xmi:type="uml:Class" xmi:id="_QE0EkK7gEe2EZoZ5sgiBCg" name="asd">
     <ownedAttribute xmi:id="_bM_S4K7gEe2EZoZ5sgiBCg" name="NewProperty1" type="_9pVK8LK0Ee24ffphK9Na6g">
-      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_bM_58K7gEe2EZoZ5sgiBCg" value="1"/>
-      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_bNAhAK7gEe2EZoZ5sgiBCg" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_bM_58K7gEe2EZoZ5sgiBCg" value="3"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_bNAhAK7gEe2EZoZ5sgiBCg" value="4"/>
     </ownedAttribute>
     <ownedAttribute xmi:id="_g69BoK7oEe2EZoZ5sgiBCg" name="NewProperty2">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_g69Boa7oEe2EZoZ5sgiBCg" value="1"/>
-      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_g69Boq7oEe2EZoZ5sgiBCg" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_g69Boq7oEe2EZoZ5sgiBCg" value="*"/>
     </ownedAttribute>
     <ownedAttribute xmi:id="_O3oC8bK1Ee24ffphK9Na6g" name="NewClass1" type="_MHjIALK1Ee24ffphK9Na6g" aggregation="shared" association="_O3oC8LK1Ee24ffphK9Na6g">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_O3oqALK1Ee24ffphK9Na6g" value="1"/>
@@ -82,5 +82,10 @@
   <packagedElement xmi:type="uml:Usage" xmi:id="_FGLhkLK2Ee24ffphK9Na6g" client="_Mg74YLK1Ee24ffphK9Na6g" supplier="_D0YigLK2Ee24ffphK9Na6g"/>
   <packagedElement xmi:type="uml:Class" xmi:id="_LjfcIbSLEe2pkZx4lGC8Ew" name="asd2"/>
   <packagedElement xmi:type="uml:Class" xmi:id="_j12MQL0cEe2besM683MlUA" name="NewClass8" isAbstract="true"/>
-  <packagedElement xmi:type="uml:Class" xmi:id="_Uk2g0cymEe2SqIqlz0mqiA" name="NewClass9"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="_Uk2g0cymEe2SqIqlz0mqiA" name="NewClass9">
+    <ownedAttribute xmi:id="_uKNqAc1tEe2aWMTUBOnCiQ" name="NewProperty1" type="_j12MQL0cEe2besM683MlUA">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_uK1VEM1tEe2aWMTUBOnCiQ" value="3"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_uK1VEc1tEe2aWMTUBOnCiQ" value="5"/>
+    </ownedAttribute>
+  </packagedElement>
 </uml:Model>

@@ -23,6 +23,8 @@ import org.eclipse.glsp.server.di.MultiBinding;
 import org.eclipse.glsp.server.emf.EMFIdGenerator;
 import org.eclipse.glsp.server.emf.idgen.FragmentIdGenerator;
 import org.eclipse.glsp.server.features.contextmenu.ContextMenuItemProvider;
+import org.eclipse.glsp.server.features.directediting.LabelEditValidator;
+import org.eclipse.glsp.server.features.directediting.RequestEditValidationHandler;
 import org.eclipse.glsp.server.features.validation.ModelValidator;
 import org.eclipse.glsp.server.operations.OperationHandler;
 import org.eclipse.uml2.uml.UMLPackage;
@@ -32,6 +34,8 @@ import com.eclipsesource.uml.glsp.core.diagram.UmlDiagramConfiguration;
 import com.eclipsesource.uml.glsp.core.features.context_menu.UmlContextMenuItemProvider;
 import com.eclipsesource.uml.glsp.core.features.label_edit.DiagramLabelEditMapperRegistry;
 import com.eclipsesource.uml.glsp.core.features.label_edit.UmlLabelEditOperationHandler;
+import com.eclipsesource.uml.glsp.core.features.label_edit.validation.DiagramLabelEditValidatorRegistry;
+import com.eclipsesource.uml.glsp.core.features.label_edit.validation.UmlLabelEditValidator;
 import com.eclipsesource.uml.glsp.core.features.tool_palette.UmlToolPaletteItemProvider;
 import com.eclipsesource.uml.glsp.core.gmodel.DiagramMapper;
 import com.eclipsesource.uml.glsp.core.gmodel.GModelMapHandler;
@@ -39,6 +43,7 @@ import com.eclipsesource.uml.glsp.core.gmodel.GModelMapperRegistry;
 import com.eclipsesource.uml.glsp.core.gmodel.UmlGModelFactory;
 import com.eclipsesource.uml.glsp.core.handler.action.UmlOperationActionHandler;
 import com.eclipsesource.uml.glsp.core.handler.action.UmlRefreshModelActionHandler;
+import com.eclipsesource.uml.glsp.core.handler.action.UmlRequestEditValidationHandler;
 import com.eclipsesource.uml.glsp.core.handler.operation.UmlChangeBoundsOperationHandler;
 import com.eclipsesource.uml.glsp.core.handler.operation.UmlChangeRoutingPointsOperationHandler;
 import com.eclipsesource.uml.glsp.core.handler.operation.UmlOperationHandlerRegistry;
@@ -91,6 +96,7 @@ public class UmlDiagramModule extends EMSGLSPNotationDiagramModule {
       bind(DiagramDeleteHandlerRegistry.class).in(Singleton.class);
       bind(DiagramLabelEditMapperRegistry.class).in(Singleton.class);
       bind(DiagramUpdateHandlerRegistry.class).in(Singleton.class);
+      bind(DiagramLabelEditValidatorRegistry.class).in(Singleton.class);
    }
 
    @Override
@@ -146,6 +152,11 @@ public class UmlDiagramModule extends EMSGLSPNotationDiagramModule {
    }
 
    @Override
+   protected Class<? extends LabelEditValidator> bindLabelEditValidator() {
+      return UmlLabelEditValidator.class;
+   }
+
+   @Override
    protected Class<? extends ContextMenuItemProvider> bindContextMenuItemProvider() {
       return UmlContextMenuItemProvider.class;
    }
@@ -179,6 +190,7 @@ public class UmlDiagramModule extends EMSGLSPNotationDiagramModule {
 
       bindings.rebind(EMSOperationActionHandler.class, UmlOperationActionHandler.class);
       bindings.rebind(EMSRefreshModelActionHandler.class, UmlRefreshModelActionHandler.class);
+      bindings.rebind(RequestEditValidationHandler.class, UmlRequestEditValidationHandler.class);
    }
 
    @Override

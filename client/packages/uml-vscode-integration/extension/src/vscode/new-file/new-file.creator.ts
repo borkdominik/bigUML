@@ -55,7 +55,7 @@ export class NewFileCreator {
     protected createUmlDiagram(diagramName: string, diagramType: string): void {
         const workspaces = vscode.workspace.workspaceFolders;
         if (workspaces && workspaces.length > 0) {
-            const workspaceRoot = new URI(workspaces[0].uri.toString());
+            const workspaceRoot = new URI(decodeURIComponent(workspaces[0].uri.toString()));
             const modelUri = new URI(workspaceRoot + `/${diagramName}/model/${diagramName}.uml`);
 
             this.client

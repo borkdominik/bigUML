@@ -11,17 +11,10 @@
 import {
     Args,
     boundsFeature,
-    Deletable,
-    deletableFeature,
     fadeFeature,
-    Hoverable,
-    hoverFeedbackFeature,
     layoutableChildFeature,
     layoutContainerFeature,
     SArgumentable,
-    SCompartment,
-    Selectable,
-    selectFeature,
     SShapeElement
 } from '@eclipse-glsp/client';
 
@@ -37,13 +30,4 @@ export class Icon extends SShapeElement {
 
 export class IconCSS extends Icon implements SArgumentable {
     args: Args;
-}
-
-export class IconLabelCompartment extends SCompartment implements Selectable, Deletable, Hoverable {
-    selected = false;
-    hoverFeedback = false;
-
-    override hasFeature(feature: symbol): boolean {
-        return super.hasFeature(feature) || feature === selectFeature || feature === deletableFeature || feature === hoverFeedbackFeature;
-    }
 }

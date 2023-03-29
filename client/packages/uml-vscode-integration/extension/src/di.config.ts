@@ -28,6 +28,7 @@ import { DisposableManager } from './vscode/disposable/disposable.manager';
 import { EditorProvider } from './vscode/editor/editor.provider';
 import { NewFileCommand } from './vscode/new-file/new-file.command';
 import { NewFileCreator } from './vscode/new-file/new-file.creator';
+import { OutputChannel } from './vscode/output/output.channel';
 import { WorkspaceWatcher } from './vscode/workspace/workspace.watcher';
 
 export function createContainer(
@@ -57,6 +58,8 @@ export function createContainer(
         bind(VSCODE_TYPES.Disposable).toService(TYPES.Connector);
 
         bind(VSCODE_TYPES.EditorProvider).to(EditorProvider).inSingletonScope();
+
+        bind(VSCODE_TYPES.OutputChannel).to(OutputChannel).inSingletonScope();
 
         bind(VSCODE_TYPES.Watcher).to(WorkspaceWatcher).inSingletonScope();
 

@@ -33,7 +33,10 @@
       ],
       "outFiles": ["${workspaceFolder}/packages/uml-vscode-integration/extension/lib/*.js"],
       "sourceMaps": true,
-      "env": {}
+      "env": {
+        "UML_GLSP_SERVER_LOGGING": "false",
+        "UML_MODEL_SERVER_LOGGING": "false"
+      }
     }
   ]
 }

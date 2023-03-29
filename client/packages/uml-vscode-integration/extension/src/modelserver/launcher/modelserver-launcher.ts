@@ -14,10 +14,15 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 
+import { ModelServerConfig } from '@borkdominik-biguml/uml-modelserver/lib/config';
 import * as childProcess from 'child_process';
 import * as fs from 'fs';
+import { Container, inject, injectable } from 'inversify';
 import * as net from 'net';
+import * as path from 'path';
 import * as vscode from 'vscode';
+import { TYPES, VSCODE_TYPES } from '../../di.types';
+import { OutputChannel } from '../../vscode/output/output.channel';
 
 const START_UP_COMPLETE_MSG = 'Javalin started in';
 const LOG_PREFIX = '[Model-Server]';
@@ -34,6 +39,26 @@ interface JavaSocketServerLauncherOptions {
     readonly additionalArgs?: string[];
 }
 
+const MODEL_SERVER_PATH = '../server/modelserver';
+const MODEL_SERVER_VERSION = '0.1.0-SNAPSHOT';
+const JAVA_EXECUTABLE = path.join(__dirname, MODEL_SERVER_PATH, `com.eclipsesource.uml.modelserver-${MODEL_SERVER_VERSION}-standalone.jar`);
+
+export async function launchModelServer(container: Container, config: ModelServerConfig): Promise<void> {
+    const launchOptions: JavaSocketServerLauncherOptions = {
+        executable: JAVA_EXECUTABLE,
+        socketConnectionOptions: { port: config.port },
+        additionalArgs: [],
+        logging: process.env.UML_MODEL_SERVER_LOGGING === 'true',
+        serverType: 'java'
+    };
+
+    container.bind(TYPES.ModelServerLaunchOptions).toConstantValue(launchOptions);
+    container.bind(TYPES.ModelServerLauncher).to(ModelServerLauncher).inSingletonScope();
+    container.bind(VSCODE_TYPES.Disposable).toService(TYPES.ModelServerLauncher);
+
+    await container.get<ModelServerLauncher>(TYPES.ModelServerLauncher).start();
+}
+
 /**
  * This component can be used to bootstrap your extension when using the default
  * GLSP server implementations, which you can find here:
@@ -46,12 +71,15 @@ interface JavaSocketServerLauncherOptions {
  * If you need a component to quickly connect your default GLSP server to the GLSP-VSCode
  * integration, take a look at the `SocketGlspVscodeServer` quickstart component.
  */
+@injectable()
 export class ModelServerLauncher implements vscode.Disposable {
     protected readonly options: Required<JavaSocketServerLauncherOptions>;
     protected serverProcess?: childProcess.ChildProcess;
 
-    constructor(options: JavaSocketServerLauncherOptions) {
-        // Create default options
+    constructor(
+        @inject(VSCODE_TYPES.OutputChannel) protected readonly outputChannel: OutputChannel,
+        @inject(TYPES.ModelServerLaunchOptions) options: JavaSocketServerLauncherOptions
+    ) {
         this.options = {
             logging: false,
             additionalArgs: [],
@@ -76,6 +104,7 @@ export class ModelServerLauncher implements vscode.Disposable {
 
             process.stdout.on('data', data => {
                 if (data.toString().includes(START_UP_COMPLETE_MSG)) {
+                    this.outputChannel.channel.appendLine(`The ${LOG_PREFIX} listens on port ${this.options.socketConnectionOptions.port}`);
                     resolve();
                 }
 
@@ -111,20 +140,20 @@ export class ModelServerLauncher implements vscode.Disposable {
 
     protected handleStdoutData(data: string | Buffer): void {
         if (this.options.logging) {
-            console.log(LOG_PREFIX, data.toString());
+            this.outputChannel.channel.appendLine(`${LOG_PREFIX} ${data.toString()}`);
         }
     }
 
     protected handleStderrData(data: string | Buffer): void {
-        if (data && this.options.logging) {
+        if (data) {
             console.error(LOG_PREFIX, data.toString());
+            this.outputChannel.channel.appendLine(`${LOG_PREFIX} ${data.toString()}`);
         }
     }
 
     protected handleProcessError(error: Error): never {
-        if (this.options.logging) {
-            console.error(LOG_PREFIX, error);
-        }
+        console.error(LOG_PREFIX, error);
+        this.outputChannel.channel.appendLine(`${LOG_PREFIX} ${error.toString()}`);
 
         throw error;
     }

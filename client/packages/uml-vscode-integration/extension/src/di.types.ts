@@ -17,9 +17,13 @@
 export const TYPES = {
     Connector: Symbol('Connector'),
     GlspServer: Symbol('GlspServer'),
-    ModelServerClient: Symbol('ModelServerClient'),
     GlspServerConfig: Symbol('GlspServerConfig'),
-    ModelServerConfig: Symbol('ModelServerConfig')
+    GlspServerLauncher: Symbol('GlspServerLauncher'),
+    GlspServerLaunchOptions: Symbol('GlspServerLaunchOptions'),
+    ModelServerClient: Symbol('ModelServerClient'),
+    ModelServerConfig: Symbol('ModelServerConfig'),
+    ModelServerLauncher: Symbol('ModelServerLauncher'),
+    ModelServerLaunchOptions: Symbol('ModelServerLaunchOptions')
 };
 
 export const VSCODE_TYPES = {
@@ -29,6 +33,7 @@ export const VSCODE_TYPES = {
     DisposableManager: Symbol('DisposableManager'),
     EditorProvider: Symbol('EditorProvider'),
     ExtensionContext: Symbol('ExtensionContext'),
+    OutputChannel: Symbol('OutputChannel'),
     Watcher: Symbol('Watcher')
 };
 

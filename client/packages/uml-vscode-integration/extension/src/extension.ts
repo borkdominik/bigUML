@@ -22,9 +22,9 @@ import * as vscode from 'vscode';
 import { createContainer } from './di.config';
 import { TYPES, VSCODE_TYPES } from './di.types';
 import { UVGlspServer } from './glsp/connection/uv-glsp-server';
-import { GlspServerConfig, launchGLSPServer } from './glsp/launcher/launcher';
+import { GlspServerConfig, launchGLSPServer } from './glsp/launcher/glsp-server-launcher';
 import { VSCodeSettings } from './language';
-import { launchModelServer } from './modelserver/launcher/launcher';
+import { launchModelServer } from './modelserver/launcher/modelserver-launcher';
 import { freePort } from './utils/server';
 
 const modelServerRoute = '/api/v2/';
@@ -47,11 +47,11 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     });
 
     if (process.env.UML_MODEL_SERVER_DEBUG !== 'true') {
-        await launchModelServer(context, modelServerConfig);
+        await launchModelServer(container, modelServerConfig);
     }
 
     if (process.env.UML_GLSP_SERVER_DEBUG !== 'true') {
-        await launchGLSPServer(context, glspServerConfig);
+        await launchGLSPServer(container, glspServerConfig);
     }
 
     configureDefaultCommands({

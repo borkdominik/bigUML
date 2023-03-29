@@ -1,38 +1,40 @@
-.label-edit input {
+/* Override */
+
+.uml-theme .label-edit input {
     background: rgba(255, 255, 255, 0.5);
     color: var(--uml-label);
 }
 
-.autocomplete {
+.uml-theme .autocomplete {
     position: relative;
     display: inline-block;
 }
 
-.autocomplete-items {
+.uml-theme .autocomplete-items {
     position: absolute;
-    border: 1px solid #d4d4d4;
     color: black;
-    border-bottom: none;
-    border-top: none;
     z-index: 99;
     top: 100%;
     left: 0;
     right: 0;
-    overflow: auto;
+    min-width: 128px;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
-.autocomplete-item {
+.uml-theme .autocomplete-item {
     padding: 6px;
     cursor: pointer;
     background-color: #fff;
     border-bottom: 1px solid #d4d4d4;
+    word-wrap: break-word;
 }
 
-.autocomplete-item:hover {
+.uml-theme .autocomplete-item:hover {
     background-color: #e9e9e9;
 }
 
-.autocomplete-active {
+.uml-theme .autocomplete-active {
     background-color: DodgerBlue !important;
     color: #ffffff;
 }

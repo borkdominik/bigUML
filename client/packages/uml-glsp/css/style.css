@@ -11,5 +11,9 @@
 @import 'base/edge.css';
 @import 'base/node.css';
 @import 'base/text.css';
-
 @import 'base/marker.css';
+
+@import 'extensions/uml-edit-label.css';
+@import 'extensions/uml-tool-palette.css';
+@import 'extensions/uml-editor-panel.css';
+@import 'extensions/uml-property-palette.css';

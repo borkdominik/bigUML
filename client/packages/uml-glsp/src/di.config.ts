@@ -18,8 +18,6 @@ import '@eclipse-glsp/client/css/glsp-sprotty.css';
 
 import '../css/style.css';
 
-import '../css/extensions/edit-label.css';
-
 import {
     configureDefaultModelElements,
     configureModelElement,
@@ -29,7 +27,6 @@ import {
     GLSPGraph,
     LogLevel,
     overrideViewerOptions,
-    saveModule,
     TYPES
 } from '@eclipse-glsp/client';
 import toolPaletteModule from '@eclipse-glsp/client/lib/features/tool-palette/di.config';
@@ -75,18 +72,11 @@ export default function createContainer(widgetId: string): Container {
         });
     });
 
-    const container = createDiagramContainer(
-        saveModule,
-        coreDiagramModule,
-        themeModule,
-        editorPanelModule,
-        umlToolPaletteModule,
-        outlineModule,
-        propertyPaletteModule,
-        ...umlDiagramModules
-    );
+    const container = createDiagramContainer(coreDiagramModule);
 
     container.unload(toolPaletteModule);
+
+    container.load(themeModule, editorPanelModule, umlToolPaletteModule, outlineModule, propertyPaletteModule, ...umlDiagramModules);
 
     overrideViewerOptions(container, {
         baseDiv: widgetId,

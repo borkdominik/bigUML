@@ -13,10 +13,13 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
+
 import { createUmlDiagramContainer } from '@borkdominik-biguml/uml-glsp/lib';
+
+import '@eclipse-glsp/vscode-integration-webview/css/glsp-vscode.css';
+
 import { OutlineService } from '@borkdominik-biguml/uml-glsp/lib/features/outline';
 import { GLSPStarter } from '@eclipse-glsp/vscode-integration-webview';
-import '@eclipse-glsp/vscode-integration-webview/css/glsp-vscode.css';
 import { GLSPDiagramIdentifier } from '@eclipse-glsp/vscode-integration-webview/lib/diagram-identifer';
 import { GLSPVscodeDiagramWidget } from '@eclipse-glsp/vscode-integration-webview/lib/glsp-vscode-diagram-widget';
 import { Container } from 'inversify';

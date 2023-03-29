@@ -87,5 +87,8 @@
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_uK1VEM1tEe2aWMTUBOnCiQ" value="3"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_uK1VEc1tEe2aWMTUBOnCiQ" value="5"/>
     </ownedAttribute>
+    <ownedOperation xmi:id="_45WxkM5PEe2J1pPdCxXkdw" name="NewOperation1" visibility="public">
+      <ownedParameter xmi:id="_8YNeEM5PEe2J1pPdCxXkdw" name="NewParameter1" type="_MHjIALK1Ee24ffphK9Na6g"/>
+    </ownedOperation>
   </packagedElement>
 </uml:Model>

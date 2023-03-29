@@ -1,6 +1,7 @@
 import * as esbuild from 'esbuild';
 
-// TODO: Switch to arguments
+const minify = process.argv.includes('--es-minify');
+const watch = process.argv.includes('--es-watch');
 
 const options: esbuild.BuildOptions = {
     entryPoints: ['./src/index.ts'],
@@ -8,7 +9,7 @@ const options: esbuild.BuildOptions = {
     bundle: true,
     sourcemap: true,
     color: true,
-    minify: process.env.ES_MINIFY ? true : false,
+    minify,
     logLevel: 'info',
     format: 'cjs',
     platform: 'node',
@@ -23,7 +24,7 @@ const options: esbuild.BuildOptions = {
     }
 };
 
-if (process.env.ES_WATCH) {
+if (watch) {
     const context = await esbuild.context(options);
     await context.watch();
 } else {

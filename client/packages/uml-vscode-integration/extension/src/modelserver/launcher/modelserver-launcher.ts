@@ -162,9 +162,12 @@ export class ModelServerLauncher implements vscode.Disposable {
      * Stops the server.
      */
     stop(): void {
-        if (this.serverProcess && !this.serverProcess.killed) {
-            this.serverProcess.kill('SIGINT');
-            // TODO: Think of a process that does this elegantly with the same consistency.
+        if (this.serverProcess && this.serverProcess.pid && !this.serverProcess.killed) {
+            if (process.platform == 'win32') {
+                childProcess.execSync(`taskkill /F /T /PID ${this.serverProcess.pid}`);
+            } else {
+                this.serverProcess.kill('SIGINT');
+            }
         }
     }
 

@@ -22,7 +22,7 @@
   ],
   "scripts": {
     "build": "tsx .esbuild.mts",
-    "build:prod": "ES_MINIFY=true yarn build",
+    "build:prod": "yarn build --es-minify",
     "clean": "rimraf lib tsconfig.tsbuildinfo server/**/*.log",
     "lint": "eslint --ext .ts,.tsx ./src",
     "lint:ci": "yarn lint -o eslint.xml -f checkstyle",
@@ -30,7 +30,7 @@
     "package": "vsce package --yarn",
     "prepare": "yarn clean && yarn build",
     "vscode:prepublish": "yarn build:prod",
-    "watch": "ES_WATCH=true yarn build"
+    "watch": "yarn build --es-watch"
   },
   "contributes": {
     "commands": [

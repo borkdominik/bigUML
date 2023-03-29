@@ -163,7 +163,7 @@ export class ModelServerLauncher implements vscode.Disposable {
      */
     stop(): void {
         if (this.serverProcess && this.serverProcess.pid && !this.serverProcess.killed) {
-            if (process.platform == 'win32') {
+            if (process.platform === 'win32') {
                 childProcess.execSync(`taskkill /F /T /PID ${this.serverProcess.pid}`);
             } else {
                 this.serverProcess.kill('SIGINT');

@@ -12,7 +12,7 @@
 }
 
 .uml-theme .tool-palette .palette-body {
-    overflow-y: scroll;
+    overflow-y: auto;
     height: 100%;
 }
 

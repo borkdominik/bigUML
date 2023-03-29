@@ -25,7 +25,7 @@ public class PropertyLabelEditValidator extends BaseLabelEditValidator<Property>
    protected ValidationStatus validateLabelEdit(final String label, final GModelElement source,
       final Property element) {
 
-      if (label.isBlank()) {
+      if (label.isBlank() && element.getAssociation() == null) {
          return ValidationStatus.error("Blank values are not allowed.");
       }
 

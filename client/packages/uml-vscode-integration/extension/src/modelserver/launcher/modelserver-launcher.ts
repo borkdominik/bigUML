@@ -20,6 +20,7 @@ import * as net from 'net';
 import * as vscode from 'vscode';
 
 const START_UP_COMPLETE_MSG = 'Javalin started in';
+const LOG_PREFIX = '[Model-Server]';
 
 interface JavaSocketServerLauncherOptions {
     /** Path to the location of the server executable (JAR or node module) that should be launched as process */
@@ -90,7 +91,11 @@ export class ModelServerLauncher implements vscode.Disposable {
         if (!this.options.executable.endsWith('jar')) {
             throw new Error(`Could not launch Java Model server. The given executable is no JAR: ${this.options.executable}`);
         }
+
+        // TODO: Workaround https://github.com/eclipse-glsp/glsp/issues/727
         const args = [
+            '--add-opens',
+            'java.base/java.util=ALL-UNNAMED',
             '-jar',
             this.options.executable,
             '--port',
@@ -106,19 +111,19 @@ export class ModelServerLauncher implements vscode.Disposable {
 
     protected handleStdoutData(data: string | Buffer): void {
         if (this.options.logging) {
-            console.log('Model-Server:', data.toString());
+            console.log(LOG_PREFIX, data.toString());
         }
     }
 
     protected handleStderrData(data: string | Buffer): void {
         if (data && this.options.logging) {
-            console.error('Model-Server:', data.toString());
+            console.error(LOG_PREFIX, data.toString());
         }
     }
 
     protected handleProcessError(error: Error): never {
         if (this.options.logging) {
-            console.error('Model-Server:', error);
+            console.error(LOG_PREFIX, error);
         }
 
         throw error;

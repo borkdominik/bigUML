@@ -1,5 +1,5 @@
 {
-  "name": "@borkdominik-biguml/uml-vscode-integration-extension",
+  "name": "biguml-vscode",
   "displayName": "bigUML Modeling Tool",
   "version": "0.1.0",
   "description": "UML-VSCode extension",
@@ -23,7 +23,7 @@
   "scripts": {
     "build": "tsx .esbuild.mts",
     "build:prod": "ES_MINIFY=true yarn build",
-    "clean": "rimraf lib tsconfig.tsbuildinfo ",
+    "clean": "rimraf lib tsconfig.tsbuildinfo server/**/*.log",
     "lint": "eslint --ext .ts,.tsx ./src",
     "lint:ci": "yarn lint -o eslint.xml -f checkstyle",
     "lint:fix": "eslint --fix --ext .ts,.tsx ./src",

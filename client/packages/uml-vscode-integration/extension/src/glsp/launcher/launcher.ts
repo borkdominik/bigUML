@@ -14,9 +14,9 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 
-import { GlspServerLauncher } from '@eclipse-glsp/vscode-integration/lib/quickstart-components/glsp-server-launcher';
 import * as path from 'path';
 import * as vscode from 'vscode';
+import { UmlGLSPServerLauncher } from './glsp-server-launcher';
 
 const GLSP_SERVER_PATH = '../server/glsp';
 const GLSP_SERVER_VERSION = '0.1.0-SNAPSHOT';
@@ -27,11 +27,11 @@ export interface GlspServerConfig {
 }
 
 export async function launchGLSPServer(context: vscode.ExtensionContext, config: GlspServerConfig): Promise<void> {
-    const serverProcess = new GlspServerLauncher({
+    const serverProcess = new UmlGLSPServerLauncher({
         executable: JAVA_EXECUTABLE,
         socketConnectionOptions: { port: config.port },
-        additionalArgs: ['--fileLog', 'true', '--logDir', path.join(__dirname, GLSP_SERVER_PATH)],
-        logging: false,
+        additionalArgs: ['--fileLog', 'false', '--logDir', path.join(__dirname, GLSP_SERVER_PATH)],
+        logging: true,
         serverType: 'java'
     });
     context.subscriptions.push(serverProcess);

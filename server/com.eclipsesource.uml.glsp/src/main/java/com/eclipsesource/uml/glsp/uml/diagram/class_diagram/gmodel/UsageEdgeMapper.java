@@ -39,7 +39,7 @@ public final class UsageEdgeMapper extends BaseGEdgeMapper<Usage, GEdge> impleme
          .addCssClass(CoreCSS.Marker.TENT.end())
          .sourceId(clientId)
          .targetId(supplierId)
-         .routerKind(GConstants.RouterKind.MANHATTAN)
+         .routerKind(GConstants.RouterKind.POLYLINE)
          .add(textEdgeBuilder(
             source,
             QuotationMark.quoteDoubleAngle("use"),
@@ -48,7 +48,7 @@ public final class UsageEdgeMapper extends BaseGEdgeMapper<Usage, GEdge> impleme
                .position(0.5d)
                .rotate(false)
                .build())
-                  .build());
+            .build());
 
       applyEdgeNotation(source, builder);
 

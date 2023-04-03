@@ -39,7 +39,7 @@ public final class PackageImportEdgeMapper extends BaseGEdgeMapper<PackageImport
          .addCssClass(CoreCSS.Marker.TENT.end())
          .sourceId(nearestPackageId)
          .targetId(importedPackageId)
-         .routerKind(GConstants.RouterKind.MANHATTAN)
+         .routerKind(GConstants.RouterKind.POLYLINE)
          .add(textEdgeBuilder(
             source,
             QuotationMark.quoteDoubleAngle("import"),
@@ -48,7 +48,7 @@ public final class PackageImportEdgeMapper extends BaseGEdgeMapper<PackageImport
                .position(0.5d)
                .rotate(false)
                .build())
-                  .build());
+            .build());
 
       applyEdgeNotation(source, builder);
 

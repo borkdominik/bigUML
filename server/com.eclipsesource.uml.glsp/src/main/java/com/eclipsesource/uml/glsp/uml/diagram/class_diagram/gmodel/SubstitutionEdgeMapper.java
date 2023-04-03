@@ -39,7 +39,7 @@ public final class SubstitutionEdgeMapper extends BaseGEdgeMapper<Substitution, 
          .addCssClass(CoreCSS.Marker.TENT.end())
          .sourceId(substitutingClassifierId)
          .targetId(contractId)
-         .routerKind(GConstants.RouterKind.MANHATTAN)
+         .routerKind(GConstants.RouterKind.POLYLINE)
          .add(textEdgeBuilder(
             source,
             QuotationMark.quoteDoubleAngle("substitution"),
@@ -48,7 +48,7 @@ public final class SubstitutionEdgeMapper extends BaseGEdgeMapper<Substitution, 
                .position(0.5d)
                .rotate(false)
                .build())
-                  .build());
+            .build());
 
       applyEdgeNotation(source, builder);
 

@@ -32,7 +32,7 @@ public final class AssociationEdgeMapper extends BaseGEdgeMapper<Association, GE
       var builder = new GEdgeBuilder(UmlClass_Association.typeId())
          .id(idGenerator.getOrCreateId(source))
          .addCssClass(CoreCSS.EDGE)
-         .routerKind(GConstants.RouterKind.MANHATTAN);
+         .routerKind(GConstants.RouterKind.POLYLINE);
 
       applyMemberEnds(source, builder);
       applyEdgeNotation(source, builder);
@@ -61,7 +61,8 @@ public final class AssociationEdgeMapper extends BaseGEdgeMapper<Association, GE
             .side(GConstants.EdgeSide.TOP)
             .position(position)
             .rotate(false)
-            .build()).build());
+            .build())
+         .build());
 
       builder.add(
          textEdgeBuilder(
@@ -73,7 +74,8 @@ public final class AssociationEdgeMapper extends BaseGEdgeMapper<Association, GE
                .position(position)
                .offset(10d)
                .rotate(false)
-               .build()).build());
+               .build())
+            .build());
 
       var marker = CoreCSS.Marker.from(memberEnd.getAggregation());
       builder.addCssClass(position < 0.5d ? marker.start() : marker.end());

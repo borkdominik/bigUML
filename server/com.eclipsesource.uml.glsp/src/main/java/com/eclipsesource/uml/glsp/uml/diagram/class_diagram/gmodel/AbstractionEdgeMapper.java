@@ -39,7 +39,7 @@ public final class AbstractionEdgeMapper extends BaseGEdgeMapper<Abstraction, GE
          .addCssClass(CoreCSS.Marker.TENT.end())
          .sourceId(clientId)
          .targetId(supplierId)
-         .routerKind(GConstants.RouterKind.MANHATTAN)
+         .routerKind(GConstants.RouterKind.POLYLINE)
          .add(textEdgeBuilder(
             source,
             QuotationMark.quoteDoubleAngle("abstraction"),

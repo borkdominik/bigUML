@@ -39,7 +39,7 @@ public final class PackageMergeEdgeMapper extends BaseGEdgeMapper<PackageMerge, 
          .addCssClass(CoreCSS.Marker.TENT.end())
          .sourceId(nearestPackageId)
          .targetId(mergedPackageId)
-         .routerKind(GConstants.RouterKind.MANHATTAN)
+         .routerKind(GConstants.RouterKind.POLYLINE)
          .add(textEdgeBuilder(
             source,
             QuotationMark.quoteDoubleAngle("merge"),
@@ -48,7 +48,7 @@ public final class PackageMergeEdgeMapper extends BaseGEdgeMapper<PackageMerge, 
                .position(0.5d)
                .rotate(false)
                .build())
-                  .build());
+            .build());
 
       applyEdgeNotation(source, builder);
 

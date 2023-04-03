@@ -80,8 +80,18 @@
   <packagedElement xmi:type="uml:Class" xmi:id="_D0YigLK2Ee24ffphK9Na6g" name="NewClass6"/>
   <packagedElement xmi:type="uml:Class" xmi:id="_EWMPELK2Ee24ffphK9Na6g" name="NewClass7"/>
   <packagedElement xmi:type="uml:Usage" xmi:id="_FGLhkLK2Ee24ffphK9Na6g" client="_Mg74YLK1Ee24ffphK9Na6g" supplier="_D0YigLK2Ee24ffphK9Na6g"/>
-  <packagedElement xmi:type="uml:Class" xmi:id="_LjfcIbSLEe2pkZx4lGC8Ew" name="asd2"/>
-  <packagedElement xmi:type="uml:Class" xmi:id="_j12MQL0cEe2besM683MlUA" name="NewClass8" isAbstract="true"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="_LjfcIbSLEe2pkZx4lGC8Ew" name="asd2">
+    <ownedAttribute xmi:id="_ItfSANIcEe2rY5KN6ehSig" name="NewClass8" type="_j12MQL0cEe2besM683MlUA" association="_ItM-INIcEe2rY5KN6ehSig">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_Itf5ENIcEe2rY5KN6ehSig" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_ItggINIcEe2rY5KN6ehSig" value="1"/>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_j12MQL0cEe2besM683MlUA" name="NewClass8" isAbstract="true">
+    <ownedAttribute xmi:id="_ItggIdIcEe2rY5KN6ehSig" name="asd2" type="_LjfcIbSLEe2pkZx4lGC8Ew" association="_ItM-INIcEe2rY5KN6ehSig">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_ItggItIcEe2rY5KN6ehSig" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_IthHMNIcEe2rY5KN6ehSig" value="1"/>
+    </ownedAttribute>
+  </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="_Uk2g0cymEe2SqIqlz0mqiA" name="NewClass9">
     <ownedAttribute xmi:id="_uKNqAc1tEe2aWMTUBOnCiQ" name="NewProperty1" type="_j12MQL0cEe2besM683MlUA">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_uK1VEM1tEe2aWMTUBOnCiQ" value="3"/>
@@ -91,4 +101,5 @@
       <ownedParameter xmi:id="_8YNeEM5PEe2J1pPdCxXkdw" name="NewParameter1" type="_MHjIALK1Ee24ffphK9Na6g"/>
     </ownedOperation>
   </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_ItM-INIcEe2rY5KN6ehSig" memberEnd="_ItfSANIcEe2rY5KN6ehSig _ItggIdIcEe2rY5KN6ehSig"/>
 </uml:Model>

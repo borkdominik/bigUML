@@ -95,8 +95,6 @@
   </elements>
   <elements xsi:type="notation:Edge">
     <semanticElement elementId="_dxJb8LK1Ee24ffphK9Na6g"/>
-    <bendPoints x="408.27142214105055" y="-674.4690288806654"/>
-    <bendPoints x="504.70231046621984" y="-674.4690288806654"/>
   </elements>
   <elements xsi:type="notation:Shape">
     <semanticElement elementId="_ed5NMLK1Ee24ffphK9Na6g"/>
@@ -105,7 +103,6 @@
   </elements>
   <elements xsi:type="notation:Edge">
     <semanticElement elementId="_e5mRwLK1Ee24ffphK9Na6g"/>
-    <bendPoints x="854.8897964937975" y="-612.7228621735027"/>
   </elements>
   <elements xsi:type="notation:Edge">
     <semanticElement elementId="_ghLTkLK1Ee24ffphK9Na6g"/>
@@ -135,17 +132,20 @@
   </elements>
   <elements xsi:type="notation:Shape">
     <semanticElement elementId="_LjfcIbSLEe2pkZx4lGC8Ew"/>
-    <position x="216.06100233192942" y="111.09757253284161"/>
+    <position x="166.38823610905203" y="7.778218789256641"/>
     <size width="164.8255157470703" height="52.5"/>
   </elements>
   <elements xsi:type="notation:Shape">
     <semanticElement elementId="_j12MQL0cEe2besM683MlUA"/>
-    <position x="482.0" y="123.0"/>
-    <size width="160.0" height="50.0"/>
+    <position x="591.2800856903302" y="-12.109924126226502"/>
+    <size width="169.3046875" height="76.0"/>
   </elements>
   <elements xsi:type="notation:Shape">
     <semanticElement elementId="_Uk2g0cymEe2SqIqlz0mqiA"/>
     <position x="138.0" y="229.0"/>
     <size width="352.028639793396" height="96.0"/>
+  </elements>
+  <elements xsi:type="notation:Edge">
+    <semanticElement elementId="_ItM-INIcEe2rY5KN6ehSig"/>
   </elements>
 </unotation:UmlDiagram>

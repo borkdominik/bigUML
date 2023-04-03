@@ -46,7 +46,8 @@ public final class AbstractionEdgeMapper extends BaseGEdgeMapper<Abstraction, GE
             new GEdgePlacementBuilder()
                .side(GConstants.EdgeSide.TOP)
                .position(0.5d)
-               .rotate(false)
+               .offset(10d)
+               .rotate(true)
                .build())
                   .build());
 

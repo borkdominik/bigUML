@@ -15,6 +15,7 @@
  ********************************************************************************/
 
 import { inject, injectable } from 'inversify';
+import { Uri } from 'vscode';
 import { VSCodeCommand } from '../command/command';
 import { NewFileCreator } from './new-file.creator';
 
@@ -27,6 +28,11 @@ export class NewFileCommand implements VSCodeCommand {
     }
 
     execute(...args: any[]): void {
-        this.creator.create();
+        let uri: Uri | undefined = undefined;
+        if (args[0] !== undefined && args[0] !== null) {
+            uri = args[0];
+        }
+
+        this.creator.create(uri);
     }
 }

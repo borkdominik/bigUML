@@ -34,7 +34,19 @@ export class NewFileCreator {
         protected readonly context: vscode.ExtensionContext
     ) {}
 
-    async create(): Promise<void> {
+    async create(targetUri?: vscode.Uri): Promise<void> {
+        const workspaces = vscode.workspace.workspaceFolders;
+        const workspace = workspaces?.[0];
+        if (workspace === undefined) {
+            throw new Error('Workspace was not defined');
+        }
+
+        const rootUri = targetUri ?? workspace.uri;
+        let prefixPath = '';
+        if (targetUri !== undefined) {
+            prefixPath = targetUri.path.replace(workspace.uri.path, '').slice(1) + '/';
+        }
+
         const wizard = await newDiagramWizard(this.context, {
             diagramTypes: UVLangugageEnvironment.supportedTypes,
             nameValidator: async input => {
@@ -43,8 +55,9 @@ export class NewFileCreator {
                 }
 
                 const models = await this.modelServerClient.getAll();
+                const newModelUri = `${prefixPath}${this.diagramDestination(input)}`;
 
-                if (models.some(model => model.modeluri.endsWith(`${input}.uml`))) {
+                if (models.some(model => model.modeluri === newModelUri)) {
                     return 'Name already exists';
                 }
 
@@ -53,50 +66,36 @@ export class NewFileCreator {
         });
 
         if (wizard !== undefined) {
-            this.createUmlDiagram(wizard.name.trim(), wizard.diagramPick.diagramType);
+            await this.createUmlDiagram(rootUri, wizard.name.trim(), wizard.diagramPick.diagramType);
         }
     }
 
-    protected createUmlDiagram(diagramName: string, diagramType: UmlDiagramType): void {
-        const workspaces = vscode.workspace.workspaceFolders;
-        if (workspaces && workspaces.length > 0) {
-            const workspaceRoot = new URIJS(decodeURIComponent(workspaces[0].uri.toString()));
-            const modelUri = new URIJS(workspaceRoot + `/${diagramName}/model/${diagramName}.uml`);
+    protected async createUmlDiagram(rootUri: vscode.Uri, diagramName: string, diagramType: UmlDiagramType): Promise<void> {
+        const workspaceRoot = new URIJS(decodeURIComponent(this.rootDestination(rootUri)));
+        const modelUri = new URIJS(workspaceRoot + '/' + this.diagramDestination(diagramName));
 
-            this.modelServerClient
-                .create(
-                    modelUri,
-                    {
-                        data: {
-                            $type: 'com.eclipsesource.uml.modelserver.model.impl.NewDiagramRequestImpl',
-                            diagramType
-                        }
-                    },
-                    undefined,
-                    'raw-json'
-                )
-                .then(async () => {
-                    await vscode.commands.executeCommand('workbench.files.action.refreshFilesExplorer');
-                    const filePath = vscode.Uri.file(modelUri.path().toString());
-                    vscode.commands.executeCommand('vscode.openWith', filePath, VSCodeSettings.editor.viewType);
-                });
-        }
-    }
-
-    protected async showInput(
-        placeHolder: string,
-        hint: string,
-        inputCheck?: (input: string) => Promise<string | undefined>
-    ): Promise<string | undefined> {
-        return vscode.window.showInputBox({
-            prompt: hint,
-            placeHolder: placeHolder,
-            validateInput: async input => {
-                if (inputCheck) {
-                    return inputCheck(input);
+        await this.modelServerClient.create(
+            modelUri,
+            {
+                data: {
+                    $type: 'com.eclipsesource.uml.modelserver.model.impl.NewDiagramRequestImpl',
+                    diagramType
                 }
-                return !input ? 'Please enter a valid string' : undefined;
-            }
-        });
+            },
+            undefined,
+            'raw-json'
+        );
+
+        await vscode.commands.executeCommand('workbench.files.action.refreshFilesExplorer');
+        const filePath = vscode.Uri.file(modelUri.path().toString());
+        await vscode.commands.executeCommand('vscode.openWith', filePath, VSCodeSettings.editor.viewType);
+    }
+
+    protected rootDestination(uri: vscode.Uri): string {
+        return uri.toString();
+    }
+
+    protected diagramDestination(name: string): string {
+        return `${name}/model/${name}.uml`;
     }
 }

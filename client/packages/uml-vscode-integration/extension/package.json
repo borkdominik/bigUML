@@ -132,6 +132,13 @@
           "command": "bigUML.model.newEmpty"
         }
       ],
+      "explorer/context": [
+        {
+          "command": "bigUML.model.newEmpty",
+          "group": "navigation@10",
+          "when": "explorerResourceIsFolder || explorerResourceIsRoot"
+        }
+      ],
       "editor/title": [
         {
           "submenu": "bigUML.editor.title",

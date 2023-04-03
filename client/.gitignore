@@ -21,3 +21,4 @@ build/
 # Files
 *.log
 *.vsix
+*.zip

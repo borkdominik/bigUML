@@ -13,52 +13,57 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { UmlDiagramTypeUtil } from '@borkdominik-biguml/uml-common';
+import { UmlDiagramType } from '@borkdominik-biguml/uml-common';
 import { inject, injectable } from 'inversify';
-import URI from 'urijs';
+import URIJS from 'urijs';
 import * as vscode from 'vscode';
 import { TYPES, VSCODE_TYPES } from '../../di.types';
 import { UVLangugageEnvironment, VSCodeSettings } from '../../language';
 import { UVModelServerClient } from '../../modelserver/uv-modelserver.client';
 import { EditorProvider } from '../editor/editor.provider';
+import { newDiagramWizard } from './wizard';
 
 @injectable()
 export class NewFileCreator {
     constructor(
         @inject(TYPES.ModelServerClient)
-        protected readonly client: UVModelServerClient,
+        protected readonly modelServerClient: UVModelServerClient,
         @inject(VSCODE_TYPES.EditorProvider)
-        protected readonly editor: EditorProvider
+        protected readonly editor: EditorProvider,
+        @inject(VSCODE_TYPES.ExtensionContext)
+        protected readonly context: vscode.ExtensionContext
     ) {}
 
     async create(): Promise<void> {
-        const diagramName = await this.showInput('Diagram name', 'Enter name of UML diagram', async input =>
-            input ? undefined : 'Diagram name can not be empty'
-        );
+        const wizard = await newDiagramWizard(this.context, {
+            diagramTypes: UVLangugageEnvironment.supportedTypes,
+            nameValidator: async input => {
+                if (!input || input.trim().length === 0) {
+                    return 'Name can not be empty';
+                }
 
-        if (diagramName !== undefined) {
-            const diagramType = await this.showInput(
-                UVLangugageEnvironment.supportedTypes.map(t => t.toLowerCase()).join(' | '),
-                'Enter UML diagram type',
-                async input =>
-                    UVLangugageEnvironment.supportedTypes.includes(UmlDiagramTypeUtil.parseString(input))
-                        ? undefined
-                        : `${input} is not a valid value`
-            );
+                const models = await this.modelServerClient.getAll();
 
-            if (diagramType !== undefined) {
-                this.createUmlDiagram(diagramName, diagramType);
+                if (models.some(model => model.modeluri.endsWith(`${input}.uml`))) {
+                    return 'Name already exists';
+                }
+
+                return undefined;
             }
+        });
+
+        if (wizard !== undefined) {
+            this.createUmlDiagram(wizard.name.trim(), wizard.diagramPick.diagramType);
         }
     }
 
-    protected createUmlDiagram(diagramName: string, diagramType: string): void {
+    protected createUmlDiagram(diagramName: string, diagramType: UmlDiagramType): void {
         const workspaces = vscode.workspace.workspaceFolders;
         if (workspaces && workspaces.length > 0) {
-            const workspaceRoot = new URI(decodeURIComponent(workspaces[0].uri.toString()));
-            const modelUri = new URI(workspaceRoot + `/${diagramName}/model/${diagramName}.uml`);
+            const workspaceRoot = new URIJS(decodeURIComponent(workspaces[0].uri.toString()));
+            const modelUri = new URIJS(workspaceRoot + `/${diagramName}/model/${diagramName}.uml`);
 
-            this.client
+            this.modelServerClient
                 .create(
                     modelUri,
                     {

@@ -23,7 +23,7 @@ export class NewFileCommand implements VSCodeCommand {
     constructor(@inject(NewFileCreator) private creator: NewFileCreator) {}
 
     get id(): string {
-        return 'bigUML.newDiagram';
+        return 'bigUML.model.newEmpty';
     }
 
     execute(...args: any[]): void {

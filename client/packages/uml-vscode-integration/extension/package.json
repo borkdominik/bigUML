@@ -35,39 +35,39 @@
   "contributes": {
     "commands": [
       {
-        "command": "bigUML.newDiagram",
-        "title": "New Diagram",
-        "category": "UML Diagram"
+        "command": "bigUML.model.newEmpty",
+        "title": "New Empty UML Diagram",
+        "category": "bigUML"
       },
       {
         "command": "bigUML.fit",
         "title": "Fit to Screen",
-        "category": "UML Diagram",
+        "category": "bigUML",
         "enablement": "activeCustomEditorId == 'bigUML.diagramView'"
       },
       {
         "command": "bigUML.center",
         "title": "Center selection",
-        "category": "UML Diagram",
+        "category": "bigUML",
         "enablement": "activeCustomEditorId == 'bigUML.diagramView'"
       },
       {
         "command": "bigUML.layout",
         "title": "Layout diagram",
-        "category": "UML Diagram",
+        "category": "bigUML",
         "enablement": "activeCustomEditorId == 'bigUML.diagramView'"
       },
       {
         "command": "bigUML.exportAsSVG",
         "title": "Export as SVG",
-        "category": "UML Diagram",
+        "category": "bigUML",
         "enablement": "activeCustomEditorId == 'bigUML.diagramView'"
       }
     ],
     "customEditors": [
       {
         "viewType": "bigUML.diagramView",
-        "displayName": "UML Diagram Editor",
+        "displayName": "bigUML Editor",
         "selector": [
           {
             "filenamePattern": "*.uml"
@@ -129,7 +129,7 @@
     "menus": {
       "file/newFile": [
         {
-          "command": "bigUML.newDiagram"
+          "command": "bigUML.model.newEmpty"
         }
       ],
       "editor/title": [
@@ -168,7 +168,9 @@
     ]
   },
   "activationEvents": [
-    "*"
+    "onLanguage:bigUML.uml",
+    "onLanguage:bigUML.unotation",
+    "onCommand:bigUML.model.newEmpty"
   ],
   "dependencies": {
     "@borkdominik-biguml/uml-common": "*",

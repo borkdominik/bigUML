@@ -25,6 +25,7 @@ import {
     createDiagramContainer,
     EditLabelUI,
     GLSPGraph,
+    GridSnapper,
     LogLevel,
     overrideViewerOptions,
     TYPES
@@ -52,6 +53,8 @@ export default function createContainer(widgetId: string): Container {
 
         rebind(TYPES.ILogger).to(FixedLogger).inSingletonScope();
         rebind(TYPES.LogLevel).toConstantValue(LogLevel.info);
+
+        bind(TYPES.ISnapper).to(GridSnapper);
         rebind(TYPES.ICopyPasteHandler).to(CustomCopyPasteHandler);
         rebind(TYPES.IFeedbackActionDispatcher).to(FixedFeedbackActionDispatcher).inSingletonScope();
 

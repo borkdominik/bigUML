@@ -17,7 +17,7 @@
     "build:server": "cd ../server && mvn clean install && cd ../client && yarn copy:server",
     "copy:server": "tsx ./scripts/copy-server.ts",
     "depcheck": "npx depcheck --config .depcheck.yml",
-    "package": "cd packages/uml-vscode-integration/extension && yarn package",
+    "package": "cd packages/uml-vscode-integration/extension && yarn package && mv ./*.vsix ../../../release",
     "prepare": "lerna run prepare",
     "prepare:theia": "yarn prepare --include-dependencies=true --scope=biguml-theia",
     "prepare:vscode": "yarn prepare --include-dependencies=true --scope=biguml-vscode",

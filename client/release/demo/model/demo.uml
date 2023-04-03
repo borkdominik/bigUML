@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_Cfp0UGmxEe2kLe5KTNzRtw" name="demo">
+  <packagedElement xmi:type="uml:Class" xmi:id="_61AyYNIzEe2g6oxIPIc7sg" name="Hello">
+    <ownedAttribute xmi:id="_A0aJANI0Ee2g6oxIPIc7sg" name="text" type="_5BVjYNI1Ee2g6oxIPIc7sg">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_A0aJAdI0Ee2g6oxIPIc7sg" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_A0aJAtI0Ee2g6oxIPIc7sg" value="1"/>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_7TYJYNIzEe2g6oxIPIc7sg" name="World">
+    <ownedOperation xmi:id="_6sEm4NI1Ee2g6oxIPIc7sg" name="map">
+      <ownedParameter xmi:id="_9XxYINI1Ee2g6oxIPIc7sg" name="object" type="_61AyYNIzEe2g6oxIPIc7sg"/>
+      <ownedParameter xmi:id="_FrUisNI2Ee2g6oxIPIc7sg" name="NewParameter1" type="_5BVjYNI1Ee2g6oxIPIc7sg" direction="return"/>
+    </ownedOperation>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Dependency" xmi:id="_bJMrcNI0Ee2g6oxIPIc7sg" client="_7TYJYNIzEe2g6oxIPIc7sg" supplier="_61AyYNIzEe2g6oxIPIc7sg"/>
+  <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5BVjYNI1Ee2g6oxIPIc7sg" name="String"/>
+</uml:Model>

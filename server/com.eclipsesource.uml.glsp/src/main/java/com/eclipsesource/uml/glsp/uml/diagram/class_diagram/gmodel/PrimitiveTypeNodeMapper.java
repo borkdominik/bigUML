@@ -45,7 +45,7 @@ public final class PrimitiveTypeNodeMapper extends BaseGNodeMapper<PrimitiveType
       var header = compartmentHeaderBuilder(source)
          .layout(GConstants.Layout.VBOX);
 
-      header.add(buildHeaderAnnotation(source, QuotationMark.quoteDoubleAngle("DataType")));
+      header.add(buildHeaderAnnotation(source, QuotationMark.quoteDoubleAngle("PrimitiveType")));
       header.add(buildHeaderName(source, "--uml-primitive-type-icon"));
 
       return header.build();

@@ -99,6 +99,7 @@
     </ownedAttribute>
     <ownedOperation xmi:id="_45WxkM5PEe2J1pPdCxXkdw" name="NewOperation1" visibility="public">
       <ownedParameter xmi:id="_8YNeEM5PEe2J1pPdCxXkdw" name="NewParameter1" type="_MHjIALK1Ee24ffphK9Na6g"/>
+      <ownedParameter xmi:id="_e-0x0dI3Ee2XPc95mjsJSg" name="NewParameter2" type="_j12MQL0cEe2besM683MlUA" direction="return"/>
     </ownedOperation>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="_ItM-INIcEe2rY5KN6ehSig" memberEnd="_ItfSANIcEe2rY5KN6ehSig _ItggIdIcEe2rY5KN6ehSig"/>

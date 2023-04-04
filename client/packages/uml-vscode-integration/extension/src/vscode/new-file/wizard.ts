@@ -220,7 +220,7 @@ class MultiStepInput {
     async showInputBox<P extends InputBoxParameters>(options: P): Promise<string> {
         const disposables: Disposable[] = [];
         try {
-            return await new Promise<string>((resolve, reject) => {
+            return await new Promise<string>(async (resolve, reject) => {
                 const input = window.createInputBox();
                 input.title = options.title;
                 input.step = options.step;
@@ -230,7 +230,7 @@ class MultiStepInput {
                 input.ignoreFocusOut = options.ignoreFocusOut ?? false;
                 input.placeholder = options.placeholder;
                 input.buttons = [...(this.steps.length > 1 ? [QuickInputButtons.Back] : []), ...(options.buttons || [])];
-                let validating = options.validate('');
+                let validating = await options.validate('');
 
                 disposables.push(
                     input.onDidTriggerButton(item => {
@@ -251,7 +251,7 @@ class MultiStepInput {
                         input.busy = false;
                     }),
                     input.onDidChangeValue(async text => {
-                        const current = options.validate(text);
+                        const current = await options.validate(text);
                         validating = current;
                         const validationMessage = await current;
                         if (current === validating) {

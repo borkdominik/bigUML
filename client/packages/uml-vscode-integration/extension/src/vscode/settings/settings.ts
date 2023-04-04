@@ -14,7 +14,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 import { injectable, postConstruct } from 'inversify';
-import { ConfigurationTarget, WorkspaceConfiguration, workspace } from 'vscode';
+import { ConfigurationScope, ConfigurationTarget, WorkspaceConfiguration, WorkspaceFolder, workspace } from 'vscode';
 
 export namespace SettingKeys {
     export const section = 'bigUML' as const;
@@ -22,8 +22,13 @@ export namespace SettingKeys {
     export const hideUnotation = 'hideUnotation' as const;
 }
 
-const filesExcludeSection = 'files.exclude';
+const filesSection = 'files';
+const filesExcludeProperty = 'exclude';
 const excludeUnotationGlob = '**/*.unotation';
+
+interface Options {
+    workspaces: readonly WorkspaceFolder[] | undefined;
+}
 
 @injectable()
 export class Settings {
@@ -31,32 +36,40 @@ export class Settings {
     protected initialize(): void {
         workspace.onDidChangeConfiguration(event => {
             if (event.affectsConfiguration(SettingKeys.section)) {
-                this.update({ override: true });
+                this.update({ workspaces: workspace.workspaceFolders });
             }
         });
 
-        this.update({ override: false });
+        this.update({ workspaces: workspace.workspaceFolders });
     }
 
-    configuration(): WorkspaceConfiguration {
-        return workspace.getConfiguration(SettingKeys.section);
+    configuration(scope?: ConfigurationScope): WorkspaceConfiguration {
+        return workspace.getConfiguration(SettingKeys.section, scope);
     }
 
-    update(options: { override: boolean }): void {
+    update(options: Options): void {
         const config = this.configuration();
 
-        this.hideUnotation(config.get(SettingKeys.hideUnotation)!, options.override);
+        this.hideUnotation(config.get(SettingKeys.hideUnotation)!, options);
     }
 
-    protected async hideUnotation(value: boolean, override: boolean): Promise<void> {
-        const workspaceConfiguration = workspace.getConfiguration();
+    protected async hideUnotation(value: boolean, options: Options): Promise<void> {
+        for (const folder of options.workspaces ?? []) {
+            const bigUMLConfiguration = this.configuration(folder);
+            const filesConfiguration = workspace.getConfiguration(filesSection, folder);
 
-        const excludeList: { [k: string]: boolean } = workspaceConfiguration.get(filesExcludeSection) ?? {};
+            const excludeList: { [k: string]: boolean } = filesConfiguration.get(filesExcludeProperty) ?? {};
 
-        if (excludeList[excludeUnotationGlob] === undefined || (override && excludeList[excludeUnotationGlob] !== value)) {
-            excludeList[excludeUnotationGlob] = value;
+            if (bigUMLConfiguration.get(SettingKeys.hideUnotation) === false && excludeList[excludeUnotationGlob] === undefined) {
+                return;
+            }
 
-            await workspaceConfiguration.update(filesExcludeSection, excludeList, ConfigurationTarget.Workspace);
+            if (excludeList[excludeUnotationGlob] === undefined || excludeList[excludeUnotationGlob] !== value) {
+                excludeList[excludeUnotationGlob] = value;
+
+                await filesConfiguration.update(filesExcludeProperty, excludeList, ConfigurationTarget.WorkspaceFolder);
+                await bigUMLConfiguration.update(SettingKeys.hideUnotation, value, ConfigurationTarget.WorkspaceFolder);
+            }
         }
     }
 }

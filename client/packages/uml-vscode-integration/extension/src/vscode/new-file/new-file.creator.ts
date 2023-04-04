@@ -44,7 +44,8 @@ export class NewFileCreator {
         const rootUri = targetUri ?? workspace.uri;
         let prefixPath = '';
         if (targetUri !== undefined) {
-            prefixPath = targetUri.path.replace(workspace.uri.path, '').slice(1) + '/';
+            const relativePath = targetUri.path.replace(workspace.uri.path, '').slice(1);
+            prefixPath = relativePath.length === 0 ? '' : relativePath + '/';
         }
 
         const wizard = await newDiagramWizard(this.context, {

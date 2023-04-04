@@ -24,13 +24,13 @@ Later, releases will be moved to GitHub and the VSCode Marketplace.
 
 ### Extension Installation
 
-Please download the latest version of the extension. Then open the command palette (default: `strg + shift + p`) and select `>Extensions: Install from VSIX`. Afterward, select the `biguml-vscode-x.x.x.vsix` file. After that, the extension will be installed.
+Please download the latest version of the extension. Unpack the `archieve` and open the `release` folder with VSCode. Next open the command palette (default: `strg + shift + p`) and type / select `>Extensions: Install from VSIX`. Afterward, select the `biguml-vscode-x.x.x.vsix` file. After that, the extension will be installed.
 
 -   Sources: <https://code.visualstudio.com/docs/editor/extension-marketplace#_install-from-a-vsix>
 
 ### Example
 
-The downloaded `zip` provides a basic demo example. Please open that folder in VSCode. Afterward you can open the demo diagram by double clicking it or you can also create a new diagram by:
+The downloaded `archive` provides a basic demo example. You can open the demo diagram by double clicking it or you can also create a new diagram by:
 
 -   clicking `File -> New File` in VSCode
 -   doing a `right click` in the explorer and then clicking on `New Empty UML Diagram`

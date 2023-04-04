@@ -1,6 +1,6 @@
 {
-  "name": "@borkdominik-biguml/uml-vscode-integration-extension",
-  "displayName": "bigUML",
+  "name": "biguml-vscode",
+  "displayName": "bigUML Modeling Tool",
   "version": "0.1.0",
   "description": "UML-VSCode extension",
   "categories": [
@@ -12,6 +12,7 @@
     "type": "git",
     "url": "https://github.com/borkdominik/bigUML.git"
   },
+  "publisher": "BIGModelingTools",
   "main": "./lib/main",
   "files": [
     "lib",
@@ -20,53 +21,65 @@
     "pack"
   ],
   "scripts": {
-    "build": "yarn esbuild-base --sourcemap",
-    "clean": "rimraf lib tsconfig.tsbuildinfo ",
-    "esbuild-base": "esbuild ./src/index.ts --bundle --outfile=lib/main.js --external:vscode --format=cjs --platform=node",
+    "build": "tsx .esbuild.mts",
+    "build:prod": "yarn build --es-minify",
+    "clean": "rimraf lib tsconfig.tsbuildinfo server/**/*.log",
     "lint": "eslint --ext .ts,.tsx ./src",
     "lint:ci": "yarn lint -o eslint.xml -f checkstyle",
     "lint:fix": "eslint --fix --ext .ts,.tsx ./src",
     "package": "vsce package --yarn",
     "prepare": "yarn clean && yarn build",
-    "vscode:prepublish": "yarn esbuild-base --minify",
-    "watch": "yarn esbuild-base --sourcemap --watch"
+    "vscode:prepublish": "yarn build:prod",
+    "watch": "yarn build --es-watch"
   },
   "contributes": {
     "commands": [
       {
-        "command": "uml.newDiagram",
-        "title": "New Diagram",
-        "category": "UML Diagram"
+        "command": "bigUML.model.newEmpty",
+        "title": "New Empty UML Diagram",
+        "category": "bigUML",
+        "enablement": "workspaceFolderCount > 0"
       },
       {
-        "command": "uml.fit",
+        "command": "bigUML.fit",
         "title": "Fit to Screen",
-        "category": "UML Diagram",
-        "enablement": "activeCustomEditorId == 'uml.glspDiagram'"
+        "category": "bigUML",
+        "enablement": "activeCustomEditorId == 'bigUML.diagramView'"
       },
       {
-        "command": "uml.center",
+        "command": "bigUML.center",
         "title": "Center selection",
-        "category": "UML Diagram",
-        "enablement": "activeCustomEditorId == 'uml.glspDiagram'"
+        "category": "bigUML",
+        "enablement": "activeCustomEditorId == 'bigUML.diagramView'"
       },
       {
-        "command": "uml.layout",
+        "command": "bigUML.layout",
         "title": "Layout diagram",
-        "category": "UML Diagram",
-        "enablement": "activeCustomEditorId == 'uml.glspDiagram'"
+        "category": "bigUML",
+        "enablement": "activeCustomEditorId == 'bigUML.diagramView'"
       },
       {
-        "command": "uml.exportAsSVG",
+        "command": "bigUML.exportAsSVG",
         "title": "Export as SVG",
-        "category": "UML Diagram",
-        "enablement": "activeCustomEditorId == 'uml.glspDiagram'"
+        "category": "bigUML",
+        "enablement": "activeCustomEditorId == 'bigUML.diagramView'"
       }
     ],
+    "configuration": {
+      "title": "bigUML",
+      "properties": {
+        "bigUML.hideUnotation": {
+          "type": "boolean",
+          "default": true,
+          "scope": "resource",
+          "description": "Hide the *.unotation files."
+        }
+      }
+    },
     "customEditors": [
       {
-        "viewType": "uml.glspDiagram",
-        "displayName": "UML Diagram Editor",
+        "viewType": "bigUML.diagramView",
+        "displayName": "bigUML Editor",
         "selector": [
           {
             "filenamePattern": "*.uml"
@@ -78,71 +91,107 @@
       {
         "key": "alt+f",
         "mac": "alt+f",
-        "command": "uml.fit",
-        "when": "activeCustomEditorId == 'uml.glspDiagram'"
+        "command": "bigUML.fit",
+        "when": "activeCustomEditorId == 'bigUML.diagramView'"
       },
       {
         "key": "alt+c",
         "mac": "alt+c",
-        "command": "uml.center",
-        "when": "activeCustomEditorId == 'uml.glspDiagram'"
+        "command": "bigUML.center",
+        "when": "activeCustomEditorId == 'bigUML.diagramView'"
       },
       {
         "key": "ctrl+a",
         "mac": "ctrl+a",
-        "command": "uml.selectAll",
-        "when": "activeCustomEditorId == 'uml.glspDiagram'"
+        "command": "bigUML.selectAll",
+        "when": "activeCustomEditorId == 'bigUML.diagramView'"
       },
       {
         "key": "alt+l",
         "mac": "alt+l",
-        "command": "uml.layout",
-        "when": "activeCustomEditorId == 'uml.glspDiagram'"
+        "command": "bigUML.layout",
+        "when": "activeCustomEditorId == 'bigUML.diagramView'"
+      }
+    ],
+    "languages": [
+      {
+        "id": "bigUML-uml",
+        "extensions": [
+          ".uml"
+        ],
+        "icon": {
+          "light": "./resources/file_icons/light/uml.svg",
+          "dark": "./resources/file_icons/dark/uml.svg"
+        }
+      },
+      {
+        "id": "bigUML-unotation",
+        "extensions": [
+          ".unotation"
+        ],
+        "mimetypes": [
+          "xml"
+        ],
+        "icon": {
+          "light": "./resources/file_icons/light/unotation.svg",
+          "dark": "./resources/file_icons/dark/unotation.svg"
+        }
       }
     ],
     "menus": {
       "file/newFile": [
         {
-          "command": "uml.newDiagram"
+          "command": "bigUML.model.newEmpty",
+          "when": "workspaceFolderCount > 0"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "bigUML.model.newEmpty",
+          "group": "navigation@10",
+          "when": "explorerResourceIsFolder || explorerResourceIsRoot"
         }
       ],
       "editor/title": [
         {
-          "submenu": "uml.editor.title",
+          "submenu": "bigUML.editor.title",
           "group": "bookmarks"
         }
       ],
-      "uml.editor.title": [
+      "bigUML.editor.title": [
         {
-          "command": "uml.fit",
+          "command": "bigUML.fit",
           "group": "navigation",
-          "when": "activeCustomEditorId == 'uml.glspDiagram'"
+          "when": "activeCustomEditorId == 'bigUML.diagramView'"
         },
         {
-          "command": "uml.center",
+          "command": "bigUML.center",
           "group": "navigation",
-          "when": "activeCustomEditorId == 'uml.glspDiagram'"
+          "when": "activeCustomEditorId == 'bigUML.diagramView'"
         },
         {
-          "command": "uml.layout",
+          "command": "bigUML.layout",
           "group": "navigation",
-          "when": "activeCustomEditorId == 'uml.glspDiagram'"
+          "when": "activeCustomEditorId == 'bigUML.diagramView'"
         },
         {
-          "command": "uml.exportAsSVG",
-          "when": "activeCustomEditorId == 'uml.glspDiagram'"
+          "command": "bigUML.exportAsSVG",
+          "when": "activeCustomEditorId == 'bigUML.diagramView'"
         }
       ]
     },
     "submenus": [
       {
-        "id": "uml.editor.title",
+        "id": "bigUML.editor.title",
         "label": "Diagram"
       }
     ]
   },
   "activationEvents": [
-    "*"
+    "onLanguage:bigUML.uml",
+    "onLanguage:bigUML.unotation",
+    "onCommand:bigUML.model.newEmpty",
+    "workspaceContains:**/*.uml"
   ],
   "dependencies": {
     "@borkdominik-biguml/uml-common": "*",

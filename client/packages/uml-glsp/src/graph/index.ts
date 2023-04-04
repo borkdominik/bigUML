@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-export * from './graph.view';
 export * from './icon.model';
 export * from './icon.view';
 export * from './model';
+export * from './uml-graph-projection.view';

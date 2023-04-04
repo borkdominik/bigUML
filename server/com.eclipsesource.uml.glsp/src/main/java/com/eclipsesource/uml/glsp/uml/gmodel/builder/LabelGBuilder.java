@@ -25,4 +25,10 @@ public interface LabelGBuilder extends IdGeneratorGProvider, IdContextGeneratorG
          .id(idContextGenerator().getOrCreateId(source))
          .text(text);
    }
+
+   default GLabelBuilder textBuilder(final EObject source, final String seperator, final String... text) {
+      return new GLabelBuilder(CoreTypes.LABEL_TEXT)
+         .id(idContextGenerator().getOrCreateId(source))
+         .text(String.join(seperator, text));
+   }
 }

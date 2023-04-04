@@ -12,7 +12,7 @@ import { IVNodePostprocessor, SModelElement, svg } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 import { VNode } from 'snabbdom';
 
-import { IconLabelCompartment } from '../graph';
+import { InteractableCompartment } from '../graph/uml-compartment';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const JSX = { createElement: svg };
@@ -23,7 +23,7 @@ const JSX = { createElement: svg };
 @injectable()
 export class IconLabelCompartmentSelectionFeedback implements IVNodePostprocessor {
     decorate(vnode: VNode, element: SModelElement): VNode {
-        if (element instanceof IconLabelCompartment && (element.hoverFeedback || element.selected)) {
+        if (element instanceof InteractableCompartment && (element.hoverFeedback || element.selected)) {
             const vPadding = -1;
             const hPadding = 3;
 

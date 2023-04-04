@@ -5,5 +5,5 @@
     "outDir": "lib",
     "resolveJsonModule": true
   },
-  "include": ["src", "server", "pack"]
+  "include": ["src", "server", "pack", "./*.config.json"]
 }

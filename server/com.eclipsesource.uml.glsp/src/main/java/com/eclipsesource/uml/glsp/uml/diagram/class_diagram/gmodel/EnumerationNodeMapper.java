@@ -19,6 +19,7 @@ import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.Enumeration;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
+import com.eclipsesource.uml.glsp.core.constants.QuotationMark;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_Enumeration;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGNodeMapper;
 import com.eclipsesource.uml.glsp.uml.gmodel.element.NamedElementGBuilder;
@@ -44,8 +45,8 @@ public final class EnumerationNodeMapper extends BaseGNodeMapper<Enumeration, GN
       var header = compartmentHeaderBuilder(source)
          .layout(GConstants.Layout.VBOX);
 
-      header.add(textBuilder(source, "<<Enumeration>>").build());
-      header.add(buildIconVisibilityName(source, "--uml-enumeration-icon"));
+      header.add(buildHeaderAnnotation(source, QuotationMark.quoteDoubleAngle("Enumeration")));
+      header.add(buildHeaderName(source, "--uml-enumeration-icon"));
 
       return header.build();
    }

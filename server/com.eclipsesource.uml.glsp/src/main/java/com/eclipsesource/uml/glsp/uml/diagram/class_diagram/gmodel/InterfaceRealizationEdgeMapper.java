@@ -38,7 +38,7 @@ public final class InterfaceRealizationEdgeMapper extends BaseGEdgeMapper<Interf
          .addCssClass(CoreCSS.Marker.TRIANGLE_EMPTY.end())
          .sourceId(classifierId)
          .targetId(contractId)
-         .routerKind(GConstants.RouterKind.MANHATTAN);
+         .routerKind(GConstants.RouterKind.POLYLINE);
 
       applyEdgeNotation(source, builder);
 

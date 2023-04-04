@@ -19,6 +19,7 @@ import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.Usage;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
+import com.eclipsesource.uml.glsp.core.constants.QuotationMark;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_Usage;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGEdgeMapper;
 import com.eclipsesource.uml.glsp.uml.gmodel.element.EdgeGBuilder;
@@ -38,16 +39,17 @@ public final class UsageEdgeMapper extends BaseGEdgeMapper<Usage, GEdge> impleme
          .addCssClass(CoreCSS.Marker.TENT.end())
          .sourceId(clientId)
          .targetId(supplierId)
-         .routerKind(GConstants.RouterKind.MANHATTAN)
+         .routerKind(GConstants.RouterKind.POLYLINE)
          .add(textEdgeBuilder(
             source,
-            "<<use>>",
+            QuotationMark.quoteDoubleAngle("use"),
             new GEdgePlacementBuilder()
                .side(GConstants.EdgeSide.TOP)
                .position(0.5d)
-               .rotate(false)
+               .offset(10d)
+               .rotate(true)
                .build())
-            .build());
+                  .build());
 
       applyEdgeNotation(source, builder);
 

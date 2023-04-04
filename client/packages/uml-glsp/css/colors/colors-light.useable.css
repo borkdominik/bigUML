@@ -1,8 +1,0 @@
-:root {
-    --uml-border: var(--uml-medium-blue);
-    --uml-diagram-background: var(--uml-editor-background);
-    --uml-drop-shadow: lightgrey;
-    --uml-edge: var(--uml-medium-blue);
-    --uml-label: var(--uml-editor-foreground);
-    --uml-node: var(--uml-light-blue);
-}

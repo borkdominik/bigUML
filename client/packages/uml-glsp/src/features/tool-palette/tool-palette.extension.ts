@@ -13,10 +13,12 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { compare, createToolGroup, PaletteItem, ToolPalette } from '@eclipse-glsp/client';
+import { changeCodiconClass, compare, createIcon, createToolGroup, PaletteItem, SModelRoot, ToolPalette } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 
 const CLICKED_CSS_CLASS = 'clicked';
+const CHEVRON_DOWN_ICON_ID = 'chevron-right';
+const PALETTE_ICON_ID = 'symbol-color';
 
 @injectable()
 export class UmlToolPalette extends ToolPalette {
@@ -32,6 +34,33 @@ export class UmlToolPalette extends ToolPalette {
         } else {
             this.defaultToolsButton?.classList.add(CLICKED_CSS_CLASS);
             this.lastActivebutton = this.defaultToolsButton;
+        }
+    }
+
+    protected override onBeforeShow(_containerElement: HTMLElement, root: Readonly<SModelRoot>): void {
+        this.modelRootId = root.id;
+    }
+
+    protected override addMinimizePaletteButton(): void {
+        const baseDiv = document.getElementById(this.options.baseDiv);
+        const minPaletteDiv = document.createElement('div');
+        minPaletteDiv.classList.add('minimize-palette-button');
+        this.containerElement.classList.add('collapsible-palette');
+        if (baseDiv) {
+            const insertedDiv = baseDiv.insertBefore(minPaletteDiv, baseDiv.firstChild);
+            const minimizeIcon = createIcon(CHEVRON_DOWN_ICON_ID);
+            this.updateMinimizePaletteButtonTooltip(minPaletteDiv);
+            minimizeIcon.onclick = _event => {
+                if (this.isPaletteMaximized()) {
+                    this.containerElement.style.maxHeight = '0px';
+                } else {
+                    this.containerElement.style.maxHeight = '';
+                }
+                this.updateMinimizePaletteButtonTooltip(minPaletteDiv);
+                changeCodiconClass(minimizeIcon, PALETTE_ICON_ID);
+                changeCodiconClass(minimizeIcon, CHEVRON_DOWN_ICON_ID);
+            };
+            insertedDiv.appendChild(minimizeIcon);
         }
     }
 

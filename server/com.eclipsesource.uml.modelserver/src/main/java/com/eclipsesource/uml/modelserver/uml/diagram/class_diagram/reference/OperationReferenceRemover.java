@@ -26,6 +26,10 @@ public final class OperationReferenceRemover extends BaseCrossReferenceProcessor
    @Override
    protected List<Command> process(final ModelContext context, final Setting setting, final Operation self,
       final EObject interest) {
-      return List.of(new DeleteOperationSemanticCommand(context, self));
+      if (self.getOwner().equals(interest)) {
+         return List.of(new DeleteOperationSemanticCommand(context, self));
+      }
+
+      return List.of();
    }
 }

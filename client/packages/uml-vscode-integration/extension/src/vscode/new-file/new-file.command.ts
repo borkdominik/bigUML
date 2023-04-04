@@ -15,6 +15,7 @@
  ********************************************************************************/
 
 import { inject, injectable } from 'inversify';
+import { Uri } from 'vscode';
 import { VSCodeCommand } from '../command/command';
 import { NewFileCreator } from './new-file.creator';
 
@@ -22,11 +23,16 @@ import { NewFileCreator } from './new-file.creator';
 export class NewFileCommand implements VSCodeCommand {
     constructor(@inject(NewFileCreator) private creator: NewFileCreator) {}
 
-    get id() {
-        return 'uml.newDiagram';
+    get id(): string {
+        return 'bigUML.model.newEmpty';
     }
 
-    execute(...args: any[]) {
-        this.creator.create();
+    execute(...args: any[]): void {
+        let uri: Uri | undefined = undefined;
+        if (args[0] !== undefined && args[0] !== null) {
+            uri = args[0];
+        }
+
+        this.creator.create(uri);
     }
 }

@@ -19,6 +19,7 @@ import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.DataType;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
+import com.eclipsesource.uml.glsp.core.constants.QuotationMark;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_DataType;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGNodeMapper;
 import com.eclipsesource.uml.glsp.uml.gmodel.element.NamedElementGBuilder;
@@ -44,8 +45,8 @@ public final class DataTypeNodeMapper extends BaseGNodeMapper<DataType, GNode>
       var header = compartmentHeaderBuilder(source)
          .layout(GConstants.Layout.VBOX);
 
-      header.add(textBuilder(source, "<<DataType>>").build());
-      header.add(buildIconVisibilityName(source, "--uml-data-type-icon"));
+      header.add(buildHeaderAnnotation(source, QuotationMark.quoteDoubleAngle("DataType")));
+      header.add(buildHeaderName(source, "--uml-data-type-icon"));
 
       return header.build();
    }

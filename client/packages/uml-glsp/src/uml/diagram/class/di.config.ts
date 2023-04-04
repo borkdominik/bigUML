@@ -11,7 +11,8 @@
 import { configureModelElement, PolylineEdgeView, SCompartmentView, SEdge, SLabelView } from '@eclipse-glsp/client/lib';
 import { ContainerModule } from 'inversify';
 
-import { IconLabelCompartment, SEditableLabel } from '../../../graph';
+import { SEditableLabel } from '../../../graph';
+import { InteractableCompartment } from '../../../graph/uml-compartment';
 import { NamedElement, NamedElementView } from '../../elements';
 import { UmlClassTypes } from './class.types';
 
@@ -21,11 +22,11 @@ export const umlClassDiagramModule = new ContainerModule((bind, unbind, isBound,
     configureModelElement(context, UmlClassTypes.CLASS, NamedElement, NamedElementView);
     configureModelElement(context, UmlClassTypes.DATA_TYPE, NamedElement, NamedElementView);
     configureModelElement(context, UmlClassTypes.ENUMERATION, NamedElement, NamedElementView);
-    configureModelElement(context, UmlClassTypes.ENUMERATION_LITERAL, IconLabelCompartment, SCompartmentView);
+    configureModelElement(context, UmlClassTypes.ENUMERATION_LITERAL, InteractableCompartment, SCompartmentView);
     configureModelElement(context, UmlClassTypes.INTERFACE, NamedElement, NamedElementView);
-    configureModelElement(context, UmlClassTypes.OPERATION, IconLabelCompartment, SCompartmentView);
+    configureModelElement(context, UmlClassTypes.OPERATION, InteractableCompartment, SCompartmentView);
     configureModelElement(context, UmlClassTypes.PACKAGE, NamedElement, NamedElementView);
-    configureModelElement(context, UmlClassTypes.PROPERTY, IconLabelCompartment, SCompartmentView);
+    configureModelElement(context, UmlClassTypes.PROPERTY, InteractableCompartment, SCompartmentView);
     configureModelElement(context, UmlClassTypes.PROPERTY_LABEL_TYPE, SEditableLabel, SLabelView);
     configureModelElement(context, UmlClassTypes.PROPERTY_LABEL_MULTIPLICITY, SEditableLabel, SLabelView);
     configureModelElement(context, UmlClassTypes.PRIMITIVE_TYPE, NamedElement, NamedElementView);

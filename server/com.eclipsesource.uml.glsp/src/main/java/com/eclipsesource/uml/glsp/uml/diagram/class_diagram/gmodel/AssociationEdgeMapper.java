@@ -32,7 +32,7 @@ public final class AssociationEdgeMapper extends BaseGEdgeMapper<Association, GE
       var builder = new GEdgeBuilder(UmlClass_Association.typeId())
          .id(idGenerator.getOrCreateId(source))
          .addCssClass(CoreCSS.EDGE)
-         .routerKind(GConstants.RouterKind.MANHATTAN);
+         .routerKind(GConstants.RouterKind.POLYLINE);
 
       applyMemberEnds(source, builder);
       applyEdgeNotation(source, builder);
@@ -49,19 +49,22 @@ public final class AssociationEdgeMapper extends BaseGEdgeMapper<Association, GE
          .sourceId(idGenerator.getOrCreateId(memberEndFirst.getOwner()))
          .targetId(idGenerator.getOrCreateId(memberEndSecond.getOwner()));
 
-      applyMemberEnd(memberEndFirst, builder, 0.9d);
-      applyMemberEnd(memberEndSecond, builder, 0.1d);
+      applyMemberEnd(memberEndFirst, builder, 0.9d, GConstants.EdgeSide.BOTTOM, GConstants.EdgeSide.TOP);
+      applyMemberEnd(memberEndSecond, builder, 0.1d, GConstants.EdgeSide.TOP, GConstants.EdgeSide.BOTTOM);
    }
 
-   protected void applyMemberEnd(final Property memberEnd, final GEdgeBuilder builder, final double position) {
+   protected void applyMemberEnd(final Property memberEnd, final GEdgeBuilder builder, final double position,
+      final String labelSide, final String multiplicitySide) {
       var memberEndId = idGenerator.getOrCreateId(memberEnd);
 
       builder.add(nameBuilder(memberEnd,
          new GEdgePlacementBuilder()
-            .side(GConstants.EdgeSide.TOP)
+            .side(labelSide)
             .position(position)
-            .rotate(false)
-            .build()).build());
+            .rotate(true)
+            .offset(10d)
+            .build())
+               .build());
 
       builder.add(
          textEdgeBuilder(
@@ -69,11 +72,12 @@ public final class AssociationEdgeMapper extends BaseGEdgeMapper<Association, GE
             suffix.appendTo(PropertyMultiplicityLabelSuffix.SUFFIX, memberEndId),
             MultiplicityUtil.getMultiplicity(memberEnd),
             new GEdgePlacementBuilder()
-               .side(GConstants.EdgeSide.BOTTOM)
+               .side(multiplicitySide)
                .position(position)
                .offset(10d)
-               .rotate(false)
-               .build()).build());
+               .rotate(true)
+               .build())
+                  .build());
 
       var marker = CoreCSS.Marker.from(memberEnd.getAggregation());
       builder.addCssClass(position < 0.5d ? marker.start() : marker.end());

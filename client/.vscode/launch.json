@@ -5,7 +5,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "UML GLSP VSCode Extension (External GLSP Server)",
+      "name": "(Debug) UML GLSP VSCode Extension",
       "type": "extensionHost",
       "request": "launch",
       "runtimeExecutable": "${execPath}",
@@ -13,13 +13,29 @@
         "${workspaceFolder}/workspace",
         "--extensionDevelopmentPath=${workspaceFolder}/packages/uml-vscode-integration/extension"
       ],
-      "outFiles": [
-        "${workspaceFolder}/packages/uml-vscode-integration/extension/lib/*.js"
-      ],
+      "outFiles": ["${workspaceFolder}/packages/uml-vscode-integration/extension/lib/*.js"],
       "sourceMaps": true,
       "env": {
         "UML_GLSP_SERVER_DEBUG": "true",
-        "UML_GLSP_SERVER_PORT": "5007"
+        "UML_GLSP_SERVER_PORT": "5007",
+        "UML_MODEL_SERVER_DEBUG": "true",
+        "UML_MODEL_SERVER_PORT": "8081"
+      }
+    },
+    {
+      "name": "(Production) UML GLSP VSCode Extension",
+      "type": "extensionHost",
+      "request": "launch",
+      "runtimeExecutable": "${execPath}",
+      "args": [
+        "${workspaceFolder}/workspace",
+        "--extensionDevelopmentPath=${workspaceFolder}/packages/uml-vscode-integration/extension"
+      ],
+      "outFiles": ["${workspaceFolder}/packages/uml-vscode-integration/extension/lib/*.js"],
+      "sourceMaps": true,
+      "env": {
+        "UML_GLSP_SERVER_LOGGING": "false",
+        "UML_MODEL_SERVER_LOGGING": "false"
       }
     }
   ]

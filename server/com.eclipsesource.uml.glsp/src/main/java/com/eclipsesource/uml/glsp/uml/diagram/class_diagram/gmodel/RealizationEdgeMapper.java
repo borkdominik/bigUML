@@ -37,7 +37,7 @@ public final class RealizationEdgeMapper extends BaseGEdgeMapper<Realization, GE
          .addCssClass(CoreCSS.Marker.TRIANGLE_EMPTY.end())
          .sourceId(clientId)
          .targetId(supplierId)
-         .routerKind(GConstants.RouterKind.MANHATTAN);
+         .routerKind(GConstants.RouterKind.POLYLINE);
 
       applyEdgeNotation(source, builder);
 

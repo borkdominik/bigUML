@@ -8,13 +8,15 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-import '@eclipse-glsp/client/css/glsp-sprotty.css';
 import 'balloon-css/balloon.min.css';
+
+import 'sprotty/css/sprotty.css';
+
 import 'sprotty/css/edit-label.css';
 
-import '../css/style.css';
+import '@eclipse-glsp/client/css/glsp-sprotty.css';
 
-import '../css/extensions/edit-label.css';
+import '../css/style.css';
 
 import {
     configureDefaultModelElements,
@@ -23,9 +25,9 @@ import {
     createDiagramContainer,
     EditLabelUI,
     GLSPGraph,
+    GridSnapper,
     LogLevel,
     overrideViewerOptions,
-    saveModule,
     TYPES
 } from '@eclipse-glsp/client';
 import toolPaletteModule from '@eclipse-glsp/client/lib/features/tool-palette/di.config';
@@ -37,10 +39,11 @@ import { EditLabelUIAutocomplete } from './features/edit-label';
 import editorPanelModule from './features/editor-panel/di.config';
 import outlineModule from './features/outline/di.config';
 import propertyPaletteModule from './features/property-palette/di.config';
+import { themeModule } from './features/theme/di.config';
 import { FixedFeedbackActionDispatcher } from './features/tool-feedback/feedback-action-dispatcher';
 import umlToolPaletteModule from './features/tool-palette/di.config';
-import { UmlGraphView } from './graph/graph.view';
 import { SVGIdCreatorService } from './graph/svg-id-creator.service';
+import { UmlGraphProjectionView } from './graph/uml-graph-projection.view';
 import { umlDiagramModules } from './uml/index';
 import { IconLabelCompartmentSelectionFeedback } from './views/feedback.postprocessor';
 
@@ -50,6 +53,8 @@ export default function createContainer(widgetId: string): Container {
 
         rebind(TYPES.ILogger).to(FixedLogger).inSingletonScope();
         rebind(TYPES.LogLevel).toConstantValue(LogLevel.info);
+
+        bind(TYPES.ISnapper).to(GridSnapper);
         rebind(TYPES.ICopyPasteHandler).to(CustomCopyPasteHandler);
         rebind(TYPES.IFeedbackActionDispatcher).to(FixedFeedbackActionDispatcher).inSingletonScope();
 
@@ -62,7 +67,7 @@ export default function createContainer(widgetId: string): Container {
 
         configureDefaultModelElements(context);
 
-        configureModelElement(context, DefaultTypes.GRAPH, GLSPGraph, UmlGraphView);
+        configureModelElement(context, DefaultTypes.GRAPH, GLSPGraph, UmlGraphProjectionView);
 
         configureViewerOptions(context, {
             needsClientLayout: true,
@@ -70,17 +75,11 @@ export default function createContainer(widgetId: string): Container {
         });
     });
 
-    const container = createDiagramContainer(
-        saveModule,
-        coreDiagramModule,
-        editorPanelModule,
-        umlToolPaletteModule,
-        outlineModule,
-        propertyPaletteModule,
-        ...umlDiagramModules
-    );
+    const container = createDiagramContainer(coreDiagramModule);
 
     container.unload(toolPaletteModule);
+
+    container.load(themeModule, editorPanelModule, umlToolPaletteModule, outlineModule, propertyPaletteModule, ...umlDiagramModules);
 
     overrideViewerOptions(container, {
         baseDiv: widgetId,

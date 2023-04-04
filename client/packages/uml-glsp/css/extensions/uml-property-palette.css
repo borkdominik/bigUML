@@ -1,0 +1,137 @@
+/* === Property Palette === */
+
+.property-palette {
+    display: flex;
+    flex-direction: column;
+    background: var(--uml-menu-background);
+    height: 192px;
+}
+
+/* === Property Header === */
+
+.property-palette-header {
+    display: flex;
+    padding: 0.4rem;
+    align-items: center;
+    background: var(--uml-secondaryBar-background);
+}
+
+.property-palette-header .property-palette-back {
+    border: none;
+    background: inherit;
+    color: inherit;
+    margin-right: 0.5rem;
+}
+
+.property-palette-header .property-palette-back:hover {
+    cursor: pointer;
+    background: var(--uml-menubar-selectionBackground);
+}
+
+.property-palette-header .property-palette-breadcrumbs {
+    margin-right: 0.5rem;
+}
+
+/* === Property Content === */
+
+.property-palette-content {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    overflow: auto;
+}
+
+.property-palette-content > .property-item {
+    margin-bottom: 0.2rem;
+}
+
+/* === Property Item === */
+
+.property-item {
+    padding: 0.4rem;
+    display: flex;
+    flex-direction: row;
+    margin-left: 1rem;
+}
+
+.property-item > .property-item-full {
+    flex: 1;
+}
+
+.property-item .property-item-label {
+    width: 128px;
+    word-wrap: break-word;
+    padding-right: 0.2rem;
+}
+
+.property-item .property-button {
+    border: none;
+    padding: 0.4rem;
+    background: var(--uml-menu-background);
+    color: inherit;
+}
+
+.property-item .property-button:hover {
+    background: var(--uml-menubar-selectionBackground);
+    cursor: pointer;
+}
+
+/* === Property Reference Item === */
+
+.property-reference-item .reference-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.property-reference-item .reference-element {
+    display: flex;
+    flex-direction: row;
+}
+
+.property-reference-item .reference-label-container {
+    padding-left: 0.5rem;
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.property-reference-item .reference-element:not(.reference-readonly) .reference-label-container:hover {
+    background: var(--uml-menubar-selectionBackground);
+    cursor: pointer;
+}
+
+.property-reference-item .reference-check-state {
+    margin-right: 0.5rem;
+}
+
+.property-reference-item .reference-element-navigate {
+    margin-left: auto;
+}
+
+.property-reference-item .reference-element-navigate:hover {
+    background: var(--uml-menubar-selectionBackground);
+    cursor: pointer;
+}
+
+.property-reference-item .reference-create-reference,
+.property-reference-item .reference-delete {
+    background: inherit;
+}
+
+.property-reference-item .reference-container-header {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 0.5rem;
+}
+
+.property-reference-item .reference-container-header > *:not(:first-child) {
+    margin-left: 0.5rem;
+}
+
+.property-reference-item .reference-create-reference {
+    color: var(--uml-successBackground);
+}
+
+.property-reference-item .reference-delete {
+    color: var(--uml-errorForeground);
+}

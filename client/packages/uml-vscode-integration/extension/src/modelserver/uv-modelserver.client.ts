@@ -14,13 +14,14 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 
+import { ModelServerConfig } from '@borkdominik-biguml/uml-modelserver/lib/config';
 import { UmlModelServerClient } from '@borkdominik-biguml/uml-modelserver/lib/modelserver.client';
-import { injectable } from 'inversify';
-import { MODEL_SERVER_CONFIG } from './uv-modelserver.config';
+import { inject, injectable } from 'inversify';
+import { TYPES } from '../di.types';
 
 @injectable()
 export class UVModelServerClient extends UmlModelServerClient {
-    constructor() {
-        super(MODEL_SERVER_CONFIG);
+    constructor(@inject(TYPES.ModelServerConfig) protected override readonly config: ModelServerConfig) {
+        super(config);
     }
 }

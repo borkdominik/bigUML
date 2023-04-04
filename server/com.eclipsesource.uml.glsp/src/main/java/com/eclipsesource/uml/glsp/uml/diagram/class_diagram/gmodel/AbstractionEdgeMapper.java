@@ -19,6 +19,7 @@ import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.Abstraction;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
+import com.eclipsesource.uml.glsp.core.constants.QuotationMark;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_Abstraction;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGEdgeMapper;
 import com.eclipsesource.uml.glsp.uml.gmodel.element.EdgeGBuilder;
@@ -33,20 +34,21 @@ public final class AbstractionEdgeMapper extends BaseGEdgeMapper<Abstraction, GE
       var supplierId = idGenerator.getOrCreateId(supplier);
 
       GEdgeBuilder builder = new GEdgeBuilder(UmlClass_Abstraction.typeId())
-            .id(idGenerator.getOrCreateId(source))
-            .addCssClasses(List.of(CoreCSS.EDGE, CoreCSS.EDGE_DASHED))
-            .addCssClass(CoreCSS.Marker.TENT.end())
-            .sourceId(clientId)
-            .targetId(supplierId)
-            .routerKind(GConstants.RouterKind.MANHATTAN)
-            .add(textEdgeBuilder(
-                  source,
-                  "<<abstraction>>",
-                  new GEdgePlacementBuilder()
-                        .side(GConstants.EdgeSide.TOP)
-                        .position(0.5d)
-                        .rotate(false)
-                        .build())
+         .id(idGenerator.getOrCreateId(source))
+         .addCssClasses(List.of(CoreCSS.EDGE, CoreCSS.EDGE_DASHED))
+         .addCssClass(CoreCSS.Marker.TENT.end())
+         .sourceId(clientId)
+         .targetId(supplierId)
+         .routerKind(GConstants.RouterKind.POLYLINE)
+         .add(textEdgeBuilder(
+            source,
+            QuotationMark.quoteDoubleAngle("abstraction"),
+            new GEdgePlacementBuilder()
+               .side(GConstants.EdgeSide.TOP)
+               .position(0.5d)
+               .offset(10d)
+               .rotate(true)
+               .build())
                   .build());
 
       applyEdgeNotation(source, builder);

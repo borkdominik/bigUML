@@ -1,5 +1,5 @@
 {
-  "name": "@borkdominik-biguml/theia-app",
+  "name": "biguml-theia",
   "version": "0.1.0",
   "private": true,
   "scripts": {

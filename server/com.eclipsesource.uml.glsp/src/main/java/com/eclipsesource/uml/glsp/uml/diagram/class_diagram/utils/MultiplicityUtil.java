@@ -10,7 +10,6 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.utils;
 
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.eclipse.uml2.uml.MultiplicityElement;
@@ -24,12 +23,20 @@ public final class MultiplicityUtil {
       return getBound(multiplicityString, 1);
    }
 
+   public static boolean matches(final String multiplicityString) {
+      return regex.matcher(multiplicityString).matches();
+   }
+
    private static int getBound(final String multiplicityString, final int index) {
-      String result = multiplicityString.trim();
-      Pattern pattern = Pattern.compile(multiplicityRegex());
-      Matcher matcher = pattern.matcher(multiplicityString);
-      if (matcher.find()) {
-         result = multiplicityString.split(multiplicityRegex())[index];
+      String result = "";
+      var multiplicity = multiplicityString.trim();
+      var matcher = regex.matcher(multiplicity);
+      if (matcher.matches()) {
+         if (!multiplicity.contains("..")) {
+            result = matcher.group(0);
+         } else {
+            result = matcher.group(index + 1);
+         }
       }
       return result.isEmpty() ? 1 : (result.equals("*") ? -1 : Integer.parseInt(result, 10));
    }
@@ -41,8 +48,5 @@ public final class MultiplicityUtil {
       return String.format("%s..%s", element.getLower(), element.getUpper() == -1 ? "*" : element.getUpper());
    }
 
-   private static String multiplicityRegex() {
-      return "\\.\\.";
-   }
-
+   public static Pattern regex = Pattern.compile("^(\\*|\\d+)\\.\\.(\\*|\\d+)$|^(\\d+)$");
 }

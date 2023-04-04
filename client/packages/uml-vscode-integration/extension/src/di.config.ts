@@ -14,28 +14,41 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 
+import { ModelServerConfig } from '@borkdominik-biguml/uml-modelserver/lib/config';
 import { Container, ContainerModule } from 'inversify';
 import * as vscode from 'vscode';
-import { TYPES, VSCODE_TYPES } from './di.types';
+import { FEATURE_TYPES, TYPES, VSCODE_TYPES } from './di.types';
+import { ThemeIntegration } from './features/theme/theme-integration';
 import { UVGlspConnector } from './glsp/connection/uv-glsp-connector';
 import { UVGlspServer } from './glsp/connection/uv-glsp-server';
+import { GlspServerConfig } from './glsp/launcher/glsp-server-launcher';
 import { UVModelServerClient } from './modelserver/uv-modelserver.client';
 import { CommandManager } from './vscode/command/command.manager';
 import { DisposableManager } from './vscode/disposable/disposable.manager';
 import { EditorProvider } from './vscode/editor/editor.provider';
 import { NewFileCommand } from './vscode/new-file/new-file.command';
 import { NewFileCreator } from './vscode/new-file/new-file.creator';
-import { ThemeManager } from './vscode/theme-manager/theme-manager';
+import { OutputChannel } from './vscode/output/output.channel';
+import { Settings } from './vscode/settings/settings';
 import { WorkspaceWatcher } from './vscode/workspace/workspace.watcher';
 
-export function createContainer(context: vscode.ExtensionContext): Container {
+export function createContainer(
+    context: vscode.ExtensionContext,
+    options: {
+        glspServerConfig: GlspServerConfig;
+        modelServerConfig: ModelServerConfig;
+    }
+): Container {
     const vscodeModule = new ContainerModule((bind, unbind, isBound, rebind) => {
         bind(TYPES.GlspServer).to(UVGlspServer).inSingletonScope();
+        bind(TYPES.GlspServerConfig).toConstantValue(options.glspServerConfig);
+
         bind(TYPES.Connector).to(UVGlspConnector).inSingletonScope();
 
-        bind(VSCODE_TYPES.CommandManager).to(CommandManager).inSingletonScope();
-
         bind(TYPES.ModelServerClient).to(UVModelServerClient).inSingletonScope();
+        bind(TYPES.ModelServerConfig).toConstantValue(options.modelServerConfig);
+
+        bind(VSCODE_TYPES.CommandManager).to(CommandManager).inSingletonScope();
 
         bind(NewFileCreator).toSelf().inSingletonScope();
         bind(VSCODE_TYPES.Command).to(NewFileCommand);
@@ -47,9 +60,15 @@ export function createContainer(context: vscode.ExtensionContext): Container {
 
         bind(VSCODE_TYPES.EditorProvider).to(EditorProvider).inSingletonScope();
 
-        bind(VSCODE_TYPES.ThemeManager).to(ThemeManager).inSingletonScope();
+        bind(VSCODE_TYPES.OutputChannel).to(OutputChannel).inSingletonScope();
+
+        bind(Settings).toSelf().inSingletonScope();
+        bind(VSCODE_TYPES.Settings).toService(Settings);
 
         bind(VSCODE_TYPES.Watcher).to(WorkspaceWatcher).inSingletonScope();
+        bind(VSCODE_TYPES.Watcher).toService(Settings);
+
+        bind(FEATURE_TYPES.Theme).to(ThemeIntegration).inSingletonScope();
     });
 
     const container = new Container({

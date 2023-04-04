@@ -45,7 +45,7 @@ public class MessageEdgeMapper extends BaseGModelMapper<Message, GEdge> {
          .addCssClass(CoreCSS.EDGE)
          .sourceId(idGenerator.getOrCreateId(source))
          .targetId(idGenerator.getOrCreateId(target))
-         .routerKind(GConstants.RouterKind.MANHATTAN);
+         .routerKind(GConstants.RouterKind.POLYLINE);
 
       var nameLabel = createEdgeNameLabel(message.getName(),
          suffix.appendTo(NameLabelSuffix.SUFFIX, idGenerator.getOrCreateId(message)), 0.6d);

@@ -13,6 +13,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
+import { ContainerContext } from '@eclipse-glsp/theia-integration';
 import { bindViewContribution, createTreeContainer, FrontendApplicationContribution } from '@theia/core/lib/browser';
 import { WidgetFactory } from '@theia/core/lib/browser/widget-manager';
 import { bindContributionProvider } from '@theia/core/lib/common/contribution-provider';
@@ -24,14 +25,14 @@ import { OutlineWidgetTreeModel } from './outline-widget.model';
 import { OutlineWidgetService } from './outline-widget.service';
 import { OutlineWidget, OutlineWidgetFactory } from './outline-widget.widget';
 
-export function registerOutlineWidget(bind: interfaces.Bind): void {
-    bind(OutlineWidgetFactory).toFactory(ctx => () => createOutlineWidget(ctx.container));
+export function registerOutlineWidget(context: ContainerContext): void {
+    context.bind(OutlineWidgetFactory).toFactory(ctx => () => createOutlineWidget(ctx.container));
 
-    bind(OutlineWidgetService).toSelf().inSingletonScope();
-    bind(WidgetFactory).toService(OutlineWidgetService);
+    context.bind(OutlineWidgetService).toSelf().inSingletonScope();
+    context.bind(WidgetFactory).toService(OutlineWidgetService);
 
-    bindViewContribution(bind, OutlineWidgetContribution);
-    bind(FrontendApplicationContribution).toService(OutlineWidgetContribution);
+    bindViewContribution(context.bind, OutlineWidgetContribution);
+    context.bind(FrontendApplicationContribution).toService(OutlineWidgetContribution);
 }
 
 function createOutlineWidgetContainer(parent: interfaces.Container): interfaces.Container {

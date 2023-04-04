@@ -19,6 +19,7 @@ import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.PackageImport;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
+import com.eclipsesource.uml.glsp.core.constants.QuotationMark;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.diagram.UmlClass_PackageImport;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGEdgeMapper;
 import com.eclipsesource.uml.glsp.uml.gmodel.element.EdgeGBuilder;
@@ -38,16 +39,17 @@ public final class PackageImportEdgeMapper extends BaseGEdgeMapper<PackageImport
          .addCssClass(CoreCSS.Marker.TENT.end())
          .sourceId(nearestPackageId)
          .targetId(importedPackageId)
-         .routerKind(GConstants.RouterKind.MANHATTAN)
+         .routerKind(GConstants.RouterKind.POLYLINE)
          .add(textEdgeBuilder(
             source,
-            "<<import>>",
+            QuotationMark.quoteDoubleAngle("import"),
             new GEdgePlacementBuilder()
                .side(GConstants.EdgeSide.TOP)
                .position(0.5d)
-               .rotate(false)
+               .offset(10d)
+               .rotate(true)
                .build())
-            .build());
+                  .build());
 
       applyEdgeNotation(source, builder);
 

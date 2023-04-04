@@ -9,19 +9,23 @@
     "nohoist": [
       "**/path",
       "**/path/**",
-      "@borkdominik-biguml/uml-vscode-integration-extension/@vscode/codicons",
-      "@borkdominik-biguml/uml-vscode-integration-extension/@vscode/codicons/**"
+      "biguml-vscode/@vscode/codicons",
+      "biguml-vscode/@vscode/codicons/**"
     ]
   },
   "scripts": {
+    "build:server": "cd ../server && mvn clean install && cd ../client && yarn copy:server",
+    "copy:server": "tsx ./scripts/copy-server.ts",
     "depcheck": "npx depcheck --config .depcheck.yml",
+    "package": "cd packages/uml-vscode-integration/extension && yarn package && mv ./*.vsix ${INIT_CWD}/release",
+    "package:zip": "yarn package && cd ${INIT_CWD} && zip -r ./release-$(date +%Y%m%d-%H%M).zip ./release",
     "prepare": "lerna run prepare",
-    "prepare:theia": "yarn prepare --include-dependencies=true --scope=@borkdominik-biguml/theia-app",
-    "prepare:vscode": "yarn prepare --include-dependencies=true --scope=@borkdominik-biguml/uml-vscode-*",
+    "prepare:theia": "yarn prepare --include-dependencies=true --scope=biguml-theia",
+    "prepare:vscode": "yarn prepare --include-dependencies=true --scope=biguml-vscode",
     "start:theia:debug": "cd environments/theia-app && yarn start:debug",
     "watch": "lerna run --parallel watch",
-    "watch:theia": "yarn watch --include-dependencies=true --scope=@borkdominik-biguml/theia-app",
-    "watch:vscode": "yarn watch --include-dependencies=true --scope=@borkdominik-biguml/uml-vscode-*"
+    "watch:theia": "yarn watch --include-dependencies=true --scope=biguml-theia",
+    "watch:vscode": "yarn watch --include-dependencies=true --scope=biguml-vscode"
   },
   "resolutions": {
     "**/@eclipse-emfcloud/modelserver-theia": "0.8.0-theia-cr02",

@@ -4,8 +4,6 @@
     --uml-successBackground: var(--theia-successBackground);
     --uml-errorForeground: var(--theia-errorForeground);
 
-    --uml-activityBar-background: var(--theia-activityBar-background);
-
     --uml-editor-background: var(--theia-editor-background);
     --uml-editor-foreground: var(--theia-editor-foreground);
 
@@ -16,6 +14,7 @@
 
     --uml-titleBar-activeBackground: var(--theia-titleBar-activeBackground);
     --uml-titleBar-activeForeground: var(--theia-titleBar-activeForeground);
+    --uml-secondaryBar-background: var(--theia-activityBar-background);
 
     --uml-widget-shadow: var(--theia-widget-shadow);
 }

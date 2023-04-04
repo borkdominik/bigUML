@@ -74,7 +74,7 @@ public class UmlClass_Property {
       @Override
       public Set<ShapeTypeHint> getShapeTypeHints() {
          return Set.of(
-            new ShapeTypeHint(typeId(), true, true, false, false,
+            new ShapeTypeHint(typeId(), false, true, false, false,
                List.of()));
       }
    }

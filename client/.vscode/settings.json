@@ -31,5 +31,6 @@
     "html",
     "typescript",
     "typescriptreact"
-  ]
+  ],
+  "bigUML.hideUnotation": false
 }

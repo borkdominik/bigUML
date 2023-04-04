@@ -64,6 +64,17 @@
         "enablement": "activeCustomEditorId == 'bigUML.diagramView'"
       }
     ],
+    "configuration": {
+      "title": "bigUML",
+      "properties": {
+        "bigUML.hideUnotation": {
+          "type": "boolean",
+          "default": true,
+          "scope": "resource",
+          "description": "Hide the *.unotation files."
+        }
+      }
+    },
     "customEditors": [
       {
         "viewType": "bigUML.diagramView",
@@ -103,7 +114,7 @@
     ],
     "languages": [
       {
-        "id": "bigUML.uml",
+        "id": "bigUML-uml",
         "extensions": [
           ".uml"
         ],
@@ -113,7 +124,7 @@
         }
       },
       {
-        "id": "bigUML.unotation",
+        "id": "bigUML-unotation",
         "extensions": [
           ".unotation"
         ],
@@ -177,7 +188,8 @@
   "activationEvents": [
     "onLanguage:bigUML.uml",
     "onLanguage:bigUML.unotation",
-    "onCommand:bigUML.model.newEmpty"
+    "onCommand:bigUML.model.newEmpty",
+    "workspaceContains:**/*.uml"
   ],
   "dependencies": {
     "@borkdominik-biguml/uml-common": "*",

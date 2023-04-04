@@ -34,6 +34,7 @@ export const VSCODE_TYPES = {
     EditorProvider: Symbol('EditorProvider'),
     ExtensionContext: Symbol('ExtensionContext'),
     OutputChannel: Symbol('OutputChannel'),
+    Settings: Symbol('Settings'),
     Watcher: Symbol('Watcher')
 };
 

@@ -21,7 +21,7 @@ import { FEATURE_TYPES, TYPES, VSCODE_TYPES } from './di.types';
 import { ThemeIntegration } from './features/theme/theme-integration';
 import { UVGlspConnector } from './glsp/connection/uv-glsp-connector';
 import { UVGlspServer } from './glsp/connection/uv-glsp-server';
-import { GlspServerConfig } from './glsp/launcher/launcher';
+import { GlspServerConfig } from './glsp/launcher/glsp-server-launcher';
 import { UVModelServerClient } from './modelserver/uv-modelserver.client';
 import { CommandManager } from './vscode/command/command.manager';
 import { DisposableManager } from './vscode/disposable/disposable.manager';
@@ -29,6 +29,7 @@ import { EditorProvider } from './vscode/editor/editor.provider';
 import { NewFileCommand } from './vscode/new-file/new-file.command';
 import { NewFileCreator } from './vscode/new-file/new-file.creator';
 import { OutputChannel } from './vscode/output/output.channel';
+import { Settings } from './vscode/settings/settings';
 import { WorkspaceWatcher } from './vscode/workspace/workspace.watcher';
 
 export function createContainer(
@@ -61,7 +62,11 @@ export function createContainer(
 
         bind(VSCODE_TYPES.OutputChannel).to(OutputChannel).inSingletonScope();
 
+        bind(Settings).toSelf().inSingletonScope();
+        bind(VSCODE_TYPES.Settings).toService(Settings);
+
         bind(VSCODE_TYPES.Watcher).to(WorkspaceWatcher).inSingletonScope();
+        bind(VSCODE_TYPES.Watcher).toService(Settings);
 
         bind(FEATURE_TYPES.Theme).to(ThemeIntegration).inSingletonScope();
     });

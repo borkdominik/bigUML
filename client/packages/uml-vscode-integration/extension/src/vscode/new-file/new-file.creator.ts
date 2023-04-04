@@ -23,6 +23,8 @@ import { UVModelServerClient } from '../../modelserver/uv-modelserver.client';
 import { EditorProvider } from '../editor/editor.provider';
 import { newDiagramWizard } from './wizard';
 
+const nameRegex = /^([\w]+\/)*[\w]+$/;
+
 @injectable()
 export class NewFileCreator {
     constructor(
@@ -55,12 +57,31 @@ export class NewFileCreator {
                     return 'Name can not be empty';
                 }
 
+                if (input.startsWith('/') || input.endsWith('/')) {
+                    return 'Path can not start or end with /';
+                }
+
+                if (!nameRegex.test(input)) {
+                    return `Invalid input - only [a-z, A-Z, 0-9, /] allowed`;
+                }
+
                 const models = await this.modelServerClient.getAll();
                 const newModelUri = `${prefixPath}${this.diagramDestination(input)}`;
 
                 if (models.some(model => model.modeluri === newModelUri)) {
-                    return 'Name already exists';
+                    return 'Model already exists';
                 }
+
+                try {
+                    const target = vscode.Uri.joinPath(rootUri, this.diagramTarget(input).folder);
+                    const stat = await vscode.workspace.fs.stat(target);
+                    if (stat.type === vscode.FileType.Directory) {
+                        const files = await vscode.workspace.fs.readDirectory(target);
+                        if (files.length > 0) {
+                            return 'Provided path is not empty';
+                        }
+                    }
+                } catch (error) {}
 
                 return undefined;
             }
@@ -90,13 +111,34 @@ export class NewFileCreator {
         await vscode.commands.executeCommand('workbench.files.action.refreshFilesExplorer');
         const filePath = vscode.Uri.file(modelUri.path().toString());
         await vscode.commands.executeCommand('vscode.openWith', filePath, VSCodeSettings.editor.viewType);
+        await vscode.window.showInformationMessage(`Diagram '${diagramName}' created`);
     }
 
     protected rootDestination(uri: vscode.Uri): string {
         return uri.toString();
     }
 
-    protected diagramDestination(name: string): string {
-        return `${name}/model/${name}.uml`;
+    protected diagramTarget(input: string): {
+        folder: string;
+        path: string;
+    } {
+        let prefix = input;
+        let name = input;
+
+        if (input.includes('/')) {
+            const lastIndex = input.lastIndexOf('/');
+
+            name = input.slice(lastIndex + 1);
+            prefix = `${input.slice(0, lastIndex)}/${name}`;
+        }
+
+        return {
+            folder: prefix,
+            path: `${prefix}/model/${name}.uml`
+        };
+    }
+
+    protected diagramDestination(input: string): string {
+        return this.diagramTarget(input).path;
     }
 }

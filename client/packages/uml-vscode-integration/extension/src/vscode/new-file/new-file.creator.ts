@@ -111,7 +111,6 @@ export class NewFileCreator {
         await vscode.commands.executeCommand('workbench.files.action.refreshFilesExplorer');
         const filePath = vscode.Uri.file(modelUri.path().toString());
         await vscode.commands.executeCommand('vscode.openWith', filePath, VSCodeSettings.editor.viewType);
-        await vscode.window.showInformationMessage(`Diagram '${diagramName}' created`);
     }
 
     protected rootDestination(uri: vscode.Uri): string {

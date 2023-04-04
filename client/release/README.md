@@ -30,7 +30,7 @@ Please download the latest version of the extension. Then open the command palet
 
 ### Example
 
-The downloaded `zip` provides a basic demo example. You can open it or create your diagram by:
+The downloaded `zip` provides a basic demo example. Please open that folder in VSCode. Afterward you can open the demo diagram by double clicking it or you can also create a new diagram by:
 
 -   clicking `File -> New File` in VSCode
 -   doing a `right click` in the explorer and then clicking on `New Empty UML Diagram`
@@ -45,3 +45,7 @@ We start in the background two Java servers with random ports. Windows will show
 ### Opening Files
 
 Opening diagrams can take a little bit of time, due to starting the servers in the background.
+
+### Workspace
+
+You need to first open a folder / workspace to be able to interact with bigUML (`File -> Open Folder`).

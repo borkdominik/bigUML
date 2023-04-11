@@ -23,7 +23,7 @@ import { UVModelServerClient } from '../../modelserver/uv-modelserver.client';
 import { EditorProvider } from '../editor/editor.provider';
 import { newDiagramWizard } from './wizard';
 
-const nameRegex = /^([\w]+\/)*[\w]+$/;
+const nameRegex = /^([\w_-]+\/?)*[\w_-]+$/;
 
 @injectable()
 export class NewFileCreator {
@@ -62,7 +62,7 @@ export class NewFileCreator {
                 }
 
                 if (!nameRegex.test(input)) {
-                    return `Invalid input - only [a-z, A-Z, 0-9, /] allowed`;
+                    return 'Invalid input - only [0-9, a-z, A-Z, /, -, _] allowed';
                 }
 
                 const models = await this.modelServerClient.getAll();
@@ -81,7 +81,9 @@ export class NewFileCreator {
                             return 'Provided path is not empty';
                         }
                     }
-                } catch (error) {}
+                } catch (error) {
+                    // No op
+                }
 
                 return undefined;
             }

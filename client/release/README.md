@@ -24,7 +24,7 @@ Later, releases will be moved to GitHub and the VSCode Marketplace.
 
 ### Extension Installation
 
-Please download the latest version of the extension. Unpack the `archieve` and open the `release` folder with VSCode. Next open the command palette (default: `strg + shift + p`) and type / select `>Extensions: Install from VSIX`. Afterward, select the `biguml-vscode-x.x.x.vsix` file. After that, the extension will be installed.
+Please download the latest version of the extension. Unpack the `archive` and open the `release` folder with VSCode. Next open the command palette (default: `strg + shift + p`) and type / select `>Extensions: Install from VSIX`. Afterward, select the `biguml-vscode-x.x.x.vsix` file. After that, the extension will be installed.
 
 -   Sources: <https://code.visualstudio.com/docs/editor/extension-marketplace#_install-from-a-vsix>
 

@@ -93,8 +93,10 @@ export class UVGlspConnector<TDocument extends vscode.CustomDocument = vscode.Cu
             }
         }
 
+        return { processedMessage: message, messageChanged: false };
+        // TODO: Check why
         // The webview client cannot handle `SetDirtyStateAction`s. Avoid propagation
-        return { processedMessage: GlspVscodeConnector.NO_PROPAGATION_MESSAGE, messageChanged: true };
+        // return { processedMessage: GlspVscodeConnector.NO_PROPAGATION_MESSAGE, messageChanged: true };
     }
 
     protected onClientMessage(client: GlspVscodeClient<TDocument>, message: unknown): void {

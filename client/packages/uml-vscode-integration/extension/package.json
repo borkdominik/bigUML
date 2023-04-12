@@ -80,19 +80,19 @@
         "key": "alt+f",
         "mac": "alt+f",
         "command": "bigUML.fit",
-        "when": "activeCustomEditorId == 'bigUML.diagramView'"
+        "when": "focusedView == '' && !inputFocus && activeCustomEditorId == 'bigUML.diagramView'"
       },
       {
         "key": "alt+c",
         "mac": "alt+c",
         "command": "bigUML.center",
-        "when": "activeCustomEditorId == 'bigUML.diagramView'"
+        "when": "focusedView == '' && !inputFocus && activeCustomEditorId == 'bigUML.diagramView'"
       },
       {
         "key": "ctrl+a",
         "mac": "ctrl+a",
         "command": "bigUML.selectAll",
-        "when": "activeCustomEditorId == 'bigUML.diagramView'"
+        "when": "focusedView == '' && !inputFocus && activeCustomEditorId == 'bigUML.diagramView'"
       }
     ],
     "languages": [

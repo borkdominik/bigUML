@@ -34,10 +34,25 @@ public final class AssociationEdgeMapper extends BaseGEdgeMapper<Association, GE
          .addCssClass(CoreCSS.EDGE)
          .routerKind(GConstants.RouterKind.POLYLINE);
 
+      applyName(source, builder);
       applyMemberEnds(source, builder);
       applyEdgeNotation(source, builder);
 
       return builder.build();
+   }
+
+   protected void applyName(final Association source, final GEdgeBuilder builder) {
+      if (source.getName() != null && !source.getName().isBlank()) {
+         builder.add(textEdgeBuilder(
+            source,
+            source.getName(),
+            new GEdgePlacementBuilder()
+               .side(GConstants.EdgeSide.TOP)
+               .position(0.5d)
+               .offset(10d)
+               .rotate(true)
+               .build()).build());
+      }
    }
 
    protected void applyMemberEnds(final Association source, final GEdgeBuilder builder) {

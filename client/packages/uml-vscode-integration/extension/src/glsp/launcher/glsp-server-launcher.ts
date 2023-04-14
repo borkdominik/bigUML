@@ -20,8 +20,8 @@ import * as fs from 'fs';
 import { Container, inject, injectable } from 'inversify';
 import * as net from 'net';
 import * as path from 'path';
-import kill from 'tree-kill';
 import { TYPES, VSCODE_TYPES } from '../../di.types';
+import { kill } from '../../utils/process';
 import { OutputChannel } from '../../vscode/output/output.channel';
 
 const START_UP_COMPLETE_MSG = 'Startup completed';
@@ -85,6 +85,7 @@ export class UmlGLSPServerLauncher extends GlspServerLauncher {
             const process = this.options.serverType === 'java' ? this.startJavaProcess() : this.startNodeProcess();
 
             this.serverProcess = process;
+            console.log('ServerProcess', this.serverProcess);
 
             process.stdout.on('data', data => {
                 if (data.toString().includes(START_UP_COMPLETE_MSG)) {
@@ -119,7 +120,9 @@ export class UmlGLSPServerLauncher extends GlspServerLauncher {
         if (this.options.socketConnectionOptions.host) {
             args.push('--host', `${this.options.socketConnectionOptions.host}`);
         }
-        return childProcess.spawn('java', args);
+        return childProcess.spawn('java', args, {
+            detached: false
+        });
     }
 
     protected override handleStdoutData(data: string | Buffer): void {
@@ -144,11 +147,7 @@ export class UmlGLSPServerLauncher extends GlspServerLauncher {
 
     override stop(): void {
         if (this.serverProcess && this.serverProcess.pid && !this.serverProcess.killed) {
-            kill(this.serverProcess.pid, 'SIGINT', error => console.error('Error', error));
-
-            if (!this.serverProcess.killed) {
-                this.serverProcess.kill('SIGINT');
-            }
+            kill(this.serverProcess.pid, 'SIGINT');
         }
     }
 }

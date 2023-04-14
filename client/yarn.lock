@@ -3079,10 +3079,10 @@
   resolved "https://registry.yarnpkg.com/@types/uuid/-/uuid-7.0.5.tgz#b1d2f772142a301538fae9bdf9cf15b9f2573a29"
   integrity sha512-hKB88y3YHL8oPOs/CNlaXtjWn93+Bs48sDQR37ZUqG2tLeCS7EA1cmnkKsuQsub9OKEB/y/Rw9zqJqqNSbqVlQ==
 
-"@types/vscode@^1.54.0":
-  version "1.75.1"
-  resolved "https://registry.yarnpkg.com/@types/vscode/-/vscode-1.75.1.tgz#21d16480c04a50a1ceb693ea7577c58f88301579"
-  integrity sha512-emg7wdsTFzdi+elvoyoA+Q8keEautdQHyY5LNmHVM4PTpY8JgOTVADrGVyXGepJ6dVW2OS5/xnLUWh+nZxvdiA==
+"@types/vscode@^1.63.0":
+  version "1.77.0"
+  resolved "https://registry.yarnpkg.com/@types/vscode/-/vscode-1.77.0.tgz#f92f15a636abc9ef562f44dd8af6766aefedb445"
+  integrity sha512-MWFN5R7a33n8eJZJmdVlifjig3LWUNRrPeO1xemIcZ0ae0TEQuRc7G2xV0LUX78RZFECY1plYBn+dP/Acc3L0Q==
 
 "@types/write-json-file@^2.2.1":
   version "2.2.1"
@@ -11271,11 +11271,6 @@ trash@^7.2.0:
   version "0.3.9"
   resolved "https://registry.yarnpkg.com/traverse/-/traverse-0.3.9.tgz#717b8f220cc0bb7b44e40514c22b2e8bbc70d8b9"
   integrity sha512-iawgk0hLP3SxGKDfnDJf8wTz4p2qImnyihM5Hh/sGvQ3K37dPi/w8sRhdNIxYA1TwFwc5mDhIJq+O0RsvXBKdQ==
-
-tree-kill@^1.2.2:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/tree-kill/-/tree-kill-1.2.2.tgz#4ca09a9092c88b73a7cdc5e8a01b507b0790a0cc"
-  integrity sha512-L0Orpi8qGpRG//Nd+H90vFB+3iHnue1zSSGmNOOCh1GLJ7rUKVwV2HvijphGQS2UmhUZewS9VgvxYIdgr+fG1A==
 
 treeverse@^2.0.0:
   version "2.0.0"

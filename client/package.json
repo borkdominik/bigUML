@@ -9,8 +9,8 @@
     "nohoist": [
       "**/path",
       "**/path/**",
-      "biguml-vscode/@vscode/codicons",
-      "biguml-vscode/@vscode/codicons/**"
+      "umldiagram/@vscode/codicons",
+      "umldiagram/@vscode/codicons/**"
     ]
   },
   "scripts": {
@@ -21,11 +21,11 @@
     "package:zip": "yarn package && cd ${INIT_CWD} && zip -r ./release-$(date +%Y%m%d-%H%M).zip ./release",
     "prepare": "lerna run prepare",
     "prepare:theia": "yarn prepare --include-dependencies=true --scope=biguml-theia",
-    "prepare:vscode": "yarn prepare --include-dependencies=true --scope=biguml-vscode",
+    "prepare:vscode": "yarn prepare --include-dependencies=true --scope=umldiagram",
     "start:theia:debug": "cd environments/theia-app && yarn start:debug",
     "watch": "lerna run --parallel watch",
     "watch:theia": "yarn watch --include-dependencies=true --scope=biguml-theia",
-    "watch:vscode": "yarn watch --include-dependencies=true --scope=biguml-vscode"
+    "watch:vscode": "yarn watch --include-dependencies=true --scope=umldiagram"
   },
   "resolutions": {
     "**/@eclipse-emfcloud/modelserver-theia": "0.8.0-theia-cr02",

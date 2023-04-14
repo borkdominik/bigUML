@@ -85,7 +85,6 @@ export class UmlGLSPServerLauncher extends GlspServerLauncher {
             const process = this.options.serverType === 'java' ? this.startJavaProcess() : this.startNodeProcess();
 
             this.serverProcess = process;
-            console.log('ServerProcess', this.serverProcess);
 
             process.stdout.on('data', data => {
                 if (data.toString().includes(START_UP_COMPLETE_MSG)) {
@@ -145,9 +144,13 @@ export class UmlGLSPServerLauncher extends GlspServerLauncher {
         throw error;
     }
 
-    override stop(): void {
+    override dispose(): void {
+        // No op
+    }
+
+    override async stop(): Promise<void> {
         if (this.serverProcess && this.serverProcess.pid && !this.serverProcess.killed) {
-            kill(this.serverProcess.pid, 'SIGINT');
+            await kill(this.serverProcess.pid, 'SIGINT');
         }
     }
 }

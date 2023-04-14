@@ -17,29 +17,32 @@
 // Modified version of the tree-kill package: https://github.com/pkrumins/node-tree-kill
 
 import * as childProcess from 'child_process';
-const spawnSync = childProcess.spawnSync;
-const execSync = childProcess.execSync;
 
-export function kill(pid: number, signal: string) {
-    let tree: any = {};
-    let pidsToProcess: any = {};
+export async function kill(pid: number, signal: string): Promise<void> {
+    const tree: any = {};
+    const pidsToProcess: any = {};
     tree[pid] = [];
     pidsToProcess[pid] = 1;
 
+    let resolve: ((value: void) => void) | undefined = undefined;
+
+    const promise = new Promise<void>(res => {
+        resolve = res;
+    });
+
     switch (process.platform) {
         case 'win32':
-            execSync(`taskkill /F /T /PID ${pid}`);
+            childProcess.execSync(`taskkill /F /T /PID ${pid}`);
             break;
         case 'darwin':
             buildProcessTree(
                 pid,
                 tree,
                 pidsToProcess,
-                (parentPid: string) => {
-                    return spawnSync('pgrep', ['-P', parentPid]);
-                },
-                function () {
+                (parentPid: any) => childProcess.spawn('pgrep', ['-P', parentPid]),
+                () => {
                     killAll(tree, signal);
+                    resolve?.();
                 }
             );
             break;
@@ -53,19 +56,21 @@ export function kill(pid: number, signal: string) {
                 pid,
                 tree,
                 pidsToProcess,
-                (parentPid: string) => {
-                    return spawnSync('ps', ['-o', 'pid', '--no-headers', '--ppid', parentPid]);
-                },
+                (parentPid: string) => childProcess.spawn('ps', ['-o', 'pid', '--no-headers', '--ppid', parentPid]),
                 () => {
                     killAll(tree, signal);
+                    resolve?.();
                 }
             );
             break;
     }
+
+    return promise;
 }
 
-function killAll(tree: any, signal: any) {
-    let killed: any = {};
+function killAll(tree: any, signal: any): void {
+    const killed: any = {};
+    // eslint-disable-next-line no-useless-catch
     try {
         Object.keys(tree).forEach(pid => {
             tree[pid].forEach((pidpid: any) => {
@@ -84,28 +89,30 @@ function killAll(tree: any, signal: any) {
     }
 }
 
-function killPid(pid: any, signal: any) {
+function killPid(pid: any, signal: any): void {
     try {
         process.kill(parseInt(pid, 10), signal);
     } catch (err: any) {
-        if (err.code !== 'ESRCH') throw err;
+        if (err.code !== 'ESRCH') {
+            throw err;
+        }
     }
 }
 
-function buildProcessTree(parentPid: any, tree: any, pidsToProcess: any, spawnChildProcessesList: any, cb: any) {
-    let ps = spawnChildProcessesList(parentPid);
+function buildProcessTree(parentPid: any, tree: any, pidsToProcess: any, spawnChildProcessesList: any, cb: any): void {
+    const ps = spawnChildProcessesList(parentPid);
     let allData: any = '';
-    ps.stdout.on('data', function (data: any) {
-        var data = data.toString('ascii');
+    ps.stdout.on('data', (data: any) => {
+        data = data.toString('ascii');
         allData += data;
     });
 
-    var onClose = (code: any) => {
+    const onClose = (code: any): void => {
         delete pidsToProcess[parentPid];
 
-        if (code != 0) {
+        if (code !== 0) {
             // no more parent processes
-            if (Object.keys(pidsToProcess).length == 0) {
+            if (Object.keys(pidsToProcess).length === 0) {
                 cb();
             }
             return;

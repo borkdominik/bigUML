@@ -162,13 +162,9 @@ export class ModelServerLauncher implements vscode.Disposable {
     /**
      * Stops the server.
      */
-    stop(): void {
+    async stop(): Promise<void> {
         if (this.serverProcess && this.serverProcess.pid && !this.serverProcess.killed) {
-            kill(this.serverProcess.pid, 'SIGINT');
+            await kill(this.serverProcess.pid, 'SIGINT');
         }
-    }
-
-    dispose(): void {
-        this.stop();
     }
 }

@@ -15,8 +15,12 @@
  ********************************************************************************/
 import 'reflect-metadata';
 import * as vscode from 'vscode';
-import { activate as extensionActivate } from './extension';
+import { activate as extensionActivate, deactivate as extensionDeactivate } from './extension';
 
 export function activate(context: vscode.ExtensionContext): Promise<void> {
     return extensionActivate(context);
+}
+
+export function deactivate(context: vscode.ExtensionContext): Promise<void> {
+    return extensionDeactivate(context);
 }

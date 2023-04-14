@@ -16,16 +16,16 @@
 import '../css/colors.css';
 
 import { ModelServerConfig } from '@borkdominik-biguml/uml-modelserver/lib/config';
-import { GlspVscodeConnector } from '@eclipse-glsp/vscode-integration';
-import { configureDefaultCommands } from '@eclipse-glsp/vscode-integration/lib/quickstart-components';
 import * as vscode from 'vscode';
 import { createContainer } from './di.config';
 import { TYPES, VSCODE_TYPES } from './di.types';
+import { UVGlspConnector } from './glsp/connection/uv-glsp-connector';
 import { UVGlspServer } from './glsp/connection/uv-glsp-server';
 import { GlspServerConfig, launchGLSPServer } from './glsp/launcher/glsp-server-launcher';
 import { VSCodeSettings } from './language';
 import { launchModelServer } from './modelserver/launcher/modelserver-launcher';
 import { freePort } from './utils/server';
+import { configureDefaultCommands } from './vscode/command/default-commands';
 
 const modelServerRoute = '/api/v2/';
 
@@ -56,7 +56,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
 
     configureDefaultCommands({
         extensionContext: context,
-        connector: container.get<GlspVscodeConnector>(TYPES.Connector),
+        connector: container.get<UVGlspConnector>(TYPES.Connector),
         diagramPrefix: VSCodeSettings.commands.prefix
     });
 

@@ -1,16 +1,24 @@
 {
-  "name": "biguml-vscode",
+  "name": "umldiagram",
   "displayName": "bigUML Modeling Tool",
   "version": "0.1.0",
-  "description": "UML-VSCode extension",
+  "description": "Graphical UML Editor",
   "categories": [
-    "Programming Languages"
+    "Programming Languages",
+    "Visualization",
+    "Education"
+  ],
+  "keywords": [
+    "UML",
+    "Unified Modeling Language",
+    "UML Diagram",
+    "Modeling Tool"
   ],
   "homepage": "https://github.com/borkdominik/bigUML",
   "bugs": "https://github.com/borkdominik/bigUML/issues",
   "repository": {
     "type": "git",
-    "url": "https://github.com/borkdominik/bigUML.git"
+    "url": "https://github.com/borkdominik/bigUML"
   },
   "publisher": "BIGModelingTools",
   "main": "./lib/main",
@@ -22,13 +30,14 @@
   ],
   "scripts": {
     "build": "tsx .esbuild.mts",
-    "build:prod": "yarn build --es-minify",
+    "build:prod": "yarn clean && yarn build --es-minify",
     "clean": "rimraf lib tsconfig.tsbuildinfo server/**/*.log",
     "lint": "eslint --ext .ts,.tsx ./src",
     "lint:ci": "yarn lint -o eslint.xml -f checkstyle",
     "lint:fix": "eslint --fix --ext .ts,.tsx ./src",
-    "package": "vsce package --yarn",
     "prepare": "yarn clean && yarn build",
+    "vscode:package": "vsce package --yarn",
+    "vscode:package-pre": "yarn vscode:package --pre-release",
     "vscode:prepublish": "yarn build:prod",
     "watch": "yarn build --es-watch"
   },
@@ -49,18 +58,6 @@
       {
         "command": "bigUML.center",
         "title": "Center selection",
-        "category": "bigUML",
-        "enablement": "activeCustomEditorId == 'bigUML.diagramView'"
-      },
-      {
-        "command": "bigUML.layout",
-        "title": "Layout diagram",
-        "category": "bigUML",
-        "enablement": "activeCustomEditorId == 'bigUML.diagramView'"
-      },
-      {
-        "command": "bigUML.exportAsSVG",
-        "title": "Export as SVG",
         "category": "bigUML",
         "enablement": "activeCustomEditorId == 'bigUML.diagramView'"
       }
@@ -92,25 +89,19 @@
         "key": "alt+f",
         "mac": "alt+f",
         "command": "bigUML.fit",
-        "when": "activeCustomEditorId == 'bigUML.diagramView'"
+        "when": "focusedView == '' && !inputFocus && activeCustomEditorId == 'bigUML.diagramView'"
       },
       {
         "key": "alt+c",
         "mac": "alt+c",
         "command": "bigUML.center",
-        "when": "activeCustomEditorId == 'bigUML.diagramView'"
+        "when": "focusedView == '' && !inputFocus && activeCustomEditorId == 'bigUML.diagramView'"
       },
       {
         "key": "ctrl+a",
         "mac": "ctrl+a",
         "command": "bigUML.selectAll",
-        "when": "activeCustomEditorId == 'bigUML.diagramView'"
-      },
-      {
-        "key": "alt+l",
-        "mac": "alt+l",
-        "command": "bigUML.layout",
-        "when": "activeCustomEditorId == 'bigUML.diagramView'"
+        "when": "focusedView == '' && !inputFocus && activeCustomEditorId == 'bigUML.diagramView'"
       }
     ],
     "languages": [
@@ -168,15 +159,6 @@
           "command": "bigUML.center",
           "group": "navigation",
           "when": "activeCustomEditorId == 'bigUML.diagramView'"
-        },
-        {
-          "command": "bigUML.layout",
-          "group": "navigation",
-          "when": "activeCustomEditorId == 'bigUML.diagramView'"
-        },
-        {
-          "command": "bigUML.exportAsSVG",
-          "when": "activeCustomEditorId == 'bigUML.diagramView'"
         }
       ]
     },
@@ -190,8 +172,7 @@
   "activationEvents": [
     "onLanguage:bigUML.uml",
     "onLanguage:bigUML.unotation",
-    "onCommand:bigUML.model.newEmpty",
-    "workspaceContains:**/*.uml"
+    "onCommand:bigUML.model.newEmpty"
   ],
   "dependencies": {
     "@borkdominik-biguml/uml-common": "*",
@@ -201,16 +182,22 @@
     "@vscode/codicons": "^0.0.25",
     "inversify": "5.1.1",
     "reflect-metadata": "^0.1.13",
+    "tree-kill": "^1.2.2",
     "urijs": "^1.19.11"
   },
   "devDependencies": {
     "@borkdominik-biguml/uml-vscode-integration-webview": "*",
     "@types/urijs": "1.19.11",
-    "@types/vscode": "^1.54.0",
+    "@types/vscode": "^1.63.0",
     "@vscode/vsce": "^2.15.0",
     "esbuild": "^0.17.10"
   },
   "engines": {
-    "vscode": "^1.54.0"
+    "vscode": "^1.63.0"
+  },
+  "icon": "./resources/logo.png",
+  "galleryBanner": {
+    "color": "#1d1d1d",
+    "theme": "dark"
   }
 }

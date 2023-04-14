@@ -16,6 +16,7 @@ import org.eclipse.glsp.graph.builder.impl.GCompartmentBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.util.GConstants;
 
+import com.eclipsesource.uml.glsp.core.constants.UmlLayoutConstants;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.IdContextGeneratorGProvider;
 
 public interface CompartmentGBuilder extends IdContextGeneratorGProvider {
@@ -42,7 +43,7 @@ public interface CompartmentGBuilder extends IdContextGeneratorGProvider {
    default GCompartmentBuilder freeformChildrenCompartmentBuilder(final EObject source) {
       return new GCompartmentBuilder(DefaultTypes.COMPARTMENT)
          .id(idContextGenerator().getOrCreateId(source))
-         .layout(GConstants.Layout.FREEFORM)
+         .layout(UmlLayoutConstants.FREEFORM)
          .layoutOptions(new GLayoutOptions()
             .hAlign(GConstants.HAlign.LEFT)
             .resizeContainer(true));

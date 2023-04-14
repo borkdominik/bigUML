@@ -20,6 +20,7 @@ import * as fs from 'fs';
 import { Container, inject, injectable } from 'inversify';
 import * as net from 'net';
 import * as path from 'path';
+import kill from 'tree-kill';
 import { TYPES, VSCODE_TYPES } from '../../di.types';
 import { OutputChannel } from '../../vscode/output/output.channel';
 
@@ -143,9 +144,9 @@ export class UmlGLSPServerLauncher extends GlspServerLauncher {
 
     override stop(): void {
         if (this.serverProcess && this.serverProcess.pid && !this.serverProcess.killed) {
-            if (process.platform === 'win32') {
-                childProcess.execSync(`taskkill /F /T /PID ${this.serverProcess.pid}`);
-            } else {
+            kill(this.serverProcess.pid, 'SIGINT', error => console.error('Error', error));
+
+            if (!this.serverProcess.killed) {
                 this.serverProcess.kill('SIGINT');
             }
         }

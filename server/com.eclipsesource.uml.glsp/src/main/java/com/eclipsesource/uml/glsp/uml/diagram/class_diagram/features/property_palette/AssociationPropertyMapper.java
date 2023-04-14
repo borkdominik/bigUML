@@ -57,8 +57,10 @@ public class AssociationPropertyMapper extends BaseDiagramElementPropertyMapper<
          .text(UmlClass_Property.Property.NAME, "Member End Name", memberEndFirst.getName())
          .text(UmlClass_Property.Property.MULTIPLICITY, "Member End Multiplicity",
             MultiplicityUtil.getMultiplicity(memberEndFirst))
+         /*- TODO: Bugs the association
          .bool(UmlClass_Property.Property.IS_NAVIGABLE, "Member End Navigable",
             memberEndFirst.isNavigable())
+            */
          .choice(
             UmlClass_Property.Property.AGGREGATION,
             "Member End Aggregation",
@@ -70,8 +72,10 @@ public class AssociationPropertyMapper extends BaseDiagramElementPropertyMapper<
          .text(UmlClass_Property.Property.NAME, "Member End Name", memberEndSecond.getName())
          .text(UmlClass_Property.Property.MULTIPLICITY, "Member End Multiplicity",
             MultiplicityUtil.getMultiplicity(memberEndSecond))
+         /*- TODO: Bugs the association
          .bool(UmlClass_Property.Property.IS_NAVIGABLE, "Member End Navigable",
             memberEndSecond.isNavigable())
+            */
          .choice(
             UmlClass_Property.Property.AGGREGATION,
             "Member End Aggregation",

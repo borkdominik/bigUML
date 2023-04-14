@@ -5,13 +5,21 @@
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_A0aJAdI0Ee2g6oxIPIc7sg" value="1"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_A0aJAtI0Ee2g6oxIPIc7sg" value="1"/>
     </ownedAttribute>
+    <ownedAttribute xmi:id="_OiN9gdhuEe2qMo2WcAtwkQ" name="World" type="_7TYJYNIzEe2g6oxIPIc7sg" association="_OiEzkNhuEe2qMo2WcAtwkQ">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_OiN9gthuEe2qMo2WcAtwkQ" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_OiOkkNhuEe2qMo2WcAtwkQ" value="1"/>
+    </ownedAttribute>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="_7TYJYNIzEe2g6oxIPIc7sg" name="World">
+    <ownedAttribute xmi:id="_OiMvYNhuEe2qMo2WcAtwkQ" name="Hello" type="_61AyYNIzEe2g6oxIPIc7sg" association="_OiEzkNhuEe2qMo2WcAtwkQ">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_OiNWcNhuEe2qMo2WcAtwkQ" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_OiN9gNhuEe2qMo2WcAtwkQ" value="1"/>
+    </ownedAttribute>
     <ownedOperation xmi:id="_6sEm4NI1Ee2g6oxIPIc7sg" name="map">
       <ownedParameter xmi:id="_9XxYINI1Ee2g6oxIPIc7sg" name="object" type="_61AyYNIzEe2g6oxIPIc7sg"/>
       <ownedParameter xmi:id="_FrUisNI2Ee2g6oxIPIc7sg" name="NewParameter1" type="_5BVjYNI1Ee2g6oxIPIc7sg" direction="return"/>
     </ownedOperation>
   </packagedElement>
-  <packagedElement xmi:type="uml:Dependency" xmi:id="_bJMrcNI0Ee2g6oxIPIc7sg" client="_7TYJYNIzEe2g6oxIPIc7sg" supplier="_61AyYNIzEe2g6oxIPIc7sg"/>
   <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5BVjYNI1Ee2g6oxIPIc7sg" name="String"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="_OiEzkNhuEe2qMo2WcAtwkQ" memberEnd="_OiMvYNhuEe2qMo2WcAtwkQ _OiN9gdhuEe2qMo2WcAtwkQ"/>
 </uml:Model>

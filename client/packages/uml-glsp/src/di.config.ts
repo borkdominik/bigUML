@@ -20,6 +20,7 @@ import '../css/style.css';
 
 import {
     configureDefaultModelElements,
+    configureLayout,
     configureModelElement,
     configureViewerOptions,
     createDiagramContainer,
@@ -42,6 +43,7 @@ import propertyPaletteModule from './features/property-palette/di.config';
 import { themeModule } from './features/theme/di.config';
 import { FixedFeedbackActionDispatcher } from './features/tool-feedback/feedback-action-dispatcher';
 import umlToolPaletteModule from './features/tool-palette/di.config';
+import { UmlFreeFormLayouter } from './graph/layout/uml-freeform.layout';
 import { SVGIdCreatorService } from './graph/svg-id-creator.service';
 import { UmlGraphProjectionView } from './graph/uml-graph-projection.view';
 import { umlDiagramModules } from './uml/index';
@@ -64,6 +66,8 @@ export default function createContainer(widgetId: string): Container {
         bind(TYPES.MouseListener).toService(LastContainableElementTracker);
         bind(TYPES.IVNodePostprocessor).to(IconLabelCompartmentSelectionFeedback);
         bind(SVGIdCreatorService).toSelf().inSingletonScope();
+
+        configureLayout({ bind, isBound }, UmlFreeFormLayouter.KIND, UmlFreeFormLayouter);
 
         configureDefaultModelElements(context);
 

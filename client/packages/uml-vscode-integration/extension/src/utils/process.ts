@@ -33,6 +33,7 @@ export async function kill(pid: number, signal: string): Promise<void> {
     switch (process.platform) {
         case 'win32':
             childProcess.execSync(`taskkill /F /T /PID ${pid}`);
+            resolve!();
             break;
         case 'darwin':
             buildProcessTree(
@@ -42,7 +43,7 @@ export async function kill(pid: number, signal: string): Promise<void> {
                 (parentPid: any) => childProcess.spawn('pgrep', ['-P', parentPid]),
                 () => {
                     killAll(tree, signal);
-                    resolve?.();
+                    resolve!();
                 }
             );
             break;
@@ -59,7 +60,7 @@ export async function kill(pid: number, signal: string): Promise<void> {
                 (parentPid: string) => childProcess.spawn('ps', ['-o', 'pid', '--no-headers', '--ppid', parentPid]),
                 () => {
                     killAll(tree, signal);
-                    resolve?.();
+                    resolve!();
                 }
             );
             break;

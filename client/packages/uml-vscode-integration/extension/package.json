@@ -1,16 +1,24 @@
 {
-  "name": "biguml-vscode",
+  "name": "umldiagram",
   "displayName": "bigUML Modeling Tool",
   "version": "0.1.0",
-  "description": "UML-VSCode extension",
+  "description": "Graphical UML Editor",
   "categories": [
-    "Programming Languages"
+    "Programming Languages",
+    "Visualization",
+    "Education"
+  ],
+  "keywords": [
+    "UML",
+    "Unified Modeling Language",
+    "UML Diagram",
+    "Modeling Tool"
   ],
   "homepage": "https://github.com/borkdominik/bigUML",
   "bugs": "https://github.com/borkdominik/bigUML/issues",
   "repository": {
     "type": "git",
-    "url": "https://github.com/borkdominik/bigUML.git"
+    "url": "https://github.com/borkdominik/bigUML"
   },
   "publisher": "BIGModelingTools",
   "main": "./lib/main",
@@ -22,13 +30,14 @@
   ],
   "scripts": {
     "build": "tsx .esbuild.mts",
-    "build:prod": "yarn build --es-minify",
+    "build:prod": "yarn clean && yarn build --es-minify",
     "clean": "rimraf lib tsconfig.tsbuildinfo server/**/*.log",
     "lint": "eslint --ext .ts,.tsx ./src",
     "lint:ci": "yarn lint -o eslint.xml -f checkstyle",
     "lint:fix": "eslint --fix --ext .ts,.tsx ./src",
-    "package": "vsce package --yarn",
     "prepare": "yarn clean && yarn build",
+    "vscode:package": "vsce package --yarn",
+    "vscode:package-pre": "yarn vscode:package --pre-release",
     "vscode:prepublish": "yarn build:prod",
     "watch": "yarn build --es-watch"
   },
@@ -163,8 +172,7 @@
   "activationEvents": [
     "onLanguage:bigUML.uml",
     "onLanguage:bigUML.unotation",
-    "onCommand:bigUML.model.newEmpty",
-    "workspaceContains:**/*.uml"
+    "onCommand:bigUML.model.newEmpty"
   ],
   "dependencies": {
     "@borkdominik-biguml/uml-common": "*",
@@ -180,11 +188,16 @@
   "devDependencies": {
     "@borkdominik-biguml/uml-vscode-integration-webview": "*",
     "@types/urijs": "1.19.11",
-    "@types/vscode": "^1.54.0",
+    "@types/vscode": "^1.63.0",
     "@vscode/vsce": "^2.15.0",
     "esbuild": "^0.17.10"
   },
   "engines": {
-    "vscode": "^1.54.0"
+    "vscode": "^1.63.0"
+  },
+  "icon": "./resources/logo.png",
+  "galleryBanner": {
+    "color": "#1d1d1d",
+    "theme": "dark"
   }
 }

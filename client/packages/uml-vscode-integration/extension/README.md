@@ -5,7 +5,7 @@
 > [Open-source](https://github.com/borkdominik/bigUML) **UML Modeling Tool** for [Visual Studio Code](https://code.visualstudio.com/) supporting graphical editing diagrams.
 
 <p align="center">
-  <img src="./resources/biguml-vscode.png" alt="Demo" width="800" />
+  <img src="https://user-images.githubusercontent.com/13104167/232125930-af3158e7-397f-4ba6-9d57-e76530b075d0.png" alt="Demo" width="800" />
 </p>
 
 <br />
@@ -47,4 +47,4 @@ _In the background two Java-based language servers will be started._
 
 You can create a new model by either using the command `bigUML: New Empty UML Diagram` or with `File -> New File`.
 
-![New File Command](./resources/new-model-command.png)
+![New File command](https://user-images.githubusercontent.com/13104167/232125866-db586183-59b9-47a3-8b95-b54a85c1c676.png)

@@ -1,6 +1,24 @@
+<!-- LOGO -->
+<p align="center">
+  <img src="./client/packages/uml-vscode-integration/extension/resources/logo.png" alt="Logo" width="150" height="150" />
+</p>
+
+<!-- TITLE -->
 <h1 align="center">bigUML Modeling Tool</h1>
 
+<!-- BADGES -->
+<p align="center">
+  <img alt="Visual Studio Marketplace Installs" src="https://img.shields.io/visual-studio-marketplace/i/BIGModelingTools.umldiagram?color=9cf" height="20"/>
+  <img alt="Visual Studio Marketplace Version" src="https://img.shields.io/visual-studio-marketplace/v/BIGModelingTools.umldiagram" height="20"/>
+  <img alt="Visual Studio Marketplace Last Updated" src="https://img.shields.io/visual-studio-marketplace/last-updated/BIGModelingTools.umldiagram?color=blue" height="20"/>
+  <img alt="GitHub contributors" src="https://img.shields.io/github/contributors/borkdominik/bigUML?color=lightgrey" height="20"/>
+</p>
 <br />
+
+<!-- DEMO -->
+<p align="center">
+  <img src="./client/packages/uml-vscode-integration/extension/resources/biguml-vscode.png" alt="Demo" width="800" />
+</p>
 
 **📖 Table of Contents**
 
@@ -29,7 +47,7 @@
 
 ## Usage
 
-You want to try bigUML out? The VSCode extension will come out soon!
+Download and install the extension from the [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=BIGModelingTools.umldiagram). Check the extension for more details!
 
 ## Documentation
 

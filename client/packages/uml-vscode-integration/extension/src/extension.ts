@@ -16,18 +16,20 @@
 import '../css/colors.css';
 
 import { ModelServerConfig } from '@borkdominik-biguml/uml-modelserver/lib/config';
+import { Container } from 'inversify';
 import * as vscode from 'vscode';
 import { createContainer } from './di.config';
 import { TYPES, VSCODE_TYPES } from './di.types';
 import { UVGlspConnector } from './glsp/connection/uv-glsp-connector';
 import { UVGlspServer } from './glsp/connection/uv-glsp-server';
-import { GlspServerConfig, launchGLSPServer } from './glsp/launcher/glsp-server-launcher';
+import { GlspServerConfig, launchGLSPServer, UmlGLSPServerLauncher } from './glsp/launcher/glsp-server-launcher';
 import { VSCodeSettings } from './language';
-import { launchModelServer } from './modelserver/launcher/modelserver-launcher';
+import { launchModelServer, ModelServerLauncher } from './modelserver/launcher/modelserver-launcher';
 import { freePort } from './utils/server';
 import { configureDefaultCommands } from './vscode/command/default-commands';
 
 const modelServerRoute = '/api/v2/';
+let diContainer: Container | undefined;
 
 export async function activate(context: vscode.ExtensionContext): Promise<void> {
     const glspServerConfig: GlspServerConfig = {
@@ -41,28 +43,37 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
         url: `http://localhost:${modelServerPort}${modelServerRoute}`
     };
 
-    const container = createContainer(context, {
+    diContainer = createContainer(context, {
         glspServerConfig,
         modelServerConfig
     });
 
     if (process.env.UML_MODEL_SERVER_DEBUG !== 'true') {
-        await launchModelServer(container, modelServerConfig);
+        await launchModelServer(diContainer, modelServerConfig);
     }
 
     if (process.env.UML_GLSP_SERVER_DEBUG !== 'true') {
-        await launchGLSPServer(container, glspServerConfig);
+        await launchGLSPServer(diContainer, glspServerConfig);
     }
 
     configureDefaultCommands({
         extensionContext: context,
-        connector: container.get<UVGlspConnector>(TYPES.Connector),
+        connector: diContainer.get<UVGlspConnector>(TYPES.Connector),
         diagramPrefix: VSCodeSettings.commands.prefix
     });
 
-    container.getAll<any>(VSCODE_TYPES.Watcher);
-    container.get<any>(VSCODE_TYPES.EditorProvider);
-    container.get<any>(VSCODE_TYPES.CommandManager);
-    container.get<any>(VSCODE_TYPES.DisposableManager);
-    container.get<UVGlspServer>(TYPES.GlspServer).start();
+    diContainer.getAll<any>(VSCODE_TYPES.Watcher);
+    diContainer.get<any>(VSCODE_TYPES.EditorProvider);
+    diContainer.get<any>(VSCODE_TYPES.CommandManager);
+    diContainer.get<any>(VSCODE_TYPES.DisposableManager);
+    diContainer.get<UVGlspServer>(TYPES.GlspServer).start();
+}
+
+export async function deactivate(context: vscode.ExtensionContext): Promise<any> {
+    if (diContainer) {
+        return Promise.all([
+            diContainer.get<UmlGLSPServerLauncher>(TYPES.GlspServerLauncher).stop(),
+            diContainer.get<ModelServerLauncher>(TYPES.ModelServerLauncher).stop()
+        ]);
+    }
 }

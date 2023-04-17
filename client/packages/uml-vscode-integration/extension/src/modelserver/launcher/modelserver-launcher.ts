@@ -20,9 +20,9 @@ import * as fs from 'fs';
 import { Container, inject, injectable } from 'inversify';
 import * as net from 'net';
 import * as path from 'path';
-import kill from 'tree-kill';
 import * as vscode from 'vscode';
 import { TYPES, VSCODE_TYPES } from '../../di.types';
+import { kill } from '../../utils/process';
 import { OutputChannel } from '../../vscode/output/output.channel';
 
 const START_UP_COMPLETE_MSG = 'Javalin started in';
@@ -162,17 +162,9 @@ export class ModelServerLauncher implements vscode.Disposable {
     /**
      * Stops the server.
      */
-    stop(): void {
+    async stop(): Promise<void> {
         if (this.serverProcess && this.serverProcess.pid && !this.serverProcess.killed) {
-            kill(this.serverProcess.pid, 'SIGINT', error => console.error('Error', error));
-
-            if (!this.serverProcess.killed) {
-                this.serverProcess.kill('SIGINT');
-            }
+            await kill(this.serverProcess.pid, 'SIGINT');
         }
-    }
-
-    dispose(): void {
-        this.stop();
     }
 }

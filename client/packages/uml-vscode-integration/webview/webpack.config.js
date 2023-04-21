@@ -1,5 +1,6 @@
 // @ts-check
 const path = require('path');
+const CopyPlugin = require('copy-webpack-plugin');
 
 const outputPath = path.resolve(__dirname, '../extension/webview');
 
@@ -47,7 +48,12 @@ const config = {
             }
         ]
     },
-    ignoreWarnings: [/Failed to parse source map/, /Can't resolve .* in '.*ws\/lib'/]
+    ignoreWarnings: [/Failed to parse source map/, /Can't resolve .* in '.*ws\/lib'/],
+    plugins: [
+        new CopyPlugin({
+            patterns: [{ from: path.resolve(__dirname, '../../uml-glsp/lib/libavoid.wasm') }]
+        })
+    ]
 };
 
 module.exports = config;

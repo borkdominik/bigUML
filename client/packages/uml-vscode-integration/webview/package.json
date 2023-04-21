@@ -21,6 +21,7 @@
     "@borkdominik-biguml/uml-glsp": "*",
     "@eclipse-glsp/vscode-integration-webview": "next",
     "@vscode/codicons": "^0.0.25",
+    "copy-webpack-plugin": "^9.1.0",
     "css-loader": "^6.7.1",
     "esbuild-loader": "^3.0.1",
     "ignore-loader": "^0.1.2",

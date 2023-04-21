@@ -19,21 +19,29 @@ import '@eclipse-glsp/client/css/glsp-sprotty.css';
 import '../css/style.css';
 
 import {
+    EditLabelUI,
+    GLSPGraph,
+    GridSnapper,
+    LogLevel,
+    TYPES,
     configureDefaultModelElements,
     configureLayout,
     configureModelElement,
     configureViewerOptions,
     createDiagramContainer,
-    EditLabelUI,
-    GLSPGraph,
-    GridSnapper,
-    LogLevel,
-    overrideViewerOptions,
-    TYPES
+    overrideViewerOptions
 } from '@eclipse-glsp/client';
 import toolPaletteModule from '@eclipse-glsp/client/lib/features/tool-palette/di.config';
 import { DefaultTypes } from '@eclipse-glsp/protocol';
 import { Container, ContainerModule } from 'inversify';
+import {
+    LibavoidDiamondAnchor,
+    LibavoidEllipseAnchor,
+    LibavoidRectangleAnchor,
+    LibavoidRouter,
+    RouteType,
+    load as loadLibavoidRouter
+} from 'sprotty-routing-libavoid';
 import { FixedLogger } from './common/fixed-logger';
 import { CustomCopyPasteHandler, LastContainableElementTracker } from './features/copy-paste/copy-paste';
 import { EditLabelUIAutocomplete } from './features/edit-label';
@@ -62,6 +70,13 @@ export default function createContainer(widgetId: string): Container {
 
         rebind(EditLabelUI).to(EditLabelUIAutocomplete);
 
+        // Router
+        bind(LibavoidRouter).toSelf().inSingletonScope();
+        bind(TYPES.IEdgeRouter).toService(LibavoidRouter);
+        bind(TYPES.IAnchorComputer).to(LibavoidDiamondAnchor).inSingletonScope();
+        bind(TYPES.IAnchorComputer).to(LibavoidEllipseAnchor).inSingletonScope();
+        bind(TYPES.IAnchorComputer).to(LibavoidRectangleAnchor).inSingletonScope();
+
         bind(LastContainableElementTracker).toSelf().inSingletonScope();
         bind(TYPES.MouseListener).toService(LastContainableElementTracker);
         bind(TYPES.IVNodePostprocessor).to(IconLabelCompartmentSelectionFeedback);
@@ -89,5 +104,26 @@ export default function createContainer(widgetId: string): Container {
         baseDiv: widgetId,
         hiddenDiv: widgetId + '_hidden'
     });
+
+    // Router options
+    const router = container.get(LibavoidRouter);
+    router.setOptions({
+        routingType: RouteType.Orthogonal,
+        segmentPenalty: 50,
+        // at least height of label to avoid labels overlap if
+        // there two neighbour edges have labels on the position
+        idealNudgingDistance: 24,
+        // 25 - height of label text + label offset. Such shape buffer distance is required to
+        // avoid label over shape
+        shapeBufferDistance: 25,
+        nudgeOrthogonalSegmentsConnectedToShapes: true,
+        // allow or disallow moving edge end from center
+        nudgeOrthogonalTouchingColinearSegments: false
+    });
+
     return container;
+}
+
+export async function loadExtensions(): Promise<void> {
+    await loadLibavoidRouter();
 }

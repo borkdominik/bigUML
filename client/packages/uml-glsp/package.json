@@ -16,7 +16,7 @@
     "resources"
   ],
   "scripts": {
-    "build": "tsc -b && yarn run lint",
+    "build": "tsc -b && yarn run lint && cp ../../node_modules/libavoid-js/dist/libavoid.wasm ./lib/libavoid.wasm",
     "clean": "rimraf lib tsconfig.tsbuildinfo",
     "icons": "tsx ./scripts/icons.ts",
     "lint": "eslint -c ./.eslintrc.js --ext .ts,.tsx ./src",
@@ -32,7 +32,8 @@
     "inversify": "^5.1.1",
     "reflect-metadata": "^0.1.13",
     "snabbdom": "^3.5.1",
-    "sprotty": "next"
+    "sprotty": "next",
+    "sprotty-routing-libavoid": "^1.0.38"
   },
   "devDependencies": {
     "endent": "^2.1.0"

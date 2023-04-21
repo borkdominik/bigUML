@@ -8,13 +8,14 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-import { configureModelElement, PolylineEdgeView, SCompartmentView, SEdge, SLabelView } from '@eclipse-glsp/client/lib';
+import { PolylineEdgeView, SCompartmentView, SLabelView, configureModelElement, editFeature, selectFeature } from '@eclipse-glsp/client';
 import { ContainerModule } from 'inversify';
 
 import { SEditableLabel } from '../../../graph';
 import { InteractableCompartment } from '../../../graph/uml-compartment';
 import { NamedElement, NamedElementView } from '../../elements';
 import { UmlClassTypes } from './class.types';
+import { UmlEdge } from './model';
 
 export const umlClassDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
     const context = { bind, unbind, isBound, rebind };
@@ -31,16 +32,19 @@ export const umlClassDiagramModule = new ContainerModule((bind, unbind, isBound,
     configureModelElement(context, UmlClassTypes.PROPERTY_LABEL_MULTIPLICITY, SEditableLabel, SLabelView);
     configureModelElement(context, UmlClassTypes.PRIMITIVE_TYPE, NamedElement, NamedElementView);
 
-    configureModelElement(context, UmlClassTypes.ABSTRACTION, SEdge, PolylineEdgeView);
-    configureModelElement(context, UmlClassTypes.ASSOCIATION, SEdge, PolylineEdgeView);
-    configureModelElement(context, UmlClassTypes.ASSOCIATION_AGGREGATION, SEdge, PolylineEdgeView);
-    configureModelElement(context, UmlClassTypes.ASSOCIATION_COMPOSITION, SEdge, PolylineEdgeView);
-    configureModelElement(context, UmlClassTypes.DEPENDENCY, SEdge, PolylineEdgeView);
-    configureModelElement(context, UmlClassTypes.INTERFACE_REALIZATION, SEdge, PolylineEdgeView);
-    configureModelElement(context, UmlClassTypes.GENERALIZATION, SEdge, PolylineEdgeView);
-    configureModelElement(context, UmlClassTypes.REALIZATION, SEdge, PolylineEdgeView);
-    configureModelElement(context, UmlClassTypes.SUBSTITUTION, SEdge, PolylineEdgeView);
-    configureModelElement(context, UmlClassTypes.USAGE, SEdge, PolylineEdgeView);
-    configureModelElement(context, UmlClassTypes.PACKAGE_IMPORT, SEdge, PolylineEdgeView);
-    configureModelElement(context, UmlClassTypes.PACKAGE_MERGE, SEdge, PolylineEdgeView);
+    // edit is disabled only if select is disabled too, however in sprotty 0.11 it wasn't so.
+    // is it expected behavior?
+    const disabledEdgeFeatures = [editFeature, selectFeature];
+    configureModelElement(context, UmlClassTypes.ABSTRACTION, UmlEdge, PolylineEdgeView, { disable: disabledEdgeFeatures });
+    configureModelElement(context, UmlClassTypes.ASSOCIATION, UmlEdge, PolylineEdgeView, { disable: disabledEdgeFeatures });
+    configureModelElement(context, UmlClassTypes.ASSOCIATION_AGGREGATION, UmlEdge, PolylineEdgeView, { disable: disabledEdgeFeatures });
+    configureModelElement(context, UmlClassTypes.ASSOCIATION_COMPOSITION, UmlEdge, PolylineEdgeView, { disable: disabledEdgeFeatures });
+    configureModelElement(context, UmlClassTypes.DEPENDENCY, UmlEdge, PolylineEdgeView, { disable: disabledEdgeFeatures });
+    configureModelElement(context, UmlClassTypes.INTERFACE_REALIZATION, UmlEdge, PolylineEdgeView, { disable: disabledEdgeFeatures });
+    configureModelElement(context, UmlClassTypes.GENERALIZATION, UmlEdge, PolylineEdgeView, { disable: disabledEdgeFeatures });
+    configureModelElement(context, UmlClassTypes.REALIZATION, UmlEdge, PolylineEdgeView, { disable: disabledEdgeFeatures });
+    configureModelElement(context, UmlClassTypes.SUBSTITUTION, UmlEdge, PolylineEdgeView, { disable: disabledEdgeFeatures });
+    configureModelElement(context, UmlClassTypes.USAGE, UmlEdge, PolylineEdgeView, { disable: disabledEdgeFeatures });
+    configureModelElement(context, UmlClassTypes.PACKAGE_IMPORT, UmlEdge, PolylineEdgeView, { disable: disabledEdgeFeatures });
+    configureModelElement(context, UmlClassTypes.PACKAGE_MERGE, UmlEdge, PolylineEdgeView, { disable: disabledEdgeFeatures });
 });

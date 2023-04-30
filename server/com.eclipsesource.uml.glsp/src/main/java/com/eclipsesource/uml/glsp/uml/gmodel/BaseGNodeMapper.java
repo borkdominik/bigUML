@@ -11,9 +11,12 @@
 package com.eclipsesource.uml.glsp.uml.gmodel;
 
 import java.util.Map;
+import java.util.Optional;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.glsp.graph.GDimension;
 import org.eclipse.glsp.graph.GNode;
+import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.builder.impl.GNodeBuilder;
 import org.eclipse.glsp.graph.util.GraphUtil;
@@ -23,18 +26,35 @@ public abstract class BaseGNodeMapper<Source extends EObject, Target extends GNo
    extends BaseGModelMapper<Source, Target> {
 
    protected void applyShapeNotation(final Source source, final GNodeBuilder builder) {
-      modelState.getIndex().getNotation(source, Shape.class).ifPresent(shape -> {
-         if (shape.getPosition() != null) {
-            builder.position(GraphUtil.copy(shape.getPosition()));
+      getNotationPosition(source).ifPresent(position -> {
+         if (position != null) {
+            builder.position(position);
          }
+      });
 
-         if (shape.getSize() != null) {
-            var size = GraphUtil.copy(shape.getSize());
+      getNotationSize(source).ifPresent(size -> {
+         if (size != null) {
             builder.size(size);
-            builder.layoutOptions(Map.of(
+            builder.addLayoutOptions(Map.of(
                GLayoutOptions.KEY_PREF_WIDTH, size.getWidth(),
                GLayoutOptions.KEY_PREF_HEIGHT, size.getHeight()));
          }
+      });
+   }
+
+   protected Optional<Shape> getNotation(final Source source) {
+      return modelState.getIndex().getNotation(source, Shape.class);
+   }
+
+   protected Optional<GPoint> getNotationPosition(final Source source) {
+      return getNotation(source).map(shape -> shape.getPosition()).map(position -> {
+         return GraphUtil.copy(position);
+      });
+   }
+
+   protected Optional<GDimension> getNotationSize(final Source source) {
+      return getNotation(source).map(shape -> shape.getSize()).map(size -> {
+         return GraphUtil.copy(size);
       });
    }
 }

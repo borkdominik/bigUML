@@ -12,6 +12,7 @@
 	
 	<modules>
 		<module>./targetplatform</module>
+		<module>./com.eclipsesource.uml.cli</module>
 		<module>./com.eclipsesource.uml.modelserver</module>
 		<module>./com.eclipsesource.uml.glsp</module>
 	</modules>

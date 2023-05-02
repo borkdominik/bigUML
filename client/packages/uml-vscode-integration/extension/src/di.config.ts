@@ -14,15 +14,15 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 
-import { ModelServerConfig } from '@borkdominik-biguml/uml-modelserver/lib/config';
+import { ModelServerConfig } from '@borkdominik-biguml/uml-modelserver';
 import { Container, ContainerModule } from 'inversify';
 import * as vscode from 'vscode';
 import { FEATURE_TYPES, TYPES, VSCODE_TYPES } from './di.types';
 import { ThemeIntegration } from './features/theme/theme-integration';
-import { UVGlspConnector } from './glsp/connection/uv-glsp-connector';
-import { UVGlspServer } from './glsp/connection/uv-glsp-server';
-import { GlspServerConfig } from './glsp/launcher/glsp-server-launcher';
+import { UVGlspConnector } from './glsp/uv-glsp-connector';
+import { UVGlspServer } from './glsp/uv-glsp-server';
 import { UVModelServerClient } from './modelserver/uv-modelserver.client';
+import { GlspServerConfig } from './server/glsp-server-launcher';
 import { CommandManager } from './vscode/command/command.manager';
 import { DisposableManager } from './vscode/disposable/disposable.manager';
 import { EditorProvider } from './vscode/editor/editor.provider';

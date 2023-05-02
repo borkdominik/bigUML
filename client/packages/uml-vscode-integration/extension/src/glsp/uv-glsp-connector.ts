@@ -29,7 +29,7 @@ import {
 } from '@eclipse-glsp/vscode-integration';
 import { inject, injectable } from 'inversify';
 import * as vscode from 'vscode';
-import { TYPES } from '../../di.types';
+import { TYPES } from '../di.types';
 
 @injectable()
 export class UVGlspConnector<TDocument extends vscode.CustomDocument = vscode.CustomDocument> extends GlspVscodeConnector<TDocument> {

@@ -18,7 +18,7 @@ import { SetUmlThemeAction, UmlTheme } from '@borkdominik-biguml/uml-glsp/lib/fe
 import { inject, injectable } from 'inversify';
 import * as vscode from 'vscode';
 import { TYPES } from '../../di.types';
-import { UVGlspConnector } from '../../glsp/connection/uv-glsp-connector';
+import { UVGlspConnector } from '../../glsp/uv-glsp-connector';
 
 @injectable()
 export class ThemeIntegration {

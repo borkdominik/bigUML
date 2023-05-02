@@ -177,6 +177,7 @@
   "dependencies": {
     "@borkdominik-biguml/uml-common": "*",
     "@borkdominik-biguml/uml-glsp": "*",
+    "@borkdominik-biguml/uml-integration": "*",
     "@borkdominik-biguml/uml-modelserver": "*",
     "@eclipse-glsp/vscode-integration": "next",
     "@vscode/codicons": "^0.0.25",

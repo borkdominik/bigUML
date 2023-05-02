@@ -20,11 +20,11 @@ import { Container } from 'inversify';
 import * as vscode from 'vscode';
 import { createContainer } from './di.config';
 import { TYPES, VSCODE_TYPES } from './di.types';
-import { UVGlspConnector } from './glsp/connection/uv-glsp-connector';
 import { UVGlspServer } from './glsp/connection/uv-glsp-server';
-import { GlspServerConfig, launchGLSPServer, UmlGLSPServerLauncher } from './glsp/launcher/glsp-server-launcher';
+import { UVGlspConnector } from './glsp/uv-glsp-connector';
 import { VSCodeSettings } from './language';
-import { launchModelServer, ModelServerLauncher } from './modelserver/launcher/modelserver-launcher';
+import { GlspServerConfig, launchGLSPServer, UmlGLSPServerLauncher } from './server/glsp-server-launcher';
+import { launchModelServer, ModelServerLauncher } from './server/modelserver-launcher';
 import { freePort } from './utils/server';
 import { configureDefaultCommands } from './vscode/command/default-commands';
 

@@ -72,6 +72,10 @@
 										<Multi-Release>true</Multi-Release>
 									</manifestEntries>
 								</transformer>
+								<transformer
+									implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+									<resource>plugin.properties</resource>
+								</transformer>
 							</transformers>
 							<filters>
 								<filter>
@@ -105,7 +109,7 @@
 								</filter>
 							</filters>
 							<shadedArtifactAttached>true</shadedArtifactAttached>
-							<shadedClassifierName>glsp</shadedClassifierName>
+							<shadedClassifierName>standalone</shadedClassifierName>
 							<minimizeJar>false</minimizeJar>
 						</configuration>
 						<executions>

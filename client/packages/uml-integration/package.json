@@ -1,7 +1,7 @@
 {
-  "name": "@borkdominik-biguml/uml-modelserver",
+  "name": "@borkdominik-biguml/uml-integration",
   "version": "0.1.0",
-  "description": "UML-Modelserver",
+  "description": "UML-Common",
   "homepage": "https://github.com/borkdominik/bigUML",
   "bugs": "https://github.com/borkdominik/bigUML/issues",
   "repository": {
@@ -17,17 +17,14 @@
   "scripts": {
     "build": "tsc -b && yarn run lint",
     "clean": "rimraf lib tsconfig.tsbuildinfo",
-    "icons": "tsx ./scripts/icons.ts",
     "lint": "eslint -c ./.eslintrc.js --ext .ts,.tsx ./src",
     "lint:fix": "eslint --fix -c ./.eslintrc.js --ext .ts,.tsx ./src",
     "prepare": "yarn run clean && yarn run build",
     "watch": "tsc -w"
   },
   "dependencies": {
-    "@eclipse-emfcloud/modelserver-client": "next",
-    "urijs": "^1.19.11"
+    "@borkdominik-biguml/uml-glsp": "*",
+    "inversify": "^5.1.1"
   },
-  "devDependencies": {
-    "@types/urijs": "1.19.11"
-  }
+  "devDependencies": {}
 }

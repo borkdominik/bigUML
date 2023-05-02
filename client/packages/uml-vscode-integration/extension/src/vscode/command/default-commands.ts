@@ -16,7 +16,7 @@
 
 import { CenterAction, FitToScreenAction, SelectAllAction } from '@eclipse-glsp/protocol';
 import * as vscode from 'vscode';
-import { UVGlspConnector } from '../../glsp/connection/uv-glsp-connector';
+import { UVGlspConnector } from '../../glsp/uv-glsp-connector';
 
 export interface CommandContext {
     extensionContext: vscode.ExtensionContext;

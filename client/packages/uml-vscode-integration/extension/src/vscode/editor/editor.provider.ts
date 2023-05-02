@@ -19,7 +19,7 @@ import URI from 'urijs';
 import * as vscode from 'vscode';
 import { FEATURE_TYPES, TYPES, VSCODE_TYPES } from '../../di.types';
 import { ThemeIntegration } from '../../features/theme/theme-integration';
-import { UVGlspConnector } from '../../glsp/connection/uv-glsp-connector';
+import { UVGlspConnector } from '../../glsp/uv-glsp-connector';
 import { VSCodeSettings } from '../../language';
 import { UVModelServerClient } from '../../modelserver/uv-modelserver.client';
 

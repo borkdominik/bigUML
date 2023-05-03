@@ -21,11 +21,25 @@ import { VSCODE_TYPES } from '../../di.types';
 @injectable()
 export class OutputChannel {
     protected readonly _channel;
+
     constructor(@inject(VSCODE_TYPES.ExtensionContext) context: vscode.ExtensionContext) {
         this._channel = vscode.window.createOutputChannel(context.extension.packageJSON['displayName'] ?? context.extension.id);
     }
 
     get channel(): vscode.OutputChannel {
         return this._channel;
+    }
+
+    appendLine(
+        message: string,
+        options?: {
+            errorMessage?: boolean;
+        }
+    ): void {
+        this.channel.appendLine(message);
+
+        if (options?.errorMessage) {
+            vscode.window.showErrorMessage(message);
+        }
     }
 }

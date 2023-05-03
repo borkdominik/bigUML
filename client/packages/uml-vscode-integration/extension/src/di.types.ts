@@ -23,7 +23,9 @@ export const TYPES = {
     ModelServerClient: Symbol('ModelServerClient'),
     ModelServerConfig: Symbol('ModelServerConfig'),
     ModelServerLauncher: Symbol('ModelServerLauncher'),
-    ModelServerLaunchOptions: Symbol('ModelServerLaunchOptions')
+    ModelServerLaunchOptions: Symbol('ModelServerLaunchOptions'),
+    ServerLauncher: Symbol('ServerLauncher'),
+    ServerLauncherManager: Symbol('ServerLauncherManager')
 };
 
 export const VSCODE_TYPES = {

@@ -14,59 +14,75 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 
-// Modified version of the tree-kill package: https://github.com/pkrumins/node-tree-kill
-
 import * as childProcess from 'child_process';
+import net from 'net';
 
-export async function kill(pid: number, signal: string): Promise<void> {
-    const tree: any = {};
-    const pidsToProcess: any = {};
-    tree[pid] = [];
-    pidsToProcess[pid] = 1;
+export namespace osUtils {
+    // Modified version of the tree-kill package: https://github.com/pkrumins/node-tree-kill
+    export async function kill(pid: number, signal: string): Promise<void> {
+        const tree: any = {};
+        const pidsToProcess: any = {};
+        tree[pid] = [];
+        pidsToProcess[pid] = 1;
 
-    let resolve: ((value: void) => void) | undefined = undefined;
+        let resolve: ((value: void) => void) | undefined = undefined;
 
-    const promise = new Promise<void>(res => {
-        resolve = res;
-    });
+        const promise = new Promise<void>(res => {
+            resolve = res;
+        });
 
-    switch (process.platform) {
-        case 'win32':
-            childProcess.execSync(`taskkill /F /T /PID ${pid}`);
-            resolve!();
-            break;
-        case 'darwin':
-            buildProcessTree(
-                pid,
-                tree,
-                pidsToProcess,
-                (parentPid: any) => childProcess.spawn('pgrep', ['-P', parentPid]),
-                () => {
-                    killAll(tree, signal);
-                    resolve!();
-                }
-            );
-            break;
-        // case 'sunos':
-        //     buildProcessTreeSunOS(pid, tree, pidsToProcess, function () {
-        //         killAll(tree, signal, callback);
-        //     });
-        //     break;
-        default: // Linux
-            buildProcessTree(
-                pid,
-                tree,
-                pidsToProcess,
-                (parentPid: string) => childProcess.spawn('ps', ['-o', 'pid', '--no-headers', '--ppid', parentPid]),
-                () => {
-                    killAll(tree, signal);
-                    resolve!();
-                }
-            );
-            break;
+        switch (process.platform) {
+            case 'win32':
+                childProcess.execSync(`taskkill /F /T /PID ${pid}`);
+                resolve!();
+                break;
+            case 'darwin':
+                buildProcessTree(
+                    pid,
+                    tree,
+                    pidsToProcess,
+                    (parentPid: any) => childProcess.spawn('pgrep', ['-P', parentPid]),
+                    () => {
+                        killAll(tree, signal);
+                        resolve!();
+                    }
+                );
+                break;
+            // case 'sunos':
+            //     buildProcessTreeSunOS(pid, tree, pidsToProcess, function () {
+            //         killAll(tree, signal, callback);
+            //     });
+            //     break;
+            default: // Linux
+                buildProcessTree(
+                    pid,
+                    tree,
+                    pidsToProcess,
+                    (parentPid: string) => childProcess.spawn('ps', ['-o', 'pid', '--no-headers', '--ppid', parentPid]),
+                    () => {
+                        killAll(tree, signal);
+                        resolve!();
+                    }
+                );
+                break;
+        }
+
+        return promise;
     }
 
-    return promise;
+    export async function freePort(): Promise<number> {
+        return new Promise((res, rej) => {
+            const srv = net.createServer();
+            srv.listen(0, () => {
+                if (srv.address()) {
+                    const port = (srv.address() as net.AddressInfo).port;
+                    srv.close(err => res(port));
+                }
+
+                srv.close(err => rej());
+            });
+        });
+    }
 }
 
 function killAll(tree: any, signal: any): void {

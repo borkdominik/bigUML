@@ -11,3 +11,4 @@
 
 export * from './environment/configuration';
 export * from './language/language';
+export * from './typescript.utils';

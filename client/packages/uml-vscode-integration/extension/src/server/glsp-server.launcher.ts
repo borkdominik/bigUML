@@ -14,12 +14,12 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 
-import { UmlServerLauncherOptions } from '@borkdominik-biguml/uml-integration';
-import { Container, inject, injectable } from 'inversify';
+import { osUtils, UmlServerLauncherOptions } from '@borkdominik-biguml/uml-integration';
+import { ContainerModule, inject, injectable } from 'inversify';
 import * as path from 'path';
 import { TYPES, VSCODE_TYPES } from '../di.types';
 import { OutputChannel } from '../vscode/output/output.channel';
-import { UVServerLauncher } from './uv-server-launcher';
+import { UVServerLauncher } from './launcher';
 
 const GLSP_SERVER_PATH = '../server';
 const GLSP_SERVER_VERSION = '0.1.0-SNAPSHOT';
@@ -30,27 +30,40 @@ export interface GlspServerConfig {
     port: number;
 }
 
-export async function launchGLSPServer(container: Container, config: GlspServerConfig): Promise<void> {
-    const launchOptions: UmlServerLauncherOptions = {
-        executable: JAVA_EXECUTABLE,
-        additionalArgs: ['glspserver', `--port=${config.port}`],
-        logging: process.env.UML_GLSP_SERVER_LOGGING === 'true',
-        server: {
-            port: config.port,
-            logPrefix: '[GLSP-Server]',
-            startUpMessage: 'Startup completed'
-        }
+export function glspServerModule(config: GlspServerConfig): ContainerModule {
+    return new ContainerModule(bind => {
+        const launchOptions: UmlServerLauncherOptions = {
+            executable: JAVA_EXECUTABLE,
+            additionalArgs: ['glspserver', `--port=${config.port}`],
+            logging: process.env.UML_GLSP_SERVER_LOGGING === 'true',
+            server: {
+                port: config.port,
+                logPrefix: '[GLSP-Server]',
+                startUpMessage: 'Startup completed'
+            }
+        };
+
+        bind(TYPES.GlspServerLaunchOptions).toConstantValue(launchOptions);
+
+        bind(UmlGLSPServerLauncher).toSelf().inSingletonScope();
+        bind(TYPES.GlspServerLauncher).toService(UmlGLSPServerLauncher);
+        bind(TYPES.ServerLauncher).toService(TYPES.GlspServerLauncher);
+        bind(VSCODE_TYPES.Disposable).toService(TYPES.GlspServerLauncher);
+    });
+}
+
+export async function createGLSPServerConfig(): Promise<GlspServerConfig> {
+    return <GlspServerConfig>{
+        port: +(process.env.UML_GLSP_SERVER_PORT ?? (await osUtils.freePort()))
     };
-
-    container.bind(TYPES.GlspServerLaunchOptions).toConstantValue(launchOptions);
-    container.bind(TYPES.GlspServerLauncher).to(UmlGLSPServerLauncher).inSingletonScope();
-    container.bind(VSCODE_TYPES.Disposable).toService(TYPES.GlspServerLauncher);
-
-    await container.get<UmlGLSPServerLauncher>(TYPES.GlspServerLauncher).start();
 }
 
 @injectable()
 export class UmlGLSPServerLauncher extends UVServerLauncher {
+    get isEnabled(): boolean {
+        return process.env.UML_GLSP_SERVER_DEBUG !== 'true';
+    }
+
     constructor(
         @inject(TYPES.GlspServerLaunchOptions) options: UmlServerLauncherOptions,
         @inject(VSCODE_TYPES.OutputChannel) outputChannel: OutputChannel

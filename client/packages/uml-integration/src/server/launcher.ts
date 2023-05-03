@@ -15,7 +15,7 @@
  ********************************************************************************/
 import * as childProcess from 'child_process';
 import * as fs from 'fs';
-import { kill } from './process';
+import { osUtils } from './os';
 
 export interface UmlServerLauncherOptions {
     readonly executable: string;
@@ -38,6 +38,12 @@ export abstract class UmlServerLauncher {
             additionalArgs: [],
             ...options
         };
+    }
+
+    abstract readonly isEnabled: boolean;
+
+    get isRunning(): boolean {
+        return this.serverProcess !== undefined && this.serverProcess.pid !== undefined && !this.serverProcess.killed;
     }
 
     async start(): Promise<void> {
@@ -68,8 +74,8 @@ export abstract class UmlServerLauncher {
     }
 
     async stop(): Promise<void> {
-        if (this.serverProcess && this.serverProcess.pid && !this.serverProcess.killed) {
-            await kill(this.serverProcess.pid, 'SIGINT');
+        if (this.serverProcess !== undefined && this.serverProcess.pid !== undefined && !this.serverProcess.killed) {
+            await osUtils.kill(this.serverProcess.pid, 'SIGINT');
         }
     }
 

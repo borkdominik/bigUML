@@ -22,7 +22,9 @@ import { ThemeIntegration } from './features/theme/theme-integration';
 import { UVGlspConnector } from './glsp/uv-glsp-connector';
 import { UVGlspServer } from './glsp/uv-glsp-server';
 import { UVModelServerClient } from './modelserver/uv-modelserver.client';
-import { GlspServerConfig } from './server/glsp-server-launcher';
+import { GlspServerConfig, glspServerModule } from './server/glsp-server.launcher';
+import { modelServerModule } from './server/modelserver.launcher';
+import { serverLauncherModule } from './server/server-launcher.manager';
 import { CommandManager } from './vscode/command/command.manager';
 import { DisposableManager } from './vscode/disposable/disposable.manager';
 import { EditorProvider } from './vscode/editor/editor.provider';
@@ -39,7 +41,13 @@ export function createContainer(
         modelServerConfig: ModelServerConfig;
     }
 ): Container {
-    const vscodeModule = new ContainerModule((bind, unbind, isBound, rebind) => {
+    const container = new Container({
+        skipBaseClassChecks: true
+    });
+
+    container.bind(VSCODE_TYPES.ExtensionContext).toConstantValue(context);
+
+    const coreModule = new ContainerModule(bind => {
         bind(TYPES.GlspServer).to(UVGlspServer).inSingletonScope();
         bind(TYPES.GlspServerConfig).toConstantValue(options.glspServerConfig);
 
@@ -47,7 +55,9 @@ export function createContainer(
 
         bind(TYPES.ModelServerClient).to(UVModelServerClient).inSingletonScope();
         bind(TYPES.ModelServerConfig).toConstantValue(options.modelServerConfig);
+    });
 
+    const vscodeModule = new ContainerModule(bind => {
         bind(VSCODE_TYPES.CommandManager).to(CommandManager).inSingletonScope();
 
         bind(NewFileCreator).toSelf().inSingletonScope();
@@ -67,16 +77,20 @@ export function createContainer(
 
         bind(VSCODE_TYPES.Watcher).to(WorkspaceWatcher).inSingletonScope();
         bind(VSCODE_TYPES.Watcher).toService(Settings);
+    });
 
+    const featureModule = new ContainerModule(bind => {
         bind(FEATURE_TYPES.Theme).to(ThemeIntegration).inSingletonScope();
     });
 
-    const container = new Container({
-        skipBaseClassChecks: true
-    });
-
-    container.bind(VSCODE_TYPES.ExtensionContext).toConstantValue(context);
-    container.load(vscodeModule);
+    container.load(
+        coreModule,
+        vscodeModule,
+        featureModule,
+        modelServerModule(options.modelServerConfig),
+        glspServerModule(options.glspServerConfig),
+        serverLauncherModule
+    );
 
     return container;
 }

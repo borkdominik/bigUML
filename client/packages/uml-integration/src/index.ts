@@ -9,5 +9,6 @@
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
 
+export * from './server/java';
 export * from './server/launcher';
-export * from './server/process';
+export * from './server/os';

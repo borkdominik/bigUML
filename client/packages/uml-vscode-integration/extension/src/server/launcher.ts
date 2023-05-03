@@ -17,7 +17,7 @@
 import { UmlServerLauncher, UmlServerLauncherOptions } from '@borkdominik-biguml/uml-integration';
 import { OutputChannel } from '../vscode/output/output.channel';
 
-export class UVServerLauncher extends UmlServerLauncher {
+export abstract class UVServerLauncher extends UmlServerLauncher {
     constructor(options: UmlServerLauncherOptions, protected readonly outputChannel: OutputChannel) {
         super(options);
     }

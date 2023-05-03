@@ -24,7 +24,7 @@ import { UVGlspServer } from './glsp/uv-glsp-server';
 import { UVModelServerClient } from './modelserver/uv-modelserver.client';
 import { GlspServerConfig, glspServerModule } from './server/glsp-server.launcher';
 import { modelServerModule } from './server/modelserver.launcher';
-import { serverLauncherModule } from './server/server-launcher.manager';
+import { serverManager } from './server/server.manager';
 import { CommandManager } from './vscode/command/command.manager';
 import { DisposableManager } from './vscode/disposable/disposable.manager';
 import { EditorProvider } from './vscode/editor/editor.provider';
@@ -48,39 +48,56 @@ export function createContainer(
     container.bind(VSCODE_TYPES.ExtensionContext).toConstantValue(context);
 
     const coreModule = new ContainerModule(bind => {
-        bind(TYPES.GlspServer).to(UVGlspServer).inSingletonScope();
         bind(TYPES.GlspServerConfig).toConstantValue(options.glspServerConfig);
-
-        bind(TYPES.Connector).to(UVGlspConnector).inSingletonScope();
-
-        bind(TYPES.ModelServerClient).to(UVModelServerClient).inSingletonScope();
         bind(TYPES.ModelServerConfig).toConstantValue(options.modelServerConfig);
+
+        bind(UVGlspServer).toSelf().inSingletonScope();
+        bind(TYPES.GlspServer).toService(UVGlspServer);
+        bind(VSCODE_TYPES.Disposable).toService(UVGlspServer);
+
+        bind(UVGlspConnector).toSelf().inSingletonScope();
+        bind(TYPES.Connector).toService(UVGlspConnector);
+        bind(VSCODE_TYPES.Disposable).toService(UVGlspConnector);
+
+        bind(UVModelServerClient).toSelf().inSingletonScope();
+        bind(TYPES.ModelServerClient).toService(UVModelServerClient);
+        bind(VSCODE_TYPES.Disposable).toService(UVModelServerClient);
+
+        bind(TYPES.ServerManagerStateListener).toService(UVModelServerClient);
     });
 
     const vscodeModule = new ContainerModule(bind => {
-        bind(VSCODE_TYPES.CommandManager).to(CommandManager).inSingletonScope();
+        bind(CommandManager).toSelf().inSingletonScope();
+        bind(VSCODE_TYPES.CommandManager).toService(CommandManager);
+        bind(VSCODE_TYPES.RootInitialization).toService(CommandManager);
 
         bind(NewFileCreator).toSelf().inSingletonScope();
         bind(VSCODE_TYPES.Command).to(NewFileCommand);
 
-        bind(VSCODE_TYPES.DisposableManager).to(DisposableManager).inSingletonScope();
-        bind(VSCODE_TYPES.Disposable).toService(TYPES.ModelServerClient);
-        bind(VSCODE_TYPES.Disposable).toService(TYPES.GlspServer);
-        bind(VSCODE_TYPES.Disposable).toService(TYPES.Connector);
+        bind(DisposableManager).toSelf().inSingletonScope();
+        bind(VSCODE_TYPES.DisposableManager).toService(DisposableManager);
+        bind(VSCODE_TYPES.RootInitialization).toService(DisposableManager);
 
-        bind(VSCODE_TYPES.EditorProvider).to(EditorProvider).inSingletonScope();
+        bind(EditorProvider).toSelf().inSingletonScope();
+        bind(VSCODE_TYPES.EditorProvider).toService(EditorProvider);
+        bind(VSCODE_TYPES.RootInitialization).toService(EditorProvider);
 
-        bind(VSCODE_TYPES.OutputChannel).to(OutputChannel).inSingletonScope();
+        bind(OutputChannel).toSelf().inSingletonScope();
+        bind(VSCODE_TYPES.OutputChannel).toService(OutputChannel);
 
         bind(Settings).toSelf().inSingletonScope();
         bind(VSCODE_TYPES.Settings).toService(Settings);
+        bind(VSCODE_TYPES.RootInitialization).toService(Settings);
 
-        bind(VSCODE_TYPES.Watcher).to(WorkspaceWatcher).inSingletonScope();
-        bind(VSCODE_TYPES.Watcher).toService(Settings);
+        bind(WorkspaceWatcher).toSelf().inSingletonScope();
+        bind(VSCODE_TYPES.RootInitialization).toService(WorkspaceWatcher);
     });
 
     const featureModule = new ContainerModule(bind => {
-        bind(FEATURE_TYPES.Theme).to(ThemeIntegration).inSingletonScope();
+        bind(ThemeIntegration).toSelf().inSingletonScope();
+        bind(FEATURE_TYPES.Theme).toService(ThemeIntegration);
+        bind(VSCODE_TYPES.Disposable).toService(ThemeIntegration);
+        bind(VSCODE_TYPES.RootInitialization).toService(ThemeIntegration);
     });
 
     container.load(
@@ -89,7 +106,7 @@ export function createContainer(
         featureModule,
         modelServerModule(options.modelServerConfig),
         glspServerModule(options.glspServerConfig),
-        serverLauncherModule
+        serverManager
     );
 
     return container;

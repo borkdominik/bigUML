@@ -17,4 +17,4 @@
 export * from './glsp-server.launcher';
 export * from './launcher';
 export * from './modelserver.launcher';
-export * from './server-launcher.manager';
+export * from './server.manager';

@@ -30,16 +30,11 @@ export class OutputChannel {
         return this._channel;
     }
 
-    appendLine(
-        message: string,
-        options?: {
-            errorMessage?: boolean;
-        }
-    ): void {
+    appendLine(message: string): void {
         this.channel.appendLine(message);
+    }
 
-        if (options?.errorMessage) {
-            vscode.window.showErrorMessage(message);
-        }
+    error(error: Error): void {
+        this.channel.appendLine(error.stack ?? error.name);
     }
 }

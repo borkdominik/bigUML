@@ -22,6 +22,7 @@ export interface UmlServerLauncherOptions {
     readonly additionalArgs?: string[];
     readonly logging?: boolean;
     readonly server: {
+        name: string;
         port: number;
         logPrefix: string;
         startUpMessage: string;
@@ -38,6 +39,10 @@ export abstract class UmlServerLauncher {
             additionalArgs: [],
             ...options
         };
+    }
+
+    get serverName(): string {
+        return this.options.server.name;
     }
 
     abstract readonly isEnabled: boolean;

@@ -15,13 +15,11 @@
  ********************************************************************************/
 import { GlspEditorProvider } from '@eclipse-glsp/vscode-integration/lib/quickstart-components';
 import { inject, injectable, postConstruct } from 'inversify';
-import URI from 'urijs';
 import * as vscode from 'vscode';
 import { FEATURE_TYPES, TYPES, VSCODE_TYPES } from '../../di.types';
 import { ThemeIntegration } from '../../features/theme/theme-integration';
 import { UVGlspConnector } from '../../glsp/uv-glsp-connector';
 import { VSCodeSettings } from '../../language';
-import { UVModelServerClient } from '../../modelserver/uv-modelserver.client';
 
 @injectable()
 export class EditorProvider extends GlspEditorProvider {
@@ -30,12 +28,9 @@ export class EditorProvider extends GlspEditorProvider {
     constructor(
         @inject(VSCODE_TYPES.ExtensionContext) protected readonly context: vscode.ExtensionContext,
         @inject(TYPES.Connector) protected override readonly glspVscodeConnector: UVGlspConnector,
-        @inject(TYPES.ModelServerClient) protected readonly modelServerClient: UVModelServerClient,
         @inject(FEATURE_TYPES.Theme) protected readonly themeIntegration: ThemeIntegration
     ) {
         super(glspVscodeConnector);
-
-        this.setUpModelServer();
     }
 
     @postConstruct()
@@ -53,7 +48,7 @@ export class EditorProvider extends GlspEditorProvider {
         _token: vscode.CancellationToken,
         clientId: string
     ): void {
-        this.setUpTheme();
+        this.themeIntegration.refresh();
 
         const webview = webviewPanel.webview;
         const extensionUri = this.context.extensionUri;
@@ -85,24 +80,5 @@ export class EditorProvider extends GlspEditorProvider {
                     <script src="${webviewScriptSourceUri}"></script>
                 </body>
             </html>`;
-    }
-
-    protected setUpTheme(): void {
-        this.themeIntegration.dispose();
-        this.themeIntegration.initialize();
-        this.themeIntegration.onChange(e => this.themeIntegration.updateTheme(vscode.window.activeColorTheme));
-    }
-
-    protected setUpModelServer(): void {
-        const workspaces = vscode.workspace.workspaceFolders;
-        if (workspaces && workspaces.length > 0) {
-            const workspaceRoot = new URI(workspaces[0].uri.toString());
-            const uiSchemaFolder = workspaceRoot.clone().segment('.ui-schemas');
-
-            this.modelServerClient.configureServer({
-                workspaceRoot,
-                uiSchemaFolder
-            });
-        }
     }
 }

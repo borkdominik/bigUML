@@ -25,7 +25,8 @@ export const TYPES = {
     ModelServerLauncher: Symbol('ModelServerLauncher'),
     ModelServerLaunchOptions: Symbol('ModelServerLaunchOptions'),
     ServerLauncher: Symbol('ServerLauncher'),
-    ServerLauncherManager: Symbol('ServerLauncherManager')
+    ServerManager: Symbol('ServerManager'),
+    ServerManagerStateListener: Symbol('ServerManagerStateListener')
 };
 
 export const VSCODE_TYPES = {
@@ -37,7 +38,7 @@ export const VSCODE_TYPES = {
     ExtensionContext: Symbol('ExtensionContext'),
     OutputChannel: Symbol('OutputChannel'),
     Settings: Symbol('Settings'),
-    Watcher: Symbol('Watcher')
+    RootInitialization: Symbol('RootInitialization')
 };
 
 export const FEATURE_TYPES = {

@@ -34,6 +34,7 @@ export function modelServerModule(config: ModelServerConfig): ContainerModule {
             additionalArgs: ['modelserver', `--port=${config.port}`],
             logging: process.env.UML_MODEL_SERVER_LOGGING === 'true',
             server: {
+                name: 'ModelServer',
                 port: config.port,
                 logPrefix: '[Model-Server]',
                 startUpMessage: 'Javalin started in'

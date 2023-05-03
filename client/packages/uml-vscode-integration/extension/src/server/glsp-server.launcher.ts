@@ -37,6 +37,7 @@ export function glspServerModule(config: GlspServerConfig): ContainerModule {
             additionalArgs: ['glspserver', `--port=${config.port}`],
             logging: process.env.UML_GLSP_SERVER_LOGGING === 'true',
             server: {
+                name: 'GLSPServer',
                 port: config.port,
                 logPrefix: '[GLSP-Server]',
                 startUpMessage: 'Startup completed'

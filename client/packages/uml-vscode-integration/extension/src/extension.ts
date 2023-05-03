@@ -22,7 +22,7 @@ import { TYPES, VSCODE_TYPES } from './di.types';
 import { UVGlspConnector } from './glsp/uv-glsp-connector';
 import { UVGlspServer } from './glsp/uv-glsp-server';
 import { VSCodeSettings } from './language';
-import { createGLSPServerConfig, createModelServerConfig, ServerLauncherManager } from './server';
+import { createGLSPServerConfig, createModelServerConfig, ServerManager } from './server';
 import { configureDefaultCommands } from './vscode/command/default-commands';
 
 let diContainer: Container | undefined;
@@ -43,18 +43,13 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     });
 
     // Start
-    await diContainer.get<ServerLauncherManager>(TYPES.ServerLauncherManager).start();
-
-    diContainer.getAll<any>(VSCODE_TYPES.Watcher);
-    diContainer.get<any>(VSCODE_TYPES.EditorProvider);
-    diContainer.get<any>(VSCODE_TYPES.CommandManager);
-    diContainer.get<any>(VSCODE_TYPES.DisposableManager);
-
+    await diContainer.get<ServerManager>(TYPES.ServerManager).start();
+    diContainer.getAll<any>(VSCODE_TYPES.RootInitialization);
     diContainer.get<UVGlspServer>(TYPES.GlspServer).start();
 }
 
 export async function deactivate(context: vscode.ExtensionContext): Promise<any> {
     if (diContainer) {
-        return Promise.all([diContainer.get<ServerLauncherManager>(TYPES.ServerLauncherManager).stop()]);
+        return Promise.all([diContainer.get<ServerManager>(TYPES.ServerManager).stop()]);
     }
 }

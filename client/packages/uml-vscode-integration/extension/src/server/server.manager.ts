@@ -16,19 +16,38 @@
 
 import { java, UmlServerLauncher } from '@borkdominik-biguml/uml-integration';
 import { ContainerModule, inject, injectable, multiInject } from 'inversify';
+import * as vscode from 'vscode';
 import { TYPES, VSCODE_TYPES } from '../di.types';
 import { OutputChannel } from '../vscode/output/output.channel';
 
-export const serverLauncherModule = new ContainerModule(bind => {
-    bind(ServerLauncherManager).toSelf().inSingletonScope();
-    bind(TYPES.ServerLauncherManager).toService(ServerLauncherManager);
+export interface ServerManagerStateListener {
+    serverManagerStateChanged(manager: ServerManager, state: ServerManager.State): void;
+}
+
+export const serverManager = new ContainerModule(bind => {
+    bind(ServerManager).toSelf().inSingletonScope();
+    bind(TYPES.ServerManager).toService(ServerManager);
 });
 
 @injectable()
-export class ServerLauncherManager {
+export class ServerManager {
+    protected _state: ServerManager.State = {
+        state: 'none'
+    };
+
+    protected get state(): ServerManager.State {
+        return this._state;
+    }
+
+    protected set state(value: ServerManager.State) {
+        this._state = value;
+        this.listeners.forEach(l => l.serverManagerStateChanged(this, this._state));
+    }
+
     constructor(
         @inject(VSCODE_TYPES.OutputChannel) protected readonly output: OutputChannel,
-        @multiInject(TYPES.ServerLauncher) protected readonly launchers: UmlServerLauncher[]
+        @multiInject(TYPES.ServerLauncher) protected readonly launchers: UmlServerLauncher[],
+        @multiInject(TYPES.ServerManagerStateListener) protected readonly listeners: ServerManagerStateListener[]
     ) {}
 
     async start(): Promise<void> {
@@ -42,13 +61,25 @@ export class ServerLauncherManager {
                 for (const launcher of launchers) {
                     await launcher.start();
                 }
+                this.state = {
+                    state: 'servers-launched',
+                    launchers
+                };
             } else {
-                this.output.appendLine('Starting bigUML failed. Please install Java 11+ on your machine.', {
-                    errorMessage: true
-                });
+                this.output.appendLine(ServerManager.JAVA_MISSING_MESSAGE);
+                vscode.window.showErrorMessage(ServerManager.JAVA_MISSING_MESSAGE);
+
+                this.state = {
+                    state: 'assertion-failed',
+                    reason: 'java'
+                };
             }
         } else {
             this.output.channel.appendLine('Skip starting servers, no server enabled.');
+            this.state = {
+                state: 'servers-launched',
+                launchers
+            };
         }
     }
 
@@ -58,6 +89,10 @@ export class ServerLauncherManager {
         for (const launcher of launchers) {
             await launcher.stop();
         }
+
+        this.state = {
+            state: 'none'
+        };
     }
 
     protected async assertJava(): Promise<boolean> {
@@ -71,31 +106,28 @@ export class ServerLauncherManager {
     }
 }
 
-export namespace ServerLauncherManager {
-    export enum State {
-        NONE,
-        ASSERTION_FAILED,
-        SERVER_RUNNING
-    }
+export namespace ServerManager {
+    export const JAVA_MISSING_MESSAGE = 'Starting bigUML failed. Please install Java 11+ on your machine.';
+
+    export type ActiveState = 'none' | 'assertion-failed' | 'servers-launched';
 
     interface CommonState {
-        readonly state: State;
+        readonly state: ActiveState;
     }
 
     export interface NoneState extends CommonState {
-        readonly state: State.NONE;
+        readonly state: 'none';
     }
 
     export interface AssertionFailedState extends CommonState {
-        readonly state: State.ASSERTION_FAILED;
+        readonly state: 'assertion-failed';
         readonly reason: any;
     }
 
-    export type ServerType = 'GLSPServer' | 'ModelServer';
-    export interface ServerRunningState extends CommonState {
-        readonly state: State.SERVER_RUNNING;
-        readonly runningServers: ServerType[];
-
-        isRunning(type: ServerType): boolean;
+    export interface ServerLaunchedState extends CommonState {
+        readonly state: 'servers-launched';
+        readonly launchers: UmlServerLauncher[];
     }
+
+    export type State = NoneState | AssertionFailedState | ServerLaunchedState;
 }

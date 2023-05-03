@@ -15,6 +15,7 @@
  ********************************************************************************/
 
 import {
+    Action,
     ActionMessage,
     Args,
     GlspVscodeClient,
@@ -69,6 +70,16 @@ export class UVGlspConnector<TDocument extends vscode.CustomDocument = vscode.Cu
         const initializeParams = await this.createInitializeClientSessionParams(client);
         await glspClient.initializeClientSession(initializeParams);
         return this.options.server.initializeResult;
+    }
+
+    public broadcastActionToClients(action: Action): void {
+        this.clientMap.forEach(client => {
+            client.onSendToClientEmitter.fire({
+                clientId: client.clientId,
+                action: action,
+                __localDispatch: true
+            });
+        });
     }
 
     protected override handleSetDirtyStateAction(

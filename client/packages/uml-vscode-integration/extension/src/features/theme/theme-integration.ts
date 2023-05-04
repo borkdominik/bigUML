@@ -35,8 +35,12 @@ export class ThemeIntegration {
         this.onChange(e => this.refresh());
     }
 
+    updateTheme(clientId: string): void {
+        this.connector.sendActionToClient(clientId, this.createAction());
+    }
+
     refresh(): void {
-        this.connector.broadcastActionToClients(SetUmlThemeAction.create(mapTheme(vscode.window.activeColorTheme)));
+        this.connector.broadcastActionToClients(this.createAction());
     }
 
     dispose(): void {
@@ -45,6 +49,10 @@ export class ThemeIntegration {
 
     protected onChange(cb: (e: vscode.ColorTheme) => void): void {
         this.disposables.push(vscode.window.onDidChangeActiveColorTheme(cb));
+    }
+
+    protected createAction(): SetUmlThemeAction {
+        return SetUmlThemeAction.create(mapTheme(vscode.window.activeColorTheme));
     }
 }
 

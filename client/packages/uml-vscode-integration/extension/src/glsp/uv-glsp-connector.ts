@@ -82,6 +82,10 @@ export class UVGlspConnector<TDocument extends vscode.CustomDocument = vscode.Cu
         });
     }
 
+    public override sendActionToClient(clientId: string, action: Action): void {
+        super.sendActionToClient(clientId, action);
+    }
+
     protected override handleSetDirtyStateAction(
         message: ActionMessage<SetDirtyStateAction>,
         client: GlspVscodeClient<TDocument> | undefined,

@@ -16,7 +16,7 @@
 
 import { inject, injectable, multiInject, postConstruct } from 'inversify';
 import * as vscode from 'vscode';
-import { VSCODE_TYPES } from '../../di.types';
+import { TYPES } from '../../di.types';
 
 export interface Disposable {
     dispose(): any;
@@ -25,8 +25,8 @@ export interface Disposable {
 @injectable()
 export class DisposableManager {
     constructor(
-        @inject(VSCODE_TYPES.ExtensionContext) protected readonly context: vscode.ExtensionContext,
-        @multiInject(VSCODE_TYPES.Disposable) protected readonly disposables: Disposable[]
+        @inject(TYPES.ExtensionContext) protected readonly context: vscode.ExtensionContext,
+        @multiInject(TYPES.Disposable) protected readonly disposables: Disposable[]
     ) {}
 
     @postConstruct()

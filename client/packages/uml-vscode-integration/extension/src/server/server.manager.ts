@@ -17,14 +17,15 @@
 import { java, UmlServerLauncher } from '@borkdominik-biguml/uml-integration';
 import { ContainerModule, inject, injectable, multiInject } from 'inversify';
 import * as vscode from 'vscode';
-import { TYPES, VSCODE_TYPES } from '../di.types';
+import { TYPES } from '../di.types';
+import { VSCodeSettings } from '../language';
 import { OutputChannel } from '../vscode/output/output.channel';
 
 export interface ServerManagerStateListener {
-    serverManagerStateChanged(manager: ServerManager, state: ServerManager.State): void;
+    serverManagerStateChanged(manager: ServerManager, state: ServerManager.State): void | Promise<void>;
 }
 
-export const serverManager = new ContainerModule(bind => {
+export const serverManagerModule = new ContainerModule(bind => {
     bind(ServerManager).toSelf().inSingletonScope();
     bind(TYPES.ServerManager).toService(ServerManager);
 });
@@ -35,22 +36,41 @@ export class ServerManager {
         state: 'none'
     };
 
-    protected get state(): ServerManager.State {
+    public get state(): ServerManager.State {
         return this._state;
     }
 
     protected set state(value: ServerManager.State) {
         this._state = value;
-        this.listeners.forEach(l => l.serverManagerStateChanged(this, this._state));
+        this.emit(l => l.serverManagerStateChanged(this, this._state));
     }
 
     constructor(
-        @inject(VSCODE_TYPES.OutputChannel) protected readonly output: OutputChannel,
+        @inject(TYPES.OutputChannel) protected readonly output: OutputChannel,
         @multiInject(TYPES.ServerLauncher) protected readonly launchers: UmlServerLauncher[],
         @multiInject(TYPES.ServerManagerStateListener) protected readonly listeners: ServerManagerStateListener[]
-    ) {}
+    ) {
+        this.listeners.forEach(l => l.serverManagerStateChanged(this, this.state));
+    }
 
     async start(): Promise<void> {
+        let progressResolve: (() => void) | undefined;
+        let progress: vscode.Progress<{ message?: string; increment?: number }> | undefined;
+
+        vscode.window.withProgress(
+            {
+                location: vscode.ProgressLocation.Notification,
+                title: `Initializing ${VSCodeSettings.name} environment`,
+                cancellable: false
+            },
+            p => {
+                progress = p;
+                return new Promise<void>(resolve => {
+                    progressResolve = resolve;
+                });
+            }
+        );
+
         const launchers = this.launchers.filter(l => l.isEnabled);
         this.output.channel.appendLine(`Registered server launchers: ${this.launchers.map(l => l.constructor.name).join(', ')}`);
 
@@ -58,9 +78,26 @@ export class ServerManager {
             this.output.channel.appendLine(`Enabled server launchers: ${launchers.map(l => l.constructor.name).join(', ')}`);
 
             if (await this.assertJava()) {
+                this.state = {
+                    state: 'assertion-succeeded'
+                };
+
                 for (const launcher of launchers) {
+                    this.state = {
+                        state: 'launching-server',
+                        launcher
+                    };
+
+                    progress?.report({
+                        message: `Starting ${launcher.serverName}`
+                    });
+
                     await launcher.start();
                 }
+                progress?.report({
+                    message: undefined
+                });
+
                 this.state = {
                     state: 'servers-launched',
                     launchers
@@ -81,6 +118,8 @@ export class ServerManager {
                 launchers
             };
         }
+
+        progressResolve?.();
     }
 
     async stop(): Promise<void> {
@@ -104,12 +143,16 @@ export class ServerManager {
 
         return true;
     }
+
+    protected emit(cb: (l: ServerManagerStateListener) => void): void {
+        this.listeners.forEach(cb);
+    }
 }
 
 export namespace ServerManager {
     export const JAVA_MISSING_MESSAGE = 'Starting bigUML failed. Please install Java 11+ on your machine.';
 
-    export type ActiveState = 'none' | 'assertion-failed' | 'servers-launched';
+    export type ActiveState = 'none' | 'assertion-failed' | 'assertion-succeeded' | 'launching-server' | 'servers-launched';
 
     interface CommonState {
         readonly state: ActiveState;
@@ -124,10 +167,19 @@ export namespace ServerManager {
         readonly reason: any;
     }
 
+    export interface AssertionSucceededState extends CommonState {
+        readonly state: 'assertion-succeeded';
+    }
+
+    export interface LaunchingServerState extends CommonState {
+        readonly state: 'launching-server';
+        readonly launcher: UmlServerLauncher;
+    }
+
     export interface ServerLaunchedState extends CommonState {
         readonly state: 'servers-launched';
         readonly launchers: UmlServerLauncher[];
     }
 
-    export type State = NoneState | AssertionFailedState | ServerLaunchedState;
+    export type State = NoneState | AssertionFailedState | AssertionSucceededState | LaunchingServerState | ServerLaunchedState;
 }

@@ -18,7 +18,7 @@ import '../css/colors.css';
 import { Container } from 'inversify';
 import * as vscode from 'vscode';
 import { createContainer } from './di.config';
-import { TYPES, VSCODE_TYPES } from './di.types';
+import { TYPES } from './di.types';
 import { UVGlspConnector } from './glsp/uv-glsp-connector';
 import { UVGlspServer } from './glsp/uv-glsp-server';
 import { VSCodeSettings } from './language';
@@ -42,9 +42,8 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
         diagramPrefix: VSCodeSettings.commands.prefix
     });
 
-    // Start
+    diContainer.getAll<any>(TYPES.RootInitialization);
     await diContainer.get<ServerManager>(TYPES.ServerManager).start();
-    diContainer.getAll<any>(VSCODE_TYPES.RootInitialization);
     diContainer.get<UVGlspServer>(TYPES.GlspServer).start();
 }
 

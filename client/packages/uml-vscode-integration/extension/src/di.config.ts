@@ -17,17 +17,17 @@
 import { ModelServerConfig } from '@borkdominik-biguml/uml-modelserver';
 import { Container, ContainerModule } from 'inversify';
 import * as vscode from 'vscode';
-import { FEATURE_TYPES, TYPES, VSCODE_TYPES } from './di.types';
+import { TYPES } from './di.types';
 import { ThemeIntegration } from './features/theme/theme-integration';
 import { UVGlspConnector } from './glsp/uv-glsp-connector';
 import { UVGlspServer } from './glsp/uv-glsp-server';
 import { UVModelServerClient } from './modelserver/uv-modelserver.client';
 import { GlspServerConfig, glspServerModule } from './server/glsp-server.launcher';
 import { modelServerModule } from './server/modelserver.launcher';
-import { serverManager } from './server/server.manager';
+import { serverManagerModule } from './server/server.manager';
 import { CommandManager } from './vscode/command/command.manager';
 import { DisposableManager } from './vscode/disposable/disposable.manager';
-import { EditorProvider } from './vscode/editor/editor.provider';
+import { UmlDiagramEditorProvider } from './vscode/editor/editor.provider';
 import { NewFileCommand } from './vscode/new-file/new-file.command';
 import { NewFileCreator } from './vscode/new-file/new-file.creator';
 import { OutputChannel } from './vscode/output/output.channel';
@@ -45,68 +45,62 @@ export function createContainer(
         skipBaseClassChecks: true
     });
 
-    container.bind(VSCODE_TYPES.ExtensionContext).toConstantValue(context);
+    container.bind(TYPES.ExtensionContext).toConstantValue(context);
 
     const coreModule = new ContainerModule(bind => {
         bind(TYPES.GlspServerConfig).toConstantValue(options.glspServerConfig);
         bind(TYPES.ModelServerConfig).toConstantValue(options.modelServerConfig);
 
+        bind(CommandManager).toSelf().inSingletonScope();
+        bind(TYPES.CommandManager).toService(CommandManager);
+        bind(TYPES.RootInitialization).toService(CommandManager);
+
+        bind(DisposableManager).toSelf().inSingletonScope();
+        bind(TYPES.DisposableManager).toService(DisposableManager);
+        bind(TYPES.RootInitialization).toService(DisposableManager);
+
         bind(UVGlspServer).toSelf().inSingletonScope();
         bind(TYPES.GlspServer).toService(UVGlspServer);
-        bind(VSCODE_TYPES.Disposable).toService(UVGlspServer);
+        bind(TYPES.Disposable).toService(UVGlspServer);
 
         bind(UVGlspConnector).toSelf().inSingletonScope();
         bind(TYPES.Connector).toService(UVGlspConnector);
-        bind(VSCODE_TYPES.Disposable).toService(UVGlspConnector);
+        bind(TYPES.Disposable).toService(UVGlspConnector);
 
         bind(UVModelServerClient).toSelf().inSingletonScope();
         bind(TYPES.ModelServerClient).toService(UVModelServerClient);
-        bind(VSCODE_TYPES.Disposable).toService(UVModelServerClient);
-
+        bind(TYPES.Disposable).toService(UVModelServerClient);
         bind(TYPES.ServerManagerStateListener).toService(UVModelServerClient);
-    });
-
-    const vscodeModule = new ContainerModule(bind => {
-        bind(CommandManager).toSelf().inSingletonScope();
-        bind(VSCODE_TYPES.CommandManager).toService(CommandManager);
-        bind(VSCODE_TYPES.RootInitialization).toService(CommandManager);
 
         bind(NewFileCreator).toSelf().inSingletonScope();
-        bind(VSCODE_TYPES.Command).to(NewFileCommand);
+        bind(TYPES.Command).to(NewFileCommand);
 
-        bind(DisposableManager).toSelf().inSingletonScope();
-        bind(VSCODE_TYPES.DisposableManager).toService(DisposableManager);
-        bind(VSCODE_TYPES.RootInitialization).toService(DisposableManager);
-
-        bind(EditorProvider).toSelf().inSingletonScope();
-        bind(VSCODE_TYPES.EditorProvider).toService(EditorProvider);
-        bind(VSCODE_TYPES.RootInitialization).toService(EditorProvider);
+        bind(UmlDiagramEditorProvider).toSelf().inSingletonScope();
+        bind(TYPES.EditorProvider).toService(UmlDiagramEditorProvider);
+        bind(TYPES.RootInitialization).toService(UmlDiagramEditorProvider);
+        bind(TYPES.ServerManagerStateListener).toService(UmlDiagramEditorProvider);
 
         bind(OutputChannel).toSelf().inSingletonScope();
-        bind(VSCODE_TYPES.OutputChannel).toService(OutputChannel);
+        bind(TYPES.OutputChannel).toService(OutputChannel);
 
         bind(Settings).toSelf().inSingletonScope();
-        bind(VSCODE_TYPES.Settings).toService(Settings);
-        bind(VSCODE_TYPES.RootInitialization).toService(Settings);
+        bind(TYPES.Settings).toService(Settings);
+        bind(TYPES.RootInitialization).toService(Settings);
 
         bind(WorkspaceWatcher).toSelf().inSingletonScope();
-        bind(VSCODE_TYPES.RootInitialization).toService(WorkspaceWatcher);
-    });
+        bind(TYPES.RootInitialization).toService(WorkspaceWatcher);
 
-    const featureModule = new ContainerModule(bind => {
         bind(ThemeIntegration).toSelf().inSingletonScope();
-        bind(FEATURE_TYPES.Theme).toService(ThemeIntegration);
-        bind(VSCODE_TYPES.Disposable).toService(ThemeIntegration);
-        bind(VSCODE_TYPES.RootInitialization).toService(ThemeIntegration);
+        bind(TYPES.Theme).toService(ThemeIntegration);
+        bind(TYPES.Disposable).toService(ThemeIntegration);
+        bind(TYPES.RootInitialization).toService(ThemeIntegration);
     });
 
     container.load(
         coreModule,
-        vscodeModule,
-        featureModule,
         modelServerModule(options.modelServerConfig),
         glspServerModule(options.glspServerConfig),
-        serverManager
+        serverManagerModule
     );
 
     return container;

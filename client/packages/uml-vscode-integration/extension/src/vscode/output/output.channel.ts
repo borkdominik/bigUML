@@ -16,13 +16,13 @@
 
 import { inject, injectable } from 'inversify';
 import * as vscode from 'vscode';
-import { VSCODE_TYPES } from '../../di.types';
+import { TYPES } from '../../di.types';
 
 @injectable()
 export class OutputChannel {
     protected readonly _channel;
 
-    constructor(@inject(VSCODE_TYPES.ExtensionContext) context: vscode.ExtensionContext) {
+    constructor(@inject(TYPES.ExtensionContext) context: vscode.ExtensionContext) {
         this._channel = vscode.window.createOutputChannel(context.extension.packageJSON['displayName'] ?? context.extension.id);
     }
 

@@ -15,7 +15,13 @@
  ********************************************************************************/
 
 export const TYPES = {
+    Command: Symbol('Command'),
+    CommandManager: Symbol('CommandManager'),
     Connector: Symbol('Connector'),
+    Disposable: Symbol('Disposable'),
+    DisposableManager: Symbol('DisposableManager'),
+    EditorProvider: Symbol('EditorProvider'),
+    ExtensionContext: Symbol('ExtensionContext'),
     GlspServer: Symbol('GlspServer'),
     GlspServerConfig: Symbol('GlspServerConfig'),
     GlspServerLauncher: Symbol('GlspServerLauncher'),
@@ -24,23 +30,11 @@ export const TYPES = {
     ModelServerConfig: Symbol('ModelServerConfig'),
     ModelServerLauncher: Symbol('ModelServerLauncher'),
     ModelServerLaunchOptions: Symbol('ModelServerLaunchOptions'),
+    OutputChannel: Symbol('OutputChannel'),
+    RootInitialization: Symbol('RootInitialization'),
+    Theme: Symbol('Theme'),
     ServerLauncher: Symbol('ServerLauncher'),
     ServerManager: Symbol('ServerManager'),
-    ServerManagerStateListener: Symbol('ServerManagerStateListener')
-};
-
-export const VSCODE_TYPES = {
-    Command: Symbol('Command'),
-    CommandManager: Symbol('CommandManager'),
-    Disposable: Symbol('Disposable'),
-    DisposableManager: Symbol('DisposableManager'),
-    EditorProvider: Symbol('EditorProvider'),
-    ExtensionContext: Symbol('ExtensionContext'),
-    OutputChannel: Symbol('OutputChannel'),
-    Settings: Symbol('Settings'),
-    RootInitialization: Symbol('RootInitialization')
-};
-
-export const FEATURE_TYPES = {
-    Theme: Symbol('Theme')
+    ServerManagerStateListener: Symbol('ServerManagerStateListener'),
+    Settings: Symbol('Settings')
 };

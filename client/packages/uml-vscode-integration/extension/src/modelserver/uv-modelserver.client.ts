@@ -19,14 +19,14 @@ import { UmlModelServerClient } from '@borkdominik-biguml/uml-modelserver/lib/mo
 import { inject, injectable } from 'inversify';
 import URI from 'urijs';
 import * as vscode from 'vscode';
-import { TYPES, VSCODE_TYPES } from '../di.types';
+import { TYPES } from '../di.types';
 import { ServerManager, ServerManagerStateListener } from '../server/server.manager';
 import { OutputChannel } from '../vscode/output/output.channel';
 
 @injectable()
 export class UVModelServerClient extends UmlModelServerClient implements ServerManagerStateListener {
     constructor(
-        @inject(VSCODE_TYPES.OutputChannel) protected readonly output: OutputChannel,
+        @inject(TYPES.OutputChannel) protected readonly output: OutputChannel,
         @inject(TYPES.ModelServerConfig) protected override readonly config: ModelServerConfig
     ) {
         super(config);

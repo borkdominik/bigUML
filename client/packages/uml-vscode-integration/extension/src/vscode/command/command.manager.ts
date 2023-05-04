@@ -16,14 +16,14 @@
 
 import { inject, injectable, multiInject, postConstruct } from 'inversify';
 import * as vscode from 'vscode';
-import { VSCODE_TYPES } from '../../di.types';
+import { TYPES } from '../../di.types';
 import { VSCodeCommand } from './command';
 
 @injectable()
 export class CommandManager {
     constructor(
-        @inject(VSCODE_TYPES.ExtensionContext) protected readonly context: vscode.ExtensionContext,
-        @multiInject(VSCODE_TYPES.Command) private commands: VSCodeCommand[]
+        @inject(TYPES.ExtensionContext) protected readonly context: vscode.ExtensionContext,
+        @multiInject(TYPES.Command) private commands: VSCodeCommand[]
     ) {}
 
     @postConstruct()

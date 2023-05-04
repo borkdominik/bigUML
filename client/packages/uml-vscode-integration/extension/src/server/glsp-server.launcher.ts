@@ -17,7 +17,7 @@
 import { osUtils, UmlServerLauncherOptions } from '@borkdominik-biguml/uml-integration';
 import { ContainerModule, inject, injectable } from 'inversify';
 import * as path from 'path';
-import { TYPES, VSCODE_TYPES } from '../di.types';
+import { TYPES } from '../di.types';
 import { OutputChannel } from '../vscode/output/output.channel';
 import { UVServerLauncher } from './launcher';
 
@@ -49,7 +49,7 @@ export function glspServerModule(config: GlspServerConfig): ContainerModule {
         bind(UmlGLSPServerLauncher).toSelf().inSingletonScope();
         bind(TYPES.GlspServerLauncher).toService(UmlGLSPServerLauncher);
         bind(TYPES.ServerLauncher).toService(TYPES.GlspServerLauncher);
-        bind(VSCODE_TYPES.Disposable).toService(TYPES.GlspServerLauncher);
+        bind(TYPES.Disposable).toService(TYPES.GlspServerLauncher);
     });
 }
 
@@ -67,7 +67,7 @@ export class UmlGLSPServerLauncher extends UVServerLauncher {
 
     constructor(
         @inject(TYPES.GlspServerLaunchOptions) options: UmlServerLauncherOptions,
-        @inject(VSCODE_TYPES.OutputChannel) outputChannel: OutputChannel
+        @inject(TYPES.OutputChannel) outputChannel: OutputChannel
     ) {
         super(options, outputChannel);
     }

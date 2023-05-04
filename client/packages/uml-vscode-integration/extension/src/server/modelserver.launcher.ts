@@ -18,7 +18,7 @@ import { osUtils, UmlServerLauncherOptions } from '@borkdominik-biguml/uml-integ
 import { ModelServerConfig } from '@borkdominik-biguml/uml-modelserver/lib/config';
 import { ContainerModule, inject, injectable } from 'inversify';
 import * as path from 'path';
-import { TYPES, VSCODE_TYPES } from '../di.types';
+import { TYPES } from '../di.types';
 import { OutputChannel } from '../vscode/output/output.channel';
 import { UVServerLauncher } from './launcher';
 
@@ -46,7 +46,7 @@ export function modelServerModule(config: ModelServerConfig): ContainerModule {
         bind(UmlModelServerLauncher).toSelf().inSingletonScope();
         bind(TYPES.ModelServerLauncher).toService(UmlModelServerLauncher);
         bind(TYPES.ServerLauncher).toService(TYPES.ModelServerLauncher);
-        bind(VSCODE_TYPES.Disposable).toService(TYPES.ModelServerLauncher);
+        bind(TYPES.Disposable).toService(TYPES.ModelServerLauncher);
     });
 }
 
@@ -68,7 +68,7 @@ export class UmlModelServerLauncher extends UVServerLauncher {
 
     constructor(
         @inject(TYPES.ModelServerLaunchOptions) options: UmlServerLauncherOptions,
-        @inject(VSCODE_TYPES.OutputChannel) outputChannel: OutputChannel
+        @inject(TYPES.OutputChannel) outputChannel: OutputChannel
     ) {
         super(options, outputChannel);
     }

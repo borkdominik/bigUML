@@ -22,6 +22,7 @@ import { ThemeIntegration } from '../../features/theme/theme-integration';
 import { UVGlspConnector } from '../../glsp/uv-glsp-connector';
 import { VSCodeSettings } from '../../language';
 import { ServerManager, ServerManagerStateListener } from '../../server/server.manager';
+import { ErrorWebviewResolver } from './error.webview';
 import { GLSPWebviewResolver } from './glsp.webiew';
 import { InitializingWebviewResolver } from './initializing.webview';
 import { WebviewResolver, WebviewResource } from './webview';
@@ -126,16 +127,12 @@ export class UmlDiagramEditorProvider implements vscode.CustomEditorProvider, Se
     async serverManagerStateChanged(_manager: ServerManager, state: ServerManager.State): Promise<void> {
         this.serverManagerState = state;
 
-        if (state.state === 'servers-launched') {
+        if (state.state === 'assertion-failed') {
             for (const key of Object.keys(this.editors)) {
                 const active = this.editors[key];
                 const resource = active.resource;
 
-                if (active.webview instanceof InitializingWebviewResolver) {
-                    active.webview.finish(resource);
-                }
-
-                const webview = this.createGLSPResolver(active.clientId, active.clientReady);
+                const webview = this.createErrorResolver(resource);
                 await webview.resolve(resource);
                 this.editors[key].webview = webview;
             }
@@ -147,6 +144,19 @@ export class UmlDiagramEditorProvider implements vscode.CustomEditorProvider, Se
                 if (webview instanceof InitializingWebviewResolver) {
                     await webview.progress(active.resource, `Starting ${state.launcher.serverName}`);
                 }
+            }
+        } else if (state.state === 'servers-launched') {
+            for (const key of Object.keys(this.editors)) {
+                const active = this.editors[key];
+                const resource = active.resource;
+
+                if (active.webview instanceof InitializingWebviewResolver) {
+                    active.webview.finish(resource);
+                }
+
+                const webview = this.createGLSPResolver(active.clientId, active.clientReady);
+                await webview.resolve(resource);
+                this.editors[key].webview = webview;
             }
         }
     }
@@ -160,6 +170,8 @@ export class UmlDiagramEditorProvider implements vscode.CustomEditorProvider, Se
 
         if (this.serverManagerState.state === 'servers-launched') {
             resolver = this.createGLSPResolver(clientId, clientReady);
+        } else if (this.serverManagerState.state === 'assertion-failed') {
+            resolver = this.createErrorResolver(resource);
         } else {
             resolver = this.createInitializingEnvironmentResolver(resource);
         }
@@ -172,6 +184,15 @@ export class UmlDiagramEditorProvider implements vscode.CustomEditorProvider, Se
         const state = this.serverManagerState;
         if (state.state === 'launching-server') {
             resolver.progress(resource, `Starting ${state.launcher.serverName}`);
+        }
+        return resolver;
+    }
+
+    protected createErrorResolver(resource: WebviewResource): ErrorWebviewResolver {
+        const resolver = new ErrorWebviewResolver();
+        const state = this.serverManagerState;
+        if (state.state === 'assertion-failed') {
+            resolver.error(resource, state.reason, state.details);
         }
         return resolver;
     }

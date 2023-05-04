@@ -17,13 +17,9 @@
 
 import { WebviewResolver, WebviewResource } from './webview';
 
-export class InitializingWebviewResolver implements WebviewResolver {
-    async progress(resource: WebviewResource, text: string): Promise<void> {
-        await resource.webviewPanel.webview.postMessage({ command: 'progress', text });
-    }
-
-    async finish(resource: WebviewResource): Promise<void> {
-        await resource.webviewPanel.webview.postMessage({ command: 'finished' });
+export class ErrorWebviewResolver implements WebviewResolver {
+    async error(resource: WebviewResource, message: string, details?: string): Promise<void> {
+        await resource.webviewPanel.webview.postMessage({ command: 'error', message, details });
     }
 
     async resolve(resource: WebviewResource): Promise<void> {
@@ -35,7 +31,7 @@ export class InitializingWebviewResolver implements WebviewResolver {
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Initializing Environments</title>
+            <title>Error</title>
             <style>
                 html, body {
                     height: 100%;
@@ -64,26 +60,24 @@ export class InitializingWebviewResolver implements WebviewResolver {
         <body>
             <div class="root">
                 <div class="container">
-                    <h1>Initializing Environments</h1>
-                    <span id="progress">Please wait...</span>
+                    <h1 id="message">An unexpected error occured. Please check the logs.</h1>
+                    <span id="details"></span>
                 </div>
-                <div class="loading"></div>
             </div>
 
             <script>
-                const progress = document.getElementById('progress');
+                const message = document.getElementById('message');
+                const details = document.getElementById('details');
 
                 // Handle the message inside the webview
                 window.addEventListener('message', event => {
 
-                    const message = event.data; // The JSON data our extension sent
+                    const data = event.data; // The JSON data our extension sent
 
-                    switch (message.command) {
-                        case 'progress':
-                            progress.textContent = message.text;
-                            break;
-                        case 'finished':
-                            document.querySelector('body').innerHTML = '';
+                    switch (data.command) {
+                        case 'error':
+                            message.textContent = data.message;
+                            details.textContent = data.details;
                             break;
                     }
                 });

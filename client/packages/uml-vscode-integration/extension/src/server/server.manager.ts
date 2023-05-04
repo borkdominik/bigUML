@@ -108,7 +108,8 @@ export class ServerManager {
 
                 this.state = {
                     state: 'assertion-failed',
-                    reason: 'java'
+                    reason: 'Java not found.',
+                    details: `Please install Java ${ServerManager.MIN_JAVA}+ and restart VS Code.`
                 };
             }
         } else {
@@ -137,7 +138,7 @@ export class ServerManager {
     protected async assertJava(): Promise<boolean> {
         const javaVersion = await java.installedMajorVersion();
 
-        if (javaVersion === undefined || +javaVersion < 11) {
+        if (javaVersion === undefined || +javaVersion < ServerManager.MIN_JAVA) {
             return false;
         }
 
@@ -150,7 +151,8 @@ export class ServerManager {
 }
 
 export namespace ServerManager {
-    export const JAVA_MISSING_MESSAGE = 'Starting bigUML failed. Please install Java 11+ on your machine.';
+    export const MIN_JAVA = 11;
+    export const JAVA_MISSING_MESSAGE = `Starting bigUML failed. Please install Java ${MIN_JAVA}+ on your machine.`;
 
     export type ActiveState = 'none' | 'assertion-failed' | 'assertion-succeeded' | 'launching-server' | 'servers-launched';
 
@@ -165,6 +167,7 @@ export namespace ServerManager {
     export interface AssertionFailedState extends CommonState {
         readonly state: 'assertion-failed';
         readonly reason: any;
+        readonly details?: any;
     }
 
     export interface AssertionSucceededState extends CommonState {

@@ -25,6 +25,7 @@ import {
     configureViewerOptions,
     createDiagramContainer,
     EditLabelUI,
+    GLSPActionDispatcher,
     GLSPGraph,
     GridSnapper,
     LogLevel,
@@ -35,9 +36,11 @@ import toolPaletteModule from '@eclipse-glsp/client/lib/features/tool-palette/di
 import { DefaultTypes } from '@eclipse-glsp/protocol';
 import { Container, ContainerModule } from 'inversify';
 import { FixedLogger } from './common/fixed-logger';
+import { UML_TYPES } from './di.types';
 import { CustomCopyPasteHandler, LastContainableElementTracker } from './features/copy-paste/copy-paste';
 import { EditLabelUIAutocomplete } from './features/edit-label';
 import editorPanelModule from './features/editor-panel/di.config';
+import { initializationModule, IOnceModelInitialized } from './features/initialization/di.config';
 import outlineModule from './features/outline/di.config';
 import propertyPaletteModule from './features/property-palette/di.config';
 import { themeModule } from './features/theme/di.config';
@@ -79,15 +82,31 @@ export default function createContainer(widgetId: string): Container {
         });
     });
 
-    const container = createDiagramContainer(coreDiagramModule);
+    const container = createDiagramContainer(coreDiagramModule, { exclude: toolPaletteModule });
 
-    container.unload(toolPaletteModule);
-
-    container.load(themeModule, editorPanelModule, umlToolPaletteModule, outlineModule, propertyPaletteModule, ...umlDiagramModules);
+    container.load(
+        initializationModule,
+        themeModule,
+        editorPanelModule,
+        umlToolPaletteModule,
+        outlineModule,
+        propertyPaletteModule,
+        ...umlDiagramModules
+    );
 
     overrideViewerOptions(container, {
         baseDiv: widgetId,
         hiddenDiv: widgetId + '_hidden'
     });
+    onceModelInitialized(container);
+
     return container;
+}
+
+function onceModelInitialized(container: Container): void {
+    const actionDispatcher = container.get<GLSPActionDispatcher>(TYPES.IActionDispatcher);
+
+    actionDispatcher.onceModelInitialized().then(() => {
+        container.getAll<IOnceModelInitialized>(UML_TYPES.IOnceModelInitialized).forEach(t => t.onceModelInitialized());
+    });
 }

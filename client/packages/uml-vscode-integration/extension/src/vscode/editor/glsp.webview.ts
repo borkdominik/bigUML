@@ -57,10 +57,11 @@ export class GLSPWebviewResolver implements WebviewResolver {
                     ">
                     <link href="${codiconsUri}" rel="stylesheet" />
                     <link href="${mainCSSUri}" rel="stylesheet" />
-    
                     </head>
                     <body style="overflow: hidden;">
-                        <div id="${this.data.clientId}_container" style="height: 100%;"></div>
+                        <div id="${this.data.clientId}_container" style="height: 100%;">
+                            <div id="${this.data.clientId}_loading" class="client-loading"></div>
+                        </div>
                         <script src="${webviewScriptSourceUri}"></script>
                     </body>
                 </html>`;

@@ -23,7 +23,7 @@ import { UVGlspConnector } from '../../glsp/uv-glsp-connector';
 import { VSCodeSettings } from '../../language';
 import { ServerManager, ServerManagerStateListener } from '../../server/server.manager';
 import { ErrorWebviewResolver } from './error.webview';
-import { GLSPWebviewResolver } from './glsp.webiew';
+import { GLSPWebviewResolver } from './glsp.webview';
 import { InitializingWebviewResolver } from './initializing.webview';
 import { WebviewResolver, WebviewResource } from './webview';
 

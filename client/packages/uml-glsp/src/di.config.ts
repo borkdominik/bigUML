@@ -35,6 +35,7 @@ import {
 import toolPaletteModule from '@eclipse-glsp/client/lib/features/tool-palette/di.config';
 import { DefaultTypes } from '@eclipse-glsp/protocol';
 import { Container, ContainerModule } from 'inversify';
+import { UMLActionDispatcher } from './base/action-dispatcher';
 import { FixedLogger } from './common/fixed-logger';
 import { UML_TYPES } from './di.types';
 import { CustomCopyPasteHandler, LastContainableElementTracker } from './features/copy-paste/copy-paste';
@@ -58,6 +59,7 @@ export default function createContainer(widgetId: string): Container {
 
         rebind(TYPES.ILogger).to(FixedLogger).inSingletonScope();
         rebind(TYPES.LogLevel).toConstantValue(LogLevel.info);
+        rebind(GLSPActionDispatcher).to(UMLActionDispatcher).inSingletonScope();
 
         bind(TYPES.ISnapper).to(GridSnapper);
         rebind(TYPES.ICopyPasteHandler).to(CustomCopyPasteHandler);

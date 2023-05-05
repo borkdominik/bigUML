@@ -1,7 +1,7 @@
 {
   "name": "@borkdominik-biguml/uml-integration",
-  "version": "0.1.0",
-  "description": "UML-Common",
+  "version": "0.2.0",
+  "description": "UML-Integration",
   "homepage": "https://github.com/borkdominik/bigUML",
   "bugs": "https://github.com/borkdominik/bigUML/issues",
   "repository": {

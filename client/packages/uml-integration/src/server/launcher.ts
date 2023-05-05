@@ -15,6 +15,7 @@
  ********************************************************************************/
 import * as childProcess from 'child_process';
 import * as fs from 'fs';
+import * as net from 'net';
 import { osUtils } from './os';
 
 export interface UmlServerLauncherOptions {
@@ -78,6 +79,13 @@ export abstract class UmlServerLauncher {
         });
     }
 
+    async ping(): Promise<void> {
+        const error = await checkService('localhost', this.options.server.port, 2000);
+        if (error !== undefined) {
+            throw new Error(`Failed to connect to port ${this.options.server.port}`);
+        }
+    }
+
     async stop(): Promise<void> {
         if (this.serverProcess !== undefined && this.serverProcess.pid !== undefined && !this.serverProcess.killed) {
             await osUtils.kill(this.serverProcess.pid, 'SIGINT');
@@ -111,5 +119,34 @@ export abstract class UmlServerLauncher {
 
     protected onProcessError(error: Error): void {
         // Nothing to do
+    }
+}
+
+// https://jakegut.com/posts/ext-svr/
+async function checkService(host: string, port: number, timeout: number): Promise<string | undefined> {
+    const promise = new Promise<string | undefined>((res, rej) => {
+        const socket = new net.Socket();
+
+        const onError = (msg: string) => () => {
+            socket.destroy();
+            rej(msg);
+        };
+
+        socket.setTimeout(timeout);
+        socket.once('error', err => onError(String(err))());
+        socket.once('timeout', onError('Connection timeout'));
+
+        socket.connect(port, host, () => {
+            socket.end();
+            // In this situation, a successful connection is null
+            // "No news is good news" type of thing
+            res(undefined);
+        });
+    });
+
+    try {
+        return await promise;
+    } catch (e: any) {
+        return e;
     }
 }

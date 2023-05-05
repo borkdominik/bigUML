@@ -72,44 +72,64 @@ export class ServerManager {
         );
 
         const launchers = this.launchers.filter(l => l.isEnabled);
-        this.output.channel.appendLine(`Registered server launchers: ${this.launchers.map(l => l.constructor.name).join(', ')}`);
+        this.output.channel.appendLine(`Registered server launchers: ${this.launchers.map(l => l.serverName).join(', ')}`);
 
         if (launchers.length > 0) {
-            this.output.channel.appendLine(`Enabled server launchers: ${launchers.map(l => l.constructor.name).join(', ')}`);
+            this.output.channel.appendLine(`Enabled server launchers: ${launchers.map(l => l.serverName).join(', ')}`);
 
-            if (await this.assertJava()) {
-                this.state = {
-                    state: 'assertion-succeeded'
-                };
-
-                for (const launcher of launchers) {
+            try {
+                if (await this.assertJava()) {
                     this.state = {
-                        state: 'launching-server',
-                        launcher
+                        state: 'assertion-succeeded'
                     };
 
+                    for (const launcher of launchers) {
+                        this.state = {
+                            state: 'launching-server',
+                            launcher
+                        };
+
+                        progress?.report({
+                            message: `Starting ${launcher.serverName}`
+                        });
+
+                        await launcher.start();
+                        await launcher.ping();
+                    }
                     progress?.report({
-                        message: `Starting ${launcher.serverName}`
+                        message: undefined
                     });
 
-                    await launcher.start();
+                    this.state = {
+                        state: 'servers-launched',
+                        launchers
+                    };
+                } else {
+                    this.output.appendLine(ServerManager.JAVA_MISSING_MESSAGE);
+                    vscode.window.showErrorMessage(ServerManager.JAVA_MISSING_MESSAGE);
+
+                    this.state = {
+                        state: 'error',
+                        reason: 'Java not found.',
+                        details: `Please install Java ${ServerManager.MIN_JAVA}+ and restart VS Code.`
+                    };
                 }
-                progress?.report({
-                    message: undefined
-                });
+            } catch (error) {
+                this.output.appendLine('Something went wrong. Please check the logs.');
+                vscode.window.showErrorMessage('Something went wrong. Please check the logs.');
+
+                let reason = 'Something went wrong.';
+                let details: string | undefined = 'Please check the logs.';
+
+                if (error instanceof Error) {
+                    reason = error.message;
+                    details = error.stack;
+                }
 
                 this.state = {
-                    state: 'servers-launched',
-                    launchers
-                };
-            } else {
-                this.output.appendLine(ServerManager.JAVA_MISSING_MESSAGE);
-                vscode.window.showErrorMessage(ServerManager.JAVA_MISSING_MESSAGE);
-
-                this.state = {
-                    state: 'assertion-failed',
-                    reason: 'Java not found.',
-                    details: `Please install Java ${ServerManager.MIN_JAVA}+ and restart VS Code.`
+                    state: 'error',
+                    reason,
+                    details
                 };
             }
         } else {
@@ -154,7 +174,7 @@ export namespace ServerManager {
     export const MIN_JAVA = 11;
     export const JAVA_MISSING_MESSAGE = `Starting bigUML failed. Please install Java ${MIN_JAVA}+ on your machine.`;
 
-    export type ActiveState = 'none' | 'assertion-failed' | 'assertion-succeeded' | 'launching-server' | 'servers-launched';
+    export type ActiveState = 'none' | 'error' | 'assertion-succeeded' | 'launching-server' | 'servers-launched';
 
     interface CommonState {
         readonly state: ActiveState;
@@ -164,8 +184,8 @@ export namespace ServerManager {
         readonly state: 'none';
     }
 
-    export interface AssertionFailedState extends CommonState {
-        readonly state: 'assertion-failed';
+    export interface ErrorState extends CommonState {
+        readonly state: 'error';
         readonly reason: any;
         readonly details?: any;
     }
@@ -184,5 +204,5 @@ export namespace ServerManager {
         readonly launchers: UmlServerLauncher[];
     }
 
-    export type State = NoneState | AssertionFailedState | AssertionSucceededState | LaunchingServerState | ServerLaunchedState;
+    export type State = NoneState | ErrorState | AssertionSucceededState | LaunchingServerState | ServerLaunchedState;
 }

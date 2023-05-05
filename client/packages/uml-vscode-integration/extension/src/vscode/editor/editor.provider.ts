@@ -127,7 +127,7 @@ export class UmlDiagramEditorProvider implements vscode.CustomEditorProvider, Se
     async serverManagerStateChanged(_manager: ServerManager, state: ServerManager.State): Promise<void> {
         this.serverManagerState = state;
 
-        if (state.state === 'assertion-failed') {
+        if (state.state === 'error') {
             for (const key of Object.keys(this.editors)) {
                 const active = this.editors[key];
                 const resource = active.resource;
@@ -170,7 +170,7 @@ export class UmlDiagramEditorProvider implements vscode.CustomEditorProvider, Se
 
         if (this.serverManagerState.state === 'servers-launched') {
             resolver = this.createGLSPResolver(clientId, clientReady);
-        } else if (this.serverManagerState.state === 'assertion-failed') {
+        } else if (this.serverManagerState.state === 'error') {
             resolver = this.createErrorResolver(resource);
         } else {
             resolver = this.createInitializingEnvironmentResolver(resource);
@@ -191,7 +191,7 @@ export class UmlDiagramEditorProvider implements vscode.CustomEditorProvider, Se
     protected createErrorResolver(resource: WebviewResource): ErrorWebviewResolver {
         const resolver = new ErrorWebviewResolver();
         const state = this.serverManagerState;
-        if (state.state === 'assertion-failed') {
+        if (state.state === 'error') {
             resolver.error(resource, state.reason, state.details);
         }
         return resolver;

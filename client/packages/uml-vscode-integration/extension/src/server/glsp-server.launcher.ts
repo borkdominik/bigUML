@@ -15,6 +15,7 @@
  ********************************************************************************/
 
 import { osUtils, UmlServerLauncherOptions } from '@borkdominik-biguml/uml-integration';
+import { SocketGlspVscodeServer } from '@eclipse-glsp/vscode-integration/lib/quickstart-components/socket-glsp-vscode-server';
 import { ContainerModule, inject, injectable } from 'inversify';
 import * as path from 'path';
 import { TYPES } from '../di.types';
@@ -35,7 +36,7 @@ export function glspServerModule(config: GlspServerConfig): ContainerModule {
         const launchOptions: UmlServerLauncherOptions = {
             executable: JAVA_EXECUTABLE,
             additionalArgs: ['glspserver', `--port=${config.port}`],
-            logging: process.env.UML_GLSP_SERVER_LOGGING === 'true',
+            logging: true || process.env.UML_GLSP_SERVER_LOGGING === 'true',
             server: {
                 name: 'GLSPServer',
                 port: config.port,
@@ -70,5 +71,11 @@ export class UmlGLSPServerLauncher extends UVServerLauncher {
         @inject(TYPES.OutputChannel) outputChannel: OutputChannel
     ) {
         super(options, outputChannel);
+    }
+
+    override async ping(): Promise<void> {
+        const server = new SocketGlspVscodeServer({ clientId: 'ping_1', clientName: 'ping', serverPort: this.options.server.port });
+        await server.start();
+        await server.stop();
     }
 }

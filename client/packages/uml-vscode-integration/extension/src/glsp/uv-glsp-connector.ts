@@ -15,6 +15,7 @@
  ********************************************************************************/
 
 import {
+    Action,
     ActionMessage,
     Args,
     GlspVscodeClient,
@@ -29,7 +30,7 @@ import {
 } from '@eclipse-glsp/vscode-integration';
 import { inject, injectable } from 'inversify';
 import * as vscode from 'vscode';
-import { TYPES } from '../../di.types';
+import { TYPES } from '../di.types';
 
 @injectable()
 export class UVGlspConnector<TDocument extends vscode.CustomDocument = vscode.CustomDocument> extends GlspVscodeConnector<TDocument> {
@@ -69,6 +70,20 @@ export class UVGlspConnector<TDocument extends vscode.CustomDocument = vscode.Cu
         const initializeParams = await this.createInitializeClientSessionParams(client);
         await glspClient.initializeClientSession(initializeParams);
         return this.options.server.initializeResult;
+    }
+
+    public broadcastActionToClients(action: Action): void {
+        this.clientMap.forEach(client => {
+            client.onSendToClientEmitter.fire({
+                clientId: client.clientId,
+                action: action,
+                __localDispatch: true
+            });
+        });
+    }
+
+    public override sendActionToClient(clientId: string, action: Action): void {
+        super.sendActionToClient(clientId, action);
     }
 
     protected override handleSetDirtyStateAction(

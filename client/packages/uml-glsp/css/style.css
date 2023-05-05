@@ -8,6 +8,7 @@
 @import 'common.css';
 @import 'uml-sprotty.css';
 
+@import 'base/animations.css';
 @import 'base/edge.css';
 @import 'base/node.css';
 @import 'base/text.css';

@@ -55,12 +55,13 @@ function checkSourcePath(sourcePath: string): void {
     log('Source directory exists!');
 }
 
-export function copyBackendFile(sourcePath: string, targetPath: string, jarName: string): void {
+export function copyBackendFile(sourcePath: string, targetPath: string, targetName: string): void {
     // Check source file
     checkSourcePath(sourcePath);
     // Check and prepare target directory
     prepareTargetDir(targetPath);
     // Start copying
-    copyFileSync(sourcePath, join(targetPath, jarName));
-    log(`Copy to '${targetPath} was successful!`);
+    const destinationPath = join(targetPath, targetName);
+    copyFileSync(sourcePath, destinationPath);
+    log(`\n\tCopying\n\t - from ${sourcePath}\n\t - to ${destinationPath}\n\twas successful!`);
 }

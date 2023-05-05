@@ -14,18 +14,9 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 
-import net from 'net';
+import { TYPES } from '@eclipse-glsp/client';
 
-export async function freePort(): Promise<number> {
-    return new Promise((res, rej) => {
-        const srv = net.createServer();
-        srv.listen(0, () => {
-            if (srv.address()) {
-                const port = (srv.address() as net.AddressInfo).port;
-                srv.close(err => res(port));
-            }
-
-            srv.close(err => rej());
-        });
-    });
-}
+export const UML_TYPES = {
+    ...TYPES,
+    IOnceModelInitialized: Symbol('IOnceModelInitialized')
+};

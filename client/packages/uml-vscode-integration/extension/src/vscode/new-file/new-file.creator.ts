@@ -17,10 +17,10 @@ import { UmlDiagramType } from '@borkdominik-biguml/uml-common';
 import { inject, injectable } from 'inversify';
 import URIJS from 'urijs';
 import * as vscode from 'vscode';
-import { TYPES, VSCODE_TYPES } from '../../di.types';
+import { TYPES } from '../../di.types';
 import { UVLangugageEnvironment, VSCodeSettings } from '../../language';
 import { UVModelServerClient } from '../../modelserver/uv-modelserver.client';
-import { EditorProvider } from '../editor/editor.provider';
+import { UmlDiagramEditorProvider } from '../editor/editor.provider';
 import { newDiagramWizard } from './wizard';
 
 const nameRegex = /^([\w_-]+\/?)*[\w_-]+$/;
@@ -30,9 +30,9 @@ export class NewFileCreator {
     constructor(
         @inject(TYPES.ModelServerClient)
         protected readonly modelServerClient: UVModelServerClient,
-        @inject(VSCODE_TYPES.EditorProvider)
-        protected readonly editor: EditorProvider,
-        @inject(VSCODE_TYPES.ExtensionContext)
+        @inject(TYPES.EditorProvider)
+        protected readonly editor: UmlDiagramEditorProvider,
+        @inject(TYPES.ExtensionContext)
         protected readonly context: vscode.ExtensionContext
     ) {}
 

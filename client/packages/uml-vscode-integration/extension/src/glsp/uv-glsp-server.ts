@@ -14,12 +14,12 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 
-import { ModelServerConfig } from '@borkdominik-biguml/uml-modelserver/lib/config';
+import { ModelServerConfig } from '@borkdominik-biguml/uml-modelserver';
 import { InitializeParameters } from '@eclipse-glsp/vscode-integration';
 import { SocketGlspVscodeServer } from '@eclipse-glsp/vscode-integration/lib/quickstart-components/socket-glsp-vscode-server';
 import { inject, injectable } from 'inversify';
-import { TYPES } from '../../di.types';
-import { GlspServerConfig } from '../launcher/launcher';
+import { TYPES } from '../di.types';
+import { GlspServerConfig } from '../server/glsp-server.launcher';
 
 @injectable()
 export class UVGlspServer extends SocketGlspVscodeServer {

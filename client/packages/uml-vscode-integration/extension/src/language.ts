@@ -21,6 +21,7 @@ export const UVLangugageEnvironment: UmlLanguageEnvironment = {
 };
 
 export const VSCodeSettings = {
+    name: 'bigUML',
     commands: {
         prefix: 'bigUML'
     },
@@ -28,4 +29,4 @@ export const VSCodeSettings = {
         extension: 'uml',
         viewType: 'bigUML.diagramView'
     }
-};
+} as const;

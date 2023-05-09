@@ -9,6 +9,7 @@ Client
 Server
 
 - [GLSP](./server/glsp.md)
+  - [Actions & Action Handlers](./server/actions.md)
 - [ModelServer](./server/model-server.md)
 
 Please read first the previously mentioned chapters.

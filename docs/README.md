@@ -9,11 +9,8 @@ Welcome to the bigUML wiki!
 - [Overview](./architecture/README.md)
   - [Client](./architecture/client/client.md)
   - [GLSP](./architecture/server/glsp.md)
+    - [Actions & Action Handlers](./server/actions.md)
   - [ModelServer](./architecture/server/model-server.md)
-
-## Features
-
--
 
 ## Using bigUML
 

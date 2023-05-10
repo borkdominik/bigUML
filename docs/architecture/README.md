@@ -4,12 +4,13 @@ We provide an overview of the architecture in this and the following pages.
 
 Client
 
-- [Client](./client/Client.md)
+- [Client](./client/client.md)
 
 Server
 
-- [GLSP](./server/GLSP.md)
-- [ModelServer](./server/ModelServer.md)
+- [GLSP](./server/glsp.md)
+  - [Actions & Action Handlers](./server/actions.md)
+- [ModelServer](./server/model-server.md)
 
 Please read first the previously mentioned chapters.
 

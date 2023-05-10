@@ -2,7 +2,7 @@
 
 This page describes how to get a running version of bigUML.
 
-Please first install the requirements as described under [Requirements](./Requirements.md)
+Please first install the requirements as described under [Requirements](./requirements.md)
 
 ---
 

@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { configureModelElement, PolylineEdgeView, SCompartmentView, SEdge, SLabelView } from '@eclipse-glsp/client/lib';
+import { configureModelElement, GEdgeView, SCompartmentView, SEdge, SLabelView } from '@eclipse-glsp/client/lib';
 import { ContainerModule } from 'inversify';
 
 import { SEditableLabel } from '../../../graph';
@@ -29,16 +29,16 @@ export const umlClassDiagramModule = new ContainerModule((bind, unbind, isBound,
     configureModelElement(context, UmlClassTypes.PROPERTY_LABEL_MULTIPLICITY, SEditableLabel, SLabelView);
     configureModelElement(context, UmlClassTypes.PRIMITIVE_TYPE, NamedElement, NamedElementView);
 
-    configureModelElement(context, UmlClassTypes.ABSTRACTION, SEdge, PolylineEdgeView);
-    configureModelElement(context, UmlClassTypes.ASSOCIATION, SEdge, PolylineEdgeView);
-    configureModelElement(context, UmlClassTypes.ASSOCIATION_AGGREGATION, SEdge, PolylineEdgeView);
-    configureModelElement(context, UmlClassTypes.ASSOCIATION_COMPOSITION, SEdge, PolylineEdgeView);
-    configureModelElement(context, UmlClassTypes.DEPENDENCY, SEdge, PolylineEdgeView);
-    configureModelElement(context, UmlClassTypes.INTERFACE_REALIZATION, SEdge, PolylineEdgeView);
-    configureModelElement(context, UmlClassTypes.GENERALIZATION, SEdge, PolylineEdgeView);
-    configureModelElement(context, UmlClassTypes.REALIZATION, SEdge, PolylineEdgeView);
-    configureModelElement(context, UmlClassTypes.SUBSTITUTION, SEdge, PolylineEdgeView);
-    configureModelElement(context, UmlClassTypes.USAGE, SEdge, PolylineEdgeView);
-    configureModelElement(context, UmlClassTypes.PACKAGE_IMPORT, SEdge, PolylineEdgeView);
-    configureModelElement(context, UmlClassTypes.PACKAGE_MERGE, SEdge, PolylineEdgeView);
+    configureModelElement(context, UmlClassTypes.ABSTRACTION, SEdge, GEdgeView);
+    configureModelElement(context, UmlClassTypes.ASSOCIATION, SEdge, GEdgeView);
+    configureModelElement(context, UmlClassTypes.ASSOCIATION_AGGREGATION, SEdge, GEdgeView);
+    configureModelElement(context, UmlClassTypes.ASSOCIATION_COMPOSITION, SEdge, GEdgeView);
+    configureModelElement(context, UmlClassTypes.DEPENDENCY, SEdge, GEdgeView);
+    configureModelElement(context, UmlClassTypes.INTERFACE_REALIZATION, SEdge, GEdgeView);
+    configureModelElement(context, UmlClassTypes.GENERALIZATION, SEdge, GEdgeView);
+    configureModelElement(context, UmlClassTypes.REALIZATION, SEdge, GEdgeView);
+    configureModelElement(context, UmlClassTypes.SUBSTITUTION, SEdge, GEdgeView);
+    configureModelElement(context, UmlClassTypes.USAGE, SEdge, GEdgeView);
+    configureModelElement(context, UmlClassTypes.PACKAGE_IMPORT, SEdge, GEdgeView);
+    configureModelElement(context, UmlClassTypes.PACKAGE_MERGE, SEdge, GEdgeView);
 });

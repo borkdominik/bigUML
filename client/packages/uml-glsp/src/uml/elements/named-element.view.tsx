@@ -10,7 +10,6 @@ import { RectangularNodeView, RenderingContext, SCompartment, svg } from '@eclip
 import { DefaultTypes } from '@eclipse-glsp/protocol';
 import { injectable } from 'inversify';
 import { VNode } from 'snabbdom';
-
 import { NamedElement } from './named-element.model';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

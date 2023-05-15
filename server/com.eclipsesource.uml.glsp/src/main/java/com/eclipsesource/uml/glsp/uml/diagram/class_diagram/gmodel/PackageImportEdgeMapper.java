@@ -13,6 +13,7 @@ package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel;
 import java.util.List;
 
 import org.eclipse.glsp.graph.GEdge;
+import org.eclipse.glsp.graph.builder.impl.GArguments;
 import org.eclipse.glsp.graph.builder.impl.GEdgeBuilder;
 import org.eclipse.glsp.graph.builder.impl.GEdgePlacementBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
@@ -40,6 +41,7 @@ public final class PackageImportEdgeMapper extends BaseGEdgeMapper<PackageImport
          .sourceId(nearestPackageId)
          .targetId(importedPackageId)
          .routerKind(GConstants.RouterKind.POLYLINE)
+         .addArgument(GArguments.edgePadding(10))
          .add(textEdgeBuilder(
             source,
             QuotationMark.quoteDoubleAngle("import"),

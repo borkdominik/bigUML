@@ -10,6 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.generalization;
 
+import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.Generalization;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
@@ -28,6 +29,14 @@ public final class UpdateGeneralizationSemanticCommand
       final UpdateGeneralizationArgument updateArgument) {
       updateArgument.isSubstitutable().ifPresent(arg -> {
          semanticElement.setIsSubstitutable(arg);
+      });
+
+      updateArgument.generalId().ifPresent(arg -> {
+         semanticElement.setGeneral(semanticElementAccessor.getElement(arg, Classifier.class).get());
+      });
+
+      updateArgument.specificId().ifPresent(arg -> {
+         semanticElement.setSpecific(semanticElementAccessor.getElement(arg, Classifier.class).get());
       });
    }
 

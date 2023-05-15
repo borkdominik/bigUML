@@ -10,6 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.realization;
 
+import org.eclipse.uml2.uml.NamedElement;
 import org.eclipse.uml2.uml.Realization;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
@@ -37,6 +38,16 @@ public final class UpdateRealizationSemanticCommand
 
       updateArgument.visibilityKind().ifPresent(arg -> {
          semanticElement.setVisibility(arg);
+      });
+
+      updateArgument.clientIds().ifPresent(arg -> {
+         semanticElement.getClients().clear();
+         semanticElement.getClients().addAll(semanticElementAccessor.getElements(arg, NamedElement.class));
+      });
+
+      updateArgument.supplierIds().ifPresent(arg -> {
+         semanticElement.getSuppliers().clear();
+         semanticElement.getSuppliers().addAll(semanticElementAccessor.getElements(arg, NamedElement.class));
       });
    }
 

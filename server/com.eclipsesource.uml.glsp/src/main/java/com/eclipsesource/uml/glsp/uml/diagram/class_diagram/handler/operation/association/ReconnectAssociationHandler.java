@@ -10,7 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.association;
 
-import java.util.List;
+import java.util.Set;
 
 import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.glsp.server.operations.ReconnectEdgeOperation;
@@ -29,7 +29,8 @@ public final class ReconnectAssociationHandler extends BaseReconnectEdgeHandler<
       final Type target) {
       return UpdateAssociationContribution.create(element,
          new UpdateAssociationArgument.Builder()
-            .endTypeIds(List.of(idGenerator.getOrCreateId(source), idGenerator.getOrCreateId(target))).get());
+            .endTypes(Set.of(source, target), idGenerator)
+            .get());
    }
 
 }

@@ -11,6 +11,7 @@
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.abstraction;
 
 import org.eclipse.uml2.uml.Abstraction;
+import org.eclipse.uml2.uml.NamedElement;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.BaseUpdateSemanticElementCommand;
@@ -36,6 +37,16 @@ public final class UpdateAbstractionSemanticCommand
 
       updateArgument.visibilityKind().ifPresent(arg -> {
          semanticElement.setVisibility(arg);
+      });
+
+      updateArgument.clientIds().ifPresent(arg -> {
+         semanticElement.getClients().clear();
+         semanticElement.getClients().addAll(semanticElementAccessor.getElements(arg, NamedElement.class));
+      });
+
+      updateArgument.supplierIds().ifPresent(arg -> {
+         semanticElement.getSuppliers().clear();
+         semanticElement.getSuppliers().addAll(semanticElementAccessor.getElements(arg, NamedElement.class));
       });
    }
 

@@ -148,4 +148,10 @@
   <elements xsi:type="notation:Edge">
     <semanticElement elementId="_ItM-INIcEe2rY5KN6ehSig"/>
   </elements>
+  <elements xsi:type="notation:Edge">
+    <semanticElement elementId="_MgRgcPM0Ee2LTeDDPAdS9g"/>
+  </elements>
+  <elements xsi:type="notation:Edge">
+    <semanticElement elementId="_-xOu0PM5Ee2JJr9PqFK6Tw"/>
+  </elements>
 </unotation:UmlDiagram>

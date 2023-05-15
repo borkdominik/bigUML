@@ -53,6 +53,8 @@ import com.eclipsesource.uml.glsp.core.handler.operation.create.UmlCreateEdgeOpe
 import com.eclipsesource.uml.glsp.core.handler.operation.create.UmlCreateNodeOperationHandler;
 import com.eclipsesource.uml.glsp.core.handler.operation.delete.DiagramDeleteHandlerRegistry;
 import com.eclipsesource.uml.glsp.core.handler.operation.delete.UmlDeleteOperationHandler;
+import com.eclipsesource.uml.glsp.core.handler.operation.reconnect_edge.DiagramReconnectEdgeHandlerRegistry;
+import com.eclipsesource.uml.glsp.core.handler.operation.reconnect_edge.UmlReconnectEdgeOperationHandler;
 import com.eclipsesource.uml.glsp.core.handler.operation.update.DiagramUpdateHandlerRegistry;
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UmlUpdateOperationHandler;
 import com.eclipsesource.uml.glsp.core.manifest.CoreManifest;
@@ -97,6 +99,7 @@ public class UmlDiagramModule extends EMSGLSPNotationDiagramModule {
       bind(DiagramLabelEditMapperRegistry.class).in(Singleton.class);
       bind(DiagramUpdateHandlerRegistry.class).in(Singleton.class);
       bind(DiagramLabelEditValidatorRegistry.class).in(Singleton.class);
+      bind(DiagramReconnectEdgeHandlerRegistry.class).in(Singleton.class);
    }
 
    @Override
@@ -204,6 +207,7 @@ public class UmlDiagramModule extends EMSGLSPNotationDiagramModule {
       bindings.add(UmlCreateEdgeOperationHandler.class);
       bindings.add(UmlDeleteOperationHandler.class);
       bindings.add(UmlUpdateOperationHandler.class);
+      bindings.add(UmlReconnectEdgeOperationHandler.class);
    }
 
    @Override

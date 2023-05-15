@@ -10,6 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.eclipse.uml2.uml.VisibilityKind;
@@ -20,6 +21,7 @@ public final class UpdateAssociationArgument implements EmbeddedCodec.JsonEncoda
    private String name;
    private String label;
    private VisibilityKind visibilityKind;
+   private List<String> endTypeIds;
 
    public Optional<String> name() {
       return Optional.ofNullable(name);
@@ -31,6 +33,10 @@ public final class UpdateAssociationArgument implements EmbeddedCodec.JsonEncoda
 
    public Optional<VisibilityKind> visibilityKind() {
       return Optional.ofNullable(visibilityKind);
+   }
+
+   public Optional<List<String>> endTypeIds() {
+      return Optional.ofNullable(endTypeIds);
    }
 
    public static final class Builder {
@@ -48,6 +54,11 @@ public final class UpdateAssociationArgument implements EmbeddedCodec.JsonEncoda
 
       public Builder visibilityKind(final VisibilityKind value) {
          argument.visibilityKind = value;
+         return this;
+      }
+
+      public Builder endTypeIds(final List<String> value) {
+         argument.endTypeIds = value;
          return this;
       }
 

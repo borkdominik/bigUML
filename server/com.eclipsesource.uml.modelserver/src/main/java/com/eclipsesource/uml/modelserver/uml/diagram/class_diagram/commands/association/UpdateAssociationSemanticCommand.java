@@ -11,6 +11,8 @@
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.association;
 
 import org.eclipse.uml2.uml.Association;
+import org.eclipse.uml2.uml.AttributeOwner;
+import org.eclipse.uml2.uml.Type;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.BaseUpdateSemanticElementCommand;
@@ -36,6 +38,26 @@ public final class UpdateAssociationSemanticCommand
 
       updateArgument.visibilityKind().ifPresent(arg -> {
          semanticElement.setVisibility(arg);
+      });
+
+      updateArgument.endTypeIds().ifPresent(arg -> {
+         var oldMemberEnds = semanticElement.getMemberEnds();
+         var oldSourceProperty = oldMemberEnds.get(0);
+         var oldSource = (AttributeOwner) oldSourceProperty.getOwner();
+         var oldTargetProperty = oldMemberEnds.get(1);
+         var oldTarget = (AttributeOwner) oldTargetProperty.getOwner();
+
+         var elements = semanticElementAccessor.getElements(arg.toArray(new String[0]), Type.class);
+         var source = (Type & AttributeOwner) elements.get(0);
+         var target = (Type & AttributeOwner) elements.get(1);
+
+         oldSource.getOwnedAttributes().remove(oldSourceProperty);
+         oldSourceProperty.setType(target);
+         source.getOwnedAttributes().add(oldSourceProperty);
+
+         oldTarget.getOwnedAttributes().remove(oldTargetProperty);
+         oldTargetProperty.setType(source);
+         target.getOwnedAttributes().add(oldTargetProperty);
       });
    }
 

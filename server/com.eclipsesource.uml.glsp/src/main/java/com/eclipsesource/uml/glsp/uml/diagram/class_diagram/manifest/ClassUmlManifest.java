@@ -15,6 +15,7 @@ import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramCre
 import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramDeleteHandlerContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramLabelEditMapperContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramLabelEditValidatorContribution;
+import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramReconnectEdgeHandlerContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramUpdateHandlerContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.SuffixIdAppenderContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.glsp.ActionHandlerContribution;
@@ -103,6 +104,7 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.as
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.association.CreateAssociationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.association.CreateCompositionHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.association.DeleteAssociationHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.association.ReconnectAssociationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.association.UpdateAssociationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.data_type.CreateDataTypeHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.data_type.DeleteDataTypeHandler;
@@ -165,7 +167,8 @@ public final class ClassUmlManifest extends DiagramManifest
    implements DiagramCreateHandlerContribution,
    DiagramDeleteHandlerContribution, DiagramLabelEditMapperContribution, SuffixIdAppenderContribution,
    DiagramElementPropertyMapperContribution, DiagramUpdateHandlerContribution,
-   ClientActionContribution, ActionHandlerContribution, DiagramLabelEditValidatorContribution {
+   ClientActionContribution, ActionHandlerContribution, DiagramLabelEditValidatorContribution,
+   DiagramReconnectEdgeHandlerContribution {
 
    @Override
    public String id() {
@@ -351,5 +354,9 @@ public final class ClassUmlManifest extends DiagramManifest
          contribution.addBinding().to(BlankLabelEditValidator.class);
          contribution.addBinding().to(PropertyLabelEditValidator.class);
       }));
+
+      contributeDiagramReconnectEdgeHandlers((contribution) -> {
+         contribution.addBinding().to(ReconnectAssociationHandler.class);
+      });
    }
 }

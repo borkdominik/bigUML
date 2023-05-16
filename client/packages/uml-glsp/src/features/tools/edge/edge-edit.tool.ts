@@ -230,6 +230,10 @@ class EdgeEditListener extends DragAwareMouseListener implements SelectionListen
 
     override mouseUp(target: SModelElement, event: MouseEvent): Action[] {
         const result = super.mouseUp(target, event);
+        if (this.newConnectable === undefined) {
+            this.mouseOver(target, event);
+        }
+
         if (!this.isReadyToReconnect() && !this.isReadyToReroute()) {
             return result;
         }
@@ -258,12 +262,12 @@ class EdgeEditListener extends DragAwareMouseListener implements SelectionListen
         if (this.edge && this.isReconnecting()) {
             const currentTarget = findParentByFeature(target, isConnectable);
             if (!this.newConnectable || currentTarget !== this.newConnectable) {
-                this.setNewConnectable(currentTarget);
                 if (currentTarget) {
                     if (
                         (this.reconnectMode === 'NEW_SOURCE' && currentTarget.canConnect(this.edge, 'source')) ||
                         (this.reconnectMode === 'NEW_TARGET' && currentTarget.canConnect(this.edge, 'target'))
                     ) {
+                        this.setNewConnectable(currentTarget);
                         this.tool.dispatchFeedback([cursorFeedbackAction(CursorCSS.EDGE_RECONNECT)]);
                         return [];
                     }

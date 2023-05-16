@@ -10,6 +10,8 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.interface_realization;
 
+import org.eclipse.uml2.uml.BehavioredClassifier;
+import org.eclipse.uml2.uml.Interface;
 import org.eclipse.uml2.uml.InterfaceRealization;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
@@ -37,6 +39,17 @@ public final class UpdateInterfaceRealizationSemanticCommand
 
       updateArgument.visibilityKind().ifPresent(arg -> {
          semanticElement.setVisibility(arg);
+      });
+
+      updateArgument.implementingClassifierId().ifPresent(arg -> {
+         semanticElement
+            .setImplementingClassifier(semanticElementAccessor.getElement(arg, BehavioredClassifier.class).get());
+      });
+
+      updateArgument.contractId().ifPresent(arg -> {
+         semanticElement
+            .setContract(semanticElementAccessor.getElement(arg, Interface.class).get());
+
       });
    }
 

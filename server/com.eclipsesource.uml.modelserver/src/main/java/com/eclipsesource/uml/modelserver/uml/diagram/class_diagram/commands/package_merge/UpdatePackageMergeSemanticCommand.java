@@ -10,6 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.package_merge;
 
+import org.eclipse.uml2.uml.Package;
 import org.eclipse.uml2.uml.PackageMerge;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
@@ -26,6 +27,18 @@ public final class UpdatePackageMergeSemanticCommand
 
    @Override
    protected void updateSemanticElement(final PackageMerge semanticElement,
-      final UpdatePackageMergeArgument updateArgument) {}
+      final UpdatePackageMergeArgument updateArgument) {
+
+      updateArgument.nearestPackageId().ifPresent(arg -> {
+         semanticElement.getNearestPackage().getPackageMerges().remove(semanticElement);
+
+         var nearestPackage = semanticElementAccessor.getElement(arg, Package.class).get();
+         nearestPackage.getPackageMerges().add(semanticElement);
+      });
+
+      updateArgument.mergedPackageId().ifPresent(arg -> {
+         semanticElement.setMergedPackage(semanticElementAccessor.getElement(arg, Package.class).get());
+      });
+   }
 
 }

@@ -11,6 +11,7 @@
 package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel;
 
 import org.eclipse.glsp.graph.GEdge;
+import org.eclipse.glsp.graph.builder.impl.GArguments;
 import org.eclipse.glsp.graph.builder.impl.GEdgeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.Generalization;
@@ -35,7 +36,8 @@ public final class GeneralizationEdgeMapper extends BaseGEdgeMapper<Generalizati
          .addCssClass(CoreCSS.Marker.TRIANGLE_EMPTY.end())
          .sourceId(specificId)
          .targetId(generalId)
-         .routerKind(GConstants.RouterKind.POLYLINE);
+         .routerKind(GConstants.RouterKind.POLYLINE)
+         .addArgument(GArguments.edgePadding(10));
 
       applyEdgeNotation(source, builder);
 

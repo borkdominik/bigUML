@@ -10,7 +10,7 @@ import { Action, FeedbackActionDispatcher, IFeedbackEmitter } from '@eclipse-gls
 import { injectable } from 'inversify';
 
 @injectable()
-export class FixedFeedbackActionDispatcher extends FeedbackActionDispatcher {
+export class UmlFeedbackActionDispatcher extends FeedbackActionDispatcher {
     constructor() {
         super();
         // overwrite private member "getMessage" 🙀

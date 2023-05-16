@@ -11,7 +11,11 @@
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.abstraction;
 
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
+import org.eclipse.glsp.server.emf.EMFIdGenerator;
+import org.eclipse.uml2.uml.NamedElement;
 import org.eclipse.uml2.uml.VisibilityKind;
 
 import com.eclipsesource.uml.modelserver.shared.codec.codecs.EmbeddedCodec;
@@ -20,6 +24,8 @@ public final class UpdateAbstractionArgument implements EmbeddedCodec.JsonEncoda
    private String name;
    private String label;
    private VisibilityKind visibilityKind;
+   private Set<String> clientIds;
+   private Set<String> supplierIds;
 
    public Optional<String> name() {
       return Optional.ofNullable(name);
@@ -31,6 +37,14 @@ public final class UpdateAbstractionArgument implements EmbeddedCodec.JsonEncoda
 
    public Optional<VisibilityKind> visibilityKind() {
       return Optional.ofNullable(visibilityKind);
+   }
+
+   public Optional<Set<String>> clientIds() {
+      return Optional.ofNullable(clientIds);
+   }
+
+   public Optional<Set<String>> supplierIds() {
+      return Optional.ofNullable(supplierIds);
    }
 
    public static final class Builder {
@@ -48,6 +62,16 @@ public final class UpdateAbstractionArgument implements EmbeddedCodec.JsonEncoda
 
       public Builder visibilityKind(final VisibilityKind value) {
          argument.visibilityKind = value;
+         return this;
+      }
+
+      public Builder clients(final Set<NamedElement> value, final EMFIdGenerator id) {
+         argument.clientIds = value.stream().map(v -> id.getOrCreateId(v)).collect(Collectors.toUnmodifiableSet());
+         return this;
+      }
+
+      public Builder suppliers(final Set<NamedElement> value, final EMFIdGenerator id) {
+         argument.supplierIds = value.stream().map(v -> id.getOrCreateId(v)).collect(Collectors.toUnmodifiableSet());
          return this;
       }
 

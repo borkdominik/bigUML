@@ -10,6 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.substitution;
 
+import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.Substitution;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
@@ -37,6 +38,14 @@ public final class UpdateSubstitutionSemanticCommand
 
       updateArgument.visibilityKind().ifPresent(arg -> {
          semanticElement.setVisibility(arg);
+      });
+
+      updateArgument.substitutedClassifierId().ifPresent(arg -> {
+         semanticElement.setSubstitutingClassifier(semanticElementAccessor.getElement(arg, Classifier.class).get());
+      });
+
+      updateArgument.contractId().ifPresent(arg -> {
+         semanticElement.setContract(semanticElementAccessor.getElement(arg, Classifier.class).get());
       });
    }
 

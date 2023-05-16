@@ -11,9 +11,9 @@
 package com.eclipsesource.uml.modelserver.shared.extension;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -56,10 +56,16 @@ public final class SemanticElementAccessor {
    public <T> List<T> getElements(
       final String[] semanticElementIds,
       final Class<T> type) {
+      return this.getElements(Set.of(semanticElementIds), type);
+   }
+
+   public <T> List<T> getElements(
+      final Set<String> semanticElementIds,
+      final Class<T> type) {
 
       var elements = new ArrayList<T>();
 
-      Arrays.asList(semanticElementIds).stream().map(semanticElementId -> {
+      semanticElementIds.stream().map(semanticElementId -> {
          var mapped = getElement(semanticElementId, type);
          return mapped;
       }).forEach(element -> {

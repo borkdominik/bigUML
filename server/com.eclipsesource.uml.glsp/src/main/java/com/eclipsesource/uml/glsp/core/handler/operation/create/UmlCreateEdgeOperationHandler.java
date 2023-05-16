@@ -21,10 +21,9 @@ import com.google.inject.Inject;
 public class UmlCreateEdgeOperationHandler extends EMSOperationHandler<CreateEdgeOperation> {
 
    @Inject
-   private DiagramCreateHandlerRegistry registry;
-
+   protected DiagramCreateHandlerRegistry registry;
    @Inject
-   private UmlModelState modelState;
+   protected UmlModelState modelState;
 
    @Override
    public void executeOperation(final CreateEdgeOperation operation) {

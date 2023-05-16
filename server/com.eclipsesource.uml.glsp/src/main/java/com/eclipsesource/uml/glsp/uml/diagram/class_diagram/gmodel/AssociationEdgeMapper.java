@@ -11,6 +11,7 @@
 package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel;
 
 import org.eclipse.glsp.graph.GEdge;
+import org.eclipse.glsp.graph.builder.impl.GArguments;
 import org.eclipse.glsp.graph.builder.impl.GEdgeBuilder;
 import org.eclipse.glsp.graph.builder.impl.GEdgePlacementBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
@@ -32,7 +33,8 @@ public final class AssociationEdgeMapper extends BaseGEdgeMapper<Association, GE
       var builder = new GEdgeBuilder(UmlClass_Association.typeId())
          .id(idGenerator.getOrCreateId(source))
          .addCssClass(CoreCSS.EDGE)
-         .routerKind(GConstants.RouterKind.POLYLINE);
+         .routerKind(GConstants.RouterKind.POLYLINE)
+         .addArgument(GArguments.edgePadding(10));
 
       applyName(source, builder);
       applyMemberEnds(source, builder);

@@ -12,6 +12,8 @@ package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.sub
 
 import java.util.Optional;
 
+import org.eclipse.glsp.server.emf.EMFIdGenerator;
+import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.VisibilityKind;
 
 import com.eclipsesource.uml.modelserver.shared.codec.codecs.EmbeddedCodec;
@@ -20,6 +22,8 @@ public final class UpdateSubstitutionArgument implements EmbeddedCodec.JsonEncod
    private String name;
    private String label;
    private VisibilityKind visibilityKind;
+   private String substitutedClassifierId;
+   private String contractId;
 
    public Optional<String> name() {
       return Optional.ofNullable(name);
@@ -31,6 +35,14 @@ public final class UpdateSubstitutionArgument implements EmbeddedCodec.JsonEncod
 
    public Optional<VisibilityKind> visibilityKind() {
       return Optional.ofNullable(visibilityKind);
+   }
+
+   public Optional<String> substitutedClassifierId() {
+      return Optional.ofNullable(substitutedClassifierId);
+   }
+
+   public Optional<String> contractId() {
+      return Optional.ofNullable(contractId);
    }
 
    public static final class Builder {
@@ -48,6 +60,16 @@ public final class UpdateSubstitutionArgument implements EmbeddedCodec.JsonEncod
 
       public Builder visibilityKind(final VisibilityKind value) {
          argument.visibilityKind = value;
+         return this;
+      }
+
+      public Builder substitutedClassifier(final Classifier value, final EMFIdGenerator id) {
+         argument.substitutedClassifierId = id.getOrCreateId(value);
+         return this;
+      }
+
+      public Builder contract(final Classifier value, final EMFIdGenerator id) {
+         argument.contractId = id.getOrCreateId(value);
          return this;
       }
 

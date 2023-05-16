@@ -15,6 +15,7 @@ import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramCre
 import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramDeleteHandlerContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramLabelEditMapperContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramLabelEditValidatorContribution;
+import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramReconnectEdgeHandlerContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramUpdateHandlerContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.SuffixIdAppenderContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.glsp.ActionHandlerContribution;
@@ -98,17 +99,20 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.action.Reque
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.action.SetTypeInformationAction;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.abstraction.CreateAbstractionHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.abstraction.DeleteAbstractionHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.abstraction.ReconnectAbstractionHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.abstraction.UpdateAbstractionHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.association.CreateAggregationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.association.CreateAssociationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.association.CreateCompositionHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.association.DeleteAssociationHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.association.ReconnectAssociationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.association.UpdateAssociationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.data_type.CreateDataTypeHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.data_type.DeleteDataTypeHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.data_type.UpdateDataTypeHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.dependency.CreateDependencyHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.dependency.DeleteDependencyHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.dependency.ReconnectDependencyHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.dependency.UpdateDependencyHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.enumeration.CreateEnumerationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.enumeration.DeleteEnumerationHandler;
@@ -118,18 +122,22 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.en
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.enumeration_literal.UpdateEnumerationLiteralHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.generalization.CreateGeneralizationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.generalization.DeleteGeneralizationHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.generalization.ReconnectGeneralizationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.generalization.UpdateGeneralizationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.interface_realization.CreateInterfaceRealizationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.interface_realization.DeleteInterfaceRealizationHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.interface_realization.ReconnectInterfaceRealizationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.interface_realization.UpdateInterfaceRealizationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.operation.CreateOperationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.operation.DeleteOperationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.operation.UpdateOperationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.package_import.CreatePackageImportHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.package_import.DeletePackageImportHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.package_import.ReconnectPackageImportHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.package_import.UpdatePackageImportHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.package_merge.CreatePackageMergeHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.package_merge.DeletePackageMergeHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.package_merge.ReconnectPackageMergeHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.package_merge.UpdatePackageMergeHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.parameter.CreateParameterHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.parameter.DeleteParameterHandler;
@@ -142,9 +150,11 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.pr
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.property.UpdatePropertyHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.realization.CreateRealizationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.realization.DeleteRealizationHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.realization.ReconnectRealizationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.realization.UpdateRealizationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.substitution.CreateSubstitutionHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.substitution.DeleteSubstitutionHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.substitution.ReconnectSubstitutionHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.substitution.UpdateSubstitutionHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.uclass.CreateAbstractClassHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.uclass.CreateClassHandler;
@@ -158,6 +168,7 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.up
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.upackage.UpdatePackageHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.usage.CreateUsageHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.usage.DeleteUsageHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.usage.ReconnectUsageHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.usage.UpdateUsageHandler;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 
@@ -165,7 +176,8 @@ public final class ClassUmlManifest extends DiagramManifest
    implements DiagramCreateHandlerContribution,
    DiagramDeleteHandlerContribution, DiagramLabelEditMapperContribution, SuffixIdAppenderContribution,
    DiagramElementPropertyMapperContribution, DiagramUpdateHandlerContribution,
-   ClientActionContribution, ActionHandlerContribution, DiagramLabelEditValidatorContribution {
+   ClientActionContribution, ActionHandlerContribution, DiagramLabelEditValidatorContribution,
+   DiagramReconnectEdgeHandlerContribution {
 
    @Override
    public String id() {
@@ -351,5 +363,18 @@ public final class ClassUmlManifest extends DiagramManifest
          contribution.addBinding().to(BlankLabelEditValidator.class);
          contribution.addBinding().to(PropertyLabelEditValidator.class);
       }));
+
+      contributeDiagramReconnectEdgeHandlers((contribution) -> {
+         contribution.addBinding().to(ReconnectAbstractionHandler.class);
+         contribution.addBinding().to(ReconnectAssociationHandler.class);
+         contribution.addBinding().to(ReconnectDependencyHandler.class);
+         contribution.addBinding().to(ReconnectGeneralizationHandler.class);
+         contribution.addBinding().to(ReconnectInterfaceRealizationHandler.class);
+         contribution.addBinding().to(ReconnectPackageImportHandler.class);
+         contribution.addBinding().to(ReconnectPackageMergeHandler.class);
+         contribution.addBinding().to(ReconnectRealizationHandler.class);
+         contribution.addBinding().to(ReconnectSubstitutionHandler.class);
+         contribution.addBinding().to(ReconnectUsageHandler.class);
+      });
    }
 }

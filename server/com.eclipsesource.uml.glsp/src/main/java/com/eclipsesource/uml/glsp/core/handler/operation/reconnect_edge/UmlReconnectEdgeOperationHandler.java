@@ -44,7 +44,7 @@ public class UmlReconnectEdgeOperationHandler extends EMSOperationHandler<Reconn
       var modelId = idGenerator.getOrCreateId(modelState.getSemanticModel());
       if (operation.getSourceElementId().equals(modelId) || operation.getTargetElementId().equals(modelId)) {
          // client tool failure, do nothing
-         LOGGER.error("SourceId or targetId was equal to modelId");
+         LOGGER.debug("SourceId or targetId was equal to modelId");
          return;
       }
 

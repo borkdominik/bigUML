@@ -28,6 +28,7 @@ import {
     GridSnapper,
     LogLevel,
     overrideViewerOptions,
+    toolFeedbackModule,
     TYPES
 } from '@eclipse-glsp/client';
 import toolPaletteModule from '@eclipse-glsp/client/lib/features/tool-palette/di.config';
@@ -43,7 +44,7 @@ import { initializationModule, IOnceModelInitialized } from './features/initiali
 import outlineModule from './features/outline/di.config';
 import propertyPaletteModule from './features/property-palette/di.config';
 import { themeModule } from './features/theme/di.config';
-import { FixedFeedbackActionDispatcher } from './features/tool-feedback/feedback-action-dispatcher';
+import { umlToolFeedbackModule } from './features/tool-feedback/di.config';
 import umlToolPaletteModule from './features/tool-palette/di.config';
 import { UmlFreeFormLayouter } from './graph/layout/uml-freeform.layout';
 import { SVGIdCreatorService } from './graph/svg-id-creator.service';
@@ -61,7 +62,6 @@ export default function createContainer(widgetId: string): Container {
 
         bind(TYPES.ISnapper).to(GridSnapper);
         rebind(TYPES.ICopyPasteHandler).to(CustomCopyPasteHandler);
-        rebind(TYPES.IFeedbackActionDispatcher).to(FixedFeedbackActionDispatcher).inSingletonScope();
 
         rebind(EditLabelUI).to(EditLabelUIAutocomplete);
 
@@ -82,13 +82,15 @@ export default function createContainer(widgetId: string): Container {
         });
     });
 
-    const container = createDiagramContainer(coreDiagramModule, { exclude: toolPaletteModule });
-
-    container.load(
+    const container = createDiagramContainer(
+        { exclude: toolPaletteModule },
+        { exclude: toolFeedbackModule },
+        coreDiagramModule,
         initializationModule,
         themeModule,
         editorPanelModule,
         umlToolPaletteModule,
+        umlToolFeedbackModule,
         outlineModule,
         propertyPaletteModule,
         ...umlDiagramModules

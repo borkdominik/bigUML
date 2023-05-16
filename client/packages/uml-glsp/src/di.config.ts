@@ -29,6 +29,7 @@ import {
     LogLevel,
     overrideViewerOptions,
     toolFeedbackModule,
+    toolsModule,
     TYPES
 } from '@eclipse-glsp/client';
 import toolPaletteModule from '@eclipse-glsp/client/lib/features/tool-palette/di.config';
@@ -46,6 +47,7 @@ import propertyPaletteModule from './features/property-palette/di.config';
 import { themeModule } from './features/theme/di.config';
 import { umlToolFeedbackModule } from './features/tool-feedback/di.config';
 import umlToolPaletteModule from './features/tool-palette/di.config';
+import { umlToolsModule } from './features/tools/di.config';
 import { UmlFreeFormLayouter } from './graph/layout/uml-freeform.layout';
 import { SVGIdCreatorService } from './graph/svg-id-creator.service';
 import { UmlGraphProjectionView } from './graph/uml-graph-projection.view';
@@ -85,12 +87,14 @@ export default function createContainer(widgetId: string): Container {
     const container = createDiagramContainer(
         { exclude: toolPaletteModule },
         { exclude: toolFeedbackModule },
+        { exclude: toolsModule },
         coreDiagramModule,
         initializationModule,
         themeModule,
         editorPanelModule,
         umlToolPaletteModule,
         umlToolFeedbackModule,
+        umlToolsModule,
         outlineModule,
         propertyPaletteModule,
         ...umlDiagramModules

@@ -18,9 +18,13 @@
       "problemMatcher": []
     },
     {
-      "label": "Start Browser Backend and Server Jars",
+      "label": "Build theia",
       "type": "shell",
-      "command": "yarn start",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "command": "yarn prepare:theia",
       "presentation": {
         "reveal": "always",
         "panel": "new"
@@ -28,9 +32,13 @@
       "problemMatcher": []
     },
     {
-      "label": "Start Browser Backend in Debug Mode (expects running Server instances)",
+      "label": "Build vscode",
       "type": "shell",
-      "command": "yarn start:debug",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "command": "yarn prepare:vscode",
       "presentation": {
         "reveal": "always",
         "panel": "new"
@@ -49,10 +57,52 @@
       "problemMatcher": []
     },
     {
-      "label": "Open Example in Browser",
+      "label": "Watch theia",
       "type": "shell",
-      "group": "test",
-      "command": "google-chrome 127.0.0.1:3000",
+      "group": "build",
+      "command": "yarn watch:theia",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Watch vscode",
+      "type": "shell",
+      "group": "build",
+      "command": "yarn watch:vscode",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Build server",
+      "type": "shell",
+      "group": "build",
+      "command": "yarn build:server",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Copy server",
+      "type": "shell",
+      "command": "yarn copy:server",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Start theia instance",
+      "type": "shell",
+      "command": "yarn start:theia:debug",
       "presentation": {
         "reveal": "always",
         "panel": "new"

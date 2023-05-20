@@ -12,6 +12,9 @@ package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.int
 
 import java.util.Optional;
 
+import org.eclipse.glsp.server.emf.EMFIdGenerator;
+import org.eclipse.uml2.uml.BehavioredClassifier;
+import org.eclipse.uml2.uml.Interface;
 import org.eclipse.uml2.uml.VisibilityKind;
 
 import com.eclipsesource.uml.modelserver.shared.codec.codecs.EmbeddedCodec;
@@ -20,6 +23,8 @@ public final class UpdateInterfaceRealizationArgument implements EmbeddedCodec.J
    private String name;
    private String label;
    private VisibilityKind visibilityKind;
+   private String implementingClassifierId;
+   private String contractId;
 
    public Optional<String> name() {
       return Optional.ofNullable(name);
@@ -31,6 +36,14 @@ public final class UpdateInterfaceRealizationArgument implements EmbeddedCodec.J
 
    public Optional<VisibilityKind> visibilityKind() {
       return Optional.ofNullable(visibilityKind);
+   }
+
+   public Optional<String> implementingClassifierId() {
+      return Optional.ofNullable(implementingClassifierId);
+   }
+
+   public Optional<String> contractId() {
+      return Optional.ofNullable(contractId);
    }
 
    public static final class Builder {
@@ -48,6 +61,16 @@ public final class UpdateInterfaceRealizationArgument implements EmbeddedCodec.J
 
       public Builder visibilityKind(final VisibilityKind value) {
          argument.visibilityKind = value;
+         return this;
+      }
+
+      public Builder implementingClassifier(final BehavioredClassifier value, final EMFIdGenerator id) {
+         argument.implementingClassifierId = id.getOrCreateId(value);
+         return this;
+      }
+
+      public Builder contract(final Interface value, final EMFIdGenerator id) {
+         argument.contractId = id.getOrCreateId(value);
          return this;
       }
 

@@ -13,6 +13,7 @@ package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel;
 import java.util.List;
 
 import org.eclipse.glsp.graph.GEdge;
+import org.eclipse.glsp.graph.builder.impl.GArguments;
 import org.eclipse.glsp.graph.builder.impl.GEdgeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.InterfaceRealization;
@@ -38,7 +39,8 @@ public final class InterfaceRealizationEdgeMapper extends BaseGEdgeMapper<Interf
          .addCssClass(CoreCSS.Marker.TRIANGLE_EMPTY.end())
          .sourceId(classifierId)
          .targetId(contractId)
-         .routerKind(GConstants.RouterKind.POLYLINE);
+         .routerKind(GConstants.RouterKind.POLYLINE)
+         .addArgument(GArguments.edgePadding(10));
 
       applyEdgeNotation(source, builder);
 

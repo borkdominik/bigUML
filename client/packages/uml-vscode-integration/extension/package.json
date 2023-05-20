@@ -1,7 +1,7 @@
 {
   "name": "umldiagram",
   "displayName": "bigUML Modeling Tool",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Graphical UML Editor",
   "categories": [
     "Programming Languages",
@@ -20,6 +20,22 @@
     "type": "git",
     "url": "https://github.com/borkdominik/bigUML"
   },
+  "license": "MIT",
+  "author": {
+    "name": "Business Informatics Group (TU Wien)"
+  },
+  "contributors": [
+    {
+      "name": "Business Informatics Group (TU Wien)",
+      "email": "dominik.bork@tuwien.ac.at",
+      "url": "https://me.big.tuwien.ac.at/"
+    },
+    {
+      "name": "Haydar Metin",
+      "email": "dev@haydar.metin.at",
+      "url": "https://me.big.tuwien.ac.at/"
+    }
+  ],
   "publisher": "BIGModelingTools",
   "main": "./lib/main",
   "files": [
@@ -177,6 +193,7 @@
   "dependencies": {
     "@borkdominik-biguml/uml-common": "*",
     "@borkdominik-biguml/uml-glsp": "*",
+    "@borkdominik-biguml/uml-integration": "*",
     "@borkdominik-biguml/uml-modelserver": "*",
     "@eclipse-glsp/vscode-integration": "next",
     "@vscode/codicons": "^0.0.25",

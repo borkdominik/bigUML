@@ -1,31 +1,25 @@
-/********************************************************************************
- * Copyright (c) 2021-2022 EclipseSource and others.
+/*********************************************************************************
+ * Copyright (c) 2023 borkdominik and others.
  *
  * This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v. 2.0 which is available at
- * http://www.eclipse.org/legal/epl-2.0.
+ * terms of the MIT License which is available at https://opensource.org/licenses/MIT.
  *
- * This Source Code may also be made available under the following Secondary
- * Licenses when the conditions for such availability set forth in the Eclipse
- * Public License v. 2.0 are satisfied: GNU General Public License, version 2
- * with the GNU Classpath Exception which is available at
- * https://www.gnu.org/software/classpath/license.html.
- *
- * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
- ********************************************************************************/
-
-import { ModelServerConfig } from '@borkdominik-biguml/uml-modelserver/lib/config';
+ * SPDX-License-Identifier: MIT
+ *********************************************************************************/
+import { ModelServerConfig } from '@borkdominik-biguml/uml-modelserver';
 import { Container, ContainerModule } from 'inversify';
 import * as vscode from 'vscode';
-import { FEATURE_TYPES, TYPES, VSCODE_TYPES } from './di.types';
+import { TYPES } from './di.types';
 import { ThemeIntegration } from './features/theme/theme-integration';
-import { UVGlspConnector } from './glsp/connection/uv-glsp-connector';
-import { UVGlspServer } from './glsp/connection/uv-glsp-server';
-import { GlspServerConfig } from './glsp/launcher/glsp-server-launcher';
+import { UVGlspConnector } from './glsp/uv-glsp-connector';
+import { UVGlspServer } from './glsp/uv-glsp-server';
 import { UVModelServerClient } from './modelserver/uv-modelserver.client';
+import { GlspServerConfig, glspServerModule } from './server/glsp-server.launcher';
+import { modelServerModule } from './server/modelserver.launcher';
+import { serverManagerModule } from './server/server.manager';
 import { CommandManager } from './vscode/command/command.manager';
 import { DisposableManager } from './vscode/disposable/disposable.manager';
-import { EditorProvider } from './vscode/editor/editor.provider';
+import { UmlDiagramEditorProvider } from './vscode/editor/editor.provider';
 import { NewFileCommand } from './vscode/new-file/new-file.command';
 import { NewFileCreator } from './vscode/new-file/new-file.creator';
 import { OutputChannel } from './vscode/output/output.channel';
@@ -39,44 +33,67 @@ export function createContainer(
         modelServerConfig: ModelServerConfig;
     }
 ): Container {
-    const vscodeModule = new ContainerModule((bind, unbind, isBound, rebind) => {
-        bind(TYPES.GlspServer).to(UVGlspServer).inSingletonScope();
-        bind(TYPES.GlspServerConfig).toConstantValue(options.glspServerConfig);
-
-        bind(TYPES.Connector).to(UVGlspConnector).inSingletonScope();
-
-        bind(TYPES.ModelServerClient).to(UVModelServerClient).inSingletonScope();
-        bind(TYPES.ModelServerConfig).toConstantValue(options.modelServerConfig);
-
-        bind(VSCODE_TYPES.CommandManager).to(CommandManager).inSingletonScope();
-
-        bind(NewFileCreator).toSelf().inSingletonScope();
-        bind(VSCODE_TYPES.Command).to(NewFileCommand);
-
-        bind(VSCODE_TYPES.DisposableManager).to(DisposableManager).inSingletonScope();
-        bind(VSCODE_TYPES.Disposable).toService(TYPES.ModelServerClient);
-        bind(VSCODE_TYPES.Disposable).toService(TYPES.GlspServer);
-        bind(VSCODE_TYPES.Disposable).toService(TYPES.Connector);
-
-        bind(VSCODE_TYPES.EditorProvider).to(EditorProvider).inSingletonScope();
-
-        bind(VSCODE_TYPES.OutputChannel).to(OutputChannel).inSingletonScope();
-
-        bind(Settings).toSelf().inSingletonScope();
-        bind(VSCODE_TYPES.Settings).toService(Settings);
-
-        bind(VSCODE_TYPES.Watcher).to(WorkspaceWatcher).inSingletonScope();
-        bind(VSCODE_TYPES.Watcher).toService(Settings);
-
-        bind(FEATURE_TYPES.Theme).to(ThemeIntegration).inSingletonScope();
-    });
-
     const container = new Container({
         skipBaseClassChecks: true
     });
 
-    container.bind(VSCODE_TYPES.ExtensionContext).toConstantValue(context);
-    container.load(vscodeModule);
+    container.bind(TYPES.ExtensionContext).toConstantValue(context);
+
+    const coreModule = new ContainerModule(bind => {
+        bind(TYPES.GlspServerConfig).toConstantValue(options.glspServerConfig);
+        bind(TYPES.ModelServerConfig).toConstantValue(options.modelServerConfig);
+
+        bind(CommandManager).toSelf().inSingletonScope();
+        bind(TYPES.CommandManager).toService(CommandManager);
+        bind(TYPES.RootInitialization).toService(CommandManager);
+
+        bind(DisposableManager).toSelf().inSingletonScope();
+        bind(TYPES.DisposableManager).toService(DisposableManager);
+        bind(TYPES.RootInitialization).toService(DisposableManager);
+
+        bind(UVGlspServer).toSelf().inSingletonScope();
+        bind(TYPES.GlspServer).toService(UVGlspServer);
+        bind(TYPES.Disposable).toService(UVGlspServer);
+
+        bind(UVGlspConnector).toSelf().inSingletonScope();
+        bind(TYPES.Connector).toService(UVGlspConnector);
+        bind(TYPES.Disposable).toService(UVGlspConnector);
+
+        bind(UVModelServerClient).toSelf().inSingletonScope();
+        bind(TYPES.ModelServerClient).toService(UVModelServerClient);
+        bind(TYPES.Disposable).toService(UVModelServerClient);
+        bind(TYPES.ServerManagerStateListener).toService(UVModelServerClient);
+
+        bind(NewFileCreator).toSelf().inSingletonScope();
+        bind(TYPES.Command).to(NewFileCommand);
+
+        bind(UmlDiagramEditorProvider).toSelf().inSingletonScope();
+        bind(TYPES.EditorProvider).toService(UmlDiagramEditorProvider);
+        bind(TYPES.RootInitialization).toService(UmlDiagramEditorProvider);
+        bind(TYPES.ServerManagerStateListener).toService(UmlDiagramEditorProvider);
+
+        bind(OutputChannel).toSelf().inSingletonScope();
+        bind(TYPES.OutputChannel).toService(OutputChannel);
+
+        bind(Settings).toSelf().inSingletonScope();
+        bind(TYPES.Settings).toService(Settings);
+        bind(TYPES.RootInitialization).toService(Settings);
+
+        bind(WorkspaceWatcher).toSelf().inSingletonScope();
+        bind(TYPES.RootInitialization).toService(WorkspaceWatcher);
+
+        bind(ThemeIntegration).toSelf().inSingletonScope();
+        bind(TYPES.Theme).toService(ThemeIntegration);
+        bind(TYPES.Disposable).toService(ThemeIntegration);
+        bind(TYPES.RootInitialization).toService(ThemeIntegration);
+    });
+
+    container.load(
+        coreModule,
+        modelServerModule(options.modelServerConfig),
+        glspServerModule(options.glspServerConfig),
+        serverManagerModule
+    );
 
     return container;
 }

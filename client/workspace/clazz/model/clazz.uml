@@ -67,7 +67,9 @@
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_VYNbEbK1Ee24ffphK9Na6g" value="1"/>
     </ownedAttribute>
   </packagedElement>
-  <packagedElement xmi:type="uml:Class" xmi:id="_Nbk7sLK1Ee24ffphK9Na6g" name="NewClass5"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="_Nbk7sLK1Ee24ffphK9Na6g" name="NewClass5">
+    <generalization xmi:id="_MgRgcPM0Ee2LTeDDPAdS9g" general="_EWMPELK2Ee24ffphK9Na6g"/>
+  </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="_O3oC8LK1Ee24ffphK9Na6g" memberEnd="_O3oC8bK1Ee24ffphK9Na6g _O3oqArK1Ee24ffphK9Na6g"/>
   <packagedElement xmi:type="uml:Association" xmi:id="_UahDwLK1Ee24ffphK9Na6g" memberEnd="_UahDwbK1Ee24ffphK9Na6g _UaiR4LK1Ee24ffphK9Na6g"/>
   <packagedElement xmi:type="uml:Association" xmi:id="_VYMM8LK1Ee24ffphK9Na6g" memberEnd="_VYMM8bK1Ee24ffphK9Na6g _VYM0ArK1Ee24ffphK9Na6g"/>

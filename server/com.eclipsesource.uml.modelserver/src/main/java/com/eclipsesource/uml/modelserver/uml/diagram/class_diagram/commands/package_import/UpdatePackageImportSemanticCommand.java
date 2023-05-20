@@ -10,6 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.package_import;
 
+import org.eclipse.uml2.uml.Package;
 import org.eclipse.uml2.uml.PackageImport;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
@@ -29,6 +30,17 @@ public final class UpdatePackageImportSemanticCommand
       final UpdatePackageImportArgument updateArgument) {
       updateArgument.visibilityKind().ifPresent(arg -> {
          semanticElement.setVisibility(arg);
+      });
+
+      updateArgument.nearestPackageId().ifPresent(arg -> {
+         semanticElement.getNearestPackage().getPackageImports().remove(semanticElement);
+
+         var nearestPackage = semanticElementAccessor.getElement(arg, Package.class).get();
+         nearestPackage.getPackageImports().add(semanticElement);
+      });
+
+      updateArgument.importedPackageId().ifPresent(arg -> {
+         semanticElement.setImportedPackage(semanticElementAccessor.getElement(arg, Package.class).get());
       });
    }
 

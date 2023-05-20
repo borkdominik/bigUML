@@ -53,17 +53,13 @@ Download and install the extension from the [VS Code Marketplace](https://market
 
 Get started with bigUML, learn fundementals, explore advanced topics or go through tutorials with our documentation.
 
-- [Getting Started](./docs/GettingStarted.md)
-- [Documentation](./docs/ReadMe.md)
-- [Tutorials](./docs/tutorial/ReadMe.md)
-
-Advanced Topics
-
-- Coming Soon
+- [Getting Started](./docs/getting-started.md)
+- [Documentation](./docs/README.md)
+- [Tutorials](./docs/tutorial/README.md.md)
 
 ## Development Setup
 
-Need help concerning the setup? Then go right to [Requirements](./docs/Requirements.md) and continue with [Getting Started](./docs/GettingStarted.md).
+Need help concerning the setup? Then go right to [Requirements](./docs/requirements.md) and continue with [Getting Started](./docs/getting-started.md).
 
 ## Issues
 
@@ -80,4 +76,4 @@ Contributions to the project are always welcome!
 - [Dominik Bork](https://github.com/borkdominik)
 - EclipseSource
 
-See [Contributors](./docs/Contributors.md) for the list of the previous contributors.
+See [Contributors](./docs/contributors.md) for the list of the previous contributors.

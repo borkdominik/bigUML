@@ -1,13 +1,11 @@
-/********************************************************************************
- * Copyright (c) 2021-2022 EclipseSource and others.
+/*********************************************************************************
+ * Copyright (c) 2023 borkdominik and others.
  *
  * This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v. 2.0 which is available at
- * https://www.eclipse.org/legal/epl-2.0, or the MIT License which is
- * available at https://opensource.org/licenses/MIT.
+ * terms of the MIT License which is available at https://opensource.org/licenses/MIT.
  *
- * SPDX-License-Identifier: EPL-2.0 OR MIT
- ********************************************************************************/
+ * SPDX-License-Identifier: MIT
+ *********************************************************************************/
 import 'balloon-css/balloon.min.css';
 
 import 'sprotty/css/sprotty.css';
@@ -29,7 +27,15 @@ import {
     configureModelElement,
     configureViewerOptions,
     createDiagramContainer,
-    overrideViewerOptions
+    EditLabelUI,
+    GLSPActionDispatcher,
+    GLSPGraph,
+    GridSnapper,
+    LogLevel,
+    overrideViewerOptions,
+    toolFeedbackModule,
+    toolsModule,
+    TYPES
 } from '@eclipse-glsp/client';
 import toolPaletteModule from '@eclipse-glsp/client/lib/features/tool-palette/di.config';
 import { DefaultTypes } from '@eclipse-glsp/protocol';
@@ -42,15 +48,19 @@ import {
     RouteType,
     load as loadLibavoidRouter
 } from 'sprotty-routing-libavoid';
+import { UMLActionDispatcher } from './base/action-dispatcher';
 import { FixedLogger } from './common/fixed-logger';
+import { UML_TYPES } from './di.types';
 import { CustomCopyPasteHandler, LastContainableElementTracker } from './features/copy-paste/copy-paste';
 import { EditLabelUIAutocomplete } from './features/edit-label';
 import editorPanelModule from './features/editor-panel/di.config';
+import { initializationModule, IOnceModelInitialized } from './features/initialization/di.config';
 import outlineModule from './features/outline/di.config';
 import propertyPaletteModule from './features/property-palette/di.config';
 import { themeModule } from './features/theme/di.config';
-import { FixedFeedbackActionDispatcher } from './features/tool-feedback/feedback-action-dispatcher';
+import { umlToolFeedbackModule } from './features/tool-feedback/di.config';
 import umlToolPaletteModule from './features/tool-palette/di.config';
+import { umlToolsModule } from './features/tools/di.config';
 import { UmlFreeFormLayouter } from './graph/layout/uml-freeform.layout';
 import { SVGIdCreatorService } from './graph/svg-id-creator.service';
 import { UmlGraphProjectionView } from './graph/uml-graph-projection.view';
@@ -63,10 +73,10 @@ export default function createContainer(widgetId: string): Container {
 
         rebind(TYPES.ILogger).to(FixedLogger).inSingletonScope();
         rebind(TYPES.LogLevel).toConstantValue(LogLevel.info);
+        rebind(GLSPActionDispatcher).to(UMLActionDispatcher).inSingletonScope();
 
         bind(TYPES.ISnapper).to(GridSnapper);
         rebind(TYPES.ICopyPasteHandler).to(CustomCopyPasteHandler);
-        rebind(TYPES.IFeedbackActionDispatcher).to(FixedFeedbackActionDispatcher).inSingletonScope();
 
         rebind(EditLabelUI).to(EditLabelUIAutocomplete);
 
@@ -94,11 +104,21 @@ export default function createContainer(widgetId: string): Container {
         });
     });
 
-    const container = createDiagramContainer(coreDiagramModule);
-
-    container.unload(toolPaletteModule);
-
-    container.load(themeModule, editorPanelModule, umlToolPaletteModule, outlineModule, propertyPaletteModule, ...umlDiagramModules);
+    const container = createDiagramContainer(
+        { exclude: toolPaletteModule },
+        { exclude: toolFeedbackModule },
+        { exclude: toolsModule },
+        coreDiagramModule,
+        initializationModule,
+        themeModule,
+        editorPanelModule,
+        umlToolPaletteModule,
+        umlToolFeedbackModule,
+        umlToolsModule,
+        outlineModule,
+        propertyPaletteModule,
+        ...umlDiagramModules
+    );
 
     overrideViewerOptions(container, {
         baseDiv: widgetId,
@@ -120,10 +140,19 @@ export default function createContainer(widgetId: string): Container {
         // allow or disallow moving edge end from center
         nudgeOrthogonalTouchingColinearSegments: false
     });
+    onceModelInitialized(container);
 
     return container;
 }
 
 export async function loadExtensions(): Promise<void> {
     await loadLibavoidRouter();
+}
+
+function onceModelInitialized(container: Container): void {
+    const actionDispatcher = container.get<GLSPActionDispatcher>(TYPES.IActionDispatcher);
+
+    actionDispatcher.onceModelInitialized().then(() => {
+        container.getAll<IOnceModelInitialized>(UML_TYPES.IOnceModelInitialized).forEach(t => t.onceModelInitialized());
+    });
 }

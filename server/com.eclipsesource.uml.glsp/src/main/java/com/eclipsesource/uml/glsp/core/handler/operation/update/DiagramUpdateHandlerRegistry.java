@@ -35,8 +35,8 @@ public class DiagramUpdateHandlerRegistry
 
          e.getValue().forEach(handler -> {
             var elementType = handler.getElementType();
-            var origin = handler.contextId();
-            register(RepresentationKey.of(representation, DoubleKey.of(elementType, origin)), handler);
+            var context = handler.contextId();
+            register(RepresentationKey.of(representation, DoubleKey.of(elementType, context)), handler);
          });
       });
 

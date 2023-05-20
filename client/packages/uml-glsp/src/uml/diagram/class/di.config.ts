@@ -1,14 +1,12 @@
-/********************************************************************************
- * Copyright (c) 2021 EclipseSource and others.
+/*********************************************************************************
+ * Copyright (c) 2023 borkdominik and others.
  *
  * This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v. 2.0 which is available at
- * https://www.eclipse.org/legal/epl-2.0, or the MIT License which is
- * available at https://opensource.org/licenses/MIT.
+ * terms of the MIT License which is available at https://opensource.org/licenses/MIT.
  *
- * SPDX-License-Identifier: EPL-2.0 OR MIT
- ********************************************************************************/
-import { PolylineEdgeView, SCompartmentView, SLabelView, configureModelElement, editFeature, selectFeature } from '@eclipse-glsp/client';
+ * SPDX-License-Identifier: MIT
+ *********************************************************************************/
+import { configureModelElement, GEdgeView, SCompartmentView, SLabelView, editFeature, selectFeature } from '@eclipse-glsp/client/lib';
 import { ContainerModule } from 'inversify';
 
 import { SEditableLabel } from '../../../graph';
@@ -32,19 +30,16 @@ export const umlClassDiagramModule = new ContainerModule((bind, unbind, isBound,
     configureModelElement(context, UmlClassTypes.PROPERTY_LABEL_MULTIPLICITY, SEditableLabel, SLabelView);
     configureModelElement(context, UmlClassTypes.PRIMITIVE_TYPE, NamedElement, NamedElementView);
 
-    // edit is disabled only if select is disabled too, however in sprotty 0.11 it wasn't so.
-    // is it expected behavior?
-    const disabledEdgeFeatures = [editFeature, selectFeature];
-    configureModelElement(context, UmlClassTypes.ABSTRACTION, UmlEdge, PolylineEdgeView, { disable: disabledEdgeFeatures });
-    configureModelElement(context, UmlClassTypes.ASSOCIATION, UmlEdge, PolylineEdgeView, { disable: disabledEdgeFeatures });
-    configureModelElement(context, UmlClassTypes.ASSOCIATION_AGGREGATION, UmlEdge, PolylineEdgeView, { disable: disabledEdgeFeatures });
-    configureModelElement(context, UmlClassTypes.ASSOCIATION_COMPOSITION, UmlEdge, PolylineEdgeView, { disable: disabledEdgeFeatures });
-    configureModelElement(context, UmlClassTypes.DEPENDENCY, UmlEdge, PolylineEdgeView, { disable: disabledEdgeFeatures });
-    configureModelElement(context, UmlClassTypes.INTERFACE_REALIZATION, UmlEdge, PolylineEdgeView, { disable: disabledEdgeFeatures });
-    configureModelElement(context, UmlClassTypes.GENERALIZATION, UmlEdge, PolylineEdgeView, { disable: disabledEdgeFeatures });
-    configureModelElement(context, UmlClassTypes.REALIZATION, UmlEdge, PolylineEdgeView, { disable: disabledEdgeFeatures });
-    configureModelElement(context, UmlClassTypes.SUBSTITUTION, UmlEdge, PolylineEdgeView, { disable: disabledEdgeFeatures });
-    configureModelElement(context, UmlClassTypes.USAGE, UmlEdge, PolylineEdgeView, { disable: disabledEdgeFeatures });
-    configureModelElement(context, UmlClassTypes.PACKAGE_IMPORT, UmlEdge, PolylineEdgeView, { disable: disabledEdgeFeatures });
-    configureModelElement(context, UmlClassTypes.PACKAGE_MERGE, UmlEdge, PolylineEdgeView, { disable: disabledEdgeFeatures });
+    configureModelElement(context, UmlClassTypes.ABSTRACTION, UmlEdge, GEdgeView, { disable: [editFeature, selectFeature] });
+    configureModelElement(context, UmlClassTypes.ASSOCIATION, UmlEdge, GEdgeView, { disable: [editFeature, selectFeature] });
+    configureModelElement(context, UmlClassTypes.ASSOCIATION_AGGREGATION, UmlEdge, GEdgeView, { disable: [editFeature, selectFeature] });
+    configureModelElement(context, UmlClassTypes.ASSOCIATION_COMPOSITION, UmlEdge, GEdgeView, { disable: [editFeature, selectFeature] });
+    configureModelElement(context, UmlClassTypes.DEPENDENCY, UmlEdge, GEdgeView, { disable: [editFeature, selectFeature] });
+    configureModelElement(context, UmlClassTypes.INTERFACE_REALIZATION, UmlEdge, GEdgeView, { disable: [editFeature, selectFeature] });
+    configureModelElement(context, UmlClassTypes.GENERALIZATION, UmlEdge, GEdgeView, { disable: [editFeature, selectFeature] });
+    configureModelElement(context, UmlClassTypes.REALIZATION, UmlEdge, GEdgeView, { disable: [editFeature, selectFeature] });
+    configureModelElement(context, UmlClassTypes.SUBSTITUTION, UmlEdge, GEdgeView, { disable: [editFeature, selectFeature] });
+    configureModelElement(context, UmlClassTypes.USAGE, UmlEdge, GEdgeView, { disable: [editFeature, selectFeature] });
+    configureModelElement(context, UmlClassTypes.PACKAGE_IMPORT, UmlEdge, GEdgeView, { disable: [editFeature, selectFeature] });
+    configureModelElement(context, UmlClassTypes.PACKAGE_MERGE, UmlEdge, GEdgeView, { disable: [editFeature, selectFeature] });
 });

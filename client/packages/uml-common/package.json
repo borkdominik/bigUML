@@ -1,6 +1,6 @@
 {
   "name": "@borkdominik-biguml/uml-common",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "UML-Common",
   "homepage": "https://github.com/borkdominik/bigUML",
   "bugs": "https://github.com/borkdominik/bigUML/issues",
@@ -8,7 +8,22 @@
     "type": "git",
     "url": "https://github.com/borkdominik/bigUML.git"
   },
-  "license": "(EPL-2.0 OR MIT)",
+  "license": "MIT",
+  "author": {
+    "name": "Business Informatics Group (TU Wien)"
+  },
+  "contributors": [
+    {
+      "name": "Business Informatics Group (TU Wien)",
+      "email": "dominik.bork@tuwien.ac.at",
+      "url": "https://me.big.tuwien.ac.at/"
+    },
+    {
+      "name": "Haydar Metin",
+      "email": "dev@haydar.metin.at",
+      "url": "https://me.big.tuwien.ac.at/"
+    }
+  ],
   "main": "lib/index",
   "files": [
     "lib",
@@ -17,7 +32,6 @@
   "scripts": {
     "build": "tsc -b && yarn run lint",
     "clean": "rimraf lib tsconfig.tsbuildinfo",
-    "icons": "tsx ./scripts/icons.ts",
     "lint": "eslint -c ./.eslintrc.js --ext .ts,.tsx ./src",
     "lint:fix": "eslint --fix -c ./.eslintrc.js --ext .ts,.tsx ./src",
     "prepare": "yarn run clean && yarn run build",

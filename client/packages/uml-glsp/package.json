@@ -16,7 +16,7 @@
     "resources"
   ],
   "scripts": {
-    "build": "tsc -b && yarn run lint && cp ../../node_modules/libavoid-js/dist/libavoid.wasm ./lib/libavoid.wasm",
+    "build": "tsc -b && yarn run lint && cp -f ../../node_modules/libavoid-js/dist/libavoid.wasm ./lib/libavoid.wasm",
     "clean": "rimraf lib tsconfig.tsbuildinfo",
     "icons": "tsx ./scripts/icons.ts",
     "lint": "eslint -c ./.eslintrc.js --ext .ts,.tsx ./src",

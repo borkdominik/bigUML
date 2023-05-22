@@ -7,7 +7,7 @@
 <h1 align="center">bigUML Modeling Tool</h1>
 
 <p align="center">
-  <strong>Editing UML diagrams in your IDE of choice is now possible.</strong>
+  <strong>Editing UML diagrams in VS Code and developing custom integrations for your IDE of choice is now possible.</strong>
 </p>
 
 <!-- DEMO -->
@@ -52,7 +52,7 @@
 
 ## UML
 
-The UML 2 specification currently consists of **8 Structure Diagrams** and **7 Behavior Diagrams**.
+The UML 2 specification currently consists of **7 Structure Diagrams** and **7 Behavior Diagrams**.
 
 ### Structure Diagrams
 
@@ -70,9 +70,10 @@ The UML 2 specification currently consists of **8 Structure Diagrams** and **7 B
 
 Get started with bigUML, learn fundamentals, explore advanced topics, or go through tutorials with our documentation.
 
+- [Changelog](./CHANGELOG.md)
 - [Getting Started](./docs/getting-started.md)
 - [Documentation](./docs/README.md)
-- [Tutorials](./docs/tutorial/README.md.md)
+- [Tutorials](./docs/tutorial/README.md)
 
 ## Development Setup
 

@@ -56,15 +56,15 @@ The UML 2 specification currently consists of **7 Structure Diagrams** and **7 B
 
 ### Structure Diagrams
 
-| Class                                                           | Component | Deployment | Object | Package | Profile | Composite |
-| --------------------------------------------------------------- | --------- | ---------- | ------ | ------- | ------- | --------- |
-| <span style="color:#7FB069;font-weight:bold">In progress</span> | -         | -          | -      | -       | -       | -         |
+| Class       | Component | Deployment | Object | Package | Profile | Composite |
+| ----------- | --------- | ---------- | ------ | ------- | ------- | --------- |
+| In progress | -         | -          | -      | -       | -       | -         |
 
 ### Behavior Diagrams
 
-| Use Case | Activity | State Machine | Sequence                                                                     | Communication                                                   | Interaction | Timing |
-| -------- | -------- | ------------- | ---------------------------------------------------------------------------- | --------------------------------------------------------------- | ----------- | ------ |
-| -        | -        | -             | <span style="color:#E6AA68;font-weight:bold">Contribution in progress</span> | <span style="color:#7FB069;font-weight:bold">In progress</span> | -           | -      |
+| Use Case | Activity | State Machine | Sequence                 | Communication | Interaction | Timing |
+| -------- | -------- | ------------- | ------------------------ | ------------- | ----------- | ------ |
+| -        | -        | -             | Contribution in progress | In progress   | -           | -      |
 
 ## Documentation
 
@@ -93,6 +93,12 @@ Do not hesitate to report a bug or to request a feature. Feel free to [open Issu
 - EclipseSource
 
 See [Contributors](./docs/contributors.md) for the list of the previous contributors.
+
+If you like our work, please feel free to [buy us a coffee](https://www.buymeacoffee.com/bigERtool) ☕️
+
+<a href="https://www.buymeacoffee.com/bigERtool" target="_blank">
+  <img src="https://www.buymeacoffee.com/assets/img/custom_images/yellow_img.png" alt="Logo" >
+</a>
 
 ## License
 

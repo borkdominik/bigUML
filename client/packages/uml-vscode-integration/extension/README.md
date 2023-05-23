@@ -25,7 +25,7 @@
 
 <div align="center">
 
-**[UML](#uml) •
+**[DIAGRAMS](#diagrams) •
 [REQUIREMENTS](#requirements) •
 [EXAMPLES](#examples)**
 
@@ -33,21 +33,15 @@
 
 </br>
 
-## UML
+## Diagrams
 
-The UML 2 specification currently consists of **7 Structure Diagrams** and **7 Behavior Diagrams**.
+Currently, **bigUML** supports the following UML diagram types:
 
-### Structure Diagrams
+-   Class Diagram
 
-| Class                                                           | Component | Deployment | Object | Package | Profile | Composite |
-| --------------------------------------------------------------- | --------- | ---------- | ------ | ------- | ------- | --------- |
-| <span style="color:#7FB069;font-weight:bold">In progress</span> | -         | -          | -      | -       | -       | -         |
+We are working on integrating more diagram types and will subsequently add them in future releases.
 
-### Behavior Diagrams
-
-| Use Case | Activity | State Machine | Sequence                                                                     | Communication                                                   | Interaction | Timing |
-| -------- | -------- | ------------- | ---------------------------------------------------------------------------- | --------------------------------------------------------------- | ----------- | ------ |
-| -        | -        | -             | <span style="color:#E6AA68;font-weight:bold">Contribution in progress</span> | <span style="color:#7FB069;font-weight:bold">In progress</span> | -           | -      |
+Get in touch if you want to contribute!
 
 ## Requirements
 
@@ -76,6 +70,18 @@ You can use the Tool Palette to create new nodes and edges. Afterward, you can r
 
 TODO GIF
 
+## Learn More
+
+For more information on how to use the tool, see the [bigUML Documentation](https://github.com/borkdominik/bigUML/tree/main/docs).
+
+Also check out the [GitHub repository](https://github.com/borkdominik/bigUML).
+
+If you like our work, please feel free to [buy us a coffee](https://www.buymeacoffee.com/bigERtool) ☕️
+
+<a href="https://www.buymeacoffee.com/bigERtool" target="_blank">
+  <img src="https://www.buymeacoffee.com/assets/img/custom_images/yellow_img.png" alt="Logo" >
+</a>
+
 </br>
 </br>
 </br>
@@ -87,7 +93,7 @@ TODO GIF
 </div>
 
 <p align="center">
-  Checkout our other cool tools.
+  Check out our other cool tools.
 </p>
 
 </br>

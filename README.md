@@ -12,7 +12,7 @@
 
 <!-- DEMO -->
 <p align="center">
-  <img src="./client/packages/uml-vscode-integration/extension/resources/biguml-vscode.png" alt="Demo" width="800" />
+  <img src="./client/packages/uml-vscode-integration/extension/resources/bigUML-demo.gif" alt="Demo" width="800" />
 </p>
 
 <!-- BADGES -->

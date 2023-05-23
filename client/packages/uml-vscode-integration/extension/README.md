@@ -7,7 +7,7 @@
 
 <!-- DEMO -->
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/13104167/232125930-af3158e7-397f-4ba6-9d57-e76530b075d0.png" alt="Demo" width="800" />
+  <img src="./resources/bigUML-demo.gif" alt="Demo" width="800" />
 </p>
 
 <p align="center">
@@ -62,13 +62,17 @@ The [GLSP-Server] listens on port <port>
 
 You can create a new model by either using the command `bigUML: New Empty UML Diagram` or with `File -> New File`.
 
-![New File command](https://user-images.githubusercontent.com/13104167/232125866-db586183-59b9-47a3-8b95-b54a85c1c676.png)
+<p align="center">
+  <img src="./resources/bigUML-new-file.gif" alt="New File" width="600" />
+</p>
 
 ### CRUD Operations
 
 You can use the Tool Palette to create new nodes and edges. Afterward, you can reposition and resize them.
 
-TODO GIF
+<p align="center">
+  <img src="./resources/bigUML-operations.gif" alt="CRUD Operations" width="600" />
+</p>
 
 ## Learn More
 

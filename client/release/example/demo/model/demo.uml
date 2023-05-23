@@ -1,25 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_Cfp0UGmxEe2kLe5KTNzRtw" name="demo">
-  <packagedElement xmi:type="uml:Class" xmi:id="_61AyYNIzEe2g6oxIPIc7sg" name="Hello">
-    <ownedAttribute xmi:id="_A0aJANI0Ee2g6oxIPIc7sg" name="text" type="_5BVjYNI1Ee2g6oxIPIc7sg">
-      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_A0aJAdI0Ee2g6oxIPIc7sg" value="1"/>
-      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_A0aJAtI0Ee2g6oxIPIc7sg" value="1"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="_7o4DUNq6Ee2wXa3b1ctYCg" name="LectureController">
+    <ownedAttribute xmi:id="_EEyDMNq8Ee2wXa3b1ctYCg" name="lectureService" visibility="protected" type="_BL94cNq7Ee2wXa3b1ctYCg">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_EEyqQNq8Ee2wXa3b1ctYCg" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_EEzRUNq8Ee2wXa3b1ctYCg" value="1"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="_OiN9gdhuEe2qMo2WcAtwkQ" name="World" type="_7TYJYNIzEe2g6oxIPIc7sg" association="_OiEzkNhuEe2qMo2WcAtwkQ">
-      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_OiN9gthuEe2qMo2WcAtwkQ" value="1"/>
-      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_OiOkkNhuEe2qMo2WcAtwkQ" value="1"/>
-    </ownedAttribute>
-  </packagedElement>
-  <packagedElement xmi:type="uml:Class" xmi:id="_7TYJYNIzEe2g6oxIPIc7sg" name="World">
-    <ownedAttribute xmi:id="_OiMvYNhuEe2qMo2WcAtwkQ" name="Hello" type="_61AyYNIzEe2g6oxIPIc7sg" association="_OiEzkNhuEe2qMo2WcAtwkQ">
-      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_OiNWcNhuEe2qMo2WcAtwkQ" value="1"/>
-      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_OiN9gNhuEe2qMo2WcAtwkQ" value="1"/>
-    </ownedAttribute>
-    <ownedOperation xmi:id="_6sEm4NI1Ee2g6oxIPIc7sg" name="map">
-      <ownedParameter xmi:id="_9XxYINI1Ee2g6oxIPIc7sg" name="object" type="_61AyYNIzEe2g6oxIPIc7sg"/>
-      <ownedParameter xmi:id="_FrUisNI2Ee2g6oxIPIc7sg" name="NewParameter1" type="_5BVjYNI1Ee2g6oxIPIc7sg" direction="return"/>
+    <ownedOperation xmi:id="_KSuMINq8Ee2wXa3b1ctYCg" name="studentsCountInModelEngineering">
+      <ownedParameter xmi:id="_EexbENq9Ee2wXa3b1ctYCg" name="NewParameter1" type="_VTCe8Nq8Ee2wXa3b1ctYCg" direction="return"/>
     </ownedOperation>
   </packagedElement>
-  <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5BVjYNI1Ee2g6oxIPIc7sg" name="String"/>
-  <packagedElement xmi:type="uml:Association" xmi:id="_OiEzkNhuEe2qMo2WcAtwkQ" memberEnd="_OiMvYNhuEe2qMo2WcAtwkQ _OiN9gdhuEe2qMo2WcAtwkQ"/>
+  <packagedElement xmi:type="uml:Interface" xmi:id="_BL94cNq7Ee2wXa3b1ctYCg" name="LectureService">
+    <ownedOperation xmi:id="_NAy78Nq8Ee2wXa3b1ctYCg" name="studentsCountInLecture">
+      <ownedParameter xmi:id="_mDWacNq8Ee2wXa3b1ctYCg" name="lectureId" type="_cUKYUNq8Ee2wXa3b1ctYCg"/>
+      <ownedParameter xmi:id="_mVuj4Nq8Ee2wXa3b1ctYCg" name="return" type="_VTCe8Nq8Ee2wXa3b1ctYCg" direction="return"/>
+    </ownedOperation>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_DckpINq7Ee2wXa3b1ctYCg" name="LectureServiceImpl">
+    <interfaceRealization xmi:id="_KNeVMNq7Ee2wXa3b1ctYCg" client="_DckpINq7Ee2wXa3b1ctYCg" supplier="_BL94cNq7Ee2wXa3b1ctYCg" contract="_BL94cNq7Ee2wXa3b1ctYCg"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Usage" xmi:id="_GxCqkNq7Ee2wXa3b1ctYCg" client="_7o4DUNq6Ee2wXa3b1ctYCg" supplier="_BL94cNq7Ee2wXa3b1ctYCg"/>
+  <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_VTCe8Nq8Ee2wXa3b1ctYCg" name="Integer"/>
+  <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_cUKYUNq8Ee2wXa3b1ctYCg" name="String"/>
+  <packagedElement xmi:type="uml:Interface" xmi:id="_igm3ANq9Ee2wXa3b1ctYCg" name="LectureRepository">
+    <ownedOperation xmi:id="_vRdTUNq9Ee2wXa3b1ctYCg" name="countBy">
+      <ownedParameter xmi:id="_FtxvYNq-Ee2wXa3b1ctYCg" name="lectureId" type="_cUKYUNq8Ee2wXa3b1ctYCg"/>
+      <ownedParameter xmi:id="_F0whINq-Ee2wXa3b1ctYCg" name="role" type="__c2j4Nq9Ee2wXa3b1ctYCg"/>
+      <ownedParameter xmi:id="_GLsacNq-Ee2wXa3b1ctYCg" name="NewParameter3" type="_VTCe8Nq8Ee2wXa3b1ctYCg" direction="return"/>
+    </ownedOperation>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Enumeration" xmi:id="__c2j4Nq9Ee2wXa3b1ctYCg" name="Role">
+    <ownedLiteral xmi:id="_AlRkgNq-Ee2wXa3b1ctYCg" name="Student"/>
+    <ownedLiteral xmi:id="_BwPi0Nq-Ee2wXa3b1ctYCg" name="Teacher"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Usage" xmi:id="_OQae0Nq-Ee2wXa3b1ctYCg" client="_DckpINq7Ee2wXa3b1ctYCg" supplier="_igm3ANq9Ee2wXa3b1ctYCg"/>
 </uml:Model>

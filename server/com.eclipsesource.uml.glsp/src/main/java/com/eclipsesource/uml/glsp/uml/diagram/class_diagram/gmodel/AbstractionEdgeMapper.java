@@ -40,7 +40,6 @@ public final class AbstractionEdgeMapper extends BaseGEdgeMapper<Abstraction, GE
          .addCssClass(CoreCSS.Marker.TENT.end())
          .sourceId(clientId)
          .targetId(supplierId)
-         .routerKind(GConstants.RouterKind.POLYLINE)
          .addArgument(GArguments.edgePadding(10))
          .add(textEdgeBuilder(
             source,

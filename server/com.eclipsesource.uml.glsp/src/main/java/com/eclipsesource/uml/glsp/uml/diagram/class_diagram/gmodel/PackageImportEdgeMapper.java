@@ -40,7 +40,6 @@ public final class PackageImportEdgeMapper extends BaseGEdgeMapper<PackageImport
          .addCssClass(CoreCSS.Marker.TENT.end())
          .sourceId(nearestPackageId)
          .targetId(importedPackageId)
-         .routerKind(GConstants.RouterKind.POLYLINE)
          .addArgument(GArguments.edgePadding(10))
          .add(textEdgeBuilder(
             source,

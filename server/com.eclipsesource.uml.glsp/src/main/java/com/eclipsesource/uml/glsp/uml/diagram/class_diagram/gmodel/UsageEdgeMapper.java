@@ -40,7 +40,6 @@ public final class UsageEdgeMapper extends BaseGEdgeMapper<Usage, GEdge> impleme
          .addCssClass(CoreCSS.Marker.TENT.end())
          .sourceId(clientId)
          .targetId(supplierId)
-         .routerKind(GConstants.RouterKind.POLYLINE)
          .addArgument(GArguments.edgePadding(10))
          .add(textEdgeBuilder(
             source,

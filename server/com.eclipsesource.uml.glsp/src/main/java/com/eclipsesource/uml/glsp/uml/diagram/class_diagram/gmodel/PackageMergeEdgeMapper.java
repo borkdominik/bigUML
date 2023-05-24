@@ -40,7 +40,6 @@ public final class PackageMergeEdgeMapper extends BaseGEdgeMapper<PackageMerge, 
          .addCssClass(CoreCSS.Marker.TENT.end())
          .sourceId(nearestPackageId)
          .targetId(mergedPackageId)
-         .routerKind(GConstants.RouterKind.POLYLINE)
          .addArgument(GArguments.edgePadding(10))
          .add(textEdgeBuilder(
             source,

@@ -33,7 +33,6 @@ public final class AssociationEdgeMapper extends BaseGEdgeMapper<Association, GE
       var builder = new GEdgeBuilder(UmlClass_Association.typeId())
          .id(idGenerator.getOrCreateId(source))
          .addCssClass(CoreCSS.EDGE)
-         .routerKind(GConstants.RouterKind.POLYLINE)
          .addArgument(GArguments.edgePadding(10));
 
       applyName(source, builder);

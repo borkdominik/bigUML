@@ -40,7 +40,6 @@ public final class SubstitutionEdgeMapper extends BaseGEdgeMapper<Substitution, 
          .addCssClass(CoreCSS.Marker.TENT.end())
          .sourceId(substitutingClassifierId)
          .targetId(contractId)
-         .routerKind(GConstants.RouterKind.POLYLINE)
          .addArgument(GArguments.edgePadding(10))
          .add(textEdgeBuilder(
             source,

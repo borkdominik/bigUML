@@ -36,7 +36,6 @@ public final class GeneralizationEdgeMapper extends BaseGEdgeMapper<Generalizati
          .addCssClass(CoreCSS.Marker.TRIANGLE_EMPTY.end())
          .sourceId(specificId)
          .targetId(generalId)
-         .routerKind(GConstants.RouterKind.POLYLINE)
          .addArgument(GArguments.edgePadding(10));
 
       applyEdgeNotation(source, builder);

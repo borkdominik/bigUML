@@ -38,7 +38,6 @@ public final class DependencyEdgeMapper extends BaseGEdgeMapper<Dependency, GEdg
          .addCssClass(CoreCSS.Marker.TENT.end())
          .sourceId(clientId)
          .targetId(supplierId)
-         .routerKind(GConstants.RouterKind.POLYLINE)
          .addArgument(GArguments.edgePadding(10));
 
       applyEdgeNotation(source, builder);

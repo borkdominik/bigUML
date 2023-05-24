@@ -18,6 +18,7 @@ import '../css/style.css';
 
 import {
     EditLabelUI,
+    GLSPActionDispatcher,
     GLSPGraph,
     GridSnapper,
     LogLevel,
@@ -27,15 +28,9 @@ import {
     configureModelElement,
     configureViewerOptions,
     createDiagramContainer,
-    EditLabelUI,
-    GLSPActionDispatcher,
-    GLSPGraph,
-    GridSnapper,
-    LogLevel,
     overrideViewerOptions,
     toolFeedbackModule,
-    toolsModule,
-    TYPES
+    toolsModule
 } from '@eclipse-glsp/client';
 import toolPaletteModule from '@eclipse-glsp/client/lib/features/tool-palette/di.config';
 import { DefaultTypes } from '@eclipse-glsp/protocol';
@@ -54,7 +49,7 @@ import { UML_TYPES } from './di.types';
 import { CustomCopyPasteHandler, LastContainableElementTracker } from './features/copy-paste/copy-paste';
 import { EditLabelUIAutocomplete } from './features/edit-label';
 import editorPanelModule from './features/editor-panel/di.config';
-import { initializationModule, IOnceModelInitialized } from './features/initialization/di.config';
+import { IOnceModelInitialized, initializationModule } from './features/initialization/di.config';
 import outlineModule from './features/outline/di.config';
 import propertyPaletteModule from './features/property-palette/di.config';
 import { themeModule } from './features/theme/di.config';

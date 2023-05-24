@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="ASCII"?>
+<unotation:UmlDiagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:notation="http://www.eclipse.org/glsp/notation" xmlns:unotation="http://www.eclipsesource.com/glsp/uml/unotation" diagramType="CLASS">
+  <semanticElement elementId="_Cfp0UGmxEe2kLe5KTNzRtw"/>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_I3Ov8NI0Ee2g6oxIPIc7sg"/>
+    <position x="50.0" y="300.0"/>
+    <size width="160.0" height="76.0"/>
+  </elements>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_7o4DUNq6Ee2wXa3b1ctYCg"/>
+    <position x="290.0" y="130.0"/>
+    <size width="477.72004890441895" height="139.5"/>
+  </elements>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_BL94cNq7Ee2wXa3b1ctYCg"/>
+    <position x="260.0" y="380.0"/>
+    <size width="547.4127368927002" height="129.5"/>
+  </elements>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_DckpINq7Ee2wXa3b1ctYCg"/>
+    <position x="-120.0" y="420.0"/>
+    <size width="250.3984375" height="52.5"/>
+  </elements>
+  <elements xsi:type="notation:Edge">
+    <semanticElement elementId="_GxCqkNq7Ee2wXa3b1ctYCg"/>
+  </elements>
+  <elements xsi:type="notation:Edge">
+    <semanticElement elementId="_KNeVMNq7Ee2wXa3b1ctYCg"/>
+  </elements>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_VTCe8Nq8Ee2wXa3b1ctYCg"/>
+    <position x="-130.0" y="130.0"/>
+    <size width="161.90103149414062" height="76.0"/>
+  </elements>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_cUKYUNq8Ee2wXa3b1ctYCg"/>
+    <position x="-130.0" y="220.0"/>
+    <size width="161.90103149414062" height="76.0"/>
+  </elements>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_igm3ANq9Ee2wXa3b1ctYCg"/>
+    <position x="260.0" y="570.0"/>
+    <size width="525.5872259140015" height="129.5"/>
+  </elements>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="__c2j4Nq9Ee2wXa3b1ctYCg"/>
+    <position x="50.0" y="130.0"/>
+    <size width="160.0" height="153.0"/>
+  </elements>
+  <elements xsi:type="notation:Edge">
+    <semanticElement elementId="_OQae0Nq-Ee2wXa3b1ctYCg"/>
+    <bendPoints x="190.0" y="620.0"/>
+  </elements>
+</unotation:UmlDiagram>

@@ -25,6 +25,7 @@ import org.eclipse.glsp.server.emf.idgen.FragmentIdGenerator;
 import org.eclipse.glsp.server.features.contextmenu.ContextMenuItemProvider;
 import org.eclipse.glsp.server.features.directediting.LabelEditValidator;
 import org.eclipse.glsp.server.features.directediting.RequestEditValidationHandler;
+import org.eclipse.glsp.server.features.popup.PopupModelFactory;
 import org.eclipse.glsp.server.features.validation.ModelValidator;
 import org.eclipse.glsp.server.operations.OperationHandler;
 import org.eclipse.uml2.uml.UMLPackage;
@@ -36,6 +37,8 @@ import com.eclipsesource.uml.glsp.core.features.label_edit.DiagramLabelEditMappe
 import com.eclipsesource.uml.glsp.core.features.label_edit.UmlLabelEditOperationHandler;
 import com.eclipsesource.uml.glsp.core.features.label_edit.validation.DiagramLabelEditValidatorRegistry;
 import com.eclipsesource.uml.glsp.core.features.label_edit.validation.UmlLabelEditValidator;
+import com.eclipsesource.uml.glsp.core.features.popup.PopupMapperRegistry;
+import com.eclipsesource.uml.glsp.core.features.popup.UmlPopupFactory;
 import com.eclipsesource.uml.glsp.core.features.tool_palette.UmlToolPaletteItemProvider;
 import com.eclipsesource.uml.glsp.core.gmodel.DiagramMapper;
 import com.eclipsesource.uml.glsp.core.gmodel.GModelMapHandler;
@@ -77,7 +80,7 @@ public class UmlDiagramModule extends EMSGLSPNotationDiagramModule {
    protected void configureBase() {
       super.configureBase();
       configureFixes();
-      configureMappers();
+      configureGModel();
       configureRegistries();
    }
 
@@ -86,10 +89,9 @@ public class UmlDiagramModule extends EMSGLSPNotationDiagramModule {
       bind(EMSNotationModelState.class).to(bindGModelState());
    }
 
-   protected void configureMappers() {
+   protected void configureGModel() {
       bind(DiagramMapper.class).in(Singleton.class);
       bind(GModelMapHandler.class).in(Singleton.class);
-      bind(GModelMapperRegistry.class).in(Singleton.class);
    }
 
    protected void configureRegistries() {
@@ -100,6 +102,8 @@ public class UmlDiagramModule extends EMSGLSPNotationDiagramModule {
       bind(DiagramUpdateHandlerRegistry.class).in(Singleton.class);
       bind(DiagramLabelEditValidatorRegistry.class).in(Singleton.class);
       bind(DiagramReconnectEdgeHandlerRegistry.class).in(Singleton.class);
+      bind(GModelMapperRegistry.class).in(Singleton.class);
+      bind(PopupMapperRegistry.class).in(Singleton.class);
    }
 
    @Override
@@ -167,6 +171,11 @@ public class UmlDiagramModule extends EMSGLSPNotationDiagramModule {
    @Override
    protected Class<? extends UmlOperationHandlerRegistry> bindOperationHandlerRegistry() {
       return UmlOperationHandlerRegistry.class;
+   }
+
+   @Override
+   protected Class<? extends PopupModelFactory> bindPopupModelFactory() {
+      return UmlPopupFactory.class;
    }
 
    @Override

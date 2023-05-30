@@ -17,6 +17,7 @@ import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramLab
 import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramLabelEditValidatorContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramReconnectEdgeHandlerContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramUpdateHandlerContribution;
+import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.PopupMapperContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.SuffixIdAppenderContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.glsp.ActionHandlerContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.glsp.ClientActionContribution;
@@ -53,6 +54,7 @@ import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.label_edit.
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.label_edit.PropertyLabelEditMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.label_edit.validation.BlankLabelEditValidator;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.label_edit.validation.PropertyLabelEditValidator;
+import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.popup.ClassPopupMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.property_palette.AbstractionPropertyMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.property_palette.AssociationPropertyMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.property_palette.ClassPropertyMapper;
@@ -177,7 +179,7 @@ public final class ClassUmlManifest extends DiagramManifest
    DiagramDeleteHandlerContribution, DiagramLabelEditMapperContribution, SuffixIdAppenderContribution,
    DiagramElementPropertyMapperContribution, DiagramUpdateHandlerContribution,
    ClientActionContribution, ActionHandlerContribution, DiagramLabelEditValidatorContribution,
-   DiagramReconnectEdgeHandlerContribution {
+   DiagramReconnectEdgeHandlerContribution, PopupMapperContribution {
 
    @Override
    public String id() {
@@ -375,6 +377,10 @@ public final class ClassUmlManifest extends DiagramManifest
          contribution.addBinding().to(ReconnectRealizationHandler.class);
          contribution.addBinding().to(ReconnectSubstitutionHandler.class);
          contribution.addBinding().to(ReconnectUsageHandler.class);
+      });
+
+      contributePopupMappers((contribution) -> {
+         contribution.addBinding().to(ClassPopupMapper.class);
       });
    }
 }

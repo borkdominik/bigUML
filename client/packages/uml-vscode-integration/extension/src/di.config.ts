@@ -10,6 +10,7 @@ import { ModelServerConfig } from '@borkdominik-biguml/uml-modelserver';
 import { Container, ContainerModule } from 'inversify';
 import * as vscode from 'vscode';
 import { TYPES } from './di.types';
+import { PropertyPaletteProvider } from './features/property-palette/property-palette.provider';
 import { ThemeIntegration } from './features/theme/theme-integration';
 import { UVGlspConnector } from './glsp/uv-glsp-connector';
 import { UVGlspServer } from './glsp/uv-glsp-server';
@@ -86,6 +87,9 @@ export function createContainer(
         bind(TYPES.Theme).toService(ThemeIntegration);
         bind(TYPES.Disposable).toService(ThemeIntegration);
         bind(TYPES.RootInitialization).toService(ThemeIntegration);
+
+        bind(PropertyPaletteProvider).toSelf().inSingletonScope();
+        bind(TYPES.RootInitialization).toService(PropertyPaletteProvider);
     });
 
     container.load(

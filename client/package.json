@@ -69,9 +69,9 @@
     "**/vscode-jsonrpc": "8.1.0"
   },
   "devDependencies": {
-    "@eclipse-glsp/dev": "^1.1.0-next.28fb493.121",
+    "@eclipse-glsp/dev": "^1.1.0-RC06",
     "tsx": "^3.12.3",
-    "typescript": "^4.9.5"
+    "typescript": "^4.9.3"
   },
   "packageManager": "yarn@1.22.19",
   "engines": {

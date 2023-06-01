@@ -46,8 +46,8 @@
   ],
   "scripts": {
     "build": "tsx .esbuild.mts",
-    "build:prod": "yarn clean && yarn build --es-minify",
-    "clean": "rimraf lib tsconfig.tsbuildinfo server/**/*.log",
+    "build:prod": "yarn clean && yarn build --minify",
+    "clean": "rimraf lib bundles tsconfig.tsbuildinfo server/**/*.log",
     "lint": "eslint --ext .ts,.tsx ./src",
     "lint:ci": "yarn lint -o eslint.xml -f checkstyle",
     "lint:fix": "eslint --fix --ext .ts,.tsx ./src",
@@ -55,7 +55,7 @@
     "vscode:package": "vsce package --yarn",
     "vscode:package-pre": "yarn vscode:package --pre-release",
     "vscode:prepublish": "yarn build:prod",
-    "watch": "yarn build --es-watch"
+    "watch": "yarn build --watch"
   },
   "contributes": {
     "commands": [
@@ -183,7 +183,25 @@
         "id": "bigUML.editor.title",
         "label": "Diagram"
       }
-    ]
+    ],
+    "views": {
+      "bigUML-panel": [
+        {
+          "id": "bigUML.panel.property-palette",
+          "name": "Properties",
+          "type": "webview"
+        }
+      ]
+    },
+    "viewsContainers": {
+      "panel": [
+        {
+          "id": "bigUML-panel",
+          "icon": "./resources/logo.png",
+          "title": "UML"
+        }
+      ]
+    }
   },
   "activationEvents": [
     "onLanguage:bigUML.uml",
@@ -202,6 +220,7 @@
     "urijs": "^1.19.11"
   },
   "devDependencies": {
+    "@borkdominik-biguml/uml-components": "*",
     "@borkdominik-biguml/uml-vscode-integration-webview": "*",
     "@types/urijs": "1.19.11",
     "@types/vscode": "^1.63.0",

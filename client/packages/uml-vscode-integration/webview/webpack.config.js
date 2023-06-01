@@ -1,7 +1,7 @@
 // @ts-check
 const path = require('path');
 
-const outputPath = path.resolve(__dirname, '../extension/webview');
+const outputPath = path.resolve(__dirname, '../extension/bundles/uml-glsp');
 
 /**@type {import('webpack').Configuration}*/
 const config = {
@@ -9,7 +9,7 @@ const config = {
 
     entry: path.resolve(__dirname, 'src/index.ts'),
     output: {
-        filename: 'webview.js',
+        filename: 'main.js',
         path: outputPath,
         clean: true
     },

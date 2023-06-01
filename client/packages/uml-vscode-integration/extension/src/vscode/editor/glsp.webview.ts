@@ -9,6 +9,7 @@
 import { GlspVscodeConnector } from '@eclipse-glsp/vscode-integration';
 import * as vscode from 'vscode';
 import { ThemeIntegration } from '../../features/theme/theme-integration';
+import { getUri } from '../../utilities/webview';
 import { WebviewResolver, WebviewResource } from './webview';
 
 export interface GLSPWebviewData {
@@ -28,11 +29,9 @@ export class GLSPWebviewResolver implements WebviewResolver {
 
         const webview = resource.webviewPanel.webview;
         const extensionUri = this.data.context.extensionUri;
-        const webviewScriptSourceUri = webview.asWebviewUri(vscode.Uri.joinPath(extensionUri, 'webview', 'webview.js'));
-        const codiconsUri = webview.asWebviewUri(
-            vscode.Uri.joinPath(extensionUri, 'node_modules', '@vscode/codicons', 'dist', 'codicon.css')
-        );
-        const mainCSSUri = webview.asWebviewUri(vscode.Uri.joinPath(extensionUri, 'lib', 'main.css'));
+        const glspUri = getUri(webview, extensionUri, ['bundles', 'uml-glsp', 'main.js']);
+        const codiconsUri = getUri(webview, extensionUri, ['node_modules', '@vscode/codicons', 'dist', 'codicon.css']);
+        const mainCSSUri = getUri(webview, extensionUri, ['lib', 'main.css']);
 
         webview.options = {
             enableScripts: true
@@ -54,7 +53,7 @@ export class GLSPWebviewResolver implements WebviewResolver {
                         <div id="${this.data.clientId}_container" style="height: 100%;"></div>
                         <div id="${this.data.clientId}_loading" class="client-loading loading-animation"></div>
 
-                        <script src="${webviewScriptSourceUri}"></script>
+                        <script src="${glspUri}"></script>
                     </body>
                 </html>`;
     }

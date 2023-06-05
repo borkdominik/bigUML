@@ -60,6 +60,10 @@
   "contributes": {
     "commands": [
       {
+        "command": "bigUML.test",
+        "title": "Test"
+      },
+      {
         "command": "bigUML.model.newEmpty",
         "title": "New Empty UML Diagram",
         "category": "bigUML",
@@ -146,6 +150,13 @@
       }
     ],
     "menus": {
+      "view/title": [
+        {
+          "command": "bigUML.test",
+          "when": "view == bigUML.panel.property-palette",
+          "group": "navigation"
+        }
+      ],
       "file/newFile": [
         {
           "command": "bigUML.model.newEmpty",
@@ -220,7 +231,6 @@
     "urijs": "^1.19.11"
   },
   "devDependencies": {
-    "@borkdominik-biguml/uml-components": "*",
     "@borkdominik-biguml/uml-vscode-integration-webview": "*",
     "@types/urijs": "1.19.11",
     "@types/vscode": "^1.63.0",

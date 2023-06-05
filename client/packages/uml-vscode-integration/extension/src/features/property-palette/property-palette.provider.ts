@@ -10,16 +10,32 @@
 import { inject, injectable, postConstruct } from 'inversify';
 import * as vscode from 'vscode';
 import { TYPES } from '../../di.types';
-import { getUri } from '../../utilities/webview';
+import { getBundleUri } from '../../utilities/webview';
+
+export interface ResolvedWebview {
+    webviewView: vscode.WebviewView;
+    context: vscode.WebviewViewResolveContext<unknown>;
+    token: vscode.CancellationToken;
+}
 
 @injectable()
 export class PropertyPaletteProvider implements vscode.WebviewViewProvider {
+    protected resolvedWebview?: ResolvedWebview;
+
     @inject(TYPES.ExtensionContext)
     protected readonly extension: vscode.ExtensionContext;
 
     @postConstruct()
     initialize(): void {
+        let counter = 0;
         vscode.window.registerWebviewViewProvider('bigUML.panel.property-palette', this);
+
+        vscode.commands.registerCommand('bigUML.test', () => {
+            this.resolvedWebview?.webviewView.webview.postMessage({
+                type: 'notification',
+                text: `Counter ${counter++}`
+            });
+        });
     }
 
     resolveWebviewView(
@@ -27,12 +43,24 @@ export class PropertyPaletteProvider implements vscode.WebviewViewProvider {
         context: vscode.WebviewViewResolveContext<unknown>,
         token: vscode.CancellationToken
     ): void | Thenable<void> {
+        const extensionUri = this.extension.extensionUri;
         const webview = webviewView.webview;
+
+        this.resolvedWebview = {
+            webviewView,
+            context,
+            token
+        };
+
+        webview.onDidReceiveMessage((message: any) => {
+            console.log('EXTENSION Got message', message);
+        });
+
         webview.options = {
             enableScripts: true
         };
 
-        const umlComponentsUri = getUri(webview, this.extension.extensionUri, ['bundles', 'uml-components', 'main.js']);
+        const bundleJSUri = getBundleUri(webview, extensionUri, ['property-palette', 'bundle.js']);
 
         webview.html = `<!DOCTYPE html>
         <html lang="en">
@@ -45,17 +73,12 @@ export class PropertyPaletteProvider implements vscode.WebviewViewProvider {
         </head>
         <body>
             Hello World
-            <biguml-property-palette></biguml-property-palette>
-            
-            <script>
-        
-                // Handle the message inside the webview
-                window.addEventListener('message', event => {
-                    console.log("message", event);
-                });
-            </script>
-            <script type="module" src="${umlComponentsUri}"></script>
+            <biguml-property-palette id="property-palette"></biguml-property-palette>
+            <script type="module">
+                import { initializeConnection } from "${bundleJSUri}";
 
+                initializeConnection();
+            </script>
         </body>
         </html>`;
     }

@@ -7,11 +7,14 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { LitElement, TemplateResult, css, html } from 'lit';
+import { PropertyPalette } from '@borkdominik-biguml/uml-common';
+import { css, html, LitElement, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
+import '../vscode.types';
+
 @customElement('biguml-property-palette')
-export class PropertyPalette extends LitElement {
+export class UmlPropertyPalette extends LitElement {
     static override styles = css`
         :host {
             display: block;
@@ -24,12 +27,16 @@ export class PropertyPalette extends LitElement {
     @property()
     name = 'World';
 
-    @property({ type: Number })
+    @property()
+    palette?: PropertyPalette = undefined;
+
+    @property()
     count = 0;
 
     override render(): TemplateResult<1> {
         return html`
             <h1>${this.sayHello(this.name)}!</h1>
+            <h2>Test: ${JSON.stringify(this.palette)}</h2>
             <vscode-button appearance="primary" @click=${this._onClick}>Click Count: ${this.count}</vscode-button>
             <slot></slot>
         `;
@@ -47,6 +54,6 @@ export class PropertyPalette extends LitElement {
 
 declare global {
     interface HTMLElementTagNameMap {
-        'biguml-property-palette': PropertyPalette;
+        'biguml-property-palette': UmlPropertyPalette;
     }
 }

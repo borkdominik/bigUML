@@ -6,7 +6,10 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-export * from './action-protocol/property-palette';
-export * from './environment/configuration';
-export * from './language/language';
-export * from './typescript.utils';
+import { Button } from '@vscode/webview-ui-toolkit';
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'vscode-button': Button;
+    }
+}

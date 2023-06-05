@@ -10,6 +10,7 @@ import { createUmlDiagramContainer } from '@borkdominik-biguml/uml-glsp/lib';
 
 import '@eclipse-glsp/vscode-integration-webview/css/glsp-vscode.css';
 
+import { RequestPropertyPaletteAction, SetPropertyPaletteAction } from '@borkdominik-biguml/uml-common';
 import { OutlineService } from '@borkdominik-biguml/uml-glsp/lib/features/outline';
 import { GLSPStarter } from '@eclipse-glsp/vscode-integration-webview';
 import { GLSPDiagramIdentifier } from '@eclipse-glsp/vscode-integration-webview/lib/diagram-identifer';
@@ -34,6 +35,10 @@ class UVStarter extends GLSPStarter {
 
         container.bind(UVDiagramWidget).toSelf().inSingletonScope();
         container.bind(GLSPVscodeDiagramWidget).toService(UVDiagramWidget);
+    }
+
+    protected override get extensionActionKinds(): string[] {
+        return [...super.extensionActionKinds, RequestPropertyPaletteAction.KIND, SetPropertyPaletteAction.KIND];
     }
 }
 

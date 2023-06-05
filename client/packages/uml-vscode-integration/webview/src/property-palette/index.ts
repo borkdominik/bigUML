@@ -7,6 +7,5 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { provideVSCodeDesignSystem, vsCodeButton } from '@vscode/webview-ui-toolkit';
-
-provideVSCodeDesignSystem().register(vsCodeButton());
+export * from './property-palette.component';
+export * from './property-palette.connection';

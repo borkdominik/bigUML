@@ -18,6 +18,7 @@ const JSX = { createElement: svg };
 @injectable()
 export class IconView implements IView {
     render(element: Icon, context: RenderingContext): VNode {
+        console.log('ICON VIEW');
         let image;
         if (element.iconImageName) {
             image = require('../../resources/images/' + element.iconImageName);

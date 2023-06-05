@@ -25,24 +25,28 @@
     }
   ],
   "scripts": {
-    "build": "webpack --mode=development",
+    "build": "tsx .esbuild.mts",
     "clean": "rimraf lib tsconfig.tsbuildinfo ",
     "lint": "eslint --ext .ts,.tsx ./src",
     "lint:ci": "yarn lint -o eslint.xml -f checkstyle",
     "prepare": "yarn clean && yarn build",
-    "watch": "webpack --watch"
+    "watch": "yarn build --watch"
   },
-  "devDependencies": {
+  "dependencies": {
+    "@borkdominik-biguml/uml-common": "*",
     "@borkdominik-biguml/uml-glsp": "*",
+    "@eclipse-glsp/protocol": "next",
     "@eclipse-glsp/vscode-integration-webview": "next",
     "@vscode/codicons": "^0.0.25",
-    "css-loader": "^6.7.1",
-    "esbuild-loader": "^3.0.1",
-    "ignore-loader": "^0.1.2",
+    "@vscode/webview-ui-toolkit": "^1.2.2",
     "inversify": "^5.1.1",
+    "lit": "^2.7.4",
     "reflect-metadata": "^0.1.13",
-    "sprotty-vscode-webview": "next",
-    "style-loader": "^3.3.1",
-    "webpack": "^5.75.0"
+    "sprotty-vscode-webview": "next"
+  },
+  "devDependencies": {
+    "esbuild": "^0.17.10",
+    "eslint": "^8.15.0",
+    "ts-lit-plugin": "^1.2.1"
   }
 }

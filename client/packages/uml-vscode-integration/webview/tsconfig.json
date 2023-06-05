@@ -1,8 +1,23 @@
 {
-  "extends": "@eclipse-glsp/ts-config/tsconfig.json",
+  "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
     "rootDir": "src",
-    "outDir": "lib"
+    "outDir": "lib",
+    "target": "es2019",
+    "module": "es2020",
+    "lib": ["es2020", "DOM", "DOM.Iterable"],
+    "inlineSources": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "plugins": [
+      {
+        "name": "ts-lit-plugin",
+        "strict": true
+      }
+    ]
   },
   "include": ["src"]
 }

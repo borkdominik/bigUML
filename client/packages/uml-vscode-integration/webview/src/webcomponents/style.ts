@@ -29,4 +29,8 @@ export const defaultStyle = css`
     .title {
         text-transform: uppercase;
     }
+
+    h4.secondary-title {
+        margin: -1em 0 1em 0;
+    }
 `;

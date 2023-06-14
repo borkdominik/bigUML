@@ -9,48 +9,48 @@
 
 import { Action, hasStringProp, RequestAction, ResponseAction } from '@eclipse-glsp/protocol';
 
-export interface PropertyPalette {
+export interface ElementProperties {
     elementId: string;
     label?: string;
-    items: ElementPropertyItem[];
+    items: ElementProperty[];
 }
 
-export interface ElementPropertyItem {
+export interface ElementProperty {
     elementId: string;
     propertyId: string;
     type: 'TEXT' | 'BOOL' | 'CHOICE' | 'REFERENCE';
 }
 
-export interface ElementTextPropertyItem extends ElementPropertyItem {
-    type: typeof ElementTextPropertyItem.TYPE;
+export interface ElementTextProperty extends ElementProperty {
+    type: typeof ElementTextProperty.TYPE;
     text: string;
     label: string;
 }
 
-export namespace ElementTextPropertyItem {
+export namespace ElementTextProperty {
     export const TYPE = 'TEXT';
 
-    export function is(value: ElementPropertyItem): value is ElementTextPropertyItem {
+    export function is(value: ElementProperty): value is ElementTextProperty {
         return value.type === TYPE;
     }
 }
 
-export interface ElementBoolPropertyItem extends ElementPropertyItem {
-    type: typeof ElementBoolPropertyItem.TYPE;
+export interface ElementBoolProperty extends ElementProperty {
+    type: typeof ElementBoolProperty.TYPE;
     value: boolean;
     label: string;
 }
 
-export namespace ElementBoolPropertyItem {
+export namespace ElementBoolProperty {
     export const TYPE = 'BOOL';
 
-    export function is(value: ElementPropertyItem): value is ElementBoolPropertyItem {
+    export function is(value: ElementProperty): value is ElementBoolProperty {
         return value.type === TYPE;
     }
 }
 
-export interface ElementChoicePropertyItem extends ElementPropertyItem {
-    type: typeof ElementChoicePropertyItem.TYPE;
+export interface ElementChoiceProperty extends ElementProperty {
+    type: typeof ElementChoiceProperty.TYPE;
     choices: {
         label: string;
         value: string;
@@ -59,23 +59,23 @@ export interface ElementChoicePropertyItem extends ElementPropertyItem {
     label: string;
 }
 
-export namespace ElementChoicePropertyItem {
+export namespace ElementChoiceProperty {
     export const TYPE = 'CHOICE';
 
-    export function is(value: ElementPropertyItem): value is ElementChoicePropertyItem {
+    export function is(value: ElementProperty): value is ElementChoiceProperty {
         return value.type === TYPE;
     }
 }
 
-export interface ElementReferencePropertyItem extends ElementPropertyItem {
-    type: typeof ElementReferencePropertyItem.TYPE;
+export interface ElementReferenceProperty extends ElementProperty {
+    type: typeof ElementReferenceProperty.TYPE;
     label: string;
-    references: ElementReferencePropertyItem.Reference[];
-    creates: ElementReferencePropertyItem.CreateReference[];
+    references: ElementReferenceProperty.Reference[];
+    creates: ElementReferenceProperty.CreateReference[];
     isOrderable: boolean;
 }
 
-export namespace ElementReferencePropertyItem {
+export namespace ElementReferenceProperty {
     export const TYPE = 'REFERENCE';
 
     export interface Reference {
@@ -89,7 +89,7 @@ export namespace ElementReferencePropertyItem {
         action: Action;
     }
 
-    export function is(value: ElementPropertyItem): value is ElementReferencePropertyItem {
+    export function is(value: ElementProperty): value is ElementReferenceProperty {
         return value.type === TYPE;
     }
 }
@@ -118,7 +118,7 @@ export namespace RequestPropertyPaletteAction {
 export interface SetPropertyPaletteAction extends ResponseAction {
     kind: typeof SetPropertyPaletteAction.KIND;
     elementId: string;
-    palette?: PropertyPalette;
+    palette?: ElementProperties;
 }
 
 export namespace SetPropertyPaletteAction {
@@ -128,7 +128,7 @@ export namespace SetPropertyPaletteAction {
         return Action.hasKind(object, KIND);
     }
 
-    export function create(options: { elementId: string; palette?: PropertyPalette; responseId?: string }): SetPropertyPaletteAction {
+    export function create(options: { elementId: string; palette?: ElementProperties; responseId?: string }): SetPropertyPaletteAction {
         return {
             kind: KIND,
             responseId: '',

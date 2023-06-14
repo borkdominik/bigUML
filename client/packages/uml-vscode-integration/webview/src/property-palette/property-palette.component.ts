@@ -7,19 +7,28 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import {
-    ElementBoolPropertyItem,
-    ElementChoicePropertyItem,
-    ElementReferencePropertyItem,
-    ElementTextPropertyItem,
-    PropertyPalette as Palette
-} from '@borkdominik-biguml/uml-common';
-import { css, html, TemplateResult } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
-import { BigUMLComponent } from '../webcomponents/component';
-
 import '../vscode/toolkit';
 import './property-palette-reference.component';
+
+import {
+    ElementBoolProperty,
+    ElementChoiceProperty,
+    ElementProperties,
+    ElementProperty,
+    ElementReferenceProperty,
+    ElementTextProperty
+} from '@borkdominik-biguml/uml-common';
+import { Checkbox as VSCodeCheckbox, Dropdown as VSCodeDropdown, TextField as VSCodeTextField } from '@vscode/webview-ui-toolkit';
+import { css, html, nothing, TemplateResult } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
+import { BigUMLComponent } from '../webcomponents/component';
+import { PropertyDeleteEventDetail } from './property-palette-reference.component';
+
+export interface PropertyChangeEventDetail {
+    elementId: string;
+    propertyId: string;
+    value: string;
+}
 
 @customElement('biguml-property-palette')
 export class PropertyPalette extends BigUMLComponent {
@@ -58,36 +67,39 @@ export class PropertyPalette extends BigUMLComponent {
     ];
 
     @property()
-    palette?: Palette = undefined;
+    properties?: ElementProperties = undefined;
 
     override render(): TemplateResult<1> {
         return html`<div>${this.renderHeader()} ${this.renderBody()}</div>`;
     }
 
     protected renderHeader(): TemplateResult<1> {
-        return html`<header><h3 class="title">Properties</h3></header>`;
+        return html`<header>
+            <h3 class="title">Properties</h3>
+            <h4 class="secondary-title">${this.properties?.label ?? nothing}</h4>
+        </header>`;
     }
 
     protected renderBody(): TemplateResult<1> {
-        if (this.palette === undefined) {
-            return html`<span>Properties not available.</span>`;
+        if (this.properties === undefined) {
+            return html`<span>Properties are not available.</span>`;
         }
 
-        const rows = this.palette.items.map(item => {
-            if (ElementTextPropertyItem.is(item)) {
-                return this.renderTextFieldItem(item);
-            } else if (ElementBoolPropertyItem.is(item)) {
-                return this.renderCheckboxItem(item);
-            } else if (ElementChoicePropertyItem.is(item)) {
-                return this.renderDropdownItem(item);
+        const rows = this.properties.items.map(item => {
+            if (ElementTextProperty.is(item)) {
+                return this.renderTextFieldElement(item);
+            } else if (ElementBoolProperty.is(item)) {
+                return this.renderCheckboxElement(item);
+            } else if (ElementChoiceProperty.is(item)) {
+                return this.renderDropdownElement(item);
             }
 
             return html``;
         });
 
-        const references = this.palette.items.map(item => {
-            if (ElementReferencePropertyItem.is(item)) {
-                return this.renderReferenceItem(item);
+        const references = this.properties.items.map(item => {
+            if (ElementReferenceProperty.is(item)) {
+                return this.renderReferenceElement(item);
             }
 
             return html``;
@@ -104,37 +116,76 @@ export class PropertyPalette extends BigUMLComponent {
         </div>`;
     }
 
-    protected renderTextFieldItem(item: ElementTextPropertyItem): TemplateResult<1> {
+    protected renderTextFieldElement(item: ElementTextProperty): TemplateResult<1> {
+        const onChange = (event: CustomEvent): void => {
+            const target = event.target as VSCodeTextField;
+            this.onPropertyChange(item, target.value);
+        };
+
         return html`<vscode-data-grid-row>
             <vscode-data-grid-cell grid-column="1">${item.label}</vscode-data-grid-cell>
             <vscode-data-grid-cell grid-column="2">
-                <vscode-text-field class="text-item" .value="${item.text}"></vscode-text-field>
+                <vscode-text-field class="text-item" .value="${item.text}" @change="${onChange}"></vscode-text-field>
             </vscode-data-grid-cell>
         </vscode-data-grid-row>`;
     }
 
-    protected renderCheckboxItem(item: ElementBoolPropertyItem): TemplateResult<1> {
+    protected renderCheckboxElement(item: ElementBoolProperty): TemplateResult<1> {
+        const onChange = (event: CustomEvent): void => {
+            const target = event.target as VSCodeCheckbox;
+            this.onPropertyChange(item, '' + target.checked);
+        };
+
         return html`<vscode-data-grid-row>
             <vscode-data-grid-cell grid-column="1">${item.label}</vscode-data-grid-cell>
             <vscode-data-grid-cell grid-column="2">
-                <vscode-checkbox class="bool-item" ?checked="${item.value}"></vscode-checkbox>
+                <vscode-checkbox class="bool-item" ?checked="${item.value}" @change="${onChange}"></vscode-checkbox>
             </vscode-data-grid-cell>
         </vscode-data-grid-row>`;
     }
 
-    protected renderDropdownItem(item: ElementChoicePropertyItem): TemplateResult<1> {
+    protected renderDropdownElement(item: ElementChoiceProperty): TemplateResult<1> {
+        const onChange = (event: CustomEvent): void => {
+            const target = event.target as VSCodeDropdown;
+            this.onPropertyChange(item, target.value);
+        };
+
         return html`<vscode-data-grid-row>
             <vscode-data-grid-cell grid-column="1">${item.label}</vscode-data-grid-cell>
             <vscode-data-grid-cell grid-column="2">
-                <vscode-dropdown .value="${item.choice}">
+                <vscode-dropdown .value="${item.choice}" @change="${onChange}">
                     ${item.choices.map(choice => html`<vscode-option .value="${choice.value}">${choice.label}</vscode-option>`)}
                 </vscode-dropdown>
             </vscode-data-grid-cell>
         </vscode-data-grid-row>`;
     }
 
-    protected renderReferenceItem(item: ElementReferencePropertyItem): TemplateResult<1> {
-        return html`<biguml-property-palette-reference .item="${item}"></biguml-property-palette-reference>`;
+    protected renderReferenceElement(item: ElementReferenceProperty): TemplateResult<1> {
+        return html`<biguml-property-palette-reference
+            .item="${item}"
+            @property-create="${this.onPropertyCreate}"
+            @property-delete="${this.onPropertyDelete}"
+        ></biguml-property-palette-reference>`;
+    }
+
+    protected onPropertyChange(item: ElementProperty, value: string) {
+        this.dispatchEvent(
+            new CustomEvent<PropertyChangeEventDetail>('property-change', {
+                detail: {
+                    elementId: item.elementId,
+                    propertyId: item.propertyId,
+                    value
+                }
+            })
+        );
+    }
+
+    protected onPropertyCreate(event: CustomEvent<ElementReferenceProperty.CreateReference>): void {
+        this.dispatchEvent(new CustomEvent('property-create', event));
+    }
+
+    protected onPropertyDelete(event: CustomEvent<PropertyDeleteEventDetail>): void {
+        this.dispatchEvent(new CustomEvent('property-delete', event));
     }
 }
 

@@ -80,12 +80,8 @@ export class PropertyPaletteProvider implements vscode.WebviewViewProvider, IAct
             <title>Property Palette</title>
         </head>
         <body>
-            <biguml-property-palette id="property-palette"></biguml-property-palette>
-            <script type="module">
-                import { initializeConnection } from "${bundleJSUri}";
-
-                initializeConnection();
-            </script>
+            <biguml-property-palette-standalone></biguml-property-palette-standalone>
+            <script type="module" src="${bundleJSUri}"></script>
         </body>
         </html>`;
     }

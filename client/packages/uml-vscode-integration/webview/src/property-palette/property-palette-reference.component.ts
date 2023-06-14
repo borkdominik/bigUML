@@ -7,13 +7,17 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { ElementReferencePropertyItem } from '@borkdominik-biguml/uml-common';
+import '../vscode/toolkit';
+import '../vscode/vscode-menu.component';
+
+import { ElementReferenceProperty } from '@borkdominik-biguml/uml-common';
 import { css, html, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { BigUMLComponent } from '../webcomponents/component';
 
-import '../vscode/toolkit';
-import '../vscode/vscode-menu.component';
+export interface PropertyDeleteEventDetail {
+    elementId: string;
+}
 
 @customElement('biguml-property-palette-reference')
 export class PropertyPaletteReference extends BigUMLComponent {
@@ -63,7 +67,7 @@ export class PropertyPaletteReference extends BigUMLComponent {
     ];
 
     @property()
-    readonly item?: ElementReferencePropertyItem = undefined;
+    readonly item?: ElementReferenceProperty = undefined;
 
     override render(): TemplateResult<1> {
         if (this.item === undefined) {
@@ -73,7 +77,7 @@ export class PropertyPaletteReference extends BigUMLComponent {
         return html`${this.renderHeader(this.item)} ${this.renderBody(this.item)}`;
     }
 
-    protected renderHeader(item: ElementReferencePropertyItem): TemplateResult<1> {
+    protected renderHeader(item: ElementReferenceProperty): TemplateResult<1> {
         return html`
             <div class="header">
                 <h4 class="title">${item.label}</h4>
@@ -91,20 +95,42 @@ export class PropertyPaletteReference extends BigUMLComponent {
         `;
     }
 
-    protected renderBody(item: ElementReferencePropertyItem): TemplateResult<1> {
+    protected renderBody(item: ElementReferenceProperty): TemplateResult<1> {
+        const onCreate = () => this.onCreate(item.creates[0]);
+
         return html`<div class="body">
             ${item.references.map(
                 ref => html`<div class="reference-item">
                     <span class="label">${ref.label}</span>
-                    <vscode-button appearance="icon">
+                    <vscode-button appearance="icon" @click="${() => this.onDelete(ref.elementId)}">
                         <span class="codicon codicon-trash"></span>
                     </vscode-button>
                 </div>`
             )}
             <div class="actions">
-                <vscode-button appearance="primary"> Add </vscode-button>
+                <vscode-button appearance="primary" @click="${() => this.onCreate(item.creates[0])}"> Add </vscode-button>
             </div>
         </div>`;
+    }
+
+    protected onCreate(create: ElementReferenceProperty.CreateReference): void {
+        this.dispatchEvent(
+            new CustomEvent<ElementReferenceProperty.CreateReference>('property-create', {
+                detail: {
+                    ...create
+                }
+            })
+        );
+    }
+
+    protected onDelete(elementId: string): void {
+        this.dispatchEvent(
+            new CustomEvent<PropertyDeleteEventDetail>('property-delete', {
+                detail: {
+                    elementId
+                }
+            })
+        );
     }
 }
 

@@ -7,5 +7,10 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-export * from './property-palette.component';
-export * from './property-palette.standalone';
+export interface VSCodeApi {
+    postMessage: (message: any) => void;
+}
+
+declare global {
+    function acquireVsCodeApi(): VSCodeApi;
+}

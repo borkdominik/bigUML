@@ -6,10 +6,5 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { Button } from '@vscode/webview-ui-toolkit';
 
-declare global {
-    interface HTMLElementTagNameMap {
-        'vscode-button': Button;
-    }
-}
+export const DATA_CONTEXT_MENU = 'data-context-menu';

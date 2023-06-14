@@ -7,10 +7,12 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
+import { SetPropertyPaletteAction } from '@borkdominik-biguml/uml-common';
+import { Action, IActionHandler } from '@eclipse-glsp/client';
 import { inject, injectable, postConstruct } from 'inversify';
 import * as vscode from 'vscode';
 import { TYPES } from '../../di.types';
-import { getBundleUri } from '../../utilities/webview';
+import { getBundleUri, getUri } from '../../utilities/webview';
 
 export interface ResolvedWebview {
     webviewView: vscode.WebviewView;
@@ -19,7 +21,7 @@ export interface ResolvedWebview {
 }
 
 @injectable()
-export class PropertyPaletteProvider implements vscode.WebviewViewProvider {
+export class PropertyPaletteProvider implements vscode.WebviewViewProvider, IActionHandler {
     protected resolvedWebview?: ResolvedWebview;
 
     @inject(TYPES.ExtensionContext)
@@ -27,15 +29,17 @@ export class PropertyPaletteProvider implements vscode.WebviewViewProvider {
 
     @postConstruct()
     initialize(): void {
-        let counter = 0;
         vscode.window.registerWebviewViewProvider('bigUML.panel.property-palette', this);
 
         vscode.commands.registerCommand('bigUML.test', () => {
-            this.resolvedWebview?.webviewView.webview.postMessage({
-                type: 'notification',
-                text: `Counter ${counter++}`
-            });
+            console.log('TEST');
         });
+    }
+
+    handle(action: Action): void {
+        if (SetPropertyPaletteAction.is(action)) {
+            this.postMessage(action);
+        }
     }
 
     resolveWebviewView(
@@ -60,6 +64,8 @@ export class PropertyPaletteProvider implements vscode.WebviewViewProvider {
             enableScripts: true
         };
 
+        const codiconsCSSUri = getUri(webview, extensionUri, ['node_modules', '@vscode/codicons', 'dist', 'codicon.css']);
+        const bundleCSSUri = getBundleUri(webview, extensionUri, ['property-palette', 'bundle.css']);
         const bundleJSUri = getBundleUri(webview, extensionUri, ['property-palette', 'bundle.js']);
 
         webview.html = `<!DOCTYPE html>
@@ -69,10 +75,11 @@ export class PropertyPaletteProvider implements vscode.WebviewViewProvider {
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <meta http-equiv="Content-Security-Policy" 
                 content="default-src http://*.fontawesome.com  ${webview.cspSource} data: 'unsafe-inline' 'unsafe-eval';">
+            <link id="codicon-css" href="${codiconsCSSUri}" rel="stylesheet" />
+            <link id="bundle-css" href="${bundleCSSUri}" rel="stylesheet" />
             <title>Property Palette</title>
         </head>
         <body>
-            Hello World
             <biguml-property-palette id="property-palette"></biguml-property-palette>
             <script type="module">
                 import { initializeConnection } from "${bundleJSUri}";
@@ -81,5 +88,14 @@ export class PropertyPaletteProvider implements vscode.WebviewViewProvider {
             </script>
         </body>
         </html>`;
+    }
+
+    protected postMessage(message: any): void {
+        if (this.resolvedWebview === undefined) {
+            console.warn('webview is not ready to post message');
+            return;
+        }
+
+        this.resolvedWebview.webviewView.webview.postMessage(message);
     }
 }

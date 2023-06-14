@@ -27,7 +27,6 @@ const componentsConfig: es.BuildOptions = {
         '.gif': 'dataurl',
         '.ttf': 'dataurl'
     },
-    assetNames: 'resources/[name]-[hash]', //-[hash]
     plugins: []
 };
 

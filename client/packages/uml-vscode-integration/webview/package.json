@@ -41,10 +41,12 @@
     "@vscode/webview-ui-toolkit": "^1.2.2",
     "inversify": "^5.1.1",
     "lit": "^2.7.4",
+    "lodash": "^4.17.21",
     "reflect-metadata": "^0.1.13",
     "sprotty-vscode-webview": "next"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.195",
     "esbuild": "^0.17.10",
     "eslint": "^8.15.0",
     "ts-lit-plugin": "^1.2.1"

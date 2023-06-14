@@ -7,8 +7,9 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { provideVSCodeDesignSystem, vsCodeButton } from '@vscode/webview-ui-toolkit';
+import { LitElement } from 'lit';
+import { codiconStyle, defaultStyle } from './style';
 
-export function initializeVSCode(): void {
-    provideVSCodeDesignSystem().register(vsCodeButton());
+export class BigUMLComponent extends LitElement {
+    static override styles = [codiconStyle, defaultStyle];
 }

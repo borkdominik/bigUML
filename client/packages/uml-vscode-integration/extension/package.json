@@ -157,6 +157,12 @@
           "group": "navigation"
         }
       ],
+      "webview/context": [
+        {
+          "command": "bigUML.test",
+          "when": "webviewId == 'bigUML.panel.property-palette' && webviewSection == 'property-item-reference-menu'"
+        }
+      ],
       "file/newFile": [
         {
           "command": "bigUML.model.newEmpty",
@@ -205,10 +211,10 @@
       ]
     },
     "viewsContainers": {
-      "panel": [
+      "activitybar": [
         {
           "id": "bigUML-panel",
-          "icon": "./resources/logo.png",
+          "icon": "./resources/file_icons/dark/uml.svg",
           "title": "UML"
         }
       ]
@@ -224,6 +230,7 @@
     "@borkdominik-biguml/uml-glsp": "*",
     "@borkdominik-biguml/uml-integration": "*",
     "@borkdominik-biguml/uml-modelserver": "*",
+    "@eclipse-glsp/client": "next",
     "@eclipse-glsp/vscode-integration": "next",
     "@vscode/codicons": "^0.0.25",
     "inversify": "5.1.1",

@@ -6,6 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
+import { IActionDispatcher } from '@eclipse-glsp/client';
 import {
     Action,
     ActionMessage,
@@ -30,10 +31,25 @@ export class UVGlspConnector<TDocument extends vscode.CustomDocument = vscode.Cu
         return Array.from(this.documentMap.keys());
     }
 
-    constructor(@inject(TYPES.GlspServer) glspServer: GlspVscodeServer) {
+    constructor(
+        @inject(TYPES.GlspServer) glspServer: GlspVscodeServer,
+        @inject(TYPES.IActionDispatcher) protected readonly actionDispatcher: IActionDispatcher
+    ) {
         super({
             server: glspServer,
-            logging: false
+            logging: false,
+            onBeforeReceiveMessageFromClient: (message, callback) => {
+                callback(message, true);
+                if (ActionMessage.is(message)) {
+                    this.actionDispatcher.dispatch(message.action);
+                }
+            },
+            onBeforeReceiveMessageFromServer: (message, callback) => {
+                callback(message, true);
+                if (ActionMessage.is(message)) {
+                    this.actionDispatcher.dispatch(message.action);
+                }
+            }
         });
     }
 

@@ -24,6 +24,7 @@ import { Checkbox as VSCodeCheckbox, Dropdown as VSCodeDropdown, TextField as VS
 import { css, html, nothing, TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { keyed } from 'lit/directives/keyed.js';
+import { when } from 'lit/directives/when.js';
 import { groupBy } from 'lodash';
 import { BigUMLComponent } from '../webcomponents/component';
 import { PropertyDeleteEventDetail } from './property-palette-reference.component';
@@ -42,16 +43,23 @@ export class PropertyPalette extends BigUMLComponent {
                 margin-bottom: 6px;
             }
 
-            vscode-data-grid-row > vscode-data-grid-cell:first-child {
-                padding-left: 0;
+            .grid {
+                display: grid;
+                grid-template-columns: [label-start] 1fr [value-start] 1fr;
+                gap: 6px 6px;
+                justify-items: stretch;
+                align-items: center;
+                margin: 6px 0;
             }
 
-            vscode-data-grid-row > vscode-data-grid-cell:last-child {
-                padding-right: 0;
+            .grid-label {
+                grid-column-start: label-start;
             }
 
-            vscode-data-grid-row vscode-dropdown {
-                width: 100%;
+            .grid-value {
+                grid-column-start: value-start;
+                display: flex;
+                flex-direction: column;
             }
 
             .reference-item .create-reference {
@@ -128,8 +136,16 @@ export class PropertyPalette extends BigUMLComponent {
                 <span slot="start" class="codicon codicon-search"></span>
             </vscode-text-field>
             <vscode-divider></vscode-divider>
-            <vscode-data-grid grid-template-columns="1fr 1fr"> ${gridTemplates} </vscode-data-grid>
-            <vscode-divider></vscode-divider>
+            ${when(
+                gridTemplates.length > 0,
+                () => html`<div class="grid">${gridTemplates}</div>`,
+                () => html`${nothing}`
+            )}
+            ${when(
+                gridTemplates.length > 0 && referenceTemplates.length > 0,
+                () => html`<vscode-divider></vscode-divider>`,
+                () => html`${nothing}`
+            )}
             ${referenceTemplates}
         </div>`;
     }
@@ -140,12 +156,10 @@ export class PropertyPalette extends BigUMLComponent {
             this.onPropertyChange(item, target.value);
         };
 
-        return html`<vscode-data-grid-row>
-            <vscode-data-grid-cell grid-column="1">${item.label}</vscode-data-grid-cell>
-            <vscode-data-grid-cell grid-column="2">
+        return html`<div class="grid-label">${item.label}</div>
+            <div class="grid-value">
                 <vscode-text-field class="text-item" .value="${item.text}" @change="${onChange}"></vscode-text-field>
-            </vscode-data-grid-cell>
-        </vscode-data-grid-row>`;
+            </div>`;
     }
 
     protected checkboxTemplate(item: ElementBoolProperty): TemplateResult<1> {
@@ -154,12 +168,10 @@ export class PropertyPalette extends BigUMLComponent {
             this.onPropertyChange(item, '' + target.checked);
         };
 
-        return html`<vscode-data-grid-row>
-            <vscode-data-grid-cell grid-column="1">${item.label}</vscode-data-grid-cell>
-            <vscode-data-grid-cell grid-column="2">
+        return html`<div class="grid-label">${item.label}</div>
+            <div class="grid-value">
                 <vscode-checkbox class="bool-item" ?checked="${item.value}" @change="${onChange}"></vscode-checkbox>
-            </vscode-data-grid-cell>
-        </vscode-data-grid-row>`;
+            </div>`;
     }
 
     protected dropdownTemplate(item: ElementChoiceProperty): TemplateResult<1> {
@@ -168,14 +180,12 @@ export class PropertyPalette extends BigUMLComponent {
             this.onPropertyChange(item, target.value);
         };
 
-        return html`<vscode-data-grid-row>
-            <vscode-data-grid-cell grid-column="1">${item.label}</vscode-data-grid-cell>
-            <vscode-data-grid-cell grid-column="2">
+        return html`<div class="grid-label">${item.label}</div>
+            <div class="grid-value">
                 <vscode-dropdown .value="${item.choice}" @change="${onChange}">
                     ${item.choices.map(choice => html`<vscode-option .value="${choice.value}">${choice.label}</vscode-option>`)}
                 </vscode-dropdown>
-            </vscode-data-grid-cell>
-        </vscode-data-grid-row>`;
+            </div>`;
     }
 
     protected referenceTemplate(item: ElementReferenceProperty): TemplateResult<1> {

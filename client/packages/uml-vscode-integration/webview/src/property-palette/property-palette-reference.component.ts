@@ -71,7 +71,7 @@ export class PropertyPaletteReference extends BigUMLComponent {
 
     override render(): TemplateResult<1> {
         if (this.item === undefined) {
-            return html`<span>Item not available.</span>`;
+            return html`<div>Item not available.</div>`;
         }
 
         return html`${this.renderHeader(this.item)} ${this.renderBody(this.item)}`;
@@ -87,7 +87,7 @@ export class PropertyPaletteReference extends BigUMLComponent {
                         data-vscode-context='{"webviewSection": "property-item-reference-menu", "preventDefaultContextMenuItems": true}'
                     >
                         <vscode-button appearance="icon">
-                            <span class="codicon codicon-ellipsis"></span>
+                            <div class="codicon codicon-ellipsis"></div>
                         </vscode-button>
                     </biguml-vscode-menu>
                 </div>
@@ -99,9 +99,9 @@ export class PropertyPaletteReference extends BigUMLComponent {
         return html`<div class="body">
             ${item.references.map(
                 ref => html`<div class="reference-item">
-                    <span class="label">${ref.label}</span>
+                    <div class="label">${ref.label}</div>
                     <vscode-button appearance="icon" @click="${() => this.onDelete(ref.elementId)}">
-                        <span class="codicon codicon-trash"></span>
+                        <div class="codicon codicon-trash"></div>
                     </vscode-button>
                 </div>`
             )}

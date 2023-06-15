@@ -22,8 +22,9 @@ import {
 import { Action, DeleteElementOperation } from '@eclipse-glsp/protocol';
 import { Checkbox as VSCodeCheckbox, Dropdown as VSCodeDropdown, TextField as VSCodeTextField } from '@vscode/webview-ui-toolkit';
 import { css, html, nothing, TemplateResult } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
 import { keyed } from 'lit/directives/keyed.js';
+import { groupBy } from 'lodash';
 import { BigUMLComponent } from '../webcomponents/component';
 import { PropertyDeleteEventDetail } from './property-palette-reference.component';
 
@@ -66,6 +67,9 @@ export class PropertyPalette extends BigUMLComponent {
     @property()
     properties?: ElementProperties = undefined;
 
+    @state()
+    protected searchText?: string;
+
     override render(): TemplateResult<1> {
         return html`${keyed(this.properties?.elementId, html`<div>${this.headerTemplate()} ${this.bodyTemplate()}</div>`)}`;
     }
@@ -82,7 +86,19 @@ export class PropertyPalette extends BigUMLComponent {
             return html`<span>Properties are not available.</span>`;
         }
 
-        const rows = this.properties.items.map(item => {
+        const items = this.properties.items;
+        const filteredItems = items.filter(item => {
+            const label: string = (item as any)['label'];
+
+            if (label !== undefined && this.searchText !== undefined) {
+                return label.toLowerCase().includes(this.searchText.toLocaleLowerCase());
+            }
+
+            return true;
+        });
+        const { references: referenceItems, other: gridItems } = extractReferences(filteredItems);
+
+        const gridTemplates = gridItems.map(item => {
             if (ElementTextProperty.is(item)) {
                 return this.textFieldTemplate(item);
             } else if (ElementBoolProperty.is(item)) {
@@ -91,25 +107,30 @@ export class PropertyPalette extends BigUMLComponent {
                 return this.dropdownTemplate(item);
             }
 
-            return html``;
+            return html`${nothing}`;
         });
 
-        const references = this.properties.items.map(item => {
+        const referenceTemplates = referenceItems.map(item => {
             if (ElementReferenceProperty.is(item)) {
-                return this.refereneTemplate(item);
+                return this.referenceTemplate(item);
             }
 
-            return html``;
+            return html`${nothing}`;
         });
 
         return html`<div class="body">
-            <vscode-text-field class="search" placeholder="Search">
+            <vscode-text-field
+                class="search"
+                placeholder="Search"
+                .value="${this.searchText}"
+                @input="${(event: any) => (this.searchText = event.target?.value)}"
+            >
                 <span slot="start" class="codicon codicon-search"></span>
             </vscode-text-field>
             <vscode-divider></vscode-divider>
-            <vscode-data-grid grid-template-columns="1fr 1fr"> ${rows} </vscode-data-grid>
+            <vscode-data-grid grid-template-columns="1fr 1fr"> ${gridTemplates} </vscode-data-grid>
             <vscode-divider></vscode-divider>
-            ${references}
+            ${referenceTemplates}
         </div>`;
     }
 
@@ -157,7 +178,7 @@ export class PropertyPalette extends BigUMLComponent {
         </vscode-data-grid-row>`;
     }
 
-    protected refereneTemplate(item: ElementReferenceProperty): TemplateResult<1> {
+    protected referenceTemplate(item: ElementReferenceProperty): TemplateResult<1> {
         return html`<biguml-property-palette-reference
             .item="${item}"
             @property-create="${this.onPropertyCreate}"
@@ -165,7 +186,7 @@ export class PropertyPalette extends BigUMLComponent {
         ></biguml-property-palette-reference>`;
     }
 
-    protected onPropertyChange(item: ElementProperty, value: string) {
+    protected onPropertyChange(item: ElementProperty, value: string): void {
         this.dispatchEvent(
             new CustomEvent<Action>('dispatch-action', {
                 detail: UpdateElementPropertyAction.create({
@@ -192,6 +213,15 @@ export class PropertyPalette extends BigUMLComponent {
             })
         );
     }
+}
+
+function extractReferences(items: ElementProperty[]): { references: ElementReferenceProperty[]; other: ElementProperty[] } {
+    const group = groupBy(items, item => item.type === 'REFERENCE');
+
+    return {
+        references: (group['true'] as ElementReferenceProperty[]) ?? [],
+        other: group['false'] ?? []
+    };
 }
 
 declare global {

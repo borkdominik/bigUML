@@ -9,31 +9,16 @@
 
 import { SetPropertyPaletteAction } from '@borkdominik-biguml/uml-common';
 import { Action, IActionHandler } from '@eclipse-glsp/client';
-import { inject, injectable, postConstruct } from 'inversify';
-import * as vscode from 'vscode';
-import { TYPES } from '../../di.types';
+import { injectable } from 'inversify';
 import { getBundleUri, getUri } from '../../utilities/webview';
-
-export interface ResolvedWebview {
-    webviewView: vscode.WebviewView;
-    context: vscode.WebviewViewResolveContext<unknown>;
-    token: vscode.CancellationToken;
-}
+import { ProviderWebviewContext, UVWebviewProvider } from '../../vscode/webview/webview-provider';
 
 @injectable()
-export class PropertyPaletteProvider implements vscode.WebviewViewProvider, IActionHandler {
-    protected resolvedWebview?: ResolvedWebview;
+export class PropertyPaletteProvider extends UVWebviewProvider implements IActionHandler {
+    static ID = 'bigUML.panel.property-palette';
 
-    @inject(TYPES.ExtensionContext)
-    protected readonly extension: vscode.ExtensionContext;
-
-    @postConstruct()
-    initialize(): void {
-        vscode.window.registerWebviewViewProvider('bigUML.panel.property-palette', this);
-
-        vscode.commands.registerCommand('bigUML.test', () => {
-            console.log('TEST');
-        });
+    get id(): string {
+        return PropertyPaletteProvider.ID;
     }
 
     handle(action: Action): void {
@@ -42,27 +27,9 @@ export class PropertyPaletteProvider implements vscode.WebviewViewProvider, IAct
         }
     }
 
-    resolveWebviewView(
-        webviewView: vscode.WebviewView,
-        context: vscode.WebviewViewResolveContext<unknown>,
-        token: vscode.CancellationToken
-    ): void | Thenable<void> {
+    protected resolveHTML(providerContext: ProviderWebviewContext): void {
+        const webview = providerContext.webviewView.webview;
         const extensionUri = this.extension.extensionUri;
-        const webview = webviewView.webview;
-
-        this.resolvedWebview = {
-            webviewView,
-            context,
-            token
-        };
-
-        webview.onDidReceiveMessage((message: any) => {
-            console.log('EXTENSION Got message', message);
-        });
-
-        webview.options = {
-            enableScripts: true
-        };
 
         const codiconsCSSUri = getUri(webview, extensionUri, ['node_modules', '@vscode/codicons', 'dist', 'codicon.css']);
         const bundleCSSUri = getBundleUri(webview, extensionUri, ['property-palette', 'bundle.css']);
@@ -84,14 +51,5 @@ export class PropertyPaletteProvider implements vscode.WebviewViewProvider, IAct
             <script type="module" src="${bundleJSUri}"></script>
         </body>
         </html>`;
-    }
-
-    protected postMessage(message: any): void {
-        if (this.resolvedWebview === undefined) {
-            console.warn('webview is not ready to post message');
-            return;
-        }
-
-        this.resolvedWebview.webviewView.webview.postMessage(message);
     }
 }

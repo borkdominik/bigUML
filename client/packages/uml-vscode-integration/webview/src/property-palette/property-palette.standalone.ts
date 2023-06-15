@@ -9,19 +9,19 @@
 
 import '../../css/reset.css';
 
-import { ElementProperties, ElementReferenceProperty, SetPropertyPaletteAction } from '@borkdominik-biguml/uml-common';
+import { ElementProperties, SetPropertyPaletteAction } from '@borkdominik-biguml/uml-common';
+import { Action } from '@eclipse-glsp/protocol';
 import { html, TemplateResult } from 'lit';
 import { customElement, query, state } from 'lit/decorators.js';
 import { DATA_CONTEXT_MENU } from '../vscode/constants';
 import { initializeToolkit } from '../vscode/toolkit';
-import { VSCodeApi } from '../vscode/vscode-api';
+import { VSCodeConnection } from '../vscode/vscode-api';
 import { BigUMLComponent } from '../webcomponents/component';
-import { PropertyDeleteEventDetail } from './property-palette-reference.component';
-import { PropertyChangeEventDetail, PropertyPalette } from './property-palette.component';
+import { PropertyPalette } from './property-palette.component';
 
 @customElement('biguml-property-palette-standalone')
 export class PropertyPaletteStandalone extends BigUMLComponent {
-    protected vscode: VSCodeApi;
+    protected connection = VSCodeConnection.instance();
 
     @query('biguml-property-palette')
     protected readonly component: PropertyPalette;
@@ -32,8 +32,6 @@ export class PropertyPaletteStandalone extends BigUMLComponent {
     override connectedCallback(): void {
         super.connectedCallback();
         initializeToolkit();
-
-        this.vscode = acquireVsCodeApi();
 
         document.addEventListener('contextmenu', event => {
             const path = event.composedPath();
@@ -46,40 +44,29 @@ export class PropertyPaletteStandalone extends BigUMLComponent {
             }
         });
 
-        window.addEventListener('message', this.onMessage.bind(this));
-    }
-
-    protected onMessage(event: MessageEvent<any>) {
-        if (SetPropertyPaletteAction.is(event.data)) {
-            this.properties = event.data.palette;
-        } else {
-            console.warn('Unknown message', event);
-        }
-    }
-
-    protected postMessage(message: any) {
-        this.vscode.postMessage(message);
+        this.connection.listen(this.onConnectionAction.bind(this), Action.is);
     }
 
     protected override render(): TemplateResult<1> {
         return html`<biguml-property-palette
             .properties="${this.properties}"
-            @property-change="${this.onPropertyChanged}"
-            @property-create="${this.onPropertyCreate}"
-            @property-delete="${this.onPropertyDelete}"
+            @dispatch-action="${this.onDispatchAction}"
         ></biguml-property-palette>`;
     }
 
-    protected onPropertyChanged(event: CustomEvent<PropertyChangeEventDetail>) {
-        console.log('Custom Event', event);
+    protected onConnectionAction(action: Action) {
+        if (SetPropertyPaletteAction.is(action)) {
+            this.properties = action.palette;
+        } else {
+            console.warn('Unsupported action', action);
+        }
     }
 
-    protected onPropertyCreate(event: CustomEvent<ElementReferenceProperty.CreateReference>): void {
-        console.log('OUTSIDE', event);
-    }
-
-    protected onPropertyDelete(event: CustomEvent<PropertyDeleteEventDetail>): void {
-        console.log('OUTSIDE', event);
+    protected onDispatchAction(event: CustomEvent<Action>) {
+        this.connection.post<Action>({
+            command: 'dispatch-action',
+            payload: event.detail
+        });
     }
 }
 

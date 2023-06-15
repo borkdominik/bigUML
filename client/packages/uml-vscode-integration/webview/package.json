@@ -43,7 +43,8 @@
     "lit": "^2.7.4",
     "lodash": "^4.17.21",
     "reflect-metadata": "^0.1.13",
-    "sprotty-vscode-webview": "next"
+    "sprotty-vscode-webview": "next",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.195",

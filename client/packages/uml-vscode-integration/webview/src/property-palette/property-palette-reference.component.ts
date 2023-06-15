@@ -16,7 +16,7 @@ import { customElement, property } from 'lit/decorators.js';
 import { BigUMLComponent } from '../webcomponents/component';
 
 export interface PropertyDeleteEventDetail {
-    elementId: string;
+    elementIds: string[];
 }
 
 @customElement('biguml-property-palette-reference')
@@ -96,8 +96,6 @@ export class PropertyPaletteReference extends BigUMLComponent {
     }
 
     protected renderBody(item: ElementReferenceProperty): TemplateResult<1> {
-        const onCreate = () => this.onCreate(item.creates[0]);
-
         return html`<div class="body">
             ${item.references.map(
                 ref => html`<div class="reference-item">
@@ -127,7 +125,7 @@ export class PropertyPaletteReference extends BigUMLComponent {
         this.dispatchEvent(
             new CustomEvent<PropertyDeleteEventDetail>('property-delete', {
                 detail: {
-                    elementId
+                    elementIds: [elementId]
                 }
             })
         );

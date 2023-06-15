@@ -16,19 +16,16 @@ import {
     ElementProperties,
     ElementProperty,
     ElementReferenceProperty,
-    ElementTextProperty
+    ElementTextProperty,
+    UpdateElementPropertyAction
 } from '@borkdominik-biguml/uml-common';
+import { Action, DeleteElementOperation } from '@eclipse-glsp/protocol';
 import { Checkbox as VSCodeCheckbox, Dropdown as VSCodeDropdown, TextField as VSCodeTextField } from '@vscode/webview-ui-toolkit';
 import { css, html, nothing, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { keyed } from 'lit/directives/keyed.js';
 import { BigUMLComponent } from '../webcomponents/component';
 import { PropertyDeleteEventDetail } from './property-palette-reference.component';
-
-export interface PropertyChangeEventDetail {
-    elementId: string;
-    propertyId: string;
-    value: string;
-}
 
 @customElement('biguml-property-palette')
 export class PropertyPalette extends BigUMLComponent {
@@ -70,28 +67,28 @@ export class PropertyPalette extends BigUMLComponent {
     properties?: ElementProperties = undefined;
 
     override render(): TemplateResult<1> {
-        return html`<div>${this.renderHeader()} ${this.renderBody()}</div>`;
+        return html`${keyed(this.properties?.elementId, html`<div>${this.headerTemplate()} ${this.bodyTemplate()}</div>`)}`;
     }
 
-    protected renderHeader(): TemplateResult<1> {
+    protected headerTemplate(): TemplateResult<1> {
         return html`<header>
             <h3 class="title">Properties</h3>
             <h4 class="secondary-title">${this.properties?.label ?? nothing}</h4>
         </header>`;
     }
 
-    protected renderBody(): TemplateResult<1> {
+    protected bodyTemplate(): TemplateResult<1> {
         if (this.properties === undefined) {
             return html`<span>Properties are not available.</span>`;
         }
 
         const rows = this.properties.items.map(item => {
             if (ElementTextProperty.is(item)) {
-                return this.renderTextFieldElement(item);
+                return this.textFieldTemplate(item);
             } else if (ElementBoolProperty.is(item)) {
-                return this.renderCheckboxElement(item);
+                return this.checkboxTemplate(item);
             } else if (ElementChoiceProperty.is(item)) {
-                return this.renderDropdownElement(item);
+                return this.dropdownTemplate(item);
             }
 
             return html``;
@@ -99,7 +96,7 @@ export class PropertyPalette extends BigUMLComponent {
 
         const references = this.properties.items.map(item => {
             if (ElementReferenceProperty.is(item)) {
-                return this.renderReferenceElement(item);
+                return this.refereneTemplate(item);
             }
 
             return html``;
@@ -116,7 +113,7 @@ export class PropertyPalette extends BigUMLComponent {
         </div>`;
     }
 
-    protected renderTextFieldElement(item: ElementTextProperty): TemplateResult<1> {
+    protected textFieldTemplate(item: ElementTextProperty): TemplateResult<1> {
         const onChange = (event: CustomEvent): void => {
             const target = event.target as VSCodeTextField;
             this.onPropertyChange(item, target.value);
@@ -130,7 +127,7 @@ export class PropertyPalette extends BigUMLComponent {
         </vscode-data-grid-row>`;
     }
 
-    protected renderCheckboxElement(item: ElementBoolProperty): TemplateResult<1> {
+    protected checkboxTemplate(item: ElementBoolProperty): TemplateResult<1> {
         const onChange = (event: CustomEvent): void => {
             const target = event.target as VSCodeCheckbox;
             this.onPropertyChange(item, '' + target.checked);
@@ -144,7 +141,7 @@ export class PropertyPalette extends BigUMLComponent {
         </vscode-data-grid-row>`;
     }
 
-    protected renderDropdownElement(item: ElementChoiceProperty): TemplateResult<1> {
+    protected dropdownTemplate(item: ElementChoiceProperty): TemplateResult<1> {
         const onChange = (event: CustomEvent): void => {
             const target = event.target as VSCodeDropdown;
             this.onPropertyChange(item, target.value);
@@ -160,7 +157,7 @@ export class PropertyPalette extends BigUMLComponent {
         </vscode-data-grid-row>`;
     }
 
-    protected renderReferenceElement(item: ElementReferenceProperty): TemplateResult<1> {
+    protected refereneTemplate(item: ElementReferenceProperty): TemplateResult<1> {
         return html`<biguml-property-palette-reference
             .item="${item}"
             @property-create="${this.onPropertyCreate}"
@@ -170,22 +167,30 @@ export class PropertyPalette extends BigUMLComponent {
 
     protected onPropertyChange(item: ElementProperty, value: string) {
         this.dispatchEvent(
-            new CustomEvent<PropertyChangeEventDetail>('property-change', {
-                detail: {
+            new CustomEvent<Action>('dispatch-action', {
+                detail: UpdateElementPropertyAction.create({
                     elementId: item.elementId,
                     propertyId: item.propertyId,
                     value
-                }
+                })
             })
         );
     }
 
     protected onPropertyCreate(event: CustomEvent<ElementReferenceProperty.CreateReference>): void {
-        this.dispatchEvent(new CustomEvent('property-create', event));
+        this.dispatchEvent(
+            new CustomEvent<Action>('dispatch-action', {
+                detail: event.detail.action
+            })
+        );
     }
 
     protected onPropertyDelete(event: CustomEvent<PropertyDeleteEventDetail>): void {
-        this.dispatchEvent(new CustomEvent('property-delete', event));
+        this.dispatchEvent(
+            new CustomEvent<Action>('dispatch-action', {
+                detail: DeleteElementOperation.create(event.detail.elementIds)
+            })
+        );
     }
 }
 

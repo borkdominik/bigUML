@@ -54,7 +54,7 @@ public class ClassPropertyMapper extends BaseDiagramElementPropertyMapper<Class>
                new ElementReferencePropertyItem.CreateReference("Property",
                   new CreateNodeOperation(UmlClass_Property.typeId(), elementId))))
          .reference(
-            UmlClass_Class.Property.OWNED_ATTRIBUTES,
+            UmlClass_Class.Property.OWNED_OPERATIONS,
             "Owned Operation",
             OperationUtils.asReferences(source.getOwnedOperations(), idGenerator),
             List.of(

@@ -38,7 +38,7 @@ export const defaultStyle = css`
         opacity: 0.5;
     }
 
-    .helper-text {
+    .hint-text {
         opacity: 0.5;
     }
 `;

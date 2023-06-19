@@ -10,14 +10,16 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.shared.model;
 
-public class OrderPosition {
-   public final Integer oldPosition;
-   public final Integer newPosition;
+public class NewListIndex {
+   public final String elementId;
+   public final Integer oldIndex;
+   public final Integer newIndex;
 
-   public OrderPosition(final Integer oldPosition, final Integer newPosition) {
+   public NewListIndex(final String elementId, final Integer oldIndex, final Integer newIndex) {
       super();
-      this.oldPosition = oldPosition;
-      this.newPosition = newPosition;
+      this.elementId = elementId;
+      this.oldIndex = oldIndex;
+      this.newIndex = newIndex;
    }
 
 }

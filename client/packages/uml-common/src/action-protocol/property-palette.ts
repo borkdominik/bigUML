@@ -82,7 +82,7 @@ export namespace ElementReferenceProperty {
         elementId: string;
         label: string;
         name?: string;
-        isReadonly: boolean;
+        hint?: string;
     }
 
     export interface CreateReference {

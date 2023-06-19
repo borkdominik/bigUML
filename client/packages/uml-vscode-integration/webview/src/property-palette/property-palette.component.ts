@@ -17,6 +17,7 @@ import {
     ElementProperty,
     ElementReferenceProperty,
     ElementTextProperty,
+    RequestPropertyPaletteAction,
     UpdateElementPropertyAction
 } from '@borkdominik-biguml/uml-common';
 import { Action, DeleteElementOperation } from '@eclipse-glsp/protocol';
@@ -27,7 +28,7 @@ import { keyed } from 'lit/directives/keyed.js';
 import { when } from 'lit/directives/when.js';
 import { groupBy } from 'lodash';
 import { BigUMLComponent } from '../webcomponents/component';
-import { PropertyDeleteEventDetail, PropertyNameChangeDetail } from './property-palette-reference.component';
+import { PropertyDeleteEventDetail, PropertyNameChangeDetail, PropertyOrderDetail } from './property-palette-reference.component';
 
 @customElement('biguml-property-palette')
 export class PropertyPalette extends BigUMLComponent {
@@ -194,6 +195,8 @@ export class PropertyPalette extends BigUMLComponent {
     protected referenceTemplate(item: ElementReferenceProperty): TemplateResult<1> {
         return html`<biguml-property-palette-reference
             .item="${item}"
+            @property-navigate="${this.onPropertyNavigate}"
+            @property-order-change="${this.onOrderChange}"
             @property-name-change="${this.onPropertyNameChange}"
             @property-create="${this.onPropertyCreate}"
             @property-delete="${this.onPropertyDelete}"
@@ -209,6 +212,32 @@ export class PropertyPalette extends BigUMLComponent {
                     elementId,
                     propertyId,
                     value
+                })
+            })
+        );
+    }
+
+    protected onOrderChange(event: CustomEvent<PropertyOrderDetail>): void {
+        const { element, updates } = event.detail;
+
+        this.dispatchEvent(
+            new CustomEvent<Action>('dispatch-action', {
+                detail: UpdateElementPropertyAction.create({
+                    elementId: element.elementId,
+                    propertyId: `${element.propertyId}_INDEX`,
+                    value: JSON.stringify(updates)
+                })
+            })
+        );
+    }
+
+    protected onPropertyNavigate(item: ElementReferenceProperty.Reference): void {
+        const { elementId } = item;
+
+        this.dispatchEvent(
+            new CustomEvent<Action>('dispatch-action', {
+                detail: RequestPropertyPaletteAction.create({
+                    elementId
                 })
             })
         );

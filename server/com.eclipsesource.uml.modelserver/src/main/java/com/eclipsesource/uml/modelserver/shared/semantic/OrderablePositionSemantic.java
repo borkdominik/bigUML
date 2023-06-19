@@ -16,7 +16,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 
-import com.eclipsesource.uml.modelserver.shared.model.OrderPosition;
+import com.eclipsesource.uml.modelserver.shared.model.NewListIndex;
 
 public interface OrderablePositionSemantic {
 
@@ -28,25 +28,35 @@ public interface OrderablePositionSemantic {
     * @param positions  The new positions
     */
    default <TElement extends EObject> void reorder(final EList<TElement> elements,
-      final List<OrderPosition> positions) {
+      final List<NewListIndex> positions) {
       var queue = new LinkedBlockingQueue<TElement>();
 
-      positions.sort((a, b) -> a.oldPosition - b.oldPosition);
-
-      if (positions.size() > 1) {
-         if (positions.get(0).oldPosition < positions.get(0).newPosition) {
-            positions.sort((a, b) -> b.oldPosition - a.oldPosition);
-         }
+      for (var position : positions) {
+         queue.add(elements.get(position.oldIndex));
       }
 
-      positions.forEach(order -> {
-         queue.add(elements.get(order.oldPosition));
+      positions.forEach(position -> {
+         var element = queue.poll();
+         elements.move(position.newIndex, element);
       });
-
+      /*-
+      
+      positions.sort((a, b) -> a.oldIndex - b.oldIndex);
+      
+      if (positions.size() > 1) {
+         if (positions.get(0).oldIndex < positions.get(0).newIndex) {
+            positions.sort((a, b) -> b.oldIndex - a.oldIndex);
+         }
+      }
+      
+      positions.forEach(order -> {
+         queue.add(elements.get(order.oldIndex));
+      });
+      
       positions.forEach(order -> {
          var element = queue.poll();
-         var newPosition = order.newPosition;
-
+         var newPosition = order.newIndex;
+      
          if (newPosition >= elements.size()) {
             elements.move(elements.size() - 1, 0);
             elements.move(0, element);
@@ -56,8 +66,9 @@ public interface OrderablePositionSemantic {
          } else {
             elements.move(newPosition, element);
          }
-
+      
       });
+      */
 
    }
 }

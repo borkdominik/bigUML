@@ -54,7 +54,7 @@ export class PropertyPaletteStandalone extends BigUMLComponent {
         ></biguml-property-palette>`;
     }
 
-    protected onConnectionAction(action: Action) {
+    protected onConnectionAction(action: Action): void {
         if (SetPropertyPaletteAction.is(action)) {
             this.properties = action.palette;
         } else {
@@ -62,7 +62,7 @@ export class PropertyPaletteStandalone extends BigUMLComponent {
         }
     }
 
-    protected onDispatchAction(event: CustomEvent<Action>) {
+    protected onDispatchAction(event: CustomEvent<Action>): void {
         this.connection.post<Action>({
             command: 'dispatch-action',
             payload: event.detail

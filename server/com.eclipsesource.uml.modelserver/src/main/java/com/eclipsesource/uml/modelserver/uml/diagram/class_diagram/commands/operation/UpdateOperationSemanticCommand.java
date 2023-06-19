@@ -59,7 +59,7 @@ public final class UpdateOperationSemanticCommand
          semanticElement.setConcurrency(arg);
       });
 
-      updateArgument.parameterPosition().ifPresent(arg -> {
+      updateArgument.parameterIndex().ifPresent(arg -> {
          reorder(semanticElement.getOwnedParameters(), arg);
       });
    }

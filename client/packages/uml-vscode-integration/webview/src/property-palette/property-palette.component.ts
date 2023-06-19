@@ -27,7 +27,7 @@ import { keyed } from 'lit/directives/keyed.js';
 import { when } from 'lit/directives/when.js';
 import { groupBy } from 'lodash';
 import { BigUMLComponent } from '../webcomponents/component';
-import { PropertyDeleteEventDetail } from './property-palette-reference.component';
+import { PropertyDeleteEventDetail, PropertyNameChangeDetail } from './property-palette-reference.component';
 
 @customElement('biguml-property-palette')
 export class PropertyPalette extends BigUMLComponent {
@@ -58,6 +58,9 @@ export class PropertyPalette extends BigUMLComponent {
 
             .grid-value {
                 grid-column-start: value-start;
+            }
+
+            .grid-flex {
                 display: flex;
                 flex-direction: column;
             }
@@ -72,7 +75,7 @@ export class PropertyPalette extends BigUMLComponent {
         `
     ];
 
-    @property()
+    @property({ type: Object })
     properties?: ElementProperties = undefined;
 
     @state()
@@ -85,13 +88,13 @@ export class PropertyPalette extends BigUMLComponent {
     protected headerTemplate(): TemplateResult<1> {
         return html`<header>
             <h3 class="title">Properties</h3>
-            <h4 class="secondary-title">${this.properties?.label ?? nothing}</h4>
+            ${this.properties === undefined ? nothing : html`<h4 class="secondary-title">${this.properties?.label}</h4>`}
         </header>`;
     }
 
     protected bodyTemplate(): TemplateResult<1> {
         if (this.properties === undefined) {
-            return html`<span>Properties are not available.</span>`;
+            return html`<span class="no-data-message">The active diagram does not provide property information.</span>`;
         }
 
         const items = this.properties.items;
@@ -139,12 +142,12 @@ export class PropertyPalette extends BigUMLComponent {
             ${when(
                 gridTemplates.length > 0,
                 () => html`<div class="grid">${gridTemplates}</div>`,
-                () => html`${nothing}`
+                () => nothing
             )}
             ${when(
                 gridTemplates.length > 0 && referenceTemplates.length > 0,
                 () => html`<vscode-divider></vscode-divider>`,
-                () => html`${nothing}`
+                () => nothing
             )}
             ${referenceTemplates}
         </div>`;
@@ -157,7 +160,7 @@ export class PropertyPalette extends BigUMLComponent {
         };
 
         return html`<div class="grid-label">${item.label}</div>
-            <div class="grid-value">
+            <div class="grid-value grid-flex">
                 <vscode-text-field class="text-item" .value="${item.text}" @change="${onChange}"></vscode-text-field>
             </div>`;
     }
@@ -181,7 +184,7 @@ export class PropertyPalette extends BigUMLComponent {
         };
 
         return html`<div class="grid-label">${item.label}</div>
-            <div class="grid-value">
+            <div class="grid-value grid-flex">
                 <vscode-dropdown .value="${item.choice}" @change="${onChange}">
                     ${item.choices.map(choice => html`<vscode-option .value="${choice.value}">${choice.label}</vscode-option>`)}
                 </vscode-dropdown>
@@ -191,18 +194,35 @@ export class PropertyPalette extends BigUMLComponent {
     protected referenceTemplate(item: ElementReferenceProperty): TemplateResult<1> {
         return html`<biguml-property-palette-reference
             .item="${item}"
+            @property-name-change="${this.onPropertyNameChange}"
             @property-create="${this.onPropertyCreate}"
             @property-delete="${this.onPropertyDelete}"
         ></biguml-property-palette-reference>`;
     }
 
     protected onPropertyChange(item: ElementProperty, value: string): void {
+        const { elementId, propertyId } = item;
+
         this.dispatchEvent(
             new CustomEvent<Action>('dispatch-action', {
                 detail: UpdateElementPropertyAction.create({
-                    elementId: item.elementId,
-                    propertyId: item.propertyId,
+                    elementId,
+                    propertyId,
                     value
+                })
+            })
+        );
+    }
+
+    protected onPropertyNameChange(event: CustomEvent<PropertyNameChangeDetail>): void {
+        const { elementId, name } = event.detail;
+
+        this.dispatchEvent(
+            new CustomEvent<Action>('dispatch-action', {
+                detail: UpdateElementPropertyAction.create({
+                    elementId,
+                    propertyId: 'NAME',
+                    value: name
                 })
             })
         );

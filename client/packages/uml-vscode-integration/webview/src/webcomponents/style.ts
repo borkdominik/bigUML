@@ -33,4 +33,12 @@ export const defaultStyle = css`
     h4.secondary-title {
         margin: -1em 0 1em 0;
     }
+
+    .no-data-message {
+        opacity: 0.5;
+    }
+
+    .helper-text {
+        opacity: 0.5;
+    }
 `;

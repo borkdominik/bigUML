@@ -13,10 +13,16 @@ import '../vscode/vscode-menu.component';
 import { ElementReferenceProperty } from '@borkdominik-biguml/uml-common';
 import { css, html, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { when } from 'lit/directives/when.js';
 import { BigUMLComponent } from '../webcomponents/component';
 
 export interface PropertyDeleteEventDetail {
     elementIds: string[];
+}
+
+export interface PropertyNameChangeDetail {
+    elementId: string;
+    name: string;
 }
 
 @customElement('biguml-property-palette-reference')
@@ -53,11 +59,14 @@ export class PropertyPaletteReference extends BigUMLComponent {
             .reference-item {
                 display: flex;
                 flex-direction: row;
+                align-items: center;
                 margin-bottom: 6px;
             }
 
-            .reference-item > .label {
+            .reference-item > .label,
+            .reference-item > .name {
                 flex: 1;
+                margin-right: 6px;
             }
 
             .reference-item .delete {
@@ -66,7 +75,7 @@ export class PropertyPaletteReference extends BigUMLComponent {
         `
     ];
 
-    @property()
+    @property({ type: Object })
     readonly item?: ElementReferenceProperty = undefined;
 
     override render(): TemplateResult<1> {
@@ -99,7 +108,17 @@ export class PropertyPaletteReference extends BigUMLComponent {
         return html`<div class="body">
             ${item.references.map(
                 ref => html`<div class="reference-item">
-                    <div class="label">${ref.label}</div>
+                    ${when(
+                        ref.isReadonly,
+                        () => html`<div class="label">${ref.label}</div>`,
+                        () => html`<vscode-text-field
+                            class="name"
+                            placeholder="Search"
+                            .value="${ref.name}"
+                            @change="${(event: any) => this.onNameChange(ref, event.target?.value)}"
+                        >
+                        </vscode-text-field>`
+                    )}
                     <vscode-button appearance="icon" @click="${() => this.onDelete(ref.elementId)}">
                         <div class="codicon codicon-trash"></div>
                     </vscode-button>
@@ -109,6 +128,17 @@ export class PropertyPaletteReference extends BigUMLComponent {
                 <vscode-button appearance="primary" @click="${() => this.onCreate(item.creates[0])}"> Add </vscode-button>
             </div>
         </div>`;
+    }
+
+    protected onNameChange(item: ElementReferenceProperty.Reference, name: string): void {
+        this.dispatchEvent(
+            new CustomEvent<PropertyNameChangeDetail>('property-name-change', {
+                detail: {
+                    elementId: item.elementId,
+                    name
+                }
+            })
+        );
     }
 
     protected onCreate(create: ElementReferenceProperty.CreateReference): void {

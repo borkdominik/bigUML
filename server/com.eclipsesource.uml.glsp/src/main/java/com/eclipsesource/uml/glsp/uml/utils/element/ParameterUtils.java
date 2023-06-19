@@ -23,7 +23,8 @@ public class ParameterUtils {
       final EMFIdGenerator idGenerator) {
       var references = parameters.stream()
          .map(v -> {
-            return new ElementReferencePropertyItem.Reference(asText(v), idGenerator.getOrCreateId(v), false);
+            return new ElementReferencePropertyItem.Reference(idGenerator.getOrCreateId(v), asText(v), v.getName(),
+               false);
          })
          .collect(Collectors.toList());
 

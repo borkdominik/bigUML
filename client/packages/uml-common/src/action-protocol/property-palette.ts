@@ -79,8 +79,9 @@ export namespace ElementReferenceProperty {
     export const TYPE = 'REFERENCE';
 
     export interface Reference {
-        label: string;
         elementId: string;
+        label: string;
+        name?: string;
         isReadonly: boolean;
     }
 

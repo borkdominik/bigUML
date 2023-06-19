@@ -13,6 +13,7 @@ import '../vscode/vscode-menu.component';
 import { ElementReferenceProperty } from '@borkdominik-biguml/uml-common';
 import { css, html, nothing, TemplateResult } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
+import { classMap } from 'lit/directives/class-map.js';
 import { keyed } from 'lit/directives/keyed.js';
 import { when } from 'lit/directives/when.js';
 import Sortable from 'sortablejs';
@@ -79,6 +80,10 @@ export class PropertyPaletteReference extends BigUMLComponent {
                 margin-right: 6px;
             }
 
+            .reference-item-body > .label {
+                margin-left: 12px;
+            }
+
             .reference-item-body > .name {
                 display: flex;
                 flex-direction: column;
@@ -95,12 +100,16 @@ export class PropertyPaletteReference extends BigUMLComponent {
                 flex-direction: row;
             }
 
-            .reference-item .hint-text {
-                margin: 6px 0 6px 16px;
-            }
-
             .reference-item-body .delete {
                 color: var(--uml-errorForeground);
+            }
+
+            .reference-item .hint-text {
+                margin: 6px 48px 6px 12px;
+            }
+
+            .reference-item .handle-empty {
+                margin-left: 24px;
             }
         `
     ];
@@ -235,7 +244,7 @@ export class PropertyPaletteReference extends BigUMLComponent {
                 </div>
                 ${when(
                     ref.hint !== undefined,
-                    () => html`<div class="hint-text">${ref.hint}</div>`,
+                    () => html`<div class=${classMap({ 'hint-text': true, 'handle-empty': item.isOrderable })}>${ref.hint}</div>`,
                     () => nothing
                 )}
             </div>`
@@ -243,12 +252,11 @@ export class PropertyPaletteReference extends BigUMLComponent {
     }
 
     protected onNavigate(item: ElementReferenceProperty.Reference): void {
-        /*this.dispatchEvent(
+        this.dispatchEvent(
             new CustomEvent<ElementReferenceProperty.Reference>('property-navigate', {
                 detail: item
             })
         );
-        */
     }
 
     protected onOrderChange(detail: PropertyOrderDetail): void {

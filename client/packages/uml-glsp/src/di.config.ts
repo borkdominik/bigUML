@@ -40,7 +40,6 @@ import { FixedLogger } from './common/fixed-logger';
 import { UML_TYPES } from './di.types';
 import { CustomCopyPasteHandler, LastContainableElementTracker } from './features/copy-paste/copy-paste';
 import { EditLabelUIAutocomplete } from './features/edit-label';
-import editorPanelModule from './features/editor-panel/di.config';
 import { initializationModule, IOnceModelInitialized } from './features/initialization/di.config';
 import outlineModule from './features/outline/di.config';
 import propertyPaletteModule from './features/property-palette/di.config';
@@ -91,7 +90,6 @@ export default function createContainer(widgetId: string): Container {
         coreDiagramModule,
         initializationModule,
         themeModule,
-        editorPanelModule,
         umlToolPaletteModule,
         umlToolFeedbackModule,
         umlToolsModule,

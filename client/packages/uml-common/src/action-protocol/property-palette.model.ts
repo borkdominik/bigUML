@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { Action, hasStringProp, RequestAction, ResponseAction } from '@eclipse-glsp/protocol';
+import { Action } from '@eclipse-glsp/protocol';
 
 export interface ElementProperties {
     elementId: string;
@@ -92,75 +92,5 @@ export namespace ElementReferenceProperty {
 
     export function is(value: ElementProperty): value is ElementReferenceProperty {
         return value.type === TYPE;
-    }
-}
-
-export interface RequestPropertyPaletteAction extends RequestAction<SetPropertyPaletteAction> {
-    kind: typeof RequestPropertyPaletteAction.KIND;
-    elementId: string;
-}
-
-export namespace RequestPropertyPaletteAction {
-    export const KIND = 'requestPropertyPalette';
-
-    export function is(object: any): object is RequestPropertyPaletteAction {
-        return Action.hasKind(object, KIND) && hasStringProp(object, 'elementId');
-    }
-
-    export function create(options: { elementId: string; requestId?: string }): RequestPropertyPaletteAction {
-        return {
-            kind: KIND,
-            requestId: '',
-            ...options
-        };
-    }
-}
-
-export interface SetPropertyPaletteAction extends ResponseAction {
-    kind: typeof SetPropertyPaletteAction.KIND;
-    elementId: string;
-    palette?: ElementProperties;
-}
-
-export namespace SetPropertyPaletteAction {
-    export const KIND = 'setPropertyPalette';
-
-    export function is(object: any): object is SetPropertyPaletteAction {
-        return Action.hasKind(object, KIND);
-    }
-
-    export function create(options: { elementId: string; palette?: ElementProperties; responseId?: string }): SetPropertyPaletteAction {
-        return {
-            kind: KIND,
-            responseId: '',
-            ...options
-        };
-    }
-}
-
-export interface UpdateElementPropertyAction extends Action {
-    kind: typeof UpdateElementPropertyAction.KIND;
-    elementId: string;
-    propertyId: string;
-    value: string;
-}
-
-export namespace UpdateElementPropertyAction {
-    export const KIND = 'updateElementProperty';
-
-    export function is(object: any): object is UpdateElementPropertyAction {
-        return (
-            RequestAction.hasKind(object, KIND) &&
-            hasStringProp(object, 'elementId') &&
-            hasStringProp(object, 'propertyId') &&
-            hasStringProp(object, 'value')
-        );
-    }
-
-    export function create(options: { elementId: string; propertyId: string; value: string }): UpdateElementPropertyAction {
-        return {
-            kind: KIND,
-            ...options
-        };
     }
 }

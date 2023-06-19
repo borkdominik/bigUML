@@ -6,7 +6,6 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { EnableEditorPanelAction } from '@borkdominik-biguml/uml-glsp/lib/features/editor-panel';
 import { GLSPVscodeDiagramWidget } from '@eclipse-glsp/vscode-integration-webview/lib/glsp-vscode-diagram-widget';
 import { injectable, postConstruct } from 'inversify';
 
@@ -58,7 +57,5 @@ export class UVDiagramWidget extends GLSPVscodeDiagramWidget {
         this.containerDiv?.classList.remove('mouse-enter');
     }
 
-    protected dispatchInitialActions(): void {
-        this.actionDispatcher.dispatch(new EnableEditorPanelAction());
-    }
+    protected dispatchInitialActions(): void {}
 }

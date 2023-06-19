@@ -16,7 +16,7 @@ import { PropertyPaletteProvider } from './features/property-palette/property-pa
 import { ThemeIntegration } from './features/theme/theme-integration';
 import { UVGlspConnector } from './glsp/uv-glsp-connector';
 import { UVGlspServer } from './glsp/uv-glsp-server';
-import { ActionDispatcher, ActionHandlerRegistry, configureActionHandler } from './glsp/workaround/action-dispatcher';
+import { ActionHandlerRegistry, configureActionHandler, VSCodeActionDispatcher } from './glsp/workaround/action-dispatcher';
 import { UVModelServerClient } from './modelserver/uv-modelserver.client';
 import { GlspServerConfig, glspServerModule } from './server/glsp-server.launcher';
 import { modelServerModule } from './server/modelserver.launcher';
@@ -52,7 +52,7 @@ export function createContainer(
                 })
         );
 
-        bind(TYPES.IActionDispatcher).to(ActionDispatcher).inSingletonScope();
+        bind(TYPES.IActionDispatcher).to(VSCodeActionDispatcher).inSingletonScope();
         bind(TYPES.IActionDispatcherProvider).toProvider<IActionDispatcher>(
             ctx => () =>
                 new Promise<IActionDispatcher>(resolve => {

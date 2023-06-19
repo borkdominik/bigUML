@@ -7,9 +7,11 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { SetPropertyPaletteAction } from '@borkdominik-biguml/uml-common';
+import { RefreshPropertyPaletteAction, SetPropertyPaletteAction } from '@borkdominik-biguml/uml-common';
 import { Action, IActionHandler } from '@eclipse-glsp/client';
-import { injectable } from 'inversify';
+import { inject, injectable, postConstruct } from 'inversify';
+import { TYPES } from '../../di.types';
+import { UVGlspConnector } from '../../glsp/uv-glsp-connector';
 import { getBundleUri, getUri } from '../../utilities/webview';
 import { ProviderWebviewContext, UVWebviewProvider } from '../../vscode/webview/webview-provider';
 
@@ -19,6 +21,22 @@ export class PropertyPaletteProvider extends UVWebviewProvider implements IActio
 
     get id(): string {
         return PropertyPaletteProvider.ID;
+    }
+
+    @inject(TYPES.Connector)
+    protected readonly connector: UVGlspConnector;
+
+    @postConstruct()
+    override initialize(): void {
+        super.initialize();
+        this.connector.onDidActiveClientChange(client => {
+            this.connector.sendActionToClient(client.clientId, RefreshPropertyPaletteAction.create());
+        });
+        this.connector.onDidClientDispose(client => {
+            if (this.connector.documents.length === 0) {
+                this.postMessage(SetPropertyPaletteAction.create());
+            }
+        });
     }
 
     handle(action: Action): void {

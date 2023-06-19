@@ -6,7 +6,8 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-export * from './action-protocol/property-palette';
+export * from './action-protocol/property-palette.action';
+export * from './action-protocol/property-palette.model';
 export * from './environment/configuration';
 export * from './language/language';
 export * from './typescript.utils';

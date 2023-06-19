@@ -6,7 +6,6 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { IActionDispatcher } from '@eclipse-glsp/client';
 import {
     Action,
     ActionMessage,
@@ -24,6 +23,7 @@ import {
 import { inject, injectable } from 'inversify';
 import * as vscode from 'vscode';
 import { TYPES } from '../di.types';
+import { VSCodeActionDispatcher } from './workaround/action-dispatcher';
 
 @injectable()
 export class UVGlspConnector<TDocument extends vscode.CustomDocument = vscode.CustomDocument> extends GlspVscodeConnector<TDocument> {
@@ -31,9 +31,14 @@ export class UVGlspConnector<TDocument extends vscode.CustomDocument = vscode.Cu
         return Array.from(this.documentMap.keys());
     }
 
+    protected readonly onDidActiveClientChangeEmitter = new vscode.EventEmitter<GlspVscodeClient<TDocument>>();
+    protected readonly onDidClientDisposeEmitter = new vscode.EventEmitter<GlspVscodeClient<TDocument>>();
+    readonly onDidActiveClientChange: vscode.Event<GlspVscodeClient<TDocument>>;
+    readonly onDidClientDispose: vscode.Event<GlspVscodeClient<TDocument>>;
+
     constructor(
         @inject(TYPES.GlspServer) glspServer: GlspVscodeServer,
-        @inject(TYPES.IActionDispatcher) protected readonly actionDispatcher: IActionDispatcher
+        @inject(TYPES.IActionDispatcher) protected readonly actionDispatcher: VSCodeActionDispatcher
     ) {
         super({
             server: glspServer,
@@ -51,6 +56,9 @@ export class UVGlspConnector<TDocument extends vscode.CustomDocument = vscode.Cu
                 }
             }
         });
+        this.actionDispatcher.connect(this);
+        this.onDidActiveClientChange = this.onDidActiveClientChangeEmitter.event;
+        this.onDidClientDispose = this.onDidClientDisposeEmitter.event;
     }
 
     clientIdByDocument(document: TDocument): string | undefined {
@@ -147,6 +155,7 @@ export class UVGlspConnector<TDocument extends vscode.CustomDocument = vscode.Cu
 
     protected onClientViewStateChange(client: GlspVscodeClient<TDocument>, event: vscode.WebviewPanelOnDidChangeViewStateEvent): void {
         if (event.webviewPanel.active) {
+            this.onDidActiveClientChangeEmitter.fire(client);
             this.selectionUpdateEmitter.fire(this.clientSelectionMap.get(client.clientId) || []);
         }
     }
@@ -165,6 +174,7 @@ export class UVGlspConnector<TDocument extends vscode.CustomDocument = vscode.Cu
         });
 
         disposables.forEach(d => d.dispose());
+        this.onDidClientDisposeEmitter.fire(client);
     }
 
     protected disposeClientSessionArgs(client: GlspVscodeClient<TDocument>): Args | undefined {

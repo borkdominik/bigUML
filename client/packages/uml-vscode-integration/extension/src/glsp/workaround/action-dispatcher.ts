@@ -7,29 +7,17 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import {
-    Action,
-    ActionHandlerRegistration,
-    IActionDispatcher,
-    IActionHandler,
-    isInjectable,
-    MultiInstanceRegistry,
-    RequestAction,
-    ResponseAction
-} from '@eclipse-glsp/client';
+import { Action, ActionHandlerRegistration, IActionHandler, isInjectable, MultiInstanceRegistry } from '@eclipse-glsp/client';
 import { inject, injectable, interfaces, multiInject, optional } from 'inversify';
 import { TYPES } from '../../di.types';
+import { UVGlspConnector } from '../uv-glsp-connector';
 
-/**
- * Workaround Action Dispatcher until the framework supports it directly
- * TODO: Add support
- */
 @injectable()
-export class ActionDispatcher implements IActionDispatcher {
+export class VSCodeActionDispatcher {
     @inject(TYPES.ActionHandlerRegistryProvider) protected actionHandlerRegistryProvider: () => Promise<ActionHandlerRegistry>;
 
+    protected connector: UVGlspConnector;
     protected actionHandlerRegistry: ActionHandlerRegistry;
-
     protected initialized: Promise<void> | undefined;
 
     initialize(): Promise<void> {
@@ -42,16 +30,20 @@ export class ActionDispatcher implements IActionDispatcher {
         return this.initialized;
     }
 
+    connect(connector: UVGlspConnector) {
+        this.connector = connector;
+    }
+
+    dispatchToActiveClient(action: Action): void {
+        this.connector.sendActionToActiveClient(action);
+    }
+
     dispatch(action: Action): Promise<void> {
         return this.initialize().then(() => this.handleAction(action));
     }
 
     dispatchAll(actions: Action[]): Promise<void> {
         return Promise.all(actions.map(action => this.dispatch(action))) as Promise<any>;
-    }
-
-    request<Res extends ResponseAction>(action: RequestAction<Res>): Promise<Res> {
-        throw new Error('Method not implemented.');
     }
 
     protected handleAction(action: Action): Promise<void> {

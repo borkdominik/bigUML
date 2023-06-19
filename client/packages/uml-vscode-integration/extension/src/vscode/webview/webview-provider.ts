@@ -10,7 +10,7 @@ import { Action, hasObjectProp, hasStringProp } from '@eclipse-glsp/client';
 import { inject, postConstruct } from 'inversify';
 import * as vscode from 'vscode';
 import { TYPES } from '../../di.types';
-import { UVGlspConnector } from '../../glsp/uv-glsp-connector';
+import { VSCodeActionDispatcher } from '../../glsp/workaround/action-dispatcher';
 
 export interface ProviderWebviewContext {
     webviewView: vscode.WebviewView;
@@ -37,8 +37,8 @@ export abstract class UVWebviewProvider implements vscode.WebviewViewProvider {
     @inject(TYPES.ExtensionContext)
     protected readonly extension: vscode.ExtensionContext;
 
-    @inject(TYPES.Connector)
-    protected readonly connector: UVGlspConnector;
+    @inject(TYPES.IActionDispatcher)
+    protected readonly actionDispatcher: VSCodeActionDispatcher;
 
     protected providerContext?: ProviderWebviewContext;
 
@@ -78,7 +78,7 @@ export abstract class UVWebviewProvider implements vscode.WebviewViewProvider {
     }
 
     protected onDidReceiveDispatchAction(message: ConnectionMessage<Action>): void {
-        this.connector.sendActionToActiveClient(message.payload);
+        this.actionDispatcher.dispatchToActiveClient(message.payload);
     }
 
     protected postMessage(message: any): void {

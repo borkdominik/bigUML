@@ -17,7 +17,7 @@ import {
     ElementProperty,
     ElementReferenceProperty,
     ElementTextProperty,
-    RequestPropertyPaletteAction,
+    RefreshPropertyPaletteAction,
     UpdateElementPropertyAction
 } from '@borkdominik-biguml/uml-common';
 import { Action, DeleteElementOperation } from '@eclipse-glsp/protocol';
@@ -59,6 +59,7 @@ export class PropertyPalette extends BigUMLComponent {
 
             .grid-value {
                 grid-column-start: value-start;
+                overflow: hidden;
             }
 
             .grid-flex {
@@ -231,12 +232,11 @@ export class PropertyPalette extends BigUMLComponent {
         );
     }
 
-    protected onPropertyNavigate(item: ElementReferenceProperty.Reference): void {
-        const { elementId } = item;
-
+    protected onPropertyNavigate(event: CustomEvent<ElementReferenceProperty.Reference>): void {
+        const { elementId } = event.detail;
         this.dispatchEvent(
             new CustomEvent<Action>('dispatch-action', {
-                detail: RequestPropertyPaletteAction.create({
+                detail: RefreshPropertyPaletteAction.create({
                     elementId
                 })
             })

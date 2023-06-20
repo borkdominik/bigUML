@@ -144,7 +144,8 @@ export class PropertyPaletteReference extends BigUMLComponent {
                     childNodes = Array.prototype.slice.call(node.parentNode!.childNodes);
                     // Filter out the 'sortable-fallback' element used on mobile/old browsers.
                     childNodes = childNodes.filter(
-                        node => node.nodeType != Node.ELEMENT_NODE || !(node as HTMLElement).classList.contains('sortable-fallback')
+                        childNode =>
+                            childNode.nodeType !== Node.ELEMENT_NODE || !(childNode as HTMLElement).classList.contains('sortable-fallback')
                     );
                 },
                 onEnd: e => {
@@ -165,9 +166,11 @@ export class PropertyPaletteReference extends BigUMLComponent {
                     for (const childNode of childNodes) {
                         parentNode.appendChild(childNode);
                     }
-                    if (e.oldIndex == e.newIndex) return;
+                    if (e.oldIndex === e.newIndex) {
+                        return;
+                    }
                     const element = this.item!.references.splice(oldIndex, 1)[0];
-                    this.item!.references.splice(newIndex, 0, element!);
+                    this.item!.references.splice(newIndex, 0, element);
                     this.requestUpdate();
 
                     this.onOrderChange({
@@ -190,14 +193,11 @@ export class PropertyPaletteReference extends BigUMLComponent {
             <div class="header">
                 <h4 class="title">${item.label}</h4>
                 <div class="actions">
-                    <biguml-vscode-menu
-                        data-context-menu
-                        data-vscode-context='{"webviewSection": "property-item-reference-menu", "preventDefaultContextMenuItems": true}'
-                    >
-                        <vscode-button appearance="icon">
-                            <div class="codicon codicon-ellipsis"></div>
-                        </vscode-button>
-                    </biguml-vscode-menu>
+                    <biguml-menu>
+                        <biguml-menu-item icon="codicon-trash" @click="${() => this.onDelete(item.references.map(i => i.elementId))}"
+                            >Delete all</biguml-menu-item
+                        >
+                    </biguml-menu>
                 </div>
             </div>
         `;
@@ -234,7 +234,7 @@ export class PropertyPaletteReference extends BigUMLComponent {
                         </div>`
                     )}
                     <div class="item-actions">
-                        <vscode-button appearance="icon" @click="${() => this.onDelete(ref.elementId)}">
+                        <vscode-button appearance="icon" @click="${() => this.onDelete([ref.elementId])}">
                             <div class="codicon codicon-trash"></div>
                         </vscode-button>
                         <vscode-button appearance="icon" @click="${() => this.onNavigate(ref)}">
@@ -288,11 +288,11 @@ export class PropertyPaletteReference extends BigUMLComponent {
         );
     }
 
-    protected onDelete(elementId: string): void {
+    protected onDelete(elementIds: string[]): void {
         this.dispatchEvent(
             new CustomEvent<PropertyDeleteEventDetail>('property-delete', {
                 detail: {
-                    elementIds: [elementId]
+                    elementIds
                 }
             })
         );

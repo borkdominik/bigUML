@@ -7,13 +7,21 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { Action, ActionHandlerRegistration, IActionHandler, isInjectable, MultiInstanceRegistry } from '@eclipse-glsp/client';
+import {
+    Action,
+    ActionHandlerRegistration,
+    IActionDispatcher,
+    IActionHandler,
+    isInjectable,
+    MultiInstanceRegistry
+} from '@eclipse-glsp/client';
 import { inject, injectable, interfaces, multiInject, optional } from 'inversify';
+import { RequestAction, ResponseAction } from 'sprotty-protocol';
 import { TYPES } from '../../di.types';
 import { UVGlspConnector } from '../uv-glsp-connector';
 
 @injectable()
-export class VSCodeActionDispatcher {
+export class VSCodeActionDispatcher implements IActionDispatcher {
     @inject(TYPES.ActionHandlerRegistryProvider) protected actionHandlerRegistryProvider: () => Promise<ActionHandlerRegistry>;
 
     protected connector: UVGlspConnector;
@@ -44,6 +52,10 @@ export class VSCodeActionDispatcher {
 
     dispatchAll(actions: Action[]): Promise<void> {
         return Promise.all(actions.map(action => this.dispatch(action))) as Promise<any>;
+    }
+
+    request<Res extends ResponseAction>(action: RequestAction<Res>): Promise<Res> {
+        throw new Error('Method not implemented.');
     }
 
     protected handleAction(action: Action): Promise<void> {

@@ -6,85 +6,72 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
+import './toolkit';
+import './vscode-context-menu.component';
 
-import { css, html, TemplateResult } from 'lit';
-import { customElement } from 'lit/decorators.js';
+import { VSCodeContextMenu, VSCodeContextMenuItem } from '../vscode/vscode-context-menu.component';
+
+import { Button as VSCodeButton } from '@vscode/webview-ui-toolkit';
+import { css, html, PropertyValueMap, TemplateResult } from 'lit';
+import { customElement, query } from 'lit/decorators.js';
 import { BigUMLComponent } from '../webcomponents/component';
 
-import './toolkit';
-
-@customElement('biguml-vscode-menu')
+@customElement('biguml-menu')
 export class VSCodeMenu extends BigUMLComponent {
     static override styles = [
+        ...super.styles,
         css`
-            :host {
+            #menu-items {
                 display: flex;
                 flex-direction: column;
-            }
-
-            .header {
-                display: flex;
-                flex-direction: row;
-            }
-
-            .header > .title {
-                flex: 1;
-                font-size: 11px;
-            }
-
-            .header > .actions {
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-            }
-
-            .body > .actions {
-                display: flex;
-                flex-direction: row;
-            }
-
-            .reference-item {
-                display: flex;
-                flex-direction: row;
-                margin-bottom: 6px;
-            }
-
-            .reference-item > .label {
-                flex: 1;
-            }
-
-            .reference-item .delete {
-                color: var(--uml-errorForeground);
             }
         `
     ];
 
-    override render(): TemplateResult<1> {
-        return html`<slot @slotchange=${this.handleSlotChange}></slot>`;
+    @query('#menu-button')
+    protected readonly menuButton: VSCodeButton;
+
+    @query('#context-menu')
+    protected readonly contextMenu: VSCodeContextMenu;
+
+    show(): void {
+        this.contextMenu.show();
     }
 
-    protected handleSlotChange(e: any): void {
-        const elements = e.target.assignedElements({ flatten: false }) as HTMLElement[];
-        elements.forEach(element => {
-            element.addEventListener('click', this.onClicked);
-        });
+    hide(): void {
+        this.contextMenu.hide();
     }
 
-    protected onClicked(event: MouseEvent): void {
-        const bound = this.getBoundingClientRect();
-        const evt = new MouseEvent('contextmenu', {
-            bubbles: true,
-            composed: true,
-            clientX: bound.x,
-            clientY: bound.y + bound.height
-        });
-        event.target?.dispatchEvent(evt);
-        event.stopImmediatePropagation();
+    toggle(): void {
+        if (this.contextMenu.isVisible) {
+            this.hide();
+        } else {
+            this.show();
+        }
+    }
+
+    protected override render(): TemplateResult<1> {
+        return html`<vscode-button id="menu-button" appearance="icon" @click="${this.toggle}">
+                <div class="codicon codicon-ellipsis"></div>
+            </vscode-button>
+            <biguml-context-menu id="context-menu">
+                <div id="menu-items">
+                    <slot></slot>
+                </div>
+            </biguml-context-menu>`;
+    }
+
+    protected override firstUpdated(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
+        this.contextMenu.reference = this.menuButton;
     }
 }
 
+@customElement('biguml-menu-item')
+export class VSCodeMenuItem extends VSCodeContextMenuItem {}
+
 declare global {
     interface HTMLElementTagNameMap {
-        'biguml-vscode-menu': VSCodeMenu;
+        'biguml-menu': VSCodeMenu;
+        'biguml-menu-item': VSCodeMenuItem;
     }
 }

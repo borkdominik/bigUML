@@ -37,6 +37,7 @@
     "@borkdominik-biguml/uml-glsp": "*",
     "@eclipse-glsp/protocol": "next",
     "@eclipse-glsp/vscode-integration-webview": "next",
+    "@floating-ui/dom": "^1.4.1",
     "@vscode/codicons": "^0.0.25",
     "@vscode/webview-ui-toolkit": "^1.2.2",
     "inversify": "^5.1.1",

@@ -8,10 +8,11 @@
  *********************************************************************************/
 
 import '../../css/reset.css';
+import '../vscode/vscode-menu.component';
 
 import { ElementProperties, SetPropertyPaletteAction } from '@borkdominik-biguml/uml-common';
 import { Action } from '@eclipse-glsp/protocol';
-import { html, TemplateResult } from 'lit';
+import { css, html, TemplateResult } from 'lit';
 import { customElement, query, state } from 'lit/decorators.js';
 import { DATA_CONTEXT_MENU } from '../vscode/constants';
 import { initializeToolkit } from '../vscode/toolkit';
@@ -21,6 +22,15 @@ import { PropertyPalette } from './property-palette.component';
 
 @customElement('biguml-property-palette-standalone')
 export class PropertyPaletteStandalone extends BigUMLComponent {
+    static override styles = [
+        css`
+            #test-div {
+                display: flex;
+                flex-direction: row;
+            }
+        `
+    ];
+
     protected connection = VSCodeConnection.instance();
 
     @query('biguml-property-palette')

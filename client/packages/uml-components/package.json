@@ -1,7 +1,7 @@
 {
-  "name": "@borkdominik-biguml/uml-vscode-integration-webview",
+  "name": "@borkdominik-biguml/uml-components",
   "version": "0.2.1",
-  "description": "UML GLSP diagram in a VS Code extensions (WebView part)",
+  "description": "UML-Components",
   "homepage": "https://github.com/borkdominik/bigUML",
   "bugs": "https://github.com/borkdominik/bigUML/issues",
   "repository": {
@@ -24,27 +24,33 @@
       "url": "https://me.big.tuwien.ac.at/"
     }
   ],
+  "main": "lib/index",
+  "files": [
+    "lib",
+    "src"
+  ],
   "scripts": {
-    "build": "tsx .esbuild.mts",
-    "clean": "rimraf lib tsconfig.tsbuildinfo ",
-    "lint": "eslint --ext .ts,.tsx ./src",
-    "lint:ci": "yarn lint -o eslint.xml -f checkstyle",
-    "prepare": "yarn clean && yarn build",
-    "watch": "yarn build --watch"
+    "build": "tsc -b && yarn run lint",
+    "clean": "rimraf lib tsconfig.tsbuildinfo",
+    "lint": "eslint -c ./.eslintrc.js --ext .ts,.tsx ./src",
+    "lint:fix": "eslint --fix -c ./.eslintrc.js --ext .ts,.tsx ./src",
+    "prepare": "yarn run clean && yarn run build",
+    "watch": "tsc -w"
   },
   "dependencies": {
-    "@borkdominik-biguml/uml-components": "*",
     "@borkdominik-biguml/uml-common": "*",
-    "@borkdominik-biguml/uml-glsp": "*",
     "@eclipse-glsp/protocol": "next",
-    "@eclipse-glsp/vscode-integration-webview": "next",
-    "@vscode/codicons": "^0.0.25",
-    "inversify": "^5.1.1",
-    "reflect-metadata": "^0.1.13",
-    "sprotty-vscode-webview": "next"
+    "@floating-ui/dom": "^1.4.1",
+    "@vscode/webview-ui-toolkit": "^1.2.2",
+    "lit": "^2.7.4",
+    "lodash": "^4.17.21",
+    "sortablejs": "^1.15.0",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
-    "esbuild": "^0.17.10",
-    "eslint": "^8.15.0"
+    "@types/lodash": "^4.14.195",
+    "@types/sortablejs": "1.15.1",
+    "eslint": "^8.15.0",
+    "ts-lit-plugin": "^1.2.1"
   }
 }

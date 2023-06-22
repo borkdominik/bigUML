@@ -7,6 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { usePropertyPaletteWebviewDesignSystem } from '@borkdominik-biguml/uml-components';
-
-usePropertyPaletteWebviewDesignSystem();
+export * from './vscode-context-menu.component';
+export * from './vscode-context-menu.style';
+export * from './vscode-menu.component';
+export * from './vscode-menu.style';

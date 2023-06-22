@@ -7,9 +7,6 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import '../vscode/toolkit';
-import './property-palette-reference.component';
-
 import {
     ElementBoolProperty,
     ElementChoiceProperty,
@@ -22,60 +19,22 @@ import {
 } from '@borkdominik-biguml/uml-common';
 import { Action, DeleteElementOperation } from '@eclipse-glsp/protocol';
 import { Checkbox as VSCodeCheckbox, Dropdown as VSCodeDropdown, TextField as VSCodeTextField } from '@vscode/webview-ui-toolkit';
-import { css, html, nothing, TemplateResult } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import { html, nothing, TemplateResult } from 'lit';
+import { property, state } from 'lit/decorators.js';
 import { keyed } from 'lit/directives/keyed.js';
 import { when } from 'lit/directives/when.js';
 import { groupBy } from 'lodash';
-import { BigUMLComponent } from '../webcomponents/component';
-import { PropertyDeleteEventDetail, PropertyNameChangeDetail, PropertyOrderDetail } from './property-palette-reference.component';
+import { BigElement } from '../base/component';
+import '../global';
+import { PropertyPaletteStyle } from './property-palette.style';
+import { PropertyDeleteEventDetail, PropertyNameChangeDetail, PropertyOrderDetail } from './reference/property-palette-reference.component';
 
-@customElement('biguml-property-palette')
-export class PropertyPalette extends BigUMLComponent {
-    static override styles = [
-        ...super.styles,
-        css`
-            .body {
-                display: flex;
-                flex-direction: column;
-            }
+export function definePropertyPalette(): void {
+    customElements.define('big-property-palette', PropertyPalette);
+}
 
-            .search {
-                margin-bottom: 6px;
-            }
-
-            .grid {
-                display: grid;
-                grid-template-columns: [label-start] 1fr [value-start] 1fr;
-                gap: 6px 6px;
-                justify-items: stretch;
-                align-items: center;
-                margin: 6px 0;
-            }
-
-            .grid-label {
-                grid-column-start: label-start;
-            }
-
-            .grid-value {
-                grid-column-start: value-start;
-                overflow: hidden;
-            }
-
-            .grid-flex {
-                display: flex;
-                flex-direction: column;
-            }
-
-            .reference-item .create-reference {
-                color: var(--uml-successBackground);
-            }
-
-            .reference-item .delete {
-                color: var(--uml-errorForeground);
-            }
-        `
-    ];
+export class PropertyPalette extends BigElement {
+    static override styles = [...super.styles, PropertyPaletteStyle.style];
 
     @property({ type: Object })
     properties?: ElementProperties = undefined;
@@ -163,7 +122,7 @@ export class PropertyPalette extends BigUMLComponent {
 
         return html`<div class="grid-label">${item.label}</div>
             <div class="grid-value grid-flex">
-                <vscode-text-field class="text-item" .value="${item.text}" @change="${onChange}"></vscode-text-field>
+                <vscode-text-field .value="${item.text}" @change="${onChange}"></vscode-text-field>
             </div>`;
     }
 
@@ -188,20 +147,33 @@ export class PropertyPalette extends BigUMLComponent {
         return html`<div class="grid-label">${item.label}</div>
             <div class="grid-value grid-flex">
                 <vscode-dropdown .value="${item.choice}" @change="${onChange}">
-                    ${item.choices.map(choice => html`<vscode-option .value="${choice.value}">${choice.label}</vscode-option>`)}
+                    <div slot="selected-value">${item.choices.find(c => c.value === item.choice)?.label}</div>
+                    ${item.choices.map(
+                        choice =>
+                            html`<vscode-option .value="${choice.value}">
+                                <div class="dropdown-option">
+                                    <span>${choice.label}</span>
+                                    ${when(
+                                        choice.secondaryText,
+                                        () => html`<small>${choice.secondaryText}</small>`,
+                                        () => nothing
+                                    )}
+                                </div>
+                            </vscode-option>`
+                    )}
                 </vscode-dropdown>
             </div>`;
     }
 
     protected referenceTemplate(item: ElementReferenceProperty): TemplateResult<1> {
-        return html`<biguml-property-palette-reference
+        return html`<big-property-palette-reference
             .item="${item}"
             @property-navigate="${this.onPropertyNavigate}"
             @property-order-change="${this.onOrderChange}"
             @property-name-change="${this.onPropertyNameChange}"
             @property-create="${this.onPropertyCreate}"
             @property-delete="${this.onPropertyDelete}"
-        ></biguml-property-palette-reference>`;
+        ></big-property-palette-reference>`;
     }
 
     protected onPropertyChange(item: ElementProperty, value: string): void {
@@ -281,10 +253,4 @@ function extractReferences(items: ElementProperty[]): { references: ElementRefer
         references: (group['true'] as ElementReferenceProperty[]) ?? [],
         other: group['false'] ?? []
     };
-}
-
-declare global {
-    interface HTMLElementTagNameMap {
-        'biguml-property-palette': PropertyPalette;
-    }
 }

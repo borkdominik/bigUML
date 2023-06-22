@@ -8,44 +8,19 @@
  *********************************************************************************/
 
 import { autoUpdate, computePosition, flip, shift } from '@floating-ui/dom';
-import { css, html, nothing, TemplateResult } from 'lit';
-import { customElement, property, query } from 'lit/decorators.js';
+import { html, nothing, TemplateResult } from 'lit';
+import { property, query } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
-import { BigUMLComponent } from '../webcomponents/component';
+import { BigElement } from '../base/component';
+import { ContextMenuItemStyle, ContextMenuStyle } from './vscode-context-menu.style';
 
-@customElement('biguml-context-menu')
-export class VSCodeContextMenu extends BigUMLComponent {
-    static override styles = [
-        css`
-            #context-menu {
-                display: none;
-                width: max-content;
-                position: absolute;
-                top: 0;
-                left: 0;
-                min-width: 160px;
-                outline: 1px solid var(--vscode-menu-border);
-                border-radius: 5px;
-                color: var(--vscode-menu-foreground);
-                background-color: var(--vscode-menu-background);
-                box-shadow: 0 2px 8px var(--vscode-widget-shadow);
-                z-index: 9999;
-            }
+export function defineContextMenu(): void {
+    customElements.define('big-context-menu', ContextMenu);
+    customElements.define('big-context-menu-item', ContextMenuItem);
+}
 
-            #context-menu[popup-show] {
-                display: block;
-            }
-
-            .action-bar {
-                padding: 4px 0;
-            }
-
-            .actions-container {
-                display: flex;
-                flex-direction: column;
-            }
-        `
-    ];
+export class ContextMenu extends BigElement {
+    static override styles = [ContextMenuStyle.style];
 
     get isVisible(): boolean {
         return this.contextMenu.hasAttribute('popup-show');
@@ -130,47 +105,8 @@ export class VSCodeContextMenu extends BigUMLComponent {
     }
 }
 
-@customElement('biguml-context-menu-item')
-export class VSCodeContextMenuItem extends BigUMLComponent {
-    static override styles = [
-        ...super.styles,
-        css`
-            .action-item {
-                display: flex;
-                flex-direction: row;
-                height: 2em;
-                text-decoration: none;
-                color: var(--vscode-menu-foreground);
-                outline-offset: -1px;
-                align-items: center;
-                position: relative;
-                margin: 0 4px;
-                border-radius: 4px;
-                cursor: pointer;
-            }
-
-            .action-item:hover {
-                color: var(--vscode-menu-selectionForeground);
-                background-color: var(--vscode-menu-selectionBackground);
-                outline: 1px solid var(--vscode-menu-selectionBorder);
-                outline-offset: -1px;
-            }
-
-            .action-item .action-icon {
-                position: absolute;
-                width: 2em;
-                font-size: 13px;
-                line-height: 13px;
-            }
-
-            .action-item .action-label {
-                flex: 1 1 auto;
-                padding: 0 2em;
-                font-size: 13px;
-                line-height: 13px;
-            }
-        `
-    ];
+export class ContextMenuItem extends BigElement {
+    static override styles = [...super.styles, ContextMenuItemStyle.style];
 
     @property()
     icon?: string;
@@ -184,12 +120,5 @@ export class VSCodeContextMenuItem extends BigUMLComponent {
             )}
             <span class="action-label"><slot></slot></span>
         </div>`;
-    }
-}
-
-declare global {
-    interface HTMLElementTagNameMap {
-        'biguml-context-menu': VSCodeContextMenu;
-        'biguml-context-menu-item': VSCodeContextMenuItem;
     }
 }

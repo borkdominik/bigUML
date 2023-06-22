@@ -6,33 +6,27 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import './toolkit';
-import './vscode-context-menu.component';
-
-import { VSCodeContextMenu, VSCodeContextMenuItem } from '../vscode/vscode-context-menu.component';
-
 import { Button as VSCodeButton } from '@vscode/webview-ui-toolkit';
-import { css, html, PropertyValueMap, TemplateResult } from 'lit';
-import { customElement, query } from 'lit/decorators.js';
-import { BigUMLComponent } from '../webcomponents/component';
+import { html, PropertyValueMap, TemplateResult } from 'lit';
+import { query } from 'lit/decorators.js';
+import { BigElement } from '../base/component';
+import './../global';
+import { ContextMenu, ContextMenuItem } from './vscode-context-menu.component';
+import { MenuStyle } from './vscode-menu.style';
 
-@customElement('biguml-menu')
-export class VSCodeMenu extends BigUMLComponent {
-    static override styles = [
-        ...super.styles,
-        css`
-            #menu-items {
-                display: flex;
-                flex-direction: column;
-            }
-        `
-    ];
+export function defineMenu(): void {
+    customElements.define('big-menu', Menu);
+    customElements.define('big-menu-item', MenuItem);
+}
+
+export class Menu extends BigElement {
+    static override styles = [...super.styles, MenuStyle.style];
 
     @query('#menu-button')
     protected readonly menuButton: VSCodeButton;
 
     @query('#context-menu')
-    protected readonly contextMenu: VSCodeContextMenu;
+    protected readonly contextMenu: ContextMenu;
 
     show(): void {
         this.contextMenu.show();
@@ -54,11 +48,11 @@ export class VSCodeMenu extends BigUMLComponent {
         return html`<vscode-button id="menu-button" appearance="icon" @click="${this.toggle}">
                 <div class="codicon codicon-ellipsis"></div>
             </vscode-button>
-            <biguml-context-menu id="context-menu">
+            <big-context-menu id="context-menu">
                 <div id="menu-items">
                     <slot></slot>
                 </div>
-            </biguml-context-menu>`;
+            </big-context-menu>`;
     }
 
     protected override firstUpdated(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
@@ -66,12 +60,4 @@ export class VSCodeMenu extends BigUMLComponent {
     }
 }
 
-@customElement('biguml-menu-item')
-export class VSCodeMenuItem extends VSCodeContextMenuItem {}
-
-declare global {
-    interface HTMLElementTagNameMap {
-        'biguml-menu': VSCodeMenu;
-        'biguml-menu-item': VSCodeMenuItem;
-    }
-}
+export class MenuItem extends ContextMenuItem {}

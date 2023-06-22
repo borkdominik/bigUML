@@ -8,20 +8,7 @@
  *********************************************************************************/
 
 import {
-    Button,
-    Checkbox,
-    DataGrid,
-    DataGridCell,
-    DataGridRow,
-    Divider,
-    Dropdown,
-    Option,
-    Panels,
-    PanelTab,
-    PanelView,
     provideVSCodeDesignSystem,
-    TextArea,
-    TextField,
     vsCodeButton,
     vsCodeCheckbox,
     vsCodeDataGrid,
@@ -37,25 +24,7 @@ import {
     vsCodeTextField
 } from '@vscode/webview-ui-toolkit';
 
-declare global {
-    interface HTMLElementTagNameMap {
-        'vscode-button': Button;
-        'vscode-dropdown': Dropdown;
-        'vscode-checkbox': Checkbox;
-        'vscode-data-grid': DataGrid;
-        'vscode-data-grid-cell': DataGridCell;
-        'vscode-data-grid-row': DataGridRow;
-        'vscode-divider': Divider;
-        'vscode-option': Option;
-        'vscode-panels': Panels;
-        'vscode-panel-tab': PanelTab;
-        'vscode-panel-view': PanelView;
-        'vscode-text-field': TextField;
-        'vscode-text-area': TextArea;
-    }
-}
-
-export function initializeToolkit(): void {
+export function useToolkit(): void {
     provideVSCodeDesignSystem().register(
         vsCodeButton(),
         vsCodeDropdown(),

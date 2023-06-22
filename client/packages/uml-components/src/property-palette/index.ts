@@ -7,9 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { LitElement } from 'lit';
-import { codiconStyle, defaultStyle } from './style';
-
-export class BigUMLComponent extends LitElement {
-    static override styles = [codiconStyle, defaultStyle];
-}
+export * from './property-palette.component';
+export * from './property-palette.style';
+export * from './reference';
+export * from './web';

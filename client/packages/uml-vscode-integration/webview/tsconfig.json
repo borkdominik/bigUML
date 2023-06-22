@@ -3,21 +3,7 @@
   "compilerOptions": {
     "rootDir": "src",
     "outDir": "lib",
-    "target": "es2019",
-    "module": "es2020",
-    "lib": ["es2020", "DOM", "DOM.Iterable"],
-    "inlineSources": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-    "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true,
-    "forceConsistentCasingInFileNames": true,
-    "plugins": [
-      {
-        "name": "ts-lit-plugin",
-        "strict": true
-      }
-    ]
+    "baseUrl": "."
   },
   "include": ["src"]
 }

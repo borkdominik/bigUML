@@ -7,6 +7,9 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { usePropertyPaletteWebviewDesignSystem } from '@borkdominik-biguml/uml-components';
+import { LitElement } from 'lit';
+import { codiconStyle, defaultStyle } from './style';
 
-usePropertyPaletteWebviewDesignSystem();
+export class BigElement extends LitElement {
+    static override styles = [codiconStyle, defaultStyle];
+}

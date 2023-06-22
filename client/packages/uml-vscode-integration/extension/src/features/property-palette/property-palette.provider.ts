@@ -32,6 +32,11 @@ export class PropertyPaletteProvider extends UVWebviewProvider implements IActio
         this.connector.onDidActiveClientChange(client => {
             this.connector.sendActionToClient(client.clientId, RefreshPropertyPaletteAction.create());
         });
+        this.connector.onDidClientViewStateChange(client => {
+            if (this.connector.clients.every(c => !c.webviewPanel.active)) {
+                this.postMessage(SetPropertyPaletteAction.create());
+            }
+        });
         this.connector.onDidClientDispose(client => {
             if (this.connector.documents.length === 0) {
                 this.postMessage(SetPropertyPaletteAction.create());
@@ -50,7 +55,6 @@ export class PropertyPaletteProvider extends UVWebviewProvider implements IActio
         const extensionUri = this.extension.extensionUri;
 
         const codiconsCSSUri = getUri(webview, extensionUri, ['node_modules', '@vscode/codicons', 'dist', 'codicon.css']);
-        const bundleCSSUri = getBundleUri(webview, extensionUri, ['property-palette', 'bundle.css']);
         const bundleJSUri = getBundleUri(webview, extensionUri, ['property-palette', 'bundle.js']);
 
         webview.html = `<!DOCTYPE html>
@@ -61,11 +65,10 @@ export class PropertyPaletteProvider extends UVWebviewProvider implements IActio
             <meta http-equiv="Content-Security-Policy" 
                 content="default-src http://*.fontawesome.com  ${webview.cspSource} data: 'unsafe-inline' 'unsafe-eval';">
             <link id="codicon-css" href="${codiconsCSSUri}" rel="stylesheet" />
-            <link id="bundle-css" href="${bundleCSSUri}" rel="stylesheet" />
             <title>Property Palette</title>
         </head>
         <body>
-            <biguml-property-palette-standalone></biguml-property-palette-standalone>
+            <big-property-palette-webview></big-property-palette-webview>
             <script type="module" src="${bundleJSUri}"></script>
         </body>
         </html>`;

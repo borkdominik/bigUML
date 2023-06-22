@@ -30,11 +30,17 @@ public final class ElementChoicePropertyItem extends ElementPropertyItem {
    public static class Choice {
       public final String label;
       public final String value;
+      public final String secondaryText;
 
       public Choice(final String label, final String value) {
+         this(label, value, null);
+      }
+
+      public Choice(final String label, final String value, final String secondaryText) {
          super();
          this.label = label;
          this.value = value;
+         this.secondaryText = secondaryText;
       }
 
    }

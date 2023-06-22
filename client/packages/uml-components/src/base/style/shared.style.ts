@@ -7,6 +7,22 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { usePropertyPaletteWebviewDesignSystem } from '@borkdominik-biguml/uml-components';
+import { css } from 'lit';
 
-usePropertyPaletteWebviewDesignSystem();
+export const defaultStyle = css`
+    .title {
+        text-transform: uppercase;
+    }
+
+    h4.secondary-title {
+        margin: -1em 0 1em 0;
+    }
+
+    .no-data-message {
+        opacity: 0.5;
+    }
+
+    .hint-text {
+        opacity: 0.5;
+    }
+`;

@@ -54,6 +54,7 @@ export interface ElementChoiceProperty extends ElementProperty {
     choices: {
         label: string;
         value: string;
+        secondaryText?: string;
     }[];
     choice: string;
     label: string;

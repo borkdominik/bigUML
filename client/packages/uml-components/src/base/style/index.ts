@@ -7,6 +7,5 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { usePropertyPaletteWebviewDesignSystem } from '@borkdominik-biguml/uml-components';
-
-usePropertyPaletteWebviewDesignSystem();
+export * from './codicon.style';
+export * from './shared.style';

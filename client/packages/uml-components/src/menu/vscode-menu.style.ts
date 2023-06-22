@@ -7,6 +7,13 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { usePropertyPaletteWebviewDesignSystem } from '@borkdominik-biguml/uml-components';
+import { css } from 'lit';
 
-usePropertyPaletteWebviewDesignSystem();
+export namespace MenuStyle {
+    export const style = css`
+        #menu-items {
+            display: flex;
+            flex-direction: column;
+        }
+    `;
+}

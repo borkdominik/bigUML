@@ -7,17 +7,20 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import '../vscode/toolkit';
-import '../vscode/vscode-menu.component';
-
 import { ElementReferenceProperty } from '@borkdominik-biguml/uml-common';
-import { css, html, nothing, TemplateResult } from 'lit';
-import { customElement, property, query } from 'lit/decorators.js';
+import { html, nothing, TemplateResult } from 'lit';
+import { property, query } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { keyed } from 'lit/directives/keyed.js';
 import { when } from 'lit/directives/when.js';
 import Sortable from 'sortablejs';
-import { BigUMLComponent } from '../webcomponents/component';
+import { BigElement } from '../../base/component';
+import '../../global';
+import { PropertyPaletteReferenceStyle } from './property-palette-reference.style';
+
+export function definePropertyPaletteReference(): void {
+    customElements.define('big-property-palette-reference', PropertyPaletteReference);
+}
 
 export interface PropertyDeleteEventDetail {
     elementIds: string[];
@@ -37,82 +40,8 @@ export interface PropertyOrderDetail {
     }[];
 }
 
-@customElement('biguml-property-palette-reference')
-export class PropertyPaletteReference extends BigUMLComponent {
-    static override styles = [
-        ...super.styles,
-        css`
-            :host {
-                display: flex;
-                flex-direction: column;
-            }
-
-            .header {
-                display: flex;
-                flex-direction: row;
-            }
-
-            .header > .title {
-                flex: 1;
-                font-size: 11px;
-            }
-
-            .header > .actions {
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-            }
-
-            .body > .actions {
-                display: flex;
-                flex-direction: row;
-            }
-
-            .reference-item {
-                display: flex;
-                flex-direction: column;
-                margin-bottom: 6px;
-            }
-
-            .reference-item-body > .label,
-            .reference-item-body > .name {
-                flex: 1;
-                margin-right: 6px;
-            }
-
-            .reference-item-body > .label {
-                margin-left: 12px;
-            }
-
-            .reference-item-body > .name {
-                display: flex;
-                flex-direction: column;
-            }
-
-            .reference-item-body {
-                display: flex;
-                flex-direction: row;
-                align-items: center;
-            }
-
-            .reference-item-body > .item-actions {
-                display: flex;
-                flex-direction: row;
-            }
-
-            .reference-item-body .delete {
-                color: var(--uml-errorForeground);
-            }
-
-            .reference-item .hint-text {
-                margin: 6px 48px 6px 12px;
-            }
-
-            .reference-item .handle-empty {
-                margin-left: 24px;
-            }
-        `
-    ];
+export class PropertyPaletteReference extends BigElement {
+    static override styles = [...super.styles, PropertyPaletteReferenceStyle.style];
 
     @property({ type: Object })
     readonly item?: ElementReferenceProperty = undefined;
@@ -193,11 +122,11 @@ export class PropertyPaletteReference extends BigUMLComponent {
             <div class="header">
                 <h4 class="title">${item.label}</h4>
                 <div class="actions">
-                    <biguml-menu>
-                        <biguml-menu-item icon="codicon-trash" @click="${() => this.onDelete(item.references.map(i => i.elementId))}"
-                            >Delete all</biguml-menu-item
+                    <big-menu>
+                        <big-menu-item icon="codicon-trash" @click="${() => this.onDelete(item.references.map(i => i.elementId))}"
+                            >Delete all</big-menu-item
                         >
-                    </biguml-menu>
+                    </big-menu>
                 </div>
             </div>
         `;
@@ -296,11 +225,5 @@ export class PropertyPaletteReference extends BigUMLComponent {
                 }
             })
         );
-    }
-}
-
-declare global {
-    interface HTMLElementTagNameMap {
-        'biguml-property-palette-reference': PropertyPaletteReference;
     }
 }

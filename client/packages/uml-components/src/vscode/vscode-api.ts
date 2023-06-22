@@ -10,10 +10,6 @@
 import { hasObjectProp, hasStringProp } from '@eclipse-glsp/protocol';
 import { v4 } from 'uuid';
 
-declare global {
-    function acquireVsCodeApi(): VSCodeApi;
-}
-
 export interface VSCodeApi {
     postMessage: (message: any) => void;
 }

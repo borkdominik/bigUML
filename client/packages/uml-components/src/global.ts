@@ -26,6 +26,7 @@ import { ContextMenu, ContextMenuItem } from './menu/context-menu.component';
 import { Menu, MenuItem } from './menu/menu.component';
 import { PropertyPalette, PropertyPaletteWebview } from './property-palette';
 import { PropertyPaletteReference } from './property-palette/reference/property-palette-reference.component';
+import { Tooltip } from './tooltip/tooltip.component';
 import { VSCodeApi } from './vscode/vscode-api';
 
 declare global {
@@ -45,12 +46,13 @@ declare global {
         'vscode-panel-view': PanelView;
         'vscode-text-field': TextField;
         'vscode-text-area': TextArea;
+        'big-context-menu': ContextMenu;
+        'big-context-menu-item': ContextMenuItem;
         'big-property-palette': PropertyPalette;
         'big-property-palette-reference': PropertyPaletteReference;
         'big-property-palette-webview': PropertyPaletteWebview;
         'big-menu': Menu;
         'big-menu-item': MenuItem;
-        'big-context-menu': ContextMenu;
-        'big-context-menu-item': ContextMenuItem;
+        'big-tooltip': Tooltip;
     }
 }

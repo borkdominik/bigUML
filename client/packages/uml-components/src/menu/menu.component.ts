@@ -11,6 +11,7 @@ import { html, PropertyValueMap, TemplateResult } from 'lit';
 import { query } from 'lit/decorators.js';
 import { BigElement } from '../base/component';
 import '../global';
+import { Tooltip } from '../tooltip/tooltip.component';
 import { ContextMenu, ContextMenuItem } from './context-menu.component';
 import { MenuStyle } from './menu.style';
 
@@ -27,6 +28,9 @@ export class Menu extends BigElement {
 
     @query('#context-menu')
     protected readonly contextMenu: ContextMenu;
+
+    @query('#tooltip')
+    protected readonly tooltip: Tooltip;
 
     show(): void {
         this.contextMenu.show();
@@ -56,7 +60,7 @@ export class Menu extends BigElement {
     }
 
     protected override firstUpdated(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
-        this.contextMenu.reference = this.menuButton;
+        this.contextMenu.anchorReference = this.menuButton;
     }
 }
 

@@ -99,7 +99,7 @@
     </ownedAttribute>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="_Uk2g0cymEe2SqIqlz0mqiA" name="NewClass9">
-    <ownedAttribute xmi:id="_uKNqAc1tEe2aWMTUBOnCiQ" name="NewProperty1" type="_j12MQL0cEe2besM683MlUA">
+    <ownedAttribute xmi:id="_uKNqAc1tEe2aWMTUBOnCiQ" name="NewProperty1" type="_W7vZ8K79Ee2EZoZ5sgiBCg">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_uK1VEM1tEe2aWMTUBOnCiQ" value="3"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_uK1VEc1tEe2aWMTUBOnCiQ" value="5"/>
     </ownedAttribute>

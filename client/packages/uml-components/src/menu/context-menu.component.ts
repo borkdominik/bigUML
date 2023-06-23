@@ -27,7 +27,7 @@ export class ContextMenu extends BigElement {
     }
 
     @property({ type: Object })
-    reference: HTMLElement;
+    anchorReference: HTMLElement;
 
     @query('#context-menu')
     protected readonly contextMenu: HTMLDivElement;
@@ -37,7 +37,7 @@ export class ContextMenu extends BigElement {
     show(): void {
         this.contextMenu.setAttribute('popup-show', '');
         this.updateContextMenu();
-        this.disposables.push(autoUpdate(this.reference, this.contextMenu, () => this.updateContextMenu()));
+        this.disposables.push(autoUpdate(this.anchorReference, this.contextMenu, () => this.updateContextMenu()));
     }
 
     hide(): void {
@@ -56,7 +56,7 @@ export class ContextMenu extends BigElement {
     }
 
     protected override render(): TemplateResult<1> {
-        return html`<div id="context-menu" @focus="${this.show}" @blur="${this.hide}">
+        return html`<div id="context-menu" @blur="${this.hide}">
             <div class="action-bar">
                 <div class="actions-container">
                     <slot></slot>
@@ -66,7 +66,7 @@ export class ContextMenu extends BigElement {
     }
 
     protected override updated(changedProperties: Map<string, any>): void {
-        if (changedProperties.has('reference') && this.reference !== undefined) {
+        if (changedProperties.has('reference') && this.anchorReference !== undefined) {
             this.updateContextMenu();
         }
     }
@@ -83,7 +83,7 @@ export class ContextMenu extends BigElement {
                     .composedPath()
                     .filter(p => p instanceof HTMLElement)
                     .slice(1)
-                    .some(p => [this.reference].includes(p as HTMLElement))
+                    .some(p => [this.anchorReference].includes(p as HTMLElement))
             ) {
                 event.preventDefault();
             } else {
@@ -93,7 +93,7 @@ export class ContextMenu extends BigElement {
     }
 
     protected updateContextMenu(): void {
-        computePosition(this.reference, this.contextMenu, {
+        computePosition(this.anchorReference, this.contextMenu, {
             placement: 'bottom-start',
             middleware: [flip(), shift()]
         }).then(({ x, y }) => {

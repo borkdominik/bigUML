@@ -12,7 +12,7 @@ import { html, nothing, TemplateResult } from 'lit';
 import { property, query } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
 import { BigElement } from '../base/component';
-import { ContextMenuItemStyle, ContextMenuStyle } from './vscode-context-menu.style';
+import { ContextMenuItemStyle, ContextMenuStyle } from './context-menu.style';
 
 export function defineContextMenu(): void {
     customElements.define('big-context-menu', ContextMenu);

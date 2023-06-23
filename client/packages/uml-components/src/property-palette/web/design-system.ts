@@ -7,8 +7,8 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { defineContextMenu } from '../../menu/vscode-context-menu.component';
-import { defineMenu } from '../../menu/vscode-menu.component';
+import { defineContextMenu } from '../../menu/context-menu.component';
+import { defineMenu } from '../../menu/menu.component';
 import { useToolkit } from '../../toolkit';
 import { definePropertyPalette } from '../property-palette.component';
 import { definePropertyPaletteReference } from '../reference';

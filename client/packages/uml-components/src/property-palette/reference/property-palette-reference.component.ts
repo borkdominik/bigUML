@@ -218,12 +218,14 @@ export class PropertyPaletteReference extends BigElement {
     }
 
     protected onDelete(elementIds: string[]): void {
-        this.dispatchEvent(
-            new CustomEvent<PropertyDeleteEventDetail>('property-delete', {
-                detail: {
-                    elementIds
-                }
-            })
-        );
+        if (elementIds.length > 0) {
+            this.dispatchEvent(
+                new CustomEvent<PropertyDeleteEventDetail>('property-delete', {
+                    detail: {
+                        elementIds
+                    }
+                })
+            );
+        }
     }
 }

@@ -10,9 +10,9 @@ import { Button as VSCodeButton } from '@vscode/webview-ui-toolkit';
 import { html, PropertyValueMap, TemplateResult } from 'lit';
 import { query } from 'lit/decorators.js';
 import { BigElement } from '../base/component';
-import './../global';
-import { ContextMenu, ContextMenuItem } from './vscode-context-menu.component';
-import { MenuStyle } from './vscode-menu.style';
+import '../global';
+import { ContextMenu, ContextMenuItem } from './context-menu.component';
+import { MenuStyle } from './menu.style';
 
 export function defineMenu(): void {
     customElements.define('big-menu', Menu);

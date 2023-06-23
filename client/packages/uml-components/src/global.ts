@@ -22,8 +22,8 @@ import {
     TextArea,
     TextField
 } from '@vscode/webview-ui-toolkit';
-import { ContextMenu, ContextMenuItem } from './menu/vscode-context-menu.component';
-import { Menu, MenuItem } from './menu/vscode-menu.component';
+import { ContextMenu, ContextMenuItem } from './menu/context-menu.component';
+import { Menu, MenuItem } from './menu/menu.component';
 import { PropertyPalette, PropertyPaletteWebview } from './property-palette';
 import { PropertyPaletteReference } from './property-palette/reference/property-palette-reference.component';
 import { VSCodeApi } from './vscode/vscode-api';

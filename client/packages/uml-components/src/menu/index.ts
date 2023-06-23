@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-export * from './vscode-context-menu.component';
-export * from './vscode-context-menu.style';
-export * from './vscode-menu.component';
-export * from './vscode-menu.style';
+export * from './context-menu.component';
+export * from './context-menu.style';
+export * from './menu.component';
+export * from './menu.style';

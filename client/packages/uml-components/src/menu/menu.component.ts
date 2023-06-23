@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import { Button as VSCodeButton } from '@vscode/webview-ui-toolkit';
-import { html, PropertyValueMap, TemplateResult } from 'lit';
+import { html, PropertyValues, TemplateResult } from 'lit';
 import { query } from 'lit/decorators.js';
 import { BigElement } from '../base/component';
 import '../global';
@@ -59,7 +59,7 @@ export class Menu extends BigElement {
             </big-context-menu>`;
     }
 
-    protected override firstUpdated(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
+    protected override firstUpdated(_changedProperties: PropertyValues<this>): void {
         this.contextMenu.anchorReference = this.menuButton;
     }
 }

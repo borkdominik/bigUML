@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import { autoUpdate, computePosition, flip, offset, shift } from '@floating-ui/dom';
-import { css, html, TemplateResult } from 'lit';
+import { css, html, PropertyValues, TemplateResult } from 'lit';
 import { property, query } from 'lit/decorators.js';
 import { BigElement } from '../base';
 
@@ -71,7 +71,7 @@ export class Tooltip extends BigElement {
         </div>`;
     }
 
-    protected override updated(changedProperties: Map<string, any>): void {
+    protected override updated(changedProperties: PropertyValues<this>): void {
         if (changedProperties.has('anchorReference')) {
             if (this.oldAnchorReference !== undefined) {
                 this.unregisterEvents(this.oldAnchorReference);

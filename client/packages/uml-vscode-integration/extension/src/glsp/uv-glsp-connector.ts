@@ -35,6 +35,10 @@ export class UVGlspConnector<TDocument extends vscode.CustomDocument = vscode.Cu
         return Array.from(this.clientMap.values());
     }
 
+    get activeClient(): GlspVscodeClient<TDocument> | undefined {
+        return this.clients.find(c => c.webviewPanel.active);
+    }
+
     protected readonly onDidActiveClientChangeEmitter = new vscode.EventEmitter<GlspVscodeClient<TDocument>>();
     protected readonly onDidClientViewStateChangeEmitter = new vscode.EventEmitter<GlspVscodeClient<TDocument>>();
     protected readonly onDidClientDisposeEmitter = new vscode.EventEmitter<GlspVscodeClient<TDocument>>();
@@ -161,11 +165,11 @@ export class UVGlspConnector<TDocument extends vscode.CustomDocument = vscode.Cu
     }
 
     protected onClientViewStateChange(client: GlspVscodeClient<TDocument>, event: vscode.WebviewPanelOnDidChangeViewStateEvent): void {
-        this.onDidClientViewStateChangeEmitter.fire(client);
         if (event.webviewPanel.active) {
             this.onDidActiveClientChangeEmitter.fire(client);
             this.selectionUpdateEmitter.fire(this.clientSelectionMap.get(client.clientId) || []);
         }
+        this.onDidClientViewStateChangeEmitter.fire(client);
     }
 
     protected onClientDispose(client: GlspVscodeClient<TDocument>, disposables: vscode.Disposable[]): void {

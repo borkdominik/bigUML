@@ -23,10 +23,12 @@ export function definePropertyPaletteWebview(): void {
 export class PropertyPaletteWebview extends BigElement {
     @query('#component')
     protected readonly component: PropertyPalette;
+
     @state()
     protected elementProperties?: ElementProperties;
 
     protected connection = VSCodeConnection.instance();
+    protected clientId?: string;
 
     override connectedCallback(): void {
         super.connectedCallback();
@@ -42,13 +44,15 @@ export class PropertyPaletteWebview extends BigElement {
     protected override render(): TemplateResult<1> {
         return html`<big-property-palette
             id="component"
+            .clientId="${this.clientId}"
             .properties="${this.elementProperties}"
             @dispatch-action="${this.onDispatchAction}"
         ></big-property-palette>`;
     }
 
-    protected onConnectionAction(action: Action): void {
+    protected onConnectionAction(action: Action, clientId: string): void {
         if (SetPropertyPaletteAction.is(action)) {
+            this.clientId = clientId;
             this.elementProperties = action.palette;
         } else {
             console.warn('Unsupported action', action);
@@ -57,6 +61,7 @@ export class PropertyPaletteWebview extends BigElement {
 
     protected onDispatchAction(event: CustomEvent<Action>): void {
         this.connection.post<Action>({
+            clientId: this.clientId,
             command: 'dispatch-action',
             payload: event.detail
         });

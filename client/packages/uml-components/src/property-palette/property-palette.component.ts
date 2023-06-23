@@ -19,7 +19,7 @@ import {
 } from '@borkdominik-biguml/uml-common';
 import { Action, DeleteElementOperation } from '@eclipse-glsp/protocol';
 import { Checkbox as VSCodeCheckbox, Dropdown as VSCodeDropdown, TextField as VSCodeTextField } from '@vscode/webview-ui-toolkit';
-import { html, nothing, TemplateResult } from 'lit';
+import { html, nothing, PropertyValues, TemplateResult } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { keyed } from 'lit/directives/keyed.js';
 import { when } from 'lit/directives/when.js';
@@ -36,18 +36,43 @@ export function definePropertyPalette(): void {
 export class PropertyPalette extends BigElement {
     static override styles = [...super.styles, PropertyPaletteStyle.style];
 
+    @property()
+    clientId?: string;
+
     @property({ type: Object })
     properties?: ElementProperties = undefined;
 
     @state()
     protected searchText?: string;
 
-    override render(): TemplateResult<1> {
+    @state()
+    protected navigationIds: { [key: string]: { from: string; to: string }[] } = {};
+
+    protected override render(): TemplateResult<1> {
         return html`${keyed(this.properties?.elementId, html`<div>${this.headerTemplate()} ${this.bodyTemplate()}</div>`)}`;
+    }
+
+    protected override updated(changedProperties: PropertyValues<this>): void {
+        if (changedProperties.has('properties') && this.clientId !== undefined) {
+            const ids = this.navigationIds[this.clientId];
+
+            if (this.properties === undefined || ids?.at(-1)?.to !== this.properties.elementId) {
+                this.navigationIds[this.clientId] = [];
+            }
+        }
     }
 
     protected headerTemplate(): TemplateResult<1> {
         return html`<header>
+            ${when(
+                this.clientId && this.navigationIds[this.clientId]?.length > 0,
+                () => html`
+                    <vscode-button id="navigate-back" appearance="icon" @click="${this.onNavigateBack}"
+                        ><span class="codicon codicon-chevron-left"></span
+                    ></vscode-button>
+                `,
+                () => nothing
+            )}
             <h3 class="title">Properties</h3>
             ${this.properties === undefined ? nothing : html`<h4 class="secondary-title">${this.properties?.label}</h4>`}
         </header>`;
@@ -92,7 +117,7 @@ export class PropertyPalette extends BigElement {
 
         return html`<div class="body">
             <vscode-text-field
-                class="search"
+                id="search"
                 placeholder="Search"
                 .value="${this.searchText}"
                 @input="${(event: any) => (this.searchText = event.target?.value)}"
@@ -176,6 +201,22 @@ export class PropertyPalette extends BigElement {
         ></big-property-palette-reference>`;
     }
 
+    protected onNavigateBack(): void {
+        if (this.clientId) {
+            const ids = this.navigationIds[this.clientId];
+            if (ids.length > 0) {
+                const elementId = ids.pop()?.from;
+                this.dispatchEvent(
+                    new CustomEvent<Action>('dispatch-action', {
+                        detail: RefreshPropertyPaletteAction.create({
+                            elementId
+                        })
+                    })
+                );
+            }
+        }
+    }
+
     protected onPropertyChange(item: ElementProperty, value: string): void {
         const { elementId, propertyId } = item;
 
@@ -206,6 +247,16 @@ export class PropertyPalette extends BigElement {
 
     protected onPropertyNavigate(event: CustomEvent<ElementReferenceProperty.Reference>): void {
         const { elementId } = event.detail;
+        if (this.properties && this.clientId) {
+            this.navigationIds[this.clientId] = [
+                ...(this.navigationIds[this.clientId] ?? []),
+                {
+                    from: this.properties.elementId,
+                    to: elementId
+                }
+            ];
+        }
+
         this.dispatchEvent(
             new CustomEvent<Action>('dispatch-action', {
                 detail: RefreshPropertyPaletteAction.create({

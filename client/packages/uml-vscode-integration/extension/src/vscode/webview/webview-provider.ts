@@ -7,6 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import { Action, hasObjectProp, hasStringProp } from '@eclipse-glsp/client';
+import { GlspVscodeClient } from '@eclipse-glsp/vscode-integration';
 import { inject, postConstruct } from 'inversify';
 import * as vscode from 'vscode';
 import { TYPES } from '../../di.types';
@@ -19,9 +20,10 @@ export interface ProviderWebviewContext {
 }
 
 export interface ConnectionMessage<T> {
-    requestId?: string;
     command: string;
     payload: T;
+    requestId?: string;
+    clientId?: string;
     error?: any;
 }
 
@@ -81,12 +83,15 @@ export abstract class UVWebviewProvider implements vscode.WebviewViewProvider {
         this.actionDispatcher.dispatchToActiveClient(message.payload);
     }
 
-    protected postMessage(message: any): void {
+    protected postMessage(payload: any, client?: GlspVscodeClient): void {
         if (this.providerContext === undefined) {
             console.warn('webview is not ready to post message');
             return;
         }
 
-        this.providerContext.webviewView.webview.postMessage(message);
+        this.providerContext.webviewView.webview.postMessage({
+            clientId: client?.clientId,
+            payload
+        });
     }
 }

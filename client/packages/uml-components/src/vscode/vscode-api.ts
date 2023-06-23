@@ -25,15 +25,16 @@ export function getOrAcquireVSCodeApi(): VSCodeApi {
 }
 
 export interface ConnectionMessage<T> {
-    requestId?: string;
     command: string;
     payload: T;
+    requestId?: string;
+    clientId?: string;
     error?: any;
 }
 
 export namespace ConnectionMessage {
     export function is(message: object): message is ConnectionMessage<any> {
-        return hasStringProp(message, 'command') && hasObjectProp(message, 'payload');
+        return hasStringProp(message, 'clientId') && hasStringProp(message, 'command') && hasObjectProp(message, 'payload');
     }
 }
 
@@ -63,10 +64,14 @@ export class VSCodeConnection {
         return VSCodeConnection._instance;
     }
 
-    listen<T>(cb: (data: T, event: MessageEvent<T>) => void, assert?: (data: any) => data is T): void {
+    listen<T>(cb: (payload: T, clientId: string, event: MessageEvent<T>) => void, assert?: (data: any) => data is T): void {
         window.addEventListener('message', (event: MessageEvent<any>) => {
-            if (assert === undefined || assert(event.data)) {
-                cb(event.data, event);
+            if ('payload' in event.data) {
+                if (assert === undefined || assert(event.data.payload)) {
+                    cb(event.data.payload, event.data.clientId, event);
+                }
+            } else {
+                console.warn('No payload in message found', event.data);
             }
         });
     }
@@ -75,7 +80,7 @@ export class VSCodeConnection {
         this.vscode.postMessage(message);
     }
 
-    request<T>(command: string, payload?: any): Promise<T> {
+    request<T>(command: string, clientId?: string, payload?: any): Promise<T> {
         const requestId = v4();
 
         return new Promise((resolve, reject) => {
@@ -92,6 +97,7 @@ export class VSCodeConnection {
             };
 
             this.post({
+                clientId,
                 command,
                 requestId,
                 payload

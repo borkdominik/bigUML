@@ -32,21 +32,23 @@ export class PropertyPaletteProvider extends UVWebviewProvider implements IActio
         this.connector.onDidActiveClientChange(client => {
             this.connector.sendActionToClient(client.clientId, RefreshPropertyPaletteAction.create());
         });
-        this.connector.onDidClientViewStateChange(client => {
-            if (this.connector.clients.every(c => !c.webviewPanel.active)) {
-                this.postMessage(SetPropertyPaletteAction.create());
-            }
+        this.connector.onDidClientViewStateChange(() => {
+            setTimeout(() => {
+                if (this.connector.clients.every(c => !c.webviewPanel.active)) {
+                    this.postMessage(SetPropertyPaletteAction.create());
+                }
+            }, 100);
         });
         this.connector.onDidClientDispose(client => {
             if (this.connector.documents.length === 0) {
-                this.postMessage(SetPropertyPaletteAction.create());
+                this.postMessage(SetPropertyPaletteAction.create(), client);
             }
         });
     }
 
     handle(action: Action): void {
-        if (SetPropertyPaletteAction.is(action)) {
-            this.postMessage(action);
+        if (this.connector.activeClient && SetPropertyPaletteAction.is(action)) {
+            this.postMessage(action, this.connector.activeClient);
         }
     }
 

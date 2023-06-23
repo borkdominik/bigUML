@@ -8,7 +8,7 @@
  *********************************************************************************/
 
 import { autoUpdate, computePosition, flip, shift } from '@floating-ui/dom';
-import { html, nothing, TemplateResult } from 'lit';
+import { html, nothing, PropertyValues, TemplateResult } from 'lit';
 import { property, query } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
 import { BigElement } from '../base/component';
@@ -65,8 +65,8 @@ export class ContextMenu extends BigElement {
         </div>`;
     }
 
-    protected override updated(changedProperties: Map<string, any>): void {
-        if (changedProperties.has('reference') && this.anchorReference !== undefined) {
+    protected override updated(changedProperties: PropertyValues<this>): void {
+        if (changedProperties.has('anchorReference') && this.anchorReference !== undefined) {
             this.updateContextMenu();
         }
     }

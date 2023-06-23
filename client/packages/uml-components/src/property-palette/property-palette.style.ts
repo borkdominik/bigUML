@@ -16,7 +16,13 @@ export namespace PropertyPaletteStyle {
             flex-direction: column;
         }
 
-        .search {
+        #navigate-back {
+            position: absolute;
+            left: 0;
+            top: 18px;
+        }
+
+        #search {
             margin-bottom: 6px;
         }
 
@@ -45,14 +51,6 @@ export namespace PropertyPaletteStyle {
         .dropdown-option {
             display: flex;
             flex-direction: column;
-        }
-
-        .reference-item .create-reference {
-            color: var(--uml-successBackground);
-        }
-
-        .reference-item .delete {
-            color: var(--uml-errorForeground);
         }
     `;
 }

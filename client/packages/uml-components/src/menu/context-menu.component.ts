@@ -38,21 +38,25 @@ export class ContextMenu extends BigElement {
         this.contextMenu.setAttribute('popup-show', '');
         this.updateContextMenu();
         this.disposables.push(autoUpdate(this.anchorReference, this.contextMenu, () => this.updateContextMenu()));
+        this.dispatchVisibilityChanged();
     }
 
     hide(): void {
         this.contextMenu.removeAttribute('popup-show');
         this.disposables.forEach(cb => cb());
+        this.dispatchVisibilityChanged();
     }
 
     override connectedCallback(): void {
         super.connectedCallback();
         document.addEventListener('click', this.handleDocumentClick.bind(this));
+        window.addEventListener('blur', this.handleWindowBlur.bind(this));
     }
 
     override disconnectedCallback(): void {
         super.disconnectedCallback();
         document.removeEventListener('click', this.handleDocumentClick);
+        document.removeEventListener('blur', this.handleWindowBlur);
     }
 
     protected override render(): TemplateResult<1> {
@@ -92,6 +96,10 @@ export class ContextMenu extends BigElement {
         }
     }
 
+    protected handleWindowBlur(): void {
+        this.hide();
+    }
+
     protected updateContextMenu(): void {
         computePosition(this.anchorReference, this.contextMenu, {
             placement: 'bottom-start',
@@ -102,6 +110,14 @@ export class ContextMenu extends BigElement {
                 top: `${y}px`
             });
         });
+    }
+
+    protected dispatchVisibilityChanged(): void {
+        this.dispatchEvent(
+            new CustomEvent('visibility-change', {
+                detail: { isVisible: this.isVisible }
+            })
+        );
     }
 }
 

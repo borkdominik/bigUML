@@ -49,10 +49,13 @@ export class Menu extends BigElement {
     }
 
     protected override render(): TemplateResult<1> {
-        return html`<vscode-button id="menu-button" appearance="icon" @click="${this.toggle}">
-                <div class="codicon codicon-ellipsis"></div>
-            </vscode-button>
-            <big-context-menu id="context-menu">
+        return html`<big-tooltip .disabled=${this.contextMenu?.isVisible}>
+                <vscode-button slot="anchor" id="menu-button" appearance="icon" @click="${this.toggle}">
+                    <div class="codicon codicon-ellipsis"></div>
+                </vscode-button>
+                <span slot="text">More actions...</span>
+            </big-tooltip>
+            <big-context-menu id="context-menu" @visibility-change=${() => this.requestUpdate()}>
                 <div id="menu-items">
                     <slot></slot>
                 </div>

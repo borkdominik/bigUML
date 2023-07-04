@@ -6,9 +6,9 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { autoUpdate, computePosition, flip, offset, shift } from '@floating-ui/dom';
-import { css, html, PropertyValues, TemplateResult } from 'lit';
-import { property, query } from 'lit/decorators.js';
+import { arrow, autoUpdate, computePosition, flip, offset, shift } from '@floating-ui/dom';
+import { css, html, PropertyValueMap, TemplateResult } from 'lit';
+import { property, query, queryAssignedElements } from 'lit/decorators.js';
 import { BigElement } from '../base';
 
 export function defineTooltip(): void {
@@ -30,17 +30,71 @@ export class Tooltip extends BigElement {
                 color: var(--vscode-menu-foreground);
                 background-color: var(--vscode-menu-background);
                 box-shadow: 0 2px 8px var(--vscode-widget-shadow);
-                z-index: 9999;
+                z-index: 9000;
             }
 
             #tooltip[popup-show] {
                 display: block;
+                animation: 0.5s ease 0s normal forwards 1 fadein;
+            }
+
+            #arrow {
+                position: absolute;
+                margin-top: 6px;
+                margin-left: -6px;
+            }
+
+            #arrow:before,
+            #arrow:after {
+                position: absolute;
+                width: 0;
+                height: 0;
+                content: '';
+                border-left: 6px solid transparent;
+                border-right: 6px solid transparent;
+                border-bottom-width: 6px;
+                border-bottom-style: solid;
+            }
+            #arrow:before {
+                top: -8px; /* extra -1 pixel offset at the top */
+                border-bottom-color: var(--vscode-menu-border);
+            }
+            #arrow:after {
+                top: -6px;
+                border-bottom-color: var(--vscode-menu-background);
+            }
+
+            @keyframes fadein {
+                0% {
+                    opacity: 0;
+                }
+                99% {
+                    opacity: 0;
+                }
+                100% {
+                    opacity: 1;
+                }
+            }
+
+            @-webkit-keyframes fadein {
+                99% {
+                    opacity: 0;
+                }
+                66% {
+                    opacity: 0;
+                }
+                100% {
+                    opacity: 1;
+                }
             }
         `
     ];
 
-    @property({ type: Object })
-    anchorReference: HTMLElement;
+    @property({ type: Boolean, reflect: true })
+    readonly disabled: boolean;
+
+    @queryAssignedElements({ slot: 'anchor', flatten: true })
+    protected readonly anchorReference: HTMLElement[];
 
     protected oldAnchorReference?: HTMLElement;
     protected disposables: (() => void)[] = [];
@@ -53,11 +107,15 @@ export class Tooltip extends BigElement {
 
     @query('#tooltip')
     protected readonly tooltip: HTMLDivElement;
+    @query('#arrow')
+    protected readonly arrowElement: HTMLDivElement;
 
     show(): void {
         this.tooltip.setAttribute('popup-show', '');
-        this.updateTooltip();
-        this.disposables.push(autoUpdate(this.anchorReference, this.tooltip, () => this.updateTooltip()));
+        this.updateTooltip(this.anchorReference[0], this.tooltip);
+        this.disposables.push(
+            autoUpdate(this.anchorReference[0], this.tooltip, () => this.updateTooltip(this.anchorReference[0], this.tooltip))
+        );
     }
 
     hide(): void {
@@ -66,21 +124,37 @@ export class Tooltip extends BigElement {
     }
 
     protected override render(): TemplateResult<1> {
-        return html`<div id="tooltip">
-            <slot></slot>
+        return html`<div>
+            <slot name="anchor" @slotchange=${this.handleAnchorChanged}></slot>
+            <div id="tooltip">
+                <div id="arrow"></div>
+                <slot name="text" @slotchange=${this.handleTextChanged}></slot>
+            </div>
         </div>`;
     }
 
-    protected override updated(changedProperties: PropertyValues<this>): void {
-        if (changedProperties.has('anchorReference')) {
+    protected override updated(changedProperties: PropertyValueMap<this>): void {
+        if (changedProperties.has('disabled')) {
+            if (this.disabled) {
+                this.hide();
+            }
+        }
+    }
+
+    protected handleTextChanged(): void {
+        this.updateTooltip(this.anchorReference[0], this.tooltip);
+    }
+
+    protected handleAnchorChanged(): void {
+        if (this.anchorReference.length > 0) {
             if (this.oldAnchorReference !== undefined) {
                 this.unregisterEvents(this.oldAnchorReference);
             }
 
-            if (this.anchorReference !== undefined) {
-                this.oldAnchorReference = this.anchorReference;
-                this.registerEvents(this.anchorReference);
-                this.updateTooltip();
+            if (this.anchorReference.length > 0) {
+                this.oldAnchorReference = this.anchorReference[0];
+                this.registerEvents(this.anchorReference[0]);
+                this.updateTooltip(this.anchorReference[0], this.tooltip);
             }
         }
     }
@@ -97,14 +171,33 @@ export class Tooltip extends BigElement {
         });
     }
 
-    protected updateTooltip(): void {
-        computePosition(this.anchorReference, this.tooltip, {
+    protected updateTooltip(anchor: HTMLElement, tooltip: HTMLElement): void {
+        computePosition(anchor, tooltip, {
             placement: 'bottom-start',
-            middleware: [offset(6), flip(), shift({ padding: 5 })]
-        }).then(({ x, y }) => {
+            middleware: [offset(12), flip(), shift({ padding: 5 }), arrow({ element: this.arrowElement })]
+        }).then(({ placement, x, y, middlewareData }) => {
             Object.assign(this.tooltip.style, {
                 left: `${x}px`,
                 top: `${y}px`
+            });
+
+            // Accessing the data
+            const { x: arrowX, y: arrowY } = middlewareData.arrow as { x: number; y: number };
+
+            const sides: { [key: string]: string } = {
+                top: 'bottom',
+                right: 'left',
+                bottom: 'top',
+                left: 'right'
+            };
+            const staticSide = sides[placement.split('-')[0]];
+
+            Object.assign(this.arrowElement.style, {
+                left: arrowX != null ? `${arrowX}px` : '',
+                top: arrowY != null ? `${arrowY}px` : '',
+                right: '',
+                bottom: '',
+                [staticSide]: '-4px'
             });
         });
     }

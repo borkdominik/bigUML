@@ -163,12 +163,18 @@ export class PropertyPaletteReference extends BigElement {
                         </div>`
                     )}
                     <div class="item-actions">
-                        <vscode-button appearance="icon" @click="${() => this.onDelete([ref.elementId])}">
-                            <div class="codicon codicon-trash"></div>
-                        </vscode-button>
-                        <vscode-button appearance="icon" @click="${() => this.onNavigate(ref)}">
-                            <div class="codicon codicon-chevron-right"></div>
-                        </vscode-button>
+                        <big-tooltip>
+                            <vscode-button slot="anchor" appearance="icon" @click="${() => this.onDelete([ref.elementId])}">
+                                <div class="codicon codicon-trash"></div>
+                            </vscode-button>
+                            <span slot="text">Delete</span>
+                        </big-tooltip>
+                        <big-tooltip>
+                            <vscode-button slot="anchor" appearance="icon" @click="${() => this.onNavigate(ref)}">
+                                <div class="codicon codicon-chevron-right"></div>
+                            </vscode-button>
+                            <span slot="text">Navigate</span>
+                        </big-tooltip>
                     </div>
                 </div>
                 ${when(

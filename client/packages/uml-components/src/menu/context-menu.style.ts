@@ -23,7 +23,7 @@ export namespace ContextMenuStyle {
             color: var(--vscode-menu-foreground);
             background-color: var(--vscode-menu-background);
             box-shadow: 0 2px 8px var(--vscode-widget-shadow);
-            z-index: 9999;
+            z-index: 9100;
         }
 
         #context-menu[popup-show] {

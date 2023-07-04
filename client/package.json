@@ -11,8 +11,7 @@
       "**/path/**",
       "umldiagram/@vscode/codicons",
       "umldiagram/@vscode/codicons/**",
-      "umldiagram/@borkdominik-biguml/uml-vscode-integration-webview",
-      "@borkdominik-biguml/uml-vscode-integration-webview/@borkdominik-biguml/uml-glsp"
+      "umldiagram/@borkdominik-biguml/uml-vscode-integration-webview"
     ]
   },
   "scripts": {
@@ -75,9 +74,11 @@
     "@eclipse-glsp/eslint-config": "^1.1.0-RC06",
     "@eclipse-glsp/prettier-config": "^1.1.0-RC06",
     "@eclipse-glsp/ts-config": "^1.1.0-RC06",
+    "@types/lodash": "^4.14.195",
+    "esbuild": "^0.17.10",
     "eslint": "^8.41.0",
     "tsx": "^3.12.3",
-    "typescript": "^4.9.3"
+    "typescript": "^4.9.5"
   },
   "packageManager": "yarn@1.22.19",
   "engines": {

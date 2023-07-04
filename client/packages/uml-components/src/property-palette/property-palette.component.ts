@@ -40,7 +40,7 @@ export class PropertyPalette extends BigElement {
     clientId?: string;
 
     @property({ type: Object })
-    properties?: ElementProperties = undefined;
+    properties?: ElementProperties;
 
     @state()
     protected searchText?: string;

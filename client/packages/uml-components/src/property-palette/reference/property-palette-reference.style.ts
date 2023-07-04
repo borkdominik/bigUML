@@ -37,6 +37,11 @@ export namespace PropertyPaletteReferenceStyle {
             flex-direction: row;
         }
 
+        .sortable-drag {
+            opacity: 0.6;
+            background: var(--vscode-editor-background);
+        }
+
         .reference-item {
             display: flex;
             flex-direction: column;

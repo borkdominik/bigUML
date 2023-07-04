@@ -13,6 +13,7 @@ import { property, query } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { keyed } from 'lit/directives/keyed.js';
 import { when } from 'lit/directives/when.js';
+// eslint-disable-next-line import/no-named-as-default
 import Sortable from 'sortablejs';
 import { BigElement } from '../../base/component';
 import '../../global';
@@ -44,7 +45,7 @@ export class PropertyPaletteReference extends BigElement {
     static override styles = [...super.styles, PropertyPaletteReferenceStyle.style];
 
     @property({ type: Object })
-    readonly item?: ElementReferenceProperty = undefined;
+    item?: ElementReferenceProperty = undefined;
 
     @query('#items')
     protected readonly itemsElement: HTMLDivElement;
@@ -67,6 +68,7 @@ export class PropertyPaletteReference extends BigElement {
             this.sortable = Sortable.create(this.itemsElement, {
                 animation: 100,
                 handle: '.handle',
+                dragClass: 'sortable-drag',
                 onStart: e => {
                     const node = e.item as Node;
                     // Remember the list of child nodes when drag started.

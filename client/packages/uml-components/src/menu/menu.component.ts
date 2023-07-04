@@ -7,13 +7,12 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import { Button as VSCodeButton } from '@vscode/webview-ui-toolkit';
-import { html, PropertyValues, TemplateResult } from 'lit';
+import { css, html, PropertyValues, TemplateResult } from 'lit';
 import { query } from 'lit/decorators.js';
 import { BigElement } from '../base/component';
 import '../global';
 import { Tooltip } from '../tooltip/tooltip.component';
 import { ContextMenu, ContextMenuItem } from './context-menu.component';
-import { MenuStyle } from './menu.style';
 
 export function defineMenu(): void {
     customElements.define('big-menu', Menu);
@@ -21,7 +20,15 @@ export function defineMenu(): void {
 }
 
 export class Menu extends BigElement {
-    static override styles = [...super.styles, MenuStyle.style];
+    static override styles = [
+        ...super.styles,
+        css`
+            #menu-items {
+                display: flex;
+                flex-direction: column;
+            }
+        `
+    ];
 
     @query('#menu-button')
     protected readonly menuButton: VSCodeButton;

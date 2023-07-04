@@ -10,4 +10,3 @@
 export * from './context-menu.component';
 export * from './context-menu.style';
 export * from './menu.component';
-export * from './menu.style';

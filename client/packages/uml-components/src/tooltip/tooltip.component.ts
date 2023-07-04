@@ -91,7 +91,7 @@ export class Tooltip extends BigElement {
     ];
 
     @property({ type: Boolean, reflect: true })
-    readonly disabled: boolean;
+    disabled: boolean;
 
     @queryAssignedElements({ slot: 'anchor', flatten: true })
     protected readonly anchorReference: HTMLElement[];

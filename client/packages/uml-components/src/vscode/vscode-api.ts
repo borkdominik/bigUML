@@ -10,6 +10,8 @@
 import { hasObjectProp, hasStringProp } from '@eclipse-glsp/protocol';
 import { v4 } from 'uuid';
 
+// https://github.com/estruyf/vscode-helpers
+
 export interface VSCodeApi {
     postMessage: (message: any) => void;
 }

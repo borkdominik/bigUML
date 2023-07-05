@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_3QrbgRsaEe6wyY76TaevJQ" name="use-case">
+  <packagedElement xmi:type="uml:Actor" xmi:id="_30vK0BsaEe6wyY76TaevJQ" name="NewActor1"/>
+  <packagedElement xmi:type="uml:Component" xmi:id="_5id38BsaEe6wyY76TaevJQ" name="NewClassifier1"/>
+  <packagedElement xmi:type="uml:UseCase" xmi:id="_57y98BsaEe6wyY76TaevJQ" name="NewUseCase1">
+    <extend xmi:id="_9U5AsBsaEe6wyY76TaevJQ" name="TODO: What is this name?" extendedCase="_81uYcBsaEe6wyY76TaevJQ"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:UseCase" xmi:id="_81uYcBsaEe6wyY76TaevJQ" name="NewUseCase2"/>
+</uml:Model>

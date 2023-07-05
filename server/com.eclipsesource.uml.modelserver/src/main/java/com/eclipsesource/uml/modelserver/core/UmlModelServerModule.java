@@ -36,6 +36,7 @@ import com.eclipsesource.uml.modelserver.core.routing.UmlModelServerRouting;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.manifest.ClassManifest;
 import com.eclipsesource.uml.modelserver.uml.diagram.common_diagram.manifest.CommonManifest;
 import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.manifest.CommunicationManifest;
+import com.eclipsesource.uml.modelserver.uml.diagram.package_diagram.manifest.PackageManifest;
 import com.eclipsesource.uml.modelserver.uml.diagram.usecase_diagram.manifest.UseCaseManifest;
 
 public class UmlModelServerModule extends EMSNotationModelServerModule {
@@ -47,6 +48,7 @@ public class UmlModelServerModule extends EMSNotationModelServerModule {
       install(new CommunicationManifest());
       install(new ClassManifest());
       install(new UseCaseManifest());
+      install(new PackageManifest());
    }
 
    @Override
@@ -70,10 +72,14 @@ public class UmlModelServerModule extends EMSNotationModelServerModule {
    }
 
    @Override
-   protected String getSemanticFileExtension() { return UMLResource.FILE_EXTENSION; }
+   protected String getSemanticFileExtension() {
+      return UMLResource.FILE_EXTENSION;
+   }
 
    @Override
-   protected String getNotationFileExtension() { return UmlNotationResource.FILE_EXTENSION; }
+   protected String getNotationFileExtension() {
+      return UmlNotationResource.FILE_EXTENSION;
+   }
 
    @Override
    protected void configureEPackages(final MultiBinding<EPackageConfiguration> binding) {

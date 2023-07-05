@@ -20,5 +20,8 @@ export const VSCodeSettings = {
     editor: {
         extension: 'uml',
         viewType: 'bigUML.diagramView'
+    },
+    outline: {
+        viewType: 'bigUML.outlineView'
     }
 } as const;

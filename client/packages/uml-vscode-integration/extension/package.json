@@ -198,6 +198,14 @@
           "name": "UML",
           "type": "webview"
         }
+      ],
+      "explorer": [
+        {
+          "id": "bigUML.outlineView",
+          "name": "Diagram Outline",
+          "when": "activeCustomEditorId == 'bigUML.diagramView'",
+          "icon": "./resources/file_icons/light/uml.svg"
+        }
       ]
     },
     "viewsContainers": {
@@ -213,7 +221,8 @@
   "activationEvents": [
     "onLanguage:bigUML.uml",
     "onLanguage:bigUML.unotation",
-    "onCommand:bigUML.model.newEmpty"
+    "onCommand:bigUML.model.newEmpty",
+    "onView:bigUML.outlineView"
   ],
   "dependencies": {
     "@borkdominik-biguml/uml-common": "*",

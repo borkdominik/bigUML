@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import { Action } from '@eclipse-glsp/client';
-import { RequestAction, ResponseAction } from '@eclipse-glsp/protocol';
+import { RequestAction, ResponseAction, hasObjectProp } from '@eclipse-glsp/protocol';
 
 import { OutlineTreeNode } from './outline-tree-node.model';
 
@@ -16,6 +16,10 @@ export class SetOutlineAction implements ResponseAction {
     kind = SetOutlineAction.KIND;
 
     constructor(public responseId = '', public outlineTreeNodes: OutlineTreeNode[]) {}
+
+    static is(object: any): object is SetOutlineAction {
+        return Action.hasKind(object, this.KIND) && hasObjectProp(object, 'outlineTreeNodes');
+    }
 }
 
 export function isSetOutlineAction(action: Action): action is SetOutlineAction {

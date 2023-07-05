@@ -34,6 +34,7 @@ export const TYPES = {
     ModelServerConfig: Symbol('ModelServerConfig'),
     ModelServerLauncher: Symbol('ModelServerLauncher'),
     ModelServerLaunchOptions: Symbol('ModelServerLaunchOptions'),
+    Outline: Symbol('Outline'),
     OutputChannel: Symbol('OutputChannel'),
     RootInitialization: Symbol('RootInitialization'),
     Theme: Symbol('Theme'),

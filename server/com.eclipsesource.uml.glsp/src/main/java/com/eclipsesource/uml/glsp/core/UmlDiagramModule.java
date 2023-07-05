@@ -17,7 +17,6 @@ import org.eclipse.emfcloud.modelserver.glsp.notation.integration.EMSGLSPNotatio
 import org.eclipse.emfcloud.modelserver.glsp.notation.integration.EMSNotationModelState;
 import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSChangeBoundsOperationHandler;
 import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSChangeRoutingPointsOperationHandler;
-import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.ActionHandler;
 import org.eclipse.glsp.server.di.MultiBinding;
 import org.eclipse.glsp.server.emf.EMFIdGenerator;
@@ -71,6 +70,7 @@ import com.eclipsesource.uml.glsp.features.property_palette.manifest.PropertyPal
 import com.eclipsesource.uml.glsp.features.validation.UmlDiagramModelValidator;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.manifest.ClassUmlManifest;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.manifest.CommunicationUmlManifest;
+import com.eclipsesource.uml.glsp.uml.diagram.package_diagram.manifest.PackageManifest;
 import com.eclipsesource.uml.glsp.uml.diagram.usecase_diagram.manifest.UseCaseUmlManifest;
 import com.eclipsesource.uml.modelserver.core.resource.notation.UmlNotationResource;
 import com.eclipsesource.uml.modelserver.unotation.UnotationPackage;
@@ -190,12 +190,6 @@ public class UmlDiagramModule extends EMSGLSPNotationDiagramModule {
    protected String getNotationFileExtension() { return UmlNotationResource.FILE_EXTENSION; }
 
    @Override
-   protected void configureClientActions(final MultiBinding<Action> bindings) {
-      super.configureClientActions(bindings);
-      // bindings.add(ReturnTypesAction.class);
-   }
-
-   @Override
    protected void configureActionHandlers(final MultiBinding<ActionHandler> bindings) {
       super.configureActionHandlers(bindings);
       // TODO: Rebind it
@@ -239,5 +233,6 @@ public class UmlDiagramModule extends EMSGLSPNotationDiagramModule {
       install(new ClassUmlManifest());
       install(new CommunicationUmlManifest());
       install(new UseCaseUmlManifest());
+      install(new PackageManifest());
    }
 }

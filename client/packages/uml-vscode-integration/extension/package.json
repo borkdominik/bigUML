@@ -76,6 +76,13 @@
         "title": "Center selection",
         "category": "bigUML",
         "enablement": "activeCustomEditorId == 'bigUML.diagramView'"
+      },
+      {
+        "command": "bigUML.show.umlPanel",
+        "title": "Show UML panel",
+        "category": "bigUML",
+        "enablement": "activeCustomEditorId == 'bigUML.diagramView'",
+        "icon": "$(symbol-reference)"
       }
     ],
     "configuration": {
@@ -154,14 +161,12 @@
           "when": "workspaceFolderCount > 0"
         }
       ],
-      "explorer/context": [
-        {
-          "command": "bigUML.model.newEmpty",
-          "group": "navigation@10",
-          "when": "explorerResourceIsFolder || explorerResourceIsRoot"
-        }
-      ],
       "editor/title": [
+        {
+          "command": "bigUML.show.umlPanel",
+          "when": "activeCustomEditorId == 'bigUML.diagramView'",
+          "group": "navigation"
+        },
         {
           "submenu": "bigUML.editor.title",
           "group": "bookmarks"
@@ -190,7 +195,7 @@
       "bigUML-panel": [
         {
           "id": "bigUML.panel.property-palette",
-          "name": "Properties",
+          "name": "UML",
           "type": "webview"
         }
       ]

@@ -6,7 +6,6 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { EnableEditorPanelAction } from '@borkdominik-biguml/uml-glsp/lib/features/editor-panel';
 import { DiagramServerProxy, ModelSource, TYPES } from '@eclipse-glsp/client';
 import { GLSPDiagramWidget, GLSPTheiaDiagramServer } from '@eclipse-glsp/theia-integration';
 import { pickBy } from 'lodash';
@@ -39,7 +38,5 @@ export class UTDiagramWidget extends GLSPDiagramWidget {
 
     protected override dispatchInitialActions(): void {
         super.dispatchInitialActions();
-
-        this.actionDispatcher.dispatch(new EnableEditorPanelAction());
     }
 }

@@ -7,5 +7,3 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 export * from './di.config';
-export * from './property-palette.actions';
-export * from './text';

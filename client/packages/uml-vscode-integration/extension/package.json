@@ -46,8 +46,8 @@
   ],
   "scripts": {
     "build": "tsx .esbuild.mts",
-    "build:prod": "yarn clean && yarn build --es-minify",
-    "clean": "rimraf lib tsconfig.tsbuildinfo server/**/*.log",
+    "build:prod": "yarn clean && yarn build --minify",
+    "clean": "rimraf lib bundles tsconfig.tsbuildinfo server/**/*.log",
     "lint": "eslint --ext .ts,.tsx ./src",
     "lint:ci": "yarn lint -o eslint.xml -f checkstyle",
     "lint:fix": "eslint --fix --ext .ts,.tsx ./src",
@@ -55,7 +55,7 @@
     "vscode:package": "vsce package --yarn",
     "vscode:package-pre": "yarn vscode:package --pre-release",
     "vscode:prepublish": "yarn build:prod",
-    "watch": "yarn build --es-watch"
+    "watch": "yarn build --watch"
   },
   "contributes": {
     "commands": [
@@ -76,6 +76,13 @@
         "title": "Center selection",
         "category": "bigUML",
         "enablement": "activeCustomEditorId == 'bigUML.diagramView'"
+      },
+      {
+        "command": "bigUML.show.umlPanel",
+        "title": "Show UML panel",
+        "category": "bigUML",
+        "enablement": "activeCustomEditorId == 'bigUML.diagramView'",
+        "icon": "$(symbol-reference)"
       }
     ],
     "configuration": {
@@ -146,20 +153,20 @@
       }
     ],
     "menus": {
+      "view/title": [],
+      "webview/context": [],
       "file/newFile": [
         {
           "command": "bigUML.model.newEmpty",
           "when": "workspaceFolderCount > 0"
         }
       ],
-      "explorer/context": [
-        {
-          "command": "bigUML.model.newEmpty",
-          "group": "navigation@10",
-          "when": "explorerResourceIsFolder || explorerResourceIsRoot"
-        }
-      ],
       "editor/title": [
+        {
+          "command": "bigUML.show.umlPanel",
+          "when": "activeCustomEditorId == 'bigUML.diagramView'",
+          "group": "navigation"
+        },
         {
           "submenu": "bigUML.editor.title",
           "group": "bookmarks"
@@ -183,7 +190,25 @@
         "id": "bigUML.editor.title",
         "label": "Diagram"
       }
-    ]
+    ],
+    "views": {
+      "bigUML-panel": [
+        {
+          "id": "bigUML.panel.property-palette",
+          "name": "UML",
+          "type": "webview"
+        }
+      ]
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "bigUML-panel",
+          "icon": "./resources/file_icons/dark/uml.svg",
+          "title": "UML"
+        }
+      ]
+    }
   },
   "activationEvents": [
     "onLanguage:bigUML.uml",
@@ -195,6 +220,7 @@
     "@borkdominik-biguml/uml-glsp": "*",
     "@borkdominik-biguml/uml-integration": "*",
     "@borkdominik-biguml/uml-modelserver": "*",
+    "@eclipse-glsp/client": "next",
     "@eclipse-glsp/vscode-integration": "next",
     "@vscode/codicons": "^0.0.25",
     "inversify": "5.1.1",
@@ -205,8 +231,7 @@
     "@borkdominik-biguml/uml-vscode-integration-webview": "*",
     "@types/urijs": "1.19.11",
     "@types/vscode": "^1.63.0",
-    "@vscode/vsce": "^2.15.0",
-    "esbuild": "^0.17.10"
+    "@vscode/vsce": "^2.15.0"
   },
   "engines": {
     "vscode": "^1.63.0"

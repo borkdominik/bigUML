@@ -11,7 +11,8 @@
 node_modules
 .browser_modules
 lib
-build/
+build
+bundles
 *.tsbuildinfo
 
 # Project

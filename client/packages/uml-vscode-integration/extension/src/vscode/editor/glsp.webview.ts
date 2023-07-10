@@ -9,6 +9,7 @@
 import { GlspVscodeConnector } from '@eclipse-glsp/vscode-integration';
 import * as vscode from 'vscode';
 import { ThemeIntegration } from '../../features/theme/theme-integration';
+import { getBundleUri, getUri } from '../../utilities/webview';
 import { WebviewResolver, WebviewResource } from './webview';
 
 export interface GLSPWebviewData {
@@ -28,11 +29,11 @@ export class GLSPWebviewResolver implements WebviewResolver {
 
         const webview = resource.webviewPanel.webview;
         const extensionUri = this.data.context.extensionUri;
-        const webviewScriptSourceUri = webview.asWebviewUri(vscode.Uri.joinPath(extensionUri, 'webview', 'webview.js'));
-        const codiconsUri = webview.asWebviewUri(
-            vscode.Uri.joinPath(extensionUri, 'node_modules', '@vscode/codicons', 'dist', 'codicon.css')
-        );
-        const mainCSSUri = webview.asWebviewUri(vscode.Uri.joinPath(extensionUri, 'lib', 'main.css'));
+        const codiconsCSSUri = getUri(webview, extensionUri, ['node_modules', '@vscode/codicons', 'dist', 'codicon.css']);
+        const mainCSSUri = getUri(webview, extensionUri, ['lib', 'main.css']);
+
+        const bundleJSUri = getBundleUri(webview, extensionUri, ['editor', 'bundle.js']);
+        const bundleCSSUri = getBundleUri(webview, extensionUri, ['editor', 'bundle.css']);
 
         webview.options = {
             enableScripts: true
@@ -47,14 +48,15 @@ export class GLSPWebviewResolver implements WebviewResolver {
                         <meta http-equiv="Content-Security-Policy" content="
                     default-src http://*.fontawesome.com  ${webview.cspSource} data: 'unsafe-inline' 'unsafe-eval';
                     ">
-                    <link href="${codiconsUri}" rel="stylesheet" />
+                    <link href="${codiconsCSSUri}" rel="stylesheet" />
                     <link href="${mainCSSUri}" rel="stylesheet" />
+                    <link href="${bundleCSSUri}" rel="stylesheet" />
                     </head>
                     <body style="overflow: hidden;">
                         <div id="${this.data.clientId}_container" style="height: 100%;"></div>
                         <div id="${this.data.clientId}_loading" class="client-loading loading-animation"></div>
 
-                        <script src="${webviewScriptSourceUri}"></script>
+                        <script src="${bundleJSUri}"></script>
                     </body>
                 </html>`;
     }

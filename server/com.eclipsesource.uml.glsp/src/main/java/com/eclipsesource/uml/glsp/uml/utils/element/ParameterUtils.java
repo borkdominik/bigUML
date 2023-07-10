@@ -23,7 +23,8 @@ public class ParameterUtils {
       final EMFIdGenerator idGenerator) {
       var references = parameters.stream()
          .map(v -> {
-            return new ElementReferencePropertyItem.Reference(asText(v), idGenerator.getOrCreateId(v), false);
+            return new ElementReferencePropertyItem.Reference(idGenerator.getOrCreateId(v), asText(v), v.getName(),
+               asHint(v));
          })
          .collect(Collectors.toList());
 
@@ -36,5 +37,12 @@ public class ParameterUtils {
       var type = TypeUtils.name(parameter.getType());
 
       return String.format("%s %s: %s", direction, name, type);
+   }
+
+   public static String asHint(final Parameter parameter) {
+      var direction = parameter.getDirection().getLiteral();
+      var type = TypeUtils.name(parameter.getType());
+
+      return String.format("%s: %s", direction, type);
    }
 }

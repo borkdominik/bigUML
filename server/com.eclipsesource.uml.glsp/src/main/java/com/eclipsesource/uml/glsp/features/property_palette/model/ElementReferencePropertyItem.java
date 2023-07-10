@@ -32,19 +32,21 @@ public final class ElementReferencePropertyItem extends ElementPropertyItem {
    }
 
    public static class Reference {
-      public final String label;
       public final String elementId;
-      public final Boolean isReadonly;
+      public final String label;
+      public final String name;
+      public final String hint;
 
-      public Reference(final String label, final String elementId) {
-         this(label, elementId, true);
+      public Reference(final String elementId, final String label, final String name) {
+         this(elementId, label, name, null);
       }
 
-      public Reference(final String label, final String elementId, final Boolean isReadonly) {
+      public Reference(final String elementId, final String label, final String name, final String hint) {
          super();
-         this.label = label;
          this.elementId = elementId;
-         this.isReadonly = isReadonly;
+         this.label = label;
+         this.name = name;
+         this.hint = hint;
       }
    }
 

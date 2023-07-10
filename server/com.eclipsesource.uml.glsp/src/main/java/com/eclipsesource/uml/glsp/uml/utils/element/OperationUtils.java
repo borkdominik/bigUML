@@ -24,7 +24,7 @@ public class OperationUtils {
       var references = operations.stream()
          .map(v -> {
             var label = v.getName() == null ? "Operation" : v.getName();
-            return new ElementReferencePropertyItem.Reference(label, idGenerator.getOrCreateId(v), false);
+            return new ElementReferencePropertyItem.Reference(idGenerator.getOrCreateId(v), label, v.getName());
          })
          .collect(Collectors.toList());
 

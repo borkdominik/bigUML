@@ -38,7 +38,7 @@ public class UmlClass_Operation {
       VISIBILITY_KIND,
       CONCURRENCY,
       OWNED_PARAMETERS,
-      OWNED_PARAMETERS_ORDER;
+      OWNED_PARAMETERS_INDEX;
    }
 
    public static class DiagramConfiguration implements DiagramElementConfiguration.Node {

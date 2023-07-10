@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_3QrbgRsaEe6wyY76TaevJQ" name="use-case">
-  <packagedElement xmi:type="uml:Actor" xmi:id="_30vK0BsaEe6wyY76TaevJQ" name="NewActor1"/>
-  <packagedElement xmi:type="uml:Component" xmi:id="_5id38BsaEe6wyY76TaevJQ" name="NewClassifier1"/>
-  <packagedElement xmi:type="uml:UseCase" xmi:id="_57y98BsaEe6wyY76TaevJQ" name="NewUseCase1">
-    <extend xmi:id="_9U5AsBsaEe6wyY76TaevJQ" name="TODO: What is this name?" extendedCase="_81uYcBsaEe6wyY76TaevJQ"/>
+  <packagedElement xmi:type="uml:Actor" xmi:id="_dx0O0B8oEe6RP-EVI6EPJA" name="NewActor1"/>
+  <packagedElement xmi:type="uml:UseCase" xmi:id="_eTUZYB8oEe6RP-EVI6EPJA" name="NewUseCase1"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="_e13FwB8oEe6RP-EVI6EPJA" memberEnd="_e13FwR8oEe6RP-EVI6EPJA _e1468B8oEe6RP-EVI6EPJA">
+    <ownedEnd xmi:id="_e13FwR8oEe6RP-EVI6EPJA" name="NewUseCase1" type="_eTUZYB8oEe6RP-EVI6EPJA" association="_e13FwB8oEe6RP-EVI6EPJA">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_e13s0B8oEe6RP-EVI6EPJA" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_e14T4B8oEe6RP-EVI6EPJA" value="1"/>
+    </ownedEnd>
+    <ownedEnd xmi:id="_e1468B8oEe6RP-EVI6EPJA" name="NewActor1" type="_dx0O0B8oEe6RP-EVI6EPJA" association="_e13FwB8oEe6RP-EVI6EPJA">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_e15iAB8oEe6RP-EVI6EPJA" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_e15iAR8oEe6RP-EVI6EPJA" value="1"/>
+    </ownedEnd>
   </packagedElement>
-  <packagedElement xmi:type="uml:UseCase" xmi:id="_81uYcBsaEe6wyY76TaevJQ" name="NewUseCase2"/>
 </uml:Model>

@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.core.commands.paste;
+package com.eclipsesource.uml.modelserver.core.commands.copy_paste;
 
 import java.util.function.Supplier;
 

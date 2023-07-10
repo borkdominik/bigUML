@@ -8,7 +8,9 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.core.commands.paste;
+package com.eclipsesource.uml.modelserver.core.commands.copy_paste;
+
+import java.util.List;
 
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
@@ -26,8 +28,8 @@ public class UmlPasteContribution extends BasicCommandContribution<Command> {
 
    public static final String TYPE = "uml:paste";
 
-   public static CCompoundCommand create(final String semanticElementId) {
-      var compoundCommand = new ContributionEncoder().type(TYPE).element(semanticElementId)
+   public static CCompoundCommand create(final List<String> semanticElementIds) {
+      var compoundCommand = new ContributionEncoder().type(TYPE).embedJson(semanticElementIds)
          .ccompoundCommand();
 
       return compoundCommand;
@@ -39,8 +41,8 @@ public class UmlPasteContribution extends BasicCommandContribution<Command> {
       var decoder = new ContributionDecoder(modelUri, domain, command);
 
       var context = decoder.context();
-      var semanticElementId = decoder.with(context.command).elementId().get();
+      var semanticElementIds = decoder.embedJson(List.class);
 
-      return new UmlPasteCompoundCommand(context, semanticElementId);
+      return new UmlPasteCompoundCommand(context, semanticElementIds);
    }
 }

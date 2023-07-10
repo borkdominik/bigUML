@@ -24,7 +24,7 @@ import org.eclipse.uml2.uml.resource.UMLResource;
 import com.eclipsesource.uml.modelserver.core.codec.UmlCodecProvider;
 import com.eclipsesource.uml.modelserver.core.commands.change_bounds.UmlChangeBoundsContribution;
 import com.eclipsesource.uml.modelserver.core.commands.change_routing_points.UmlChangeRoutingPointsContribution;
-import com.eclipsesource.uml.modelserver.core.commands.paste.UmlPasteContribution;
+import com.eclipsesource.uml.modelserver.core.commands.copy_paste.UmlPasteContribution;
 import com.eclipsesource.uml.modelserver.core.controller.UmlSessionController;
 import com.eclipsesource.uml.modelserver.core.repository.UmlModelRepository;
 import com.eclipsesource.uml.modelserver.core.resource.UmlModelResourceManager;

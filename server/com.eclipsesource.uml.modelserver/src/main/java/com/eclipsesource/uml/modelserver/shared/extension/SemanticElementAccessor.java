@@ -11,6 +11,7 @@
 package com.eclipsesource.uml.modelserver.shared.extension;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -57,6 +58,12 @@ public final class SemanticElementAccessor {
       final String[] semanticElementIds,
       final Class<T> type) {
       return this.getElements(Set.of(semanticElementIds), type);
+   }
+
+   public <T> List<T> getElements(
+      final List<String> semanticElementIds,
+      final Class<T> type) {
+      return this.getElements(new HashSet<String>(semanticElementIds), type);
    }
 
    public <T> List<T> getElements(

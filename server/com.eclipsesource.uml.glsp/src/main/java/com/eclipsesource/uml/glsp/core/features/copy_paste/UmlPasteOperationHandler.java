@@ -8,12 +8,13 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.features.copy_paste.operations;
+package com.eclipsesource.uml.glsp.core.features.copy_paste;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
@@ -27,8 +28,7 @@ import org.eclipse.glsp.server.types.EditorContext;
 import com.eclipsesource.uml.glsp.core.handler.action.UmlRequestClipboardDataActionHandler;
 import com.eclipsesource.uml.glsp.core.model.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
-import com.eclipsesource.uml.modelserver.core.commands.paste.UmlPasteContribution;
-import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.eclipsesource.uml.modelserver.core.commands.copy_paste.UmlPasteContribution;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -54,30 +54,31 @@ public class UmlPasteOperationHandler
 
    @Override
    public void executeOperation(final PasteOperation operation) {
-      var representation = modelState.getUnsafeRepresentation();
+      var copiedElements = getCopiedElements(
+         operation.getClipboardData().get(UmlRequestClipboardDataActionHandler.CLIPBOARD_SELECTED_ELEMENTS));
 
-      // TODO: Enable for all diagrams
-      if (representation == Representation.USE_CASE) {
-         var selectedElements = getCopiedElements(
-            operation.getClipboardData().get(UmlRequestClipboardDataActionHandler.CLIPBOARD_SELECTED_ELEMENTS));
-
-         if (selectedElements.isEmpty()) {
-            return;
-         }
-
-         executePaste(selectedElements, operation.getEditorContext());
+      if (copiedElements.isEmpty()) {
+         return;
       }
+
+      executePaste(filterElements(copiedElements), operation.getEditorContext());
    }
 
    public void executePaste(final List<GModelElement> selectedElements, final EditorContext context) {
       if (selectedElements.size() > 0) {
-         selectedElements
-            .forEach(selectedElm -> modelServerAccess.exec(UmlPasteContribution.create(selectedElm.getId())));
+         modelServerAccess.exec(
+            UmlPasteContribution.create(selectedElements.stream().map(e -> e.getId()).collect(Collectors.toList())));
       }
    }
 
    protected List<GModelElement> getCopiedElements(final String jsonString) {
-      GModelElement[] elements = gson.fromJson(jsonString, GModelElement[].class);
+      var elements = gson.fromJson(jsonString, GModelElement[].class);
       return elements != null ? new ArrayList<>(Arrays.asList(elements)) : Collections.emptyList();
+   }
+
+   protected List<GModelElement> filterElements(final List<GModelElement> elements) {
+      return elements.stream()
+         .filter(e -> modelState.getIndex().getEObject(e).isPresent())
+         .collect(Collectors.toList());
    }
 }

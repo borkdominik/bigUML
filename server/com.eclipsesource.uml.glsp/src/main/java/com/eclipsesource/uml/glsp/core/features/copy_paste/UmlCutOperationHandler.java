@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.features.copy_paste.operations;
+package com.eclipsesource.uml.glsp.core.features.copy_paste;
 
 public class UmlCutOperationHandler {/*-
    extends AbstractEMSOperationHandler<CutOperation> {

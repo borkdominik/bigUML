@@ -33,6 +33,7 @@ import org.eclipse.uml2.uml.resource.UMLResource;
 
 import com.eclipsesource.uml.glsp.core.diagram.UmlDiagramConfiguration;
 import com.eclipsesource.uml.glsp.core.features.context_menu.UmlContextMenuItemProvider;
+import com.eclipsesource.uml.glsp.core.features.copy_paste.UmlPasteOperationHandler;
 import com.eclipsesource.uml.glsp.core.features.label_edit.DiagramLabelEditMapperRegistry;
 import com.eclipsesource.uml.glsp.core.features.label_edit.UmlLabelEditOperationHandler;
 import com.eclipsesource.uml.glsp.core.features.label_edit.validation.DiagramLabelEditValidatorRegistry;
@@ -65,7 +66,6 @@ import com.eclipsesource.uml.glsp.core.manifest.CoreManifest;
 import com.eclipsesource.uml.glsp.core.model.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.eclipsesource.uml.glsp.core.model.UmlSourceModelStorage;
-import com.eclipsesource.uml.glsp.features.copy_paste.operations.UmlPasteOperationHandler;
 import com.eclipsesource.uml.glsp.features.editor_panel.manifest.EditorPanelFeatureManifest;
 import com.eclipsesource.uml.glsp.features.outline.manifest.OutlineFeatureManifest;
 import com.eclipsesource.uml.glsp.features.property_palette.manifest.PropertyPaletteFeatureManifest;
@@ -217,7 +217,6 @@ public class UmlDiagramModule extends EMSGLSPNotationDiagramModule {
       bindings.rebind(EMSChangeRoutingPointsOperationHandler.class, UmlChangeRoutingPointsOperationHandler.class);
 
       bindings.add(UmlPasteOperationHandler.class);
-
       bindings.add(UmlLabelEditOperationHandler.class);
       bindings.add(UmlCreateNodeOperationHandler.class);
       bindings.add(UmlCreateEdgeOperationHandler.class);

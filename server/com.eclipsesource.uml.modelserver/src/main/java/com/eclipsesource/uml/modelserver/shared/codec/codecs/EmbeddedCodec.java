@@ -33,6 +33,15 @@ public interface EmbeddedCodec {
 
          return (T) this;
       }
+
+      default T embedJson(final Object value) {
+         var gson = new Gson();
+         var property = gson.toJson(value);
+
+         ccommand().getProperties().put(EMBEDDED_JSON, property);
+
+         return (T) this;
+      }
    }
 
    interface Decoder extends CCommandProvider {

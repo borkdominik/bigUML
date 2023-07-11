@@ -25,6 +25,6 @@ public class CreateExtendSemanticCommand extends BaseCreateSemanticRelationComma
 
    @Override
    protected Extend createSemanticElement(final UseCase source, final UseCase target) {
-      return source.createExtend("TODO: What is this name?", target);
+      return source.createExtend(null, target);
    }
 }

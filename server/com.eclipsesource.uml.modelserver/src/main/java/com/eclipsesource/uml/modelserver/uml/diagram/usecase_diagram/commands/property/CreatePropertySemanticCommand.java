@@ -26,14 +26,11 @@ public class CreatePropertySemanticCommand extends BaseCreateSemanticChildComman
    public CreatePropertySemanticCommand(final ModelContext context,
       final AttributeOwner parent) {
       super(context, parent);
-      System.out.println("CreatePropertySemanticCommand - constructor");
       this.defaultType = PropertyUtil.getType(context.domain, "String");
    }
 
    @Override
    protected Property createSemanticElement(final AttributeOwner parent) {
-      System.out.println("CreatePropertySemanticCommand - createSemanticElement");
-
       var nameGenerator = new ListNameGenerator(Property.class, parent.getOwnedAttributes());
 
       var property = parent.createOwnedAttribute(nameGenerator.newName(), defaultType);

@@ -52,9 +52,8 @@ public class UmlPasteSemanticElementCommand extends BaseSemanticElementCommand {
 
    protected EReference getTargetFeature(final EObject target, final EObject element) {
       var oldContainmentFeature = element.eContainmentFeature();
-
-      if (target.eClass().getEAllReferences().contains(
-         oldContainmentFeature)) {
+      var references = target.eClass().getEAllReferences();
+      if (references.contains(oldContainmentFeature)) {
          return oldContainmentFeature;
       }
 

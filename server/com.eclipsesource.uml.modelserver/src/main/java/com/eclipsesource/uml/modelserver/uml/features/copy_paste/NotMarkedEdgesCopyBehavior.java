@@ -10,7 +10,6 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.features.copy_paste;
 
-import java.util.List;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
@@ -37,26 +36,36 @@ public class NotMarkedEdgesCopyBehavior implements CopyBehavior {
    }
 
    @Override
-   public boolean shouldIgnore(final UmlCopier copier, final EObject original) {
+   public boolean shouldSuspend(final UmlCopier copier, final EObject original) {
+      var notation = this.notationAccessor.getElement(original);
+      if (notation.isPresent()) {
+         var notationElement = notation.get();
+         if (notationElement instanceof Edge) {
+            return true;
+         }
+      }
+
+      return false;
+   }
+
+   @Override
+   public boolean removeFromSuspension(final UmlCopier copier, final EObject original) {
       var notation = this.notationAccessor.getElement(original);
 
       if (notation.isPresent()) {
          var notationElement = notation.get();
          if (notationElement instanceof Edge) {
             var isSelected = copier.getSelectedElements().contains(original);
-            var isFullyAccessible = UmlEcoreReferencesUtil.areReferencesAccessible(copier, original);
-
-            if (outsideElements.stream().noneMatch(o -> List.of(original.getClass().getInterfaces()).contains(o))) {
-               var parentIsNotRootAncestor = EcoreUtil.isAncestor(copier.getElementsToCopy(), original)
-                  && !copier.getElementsToCopy().contains(original.eContainer());
-
-               return !(isSelected || (parentIsNotRootAncestor && isFullyAccessible));
-            }
-
-            return !(isSelected || isFullyAccessible);
+            var isParentPackage = original.eContainer() instanceof org.eclipse.uml2.uml.Package
+               && UmlEcoreReferencesUtil.hasAllReferencesAvailable(copier, original);
+            var isParentNonRoot = !copier.getElementsToCopy().contains(original.eContainer())
+               && EcoreUtil.isAncestor(copier.getElementsToCopy(), original.eContainer())
+               && UmlEcoreReferencesUtil.hasAllReferencesAvailable(copier, original);
+            return isSelected || isParentPackage || isParentNonRoot;
          }
       }
 
       return false;
+
    }
 }

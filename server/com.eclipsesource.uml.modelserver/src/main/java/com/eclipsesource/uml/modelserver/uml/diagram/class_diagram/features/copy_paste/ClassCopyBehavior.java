@@ -29,7 +29,6 @@ import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.CallbackSemanticCommand;
 
 public class ClassCopyBehavior implements CopyBehavior {
-   protected List<BiFunction<UmlCopier, EObject, Boolean>> ignores = List.of(this::ignoreProperty);
    protected List<BiFunction<UmlCopier, Map.Entry<EObject, EObject>, List<Command>>> modifiers = List
       .of(this::modifyAssociation);
    protected final ModelContext context;
@@ -79,22 +78,38 @@ public class ClassCopyBehavior implements CopyBehavior {
    }
 
    @Override
-   public boolean shouldIgnore(final UmlCopier copier, final EObject original) {
-      return ignores.stream().anyMatch(i -> i.apply(copier, original));
-   }
-
-   protected boolean ignoreProperty(final UmlCopier copier, final EObject original) {
+   public boolean shouldSuspend(final UmlCopier copier, final EObject original) {
       if (original instanceof Property) {
          var originalT = (Property) original;
 
          if (originalT.getAssociation() != null) {
-            var association = originalT.getAssociation();
-            var isSelected = copier.getSelectedElements().contains(association);
-            var isAncestor = EcoreUtil.isAncestor(copier.getElementsToCopy(), association)
-               && association.getMemberEnds().stream()
-                  .allMatch(end -> EcoreUtil.isAncestor(copier.getElementsToCopy(), end));
-            return !(isSelected || isAncestor);
+            return true;
          }
+      } else if (original instanceof Association) {
+         return true;
+      }
+
+      return false;
+   }
+
+   @Override
+   public boolean removeFromSuspension(final UmlCopier copier, final EObject original) {
+      Association association = null;
+      if (original instanceof Property) {
+         var originalT = (Property) original;
+
+         association = originalT.getAssociation();
+      } else if (original instanceof Association) {
+         association = (Association) original;
+      }
+
+      if (association != null) {
+         var isSelected = copier.getSelectedElements().contains(association);
+         var hasAllMembers = association.getMemberEnds().stream()
+            .allMatch(end -> copier.containsKey(end.getClass_()))
+            && EcoreUtil.isAncestor(copier.getElementsToCopy(), association);
+
+         return isSelected || hasAllMembers;
       }
 
       return false;

@@ -35,7 +35,7 @@ public class UmlPasteCompoundCommand extends CompoundCommand {
    public UmlPasteCompoundCommand(final ModelContext context, final List<String> semanticElementIds) {
       this.semanticElementAccessor = new SemanticElementAccessor(context);
       this.notationElementAccessor = new NotationElementAccessor(context);
-      this.copyBehaviors = Set.of(new ClassCopyBehavior(context), new NotMarkedEdgesCopyBehavior(context));
+      this.copyBehaviors = Set.of(new NotMarkedEdgesCopyBehavior(context), new ClassCopyBehavior(context));
 
       var selectedElements = semanticElementAccessor.getElements(semanticElementIds, Element.class);
       var filteredElements = filterElements(selectedElements);
@@ -53,6 +53,7 @@ public class UmlPasteCompoundCommand extends CompoundCommand {
       var copier = new UmlCopier(context, copyBehaviors, elementsToCopy, selectedElements);
       var copied = new ArrayList<>(copier.copyAll(elementsToCopy));
 
+      copier.analyzeSuspended();
       copier.copyReferences((behaviors) -> behaviors
          .forEach(i -> i.modifyReferences(copier).forEach(this::append)));
 

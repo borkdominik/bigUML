@@ -10,24 +10,31 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.core.commands.copy_paste;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 
 public class UmlCopier extends Copier {
+
    protected final ModelContext context;
    protected final Set<CopyBehavior> copyBehaviors;
    protected final Collection<? extends EObject> elementsToCopy;
    protected final Collection<? extends EObject> selectedElements;
+
+   protected final List<Suspension> suspended = new ArrayList<>();
 
    public ModelContext getContext() { return context; }
 
@@ -51,14 +58,70 @@ public class UmlCopier extends Copier {
    }
 
    @Override
-   public EObject copy(final EObject eObject) {
-      if (this.copyBehaviors.size() > 0
-         && this.copyBehaviors.stream()
-            .anyMatch(i -> i.shouldIgnore(this, eObject))) {
-         return null;
+   protected void copyContainment(final EReference eReference, final EObject eObject, final EObject copyEObject) {
+      if (eObject.eIsSet(eReference)) {
+         var setting = getTarget(eReference, eObject, copyEObject);
+         if (setting != null) {
+            var value = eObject.eGet(eReference);
+            if (eReference.isMany()) {
+               @SuppressWarnings("unchecked")
+               var target = (List<EObject>) value;
+
+               var problem = target.stream().filter(t -> copyBehaviors.stream()
+                  .anyMatch(b -> b.shouldSuspend(this, t))).collect(Collectors.toList());
+               var unproblematic = new ArrayList<>(target);
+               unproblematic.removeAll(problem);
+
+               if (problem.size() > 0) {
+                  this.suspended.add(new Suspension(eObject, copyEObject, eReference, setting, target, problem));
+               }
+
+               setting.set(copyAll(unproblematic));
+            } else {
+               setting.set(copy((EObject) value));
+            }
+         }
+      }
+   }
+
+   public void analyzeSuspended() {
+      var analyzing = true;
+
+      while (analyzing) {
+         suspended.forEach(s -> {
+            var problem = s.problem;
+
+            if (problem instanceof List) {
+               var list = (List<EObject>) problem;
+
+               list.removeIf(e -> this.copyBehaviors.stream()
+                  .anyMatch(c -> c.removeFromSuspension(this, e)));
+               var newValues = new ArrayList<Object>((List) s.value);
+               newValues.removeAll(list);
+               s.value = newValues;
+            }
+         });
+         var retakes = new ArrayList<>(suspended);
+         suspended.clear();
+         retakes.forEach(this::retake);
+
+         analyzing = suspended.size() > 0;
       }
 
-      return super.copy(eObject);
+   }
+
+   protected void retake(final Suspension suspension) {
+      var eReference = suspension.reference;
+      var value = suspension.value;
+      var setting = suspension.setting;
+
+      if (eReference.isMany()) {
+         @SuppressWarnings("unchecked")
+         var target = (List<EObject>) value;
+         setting.set(copyAll(target));
+      } else {
+         setting.set(copy((EObject) value));
+      }
    }
 
    public void copyReferences(final Consumer<Set<CopyBehavior>> consumers) {
@@ -128,6 +191,26 @@ public class UmlCopier extends Copier {
                }
             }
          }
+      }
+   }
+
+   public static class Suspension {
+      public final EObject original;
+      public final EObject copy;
+      public final EReference reference;
+      public final Setting setting;
+      public Object value;
+      public Object problem;
+
+      public Suspension(final EObject original, final EObject copy, final EReference reference, final Setting setting,
+         final Object value, final Object problem) {
+         super();
+         this.original = original;
+         this.copy = copy;
+         this.reference = reference;
+         this.setting = setting;
+         this.value = value;
+         this.problem = problem;
       }
    }
 }

@@ -16,11 +16,11 @@ import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.ecore.EObject;
 
 public interface CopyBehavior {
+   boolean shouldSuspend(UmlCopier copier, EObject original);
+
+   boolean removeFromSuspension(UmlCopier copier, EObject original);
+
    default List<Command> modifyReferences(final UmlCopier copier) {
       return List.of();
-   }
-
-   default boolean shouldIgnore(final UmlCopier copier, final EObject original) {
-      return false;
    }
 }

@@ -18,12 +18,11 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import com.eclipsesource.uml.modelserver.core.commands.copy_paste.UmlCopier;
 
 public class UmlEcoreReferencesUtil {
-   public static boolean areReferencesAccessible(final UmlCopier copier, final EObject original) {
+   public static boolean hasAllReferencesAvailable(final UmlCopier copier, final EObject original) {
       var references = getReferences(original);
       for (var reference : references) {
          if (original.eIsSet(reference)) {
@@ -34,12 +33,12 @@ public class UmlEcoreReferencesUtil {
                   @SuppressWarnings("unchecked")
                   Collection<EObject> collection = (Collection<EObject>) value;
                   for (var eObject : collection) {
-                     if (!EcoreUtil.isAncestor(copier.getElementsToCopy(), eObject)) {
+                     if (!copier.containsKey(eObject)) {
                         return false;
                      }
                   }
                } else {
-                  if (!EcoreUtil.isAncestor(copier.getElementsToCopy(), (EObject) value)) {
+                  if (!copier.containsKey(value)) {
                      return false;
                   }
                }

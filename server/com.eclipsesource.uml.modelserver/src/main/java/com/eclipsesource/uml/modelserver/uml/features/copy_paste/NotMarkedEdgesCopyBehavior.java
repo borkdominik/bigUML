@@ -44,15 +44,16 @@ public class NotMarkedEdgesCopyBehavior implements CopyBehavior {
          var notationElement = notation.get();
          if (notationElement instanceof Edge) {
             var isSelected = copier.getSelectedElements().contains(original);
+            var isFullyAccessible = UmlEcoreReferencesUtil.areReferencesAccessible(copier, original);
 
             if (outsideElements.stream().noneMatch(o -> List.of(original.getClass().getInterfaces()).contains(o))) {
                var parentIsNotRootAncestor = EcoreUtil.isAncestor(copier.getElementsToCopy(), original)
                   && !copier.getElementsToCopy().contains(original.eContainer());
 
-               return !(isSelected || parentIsNotRootAncestor);
+               return !(isSelected || (parentIsNotRootAncestor && isFullyAccessible));
             }
 
-            return !(isSelected || UmlEcoreReferencesUtil.areReferencesAccessible(copier, original));
+            return !(isSelected || isFullyAccessible);
          }
       }
 

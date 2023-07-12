@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import com.eclipsesource.uml.modelserver.core.commands.copy_paste.UmlCopier;
 
@@ -33,12 +34,12 @@ public class UmlEcoreReferencesUtil {
                   @SuppressWarnings("unchecked")
                   Collection<EObject> collection = (Collection<EObject>) value;
                   for (var eObject : collection) {
-                     if (!copier.containsKey(eObject)) {
+                     if (!EcoreUtil.isAncestor(copier.getElementsToCopy(), eObject)) {
                         return false;
                      }
                   }
                } else {
-                  if (!copier.containsKey(value)) {
+                  if (!EcoreUtil.isAncestor(copier.getElementsToCopy(), (EObject) value)) {
                      return false;
                   }
                }

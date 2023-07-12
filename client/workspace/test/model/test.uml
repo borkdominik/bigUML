@@ -1,18 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_QwgEoR_YEe6aAqy_C1bnqQ" name="test">
   <packagedElement xmi:type="uml:Package" xmi:id="_pY_XESC5Ee6N8IsGyUTFtg" name="NewPackage1">
+    <packagedElement xmi:type="uml:Package" xmi:id="_VcAR8CC-Ee6MJpzkLBZ1yQ" name="NewPackage1">
+      <packagedElement xmi:type="uml:Class" xmi:id="_X7mg4CC-Ee6MJpzkLBZ1yQ" name="NewClass3">
+        <ownedAttribute xmi:id="_eiKlMCC-Ee6MJpzkLBZ1yQ" name="NewClass1" type="_p19m8CC5Ee6N8IsGyUTFtg" association="_eiJ-ICC-Ee6MJpzkLBZ1yQ">
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_eiKlMSC-Ee6MJpzkLBZ1yQ" value="1"/>
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_eiKlMiC-Ee6MJpzkLBZ1yQ" value="1"/>
+        </ownedAttribute>
+        <ownedAttribute xmi:id="_v_rZYCDIEe6iFPTaAsnMmA" name="NewClass1" type="_w5FAMCDAEe6XoauYxav6jg" aggregation="shared" association="_v_i2gCDIEe6iFPTaAsnMmA">
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_v_sAcCDIEe6iFPTaAsnMmA" value="1"/>
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_v_sngCDIEe6iFPTaAsnMmA" value="1"/>
+        </ownedAttribute>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Association" xmi:id="_eiJ-ICC-Ee6MJpzkLBZ1yQ" memberEnd="_eiKlMCC-Ee6MJpzkLBZ1yQ _eiLMQCC-Ee6MJpzkLBZ1yQ"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_w5FAMCDAEe6XoauYxav6jg" name="NewClass1">
+        <ownedAttribute xmi:id="_v_sngSDIEe6iFPTaAsnMmA" name="NewClass3" type="_X7mg4CC-Ee6MJpzkLBZ1yQ" association="_v_i2gCDIEe6iFPTaAsnMmA">
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_v_sngiDIEe6iFPTaAsnMmA" value="1"/>
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_v_tOkCDIEe6iFPTaAsnMmA" value="1"/>
+        </ownedAttribute>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_xHl9UCDAEe6XoauYxav6jg" name="NewClass1">
+        <substitution xmi:id="_zrbzECDAEe6XoauYxav6jg" client="_xHl9UCDAEe6XoauYxav6jg" supplier="_yh70YCDAEe6XoauYxav6jg" contract="_yh70YCDAEe6XoauYxav6jg"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Dependency" xmi:id="_yKbTUCDAEe6XoauYxav6jg" client="_xHl9UCDAEe6XoauYxav6jg" supplier="_wPWGsCDAEe6XoauYxav6jg"/>
+      <packagedElement xmi:type="uml:Realization" xmi:id="_0RMykCDAEe6XoauYxav6jg" client="_w5FAMCDAEe6XoauYxav6jg" supplier="_xHl9UCDAEe6XoauYxav6jg"/>
+      <packagedElement xmi:type="uml:Association" xmi:id="_v_i2gCDIEe6iFPTaAsnMmA" memberEnd="_v_rZYCDIEe6iFPTaAsnMmA _v_sngSDIEe6iFPTaAsnMmA"/>
+    </packagedElement>
     <packagedElement xmi:type="uml:Class" xmi:id="_p19m8CC5Ee6N8IsGyUTFtg" name="NewClass1">
-      <ownedAttribute xmi:id="_TKM5UCC8Ee6DEoTvNwFfkg" name="NewClass3" type="_SefC0CC8Ee6DEoTvNwFfkg" association="_TKBTICC8Ee6DEoTvNwFfkg">
-        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_TKOHcCC8Ee6DEoTvNwFfkg" value="1"/>
-        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_TKOHcSC8Ee6DEoTvNwFfkg" value="1"/>
+      <ownedAttribute xmi:id="_eiLMQCC-Ee6MJpzkLBZ1yQ" name="NewClass3" type="_X7mg4CC-Ee6MJpzkLBZ1yQ" association="_eiJ-ICC-Ee6MJpzkLBZ1yQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_eiLMQSC-Ee6MJpzkLBZ1yQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_eiLMQiC-Ee6MJpzkLBZ1yQ" value="1"/>
       </ownedAttribute>
     </packagedElement>
-    <packagedElement xmi:type="uml:Class" xmi:id="_SefC0CC8Ee6DEoTvNwFfkg" name="NewClass3">
-      <ownedAttribute xmi:id="_TKOugCC8Ee6DEoTvNwFfkg" name="NewClass1" type="_p19m8CC5Ee6N8IsGyUTFtg" association="_TKBTICC8Ee6DEoTvNwFfkg">
-        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_TKOugSC8Ee6DEoTvNwFfkg" value="1"/>
-        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_TKOugiC8Ee6DEoTvNwFfkg" value="1"/>
-      </ownedAttribute>
-    </packagedElement>
-    <packagedElement xmi:type="uml:Association" xmi:id="_TKBTICC8Ee6DEoTvNwFfkg" memberEnd="_TKM5UCC8Ee6DEoTvNwFfkg _TKOugCC8Ee6DEoTvNwFfkg"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_wPWGsCDAEe6XoauYxav6jg" name="NewClass2"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_yh70YCDAEe6XoauYxav6jg" name="NewClass3"/>
   </packagedElement>
 </uml:Model>

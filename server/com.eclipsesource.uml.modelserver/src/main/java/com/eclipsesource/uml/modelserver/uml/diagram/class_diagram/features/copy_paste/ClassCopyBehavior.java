@@ -89,9 +89,10 @@ public class ClassCopyBehavior implements CopyBehavior {
 
          if (originalT.getAssociation() != null) {
             var association = originalT.getAssociation();
-
             var isSelected = copier.getSelectedElements().contains(association);
-            var isAncestor = EcoreUtil.isAncestor(copier.getElementsToCopy(), association);
+            var isAncestor = EcoreUtil.isAncestor(copier.getElementsToCopy(), association)
+               && association.getMemberEnds().stream()
+                  .allMatch(end -> EcoreUtil.isAncestor(copier.getElementsToCopy(), end));
             return !(isSelected || isAncestor);
          }
       }

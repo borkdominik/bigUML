@@ -25,31 +25,53 @@ public class UmlPasteNotationElementCommand extends BaseNotationElementCommand {
 
    private static final int DEFAULT_POSITION_SHIFT = 30;
 
-   protected final NotationElement newNotationElement;
+   protected final NotationElement notationCopy;
    protected final Supplier<? extends EObject> semanticElementSupplier;
+   protected final Options options;
 
    public UmlPasteNotationElementCommand(final ModelContext context,
-      final Supplier<? extends EObject> semanticElementSupplier, final NotationElement newNotationElement) {
+      final Supplier<? extends EObject> semanticElementSupplier, final NotationElement notationCopy) {
+      this(context, semanticElementSupplier, notationCopy, new Options());
+   }
+
+   public UmlPasteNotationElementCommand(final ModelContext context,
+      final Supplier<? extends EObject> semanticElementSupplier, final NotationElement notationCopy,
+      final Options options) {
       super(context);
 
-      this.newNotationElement = newNotationElement;
+      this.notationCopy = notationCopy;
       this.semanticElementSupplier = semanticElementSupplier;
+      this.options = options;
    }
 
    @Override
    protected void doExecute() {
       var semanticReference = NotationFactory.eINSTANCE.createSemanticElementReference();
       semanticReference.setElementId(SemanticElementAccessor.getId(semanticElementSupplier.get()));
+      notationCopy.setSemanticElement(semanticReference);
 
-      newNotationElement.setSemanticElement(semanticReference);
-
-      if (newNotationElement instanceof Shape) {
-         var newPosition = ((Shape) newNotationElement).getPosition();
-         newPosition.setX(newPosition.getX() + DEFAULT_POSITION_SHIFT);
-         newPosition.setY(newPosition.getY() + DEFAULT_POSITION_SHIFT);
-         ((Shape) newNotationElement).setPosition(newPosition);
+      if (notationCopy instanceof Shape) {
+         if (options.shift) {
+            var shape = ((Shape) notationCopy);
+            var newPosition = shape.getPosition();
+            newPosition.setX(newPosition.getX() + DEFAULT_POSITION_SHIFT);
+            newPosition.setY(newPosition.getY() + DEFAULT_POSITION_SHIFT);
+            shape.setPosition(newPosition);
+         }
       }
 
-      diagram.getElements().add(newNotationElement);
+      diagram.getElements().add(notationCopy);
+   }
+
+   public static class Options {
+      public final Boolean shift;
+
+      public Options() {
+         this(true);
+      }
+
+      public Options(final Boolean shift) {
+         this.shift = shift;
+      }
    }
 }

@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_QwgEoR_YEe6aAqy_C1bnqQ" name="test">
-  <packagedElement xmi:type="uml:Class" xmi:id="_tFpaoR_rEe6J_9rpdixq-Q" name="NewClass1">
-    <substitution xmi:id="_WH89kB_wEe6Mqb5XT2ATsA" client="_tFpaoR_rEe6J_9rpdixq-Q" supplier="_tWq5MB_rEe6J_9rpdixq-Q" contract="_tWq5MB_rEe6J_9rpdixq-Q"/>
+  <packagedElement xmi:type="uml:Package" xmi:id="_pY_XESC5Ee6N8IsGyUTFtg" name="NewPackage1">
+    <packagedElement xmi:type="uml:Class" xmi:id="_p19m8CC5Ee6N8IsGyUTFtg" name="NewClass1">
+      <ownedAttribute xmi:id="_TKM5UCC8Ee6DEoTvNwFfkg" name="NewClass3" type="_SefC0CC8Ee6DEoTvNwFfkg" association="_TKBTICC8Ee6DEoTvNwFfkg">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_TKOHcCC8Ee6DEoTvNwFfkg" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_TKOHcSC8Ee6DEoTvNwFfkg" value="1"/>
+      </ownedAttribute>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_SefC0CC8Ee6DEoTvNwFfkg" name="NewClass3">
+      <ownedAttribute xmi:id="_TKOugCC8Ee6DEoTvNwFfkg" name="NewClass1" type="_p19m8CC5Ee6N8IsGyUTFtg" association="_TKBTICC8Ee6DEoTvNwFfkg">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_TKOugSC8Ee6DEoTvNwFfkg" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_TKOugiC8Ee6DEoTvNwFfkg" value="1"/>
+      </ownedAttribute>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_TKBTICC8Ee6DEoTvNwFfkg" memberEnd="_TKM5UCC8Ee6DEoTvNwFfkg _TKOugCC8Ee6DEoTvNwFfkg"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Class" xmi:id="_tWq5MB_rEe6J_9rpdixq-Q" name="NewClass2"/>
 </uml:Model>

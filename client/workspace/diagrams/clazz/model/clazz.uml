@@ -36,11 +36,6 @@
     <ownedLiteral xmi:id="__G-0sLK0Ee24ffphK9Na6g" name="NewEnumerationLiteral1"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Interface" xmi:id="_9pVK8LK0Ee24ffphK9Na6g" name="NewInterface1"/>
-  <packagedElement xmi:type="uml:Package" xmi:id="_99xw8LK0Ee24ffphK9Na6g" name="NewPackage3" visibility="public">
-    <packageImport xmi:id="_dxJb8LK1Ee24ffphK9Na6g" importedPackage="_dDtuMLK1Ee24ffphK9Na6g"/>
-    <packageMerge xmi:id="_e5mRwLK1Ee24ffphK9Na6g" mergedPackage="_ed5NMLK1Ee24ffphK9Na6g"/>
-    <packagedElement xmi:type="uml:Package" xmi:id="_AmwlYLK1Ee24ffphK9Na6g" name="NewPackage1"/>
-  </packagedElement>
   <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_-da6ULK0Ee24ffphK9Na6g" name="NewPrimitiveType1">
     <ownedAttribute xmi:id="_ipeAULK2Ee24ffphK9Na6g" name="NewProperty1" isStatic="true" isDerived="true">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_ipenYLK2Ee24ffphK9Na6g" value="1"/>
@@ -105,4 +100,9 @@
     </ownedOperation>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="_ItM-INIcEe2rY5KN6ehSig" memberEnd="_ItfSANIcEe2rY5KN6ehSig _ItggIdIcEe2rY5KN6ehSig"/>
+  <packagedElement xmi:type="uml:Package" xmi:id="_5TBTMCCrEe6XX-qz1apJUQ" name="NewPackage1">
+    <packageImport xmi:id="_8glbYCCrEe6XX-qz1apJUQ" importedPackage="_ed5NMLK1Ee24ffphK9Na6g"/>
+    <packageMerge xmi:id="_9VqCMCCrEe6XX-qz1apJUQ" mergedPackage="_dDtuMLK1Ee24ffphK9Na6g"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_6PW_oCCrEe6XX-qz1apJUQ" name="NewClass1"/>
+  </packagedElement>
 </uml:Model>

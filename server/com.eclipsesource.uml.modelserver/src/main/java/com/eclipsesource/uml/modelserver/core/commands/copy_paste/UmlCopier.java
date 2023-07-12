@@ -13,6 +13,7 @@ package com.eclipsesource.uml.modelserver.core.commands.copy_paste;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.function.Consumer;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -20,30 +21,49 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier;
 import org.eclipse.emf.ecore.util.InternalEList;
 
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
+
 public class UmlCopier extends Copier {
-   protected Set<CopyBehaviorInfluencer> behaviorInfluencer = Set.of();
-   protected Collection<? extends EObject> eObjects = Set.of();
+   protected final ModelContext context;
+   protected final Set<CopyBehavior> copyBehaviors;
+   protected final Collection<? extends EObject> elementsToCopy;
+   protected final Collection<? extends EObject> selectedElements;
 
-   public <T extends EObject> Collection<T> copyAll(final Collection<T> eObjects,
-      final Set<CopyBehaviorInfluencer> behaviorInfluencer) {
-      this.eObjects = eObjects;
-      this.behaviorInfluencer = behaviorInfluencer;
+   public ModelContext getContext() { return context; }
 
-      var elements = super.copyAll(eObjects);
+   public Set<CopyBehavior> getCopyBehaviors() { return copyBehaviors; }
 
-      this.eObjects = Set.of();
-      this.behaviorInfluencer = Set.of();
-      return elements;
+   public Collection<? extends EObject> getElementsToCopy() { return elementsToCopy; }
+
+   public Collection<? extends EObject> getSelectedElements() { return selectedElements; }
+
+   public UmlCopier(final ModelContext context) {
+      this(context, Set.of(), Set.of(), Set.of());
+   }
+
+   public UmlCopier(final ModelContext context, final Set<CopyBehavior> copyBehaviors,
+      final Collection<? extends EObject> elementsToCopy,
+      final Collection<? extends EObject> selectedElements) {
+      this.context = context;
+      this.copyBehaviors = copyBehaviors;
+      this.elementsToCopy = elementsToCopy;
+      this.selectedElements = selectedElements;
    }
 
    @Override
    public EObject copy(final EObject eObject) {
-      if (this.behaviorInfluencer.size() > 0
-         && this.behaviorInfluencer.stream().anyMatch(i -> i.shouldIgnore(this.eObjects, eObject))) {
+      if (this.copyBehaviors.size() > 0
+         && this.copyBehaviors.stream()
+            .anyMatch(i -> i.shouldIgnore(this, eObject))) {
          return null;
       }
 
       return super.copy(eObject);
+   }
+
+   public void copyReferences(final Consumer<Set<CopyBehavior>> consumers) {
+      super.copyReferences();
+      consumers.accept(copyBehaviors);
    }
 
    /**

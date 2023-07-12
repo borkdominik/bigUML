@@ -24,61 +24,67 @@ import org.eclipse.uml2.uml.Element;
 import com.eclipsesource.uml.modelserver.shared.extension.NotationElementAccessor;
 import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.features.copy_paste.ClassCopyBehaviorInfluencer;
+import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.features.copy_paste.ClassCopyBehavior;
+import com.eclipsesource.uml.modelserver.uml.features.copy_paste.NotMarkedEdgesCopyBehavior;
 
 public class UmlPasteCompoundCommand extends CompoundCommand {
    protected final SemanticElementAccessor semanticElementAccessor;
    protected final NotationElementAccessor notationElementAccessor;
-   protected final Set<CopyBehaviorInfluencer> copyBehaviorInfluencer = Set.of(new ClassCopyBehaviorInfluencer());
+   protected final Set<CopyBehavior> copyBehaviors;
 
    public UmlPasteCompoundCommand(final ModelContext context, final List<String> semanticElementIds) {
       this.semanticElementAccessor = new SemanticElementAccessor(context);
       this.notationElementAccessor = new NotationElementAccessor(context);
+      this.copyBehaviors = Set.of(new ClassCopyBehavior(context), new NotMarkedEdgesCopyBehavior(context));
 
-      var filteredIds = filterElements(semanticElementIds);
-      var elements = filteredIds.stream().map(id -> semanticElementAccessor.getElement(id, Element.class).get())
-         .collect(Collectors.toList());
+      var selectedElements = semanticElementAccessor.getElements(semanticElementIds, Element.class);
+      var filteredElements = filterElements(selectedElements);
 
-      copyElements(context, elements).forEach(this::append);
+      copyElements(context, filteredElements, selectedElements).forEach(this::append);
    }
 
-   protected List<String> filterElements(final List<String> elementIds) {
-      var elements = semanticElementAccessor.getElements(elementIds, Element.class);
-      var filtered = EcoreUtil.filterDescendants(elements);
-      return filtered.stream().map(f -> SemanticElementAccessor.getId(f)).collect(Collectors.toList());
+   protected List<Element> filterElements(final List<Element> elements) {
+      return EcoreUtil.filterDescendants(elements).stream().map(e -> (Element) e).collect(Collectors.toList());
    }
 
-   protected List<Command> copyElements(final ModelContext context, final List<Element> elements) {
+   protected List<Command> copyElements(final ModelContext context, final List<Element> elementsToCopy,
+      final List<Element> selectedElements) {
       var commands = new ArrayList<Command>();
-      var copied = copyAll(context, elements);
+      var copier = new UmlCopier(context, copyBehaviors, elementsToCopy, selectedElements);
+      var copied = new ArrayList<>(copier.copyAll(elementsToCopy));
+
+      copier.copyReferences((behaviors) -> behaviors
+         .forEach(i -> i.modifyReferences(copier).forEach(this::append)));
 
       for (int i = 0; i < copied.size(); i++) {
-         var semantic = elements.get(i);
+         var semantic = elementsToCopy.get(i);
          var semanticCopy = copied.get(i);
 
          commands.add(
             new UmlPasteSemanticElementCommand(context, semantic, semanticCopy));
 
          notationElementAccessor.getElement(semantic).ifPresent(notation -> {
-            var notationCopy = copy(notation);
+            var notationCopy = copy(context, notation);
 
             commands.add(
                new UmlPasteNotationElementCommand(context, () -> semanticCopy, notationCopy));
          });
 
          var originalTree = semantic.eAllContents();
-         var copyTree = semanticCopy.eAllContents();
 
-         while (originalTree.hasNext() && copyTree.hasNext()) {
+         while (originalTree.hasNext()) {
             var originalTreeItem = originalTree.next();
-            var copyTreeItem = copyTree.next();
+            if (!copier.containsKey(originalTreeItem)) {
+               continue;
+            }
 
-            var childId = SemanticElementAccessor.getUnsafeId(originalTreeItem);
+            notationElementAccessor.getElement(originalTreeItem).ifPresent(childNotation -> {
+               var childSemanticCopy = copier.get(originalTreeItem);
+               var childNotationCopy = copy(context, childNotation);
 
-            notationElementAccessor.getElement(childId).ifPresent(childNotation -> {
-               var childNotationCopy = copy(childNotation);
                commands.add(
-                  new UmlPasteNotationElementCommand(context, () -> copyTreeItem, childNotationCopy));
+                  new UmlPasteNotationElementCommand(context, () -> childSemanticCopy, childNotationCopy,
+                     new UmlPasteNotationElementCommand.Options(false)));
             });
          }
       }
@@ -86,18 +92,8 @@ public class UmlPasteCompoundCommand extends CompoundCommand {
       return commands;
    }
 
-   protected <T extends EObject> List<T> copyAll(final ModelContext context, final List<T> elements) {
-      var copier = new UmlCopier();
-      var result = copier.copyAll(elements, copyBehaviorInfluencer);
-
-      copier.copyReferences();
-      copyBehaviorInfluencer.forEach(i -> i.modifyReferences(context, elements, copier).forEach(this::append));
-
-      return new ArrayList<>(result);
-   }
-
-   protected <T extends EObject> T copy(final T element) {
-      var copier = new UmlCopier();
+   protected <T extends EObject> T copy(final ModelContext context, final T element) {
+      var copier = new UmlCopier(context);
       var result = copier.copy(element);
       copier.copyReferences();
 

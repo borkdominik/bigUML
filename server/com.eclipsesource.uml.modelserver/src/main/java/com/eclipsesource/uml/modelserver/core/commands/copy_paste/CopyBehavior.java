@@ -10,20 +10,17 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.core.commands.copy_paste;
 
-import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.util.EcoreUtil.Copier;
 
-import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
-
-public interface CopyBehaviorInfluencer {
-   default List<Command> modifyReferences(final ModelContext context, final Collection<? extends EObject> elements,
-      final Copier copier) {
+public interface CopyBehavior {
+   default List<Command> modifyReferences(final UmlCopier copier) {
       return List.of();
    }
 
-   boolean shouldIgnore(Collection<? extends EObject> elements, EObject original);
+   default boolean shouldIgnore(final UmlCopier copier, final EObject original) {
+      return false;
+   }
 }

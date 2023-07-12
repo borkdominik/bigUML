@@ -11,7 +11,6 @@
 package com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.features.copy_paste;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
@@ -19,35 +18,39 @@ import java.util.stream.Collectors;
 
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.util.EcoreUtil.Copier;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.uml2.uml.Association;
 import org.eclipse.uml2.uml.Property;
 
-import com.eclipsesource.uml.modelserver.core.commands.copy_paste.CopyBehaviorInfluencer;
+import com.eclipsesource.uml.modelserver.core.commands.copy_paste.CopyBehavior;
+import com.eclipsesource.uml.modelserver.core.commands.copy_paste.UmlCopier;
 import com.eclipsesource.uml.modelserver.core.commands.copy_paste.UmlPasteSemanticElementCommand;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.CallbackSemanticCommand;
-import com.eclipsesource.uml.modelserver.shared.utils.TriFunction;
 
-public class ClassCopyBehaviorInfluencer implements CopyBehaviorInfluencer {
-   protected List<BiFunction<Collection<? extends EObject>, EObject, Boolean>> ignores = List.of(this::ignoreProperty);
-   protected List<TriFunction<ModelContext, Copier, Map.Entry<EObject, EObject>, List<Command>>> modifiers = List
+public class ClassCopyBehavior implements CopyBehavior {
+   protected List<BiFunction<UmlCopier, EObject, Boolean>> ignores = List.of(this::ignoreProperty);
+   protected List<BiFunction<UmlCopier, Map.Entry<EObject, EObject>, List<Command>>> modifiers = List
       .of(this::modifyAssociation);
+   protected final ModelContext context;
+
+   public ClassCopyBehavior(final ModelContext context) {
+      this.context = context;
+   }
 
    @Override
-   public List<Command> modifyReferences(final ModelContext context, final Collection<? extends EObject> elements,
-      final Copier copier) {
+   public List<Command> modifyReferences(final UmlCopier copier) {
       var commands = new ArrayList<Command>();
 
       var entries = copier.entrySet().stream().collect(Collectors.toUnmodifiableSet());
       for (var entry : entries) {
-         this.modifiers.stream().map(m -> m.apply(context, copier, entry)).forEach(commands::addAll);
+         this.modifiers.stream().map(m -> m.apply(copier, entry)).forEach(commands::addAll);
       }
 
       return commands;
    }
 
-   protected List<Command> modifyAssociation(final ModelContext context, final Copier copier,
+   protected List<Command> modifyAssociation(final UmlCopier copier,
       final Map.Entry<EObject, EObject> entry) {
       var commands = new ArrayList<Command>();
 
@@ -76,15 +79,21 @@ public class ClassCopyBehaviorInfluencer implements CopyBehaviorInfluencer {
    }
 
    @Override
-   public boolean shouldIgnore(final Collection<? extends EObject> elements, final EObject original) {
-      return ignores.stream().anyMatch(i -> i.apply(elements, original));
+   public boolean shouldIgnore(final UmlCopier copier, final EObject original) {
+      return ignores.stream().anyMatch(i -> i.apply(copier, original));
    }
 
-   protected boolean ignoreProperty(final Collection<? extends EObject> elements, final EObject original) {
+   protected boolean ignoreProperty(final UmlCopier copier, final EObject original) {
       if (original instanceof Property) {
          var originalT = (Property) original;
 
-         return originalT.getAssociation() != null && !elements.contains(originalT.getAssociation());
+         if (originalT.getAssociation() != null) {
+            var association = originalT.getAssociation();
+
+            var isSelected = copier.getSelectedElements().contains(association);
+            var isAncestor = EcoreUtil.isAncestor(copier.getElementsToCopy(), association);
+            return !(isSelected || isAncestor);
+         }
       }
 
       return false;

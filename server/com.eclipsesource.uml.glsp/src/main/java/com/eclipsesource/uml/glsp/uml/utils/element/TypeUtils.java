@@ -23,8 +23,8 @@ public class TypeUtils {
    public static List<ElementChoicePropertyItem.Choice> asChoices(final Set<TypeInformation> typeInformation) {
       var choices = typeInformation.stream()
          .map(v -> {
-            var label = String.format("[%s] %s", v.type, name(v));
-            return new ElementChoicePropertyItem.Choice(label, v.id);
+            var label = name(v);
+            return new ElementChoicePropertyItem.Choice(label, v.id, v.type);
          })
          .collect(Collectors.toList());
 

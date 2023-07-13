@@ -24,7 +24,7 @@ public class EnumerationLiteralUtils {
       var references = literals.stream()
          .map(v -> {
             var label = v.getName() == null ? "Enumeration Literal" : v.getName();
-            return new ElementReferencePropertyItem.Reference(label, idGenerator.getOrCreateId(v), false);
+            return new ElementReferencePropertyItem.Reference(idGenerator.getOrCreateId(v), label, v.getName());
          })
          .collect(Collectors.toList());
 

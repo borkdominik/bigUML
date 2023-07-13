@@ -1,19 +1,21 @@
-import * as esbuild from 'esbuild';
+import * as es from 'esbuild';
 
-const minify = process.argv.includes('--es-minify');
-const watch = process.argv.includes('--es-watch');
+const args = process.argv.slice(2);
+const minify = args.includes('--minify');
+const watch = args.includes('--watch');
 
-const options: esbuild.BuildOptions = {
+const extensionConfig: es.BuildOptions = {
+    bundle: true,
+    minify: process.env.NODE_ENV === 'production' || minify,
+    sourcemap: process.env.NODE_ENV !== 'production' || !minify,
     entryPoints: ['./src/index.ts'],
     outfile: './lib/main.js',
-    bundle: true,
-    sourcemap: true,
-    color: true,
-    minify,
-    logLevel: 'info',
-    format: 'cjs',
     platform: 'node',
+    mainFields: ['module', 'main'],
+    format: 'cjs',
     external: ['vscode'],
+    color: true,
+    logLevel: 'info',
     loader: {
         '.png': 'dataurl',
         '.woff': 'dataurl',
@@ -24,9 +26,16 @@ const options: esbuild.BuildOptions = {
     }
 };
 
-if (watch) {
-    const context = await esbuild.context(options);
-    await context.watch();
-} else {
-    await esbuild.build(options);
-}
+(async () => {
+    try {
+        if (watch) {
+            const context = await es.context(extensionConfig);
+            await context.watch();
+        } else {
+            await es.build(extensionConfig);
+        }
+    } catch (err) {
+        process.stderr.write(err.stderr);
+        process.exit(1);
+    }
+})();

@@ -30,7 +30,7 @@ import com.eclipsesource.uml.glsp.uml.features.property_palette.BaseDiagramEleme
 import com.eclipsesource.uml.glsp.uml.utils.element.CallConcurrencyKindUtils;
 import com.eclipsesource.uml.glsp.uml.utils.element.ParameterUtils;
 import com.eclipsesource.uml.glsp.uml.utils.element.VisibilityKindUtils;
-import com.eclipsesource.uml.modelserver.shared.model.OrderPosition;
+import com.eclipsesource.uml.modelserver.shared.model.NewListIndex;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.operation.UpdateOperationArgument;
 import com.google.common.reflect.TypeToken;
 
@@ -112,11 +112,11 @@ public class OperationPropertyMapper extends BaseDiagramElementPropertyMapper<Op
                   .concurrency(CallConcurrencyKind.get(action.getValue()))
                   .get());
             break;
-         case OWNED_PARAMETERS_ORDER:
+         case OWNED_PARAMETERS_INDEX:
             operation = handler.withArgument(
                new UpdateOperationArgument.Builder()
-                  .parameterOrders(
-                     gson.fromJson(action.getValue(), new TypeToken<ArrayList<OrderPosition>>() {}.getType()))
+                  .parameterIndex(
+                     gson.fromJson(action.getValue(), new TypeToken<ArrayList<NewListIndex>>() {}.getType()))
                   .get());
             break;
       }

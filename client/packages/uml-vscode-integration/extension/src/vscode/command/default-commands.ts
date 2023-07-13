@@ -32,6 +32,9 @@ export function configureDefaultCommands(context: CommandContext): void {
         }),
         vscode.commands.registerCommand(`${diagramPrefix}.selectAll`, () => {
             connector.sendActionToActiveClient(SelectAllAction.create());
+        }),
+        vscode.commands.registerCommand(`${diagramPrefix}.show.umlPanel`, () => {
+            vscode.commands.executeCommand('bigUML.panel.property-palette.focus');
         })
         /*
         vscode.commands.registerCommand(`${diagramPrefix}.exportAsSVG`, () => {

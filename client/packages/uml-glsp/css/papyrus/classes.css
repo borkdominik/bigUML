@@ -675,9 +675,6 @@
 .uml-test-identity-action-icon {
     background-image: var(--uml-test-identity-action-icon);
 }
-.uml-thumbs-icon {
-    background-image: var(--uml-thumbs-icon);
-}
 .uml-time-constraint-icon {
     background-image: var(--uml-time-constraint-icon);
 }

@@ -33,6 +33,7 @@ import org.eclipse.uml2.uml.resource.UMLResource;
 
 import com.eclipsesource.uml.glsp.core.diagram.UmlDiagramConfiguration;
 import com.eclipsesource.uml.glsp.core.features.context_menu.UmlContextMenuItemProvider;
+import com.eclipsesource.uml.glsp.core.features.copy_paste.UmlPasteOperationHandler;
 import com.eclipsesource.uml.glsp.core.features.label_edit.DiagramLabelEditMapperRegistry;
 import com.eclipsesource.uml.glsp.core.features.label_edit.UmlLabelEditOperationHandler;
 import com.eclipsesource.uml.glsp.core.features.label_edit.validation.DiagramLabelEditValidatorRegistry;
@@ -46,6 +47,7 @@ import com.eclipsesource.uml.glsp.core.gmodel.GModelMapperRegistry;
 import com.eclipsesource.uml.glsp.core.gmodel.UmlGModelFactory;
 import com.eclipsesource.uml.glsp.core.handler.action.UmlOperationActionHandler;
 import com.eclipsesource.uml.glsp.core.handler.action.UmlRefreshModelActionHandler;
+import com.eclipsesource.uml.glsp.core.handler.action.UmlRequestClipboardDataActionHandler;
 import com.eclipsesource.uml.glsp.core.handler.action.UmlRequestEditValidationHandler;
 import com.eclipsesource.uml.glsp.core.handler.operation.UmlChangeBoundsOperationHandler;
 import com.eclipsesource.uml.glsp.core.handler.operation.UmlChangeRoutingPointsOperationHandler;
@@ -69,6 +71,7 @@ import com.eclipsesource.uml.glsp.features.property_palette.manifest.PropertyPal
 import com.eclipsesource.uml.glsp.features.validation.UmlDiagramModelValidator;
 import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.manifest.ClassUmlManifest;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.manifest.CommunicationUmlManifest;
+import com.eclipsesource.uml.glsp.uml.diagram.usecase_diagram.manifest.UseCaseUmlManifest;
 import com.eclipsesource.uml.modelserver.core.resource.notation.UmlNotationResource;
 import com.eclipsesource.uml.modelserver.unotation.UnotationPackage;
 import com.google.inject.Singleton;
@@ -196,20 +199,23 @@ public class UmlDiagramModule extends EMSGLSPNotationDiagramModule {
    protected void configureActionHandlers(final MultiBinding<ActionHandler> bindings) {
       super.configureActionHandlers(bindings);
       // TODO: Rebind it
-      // bindings.rebind(RequestClipboardDataActionHandler.class, UmlRequestClipboardDataActionHandler.class);
       // bindings.rebind(RequestMarkersHandler.class, UmlRequestMarkersHandler.class);
 
       bindings.rebind(EMSOperationActionHandler.class, UmlOperationActionHandler.class);
       bindings.rebind(EMSRefreshModelActionHandler.class, UmlRefreshModelActionHandler.class);
       bindings.rebind(RequestEditValidationHandler.class, UmlRequestEditValidationHandler.class);
+
+      bindings.add(UmlRequestClipboardDataActionHandler.class);
    }
 
    @Override
    protected void configureOperationHandlers(final MultiBinding<OperationHandler<?>> bindings) {
       super.configureOperationHandlers(bindings);
+
       bindings.rebind(EMSChangeBoundsOperationHandler.class, UmlChangeBoundsOperationHandler.class);
       bindings.rebind(EMSChangeRoutingPointsOperationHandler.class, UmlChangeRoutingPointsOperationHandler.class);
 
+      bindings.add(UmlPasteOperationHandler.class);
       bindings.add(UmlLabelEditOperationHandler.class);
       bindings.add(UmlCreateNodeOperationHandler.class);
       bindings.add(UmlCreateEdgeOperationHandler.class);
@@ -232,5 +238,6 @@ public class UmlDiagramModule extends EMSGLSPNotationDiagramModule {
       // Diagram
       install(new ClassUmlManifest());
       install(new CommunicationUmlManifest());
+      install(new UseCaseUmlManifest());
    }
 }

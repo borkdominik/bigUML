@@ -51,13 +51,19 @@ public abstract class BaseCreateEdgeHandler<S, T>
          targetType,
          "No valid container with id " + targetId + " for target type " + targetType.getSimpleName() + " found.");
 
-      var command = createCommand(operation, source, target);
-      modelServerAccess.exec(command)
-         .thenAccept(response -> {
-            if (response.body() == null || response.body().isEmpty()) {
-               throw new GLSPServerException("Could not execute command of " + command.getClass().getName());
-            }
-         });
+      if (isEdgeCreationValid(source, target)) {
+         var command = createCommand(operation, source, target);
+         modelServerAccess.exec(command)
+            .thenAccept(response -> {
+               if (response.body() == null || response.body().isEmpty()) {
+                  throw new GLSPServerException("Could not execute command of " + command.getClass().getName());
+               }
+            });
+      }
+   }
+
+   protected boolean isEdgeCreationValid(final S source, final T target) {
+      return true;
    }
 
    protected abstract CCommand createCommand(CreateEdgeOperation operation, S source, T target);

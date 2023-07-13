@@ -22,7 +22,7 @@ public final class CreateRealizationSemanticCommand
       realization.getClients().add(source);
       realization.getSuppliers().add(target);
 
-      this.context.model.getPackagedElements().add(realization);
+      source.getNearestPackage().getPackagedElements().add(realization);
 
       return realization;
    }

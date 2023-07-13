@@ -22,7 +22,7 @@ public final class CreateAbstractionSemanticCommand
       abstraction.getClients().add(source);
       abstraction.getSuppliers().add(target);
 
-      context.model.getPackagedElements().add(abstraction);
+      source.getNearestPackage().getPackagedElements().add(abstraction);
 
       return abstraction;
    }

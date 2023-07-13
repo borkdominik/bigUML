@@ -27,6 +27,7 @@ interface ClipboardId {
 function isClipboardId(jsonData: any): jsonData is ClipboardId {
     return jsonData !== undefined && 'clipboardId' in jsonData;
 }
+
 function getClipboardIdFromDataTransfer(dataTransfer: DataTransfer): string | undefined {
     const jsonString = dataTransfer.getData(CLIPBOARD_DATA_FORMAT);
     const jsonObject = jsonString ? JSON.parse(jsonString) : undefined;

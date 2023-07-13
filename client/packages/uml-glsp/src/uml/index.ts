@@ -9,5 +9,6 @@
 import { umlModule } from './di.config';
 import { umlClassDiagramModule } from './diagram/class/di.config';
 import { umlCommunicationDiagramModule } from './diagram/communication/di.config';
+import { umlUseCaseDiagramModule } from './diagram/usecase/di.config';
 
-export const umlDiagramModules = [umlModule, umlClassDiagramModule, umlCommunicationDiagramModule];
+export const umlDiagramModules = [umlModule, umlClassDiagramModule, umlCommunicationDiagramModule, umlUseCaseDiagramModule];

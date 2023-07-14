@@ -13,20 +13,20 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { OutlineTreeNode } from '@borkdominik-biguml/uml-glsp/lib/features/outline';
+import { OutlineTreeNode } from '@borkdominik-biguml/uml-common';
 import { SelectAction } from '@eclipse-glsp/vscode-integration';
 import { inject, injectable, postConstruct } from 'inversify';
 import * as vscode from 'vscode';
 import { TYPES } from '../../di.types';
-import { UVGlspConnector } from '../../glsp/connection/uv-glsp-connector';
+import { UVGlspConnector } from '../../glsp/uv-glsp-connector';
 import { VSCodeSettings } from '../../language';
 
 @injectable()
-export class OutlineIntegration implements vscode.TreeDataProvider<OutlineTreeNode>, vscode.Disposable {
+export class OutlineTreeProvider implements vscode.TreeDataProvider<OutlineTreeNode>, vscode.Disposable {
     @inject(TYPES.Connector)
     protected readonly connector: UVGlspConnector;
 
-    private readonly iconMap = new Map<string, vscode.ThemeIcon>([
+    protected readonly iconMap = new Map<string, vscode.ThemeIcon>([
         ['Package', vscode.ThemeIcon.Folder],
         ['Dependency', new vscode.ThemeIcon('arrow-up')],
         ['ElementImport', new vscode.ThemeIcon('arrow-left')],
@@ -52,24 +52,24 @@ export class OutlineIntegration implements vscode.TreeDataProvider<OutlineTreeNo
         ['Substitution', new vscode.ThemeIcon('arrow-up')]
     ]);
 
-    private _onDidChangeTreeData = new vscode.EventEmitter<OutlineTreeNode | undefined | null | void>();
+    protected _onDidChangeTreeData = new vscode.EventEmitter<OutlineTreeNode | undefined | null | void>();
     readonly onDidChangeTreeData: vscode.Event<OutlineTreeNode | undefined | null | void> = this._onDidChangeTreeData.event;
 
-    private readonly disposables: vscode.Disposable[] = [];
+    protected readonly disposables: vscode.Disposable[] = [];
 
-    private nodes: OutlineTreeNode[] = [];
-    private flattenedNodes: OutlineTreeNode[] = [];
+    protected nodes: OutlineTreeNode[] = [];
+    protected flattenedNodes: OutlineTreeNode[] = [];
 
     /**
      * The origin of the selection update. This is used to prevent duplicate requests.
      * Changing the selection in the outline should only trigger a request, but not react to the SelectAction that is received as a result.
      * Similarly, reacting to a SelectAction should only trigger a selection update in the outline, but not trigger a request.
      */
-    private selectionUpdateOrigin: 'outline' | 'editor' | undefined = undefined;
+    protected selectionUpdateOrigin: 'outline' | 'editor' | undefined = undefined;
 
     @postConstruct()
     public initialize(): void {
-        const treeView = vscode.window.createTreeView(VSCodeSettings.outline.viewType, {
+        const treeView = vscode.window.createTreeView(VSCodeSettings.outline.viewId, {
             treeDataProvider: this,
             canSelectMany: true,
             showCollapseAll: true
@@ -78,12 +78,18 @@ export class OutlineIntegration implements vscode.TreeDataProvider<OutlineTreeNo
             treeView,
             treeView.onDidChangeSelection(e => this.requestSelection(e.selection)),
             this.connector.onSelectionUpdate(selection => this.showSelection(selection, treeView)),
-            this.connector.onOutlineChanged(nodes => {
-                // The outline has changed. Update the tree view.
-                this.nodes = nodes;
-                this.flattenedNodes = nodes.flatMap(node => [node, ...node.children]);
-                this.selectionUpdateOrigin = undefined;
-                this._onDidChangeTreeData.fire();
+            this.connector.onOutlineChanged(nodes => this.onNodesChanged(nodes)),
+            this.connector.onDidClientViewStateChange(() => {
+                setTimeout(() => {
+                    if (this.connector.clients.every(c => !c.webviewPanel.active)) {
+                        this.onNodesChanged([]);
+                    }
+                }, 100);
+            }),
+            this.connector.onDidClientDispose(client => {
+                if (this.connector.documents.length === 0) {
+                    this.onNodesChanged([]);
+                }
             })
         );
     }
@@ -111,14 +117,22 @@ export class OutlineIntegration implements vscode.TreeDataProvider<OutlineTreeNo
         return this.flattenedNodes.find(node => node.children.includes(element));
     }
 
-    private getCollapsibleState(element: OutlineTreeNode): vscode.TreeItemCollapsibleState {
+    protected onNodesChanged(nodes: OutlineTreeNode[]): void {
+        // The outline has changed. Update the tree view.
+        this.nodes = nodes;
+        this.flattenedNodes = nodes.flatMap(node => [node, ...node.children]);
+        this.selectionUpdateOrigin = undefined;
+        this._onDidChangeTreeData.fire();
+    }
+
+    protected getCollapsibleState(element: OutlineTreeNode): vscode.TreeItemCollapsibleState {
         if (element.children && element.children.length > 0) {
             return vscode.TreeItemCollapsibleState.Expanded;
         }
         return vscode.TreeItemCollapsibleState.None;
     }
 
-    private requestSelection(selection: readonly OutlineTreeNode[]): void {
+    protected requestSelection(selection: readonly OutlineTreeNode[]): void {
         if (this.selectionUpdateOrigin === 'editor') {
             this.selectionUpdateOrigin = undefined;
             return;
@@ -137,7 +151,7 @@ export class OutlineIntegration implements vscode.TreeDataProvider<OutlineTreeNo
         this.connector.requestSelection(action);
     }
 
-    private showSelection(selection: string[], treeView: vscode.TreeView<OutlineTreeNode>): void {
+    protected showSelection(selection: string[], treeView: vscode.TreeView<OutlineTreeNode>): void {
         if (this.selectionUpdateOrigin === 'outline') {
             this.selectionUpdateOrigin = undefined;
             return;

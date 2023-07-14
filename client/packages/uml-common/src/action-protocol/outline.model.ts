@@ -6,6 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
+
 export interface OutlineTreeNode {
     label: string;
     semanticUri: string;

@@ -7,19 +7,14 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import { Action, IActionHandler } from '@eclipse-glsp/client';
-import { inject, injectable } from 'inversify';
+import { injectable } from 'inversify';
 
-import { isSetOutlineAction } from './outline.actions';
-import { OutlineService } from './outline.service';
-
+/**
+ * TODO: Workaround until the webview (property palette) can handle the actions directly
+ */
 @injectable()
 export class OutlineActionHandler implements IActionHandler {
-    @inject(OutlineService)
-    protected readonly outlineService: OutlineService;
-
     handle(action: Action): void | Action {
-        if (isSetOutlineAction(action)) {
-            this.outlineService.updateOutline(action.outlineTreeNodes);
-        }
+        // nothing to do
     }
 }

@@ -11,20 +11,16 @@ import { createUmlDiagramContainer } from '@borkdominik-biguml/uml-glsp/lib';
 import '@eclipse-glsp/vscode-integration-webview/css/glsp-vscode.css';
 
 import { RequestPropertyPaletteAction, SetPropertyPaletteAction } from '@borkdominik-biguml/uml-common';
-import { OutlineService } from '@borkdominik-biguml/uml-glsp/lib/features/outline';
 import { GLSPStarter } from '@eclipse-glsp/vscode-integration-webview';
 import { GLSPDiagramIdentifier } from '@eclipse-glsp/vscode-integration-webview/lib/diagram-identifer';
 import { GLSPVscodeDiagramWidget } from '@eclipse-glsp/vscode-integration-webview/lib/glsp-vscode-diagram-widget';
 import { Container } from 'inversify';
 import { SprottyDiagramIdentifier } from 'sprotty-vscode-webview';
-import { OutlineIntegrationService } from './features/outline/integration/outline-integration.service';
 import { UVDiagramWidget } from './vscode/uv-diagram.widget';
 
 class UVStarter extends GLSPStarter {
     createContainer(diagramIdentifier: SprottyDiagramIdentifier): Container {
         const container = createUmlDiagramContainer(diagramIdentifier.clientId);
-
-        container.bind(OutlineService).to(OutlineIntegrationService).inSingletonScope();
 
         return container;
     }

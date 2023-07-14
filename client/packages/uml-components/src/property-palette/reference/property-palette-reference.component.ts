@@ -125,7 +125,9 @@ export class PropertyPaletteReference extends BigElement {
                 <h4 class="title">${item.label}</h4>
                 <div class="actions">
                     <big-menu>
-                        <big-menu-item icon="codicon-trash" @click="${() => this.onDelete(item.references.map(i => i.elementId))}"
+                        <big-menu-item
+                            icon="codicon-trash"
+                            @click="${() => this.onDelete(item.references.filter(r => r.isDeleteable).map(i => i.elementId))}"
                             >Delete all</big-menu-item
                         >
                     </big-menu>
@@ -137,9 +139,12 @@ export class PropertyPaletteReference extends BigElement {
     protected renderBody(item: ElementReferenceProperty): TemplateResult<1> {
         return html`<div class="body">
             <div id="items">${item.references.map(ref => html`${this.renderItem(item, ref)}`)}</div>
-            <div class="actions">
-                <vscode-button appearance="primary" @click="${() => this.onCreate(item.creates[0])}"> Add </vscode-button>
-            </div>
+            ${when(
+                item.creates.length > 0,
+                () => html`<div class="actions">
+                    <vscode-button appearance="primary" @click="${() => this.onCreate(item.creates[0])}"> Add </vscode-button>
+                </div>`
+            )}
         </div>`;
     }
 
@@ -165,12 +170,15 @@ export class PropertyPaletteReference extends BigElement {
                         </div>`
                     )}
                     <div class="item-actions">
-                        <big-tooltip>
-                            <vscode-button slot="anchor" appearance="icon" @click="${() => this.onDelete([ref.elementId])}">
-                                <div class="codicon codicon-trash"></div>
-                            </vscode-button>
-                            <span slot="text">Delete</span>
-                        </big-tooltip>
+                        ${when(
+                            ref.isDeleteable,
+                            () => html`<big-tooltip>
+                                <vscode-button slot="anchor" appearance="icon" @click="${() => this.onDelete([ref.elementId])}">
+                                    <div class="codicon codicon-trash"></div>
+                                </vscode-button>
+                                <span slot="text">Delete</span>
+                            </big-tooltip>`
+                        )}
                         <big-tooltip>
                             <vscode-button slot="anchor" appearance="icon" @click="${() => this.onNavigate(ref)}">
                                 <div class="codicon codicon-chevron-right"></div>

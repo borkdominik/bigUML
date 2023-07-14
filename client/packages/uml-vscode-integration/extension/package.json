@@ -195,16 +195,14 @@
       "bigUML-panel": [
         {
           "id": "bigUML.panel.property-palette",
-          "name": "UML",
+          "name": "Properties",
           "type": "webview"
-        }
-      ],
-      "explorer": [
+        },
         {
-          "id": "bigUML.outlineView",
+          "id": "bigUML.panel.outline",
           "name": "Diagram Outline",
-          "when": "activeCustomEditorId == 'bigUML.diagramView'",
-          "icon": "./resources/file_icons/light/uml.svg"
+          "type": "tree",
+          "visibility": "collapsed"
         }
       ]
     },

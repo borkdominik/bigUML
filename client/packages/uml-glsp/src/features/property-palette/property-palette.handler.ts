@@ -22,7 +22,7 @@ import {
 import { inject, injectable } from 'inversify';
 
 /**
- * Workaround until the webview (property palette) can handle the actions directly
+ * TODO: Workaround until the webview (property palette) can handle the actions directly
  */
 @injectable()
 export class PropertyPaletteHandler implements IActionHandler, SModelRootListener {

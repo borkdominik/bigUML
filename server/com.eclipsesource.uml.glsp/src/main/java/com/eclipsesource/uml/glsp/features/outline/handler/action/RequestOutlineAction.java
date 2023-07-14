@@ -13,7 +13,7 @@ package com.eclipsesource.uml.glsp.features.outline.handler.action;
 import org.eclipse.glsp.server.actions.RequestAction;
 
 public class RequestOutlineAction extends RequestAction<SetOutlineAction> {
-   public static final String KIND = "requestOutlineView";
+   public static final String KIND = "requestOutline";
 
    public RequestOutlineAction() {
       super(KIND);

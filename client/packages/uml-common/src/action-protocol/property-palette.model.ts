@@ -84,6 +84,7 @@ export namespace ElementReferenceProperty {
         label: string;
         name?: string;
         hint?: string;
+        isDeleteable: boolean;
     }
 
     export interface CreateReference {

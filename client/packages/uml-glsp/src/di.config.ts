@@ -41,7 +41,7 @@ import { UML_TYPES } from './di.types';
 import { CustomCopyPasteHandler, LastContainableElementTracker } from './features/copy-paste/copy-paste';
 import { EditLabelUIAutocomplete } from './features/edit-label';
 import { initializationModule, IOnceModelInitialized } from './features/initialization/di.config';
-import outlineModule from './features/outline/di.config';
+import { umlOutlineModule } from './features/outline/di.config';
 import propertyPaletteModule from './features/property-palette/di.config';
 import { themeModule } from './features/theme/di.config';
 import { umlToolFeedbackModule } from './features/tool-feedback/di.config';
@@ -93,7 +93,7 @@ export default function createContainer(widgetId: string): Container {
         umlToolPaletteModule,
         umlToolFeedbackModule,
         umlToolsModule,
-        outlineModule,
+        umlOutlineModule,
         propertyPaletteModule,
         ...umlDiagramModules
     );

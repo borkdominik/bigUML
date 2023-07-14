@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { OutlineTreeNode, RequestOutlineAction, SetOutlineAction } from '@borkdominik-biguml/uml-glsp/lib/features/outline';
+import { OutlineTreeNode, RequestOutlineAction, SetOutlineAction } from '@borkdominik-biguml/uml-common';
 import {
     Action,
     ActionMessage,
@@ -42,7 +42,6 @@ export class UVGlspConnector<TDocument extends vscode.CustomDocument = vscode.Cu
         return this.clients.find(c => c.webviewPanel.active);
     }
 
-    
     protected readonly onDidActiveClientChangeEmitter = new vscode.EventEmitter<GlspVscodeClient<TDocument>>();
     protected readonly onDidClientViewStateChangeEmitter = new vscode.EventEmitter<GlspVscodeClient<TDocument>>();
     protected readonly onDidClientDisposeEmitter = new vscode.EventEmitter<GlspVscodeClient<TDocument>>();
@@ -121,7 +120,7 @@ export class UVGlspConnector<TDocument extends vscode.CustomDocument = vscode.Cu
     }
 
     protected requestNewOutline(): void {
-        this.sendActionToActiveClient(new RequestOutlineAction());
+        this.sendActionToActiveClient(RequestOutlineAction.create());
     }
 
     protected override handleSetDirtyStateAction(

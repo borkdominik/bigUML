@@ -20,6 +20,7 @@ import org.eclipse.uml2.uml.PackageImport;
 import com.eclipsesource.uml.glsp.features.property_palette.model.ElementReferencePropertyItem;
 
 public class PackageImportUtils {
+
    public static List<ElementReferencePropertyItem.Reference> asReferenceFromPackageImport(
       final List<PackageImport> packageImports,
       final EMFIdGenerator idGenerator) {

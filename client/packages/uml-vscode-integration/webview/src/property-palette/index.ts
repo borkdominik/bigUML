@@ -6,6 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
+import 'reflect-metadata';
 
 import { usePropertyPaletteWebviewDesignSystem } from '@borkdominik-biguml/uml-components';
 

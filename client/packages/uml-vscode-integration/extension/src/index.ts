@@ -7,6 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import 'reflect-metadata';
+
 import * as vscode from 'vscode';
 import { activate as extensionActivate, deactivate as extensionDeactivate } from './extension';
 

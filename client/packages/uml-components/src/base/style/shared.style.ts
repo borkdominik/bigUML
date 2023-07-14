@@ -12,6 +12,7 @@ import { css } from 'lit';
 export const defaultStyle = css`
     .title {
         text-transform: uppercase;
+        margin: 6px 0;
     }
 
     h4.secondary-title {

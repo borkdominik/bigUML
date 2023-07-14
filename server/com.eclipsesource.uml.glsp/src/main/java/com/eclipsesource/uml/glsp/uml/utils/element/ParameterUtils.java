@@ -24,7 +24,7 @@ public class ParameterUtils {
       var references = parameters.stream()
          .map(v -> {
             return new ElementReferencePropertyItem.Reference(idGenerator.getOrCreateId(v), asText(v), v.getName(),
-               asHint(v));
+               asHint(v), true);
          })
          .collect(Collectors.toList());
 

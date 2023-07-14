@@ -16,6 +16,10 @@ export namespace PropertyPaletteStyle {
             flex-direction: column;
         }
 
+        .no-data-message {
+            margin-top: 6px;
+        }
+
         #navigate-back {
             position: absolute;
             left: 0;

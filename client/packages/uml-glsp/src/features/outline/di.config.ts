@@ -6,16 +6,13 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
+import { SetOutlineAction } from '@borkdominik-biguml/uml-common';
 import { configureActionHandler } from '@eclipse-glsp/client';
 import { ContainerModule } from 'inversify';
-
-import { SetOutlineAction } from './outline.actions';
 import { OutlineActionHandler } from './outline.handlers';
 
-const outlineModule = new ContainerModule((bind, _unbind, isBound, rebind) => {
+export const umlOutlineModule = new ContainerModule((bind, _unbind, isBound, rebind) => {
     const context = { bind, _unbind, isBound, rebind };
     bind(OutlineActionHandler).toSelf().inSingletonScope();
     configureActionHandler(context, SetOutlineAction.KIND, OutlineActionHandler);
 });
-
-export default outlineModule;

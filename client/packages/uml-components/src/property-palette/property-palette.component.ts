@@ -73,14 +73,13 @@ export class PropertyPalette extends BigElement {
                 `,
                 () => nothing
             )}
-            <h3 class="title">Properties</h3>
-            ${this.properties === undefined ? nothing : html`<h4 class="secondary-title">${this.properties?.label}</h4>`}
+            ${this.properties === undefined ? nothing : html`<h3 class="title">${this.properties?.label}</h3>`}
         </header>`;
     }
 
     protected bodyTemplate(): TemplateResult<1> {
         if (this.properties === undefined) {
-            return html`<span class="no-data-message">The active diagram does not provide property information.</span>`;
+            return html`<div class="no-data-message">The active diagram does not provide property information.</div>`;
         }
 
         const items = this.properties.items;

@@ -12,15 +12,14 @@ import { Action, IActionHandler } from '@eclipse-glsp/client';
 import { inject, injectable, postConstruct } from 'inversify';
 import { TYPES } from '../../di.types';
 import { UVGlspConnector } from '../../glsp/uv-glsp-connector';
+import { VSCodeSettings } from '../../language';
 import { getBundleUri, getUri } from '../../utilities/webview';
 import { ProviderWebviewContext, UVWebviewProvider } from '../../vscode/webview/webview-provider';
 
 @injectable()
 export class PropertyPaletteProvider extends UVWebviewProvider implements IActionHandler {
-    static ID = 'bigUML.panel.property-palette';
-
     get id(): string {
-        return PropertyPaletteProvider.ID;
+        return VSCodeSettings.propertyPalette.viewId;
     }
 
     @inject(TYPES.Connector)

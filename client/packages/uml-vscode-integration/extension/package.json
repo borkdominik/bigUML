@@ -195,8 +195,14 @@
       "bigUML-panel": [
         {
           "id": "bigUML.panel.property-palette",
-          "name": "UML",
+          "name": "Properties",
           "type": "webview"
+        },
+        {
+          "id": "bigUML.panel.outline",
+          "name": "Diagram Outline",
+          "type": "tree",
+          "visibility": "collapsed"
         }
       ]
     },
@@ -213,7 +219,8 @@
   "activationEvents": [
     "onLanguage:bigUML.uml",
     "onLanguage:bigUML.unotation",
-    "onCommand:bigUML.model.newEmpty"
+    "onCommand:bigUML.model.newEmpty",
+    "onView:bigUML.outlineView"
   ],
   "dependencies": {
     "@borkdominik-biguml/uml-common": "*",

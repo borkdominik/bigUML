@@ -6,6 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
+import { OutlineTreeNode, RequestOutlineAction, SetOutlineAction } from '@borkdominik-biguml/uml-common';
 import {
     Action,
     ActionMessage,
@@ -17,8 +18,10 @@ import {
     MessageOrigin,
     MessageProcessingResult,
     RedoAction,
+    SelectAction,
     SetDirtyStateAction,
-    UndoAction
+    UndoAction,
+    UpdateModelAction
 } from '@eclipse-glsp/vscode-integration';
 import { inject, injectable } from 'inversify';
 import * as vscode from 'vscode';
@@ -42,9 +45,11 @@ export class UVGlspConnector<TDocument extends vscode.CustomDocument = vscode.Cu
     protected readonly onDidActiveClientChangeEmitter = new vscode.EventEmitter<GlspVscodeClient<TDocument>>();
     protected readonly onDidClientViewStateChangeEmitter = new vscode.EventEmitter<GlspVscodeClient<TDocument>>();
     protected readonly onDidClientDisposeEmitter = new vscode.EventEmitter<GlspVscodeClient<TDocument>>();
-    readonly onDidActiveClientChange: vscode.Event<GlspVscodeClient<TDocument>>;
-    readonly onDidClientViewStateChange: vscode.Event<GlspVscodeClient<TDocument>>;
-    readonly onDidClientDispose: vscode.Event<GlspVscodeClient<TDocument>>;
+    protected readonly onOutlineChangedEmitter = new vscode.EventEmitter<OutlineTreeNode[]>();
+    readonly onDidActiveClientChange = this.onDidActiveClientChangeEmitter.event;
+    readonly onDidClientViewStateChange = this.onDidClientViewStateChangeEmitter.event;
+    readonly onDidClientDispose = this.onDidClientDisposeEmitter.event;
+    readonly onOutlineChanged = this.onOutlineChangedEmitter.event;
 
     constructor(
         @inject(TYPES.GlspServer) glspServer: GlspVscodeServer,
@@ -67,9 +72,6 @@ export class UVGlspConnector<TDocument extends vscode.CustomDocument = vscode.Cu
             }
         });
         this.actionDispatcher.connect(this);
-        this.onDidActiveClientChange = this.onDidActiveClientChangeEmitter.event;
-        this.onDidClientViewStateChange = this.onDidClientViewStateChangeEmitter.event;
-        this.onDidClientDispose = this.onDidClientDisposeEmitter.event;
     }
 
     clientIdByDocument(document: TDocument): string | undefined {
@@ -109,8 +111,16 @@ export class UVGlspConnector<TDocument extends vscode.CustomDocument = vscode.Cu
         });
     }
 
+    public requestSelection(action: SelectAction): void {
+        this.sendActionToActiveClient(action);
+    }
+
     public override sendActionToClient(clientId: string, action: Action): void {
         super.sendActionToClient(clientId, action);
+    }
+
+    protected requestNewOutline(): void {
+        this.sendActionToActiveClient(RequestOutlineAction.create());
     }
 
     protected override handleSetDirtyStateAction(
@@ -141,6 +151,25 @@ export class UVGlspConnector<TDocument extends vscode.CustomDocument = vscode.Cu
         // return { processedMessage: GlspVscodeConnector.NO_PROPAGATION_MESSAGE, messageChanged: true };
     }
 
+    protected handleSetOutlineAction(
+        message: ActionMessage<SetOutlineAction>,
+        _client: GlspVscodeClient<TDocument> | undefined,
+        _origin: MessageOrigin
+    ): MessageProcessingResult {
+        const nodes = message.action.outlineTreeNodes;
+        this.onOutlineChangedEmitter.fire(nodes);
+        return { processedMessage: message, messageChanged: false };
+    }
+
+    protected handleUpdateModelAction(
+        message: ActionMessage<UpdateModelAction>,
+        _client: GlspVscodeClient<TDocument> | undefined,
+        _origin: MessageOrigin
+    ): MessageProcessingResult {
+        this.requestNewOutline();
+        return { processedMessage: message, messageChanged: false };
+    }
+
     protected onClientMessage(client: GlspVscodeClient<TDocument>, message: unknown): void {
         if (this.options.logging) {
             if (ActionMessage.is(message)) {
@@ -164,10 +193,26 @@ export class UVGlspConnector<TDocument extends vscode.CustomDocument = vscode.Cu
         });
     }
 
+    protected override processMessage(message: unknown, origin: MessageOrigin): MessageProcessingResult {
+        if (ActionMessage.is(message)) {
+            const client = this.clientMap.get(message.clientId);
+            if (SetOutlineAction.is(message.action)) {
+                return this.handleSetOutlineAction(message as ActionMessage<SetOutlineAction>, client, origin);
+            }
+            if (UpdateModelAction.is(message.action)) {
+                return this.handleUpdateModelAction(message as ActionMessage<UpdateModelAction>, client, origin);
+            }
+        }
+        return super.processMessage(message, origin);
+    }
+
     protected onClientViewStateChange(client: GlspVscodeClient<TDocument>, event: vscode.WebviewPanelOnDidChangeViewStateEvent): void {
         if (event.webviewPanel.active) {
             this.onDidActiveClientChangeEmitter.fire(client);
             this.selectionUpdateEmitter.fire(this.clientSelectionMap.get(client.clientId) || []);
+            // The active document has changed. A new outline must be requested,
+            // because the model by already be present on the client and thus not trigger a model update.
+            this.requestNewOutline();
         }
         this.onDidClientViewStateChangeEmitter.fire(client);
     }

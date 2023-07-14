@@ -36,17 +36,20 @@ public final class ElementReferencePropertyItem extends ElementPropertyItem {
       public final String label;
       public final String name;
       public final String hint;
+      public final Boolean isDeleteable;
 
       public Reference(final String elementId, final String label, final String name) {
-         this(elementId, label, name, null);
+         this(elementId, label, name, null, true);
       }
 
-      public Reference(final String elementId, final String label, final String name, final String hint) {
+      public Reference(final String elementId, final String label, final String name, final String hint,
+         final Boolean isDeleteable) {
          super();
          this.elementId = elementId;
          this.label = label;
          this.name = name;
          this.hint = hint;
+         this.isDeleteable = isDeleteable;
       }
    }
 

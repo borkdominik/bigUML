@@ -20,7 +20,7 @@ public class SetOutlineAction extends ResponseAction {
 
    private List<OutlineTreeNode> outlineTreeNodes = List.of();
 
-   public static final String KIND = "setOutlineAction";
+   public static final String KIND = "setOutline";
 
    public SetOutlineAction() {
       super(KIND);

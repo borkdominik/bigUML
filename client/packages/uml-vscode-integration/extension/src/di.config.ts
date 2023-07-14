@@ -12,6 +12,7 @@ import { IActionDispatcher } from '@eclipse-glsp/client';
 import { Container, ContainerModule } from 'inversify';
 import * as vscode from 'vscode';
 import { TYPES } from './di.types';
+import { OutlineTreeProvider } from './features/outline/outline-tree.provider';
 import { PropertyPaletteProvider } from './features/property-palette/property-palette.provider';
 import { ThemeIntegration } from './features/theme/theme-integration';
 import { UVGlspConnector } from './glsp/uv-glsp-connector';
@@ -113,6 +114,11 @@ export function createContainer(
         bind(PropertyPaletteProvider).toSelf().inSingletonScope();
         bind(TYPES.RootInitialization).toService(PropertyPaletteProvider);
         configureActionHandler(context, SetPropertyPaletteAction.KIND, PropertyPaletteProvider);
+
+        bind(OutlineTreeProvider).toSelf().inSingletonScope();
+        bind(TYPES.Outline).to(OutlineTreeProvider);
+        bind(TYPES.Disposable).toService(OutlineTreeProvider);
+        bind(TYPES.RootInitialization).toService(OutlineTreeProvider);
     });
 
     container.load(

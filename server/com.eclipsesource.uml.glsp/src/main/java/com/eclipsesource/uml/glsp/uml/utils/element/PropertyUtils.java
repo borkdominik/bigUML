@@ -28,11 +28,11 @@ public class PropertyUtils {
             var association = v.getAssociation();
             if (association == null) {
                return new ElementReferencePropertyItem.Reference(idGenerator.getOrCreateId(v), label, v.getName(),
-                  String.format("Type: %s", TypeUtils.name(v.getType())));
+                  String.format("Type: %s", TypeUtils.name(v.getType())), true);
             }
 
             return new ElementReferencePropertyItem.Reference(idGenerator.getOrCreateId(association),
-               label, null, "Association");
+               label, null, "Association", false);
          })
          .collect(Collectors.toList());
 

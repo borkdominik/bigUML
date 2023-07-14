@@ -6,7 +6,8 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { OutlineService, OutlineTreeNode } from '@borkdominik-biguml/uml-glsp/lib/features/outline';
+import { OutlineTreeNode } from '@borkdominik-biguml/uml-common';
+import { OutlineService } from '@borkdominik-biguml/uml-glsp/lib/features/outline';
 import { inject, injectable, postConstruct } from '@theia/core/shared/inversify';
 
 import { belongsToDiagramWidget, UTDiagramManager } from '../../../glsp/diagram/ut-diagram.manager';

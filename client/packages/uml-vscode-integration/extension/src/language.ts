@@ -20,5 +20,11 @@ export const VSCodeSettings = {
     editor: {
         extension: 'uml',
         viewType: 'bigUML.diagramView'
+    },
+    propertyPalette: {
+        viewId: 'bigUML.panel.property-palette'
+    },
+    outline: {
+        viewId: 'bigUML.panel.outline'
     }
 } as const;

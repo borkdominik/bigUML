@@ -49,6 +49,7 @@
   },
   "devDependencies": {
     "@types/sortablejs": "1.15.1",
+    "@types/uuid": "^9.0.0",
     "ts-lit-plugin": "^1.2.1"
   }
 }

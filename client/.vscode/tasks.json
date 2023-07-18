@@ -18,60 +18,10 @@
       "problemMatcher": []
     },
     {
-      "label": "Build theia",
-      "type": "shell",
-      "group": {
-        "kind": "build",
-        "isDefault": true
-      },
-      "command": "yarn prepare:theia",
-      "presentation": {
-        "reveal": "always",
-        "panel": "new"
-      },
-      "problemMatcher": []
-    },
-    {
-      "label": "Build vscode",
-      "type": "shell",
-      "group": {
-        "kind": "build",
-        "isDefault": true
-      },
-      "command": "yarn prepare:vscode",
-      "presentation": {
-        "reveal": "always",
-        "panel": "new"
-      },
-      "problemMatcher": []
-    },
-    {
       "label": "Watch all packages",
       "type": "shell",
       "group": "build",
       "command": "yarn watch",
-      "presentation": {
-        "reveal": "always",
-        "panel": "new"
-      },
-      "problemMatcher": []
-    },
-    {
-      "label": "Watch theia",
-      "type": "shell",
-      "group": "build",
-      "command": "yarn watch:theia",
-      "presentation": {
-        "reveal": "always",
-        "panel": "new"
-      },
-      "problemMatcher": []
-    },
-    {
-      "label": "Watch vscode",
-      "type": "shell",
-      "group": "build",
-      "command": "yarn watch:vscode",
       "presentation": {
         "reveal": "always",
         "panel": "new"
@@ -93,16 +43,6 @@
       "label": "Copy server",
       "type": "shell",
       "command": "yarn copy:server",
-      "presentation": {
-        "reveal": "always",
-        "panel": "new"
-      },
-      "problemMatcher": []
-    },
-    {
-      "label": "Start theia instance",
-      "type": "shell",
-      "command": "yarn start:theia:debug",
       "presentation": {
         "reveal": "always",
         "panel": "new"

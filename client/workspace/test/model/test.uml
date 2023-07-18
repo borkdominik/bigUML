@@ -36,5 +36,8 @@
     <packagedElement xmi:type="uml:Abstraction" xmi:id="_XT9XoCD2Ee6lQaghWklJxQ" client="_VkI_0CD2Ee6lQaghWklJxQ" supplier="_WJZpACD2Ee6lQaghWklJxQ"/>
     <packagedElement xmi:type="uml:Class" xmi:id="_x7cWICECEe6h2__j8zC_Xg" name="NewClass3"/>
     <packagedElement xmi:type="uml:Association" xmi:id="_MRFFwSEGEe6LzuV3TzojXA" memberEnd="_MRMagCEGEe6LzuV3TzojXA _MRNooSEGEe6LzuV3TzojXA"/>
+    <packagedElement xmi:type="uml:Abstraction" xmi:id="_MsqFYCViEe6wk4I7p8G_EA" client="_x7cWICECEe6h2__j8zC_Xg" supplier="_12vTASVgEe6wk4I7p8G_EA"/>
   </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_12vTASVgEe6wk4I7p8G_EA" name="NewClass1"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="_fsirQCVsEe6wk4I7p8G_EA" name="NewClass2"/>
 </uml:Model>

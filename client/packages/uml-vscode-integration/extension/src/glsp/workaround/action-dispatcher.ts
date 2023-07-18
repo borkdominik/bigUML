@@ -74,8 +74,7 @@ export class VSCodeActionDispatcher implements IActionDispatcher {
 }
 
 /**
- * Workaround Action Registry until the framework supports it directly
- * TODO: Add support
+ * TODO: Workaround Action Registry until the framework supports it directly
  */
 @injectable()
 export class ActionHandlerRegistry extends MultiInstanceRegistry<IActionHandler> {

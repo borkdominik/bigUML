@@ -232,7 +232,8 @@
     "@vscode/codicons": "^0.0.25",
     "inversify": "5.1.1",
     "reflect-metadata": "^0.1.13",
-    "urijs": "^1.19.11"
+    "urijs": "^1.19.11",
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "@borkdominik-biguml/uml-vscode-integration-webview": "*",

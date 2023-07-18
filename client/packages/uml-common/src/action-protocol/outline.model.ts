@@ -12,4 +12,5 @@ export interface OutlineTreeNode {
     semanticUri: string;
     children: OutlineTreeNode[];
     iconClass: string;
+    isRoot: boolean;
 }

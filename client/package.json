@@ -2,7 +2,6 @@
   "private": true,
   "workspaces": {
     "packages": [
-      "environments/*",
       "packages/*",
       "packages/uml-vscode-integration/*"
     ],
@@ -22,18 +21,12 @@
     "package": "cd packages/uml-vscode-integration/extension && yarn vscode:package && mv ./*.vsix ${INIT_CWD}/release/vsix",
     "package:zip": "yarn package && cd ${INIT_CWD} && zip -r ./release-$(date +%Y%m%d-%H%M).zip ./release",
     "prepare": "lerna run prepare",
-    "prepare:theia": "yarn prepare --include-dependencies=true --scope=biguml-theia",
-    "prepare:vscode": "yarn prepare --include-dependencies=true --scope=umldiagram",
-    "start:theia:debug": "cd environments/theia-app && yarn start:debug",
-    "watch": "lerna run --parallel watch",
-    "watch:theia": "yarn watch --include-dependencies=true --scope=biguml-theia",
-    "watch:vscode": "yarn watch --include-dependencies=true --scope=umldiagram"
+    "watch": "lerna run --parallel watch"
   },
   "resolutions": {
     "**/@eclipse-emfcloud/modelserver-theia": "0.8.0-theia-cr02",
     "**/@eclipse-glsp/client": "1.1.0-next.40987f7.225",
     "**/@eclipse-glsp/protocol": "1.1.0-next.40987f7.225",
-    "**/@eclipse-glsp/theia-integration": "1.1.0-RC05",
     "**/@eclipse-glsp/vscode-integration": "1.1.0-RC05",
     "**/@eclipse-glsp/vscode-integration-webview": "1.1.0-RC05",
     "**/@theia/application-manager": "1.35.0",
@@ -66,7 +59,6 @@
     "**/@theia/workspace": "1.35.0",
     "**/inversify": "5.1.1",
     "**/sprotty": "0.13.0-next.f4445dd.342",
-    "**/sprotty-theia": "0.13.0-next.9cbedec",
     "**/vscode-jsonrpc": "8.1.0"
   },
   "devDependencies": {
@@ -75,6 +67,7 @@
     "@eclipse-glsp/prettier-config": "^1.1.0-RC06",
     "@eclipse-glsp/ts-config": "^1.1.0-RC06",
     "@types/lodash": "^4.14.195",
+    "@types/node": "^20.4.2",
     "esbuild": "^0.17.10",
     "eslint": "^8.41.0",
     "tsx": "^3.12.3",

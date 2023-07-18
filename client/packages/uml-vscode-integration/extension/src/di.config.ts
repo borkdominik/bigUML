@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { SetPropertyPaletteAction } from '@borkdominik-biguml/uml-common';
+import { SetOutlineAction, SetPropertyPaletteAction } from '@borkdominik-biguml/uml-common';
 import { ModelServerConfig } from '@borkdominik-biguml/uml-modelserver';
 import { IActionDispatcher } from '@eclipse-glsp/client';
 import { Container, ContainerModule } from 'inversify';
@@ -119,6 +119,7 @@ export function createContainer(
         bind(TYPES.Outline).to(OutlineTreeProvider);
         bind(TYPES.Disposable).toService(OutlineTreeProvider);
         bind(TYPES.RootInitialization).toService(OutlineTreeProvider);
+        configureActionHandler(context, SetOutlineAction.KIND, OutlineTreeProvider);
     });
 
     container.load(

@@ -62,4 +62,17 @@
     <semanticElement elementId="_FaB48CEHEe6LzuV3TzojXA"/>
     <bendPoints x="-120.0" y="180.0"/>
   </elements>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_12vTASVgEe6wk4I7p8G_EA"/>
+    <position x="840.0" y="150.0"/>
+    <size width="169.3046875" height="52.5"/>
+  </elements>
+  <elements xsi:type="notation:Edge">
+    <semanticElement elementId="_MsqFYCViEe6wk4I7p8G_EA"/>
+  </elements>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_fsirQCVsEe6wk4I7p8G_EA"/>
+    <position x="870.0" y="290.0"/>
+    <size width="160.0" height="50.0"/>
+  </elements>
 </unotation:UmlDiagram>

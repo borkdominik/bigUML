@@ -18,7 +18,6 @@ import {
     MessageOrigin,
     MessageProcessingResult,
     RedoAction,
-    SelectAction,
     SetDirtyStateAction,
     UndoAction,
     UpdateModelAction
@@ -49,7 +48,6 @@ export class UVGlspConnector<TDocument extends vscode.CustomDocument = vscode.Cu
     readonly onDidActiveClientChange = this.onDidActiveClientChangeEmitter.event;
     readonly onDidClientViewStateChange = this.onDidClientViewStateChangeEmitter.event;
     readonly onDidClientDispose = this.onDidClientDisposeEmitter.event;
-    readonly onOutlineChanged = this.onOutlineChangedEmitter.event;
 
     constructor(
         @inject(TYPES.GlspServer) glspServer: GlspVscodeServer,
@@ -111,16 +109,18 @@ export class UVGlspConnector<TDocument extends vscode.CustomDocument = vscode.Cu
         });
     }
 
-    public requestSelection(action: SelectAction): void {
-        this.sendActionToActiveClient(action);
+    public override sendActionToActiveClient(action: Action): void;
+    public override sendActionToActiveClient(action: Action[]): void;
+    public override sendActionToActiveClient(action: Action | Action[]): void {
+        if (Array.isArray(action)) {
+            action.forEach(a => super.sendActionToActiveClient(a));
+        } else {
+            super.sendActionToActiveClient(action);
+        }
     }
 
     public override sendActionToClient(clientId: string, action: Action): void {
         super.sendActionToClient(clientId, action);
-    }
-
-    protected requestNewOutline(): void {
-        this.sendActionToActiveClient(RequestOutlineAction.create());
     }
 
     protected override handleSetDirtyStateAction(
@@ -166,7 +166,7 @@ export class UVGlspConnector<TDocument extends vscode.CustomDocument = vscode.Cu
         _client: GlspVscodeClient<TDocument> | undefined,
         _origin: MessageOrigin
     ): MessageProcessingResult {
-        this.requestNewOutline();
+        this.sendActionToActiveClient(RequestOutlineAction.create());
         return { processedMessage: message, messageChanged: false };
     }
 
@@ -210,9 +210,6 @@ export class UVGlspConnector<TDocument extends vscode.CustomDocument = vscode.Cu
         if (event.webviewPanel.active) {
             this.onDidActiveClientChangeEmitter.fire(client);
             this.selectionUpdateEmitter.fire(this.clientSelectionMap.get(client.clientId) || []);
-            // The active document has changed. A new outline must be requested,
-            // because the model by already be present on the client and thus not trigger a model update.
-            this.requestNewOutline();
         }
         this.onDidClientViewStateChangeEmitter.fire(client);
     }

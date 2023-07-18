@@ -10,24 +10,25 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.features.outline.generator;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.glsp.server.emf.model.notation.Edge;
 import org.eclipse.uml2.uml.Element;
-
-import com.eclipsesource.uml.glsp.features.outline.model.OutlineTreeNode;
 
 public class NotationBasedOutlineGenerator extends BaseOutlineGenerator implements DefaultDiagramOutlineGenerator {
 
    @Override
-   protected List<OutlineTreeNode> childrenOf(final Element element) {
-      if (element.getOwnedElements().isEmpty()) {
-         return List.of();
-      }
+   protected boolean filter(final EObject eObject) {
+      return super.filter(eObject) && modelState.hasNotation(eObject);
+   }
 
-      return element.getOwnedElements().stream()
-         .filter(elem -> modelState.hasNotation(elem))
-         .map(elem -> map(elem))
-         .collect(Collectors.toList());
+   @Override
+   protected String iconOf(final Element element) {
+      return modelState.getIndex().getNotation(element).map(notation -> {
+         if (notation instanceof Edge) {
+            return "edge";
+         }
+
+         return "element";
+      }).orElse("element");
    }
 }

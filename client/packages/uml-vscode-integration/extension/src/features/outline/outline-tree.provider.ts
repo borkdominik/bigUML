@@ -133,8 +133,6 @@ export class OutlineTreeProvider implements vscode.TreeDataProvider<OutlineTreeN
             selectedId
         };
 
-        console.log('Select', selection);
-
         this.connector.sendActionToActiveClient([
             SelectAllAction.create(false),
             SelectAction.create({
@@ -144,6 +142,15 @@ export class OutlineTreeProvider implements vscode.TreeDataProvider<OutlineTreeN
     }
 
     protected reveal(selection: string[], treeView: vscode.TreeView<OutlineTreeNode>): void {
+        if (selection.length === 1 && selection[0] === null) {
+            const node = this.storage.data[0];
+            this.selectionToUpdateContext = {
+                selectedId: node.semanticUri
+            };
+            treeView.reveal(node, { select: true, focus: false, expand: false });
+            return;
+        }
+
         selection = selection.filter(s => s !== null && s !== undefined);
         const selectedId = selection.at(-1);
 
@@ -158,7 +165,6 @@ export class OutlineTreeProvider implements vscode.TreeDataProvider<OutlineTreeN
             selectedId: selectedNode.semanticUri
         };
 
-        console.log('Reveal');
         treeView.reveal(selectedNode, { select: true, focus: false, expand: false });
     }
 }

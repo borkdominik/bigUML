@@ -32,7 +32,7 @@ export class PropertyPaletteHandler implements IActionHandler, SModelRootListene
 
     handle(action: Action): ICommand | Action | void {
         if (SelectAction.is(action) && action.selectedElementsIDs.length > 0) {
-            this.request(action.selectedElementsIDs[0]);
+            this.request(action.selectedElementsIDs.filter(id => id !== undefined && id !== null).at(-1));
         } else if (SetDirtyStateAction.is(action)) {
             this.request(this.activeElementId);
         } else if (RefreshPropertyPaletteAction.is(action)) {

@@ -31,18 +31,18 @@ export namespace ChangeToolsStateAction {
 
 @injectable()
 export class UmlToolManager extends GLSPToolManager {
-    chnage(toolIds: string[], enabled: boolean): void {
+    change(toolIds: string[], enabled: boolean): void {
         const tools = toolIds.map(id => this.tool(id));
         tools.forEach(tool => {
             if (tool !== undefined) {
                 if (enabled) {
-                    tool.enable();
                     if (!this.actives.includes(tool)) {
+                        tool.enable();
                         this.actives.push(tool);
                     }
                 } else {
-                    tool.disable();
                     if (this.actives.includes(tool)) {
+                        tool.disable();
                         this.actives.splice(this.actives.indexOf(tool), 1);
                     }
                 }
@@ -62,7 +62,7 @@ export class UmlToolManagerActionHandler implements IActionHandler {
         } else if (EnableToolsAction.is(action)) {
             this.toolManager.enable(action.toolIds);
         } else if (ChangeToolsStateAction.is(action)) {
-            this.toolManager.chnage(action.toolIds, action.enabled);
+            this.toolManager.change(action.toolIds, action.enabled);
         }
     }
 }

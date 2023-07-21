@@ -21,7 +21,6 @@
 <!-- LOGO -->
 <img align="left" src="./client/packages/uml-vscode-integration/extension/resources/logo.png" alt="Logo" width="150" height="150" />
 
-<br>
 <!-- TITLE -->
 <h1 align="center">&emsp;bigUML Modeling Tool</h1>
 
@@ -69,7 +68,7 @@ The UML 2 specification currently consists of **7 Structure Diagrams** and **7 B
 
 <img src="./media/vscode-usecase.png" alt="Use Case Diagram" />
 
-<em>Initial implementation provided by: @julia05, @JakobD97</em>
+<p align="center"><em>Initial implementation provided by: @julia05, @JakobD97</em><p>
 
 </details>
 
@@ -78,9 +77,9 @@ The UML 2 specification currently consists of **7 Structure Diagrams** and **7 B
 
 ### Structure Diagrams
 
-| Class  | Component | Deployment | Object | Package | Profile              | Composite |
-| ------ | --------- | ---------- | ------ | ------- | -------------------- | --------- |
-| Merged | -         | -          | -      | -       | Merged, not released | -         |
+| Class  | Component | Deployment | Object | Package              | Profile | Composite |
+| ------ | --------- | ---------- | ------ | -------------------- | ------- | --------- |
+| Merged | -         | -          | -      | Merged, not released | -       | -         |
 
 ### Behavior Diagrams
 

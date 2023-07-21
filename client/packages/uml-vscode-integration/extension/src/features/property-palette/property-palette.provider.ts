@@ -22,6 +22,8 @@ export class PropertyPaletteProvider extends UVWebviewProvider implements IActio
         return VSCodeSettings.propertyPalette.viewId;
     }
 
+    protected override retainContextWhenHidden = true;
+
     @inject(TYPES.Connector)
     protected readonly connector: UVGlspConnector;
 

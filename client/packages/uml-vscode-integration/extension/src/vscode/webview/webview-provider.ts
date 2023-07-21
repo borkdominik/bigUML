@@ -35,6 +35,7 @@ export namespace ConnectionData {
 
 export abstract class UVWebviewProvider implements vscode.WebviewViewProvider {
     abstract id: string;
+    protected readonly retainContextWhenHidden: boolean = false;
 
     @inject(TYPES.ExtensionContext)
     protected readonly extension: vscode.ExtensionContext;
@@ -46,7 +47,11 @@ export abstract class UVWebviewProvider implements vscode.WebviewViewProvider {
 
     @postConstruct()
     initialize(): void {
-        vscode.window.registerWebviewViewProvider(this.id, this);
+        vscode.window.registerWebviewViewProvider(this.id, this, {
+            webviewOptions: {
+                retainContextWhenHidden: this.retainContextWhenHidden
+            }
+        });
     }
 
     resolveWebviewView(
@@ -85,7 +90,6 @@ export abstract class UVWebviewProvider implements vscode.WebviewViewProvider {
 
     protected postMessage(payload: any, client?: GlspVscodeClient): void {
         if (this.providerContext === undefined) {
-            console.warn('webview is not ready to post message');
             return;
         }
 

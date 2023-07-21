@@ -14,6 +14,8 @@ import { v4 } from 'uuid';
 
 export interface VSCodeApi {
     postMessage: (message: any) => void;
+    getState<T>(): T | undefined;
+    setState(json: object): void;
 }
 
 let api: VSCodeApi | undefined;
@@ -44,7 +46,7 @@ export class VSCodeConnection {
     private static _instance: VSCodeConnection;
     protected listeners: { [commandId: string]: (result: any, error: any) => void } = {};
 
-    protected readonly vscode: VSCodeApi;
+    readonly vscode: VSCodeApi;
 
     private constructor() {
         this.vscode = getOrAcquireVSCodeApi();

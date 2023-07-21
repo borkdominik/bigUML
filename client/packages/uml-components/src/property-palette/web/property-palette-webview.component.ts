@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { ElementProperties, SetPropertyPaletteAction } from '@borkdominik-biguml/uml-common';
+import { ElementProperties, RefreshPropertyPaletteAction, SetPropertyPaletteAction } from '@borkdominik-biguml/uml-common';
 import { Action } from '@eclipse-glsp/protocol';
 import { html, TemplateResult } from 'lit';
 import { query, state } from 'lit/decorators.js';
@@ -39,6 +39,8 @@ export class PropertyPaletteWebview extends BigElement {
         });
 
         this.connection.listen(this.onConnectionAction.bind(this), Action.is);
+
+        this.dispatchAction(RefreshPropertyPaletteAction.create());
     }
 
     protected override render(): TemplateResult<1> {
@@ -60,10 +62,14 @@ export class PropertyPaletteWebview extends BigElement {
     }
 
     protected onDispatchAction(event: CustomEvent<Action>): void {
+        this.dispatchAction(event.detail);
+    }
+
+    protected dispatchAction(payload: Action): void {
         this.connection.post<Action>({
             clientId: this.clientId,
             command: 'dispatch-action',
-            payload: event.detail
+            payload
         });
     }
 }

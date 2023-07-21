@@ -38,6 +38,8 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     diContainer.getAll<any>(TYPES.RootInitialization);
     await diContainer.get<ServerManager>(TYPES.ServerManager).start();
     diContainer.get<UVGlspServer>(TYPES.GlspServer).start();
+
+    vscode.commands.executeCommand('setContext', `${VSCodeSettings.name}.isRunning`, true);
 }
 
 export async function deactivate(context: vscode.ExtensionContext): Promise<any> {

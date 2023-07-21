@@ -54,7 +54,12 @@ export class OutlineTreeProvider implements vscode.TreeDataProvider<OutlineTreeN
         this.disposables.push(
             treeView,
             treeView.onDidChangeSelection(e => this.requestSelection(e.selection[0])),
-            this.connector.onSelectionUpdate(selection => this.reveal(selection, treeView)),
+            treeView.onDidChangeVisibility(e => {
+                if (e.visible && this.selectionToUpdateContext.selectedId) {
+                    this.select([this.selectionToUpdateContext.selectedId], treeView);
+                }
+            }),
+            this.connector.onSelectionUpdate(selection => this.select(selection, treeView)),
             this.connector.onDidClientViewStateChange(() => {
                 setTimeout(() => {
                     if (this.connector.clients.every(c => !c.webviewPanel.active)) {
@@ -141,20 +146,20 @@ export class OutlineTreeProvider implements vscode.TreeDataProvider<OutlineTreeN
         ]);
     }
 
-    protected reveal(selection: string[], treeView: vscode.TreeView<OutlineTreeNode>): void {
+    protected select(selection: string[], treeView: vscode.TreeView<OutlineTreeNode>): void {
         if (selection.length === 1 && selection[0] === null) {
             const node = this.storage.data[0];
             this.selectionToUpdateContext = {
                 selectedId: node.semanticUri
             };
-            treeView.reveal(node, { select: true, focus: false, expand: false });
+            this.reveal(treeView, node);
             return;
         }
 
         selection = selection.filter(s => s !== null && s !== undefined);
         const selectedId = selection.at(-1);
 
-        if (this.selectionToUpdateContext.selectedId === selectedId || selection.length === 0) {
+        if (selection.length === 0 || treeView.selection.some(s => s.semanticUri === selectedId)) {
             return;
         }
 
@@ -165,7 +170,13 @@ export class OutlineTreeProvider implements vscode.TreeDataProvider<OutlineTreeN
             selectedId: selectedNode.semanticUri
         };
 
-        treeView.reveal(selectedNode, { select: true, focus: false, expand: false });
+        this.reveal(treeView, selectedNode);
+    }
+
+    protected reveal(treeView: vscode.TreeView<OutlineTreeNode>, selectedNode: OutlineTreeNode): void {
+        if (treeView.visible) {
+            treeView.reveal(selectedNode, { select: true, focus: false, expand: false });
+        }
     }
 }
 

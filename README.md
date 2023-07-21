@@ -103,20 +103,36 @@ Get started with bigUML, learn fundamentals, explore advanced topics, or go thro
 
 Need help concerning the setup? Then go right to [Requirements](./docs/requirements.md) and continue with [Getting Started](./docs/getting-started.md).
 
-## Contributing
+## Contributors ✨
 
-Contributions to the project are always welcome!
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 
-Do not hesitate to report a bug or to request a feature. Feel free to [open Issues](./issues) or submit PRs.
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/aylin-sarioglu"><img src="https://avatars.githubusercontent.com/u/61785275?v=4?s=100" width="100px;" alt="Aylin Sarioğlu"/><br /><sub><b>Aylin Sarioğlu</b></sub></a><br /><a href="https://github.com/borkdominik/bigUML/commits?author=aylin-sarioglu" title="Code">💻</a> <a href="#diagram-aylin-sarioglu" title="Worked on a diagram">↔</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/haydar-metin"><img src="https://avatars.githubusercontent.com/u/13104167?v=4?s=100" width="100px;" alt="Haydar Metin"/><br /><sub><b>Haydar Metin</b></sub></a><br /><a href="https://github.com/borkdominik/bigUML/commits?author=haydar-metin" title="Code">💻</a> <a href="#maintenance-haydar-metin" title="Maintenance">🚧</a> <a href="#diagram-haydar-metin" title="Worked on a diagram">↔</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/JakobD97"><img src="https://avatars.githubusercontent.com/u/57354440?v=4?s=100" width="100px;" alt="JakobD97"/><br /><sub><b>JakobD97</b></sub></a><br /><a href="https://github.com/borkdominik/bigUML/commits?author=JakobD97" title="Code">💻</a> <a href="#diagram-JakobD97" title="Worked on a diagram">↔</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://jan-mueller.at/"><img src="https://avatars.githubusercontent.com/u/7950094?v=4?s=100" width="100px;" alt="Jan Müller"/><br /><sub><b>Jan Müller</b></sub></a><br /><a href="https://github.com/borkdominik/bigUML/commits?author=DerYeger" title="Code">💻</a> <a href="#diagram-DerYeger" title="Worked on a diagram">↔</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/deweiiss"><img src="https://avatars.githubusercontent.com/u/73828363?v=4?s=100" width="100px;" alt="Julian Weiß"/><br /><sub><b>Julian Weiß</b></sub></a><br /><a href="https://github.com/borkdominik/bigUML/commits?author=deweiiss" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/mrstexx"><img src="https://avatars.githubusercontent.com/u/18032955?v=4?s=100" width="100px;" alt="Stefan Miljevic"/><br /><sub><b>Stefan Miljevic</b></sub></a><br /><a href="https://github.com/borkdominik/bigUML/commits?author=mrstexx" title="Code">💻</a> <a href="#diagram-mrstexx" title="Worked on a diagram">↔</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="http://model-engineering.info/"><img src="https://avatars.githubusercontent.com/u/60790671?v=4?s=100" width="100px;" alt="borkdominik"/><br /><sub><b>borkdominik</b></sub></a><br /><a href="#projectManagement-borkdominik" title="Project Management">📆</a></td>
+    </tr>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/julia05"><img src="https://avatars.githubusercontent.com/u/23345501?v=4?s=100" width="100px;" alt="julia05"/><br /><sub><b>julia05</b></sub></a><br /><a href="https://github.com/borkdominik/bigUML/commits?author=julia05" title="Code">💻</a> <a href="#diagram-julia05" title="Worked on a diagram">↔</a></td>
+    </tr>
+  </tbody>
+</table>
 
-### Maintainers
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
 
-- [Haydar Metin](https://github.com/haydar-metin) (main-developer)
-- [Julian Weiß](https://github.com/deweiiss) (former main-developer)
-- [Dominik Bork](https://github.com/borkdominik)
-- EclipseSource
+<!-- ALL-CONTRIBUTORS-LIST:END -->
 
-See [Contributors](./docs/contributors.md) for the list of the previous contributors.
+Contributions of any kind welcome! Do not hesitate to report a bug or to request a feature. Feel free to [open Issues](./issues) or submit PRs.
 
 If you like our work, please feel free to [buy us a coffee](https://www.buymeacoffee.com/bigERtool) ☕️
 

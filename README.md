@@ -1,15 +1,3 @@
-<!-- LOGO -->
-<p align="center">
-  <img src="./client/packages/uml-vscode-integration/extension/resources/logo.png" alt="Logo" width="150" height="150" />
-</p>
-
-<!-- TITLE -->
-<h1 align="center">bigUML Modeling Tool</h1>
-
-<p align="center">
-  <strong>Editing UML diagrams in VS Code and developing custom integrations for your IDE of choice is now possible.</strong>
-</p>
-
 <!-- DEMO -->
 <p align="center">
   <img src="./media/bigUML-demo.gif" alt="Demo" />
@@ -27,6 +15,21 @@
     <img alt="GitHub contributors" src="https://img.shields.io/github/contributors/borkdominik/bigUML?color=lightgrey&style=for-the-badge" height="20"/>
   </a>
 </p>
+
+<br>
+
+<!-- LOGO -->
+<img align="left" src="./client/packages/uml-vscode-integration/extension/resources/logo.png" alt="Logo" width="150" height="150" />
+
+<br>
+<!-- TITLE -->
+<h1 align="center">&emsp;bigUML Modeling Tool</h1>
+
+<p align="center">
+  &emsp;<strong>Editing UML diagrams in VS Code and developing custom integrations for your IDE of choice is now possible.</strong>
+</p>
+
+<br>
 
 - For VS Code users, the project is already distributed in the [VS Code marketplace](https://marketplace.visualstudio.com/items?itemName=BIGModelingTools.umldiagram) and can be installed directly from VS Code.
 
@@ -54,17 +57,38 @@
 
 The UML 2 specification currently consists of **7 Structure Diagrams** and **7 Behavior Diagrams**.
 
+<details>
+<summary><strong>Class Diagram</strong></summary>
+
+<img src="./media/vscode-class.png" alt="Class Diagram" />
+
+</details>
+
+<details>
+<summary><strong>Use Case Diagram</strong></summary>
+
+<img src="./media/vscode-usecase.png" alt="Use Case Diagram" />
+
+<em>Initial implementation provided by: @julia05, @JakobD97</em>
+
+</details>
+
+<details>
+<summary><strong>Progress</strong></summary>
+
 ### Structure Diagrams
 
-| Class       | Component | Deployment | Object | Package | Profile | Composite |
-| ----------- | --------- | ---------- | ------ | ------- | ------- | --------- |
-| In progress | -         | -          | -      | -       | -       | -         |
+| Class  | Component | Deployment | Object | Package | Profile              | Composite |
+| ------ | --------- | ---------- | ------ | ------- | -------------------- | --------- |
+| Merged | -         | -          | -      | -       | Merged, not released | -         |
 
 ### Behavior Diagrams
 
-| Use Case | Activity | State Machine | Sequence                 | Communication | Interaction | Timing |
-| -------- | -------- | ------------- | ------------------------ | ------------- | ----------- | ------ |
-| -        | -        | -             | Contribution in progress | In progress   | -           | -      |
+| Use Case | Activity | State Machine | Sequence                 | Communication        | Interaction | Timing |
+| -------- | -------- | ------------- | ------------------------ | -------------------- | ----------- | ------ |
+| Merged   | -        | -             | Contribution in progress | Merged, not released | -           | -      |
+
+</details>
 
 ## Documentation
 

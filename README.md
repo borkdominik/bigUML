@@ -137,7 +137,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
-Contributions of any kind welcome! Do not hesitate to report a bug or to request a feature. Feel free to [open Issues](./issues) or submit PRs.
+Contributions of any kind are welcome! Do not hesitate to report a bug or to request a feature. Feel free to [open Issues](./issues) or submit PRs.
 
 If you like our work, please feel free to [buy us a coffee](https://www.buymeacoffee.com/bigERtool) ☕️
 

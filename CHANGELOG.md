@@ -8,6 +8,16 @@ All notable changes to this project will be documented in this file.
 
 ### What's Changed
 
+## [v0.3.0 - 2023-05-23](https://github.com/borkdominik/bigUML/releases/tag/v0.3.0)
+
+### What's Changed
+
+- Introduce diagram popup by @haydar-metin in https://github.com/borkdominik/bigUML/pull/124
+- Move property palette to VSCode by @haydar-metin in https://github.com/borkdominik/bigUML/pull/125
+- Add usecase diagram together with server message handling and copy paste operations by @haydar-metin, @julia05, @JakobD97 in https://github.com/borkdominik/bigUML/pull/127
+- Add package diagram together with diagram outline view by @haydar-metin, @DerYeger, @mrstexx in https://github.com/borkdominik/bigUML/pull/128
+- Remove theia and bug fixes by @haydar-metin in https://github.com/borkdominik/bigUML/pull/130
+
 ## [v0.2.1 - 2023-05-23](https://github.com/borkdominik/bigUML/releases/tag/v0.2.1)
 
 ### What's Changed

@@ -11,9 +11,6 @@
   <a target="_blank" href="https://marketplace.visualstudio.com/items?itemName=BIGModelingTools.umldiagram">
     <img alt="Visual Studio Marketplace Version" src="https://img.shields.io/visual-studio-marketplace/v/BIGModelingTools.umldiagram?style=for-the-badge&label=VS%20Code%20Version" height="20"/>
   </a>
-  <a target="_blank" href="https://github.com/borkdominik/bigUML/graphs/contributors">
-    <img alt="GitHub contributors" src="https://img.shields.io/github/contributors/borkdominik/bigUML?color=lightgrey&style=for-the-badge" height="20"/>
-  </a>
 </p>
 
 <br>
@@ -68,7 +65,16 @@ The UML 2 specification currently consists of **7 Structure Diagrams** and **7 B
 
 <img src="./media/vscode-usecase.png" alt="Use Case Diagram" />
 
-<p align="center"><em>Initial implementation provided by: @julia05, @JakobD97</em><p>
+<em>Initial implementation provided by: [@julia05](https://github.com/julia05), [@JakobD97](https://github.com/JakobD97)</em>
+
+</details>
+
+<details>
+<summary><strong>Package Diagram</strong></summary>
+
+Coming Soon!
+
+<em>Initial implementation provided by: [@DerYeger](https://github.com/DerYeger), [@mrstexx](https://github.com/mrstexx)</em>
 
 </details>
 

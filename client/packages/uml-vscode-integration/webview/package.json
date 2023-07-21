@@ -1,6 +1,6 @@
 {
   "name": "@borkdominik-biguml/uml-vscode-integration-webview",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "UML GLSP diagram in a VS Code extensions (WebView part)",
   "homepage": "https://github.com/borkdominik/bigUML",
   "bugs": "https://github.com/borkdominik/bigUML/issues",
@@ -33,8 +33,8 @@
     "watch": "yarn build --watch"
   },
   "dependencies": {
-    "@borkdominik-biguml/uml-components": "*",
     "@borkdominik-biguml/uml-common": "*",
+    "@borkdominik-biguml/uml-components": "*",
     "@borkdominik-biguml/uml-glsp": "*",
     "@eclipse-glsp/protocol": "next",
     "@eclipse-glsp/vscode-integration-webview": "next",

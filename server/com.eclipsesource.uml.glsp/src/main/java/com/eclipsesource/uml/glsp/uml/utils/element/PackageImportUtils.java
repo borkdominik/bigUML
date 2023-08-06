@@ -20,13 +20,15 @@ import org.eclipse.uml2.uml.PackageImport;
 import com.eclipsesource.uml.glsp.features.property_palette.model.ElementReferencePropertyItem;
 
 public class PackageImportUtils {
+
    public static List<ElementReferencePropertyItem.Reference> asReferenceFromPackageImport(
       final List<PackageImport> packageImports,
       final EMFIdGenerator idGenerator) {
       var references = packageImports.stream()
          .map(v -> {
             var label = String.format("<Package Import> %s", v.getImportedPackage().getName());
-            return new ElementReferencePropertyItem.Reference(label, idGenerator.getOrCreateId(v));
+            return new ElementReferencePropertyItem.Reference(idGenerator.getOrCreateId(v), label,
+               v.getImportedPackage().getName());
          })
          .collect(Collectors.toList());
 
@@ -38,7 +40,7 @@ public class PackageImportUtils {
       var references = packages.stream()
          .map(v -> {
             var label = String.format("<Package> %s", v.getName());
-            return new ElementReferencePropertyItem.Reference(label, idGenerator.getOrCreateId(v));
+            return new ElementReferencePropertyItem.Reference(idGenerator.getOrCreateId(v), label, v.getName());
          })
          .collect(Collectors.toList());
 

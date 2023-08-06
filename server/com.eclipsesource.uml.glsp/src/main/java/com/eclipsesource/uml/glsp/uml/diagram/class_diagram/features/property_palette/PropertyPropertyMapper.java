@@ -11,10 +11,12 @@
 package com.eclipsesource.uml.glsp.uml.diagram.class_diagram.features.property_palette;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
 import org.eclipse.uml2.uml.AggregationKind;
+import org.eclipse.uml2.uml.NamedElement;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.VisibilityKind;
 
@@ -57,7 +59,21 @@ public class PropertyPropertyMapper extends BaseDiagramElementPropertyMapper<Pro
          .choice(
             UmlClass_Property.Property.TYPE,
             "Type",
-            TypeUtils.asChoices(modelServerAccess.getUmlTypeInformation()),
+            TypeUtils
+               .asChoices(modelServerAccess.getUmlTypeInformation().stream()
+                  .filter(type -> this.modelState.getIndex().getEObject(type.id)
+                     .map(element -> {
+                        if (element instanceof NamedElement) {
+                           var namedElement = (NamedElement) element;
+                           if (namedElement.getName() != null && !namedElement.getName().isBlank()) {
+                              return true;
+                           }
+                        }
+
+                        return null;
+                     })
+                     .isPresent())
+                  .collect(Collectors.toSet())),
             source.getType() == null ? "" : idGenerator.getOrCreateId(source.getType()))
          .choice(
             UmlClass_Property.Property.AGGREGATION,

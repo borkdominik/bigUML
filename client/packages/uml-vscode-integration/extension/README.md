@@ -1,20 +1,13 @@
-<!-- TITLE -->
-<h1 align="center">bigUML Modeling Tool</h1>
-
-<p align="center">
-  <strong>VS Code extension for editing UML diagrams.</strong>
-</p>
-
 <!-- DEMO -->
 <p align="center">
   <img src="https://github.com/borkdominik/bigUML/assets/13104167/78f273c7-302a-421f-9ed7-99deebdf8147" alt="Demo" />
 </p>
 
+<!-- TITLE -->
+<h1 align="center">bigUML Modeling Tool</h1>
 
 <p align="center">
-  <a target="_blank" href="https://github.com/borkdominik/bigUML/graphs/contributors">
-    <img alt="GitHub contributors" src="https://img.shields.io/github/contributors/borkdominik/bigUML?color=lightgrey&style=for-the-badge" height="20"/>
-  </a>
+  <strong>VS Code extension for editing UML diagrams.</strong>
 </p>
 
 **bigUML** follows the UML specification to create the different diagrams. This extension is the _client_ integration based on [GLSP](https://www.eclipse.org/glsp/). It comes together with the **bigUML** language server integrated into it, which utilizes the [GLSP-Server](https://github.com/eclipse-glsp/glsp-server) and the [ModelServer](https://github.com/eclipse-emfcloud/modelserver-glsp-integration).
@@ -38,7 +31,20 @@
 
 Currently, **bigUML** supports the following UML diagram types:
 
--   Class Diagram
+
+<details>
+<summary><strong>Class Diagram</strong></summary>
+
+![image](https://github.com/borkdominik/bigUML/assets/13104167/1a5373c4-76c3-4908-9d6f-3d039bedb4b8)
+
+</details>
+
+<details>
+<summary><strong>Use Case Diagram</strong></summary>
+
+![image](https://github.com/borkdominik/bigUML/assets/13104167/7acbb3ad-522e-4a48-91ef-6b0d5f7451be)
+
+</details>
 
 We are working on integrating more diagram types and will subsequently add them in future releases.
 

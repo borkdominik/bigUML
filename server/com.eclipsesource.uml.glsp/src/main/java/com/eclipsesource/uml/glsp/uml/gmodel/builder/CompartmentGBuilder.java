@@ -21,6 +21,8 @@ import com.eclipsesource.uml.glsp.uml.gmodel.provider.IdContextGeneratorGProvide
 
 public interface CompartmentGBuilder extends IdContextGeneratorGProvider {
 
+   String childrenContainerKey = "children-container";
+
    default GCompartmentBuilder compartmentHeaderBuilder(final EObject source) {
       return new GCompartmentBuilder(DefaultTypes.COMPARTMENT_HEADER)
          .id(idContextGenerator().getOrCreateId(source));
@@ -43,6 +45,7 @@ public interface CompartmentGBuilder extends IdContextGeneratorGProvider {
    default GCompartmentBuilder freeformChildrenCompartmentBuilder(final EObject source) {
       return new GCompartmentBuilder(DefaultTypes.COMPARTMENT)
          .id(idContextGenerator().getOrCreateId(source))
+         .addArgument(CompartmentGBuilder.childrenContainerKey, true)
          .layout(UmlLayoutConstants.FREEFORM)
          .layoutOptions(new GLayoutOptions()
             .hAlign(GConstants.HAlign.LEFT)

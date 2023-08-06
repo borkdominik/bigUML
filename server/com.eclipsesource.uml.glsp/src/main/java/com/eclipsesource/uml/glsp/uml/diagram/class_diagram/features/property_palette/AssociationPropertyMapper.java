@@ -54,8 +54,8 @@ public class AssociationPropertyMapper extends BaseDiagramElementPropertyMapper<
          .items());
 
       items.addAll(this.propertyBuilder(UmlClass_Property.Property.class, memberEndFirstId)
-         .text(UmlClass_Property.Property.NAME, "Member End Name", memberEndFirst.getName())
-         .text(UmlClass_Property.Property.MULTIPLICITY, "Member End Multiplicity",
+         .text(UmlClass_Property.Property.NAME, "Source Name", memberEndFirst.getName())
+         .text(UmlClass_Property.Property.MULTIPLICITY, "Source Multiplicity",
             MultiplicityUtil.getMultiplicity(memberEndFirst))
          /*- TODO: Bugs the association
          .bool(UmlClass_Property.Property.IS_NAVIGABLE, "Member End Navigable",
@@ -63,14 +63,14 @@ public class AssociationPropertyMapper extends BaseDiagramElementPropertyMapper<
             */
          .choice(
             UmlClass_Property.Property.AGGREGATION,
-            "Member End Aggregation",
+            "Source Aggregation",
             AggregationKindUtils.asChoices(),
             memberEndFirst.getAggregation().getLiteral())
          .items());
 
       items.addAll(this.propertyBuilder(UmlClass_Property.Property.class, memberEndSecondId)
-         .text(UmlClass_Property.Property.NAME, "Member End Name", memberEndSecond.getName())
-         .text(UmlClass_Property.Property.MULTIPLICITY, "Member End Multiplicity",
+         .text(UmlClass_Property.Property.NAME, "Target Name", memberEndSecond.getName())
+         .text(UmlClass_Property.Property.MULTIPLICITY, "Target Multiplicity",
             MultiplicityUtil.getMultiplicity(memberEndSecond))
          /*- TODO: Bugs the association
          .bool(UmlClass_Property.Property.IS_NAVIGABLE, "Member End Navigable",
@@ -78,7 +78,7 @@ public class AssociationPropertyMapper extends BaseDiagramElementPropertyMapper<
             */
          .choice(
             UmlClass_Property.Property.AGGREGATION,
-            "Member End Aggregation",
+            "Target Aggregation",
             AggregationKindUtils.asChoices(),
             memberEndSecond.getAggregation().getLiteral())
          .items());

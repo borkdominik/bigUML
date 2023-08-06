@@ -1,0 +1,96 @@
+{
+  "projectName": "bigUML",
+  "projectOwner": "borkdominik",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "commitConvention": "none",
+  "contributorsSortAlphabetically": true,
+  "contributors": [
+    {
+      "login": "haydar-metin",
+      "name": "Haydar Metin",
+      "avatar_url": "https://avatars.githubusercontent.com/u/13104167?v=4",
+      "profile": "https://github.com/haydar-metin",
+      "contributions": [
+        "code", "maintenance", "diagram"
+      ]
+    },
+    {
+      "login": "aylin-sarioglu",
+      "name": "Aylin Sarioğlu",
+      "avatar_url": "https://avatars.githubusercontent.com/u/61785275?v=4",
+      "profile": "https://github.com/aylin-sarioglu",
+      "contributions": [
+        "code", "diagram"
+      ]
+    },
+    {
+      "login": "julia05",
+      "name": "julia05",
+      "avatar_url": "https://avatars.githubusercontent.com/u/23345501?v=4",
+      "profile": "https://github.com/julia05",
+      "contributions": [
+        "code", "diagram"
+      ]
+    },
+    {
+      "login": "JakobD97",
+      "name": "JakobD97",
+      "avatar_url": "https://avatars.githubusercontent.com/u/57354440?v=4",
+      "profile": "https://github.com/JakobD97",
+      "contributions": [
+        "code", "diagram"
+      ]
+    },
+    {
+      "login": "DerYeger",
+      "name": "Jan Müller",
+      "avatar_url": "https://avatars.githubusercontent.com/u/7950094?v=4",
+      "profile": "https://jan-mueller.at/",
+      "contributions": [
+        "code", "diagram"
+      ]
+    },
+    {
+      "login": "mrstexx",
+      "name": "Stefan Miljevic",
+      "avatar_url": "https://avatars.githubusercontent.com/u/18032955?v=4",
+      "profile": "https://github.com/mrstexx",
+      "contributions": [
+        "code", "diagram"
+      ]
+    },
+    {
+      "login": "borkdominik",
+      "name": "borkdominik",
+      "avatar_url": "https://avatars.githubusercontent.com/u/60790671?v=4",
+      "profile": "http://model-engineering.info/",
+      "contributions": [
+        "projectManagement"
+      ]
+    },
+    {
+      "login": "deweiiss",
+      "name": "Julian Weiß",
+      "avatar_url": "https://avatars.githubusercontent.com/u/73828363?v=4",
+      "profile": "https://github.com/deweiiss",
+      "contributions": [
+        "code"
+      ]
+    }
+  ],
+  "types": {
+    "diagram": {
+      "symbol": "↔",
+      "description": "Worked on a diagram",
+      "link": ""
+    }
+  },
+  "contributorsPerLine": 7,
+  "linkToUsage": false
+}

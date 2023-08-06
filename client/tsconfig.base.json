@@ -3,11 +3,13 @@
   "compilerOptions": {
     "baseUrl": ".",
     "reactNamespace": "JSX",
+    "moduleResolution": "node16",
     "esModuleInterop": true,
+    "noFallthroughCasesInSwitch": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
     "paths": {
-      "@borkdominik-biguml/uml-glsp": [
-        "packages/uml-glsp/src/*"
-      ]
+      "@borkdominik-biguml/uml-glsp": ["packages/uml-glsp/src/*"]
     }
   },
 

@@ -13,18 +13,26 @@ package com.eclipsesource.uml.glsp.features.outline.model;
 import java.util.List;
 
 public class OutlineTreeNode {
-   private String label;
-   private String semanticUri;
-   private List<OutlineTreeNode> children;
-   private String iconClass;
+   protected String label;
+   protected String semanticUri;
+   protected List<OutlineTreeNode> children;
+   protected String iconClass;
+   protected Boolean isRoot;
 
    public OutlineTreeNode(final String label, final String semanticUri, final List<OutlineTreeNode> children,
       final String iconClass) {
+      this(label, semanticUri, children, iconClass, false);
+   }
+
+   public OutlineTreeNode(final String label, final String semanticUri, final List<OutlineTreeNode> children,
+      final String iconClass,
+      final Boolean isRoot) {
       super();
       this.label = label;
       this.semanticUri = semanticUri;
       this.children = children;
       this.iconClass = iconClass;
+      this.isRoot = isRoot;
    }
 
    public String getLabel() { return label; }

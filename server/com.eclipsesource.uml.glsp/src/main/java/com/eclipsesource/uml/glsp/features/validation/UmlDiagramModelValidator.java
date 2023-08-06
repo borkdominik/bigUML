@@ -31,7 +31,7 @@ public class UmlDiagramModelValidator implements ModelValidator {
             markers.addAll(validateClassNode((Class) semanticElement));
          }
       }
-      System.out.println(markers);
+
       return markers;
    }
 
@@ -44,7 +44,6 @@ public class UmlDiagramModelValidator implements ModelValidator {
    private static Optional<Marker> classNodeIsConnected(final Class semanticElement) {
       EList<Association> associations = semanticElement.getAssociations();
       if (associations.isEmpty()) {
-         System.out.println("NO ASSOCIATIONS PRESENT");
          return Optional.of(new Marker("Class Node needs to be connected",
             "Class nodes always need to be connected to an edge", semanticElement.getName(), MarkerKind.WARNING));
       }

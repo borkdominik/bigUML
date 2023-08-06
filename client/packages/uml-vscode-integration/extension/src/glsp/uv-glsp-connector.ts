@@ -6,6 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
+import { OutlineTreeNode, RequestOutlineAction, SetOutlineAction } from '@borkdominik-biguml/uml-common';
 import {
     Action,
     ActionMessage,
@@ -18,11 +19,13 @@ import {
     MessageProcessingResult,
     RedoAction,
     SetDirtyStateAction,
-    UndoAction
+    UndoAction,
+    UpdateModelAction
 } from '@eclipse-glsp/vscode-integration';
 import { inject, injectable } from 'inversify';
 import * as vscode from 'vscode';
 import { TYPES } from '../di.types';
+import { VSCodeActionDispatcher } from './workaround/action-dispatcher';
 
 @injectable()
 export class UVGlspConnector<TDocument extends vscode.CustomDocument = vscode.CustomDocument> extends GlspVscodeConnector<TDocument> {
@@ -30,11 +33,43 @@ export class UVGlspConnector<TDocument extends vscode.CustomDocument = vscode.Cu
         return Array.from(this.documentMap.keys());
     }
 
-    constructor(@inject(TYPES.GlspServer) glspServer: GlspVscodeServer) {
+    get clients(): GlspVscodeClient<TDocument>[] {
+        return Array.from(this.clientMap.values());
+    }
+
+    get activeClient(): GlspVscodeClient<TDocument> | undefined {
+        return this.clients.find(c => c.webviewPanel.active);
+    }
+
+    protected readonly onDidActiveClientChangeEmitter = new vscode.EventEmitter<GlspVscodeClient<TDocument>>();
+    protected readonly onDidClientViewStateChangeEmitter = new vscode.EventEmitter<GlspVscodeClient<TDocument>>();
+    protected readonly onDidClientDisposeEmitter = new vscode.EventEmitter<GlspVscodeClient<TDocument>>();
+    protected readonly onOutlineChangedEmitter = new vscode.EventEmitter<OutlineTreeNode[]>();
+    readonly onDidActiveClientChange = this.onDidActiveClientChangeEmitter.event;
+    readonly onDidClientViewStateChange = this.onDidClientViewStateChangeEmitter.event;
+    readonly onDidClientDispose = this.onDidClientDisposeEmitter.event;
+
+    constructor(
+        @inject(TYPES.GlspServer) glspServer: GlspVscodeServer,
+        @inject(TYPES.IActionDispatcher) protected readonly actionDispatcher: VSCodeActionDispatcher
+    ) {
         super({
             server: glspServer,
-            logging: false
+            logging: false,
+            onBeforeReceiveMessageFromClient: (message, callback) => {
+                callback(message, true);
+                if (ActionMessage.is(message)) {
+                    this.actionDispatcher.dispatch(message.action);
+                }
+            },
+            onBeforeReceiveMessageFromServer: (message, callback) => {
+                callback(message, true);
+                if (ActionMessage.is(message)) {
+                    this.actionDispatcher.dispatch(message.action);
+                }
+            }
         });
+        this.actionDispatcher.connect(this);
     }
 
     clientIdByDocument(document: TDocument): string | undefined {
@@ -74,6 +109,16 @@ export class UVGlspConnector<TDocument extends vscode.CustomDocument = vscode.Cu
         });
     }
 
+    public override sendActionToActiveClient(action: Action): void;
+    public override sendActionToActiveClient(action: Action[]): void;
+    public override sendActionToActiveClient(action: Action | Action[]): void {
+        if (Array.isArray(action)) {
+            action.forEach(a => super.sendActionToActiveClient(a));
+        } else {
+            super.sendActionToActiveClient(action);
+        }
+    }
+
     public override sendActionToClient(clientId: string, action: Action): void {
         super.sendActionToClient(clientId, action);
     }
@@ -106,6 +151,25 @@ export class UVGlspConnector<TDocument extends vscode.CustomDocument = vscode.Cu
         // return { processedMessage: GlspVscodeConnector.NO_PROPAGATION_MESSAGE, messageChanged: true };
     }
 
+    protected handleSetOutlineAction(
+        message: ActionMessage<SetOutlineAction>,
+        _client: GlspVscodeClient<TDocument> | undefined,
+        _origin: MessageOrigin
+    ): MessageProcessingResult {
+        const nodes = message.action.outlineTreeNodes;
+        this.onOutlineChangedEmitter.fire(nodes);
+        return { processedMessage: message, messageChanged: false };
+    }
+
+    protected handleUpdateModelAction(
+        message: ActionMessage<UpdateModelAction>,
+        _client: GlspVscodeClient<TDocument> | undefined,
+        _origin: MessageOrigin
+    ): MessageProcessingResult {
+        this.sendActionToActiveClient(RequestOutlineAction.create());
+        return { processedMessage: message, messageChanged: false };
+    }
+
     protected onClientMessage(client: GlspVscodeClient<TDocument>, message: unknown): void {
         if (this.options.logging) {
             if (ActionMessage.is(message)) {
@@ -129,10 +193,25 @@ export class UVGlspConnector<TDocument extends vscode.CustomDocument = vscode.Cu
         });
     }
 
+    protected override processMessage(message: unknown, origin: MessageOrigin): MessageProcessingResult {
+        if (ActionMessage.is(message)) {
+            const client = this.clientMap.get(message.clientId);
+            if (SetOutlineAction.is(message.action)) {
+                return this.handleSetOutlineAction(message as ActionMessage<SetOutlineAction>, client, origin);
+            }
+            if (UpdateModelAction.is(message.action)) {
+                return this.handleUpdateModelAction(message as ActionMessage<UpdateModelAction>, client, origin);
+            }
+        }
+        return super.processMessage(message, origin);
+    }
+
     protected onClientViewStateChange(client: GlspVscodeClient<TDocument>, event: vscode.WebviewPanelOnDidChangeViewStateEvent): void {
         if (event.webviewPanel.active) {
+            this.onDidActiveClientChangeEmitter.fire(client);
             this.selectionUpdateEmitter.fire(this.clientSelectionMap.get(client.clientId) || []);
         }
+        this.onDidClientViewStateChangeEmitter.fire(client);
     }
 
     protected onClientDispose(client: GlspVscodeClient<TDocument>, disposables: vscode.Disposable[]): void {
@@ -149,6 +228,7 @@ export class UVGlspConnector<TDocument extends vscode.CustomDocument = vscode.Cu
         });
 
         disposables.forEach(d => d.dispose());
+        this.onDidClientDisposeEmitter.fire(client);
     }
 
     protected disposeClientSessionArgs(client: GlspVscodeClient<TDocument>): Args | undefined {

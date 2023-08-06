@@ -13,6 +13,7 @@ package com.eclipsesource.uml.glsp.features.outline.generator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.glsp.server.emf.EMFIdGenerator;
 import org.eclipse.uml2.uml.Element;
@@ -35,12 +36,17 @@ public abstract class BaseOutlineGenerator implements DiagramOutlineGenerator {
       var model = modelState.getSemanticModel();
 
       var outlineTreeNodes = model.eContents().stream().filter(elem -> modelState.hasNotation(elem))
-         .filter(elem -> elem instanceof Element)
+         .filter(this::filter)
          .map(elem -> (Element) elem)
-         .map(child -> map(child))
+         .map(this::map)
          .collect(Collectors.toList());
 
-      return outlineTreeNodes;
+      var root = new OutlineTreeNode("Model", modelState.getRoot().getId(), outlineTreeNodes, "model", true);
+      return List.of(root);
+   }
+
+   protected boolean filter(final EObject eObject) {
+      return eObject instanceof Element;
    }
 
    protected OutlineTreeNode map(final Element element) {
@@ -68,7 +74,7 @@ public abstract class BaseOutlineGenerator implements DiagramOutlineGenerator {
    }
 
    protected String iconOf(final Element element) {
-      return "class";
+      return "element";
    }
 
    protected List<OutlineTreeNode> childrenOf(final Element element) {
@@ -77,6 +83,7 @@ public abstract class BaseOutlineGenerator implements DiagramOutlineGenerator {
       }
 
       return element.getOwnedElements().stream()
+         .filter(this::filter)
          .map(elem -> map(elem))
          .collect(Collectors.toList());
    }

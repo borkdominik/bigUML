@@ -12,6 +12,7 @@ package com.eclipsesource.uml.modelserver.shared.extension;
 
 import java.util.Optional;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.server.emf.model.notation.NotationElement;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
@@ -33,6 +34,10 @@ public final class NotationElementAccessor {
 
    public <C extends NotationElement> Optional<C> getElement(final String semanticUri, final Class<C> clazz) {
       return getElement(semanticUri).map(element -> clazz.cast(element));
+   }
+
+   public Optional<NotationElement> getElement(final EObject semantic) {
+      return getElement(SemanticElementAccessor.getId(semantic));
    }
 
    public Optional<NotationElement> getElement(final String semanticUri) {

@@ -6,13 +6,18 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
+import { SetOutlineAction, SetPropertyPaletteAction } from '@borkdominik-biguml/uml-common';
 import { ModelServerConfig } from '@borkdominik-biguml/uml-modelserver';
+import { IActionDispatcher } from '@eclipse-glsp/client';
 import { Container, ContainerModule } from 'inversify';
 import * as vscode from 'vscode';
 import { TYPES } from './di.types';
+import { OutlineTreeProvider } from './features/outline/outline-tree.provider';
+import { PropertyPaletteProvider } from './features/property-palette/property-palette.provider';
 import { ThemeIntegration } from './features/theme/theme-integration';
 import { UVGlspConnector } from './glsp/uv-glsp-connector';
 import { UVGlspServer } from './glsp/uv-glsp-server';
+import { ActionHandlerRegistry, configureActionHandler, VSCodeActionDispatcher } from './glsp/workaround/action-dispatcher';
 import { UVModelServerClient } from './modelserver/uv-modelserver.client';
 import { GlspServerConfig, glspServerModule } from './server/glsp-server.launcher';
 import { modelServerModule } from './server/modelserver.launcher';
@@ -27,7 +32,7 @@ import { Settings } from './vscode/settings/settings';
 import { WorkspaceWatcher } from './vscode/workspace/workspace.watcher';
 
 export function createContainer(
-    context: vscode.ExtensionContext,
+    extensionContext: vscode.ExtensionContext,
     options: {
         glspServerConfig: GlspServerConfig;
         modelServerConfig: ModelServerConfig;
@@ -37,9 +42,28 @@ export function createContainer(
         skipBaseClassChecks: true
     });
 
-    container.bind(TYPES.ExtensionContext).toConstantValue(context);
+    container.bind(TYPES.ExtensionContext).toConstantValue(extensionContext);
 
-    const coreModule = new ContainerModule(bind => {
+    const workarounModule = new ContainerModule(bind => {
+        bind(ActionHandlerRegistry).toSelf().inSingletonScope();
+        bind(TYPES.ActionHandlerRegistryProvider).toProvider<ActionHandlerRegistry>(
+            ctx => () =>
+                new Promise<ActionHandlerRegistry>(resolve => {
+                    resolve(ctx.container.get<ActionHandlerRegistry>(ActionHandlerRegistry));
+                })
+        );
+
+        bind(TYPES.IActionDispatcher).to(VSCodeActionDispatcher).inSingletonScope();
+        bind(TYPES.IActionDispatcherProvider).toProvider<IActionDispatcher>(
+            ctx => () =>
+                new Promise<IActionDispatcher>(resolve => {
+                    resolve(ctx.container.get<IActionDispatcher>(TYPES.IActionDispatcher));
+                })
+        );
+    });
+
+    const coreModule = new ContainerModule((bind, unbind, isBound, rebind) => {
+        const context = { bind, unbind, isBound, rebind };
         bind(TYPES.GlspServerConfig).toConstantValue(options.glspServerConfig);
         bind(TYPES.ModelServerConfig).toConstantValue(options.modelServerConfig);
 
@@ -86,9 +110,20 @@ export function createContainer(
         bind(TYPES.Theme).toService(ThemeIntegration);
         bind(TYPES.Disposable).toService(ThemeIntegration);
         bind(TYPES.RootInitialization).toService(ThemeIntegration);
+
+        bind(PropertyPaletteProvider).toSelf().inSingletonScope();
+        bind(TYPES.RootInitialization).toService(PropertyPaletteProvider);
+        configureActionHandler(context, SetPropertyPaletteAction.KIND, PropertyPaletteProvider);
+
+        bind(OutlineTreeProvider).toSelf().inSingletonScope();
+        bind(TYPES.Outline).to(OutlineTreeProvider);
+        bind(TYPES.Disposable).toService(OutlineTreeProvider);
+        bind(TYPES.RootInitialization).toService(OutlineTreeProvider);
+        configureActionHandler(context, SetOutlineAction.KIND, OutlineTreeProvider);
     });
 
     container.load(
+        workarounModule,
         coreModule,
         modelServerModule(options.modelServerConfig),
         glspServerModule(options.glspServerConfig),

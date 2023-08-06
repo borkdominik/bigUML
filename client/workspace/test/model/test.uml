@@ -1,18 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_nD7_AEiTEe287ptuQ4W3Iw" name="test">
-  <packagedElement xmi:type="uml:Interaction" xmi:id="_Apok4XZJEe2wEbvDZ90BxA" name="asd">
-    <lifeline xmi:id="_BAry8HZJEe2wEbvDZ90BxA" name="asd" coveredBy="_CSxF4HZJEe2wEbvDZ90BxA _OLpygHr2Ee2mpLR0oNPjJg"/>
-    <lifeline xmi:id="_BVYQkHZJEe2wEbvDZ90BxA" name="asd" coveredBy="_CSxs8HZJEe2wEbvDZ90BxA _RNH6EHrjEe23h8dJ4RYmwQ"/>
-    <lifeline xmi:id="_Qp-wwHrjEe23h8dJ4RYmwQ" name="NewLifeline3" coveredBy="_RNHTAHrjEe23h8dJ4RYmwQ _OLpLcHr2Ee2mpLR0oNPjJg"/>
-    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_CSxF4HZJEe2wEbvDZ90BxA" name="asd - SendEvent" covered="_BAry8HZJEe2wEbvDZ90BxA" message="_CSv3wHZJEe2wEbvDZ90BxA"/>
-    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_CSxs8HZJEe2wEbvDZ90BxA" name="asd - ReceiveEvent" covered="_BVYQkHZJEe2wEbvDZ90BxA" message="_CSv3wHZJEe2wEbvDZ90BxA"/>
-    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_RNHTAHrjEe23h8dJ4RYmwQ" name="NewMessage2 - SendEvent" covered="_Qp-wwHrjEe23h8dJ4RYmwQ" message="_RNGE4HrjEe23h8dJ4RYmwQ"/>
-    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_RNH6EHrjEe23h8dJ4RYmwQ" name="NewMessage2 - ReceiveEvent" covered="_BVYQkHZJEe2wEbvDZ90BxA" message="_RNGE4HrjEe23h8dJ4RYmwQ"/>
-    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_OLpLcHr2Ee2mpLR0oNPjJg" name="NewMessage3 - SendEvent" covered="_Qp-wwHrjEe23h8dJ4RYmwQ" message="_OLn9UHr2Ee2mpLR0oNPjJg"/>
-    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_OLpygHr2Ee2mpLR0oNPjJg" name="NewMessage3 - ReceiveEvent" covered="_BAry8HZJEe2wEbvDZ90BxA" message="_OLn9UHr2Ee2mpLR0oNPjJg"/>
-    <message xmi:id="_CSv3wHZJEe2wEbvDZ90BxA" name="asd" receiveEvent="_CSxs8HZJEe2wEbvDZ90BxA" sendEvent="_CSxF4HZJEe2wEbvDZ90BxA"/>
-    <message xmi:id="_RNGE4HrjEe23h8dJ4RYmwQ" name="NewMessage2" receiveEvent="_RNH6EHrjEe23h8dJ4RYmwQ" sendEvent="_RNHTAHrjEe23h8dJ4RYmwQ"/>
-    <message xmi:id="_OLn9UHr2Ee2mpLR0oNPjJg" name="NewMessage3" receiveEvent="_OLpygHr2Ee2mpLR0oNPjJg" sendEvent="_OLpLcHr2Ee2mpLR0oNPjJg"/>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_QwgEoR_YEe6aAqy_C1bnqQ" name="test">
+  <packagedElement xmi:type="uml:Package" xmi:id="_VPmTMCD2Ee6lQaghWklJxQ" name="NewPackage1">
+    <packagedElement xmi:type="uml:Package" xmi:id="_2sqpcCECEe6h2__j8zC_Xg" name="NewPackage1">
+      <packagedElement xmi:type="uml:Class" xmi:id="_3rxWACECEe6h2__j8zC_Xg" name="NewClass1">
+        <substitution xmi:id="_59tjcCECEe6h2__j8zC_Xg" client="_3rxWACECEe6h2__j8zC_Xg" supplier="_x7cWICECEe6h2__j8zC_Xg" contract="_x7cWICECEe6h2__j8zC_Xg"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_3_LaMCECEe6h2__j8zC_Xg" name="NewClass2">
+        <ownedAttribute xmi:id="_FaCgACEHEe6LzuV3TzojXA" name="NewClass1" type="_VkI_0CD2Ee6lQaghWklJxQ" association="_FaB48CEHEe6LzuV3TzojXA">
+          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_FaCgASEHEe6LzuV3TzojXA" value="1"/>
+          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_FaCgAiEHEe6LzuV3TzojXA" value="1"/>
+        </ownedAttribute>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Abstraction" xmi:id="_5Q3EgCECEe6h2__j8zC_Xg" client="_3_LaMCECEe6h2__j8zC_Xg" supplier="_3rxWACECEe6h2__j8zC_Xg"/>
+      <packagedElement xmi:type="uml:Realization" xmi:id="_6nNzcCECEe6h2__j8zC_Xg" client="_3rxWACECEe6h2__j8zC_Xg" supplier="_VkI_0CD2Ee6lQaghWklJxQ"/>
+      <packagedElement xmi:type="uml:Dependency" xmi:id="_7zup4CECEe6h2__j8zC_Xg" client="_3_LaMCECEe6h2__j8zC_Xg" supplier="_VkI_0CD2Ee6lQaghWklJxQ"/>
+      <packagedElement xmi:type="uml:Association" xmi:id="_FaB48CEHEe6LzuV3TzojXA" memberEnd="_FaCgACEHEe6LzuV3TzojXA _FaCgAyEHEe6LzuV3TzojXA"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_VkI_0CD2Ee6lQaghWklJxQ" name="NewClass1">
+      <ownedAttribute xmi:id="_MRMagCEGEe6LzuV3TzojXA" name="NewClass2" type="_WJZpACD2Ee6lQaghWklJxQ" association="_MRFFwSEGEe6LzuV3TzojXA">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_MRNBkCEGEe6LzuV3TzojXA" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_MRNooCEGEe6LzuV3TzojXA" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_FaCgAyEHEe6LzuV3TzojXA" name="NewClass2" type="_3_LaMCECEe6h2__j8zC_Xg" association="_FaB48CEHEe6LzuV3TzojXA">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_FaCgBCEHEe6LzuV3TzojXA" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_FaCgBSEHEe6LzuV3TzojXA" value="1"/>
+      </ownedAttribute>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_WJZpACD2Ee6lQaghWklJxQ" name="NewClass2">
+      <substitution xmi:id="_y0CLACECEe6h2__j8zC_Xg" client="_WJZpACD2Ee6lQaghWklJxQ" supplier="_x7cWICECEe6h2__j8zC_Xg" contract="_x7cWICECEe6h2__j8zC_Xg"/>
+      <ownedAttribute xmi:id="_MRNooSEGEe6LzuV3TzojXA" name="NewClass1" type="_VkI_0CD2Ee6lQaghWklJxQ" association="_MRFFwSEGEe6LzuV3TzojXA">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_MRNooiEGEe6LzuV3TzojXA" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_MROPsCEGEe6LzuV3TzojXA" value="1"/>
+      </ownedAttribute>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Abstraction" xmi:id="_XT9XoCD2Ee6lQaghWklJxQ" client="_VkI_0CD2Ee6lQaghWklJxQ" supplier="_WJZpACD2Ee6lQaghWklJxQ"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_x7cWICECEe6h2__j8zC_Xg" name="NewClass3"/>
+    <packagedElement xmi:type="uml:Association" xmi:id="_MRFFwSEGEe6LzuV3TzojXA" memberEnd="_MRMagCEGEe6LzuV3TzojXA _MRNooSEGEe6LzuV3TzojXA"/>
+    <packagedElement xmi:type="uml:Abstraction" xmi:id="_MsqFYCViEe6wk4I7p8G_EA" client="_x7cWICECEe6h2__j8zC_Xg" supplier="_12vTASVgEe6wk4I7p8G_EA"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Interaction" xmi:id="_ntqiEXrTEe2uNb5d1e2_ig" name="NewInteraction2"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="_12vTASVgEe6wk4I7p8G_EA" name="NewClass1"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="_fsirQCVsEe6wk4I7p8G_EA" name="NewClass2"/>
 </uml:Model>

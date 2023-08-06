@@ -1,6 +1,6 @@
 {
   "name": "biguml-theia",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "private": true,
   "license": "MIT",
   "author": {
@@ -23,12 +23,11 @@
     "clean": "theia clean",
     "download:plugins": "theia download:plugins",
     "prepare": "yarn clean && yarn build && yarn download:plugins",
-    "start": "theia start --UML_GLSP_PORT=5007 --UML_MODELSERVER_PORT=8081 --hostname=0.0.0.0 --root-dir=../workspace",
-    "start:debug": "theia start --UML_GLSP_PORT=5007 --UML_MODELSERVER_PORT=8081 --hostname=0.0.0.0 --loglevel=debug --root-dir=../../workspace --debug",
+    "start": "theia start --UML_GLSP_PORT=5007 --UML_MODELSERVER_PORT=8081 --hostname=0.0.0.0 --root-dir=../workspace --plugins=local-dir:./extensions",
+    "start:debug": "yarn start --loglevel=debug --debug",
     "watch": "theia build --watch --mode development"
   },
   "dependencies": {
-    "@borkdominik-biguml/uml-theia-integration": "*",
     "@theia/core": "next",
     "@theia/editor": "next",
     "@theia/file-search": "next",

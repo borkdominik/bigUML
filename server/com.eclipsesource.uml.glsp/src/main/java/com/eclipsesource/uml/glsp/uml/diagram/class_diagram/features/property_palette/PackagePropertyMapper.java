@@ -45,7 +45,7 @@ public class PackagePropertyMapper extends BaseDiagramElementPropertyMapper<Pack
             "Package Import",
             PackageImportUtils.asReferenceFromPackageImport(source.getPackageImports(), idGenerator))
          .reference(
-            UmlClass_Package.Property.PACKAGE_IMPORTS,
+            UmlClass_Package.Property.PACKAGE_MERGES,
             "Package Merge",
             PackageMergeUtils.asReferences(source.getPackageMerges(), idGenerator))
 

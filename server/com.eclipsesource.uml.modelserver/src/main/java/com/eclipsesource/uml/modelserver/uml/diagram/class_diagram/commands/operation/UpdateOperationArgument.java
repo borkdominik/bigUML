@@ -21,7 +21,7 @@ import org.eclipse.uml2.uml.Type;
 import org.eclipse.uml2.uml.VisibilityKind;
 
 import com.eclipsesource.uml.modelserver.shared.codec.codecs.EmbeddedCodec;
-import com.eclipsesource.uml.modelserver.shared.model.OrderPosition;
+import com.eclipsesource.uml.modelserver.shared.model.NewListIndex;
 
 public final class UpdateOperationArgument implements EmbeddedCodec.JsonEncodable {
    private String name;
@@ -34,7 +34,7 @@ public final class UpdateOperationArgument implements EmbeddedCodec.JsonEncodabl
 
    // Reference
    private Constraint bodyCondition;
-   private List<OrderPosition> parameterOrders;
+   private List<NewListIndex> parameterIndex;
 
    // References
    private List<Behavior> methods;
@@ -69,8 +69,8 @@ public final class UpdateOperationArgument implements EmbeddedCodec.JsonEncodabl
       return Optional.ofNullable(concurrency);
    }
 
-   public Optional<List<OrderPosition>> parameterPosition() {
-      return Optional.ofNullable(parameterOrders);
+   public Optional<List<NewListIndex>> parameterIndex() {
+      return Optional.ofNullable(parameterIndex);
    }
 
    public static final class Builder {
@@ -116,8 +116,8 @@ public final class UpdateOperationArgument implements EmbeddedCodec.JsonEncodabl
          return this;
       }
 
-      public Builder parameterOrders(final List<OrderPosition> value) {
-         argument.parameterOrders = value;
+      public Builder parameterIndex(final List<NewListIndex> value) {
+         argument.parameterIndex = value;
          return this;
       }
 

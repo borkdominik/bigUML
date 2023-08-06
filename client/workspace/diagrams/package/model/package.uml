@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_PTF5sc4OEe2NwpxoRjsNIQ" name="package">
+  <packagedElement xmi:type="uml:Package" xmi:id="_QGY-4M4OEe2NwpxoRjsNIQ" name="App" URI="com.example.app">
+    <elementImport xmi:id="_5AugUPn-Ee2smM55zuHUhw" alias="AppLauncher" importedElement="_gu8-gPn-Ee2smM55zuHUhw" visibility="private"/>
+    <packageImport xmi:id="_uBXk4M4OEe2WfbpzO7t8-A" importedPackage="_RY5voM4OEe2NwpxoRjsNIQ"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_KrFesfn-Ee2smM55zuHUhw" name="Main"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Package" xmi:id="_RY5voM4OEe2NwpxoRjsNIQ" name="Lib" URI="com.example.lib">
+    <packageMerge xmi:id="_2IFB4PYREe2O9IdeA_KGyQ" mergedPackage="_kjCCMM4OEe2WfbpzO7t8-A"/>
+    <packageMerge xmi:id="_4Xgt4PYREe2O9IdeA_KGyQ" mergedPackage="_lJmS8M4OEe2WfbpzO7t8-A"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_gu8-gPn-Ee2smM55zuHUhw" name="Launcher"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Package" xmi:id="_kjCCMM4OEe2WfbpzO7t8-A" name="Utils">
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_59v3UM4OEe2WfbpzO7t8-A" client="_kjCCMM4OEe2WfbpzO7t8-A" supplier="_4EHcMM4OEe2WfbpzO7t8-A"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Package" xmi:id="_lJmS8M4OEe2WfbpzO7t8-A" name="Logic">
+    <packageImport xmi:id="_qfI0QM4OEe2WfbpzO7t8-A" importedPackage="_kjCCMM4OEe2WfbpzO7t8-A" visibility="private"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Package" xmi:id="_4EHcMM4OEe2WfbpzO7t8-A" name="StdLib">
+    <packagedElement xmi:type="uml:Package" xmi:id="_Mmu2kPn_Ee2smM55zuHUhw" name="Collections">
+      <elementImport xmi:id="_gg-iAPoAEe2smM55zuHUhw" importedElement="_dHjvIPoAEe2smM55zuHUhw"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_PwW58Pn_Ee2smM55zuHUhw" name="ArrayList"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_U4qQgPn_Ee2smM55zuHUhw" name="List" isAbstract="true"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_Oj0OUPn_Ee2smM55zuHUhw" name="Math">
+      <packagedElement xmi:type="uml:Class" xmi:id="_dHjvIPoAEe2smM55zuHUhw" name="Int"/>
+    </packagedElement>
+  </packagedElement>
+</uml:Model>

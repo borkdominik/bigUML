@@ -7,7 +7,4 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 export * from './di.config';
-export * from './outline-tree-node.model';
-export * from './outline.actions';
 export * from './outline.handlers';
-export * from './outline.service';

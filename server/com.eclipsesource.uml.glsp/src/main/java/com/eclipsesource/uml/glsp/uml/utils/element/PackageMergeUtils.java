@@ -24,7 +24,8 @@ public class PackageMergeUtils {
       var references = packageMerges.stream()
          .map(v -> {
             var label = String.format("<Package Merge> %s", v.getMergedPackage().getName());
-            return new ElementReferencePropertyItem.Reference(label, idGenerator.getOrCreateId(v));
+            return new ElementReferencePropertyItem.Reference(idGenerator.getOrCreateId(v), label,
+               v.getMergedPackage().getName());
          })
          .collect(Collectors.toList());
 

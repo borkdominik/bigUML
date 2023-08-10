@@ -36,7 +36,7 @@ public class UpdateHandlerOperationMapper {
       this.gson = new Gson();
    }
 
-   public <THandler extends DiagramUpdateHandler<TElement, TUpdateArgument>, TElement extends EObject, TUpdateArgument> UpdateOperation asOperation(
+   public <THandler extends DiagramUpdateHandler<TElement>, TElement extends EObject, TUpdateArgument> UpdateOperation asOperation(
       final Class<THandler> handler,
       final TElement element,
       final TUpdateArgument args) {
@@ -44,14 +44,14 @@ public class UpdateHandlerOperationMapper {
       return asOperation(instance, element, args);
    }
 
-   public <THandler extends DiagramUpdateHandler<TElement, TUpdateArgument>, TElement extends EObject, TUpdateArgument> UpdateOperation asOperation(
+   public <THandler extends DiagramUpdateHandler<TElement>, TElement extends EObject, TUpdateArgument> UpdateOperation asOperation(
       final THandler handler,
       final TElement element,
       final TUpdateArgument args) {
       return asOperation(handler, element, args, new HashMap<>());
    }
 
-   public <THandler extends DiagramUpdateHandler<TElement, TUpdateArgument>, TElement extends EObject, TUpdateArgument> UpdateOperation asOperation(
+   public <THandler extends DiagramUpdateHandler<TElement>, TElement extends EObject, TUpdateArgument> UpdateOperation asOperation(
       final THandler handler,
       final TElement element,
       final TUpdateArgument args,
@@ -62,17 +62,16 @@ public class UpdateHandlerOperationMapper {
 
       return new UpdateOperation(
          elementId,
-         handler.contextId(),
          context,
          gson.fromJson(gson.toJsonTree(args), type));
    }
 
-   public <THandler extends DiagramUpdateHandler<TElement, TUpdateArgument>, TElement extends EObject, TUpdateArgument> Prepared<THandler, TElement, TUpdateArgument> prepare(
+   public <THandler extends DiagramUpdateHandler<TElement>, TElement extends EObject, TUpdateArgument> Prepared<THandler, TElement, TUpdateArgument> prepare(
       final Class<THandler> handlerType, final TElement element) {
       return new Prepared<>(this.idGenerator, this.injector, handlerType, element);
    }
 
-   public static class Prepared<THandler extends DiagramUpdateHandler<TElement, TUpdateArgument>, TElement extends EObject, TUpdateArgument>
+   public static class Prepared<THandler extends DiagramUpdateHandler<TElement>, TElement extends EObject, TUpdateArgument>
       extends UpdateHandlerOperationMapper {
 
       protected final Class<THandler> handlerType;

@@ -14,9 +14,9 @@ import java.util.Set;
 import java.util.function.Consumer;
 
 import com.eclipsesource.uml.glsp.core.features.tool_palette.ToolPaletteConfiguration;
-import com.eclipsesource.uml.glsp.core.manifest.contributions.ContributionBinderSupplier;
-import com.eclipsesource.uml.glsp.core.manifest.contributions.ContributionIdSupplier;
-import com.eclipsesource.uml.glsp.core.manifest.contributions.ContributionRepresentationSupplier;
+import com.eclipsesource.uml.modelserver.shared.manifest.supplier.ContributionBinderSupplier;
+import com.eclipsesource.uml.modelserver.shared.manifest.supplier.ContributionIdSupplier;
+import com.eclipsesource.uml.modelserver.shared.manifest.supplier.ContributionRepresentationSupplier;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Key;
 import com.google.inject.TypeLiteral;

@@ -14,7 +14,7 @@ import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.uml2.uml.NamedElement;
 
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
-import com.eclipsesource.uml.modelserver.uml.diagram.common_diagram.commands.RenameElementContribution;
+import com.eclipsesource.uml.modelserver.core.commands.rename.UmlRenameElementContribution;
 
 public abstract class UpdateNamedElementNameHandler<T extends NamedElement>
    extends BaseUpdateElementHandler<T, UpdateNamedElementNameHandler.Args> {
@@ -33,7 +33,7 @@ public abstract class UpdateNamedElementNameHandler<T extends NamedElement>
 
    @Override
    protected CCommand createCommand(final UpdateOperation operation, final T element, final Args args) {
-      return RenameElementContribution.create(element, args.name);
+      return UmlRenameElementContribution.create(element, args.name);
    }
 
 }

@@ -12,9 +12,6 @@ package com.eclipsesource.uml.modelserver.uml.diagram.package_diagram.manifest;
 
 import com.eclipsesource.uml.modelserver.core.manifest.DiagramManifest;
 import com.eclipsesource.uml.modelserver.core.manifest.contributions.CommandCodecContribution;
-import com.eclipsesource.uml.modelserver.uml.diagram.package_diagram.commands.uclass.CreateClassContribution;
-import com.eclipsesource.uml.modelserver.uml.diagram.package_diagram.commands.uclass.DeleteClassContribution;
-import com.eclipsesource.uml.modelserver.uml.diagram.package_diagram.commands.uclass.UpdateClassContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.package_diagram.commands.dependency.CreateDependencyContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.package_diagram.commands.dependency.DeleteDependencyContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.package_diagram.commands.dependency.UpdateDependencyContribution;
@@ -27,11 +24,20 @@ import com.eclipsesource.uml.modelserver.uml.diagram.package_diagram.commands.pa
 import com.eclipsesource.uml.modelserver.uml.diagram.package_diagram.commands.package_merge.CreatePackageMergeContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.package_diagram.commands.package_merge.DeletePackageMergeContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.package_diagram.commands.package_merge.UpdatePackageMergeContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.package_diagram.commands.uclass.CreateClassContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.package_diagram.commands.uclass.DeleteClassContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.package_diagram.commands.uclass.UpdateClassContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.package_diagram.commands.upackage.CreatePackageContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.package_diagram.commands.upackage.DeletePackageContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.package_diagram.commands.upackage.UpdatePackageContribution;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
 
 public class PackageManifest extends DiagramManifest implements CommandCodecContribution {
+
+   public PackageManifest() {
+      super(Representation.PACKAGE);
+   }
+
    @Override
    protected void configure() {
       super.configure();

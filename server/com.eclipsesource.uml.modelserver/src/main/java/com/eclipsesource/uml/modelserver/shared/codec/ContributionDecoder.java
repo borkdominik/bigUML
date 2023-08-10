@@ -21,11 +21,13 @@ import com.eclipsesource.uml.modelserver.shared.codec.codecs.EmbeddedCodec;
 import com.eclipsesource.uml.modelserver.shared.codec.codecs.ExtraCodec;
 import com.eclipsesource.uml.modelserver.shared.codec.codecs.ParentCodec;
 import com.eclipsesource.uml.modelserver.shared.codec.codecs.PositionCodec;
+import com.eclipsesource.uml.modelserver.shared.codec.codecs.TypeCodec;
 import com.eclipsesource.uml.modelserver.shared.codec.decoder.BaseDecoder;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 
 public final class ContributionDecoder extends BaseDecoder
-   implements PositionCodec.Decoder, ParentCodec.Decoder, ExtraCodec.Decoder, ElementCodec.Decoder, EdgeCodec.Decoder,
+   implements TypeCodec.Decoder, PositionCodec.Decoder, ParentCodec.Decoder, ExtraCodec.Decoder, ElementCodec.Decoder,
+   EdgeCodec.Decoder,
    DimensionCodec.Decoder, EmbeddedCodec.Decoder {
 
    public ContributionDecoder(final ModelContext context) {
@@ -37,6 +39,7 @@ public final class ContributionDecoder extends BaseDecoder
    }
 
    public ContributionDecoder with(final CCommand command) {
-      return new ContributionDecoder(ModelContext.of(context.uri, context.domain, command));
+      return new ContributionDecoder(
+         ModelContext.of(context.uri, context.domain, command, context.injector.orElse(null)));
    }
 }

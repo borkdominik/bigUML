@@ -16,13 +16,15 @@ import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 import org.eclipse.glsp.server.types.GLSPServerException;
 
+import com.eclipsesource.uml.glsp.core.handler.operation.create.DiagramCreateEdgeHandler;
 import com.eclipsesource.uml.glsp.core.model.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
-import com.eclipsesource.uml.glsp.core.utils.reflection.GenericsUtil;
+import com.eclipsesource.uml.modelserver.shared.utils.reflection.GenericsUtil;
 import com.google.inject.Inject;
 
-public abstract class BaseCreateEdgeHandler<S, T>
-   extends BaseCreateHandler<CreateEdgeOperation> {
+public abstract class BaseCreateEdgeHandler<S, T> implements DiagramCreateEdgeHandler {
+   protected final String elementTypeId;
+
    protected final Class<S> sourceType;
    protected final Class<T> targetType;
 
@@ -33,14 +35,17 @@ public abstract class BaseCreateEdgeHandler<S, T>
    protected UmlModelState modelState;
 
    public BaseCreateEdgeHandler(final String typeId) {
-      super(typeId);
+      this.elementTypeId = typeId;
 
       sourceType = GenericsUtil.getClassParameter(getClass(), BaseCreateEdgeHandler.class, 0);
       targetType = GenericsUtil.getClassParameter(getClass(), BaseCreateEdgeHandler.class, 1);
    }
 
    @Override
-   public void execute(final CreateEdgeOperation operation) {
+   public String getElementTypeId() { return elementTypeId; }
+
+   @Override
+   public void handleCreateEdge(final CreateEdgeOperation operation) {
       var sourceId = operation.getSourceElementId();
       var targetId = operation.getTargetElementId();
 

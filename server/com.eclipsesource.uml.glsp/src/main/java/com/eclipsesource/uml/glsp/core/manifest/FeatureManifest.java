@@ -10,8 +10,8 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.core.manifest;
 
-import com.eclipsesource.uml.glsp.core.manifest.contributions.ContributionBinderSupplier;
-import com.eclipsesource.uml.glsp.core.manifest.contributions.ContributionIdSupplier;
+import com.eclipsesource.uml.modelserver.shared.manifest.supplier.ContributionBinderSupplier;
+import com.eclipsesource.uml.modelserver.shared.manifest.supplier.ContributionIdSupplier;
 import com.google.inject.AbstractModule;
 import com.google.inject.Binder;
 

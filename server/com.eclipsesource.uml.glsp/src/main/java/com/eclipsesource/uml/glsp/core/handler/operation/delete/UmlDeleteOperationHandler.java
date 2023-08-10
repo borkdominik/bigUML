@@ -17,8 +17,8 @@ import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSOperationHan
 import org.eclipse.glsp.server.operations.DeleteOperation;
 import org.eclipse.glsp.server.types.GLSPServerException;
 
-import com.eclipsesource.uml.glsp.core.common.RepresentationKey;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
+import com.eclipsesource.uml.modelserver.shared.registry.RepresentationKey;
 import com.google.inject.Inject;
 
 public class UmlDeleteOperationHandler extends EMSOperationHandler<DeleteOperation> {
@@ -46,7 +46,7 @@ public class UmlDeleteOperationHandler extends EMSOperationHandler<DeleteOperati
                   return new GLSPServerException(
                      "No delete handler found for class " + semanticElement.getClass().getName());
                })
-            .handle(semanticElement);
+            .handleDelete(semanticElement);
       });
 
       // printContent();

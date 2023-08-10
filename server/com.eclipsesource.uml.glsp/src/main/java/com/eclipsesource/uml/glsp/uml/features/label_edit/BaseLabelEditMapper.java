@@ -22,8 +22,8 @@ import com.eclipsesource.uml.glsp.core.handler.operation.update.DiagramUpdateHan
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateHandlerOperationMapper;
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
-import com.eclipsesource.uml.glsp.core.utils.reflection.GenericsUtil;
 import com.eclipsesource.uml.glsp.features.property_palette.manifest.PropertyPaletteFeatureManifest;
+import com.eclipsesource.uml.modelserver.shared.utils.reflection.GenericsUtil;
 import com.google.inject.Inject;
 
 public abstract class BaseLabelEditMapper<TElement extends EObject>
@@ -49,7 +49,7 @@ public abstract class BaseLabelEditMapper<TElement extends EObject>
    @Override
    public Class<TElement> getElementType() { return elementType; }
 
-   protected <THandler extends DiagramUpdateHandler<TElement, TUpdateArgument>, TUpdateArgument> UpdateHandlerOperationMapper.Prepared<THandler, TElement, TUpdateArgument> getHandler(
+   protected <THandler extends DiagramUpdateHandler<TElement>, TUpdateArgument> UpdateHandlerOperationMapper.Prepared<THandler, TElement, TUpdateArgument> getHandler(
       final Class<THandler> handlerType, final ApplyLabelEditOperation operation) {
       return handlerMapper.prepare(handlerType, labelExtractor.extractElement(operation, this.elementType));
    }

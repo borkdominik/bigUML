@@ -21,11 +21,11 @@ import com.eclipsesource.uml.glsp.core.handler.operation.update.DiagramUpdateHan
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateHandlerOperationMapper;
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
-import com.eclipsesource.uml.glsp.core.utils.reflection.GenericsUtil;
 import com.eclipsesource.uml.glsp.features.property_palette.handler.action.UpdateElementPropertyAction;
 import com.eclipsesource.uml.glsp.features.property_palette.manifest.PropertyPaletteFeatureManifest;
 import com.eclipsesource.uml.glsp.features.property_palette.mapper.DiagramElementPropertyMapper;
 import com.eclipsesource.uml.glsp.features.property_palette.model.ElementPropertyBuilder;
+import com.eclipsesource.uml.modelserver.shared.utils.reflection.GenericsUtil;
 import com.google.gson.Gson;
 import com.google.inject.Inject;
 
@@ -60,7 +60,7 @@ public abstract class BaseDiagramElementPropertyMapper<TElement extends EObject>
       return new ElementPropertyBuilder<>(elementId);
    }
 
-   protected <THandler extends DiagramUpdateHandler<TElement, TUpdateArgument>, TUpdateArgument> UpdateHandlerOperationMapper.Prepared<THandler, TElement, TUpdateArgument> getHandler(
+   protected <THandler extends DiagramUpdateHandler<TElement>, TUpdateArgument> UpdateHandlerOperationMapper.Prepared<THandler, TElement, TUpdateArgument> getHandler(
       final Class<THandler> handlerType, final UpdateElementPropertyAction action) {
       return handlerMapper.prepare(handlerType, getElement(action));
    }

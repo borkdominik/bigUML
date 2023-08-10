@@ -15,9 +15,9 @@ import java.util.Optional;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.server.emf.model.notation.NotationElement;
 
-import com.eclipsesource.uml.modelserver.core.utils.reflection.GenericsUtil;
 import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
+import com.eclipsesource.uml.modelserver.shared.utils.reflection.GenericsUtil;
 
 public abstract class BaseNotationExistenceCheckedCommand<TSemantic extends EObject, TNotation extends NotationElement>
    extends BaseNotationElementCommand {

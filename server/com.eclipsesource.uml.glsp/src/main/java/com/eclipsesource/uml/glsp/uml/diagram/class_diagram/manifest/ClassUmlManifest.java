@@ -235,31 +235,35 @@ public final class ClassUmlManifest extends DiagramManifest
          contribution.addBinding().to(RequestTypeInformationHandler.class);
       });
 
-      contributeDiagramCreateHandlers((contribution) -> {
-         contribution.addBinding().to(CreateAbstractionHandler.class);
+      contributeDiagramCreateNodeHandlers((contribution) -> {
          contribution.addBinding().to(CreateAbstractClassHandler.class);
-         contribution.addBinding().to(CreateAggregationHandler.class);
-         contribution.addBinding().to(CreateAssociationHandler.class);
          contribution.addBinding().to(CreateClassHandler.class);
-         contribution.addBinding().to(CreateCompositionHandler.class);
          contribution.addBinding().to(CreateDataTypeHandler.class);
-         contribution.addBinding().to(CreateDependencyHandler.class);
          contribution.addBinding().to(CreateEnumerationHandler.class);
          contribution.addBinding().to(CreateEnumerationLiteralHandler.class);
-         contribution.addBinding().to(CreateGeneralizationHandler.class);
          contribution.addBinding().to(CreateInterfaceHandler.class);
-         contribution.addBinding().to(CreateInterfaceRealizationHandler.class);
          contribution.addBinding().to(CreateOperationHandler.class);
          contribution.addBinding().to(CreatePackageHandler.class);
-         contribution.addBinding().to(CreatePackageImportHandler.class);
-         contribution.addBinding().to(CreatePackageMergeHandler.class);
          contribution.addBinding().to(CreateParameterHandler.class);
          contribution.addBinding().to(CreatePrimitiveTypeHandler.class);
          contribution.addBinding().to(CreatePropertyHandler.class);
+      });
+
+      contributeDiagramCreateEdgeHandlers((contribution) -> {
+         contribution.addBinding().to(CreateAbstractionHandler.class);
+         contribution.addBinding().to(CreateAggregationHandler.class);
+         contribution.addBinding().to(CreateAssociationHandler.class);
+         contribution.addBinding().to(CreateCompositionHandler.class);
+         contribution.addBinding().to(CreateDependencyHandler.class);
+         contribution.addBinding().to(CreateGeneralizationHandler.class);
+         contribution.addBinding().to(CreateInterfaceRealizationHandler.class);
+         contribution.addBinding().to(CreatePackageImportHandler.class);
+         contribution.addBinding().to(CreatePackageMergeHandler.class);
          contribution.addBinding().to(CreateRealizationHandler.class);
          contribution.addBinding().to(CreateSubstitutionHandler.class);
          contribution.addBinding().to(CreateUsageHandler.class);
       });
+
       contributeDiagramDeleteHandlers((contribution) -> {
          contribution.addBinding().to(DeleteAbstractionHandler.class);
          contribution.addBinding().to(DeleteAssociationHandler.class);

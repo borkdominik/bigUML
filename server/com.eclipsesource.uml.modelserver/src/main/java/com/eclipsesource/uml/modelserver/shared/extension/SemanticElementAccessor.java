@@ -51,7 +51,13 @@ public final class SemanticElementAccessor {
 
    public <C> Optional<C> getElement(final String semanticElementId,
       final Class<C> clazz) {
-      return getElement(semanticElementId).map(element -> clazz.cast(element));
+      return getElement(semanticElementId).map(element -> {
+         if (clazz.isAssignableFrom(element.getClass())) {
+            return clazz.cast(element);
+         }
+
+         return null;
+      });
    }
 
    public <T> List<T> getElements(
@@ -63,7 +69,7 @@ public final class SemanticElementAccessor {
    public <T> List<T> getElements(
       final List<String> semanticElementIds,
       final Class<T> type) {
-      return this.getElements(new HashSet<String>(semanticElementIds), type);
+      return this.getElements(new HashSet<>(semanticElementIds), type);
    }
 
    public <T> List<T> getElements(

@@ -14,7 +14,7 @@ import java.util.function.Consumer;
 
 import org.eclipse.glsp.server.actions.ActionHandler;
 
-import com.eclipsesource.uml.glsp.core.manifest.contributions.ContributionBinderSupplier;
+import com.eclipsesource.uml.modelserver.shared.manifest.supplier.ContributionBinderSupplier;
 import com.google.inject.multibindings.Multibinder;
 
 public interface ActionHandlerContribution extends ContributionBinderSupplier {

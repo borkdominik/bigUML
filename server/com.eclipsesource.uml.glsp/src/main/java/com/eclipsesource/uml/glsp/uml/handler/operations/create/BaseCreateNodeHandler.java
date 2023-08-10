@@ -14,20 +14,25 @@ import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.types.GLSPServerException;
 
+import com.eclipsesource.uml.glsp.core.handler.operation.create.DiagramCreateNodeHandler;
 import com.eclipsesource.uml.glsp.core.model.UmlModelServerAccess;
 import com.google.inject.Inject;
 
-public abstract class BaseCreateNodeHandler extends BaseCreateHandler<CreateNodeOperation> {
+public abstract class BaseCreateNodeHandler implements DiagramCreateNodeHandler {
+   protected final String elementTypeId;
 
    @Inject
    protected UmlModelServerAccess modelServerAccess;
 
    public BaseCreateNodeHandler(final String typeId) {
-      super(typeId);
+      this.elementTypeId = typeId;
    }
 
    @Override
-   public void execute(final CreateNodeOperation operation) {
+   public String getElementTypeId() { return elementTypeId; }
+
+   @Override
+   public void handleCreateNode(final CreateNodeOperation operation) {
       var command = createCommand(operation);
       modelServerAccess.exec(command)
          .thenAccept(response -> {

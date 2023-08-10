@@ -16,9 +16,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSOperationHandler;
 import org.eclipse.glsp.server.types.GLSPServerException;
 
-import com.eclipsesource.uml.glsp.core.common.DoubleKey;
-import com.eclipsesource.uml.glsp.core.common.RepresentationKey;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
+import com.eclipsesource.uml.modelserver.shared.registry.RepresentationKey;
 import com.google.inject.Inject;
 
 public class UmlUpdateOperationHandler
@@ -35,23 +34,21 @@ public class UmlUpdateOperationHandler
       var representation = modelState.getUnsafeRepresentation();
 
       var elementId = operation.getElementId();
-      var contextId = operation.getContextId();
 
       var semanticElement = getOrThrow(modelState.getIndex().getEObject(elementId),
          EObject.class,
          "Could not find semantic element for id '" + elementId + "', no update operation executed.");
 
-      var handler = registry
-         .get(RepresentationKey.of(representation, DoubleKey.of(semanticElement.getClass(), contextId)));
+      var handler = registry.get(RepresentationKey.of(representation, semanticElement.getClass()));
 
       handler
-         .orElseThrow(() -> {
-            registry.printContent();
-            return new GLSPServerException(
-               "No handler found for element class " + semanticElement.getClass().getName() + " with contextId "
-                  + contextId + " for elementId " + elementId);
-         })
-         .handle(operation);
+         .orElseThrow(
+            () -> {
+               registry.printContent();
+               return new GLSPServerException(
+                  "No update handler found for class " + semanticElement.getClass().getName());
+            })
+         .handleUpdate(operation, semanticElement);
    }
 
    @Override

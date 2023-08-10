@@ -10,8 +10,6 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.handler.operations.update;
 
-import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
-
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.glsp.server.types.GLSPServerException;
@@ -20,12 +18,12 @@ import com.eclipsesource.uml.glsp.core.handler.operation.update.DiagramUpdateHan
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
 import com.eclipsesource.uml.glsp.core.model.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
-import com.eclipsesource.uml.glsp.core.utils.reflection.GenericsUtil;
+import com.eclipsesource.uml.modelserver.shared.utils.reflection.GenericsUtil;
 import com.google.gson.Gson;
 import com.google.inject.Inject;
 
 public abstract class BaseUpdateElementHandler<TElementType extends EObject, TUpdateArgument>
-   implements DiagramUpdateHandler<TElementType, TUpdateArgument> {
+   implements DiagramUpdateHandler<TElementType> {
    protected final Class<TElementType> elementType;
    protected final Class<TUpdateArgument> updateArgumentType;
 
@@ -51,24 +49,10 @@ public abstract class BaseUpdateElementHandler<TElementType extends EObject, TUp
    public Class<TElementType> getElementType() { return elementType; }
 
    @Override
-   public Class<TUpdateArgument> getUpdateArgumentType() { return updateArgumentType; }
-
-   @Override
-   public String contextId() {
-      return contextId;
-   }
-
-   @Override
-   public void handle(final UpdateOperation operation) {
-      var elementId = operation.getElementId();
-
-      TElementType semanticElement = getOrThrow(modelState.getIndex().getEObject(elementId),
-         elementType,
-         "Could not find semantic element for id '" + elementId + "'.");
-
+   public void handleUpdate(final UpdateOperation operation, final TElementType element) {
       TUpdateArgument updateArgument = gson.fromJson(gson.toJsonTree(operation.getArgs()), this.updateArgumentType);
 
-      var command = createCommand(operation, semanticElement, updateArgument);
+      var command = createCommand(operation, element, updateArgument);
       modelServerAccess.exec(command)
          .thenAccept(response -> {
             if (response.body() == null || response.body().isEmpty()) {
@@ -77,5 +61,6 @@ public abstract class BaseUpdateElementHandler<TElementType extends EObject, TUp
          });
    }
 
-   protected abstract CCommand createCommand(UpdateOperation operation, TElementType element, TUpdateArgument updateArgument);
+   protected abstract CCommand createCommand(UpdateOperation operation, TElementType element,
+      TUpdateArgument updateArgument);
 }

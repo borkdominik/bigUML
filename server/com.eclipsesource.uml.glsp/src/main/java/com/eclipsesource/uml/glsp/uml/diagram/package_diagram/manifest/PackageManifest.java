@@ -17,24 +17,21 @@ import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramLab
 import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramUpdateHandlerContribution;
 import com.eclipsesource.uml.glsp.features.property_palette.manifest.contributions.DiagramElementPropertyMapperContribution;
 import com.eclipsesource.uml.glsp.uml.diagram.package_diagram.diagram.UmlPackage_Class;
-import com.eclipsesource.uml.glsp.uml.diagram.package_diagram.features.label_edit.ClassLabelEditMapper;
-import com.eclipsesource.uml.glsp.uml.diagram.package_diagram.features.property_palette.ClassPropertyMapper;
-import com.eclipsesource.uml.glsp.uml.diagram.package_diagram.gmodel.ClassNodeMapper;
-import com.eclipsesource.uml.glsp.uml.diagram.package_diagram.handler.operation.uclass.CreateClassHandler;
-import com.eclipsesource.uml.glsp.uml.diagram.package_diagram.handler.operation.uclass.DeleteClassHandler;
-import com.eclipsesource.uml.glsp.uml.diagram.package_diagram.handler.operation.uclass.UpdateClassHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.package_diagram.diagram.UmlPackage_Dependency;
 import com.eclipsesource.uml.glsp.uml.diagram.package_diagram.diagram.UmlPackage_ElementImport;
 import com.eclipsesource.uml.glsp.uml.diagram.package_diagram.diagram.UmlPackage_Package;
 import com.eclipsesource.uml.glsp.uml.diagram.package_diagram.diagram.UmlPackage_PackageImport;
 import com.eclipsesource.uml.glsp.uml.diagram.package_diagram.diagram.UmlPackage_PackageMerge;
+import com.eclipsesource.uml.glsp.uml.diagram.package_diagram.features.label_edit.ClassLabelEditMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.package_diagram.features.label_edit.PackageLabelEditMapper;
+import com.eclipsesource.uml.glsp.uml.diagram.package_diagram.features.property_palette.ClassPropertyMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.package_diagram.features.property_palette.DependencyPropertyMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.package_diagram.features.property_palette.ElementImportPropertyMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.package_diagram.features.property_palette.PackageImportPropertyMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.package_diagram.features.property_palette.PackageMergePropertyMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.package_diagram.features.property_palette.PackagePropertyMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.package_diagram.features.tool_palette.PackageToolPaletteConfiguration;
+import com.eclipsesource.uml.glsp.uml.diagram.package_diagram.gmodel.ClassNodeMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.package_diagram.gmodel.DependencyEdgeMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.package_diagram.gmodel.ElementImportEdgeMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.package_diagram.gmodel.PackageImportEdgeMapper;
@@ -52,6 +49,9 @@ import com.eclipsesource.uml.glsp.uml.diagram.package_diagram.handler.operation.
 import com.eclipsesource.uml.glsp.uml.diagram.package_diagram.handler.operation.package_merge.CreatePackageMergeHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.package_diagram.handler.operation.package_merge.DeletePackageMergeHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.package_diagram.handler.operation.package_merge.UpdatePackageMergeHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.package_diagram.handler.operation.uclass.CreateClassHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.package_diagram.handler.operation.uclass.DeleteClassHandler;
+import com.eclipsesource.uml.glsp.uml.diagram.package_diagram.handler.operation.uclass.UpdateClassHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.package_diagram.handler.operation.upackage.CreatePackageHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.package_diagram.handler.operation.upackage.DeletePackageHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.package_diagram.handler.operation.upackage.UpdatePackageHandler;
@@ -99,14 +99,18 @@ public class PackageManifest extends DiagramManifest
          contributions.addBinding().to(PackageMergeEdgeMapper.class);
       });
 
-      contributeDiagramCreateHandlers((contribution) -> {
+      contributeDiagramCreateNodeHandlers((contribution) -> {
          contribution.addBinding().to(CreateClassHandler.class);
-         contribution.addBinding().to(CreateDependencyHandler.class);
          contribution.addBinding().to(CreatePackageHandler.class);
+      });
+
+      contributeDiagramCreateEdgeHandlers((contribution) -> {
+         contribution.addBinding().to(CreateDependencyHandler.class);
          contribution.addBinding().to(CreateElementImportHandler.class);
          contribution.addBinding().to(CreatePackageImportHandler.class);
          contribution.addBinding().to(CreatePackageMergeHandler.class);
       });
+
       contributeDiagramUpdateHandlers((contribution) -> {
          contribution.addBinding().to(UpdateClassHandler.class);
          contribution.addBinding().to(UpdateDependencyHandler.class);

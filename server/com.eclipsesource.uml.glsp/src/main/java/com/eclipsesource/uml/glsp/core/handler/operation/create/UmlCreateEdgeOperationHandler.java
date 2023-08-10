@@ -14,14 +14,14 @@ import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSOperationHan
 import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 import org.eclipse.glsp.server.types.GLSPServerException;
 
-import com.eclipsesource.uml.glsp.core.common.RepresentationKey;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
+import com.eclipsesource.uml.modelserver.shared.registry.RepresentationKey;
 import com.google.inject.Inject;
 
 public class UmlCreateEdgeOperationHandler extends EMSOperationHandler<CreateEdgeOperation> {
 
    @Inject
-   protected DiagramCreateHandlerRegistry registry;
+   protected DiagramCreateEdgeHandlerRegistry registry;
    @Inject
    protected UmlModelState modelState;
 
@@ -38,7 +38,7 @@ public class UmlCreateEdgeOperationHandler extends EMSOperationHandler<CreateEdg
                return new GLSPServerException(
                   "No create edge handler found for element " + operation.getElementTypeId());
             })
-         .handle(operation);
+         .handleCreateEdge(operation);
    }
 
    @Override

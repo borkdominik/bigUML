@@ -17,6 +17,7 @@ import com.eclipsesource.uml.modelserver.shared.codec.codecs.EmbeddedCodec;
 import com.eclipsesource.uml.modelserver.shared.codec.codecs.ExtraCodec;
 import com.eclipsesource.uml.modelserver.shared.codec.codecs.ParentCodec;
 import com.eclipsesource.uml.modelserver.shared.codec.codecs.PositionCodec;
+import com.eclipsesource.uml.modelserver.shared.codec.codecs.RepresentationCodec;
 import com.eclipsesource.uml.modelserver.shared.codec.codecs.TypeCodec;
 import com.eclipsesource.uml.modelserver.shared.codec.encoder.BaseEncoder;
 
@@ -24,4 +25,5 @@ public final class ContributionEncoder extends BaseEncoder
    implements TypeCodec.Encoder<ContributionEncoder>, PositionCodec.Encoder<ContributionEncoder>,
    ParentCodec.Encoder<ContributionEncoder>, ExtraCodec.Encoder<ContributionEncoder>,
    ElementCodec.Encoder<ContributionEncoder>, EdgeCodec.Encoder<ContributionEncoder>,
-   DimensionCodec.Encoder<ContributionEncoder>, EmbeddedCodec.Encoder<ContributionEncoder> {}
+   DimensionCodec.Encoder<ContributionEncoder>, EmbeddedCodec.Encoder<ContributionEncoder>,
+   RepresentationCodec.Encoder<ContributionEncoder> {}

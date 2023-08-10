@@ -16,9 +16,9 @@ import java.util.function.Consumer;
 import org.eclipse.emf.ecore.EObject;
 
 import com.eclipsesource.uml.glsp.core.handler.operation.update.DiagramUpdateHandler;
-import com.eclipsesource.uml.glsp.core.manifest.contributions.ContributionBinderSupplier;
-import com.eclipsesource.uml.glsp.core.manifest.contributions.ContributionIdSupplier;
-import com.eclipsesource.uml.glsp.core.manifest.contributions.ContributionRepresentationSupplier;
+import com.eclipsesource.uml.modelserver.shared.manifest.supplier.ContributionBinderSupplier;
+import com.eclipsesource.uml.modelserver.shared.manifest.supplier.ContributionIdSupplier;
+import com.eclipsesource.uml.modelserver.shared.manifest.supplier.ContributionRepresentationSupplier;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Key;
 import com.google.inject.TypeLiteral;
@@ -29,18 +29,18 @@ public interface DiagramUpdateHandlerContribution
    extends ContributionBinderSupplier, ContributionIdSupplier, ContributionRepresentationSupplier {
 
    default void contributeDiagramUpdateHandlers(
-      final Consumer<Multibinder<DiagramUpdateHandler<? extends EObject, ?>>> consumer) {
+      final Consumer<Multibinder<DiagramUpdateHandler<? extends EObject>>> consumer) {
       var binder = contributionBinder();
 
       var multibinder = Multibinder.newSetBinder(binder,
-         new TypeLiteral<DiagramUpdateHandler<? extends EObject, ?>>() {},
+         new TypeLiteral<DiagramUpdateHandler<? extends EObject>>() {},
          idNamed());
 
       consumer.accept(multibinder);
 
       MapBinder.newMapBinder(binder, new TypeLiteral<Representation>() {},
-         new TypeLiteral<Set<DiagramUpdateHandler<? extends EObject, ?>>>() {})
+         new TypeLiteral<Set<DiagramUpdateHandler<? extends EObject>>>() {})
          .addBinding(representation())
-         .to(Key.get(new TypeLiteral<Set<DiagramUpdateHandler<? extends EObject, ?>>>() {}, idNamed()));
+         .to(Key.get(new TypeLiteral<Set<DiagramUpdateHandler<? extends EObject>>>() {}, idNamed()));
    }
 }

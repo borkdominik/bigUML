@@ -21,9 +21,15 @@ import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.comma
 import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.message.CreateMessageContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.message.DeleteMessageContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.commands.message.RenameMessageContribution;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.multibindings.MapBinder;
 
 public final class CommunicationManifest extends DiagramManifest implements CommandCodecContribution {
+
+   public CommunicationManifest() {
+      super(Representation.COMMUNICATION);
+   }
+
    @Override
    protected void configure() {
       super.configure();

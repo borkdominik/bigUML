@@ -74,9 +74,15 @@ import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.upac
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.usage.CreateUsageContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.usage.DeleteUsageContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.commands.usage.UpdateUsageContribution;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.multibindings.MapBinder;
 
 public final class ClassManifest extends DiagramManifest implements CommandCodecContribution {
+
+   public ClassManifest() {
+      super(Representation.CLASS);
+   }
+
    @Override
    protected void configure() {
       super.configure();

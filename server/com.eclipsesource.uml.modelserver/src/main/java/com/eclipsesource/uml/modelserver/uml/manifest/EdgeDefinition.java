@@ -24,7 +24,8 @@ import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.multibindings.Multibinder;
 
 public abstract class EdgeDefinition extends ElementDefinition implements CreateCommandProviderContribution,
-   DeleteCommandProviderContribution, UpdateCommandProviderContribution, CrossReferenceRemoveProcessorContribution {
+   DeleteCommandProviderContribution, UpdateCommandProviderContribution,
+   CrossReferenceRemoveProcessorContribution {
 
    public EdgeDefinition(final String id, final Representation representation) {
       super(id, representation);
@@ -51,4 +52,5 @@ public abstract class EdgeDefinition extends ElementDefinition implements Create
 
    protected abstract void crossReferenceRemoverProcessors(
       final Multibinder<CrossReferenceRemoveProcessor<? extends EObject>> contributions);
+
 }

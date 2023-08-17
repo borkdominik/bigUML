@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2023 EclipseSource and others.
+ * Copyright (c) 2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -10,13 +10,17 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.elements.property.commands;
 
+import java.util.List;
+
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Type;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.BaseUpdateSemanticElementCommand;
+import com.eclipsesource.uml.modelserver.uml.elements.named_element.UpdateNamedElementSemanticCommand;
 
-public class UpdatePropertySemanticCommand extends BaseUpdateSemanticElementCommand<Property, UpdatePropertyArgument> {
+public class UpdatePropertySemanticCommand
+   extends BaseUpdateSemanticElementCommand<Property, UpdatePropertyArgument> {
 
    public UpdatePropertySemanticCommand(final ModelContext context, final Property semanticElement,
       final UpdatePropertyArgument updateArgument) {
@@ -25,8 +29,34 @@ public class UpdatePropertySemanticCommand extends BaseUpdateSemanticElementComm
 
    @Override
    protected void updateSemanticElement(final Property semanticElement, final UpdatePropertyArgument updateArgument) {
-      updateArgument.name().ifPresent(arg -> {
-         semanticElement.setName(arg);
+      include(List.of(new UpdateNamedElementSemanticCommand(context, semanticElement, updateArgument)));
+
+      updateArgument.isDerived().ifPresent(arg -> {
+         semanticElement.setIsDerived(arg);
+      });
+
+      updateArgument.isOrdered().ifPresent(arg -> {
+         semanticElement.setIsOrdered(arg);
+      });
+
+      updateArgument.isStatic().ifPresent(arg -> {
+         semanticElement.setIsStatic(arg);
+      });
+
+      updateArgument.isDerivedUnion().ifPresent(arg -> {
+         semanticElement.setIsDerivedUnion(arg);
+      });
+
+      updateArgument.isReadOnly().ifPresent(arg -> {
+         semanticElement.setIsReadOnly(arg);
+      });
+
+      updateArgument.isUnique().ifPresent(arg -> {
+         semanticElement.setIsUnique(arg);
+      });
+
+      updateArgument.isNavigable().ifPresent(arg -> {
+         semanticElement.setIsNavigable(arg);
       });
 
       updateArgument.typeId().ifPresent(arg -> {
@@ -43,8 +73,9 @@ public class UpdatePropertySemanticCommand extends BaseUpdateSemanticElementComm
          semanticElement.setUpper(arg);
       });
 
-      updateArgument.defaultValue().ifPresent(arg -> {
-         semanticElement.setDefaultValue(arg);
+      updateArgument.aggregation().ifPresent(arg -> {
+         semanticElement.setAggregation(arg);
       });
    }
+
 }

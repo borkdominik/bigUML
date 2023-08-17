@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2023 EclipseSource and others.
+ * Copyright (c) 2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -19,7 +19,7 @@ import com.eclipsesource.uml.modelserver.shared.semantic.BaseCreateSemanticChild
 import com.eclipsesource.uml.modelserver.uml.generator.ListNameGenerator;
 import com.eclipsesource.uml.modelserver.uml.util.PropertyUtil;
 
-public class CreatePropertySemanticCommand extends BaseCreateSemanticChildCommand<AttributeOwner, Property> {
+public final class CreatePropertySemanticCommand extends BaseCreateSemanticChildCommand<AttributeOwner, Property> {
 
    protected final Type defaultType;
 
@@ -34,7 +34,10 @@ public class CreatePropertySemanticCommand extends BaseCreateSemanticChildComman
       var nameGenerator = new ListNameGenerator(Property.class, parent.getOwnedAttributes());
 
       var property = parent.createOwnedAttribute(nameGenerator.newName(), defaultType);
+      property.setLower(1);
+      property.setUpper(1);
 
       return property;
    }
+
 }

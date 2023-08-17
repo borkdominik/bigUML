@@ -31,7 +31,8 @@ public interface UpdateCommandProviderContribution
       final Consumer<Multibinder<UpdateCommandProvider<? extends EObject>>> consumer) {
       var binder = contributionBinder();
 
-      var multibinder = Multibinder.newSetBinder(binder, new TypeLiteral<UpdateCommandProvider<? extends EObject>>() {},
+      var multibinder = Multibinder.newSetBinder(binder,
+         new TypeLiteral<UpdateCommandProvider<? extends EObject>>() {},
          idNamed());
 
       consumer.accept(multibinder);

@@ -10,10 +10,13 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.elements.actor.commands;
 
+import java.util.List;
+
 import org.eclipse.uml2.uml.Actor;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.BaseUpdateSemanticElementCommand;
+import com.eclipsesource.uml.modelserver.uml.elements.classifier.UpdateClassifierSemanticCommand;
 
 public class UpdateActorSemanticCommand extends BaseUpdateSemanticElementCommand<Actor, UpdateActorArgument> {
 
@@ -25,16 +28,6 @@ public class UpdateActorSemanticCommand extends BaseUpdateSemanticElementCommand
    @Override
    protected void updateSemanticElement(final Actor semanticElement,
       final UpdateActorArgument updateArgument) {
-      updateArgument.name().ifPresent(arg -> {
-         semanticElement.setName(arg);
-      });
-
-      updateArgument.label().ifPresent(arg -> {
-         throw new UnsupportedOperationException();
-      });
-
-      updateArgument.isAbstract().ifPresent(arg -> {
-         semanticElement.setIsAbstract(arg);
-      });
+      include(List.of(new UpdateClassifierSemanticCommand(context, semanticElement, updateArgument)));
    }
 }

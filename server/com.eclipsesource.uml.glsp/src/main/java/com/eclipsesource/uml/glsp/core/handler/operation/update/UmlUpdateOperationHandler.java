@@ -39,15 +39,7 @@ public class UmlUpdateOperationHandler
          EObject.class,
          "Could not find semantic element for id '" + elementId + "', no update operation executed.");
 
-      var handler = registry.get(RepresentationKey.of(representation, semanticElement.getClass()));
-
-      handler
-         .orElseThrow(
-            () -> {
-               registry.printContent();
-               return new GLSPServerException(
-                  "No update handler found for class " + semanticElement.getClass().getName());
-            })
+      registry.access(RepresentationKey.of(representation, semanticElement.getClass()))
          .handleUpdate(operation, semanticElement);
    }
 

@@ -17,7 +17,7 @@ import org.eclipse.uml2.uml.Component;
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
 import com.eclipsesource.uml.glsp.features.property_palette.handler.action.UpdateElementPropertyAction;
 import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalette;
-import com.eclipsesource.uml.glsp.uml.elements.subject.SubjectDefaultHandler;
+import com.eclipsesource.uml.glsp.uml.elements.subject.SubjectOperationHandler;
 import com.eclipsesource.uml.glsp.uml.elements.subject.SubjectConfiguration;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.BaseDiagramElementPropertyMapper;
 import com.eclipsesource.uml.modelserver.uml.elements.subject.commands.UpdateSubjectArgument;
@@ -38,15 +38,15 @@ public class SubjectPropertyMapper extends BaseDiagramElementPropertyMapper<Comp
    @Override
    public Optional<UpdateOperation> map(final UpdateElementPropertyAction action) {
       var property = getProperty(SubjectConfiguration.Property.class, action);
-      var handler = getHandler(SubjectDefaultHandler.class, action);
+      var handler = getHandler(SubjectOperationHandler.class, action);
       UpdateOperation operation = null;
 
       switch (property) {
          case NAME:
             operation = handler.withArgument(
-               new UpdateSubjectArgument.Builder()
+               UpdateSubjectArgument.by()
                   .name(action.getValue())
-                  .get());
+                  .build());
             break;
       }
 

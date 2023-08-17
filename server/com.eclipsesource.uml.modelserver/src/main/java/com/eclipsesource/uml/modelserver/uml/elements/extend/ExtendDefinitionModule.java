@@ -10,36 +10,27 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.elements.extend;
 
+import java.util.Optional;
+
 import org.eclipse.emf.ecore.EObject;
 
 import com.eclipsesource.uml.modelserver.core.manifest.DiagramManifest;
-import com.eclipsesource.uml.modelserver.uml.command.create.CreateCommandProvider;
-import com.eclipsesource.uml.modelserver.uml.command.delete.DeleteCommandProvider;
-import com.eclipsesource.uml.modelserver.uml.command.update.UpdateCommandProvider;
+import com.eclipsesource.uml.modelserver.uml.command.EdgeCommandProvider;
 import com.eclipsesource.uml.modelserver.uml.elements.extend.reference.ExtendReferenceRemover;
-import com.eclipsesource.uml.modelserver.uml.manifest.EdgeDefinition;
+import com.eclipsesource.uml.modelserver.uml.manifest.EdgeCommandProviderDefinition;
 import com.eclipsesource.uml.modelserver.uml.reference.CrossReferenceRemoveProcessor;
+import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.Multibinder;
 
-public class ExtendDefinitionModule extends EdgeDefinition {
+public class ExtendDefinitionModule extends EdgeCommandProviderDefinition {
 
    public ExtendDefinitionModule(final DiagramManifest manifest) {
       super(manifest.id(), manifest.representation());
    }
 
    @Override
-   protected void createCommandProvider(final Multibinder<CreateCommandProvider<? extends EObject>> contributions) {
-      contributions.addBinding().to(ExtendDefaultCommandProvider.class);
-   }
-
-   @Override
-   protected void deleteCommandProvider(final Multibinder<DeleteCommandProvider<? extends EObject>> contributions) {
-      contributions.addBinding().to(ExtendDefaultCommandProvider.class);
-   }
-
-   @Override
-   protected void updateCommandProvider(final Multibinder<UpdateCommandProvider<? extends EObject>> contributions) {
-      contributions.addBinding().to(ExtendDefaultCommandProvider.class);
+   protected Optional<TypeLiteral<? extends EdgeCommandProvider<?, ?, ?>>> commandProvider() {
+      return Optional.of(new TypeLiteral<ExtendCommandProvider>() {});
    }
 
    @Override

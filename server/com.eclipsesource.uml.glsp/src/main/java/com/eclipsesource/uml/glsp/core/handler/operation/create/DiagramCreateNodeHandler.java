@@ -10,10 +10,12 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.core.handler.operation.create;
 
+import java.util.Set;
+
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 
 public interface DiagramCreateNodeHandler {
-   String getElementTypeId();
+   Set<String> getElementTypeIds();
 
    void handleCreateNode(CreateNodeOperation operation);
 }

@@ -10,36 +10,27 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.elements.usecase;
 
+import java.util.Optional;
+
 import org.eclipse.emf.ecore.EObject;
 
 import com.eclipsesource.uml.modelserver.core.manifest.DiagramManifest;
-import com.eclipsesource.uml.modelserver.uml.command.create.CreateCommandProvider;
-import com.eclipsesource.uml.modelserver.uml.command.delete.DeleteCommandProvider;
-import com.eclipsesource.uml.modelserver.uml.command.update.UpdateCommandProvider;
+import com.eclipsesource.uml.modelserver.uml.command.NodeCommandProvider;
 import com.eclipsesource.uml.modelserver.uml.elements.usecase.reference.UseCaseReferenceRemover;
-import com.eclipsesource.uml.modelserver.uml.manifest.NodeDefinition;
+import com.eclipsesource.uml.modelserver.uml.manifest.NodeCommandProviderDefinition;
 import com.eclipsesource.uml.modelserver.uml.reference.CrossReferenceRemoveProcessor;
+import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.Multibinder;
 
-public class UseCaseDefinitionModule extends NodeDefinition {
+public class UseCaseDefinitionModule extends NodeCommandProviderDefinition {
 
    public UseCaseDefinitionModule(final DiagramManifest manifest) {
       super(manifest.id(), manifest.representation());
    }
 
    @Override
-   protected void createCommandProvider(final Multibinder<CreateCommandProvider<? extends EObject>> contributions) {
-      contributions.addBinding().to(UseCaseDefaultCommandProvider.class);
-   }
-
-   @Override
-   protected void deleteCommandProvider(final Multibinder<DeleteCommandProvider<? extends EObject>> contributions) {
-      contributions.addBinding().to(UseCaseDefaultCommandProvider.class);
-   }
-
-   @Override
-   protected void updateCommandProvider(final Multibinder<UpdateCommandProvider<? extends EObject>> contributions) {
-      contributions.addBinding().to(UseCaseDefaultCommandProvider.class);
+   protected Optional<TypeLiteral<? extends NodeCommandProvider<?, ?>>> commandProvider() {
+      return Optional.of(new TypeLiteral<UseCaseCommandProvider>() {});
    }
 
    @Override

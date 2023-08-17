@@ -17,7 +17,7 @@ import org.eclipse.uml2.uml.Actor;
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
 import com.eclipsesource.uml.glsp.features.property_palette.handler.action.UpdateElementPropertyAction;
 import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalette;
-import com.eclipsesource.uml.glsp.uml.elements.actor.ActorDefaultHandler;
+import com.eclipsesource.uml.glsp.uml.elements.actor.ActorOperationHandler;
 import com.eclipsesource.uml.glsp.uml.elements.actor.ActorConfiguration;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.BaseDiagramElementPropertyMapper;
 import com.eclipsesource.uml.modelserver.uml.elements.actor.commands.UpdateActorArgument;
@@ -39,21 +39,21 @@ public class ActorPropertyMapper extends BaseDiagramElementPropertyMapper<Actor>
    @Override
    public Optional<UpdateOperation> map(final UpdateElementPropertyAction action) {
       var property = getProperty(ActorConfiguration.Property.class, action);
-      var handler = getHandler(ActorDefaultHandler.class, action);
+      var handler = getHandler(ActorOperationHandler.class, action);
       UpdateOperation operation = null;
 
       switch (property) {
          case NAME:
             operation = handler.withArgument(
-               new UpdateActorArgument.Builder()
+               UpdateActorArgument.by()
                   .name(action.getValue())
-                  .get());
+                  .build());
             break;
          case IS_ABSTRACT:
             operation = handler.withArgument(
-               new UpdateActorArgument.Builder()
+               UpdateActorArgument.by()
                   .isAbstract(Boolean.parseBoolean(action.getValue()))
-                  .get());
+                  .build());
             break;
       }
 

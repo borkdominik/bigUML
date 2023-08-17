@@ -10,8 +10,8 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml;
 
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.manifest.ClassUmlManifest;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.manifest.CommunicationUmlManifest;
+import com.eclipsesource.uml.glsp.uml.representation.class_diagram.ClassUmlManifest;
 import com.eclipsesource.uml.glsp.uml.representation.use_case.UseCaseManifest;
 import com.google.inject.AbstractModule;
 

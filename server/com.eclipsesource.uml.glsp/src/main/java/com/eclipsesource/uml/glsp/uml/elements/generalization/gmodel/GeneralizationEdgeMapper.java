@@ -10,9 +10,8 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.elements.generalization.gmodel;
 
-import java.util.List;
-
 import org.eclipse.glsp.graph.GEdge;
+import org.eclipse.glsp.graph.builder.impl.GArguments;
 import org.eclipse.glsp.graph.builder.impl.GEdgeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.Generalization;
@@ -33,10 +32,12 @@ public class GeneralizationEdgeMapper extends BaseGEdgeMapper<Generalization, GE
 
       GEdgeBuilder builder = new GEdgeBuilder(GeneralizationConfiguration.typeId())
          .id(idGenerator.getOrCreateId(source))
-         .addCssClasses(List.of(CoreCSS.EDGE, CoreCSS.Marker.TRIANGLE_EMPTY.end()))
+         .addCssClass(CoreCSS.EDGE)
+         .addCssClass(CoreCSS.Marker.TRIANGLE_EMPTY.end())
          .sourceId(specificId)
          .targetId(generalId)
-         .routerKind(GConstants.RouterKind.POLYLINE);
+         .routerKind(GConstants.RouterKind.POLYLINE)
+         .addArgument(GArguments.edgePadding(10));
 
       applyEdgeNotation(source, builder);
 

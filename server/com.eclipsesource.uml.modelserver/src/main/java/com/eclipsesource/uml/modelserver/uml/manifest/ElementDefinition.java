@@ -10,15 +10,17 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.manifest;
 
-import com.eclipsesource.uml.modelserver.shared.manifest.supplier.ContributionBinderSupplier;
-import com.eclipsesource.uml.modelserver.shared.manifest.supplier.ContributionIdSupplier;
-import com.eclipsesource.uml.modelserver.shared.manifest.supplier.ContributionRepresentationSupplier;
+import org.eclipse.emf.ecore.EObject;
+
+import com.eclipsesource.uml.modelserver.uml.behavior.Behavior;
+import com.eclipsesource.uml.modelserver.uml.behavior.BehaviorContribution;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.AbstractModule;
 import com.google.inject.Binder;
+import com.google.inject.multibindings.Multibinder;
 
 public abstract class ElementDefinition extends AbstractModule
-   implements ContributionBinderSupplier, ContributionIdSupplier, ContributionRepresentationSupplier {
+   implements BehaviorContribution {
 
    protected final String id;
    protected final Representation representation;
@@ -42,5 +44,17 @@ public abstract class ElementDefinition extends AbstractModule
    @Override
    public Binder contributionBinder() {
       return binder();
+   }
+
+   @Override
+   protected void configure() {
+      super.configure();
+
+      contributeBehaviors(this::behaviors);
+   }
+
+   protected void behaviors(
+      final Multibinder<Behavior<? extends EObject>> contributions) {
+
    }
 }

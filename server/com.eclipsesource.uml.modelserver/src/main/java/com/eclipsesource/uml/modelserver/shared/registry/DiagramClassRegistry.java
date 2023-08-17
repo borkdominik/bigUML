@@ -35,14 +35,4 @@ public abstract class DiagramClassRegistry<K extends Class<?>, V> extends Diagra
 
       return super.deriveKey(key);
    }
-
-   public V access(final RepresentationKey<K> key) {
-      return this.get(key).orElseThrow(
-         () -> {
-            printContent();
-            return new IllegalArgumentException(
-               String.format("[%s] No value found for representation %s and key %s",
-                  this.getClass().getSimpleName(), key.representation.getName(), key.key.getClass().getSimpleName()));
-         });
-   }
 }

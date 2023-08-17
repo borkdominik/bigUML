@@ -10,9 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.package_diagram.commands.package_merge;
 
-import com.eclipsesource.uml.modelserver.shared.codec.codecs.EmbeddedCodec;
-
-public final class UpdatePackageMergeArgument implements EmbeddedCodec.JsonEncodable {
+public final class UpdatePackageMergeArgument {
    public static final class Builder {
       private final UpdatePackageMergeArgument argument = new UpdatePackageMergeArgument();
 

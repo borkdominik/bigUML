@@ -21,7 +21,8 @@ import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 
 public class UpdateCommandProviderRegistry
-   extends DiagramClassRegistry<Class<? extends EObject>, UpdateCommandProvider<EObject>> {
+   extends
+   DiagramClassRegistry<Class<? extends EObject>, UpdateCommandProvider<EObject>> {
 
    @Inject
    public UpdateCommandProviderRegistry(
@@ -29,9 +30,9 @@ public class UpdateCommandProviderRegistry
       providers.entrySet().forEach(e -> {
          var representation = e.getKey();
 
-         e.getValue().forEach(handler -> {
-            var elementType = handler.getElementType();
-            register(RepresentationKey.of(representation, elementType), (UpdateCommandProvider<EObject>) handler);
+         e.getValue().forEach((value) -> {
+            register(RepresentationKey.of(representation, value.getElementType()),
+               (UpdateCommandProvider<EObject>) value);
          });
       });
 

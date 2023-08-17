@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2023 EclipseSource and others.
+ * Copyright (c) 2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -10,10 +10,14 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.elements.generalization.commands;
 
+import java.util.List;
+
+import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.Generalization;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.BaseUpdateSemanticElementCommand;
+import com.eclipsesource.uml.modelserver.uml.elements.element.UpdateElementSemanticCommand;
 
 public class UpdateGeneralizationSemanticCommand
    extends BaseUpdateSemanticElementCommand<Generalization, UpdateGeneralizationArgument> {
@@ -26,8 +30,19 @@ public class UpdateGeneralizationSemanticCommand
    @Override
    protected void updateSemanticElement(final Generalization semanticElement,
       final UpdateGeneralizationArgument updateArgument) {
+      include(List.of(new UpdateElementSemanticCommand(context, semanticElement, updateArgument)));
+
       updateArgument.isSubstitutable().ifPresent(arg -> {
          semanticElement.setIsSubstitutable(arg);
       });
+
+      updateArgument.generalId().ifPresent(arg -> {
+         semanticElement.setGeneral(semanticElementAccessor.getElement(arg, Classifier.class).get());
+      });
+
+      updateArgument.specificId().ifPresent(arg -> {
+         semanticElement.setSpecific(semanticElementAccessor.getElement(arg, Classifier.class).get());
+      });
    }
+
 }

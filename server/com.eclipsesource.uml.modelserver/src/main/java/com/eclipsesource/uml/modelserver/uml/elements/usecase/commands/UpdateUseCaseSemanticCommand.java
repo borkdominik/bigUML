@@ -10,10 +10,13 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.elements.usecase.commands;
 
+import java.util.List;
+
 import org.eclipse.uml2.uml.UseCase;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.BaseUpdateSemanticElementCommand;
+import com.eclipsesource.uml.modelserver.uml.elements.classifier.UpdateClassifierSemanticCommand;
 
 public class UpdateUseCaseSemanticCommand
    extends BaseUpdateSemanticElementCommand<UseCase, UpdateUseCaseArgument> {
@@ -26,16 +29,6 @@ public class UpdateUseCaseSemanticCommand
    @Override
    protected void updateSemanticElement(final UseCase semanticElement,
       final UpdateUseCaseArgument updateArgument) {
-      updateArgument.name().ifPresent(arg -> {
-         semanticElement.setName(arg);
-      });
-
-      updateArgument.label().ifPresent(arg -> {
-         throw new UnsupportedOperationException();
-      });
-
-      updateArgument.isAbstract().ifPresent(arg -> {
-         semanticElement.setIsAbstract(arg);
-      });
+      include(List.of(new UpdateClassifierSemanticCommand(context, semanticElement, updateArgument)));
    }
 }

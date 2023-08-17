@@ -67,7 +67,7 @@ public abstract class NodeDefinition extends ElementDefinition
    protected void diagramPropertyPaletteMappers(
       final Multibinder<DiagramElementPropertyMapper<? extends EObject>> contribution) {}
 
-   protected abstract void gmodelMappers(
-      Multibinder<GModelMapper<? extends EObject, ? extends GModelElement>> contribution);
+   protected void gmodelMappers(
+      final Multibinder<GModelMapper<? extends EObject, ? extends GModelElement>> contribution) {}
 
 }

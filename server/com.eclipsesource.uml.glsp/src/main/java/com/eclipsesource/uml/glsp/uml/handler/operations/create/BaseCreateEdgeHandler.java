@@ -12,6 +12,8 @@ package com.eclipsesource.uml.glsp.uml.handler.operations.create;
 
 import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
 
+import java.util.Set;
+
 import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 import org.eclipse.glsp.server.types.GLSPServerException;
@@ -23,7 +25,7 @@ import com.eclipsesource.uml.modelserver.shared.utils.reflection.GenericsUtil;
 import com.google.inject.Inject;
 
 public abstract class BaseCreateEdgeHandler<S, T> implements DiagramCreateEdgeHandler {
-   protected final String elementTypeId;
+   protected final Set<String> elementTypeIds;
 
    protected final Class<S> sourceType;
    protected final Class<T> targetType;
@@ -35,14 +37,18 @@ public abstract class BaseCreateEdgeHandler<S, T> implements DiagramCreateEdgeHa
    protected UmlModelState modelState;
 
    public BaseCreateEdgeHandler(final String typeId) {
-      this.elementTypeId = typeId;
+      this(Set.of(typeId));
+   }
+
+   public BaseCreateEdgeHandler(final Set<String> typeIds) {
+      this.elementTypeIds = typeIds;
 
       sourceType = GenericsUtil.getClassParameter(getClass(), BaseCreateEdgeHandler.class, 0);
       targetType = GenericsUtil.getClassParameter(getClass(), BaseCreateEdgeHandler.class, 1);
    }
 
    @Override
-   public String getElementTypeId() { return elementTypeId; }
+   public Set<String> getElementTypeIds() { return elementTypeIds; }
 
    @Override
    public void handleCreateEdge(final CreateEdgeOperation operation) {

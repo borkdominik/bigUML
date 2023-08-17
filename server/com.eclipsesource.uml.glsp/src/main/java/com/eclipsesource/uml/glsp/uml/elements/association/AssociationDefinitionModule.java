@@ -10,24 +10,25 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.elements.association;
 
+import java.util.Optional;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.graph.GModelElement;
 
 import com.eclipsesource.uml.glsp.core.diagram.DiagramElementConfiguration.Edge;
 import com.eclipsesource.uml.glsp.core.features.label_edit.DiagramLabelEditMapper;
 import com.eclipsesource.uml.glsp.core.gmodel.GModelMapper;
-import com.eclipsesource.uml.glsp.core.handler.operation.create.DiagramCreateEdgeHandler;
-import com.eclipsesource.uml.glsp.core.handler.operation.delete.DiagramDeleteHandler;
-import com.eclipsesource.uml.glsp.core.handler.operation.update.DiagramUpdateHandler;
 import com.eclipsesource.uml.glsp.core.manifest.DiagramManifest;
 import com.eclipsesource.uml.glsp.features.property_palette.mapper.DiagramElementPropertyMapper;
 import com.eclipsesource.uml.glsp.uml.elements.association.features.AssociationLabelEditMapper;
 import com.eclipsesource.uml.glsp.uml.elements.association.features.AssociationPropertyMapper;
 import com.eclipsesource.uml.glsp.uml.elements.association.gmodel.AssociationEdgeMapper;
-import com.eclipsesource.uml.glsp.uml.manifest.EdgeDefinition;
+import com.eclipsesource.uml.glsp.uml.handler.element.EdgeOperationHandler;
+import com.eclipsesource.uml.glsp.uml.manifest.EdgeOperationHandlerDefinition;
+import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.Multibinder;
 
-public class AssociationDefinitionModule extends EdgeDefinition {
+public class AssociationDefinitionModule extends EdgeOperationHandlerDefinition {
 
    public AssociationDefinitionModule(final DiagramManifest manifest) {
       super(manifest.id(), manifest.representation());
@@ -39,18 +40,8 @@ public class AssociationDefinitionModule extends EdgeDefinition {
    }
 
    @Override
-   protected void diagramCreateHandlers(final Multibinder<DiagramCreateEdgeHandler> contribution) {
-      contribution.addBinding().to(AssociationDefaultHandler.class);
-   }
-
-   @Override
-   protected void diagramDeleteHandlers(final Multibinder<DiagramDeleteHandler<? extends EObject>> contribution) {
-      contribution.addBinding().to(AssociationDefaultHandler.class);
-   }
-
-   @Override
-   protected void diagramUpdateHandlers(final Multibinder<DiagramUpdateHandler<? extends EObject>> contribution) {
-      contribution.addBinding().to(AssociationDefaultHandler.class);
+   protected Optional<TypeLiteral<? extends EdgeOperationHandler<?, ?, ?>>> operationHandler() {
+      return Optional.of(new TypeLiteral<AssociationOperationHandler>() {});
    }
 
    @Override

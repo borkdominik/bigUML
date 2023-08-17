@@ -12,23 +12,56 @@ package com.eclipsesource.uml.modelserver.uml.elements.generalization.commands;
 
 import java.util.Optional;
 
-import com.eclipsesource.uml.modelserver.shared.codec.codecs.EmbeddedCodec;
+import org.eclipse.glsp.server.emf.EMFIdGenerator;
+import org.eclipse.uml2.uml.Classifier;
 
-public final class UpdateGeneralizationArgument implements EmbeddedCodec.JsonEncodable {
-   private boolean isSubstitutable;
+import com.eclipsesource.uml.modelserver.uml.elements.element.UpdateElementArgument;
+
+public class UpdateGeneralizationArgument extends UpdateElementArgument {
+   protected boolean isSubstitutable;
+   protected String generalId;
+   protected String specificId;
 
    public Optional<Boolean> isSubstitutable() { return Optional.ofNullable(isSubstitutable); }
 
-   public static final class Builder {
-      private final UpdateGeneralizationArgument argument = new UpdateGeneralizationArgument();
+   public Optional<String> generalId() {
+      return Optional.ofNullable(generalId);
+   }
 
-      public Builder isSubstitutable(final boolean value) {
+   public Optional<String> specificId() {
+      return Optional.ofNullable(specificId);
+   }
+
+   public static Builder<?> by() {
+      return new Builder<>();
+   }
+
+   public static class Builder<TArgument extends UpdateGeneralizationArgument>
+      extends UpdateElementArgument.Builder<TArgument> {
+
+      public Builder<TArgument> isSubstitutable(final boolean value) {
          argument.isSubstitutable = value;
          return this;
       }
 
-      public UpdateGeneralizationArgument get() {
-         return argument;
+      public Builder<TArgument> generalId(final String value) {
+         argument.generalId = value;
+         return this;
+      }
+
+      public Builder<TArgument> general(final Classifier value, final EMFIdGenerator id) {
+         argument.generalId = id.getOrCreateId(value);
+         return this;
+      }
+
+      public Builder<TArgument> specificId(final String value) {
+         argument.specificId = value;
+         return this;
+      }
+
+      public Builder<TArgument> specific(final Classifier value, final EMFIdGenerator id) {
+         argument.specificId = id.getOrCreateId(value);
+         return this;
       }
    }
 }

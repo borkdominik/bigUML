@@ -14,10 +14,9 @@ import java.util.Optional;
 
 import org.eclipse.uml2.uml.VisibilityKind;
 
-import com.eclipsesource.uml.modelserver.shared.codec.codecs.EmbeddedCodec;
 import com.eclipsesource.uml.modelserver.uml.diagram.package_diagram.util.PackageUtils;
 
-public final class UpdatePackageImportArgument implements EmbeddedCodec.JsonEncodable {
+public final class UpdatePackageImportArgument {
    private VisibilityKind visibilityKind;
 
    public Optional<VisibilityKind> visibilityKind() {

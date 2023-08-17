@@ -18,21 +18,21 @@ import org.eclipse.uml2.uml.Actor;
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
-import com.eclipsesource.uml.glsp.uml.elements.actor.ActorDefaultHandler;
+import com.eclipsesource.uml.glsp.uml.elements.actor.ActorOperationHandler;
 import com.eclipsesource.uml.glsp.uml.features.label_edit.BaseLabelEditMapper;
 import com.eclipsesource.uml.modelserver.uml.elements.actor.commands.UpdateActorArgument;
 
 public class ActorLabelEditMapper extends BaseLabelEditMapper<Actor> {
    @Override
    public Optional<UpdateOperation> map(final ApplyLabelEditOperation operation) {
-      var handler = getHandler(ActorDefaultHandler.class, operation);
+      var handler = getHandler(ActorOperationHandler.class, operation);
       UpdateOperation update = null;
 
       if (matches(operation, CoreTypes.LABEL_NAME, NameLabelSuffix.SUFFIX)) {
          update = handler.withArgument(
-            new UpdateActorArgument.Builder()
+            UpdateActorArgument.by()
                .name(operation.getText())
-               .get());
+               .build());
       }
 
       return withContext(update);

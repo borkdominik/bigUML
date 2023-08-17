@@ -12,6 +12,7 @@ package com.eclipsesource.uml.modelserver.shared.registry;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -33,6 +34,10 @@ public abstract class DiagramMultiKeyRegistry<K, V> implements Registry<Represen
    @Override
    public boolean register(final RepresentationKey<K> key,
       final V value) {
+      if (hasKey(key)) {
+         throw new IllegalArgumentException(
+            String.format("[%s] Key %s already exists.", this.getClass().getSimpleName(), deriveKey(key)));
+      }
       keys.put(deriveKey(key), key);
       return registry.register(deriveKey(key), value);
    }
@@ -53,6 +58,16 @@ public abstract class DiagramMultiKeyRegistry<K, V> implements Registry<Represen
       return registry.get(deriveKey(key));
    }
 
+   public V access(final RepresentationKey<K> key) {
+      return this.get(key).orElseThrow(
+         () -> {
+            printContent();
+            return new NoSuchElementException(
+               String.format("[%s] No value found for representation %s and key %s",
+                  this.getClass().getSimpleName(), key.representation.getName(), deriveKey(key)));
+         });
+   }
+
    @Override
    public Set<V> getAll() { return registry.getAll(); }
 
@@ -63,7 +78,7 @@ public abstract class DiagramMultiKeyRegistry<K, V> implements Registry<Represen
 
    public void printContent() {
       System.out.println("==== " + getClass().getName() + " ====");
-      keys().stream().sorted((a, b) -> a.representation.compareTo(b.representation)).forEach(key -> {
+      keys().stream().sorted((a, b) -> deriveKey(a).compareTo(deriveKey(b))).forEach(key -> {
          System.out.println("Key:\t" + deriveKey(key));
          System.out.println("Value:\t" + get(key).get().getClass().getName());
          System.out.println();

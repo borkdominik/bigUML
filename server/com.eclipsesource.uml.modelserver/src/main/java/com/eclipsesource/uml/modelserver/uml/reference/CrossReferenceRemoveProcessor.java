@@ -21,6 +21,8 @@ import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.registry.RepresentationKey;
 import com.eclipsesource.uml.modelserver.uml.command.delete.DeleteCommandProvider;
 import com.eclipsesource.uml.modelserver.uml.command.delete.DeleteCommandProviderRegistry;
+import com.eclipsesource.uml.modelserver.uml.command.update.UpdateCommandProvider;
+import com.eclipsesource.uml.modelserver.uml.command.update.UpdateCommandProviderRegistry;
 
 public class CrossReferenceRemoveProcessor<TSelf extends EObject> extends BaseCrossReferenceProcessor<TSelf> {
 
@@ -37,6 +39,14 @@ public class CrossReferenceRemoveProcessor<TSelf extends EObject> extends BaseCr
       var registry = context.injector.map(i -> i.getInstance(DeleteCommandProviderRegistry.class)).orElseThrow();
 
       return (DeleteCommandProvider<TElement>) registry
+         .access(new RepresentationKey<>(context.representation(), element.getClass()));
+   }
+
+   protected <TElement extends EObject> UpdateCommandProvider<TElement> updateProviderFor(final ModelContext context,
+      final TElement element) {
+      var registry = context.injector.map(i -> i.getInstance(UpdateCommandProviderRegistry.class)).orElseThrow();
+
+      return (UpdateCommandProvider<TElement>) registry
          .access(new RepresentationKey<>(context.representation(), element.getClass()));
    }
 }

@@ -21,14 +21,13 @@ import org.eclipse.glsp.server.types.EdgeTypeHint;
 import org.eclipse.uml2.uml.Generalization;
 
 import com.eclipsesource.uml.glsp.core.diagram.DiagramElementConfiguration;
-import com.eclipsesource.uml.glsp.uml.elements.actor.ActorConfiguration;
-import com.eclipsesource.uml.glsp.uml.elements.usecase.UseCaseConfiguration;
+import com.eclipsesource.uml.glsp.uml.elements.class_.ClassConfiguration;
 import com.eclipsesource.uml.glsp.uml.utils.QualifiedUtil;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 
 public class GeneralizationConfiguration {
    public static String typeId() {
-      return QualifiedUtil.representationTypeId(Representation.USE_CASE, DefaultTypes.EDGE,
+      return QualifiedUtil.representationTypeId(Representation.CLASS, DefaultTypes.EDGE,
          Generalization.class.getSimpleName());
    }
 
@@ -39,15 +38,14 @@ public class GeneralizationConfiguration {
    public static class Diagram implements DiagramElementConfiguration.Edge {
 
       @Override
-      public Map<String, EClass> getTypeMappings() { return Map.of(
-         typeId(), GraphPackage.Literals.GEDGE); }
+      public Map<String, EClass> getTypeMappings() { return Map.of(typeId(), GraphPackage.Literals.GEDGE); }
 
       @Override
       public Set<EdgeTypeHint> getEdgeTypeHints() {
          return Set.of(
             new EdgeTypeHint(typeId(), true, true, true,
-               List.of(ActorConfiguration.typeId(), UseCaseConfiguration.typeId()),
-               List.of(ActorConfiguration.typeId(), UseCaseConfiguration.typeId())));
+               List.of(ClassConfiguration.typeId()),
+               List.of(ClassConfiguration.typeId())));
       }
    }
 }

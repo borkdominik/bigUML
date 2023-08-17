@@ -10,6 +10,8 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.handler.operations.create;
 
+import java.util.Set;
+
 import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.types.GLSPServerException;
@@ -19,17 +21,21 @@ import com.eclipsesource.uml.glsp.core.model.UmlModelServerAccess;
 import com.google.inject.Inject;
 
 public abstract class BaseCreateNodeHandler implements DiagramCreateNodeHandler {
-   protected final String elementTypeId;
+   protected final Set<String> elementTypeIds;
 
    @Inject
    protected UmlModelServerAccess modelServerAccess;
 
    public BaseCreateNodeHandler(final String typeId) {
-      this.elementTypeId = typeId;
+      this(Set.of(typeId));
+   }
+
+   public BaseCreateNodeHandler(final Set<String> typeIds) {
+      this.elementTypeIds = typeIds;
    }
 
    @Override
-   public String getElementTypeId() { return elementTypeId; }
+   public Set<String> getElementTypeIds() { return elementTypeIds; }
 
    @Override
    public void handleCreateNode(final CreateNodeOperation operation) {

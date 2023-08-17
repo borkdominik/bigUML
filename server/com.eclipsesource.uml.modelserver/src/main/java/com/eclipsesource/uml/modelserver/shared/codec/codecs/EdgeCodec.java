@@ -35,14 +35,20 @@ public interface EdgeCodec {
    }
 
    interface Decoder extends CCommandProvider, ContextProvider {
+      default String sourceId() {
+         return ccommand().getProperties().get(EdgeCodec.SOURCE_SEMANTIC_ELEMENT_ID);
+      }
+
       default <T> Optional<T> source(final Class<T> clazz) {
-         var semanticElementId = ccommand().getProperties().get(EdgeCodec.SOURCE_SEMANTIC_ELEMENT_ID);
-         return new SemanticElementAccessor(context()).getElement(semanticElementId, clazz);
+         return new SemanticElementAccessor(context()).getElement(sourceId(), clazz);
+      }
+
+      default String targetId() {
+         return ccommand().getProperties().get(EdgeCodec.TARGET_SEMANTIC_ELEMENT_ID);
       }
 
       default <T> Optional<T> target(final Class<T> clazz) {
-         var semanticElementId = ccommand().getProperties().get(EdgeCodec.TARGET_SEMANTIC_ELEMENT_ID);
-         return new SemanticElementAccessor(context()).getElement(semanticElementId, clazz);
+         return new SemanticElementAccessor(context()).getElement(targetId(), clazz);
       }
    }
 }

@@ -37,19 +37,9 @@ public class UmlDeleteOperationHandler extends EMSOperationHandler<DeleteOperati
          var semanticElement = getOrThrow(modelState.getIndex().getEObject(elementId),
             EObject.class, "Could not find semantic element for id '" + elementId + "', no delete operation executed.");
 
-         var handler = registry.get(RepresentationKey.of(representation, semanticElement.getClass()));
-
-         handler
-            .orElseThrow(
-               () -> {
-                  registry.printContent();
-                  return new GLSPServerException(
-                     "No delete handler found for class " + semanticElement.getClass().getName());
-               })
+         registry.access(RepresentationKey.of(representation, semanticElement.getClass()))
             .handleDelete(semanticElement);
       });
-
-      // printContent();
    }
 
    @Override

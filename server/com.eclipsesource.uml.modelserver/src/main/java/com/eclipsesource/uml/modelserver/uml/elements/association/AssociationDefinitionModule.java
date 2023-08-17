@@ -10,36 +10,36 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.elements.association;
 
+import java.util.Optional;
+
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.uml2.uml.Association;
 
 import com.eclipsesource.uml.modelserver.core.manifest.DiagramManifest;
-import com.eclipsesource.uml.modelserver.uml.command.create.CreateCommandProvider;
-import com.eclipsesource.uml.modelserver.uml.command.delete.DeleteCommandProvider;
-import com.eclipsesource.uml.modelserver.uml.command.update.UpdateCommandProvider;
+import com.eclipsesource.uml.modelserver.shared.utils.Type;
+import com.eclipsesource.uml.modelserver.uml.behavior.Behavior;
+import com.eclipsesource.uml.modelserver.uml.command.EdgeCommandProvider;
+import com.eclipsesource.uml.modelserver.uml.elements.association.behavior.AssociationReconnectBehavior;
 import com.eclipsesource.uml.modelserver.uml.elements.association.reference.AssociationReferenceRemover;
-import com.eclipsesource.uml.modelserver.uml.manifest.EdgeDefinition;
+import com.eclipsesource.uml.modelserver.uml.manifest.EdgeCommandProviderDefinition;
 import com.eclipsesource.uml.modelserver.uml.reference.CrossReferenceRemoveProcessor;
+import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.Multibinder;
 
-public class AssociationDefinitionModule extends EdgeDefinition {
+public class AssociationDefinitionModule extends EdgeCommandProviderDefinition {
 
    public AssociationDefinitionModule(final DiagramManifest manifest) {
       super(manifest.id(), manifest.representation());
    }
 
    @Override
-   protected void createCommandProvider(final Multibinder<CreateCommandProvider<? extends EObject>> contributions) {
-      contributions.addBinding().to(AssociationDefaultCommandProvider.class);
+   protected Optional<TypeLiteral<? extends EdgeCommandProvider<?, ?, ?>>> commandProvider() {
+      return Optional.of(new TypeLiteral<AssociationCommandProvider>() {});
    }
 
    @Override
-   protected void deleteCommandProvider(final Multibinder<DeleteCommandProvider<? extends EObject>> contributions) {
-      contributions.addBinding().to(AssociationDefaultCommandProvider.class);
-   }
-
-   @Override
-   protected void updateCommandProvider(final Multibinder<UpdateCommandProvider<? extends EObject>> contributions) {
-      contributions.addBinding().to(AssociationDefaultCommandProvider.class);
+   protected void behaviors(final Multibinder<Behavior<? extends EObject>> contributions) {
+      contributions.addBinding().to(new TypeLiteral<AssociationReconnectBehavior<Association>>() {});
    }
 
    @Override

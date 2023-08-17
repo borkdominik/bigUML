@@ -20,10 +20,12 @@ import org.eclipse.glsp.graph.GPoint;
 
 import com.eclipsesource.uml.modelserver.shared.codec.ContributionDecoder;
 import com.eclipsesource.uml.modelserver.shared.codec.ContributionEncoder;
+import com.eclipsesource.uml.modelserver.shared.command.SerializableArgument;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.registry.RepresentationKey;
 import com.eclipsesource.uml.modelserver.uml.command.UmlCommandContribution;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.gson.JsonSerializer;
 import com.google.inject.Inject;
 
 public class CreateElementCommandContribution extends UmlCommandContribution {
@@ -33,17 +35,54 @@ public class CreateElementCommandContribution extends UmlCommandContribution {
    @Inject
    protected CreateCommandProviderRegistry registry;
 
-   public static CCommand create(final Representation representation, final Class<? extends EObject> elementType,
+   public static CCommand createNode(final Representation representation, final Class<? extends EObject> elementType,
       final Object parent, final GPoint position) {
+      return createNode(representation, elementType, parent, position, null);
+   }
+
+   public static CCommand createNode(final Representation representation, final Class<? extends EObject> elementType,
+      final Object parent, final GPoint position, final Object argument) {
       return new ContributionEncoder().type(TYPE).representation(representation).elementType(elementType).parent(parent)
          .position(position)
+         .embedJson(argument)
          .ccommand();
    }
 
-   public static CCommand create(final Representation representation, final Class<? extends EObject> elementType,
+   public static CCommand createNode(final Representation representation, final Class<? extends EObject> elementType,
+      final Object parent, final GPoint position, final SerializableArgument argument) {
+      return createNode(representation, elementType, parent, position, argument, argument.serializer());
+   }
+
+   public static <TArgument> CCommand createNode(final Representation representation,
+      final Class<? extends EObject> elementType,
+      final Object parent, final GPoint position, final TArgument argument,
+      final JsonSerializer<TArgument> serializer) {
+      return new ContributionEncoder().type(TYPE).representation(representation).elementType(elementType).parent(parent)
+         .position(position)
+         .embedJson(argument, serializer)
+         .ccommand();
+   }
+
+   public static CCommand createEdge(final Representation representation, final Class<? extends EObject> elementType,
       final EObject source, final EObject target) {
+      return createEdge(representation, elementType, source, target, null);
+   }
+
+   public static CCommand createEdge(final Representation representation, final Class<? extends EObject> elementType,
+      final EObject source, final EObject target, final Object argument) {
       return new ContributionEncoder().type(TYPE).representation(representation).elementType(elementType).source(source)
          .target(target)
+         .embedJson(argument)
+         .ccommand();
+   }
+
+   public static <TArgument> CCommand createEdge(final Representation representation,
+      final Class<? extends EObject> elementType,
+      final EObject source, final EObject target, final TArgument argument,
+      final JsonSerializer<TArgument> serializer) {
+      return new ContributionEncoder().type(TYPE).representation(representation).elementType(elementType).source(source)
+         .target(target)
+         .embedJson(argument, serializer)
          .ccommand();
    }
 

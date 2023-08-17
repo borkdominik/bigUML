@@ -18,21 +18,21 @@ import org.eclipse.uml2.uml.UseCase;
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
-import com.eclipsesource.uml.glsp.uml.elements.usecase.UseCaseDefaultHandler;
+import com.eclipsesource.uml.glsp.uml.elements.usecase.UseCaseOperationHandler;
 import com.eclipsesource.uml.glsp.uml.features.label_edit.BaseLabelEditMapper;
 import com.eclipsesource.uml.modelserver.uml.elements.usecase.commands.UpdateUseCaseArgument;
 
 public class UseCaseLabelEditMapper extends BaseLabelEditMapper<UseCase> {
    @Override
    public Optional<UpdateOperation> map(final ApplyLabelEditOperation operation) {
-      var handler = getHandler(UseCaseDefaultHandler.class, operation);
+      var handler = getHandler(UseCaseOperationHandler.class, operation);
       UpdateOperation update = null;
 
       if (matches(operation, CoreTypes.LABEL_NAME, NameLabelSuffix.SUFFIX)) {
          update = handler.withArgument(
-            new UpdateUseCaseArgument.Builder()
+            UpdateUseCaseArgument.by()
                .name(operation.getText())
-               .get());
+               .build());
       }
 
       return withContext(update);

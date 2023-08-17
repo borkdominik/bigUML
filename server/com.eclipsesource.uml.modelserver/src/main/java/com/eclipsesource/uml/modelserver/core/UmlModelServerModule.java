@@ -27,8 +27,10 @@ import com.eclipsesource.uml.modelserver.core.commands.change_routing_points.Uml
 import com.eclipsesource.uml.modelserver.core.commands.copy_paste.UmlPasteContribution;
 import com.eclipsesource.uml.modelserver.core.commands.rename.UmlRenameElementContribution;
 import com.eclipsesource.uml.modelserver.core.controller.UmlSessionController;
-import com.eclipsesource.uml.modelserver.core.repository.UmlModelRepository;
+import com.eclipsesource.uml.modelserver.core.model.UmlModelRepository;
+import com.eclipsesource.uml.modelserver.core.model.UmlModelSynchronizer;
 import com.eclipsesource.uml.modelserver.core.resource.UmlModelResourceManager;
+import com.eclipsesource.uml.modelserver.core.resource.UmlResourceSetFactory;
 import com.eclipsesource.uml.modelserver.core.resource.model.UmlModelPackageConfiguration;
 import com.eclipsesource.uml.modelserver.core.resource.notation.UmlNotationPackageConfiguration;
 import com.eclipsesource.uml.modelserver.core.resource.notation.UmlNotationResource;
@@ -63,6 +65,11 @@ public class UmlModelServerModule extends EMSNotationModelServerModule {
    @Override
    protected Class<? extends UmlModelRepository> bindModelRepository() {
       return UmlModelRepository.class;
+   }
+
+   @Override
+   protected Class<? extends UmlModelSynchronizer> bindModelSynchronizer() {
+      return UmlModelSynchronizer.class;
    }
 
    @Override

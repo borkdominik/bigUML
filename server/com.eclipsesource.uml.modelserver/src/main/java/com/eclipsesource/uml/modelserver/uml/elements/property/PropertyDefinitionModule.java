@@ -10,33 +10,32 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.elements.property;
 
+import java.util.Optional;
+
 import org.eclipse.emf.ecore.EObject;
 
 import com.eclipsesource.uml.modelserver.core.manifest.DiagramManifest;
-import com.eclipsesource.uml.modelserver.uml.command.create.CreateCommandProvider;
-import com.eclipsesource.uml.modelserver.uml.command.delete.DeleteCommandProvider;
-import com.eclipsesource.uml.modelserver.uml.command.update.UpdateCommandProvider;
-import com.eclipsesource.uml.modelserver.uml.manifest.NodeDefinition;
+import com.eclipsesource.uml.modelserver.uml.command.NodeCommandProvider;
+import com.eclipsesource.uml.modelserver.uml.elements.property.reference.PropertyReferenceRemover;
+import com.eclipsesource.uml.modelserver.uml.manifest.NodeCommandProviderDefinition;
+import com.eclipsesource.uml.modelserver.uml.reference.CrossReferenceRemoveProcessor;
+import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.Multibinder;
 
-public class PropertyDefinitionModule extends NodeDefinition {
+public class PropertyDefinitionModule extends NodeCommandProviderDefinition {
 
    public PropertyDefinitionModule(final DiagramManifest manifest) {
       super(manifest.id(), manifest.representation());
    }
 
    @Override
-   protected void createCommandProvider(final Multibinder<CreateCommandProvider<? extends EObject>> contributions) {
-      contributions.addBinding().to(PropertyDefaultCommandProvider.class);
+   protected Optional<TypeLiteral<? extends NodeCommandProvider<?, ?>>> commandProvider() {
+      return Optional.of(new TypeLiteral<PropertyCommandProvider>() {});
    }
 
    @Override
-   protected void deleteCommandProvider(final Multibinder<DeleteCommandProvider<? extends EObject>> contributions) {
-      contributions.addBinding().to(PropertyDefaultCommandProvider.class);
-   }
-
-   @Override
-   protected void updateCommandProvider(final Multibinder<UpdateCommandProvider<? extends EObject>> contributions) {
-      contributions.addBinding().to(PropertyDefaultCommandProvider.class);
+   protected void crossReferenceRemoverProcessors(
+      final Multibinder<CrossReferenceRemoveProcessor<? extends EObject>> contributions) {
+      contributions.addBinding().to(PropertyReferenceRemover.class);
    }
 }

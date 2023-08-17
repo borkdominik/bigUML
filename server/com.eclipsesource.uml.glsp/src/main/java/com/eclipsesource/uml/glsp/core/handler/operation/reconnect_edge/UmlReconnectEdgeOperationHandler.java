@@ -66,7 +66,7 @@ public class UmlReconnectEdgeOperationHandler extends EMSOperationHandler<Reconn
                return new GLSPServerException(
                   "No reconnect edge handler found for class " + semanticElement.getClass());
             })
-         .handle(operation);
+         .handleReconnect(operation);
    }
 
 }

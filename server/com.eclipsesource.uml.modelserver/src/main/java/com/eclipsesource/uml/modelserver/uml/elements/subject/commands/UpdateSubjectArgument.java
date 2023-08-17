@@ -10,38 +10,16 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.elements.subject.commands;
 
-import java.util.Optional;
+import com.eclipsesource.uml.modelserver.uml.elements.named_element.UpdateNamedElementArgument;
 
-import com.eclipsesource.uml.modelserver.shared.codec.codecs.EmbeddedCodec;
+public class UpdateSubjectArgument extends UpdateNamedElementArgument {
 
-public class UpdateSubjectArgument implements EmbeddedCodec.JsonEncodable {
-
-   private String name;
-   private String label;
-
-   public Optional<String> name() {
-      return Optional.ofNullable(name);
+   public static Builder<?> by() {
+      return new Builder<>();
    }
 
-   public Optional<String> label() {
-      return Optional.ofNullable(label);
-   }
+   public static class Builder<TArgument extends UpdateSubjectArgument>
+      extends UpdateNamedElementArgument.Builder<TArgument> {
 
-   public static final class Builder {
-      private final UpdateSubjectArgument argument = new UpdateSubjectArgument();
-
-      public Builder name(final String value) {
-         argument.name = value;
-         return this;
-      }
-
-      public Builder label(final String value) {
-         argument.label = value;
-         return this;
-      }
-
-      public UpdateSubjectArgument get() {
-         return argument;
-      }
    }
 }

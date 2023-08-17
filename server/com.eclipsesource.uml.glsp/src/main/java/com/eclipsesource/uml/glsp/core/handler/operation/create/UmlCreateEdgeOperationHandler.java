@@ -29,15 +29,7 @@ public class UmlCreateEdgeOperationHandler extends EMSOperationHandler<CreateEdg
    public void executeOperation(final CreateEdgeOperation operation) {
       var representation = modelState.getUnsafeRepresentation();
 
-      var handler = registry.get(RepresentationKey.of(representation, operation.getElementTypeId()));
-
-      handler
-         .orElseThrow(
-            () -> {
-               registry.printContent();
-               return new GLSPServerException(
-                  "No create edge handler found for element " + operation.getElementTypeId());
-            })
+      registry.access(RepresentationKey.of(representation, operation.getElementTypeId()))
          .handleCreateEdge(operation);
    }
 

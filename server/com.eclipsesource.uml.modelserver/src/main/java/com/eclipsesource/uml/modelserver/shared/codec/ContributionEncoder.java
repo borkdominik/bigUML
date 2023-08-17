@@ -10,6 +10,8 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.shared.codec;
 
+import org.eclipse.emf.common.util.EMap;
+
 import com.eclipsesource.uml.modelserver.shared.codec.codecs.DimensionCodec;
 import com.eclipsesource.uml.modelserver.shared.codec.codecs.EdgeCodec;
 import com.eclipsesource.uml.modelserver.shared.codec.codecs.ElementCodec;
@@ -26,4 +28,10 @@ public final class ContributionEncoder extends BaseEncoder
    ParentCodec.Encoder<ContributionEncoder>, ExtraCodec.Encoder<ContributionEncoder>,
    ElementCodec.Encoder<ContributionEncoder>, EdgeCodec.Encoder<ContributionEncoder>,
    DimensionCodec.Encoder<ContributionEncoder>, EmbeddedCodec.Encoder<ContributionEncoder>,
-   RepresentationCodec.Encoder<ContributionEncoder> {}
+   RepresentationCodec.Encoder<ContributionEncoder> {
+
+   public void overrideProperties(final EMap<String, String> properties) {
+      command.getProperties().clear();
+      command.getProperties().addAll(properties.entrySet());
+   }
+}

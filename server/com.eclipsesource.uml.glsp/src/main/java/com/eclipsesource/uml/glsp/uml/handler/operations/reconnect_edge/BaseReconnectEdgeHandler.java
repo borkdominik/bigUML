@@ -47,7 +47,7 @@ public abstract class BaseReconnectEdgeHandler<TElementType extends EObject, TSo
    public Class<TElementType> getElementType() { return elementType; }
 
    @Override
-   public void handle(final ReconnectEdgeOperation operation) {
+   public void handleReconnect(final ReconnectEdgeOperation operation) {
       var elementId = operation.getEdgeElementId();
       var sourceId = operation.getSourceElementId();
       var targetId = operation.getTargetElementId();

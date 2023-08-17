@@ -27,8 +27,9 @@ public class DiagramCreateEdgeHandlerRegistry
          var representation = e.getKey();
 
          e.getValue().forEach(handler -> {
-            var elementId = handler.getElementTypeId();
-            register(RepresentationKey.of(representation, elementId), handler);
+            handler.getElementTypeIds().forEach(elementId -> {
+               register(RepresentationKey.of(representation, elementId), handler);
+            });
          });
       });
 

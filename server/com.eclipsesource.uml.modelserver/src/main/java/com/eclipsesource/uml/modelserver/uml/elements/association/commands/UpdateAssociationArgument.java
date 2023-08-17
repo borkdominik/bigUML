@@ -11,26 +11,36 @@
 package com.eclipsesource.uml.modelserver.uml.elements.association.commands;
 
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
-import com.eclipsesource.uml.modelserver.shared.codec.codecs.EmbeddedCodec;
+import org.eclipse.glsp.server.emf.EMFIdGenerator;
+import org.eclipse.uml2.uml.Type;
 
-public class UpdateAssociationArgument implements EmbeddedCodec.JsonEncodable {
-   private String name;
+import com.eclipsesource.uml.modelserver.uml.elements.classifier.UpdateClassifierArgument;
 
-   public Optional<String> name() {
-      return Optional.ofNullable(name);
+public class UpdateAssociationArgument extends UpdateClassifierArgument {
+   protected Set<String> endTypeIds;
+
+   public Optional<Set<String>> endTypeIds() {
+      return Optional.ofNullable(endTypeIds);
    }
 
-   public static final class Builder {
-      private final UpdateAssociationArgument argument = new UpdateAssociationArgument();
+   public static Builder<?> by() {
+      return new Builder<>();
+   }
 
-      public Builder name(final String value) {
-         argument.name = value;
+   public static class Builder<TArgument extends UpdateAssociationArgument>
+      extends UpdateClassifierArgument.Builder<TArgument> {
+
+      public Builder<TArgument> endTypeIds(final Set<String> value) {
+         argument.endTypeIds = value;
          return this;
       }
 
-      public UpdateAssociationArgument get() {
-         return argument;
+      public Builder<TArgument> endTypes(final Set<Type> value, final EMFIdGenerator id) {
+         argument.endTypeIds = value.stream().map(v -> id.getOrCreateId(v)).collect(Collectors.toUnmodifiableSet());
+         return this;
       }
    }
 }

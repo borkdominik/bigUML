@@ -29,15 +29,7 @@ public class UmlCreateNodeOperationHandler extends EMSOperationHandler<CreateNod
    public void executeOperation(final CreateNodeOperation operation) {
       var representation = modelState.getUnsafeRepresentation();
 
-      var handler = registry.get(RepresentationKey.of(representation, operation.getElementTypeId()));
-
-      handler
-         .orElseThrow(
-            () -> {
-               registry.printContent();
-               return new GLSPServerException(
-                  "No create node handler found for element " + operation.getElementTypeId());
-            })
+      registry.access(RepresentationKey.of(representation, operation.getElementTypeId()))
          .handleCreateNode(operation);
    }
 

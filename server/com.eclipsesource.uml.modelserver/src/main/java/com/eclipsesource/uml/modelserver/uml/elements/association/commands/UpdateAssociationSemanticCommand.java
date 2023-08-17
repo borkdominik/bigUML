@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2023 EclipseSource and others.
+ * Copyright (c) 2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -10,10 +10,15 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.elements.association.commands;
 
+import java.util.List;
+
 import org.eclipse.uml2.uml.Association;
+import org.eclipse.uml2.uml.AttributeOwner;
+import org.eclipse.uml2.uml.Type;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.BaseUpdateSemanticElementCommand;
+import com.eclipsesource.uml.modelserver.uml.elements.named_element.UpdateNamedElementSemanticCommand;
 
 public class UpdateAssociationSemanticCommand
    extends BaseUpdateSemanticElementCommand<Association, UpdateAssociationArgument> {
@@ -26,8 +31,27 @@ public class UpdateAssociationSemanticCommand
    @Override
    protected void updateSemanticElement(final Association semanticElement,
       final UpdateAssociationArgument updateArgument) {
-      updateArgument.name().ifPresent(arg -> {
-         semanticElement.setName(arg);
+      include(List.of(new UpdateNamedElementSemanticCommand(context, semanticElement, updateArgument)));
+
+      updateArgument.endTypeIds().ifPresent(arg -> {
+         var oldMemberEnds = semanticElement.getMemberEnds();
+         var oldSourceProperty = oldMemberEnds.get(0);
+         var oldSource = (AttributeOwner) oldSourceProperty.getOwner();
+         var oldTargetProperty = oldMemberEnds.get(1);
+         var oldTarget = (AttributeOwner) oldTargetProperty.getOwner();
+
+         var elements = semanticElementAccessor.getElements(arg.toArray(new String[0]), Type.class);
+         var source = (Type & AttributeOwner) elements.get(0);
+         var target = (Type & AttributeOwner) elements.get(1);
+
+         oldSource.getOwnedAttributes().remove(oldSourceProperty);
+         oldSourceProperty.setType(target);
+         source.getOwnedAttributes().add(oldSourceProperty);
+
+         oldTarget.getOwnedAttributes().remove(oldTargetProperty);
+         oldTargetProperty.setType(source);
+         target.getOwnedAttributes().add(oldTargetProperty);
       });
    }
+
 }

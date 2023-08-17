@@ -11,14 +11,20 @@
 package com.eclipsesource.uml.modelserver.uml;
 
 import com.eclipsesource.uml.modelserver.core.manifest.contributions.CommandCodecContribution;
+import com.eclipsesource.uml.modelserver.uml.behavior.BehaviorRegistry;
+import com.eclipsesource.uml.modelserver.uml.command.create.CreateCommandProviderRegistry;
 import com.eclipsesource.uml.modelserver.uml.command.create.CreateElementCommandContribution;
+import com.eclipsesource.uml.modelserver.uml.command.delete.DeleteCommandProviderRegistry;
 import com.eclipsesource.uml.modelserver.uml.command.delete.DeleteElementCommandContribution;
+import com.eclipsesource.uml.modelserver.uml.command.reconnect.ReconnectElementCommandContribution;
+import com.eclipsesource.uml.modelserver.uml.command.update.UpdateCommandProviderRegistry;
 import com.eclipsesource.uml.modelserver.uml.command.update.UpdateElementCommandContribution;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.manifest.ClassManifest;
 import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.manifest.CommunicationManifest;
 import com.eclipsesource.uml.modelserver.uml.diagram.package_diagram.manifest.PackageManifest;
-import com.eclipsesource.uml.modelserver.uml.representation.usecase.UseCaseManifest;
+import com.eclipsesource.uml.modelserver.uml.representation.class_.ClassManifest;
+import com.eclipsesource.uml.modelserver.uml.representation.use_case.UseCaseManifest;
 import com.google.inject.AbstractModule;
+import com.google.inject.Singleton;
 
 public class UmlModule extends AbstractModule implements CommandCodecContribution {
    @Override
@@ -30,10 +36,17 @@ public class UmlModule extends AbstractModule implements CommandCodecContributio
       install(new UseCaseManifest());
       install(new PackageManifest());
 
+      bind(CreateCommandProviderRegistry.class).in(Singleton.class);
+      bind(DeleteCommandProviderRegistry.class).in(Singleton.class);
+      bind(UpdateCommandProviderRegistry.class).in(Singleton.class);
+      bind(BehaviorRegistry.class).in(Singleton.class);
+
       contributeCommandCodec(binder(), (contributions) -> {
          contributions.addBinding(CreateElementCommandContribution.TYPE).to(CreateElementCommandContribution.class);
          contributions.addBinding(DeleteElementCommandContribution.TYPE).to(DeleteElementCommandContribution.class);
          contributions.addBinding(UpdateElementCommandContribution.TYPE).to(UpdateElementCommandContribution.class);
+         contributions.addBinding(ReconnectElementCommandContribution.TYPE)
+            .to(ReconnectElementCommandContribution.class);
       });
    }
 }

@@ -10,46 +10,14 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.elements.usecase.commands;
 
-import java.util.Optional;
+import com.eclipsesource.uml.modelserver.uml.elements.classifier.UpdateClassifierArgument;
 
-import com.eclipsesource.uml.modelserver.shared.codec.codecs.EmbeddedCodec;
+public class UpdateUseCaseArgument extends UpdateClassifierArgument {
 
-public class UpdateUseCaseArgument implements EmbeddedCodec.JsonEncodable {
-
-   private String name;
-   private String label;
-   private Boolean isAbstract;
-
-   public Optional<String> name() {
-      return Optional.ofNullable(name);
+   public static Builder<?> by() {
+      return new Builder<>();
    }
 
-   public Optional<String> label() {
-      return Optional.ofNullable(label);
-   }
-
-   public Optional<Boolean> isAbstract() { return Optional.ofNullable(isAbstract); }
-
-   public static final class Builder {
-      private final UpdateUseCaseArgument argument = new UpdateUseCaseArgument();
-
-      public Builder name(final String value) {
-         argument.name = value;
-         return this;
-      }
-
-      public Builder label(final String value) {
-         argument.label = value;
-         return this;
-      }
-
-      public Builder isAbstract(final boolean value) {
-         argument.isAbstract = value;
-         return this;
-      }
-
-      public UpdateUseCaseArgument get() {
-         return argument;
-      }
-   }
+   public static class Builder<TArgument extends UpdateUseCaseArgument>
+      extends UpdateClassifierArgument.Builder<TArgument> {}
 }

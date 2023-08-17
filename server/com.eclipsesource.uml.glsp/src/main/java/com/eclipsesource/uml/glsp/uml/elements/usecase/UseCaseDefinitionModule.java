@@ -10,24 +10,25 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.elements.usecase;
 
+import java.util.Optional;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.graph.GModelElement;
 
 import com.eclipsesource.uml.glsp.core.diagram.DiagramElementConfiguration.Node;
 import com.eclipsesource.uml.glsp.core.features.label_edit.DiagramLabelEditMapper;
 import com.eclipsesource.uml.glsp.core.gmodel.GModelMapper;
-import com.eclipsesource.uml.glsp.core.handler.operation.create.DiagramCreateNodeHandler;
-import com.eclipsesource.uml.glsp.core.handler.operation.delete.DiagramDeleteHandler;
-import com.eclipsesource.uml.glsp.core.handler.operation.update.DiagramUpdateHandler;
 import com.eclipsesource.uml.glsp.core.manifest.DiagramManifest;
 import com.eclipsesource.uml.glsp.features.property_palette.mapper.DiagramElementPropertyMapper;
 import com.eclipsesource.uml.glsp.uml.elements.usecase.features.UseCaseLabelEditMapper;
 import com.eclipsesource.uml.glsp.uml.elements.usecase.features.UseCasePropertyMapper;
 import com.eclipsesource.uml.glsp.uml.elements.usecase.gmodel.UseCaseNodeMapper;
-import com.eclipsesource.uml.glsp.uml.manifest.NodeDefinition;
+import com.eclipsesource.uml.glsp.uml.handler.element.NodeOperationHandler;
+import com.eclipsesource.uml.glsp.uml.manifest.NodeOperationHandlerDefinition;
+import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.Multibinder;
 
-public class UseCaseDefinitionModule extends NodeDefinition {
+public class UseCaseDefinitionModule extends NodeOperationHandlerDefinition {
 
    public UseCaseDefinitionModule(final DiagramManifest manifest) {
       super(manifest.id(), manifest.representation());
@@ -39,18 +40,8 @@ public class UseCaseDefinitionModule extends NodeDefinition {
    }
 
    @Override
-   protected void diagramCreateHandlers(final Multibinder<DiagramCreateNodeHandler> contribution) {
-      contribution.addBinding().to(UseCaseDefaultHandler.class);
-   }
-
-   @Override
-   protected void diagramDeleteHandlers(final Multibinder<DiagramDeleteHandler<? extends EObject>> contribution) {
-      contribution.addBinding().to(UseCaseDefaultHandler.class);
-   }
-
-   @Override
-   protected void diagramUpdateHandlers(final Multibinder<DiagramUpdateHandler<? extends EObject>> contribution) {
-      contribution.addBinding().to(UseCaseDefaultHandler.class);
+   protected Optional<TypeLiteral<? extends NodeOperationHandler<?, ?>>> operationHandler() {
+      return Optional.of(new TypeLiteral<UseCaseOperationHandler>() {});
    }
 
    @Override

@@ -44,13 +44,7 @@ public class UpdateElementPropertyHandler extends AbstractActionHandler<UpdateEl
             EObject.class,
             "Could not find semantic element for id '" + elementId + "', no property updating executed.");
 
-         var mapper = registry.get(RepresentationKey.of(representation, semanticElement.getClass()))
-            .orElseThrow(
-               () -> {
-                  registry.printContent();
-                  return new GLSPServerException(
-                     "No property palette mapper found for class " + semanticElement.getClass().getName());
-               });
+         var mapper = registry.access(RepresentationKey.of(representation, semanticElement.getClass()));
 
          var operation = mapper
             .map(action)

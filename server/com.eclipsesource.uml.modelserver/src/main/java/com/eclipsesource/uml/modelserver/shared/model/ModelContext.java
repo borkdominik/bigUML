@@ -20,7 +20,6 @@ import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.uml2.uml.Model;
 
 import com.eclipsesource.uml.modelserver.shared.codec.ContributionDecoder;
-import com.eclipsesource.uml.modelserver.shared.codec.decoder.BaseDecoder;
 import com.eclipsesource.uml.modelserver.shared.utils.UmlSemanticUtil;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Injector;
@@ -52,7 +51,11 @@ public class ModelContext {
       return Optional.ofNullable(data.get(key)).map(element -> clazz.cast(element));
    }
 
-   public BaseDecoder decoder() {
+   public PartialBuilder with() {
+      return new PartialBuilder(this);
+   }
+
+   public ContributionDecoder decoder() {
       return new ContributionDecoder(this);
    }
 
@@ -67,5 +70,36 @@ public class ModelContext {
    public static ModelContext of(final URI uri, final EditingDomain domain, final CCommand command,
       final Injector injector) {
       return new ModelContext(uri, domain, command, injector);
+   }
+
+   public static class PartialBuilder {
+      protected URI uri;
+      protected EditingDomain domain;
+      protected CCommand command;
+
+      protected PartialBuilder(final ModelContext context) {
+         uri = context.uri;
+         domain = context.domain;
+         command = context.command;
+      }
+
+      public PartialBuilder uri(final URI uri) {
+         this.uri = uri;
+         return this;
+      }
+
+      public PartialBuilder domain(final EditingDomain domain) {
+         this.domain = domain;
+         return this;
+      }
+
+      public PartialBuilder command(final CCommand command) {
+         this.command = command;
+         return this;
+      }
+
+      public ModelContext build() {
+         return ModelContext.of(uri, domain, command);
+      }
    }
 }

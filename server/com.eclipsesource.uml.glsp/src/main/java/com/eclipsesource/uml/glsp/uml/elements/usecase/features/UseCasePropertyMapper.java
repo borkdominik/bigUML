@@ -17,7 +17,7 @@ import org.eclipse.uml2.uml.UseCase;
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
 import com.eclipsesource.uml.glsp.features.property_palette.handler.action.UpdateElementPropertyAction;
 import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalette;
-import com.eclipsesource.uml.glsp.uml.elements.usecase.UseCaseDefaultHandler;
+import com.eclipsesource.uml.glsp.uml.elements.usecase.UseCaseOperationHandler;
 import com.eclipsesource.uml.glsp.uml.elements.usecase.UseCaseConfiguration;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.BaseDiagramElementPropertyMapper;
 import com.eclipsesource.uml.modelserver.uml.elements.usecase.commands.UpdateUseCaseArgument;
@@ -39,21 +39,21 @@ public class UseCasePropertyMapper extends BaseDiagramElementPropertyMapper<UseC
    @Override
    public Optional<UpdateOperation> map(final UpdateElementPropertyAction action) {
       var property = getProperty(UseCaseConfiguration.Property.class, action);
-      var handler = getHandler(UseCaseDefaultHandler.class, action);
+      var handler = getHandler(UseCaseOperationHandler.class, action);
       UpdateOperation operation = null;
 
       switch (property) {
          case NAME:
             operation = handler.withArgument(
-               new UpdateUseCaseArgument.Builder()
+               UpdateUseCaseArgument.by()
                   .name(action.getValue())
-                  .get());
+                  .build());
             break;
          case IS_ABSTRACT:
             operation = handler.withArgument(
-               new UpdateUseCaseArgument.Builder()
+               UpdateUseCaseArgument.by()
                   .isAbstract(Boolean.parseBoolean(action.getValue()))
-                  .get());
+                  .build());
             break;
       }
 

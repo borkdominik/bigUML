@@ -59,6 +59,6 @@ public final class GenericsUtil {
          }
       }
       throw new IllegalArgumentException(
-         "no generic supertype for " + subClass + " of type " + superClass);
+         "[GenericsUtil] no generic supertype for " + subClass + " of type " + superClass);
    }
 }

@@ -10,27 +10,27 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.elements.subject.commands;
 
-import org.eclipse.uml2.uml.Classifier;
-import org.eclipse.uml2.uml.Model;
+import org.eclipse.uml2.uml.Component;
+import org.eclipse.uml2.uml.Package;
 import org.eclipse.uml2.uml.UMLFactory;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.BaseCreateSemanticChildCommand;
 import com.eclipsesource.uml.modelserver.uml.generator.ListNameGenerator;
 
-public class CreateSubjectSemanticCommand extends BaseCreateSemanticChildCommand<Model, Classifier> {
-   public CreateSubjectSemanticCommand(final ModelContext context, final Model parent) {
+public class CreateSubjectSemanticCommand extends BaseCreateSemanticChildCommand<Package, Component> {
+   public CreateSubjectSemanticCommand(final ModelContext context, final Package parent) {
       super(context, parent);
    }
 
    @Override
-   protected Classifier createSemanticElement(final Model parent) {
-      var nameGenerator = new ListNameGenerator(Classifier.class, parent.getPackagedElements());
+   protected Component createSemanticElement(final Package parent) {
+      var nameGenerator = new ListNameGenerator(Component.class, parent.getPackagedElements());
 
-      var classifier = UMLFactory.eINSTANCE.createComponent();
-      classifier.setName(nameGenerator.newName());
+      var component = UMLFactory.eINSTANCE.createComponent();
+      component.setName(nameGenerator.newName());
 
-      parent.getPackagedElements().add(classifier);
-      return classifier;
+      parent.getPackagedElements().add(component);
+      return component;
    }
 }

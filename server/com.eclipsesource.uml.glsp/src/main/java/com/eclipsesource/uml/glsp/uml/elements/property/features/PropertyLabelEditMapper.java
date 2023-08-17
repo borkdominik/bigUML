@@ -18,10 +18,10 @@ import org.eclipse.uml2.uml.Property;
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyMultiplicityLabelSuffix;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.gmodel.suffix.PropertyTypeLabelSuffix;
-import com.eclipsesource.uml.glsp.uml.diagram.class_diagram.handler.operation.property.UpdatePropertyHandler;
 import com.eclipsesource.uml.glsp.uml.elements.property.PropertyConfiguration;
+import com.eclipsesource.uml.glsp.uml.elements.property.PropertyOperationHandler;
+import com.eclipsesource.uml.glsp.uml.elements.property.gmodel.suffix.PropertyMultiplicityLabelSuffix;
+import com.eclipsesource.uml.glsp.uml.elements.property.gmodel.suffix.PropertyTypeLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.features.label_edit.BaseLabelEditMapper;
 import com.eclipsesource.uml.glsp.uml.utils.MultiplicityUtil;
 import com.eclipsesource.uml.modelserver.uml.elements.property.commands.UpdatePropertyArgument;
@@ -30,26 +30,26 @@ public class PropertyLabelEditMapper extends BaseLabelEditMapper<Property> {
 
    @Override
    public Optional<UpdateOperation> map(final ApplyLabelEditOperation operation) {
-      var handler = getHandler(UpdatePropertyHandler.class, operation);
+      var handler = getHandler(PropertyOperationHandler.class, operation);
       UpdateOperation update = null;
 
       if (matches(operation, CoreTypes.LABEL_NAME, NameLabelSuffix.SUFFIX)) {
          update = handler.withArgument(
-            new UpdatePropertyArgument.Builder()
+            UpdatePropertyArgument.by()
                .name(operation.getText())
-               .get());
+               .build());
       } else if (matches(operation, PropertyConfiguration.Label.multiplicityTypeId(),
          PropertyMultiplicityLabelSuffix.SUFFIX)) {
          update = handler.withArgument(
-            new UpdatePropertyArgument.Builder()
+            UpdatePropertyArgument.by()
                .upperBound(MultiplicityUtil.getUpper(operation.getText()))
                .lowerBound(MultiplicityUtil.getLower(operation.getText()))
-               .get());
+               .build());
       } else if (matches(operation, PropertyConfiguration.Label.typeTypeId(), PropertyTypeLabelSuffix.SUFFIX)) {
          update = handler.withArgument(
-            new UpdatePropertyArgument.Builder()
+            UpdatePropertyArgument.by()
                .typeId(operation.getText())
-               .get());
+               .build());
       }
 
       return withContext(update);

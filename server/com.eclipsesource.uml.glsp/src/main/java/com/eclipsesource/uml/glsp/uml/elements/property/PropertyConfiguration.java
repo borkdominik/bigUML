@@ -27,25 +27,34 @@ public class PropertyConfiguration {
    public static String ID = org.eclipse.uml2.uml.Property.class.getSimpleName();
 
    public static String typeId() {
-      return QualifiedUtil.representationTypeId(Representation.USE_CASE, DefaultTypes.COMPARTMENT,
+      return QualifiedUtil.representationTypeId(Representation.CLASS, DefaultTypes.COMPARTMENT,
          ID);
    }
 
    public static class Label {
       public static String typeTypeId() {
-         return QualifiedUtil.representationTypeId(Representation.USE_CASE, DefaultTypes.LABEL,
+         return QualifiedUtil.representationTypeId(Representation.CLASS, DefaultTypes.LABEL,
             ID + "-type");
       }
 
       public static String multiplicityTypeId() {
-         return QualifiedUtil.representationTypeId(Representation.USE_CASE, DefaultTypes.LABEL,
+         return QualifiedUtil.representationTypeId(Representation.CLASS, DefaultTypes.LABEL,
             ID + "-multiplicity");
       }
    }
 
    public enum Property {
       NAME,
+      IS_DERIVED,
+      IS_ORDERED,
+      IS_STATIC,
+      IS_DERIVED_UNION,
+      IS_READ_ONLY,
+      IS_UNIQUE,
+      VISIBILITY_KIND,
       MULTIPLICITY,
+      IS_NAVIGABLE,
+      AGGREGATION,
       TYPE;
    }
 
@@ -60,12 +69,13 @@ public class PropertyConfiguration {
       }
 
       @Override
-      public Set<String> getGraphContainableElements() { return Set.of(typeId()); }
+      public Set<String> getGraphContainableElements() { return Set.of(); }
 
       @Override
       public Set<ShapeTypeHint> getShapeTypeHints() {
          return Set.of(
-            new ShapeTypeHint(typeId(), true, true, false, false, List.of()));
+            new ShapeTypeHint(typeId(), false, true, false, false,
+               List.of()));
       }
    }
 }

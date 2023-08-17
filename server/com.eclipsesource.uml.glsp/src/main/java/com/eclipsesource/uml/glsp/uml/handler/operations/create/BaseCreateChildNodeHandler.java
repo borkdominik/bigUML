@@ -12,6 +12,8 @@ package com.eclipsesource.uml.glsp.uml.handler.operations.create;
 
 import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
 
+import java.util.Set;
+
 import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.types.GLSPServerException;
@@ -23,7 +25,7 @@ import com.eclipsesource.uml.modelserver.shared.utils.reflection.GenericsUtil;
 import com.google.inject.Inject;
 
 public abstract class BaseCreateChildNodeHandler<T> implements DiagramCreateNodeHandler {
-   protected final String elementTypeId;
+   protected final Set<String> elementTypeIds;
    protected final Class<T> containerType;
 
    @Inject
@@ -33,13 +35,17 @@ public abstract class BaseCreateChildNodeHandler<T> implements DiagramCreateNode
    protected UmlModelState modelState;
 
    public BaseCreateChildNodeHandler(final String typeId) {
-      this.elementTypeId = typeId;
+      this(Set.of(typeId));
+   }
+
+   public BaseCreateChildNodeHandler(final Set<String> typeIds) {
+      this.elementTypeIds = typeIds;
 
       this.containerType = GenericsUtil.getClassParameter(getClass(), BaseCreateChildNodeHandler.class, 0);
    }
 
    @Override
-   public String getElementTypeId() { return elementTypeId; }
+   public Set<String> getElementTypeIds() { return elementTypeIds; }
 
    @Override
    public void handleCreateNode(final CreateNodeOperation operation) {
@@ -53,7 +59,7 @@ public abstract class BaseCreateChildNodeHandler<T> implements DiagramCreateNode
       modelServerAccess.exec(command)
          .thenAccept(response -> {
             if (response.body() == null || response.body().isEmpty()) {
-               throw new GLSPServerException("Could not execute create on " + elementTypeId + " for command "
+               throw new GLSPServerException("Could not execute create on " + elementTypeIds + " for command "
                   + command.getClass().getName());
             }
          });

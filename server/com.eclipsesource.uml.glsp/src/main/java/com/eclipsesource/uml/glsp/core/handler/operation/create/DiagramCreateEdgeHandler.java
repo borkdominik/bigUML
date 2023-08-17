@@ -10,10 +10,12 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.core.handler.operation.create;
 
+import java.util.Set;
+
 import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 
 public interface DiagramCreateEdgeHandler {
-   String getElementTypeId();
+   Set<String> getElementTypeIds();
 
    void handleCreateEdge(CreateEdgeOperation operation);
 }

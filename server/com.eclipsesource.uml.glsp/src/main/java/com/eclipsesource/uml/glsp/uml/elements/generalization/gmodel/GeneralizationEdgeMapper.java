@@ -17,11 +17,19 @@ import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.Generalization;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
-import com.eclipsesource.uml.glsp.uml.elements.generalization.GeneralizationConfiguration;
-import com.eclipsesource.uml.glsp.uml.gmodel.BaseGEdgeMapper;
+import com.eclipsesource.uml.glsp.uml.gmodel.RepresentationGEdgeMapper;
 import com.eclipsesource.uml.glsp.uml.gmodel.element.EdgeGBuilder;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
-public class GeneralizationEdgeMapper extends BaseGEdgeMapper<Generalization, GEdge> implements EdgeGBuilder {
+public class GeneralizationEdgeMapper extends RepresentationGEdgeMapper<Generalization, GEdge>
+   implements EdgeGBuilder {
+
+   @Inject
+   public GeneralizationEdgeMapper(@Assisted final Representation representation) {
+      super(representation);
+   }
 
    @Override
    public GEdge map(final Generalization source) {
@@ -30,7 +38,7 @@ public class GeneralizationEdgeMapper extends BaseGEdgeMapper<Generalization, GE
       var general = source.getGeneral();
       var generalId = idGenerator.getOrCreateId(general);
 
-      GEdgeBuilder builder = new GEdgeBuilder(GeneralizationConfiguration.typeId())
+      GEdgeBuilder builder = new GEdgeBuilder(configuration().typeId())
          .id(idGenerator.getOrCreateId(source))
          .addCssClass(CoreCSS.EDGE)
          .addCssClass(CoreCSS.Marker.TRIANGLE_EMPTY.end())

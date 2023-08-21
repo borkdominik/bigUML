@@ -28,7 +28,7 @@ import com.eclipsesource.uml.modelserver.unotation.Representation;
 
 public class RealizationConfiguration {
    public static String typeId() {
-      return QualifiedUtil.representationTypeId(Representation.CLASS, DefaultTypes.EDGE,
+      return QualifiedUtil.typeId(DefaultTypes.EDGE,
          Realization.class.getSimpleName());
    }
 

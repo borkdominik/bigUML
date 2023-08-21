@@ -12,14 +12,21 @@ package com.eclipsesource.uml.glsp.core.handler.operation.update;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.server.emf.EMFIdGenerator;
 
+import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
+import com.google.inject.TypeLiteral;
+import com.google.inject.name.Names;
+import com.google.inject.spi.ProviderInstanceBinding;
 
 public class UpdateHandlerOperationMapper {
 
@@ -68,27 +75,71 @@ public class UpdateHandlerOperationMapper {
 
    public <THandler extends DiagramUpdateHandler<TElement>, TElement extends EObject, TUpdateArgument> Prepared<THandler, TElement, TUpdateArgument> prepare(
       final Class<THandler> handlerType, final TElement element) {
-      return new Prepared<>(this.idGenerator, this.injector, handlerType, element);
+      return new Prepared<>(this.idGenerator, this.injector, Optional.empty(), handlerType, element);
+   }
+
+   public <THandler extends DiagramUpdateHandler<TElement>, TElement extends EObject, TUpdateArgument> Prepared<THandler, TElement, TUpdateArgument> prepare(
+      final Representation representation, final Class<THandler> handlerType, final TElement element) {
+      return new Prepared<>(this.idGenerator, this.injector, Optional.of(representation), handlerType, element);
    }
 
    public static class Prepared<THandler extends DiagramUpdateHandler<TElement>, TElement extends EObject, TUpdateArgument>
       extends UpdateHandlerOperationMapper {
 
+      protected final Optional<Representation> representation;
       protected final Class<THandler> handlerType;
       protected final TElement element;
 
       public Prepared(final EMFIdGenerator idGenerator, final Injector injector,
-         final Class<THandler> handlerType, final TElement element) {
+         final Optional<Representation> representation, final Class<THandler> handlerType, final TElement element) {
          super(idGenerator, injector);
 
+         this.representation = representation;
          this.handlerType = handlerType;
          this.element = element;
       }
 
       public UpdateOperation withArgument(
          final TUpdateArgument args) {
-         THandler instance = injector.getInstance(this.handlerType);
-         return asOperation(instance, element, args);
+         return representation.map(r -> withArgument(r, args)).orElseGet(() -> {
+            THandler instance = injector.getInstance(this.handlerType);
+            return asOperation(instance, element, args);
+         });
+      }
+
+      public UpdateOperation withArgument(
+         final Representation representation,
+         final TUpdateArgument args) {
+         var updateBindings = injector
+            .findBindingsByType(new TypeLiteral<Set<DiagramUpdateHandler<? extends EObject>>>() {}).stream()
+            .filter(v -> {
+
+               var key = v.getKey();
+               var annotation = key.getAnnotation();
+               if (annotation != null) {
+                  return annotation.equals(Names.named("USE_CASE"));
+               }
+
+               return false;
+            })
+            .collect(Collectors.toList());
+
+         for (var updateBinding : updateBindings) {
+            if (updateBinding instanceof ProviderInstanceBinding) {
+               var instanceBinding = (ProviderInstanceBinding<Set<DiagramUpdateHandler<? extends EObject>>>) updateBinding;
+               var handlers = injector.getInstance(instanceBinding.getKey());
+
+               for (var handler : handlers) {
+                  if (handler.getClass().equals(this.handlerType)) {
+                     return asOperation((THandler) handler, element, args);
+                  }
+               }
+
+            }
+         }
+
+         throw new IllegalArgumentException(
+            String.format("Could not find instance for handler %s in representation %s", handlerType, representation));
       }
 
    }

@@ -19,18 +19,26 @@ import org.eclipse.uml2.uml.Association;
 import org.eclipse.uml2.uml.Property;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
-import com.eclipsesource.uml.glsp.uml.elements.association.AssociationConfiguration;
 import com.eclipsesource.uml.glsp.uml.elements.property.PropertyConfiguration;
 import com.eclipsesource.uml.glsp.uml.elements.property.gmodel.suffix.PropertyMultiplicityLabelSuffix;
-import com.eclipsesource.uml.glsp.uml.gmodel.BaseGEdgeMapper;
+import com.eclipsesource.uml.glsp.uml.gmodel.RepresentationGEdgeMapper;
 import com.eclipsesource.uml.glsp.uml.gmodel.element.EdgeGBuilder;
 import com.eclipsesource.uml.glsp.uml.utils.MultiplicityUtil;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
-public final class AssociationEdgeMapper extends BaseGEdgeMapper<Association, GEdge> implements EdgeGBuilder {
+public class AssociationEdgeMapper extends RepresentationGEdgeMapper<Association, GEdge>
+   implements EdgeGBuilder {
+
+   @Inject
+   public AssociationEdgeMapper(@Assisted final Representation representation) {
+      super(representation);
+   }
 
    @Override
    public GEdge map(final Association source) {
-      var builder = new GEdgeBuilder(AssociationConfiguration.typeId())
+      var builder = new GEdgeBuilder(configuration().typeId())
          .id(idGenerator.getOrCreateId(source))
          .addCssClass(CoreCSS.EDGE)
          .routerKind(GConstants.RouterKind.POLYLINE)
@@ -62,9 +70,14 @@ public final class AssociationEdgeMapper extends BaseGEdgeMapper<Association, GE
       var memberEndFirst = memberEnds.get(0);
       var memberEndSecond = memberEnds.get(1);
 
+      var memberSource = memberEndFirst.getOwner() instanceof Association ? memberEndFirst.getType()
+         : memberEndFirst.getOwner();
+      var memberTarget = memberEndSecond.getOwner() instanceof Association ? memberEndSecond.getType()
+         : memberEndSecond.getOwner();
+
       builder
-         .sourceId(idGenerator.getOrCreateId(memberEndFirst.getOwner()))
-         .targetId(idGenerator.getOrCreateId(memberEndSecond.getOwner()));
+         .sourceId(idGenerator.getOrCreateId(memberSource))
+         .targetId(idGenerator.getOrCreateId(memberTarget));
 
       applyMemberEnd(memberEndFirst, builder, 0.9d, GConstants.EdgeSide.BOTTOM, GConstants.EdgeSide.TOP);
       applyMemberEnd(memberEndSecond, builder, 0.1d, GConstants.EdgeSide.TOP, GConstants.EdgeSide.BOTTOM);

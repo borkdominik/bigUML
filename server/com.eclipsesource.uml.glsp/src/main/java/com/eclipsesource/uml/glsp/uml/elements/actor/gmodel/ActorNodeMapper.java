@@ -24,15 +24,23 @@ import org.eclipse.uml2.uml.Actor;
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.QuotationMark;
 import com.eclipsesource.uml.glsp.uml.elements.actor.ActorConfiguration;
-import com.eclipsesource.uml.glsp.uml.gmodel.BaseGNodeMapper;
+import com.eclipsesource.uml.glsp.uml.gmodel.RepresentationGNodeMapper;
 import com.eclipsesource.uml.glsp.uml.gmodel.element.NamedElementGBuilder;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
-public class ActorNodeMapper extends BaseGNodeMapper<Actor, GNode>
+public class ActorNodeMapper extends RepresentationGNodeMapper<Actor, GNode>
    implements NamedElementGBuilder<Actor> {
+
+   @Inject
+   public ActorNodeMapper(@Assisted final Representation representation) {
+      super(representation);
+   }
 
    @Override
    public GNode map(final Actor source) {
-      var builder = new GNodeBuilder(ActorConfiguration.typeId())
+      var builder = new GNodeBuilder(configuration().typeId())
          .id(idGenerator.getOrCreateId(source))
          .layout(GConstants.Layout.VBOX);
 
@@ -50,7 +58,8 @@ public class ActorNodeMapper extends BaseGNodeMapper<Actor, GNode>
          .layoutOptions(new GLayoutOptions().hAlign(GConstants.HAlign.CENTER).vGap(5))
          .addCssClass(CoreCSS.NODE);
 
-      var stickFigure = new GNodeBuilder(ActorConfiguration.GModel.stickFigureNodeTypeId())
+      var stickFigure = new GNodeBuilder(
+         configuration(ActorConfiguration.class).stickFigureNodeTypeId())
          .id(idContextGenerator().getOrCreateId(source))
          .addCssClass(CoreCSS.NODE)
          .build();

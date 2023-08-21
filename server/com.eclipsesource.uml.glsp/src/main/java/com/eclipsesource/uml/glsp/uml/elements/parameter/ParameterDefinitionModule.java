@@ -19,7 +19,7 @@ import com.eclipsesource.uml.glsp.core.manifest.DiagramManifest;
 import com.eclipsesource.uml.glsp.features.property_palette.mapper.DiagramElementPropertyMapper;
 import com.eclipsesource.uml.glsp.uml.elements.parameter.features.ParameterPropertyMapper;
 import com.eclipsesource.uml.glsp.uml.handler.element.NodeOperationHandler;
-import com.eclipsesource.uml.glsp.uml.manifest.NodeOperationHandlerDefinition;
+import com.eclipsesource.uml.glsp.uml.manifest.node.NodeOperationHandlerDefinition;
 import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.Multibinder;
 

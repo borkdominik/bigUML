@@ -24,7 +24,7 @@ import com.eclipsesource.uml.glsp.uml.elements.data_type.features.DataTypeLabelE
 import com.eclipsesource.uml.glsp.uml.elements.data_type.features.DataTypePropertyMapper;
 import com.eclipsesource.uml.glsp.uml.elements.data_type.gmodel.DataTypeNodeMapper;
 import com.eclipsesource.uml.glsp.uml.handler.element.NodeOperationHandler;
-import com.eclipsesource.uml.glsp.uml.manifest.NodeOperationHandlerDefinition;
+import com.eclipsesource.uml.glsp.uml.manifest.node.NodeOperationHandlerDefinition;
 import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.Multibinder;
 

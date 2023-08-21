@@ -20,22 +20,23 @@ import org.eclipse.glsp.graph.GraphPackage;
 import org.eclipse.glsp.server.types.ShapeTypeHint;
 import org.eclipse.uml2.uml.Actor;
 
-import com.eclipsesource.uml.glsp.core.diagram.DiagramElementConfiguration;
+import com.eclipsesource.uml.glsp.uml.configuration.RepresentationNodeConfiguration;
 import com.eclipsesource.uml.glsp.uml.utils.QualifiedUtil;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
-public class ActorConfiguration {
-   public static String typeId() {
-      return QualifiedUtil.representationTypeId(Representation.USE_CASE, DefaultTypes.NODE,
-         Actor.class.getSimpleName());
+public class ActorConfiguration extends RepresentationNodeConfiguration<Actor> {
+
+   @Inject
+   public ActorConfiguration(@Assisted final Representation representation) {
+      super(representation);
    }
 
-   public static class GModel {
-      public static String stickFigureNodeTypeId() {
-         return QualifiedUtil.representationTemplateTypeId(Representation.USE_CASE, DefaultTypes.NODE,
-            "GModel",
-            "STICKFIGURE");
-      }
+   public String stickFigureNodeTypeId() {
+      return QualifiedUtil.representationTemplateTypeId(representation, DefaultTypes.NODE,
+         "GModel",
+         "STICKFIGURE");
    }
 
    public enum Property {
@@ -43,19 +44,16 @@ public class ActorConfiguration {
       IS_ABSTRACT
    }
 
-   public static class Diagram implements DiagramElementConfiguration.Node {
+   @Override
+   public Map<String, EClass> getTypeMappings() { return Map.of(
+      typeId(), GraphPackage.Literals.GNODE); }
 
-      @Override
-      public Map<String, EClass> getTypeMappings() { return Map.of(
-         typeId(), GraphPackage.Literals.GNODE); }
+   @Override
+   public Set<String> getGraphContainableElements() { return Set.of(typeId()); }
 
-      @Override
-      public Set<String> getGraphContainableElements() { return Set.of(typeId()); }
-
-      @Override
-      public Set<ShapeTypeHint> getShapeTypeHints() {
-         return Set.of(
-            new ShapeTypeHint(typeId(), true, true, true, false, List.of()));
-      }
+   @Override
+   public Set<ShapeTypeHint> getShapeTypeHints() {
+      return Set.of(
+         new ShapeTypeHint(typeId(), true, true, true, false, List.of()));
    }
 }

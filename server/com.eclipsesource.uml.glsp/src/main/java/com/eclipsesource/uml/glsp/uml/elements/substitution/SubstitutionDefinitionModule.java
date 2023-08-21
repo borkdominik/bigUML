@@ -22,7 +22,7 @@ import com.eclipsesource.uml.glsp.features.property_palette.mapper.DiagramElemen
 import com.eclipsesource.uml.glsp.uml.elements.substitution.features.SubstitutionPropertyMapper;
 import com.eclipsesource.uml.glsp.uml.elements.substitution.gmodel.SubstitutionEdgeMapper;
 import com.eclipsesource.uml.glsp.uml.handler.element.EdgeOperationHandler;
-import com.eclipsesource.uml.glsp.uml.manifest.EdgeOperationHandlerDefinition;
+import com.eclipsesource.uml.glsp.uml.manifest.edge.EdgeOperationHandlerDefinition;
 import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.Multibinder;
 

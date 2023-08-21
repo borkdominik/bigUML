@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_o9FFsEBLEe6ub88yN7dSRA" name="test_c">
+  <packagedElement xmi:type="uml:Class" xmi:id="_pcJnUEBLEe6ub88yN7dSRA" name="NewClass1">
+    <ownedAttribute xmi:id="_JnSSEUBMEe6ub88yN7dSRA" name="NewClass1" type="_pcJnUEBLEe6ub88yN7dSRA" association="_JnSSEEBMEe6ub88yN7dSRA">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_JnS5IEBMEe6ub88yN7dSRA" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_JnS5IUBMEe6ub88yN7dSRA" value="1"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_JnS5IkBMEe6ub88yN7dSRA" name="NewClass1" type="_pcJnUEBLEe6ub88yN7dSRA" association="_JnSSEEBMEe6ub88yN7dSRA">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_JnS5I0BMEe6ub88yN7dSRA" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_JnTgMEBMEe6ub88yN7dSRA" value="1"/>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_p8hwgEBLEe6ub88yN7dSRA" name="NewClass2"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="_JnSSEEBMEe6ub88yN7dSRA" memberEnd="_JnSSEUBMEe6ub88yN7dSRA _JnS5IkBMEe6ub88yN7dSRA"/>
+</uml:Model>

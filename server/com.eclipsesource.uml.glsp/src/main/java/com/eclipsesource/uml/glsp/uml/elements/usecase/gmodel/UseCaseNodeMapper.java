@@ -23,16 +23,23 @@ import org.eclipse.uml2.uml.UseCase;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.QuotationMark;
-import com.eclipsesource.uml.glsp.uml.elements.usecase.UseCaseConfiguration;
-import com.eclipsesource.uml.glsp.uml.gmodel.BaseGNodeMapper;
+import com.eclipsesource.uml.glsp.uml.gmodel.RepresentationGNodeMapper;
 import com.eclipsesource.uml.glsp.uml.gmodel.element.NamedElementGBuilder;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
-public class UseCaseNodeMapper extends BaseGNodeMapper<UseCase, GNode>
+public class UseCaseNodeMapper extends RepresentationGNodeMapper<UseCase, GNode>
    implements NamedElementGBuilder<UseCase> {
+
+   @Inject
+   public UseCaseNodeMapper(@Assisted final Representation representation) {
+      super(representation);
+   }
 
    @Override
    public GNode map(final UseCase source) {
-      var builder = new GNodeBuilder(UseCaseConfiguration.typeId())
+      var builder = new GNodeBuilder(configuration().typeId())
          .id(idGenerator.getOrCreateId(source))
          .layout(GConstants.Layout.VBOX)
          .addCssClass(CoreCSS.NODE)

@@ -16,9 +16,17 @@ import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperation;
 import org.eclipse.uml2.uml.Association;
 
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
-import com.eclipsesource.uml.glsp.uml.features.label_edit.BaseLabelEditMapper;
+import com.eclipsesource.uml.glsp.uml.features.label_edit.RepresentationLabelEditMapper;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
-public class AssociationLabelEditMapper extends BaseLabelEditMapper<Association> {
+public class AssociationLabelEditMapper extends RepresentationLabelEditMapper<Association> {
+
+   @Inject
+   public AssociationLabelEditMapper(@Assisted final Representation representation) {
+      super(representation);
+   }
 
    @Override
    public Optional<UpdateOperation> map(final ApplyLabelEditOperation operation) {

@@ -27,7 +27,7 @@ import com.eclipsesource.uml.modelserver.unotation.Representation;
 
 public class EnumerationConfiguration {
    public static String typeId() {
-      return QualifiedUtil.representationTypeId(Representation.CLASS, DefaultTypes.NODE,
+      return QualifiedUtil.typeId(DefaultTypes.NODE,
          Enumeration.class.getSimpleName());
    }
 

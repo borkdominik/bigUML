@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.uml.manifest;
+package com.eclipsesource.uml.glsp.uml.manifest.node;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.graph.GModelElement;
@@ -16,7 +16,7 @@ import org.eclipse.glsp.graph.GModelElement;
 import com.eclipsesource.uml.glsp.core.diagram.DiagramElementConfiguration;
 import com.eclipsesource.uml.glsp.core.features.label_edit.DiagramLabelEditMapper;
 import com.eclipsesource.uml.glsp.core.gmodel.GModelMapper;
-import com.eclipsesource.uml.glsp.core.handler.operation.create.DiagramCreateEdgeHandler;
+import com.eclipsesource.uml.glsp.core.handler.operation.create.DiagramCreateNodeHandler;
 import com.eclipsesource.uml.glsp.core.handler.operation.delete.DiagramDeleteHandler;
 import com.eclipsesource.uml.glsp.core.handler.operation.update.DiagramUpdateHandler;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramCreateHandlerContribution;
@@ -27,15 +27,16 @@ import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramUpd
 import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.GModelMapperContribution;
 import com.eclipsesource.uml.glsp.features.property_palette.manifest.contributions.DiagramElementPropertyMapperContribution;
 import com.eclipsesource.uml.glsp.features.property_palette.mapper.DiagramElementPropertyMapper;
+import com.eclipsesource.uml.glsp.uml.manifest.ElementDefinition;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.multibindings.Multibinder;
 
-public abstract class EdgeDefinition extends ElementDefinition
+public abstract class NodeDefinition extends ElementDefinition
    implements DiagramElementConfigurationContribution, DiagramCreateHandlerContribution,
    DiagramDeleteHandlerContribution, DiagramUpdateHandlerContribution, DiagramLabelEditMapperContribution,
    DiagramElementPropertyMapperContribution, GModelMapperContribution {
 
-   public EdgeDefinition(final String id, final Representation representation) {
+   public NodeDefinition(final String id, final Representation representation) {
       super(id, representation);
    }
 
@@ -43,8 +44,8 @@ public abstract class EdgeDefinition extends ElementDefinition
    protected void configure() {
       super.configure();
 
-      contributeDiagramElementConfiguration((nodes) -> {}, this::diagramConfigurations);
-      contributeDiagramCreateEdgeHandlers(this::diagramCreateHandlers);
+      contributeDiagramElementConfiguration(this::diagramConfigurations, (edges) -> {});
+      contributeDiagramCreateNodeHandlers(this::diagramCreateHandlers);
       contributeDiagramDeleteHandlers(this::diagramDeleteHandlers);
       contributeDiagramUpdateHandlers(this::diagramUpdateHandlers);
 
@@ -54,9 +55,9 @@ public abstract class EdgeDefinition extends ElementDefinition
       contributeGModelMappers(this::gmodelMappers);
    }
 
-   protected abstract void diagramConfigurations(Multibinder<DiagramElementConfiguration.Edge> contribution);
+   protected abstract void diagramConfigurations(Multibinder<DiagramElementConfiguration.Node> contribution);
 
-   protected abstract void diagramCreateHandlers(Multibinder<DiagramCreateEdgeHandler> contribution);
+   protected abstract void diagramCreateHandlers(Multibinder<DiagramCreateNodeHandler> contribution);
 
    protected abstract void diagramDeleteHandlers(Multibinder<DiagramDeleteHandler<? extends EObject>> contribution);
 
@@ -67,7 +68,7 @@ public abstract class EdgeDefinition extends ElementDefinition
    protected void diagramPropertyPaletteMappers(
       final Multibinder<DiagramElementPropertyMapper<? extends EObject>> contribution) {}
 
-   protected abstract void gmodelMappers(
-      Multibinder<GModelMapper<? extends EObject, ? extends GModelElement>> contribution);
+   protected void gmodelMappers(
+      final Multibinder<GModelMapper<? extends EObject, ? extends GModelElement>> contribution) {}
 
 }

@@ -12,13 +12,13 @@ package com.eclipsesource.uml.glsp.uml.representation.use_case;
 
 import com.eclipsesource.uml.glsp.core.manifest.DiagramManifest;
 import com.eclipsesource.uml.glsp.uml.elements.actor.ActorDefinitionModule;
-import com.eclipsesource.uml.glsp.uml.elements.association.AssociationDefinitionModule;
 import com.eclipsesource.uml.glsp.uml.elements.extend.ExtendDefinitionModule;
 import com.eclipsesource.uml.glsp.uml.elements.generalization.GeneralizationDefinitionModule;
 import com.eclipsesource.uml.glsp.uml.elements.include.IncludeDefinitionModule;
 import com.eclipsesource.uml.glsp.uml.elements.property.PropertyDefinitionModule;
 import com.eclipsesource.uml.glsp.uml.elements.subject.SubjectDefinitionModule;
 import com.eclipsesource.uml.glsp.uml.elements.usecase.UseCaseDefinitionModule;
+import com.eclipsesource.uml.glsp.uml.representation.use_case.elements.association.UseCaseAssociationDefinitionModule;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 
 public class UseCaseManifest extends DiagramManifest {
@@ -38,7 +38,7 @@ public class UseCaseManifest extends DiagramManifest {
       super.configure();
 
       install(new ActorDefinitionModule(this));
-      install(new AssociationDefinitionModule(this));
+      install(new UseCaseAssociationDefinitionModule(this));
       install(new ExtendDefinitionModule(this));
       install(new GeneralizationDefinitionModule(this));
       install(new IncludeDefinitionModule(this));

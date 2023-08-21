@@ -14,39 +14,45 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.glsp.server.features.toolpalette.PaletteItem;
+import org.eclipse.uml2.uml.Actor;
+import org.eclipse.uml2.uml.Association;
+import org.eclipse.uml2.uml.Component;
+import org.eclipse.uml2.uml.Extend;
+import org.eclipse.uml2.uml.Generalization;
+import org.eclipse.uml2.uml.Include;
+import org.eclipse.uml2.uml.UseCase;
 
 import com.eclipsesource.uml.glsp.core.features.tool_palette.PaletteItemUtil;
-import com.eclipsesource.uml.glsp.core.features.tool_palette.ToolPaletteConfiguration;
-import com.eclipsesource.uml.glsp.uml.elements.actor.ActorConfiguration;
-import com.eclipsesource.uml.glsp.uml.elements.association.AssociationConfiguration;
-import com.eclipsesource.uml.glsp.uml.elements.extend.ExtendConfiguration;
-import com.eclipsesource.uml.glsp.uml.elements.generalization.GeneralizationConfiguration;
-import com.eclipsesource.uml.glsp.uml.elements.include.IncludeConfiguration;
-import com.eclipsesource.uml.glsp.uml.elements.subject.SubjectConfiguration;
-import com.eclipsesource.uml.glsp.uml.elements.usecase.UseCaseConfiguration;
+import com.eclipsesource.uml.glsp.uml.features.tool_palette.RepresentationToolPaletteConfiguration;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
 
-public class UseCaseToolPaletteConfiguration implements ToolPaletteConfiguration {
+public class UseCaseToolPaletteConfiguration extends RepresentationToolPaletteConfiguration {
+   public UseCaseToolPaletteConfiguration() {
+      super(Representation.USE_CASE);
+   }
+
    @Override
    public List<PaletteItem> getItems(final Map<String, String> args) {
       return List.of(containers(), relations());
    }
 
-   private PaletteItem containers() {
+   protected PaletteItem containers() {
       var containers = List.of(
-         PaletteItemUtil.node(UseCaseConfiguration.typeId(), "Usecase", "uml-use-case-icon"),
-         PaletteItemUtil.node(ActorConfiguration.typeId(), "Actor", "uml-actor-icon"),
-         PaletteItemUtil.node(SubjectConfiguration.typeId(), "Subject", "uml-component-icon"));
+         PaletteItemUtil.node(configurationFor(UseCase.class).typeId(), "Usecase", "uml-use-case-icon"),
+         PaletteItemUtil.node(configurationFor(Actor.class).typeId(), "Actor", "uml-actor-icon"),
+         PaletteItemUtil.node(configurationFor(Component.class).typeId(), "Subject", "uml-component-icon"));
 
       return PaletteItem.createPaletteGroup("uml.classifier", "Container", containers, "symbol-property");
    }
 
-   private PaletteItem relations() {
+   protected PaletteItem relations() {
       var relations = List.of(
-         PaletteItemUtil.edge(IncludeConfiguration.typeId(), "Include", "uml-include-icon"),
-         PaletteItemUtil.edge(AssociationConfiguration.typeId(), "Association",
+         PaletteItemUtil.edge(configurationFor(Include.class).typeId(), "Include", "uml-include-icon"),
+         PaletteItemUtil.edge(configurationFor(Association.class).typeId(), "Association",
             "uml-association-none-icon"),
-         PaletteItemUtil.edge(GeneralizationConfiguration.typeId(), "Generalization", "uml-generalization-icon"),
-         PaletteItemUtil.edge(ExtendConfiguration.typeId(), "Extend", "uml-extend-icon"));
+         PaletteItemUtil.edge(configurationFor(Generalization.class).typeId(), "Generalization",
+            "uml-generalization-icon"),
+         PaletteItemUtil.edge(configurationFor(Extend.class).typeId(), "Extend", "uml-extend-icon"));
 
       return PaletteItem.createPaletteGroup("uml.classifier", "Relation", relations, "symbol-property");
    }

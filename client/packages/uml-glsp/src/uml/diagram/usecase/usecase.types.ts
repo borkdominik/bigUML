@@ -20,7 +20,7 @@ import { QualifiedUtil } from '../../qualified.utils';
 export namespace UmlUseCaseTypes {
     export const USE_CASE = QualifiedUtil.representationTypeId(UmlDiagramType.USE_CASE, DefaultTypes.NODE, 'UseCase');
 
-    export const SUBJECT = QualifiedUtil.representationTypeId(UmlDiagramType.USE_CASE, DefaultTypes.NODE, 'Subject');
+    export const SUBJECT = QualifiedUtil.representationTypeId(UmlDiagramType.USE_CASE, DefaultTypes.NODE, 'Component');
 
     export const ACTOR = QualifiedUtil.representationTypeId(UmlDiagramType.USE_CASE, DefaultTypes.NODE, 'Actor');
 

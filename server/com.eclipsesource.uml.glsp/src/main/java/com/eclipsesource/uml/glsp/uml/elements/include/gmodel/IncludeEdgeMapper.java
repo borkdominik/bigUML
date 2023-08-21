@@ -19,11 +19,19 @@ import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.Include;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
-import com.eclipsesource.uml.glsp.uml.elements.include.IncludeConfiguration;
-import com.eclipsesource.uml.glsp.uml.gmodel.BaseGEdgeMapper;
+import com.eclipsesource.uml.glsp.uml.gmodel.RepresentationGEdgeMapper;
 import com.eclipsesource.uml.glsp.uml.gmodel.element.EdgeGBuilder;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
-public final class IncludeEdgeMapper extends BaseGEdgeMapper<Include, GEdge> implements EdgeGBuilder {
+public final class IncludeEdgeMapper extends RepresentationGEdgeMapper<Include, GEdge>
+   implements EdgeGBuilder {
+
+   @Inject
+   public IncludeEdgeMapper(@Assisted final Representation representation) {
+      super(representation);
+   }
 
    @Override
    public GEdge map(final Include source) {
@@ -32,7 +40,7 @@ public final class IncludeEdgeMapper extends BaseGEdgeMapper<Include, GEdge> imp
       var addition = source.getAddition();
       var additionId = idGenerator.getOrCreateId(addition);
 
-      GEdgeBuilder builder = new GEdgeBuilder(IncludeConfiguration.typeId())
+      GEdgeBuilder builder = new GEdgeBuilder(configuration().typeId())
          .id(idGenerator.getOrCreateId(source))
          .addCssClasses(List.of(CoreCSS.EDGE, CoreCSS.EDGE_DASHED))
          .addCssClass(CoreCSS.Marker.TENT.end())
@@ -47,7 +55,7 @@ public final class IncludeEdgeMapper extends BaseGEdgeMapper<Include, GEdge> imp
                .position(0.5d)
                .rotate(false)
                .build())
-                  .build());
+            .build());
 
       applyEdgeNotation(source, builder);
 

@@ -13,12 +13,18 @@ package com.eclipsesource.uml.glsp.uml.elements.subject;
 import org.eclipse.uml2.uml.Component;
 import org.eclipse.uml2.uml.Model;
 
+import com.eclipsesource.uml.glsp.uml.configuration.ElementConfigurationRegistry;
 import com.eclipsesource.uml.glsp.uml.handler.element.NodeOperationHandler;
+import com.eclipsesource.uml.modelserver.shared.registry.RepresentationKey;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
 public class SubjectOperationHandler extends NodeOperationHandler<Component, Model> {
 
-   public SubjectOperationHandler() {
-      super(SubjectConfiguration.typeId());
+   @Inject
+   public SubjectOperationHandler(@Assisted final Representation representation,
+      final ElementConfigurationRegistry registry) {
+      super(registry.accessTyped(new RepresentationKey<>(representation, Component.class)).typeId());
    }
-
 }

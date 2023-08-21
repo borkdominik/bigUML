@@ -31,14 +31,9 @@ public class GModelMapHandler {
 
    public GModelElement handle(final EObject source) {
       var representation = modelState.getUnsafeRepresentation();
-      var mapperOpt = registry.get(RepresentationKey.of(representation, source.getClass()));
+      var mapper = registry.access(RepresentationKey.of(representation, source.getClass()));
 
-      if (mapperOpt.isEmpty()) {
-         throw new GLSPServerException("Error during model initialization!", new Throwable(
-            "No matching GModelMapper found for the semanticElement of type: " + source.getClass().getSimpleName()));
-      }
-
-      return mapperOpt.get().map(source);
+      return mapper.map(source);
    }
 
    public List<GModelElement> handle(final Collection<? extends EObject> sources) {

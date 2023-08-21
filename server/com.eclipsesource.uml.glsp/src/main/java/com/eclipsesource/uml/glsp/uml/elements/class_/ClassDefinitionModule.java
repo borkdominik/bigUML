@@ -27,7 +27,7 @@ import com.eclipsesource.uml.glsp.uml.elements.class_.features.ClassPopupMapper;
 import com.eclipsesource.uml.glsp.uml.elements.class_.features.ClassPropertyMapper;
 import com.eclipsesource.uml.glsp.uml.elements.class_.gmodel.ClassNodeMapper;
 import com.eclipsesource.uml.glsp.uml.handler.element.NodeOperationHandler;
-import com.eclipsesource.uml.glsp.uml.manifest.NodeOperationHandlerDefinition;
+import com.eclipsesource.uml.glsp.uml.manifest.node.NodeOperationHandlerDefinition;
 import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.Multibinder;
 

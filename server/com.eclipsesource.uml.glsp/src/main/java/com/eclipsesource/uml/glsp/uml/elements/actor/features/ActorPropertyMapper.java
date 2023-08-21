@@ -17,12 +17,20 @@ import org.eclipse.uml2.uml.Actor;
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
 import com.eclipsesource.uml.glsp.features.property_palette.handler.action.UpdateElementPropertyAction;
 import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalette;
-import com.eclipsesource.uml.glsp.uml.elements.actor.ActorOperationHandler;
 import com.eclipsesource.uml.glsp.uml.elements.actor.ActorConfiguration;
-import com.eclipsesource.uml.glsp.uml.features.property_palette.BaseDiagramElementPropertyMapper;
+import com.eclipsesource.uml.glsp.uml.elements.actor.ActorOperationHandler;
+import com.eclipsesource.uml.glsp.uml.features.property_palette.RepresentationElementPropertyMapper;
 import com.eclipsesource.uml.modelserver.uml.elements.actor.commands.UpdateActorArgument;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
-public class ActorPropertyMapper extends BaseDiagramElementPropertyMapper<Actor> {
+public class ActorPropertyMapper extends RepresentationElementPropertyMapper<Actor> {
+
+   @Inject
+   public ActorPropertyMapper(@Assisted final Representation representation) {
+      super(representation);
+   }
 
    @Override
    public PropertyPalette map(final Actor source) {

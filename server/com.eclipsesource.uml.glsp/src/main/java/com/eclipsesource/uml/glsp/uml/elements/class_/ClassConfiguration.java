@@ -28,12 +28,12 @@ import com.eclipsesource.uml.modelserver.unotation.Representation;
 
 public final class ClassConfiguration {
    public static String typeId() {
-      return QualifiedUtil.representationTypeId(Representation.CLASS, DefaultTypes.NODE, Class.class.getSimpleName());
+      return QualifiedUtil.typeId(Representation.CLASS, DefaultTypes.NODE, Class.class.getSimpleName());
    }
 
    public static class Variant {
       public static String abstractTypeId() {
-         return QualifiedUtil.representationTemplateTypeId(Representation.CLASS, DefaultTypes.NODE, "abstract",
+         return QualifiedUtil.templateTypeId(DefaultTypes.NODE, "abstract",
             Class.class.getSimpleName());
       }
    }

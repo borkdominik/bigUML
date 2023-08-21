@@ -28,7 +28,7 @@ import com.eclipsesource.uml.modelserver.unotation.Representation;
 
 public class DataTypeConfiguration {
    public static String typeId() {
-      return QualifiedUtil.representationTypeId(Representation.CLASS, DefaultTypes.NODE,
+      return QualifiedUtil.typeId(DefaultTypes.NODE,
          DataType.class.getSimpleName());
    }
 

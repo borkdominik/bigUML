@@ -27,7 +27,7 @@ import com.eclipsesource.uml.modelserver.unotation.Representation;
 
 public class PackageImportConfiguration {
    public static String typeId() {
-      return QualifiedUtil.representationTypeId(Representation.CLASS, DefaultTypes.EDGE,
+      return QualifiedUtil.typeId(DefaultTypes.EDGE,
          PackageImport.class.getSimpleName());
    }
 

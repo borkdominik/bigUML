@@ -12,12 +12,19 @@ package com.eclipsesource.uml.glsp.uml.elements.actor;
 
 import org.eclipse.uml2.uml.Actor;
 
+import com.eclipsesource.uml.glsp.uml.configuration.ElementConfigurationRegistry;
 import com.eclipsesource.uml.glsp.uml.handler.element.NodeOperationHandler;
+import com.eclipsesource.uml.modelserver.shared.registry.RepresentationKey;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
 public class ActorOperationHandler extends NodeOperationHandler<Actor, org.eclipse.uml2.uml.Package> {
 
-   public ActorOperationHandler() {
-      super(ActorConfiguration.typeId());
+   @Inject
+   public ActorOperationHandler(@Assisted final Representation representation,
+      final ElementConfigurationRegistry registry) {
+      super(registry.accessTyped(new RepresentationKey<>(representation, Actor.class)).typeId());
    }
 
 }

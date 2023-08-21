@@ -16,14 +16,23 @@ import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 import org.eclipse.uml2.uml.Association;
 import org.eclipse.uml2.uml.Type;
 
+import com.eclipsesource.uml.glsp.uml.configuration.ElementConfigurationRegistry;
 import com.eclipsesource.uml.glsp.uml.handler.element.EdgeOperationHandler;
+import com.eclipsesource.uml.modelserver.shared.registry.RepresentationKey;
 import com.eclipsesource.uml.modelserver.uml.elements.association.commands.CreateAssociationArgument;
 import com.eclipsesource.uml.modelserver.uml.elements.association.constants.AssociationType;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
 public class AssociationOperationHandler extends EdgeOperationHandler<Association, Type, Type> {
 
-   public AssociationOperationHandler() {
-      super(Set.of(AssociationConfiguration.typeId(), AssociationConfiguration.Variant.aggregationTypeId(),
+   @Inject
+   public AssociationOperationHandler(@Assisted final Representation representation,
+      final ElementConfigurationRegistry registry) {
+      super(Set.of(
+         registry.accessTyped(new RepresentationKey<>(representation, Association.class)).typeId(),
+         AssociationConfiguration.Variant.aggregationTypeId(),
          AssociationConfiguration.Variant.compositionTypeId()));
    }
 

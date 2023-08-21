@@ -10,54 +10,12 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.elements.actor;
 
-import java.util.Optional;
-
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.glsp.graph.GModelElement;
-
-import com.eclipsesource.uml.glsp.core.diagram.DiagramElementConfiguration.Node;
-import com.eclipsesource.uml.glsp.core.features.label_edit.DiagramLabelEditMapper;
-import com.eclipsesource.uml.glsp.core.gmodel.GModelMapper;
 import com.eclipsesource.uml.glsp.core.manifest.DiagramManifest;
-import com.eclipsesource.uml.glsp.features.property_palette.mapper.DiagramElementPropertyMapper;
-import com.eclipsesource.uml.glsp.uml.elements.actor.features.ActorLabelEditMapper;
-import com.eclipsesource.uml.glsp.uml.elements.actor.features.ActorPropertyMapper;
-import com.eclipsesource.uml.glsp.uml.elements.actor.gmodel.ActorNodeMapper;
-import com.eclipsesource.uml.glsp.uml.handler.element.NodeOperationHandler;
-import com.eclipsesource.uml.glsp.uml.manifest.NodeOperationHandlerDefinition;
-import com.google.inject.TypeLiteral;
-import com.google.inject.multibindings.Multibinder;
+import com.eclipsesource.uml.glsp.uml.manifest.node.NodeFactoryDefinition;
 
-public class ActorDefinitionModule extends NodeOperationHandlerDefinition {
+public class ActorDefinitionModule extends NodeFactoryDefinition {
 
    public ActorDefinitionModule(final DiagramManifest manifest) {
-      super(manifest.id(), manifest.representation());
-   }
-
-   @Override
-   protected void diagramConfigurations(final Multibinder<Node> contribution) {
-      contribution.addBinding().to(ActorConfiguration.Diagram.class);
-   }
-
-   @Override
-   protected Optional<TypeLiteral<? extends NodeOperationHandler<?, ?>>> operationHandler() {
-      return Optional.of(new TypeLiteral<ActorOperationHandler>() {});
-   }
-
-   @Override
-   protected void diagramLabelEditMappers(final Multibinder<DiagramLabelEditMapper<? extends EObject>> contribution) {
-      contribution.addBinding().to(ActorLabelEditMapper.class);
-   }
-
-   @Override
-   protected void diagramPropertyPaletteMappers(
-      final Multibinder<DiagramElementPropertyMapper<? extends EObject>> contribution) {
-      contribution.addBinding().to(ActorPropertyMapper.class);
-   }
-
-   @Override
-   protected void gmodelMappers(
-      final Multibinder<GModelMapper<? extends EObject, ? extends GModelElement>> contribution) {
-      contribution.addBinding().to(ActorNodeMapper.class);
+      super(manifest.id(), manifest.representation(), ActorFactory.class);
    }
 }

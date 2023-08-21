@@ -24,7 +24,7 @@ import com.eclipsesource.uml.glsp.uml.elements.primitive_type.features.Primitive
 import com.eclipsesource.uml.glsp.uml.elements.primitive_type.features.PrimitiveTypePropertyMapper;
 import com.eclipsesource.uml.glsp.uml.elements.primitive_type.gmodel.PrimitiveTypeNodeMapper;
 import com.eclipsesource.uml.glsp.uml.handler.element.NodeOperationHandler;
-import com.eclipsesource.uml.glsp.uml.manifest.NodeOperationHandlerDefinition;
+import com.eclipsesource.uml.glsp.uml.manifest.node.NodeOperationHandlerDefinition;
 import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.Multibinder;
 

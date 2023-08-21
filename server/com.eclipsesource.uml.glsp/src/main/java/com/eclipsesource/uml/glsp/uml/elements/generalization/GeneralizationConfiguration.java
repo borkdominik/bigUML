@@ -10,42 +10,54 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.elements.generalization;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.glsp.graph.DefaultTypes;
 import org.eclipse.glsp.graph.GraphPackage;
 import org.eclipse.glsp.server.types.EdgeTypeHint;
+import org.eclipse.uml2.uml.Actor;
 import org.eclipse.uml2.uml.Generalization;
 
-import com.eclipsesource.uml.glsp.core.diagram.DiagramElementConfiguration;
+import com.eclipsesource.uml.glsp.uml.configuration.RepresentationEdgeConfiguration;
 import com.eclipsesource.uml.glsp.uml.elements.class_.ClassConfiguration;
-import com.eclipsesource.uml.glsp.uml.utils.QualifiedUtil;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
-public class GeneralizationConfiguration {
-   public static String typeId() {
-      return QualifiedUtil.representationTypeId(Representation.CLASS, DefaultTypes.EDGE,
-         Generalization.class.getSimpleName());
+public class GeneralizationConfiguration extends RepresentationEdgeConfiguration<Generalization> {
+   @Inject
+   public GeneralizationConfiguration(@Assisted final Representation representation) {
+      super(representation);
    }
 
    public enum Property {
       IS_SUBSTITUTABLE
    }
 
-   public static class Diagram implements DiagramElementConfiguration.Edge {
+   @Override
+   public Map<String, EClass> getTypeMappings() { return Map.of(typeId(), GraphPackage.Literals.GEDGE); }
 
-      @Override
-      public Map<String, EClass> getTypeMappings() { return Map.of(typeId(), GraphPackage.Literals.GEDGE); }
+   @Override
+   public Set<EdgeTypeHint> getEdgeTypeHints() {
+      var hints = new HashSet<EdgeTypeHint>();
 
-      @Override
-      public Set<EdgeTypeHint> getEdgeTypeHints() {
-         return Set.of(
+      hints.addAll(Set.of(
+         new EdgeTypeHint(typeId(), true, true, true,
+            List.of(ClassConfiguration.typeId()),
+            List.of(ClassConfiguration.typeId()))));
+
+      var actor = tryConfigurationFor(Actor.class);
+
+      if (actor.isPresent()) {
+         hints.add(
             new EdgeTypeHint(typeId(), true, true, true,
-               List.of(ClassConfiguration.typeId()),
-               List.of(ClassConfiguration.typeId())));
+               List.of(actor.get().typeId()),
+               List.of(actor.get().typeId())));
       }
+
+      return hints;
    }
 }

@@ -24,7 +24,7 @@ import com.eclipsesource.uml.glsp.uml.elements.enumeration.features.EnumerationL
 import com.eclipsesource.uml.glsp.uml.elements.enumeration.features.EnumerationPropertyMapper;
 import com.eclipsesource.uml.glsp.uml.elements.enumeration.gmodel.EnumerationNodeMapper;
 import com.eclipsesource.uml.glsp.uml.handler.element.NodeOperationHandler;
-import com.eclipsesource.uml.glsp.uml.manifest.NodeOperationHandlerDefinition;
+import com.eclipsesource.uml.glsp.uml.manifest.node.NodeOperationHandlerDefinition;
 import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.Multibinder;
 

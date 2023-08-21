@@ -24,13 +24,21 @@ import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalett
 import com.eclipsesource.uml.glsp.uml.elements.association.AssociationConfiguration;
 import com.eclipsesource.uml.glsp.uml.elements.association.AssociationOperationHandler;
 import com.eclipsesource.uml.glsp.uml.elements.property.PropertyConfiguration;
-import com.eclipsesource.uml.glsp.uml.features.property_palette.BaseDiagramElementPropertyMapper;
+import com.eclipsesource.uml.glsp.uml.features.property_palette.RepresentationElementPropertyMapper;
 import com.eclipsesource.uml.glsp.uml.utils.MultiplicityUtil;
 import com.eclipsesource.uml.glsp.uml.utils.element.AggregationKindUtils;
 import com.eclipsesource.uml.glsp.uml.utils.element.VisibilityKindUtils;
 import com.eclipsesource.uml.modelserver.uml.elements.association.commands.UpdateAssociationArgument;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
-public class AssociationPropertyMapper extends BaseDiagramElementPropertyMapper<Association> {
+public class AssociationPropertyMapper extends RepresentationElementPropertyMapper<Association> {
+
+   @Inject
+   public AssociationPropertyMapper(@Assisted final Representation representation) {
+      super(representation);
+   }
 
    @Override
    public PropertyPalette map(final Association source) {

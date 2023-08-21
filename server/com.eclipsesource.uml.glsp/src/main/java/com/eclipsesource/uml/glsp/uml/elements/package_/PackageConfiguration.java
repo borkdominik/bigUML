@@ -30,7 +30,7 @@ import com.eclipsesource.uml.modelserver.unotation.Representation;
 
 public class PackageConfiguration {
    public static String typeId() {
-      return QualifiedUtil.representationTypeId(Representation.CLASS, DefaultTypes.NODE,
+      return QualifiedUtil.typeId(DefaultTypes.NODE,
          org.eclipse.uml2.uml.Package.class.getSimpleName());
    }
 
@@ -56,8 +56,9 @@ public class PackageConfiguration {
          return Set.of(
             new ShapeTypeHint(typeId(), true, true, true, false,
                List.of(ClassConfiguration.typeId(),
-                  ClassConfiguration.Variant.abstractTypeId(), // Required because the client checks for the type id before
-                                                           // create
+                  ClassConfiguration.Variant.abstractTypeId(), // Required because the client checks for the type id
+                                                               // before
+                  // create
                   EnumerationConfiguration.typeId(),
                   InterfaceConfiguration.typeId(),
                   DataTypeConfiguration.typeId(),

@@ -35,8 +35,12 @@ public abstract class DiagramMultiKeyRegistry<K, V> implements Registry<Represen
    public boolean register(final RepresentationKey<K> key,
       final V value) {
       if (hasKey(key)) {
+         printContent();
          throw new IllegalArgumentException(
-            String.format("[%s] Key %s already exists.", this.getClass().getSimpleName(), deriveKey(key)));
+            String.format("[%s] Key %s already exists with value %s. Tried to register with value %s",
+               this.getClass().getSimpleName(), deriveKey(key),
+               get(key).map(v -> v.getClass().getName()).orElse("Unknown"),
+               value.getClass().getName()));
       }
       keys.put(deriveKey(key), key);
       return registry.register(deriveKey(key), value);

@@ -30,6 +30,11 @@ public abstract class ElementDefinition extends AbstractModule
    }
 
    @Override
+   protected void configure() {
+
+   }
+
+   @Override
    public String id() {
       return this.id;
    }

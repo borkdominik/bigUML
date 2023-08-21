@@ -17,12 +17,20 @@ import org.eclipse.uml2.uml.UseCase;
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
 import com.eclipsesource.uml.glsp.features.property_palette.handler.action.UpdateElementPropertyAction;
 import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalette;
-import com.eclipsesource.uml.glsp.uml.elements.usecase.UseCaseOperationHandler;
 import com.eclipsesource.uml.glsp.uml.elements.usecase.UseCaseConfiguration;
-import com.eclipsesource.uml.glsp.uml.features.property_palette.BaseDiagramElementPropertyMapper;
+import com.eclipsesource.uml.glsp.uml.elements.usecase.UseCaseOperationHandler;
+import com.eclipsesource.uml.glsp.uml.features.property_palette.RepresentationElementPropertyMapper;
 import com.eclipsesource.uml.modelserver.uml.elements.usecase.commands.UpdateUseCaseArgument;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
-public class UseCasePropertyMapper extends BaseDiagramElementPropertyMapper<UseCase> {
+public class UseCasePropertyMapper extends RepresentationElementPropertyMapper<UseCase> {
+
+   @Inject
+   public UseCasePropertyMapper(@Assisted final Representation representation) {
+      super(representation);
+   }
 
    @Override
    public PropertyPalette map(final UseCase source) {

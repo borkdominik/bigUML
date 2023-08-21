@@ -13,12 +13,19 @@ package com.eclipsesource.uml.glsp.uml.elements.usecase;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.uml2.uml.UseCase;
 
+import com.eclipsesource.uml.glsp.uml.configuration.ElementConfigurationRegistry;
 import com.eclipsesource.uml.glsp.uml.handler.element.NodeOperationHandler;
+import com.eclipsesource.uml.modelserver.shared.registry.RepresentationKey;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
 public class UseCaseOperationHandler extends NodeOperationHandler<UseCase, EObject> {
 
-   public UseCaseOperationHandler() {
-      super(UseCaseConfiguration.typeId());
+   @Inject
+   public UseCaseOperationHandler(@Assisted final Representation representation,
+      final ElementConfigurationRegistry registry) {
+      super(registry.accessTyped(new RepresentationKey<>(representation, UseCase.class)).typeId());
    }
 
 }

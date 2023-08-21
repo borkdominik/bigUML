@@ -13,12 +13,19 @@ package com.eclipsesource.uml.glsp.uml.elements.extend;
 import org.eclipse.uml2.uml.Extend;
 import org.eclipse.uml2.uml.UseCase;
 
+import com.eclipsesource.uml.glsp.uml.configuration.ElementConfigurationRegistry;
 import com.eclipsesource.uml.glsp.uml.handler.element.EdgeOperationHandler;
+import com.eclipsesource.uml.modelserver.shared.registry.RepresentationKey;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
 public class ExtendOperationHandler extends EdgeOperationHandler<Extend, UseCase, UseCase> {
 
-   public ExtendOperationHandler() {
-      super(ExtendConfiguration.typeId());
+   @Inject
+   public ExtendOperationHandler(@Assisted final Representation representation,
+      final ElementConfigurationRegistry registry) {
+      super(registry.accessTyped(new RepresentationKey<>(representation, Extend.class)).typeId());
    }
 
 }

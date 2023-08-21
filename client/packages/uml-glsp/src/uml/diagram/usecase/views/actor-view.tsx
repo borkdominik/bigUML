@@ -13,15 +13,16 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { alignFeature, layoutableChildFeature, RenderingContext, ShapeView, SNode, svg } from '@eclipse-glsp/client';
+import { alignFeature, layoutableChildFeature, RenderingContext, ShapeView, svg } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 import { VNode } from 'snabbdom';
+import { NamedElement } from '../../../elements/named-element.model';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const JSX = { createElement: svg };
 
-export class ActorNode extends SNode {
-    static override readonly DEFAULT_FEATURES = [...SNode.DEFAULT_FEATURES, alignFeature, layoutableChildFeature];
+export class ActorNode extends NamedElement {
+    static override readonly DEFAULT_FEATURES = [...NamedElement.DEFAULT_FEATURES, alignFeature, layoutableChildFeature];
 }
 
 @injectable()
@@ -33,7 +34,11 @@ export class ActorView extends ShapeView {
 
         return (
             <g class-selected={element.selected} class-mouseover={element.hoverFeedback}>
-                <rect x={0} y={0} rx={2} ry={2}
+                <rect
+                    x={0}
+                    y={0}
+                    rx={2}
+                    ry={2}
                     width={Math.max(0, element.bounds.width)}
                     height={Math.max(0, element.bounds.height)}
                     visibility='hidden'

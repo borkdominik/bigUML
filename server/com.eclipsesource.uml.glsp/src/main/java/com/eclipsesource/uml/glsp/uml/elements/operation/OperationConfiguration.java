@@ -27,7 +27,7 @@ import com.eclipsesource.uml.modelserver.unotation.Representation;
 
 public class OperationConfiguration {
    public static String typeId() {
-      return QualifiedUtil.representationTypeId(Representation.CLASS, DefaultTypes.COMPARTMENT,
+      return QualifiedUtil.typeId(DefaultTypes.COMPARTMENT,
          Operation.class.getSimpleName());
    }
 

@@ -24,7 +24,7 @@ import com.eclipsesource.uml.glsp.uml.elements.interface_.features.InterfaceLabe
 import com.eclipsesource.uml.glsp.uml.elements.interface_.features.InterfacePropertyMapper;
 import com.eclipsesource.uml.glsp.uml.elements.interface_.gmodel.InterfaceNodeMapper;
 import com.eclipsesource.uml.glsp.uml.handler.element.NodeOperationHandler;
-import com.eclipsesource.uml.glsp.uml.manifest.NodeOperationHandlerDefinition;
+import com.eclipsesource.uml.glsp.uml.manifest.node.NodeOperationHandlerDefinition;
 import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.Multibinder;
 

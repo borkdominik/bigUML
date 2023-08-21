@@ -28,7 +28,7 @@ import com.eclipsesource.uml.modelserver.unotation.Representation;
 
 public class PrimitiveTypeConfiguration {
    public static String typeId() {
-      return QualifiedUtil.representationTypeId(Representation.CLASS, DefaultTypes.NODE,
+      return QualifiedUtil.typeId(DefaultTypes.NODE,
          PrimitiveType.class.getSimpleName());
    }
 

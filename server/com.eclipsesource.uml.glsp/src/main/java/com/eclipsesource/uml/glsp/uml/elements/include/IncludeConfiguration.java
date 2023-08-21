@@ -15,37 +15,34 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.glsp.graph.DefaultTypes;
 import org.eclipse.glsp.graph.GraphPackage;
 import org.eclipse.glsp.server.types.EdgeTypeHint;
 import org.eclipse.uml2.uml.Include;
+import org.eclipse.uml2.uml.UseCase;
 
-import com.eclipsesource.uml.glsp.core.diagram.DiagramElementConfiguration;
-import com.eclipsesource.uml.glsp.uml.elements.usecase.UseCaseConfiguration;
-import com.eclipsesource.uml.glsp.uml.utils.QualifiedUtil;
+import com.eclipsesource.uml.glsp.uml.configuration.RepresentationEdgeConfiguration;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
-public class IncludeConfiguration {
-   public static String typeId() {
-      return QualifiedUtil.representationTypeId(Representation.USE_CASE, DefaultTypes.EDGE,
-         Include.class.getSimpleName());
+public class IncludeConfiguration extends RepresentationEdgeConfiguration<Include> {
+   @Inject
+   public IncludeConfiguration(@Assisted final Representation representation) {
+      super(representation);
    }
 
    public enum Property {
       NAME,
    }
 
-   public static class Diagram implements DiagramElementConfiguration.Edge {
+   @Override
+   public Map<String, EClass> getTypeMappings() { return Map.of(typeId(), GraphPackage.Literals.GEDGE); }
 
-      @Override
-      public Map<String, EClass> getTypeMappings() { return Map.of(typeId(), GraphPackage.Literals.GEDGE); }
-
-      @Override
-      public Set<EdgeTypeHint> getEdgeTypeHints() {
-         return Set.of(
-            new EdgeTypeHint(typeId(), true, true, true,
-               List.of(UseCaseConfiguration.typeId()),
-               List.of(UseCaseConfiguration.typeId())));
-      }
+   @Override
+   public Set<EdgeTypeHint> getEdgeTypeHints() {
+      return Set.of(
+         new EdgeTypeHint(typeId(), true, true, true,
+            List.of(configurationFor(UseCase.class).typeId()),
+            List.of(configurationFor(UseCase.class).typeId())));
    }
 }

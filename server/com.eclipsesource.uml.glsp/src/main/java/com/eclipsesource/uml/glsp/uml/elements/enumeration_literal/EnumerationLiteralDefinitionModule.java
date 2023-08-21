@@ -24,7 +24,7 @@ import com.eclipsesource.uml.glsp.uml.elements.enumeration_literal.features.Enum
 import com.eclipsesource.uml.glsp.uml.elements.enumeration_literal.features.EnumerationLiteralPropertyMapper;
 import com.eclipsesource.uml.glsp.uml.elements.enumeration_literal.gmodel.EnumerationLiteralCompartmentMapper;
 import com.eclipsesource.uml.glsp.uml.handler.element.NodeOperationHandler;
-import com.eclipsesource.uml.glsp.uml.manifest.NodeOperationHandlerDefinition;
+import com.eclipsesource.uml.glsp.uml.manifest.node.NodeOperationHandlerDefinition;
 import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.Multibinder;
 

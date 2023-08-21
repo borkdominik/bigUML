@@ -27,18 +27,18 @@ public class PropertyConfiguration {
    public static String ID = org.eclipse.uml2.uml.Property.class.getSimpleName();
 
    public static String typeId() {
-      return QualifiedUtil.representationTypeId(Representation.CLASS, DefaultTypes.COMPARTMENT,
+      return QualifiedUtil.typeId(DefaultTypes.COMPARTMENT,
          ID);
    }
 
    public static class Label {
       public static String typeTypeId() {
-         return QualifiedUtil.representationTypeId(Representation.CLASS, DefaultTypes.LABEL,
+         return QualifiedUtil.typeId(DefaultTypes.LABEL,
             ID + "-type");
       }
 
       public static String multiplicityTypeId() {
-         return QualifiedUtil.representationTypeId(Representation.CLASS, DefaultTypes.LABEL,
+         return QualifiedUtil.typeId(DefaultTypes.LABEL,
             ID + "-multiplicity");
       }
    }

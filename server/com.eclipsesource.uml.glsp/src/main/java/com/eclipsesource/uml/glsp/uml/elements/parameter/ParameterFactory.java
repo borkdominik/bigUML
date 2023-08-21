@@ -8,16 +8,22 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.uml.manifest.node;
+package com.eclipsesource.uml.glsp.uml.elements.parameter;
 
 import com.eclipsesource.uml.glsp.uml.configuration.di.NodeConfigurationFactory;
-import com.eclipsesource.uml.glsp.uml.features.label_edit.di.LabelEditMapperFactory;
+import com.eclipsesource.uml.glsp.uml.elements.parameter.features.ParameterPropertyMapper;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.di.PropertyMapperFactory;
-import com.eclipsesource.uml.glsp.uml.gmodel.di.GModelMapperFactory;
 import com.eclipsesource.uml.glsp.uml.handler.di.NodeOperationHandlerFactory;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
 
-public interface NodeFactory
-   extends NodeConfigurationFactory, NodeOperationHandlerFactory, GModelMapperFactory, LabelEditMapperFactory,
-   PropertyMapperFactory {
+public interface ParameterFactory
+   extends NodeConfigurationFactory, NodeOperationHandlerFactory, PropertyMapperFactory {
+   @Override
+   ParameterConfiguration nodeConfiguration(Representation representation);
 
+   @Override
+   ParameterOperationHandler nodeOperationHandler(Representation representation);
+
+   @Override
+   ParameterPropertyMapper elementPropertyMapper(Representation representation);
 }

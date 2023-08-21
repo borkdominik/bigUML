@@ -13,12 +13,19 @@ package com.eclipsesource.uml.glsp.uml.elements.enumeration;
 import org.eclipse.uml2.uml.Enumeration;
 import org.eclipse.uml2.uml.Package;
 
+import com.eclipsesource.uml.glsp.uml.configuration.ElementConfigurationRegistry;
 import com.eclipsesource.uml.glsp.uml.handler.element.NodeOperationHandler;
+import com.eclipsesource.uml.modelserver.shared.registry.RepresentationKey;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
 public class EnumerationOperationHandler extends NodeOperationHandler<Enumeration, Package> {
 
-   public EnumerationOperationHandler() {
-      super(EnumerationConfiguration.typeId());
+   @Inject
+   public EnumerationOperationHandler(@Assisted final Representation representation,
+      final ElementConfigurationRegistry registry) {
+      super(representation, registry.accessTyped(new RepresentationKey<>(representation, Enumeration.class)).typeId());
    }
 
 }

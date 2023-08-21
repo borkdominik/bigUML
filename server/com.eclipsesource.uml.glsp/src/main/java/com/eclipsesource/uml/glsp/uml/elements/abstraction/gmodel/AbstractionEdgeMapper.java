@@ -21,11 +21,19 @@ import org.eclipse.uml2.uml.Abstraction;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.QuotationMark;
-import com.eclipsesource.uml.glsp.uml.elements.abstraction.AbstractionConfiguration;
-import com.eclipsesource.uml.glsp.uml.gmodel.BaseGEdgeMapper;
+import com.eclipsesource.uml.glsp.uml.gmodel.RepresentationGEdgeMapper;
 import com.eclipsesource.uml.glsp.uml.gmodel.element.EdgeGBuilder;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
-public final class AbstractionEdgeMapper extends BaseGEdgeMapper<Abstraction, GEdge> implements EdgeGBuilder {
+public final class AbstractionEdgeMapper extends RepresentationGEdgeMapper<Abstraction, GEdge>
+   implements EdgeGBuilder {
+
+   @Inject
+   public AbstractionEdgeMapper(@Assisted final Representation representation) {
+      super(representation);
+   }
 
    @Override
    public GEdge map(final Abstraction source) {
@@ -34,7 +42,7 @@ public final class AbstractionEdgeMapper extends BaseGEdgeMapper<Abstraction, GE
       var supplier = source.getSuppliers().get(0);
       var supplierId = idGenerator.getOrCreateId(supplier);
 
-      GEdgeBuilder builder = new GEdgeBuilder(AbstractionConfiguration.typeId())
+      GEdgeBuilder builder = new GEdgeBuilder(configuration().typeId())
          .id(idGenerator.getOrCreateId(source))
          .addCssClasses(List.of(CoreCSS.EDGE, CoreCSS.EDGE_DASHED))
          .addCssClass(CoreCSS.Marker.TENT.end())

@@ -12,13 +12,19 @@ package com.eclipsesource.uml.glsp.uml.elements.package_merge;
 
 import org.eclipse.uml2.uml.PackageMerge;
 
+import com.eclipsesource.uml.glsp.uml.configuration.ElementConfigurationRegistry;
 import com.eclipsesource.uml.glsp.uml.handler.element.EdgeOperationHandler;
+import com.eclipsesource.uml.modelserver.shared.registry.RepresentationKey;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
 public class PackageMergeOperationHandler
    extends EdgeOperationHandler<PackageMerge, org.eclipse.uml2.uml.Package, org.eclipse.uml2.uml.Package> {
 
-   public PackageMergeOperationHandler() {
-      super(PackageMergeConfiguration.typeId());
+   @Inject
+   public PackageMergeOperationHandler(@Assisted final Representation representation,
+      final ElementConfigurationRegistry registry) {
+      super(representation, registry.accessTyped(new RepresentationKey<>(representation, PackageMerge.class)).typeId());
    }
-
 }

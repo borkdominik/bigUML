@@ -15,19 +15,20 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.glsp.graph.DefaultTypes;
 import org.eclipse.glsp.graph.GraphPackage;
 import org.eclipse.glsp.server.types.ShapeTypeHint;
 import org.eclipse.uml2.uml.Parameter;
 
-import com.eclipsesource.uml.glsp.core.diagram.DiagramElementConfiguration;
-import com.eclipsesource.uml.glsp.uml.utils.QualifiedUtil;
+import com.eclipsesource.uml.glsp.uml.configuration.RepresentationNodeConfiguration;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
-public class ParameterConfiguration {
-   public static String typeId() {
-      return QualifiedUtil.typeId(DefaultTypes.COMPARTMENT,
-         Parameter.class.getSimpleName());
+public class ParameterConfiguration extends RepresentationNodeConfiguration<Parameter> {
+
+   @Inject
+   public ParameterConfiguration(@Assisted final Representation representation) {
+      super(representation);
    }
 
    public enum Property {
@@ -43,20 +44,17 @@ public class ParameterConfiguration {
       MULTIPLICITY
    }
 
-   public static class Diagram implements DiagramElementConfiguration.Node {
+   @Override
+   public Map<String, EClass> getTypeMappings() { return Map.of(
+      typeId(), GraphPackage.Literals.GCOMPARTMENT); }
 
-      @Override
-      public Map<String, EClass> getTypeMappings() { return Map.of(
-         typeId(), GraphPackage.Literals.GCOMPARTMENT); }
+   @Override
+   public Set<String> getGraphContainableElements() { return Set.of(); }
 
-      @Override
-      public Set<String> getGraphContainableElements() { return Set.of(); }
-
-      @Override
-      public Set<ShapeTypeHint> getShapeTypeHints() {
-         return Set.of(
-            new ShapeTypeHint(typeId(), false, true, false, false,
-               List.of()));
-      }
+   @Override
+   public Set<ShapeTypeHint> getShapeTypeHints() {
+      return Set.of(
+         new ShapeTypeHint(typeId(), false, true, false, false,
+            List.of()));
    }
 }

@@ -13,12 +13,19 @@ package com.eclipsesource.uml.glsp.uml.elements.interface_;
 import org.eclipse.uml2.uml.Interface;
 import org.eclipse.uml2.uml.Package;
 
+import com.eclipsesource.uml.glsp.uml.configuration.ElementConfigurationRegistry;
 import com.eclipsesource.uml.glsp.uml.handler.element.NodeOperationHandler;
+import com.eclipsesource.uml.modelserver.shared.registry.RepresentationKey;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
 public class InterfaceOperationHandler extends NodeOperationHandler<Interface, Package> {
 
-   public InterfaceOperationHandler() {
-      super(InterfaceConfiguration.typeId());
+   @Inject
+   public InterfaceOperationHandler(@Assisted final Representation representation,
+      final ElementConfigurationRegistry registry) {
+      super(representation, registry.accessTyped(new RepresentationKey<>(representation, Interface.class)).typeId());
    }
 
 }

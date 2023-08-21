@@ -13,12 +13,19 @@ package com.eclipsesource.uml.glsp.uml.elements.property;
 import org.eclipse.uml2.uml.AttributeOwner;
 import org.eclipse.uml2.uml.Property;
 
+import com.eclipsesource.uml.glsp.uml.configuration.ElementConfigurationRegistry;
 import com.eclipsesource.uml.glsp.uml.handler.element.NodeOperationHandler;
+import com.eclipsesource.uml.modelserver.shared.registry.RepresentationKey;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
 public class PropertyOperationHandler extends NodeOperationHandler<Property, AttributeOwner> {
 
-   public PropertyOperationHandler() {
-      super(PropertyConfiguration.typeId());
+   @Inject
+   public PropertyOperationHandler(@Assisted final Representation representation,
+      final ElementConfigurationRegistry registry) {
+      super(representation, registry.accessTyped(new RepresentationKey<>(representation, Property.class)).typeId());
    }
 
 }

@@ -10,54 +10,12 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.elements.package_;
 
-import java.util.Optional;
-
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.glsp.graph.GModelElement;
-
-import com.eclipsesource.uml.glsp.core.diagram.DiagramElementConfiguration.Node;
-import com.eclipsesource.uml.glsp.core.features.label_edit.DiagramLabelEditMapper;
-import com.eclipsesource.uml.glsp.core.gmodel.GModelMapper;
 import com.eclipsesource.uml.glsp.core.manifest.DiagramManifest;
-import com.eclipsesource.uml.glsp.features.property_palette.mapper.DiagramElementPropertyMapper;
-import com.eclipsesource.uml.glsp.uml.elements.package_.features.PackageLabelEditMapper;
-import com.eclipsesource.uml.glsp.uml.elements.package_.features.PackagePropertyMapper;
-import com.eclipsesource.uml.glsp.uml.elements.package_.gmodel.PackageNodeMapper;
-import com.eclipsesource.uml.glsp.uml.handler.element.NodeOperationHandler;
-import com.eclipsesource.uml.glsp.uml.manifest.node.NodeOperationHandlerDefinition;
-import com.google.inject.TypeLiteral;
-import com.google.inject.multibindings.Multibinder;
+import com.eclipsesource.uml.glsp.uml.manifest.node.NodeFactoryDefinition;
 
-public class PackageDefinitionModule extends NodeOperationHandlerDefinition {
+public class PackageDefinitionModule extends NodeFactoryDefinition {
 
    public PackageDefinitionModule(final DiagramManifest manifest) {
-      super(manifest.id(), manifest.representation());
-   }
-
-   @Override
-   protected void diagramConfigurations(final Multibinder<Node> contribution) {
-      contribution.addBinding().to(PackageConfiguration.Diagram.class);
-   }
-
-   @Override
-   protected Optional<TypeLiteral<? extends NodeOperationHandler<?, ?>>> operationHandler() {
-      return Optional.of(new TypeLiteral<PackageOperationHandler>() {});
-   }
-
-   @Override
-   protected void diagramLabelEditMappers(final Multibinder<DiagramLabelEditMapper<? extends EObject>> contribution) {
-      contribution.addBinding().to(PackageLabelEditMapper.class);
-   }
-
-   @Override
-   protected void diagramPropertyPaletteMappers(
-      final Multibinder<DiagramElementPropertyMapper<? extends EObject>> contribution) {
-      contribution.addBinding().to(PackagePropertyMapper.class);
-   }
-
-   @Override
-   protected void gmodelMappers(
-      final Multibinder<GModelMapper<? extends EObject, ? extends GModelElement>> contribution) {
-      contribution.addBinding().to(PackageNodeMapper.class);
+      super(manifest.id(), manifest.representation(), PackageFactory.class);
    }
 }

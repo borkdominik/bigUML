@@ -14,11 +14,7 @@ import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.server.features.directediting.ValidationStatus;
 import org.eclipse.uml2.uml.Property;
 
-import com.eclipsesource.uml.glsp.uml.elements.property.PropertyConfiguration;
-import com.eclipsesource.uml.glsp.uml.elements.property.PropertyConfiguration.Label;
-import com.eclipsesource.uml.glsp.uml.elements.property.gmodel.suffix.PropertyMultiplicityLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.features.label_edit.BaseLabelEditValidator;
-import com.eclipsesource.uml.glsp.uml.utils.MultiplicityUtil;
 
 public class PropertyLabelEditValidator extends BaseLabelEditValidator<Property> {
 
@@ -29,11 +25,12 @@ public class PropertyLabelEditValidator extends BaseLabelEditValidator<Property>
       if (label.isBlank() && element.getAssociation() == null) {
          return ValidationStatus.error("Blank values are not allowed.");
       }
-
+      /*-
       if (matches(source, PropertyConfiguration.Label.multiplicityTypeId(),
          PropertyMultiplicityLabelSuffix.SUFFIX) && !MultiplicityUtil.matches(label)) {
          return ValidationStatus.error("Invalid multiplicity provided. Example: 1..2, 3..*, 5");
       }
+      */
 
       return ValidationStatus.ok();
    }

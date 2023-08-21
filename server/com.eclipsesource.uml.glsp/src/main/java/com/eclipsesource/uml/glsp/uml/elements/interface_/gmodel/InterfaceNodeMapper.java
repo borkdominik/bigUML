@@ -20,16 +20,23 @@ import org.eclipse.uml2.uml.Interface;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.QuotationMark;
-import com.eclipsesource.uml.glsp.uml.elements.interface_.InterfaceConfiguration;
-import com.eclipsesource.uml.glsp.uml.gmodel.BaseGNodeMapper;
+import com.eclipsesource.uml.glsp.uml.gmodel.RepresentationGNodeMapper;
 import com.eclipsesource.uml.glsp.uml.gmodel.element.NamedElementGBuilder;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
-public final class InterfaceNodeMapper extends BaseGNodeMapper<Interface, GNode>
+public final class InterfaceNodeMapper extends RepresentationGNodeMapper<Interface, GNode>
    implements NamedElementGBuilder<Interface> {
+
+   @Inject
+   public InterfaceNodeMapper(@Assisted final Representation representation) {
+      super(representation);
+   }
 
    @Override
    public GNode map(final Interface source) {
-      var builder = new GNodeBuilder(InterfaceConfiguration.typeId())
+      var builder = new GNodeBuilder(configuration().typeId())
          .id(idGenerator.getOrCreateId(source))
          .layout(GConstants.Layout.VBOX)
          .addCssClass(CoreCSS.NODE)

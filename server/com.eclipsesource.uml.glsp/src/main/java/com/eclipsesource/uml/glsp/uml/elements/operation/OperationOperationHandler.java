@@ -13,12 +13,19 @@ package com.eclipsesource.uml.glsp.uml.elements.operation;
 import org.eclipse.uml2.uml.Operation;
 import org.eclipse.uml2.uml.OperationOwner;
 
+import com.eclipsesource.uml.glsp.uml.configuration.ElementConfigurationRegistry;
 import com.eclipsesource.uml.glsp.uml.handler.element.NodeOperationHandler;
+import com.eclipsesource.uml.modelserver.shared.registry.RepresentationKey;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
 public class OperationOperationHandler extends NodeOperationHandler<Operation, OperationOwner> {
 
-   public OperationOperationHandler() {
-      super(OperationConfiguration.typeId());
+   @Inject
+   public OperationOperationHandler(@Assisted final Representation representation,
+      final ElementConfigurationRegistry registry) {
+      super(representation, registry.accessTyped(new RepresentationKey<>(representation, Operation.class)).typeId());
    }
 
 }

@@ -15,20 +15,21 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.glsp.graph.DefaultTypes;
 import org.eclipse.glsp.graph.GraphPackage;
 import org.eclipse.glsp.server.types.ShapeTypeHint;
 import org.eclipse.uml2.uml.Enumeration;
+import org.eclipse.uml2.uml.EnumerationLiteral;
 
-import com.eclipsesource.uml.glsp.core.diagram.DiagramElementConfiguration;
-import com.eclipsesource.uml.glsp.uml.elements.enumeration_literal.EnumerationLiteralConfiguration;
-import com.eclipsesource.uml.glsp.uml.utils.QualifiedUtil;
+import com.eclipsesource.uml.glsp.uml.configuration.RepresentationNodeConfiguration;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
-public class EnumerationConfiguration {
-   public static String typeId() {
-      return QualifiedUtil.typeId(DefaultTypes.NODE,
-         Enumeration.class.getSimpleName());
+public class EnumerationConfiguration extends RepresentationNodeConfiguration<Enumeration> {
+
+   @Inject
+   public EnumerationConfiguration(@Assisted final Representation representation) {
+      super(representation);
    }
 
    public enum Property {
@@ -38,20 +39,18 @@ public class EnumerationConfiguration {
       OWNED_LITERALS;
    }
 
-   public static class Diagram implements DiagramElementConfiguration.Node {
+   @Override
+   public Map<String, EClass> getTypeMappings() { return Map.of(
+      typeId(), GraphPackage.Literals.GNODE); }
 
-      @Override
-      public Map<String, EClass> getTypeMappings() { return Map.of(
-         typeId(), GraphPackage.Literals.GNODE); }
+   @Override
+   public Set<String> getGraphContainableElements() { return Set.of(typeId()); }
 
-      @Override
-      public Set<String> getGraphContainableElements() { return Set.of(typeId()); }
-
-      @Override
-      public Set<ShapeTypeHint> getShapeTypeHints() {
-         return Set.of(
-            new ShapeTypeHint(typeId(), true, true, true, false,
-               List.of(EnumerationLiteralConfiguration.typeId())));
-      }
+   @Override
+   public Set<ShapeTypeHint> getShapeTypeHints() {
+      return Set.of(
+         new ShapeTypeHint(typeId(), true, true, true, false,
+            List.of(configurationFor(EnumerationLiteral.class).typeId())));
    }
+
 }

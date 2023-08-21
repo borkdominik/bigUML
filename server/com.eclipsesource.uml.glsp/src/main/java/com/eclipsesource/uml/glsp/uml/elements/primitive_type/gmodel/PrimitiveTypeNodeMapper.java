@@ -20,16 +20,23 @@ import org.eclipse.uml2.uml.PrimitiveType;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.QuotationMark;
-import com.eclipsesource.uml.glsp.uml.elements.primitive_type.PrimitiveTypeConfiguration;
-import com.eclipsesource.uml.glsp.uml.gmodel.BaseGNodeMapper;
+import com.eclipsesource.uml.glsp.uml.gmodel.RepresentationGNodeMapper;
 import com.eclipsesource.uml.glsp.uml.gmodel.element.NamedElementGBuilder;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
-public final class PrimitiveTypeNodeMapper extends BaseGNodeMapper<PrimitiveType, GNode>
+public final class PrimitiveTypeNodeMapper extends RepresentationGNodeMapper<PrimitiveType, GNode>
    implements NamedElementGBuilder<PrimitiveType> {
+
+   @Inject
+   public PrimitiveTypeNodeMapper(@Assisted final Representation representation) {
+      super(representation);
+   }
 
    @Override
    public GNode map(final PrimitiveType source) {
-      var builder = new GNodeBuilder(PrimitiveTypeConfiguration.typeId())
+      var builder = new GNodeBuilder(configuration().typeId())
          .id(idGenerator.getOrCreateId(source))
          .layout(GConstants.Layout.VBOX)
          .addCssClass(CoreCSS.NODE)

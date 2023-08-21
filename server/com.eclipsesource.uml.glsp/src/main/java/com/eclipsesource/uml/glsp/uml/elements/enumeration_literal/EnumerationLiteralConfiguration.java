@@ -20,14 +20,23 @@ import org.eclipse.glsp.graph.GraphPackage;
 import org.eclipse.glsp.server.types.ShapeTypeHint;
 import org.eclipse.uml2.uml.EnumerationLiteral;
 
-import com.eclipsesource.uml.glsp.core.diagram.DiagramElementConfiguration;
+import com.eclipsesource.uml.glsp.uml.configuration.RepresentationNodeConfiguration;
 import com.eclipsesource.uml.glsp.uml.utils.QualifiedUtil;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
-public class EnumerationLiteralConfiguration {
-   public static String typeId() {
-      return QualifiedUtil.typeId(DefaultTypes.COMPARTMENT,
-         EnumerationLiteral.class.getSimpleName());
+public class EnumerationLiteralConfiguration extends RepresentationNodeConfiguration<EnumerationLiteral> {
+
+   @Inject
+   public EnumerationLiteralConfiguration(@Assisted final Representation representation) {
+      super(representation);
+   }
+
+   @Override
+   public String typeId() {
+      return QualifiedUtil.representationTypeId(representation, DefaultTypes.COMPARTMENT,
+         getElementType().getSimpleName());
    }
 
    public enum Property {
@@ -35,20 +44,18 @@ public class EnumerationLiteralConfiguration {
       VISIBILITY_KIND;
    }
 
-   public static class Diagram implements DiagramElementConfiguration.Node {
+   @Override
+   public Map<String, EClass> getTypeMappings() { return Map.of(
+      typeId(), GraphPackage.Literals.GCOMPARTMENT); }
 
-      @Override
-      public Map<String, EClass> getTypeMappings() { return Map.of(
-         typeId(), GraphPackage.Literals.GCOMPARTMENT); }
+   @Override
+   public Set<String> getGraphContainableElements() { return Set.of(); }
 
-      @Override
-      public Set<String> getGraphContainableElements() { return Set.of(); }
-
-      @Override
-      public Set<ShapeTypeHint> getShapeTypeHints() {
-         return Set.of(
-            new ShapeTypeHint(typeId(), false, true, false, false,
-               List.of()));
-      }
+   @Override
+   public Set<ShapeTypeHint> getShapeTypeHints() {
+      return Set.of(
+         new ShapeTypeHint(typeId(), false, true, false, false,
+            List.of()));
    }
+
 }

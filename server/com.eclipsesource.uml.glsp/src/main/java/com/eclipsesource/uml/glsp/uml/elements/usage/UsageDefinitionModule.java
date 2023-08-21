@@ -10,47 +10,12 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.elements.usage;
 
-import java.util.Optional;
-
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.glsp.graph.GModelElement;
-
-import com.eclipsesource.uml.glsp.core.diagram.DiagramElementConfiguration.Edge;
-import com.eclipsesource.uml.glsp.core.gmodel.GModelMapper;
 import com.eclipsesource.uml.glsp.core.manifest.DiagramManifest;
-import com.eclipsesource.uml.glsp.features.property_palette.mapper.DiagramElementPropertyMapper;
-import com.eclipsesource.uml.glsp.uml.elements.usage.features.UsagePropertyMapper;
-import com.eclipsesource.uml.glsp.uml.elements.usage.gmodel.UsageEdgeMapper;
-import com.eclipsesource.uml.glsp.uml.handler.element.EdgeOperationHandler;
-import com.eclipsesource.uml.glsp.uml.manifest.edge.EdgeOperationHandlerDefinition;
-import com.google.inject.TypeLiteral;
-import com.google.inject.multibindings.Multibinder;
+import com.eclipsesource.uml.glsp.uml.manifest.edge.EdgeFactoryDefinition;
 
-public class UsageDefinitionModule extends EdgeOperationHandlerDefinition {
+public class UsageDefinitionModule extends EdgeFactoryDefinition {
 
    public UsageDefinitionModule(final DiagramManifest manifest) {
-      super(manifest.id(), manifest.representation());
-   }
-
-   @Override
-   protected void diagramConfigurations(final Multibinder<Edge> contribution) {
-      contribution.addBinding().to(UsageConfiguration.Diagram.class);
-   }
-
-   @Override
-   protected Optional<TypeLiteral<? extends EdgeOperationHandler<?, ?, ?>>> operationHandler() {
-      return Optional.of(new TypeLiteral<UsageOperationHandler>() {});
-   }
-
-   @Override
-   protected void diagramPropertyPaletteMappers(
-      final Multibinder<DiagramElementPropertyMapper<? extends EObject>> contribution) {
-      contribution.addBinding().to(UsagePropertyMapper.class);
-   }
-
-   @Override
-   protected void gmodelMappers(
-      final Multibinder<GModelMapper<? extends EObject, ? extends GModelElement>> contribution) {
-      contribution.addBinding().to(UsageEdgeMapper.class);
+      super(manifest.id(), manifest.representation(), UsageFactory.class);
    }
 }

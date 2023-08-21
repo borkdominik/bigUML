@@ -15,20 +15,19 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.glsp.graph.DefaultTypes;
 import org.eclipse.glsp.graph.GraphPackage;
 import org.eclipse.glsp.server.types.EdgeTypeHint;
 import org.eclipse.uml2.uml.PackageImport;
 
-import com.eclipsesource.uml.glsp.core.diagram.DiagramElementConfiguration;
-import com.eclipsesource.uml.glsp.uml.elements.package_.PackageConfiguration;
-import com.eclipsesource.uml.glsp.uml.utils.QualifiedUtil;
+import com.eclipsesource.uml.glsp.uml.configuration.RepresentationEdgeConfiguration;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
-public class PackageImportConfiguration {
-   public static String typeId() {
-      return QualifiedUtil.typeId(DefaultTypes.EDGE,
-         PackageImport.class.getSimpleName());
+public class PackageImportConfiguration extends RepresentationEdgeConfiguration<PackageImport> {
+   @Inject
+   public PackageImportConfiguration(@Assisted final Representation representation) {
+      super(representation);
    }
 
    public enum Property {
@@ -36,17 +35,14 @@ public class PackageImportConfiguration {
       IMPORTED_PACKAGE;
    }
 
-   public static class Diagram implements DiagramElementConfiguration.Edge {
+   @Override
+   public Map<String, EClass> getTypeMappings() { return Map.of(typeId(), GraphPackage.Literals.GEDGE); }
 
-      @Override
-      public Map<String, EClass> getTypeMappings() { return Map.of(typeId(), GraphPackage.Literals.GEDGE); }
-
-      @Override
-      public Set<EdgeTypeHint> getEdgeTypeHints() {
-         return Set.of(
-            new EdgeTypeHint(typeId(), true, true, true,
-               List.of(PackageConfiguration.typeId()),
-               List.of(PackageConfiguration.typeId())));
-      }
+   @Override
+   public Set<EdgeTypeHint> getEdgeTypeHints() {
+      return Set.of(
+         new EdgeTypeHint(typeId(), true, true, true,
+            List.of(configurationFor(org.eclipse.uml2.uml.Package.class).typeId()),
+            List.of(configurationFor(org.eclipse.uml2.uml.Package.class).typeId())));
    }
 }

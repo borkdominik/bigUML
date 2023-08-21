@@ -10,13 +10,19 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.elements.subject;
 
+import com.eclipsesource.uml.glsp.uml.configuration.di.NodeConfigurationFactory;
 import com.eclipsesource.uml.glsp.uml.elements.subject.features.SubjectLabelEditMapper;
 import com.eclipsesource.uml.glsp.uml.elements.subject.features.SubjectPropertyMapper;
 import com.eclipsesource.uml.glsp.uml.elements.subject.gmodel.SubjectNodeMapper;
-import com.eclipsesource.uml.glsp.uml.manifest.node.NodeFactory;
+import com.eclipsesource.uml.glsp.uml.features.label_edit.di.LabelEditMapperFactory;
+import com.eclipsesource.uml.glsp.uml.features.property_palette.di.PropertyMapperFactory;
+import com.eclipsesource.uml.glsp.uml.gmodel.di.GModelMapperFactory;
+import com.eclipsesource.uml.glsp.uml.handler.di.NodeOperationHandlerFactory;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 
-public interface SubjectFactory extends NodeFactory {
+public interface SubjectFactory
+   extends NodeConfigurationFactory, NodeOperationHandlerFactory, GModelMapperFactory, PropertyMapperFactory,
+   LabelEditMapperFactory {
    @Override
    SubjectConfiguration nodeConfiguration(Representation representation);
 

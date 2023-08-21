@@ -19,11 +19,18 @@ import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
 import com.eclipsesource.uml.glsp.features.property_palette.handler.action.UpdateElementPropertyAction;
 import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalette;
 import com.eclipsesource.uml.glsp.uml.elements.package_merge.PackageMergeConfiguration;
-import com.eclipsesource.uml.glsp.uml.elements.package_merge.PackageMergeConfiguration.Property;
-import com.eclipsesource.uml.glsp.uml.features.property_palette.BaseDiagramElementPropertyMapper;
+import com.eclipsesource.uml.glsp.uml.features.property_palette.RepresentationElementPropertyMapper;
 import com.eclipsesource.uml.glsp.uml.utils.element.PackageImportUtils;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
-public class PackageMergePropertyMapper extends BaseDiagramElementPropertyMapper<PackageMerge> {
+public class PackageMergePropertyMapper extends RepresentationElementPropertyMapper<PackageMerge> {
+
+   @Inject
+   public PackageMergePropertyMapper(@Assisted final Representation representation) {
+      super(representation);
+   }
 
    @Override
    public PropertyPalette map(final PackageMerge source) {

@@ -19,23 +19,24 @@ import org.eclipse.glsp.graph.DefaultTypes;
 import org.eclipse.glsp.graph.GraphPackage;
 import org.eclipse.glsp.server.types.ShapeTypeHint;
 import org.eclipse.uml2.uml.Class;
+import org.eclipse.uml2.uml.Operation;
 
-import com.eclipsesource.uml.glsp.core.diagram.DiagramElementConfiguration;
-import com.eclipsesource.uml.glsp.uml.elements.operation.OperationConfiguration;
-import com.eclipsesource.uml.glsp.uml.elements.property.PropertyConfiguration;
+import com.eclipsesource.uml.glsp.uml.configuration.RepresentationNodeConfiguration;
 import com.eclipsesource.uml.glsp.uml.utils.QualifiedUtil;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
-public final class ClassConfiguration {
-   public static String typeId() {
-      return QualifiedUtil.typeId(Representation.CLASS, DefaultTypes.NODE, Class.class.getSimpleName());
+public final class ClassConfiguration extends RepresentationNodeConfiguration<Class> {
+
+   @Inject
+   public ClassConfiguration(@Assisted final Representation representation) {
+      super(representation);
    }
 
-   public static class Variant {
-      public static String abstractTypeId() {
-         return QualifiedUtil.templateTypeId(DefaultTypes.NODE, "abstract",
-            Class.class.getSimpleName());
-      }
+   public String abstractTypeId() {
+      return QualifiedUtil.templateTypeId(DefaultTypes.NODE, "abstract",
+         Class.class.getSimpleName());
    }
 
    public enum Property {
@@ -47,20 +48,19 @@ public final class ClassConfiguration {
       OWNED_OPERATIONS;
    }
 
-   public static class Diagram implements DiagramElementConfiguration.Node {
+   @Override
+   public Map<String, EClass> getTypeMappings() { return Map.of(
+      typeId(), GraphPackage.Literals.GNODE); }
 
-      @Override
-      public Map<String, EClass> getTypeMappings() { return Map.of(
-         typeId(), GraphPackage.Literals.GNODE); }
+   @Override
+   public Set<String> getGraphContainableElements() { return Set.of(typeId(), abstractTypeId()); }
 
-      @Override
-      public Set<String> getGraphContainableElements() { return Set.of(typeId(), Variant.abstractTypeId()); }
+   @Override
+   public Set<ShapeTypeHint> getShapeTypeHints() {
+      return Set.of(
+         new ShapeTypeHint(typeId(), true, true, true, false,
+            List.of(configurationFor(org.eclipse.uml2.uml.Property.class).typeId(),
+               configurationFor(Operation.class).typeId())));
 
-      @Override
-      public Set<ShapeTypeHint> getShapeTypeHints() {
-         return Set.of(
-            new ShapeTypeHint(typeId(), true, true, true, false,
-               List.of(PropertyConfiguration.typeId(), OperationConfiguration.typeId())));
-      }
    }
 }

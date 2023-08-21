@@ -19,12 +19,19 @@ import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.InterfaceRealization;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
-import com.eclipsesource.uml.glsp.uml.elements.interface_realization.InterfaceRealizationConfiguration;
-import com.eclipsesource.uml.glsp.uml.gmodel.BaseGEdgeMapper;
+import com.eclipsesource.uml.glsp.uml.gmodel.RepresentationGEdgeMapper;
 import com.eclipsesource.uml.glsp.uml.gmodel.element.EdgeGBuilder;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
-public final class InterfaceRealizationEdgeMapper extends BaseGEdgeMapper<InterfaceRealization, GEdge>
+public final class InterfaceRealizationEdgeMapper extends RepresentationGEdgeMapper<InterfaceRealization, GEdge>
    implements EdgeGBuilder {
+
+   @Inject
+   public InterfaceRealizationEdgeMapper(@Assisted final Representation representation) {
+      super(representation);
+   }
 
    @Override
    public GEdge map(final InterfaceRealization source) {
@@ -33,7 +40,7 @@ public final class InterfaceRealizationEdgeMapper extends BaseGEdgeMapper<Interf
       var contract = source.getContract();
       var contractId = idGenerator.getOrCreateId(contract);
 
-      GEdgeBuilder builder = new GEdgeBuilder(InterfaceRealizationConfiguration.typeId())
+      GEdgeBuilder builder = new GEdgeBuilder(configuration().typeId())
          .id(idGenerator.getOrCreateId(source))
          .addCssClasses(List.of(CoreCSS.EDGE, CoreCSS.EDGE_DASHED))
          .addCssClass(CoreCSS.Marker.TRIANGLE_EMPTY.end())

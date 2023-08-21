@@ -19,18 +19,25 @@ import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.Operation;
 import org.eclipse.uml2.uml.ParameterDirectionKind;
 
-import com.eclipsesource.uml.glsp.uml.elements.operation.OperationConfiguration;
-import com.eclipsesource.uml.glsp.uml.gmodel.BaseGModelMapper;
+import com.eclipsesource.uml.glsp.uml.gmodel.RepresentationGModelMapper;
 import com.eclipsesource.uml.glsp.uml.gmodel.element.NamedElementGBuilder;
 import com.eclipsesource.uml.glsp.uml.utils.element.ParameterUtils;
 import com.eclipsesource.uml.glsp.uml.utils.element.TypeUtils;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
-public final class OperationCompartmentMapper extends BaseGModelMapper<Operation, GCompartment>
+public final class OperationCompartmentMapper extends RepresentationGModelMapper<Operation, GCompartment>
    implements NamedElementGBuilder<Operation> {
+
+   @Inject
+   public OperationCompartmentMapper(@Assisted final Representation representation) {
+      super(representation);
+   }
 
    @Override
    public GCompartment map(final Operation source) {
-      var builder = new GCompartmentBuilder(OperationConfiguration.typeId())
+      var builder = new GCompartmentBuilder(configuration().typeId())
          .id(idGenerator.getOrCreateId(source))
          .layout(GConstants.Layout.HBOX)
          .layoutOptions(new GLayoutOptions()

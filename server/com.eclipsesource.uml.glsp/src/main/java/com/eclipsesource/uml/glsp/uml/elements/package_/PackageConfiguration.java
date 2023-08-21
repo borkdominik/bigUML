@@ -15,23 +15,24 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.glsp.graph.DefaultTypes;
 import org.eclipse.glsp.graph.GraphPackage;
 import org.eclipse.glsp.server.types.ShapeTypeHint;
+import org.eclipse.uml2.uml.DataType;
+import org.eclipse.uml2.uml.Enumeration;
+import org.eclipse.uml2.uml.Interface;
+import org.eclipse.uml2.uml.PrimitiveType;
 
-import com.eclipsesource.uml.glsp.core.diagram.DiagramElementConfiguration;
+import com.eclipsesource.uml.glsp.uml.configuration.RepresentationNodeConfiguration;
 import com.eclipsesource.uml.glsp.uml.elements.class_.ClassConfiguration;
-import com.eclipsesource.uml.glsp.uml.elements.data_type.DataTypeConfiguration;
-import com.eclipsesource.uml.glsp.uml.elements.enumeration.EnumerationConfiguration;
-import com.eclipsesource.uml.glsp.uml.elements.interface_.InterfaceConfiguration;
-import com.eclipsesource.uml.glsp.uml.elements.primitive_type.PrimitiveTypeConfiguration;
-import com.eclipsesource.uml.glsp.uml.utils.QualifiedUtil;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
-public class PackageConfiguration {
-   public static String typeId() {
-      return QualifiedUtil.typeId(DefaultTypes.NODE,
-         org.eclipse.uml2.uml.Package.class.getSimpleName());
+public class PackageConfiguration extends RepresentationNodeConfiguration<org.eclipse.uml2.uml.Package> {
+
+   @Inject
+   public PackageConfiguration(@Assisted final Representation representation) {
+      super(representation);
    }
 
    public enum Property {
@@ -42,28 +43,25 @@ public class PackageConfiguration {
       PACKAGE_MERGES;
    }
 
-   public static class Diagram implements DiagramElementConfiguration.Node {
+   @Override
+   public Map<String, EClass> getTypeMappings() { return Map.of(
+      typeId(), GraphPackage.Literals.GNODE); }
 
-      @Override
-      public Map<String, EClass> getTypeMappings() { return Map.of(
-         typeId(), GraphPackage.Literals.GNODE); }
+   @Override
+   public Set<String> getGraphContainableElements() { return Set.of(typeId()); }
 
-      @Override
-      public Set<String> getGraphContainableElements() { return Set.of(typeId()); }
+   @Override
+   public Set<ShapeTypeHint> getShapeTypeHints() {
+      return Set.of(
+         new ShapeTypeHint(typeId(), true, true, true, false,
+            List.of(
+               configurationFor(org.eclipse.uml2.uml.Class.class).typeId(),
+               configurationFor(org.eclipse.uml2.uml.Class.class, ClassConfiguration.class).abstractTypeId(),
+               configurationFor(Enumeration.class).typeId(),
+               configurationFor(Interface.class).typeId(),
+               configurationFor(DataType.class).typeId(),
+               configurationFor(PrimitiveType.class).typeId(),
+               configurationFor(org.eclipse.uml2.uml.Package.class).typeId())));
 
-      @Override
-      public Set<ShapeTypeHint> getShapeTypeHints() {
-         return Set.of(
-            new ShapeTypeHint(typeId(), true, true, true, false,
-               List.of(ClassConfiguration.typeId(),
-                  ClassConfiguration.Variant.abstractTypeId(), // Required because the client checks for the type id
-                                                               // before
-                  // create
-                  EnumerationConfiguration.typeId(),
-                  InterfaceConfiguration.typeId(),
-                  DataTypeConfiguration.typeId(),
-                  PrimitiveTypeConfiguration.typeId(),
-                  PackageConfiguration.typeId())));
-      }
    }
 }

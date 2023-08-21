@@ -15,21 +15,20 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.glsp.graph.DefaultTypes;
 import org.eclipse.glsp.graph.GraphPackage;
 import org.eclipse.glsp.server.types.EdgeTypeHint;
 import org.eclipse.uml2.uml.Dependency;
+import org.eclipse.uml2.uml.Interface;
 
-import com.eclipsesource.uml.glsp.core.diagram.DiagramElementConfiguration;
-import com.eclipsesource.uml.glsp.uml.elements.class_.ClassConfiguration;
-import com.eclipsesource.uml.glsp.uml.elements.interface_.InterfaceConfiguration;
-import com.eclipsesource.uml.glsp.uml.utils.QualifiedUtil;
+import com.eclipsesource.uml.glsp.uml.configuration.RepresentationEdgeConfiguration;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
-public class DependencyConfiguration {
-   public static String typeId() {
-      return QualifiedUtil.typeId(DefaultTypes.EDGE,
-         Dependency.class.getSimpleName());
+public class DependencyConfiguration extends RepresentationEdgeConfiguration<Dependency> {
+   @Inject
+   public DependencyConfiguration(@Assisted final Representation representation) {
+      super(representation);
    }
 
    public enum Property {
@@ -37,17 +36,16 @@ public class DependencyConfiguration {
       VISIBILITY_KIND;
    }
 
-   public static class Diagram implements DiagramElementConfiguration.Edge {
+   @Override
+   public Map<String, EClass> getTypeMappings() { return Map.of(typeId(), GraphPackage.Literals.GEDGE); }
 
-      @Override
-      public Map<String, EClass> getTypeMappings() { return Map.of(typeId(), GraphPackage.Literals.GEDGE); }
-
-      @Override
-      public Set<EdgeTypeHint> getEdgeTypeHints() {
-         return Set.of(
-            new EdgeTypeHint(typeId(), true, true, true,
-               List.of(ClassConfiguration.typeId(), InterfaceConfiguration.typeId()),
-               List.of(ClassConfiguration.typeId(), InterfaceConfiguration.typeId())));
-      }
+   @Override
+   public Set<EdgeTypeHint> getEdgeTypeHints() {
+      return Set.of(
+         new EdgeTypeHint(typeId(), true, true, true,
+            List.of(configurationFor(org.eclipse.uml2.uml.Class.class).typeId(),
+               configurationFor(Interface.class).typeId()),
+            List.of(configurationFor(org.eclipse.uml2.uml.Class.class).typeId(),
+               configurationFor(Interface.class).typeId())));
    }
 }

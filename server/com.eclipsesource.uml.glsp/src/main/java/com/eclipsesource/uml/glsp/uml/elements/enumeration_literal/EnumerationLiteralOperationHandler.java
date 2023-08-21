@@ -13,12 +13,20 @@ package com.eclipsesource.uml.glsp.uml.elements.enumeration_literal;
 import org.eclipse.uml2.uml.Enumeration;
 import org.eclipse.uml2.uml.EnumerationLiteral;
 
+import com.eclipsesource.uml.glsp.uml.configuration.ElementConfigurationRegistry;
 import com.eclipsesource.uml.glsp.uml.handler.element.NodeOperationHandler;
+import com.eclipsesource.uml.modelserver.shared.registry.RepresentationKey;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
 public class EnumerationLiteralOperationHandler extends NodeOperationHandler<EnumerationLiteral, Enumeration> {
 
-   public EnumerationLiteralOperationHandler() {
-      super(EnumerationLiteralConfiguration.typeId());
+   @Inject
+   public EnumerationLiteralOperationHandler(@Assisted final Representation representation,
+      final ElementConfigurationRegistry registry) {
+      super(representation,
+         registry.accessTyped(new RepresentationKey<>(representation, EnumerationLiteral.class)).typeId());
    }
 
 }

@@ -28,18 +28,21 @@ import com.eclipsesource.uml.glsp.core.handler.operation.update.DiagramUpdateHan
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
 import com.eclipsesource.uml.glsp.core.model.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
+import com.eclipsesource.uml.glsp.uml.configuration.ElementConfigurationAccessor;
+import com.eclipsesource.uml.glsp.uml.configuration.ElementConfigurationRegistry;
 import com.eclipsesource.uml.modelserver.shared.utils.Type;
 import com.eclipsesource.uml.modelserver.shared.utils.reflection.ReflectionUtil;
 import com.eclipsesource.uml.modelserver.uml.command.create.CreateElementCommandContribution;
 import com.eclipsesource.uml.modelserver.uml.command.delete.DeleteElementCommandContribution;
 import com.eclipsesource.uml.modelserver.uml.command.reconnect.ReconnectElementCommandContribution;
 import com.eclipsesource.uml.modelserver.uml.command.update.UpdateElementCommandContribution;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.gson.Gson;
 import com.google.inject.Inject;
 import com.google.inject.TypeLiteral;
 
 public abstract class EdgeOperationHandler<TElement extends EObject, TSource extends EObject, TTarget extends EObject>
-   implements DiagramCreateEdgeHandler, DiagramDeleteHandler<TElement>,
+   implements ElementConfigurationAccessor, DiagramCreateEdgeHandler, DiagramDeleteHandler<TElement>,
    DiagramUpdateHandler<TElement>, DiagramReconnectEdgeHandler<TElement> {
    protected final Set<String> elementTypeIds;
    @Inject
@@ -50,6 +53,7 @@ public abstract class EdgeOperationHandler<TElement extends EObject, TSource ext
    protected TypeLiteral<TTarget> targetType;
 
    protected final Gson gson;
+   protected Representation representation;
 
    @Inject
    protected UmlModelServerAccess modelServerAccess;
@@ -57,14 +61,27 @@ public abstract class EdgeOperationHandler<TElement extends EObject, TSource ext
    protected UmlModelState modelState;
    @Inject
    protected EMFIdGenerator idGenerator;
+   @Inject
+   protected ElementConfigurationRegistry configurationRegistry;
 
-   public EdgeOperationHandler(final String typeId) {
-      this(Set.of(typeId));
+   public EdgeOperationHandler(final Representation representation, final String typeId) {
+      this(representation, Set.of(typeId));
    }
 
-   public EdgeOperationHandler(final Set<String> typeIds) {
+   public EdgeOperationHandler(final Representation representation, final Set<String> typeIds) {
       this.elementTypeIds = typeIds;
       this.gson = new Gson();
+      this.representation = representation;
+   }
+
+   @Override
+   public Representation representation() {
+      return representation;
+   }
+
+   @Override
+   public ElementConfigurationRegistry configurationRegistry() {
+      return configurationRegistry;
    }
 
    @Override

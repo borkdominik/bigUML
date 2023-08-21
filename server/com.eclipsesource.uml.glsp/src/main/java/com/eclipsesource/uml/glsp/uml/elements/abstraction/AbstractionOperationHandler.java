@@ -13,12 +13,19 @@ package com.eclipsesource.uml.glsp.uml.elements.abstraction;
 import org.eclipse.uml2.uml.Abstraction;
 import org.eclipse.uml2.uml.NamedElement;
 
+import com.eclipsesource.uml.glsp.uml.configuration.ElementConfigurationRegistry;
 import com.eclipsesource.uml.glsp.uml.handler.element.EdgeOperationHandler;
+import com.eclipsesource.uml.modelserver.shared.registry.RepresentationKey;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
 public class AbstractionOperationHandler extends EdgeOperationHandler<Abstraction, NamedElement, NamedElement> {
 
-   public AbstractionOperationHandler() {
-      super(AbstractionConfiguration.typeId());
+   @Inject
+   public AbstractionOperationHandler(@Assisted final Representation representation,
+      final ElementConfigurationRegistry registry) {
+      super(representation, registry.accessTyped(new RepresentationKey<>(representation, Abstraction.class)).typeId());
    }
 
 }

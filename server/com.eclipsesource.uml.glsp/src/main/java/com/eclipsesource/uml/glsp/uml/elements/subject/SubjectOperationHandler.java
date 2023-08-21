@@ -25,6 +25,6 @@ public class SubjectOperationHandler extends NodeOperationHandler<Component, Mod
    @Inject
    public SubjectOperationHandler(@Assisted final Representation representation,
       final ElementConfigurationRegistry registry) {
-      super(registry.accessTyped(new RepresentationKey<>(representation, Component.class)).typeId());
+      super(representation, registry.accessTyped(new RepresentationKey<>(representation, Component.class)).typeId());
    }
 }

@@ -30,18 +30,22 @@ public class AssociationOperationHandler extends EdgeOperationHandler<Associatio
    @Inject
    public AssociationOperationHandler(@Assisted final Representation representation,
       final ElementConfigurationRegistry registry) {
-      super(Set.of(
+      super(representation, Set.of(
          registry.accessTyped(new RepresentationKey<>(representation, Association.class)).typeId(),
-         AssociationConfiguration.Variant.aggregationTypeId(),
-         AssociationConfiguration.Variant.compositionTypeId()));
+         registry
+            .accessTyped(new RepresentationKey<>(representation, Association.class), AssociationConfiguration.class)
+            .aggregationTypeId(),
+         registry
+            .accessTyped(new RepresentationKey<>(representation, Association.class), AssociationConfiguration.class)
+            .compositionTypeId()));
    }
 
    @Override
    protected Object createArgument(final CreateEdgeOperation operation, final Type source, final Type target) {
       var typeId = operation.getElementTypeId();
-      if (typeId.equals(AssociationConfiguration.Variant.aggregationTypeId())) {
+      if (typeId.equals(configuration(AssociationConfiguration.class).aggregationTypeId())) {
          return new CreateAssociationArgument(AssociationType.AGGREGATION);
-      } else if (typeId.equals(AssociationConfiguration.Variant.compositionTypeId())) {
+      } else if (typeId.equals(configuration(AssociationConfiguration.class).compositionTypeId())) {
          return new CreateAssociationArgument(AssociationType.COMPOSITION);
       }
 

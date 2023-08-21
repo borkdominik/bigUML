@@ -75,7 +75,7 @@ public final class UseCaseAssociationEdgeMapper extends AssociationEdgeMapper {
 
       builder.add(
          textEdgeBuilder(
-            PropertyConfiguration.Label.multiplicityTypeId(),
+            configurationFor(Property.class, PropertyConfiguration.class).multiplicityTypeId(),
             suffix.appendTo(PropertyMultiplicityLabelSuffix.SUFFIX, memberEndId),
             MultiplicityUtil.getMultiplicity(memberEnd),
             new GEdgePlacementBuilder()

@@ -10,47 +10,12 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.elements.interface_realization;
 
-import java.util.Optional;
-
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.glsp.graph.GModelElement;
-
-import com.eclipsesource.uml.glsp.core.diagram.DiagramElementConfiguration.Edge;
-import com.eclipsesource.uml.glsp.core.gmodel.GModelMapper;
 import com.eclipsesource.uml.glsp.core.manifest.DiagramManifest;
-import com.eclipsesource.uml.glsp.features.property_palette.mapper.DiagramElementPropertyMapper;
-import com.eclipsesource.uml.glsp.uml.elements.interface_realization.features.InterfaceRealizationPropertyMapper;
-import com.eclipsesource.uml.glsp.uml.elements.interface_realization.gmodel.InterfaceRealizationEdgeMapper;
-import com.eclipsesource.uml.glsp.uml.handler.element.EdgeOperationHandler;
-import com.eclipsesource.uml.glsp.uml.manifest.edge.EdgeOperationHandlerDefinition;
-import com.google.inject.TypeLiteral;
-import com.google.inject.multibindings.Multibinder;
+import com.eclipsesource.uml.glsp.uml.manifest.edge.EdgeFactoryDefinition;
 
-public class InterfaceRealizationDefinitionModule extends EdgeOperationHandlerDefinition {
+public class InterfaceRealizationDefinitionModule extends EdgeFactoryDefinition {
 
    public InterfaceRealizationDefinitionModule(final DiagramManifest manifest) {
-      super(manifest.id(), manifest.representation());
-   }
-
-   @Override
-   protected void diagramConfigurations(final Multibinder<Edge> contribution) {
-      contribution.addBinding().to(InterfaceRealizationConfiguration.Diagram.class);
-   }
-
-   @Override
-   protected Optional<TypeLiteral<? extends EdgeOperationHandler<?, ?, ?>>> operationHandler() {
-      return Optional.of(new TypeLiteral<InterfaceRealizationOperationHandler>() {});
-   }
-
-   @Override
-   protected void diagramPropertyPaletteMappers(
-      final Multibinder<DiagramElementPropertyMapper<? extends EObject>> contribution) {
-      contribution.addBinding().to(InterfaceRealizationPropertyMapper.class);
-   }
-
-   @Override
-   protected void gmodelMappers(
-      final Multibinder<GModelMapper<? extends EObject, ? extends GModelElement>> contribution) {
-      contribution.addBinding().to(InterfaceRealizationEdgeMapper.class);
+      super(manifest.id(), manifest.representation(), InterfaceRealizationFactory.class);
    }
 }

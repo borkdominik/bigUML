@@ -22,7 +22,6 @@ import org.eclipse.uml2.uml.Actor;
 import org.eclipse.uml2.uml.Generalization;
 
 import com.eclipsesource.uml.glsp.uml.configuration.RepresentationEdgeConfiguration;
-import com.eclipsesource.uml.glsp.uml.elements.class_.ClassConfiguration;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
@@ -44,18 +43,17 @@ public class GeneralizationConfiguration extends RepresentationEdgeConfiguration
    public Set<EdgeTypeHint> getEdgeTypeHints() {
       var hints = new HashSet<EdgeTypeHint>();
 
-      hints.addAll(Set.of(
-         new EdgeTypeHint(typeId(), true, true, true,
-            List.of(ClassConfiguration.typeId()),
-            List.of(ClassConfiguration.typeId()))));
+      if (representation == Representation.CLASS) {
+         hints.addAll(Set.of(
+            new EdgeTypeHint(typeId(), true, true, true,
+               List.of(configurationFor(org.eclipse.uml2.uml.Class.class).typeId()),
+               List.of(configurationFor(org.eclipse.uml2.uml.Class.class).typeId()))));
+      } else if (representation == Representation.USE_CASE) {
 
-      var actor = tryConfigurationFor(Actor.class);
-
-      if (actor.isPresent()) {
          hints.add(
             new EdgeTypeHint(typeId(), true, true, true,
-               List.of(actor.get().typeId()),
-               List.of(actor.get().typeId())));
+               List.of(configurationFor(Actor.class).typeId()),
+               List.of(configurationFor(Actor.class).typeId())));
       }
 
       return hints;

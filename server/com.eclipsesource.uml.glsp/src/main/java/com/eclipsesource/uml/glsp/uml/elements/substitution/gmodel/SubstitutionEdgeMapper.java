@@ -21,11 +21,19 @@ import org.eclipse.uml2.uml.Substitution;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.QuotationMark;
-import com.eclipsesource.uml.glsp.uml.elements.substitution.SubstitutionConfiguration;
-import com.eclipsesource.uml.glsp.uml.gmodel.BaseGEdgeMapper;
+import com.eclipsesource.uml.glsp.uml.gmodel.RepresentationGEdgeMapper;
 import com.eclipsesource.uml.glsp.uml.gmodel.element.EdgeGBuilder;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
-public final class SubstitutionEdgeMapper extends BaseGEdgeMapper<Substitution, GEdge> implements EdgeGBuilder {
+public final class SubstitutionEdgeMapper extends RepresentationGEdgeMapper<Substitution, GEdge>
+   implements EdgeGBuilder {
+
+   @Inject
+   public SubstitutionEdgeMapper(@Assisted final Representation representation) {
+      super(representation);
+   }
 
    @Override
    public GEdge map(final Substitution source) {
@@ -34,7 +42,7 @@ public final class SubstitutionEdgeMapper extends BaseGEdgeMapper<Substitution, 
       var contract = source.getContract();
       var contractId = idGenerator.getOrCreateId(contract);
 
-      GEdgeBuilder builder = new GEdgeBuilder(SubstitutionConfiguration.typeId())
+      GEdgeBuilder builder = new GEdgeBuilder(configuration().typeId())
          .id(idGenerator.getOrCreateId(source))
          .addCssClasses(List.of(CoreCSS.EDGE, CoreCSS.EDGE_DASHED))
          .addCssClass(CoreCSS.Marker.TENT.end())

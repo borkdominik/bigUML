@@ -13,12 +13,20 @@ package com.eclipsesource.uml.glsp.uml.elements.primitive_type;
 import org.eclipse.uml2.uml.Package;
 import org.eclipse.uml2.uml.PrimitiveType;
 
+import com.eclipsesource.uml.glsp.uml.configuration.ElementConfigurationRegistry;
 import com.eclipsesource.uml.glsp.uml.handler.element.NodeOperationHandler;
+import com.eclipsesource.uml.modelserver.shared.registry.RepresentationKey;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
 public class PrimitiveTypeOperationHandler extends NodeOperationHandler<PrimitiveType, Package> {
 
-   public PrimitiveTypeOperationHandler() {
-      super(PrimitiveTypeConfiguration.typeId());
+   @Inject
+   public PrimitiveTypeOperationHandler(@Assisted final Representation representation,
+      final ElementConfigurationRegistry registry) {
+      super(representation,
+         registry.accessTyped(new RepresentationKey<>(representation, PrimitiveType.class)).typeId());
    }
 
 }

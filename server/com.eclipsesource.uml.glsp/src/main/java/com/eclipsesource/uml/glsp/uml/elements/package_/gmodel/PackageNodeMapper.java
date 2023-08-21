@@ -23,16 +23,23 @@ import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.Package;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
-import com.eclipsesource.uml.glsp.uml.elements.package_.PackageConfiguration;
-import com.eclipsesource.uml.glsp.uml.gmodel.BaseGNodeMapper;
+import com.eclipsesource.uml.glsp.uml.gmodel.RepresentationGNodeMapper;
 import com.eclipsesource.uml.glsp.uml.gmodel.element.NamedElementGBuilder;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
-public final class PackageNodeMapper extends BaseGNodeMapper<Package, GNode>
+public final class PackageNodeMapper extends RepresentationGNodeMapper<Package, GNode>
    implements NamedElementGBuilder<Package> {
+
+   @Inject
+   public PackageNodeMapper(@Assisted final Representation representation) {
+      super(representation);
+   }
 
    @Override
    public GNode map(final Package source) {
-      var builder = new GNodeBuilder(PackageConfiguration.typeId())
+      var builder = new GNodeBuilder(configuration().typeId())
          .id(idGenerator.getOrCreateId(source))
          .layout(GConstants.Layout.VBOX)
          .addCssClass(CoreCSS.NODE)

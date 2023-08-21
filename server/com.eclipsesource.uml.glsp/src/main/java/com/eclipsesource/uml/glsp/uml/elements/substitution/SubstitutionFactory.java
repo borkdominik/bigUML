@@ -8,16 +8,28 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.uml.manifest.edge;
+package com.eclipsesource.uml.glsp.uml.elements.substitution;
 
 import com.eclipsesource.uml.glsp.uml.configuration.di.EdgeConfigurationFactory;
-import com.eclipsesource.uml.glsp.uml.features.label_edit.di.LabelEditMapperFactory;
+import com.eclipsesource.uml.glsp.uml.elements.substitution.features.SubstitutionPropertyMapper;
+import com.eclipsesource.uml.glsp.uml.elements.substitution.gmodel.SubstitutionEdgeMapper;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.di.PropertyMapperFactory;
 import com.eclipsesource.uml.glsp.uml.gmodel.di.GModelMapperFactory;
 import com.eclipsesource.uml.glsp.uml.handler.di.EdgeOperationHandlerFactory;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
 
-public interface EdgeFactory
-   extends EdgeConfigurationFactory, EdgeOperationHandlerFactory, GModelMapperFactory, LabelEditMapperFactory,
-   PropertyMapperFactory {
+public interface SubstitutionFactory
+   extends EdgeConfigurationFactory, EdgeOperationHandlerFactory, GModelMapperFactory, PropertyMapperFactory {
 
+   @Override
+   SubstitutionConfiguration edgeConfiguration(Representation representation);
+
+   @Override
+   SubstitutionEdgeMapper gmodel(Representation representation);
+
+   @Override
+   SubstitutionOperationHandler edgeOperationHandler(Representation representation);
+
+   @Override
+   SubstitutionPropertyMapper elementPropertyMapper(Representation representation);
 }

@@ -13,12 +13,19 @@ package com.eclipsesource.uml.glsp.uml.elements.dependency;
 import org.eclipse.uml2.uml.Dependency;
 import org.eclipse.uml2.uml.NamedElement;
 
+import com.eclipsesource.uml.glsp.uml.configuration.ElementConfigurationRegistry;
 import com.eclipsesource.uml.glsp.uml.handler.element.EdgeOperationHandler;
+import com.eclipsesource.uml.modelserver.shared.registry.RepresentationKey;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
 public class DependencyOperationHandler extends EdgeOperationHandler<Dependency, NamedElement, NamedElement> {
 
-   public DependencyOperationHandler() {
-      super(DependencyConfiguration.typeId());
+   @Inject
+   public DependencyOperationHandler(@Assisted final Representation representation,
+      final ElementConfigurationRegistry registry) {
+      super(representation, registry.accessTyped(new RepresentationKey<>(representation, Dependency.class)).typeId());
    }
 
 }

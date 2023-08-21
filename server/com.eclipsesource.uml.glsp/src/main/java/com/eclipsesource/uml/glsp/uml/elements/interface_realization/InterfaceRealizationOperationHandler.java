@@ -13,13 +13,20 @@ package com.eclipsesource.uml.glsp.uml.elements.interface_realization;
 import org.eclipse.uml2.uml.Interface;
 import org.eclipse.uml2.uml.InterfaceRealization;
 
+import com.eclipsesource.uml.glsp.uml.configuration.ElementConfigurationRegistry;
 import com.eclipsesource.uml.glsp.uml.handler.element.EdgeOperationHandler;
+import com.eclipsesource.uml.modelserver.shared.registry.RepresentationKey;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
 public class InterfaceRealizationOperationHandler
    extends EdgeOperationHandler<InterfaceRealization, org.eclipse.uml2.uml.Class, Interface> {
 
-   public InterfaceRealizationOperationHandler() {
-      super(InterfaceRealizationConfiguration.typeId());
+   @Inject
+   public InterfaceRealizationOperationHandler(@Assisted final Representation representation,
+      final ElementConfigurationRegistry registry) {
+      super(representation,
+         registry.accessTyped(new RepresentationKey<>(representation, InterfaceRealization.class)).typeId());
    }
-
 }

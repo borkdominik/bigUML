@@ -25,7 +25,7 @@ public class ExtendOperationHandler extends EdgeOperationHandler<Extend, UseCase
    @Inject
    public ExtendOperationHandler(@Assisted final Representation representation,
       final ElementConfigurationRegistry registry) {
-      super(registry.accessTyped(new RepresentationKey<>(representation, Extend.class)).typeId());
+      super(representation, registry.accessTyped(new RepresentationKey<>(representation, Extend.class)).typeId());
    }
 
 }

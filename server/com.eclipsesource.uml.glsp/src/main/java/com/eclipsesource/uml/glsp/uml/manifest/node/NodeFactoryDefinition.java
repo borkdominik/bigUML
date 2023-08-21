@@ -10,6 +10,8 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.manifest.node;
 
+import java.util.Optional;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.graph.GModelElement;
 
@@ -22,10 +24,15 @@ import com.eclipsesource.uml.glsp.core.handler.operation.update.DiagramUpdateHan
 import com.eclipsesource.uml.glsp.features.property_palette.mapper.DiagramElementPropertyMapper;
 import com.eclipsesource.uml.glsp.uml.configuration.ElementConfigurationContribution;
 import com.eclipsesource.uml.glsp.uml.configuration.NodeConfiguration;
+import com.eclipsesource.uml.glsp.uml.configuration.di.NodeConfigurationFactory;
 import com.eclipsesource.uml.glsp.uml.configuration.di.NodeConfigurationProvider;
+import com.eclipsesource.uml.glsp.uml.features.label_edit.di.LabelEditMapperFactory;
 import com.eclipsesource.uml.glsp.uml.features.label_edit.di.LabelEditMapperProvider;
+import com.eclipsesource.uml.glsp.uml.features.property_palette.di.PropertyMapperFactory;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.di.PropertyMapperProvider;
+import com.eclipsesource.uml.glsp.uml.gmodel.di.GModelMapperFactory;
 import com.eclipsesource.uml.glsp.uml.gmodel.di.GModelMapperProvider;
+import com.eclipsesource.uml.glsp.uml.handler.di.NodeOperationHandlerFactory;
 import com.eclipsesource.uml.glsp.uml.handler.di.NodeOperationHandlerProvider;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
@@ -33,10 +40,10 @@ import com.google.inject.multibindings.Multibinder;
 
 public abstract class NodeFactoryDefinition extends NodeDefinition implements ElementConfigurationContribution {
 
-   protected final Class<? extends NodeFactory> factory;
+   protected final Class<?> factory;
 
    public NodeFactoryDefinition(final String id, final Representation representation,
-      final Class<? extends NodeFactory> factory) {
+      final Class<?> factory) {
       super(id, representation);
       this.factory = factory;
    }
@@ -51,44 +58,59 @@ public abstract class NodeFactoryDefinition extends NodeDefinition implements El
          .build(this.factory));
    }
 
+   protected <TFactory> Optional<Class<TFactory>> supports(final Class<?> factory, final Class<TFactory> support) {
+      if (support.isAssignableFrom(factory)) {
+         return Optional.of((Class<TFactory>) factory);
+      }
+      return Optional.empty();
+   }
+
    protected void elementConfigurations(final Multibinder<NodeConfiguration<?>> contribution) {
-      contribution.addBinding().toProvider(new NodeConfigurationProvider(representation(), factory));
+      supports(factory, NodeConfigurationFactory.class)
+         .map(f -> contribution.addBinding().toProvider(new NodeConfigurationProvider(representation(), f)));
    }
 
    @Override
    protected void diagramConfigurations(final Multibinder<Node> contribution) {
-      contribution.addBinding().toProvider(new NodeConfigurationProvider(representation(), factory));
+      supports(factory, NodeConfigurationFactory.class)
+         .map(f -> contribution.addBinding().toProvider(new NodeConfigurationProvider(representation(), f)));
    }
 
    @Override
    protected void diagramCreateHandlers(final Multibinder<DiagramCreateNodeHandler> contribution) {
-      contribution.addBinding().toProvider(new NodeOperationHandlerProvider(representation(), factory));
+      supports(factory, NodeOperationHandlerFactory.class)
+         .map(f -> contribution.addBinding().toProvider(new NodeOperationHandlerProvider(representation(), f)));
    }
 
    @Override
    protected void diagramDeleteHandlers(final Multibinder<DiagramDeleteHandler<? extends EObject>> contribution) {
-      contribution.addBinding().toProvider(new NodeOperationHandlerProvider(representation(), factory));
+      supports(factory, NodeOperationHandlerFactory.class)
+         .map(f -> contribution.addBinding().toProvider(new NodeOperationHandlerProvider(representation(), f)));
    }
 
    @Override
    protected void diagramUpdateHandlers(final Multibinder<DiagramUpdateHandler<? extends EObject>> contribution) {
-      contribution.addBinding().toProvider(new NodeOperationHandlerProvider(representation(), factory));
+      supports(factory, NodeOperationHandlerFactory.class)
+         .map(f -> contribution.addBinding().toProvider(new NodeOperationHandlerProvider(representation(), f)));
    }
 
    @Override
    protected void gmodelMappers(
       final Multibinder<GModelMapper<? extends EObject, ? extends GModelElement>> contribution) {
-      contribution.addBinding().toProvider(new GModelMapperProvider(representation(), factory));
+      supports(factory, GModelMapperFactory.class)
+         .map(f -> contribution.addBinding().toProvider(new GModelMapperProvider(representation(), f)));
    }
 
    @Override
    protected void diagramLabelEditMappers(final Multibinder<DiagramLabelEditMapper<? extends EObject>> contribution) {
-      contribution.addBinding().toProvider(new LabelEditMapperProvider(representation(), factory));
+      supports(factory, LabelEditMapperFactory.class)
+         .map(f -> contribution.addBinding().toProvider(new LabelEditMapperProvider(representation(), f)));
    }
 
    @Override
    protected void diagramPropertyPaletteMappers(
       final Multibinder<DiagramElementPropertyMapper<? extends EObject>> contribution) {
-      contribution.addBinding().toProvider(new PropertyMapperProvider(representation(), factory));
+      supports(factory, PropertyMapperFactory.class)
+         .map(f -> contribution.addBinding().toProvider(new PropertyMapperProvider(representation(), f)));
    }
 }

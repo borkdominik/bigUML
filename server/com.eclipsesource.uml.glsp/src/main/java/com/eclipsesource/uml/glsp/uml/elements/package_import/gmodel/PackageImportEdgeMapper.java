@@ -21,11 +21,19 @@ import org.eclipse.uml2.uml.PackageImport;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.QuotationMark;
-import com.eclipsesource.uml.glsp.uml.elements.package_import.PackageImportConfiguration;
-import com.eclipsesource.uml.glsp.uml.gmodel.BaseGEdgeMapper;
+import com.eclipsesource.uml.glsp.uml.gmodel.RepresentationGEdgeMapper;
 import com.eclipsesource.uml.glsp.uml.gmodel.element.EdgeGBuilder;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
-public final class PackageImportEdgeMapper extends BaseGEdgeMapper<PackageImport, GEdge> implements EdgeGBuilder {
+public final class PackageImportEdgeMapper extends RepresentationGEdgeMapper<PackageImport, GEdge>
+   implements EdgeGBuilder {
+
+   @Inject
+   public PackageImportEdgeMapper(@Assisted final Representation representation) {
+      super(representation);
+   }
 
    @Override
    public GEdge map(final PackageImport source) {
@@ -34,7 +42,7 @@ public final class PackageImportEdgeMapper extends BaseGEdgeMapper<PackageImport
       var importedPackage = source.getImportedPackage();
       var importedPackageId = idGenerator.getOrCreateId(importedPackage);
 
-      GEdgeBuilder builder = new GEdgeBuilder(PackageImportConfiguration.typeId())
+      GEdgeBuilder builder = new GEdgeBuilder(configuration().typeId())
          .id(idGenerator.getOrCreateId(source))
          .addCssClasses(List.of(CoreCSS.EDGE, CoreCSS.EDGE_DASHED))
          .addCssClass(CoreCSS.Marker.TENT.end())

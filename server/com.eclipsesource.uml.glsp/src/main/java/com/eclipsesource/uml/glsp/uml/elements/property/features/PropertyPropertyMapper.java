@@ -26,14 +26,21 @@ import com.eclipsesource.uml.glsp.features.property_palette.handler.action.Updat
 import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalette;
 import com.eclipsesource.uml.glsp.uml.elements.property.PropertyConfiguration;
 import com.eclipsesource.uml.glsp.uml.elements.property.PropertyOperationHandler;
-import com.eclipsesource.uml.glsp.uml.features.property_palette.BaseDiagramElementPropertyMapper;
+import com.eclipsesource.uml.glsp.uml.features.property_palette.RepresentationElementPropertyMapper;
 import com.eclipsesource.uml.glsp.uml.utils.MultiplicityUtil;
 import com.eclipsesource.uml.glsp.uml.utils.element.AggregationKindUtils;
 import com.eclipsesource.uml.glsp.uml.utils.element.TypeUtils;
 import com.eclipsesource.uml.glsp.uml.utils.element.VisibilityKindUtils;
 import com.eclipsesource.uml.modelserver.uml.elements.property.commands.UpdatePropertyArgument;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.inject.assistedinject.Assisted;
 
-public class PropertyPropertyMapper extends BaseDiagramElementPropertyMapper<Property> {
+public class PropertyPropertyMapper extends RepresentationElementPropertyMapper<Property> {
+
+   @Inject
+   public PropertyPropertyMapper(@Assisted final Representation representation) {
+      super(representation);
+   }
 
    @Inject
    private UmlModelServerAccess modelServerAccess;

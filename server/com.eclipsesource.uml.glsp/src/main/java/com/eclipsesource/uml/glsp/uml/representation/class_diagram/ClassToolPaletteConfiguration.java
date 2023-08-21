@@ -15,27 +15,25 @@ import java.util.Map;
 
 import org.eclipse.glsp.server.features.toolpalette.PaletteItem;
 import org.eclipse.uml2.uml.Association;
+import org.eclipse.uml2.uml.DataType;
+import org.eclipse.uml2.uml.Dependency;
+import org.eclipse.uml2.uml.Enumeration;
+import org.eclipse.uml2.uml.EnumerationLiteral;
 import org.eclipse.uml2.uml.Generalization;
+import org.eclipse.uml2.uml.Interface;
+import org.eclipse.uml2.uml.InterfaceRealization;
+import org.eclipse.uml2.uml.Operation;
+import org.eclipse.uml2.uml.PackageImport;
+import org.eclipse.uml2.uml.PackageMerge;
+import org.eclipse.uml2.uml.PrimitiveType;
+import org.eclipse.uml2.uml.Property;
+import org.eclipse.uml2.uml.Realization;
+import org.eclipse.uml2.uml.Substitution;
+import org.eclipse.uml2.uml.Usage;
 
 import com.eclipsesource.uml.glsp.core.features.tool_palette.PaletteItemUtil;
-import com.eclipsesource.uml.glsp.uml.elements.abstraction.AbstractionConfiguration;
 import com.eclipsesource.uml.glsp.uml.elements.association.AssociationConfiguration;
 import com.eclipsesource.uml.glsp.uml.elements.class_.ClassConfiguration;
-import com.eclipsesource.uml.glsp.uml.elements.data_type.DataTypeConfiguration;
-import com.eclipsesource.uml.glsp.uml.elements.dependency.DependencyConfiguration;
-import com.eclipsesource.uml.glsp.uml.elements.enumeration.EnumerationConfiguration;
-import com.eclipsesource.uml.glsp.uml.elements.enumeration_literal.EnumerationLiteralConfiguration;
-import com.eclipsesource.uml.glsp.uml.elements.interface_.InterfaceConfiguration;
-import com.eclipsesource.uml.glsp.uml.elements.interface_realization.InterfaceRealizationConfiguration;
-import com.eclipsesource.uml.glsp.uml.elements.operation.OperationConfiguration;
-import com.eclipsesource.uml.glsp.uml.elements.package_.PackageConfiguration;
-import com.eclipsesource.uml.glsp.uml.elements.package_import.PackageImportConfiguration;
-import com.eclipsesource.uml.glsp.uml.elements.package_merge.PackageMergeConfiguration;
-import com.eclipsesource.uml.glsp.uml.elements.primitive_type.PrimitiveTypeConfiguration;
-import com.eclipsesource.uml.glsp.uml.elements.property.PropertyConfiguration;
-import com.eclipsesource.uml.glsp.uml.elements.realization.RealizationConfiguration;
-import com.eclipsesource.uml.glsp.uml.elements.substitution.SubstitutionConfiguration;
-import com.eclipsesource.uml.glsp.uml.elements.usage.UsageConfiguration;
 import com.eclipsesource.uml.glsp.uml.features.tool_palette.RepresentationToolPaletteConfiguration;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 
@@ -51,46 +49,53 @@ public final class ClassToolPaletteConfiguration extends RepresentationToolPalet
 
    private PaletteItem containers() {
       var containers = List.of(
-         PaletteItemUtil.node(ClassConfiguration.typeId(), "Class", "uml-class-icon"),
-         PaletteItemUtil.node(ClassConfiguration.Variant.abstractTypeId(), "Abstract Class", "uml-class-icon"),
-         PaletteItemUtil.node(InterfaceConfiguration.typeId(), "Interface", "uml-interface-icon"),
-         PaletteItemUtil.node(EnumerationConfiguration.typeId(), "Enumeration", "uml-enumeration-icon"),
-         PaletteItemUtil.node(DataTypeConfiguration.typeId(), "Data Type", "uml-data-type-icon"),
-         PaletteItemUtil.node(PrimitiveTypeConfiguration.typeId(), "Primitive Type", "uml-primitive-type-icon"),
-         PaletteItemUtil.node(PackageConfiguration.typeId(), "Package", "uml-package-icon"));
+         PaletteItemUtil.node(configurationFor(org.eclipse.uml2.uml.Class.class).typeId(), "Class", "uml-class-icon"),
+         PaletteItemUtil.node(
+            configurationFor(org.eclipse.uml2.uml.Class.class, ClassConfiguration.class).abstractTypeId(),
+            "Abstract Class", "uml-class-icon"),
+         PaletteItemUtil.node(configurationFor(Interface.class).typeId(), "Interface", "uml-interface-icon"),
+         PaletteItemUtil.node(configurationFor(Enumeration.class).typeId(), "Enumeration", "uml-enumeration-icon"),
+         PaletteItemUtil.node(configurationFor(DataType.class).typeId(), "Data Type", "uml-data-type-icon"),
+         PaletteItemUtil.node(configurationFor(PrimitiveType.class).typeId(), "Primitive Type",
+            "uml-primitive-type-icon"),
+         PaletteItemUtil.node(configurationFor(org.eclipse.uml2.uml.Package.class).typeId(), "Package",
+            "uml-package-icon"));
 
       return PaletteItem.createPaletteGroup("uml.classifier", "Container", containers, "symbol-property");
    }
 
    private PaletteItem relations() {
       var relations = List.of(
-         PaletteItemUtil.edge(AbstractionConfiguration.typeId(), "Abstraction", "uml-abstraction-icon"),
+         PaletteItemUtil.edge(configurationFor(Interface.class).typeId(), "Abstraction", "uml-abstraction-icon"),
          PaletteItemUtil.edge(configurationFor(Association.class).typeId(), "Association",
             "uml-association-none-icon"),
-         PaletteItemUtil.edge(AssociationConfiguration.Variant.compositionTypeId(), "Composition",
+         PaletteItemUtil.edge(configurationFor(Association.class, AssociationConfiguration.class).compositionTypeId(),
+            "Composition",
             "uml-association-composite-icon"),
-         PaletteItemUtil.edge(AssociationConfiguration.Variant.aggregationTypeId(), "Aggregation",
+         PaletteItemUtil.edge(configurationFor(Association.class, AssociationConfiguration.class).aggregationTypeId(),
+            "Aggregation",
             "uml-association-shared-icon"),
-         PaletteItemUtil.edge(DependencyConfiguration.typeId(), "Dependency", "uml-dependency-icon"),
+         PaletteItemUtil.edge(configurationFor(Dependency.class).typeId(), "Dependency", "uml-dependency-icon"),
          PaletteItemUtil.edge(configurationFor(Generalization.class).typeId(), "Generalization",
             "uml-generalization-icon"),
-         PaletteItemUtil.edge(InterfaceRealizationConfiguration.typeId(), "Interface Realization",
+         PaletteItemUtil.edge(configurationFor(InterfaceRealization.class).typeId(), "Interface Realization",
             "uml-interface-realization-icon"),
-         PaletteItemUtil.edge(PackageImportConfiguration.typeId(), "Package Import", "uml-package-import-icon"),
-         PaletteItemUtil.edge(PackageMergeConfiguration.typeId(), "Package Merge", "uml-package-merge-icon"),
-         PaletteItemUtil.edge(RealizationConfiguration.typeId(), "Realization", "uml-realization-icon"),
-         PaletteItemUtil.edge(SubstitutionConfiguration.typeId(), "Substitution", "uml-substitution-icon"),
-         PaletteItemUtil.edge(UsageConfiguration.typeId(), "Usage", "uml-usage-icon"));
+         PaletteItemUtil.edge(configurationFor(PackageImport.class).typeId(), "Package Import",
+            "uml-package-import-icon"),
+         PaletteItemUtil.edge(configurationFor(PackageMerge.class).typeId(), "Package Merge", "uml-package-merge-icon"),
+         PaletteItemUtil.edge(configurationFor(Realization.class).typeId(), "Realization", "uml-realization-icon"),
+         PaletteItemUtil.edge(configurationFor(Substitution.class).typeId(), "Substitution", "uml-substitution-icon"),
+         PaletteItemUtil.edge(configurationFor(Usage.class).typeId(), "Usage", "uml-usage-icon"));
 
       return PaletteItem.createPaletteGroup("uml.classifier", "Relation", relations, "symbol-property");
    }
 
    private PaletteItem features() {
       var features = List.of(
-         PaletteItemUtil.node(PropertyConfiguration.typeId(), "Property", "uml-property-icon"),
-         PaletteItemUtil.node(EnumerationLiteralConfiguration.typeId(), "Enumeration Literal",
+         PaletteItemUtil.node(configurationFor(Property.class).typeId(), "Property", "uml-property-icon"),
+         PaletteItemUtil.node(configurationFor(EnumerationLiteral.class).typeId(), "Enumeration Literal",
             "uml-enumeration-literal-icon"),
-         PaletteItemUtil.node(OperationConfiguration.typeId(), "Operation", "uml-operation-icon"));
+         PaletteItemUtil.node(configurationFor(Operation.class).typeId(), "Operation", "uml-operation-icon"));
 
       return PaletteItem.createPaletteGroup("uml.classifier", "Feature", features, "symbol-property");
    }

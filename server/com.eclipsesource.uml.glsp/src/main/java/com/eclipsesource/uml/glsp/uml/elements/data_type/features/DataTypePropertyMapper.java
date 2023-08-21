@@ -15,6 +15,8 @@ import java.util.Optional;
 
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.uml2.uml.DataType;
+import org.eclipse.uml2.uml.Operation;
+import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.VisibilityKind;
 
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
@@ -23,15 +25,21 @@ import com.eclipsesource.uml.glsp.features.property_palette.model.ElementReferen
 import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalette;
 import com.eclipsesource.uml.glsp.uml.elements.data_type.DataTypeConfiguration;
 import com.eclipsesource.uml.glsp.uml.elements.data_type.DataTypeOperationHandler;
-import com.eclipsesource.uml.glsp.uml.elements.operation.OperationConfiguration;
-import com.eclipsesource.uml.glsp.uml.elements.property.PropertyConfiguration;
-import com.eclipsesource.uml.glsp.uml.features.property_palette.BaseDiagramElementPropertyMapper;
+import com.eclipsesource.uml.glsp.uml.features.property_palette.RepresentationElementPropertyMapper;
 import com.eclipsesource.uml.glsp.uml.utils.element.OperationUtils;
 import com.eclipsesource.uml.glsp.uml.utils.element.PropertyUtils;
 import com.eclipsesource.uml.glsp.uml.utils.element.VisibilityKindUtils;
 import com.eclipsesource.uml.modelserver.uml.elements.data_type.commands.UpdateDataTypeArgument;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
-public class DataTypePropertyMapper extends BaseDiagramElementPropertyMapper<DataType> {
+public class DataTypePropertyMapper extends RepresentationElementPropertyMapper<DataType> {
+
+   @Inject
+   public DataTypePropertyMapper(@Assisted final Representation representation) {
+      super(representation);
+   }
 
    @Override
    public PropertyPalette map(final DataType source) {
@@ -51,14 +59,14 @@ public class DataTypePropertyMapper extends BaseDiagramElementPropertyMapper<Dat
             PropertyUtils.asReferences(source.getOwnedAttributes(), idGenerator),
             List.of(
                new ElementReferencePropertyItem.CreateReference("Property",
-                  new CreateNodeOperation(PropertyConfiguration.typeId(), elementId))))
+                  new CreateNodeOperation(configurationFor(Property.class).typeId(), elementId))))
          .reference(
             DataTypeConfiguration.Property.OWNED_ATTRIBUTES,
             "Owned Operation",
             OperationUtils.asReferences(source.getOwnedOperations(), idGenerator),
             List.of(
                new ElementReferencePropertyItem.CreateReference("Operation",
-                  new CreateNodeOperation(OperationConfiguration.typeId(), elementId))))
+                  new CreateNodeOperation(configurationFor(Operation.class).typeId(), elementId))))
 
          .items();
 

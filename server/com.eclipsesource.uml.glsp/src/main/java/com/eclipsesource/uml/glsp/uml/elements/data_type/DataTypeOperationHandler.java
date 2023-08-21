@@ -13,12 +13,19 @@ package com.eclipsesource.uml.glsp.uml.elements.data_type;
 import org.eclipse.uml2.uml.DataType;
 import org.eclipse.uml2.uml.Package;
 
+import com.eclipsesource.uml.glsp.uml.configuration.ElementConfigurationRegistry;
 import com.eclipsesource.uml.glsp.uml.handler.element.NodeOperationHandler;
+import com.eclipsesource.uml.modelserver.shared.registry.RepresentationKey;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
 public class DataTypeOperationHandler extends NodeOperationHandler<DataType, Package> {
 
-   public DataTypeOperationHandler() {
-      super(DataTypeConfiguration.typeId());
+   @Inject
+   public DataTypeOperationHandler(@Assisted final Representation representation,
+      final ElementConfigurationRegistry registry) {
+      super(representation, registry.accessTyped(new RepresentationKey<>(representation, DataType.class)).typeId());
    }
 
 }

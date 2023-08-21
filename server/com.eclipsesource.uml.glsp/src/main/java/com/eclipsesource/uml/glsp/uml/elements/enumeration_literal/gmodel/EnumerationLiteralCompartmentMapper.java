@@ -16,16 +16,24 @@ import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.EnumerationLiteral;
 
-import com.eclipsesource.uml.glsp.uml.elements.enumeration_literal.EnumerationLiteralConfiguration;
-import com.eclipsesource.uml.glsp.uml.gmodel.BaseGModelMapper;
+import com.eclipsesource.uml.glsp.uml.gmodel.RepresentationGModelMapper;
 import com.eclipsesource.uml.glsp.uml.gmodel.element.NamedElementGBuilder;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
-public final class EnumerationLiteralCompartmentMapper extends BaseGModelMapper<EnumerationLiteral, GCompartment>
+public final class EnumerationLiteralCompartmentMapper
+   extends RepresentationGModelMapper<EnumerationLiteral, GCompartment>
    implements NamedElementGBuilder<EnumerationLiteral> {
+
+   @Inject
+   public EnumerationLiteralCompartmentMapper(@Assisted final Representation representation) {
+      super(representation);
+   }
 
    @Override
    public GCompartment map(final EnumerationLiteral source) {
-      var builder = new GCompartmentBuilder(EnumerationLiteralConfiguration.typeId())
+      var builder = new GCompartmentBuilder(configuration().typeId())
          .id(idGenerator.getOrCreateId(source))
          .layout(GConstants.Layout.HBOX)
          .layoutOptions(new GLayoutOptions()

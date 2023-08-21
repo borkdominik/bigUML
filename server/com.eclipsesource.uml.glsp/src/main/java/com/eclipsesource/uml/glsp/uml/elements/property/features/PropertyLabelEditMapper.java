@@ -22,11 +22,19 @@ import com.eclipsesource.uml.glsp.uml.elements.property.PropertyConfiguration;
 import com.eclipsesource.uml.glsp.uml.elements.property.PropertyOperationHandler;
 import com.eclipsesource.uml.glsp.uml.elements.property.gmodel.suffix.PropertyMultiplicityLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.elements.property.gmodel.suffix.PropertyTypeLabelSuffix;
-import com.eclipsesource.uml.glsp.uml.features.label_edit.BaseLabelEditMapper;
+import com.eclipsesource.uml.glsp.uml.features.label_edit.RepresentationLabelEditMapper;
 import com.eclipsesource.uml.glsp.uml.utils.MultiplicityUtil;
 import com.eclipsesource.uml.modelserver.uml.elements.property.commands.UpdatePropertyArgument;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
-public class PropertyLabelEditMapper extends BaseLabelEditMapper<Property> {
+public class PropertyLabelEditMapper extends RepresentationLabelEditMapper<Property> {
+
+   @Inject
+   public PropertyLabelEditMapper(@Assisted final Representation representation) {
+      super(representation);
+   }
 
    @Override
    public Optional<UpdateOperation> map(final ApplyLabelEditOperation operation) {
@@ -38,14 +46,15 @@ public class PropertyLabelEditMapper extends BaseLabelEditMapper<Property> {
             UpdatePropertyArgument.by()
                .name(operation.getText())
                .build());
-      } else if (matches(operation, PropertyConfiguration.Label.multiplicityTypeId(),
+      } else if (matches(operation, configuration(PropertyConfiguration.class).multiplicityTypeId(),
          PropertyMultiplicityLabelSuffix.SUFFIX)) {
          update = handler.withArgument(
             UpdatePropertyArgument.by()
                .upperBound(MultiplicityUtil.getUpper(operation.getText()))
                .lowerBound(MultiplicityUtil.getLower(operation.getText()))
                .build());
-      } else if (matches(operation, PropertyConfiguration.Label.typeTypeId(), PropertyTypeLabelSuffix.SUFFIX)) {
+      } else if (matches(operation, configuration(PropertyConfiguration.class).typeTypeId(),
+         PropertyTypeLabelSuffix.SUFFIX)) {
          update = handler.withArgument(
             UpdatePropertyArgument.by()
                .typeId(operation.getText())

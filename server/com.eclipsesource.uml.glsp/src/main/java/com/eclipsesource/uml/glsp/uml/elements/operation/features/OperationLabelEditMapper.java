@@ -19,10 +19,18 @@ import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
 import com.eclipsesource.uml.glsp.uml.elements.operation.OperationOperationHandler;
-import com.eclipsesource.uml.glsp.uml.features.label_edit.BaseLabelEditMapper;
+import com.eclipsesource.uml.glsp.uml.features.label_edit.RepresentationLabelEditMapper;
 import com.eclipsesource.uml.modelserver.uml.elements.operation.commands.UpdateOperationArgument;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
-public final class OperationLabelEditMapper extends BaseLabelEditMapper<Operation> {
+public final class OperationLabelEditMapper extends RepresentationLabelEditMapper<Operation> {
+
+   @Inject
+   public OperationLabelEditMapper(@Assisted final Representation representation) {
+      super(representation);
+   }
 
    @Override
    public Optional<UpdateOperation> map(final ApplyLabelEditOperation operation) {

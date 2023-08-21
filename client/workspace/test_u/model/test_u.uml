@@ -7,7 +7,7 @@
   <packagedElement xmi:type="uml:UseCase" xmi:id="_LtAlQEBIEe6lEqvgyrSBNg" name="NewUseCase1">
     <include xmi:id="_OCQlYEBIEe6lEqvgyrSBNg" addition="_Mqe6IEBIEe6lEqvgyrSBNg"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:UseCase" xmi:id="_MS6usEBIEe6lEqvgyrSBNg" name="NewUseCase2">
+  <packagedElement xmi:type="uml:UseCase" xmi:id="_MS6usEBIEe6lEqvgyrSBNg" name="asd">
     <extend xmi:id="_NQP5oEBIEe6lEqvgyrSBNg" extendedCase="_Mqe6IEBIEe6lEqvgyrSBNg"/>
   </packagedElement>
   <packagedElement xmi:type="uml:UseCase" xmi:id="_Mqe6IEBIEe6lEqvgyrSBNg" name="NewUseCase3"/>

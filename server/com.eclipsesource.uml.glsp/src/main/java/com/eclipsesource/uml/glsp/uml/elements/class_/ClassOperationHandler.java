@@ -16,19 +16,29 @@ import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.Package;
 
+import com.eclipsesource.uml.glsp.uml.configuration.ElementConfigurationRegistry;
 import com.eclipsesource.uml.glsp.uml.handler.element.NodeOperationHandler;
+import com.eclipsesource.uml.modelserver.shared.registry.RepresentationKey;
 import com.eclipsesource.uml.modelserver.uml.elements.class_.commands.CreateClassArgument;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
 public class ClassOperationHandler extends NodeOperationHandler<Class, Package> {
 
-   public ClassOperationHandler() {
-      super(Set.of(ClassConfiguration.typeId(), ClassConfiguration.Variant.abstractTypeId()));
+   @Inject
+   public ClassOperationHandler(@Assisted final Representation representation,
+      final ElementConfigurationRegistry registry) {
+      super(representation, Set.of(
+         registry.accessTyped(new RepresentationKey<>(representation, Class.class), ClassConfiguration.class).typeId(),
+         registry.accessTyped(new RepresentationKey<>(representation, Class.class), ClassConfiguration.class)
+            .abstractTypeId()));
    }
 
    @Override
    protected CreateClassArgument createArgument(final CreateNodeOperation operation, final Package parent) {
       var elementTypeId = operation.getElementTypeId();
-      if (elementTypeId.equals(ClassConfiguration.Variant.abstractTypeId())) {
+      if (elementTypeId.equals(configuration(ClassConfiguration.class).abstractTypeId())) {
          return new CreateClassArgument(true);
 
       }

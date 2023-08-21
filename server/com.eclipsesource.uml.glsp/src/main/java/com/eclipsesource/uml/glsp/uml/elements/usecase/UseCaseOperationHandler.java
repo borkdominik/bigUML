@@ -25,7 +25,7 @@ public class UseCaseOperationHandler extends NodeOperationHandler<UseCase, EObje
    @Inject
    public UseCaseOperationHandler(@Assisted final Representation representation,
       final ElementConfigurationRegistry registry) {
-      super(registry.accessTyped(new RepresentationKey<>(representation, UseCase.class)).typeId());
+      super(representation, registry.accessTyped(new RepresentationKey<>(representation, UseCase.class)).typeId());
    }
 
 }

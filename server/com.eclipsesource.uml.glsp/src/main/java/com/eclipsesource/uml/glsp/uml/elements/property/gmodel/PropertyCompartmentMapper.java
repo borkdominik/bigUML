@@ -25,19 +25,27 @@ import com.eclipsesource.uml.glsp.core.features.id_generator.IdCountContextGener
 import com.eclipsesource.uml.glsp.uml.elements.property.PropertyConfiguration;
 import com.eclipsesource.uml.glsp.uml.elements.property.gmodel.suffix.PropertyMultiplicityLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.elements.property.gmodel.suffix.PropertyTypeLabelSuffix;
-import com.eclipsesource.uml.glsp.uml.gmodel.BaseGModelMapper;
+import com.eclipsesource.uml.glsp.uml.gmodel.RepresentationGModelMapper;
 import com.eclipsesource.uml.glsp.uml.gmodel.element.NamedElementGBuilder;
 import com.eclipsesource.uml.glsp.uml.utils.MultiplicityUtil;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
-public final class PropertyCompartmentMapper extends BaseGModelMapper<Property, GCompartment>
+public final class PropertyCompartmentMapper extends RepresentationGModelMapper<Property, GCompartment>
    implements NamedElementGBuilder<Property> {
+
+   @Inject
+   public PropertyCompartmentMapper(@Assisted final Representation representation) {
+      super(representation);
+   }
+
    @Inject
    protected IdCountContextGenerator idCountGenerator;
 
    @Override
    public GCompartment map(final Property source) {
-      var builder = new GCompartmentBuilder(PropertyConfiguration.typeId())
+      var builder = new GCompartmentBuilder(configuration().typeId())
          .id(idGenerator.getOrCreateId(source))
          .layout(GConstants.Layout.HBOX)
          .layoutOptions(new GLayoutOptions()
@@ -60,7 +68,7 @@ public final class PropertyCompartmentMapper extends BaseGModelMapper<Property, 
    }
 
    protected GLabel buildTypeName(final Property source, final String text) {
-      return new GLabelBuilder(PropertyConfiguration.Label.typeTypeId())
+      return new GLabelBuilder(configuration(PropertyConfiguration.class).typeTypeId())
          .id(suffix.appendTo(PropertyTypeLabelSuffix.SUFFIX, idGenerator.getOrCreateId(source)))
          .text(text)
          .build();
@@ -81,7 +89,7 @@ public final class PropertyCompartmentMapper extends BaseGModelMapper<Property, 
 
       builder
          .add(separatorBuilder(source, "[").build())
-         .add(new GLabelBuilder(PropertyConfiguration.Label.multiplicityTypeId())
+         .add(new GLabelBuilder(configuration(PropertyConfiguration.class).multiplicityTypeId())
             .id(suffix.appendTo(PropertyMultiplicityLabelSuffix.SUFFIX, idGenerator.getOrCreateId(source)))
             .text(multiplicity)
             .build())

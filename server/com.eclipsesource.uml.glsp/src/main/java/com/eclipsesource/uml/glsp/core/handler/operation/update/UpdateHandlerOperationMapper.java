@@ -117,7 +117,7 @@ public class UpdateHandlerOperationMapper {
                var key = v.getKey();
                var annotation = key.getAnnotation();
                if (annotation != null) {
-                  return annotation.equals(Names.named("USE_CASE"));
+                  return annotation.equals(Names.named(representation.getName()));
                }
 
                return false;

@@ -20,16 +20,23 @@ import org.eclipse.uml2.uml.Enumeration;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.QuotationMark;
-import com.eclipsesource.uml.glsp.uml.elements.enumeration.EnumerationConfiguration;
-import com.eclipsesource.uml.glsp.uml.gmodel.BaseGNodeMapper;
+import com.eclipsesource.uml.glsp.uml.gmodel.RepresentationGNodeMapper;
 import com.eclipsesource.uml.glsp.uml.gmodel.element.NamedElementGBuilder;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
-public final class EnumerationNodeMapper extends BaseGNodeMapper<Enumeration, GNode>
+public final class EnumerationNodeMapper extends RepresentationGNodeMapper<Enumeration, GNode>
    implements NamedElementGBuilder<Enumeration> {
+
+   @Inject
+   public EnumerationNodeMapper(@Assisted final Representation representation) {
+      super(representation);
+   }
 
    @Override
    public GNode map(final Enumeration source) {
-      var builder = new GNodeBuilder(EnumerationConfiguration.typeId())
+      var builder = new GNodeBuilder(configuration().typeId())
          .id(idGenerator.getOrCreateId(source))
          .layout(GConstants.Layout.VBOX)
          .addCssClass(CoreCSS.NODE)

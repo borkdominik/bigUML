@@ -20,12 +20,18 @@ import com.eclipsesource.uml.glsp.core.features.label_edit.DiagramLabelEditMappe
 import com.eclipsesource.uml.glsp.core.gmodel.GModelMapper;
 import com.eclipsesource.uml.glsp.core.handler.operation.create.DiagramCreateEdgeHandler;
 import com.eclipsesource.uml.glsp.core.handler.operation.delete.DiagramDeleteHandler;
+import com.eclipsesource.uml.glsp.core.handler.operation.reconnect_edge.DiagramReconnectEdgeHandler;
 import com.eclipsesource.uml.glsp.core.handler.operation.update.DiagramUpdateHandler;
+import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramReconnectEdgeHandlerContribution;
 import com.eclipsesource.uml.glsp.features.property_palette.mapper.DiagramElementPropertyMapper;
 import com.eclipsesource.uml.glsp.uml.configuration.EdgeConfiguration;
 import com.eclipsesource.uml.glsp.uml.configuration.ElementConfigurationContribution;
 import com.eclipsesource.uml.glsp.uml.configuration.di.EdgeConfigurationFactory;
 import com.eclipsesource.uml.glsp.uml.configuration.di.EdgeConfigurationProvider;
+import com.eclipsesource.uml.glsp.uml.features.label_edit.di.LabelEditMapperFactory;
+import com.eclipsesource.uml.glsp.uml.features.label_edit.di.LabelEditMapperProvider;
+import com.eclipsesource.uml.glsp.uml.features.property_palette.di.PropertyMapperFactory;
+import com.eclipsesource.uml.glsp.uml.features.property_palette.di.PropertyMapperProvider;
 import com.eclipsesource.uml.glsp.uml.gmodel.di.GModelMapperFactory;
 import com.eclipsesource.uml.glsp.uml.gmodel.di.GModelMapperProvider;
 import com.eclipsesource.uml.glsp.uml.handler.di.EdgeOperationHandlerFactory;
@@ -34,7 +40,8 @@ import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
 import com.google.inject.multibindings.Multibinder;
 
-public abstract class EdgeFactoryDefinition extends EdgeDefinition implements ElementConfigurationContribution {
+public abstract class EdgeFactoryDefinition extends EdgeDefinition
+   implements ElementConfigurationContribution, DiagramReconnectEdgeHandlerContribution {
    protected final Class<?> factory;
 
    public EdgeFactoryDefinition(final String id, final Representation representation,
@@ -48,6 +55,7 @@ public abstract class EdgeFactoryDefinition extends EdgeDefinition implements El
       super.configure();
 
       contributeEdgeConfigurations(this::elementConfigurations);
+      contributeDiagramReconnectEdgeHandlers(this::diagramReconnectEdgeHandlers);
 
       install(new FactoryModuleBuilder()
          .build(this.factory));
@@ -90,6 +98,12 @@ public abstract class EdgeFactoryDefinition extends EdgeDefinition implements El
          .map(f -> contribution.addBinding().toProvider(new EdgeOperationHandlerProvider(representation(), f)));
    }
 
+   protected void diagramReconnectEdgeHandlers(
+      final Multibinder<DiagramReconnectEdgeHandler<? extends EObject>> contribution) {
+      supports(factory, EdgeOperationHandlerFactory.class)
+         .map(f -> contribution.addBinding().toProvider(new EdgeOperationHandlerProvider(representation(), f)));
+   }
+
    @Override
    protected void gmodelMappers(
       final Multibinder<GModelMapper<? extends EObject, ? extends GModelElement>> contribution) {
@@ -99,12 +113,14 @@ public abstract class EdgeFactoryDefinition extends EdgeDefinition implements El
 
    @Override
    protected void diagramLabelEditMappers(final Multibinder<DiagramLabelEditMapper<? extends EObject>> contribution) {
-      // contribution.addBinding().toProvider(new LabelEditMapperProvider(representation(), factory));
+      supports(factory, LabelEditMapperFactory.class)
+         .map(f -> contribution.addBinding().toProvider(new LabelEditMapperProvider(representation(), f)));
    }
 
    @Override
    protected void diagramPropertyPaletteMappers(
       final Multibinder<DiagramElementPropertyMapper<? extends EObject>> contribution) {
-      // contribution.addBinding().toProvider(new PropertyMapperProvider(representation(), factory));
+      supports(factory, PropertyMapperFactory.class)
+         .map(f -> contribution.addBinding().toProvider(new PropertyMapperProvider(representation(), f)));
    }
 }

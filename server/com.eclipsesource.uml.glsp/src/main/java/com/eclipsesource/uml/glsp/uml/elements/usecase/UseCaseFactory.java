@@ -10,13 +10,19 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.elements.usecase;
 
+import com.eclipsesource.uml.glsp.uml.configuration.di.NodeConfigurationFactory;
 import com.eclipsesource.uml.glsp.uml.elements.usecase.features.UseCaseLabelEditMapper;
 import com.eclipsesource.uml.glsp.uml.elements.usecase.features.UseCasePropertyMapper;
 import com.eclipsesource.uml.glsp.uml.elements.usecase.gmodel.UseCaseNodeMapper;
-import com.eclipsesource.uml.glsp.uml.manifest.node.NodeFactory;
+import com.eclipsesource.uml.glsp.uml.features.label_edit.di.LabelEditMapperFactory;
+import com.eclipsesource.uml.glsp.uml.features.property_palette.di.PropertyMapperFactory;
+import com.eclipsesource.uml.glsp.uml.gmodel.di.GModelMapperFactory;
+import com.eclipsesource.uml.glsp.uml.handler.di.NodeOperationHandlerFactory;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 
-public interface UseCaseFactory extends NodeFactory {
+public interface UseCaseFactory
+   extends NodeConfigurationFactory, NodeOperationHandlerFactory, GModelMapperFactory, PropertyMapperFactory,
+   LabelEditMapperFactory {
    @Override
    UseCaseConfiguration nodeConfiguration(Representation representation);
 

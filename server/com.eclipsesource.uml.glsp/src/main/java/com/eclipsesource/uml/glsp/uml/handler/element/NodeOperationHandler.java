@@ -26,33 +26,40 @@ import com.eclipsesource.uml.glsp.core.handler.operation.update.DiagramUpdateHan
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
 import com.eclipsesource.uml.glsp.core.model.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
+import com.eclipsesource.uml.glsp.uml.configuration.ElementConfigurationAccessor;
+import com.eclipsesource.uml.glsp.uml.configuration.ElementConfigurationRegistry;
 import com.eclipsesource.uml.glsp.uml.handler.operations.create.CreateLocationAwareNodeHandler;
 import com.eclipsesource.uml.modelserver.shared.utils.reflection.GenericsUtil;
 import com.eclipsesource.uml.modelserver.shared.utils.reflection.ReflectionUtil;
 import com.eclipsesource.uml.modelserver.uml.command.create.CreateElementCommandContribution;
 import com.eclipsesource.uml.modelserver.uml.command.delete.DeleteElementCommandContribution;
 import com.eclipsesource.uml.modelserver.uml.command.update.UpdateElementCommandContribution;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.gson.Gson;
 import com.google.inject.Inject;
 
 public abstract class NodeOperationHandler<TElement extends EObject, TParent>
-   implements CreateLocationAwareNodeHandler, DiagramCreateNodeHandler, DiagramDeleteHandler<TElement>,
+   implements ElementConfigurationAccessor, CreateLocationAwareNodeHandler, DiagramCreateNodeHandler,
+   DiagramDeleteHandler<TElement>,
    DiagramUpdateHandler<TElement> {
    protected final Set<String> elementTypeIds;
    protected final Class<TElement> elementType;
    protected final Class<TParent> parentType;
    protected final Gson gson;
+   protected Representation representation;
 
    @Inject
    protected UmlModelServerAccess modelServerAccess;
    @Inject
    protected UmlModelState modelState;
+   @Inject
+   protected ElementConfigurationRegistry configurationRegistry;
 
-   public NodeOperationHandler(final String typeId) {
-      this(Set.of(typeId));
+   public NodeOperationHandler(final Representation representation, final String typeId) {
+      this(representation, Set.of(typeId));
    }
 
-   public NodeOperationHandler(final Set<String> typeIds) {
+   public NodeOperationHandler(final Representation representation, final Set<String> typeIds) {
       this.elementTypeIds = typeIds;
       this.elementType = GenericsUtil.getClassParameter(getClass(), NodeOperationHandler.class, 0);
       this.parentType = GenericsUtil.getClassParameter(getClass(), NodeOperationHandler.class, 1);
@@ -64,6 +71,16 @@ public abstract class NodeOperationHandler<TElement extends EObject, TParent>
 
    @Override
    public Class<TElement> getElementType() { return elementType; }
+
+   @Override
+   public Representation representation() {
+      return representation;
+   }
+
+   @Override
+   public ElementConfigurationRegistry configurationRegistry() {
+      return configurationRegistry;
+   }
 
    @Override
    public void handleCreateNode(final CreateNodeOperation operation) {

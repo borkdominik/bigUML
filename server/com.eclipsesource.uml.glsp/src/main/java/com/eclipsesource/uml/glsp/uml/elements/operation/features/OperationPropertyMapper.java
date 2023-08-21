@@ -17,6 +17,7 @@ import java.util.Optional;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.uml2.uml.CallConcurrencyKind;
 import org.eclipse.uml2.uml.Operation;
+import org.eclipse.uml2.uml.Parameter;
 import org.eclipse.uml2.uml.VisibilityKind;
 
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
@@ -25,16 +26,23 @@ import com.eclipsesource.uml.glsp.features.property_palette.model.ElementReferen
 import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalette;
 import com.eclipsesource.uml.glsp.uml.elements.operation.OperationConfiguration;
 import com.eclipsesource.uml.glsp.uml.elements.operation.OperationOperationHandler;
-import com.eclipsesource.uml.glsp.uml.elements.parameter.ParameterConfiguration;
-import com.eclipsesource.uml.glsp.uml.features.property_palette.BaseDiagramElementPropertyMapper;
+import com.eclipsesource.uml.glsp.uml.features.property_palette.RepresentationElementPropertyMapper;
 import com.eclipsesource.uml.glsp.uml.utils.element.CallConcurrencyKindUtils;
 import com.eclipsesource.uml.glsp.uml.utils.element.ParameterUtils;
 import com.eclipsesource.uml.glsp.uml.utils.element.VisibilityKindUtils;
 import com.eclipsesource.uml.modelserver.shared.model.NewListIndex;
 import com.eclipsesource.uml.modelserver.uml.elements.operation.commands.UpdateOperationArgument;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.common.reflect.TypeToken;
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
-public class OperationPropertyMapper extends BaseDiagramElementPropertyMapper<Operation> {
+public class OperationPropertyMapper extends RepresentationElementPropertyMapper<Operation> {
+
+   @Inject
+   public OperationPropertyMapper(@Assisted final Representation representation) {
+      super(representation);
+   }
 
    @Override
    public PropertyPalette map(final Operation source) {
@@ -61,7 +69,7 @@ public class OperationPropertyMapper extends BaseDiagramElementPropertyMapper<Op
             ParameterUtils.asReferences(source.getOwnedParameters(), idGenerator),
             List.of(
                new ElementReferencePropertyItem.CreateReference("Parameter",
-                  new CreateNodeOperation(ParameterConfiguration.typeId(), elementId))),
+                  new CreateNodeOperation(configurationFor(Parameter.class).typeId(), elementId))),
             true)
 
          .items();

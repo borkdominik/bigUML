@@ -20,11 +20,19 @@ import com.eclipsesource.uml.glsp.features.property_palette.handler.action.Updat
 import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalette;
 import com.eclipsesource.uml.glsp.uml.elements.usage.UsageConfiguration;
 import com.eclipsesource.uml.glsp.uml.elements.usage.UsageOperationHandler;
-import com.eclipsesource.uml.glsp.uml.features.property_palette.BaseDiagramElementPropertyMapper;
+import com.eclipsesource.uml.glsp.uml.features.property_palette.RepresentationElementPropertyMapper;
 import com.eclipsesource.uml.glsp.uml.utils.element.VisibilityKindUtils;
 import com.eclipsesource.uml.modelserver.uml.elements.usage.commands.UpdateUsageArgument;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
-public class UsagePropertyMapper extends BaseDiagramElementPropertyMapper<Usage> {
+public class UsagePropertyMapper extends RepresentationElementPropertyMapper<Usage> {
+
+   @Inject
+   public UsagePropertyMapper(@Assisted final Representation representation) {
+      super(representation);
+   }
 
    @Override
    public PropertyPalette map(final Usage source) {

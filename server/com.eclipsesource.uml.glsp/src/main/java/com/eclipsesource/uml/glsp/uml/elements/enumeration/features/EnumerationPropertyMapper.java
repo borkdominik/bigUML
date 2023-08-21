@@ -15,6 +15,7 @@ import java.util.Optional;
 
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.uml2.uml.Enumeration;
+import org.eclipse.uml2.uml.EnumerationLiteral;
 import org.eclipse.uml2.uml.VisibilityKind;
 
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
@@ -23,13 +24,20 @@ import com.eclipsesource.uml.glsp.features.property_palette.model.ElementReferen
 import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalette;
 import com.eclipsesource.uml.glsp.uml.elements.enumeration.EnumerationConfiguration;
 import com.eclipsesource.uml.glsp.uml.elements.enumeration.EnumerationOperationHandler;
-import com.eclipsesource.uml.glsp.uml.elements.enumeration_literal.EnumerationLiteralConfiguration;
-import com.eclipsesource.uml.glsp.uml.features.property_palette.BaseDiagramElementPropertyMapper;
+import com.eclipsesource.uml.glsp.uml.features.property_palette.RepresentationElementPropertyMapper;
 import com.eclipsesource.uml.glsp.uml.utils.element.EnumerationLiteralUtils;
 import com.eclipsesource.uml.glsp.uml.utils.element.VisibilityKindUtils;
 import com.eclipsesource.uml.modelserver.uml.elements.enumeration.commands.UpdateEnumerationArgument;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
-public class EnumerationPropertyMapper extends BaseDiagramElementPropertyMapper<Enumeration> {
+public class EnumerationPropertyMapper extends RepresentationElementPropertyMapper<Enumeration> {
+
+   @Inject
+   public EnumerationPropertyMapper(@Assisted final Representation representation) {
+      super(representation);
+   }
 
    @Override
    public PropertyPalette map(final Enumeration source) {
@@ -49,7 +57,7 @@ public class EnumerationPropertyMapper extends BaseDiagramElementPropertyMapper<
             EnumerationLiteralUtils.asReferences(source.getOwnedLiterals(), idGenerator),
             List.of(
                new ElementReferencePropertyItem.CreateReference("Enumeration Literal",
-                  new CreateNodeOperation(EnumerationLiteralConfiguration.typeId(), elementId))))
+                  new CreateNodeOperation(configurationFor(EnumerationLiteral.class).typeId(), elementId))))
 
          .items();
 

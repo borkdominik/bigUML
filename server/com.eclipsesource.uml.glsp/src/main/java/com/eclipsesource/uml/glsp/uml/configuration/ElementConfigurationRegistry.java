@@ -11,7 +11,6 @@
 package com.eclipsesource.uml.glsp.uml.configuration;
 
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
@@ -46,20 +45,5 @@ public class ElementConfigurationRegistry
       });
 
       // printContent();
-   }
-
-   public Optional<ElementConfiguration<? extends EObject>> get(final Representation representation,
-      final Class<? extends EObject> key) {
-      return super.get(new RepresentationKey<>(representation, key));
-   }
-
-   public <TConfiguration extends ElementConfiguration<? extends EObject>> TConfiguration accessTyped(
-      final RepresentationKey<Class<? extends EObject>> key) {
-      return (TConfiguration) access(key);
-   }
-
-   public <TConfiguration extends ElementConfiguration<? extends EObject>> TConfiguration accessTyped(
-      final RepresentationKey<Class<? extends EObject>> key, final Class<TConfiguration> configuration) {
-      return (TConfiguration) access(key);
    }
 }

@@ -31,19 +31,9 @@ export namespace UmlUseCaseTypes {
         'STICKFIGURE'
     );
 
-    export const PROPERTY = QualifiedUtil.representationTypeId(UmlDiagramType.USE_CASE, DefaultTypes.COMPARTMENT, 'Property');
-    export const PROPERTY_LABEL_TYPE = QualifiedUtil.representationTypeId(UmlDiagramType.USE_CASE, DefaultTypes.LABEL, 'Property-type');
-    export const PROPERTY_LABEL_MULTIPLICITY = QualifiedUtil.representationTypeId(
-        UmlDiagramType.USE_CASE,
-        DefaultTypes.LABEL,
-        'Property-multiplicity'
-    );
-
     export const INCLUDE = QualifiedUtil.representationTypeId(UmlDiagramType.USE_CASE, DefaultTypes.EDGE, 'Include');
 
     export const EXTEND = QualifiedUtil.representationTypeId(UmlDiagramType.USE_CASE, DefaultTypes.EDGE, 'Extend');
-
-    export const ASSOCIATION = QualifiedUtil.representationTypeId(UmlDiagramType.USE_CASE, DefaultTypes.EDGE, 'Association');
 
     export const GENERALIZATION = QualifiedUtil.representationTypeId(UmlDiagramType.USE_CASE, DefaultTypes.EDGE, 'Generalization');
 }

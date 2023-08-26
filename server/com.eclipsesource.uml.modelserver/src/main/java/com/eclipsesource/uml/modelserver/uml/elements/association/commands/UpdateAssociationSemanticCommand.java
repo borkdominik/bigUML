@@ -34,23 +34,34 @@ public class UpdateAssociationSemanticCommand
       include(List.of(new UpdateNamedElementSemanticCommand(context, semanticElement, updateArgument)));
 
       updateArgument.endTypeIds().ifPresent(arg -> {
+         var newElements = semanticElementAccessor.getElements(arg.toArray(new String[0]), Type.class);
+         var newSourceType = newElements.get(0);
+         var newTargetType = newElements.get(1);
+
          var oldMemberEnds = semanticElement.getMemberEnds();
          var oldSourceProperty = oldMemberEnds.get(0);
-         var oldSource = (AttributeOwner) oldSourceProperty.getOwner();
          var oldTargetProperty = oldMemberEnds.get(1);
-         var oldTarget = (AttributeOwner) oldTargetProperty.getOwner();
 
-         var elements = semanticElementAccessor.getElements(arg.toArray(new String[0]), Type.class);
-         var source = (Type & AttributeOwner) elements.get(0);
-         var target = (Type & AttributeOwner) elements.get(1);
+         if (oldSourceProperty.getOwner() instanceof AttributeOwner
+            && oldTargetProperty.getOwner() instanceof AttributeOwner) {
+            var oldSourceOwner = (AttributeOwner) oldSourceProperty.getOwner();
+            var oldTargetOwner = (AttributeOwner) oldTargetProperty.getOwner();
+            var newSourceOwner = (Type & AttributeOwner) newSourceType;
+            var newTargetOwner = (Type & AttributeOwner) newTargetType;
 
-         oldSource.getOwnedAttributes().remove(oldSourceProperty);
-         oldSourceProperty.setType(target);
-         source.getOwnedAttributes().add(oldSourceProperty);
+            oldSourceOwner.getOwnedAttributes().remove(oldSourceProperty);
+            oldSourceProperty.setType(newTargetType);
+            newSourceOwner.getOwnedAttributes().add(oldSourceProperty);
 
-         oldTarget.getOwnedAttributes().remove(oldTargetProperty);
-         oldTargetProperty.setType(source);
-         target.getOwnedAttributes().add(oldTargetProperty);
+            oldTargetOwner.getOwnedAttributes().remove(oldTargetProperty);
+            oldTargetProperty.setType(newSourceType);
+            newTargetOwner.getOwnedAttributes().add(oldTargetProperty);
+         } else if (oldSourceProperty.getOwner() instanceof Association
+            && oldTargetProperty.getOwner() instanceof Association) {
+            oldSourceProperty.setType(newSourceType);
+            oldTargetProperty.setType(newTargetType);
+         }
+
       });
    }
 

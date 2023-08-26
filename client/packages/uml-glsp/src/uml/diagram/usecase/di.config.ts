@@ -13,35 +13,33 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { configureModelElement, PolylineEdgeView, SCompartmentView, SEdge, SLabelView } from '@eclipse-glsp/client';
+import { UmlDiagramType } from '@borkdominik-biguml/uml-common';
+import { configureModelElement, GEdgeView, SEdge } from '@eclipse-glsp/client';
 import { ContainerModule } from 'inversify';
-import { SEditableLabel } from '../../../graph';
-import { NamedElement } from '../../elements/named-element.model';
-import { NamedElementView } from '../../elements/named-element.view';
+import { registerAssociationElement } from '../../elements/association/association-element';
+import { NamedElement } from '../../elements/named-element/named-element.model';
+import { NamedElementView } from '../../elements/named-element/named-element.view';
+import { registerPropertyElement } from '../../elements/property/property-element';
 import { UmlUseCaseTypes } from './usecase.types';
 import { ActorNodeView, StickFigureNode } from './views/actor-node-view';
-import { ActorNode, ActorView } from './views/actor-view';
-import { UseCaseNodeView } from './views/use-case-node-view';
 
 export const umlUseCaseDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
     const context = { bind, unbind, isBound, rebind };
 
-    configureModelElement(context, UmlUseCaseTypes.USE_CASE, NamedElement, UseCaseNodeView);
+    configureModelElement(context, UmlUseCaseTypes.USE_CASE, NamedElement, NamedElementView);
 
     configureModelElement(context, UmlUseCaseTypes.SUBJECT, NamedElement, NamedElementView);
 
-    configureModelElement(context, UmlUseCaseTypes.ACTOR, ActorNode, ActorView);
+    configureModelElement(context, UmlUseCaseTypes.ACTOR, NamedElement, NamedElementView);
     configureModelElement(context, UmlUseCaseTypes.STICKFIGURE_NODE, StickFigureNode, ActorNodeView);
 
-    configureModelElement(context, UmlUseCaseTypes.PROPERTY, SEditableLabel, SCompartmentView);
-    configureModelElement(context, UmlUseCaseTypes.PROPERTY_LABEL_TYPE, SEditableLabel, SLabelView);
-    configureModelElement(context, UmlUseCaseTypes.PROPERTY_LABEL_MULTIPLICITY, SEditableLabel, SLabelView);
+    registerPropertyElement(context, UmlDiagramType.USE_CASE);
 
-    configureModelElement(context, UmlUseCaseTypes.INCLUDE, SEdge, PolylineEdgeView);
+    configureModelElement(context, UmlUseCaseTypes.INCLUDE, SEdge, GEdgeView);
 
-    configureModelElement(context, UmlUseCaseTypes.EXTEND, SEdge, PolylineEdgeView);
+    configureModelElement(context, UmlUseCaseTypes.EXTEND, SEdge, GEdgeView);
 
-    configureModelElement(context, UmlUseCaseTypes.ASSOCIATION, SEdge, PolylineEdgeView);
+    registerAssociationElement(context, UmlDiagramType.USE_CASE);
 
-    configureModelElement(context, UmlUseCaseTypes.GENERALIZATION, SEdge, PolylineEdgeView);
+    configureModelElement(context, UmlUseCaseTypes.GENERALIZATION, SEdge, GEdgeView);
 });

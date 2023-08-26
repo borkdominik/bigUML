@@ -26,7 +26,7 @@ public class EnumerationLiteralOperationHandler extends NodeOperationHandler<Enu
    public EnumerationLiteralOperationHandler(@Assisted final Representation representation,
       final ElementConfigurationRegistry registry) {
       super(representation,
-         registry.accessTyped(new RepresentationKey<>(representation, EnumerationLiteral.class)).typeId());
+         registry.accessTyped(representation, EnumerationLiteral.class).typeId());
    }
 
 }

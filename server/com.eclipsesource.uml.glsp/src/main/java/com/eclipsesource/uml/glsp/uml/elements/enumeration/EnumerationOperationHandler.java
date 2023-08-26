@@ -25,7 +25,7 @@ public class EnumerationOperationHandler extends NodeOperationHandler<Enumeratio
    @Inject
    public EnumerationOperationHandler(@Assisted final Representation representation,
       final ElementConfigurationRegistry registry) {
-      super(representation, registry.accessTyped(new RepresentationKey<>(representation, Enumeration.class)).typeId());
+      super(representation, registry.accessTyped(representation, Enumeration.class).typeId());
    }
 
 }

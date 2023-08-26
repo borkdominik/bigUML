@@ -12,6 +12,7 @@ package com.eclipsesource.uml.modelserver.uml;
 
 import com.eclipsesource.uml.modelserver.core.manifest.contributions.CommandCodecContribution;
 import com.eclipsesource.uml.modelserver.uml.behavior.BehaviorRegistry;
+import com.eclipsesource.uml.modelserver.uml.behavior.cross_delete.CrossReferenceDeleter;
 import com.eclipsesource.uml.modelserver.uml.command.create.CreateCommandProviderRegistry;
 import com.eclipsesource.uml.modelserver.uml.command.create.CreateElementCommandContribution;
 import com.eclipsesource.uml.modelserver.uml.command.delete.DeleteCommandProviderRegistry;
@@ -40,6 +41,8 @@ public class UmlModule extends AbstractModule implements CommandCodecContributio
       bind(DeleteCommandProviderRegistry.class).in(Singleton.class);
       bind(UpdateCommandProviderRegistry.class).in(Singleton.class);
       bind(BehaviorRegistry.class).in(Singleton.class);
+
+      bind(CrossReferenceDeleter.class).in(Singleton.class);
 
       contributeCommandCodec(binder(), (contributions) -> {
          contributions.addBinding(CreateElementCommandContribution.TYPE).to(CreateElementCommandContribution.class);

@@ -26,6 +26,16 @@ public abstract class UpdateElementArgument {
          }
       }
 
+      public Builder<TArgument> empty() {
+         try {
+            return getClass().getDeclaredConstructor().newInstance();
+         } catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+            | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+            e.printStackTrace();
+            throw new IllegalStateException(e);
+         }
+      }
+
       protected TArgument createArgument() {
          var current = getClass();
          var generic = current.getGenericSuperclass();

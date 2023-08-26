@@ -23,11 +23,12 @@ import com.eclipsesource.uml.modelserver.shared.codec.ContributionDecoder;
 import com.eclipsesource.uml.modelserver.shared.codec.ContributionEncoder;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.uml.behavior.BehaviorRegistry;
-import com.eclipsesource.uml.modelserver.uml.behavior.ReconnectBehavior;
+import com.eclipsesource.uml.modelserver.uml.behavior.reconnect.ReconnectBehavior;
 import com.eclipsesource.uml.modelserver.uml.command.UmlCommandContribution;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.common.reflect.TypeToken;
 import com.google.inject.Inject;
+import com.google.inject.TypeLiteral;
 
 public class ReconnectElementCommandContribution extends UmlCommandContribution {
 
@@ -50,19 +51,12 @@ public class ReconnectElementCommandContribution extends UmlCommandContribution 
       throws DecodingException {
       var decoder = new ContributionDecoder(ModelContext.of(modelUri, domain, command, injector));
       var context = decoder.context();
-      var representation = decoder.representation().orElseThrow();
       var element = decoder.element(EObject.class).orElseThrow();
       var sources = decoder.embedJson(SOURCES, new TypeToken<Set<String>>() {});
       var targets = decoder.embedJson(TARGETS, new TypeToken<Set<String>>() {});
 
-      return registry.get(context.representation(), element, new TypeToken<ReconnectBehavior<EObject>>() {})
-         .orElseThrow(
-            () -> {
-               registry.printContent();
-               return new IllegalArgumentException(
-                  String.format("No reconnect behavior found for representation %s and element %s",
-                     representation.getName(), element.getClass().getSimpleName()));
-            })
+      return registry
+         .access(context.representation(), element.getClass(), new TypeLiteral<ReconnectBehavior<EObject>>() {})
          .reconnect(context, element, sources, targets);
    }
 }

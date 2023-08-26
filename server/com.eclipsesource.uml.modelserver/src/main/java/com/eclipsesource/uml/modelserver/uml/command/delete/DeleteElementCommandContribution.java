@@ -17,6 +17,7 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
 
+import com.eclipsesource.uml.modelserver.core.commands.noop.NoopCommand;
 import com.eclipsesource.uml.modelserver.shared.codec.ContributionDecoder;
 import com.eclipsesource.uml.modelserver.shared.codec.ContributionEncoder;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
@@ -42,9 +43,9 @@ public class DeleteElementCommandContribution extends UmlCommandContribution {
       throws DecodingException {
       var decoder = new ContributionDecoder(ModelContext.of(modelUri, domain, command, injector));
       var representation = decoder.representation().orElseThrow();
-      var element = decoder.element(EObject.class).orElseThrow();
+      var elementOpt = decoder.element(EObject.class);
 
-      return registry.access(RepresentationKey.of(representation, element.getClass()))
-         .provideDeleteCommand(decoder.context(), element);
+      return elementOpt.map(element -> registry.access(RepresentationKey.of(representation, element.getClass()))
+         .provideDeleteCommand(decoder.context(), element)).orElse(new NoopCommand());
    }
 }

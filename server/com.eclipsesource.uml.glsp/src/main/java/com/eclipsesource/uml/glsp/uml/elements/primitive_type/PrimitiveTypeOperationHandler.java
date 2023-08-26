@@ -26,7 +26,7 @@ public class PrimitiveTypeOperationHandler extends NodeOperationHandler<Primitiv
    public PrimitiveTypeOperationHandler(@Assisted final Representation representation,
       final ElementConfigurationRegistry registry) {
       super(representation,
-         registry.accessTyped(new RepresentationKey<>(representation, PrimitiveType.class)).typeId());
+         registry.accessTyped(representation, PrimitiveType.class).typeId());
    }
 
 }

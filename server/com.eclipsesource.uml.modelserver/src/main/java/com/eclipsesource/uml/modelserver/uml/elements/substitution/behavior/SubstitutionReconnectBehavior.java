@@ -16,7 +16,7 @@ import java.util.Set;
 import org.eclipse.uml2.uml.Substitution;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
-import com.eclipsesource.uml.modelserver.uml.behavior.base.BaseReconnectBehavior;
+import com.eclipsesource.uml.modelserver.uml.behavior.reconnect.BaseReconnectBehavior;
 import com.eclipsesource.uml.modelserver.uml.elements.substitution.commands.UpdateSubstitutionArgument;
 
 public class SubstitutionReconnectBehavior<TElement extends Substitution> extends BaseReconnectBehavior<TElement> {

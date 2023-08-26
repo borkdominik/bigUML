@@ -17,11 +17,10 @@ import org.eclipse.uml2.uml.Substitution;
 
 import com.eclipsesource.uml.modelserver.core.manifest.DiagramManifest;
 import com.eclipsesource.uml.modelserver.uml.behavior.Behavior;
+import com.eclipsesource.uml.modelserver.uml.behavior.cross_delete.BaseCrossReferenceDeleteBehavior;
 import com.eclipsesource.uml.modelserver.uml.command.EdgeCommandProvider;
 import com.eclipsesource.uml.modelserver.uml.elements.substitution.behavior.SubstitutionReconnectBehavior;
-import com.eclipsesource.uml.modelserver.uml.elements.substitution.reference.SubstitutionReferenceRemover;
 import com.eclipsesource.uml.modelserver.uml.manifest.EdgeCommandProviderDefinition;
-import com.eclipsesource.uml.modelserver.uml.reference.CrossReferenceRemoveProcessor;
 import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.Multibinder;
 
@@ -39,12 +38,7 @@ public class SubstitutionDefinitionModule extends EdgeCommandProviderDefinition 
    @Override
    protected void behaviors(final Multibinder<Behavior<? extends EObject>> contributions) {
       contributions.addBinding().to(new TypeLiteral<SubstitutionReconnectBehavior<Substitution>>() {});
-   }
-
-   @Override
-   protected void crossReferenceRemoverProcessors(
-      final Multibinder<CrossReferenceRemoveProcessor<? extends EObject>> contributions) {
-      contributions.addBinding().to(SubstitutionReferenceRemover.class);
+      contributions.addBinding().to(new TypeLiteral<BaseCrossReferenceDeleteBehavior<Substitution>>() {});
    }
 
 }

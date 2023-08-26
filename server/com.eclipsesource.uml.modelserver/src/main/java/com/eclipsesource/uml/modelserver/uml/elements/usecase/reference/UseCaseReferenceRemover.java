@@ -18,9 +18,9 @@ import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.uml2.uml.UseCase;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
-import com.eclipsesource.uml.modelserver.uml.reference.CrossReferenceRemoveProcessor;
+import com.eclipsesource.uml.modelserver.uml.behavior.cross_delete.BaseCrossReferenceDeleteBehavior;
 
-public class UseCaseReferenceRemover extends CrossReferenceRemoveProcessor<UseCase> {
+public class UseCaseReferenceRemover extends BaseCrossReferenceDeleteBehavior<UseCase> {
 
    @Override
    protected List<Command> process(final ModelContext context,

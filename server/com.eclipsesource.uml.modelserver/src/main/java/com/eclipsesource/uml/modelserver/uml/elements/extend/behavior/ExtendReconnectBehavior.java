@@ -8,21 +8,25 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.uml.elements.abstraction.behavior;
+package com.eclipsesource.uml.modelserver.uml.elements.extend.behavior;
 
+import java.util.ArrayList;
 import java.util.Set;
 
-import org.eclipse.uml2.uml.Dependency;
+import org.eclipse.uml2.uml.Extend;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
-import com.eclipsesource.uml.modelserver.uml.behavior.base.BaseReconnectBehavior;
-import com.eclipsesource.uml.modelserver.uml.elements.dependency.commands.UpdateDependencyArgument;
+import com.eclipsesource.uml.modelserver.uml.behavior.reconnect.BaseReconnectBehavior;
+import com.eclipsesource.uml.modelserver.uml.elements.extend.commands.UpdateExtendArgument;
 
-public class AbstractionReconnectBehavior<TElement extends Dependency> extends BaseReconnectBehavior<TElement> {
+public class ExtendReconnectBehavior<TElement extends Extend> extends BaseReconnectBehavior<TElement> {
+
    @Override
-   protected UpdateDependencyArgument argument(final ModelContext context, final TElement element,
+   protected UpdateExtendArgument argument(final ModelContext context, final TElement element,
       final Set<String> sources,
       final Set<String> targets) {
-      return UpdateDependencyArgument.by().clientIds(sources).supplierIds(targets).build();
+      var source = new ArrayList<>(sources).get(0);
+      var target = new ArrayList<>(targets).get(0);
+      return UpdateExtendArgument.by().extensionId(source).extendedCaseId(target).build();
    }
 }

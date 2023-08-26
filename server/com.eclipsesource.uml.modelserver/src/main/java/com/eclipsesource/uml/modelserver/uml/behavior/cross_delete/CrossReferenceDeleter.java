@@ -8,9 +8,8 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.uml.reference;
+package com.eclipsesource.uml.modelserver.uml.behavior.cross_delete;
 
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -21,38 +20,24 @@ import com.eclipsesource.uml.modelserver.shared.matcher.CrossReferenceFinder;
 import com.eclipsesource.uml.modelserver.shared.matcher.CrossReferenceProcessor;
 import com.eclipsesource.uml.modelserver.shared.matcher.MatcherContext;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
-import com.eclipsesource.uml.modelserver.unotation.Representation;
-import com.google.inject.Key;
+import com.eclipsesource.uml.modelserver.uml.behavior.BehaviorRegistry;
+import com.google.inject.Inject;
 import com.google.inject.TypeLiteral;
 
-public final class CrossReferenceRemover {
+public class CrossReferenceDeleter {
    public static String MATCHER_CONTEXT_KEY = "matcher_context";
 
-   private final ModelContext context;
-   private final CrossReferenceFinder<Command> finder;
+   @Inject
+   protected BehaviorRegistry registry;
 
-   public CrossReferenceRemover(final ModelContext context) {
-      super();
-      this.context = context;
-
-      var processors = context.injector.map(i -> {
-         var map = i.getInstance(
-            Key.get(new TypeLiteral<Map<Representation, Set<CrossReferenceRemoveProcessor<? extends EObject>>>>() {}));
-
-         return map.getOrDefault(context.representation(), Set.of()).stream().map(v -> {
-            return (CrossReferenceProcessor<Command>) v;
-         }).collect(Collectors.toSet());
-
-      }).orElse(Set.of());
-
-      this.finder = new CrossReferenceFinder<>(context, processors);
+   public Set<Command> deleteCommandsFor(final ModelContext context, final EObject interest) {
+      var behaviors = registry.getAll(context.representation(),
+         new TypeLiteral<CrossReferenceDeleteBehavior<EObject>>() {});
+      var processors = behaviors.stream().map(b -> (CrossReferenceProcessor<Command>) b).collect(Collectors.toSet());
 
       context.data.putIfAbsent(MATCHER_CONTEXT_KEY, new MatcherContext());
-
-   }
-
-   public Set<Command> deleteCommandsFor(final EObject interest) {
-      var matcherContext = context.get(MATCHER_CONTEXT_KEY, MatcherContext.class).get();
+      var matcherContext = context.get(MATCHER_CONTEXT_KEY, MatcherContext.class).orElseThrow();
+      var finder = new CrossReferenceFinder<>(context, processors);
 
       return finder.find(matcherContext, interest, context.model.eResource());
    }

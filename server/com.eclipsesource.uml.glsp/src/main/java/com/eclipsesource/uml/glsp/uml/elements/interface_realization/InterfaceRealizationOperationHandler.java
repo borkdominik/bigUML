@@ -27,6 +27,6 @@ public class InterfaceRealizationOperationHandler
    public InterfaceRealizationOperationHandler(@Assisted final Representation representation,
       final ElementConfigurationRegistry registry) {
       super(representation,
-         registry.accessTyped(new RepresentationKey<>(representation, InterfaceRealization.class)).typeId());
+         registry.accessTyped(representation, InterfaceRealization.class).typeId());
    }
 }

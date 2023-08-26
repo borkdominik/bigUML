@@ -25,7 +25,7 @@ public class OperationOperationHandler extends NodeOperationHandler<Operation, O
    @Inject
    public OperationOperationHandler(@Assisted final Representation representation,
       final ElementConfigurationRegistry registry) {
-      super(representation, registry.accessTyped(new RepresentationKey<>(representation, Operation.class)).typeId());
+      super(representation, registry.accessTyped(representation, Operation.class).typeId());
    }
 
 }

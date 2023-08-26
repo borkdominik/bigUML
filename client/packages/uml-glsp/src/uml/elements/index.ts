@@ -6,5 +6,5 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-export * from './named-element.model';
-export * from './named-element.view';
+export * from './named-element/named-element.model';
+export * from './named-element/named-element.view';

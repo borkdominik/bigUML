@@ -16,7 +16,7 @@
 import { alignFeature, layoutableChildFeature, RenderingContext, ShapeView, svg } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 import { VNode } from 'snabbdom';
-import { NamedElement } from '../../../elements/named-element.model';
+import { NamedElement } from '../../../elements/named-element/named-element.model';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const JSX = { createElement: svg };

@@ -15,10 +15,10 @@ import java.util.Optional;
 import org.eclipse.emf.ecore.EObject;
 
 import com.eclipsesource.uml.modelserver.core.manifest.DiagramManifest;
+import com.eclipsesource.uml.modelserver.uml.behavior.Behavior;
 import com.eclipsesource.uml.modelserver.uml.command.NodeCommandProvider;
 import com.eclipsesource.uml.modelserver.uml.elements.property.reference.PropertyReferenceRemover;
 import com.eclipsesource.uml.modelserver.uml.manifest.NodeCommandProviderDefinition;
-import com.eclipsesource.uml.modelserver.uml.reference.CrossReferenceRemoveProcessor;
 import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.Multibinder;
 
@@ -34,8 +34,7 @@ public class PropertyDefinitionModule extends NodeCommandProviderDefinition {
    }
 
    @Override
-   protected void crossReferenceRemoverProcessors(
-      final Multibinder<CrossReferenceRemoveProcessor<? extends EObject>> contributions) {
+   protected void behaviors(final Multibinder<Behavior<? extends EObject>> contributions) {
       contributions.addBinding().to(PropertyReferenceRemover.class);
    }
 }

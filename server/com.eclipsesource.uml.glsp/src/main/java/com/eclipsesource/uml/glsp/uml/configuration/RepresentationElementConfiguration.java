@@ -44,4 +44,5 @@ public abstract class RepresentationElementConfiguration<TElement extends EObjec
    public ElementConfigurationRegistry configurationRegistry() {
       return configurationRegistry.get();
    }
+
 }

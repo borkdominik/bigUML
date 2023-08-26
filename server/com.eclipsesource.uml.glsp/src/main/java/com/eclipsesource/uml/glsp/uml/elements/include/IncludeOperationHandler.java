@@ -25,6 +25,6 @@ public class IncludeOperationHandler extends EdgeOperationHandler<Include, UseCa
    @Inject
    public IncludeOperationHandler(@Assisted final Representation representation,
       final ElementConfigurationRegistry registry) {
-      super(representation, registry.accessTyped(new RepresentationKey<>(representation, Include.class)).typeId());
+      super(representation, registry.accessTyped(representation, Include.class).typeId());
    }
 }

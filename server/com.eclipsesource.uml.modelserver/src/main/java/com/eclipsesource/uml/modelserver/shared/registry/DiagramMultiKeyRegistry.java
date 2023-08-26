@@ -20,6 +20,8 @@ import java.util.stream.Collectors;
 import org.eclipse.glsp.server.internal.registry.MapRegistry;
 import org.eclipse.glsp.server.registry.Registry;
 
+import com.eclipsesource.uml.modelserver.unotation.Representation;
+
 @SuppressWarnings("restriction")
 public abstract class DiagramMultiKeyRegistry<K, V> implements Registry<RepresentationKey<K>, V> {
    protected final Map<String, RepresentationKey<K>> keys = new HashMap<>();
@@ -62,6 +64,10 @@ public abstract class DiagramMultiKeyRegistry<K, V> implements Registry<Represen
       return registry.get(deriveKey(key));
    }
 
+   public Optional<V> get(final Representation representation, final K key) {
+      return get(new RepresentationKey<>(representation, key));
+   }
+
    public V access(final RepresentationKey<K> key) {
       return this.get(key).orElseThrow(
          () -> {
@@ -72,8 +78,31 @@ public abstract class DiagramMultiKeyRegistry<K, V> implements Registry<Represen
          });
    }
 
+   public V access(final Representation representation, final K key) {
+      return access(RepresentationKey.of(representation, key));
+   }
+
+   public <TValue extends V> TValue accessTyped(
+      final Representation representation,
+      final K key) {
+      return (TValue) access(representation, key);
+   }
+
+   public <TValue extends V> TValue accessTyped(
+      final Representation representation,
+      final K key,
+      final Class<TValue> type) {
+      return (TValue) access(representation, key);
+   }
+
    @Override
    public Set<V> getAll() { return registry.getAll(); }
+
+   public Set<V> getAll(final Representation representation) {
+      return keys().stream().filter(k -> k.representation.equals(representation))
+         .map(k -> access(k))
+         .collect(Collectors.toSet());
+   }
 
    @Override
    public Set<RepresentationKey<K>> keys() {

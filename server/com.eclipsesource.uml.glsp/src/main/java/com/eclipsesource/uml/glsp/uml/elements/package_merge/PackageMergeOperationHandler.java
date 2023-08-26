@@ -25,6 +25,6 @@ public class PackageMergeOperationHandler
    @Inject
    public PackageMergeOperationHandler(@Assisted final Representation representation,
       final ElementConfigurationRegistry registry) {
-      super(representation, registry.accessTyped(new RepresentationKey<>(representation, PackageMerge.class)).typeId());
+      super(representation, registry.accessTyped(representation, PackageMerge.class).typeId());
    }
 }

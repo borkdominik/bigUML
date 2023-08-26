@@ -26,7 +26,7 @@ public class ParameterOperationHandler extends NodeOperationHandler<Parameter, O
    public ParameterOperationHandler(@Assisted final Representation representation,
       final ElementConfigurationRegistry registry) {
       super(representation,
-         registry.accessTyped(new RepresentationKey<>(representation, Parameter.class)).typeId());
+         registry.accessTyped(representation, Parameter.class).typeId());
    }
 
 }

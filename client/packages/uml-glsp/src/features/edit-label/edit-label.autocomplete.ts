@@ -6,10 +6,11 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { EditLabelUI, EditLabelValidationResult, GLSPActionDispatcher, SModelRoot, TYPES } from '@eclipse-glsp/client';
+import { UmlDiagramType } from '@borkdominik-biguml/uml-common';
+import { DefaultTypes, EditLabelUI, EditLabelValidationResult, GLSPActionDispatcher, SModelRoot, TYPES } from '@eclipse-glsp/client';
 import { inject, injectable } from 'inversify';
 import { matchesKeystroke } from 'sprotty/lib/utils/keyboard';
-import { UmlClassTypes } from '../../uml/diagram/class/class.types';
+import { QualifiedUtil } from '../../uml/qualified.utils';
 
 import { RequestTypeInformationAction, SetTypeInformationAction, TypeInformation } from './edit-label.actions';
 
@@ -196,7 +197,7 @@ export class EditLabelUIAutocomplete extends EditLabelUI {
     }
 
     protected isAutoCompleteLabel(): boolean {
-        return this.label?.type === UmlClassTypes.PROPERTY_LABEL_TYPE;
+        return this.label?.type === QualifiedUtil.representationTypeId(UmlDiagramType.CLASS, DefaultTypes.LABEL, 'Property-type');
     }
 
     public override hide(): void {

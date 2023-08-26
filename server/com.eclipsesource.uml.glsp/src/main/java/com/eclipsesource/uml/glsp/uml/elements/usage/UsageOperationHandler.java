@@ -25,6 +25,6 @@ public class UsageOperationHandler extends EdgeOperationHandler<Usage, Classifie
    @Inject
    public UsageOperationHandler(@Assisted final Representation representation,
       final ElementConfigurationRegistry registry) {
-      super(representation, registry.accessTyped(new RepresentationKey<>(representation, Usage.class)).typeId());
+      super(representation, registry.accessTyped(representation, Usage.class).typeId());
    }
 }

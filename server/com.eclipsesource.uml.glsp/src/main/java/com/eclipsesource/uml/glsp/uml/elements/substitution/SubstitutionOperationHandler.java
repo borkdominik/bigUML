@@ -25,6 +25,6 @@ public class SubstitutionOperationHandler extends EdgeOperationHandler<Substitut
    @Inject
    public SubstitutionOperationHandler(@Assisted final Representation representation,
       final ElementConfigurationRegistry registry) {
-      super(representation, registry.accessTyped(new RepresentationKey<>(representation, Substitution.class)).typeId());
+      super(representation, registry.accessTyped(representation, Substitution.class).typeId());
    }
 }

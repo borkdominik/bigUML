@@ -24,7 +24,7 @@ public class PackageOperationHandler extends NodeOperationHandler<Package, Packa
    @Inject
    public PackageOperationHandler(@Assisted final Representation representation,
       final ElementConfigurationRegistry registry) {
-      super(representation, registry.accessTyped(new RepresentationKey<>(representation, Package.class)).typeId());
+      super(representation, registry.accessTyped(representation, Package.class).typeId());
    }
 
 }

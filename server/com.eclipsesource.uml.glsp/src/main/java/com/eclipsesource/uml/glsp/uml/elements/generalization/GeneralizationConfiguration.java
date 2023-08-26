@@ -43,17 +43,22 @@ public class GeneralizationConfiguration extends RepresentationEdgeConfiguration
    public Set<EdgeTypeHint> getEdgeTypeHints() {
       var hints = new HashSet<EdgeTypeHint>();
 
-      if (representation == Representation.CLASS) {
+      if (existsConfigurationFor(Set.of(org.eclipse.uml2.uml.Class.class))) {
          hints.addAll(Set.of(
             new EdgeTypeHint(typeId(), true, true, true,
                List.of(configurationFor(org.eclipse.uml2.uml.Class.class).typeId()),
-               List.of(configurationFor(org.eclipse.uml2.uml.Class.class).typeId()))));
-      } else if (representation == Representation.USE_CASE) {
+               List.of(configurationFor(org.eclipse.uml2.uml.Class.class).typeId()))
 
-         hints.add(
+         ));
+      }
+
+      if (existsConfigurationFor(Set.of(Actor.class))) {
+         hints.addAll(Set.of(
             new EdgeTypeHint(typeId(), true, true, true,
                List.of(configurationFor(Actor.class).typeId()),
-               List.of(configurationFor(Actor.class).typeId())));
+               List.of(configurationFor(Actor.class).typeId()))
+
+         ));
       }
 
       return hints;

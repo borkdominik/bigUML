@@ -31,12 +31,12 @@ public class AssociationOperationHandler extends EdgeOperationHandler<Associatio
    public AssociationOperationHandler(@Assisted final Representation representation,
       final ElementConfigurationRegistry registry) {
       super(representation, Set.of(
-         registry.accessTyped(new RepresentationKey<>(representation, Association.class)).typeId(),
+         registry.accessTyped(representation, Association.class).typeId(),
          registry
-            .accessTyped(new RepresentationKey<>(representation, Association.class), AssociationConfiguration.class)
+            .accessTyped(representation, Association.class, AssociationConfiguration.class)
             .aggregationTypeId(),
          registry
-            .accessTyped(new RepresentationKey<>(representation, Association.class), AssociationConfiguration.class)
+            .accessTyped(representation, Association.class, AssociationConfiguration.class)
             .compositionTypeId()));
    }
 

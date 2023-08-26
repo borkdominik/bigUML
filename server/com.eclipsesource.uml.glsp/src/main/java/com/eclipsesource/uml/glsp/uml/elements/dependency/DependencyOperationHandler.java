@@ -25,7 +25,7 @@ public class DependencyOperationHandler extends EdgeOperationHandler<Dependency,
    @Inject
    public DependencyOperationHandler(@Assisted final Representation representation,
       final ElementConfigurationRegistry registry) {
-      super(representation, registry.accessTyped(new RepresentationKey<>(representation, Dependency.class)).typeId());
+      super(representation, registry.accessTyped(representation, Dependency.class).typeId());
    }
 
 }

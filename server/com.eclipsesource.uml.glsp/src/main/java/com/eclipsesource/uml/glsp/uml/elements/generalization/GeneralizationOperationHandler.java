@@ -26,6 +26,6 @@ public class GeneralizationOperationHandler extends EdgeOperationHandler<General
    public GeneralizationOperationHandler(@Assisted final Representation representation,
       final ElementConfigurationRegistry registry) {
       super(representation,
-         registry.accessTyped(new RepresentationKey<>(representation, Generalization.class)).typeId());
+         registry.accessTyped(representation, Generalization.class).typeId());
    }
 }

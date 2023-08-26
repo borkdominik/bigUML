@@ -21,30 +21,12 @@ export namespace UmlClassTypes {
     );
     export const INTERFACE = QualifiedUtil.representationTypeId(UmlDiagramType.CLASS, DefaultTypes.NODE, 'Interface');
     export const OPERATION = QualifiedUtil.representationTypeId(UmlDiagramType.CLASS, DefaultTypes.COMPARTMENT, 'Operation');
-    export const PROPERTY = QualifiedUtil.representationTypeId(UmlDiagramType.CLASS, DefaultTypes.COMPARTMENT, 'Property');
-    export const PROPERTY_LABEL_TYPE = QualifiedUtil.representationTypeId(UmlDiagramType.CLASS, DefaultTypes.LABEL, 'Property-type');
-    export const PROPERTY_LABEL_MULTIPLICITY = QualifiedUtil.representationTypeId(
-        UmlDiagramType.CLASS,
-        DefaultTypes.LABEL,
-        'Property-multiplicity'
-    );
+
     export const PACKAGE = QualifiedUtil.representationTypeId(UmlDiagramType.CLASS, DefaultTypes.NODE, 'Package');
     export const PRIMITIVE_TYPE = QualifiedUtil.representationTypeId(UmlDiagramType.CLASS, DefaultTypes.NODE, 'PrimitiveType');
 
     export const ABSTRACTION = QualifiedUtil.representationTypeId(UmlDiagramType.CLASS, DefaultTypes.EDGE, 'Abstraction');
-    export const ASSOCIATION = QualifiedUtil.representationTypeId(UmlDiagramType.CLASS, DefaultTypes.EDGE, 'Association');
-    export const ASSOCIATION_AGGREGATION = QualifiedUtil.representationTemplateTypeId(
-        UmlDiagramType.CLASS,
-        DefaultTypes.EDGE,
-        'aggregation',
-        'Association'
-    );
-    export const ASSOCIATION_COMPOSITION = QualifiedUtil.representationTemplateTypeId(
-        UmlDiagramType.CLASS,
-        DefaultTypes.EDGE,
-        'composition',
-        'Association'
-    );
+
     export const DEPENDENCY = QualifiedUtil.representationTypeId(UmlDiagramType.CLASS, DefaultTypes.EDGE, 'Dependency');
     export const GENERALIZATION = QualifiedUtil.representationTypeId(UmlDiagramType.CLASS, DefaultTypes.EDGE, 'Generalization');
     export const INTERFACE_REALIZATION = QualifiedUtil.representationTypeId(

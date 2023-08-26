@@ -18,11 +18,11 @@ import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.uml2.uml.Property;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
+import com.eclipsesource.uml.modelserver.uml.behavior.cross_delete.BaseCrossReferenceDeleteBehavior;
 import com.eclipsesource.uml.modelserver.uml.elements.property.commands.UpdatePropertyArgument;
 import com.eclipsesource.uml.modelserver.uml.elements.property.commands.UpdatePropertySemanticCommand;
-import com.eclipsesource.uml.modelserver.uml.reference.CrossReferenceRemoveProcessor;
 
-public final class PropertyReferenceRemover extends CrossReferenceRemoveProcessor<Property> {
+public final class PropertyReferenceRemover extends BaseCrossReferenceDeleteBehavior<Property> {
 
    @Override
    protected List<Command> process(final ModelContext context,

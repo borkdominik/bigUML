@@ -17,11 +17,10 @@ import org.eclipse.uml2.uml.Abstraction;
 
 import com.eclipsesource.uml.modelserver.core.manifest.DiagramManifest;
 import com.eclipsesource.uml.modelserver.uml.behavior.Behavior;
+import com.eclipsesource.uml.modelserver.uml.behavior.cross_delete.BaseCrossReferenceDeleteBehavior;
 import com.eclipsesource.uml.modelserver.uml.command.EdgeCommandProvider;
-import com.eclipsesource.uml.modelserver.uml.elements.abstraction.reference.AbstractionReferenceRemover;
 import com.eclipsesource.uml.modelserver.uml.elements.dependency.behavior.DependencyReconnectBehavior;
 import com.eclipsesource.uml.modelserver.uml.manifest.EdgeCommandProviderDefinition;
-import com.eclipsesource.uml.modelserver.uml.reference.CrossReferenceRemoveProcessor;
 import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.Multibinder;
 
@@ -39,12 +38,6 @@ public class AbstractionDefinitionModule extends EdgeCommandProviderDefinition {
    @Override
    protected void behaviors(final Multibinder<Behavior<? extends EObject>> contributions) {
       contributions.addBinding().to(new TypeLiteral<DependencyReconnectBehavior<Abstraction>>() {});
+      contributions.addBinding().to(new TypeLiteral<BaseCrossReferenceDeleteBehavior<Abstraction>>() {});
    }
-
-   @Override
-   protected void crossReferenceRemoverProcessors(
-      final Multibinder<CrossReferenceRemoveProcessor<? extends EObject>> contributions) {
-      contributions.addBinding().to(AbstractionReferenceRemover.class);
-   }
-
 }

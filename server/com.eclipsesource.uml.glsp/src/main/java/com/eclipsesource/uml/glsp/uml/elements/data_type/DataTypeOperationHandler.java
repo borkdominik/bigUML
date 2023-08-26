@@ -25,7 +25,7 @@ public class DataTypeOperationHandler extends NodeOperationHandler<DataType, Pac
    @Inject
    public DataTypeOperationHandler(@Assisted final Representation representation,
       final ElementConfigurationRegistry registry) {
-      super(representation, registry.accessTyped(new RepresentationKey<>(representation, DataType.class)).typeId());
+      super(representation, registry.accessTyped(representation, DataType.class).typeId());
    }
 
 }

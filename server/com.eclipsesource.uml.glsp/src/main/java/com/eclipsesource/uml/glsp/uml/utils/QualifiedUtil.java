@@ -26,6 +26,11 @@ public class QualifiedUtil {
       return String.format("%s:%s__%s", type, template, id);
    }
 
+   public static String templateTypeId(final Representation representation, final String type,
+      final String template, final String id) {
+      return String.format("%s:%s__%s__%s", type, representation.getLiteral().toLowerCase(), template, id);
+   }
+
    public static String representationName(final Representation representation, final String name) {
       return String.format("%s__%s", representation.getLiteral().toLowerCase(), name);
    }

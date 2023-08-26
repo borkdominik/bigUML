@@ -25,7 +25,7 @@ public class RealizationOperationHandler extends EdgeOperationHandler<Realizatio
    @Inject
    public RealizationOperationHandler(@Assisted final Representation representation,
       final ElementConfigurationRegistry registry) {
-      super(representation, registry.accessTyped(new RepresentationKey<>(representation, Realization.class)).typeId());
+      super(representation, registry.accessTyped(representation, Realization.class).typeId());
    }
 
 }

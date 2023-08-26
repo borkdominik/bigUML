@@ -24,7 +24,7 @@ public class ActorOperationHandler extends NodeOperationHandler<Actor, org.eclip
    @Inject
    public ActorOperationHandler(@Assisted final Representation representation,
       final ElementConfigurationRegistry registry) {
-      super(representation, registry.accessTyped(new RepresentationKey<>(representation, Actor.class)).typeId());
+      super(representation, registry.accessTyped(representation, Actor.class).typeId());
    }
 
 }

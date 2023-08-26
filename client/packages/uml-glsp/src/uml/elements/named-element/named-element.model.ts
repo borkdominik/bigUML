@@ -6,6 +6,6 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { LabeledNode } from '../../graph/model';
+import { LabeledNode } from '../../../graph/model';
 
 export class NamedElement extends LabeledNode {}

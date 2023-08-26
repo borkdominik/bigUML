@@ -26,7 +26,7 @@ import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.commands.DeleteNotationElementCommand;
 import com.eclipsesource.uml.modelserver.shared.semantic.CallbackSemanticCommand;
 import com.eclipsesource.uml.modelserver.shared.utils.Type;
-import com.eclipsesource.uml.modelserver.uml.reference.CrossReferenceRemover;
+import com.eclipsesource.uml.modelserver.uml.behavior.cross_delete.CrossReferenceDeleter;
 import com.google.inject.Inject;
 import com.google.inject.TypeLiteral;
 
@@ -37,6 +37,8 @@ public abstract class EdgeCommandProvider<TElement extends EObject, TSource exte
    protected TypeLiteral<TSource> sourceType;
    @Inject
    protected TypeLiteral<TTarget> targetType;
+   @Inject
+   protected CrossReferenceDeleter deleter;
 
    @Override
    public Command provideCreateCommand(final ModelContext context) {
@@ -69,7 +71,7 @@ public abstract class EdgeCommandProvider<TElement extends EObject, TSource exte
             EcoreUtil.delete(element);
          }),
          new DeleteNotationElementCommand(context, element)));
-      new CrossReferenceRemover(context).deleteCommandsFor(element).forEach(commands::add);
+      deleter.deleteCommandsFor(context, element).forEach(commands::add);
       return commands;
    }
 

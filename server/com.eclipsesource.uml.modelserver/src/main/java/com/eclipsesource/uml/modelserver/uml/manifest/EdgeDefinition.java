@@ -18,14 +18,11 @@ import com.eclipsesource.uml.modelserver.uml.command.delete.DeleteCommandProvide
 import com.eclipsesource.uml.modelserver.uml.command.delete.DeleteCommandProviderContribution;
 import com.eclipsesource.uml.modelserver.uml.command.update.UpdateCommandProvider;
 import com.eclipsesource.uml.modelserver.uml.command.update.UpdateCommandProviderContribution;
-import com.eclipsesource.uml.modelserver.uml.reference.CrossReferenceRemoveProcessor;
-import com.eclipsesource.uml.modelserver.uml.reference.CrossReferenceRemoveProcessorContribution;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.multibindings.Multibinder;
 
 public abstract class EdgeDefinition extends ElementDefinition implements CreateCommandProviderContribution,
-   DeleteCommandProviderContribution, UpdateCommandProviderContribution,
-   CrossReferenceRemoveProcessorContribution {
+   DeleteCommandProviderContribution, UpdateCommandProviderContribution {
 
    public EdgeDefinition(final String id, final Representation representation) {
       super(id, representation);
@@ -37,8 +34,6 @@ public abstract class EdgeDefinition extends ElementDefinition implements Create
       contributeCreateCommandProvider(this::createCommandProvider);
       contributeDeleteCommandProvider(this::deleteCommandProvider);
       contributeUpdateCommandProvider(this::updateCommandProvider);
-
-      contributeCrossReferenceRemoverProcessors(this::crossReferenceRemoverProcessors);
    }
 
    protected abstract void createCommandProvider(
@@ -49,8 +44,4 @@ public abstract class EdgeDefinition extends ElementDefinition implements Create
 
    protected abstract void updateCommandProvider(
       final Multibinder<UpdateCommandProvider<? extends EObject>> contributions);
-
-   protected abstract void crossReferenceRemoverProcessors(
-      final Multibinder<CrossReferenceRemoveProcessor<? extends EObject>> contributions);
-
 }

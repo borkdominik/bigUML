@@ -15,6 +15,7 @@ import org.eclipse.glsp.graph.builder.impl.GArguments;
 import org.eclipse.glsp.graph.builder.impl.GEdgeBuilder;
 import org.eclipse.glsp.graph.builder.impl.GEdgePlacementBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
+import org.eclipse.uml2.uml.Actor;
 import org.eclipse.uml2.uml.Association;
 import org.eclipse.uml2.uml.Property;
 
@@ -55,10 +56,13 @@ public final class UseCaseAssociationEdgeMapper extends AssociationEdgeMapper {
       var memberEndFirst = memberEnds.get(0);
       var memberEndSecond = memberEnds.get(1);
 
-      var memberSource = memberEndFirst.getOwner() instanceof Association ? memberEndFirst.getType()
+      var first = memberEndFirst.getOwner() instanceof Association ? memberEndFirst.getType()
          : memberEndFirst.getOwner();
-      var memberTarget = memberEndSecond.getOwner() instanceof Association ? memberEndSecond.getType()
+      var second = memberEndSecond.getOwner() instanceof Association ? memberEndSecond.getType()
          : memberEndSecond.getOwner();
+
+      var memberSource = first instanceof Actor ? first : second;
+      var memberTarget = first instanceof Actor ? second : first;
 
       builder
          .sourceId(idGenerator.getOrCreateId(memberSource))

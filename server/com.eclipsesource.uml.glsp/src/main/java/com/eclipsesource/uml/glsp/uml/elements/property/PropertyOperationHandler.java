@@ -25,7 +25,7 @@ public class PropertyOperationHandler extends NodeOperationHandler<Property, Att
    @Inject
    public PropertyOperationHandler(@Assisted final Representation representation,
       final ElementConfigurationRegistry registry) {
-      super(representation, registry.accessTyped(new RepresentationKey<>(representation, Property.class)).typeId());
+      super(representation, registry.accessTyped(representation, Property.class).typeId());
    }
 
 }

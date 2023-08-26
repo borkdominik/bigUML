@@ -8,10 +8,16 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.uml.elements.package_merge.reference;
+package com.eclipsesource.uml.modelserver.uml.behavior.reconnect;
 
-import org.eclipse.uml2.uml.PackageMerge;
+import java.util.Set;
 
-import com.eclipsesource.uml.modelserver.uml.reference.CrossReferenceRemoveProcessor;
+import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.ecore.EObject;
 
-public class PackageMergeReferenceRemover extends CrossReferenceRemoveProcessor<PackageMerge> {}
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
+import com.eclipsesource.uml.modelserver.uml.behavior.Behavior;
+
+public interface ReconnectBehavior<TElement extends EObject> extends Behavior<TElement> {
+   Command reconnect(ModelContext context, TElement element, Set<String> sources, Set<String> targets);
+}

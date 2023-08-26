@@ -60,6 +60,7 @@ public abstract class NodeOperationHandler<TElement extends EObject, TParent>
    }
 
    public NodeOperationHandler(final Representation representation, final Set<String> typeIds) {
+      this.representation = representation;
       this.elementTypeIds = typeIds;
       this.elementType = GenericsUtil.getClassParameter(getClass(), NodeOperationHandler.class, 0);
       this.parentType = GenericsUtil.getClassParameter(getClass(), NodeOperationHandler.class, 1);

@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.glsp.server.features.toolpalette.PaletteItem;
+import org.eclipse.uml2.uml.Abstraction;
 import org.eclipse.uml2.uml.Association;
 import org.eclipse.uml2.uml.DataType;
 import org.eclipse.uml2.uml.Dependency;
@@ -66,7 +67,7 @@ public final class ClassToolPaletteConfiguration extends RepresentationToolPalet
 
    private PaletteItem relations() {
       var relations = List.of(
-         PaletteItemUtil.edge(configurationFor(Interface.class).typeId(), "Abstraction", "uml-abstraction-icon"),
+         PaletteItemUtil.edge(configurationFor(Abstraction.class).typeId(), "Abstraction", "uml-abstraction-icon"),
          PaletteItemUtil.edge(configurationFor(Association.class).typeId(), "Association",
             "uml-association-none-icon"),
          PaletteItemUtil.edge(configurationFor(Association.class, AssociationConfiguration.class).compositionTypeId(),

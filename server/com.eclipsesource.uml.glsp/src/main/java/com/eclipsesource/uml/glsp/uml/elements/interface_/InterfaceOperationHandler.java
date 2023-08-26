@@ -25,7 +25,7 @@ public class InterfaceOperationHandler extends NodeOperationHandler<Interface, P
    @Inject
    public InterfaceOperationHandler(@Assisted final Representation representation,
       final ElementConfigurationRegistry registry) {
-      super(representation, registry.accessTyped(new RepresentationKey<>(representation, Interface.class)).typeId());
+      super(representation, registry.accessTyped(representation, Interface.class).typeId());
    }
 
 }

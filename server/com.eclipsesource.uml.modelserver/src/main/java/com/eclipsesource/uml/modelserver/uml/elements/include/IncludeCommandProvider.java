@@ -17,10 +17,13 @@ import org.eclipse.emf.common.command.Command;
 import org.eclipse.uml2.uml.Include;
 import org.eclipse.uml2.uml.UseCase;
 
+import com.eclipsesource.uml.modelserver.shared.codec.ContributionDecoder;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.commands.AddEdgeNotationCommand;
 import com.eclipsesource.uml.modelserver.uml.command.EdgeCommandProvider;
 import com.eclipsesource.uml.modelserver.uml.elements.include.commands.CreateIncludeSemanticCommand;
+import com.eclipsesource.uml.modelserver.uml.elements.include.commands.UpdateIncludeArgument;
+import com.eclipsesource.uml.modelserver.uml.elements.include.commands.UpdateIncludeSemanticCommand;
 
 public class IncludeCommandProvider extends EdgeCommandProvider<Include, UseCase, UseCase> {
    @Override
@@ -30,5 +33,12 @@ public class IncludeCommandProvider extends EdgeCommandProvider<Include, UseCase
          target);
       var notation = new AddEdgeNotationCommand(context, semantic::getSemanticElement);
       return List.of(semantic, notation);
+   }
+
+   @Override
+   protected Collection<Command> updateModifications(final ModelContext context, final Include element) {
+      var decoder = new ContributionDecoder(context);
+      var update = decoder.embedJson(UpdateIncludeArgument.class);
+      return List.of(new UpdateIncludeSemanticCommand(context, element, update));
    }
 }

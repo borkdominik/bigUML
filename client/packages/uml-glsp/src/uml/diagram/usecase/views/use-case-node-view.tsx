@@ -32,17 +32,6 @@ export class UseCaseNodeView extends ShapeView {
 
         const useCaseNode: any = (
             <g class-node={true} class-selected={node.selected} class-mouseover={node.hoverFeedback}>
-                <defs>
-                    <filter id='dropShadow'>
-                        <feDropShadow
-                            dx='1.5'
-                            dy='1.5'
-                            stdDeviation='0.5'
-                            style-flood-color='var(--uml-drop-shadow)'
-                            style-flood-opacity='0.5'
-                        />
-                    </filter>
-                </defs>
                 <ellipse cx={rX} cy={rY} rx={rX} ry={rY} />
                 {context.renderChildren(node)}
                 {node.children[1] && node.children[1].children.length > 0 ? <path class-uml-comp-separator={true} d={linePath}></path> : ''}

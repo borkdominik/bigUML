@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.uml.behavior.base;
+package com.eclipsesource.uml.modelserver.uml.behavior.reconnect;
 
 import java.util.Set;
 
@@ -17,7 +17,6 @@ import org.eclipse.emf.ecore.EObject;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.registry.RepresentationKey;
-import com.eclipsesource.uml.modelserver.uml.behavior.ReconnectBehavior;
 import com.eclipsesource.uml.modelserver.uml.command.update.UpdateCommandProvider;
 import com.eclipsesource.uml.modelserver.uml.command.update.UpdateCommandProviderRegistry;
 import com.eclipsesource.uml.modelserver.uml.command.update.UpdateElementCommandContribution;
@@ -26,12 +25,12 @@ import com.google.inject.TypeLiteral;
 
 public abstract class BaseReconnectBehavior<TElement extends EObject> implements ReconnectBehavior<TElement> {
    @Inject
-   protected TypeLiteral<TElement> type;
+   protected TypeLiteral<TElement> elementType;
    @Inject
    protected UpdateCommandProviderRegistry updateRegistry;
 
    @Override
-   public Class<? extends EObject> getElementType() { return (Class<? extends EObject>) type.getRawType(); }
+   public Class<? extends EObject> getElementType() { return (Class<? extends EObject>) elementType.getRawType(); }
 
    @Override
    public Command reconnect(final ModelContext context, final TElement element, final Set<String> sources,

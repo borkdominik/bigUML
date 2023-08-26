@@ -26,7 +26,6 @@ public class CreateIncludeSemanticCommand
 
    @Override
    protected Include createSemanticElement(final UseCase source, final UseCase traget) {
-      var includes = source.getIncludes();
       return source.createInclude(null, traget);
    }
 }

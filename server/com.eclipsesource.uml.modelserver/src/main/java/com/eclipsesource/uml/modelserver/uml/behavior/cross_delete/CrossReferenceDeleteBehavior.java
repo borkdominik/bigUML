@@ -8,15 +8,19 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.uml.behavior;
+package com.eclipsesource.uml.modelserver.uml.behavior.cross_delete;
 
-import java.util.Set;
+import java.util.List;
 
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 
+import com.eclipsesource.uml.modelserver.shared.matcher.CrossReferenceProcessor;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
+import com.eclipsesource.uml.modelserver.uml.behavior.Behavior;
 
-public interface ReconnectBehavior<TElement extends EObject> extends Behavior<TElement> {
-   Command reconnect(ModelContext context, TElement element, Set<String> sources, Set<String> targets);
+public interface CrossReferenceDeleteBehavior<TElement extends EObject>
+   extends Behavior<TElement>, CrossReferenceProcessor<Command> {
+   List<Command> crossRemove(ModelContext context, Setting setting, EObject interest);
 }

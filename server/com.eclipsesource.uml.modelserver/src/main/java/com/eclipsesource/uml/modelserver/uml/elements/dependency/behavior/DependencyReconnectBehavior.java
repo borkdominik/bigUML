@@ -15,10 +15,11 @@ import java.util.Set;
 import org.eclipse.uml2.uml.Dependency;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
-import com.eclipsesource.uml.modelserver.uml.behavior.base.BaseReconnectBehavior;
+import com.eclipsesource.uml.modelserver.uml.behavior.reconnect.BaseReconnectBehavior;
 import com.eclipsesource.uml.modelserver.uml.elements.dependency.commands.UpdateDependencyArgument;
 
 public class DependencyReconnectBehavior<TElement extends Dependency> extends BaseReconnectBehavior<TElement> {
+
    @Override
    protected UpdateDependencyArgument argument(final ModelContext context, final TElement element,
       final Set<String> sources,

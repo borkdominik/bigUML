@@ -26,6 +26,6 @@ public class PackageImportOperationHandler
    public PackageImportOperationHandler(@Assisted final Representation representation,
       final ElementConfigurationRegistry registry) {
       super(representation,
-         registry.accessTyped(new RepresentationKey<>(representation, PackageImport.class)).typeId());
+         registry.accessTyped(representation, PackageImport.class).typeId());
    }
 }

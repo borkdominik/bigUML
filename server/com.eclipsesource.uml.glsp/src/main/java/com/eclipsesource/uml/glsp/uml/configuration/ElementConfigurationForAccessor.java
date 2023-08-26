@@ -10,11 +10,10 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.configuration;
 
-import java.util.Optional;
+import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 
-import com.eclipsesource.uml.modelserver.shared.registry.RepresentationKey;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 
 public interface ElementConfigurationForAccessor {
@@ -22,18 +21,17 @@ public interface ElementConfigurationForAccessor {
 
    ElementConfigurationRegistry configurationRegistry();
 
-   default <TConfiguration extends ElementConfiguration<?>> Optional<TConfiguration> tryConfigurationFor(
-      final Class<? extends EObject> elementType) {
-      return (Optional<TConfiguration>) configurationRegistry().get(representation(), elementType);
+   default Boolean existsConfigurationFor(final Set<Class<? extends EObject>> configurations) {
+      return configurations.stream().allMatch(c -> configurationRegistry().get(representation(), c).isPresent());
    }
 
    default <TConfiguration extends ElementConfiguration<?>> TConfiguration configurationFor(
       final Class<? extends EObject> elementType) {
-      return configurationRegistry().accessTyped(new RepresentationKey<>(representation(), elementType));
+      return configurationRegistry().accessTyped(representation(), elementType);
    }
 
    default <TConfiguration extends ElementConfiguration<?>> TConfiguration configurationFor(
       final Class<? extends EObject> elementType, final Class<TConfiguration> configuration) {
-      return configurationRegistry().accessTyped(new RepresentationKey<>(representation(), elementType));
+      return configurationRegistry().accessTyped(representation(), elementType, configuration);
    }
 }

@@ -16,7 +16,7 @@ import java.util.Set;
 import org.eclipse.uml2.uml.Generalization;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
-import com.eclipsesource.uml.modelserver.uml.behavior.base.BaseReconnectBehavior;
+import com.eclipsesource.uml.modelserver.uml.behavior.reconnect.BaseReconnectBehavior;
 import com.eclipsesource.uml.modelserver.uml.elements.generalization.commands.UpdateGeneralizationArgument;
 
 public class GeneralizationReconnectBehavior<TElement extends Generalization> extends BaseReconnectBehavior<TElement> {
@@ -24,9 +24,9 @@ public class GeneralizationReconnectBehavior<TElement extends Generalization> ex
    protected UpdateGeneralizationArgument argument(final ModelContext context, final TElement element,
       final Set<String> sources,
       final Set<String> targets) {
-      var specificId = new ArrayList<>(sources).get(0);
-      var generalId = new ArrayList<>(targets).get(0);
+      var source = new ArrayList<>(sources).get(0);
+      var target = new ArrayList<>(targets).get(0);
 
-      return UpdateGeneralizationArgument.by().specificId(specificId).generalId(generalId).build();
+      return UpdateGeneralizationArgument.by().specificId(source).generalId(target).build();
    }
 }

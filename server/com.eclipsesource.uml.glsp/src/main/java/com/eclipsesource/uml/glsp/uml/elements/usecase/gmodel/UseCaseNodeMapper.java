@@ -70,13 +70,7 @@ public class UseCaseNodeMapper extends RepresentationGNodeMapper<UseCase, GNode>
          header.add(buildHeaderAnnotation(source, QuotationMark.quoteDoubleAngle("abstract")));
       }
 
-      var buildIconName = compartmentBuilder(source)
-         .layout(GConstants.Layout.HBOX)
-         .add(iconFromCssPropertyBuilder(source, "--uml-use-case-icon").build())
-         .add(nameBuilder(source).build())
-         .build();
-
-      header.add(buildIconName);
+      header.add(buildHeaderName(source, "--uml-use-case-icon"));
 
       return header.build();
    }

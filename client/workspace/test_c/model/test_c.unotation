@@ -8,10 +8,18 @@
   </elements>
   <elements xsi:type="notation:Shape">
     <semanticElement elementId="_p8hwgEBLEe6ub88yN7dSRA"/>
-    <position x="370.0" y="330.0"/>
+    <position x="140.0" y="350.0"/>
     <size width="169.3046875" height="52.5"/>
   </elements>
   <elements xsi:type="notation:Edge">
     <semanticElement elementId="_JnSSEEBMEe6ub88yN7dSRA"/>
+  </elements>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_wGv58UQjEe64ncrbITWPGg"/>
+    <position x="660.0" y="310.0"/>
+    <size width="160.0" height="50.0"/>
+  </elements>
+  <elements xsi:type="notation:Edge">
+    <semanticElement elementId="_woUV8EQjEe64ncrbITWPGg"/>
   </elements>
 </unotation:UmlDiagram>

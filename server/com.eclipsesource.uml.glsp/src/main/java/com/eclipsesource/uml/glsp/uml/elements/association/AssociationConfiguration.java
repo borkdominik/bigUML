@@ -37,12 +37,12 @@ public class AssociationConfiguration extends RepresentationEdgeConfiguration<As
    }
 
    public String compositionTypeId() {
-      return QualifiedUtil.templateTypeId(DefaultTypes.EDGE, "composition",
+      return QualifiedUtil.templateTypeId(representation, DefaultTypes.EDGE, "composition",
          Association.class.getSimpleName());
    }
 
    public String aggregationTypeId() {
-      return QualifiedUtil.templateTypeId(DefaultTypes.EDGE, "aggregation",
+      return QualifiedUtil.templateTypeId(representation, DefaultTypes.EDGE, "aggregation",
          Association.class.getSimpleName());
    }
 
@@ -63,28 +63,36 @@ public class AssociationConfiguration extends RepresentationEdgeConfiguration<As
    public Set<EdgeTypeHint> getEdgeTypeHints() {
       var hints = new HashSet<EdgeTypeHint>();
 
-      if (representation == Representation.CLASS) {
+      if (existsConfigurationFor(Set.of(org.eclipse.uml2.uml.Class.class, Interface.class))) {
          hints.addAll(Set.of(
             new EdgeTypeHint(typeId(), true, true, true,
                List.of(configurationFor(org.eclipse.uml2.uml.Class.class).typeId(),
                   configurationFor(Interface.class).typeId()),
                List.of(configurationFor(org.eclipse.uml2.uml.Class.class).typeId(),
                   configurationFor(Interface.class).typeId())),
+
             new EdgeTypeHint(aggregationTypeId(), true, true, true,
                List.of(configurationFor(org.eclipse.uml2.uml.Class.class).typeId(),
                   configurationFor(Interface.class).typeId()),
                List.of(configurationFor(org.eclipse.uml2.uml.Class.class).typeId(),
                   configurationFor(Interface.class).typeId())),
+
             new EdgeTypeHint(compositionTypeId(), true, true, true,
                List.of(configurationFor(org.eclipse.uml2.uml.Class.class).typeId(),
                   configurationFor(Interface.class).typeId()),
                List.of(configurationFor(org.eclipse.uml2.uml.Class.class).typeId(),
-                  configurationFor(Interface.class).typeId()))));
-      } else if (representation == Representation.USE_CASE) {
-         hints.add(
+                  configurationFor(Interface.class).typeId()))
+
+         ));
+      }
+
+      if (existsConfigurationFor(Set.of(Actor.class, UseCase.class))) {
+         hints.addAll(Set.of(
             new EdgeTypeHint(typeId(), true, true, true,
                List.of(configurationFor(Actor.class).typeId()),
-               List.of(configurationFor(UseCase.class).typeId())));
+               List.of(configurationFor(UseCase.class).typeId()))
+
+         ));
       }
 
       return hints;

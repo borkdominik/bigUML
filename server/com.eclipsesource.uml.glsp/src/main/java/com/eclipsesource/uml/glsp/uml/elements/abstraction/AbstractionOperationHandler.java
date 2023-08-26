@@ -25,7 +25,7 @@ public class AbstractionOperationHandler extends EdgeOperationHandler<Abstractio
    @Inject
    public AbstractionOperationHandler(@Assisted final Representation representation,
       final ElementConfigurationRegistry registry) {
-      super(representation, registry.accessTyped(new RepresentationKey<>(representation, Abstraction.class)).typeId());
+      super(representation, registry.accessTyped(representation, Abstraction.class).typeId());
    }
 
 }

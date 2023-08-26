@@ -30,8 +30,8 @@ public class ClassOperationHandler extends NodeOperationHandler<Class, Package> 
    public ClassOperationHandler(@Assisted final Representation representation,
       final ElementConfigurationRegistry registry) {
       super(representation, Set.of(
-         registry.accessTyped(new RepresentationKey<>(representation, Class.class), ClassConfiguration.class).typeId(),
-         registry.accessTyped(new RepresentationKey<>(representation, Class.class), ClassConfiguration.class)
+         registry.accessTyped(representation, Class.class, ClassConfiguration.class).typeId(),
+         registry.accessTyped(representation, Class.class, ClassConfiguration.class)
             .abstractTypeId()));
    }
 

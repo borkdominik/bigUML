@@ -21,8 +21,8 @@ import org.eclipse.emf.ecore.EObject;
 import com.eclipsesource.uml.modelserver.shared.registry.DiagramClassRegistry;
 import com.eclipsesource.uml.modelserver.shared.registry.RepresentationKey;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
-import com.google.common.reflect.TypeToken;
 import com.google.inject.Inject;
+import com.google.inject.TypeLiteral;
 
 public class BehaviorRegistry
    extends DiagramClassRegistry<Class<? extends EObject>, Set<Behavior<? extends EObject>>> {
@@ -45,12 +45,35 @@ public class BehaviorRegistry
    }
 
    public <TValue extends Behavior<? extends EObject>> Optional<TValue> get(final Representation representation,
-      final EObject element,
-      final TypeToken<TValue> value) {
-      var values = this.get(RepresentationKey.of(representation, element.getClass()));
+      final Class<? extends EObject> key,
+      final TypeLiteral<TValue> value) {
+      var values = this.get(RepresentationKey.of(representation, key));
       return values.orElseGet(() -> new HashSet<>()).stream()
          .filter(b -> value.getRawType().isAssignableFrom(b.getClass()))
          .map(b -> (TValue) b)
          .findFirst();
+   }
+
+   public <TValue extends Behavior<? extends EObject>> TValue access(final Representation representation,
+      final Class<? extends EObject> key,
+      final TypeLiteral<TValue> value) {
+      return get(representation, key, value)
+         .orElseThrow(
+            () -> {
+               printContent();
+               return new IllegalArgumentException(
+                  String.format("[%s] No %s found for representation %s and element %s",
+                     this.getClass().getSimpleName(), value.getRawType(), representation.getName(),
+                     key.getSimpleName()));
+            });
+   }
+
+   public <TValue extends Behavior<? extends EObject>> Set<TValue> getAll(final Representation representation,
+      final TypeLiteral<TValue> value) {
+      return getAll(representation).stream()
+         .flatMap(v -> v.stream())
+         .filter(b -> value.getRawType().isAssignableFrom(b.getClass()))
+         .map(b -> (TValue) b)
+         .collect(Collectors.toSet());
    }
 }

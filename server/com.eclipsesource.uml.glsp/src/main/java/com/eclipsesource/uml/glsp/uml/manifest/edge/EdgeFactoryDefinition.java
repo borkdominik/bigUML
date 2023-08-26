@@ -71,56 +71,56 @@ public abstract class EdgeFactoryDefinition extends EdgeDefinition
 
    protected void elementConfigurations(final Multibinder<EdgeConfiguration<?>> contribution) {
       supports(factory, EdgeConfigurationFactory.class)
-         .map(f -> contribution.addBinding().toProvider(new EdgeConfigurationProvider(representation(), f)));
+         .ifPresent(f -> contribution.addBinding().toProvider(new EdgeConfigurationProvider(representation(), f)));
    }
 
    @Override
    protected void diagramConfigurations(final Multibinder<Edge> contribution) {
       supports(factory, EdgeConfigurationFactory.class)
-         .map(f -> contribution.addBinding().toProvider(new EdgeConfigurationProvider(representation(), f)));
+         .ifPresent(f -> contribution.addBinding().toProvider(new EdgeConfigurationProvider(representation(), f)));
    }
 
    @Override
    protected void diagramCreateHandlers(final Multibinder<DiagramCreateEdgeHandler> contribution) {
       supports(factory, EdgeOperationHandlerFactory.class)
-         .map(f -> contribution.addBinding().toProvider(new EdgeOperationHandlerProvider(representation(), f)));
+         .ifPresent(f -> contribution.addBinding().toProvider(new EdgeOperationHandlerProvider(representation(), f)));
    }
 
    @Override
    protected void diagramDeleteHandlers(final Multibinder<DiagramDeleteHandler<? extends EObject>> contribution) {
       supports(factory, EdgeOperationHandlerFactory.class)
-         .map(f -> contribution.addBinding().toProvider(new EdgeOperationHandlerProvider(representation(), f)));
+         .ifPresent(f -> contribution.addBinding().toProvider(new EdgeOperationHandlerProvider(representation(), f)));
    }
 
    @Override
    protected void diagramUpdateHandlers(final Multibinder<DiagramUpdateHandler<? extends EObject>> contribution) {
       supports(factory, EdgeOperationHandlerFactory.class)
-         .map(f -> contribution.addBinding().toProvider(new EdgeOperationHandlerProvider(representation(), f)));
+         .ifPresent(f -> contribution.addBinding().toProvider(new EdgeOperationHandlerProvider(representation(), f)));
    }
 
    protected void diagramReconnectEdgeHandlers(
       final Multibinder<DiagramReconnectEdgeHandler<? extends EObject>> contribution) {
       supports(factory, EdgeOperationHandlerFactory.class)
-         .map(f -> contribution.addBinding().toProvider(new EdgeOperationHandlerProvider(representation(), f)));
+         .ifPresent(f -> contribution.addBinding().toProvider(new EdgeOperationHandlerProvider(representation(), f)));
    }
 
    @Override
    protected void gmodelMappers(
       final Multibinder<GModelMapper<? extends EObject, ? extends GModelElement>> contribution) {
       supports(factory, GModelMapperFactory.class)
-         .map(f -> contribution.addBinding().toProvider(new GModelMapperProvider(representation(), f)));
+         .ifPresent(f -> contribution.addBinding().toProvider(new GModelMapperProvider(representation(), f)));
    }
 
    @Override
    protected void diagramLabelEditMappers(final Multibinder<DiagramLabelEditMapper<? extends EObject>> contribution) {
       supports(factory, LabelEditMapperFactory.class)
-         .map(f -> contribution.addBinding().toProvider(new LabelEditMapperProvider(representation(), f)));
+         .ifPresent(f -> contribution.addBinding().toProvider(new LabelEditMapperProvider(representation(), f)));
    }
 
    @Override
    protected void diagramPropertyPaletteMappers(
       final Multibinder<DiagramElementPropertyMapper<? extends EObject>> contribution) {
       supports(factory, PropertyMapperFactory.class)
-         .map(f -> contribution.addBinding().toProvider(new PropertyMapperProvider(representation(), f)));
+         .ifPresent(f -> contribution.addBinding().toProvider(new PropertyMapperProvider(representation(), f)));
    }
 }

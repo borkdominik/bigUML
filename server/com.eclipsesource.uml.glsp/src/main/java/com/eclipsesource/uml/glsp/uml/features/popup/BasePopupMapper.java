@@ -21,7 +21,7 @@ import org.eclipse.glsp.server.features.popup.RequestPopupModelAction;
 
 import com.eclipsesource.uml.glsp.core.features.popup.PopupConstants;
 import com.eclipsesource.uml.glsp.core.features.popup.PopupMapper;
-import com.eclipsesource.uml.glsp.core.utils.reflection.GenericsUtil;
+import com.eclipsesource.uml.modelserver.shared.utils.reflection.GenericsUtil;
 
 public abstract class BasePopupMapper<TElementType extends EObject> implements PopupMapper<TElementType> {
    protected final Class<TElementType> elementType;

@@ -14,10 +14,9 @@ import java.util.Optional;
 
 import org.eclipse.uml2.uml.VisibilityKind;
 
-import com.eclipsesource.uml.modelserver.shared.codec.codecs.EmbeddedCodec;
 import com.eclipsesource.uml.modelserver.uml.diagram.package_diagram.util.PackageUtils;
 
-public final class UpdatePackageArgument implements EmbeddedCodec.JsonEncodable {
+public final class UpdatePackageArgument {
    private String name;
    private String label;
    private String uri;

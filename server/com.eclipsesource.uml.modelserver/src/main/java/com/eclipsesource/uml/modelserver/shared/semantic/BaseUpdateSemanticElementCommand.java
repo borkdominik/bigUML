@@ -10,6 +10,8 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.shared.semantic;
 
+import java.util.List;
+
 import org.eclipse.emf.ecore.EObject;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
@@ -36,8 +38,14 @@ public abstract class BaseUpdateSemanticElementCommand<TSemanticElement extends 
     * Updates the semantic element with the provided argument
     *
     * @param semanticElement Semantic element which will be updated
-    * @param updateArgument        Argument with the changes
+    * @param updateArgument  Argument with the changes
     */
-   abstract protected void updateSemanticElement(TSemanticElement semanticElement, TUpdateArgument updateArgument);
+   protected abstract void updateSemanticElement(final TSemanticElement semanticElement,
+      final TUpdateArgument updateArgument);
+
+   protected void include(
+      final List<BaseUpdateSemanticElementCommand<? super TSemanticElement, ? super TUpdateArgument>> commands) {
+      commands.forEach(c -> c.doExecute());
+   }
 
 }

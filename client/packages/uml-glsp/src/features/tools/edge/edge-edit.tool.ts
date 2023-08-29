@@ -11,6 +11,7 @@ import {
     Action,
     AnchorComputerRegistry,
     BaseGLSPTool,
+    Bounds,
     calcElementAndRoutingPoints,
     canEditRouting,
     ChangeBoundsTool,
@@ -23,12 +24,18 @@ import {
     DrawFeedbackEdgeSourceAction,
     EdgeEditTool,
     EdgeRouterRegistry,
+    FeedbackEdgeEnd,
+    feedbackEdgeEndId,
     feedbackEdgeId,
     FeedbackEdgeRouteMovingMouseListener,
     FeedbackEdgeSourceMovingMouseListener,
     FeedbackEdgeTargetMovingMouseListener,
+    findChildrenAtPosition,
     findParentByFeature,
+    getAbsolutePosition,
+    GLSPGraph,
     HideEdgeReconnectHandlesFeedbackAction,
+    isBoundsAware,
     isConnectable,
     ISnapper,
     isReconnectable,
@@ -38,8 +45,11 @@ import {
     isSelected,
     isSourceRoutingHandle,
     isTargetRoutingHandle,
+    MoveAction,
+    Point,
     ReconnectEdgeOperation,
     RemoveFeedbackEdgeAction,
+    SConnectableElement,
     ShowEdgeReconnectHandlesFeedbackAction,
     SModelElement,
     SModelRoot,
@@ -47,6 +57,7 @@ import {
     SRoutableElement,
     SRoutingHandle,
     SwitchRoutingModeAction,
+    toAbsoluteBounds,
     TYPES
 } from '@eclipse-glsp/client';
 import { SelectionListener, SelectionService } from '@eclipse-glsp/client/lib/features/select/selection-service';
@@ -64,21 +75,21 @@ export class UmlEdgeEditTool extends BaseGLSPTool {
     protected feedbackEdgeSourceMovingListener: FeedbackEdgeSourceMovingMouseListener;
     protected feedbackEdgeTargetMovingListener: FeedbackEdgeTargetMovingMouseListener;
     protected feedbackMovingListener: FeedbackEdgeRouteMovingMouseListener;
-    protected edgeEditListener: EdgeEditListener;
+    protected edgeEditListener: UmlEdgeEditListener;
 
     get id(): string {
         return EdgeEditTool.ID;
     }
 
     enable(): void {
-        this.edgeEditListener = new EdgeEditListener(this);
+        this.edgeEditListener = new UmlEdgeEditListener(this);
         this.mouseTool.register(this.edgeEditListener);
         this.selectionService.register(this.edgeEditListener);
 
         // install feedback move mouse listener for client-side move updates
-        this.feedbackEdgeSourceMovingListener = new FeedbackEdgeSourceMovingMouseListener(this.anchorRegistry);
-        this.feedbackEdgeTargetMovingListener = new FeedbackEdgeTargetMovingMouseListener(this.anchorRegistry);
-        this.feedbackMovingListener = new FeedbackEdgeRouteMovingMouseListener(this.edgeRouterRegistry, this.snapper);
+        this.feedbackEdgeSourceMovingListener = new UmlFeedbackEdgeSourceMovingMouseListener(this.anchorRegistry);
+        this.feedbackEdgeTargetMovingListener = new UmlFeedbackEdgeTargetMovingMouseListener(this.anchorRegistry);
+        this.feedbackMovingListener = new UmlFeedbackEdgeRouteMovingMouseListener(this.edgeRouterRegistry, this.snapper);
     }
 
     registerFeedbackListeners(): void {
@@ -101,7 +112,71 @@ export class UmlEdgeEditTool extends BaseGLSPTool {
     }
 }
 
-class EdgeEditListener extends DragAwareMouseListener implements SelectionListener {
+class UmlFeedbackEdgeTargetMovingMouseListener extends FeedbackEdgeTargetMovingMouseListener {
+    override mouseMove(target: SModelElement, event: MouseEvent): Action[] {
+        const root = target.root;
+        const edgeEnd = root.index.getById(feedbackEdgeEndId(root));
+        if (!(edgeEnd instanceof FeedbackEdgeEnd) || !edgeEnd.feedbackEdge) {
+            return [];
+        }
+
+        const edge = edgeEnd.feedbackEdge;
+        if (edge.targetId !== edgeEnd.id) {
+            return [];
+        }
+
+        const position = getAbsolutePosition(edgeEnd, event);
+        const endAtMousePosition = findChildrenAtPosition(target.root, position)
+            .reverse()
+            .find(element => isConnectable(element) && element.canConnect(edge, 'target'));
+
+        if (endAtMousePosition instanceof SConnectableElement && edge.source && isBoundsAware(edge.source)) {
+            const anchor = this.computeAbsoluteAnchor(endAtMousePosition, Bounds.center(toAbsoluteBounds(edge.source)));
+            if (Point.euclideanDistance(anchor, edgeEnd.position) > 1) {
+                return [MoveAction.create([{ elementId: edgeEnd.id, toPosition: anchor }], { animate: false })];
+            }
+        } else {
+            return [MoveAction.create([{ elementId: edgeEnd.id, toPosition: position }], { animate: false })];
+        }
+
+        return [];
+    }
+}
+
+class UmlFeedbackEdgeSourceMovingMouseListener extends FeedbackEdgeSourceMovingMouseListener {
+    override mouseMove(target: SModelElement, event: MouseEvent): Action[] {
+        const root = target.root;
+        const edgeEnd = root.index.getById(feedbackEdgeEndId(root));
+        if (!(edgeEnd instanceof FeedbackEdgeEnd) || !edgeEnd.feedbackEdge) {
+            return [];
+        }
+
+        const edge = edgeEnd.feedbackEdge;
+        if (edge.sourceId !== edgeEnd.id) {
+            return [];
+        }
+        const position = getAbsolutePosition(edgeEnd, event);
+        const endAtMousePosition = findChildrenAtPosition(target.root, position).find(
+            e => isConnectable(e) && e.canConnect(edge, 'source')
+        );
+
+        if (endAtMousePosition instanceof SConnectableElement && edge.target && isBoundsAware(edge.target)) {
+            const anchor = this.computeAbsoluteAnchor(endAtMousePosition, Bounds.center(edge.target.bounds));
+            if (Point.euclideanDistance(anchor, edgeEnd.position) > 1) {
+                console.log('SOURCE ANCHOR', anchor, position, Point.euclideanDistance(anchor, edgeEnd.position));
+                return [MoveAction.create([{ elementId: edgeEnd.id, toPosition: anchor }], { animate: false })];
+            }
+        } else {
+            return [MoveAction.create([{ elementId: edgeEnd.id, toPosition: position }], { animate: false })];
+        }
+
+        return [];
+    }
+}
+
+class UmlFeedbackEdgeRouteMovingMouseListener extends FeedbackEdgeRouteMovingMouseListener {}
+
+class UmlEdgeEditListener extends DragAwareMouseListener implements SelectionListener {
     protected disableToolList: string[] = [ChangeBoundsTool.ID];
 
     // active selection data
@@ -220,6 +295,9 @@ class EdgeEditListener extends DragAwareMouseListener implements SelectionListen
     }
 
     override mouseMove(target: SModelElement, event: MouseEvent): Action[] {
+        if (!(target instanceof GLSPGraph)) {
+            // console.log('Mouse Move', target.id, target.type);
+        }
         const result = super.mouseMove(target, event);
         if (this.isMouseDrag) {
             // reset any selected connectables when we are dragging, maybe the user is just panning
@@ -273,6 +351,8 @@ class EdgeEditListener extends DragAwareMouseListener implements SelectionListen
                     }
                 }
                 this.tool.dispatchFeedback([cursorFeedbackAction(CursorCSS.OPERATION_NOT_ALLOWED)]);
+            } else if (currentTarget === this.newConnectable) {
+                this.tool.dispatchFeedback([cursorFeedbackAction(CursorCSS.EDGE_RECONNECT)]);
             }
         }
         return [];

@@ -10,8 +10,7 @@ import { configureModelElement, SEdge } from '@eclipse-glsp/client/lib';
 import { ContainerModule } from 'inversify';
 
 import { IconView, SEditableLabel } from '../../../index';
-import { NamedElement } from '../../elements/named-element.model';
-import { NamedElementView } from '../../elements/named-element.view';
+import { NamedElement, NamedElementView } from '../../elements/named-element/named-element.view';
 import { UmlCommunicationTypes } from './communication.types';
 import { IconInteraction } from './elements/interaction/model';
 import { IconLifeline } from './elements/lifeline';

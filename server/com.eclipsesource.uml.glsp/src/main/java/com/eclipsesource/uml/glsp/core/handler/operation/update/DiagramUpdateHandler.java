@@ -12,12 +12,8 @@ package com.eclipsesource.uml.glsp.core.handler.operation.update;
 
 import org.eclipse.emf.ecore.EObject;
 
-public interface DiagramUpdateHandler<TElementType extends EObject, TUpdateArgument> {
-   Class<TElementType> getElementType();
+public interface DiagramUpdateHandler<TElement extends EObject> {
+   Class<TElement> getElementType();
 
-   Class<TUpdateArgument> getUpdateArgumentType();
-
-   String contextId();
-
-   void handle(final UpdateOperation operation);
+   void handleUpdate(final UpdateOperation operation, TElement element);
 }

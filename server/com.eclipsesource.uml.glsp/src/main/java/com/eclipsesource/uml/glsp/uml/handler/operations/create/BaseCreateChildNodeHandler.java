@@ -12,17 +12,20 @@ package com.eclipsesource.uml.glsp.uml.handler.operations.create;
 
 import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
 
+import java.util.Set;
+
 import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.types.GLSPServerException;
 
+import com.eclipsesource.uml.glsp.core.handler.operation.create.DiagramCreateNodeHandler;
 import com.eclipsesource.uml.glsp.core.model.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
-import com.eclipsesource.uml.glsp.core.utils.reflection.GenericsUtil;
+import com.eclipsesource.uml.modelserver.shared.utils.reflection.GenericsUtil;
 import com.google.inject.Inject;
 
-public abstract class BaseCreateChildNodeHandler<T> extends BaseCreateHandler<CreateNodeOperation> {
-
+public abstract class BaseCreateChildNodeHandler<T> implements DiagramCreateNodeHandler {
+   protected final Set<String> elementTypeIds;
    protected final Class<T> containerType;
 
    @Inject
@@ -32,13 +35,20 @@ public abstract class BaseCreateChildNodeHandler<T> extends BaseCreateHandler<Cr
    protected UmlModelState modelState;
 
    public BaseCreateChildNodeHandler(final String typeId) {
-      super(typeId);
+      this(Set.of(typeId));
+   }
+
+   public BaseCreateChildNodeHandler(final Set<String> typeIds) {
+      this.elementTypeIds = typeIds;
 
       this.containerType = GenericsUtil.getClassParameter(getClass(), BaseCreateChildNodeHandler.class, 0);
    }
 
    @Override
-   public void execute(final CreateNodeOperation operation) {
+   public Set<String> getElementTypeIds() { return elementTypeIds; }
+
+   @Override
+   public void handleCreateNode(final CreateNodeOperation operation) {
       var containerId = operation.getContainerId();
       var container = getOrThrow(modelState.getIndex().getEObject(containerId),
          containerType,
@@ -49,7 +59,7 @@ public abstract class BaseCreateChildNodeHandler<T> extends BaseCreateHandler<Cr
       modelServerAccess.exec(command)
          .thenAccept(response -> {
             if (response.body() == null || response.body().isEmpty()) {
-               throw new GLSPServerException("Could not execute create on " + elementTypeId + " for command "
+               throw new GLSPServerException("Could not execute create on " + elementTypeIds + " for command "
                   + command.getClass().getName());
             }
          });

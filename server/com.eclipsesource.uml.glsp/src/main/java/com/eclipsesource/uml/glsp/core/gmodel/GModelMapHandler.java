@@ -18,8 +18,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.server.types.GLSPServerException;
 
-import com.eclipsesource.uml.glsp.core.common.RepresentationKey;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
+import com.eclipsesource.uml.modelserver.shared.registry.RepresentationKey;
 import com.google.inject.Inject;
 
 public class GModelMapHandler {
@@ -31,14 +31,9 @@ public class GModelMapHandler {
 
    public GModelElement handle(final EObject source) {
       var representation = modelState.getUnsafeRepresentation();
-      var mapperOpt = registry.get(RepresentationKey.of(representation, source.getClass()));
+      var mapper = registry.access(RepresentationKey.of(representation, source.getClass()));
 
-      if (mapperOpt.isEmpty()) {
-         throw new GLSPServerException("Error during model initialization!", new Throwable(
-            "No matching GModelMapper found for the semanticElement of type: " + source.getClass().getSimpleName()));
-      }
-
-      return mapperOpt.get().map(source);
+      return mapper.map(source);
    }
 
    public List<GModelElement> handle(final Collection<? extends EObject> sources) {

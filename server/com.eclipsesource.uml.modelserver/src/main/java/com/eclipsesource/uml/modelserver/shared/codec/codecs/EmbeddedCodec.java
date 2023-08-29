@@ -11,34 +11,35 @@
 package com.eclipsesource.uml.modelserver.shared.codec.codecs;
 
 import com.eclipsesource.uml.modelserver.shared.codec.CCommandProvider;
+import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonSerializer;
 
 public interface EmbeddedCodec {
    String EMBEDDED_JSON = "embedded_json";
 
-   interface JsonEncodable {
-      default JsonElement encodeJson() {
-         return new Gson().toJsonTree(this);
-      }
-   }
-
    interface Encoder<T> extends CCommandProvider {
-      default T embedJson(final JsonEncodable value) {
-         var gson = new Gson();
-         var encoded = value.encodeJson();
-         var property = gson.toJson(encoded);
 
-         ccommand().getProperties().put(EMBEDDED_JSON, property);
+      default T embedJson(final Object value) {
+         return embedJson(EMBEDDED_JSON, value);
+      }
+
+      default <TValue> T embedJson(final TValue value, final JsonSerializer<TValue> serializer) {
+         var gson = new GsonBuilder().registerTypeAdapter(value.getClass(), serializer).create();
+         var json = gson.toJson(value);
+
+         ccommand().getProperties().put(EMBEDDED_JSON, json);
 
          return (T) this;
       }
 
-      default T embedJson(final Object value) {
+      default T embedJson(final String key, final Object value) {
          var gson = new Gson();
-         var property = gson.toJson(value);
+         var json = gson.toJson(value);
 
-         ccommand().getProperties().put(EMBEDDED_JSON, property);
+         ccommand().getProperties().put(key, json);
 
          return (T) this;
       }
@@ -46,10 +47,29 @@ public interface EmbeddedCodec {
 
    interface Decoder extends CCommandProvider {
       default <TObject> TObject embedJson(final Class<TObject> clazz) {
-         var gson = new Gson();
-         var property = ccommand().getProperties().get(EMBEDDED_JSON);
-
-         return gson.fromJson(property, clazz);
+         return embedJson(EMBEDDED_JSON, clazz);
       }
+
+      default <TObject> TObject embedJson(final String key, final Class<TObject> clazz) {
+         var gson = new Gson();
+         var json = ccommand().getProperties().get(key);
+
+         return gson.fromJson(json, clazz);
+      }
+
+      default <TObject> TObject embedJson(final String key, final TypeToken<TObject> token) {
+         var gson = new Gson();
+         var json = ccommand().getProperties().get(key);
+
+         return gson.fromJson(json, token.getType());
+      }
+
+      default <TValue> TValue embedJson(final Class<TValue> clazz, final JsonDeserializer<TValue> deserializer) {
+         var gson = new GsonBuilder().registerTypeAdapter(clazz, deserializer).create();
+         var json = ccommand().getProperties().get(EMBEDDED_JSON);
+
+         return gson.fromJson(json, clazz);
+      }
+
    }
 }

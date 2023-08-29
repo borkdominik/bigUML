@@ -12,8 +12,8 @@ package com.eclipsesource.uml.glsp.features.outline.handler.action;
 
 import java.util.Map;
 
-import com.eclipsesource.uml.glsp.core.common.DiagramSingleKeyRegistry;
 import com.eclipsesource.uml.glsp.features.outline.generator.DiagramOutlineGenerator;
+import com.eclipsesource.uml.modelserver.shared.registry.DiagramSingleKeyRegistry;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 

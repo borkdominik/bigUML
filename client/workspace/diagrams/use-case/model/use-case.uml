@@ -12,4 +12,15 @@
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_e15iAR8oEe6RP-EVI6EPJA" value="1"/>
     </ownedEnd>
   </packagedElement>
+  <packagedElement xmi:type="uml:UseCase" xmi:id="_jVN44TeFEe6YwNJo51TMdA" name="NewUseCase2"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="_j8Z0sDeFEe6YwNJo51TMdA" memberEnd="_j8fUQDeFEe6YwNJo51TMdA _j8hJcDeFEe6YwNJo51TMdA">
+    <ownedEnd xmi:id="_j8fUQDeFEe6YwNJo51TMdA" name="NewUseCase2" type="_jVN44TeFEe6YwNJo51TMdA" association="_j8Z0sDeFEe6YwNJo51TMdA">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_j8giYDeFEe6YwNJo51TMdA" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_j8giYTeFEe6YwNJo51TMdA" value="1"/>
+    </ownedEnd>
+    <ownedEnd xmi:id="_j8hJcDeFEe6YwNJo51TMdA" name="NewActor1" type="_dx0O0B8oEe6RP-EVI6EPJA" association="_j8Z0sDeFEe6YwNJo51TMdA">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_j8hJcTeFEe6YwNJo51TMdA" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_j8hJcjeFEe6YwNJo51TMdA" value="1"/>
+    </ownedEnd>
+  </packagedElement>
 </uml:Model>

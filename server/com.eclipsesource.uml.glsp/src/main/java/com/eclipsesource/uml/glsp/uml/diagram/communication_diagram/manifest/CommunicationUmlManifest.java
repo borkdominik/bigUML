@@ -11,6 +11,7 @@
 package com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.manifest;
 
 import com.eclipsesource.uml.glsp.core.manifest.DiagramManifest;
+import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramConfigurationContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramCreateHandlerContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramDeleteHandlerContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramLabelEditMapperContribution;
@@ -36,7 +37,8 @@ import com.eclipsesource.uml.modelserver.unotation.Representation;
 
 public class CommunicationUmlManifest extends DiagramManifest
    implements DiagramCreateHandlerContribution,
-   DiagramDeleteHandlerContribution, DiagramLabelEditMapperContribution, DiagramUpdateHandlerContribution {
+   DiagramConfigurationContribution, DiagramDeleteHandlerContribution, DiagramLabelEditMapperContribution,
+   DiagramUpdateHandlerContribution {
 
    @Override
    public String id() {
@@ -57,9 +59,11 @@ public class CommunicationUmlManifest extends DiagramManifest
          contribution.addBinding().to(CommunicationToolPaletteConfiguration.class);
       });
 
-      contributeDiagramCreateHandlers((contribution) -> {
+      contributeDiagramCreateNodeHandlers((contribution) -> {
          contribution.addBinding().to(CreateInteractionHandler.class);
          contribution.addBinding().to(CreateLifelineHandler.class);
+      });
+      contributeDiagramCreateEdgeHandlers((contribution) -> {
          contribution.addBinding().to(CreateMessageHandler.class);
       });
       contributeDiagramDeleteHandlers((contribution) -> {

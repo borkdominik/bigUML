@@ -16,5 +16,5 @@ import org.eclipse.glsp.server.operations.ReconnectEdgeOperation;
 public interface DiagramReconnectEdgeHandler<TElementType extends EObject> {
    Class<TElementType> getElementType();
 
-   void handle(ReconnectEdgeOperation operation);
+   void handleReconnect(ReconnectEdgeOperation operation);
 }

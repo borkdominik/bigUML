@@ -24,8 +24,8 @@ import org.eclipse.uml2.uml.Element;
 import com.eclipsesource.uml.modelserver.shared.extension.NotationElementAccessor;
 import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.features.copy_paste.ClassCopyBehavior;
 import com.eclipsesource.uml.modelserver.uml.features.copy_paste.NotMarkedEdgesCopyBehavior;
+import com.eclipsesource.uml.modelserver.uml.representation.class_.features.copy_paste.ClassCopyBehavior;
 
 public class UmlPasteCompoundCommand extends CompoundCommand {
    protected final SemanticElementAccessor semanticElementAccessor;

@@ -25,30 +25,26 @@ import com.eclipsesource.uml.modelserver.core.codec.UmlCodecProvider;
 import com.eclipsesource.uml.modelserver.core.commands.change_bounds.UmlChangeBoundsContribution;
 import com.eclipsesource.uml.modelserver.core.commands.change_routing_points.UmlChangeRoutingPointsContribution;
 import com.eclipsesource.uml.modelserver.core.commands.copy_paste.UmlPasteContribution;
+import com.eclipsesource.uml.modelserver.core.commands.rename.UmlRenameElementContribution;
 import com.eclipsesource.uml.modelserver.core.controller.UmlSessionController;
-import com.eclipsesource.uml.modelserver.core.repository.UmlModelRepository;
+import com.eclipsesource.uml.modelserver.core.model.UmlModelRepository;
+import com.eclipsesource.uml.modelserver.core.model.UmlModelSynchronizer;
 import com.eclipsesource.uml.modelserver.core.resource.UmlModelResourceManager;
+import com.eclipsesource.uml.modelserver.core.resource.UmlResourceSetFactory;
 import com.eclipsesource.uml.modelserver.core.resource.model.UmlModelPackageConfiguration;
 import com.eclipsesource.uml.modelserver.core.resource.notation.UmlNotationPackageConfiguration;
 import com.eclipsesource.uml.modelserver.core.resource.notation.UmlNotationResource;
 import com.eclipsesource.uml.modelserver.core.resource.uml.UmlPackageConfiguration;
 import com.eclipsesource.uml.modelserver.core.routing.UmlModelServerRouting;
-import com.eclipsesource.uml.modelserver.uml.diagram.class_diagram.manifest.ClassManifest;
-import com.eclipsesource.uml.modelserver.uml.diagram.common_diagram.manifest.CommonManifest;
-import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.manifest.CommunicationManifest;
-import com.eclipsesource.uml.modelserver.uml.diagram.package_diagram.manifest.PackageManifest;
-import com.eclipsesource.uml.modelserver.uml.diagram.usecase_diagram.manifest.UseCaseManifest;
+import com.eclipsesource.uml.modelserver.uml.UmlModule;
 
 public class UmlModelServerModule extends EMSNotationModelServerModule {
 
    @Override
    protected void configure() {
       super.configure();
-      install(new CommonManifest());
-      install(new CommunicationManifest());
-      install(new ClassManifest());
-      install(new UseCaseManifest());
-      install(new PackageManifest());
+
+      install(new UmlModule());
    }
 
    @Override
@@ -72,14 +68,15 @@ public class UmlModelServerModule extends EMSNotationModelServerModule {
    }
 
    @Override
-   protected String getSemanticFileExtension() {
-      return UMLResource.FILE_EXTENSION;
+   protected Class<? extends UmlModelSynchronizer> bindModelSynchronizer() {
+      return UmlModelSynchronizer.class;
    }
 
    @Override
-   protected String getNotationFileExtension() {
-      return UmlNotationResource.FILE_EXTENSION;
-   }
+   protected String getSemanticFileExtension() { return UMLResource.FILE_EXTENSION; }
+
+   @Override
+   protected String getNotationFileExtension() { return UmlNotationResource.FILE_EXTENSION; }
 
    @Override
    protected void configureEPackages(final MultiBinding<EPackageConfiguration> binding) {
@@ -99,6 +96,8 @@ public class UmlModelServerModule extends EMSNotationModelServerModule {
       binding.put(UmlChangeBoundsContribution.TYPE, UmlChangeBoundsContribution.class);
       binding.put(UmlChangeRoutingPointsContribution.TYPE, UmlChangeRoutingPointsContribution.class);
       binding.put(UmlPasteContribution.TYPE, UmlPasteContribution.class);
+      binding.put(UmlRenameElementContribution.TYPE, UmlRenameElementContribution.class);
+
    }
 
    @Override

@@ -16,8 +16,8 @@ import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 
-import com.eclipsesource.uml.modelserver.core.utils.reflection.GenericsUtil;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
+import com.eclipsesource.uml.modelserver.shared.utils.reflection.GenericsUtil;
 
 public abstract class BaseCrossReferenceProcessor<TSelf extends EObject> implements CrossReferenceProcessor<Command> {
    protected final Class<TSelf> selfType;

@@ -12,10 +12,10 @@ package com.eclipsesource.uml.glsp.features.outline.manifest.contributions;
 
 import java.util.function.Supplier;
 
-import com.eclipsesource.uml.glsp.core.manifest.contributions.ContributionBinderSupplier;
-import com.eclipsesource.uml.glsp.core.manifest.contributions.ContributionIdSupplier;
-import com.eclipsesource.uml.glsp.core.manifest.contributions.ContributionRepresentationSupplier;
 import com.eclipsesource.uml.glsp.features.outline.generator.DiagramOutlineGenerator;
+import com.eclipsesource.uml.modelserver.shared.manifest.supplier.ContributionBinderSupplier;
+import com.eclipsesource.uml.modelserver.shared.manifest.supplier.ContributionIdSupplier;
+import com.eclipsesource.uml.modelserver.shared.manifest.supplier.ContributionRepresentationSupplier;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Key;
 import com.google.inject.multibindings.MapBinder;

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="ASCII"?>
+<unotation:UmlDiagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:notation="http://www.eclipse.org/glsp/notation" xmlns:unotation="http://www.eclipsesource.com/glsp/uml/unotation" diagramType="USE_CASE" representation="USE_CASE">
+  <semanticElement elementId="_KVNE0EBIEe6lEqvgyrSBNg"/>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_Kv3nkEBIEe6lEqvgyrSBNg"/>
+    <position x="20.0" y="90.0"/>
+    <size width="160.0" height="110.5"/>
+  </elements>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_LE6DcEBIEe6lEqvgyrSBNg"/>
+    <position x="660.0" y="130.0"/>
+    <size width="160.0" height="50.0"/>
+  </elements>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_LtAlQEBIEe6lEqvgyrSBNg"/>
+    <position x="360.0" y="310.0"/>
+    <size width="184.3984375" height="52.5"/>
+  </elements>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_MS6usEBIEe6lEqvgyrSBNg"/>
+    <position x="250.0" y="460.0"/>
+    <size width="184.3984375" height="52.5"/>
+  </elements>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_Mqe6IEBIEe6lEqvgyrSBNg"/>
+    <position x="750.0" y="540.0"/>
+    <size width="184.3984375" height="52.5"/>
+  </elements>
+  <elements xsi:type="notation:Edge">
+    <semanticElement elementId="_NQP5oEBIEe6lEqvgyrSBNg"/>
+  </elements>
+  <elements xsi:type="notation:Edge">
+    <semanticElement elementId="_OCQlYEBIEe6lEqvgyrSBNg"/>
+  </elements>
+  <elements xsi:type="notation:Edge">
+    <semanticElement elementId="_Ng36IEBJEe6lEqvgyrSBNg"/>
+  </elements>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_Y18BgUQFEe6RhfTyPlUmrQ"/>
+    <position x="550.0" y="600.0"/>
+    <size width="160.0" height="50.0"/>
+  </elements>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_8tvLQUQFEe6V-aQncdNPnA"/>
+    <position x="400.0" y="-10.0"/>
+    <size width="160.0" height="110.5"/>
+  </elements>
+  <elements xsi:type="notation:Edge">
+    <semanticElement elementId="_E2tOwEQMEe65Sc1R_Onx5g"/>
+  </elements>
+  <elements xsi:type="notation:Edge">
+    <semanticElement elementId="_Hooj0EQMEe65Sc1R_Onx5g"/>
+  </elements>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_ojxUsEZoEe6PxqGx6RvmrA"/>
+    <position x="880.0" y="240.0"/>
+    <size width="160.0" height="50.0"/>
+  </elements>
+</unotation:UmlDiagram>

@@ -17,8 +17,8 @@ import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.server.actions.AbstractActionHandler;
 import org.eclipse.glsp.server.actions.Action;
 
-import com.eclipsesource.uml.glsp.core.common.RepresentationKey;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
+import com.eclipsesource.uml.modelserver.shared.registry.RepresentationKey;
 import com.google.inject.Inject;
 
 public class RequestPropertyPaletteHandler extends AbstractActionHandler<RequestPropertyPaletteAction> {

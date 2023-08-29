@@ -16,9 +16,9 @@ import java.util.function.Consumer;
 import org.eclipse.emf.ecore.EObject;
 
 import com.eclipsesource.uml.glsp.core.handler.operation.reconnect_edge.DiagramReconnectEdgeHandler;
-import com.eclipsesource.uml.glsp.core.manifest.contributions.ContributionBinderSupplier;
-import com.eclipsesource.uml.glsp.core.manifest.contributions.ContributionIdSupplier;
-import com.eclipsesource.uml.glsp.core.manifest.contributions.ContributionRepresentationSupplier;
+import com.eclipsesource.uml.modelserver.shared.manifest.supplier.ContributionBinderSupplier;
+import com.eclipsesource.uml.modelserver.shared.manifest.supplier.ContributionIdSupplier;
+import com.eclipsesource.uml.modelserver.shared.manifest.supplier.ContributionRepresentationSupplier;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Key;
 import com.google.inject.TypeLiteral;

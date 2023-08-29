@@ -32,9 +32,9 @@ public class NoopCommand extends AbstractCommand {
    @Override
    public void execute() {
       if (reason.isBlank()) {
-         LOGGER.warn("Reason for NOOP: " + reason);
-      } else {
          LOGGER.warn("NOOP executed");
+      } else {
+         LOGGER.warn("Reason for NOOP: " + reason);
       }
    }
 

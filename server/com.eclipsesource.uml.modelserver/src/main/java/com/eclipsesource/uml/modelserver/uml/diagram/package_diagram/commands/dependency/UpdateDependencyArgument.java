@@ -10,9 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.diagram.package_diagram.commands.dependency;
 
-import com.eclipsesource.uml.modelserver.shared.codec.codecs.EmbeddedCodec;
-
-public final class UpdateDependencyArgument implements EmbeddedCodec.JsonEncodable {
+public final class UpdateDependencyArgument {
 
    public static final class Builder {
       private final UpdateDependencyArgument argument = new UpdateDependencyArgument();

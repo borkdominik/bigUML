@@ -14,9 +14,7 @@ import java.util.Optional;
 
 import org.eclipse.uml2.uml.VisibilityKind;
 
-import com.eclipsesource.uml.modelserver.shared.codec.codecs.EmbeddedCodec;
-
-public final class UpdateClassArgument implements EmbeddedCodec.JsonEncodable {
+public final class UpdateClassArgument {
    private String name;
    private String label;
    private Boolean isAbstract;

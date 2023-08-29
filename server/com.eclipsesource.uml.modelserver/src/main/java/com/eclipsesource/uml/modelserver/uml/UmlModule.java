@@ -22,6 +22,7 @@ import com.eclipsesource.uml.modelserver.uml.command.update.UpdateCommandProvide
 import com.eclipsesource.uml.modelserver.uml.command.update.UpdateElementCommandContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.manifest.CommunicationManifest;
 import com.eclipsesource.uml.modelserver.uml.diagram.package_diagram.manifest.PackageManifest;
+import com.eclipsesource.uml.modelserver.uml.diagram.state_machine_diagram.manifest.StateMachineManifest;
 import com.eclipsesource.uml.modelserver.uml.representation.class_.ClassManifest;
 import com.eclipsesource.uml.modelserver.uml.representation.use_case.UseCaseManifest;
 import com.google.inject.AbstractModule;
@@ -36,6 +37,7 @@ public class UmlModule extends AbstractModule implements CommandCodecContributio
       install(new ClassManifest());
       install(new UseCaseManifest());
       install(new PackageManifest());
+      install(new StateMachineManifest());
 
       bind(CreateCommandProviderRegistry.class).in(Singleton.class);
       bind(DeleteCommandProviderRegistry.class).in(Singleton.class);

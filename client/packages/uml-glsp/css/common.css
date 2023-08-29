@@ -29,3 +29,6 @@
 .stroked {
     stroke-dasharray: 4;
 }
+.no-stroke {
+    stroke-dasharray: none;
+}

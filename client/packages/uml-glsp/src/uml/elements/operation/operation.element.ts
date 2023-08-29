@@ -8,33 +8,20 @@
  *********************************************************************************/
 
 import { UmlDiagramType } from '@borkdominik-biguml/uml-common';
-import { configureModelElement, SCompartmentView, SLabelView } from '@eclipse-glsp/client';
+import { configureModelElement, SCompartmentView } from '@eclipse-glsp/client';
 import { DefaultTypes } from '@eclipse-glsp/protocol';
 import { interfaces } from 'inversify';
 import { InteractableCompartment } from '../../../graph/base/compartment';
-import { SEditableLabel } from '../../../index';
 import { QualifiedUtil } from '../../qualified.utils';
 
-export function registerPropertyElement(
+export function registerOperationElement(
     context: { bind: interfaces.Bind; isBound: interfaces.IsBound },
     representation: UmlDiagramType
 ): void {
     configureModelElement(
         context,
-        QualifiedUtil.representationTypeId(representation, DefaultTypes.COMPARTMENT, 'Property'),
+        QualifiedUtil.representationTypeId(representation, DefaultTypes.COMPARTMENT, 'Operation'),
         InteractableCompartment,
         SCompartmentView
-    );
-    configureModelElement(
-        context,
-        QualifiedUtil.representationTypeId(representation, DefaultTypes.LABEL, 'Property-type'),
-        SEditableLabel,
-        SLabelView
-    );
-    configureModelElement(
-        context,
-        QualifiedUtil.representationTypeId(representation, DefaultTypes.LABEL, 'Property-multiplicity'),
-        SEditableLabel,
-        SLabelView
     );
 }

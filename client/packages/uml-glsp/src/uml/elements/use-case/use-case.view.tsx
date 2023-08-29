@@ -16,14 +16,14 @@
 import { RenderingContext, ShapeView, svg } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 import { VNode } from 'snabbdom';
-import { LabeledNode } from '../../../../graph/model';
+import { NamedElement } from '../named-element/named-element.view';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const JSX = { createElement: svg };
 
 @injectable()
-export class UseCaseNodeView extends ShapeView {
-    render(node: LabeledNode, context: RenderingContext): VNode {
+export class UseCaseView extends ShapeView {
+    render(node: NamedElement, context: RenderingContext): VNode {
         const rX = Math.max(node.size.width, node.size.height) < 0 ? 0 : Math.max(node.size.width, node.size.height) / 2;
         const rY = Math.min(node.size.width, node.size.height) < 0 ? 0 : Math.min(node.size.width, node.size.height) / 2;
         const lineLength = 2 * rX * Math.sqrt(1 - Math.pow((rY - 48) / rY, 2));

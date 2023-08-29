@@ -13,21 +13,17 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { alignFeature, layoutableChildFeature, RenderingContext, ShapeView, svg } from '@eclipse-glsp/client';
+import { RenderingContext, ShapeView, svg } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 import { VNode } from 'snabbdom';
-import { NamedElement } from '../../../elements/named-element/named-element.model';
+import { NamedElement } from '../named-element/named-element.view';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const JSX = { createElement: svg };
 
-export class ActorNode extends NamedElement {
-    static override readonly DEFAULT_FEATURES = [...NamedElement.DEFAULT_FEATURES, alignFeature, layoutableChildFeature];
-}
-
 @injectable()
 export class ActorView extends ShapeView {
-    override render(element: ActorNode, context: RenderingContext): VNode | undefined {
+    override render(element: NamedElement, context: RenderingContext): VNode | undefined {
         if (!this.isVisible(element, context)) {
             return undefined;
         }

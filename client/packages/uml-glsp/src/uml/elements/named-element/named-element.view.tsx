@@ -6,11 +6,15 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { RectangularNodeView, RenderingContext, SCompartment, svg } from '@eclipse-glsp/client';
+import { alignFeature, layoutableChildFeature, RectangularNodeView, RenderingContext, SCompartment, svg } from '@eclipse-glsp/client';
 import { DefaultTypes } from '@eclipse-glsp/protocol';
 import { injectable } from 'inversify';
 import { VNode } from 'snabbdom';
-import { NamedElement } from './named-element.model';
+import { LabeledNode } from '../../../graph/base/label';
+
+export class NamedElement extends LabeledNode {
+    static override readonly DEFAULT_FEATURES = [...LabeledNode.DEFAULT_FEATURES, alignFeature, layoutableChildFeature];
+}
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const JSX = { createElement: svg };

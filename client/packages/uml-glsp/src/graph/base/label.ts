@@ -7,23 +7,21 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import {
-    deletableFeature,
     EditableLabel,
     editLabelFeature,
-    hoverFeedbackFeature,
     isEditableLabel,
     Nameable,
     nameFeature,
-    popupFeature,
     RectangularNode,
     SChildElement,
-    selectFeature,
     SLabel,
     WithEditableLabel,
     withEditLabelFeature
 } from '@eclipse-glsp/client';
 
 export class LabeledNode extends RectangularNode implements WithEditableLabel, Nameable {
+    static override readonly DEFAULT_FEATURES = [...RectangularNode.DEFAULT_FEATURES, nameFeature, withEditLabelFeature];
+
     get editableLabel(): (SChildElement & EditableLabel) | undefined {
         const headerComp = this.children.find(element => element.type === 'comp:header');
         if (headerComp) {
@@ -41,30 +39,8 @@ export class LabeledNode extends RectangularNode implements WithEditableLabel, N
         }
         return this.id;
     }
-
-    override hasFeature(feature: symbol): boolean {
-        return super.hasFeature(feature) || feature === nameFeature || feature === withEditLabelFeature;
-    }
 }
 
 export class SEditableLabel extends SLabel implements EditableLabel {
-    override hasFeature(feature: symbol): boolean {
-        return feature === editLabelFeature || super.hasFeature(feature);
-    }
-}
-
-export class SLabelNode extends SLabel implements EditableLabel {
-    hoverFeedback = false;
-    imageName: string;
-
-    override hasFeature(feature: symbol): boolean {
-        return (
-            feature === selectFeature ||
-            feature === editLabelFeature ||
-            feature === popupFeature ||
-            feature === deletableFeature ||
-            feature === hoverFeedbackFeature ||
-            super.hasFeature(feature)
-        );
-    }
+    static override readonly DEFAULT_FEATURES = [...SLabel.DEFAULT_FEATURES, editLabelFeature];
 }

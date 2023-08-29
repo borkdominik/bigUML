@@ -33,4 +33,5 @@
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_HoqZAEQMEe65Sc1R_Onx5g" value="1"/>
     </ownedEnd>
   </packagedElement>
+  <packagedElement xmi:type="uml:Component" xmi:id="_ojxUsEZoEe6PxqGx6RvmrA" name="NewComponent1"/>
 </uml:Model>

@@ -6,11 +6,34 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { IView, RenderingContext, svg } from '@eclipse-glsp/client';
+import {
+    Args,
+    boundsFeature,
+    fadeFeature,
+    IView,
+    layoutableChildFeature,
+    layoutContainerFeature,
+    RenderingContext,
+    SArgumentable,
+    SShapeElement,
+    svg
+} from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 import { VNode } from 'snabbdom';
 
-import { Icon, IconCSS } from './icon.model';
+export class Icon extends SShapeElement {
+    iconImageName: string;
+
+    override hasFeature(feature: symbol): boolean {
+        return (
+            feature === boundsFeature || feature === layoutContainerFeature || feature === layoutableChildFeature || feature === fadeFeature
+        );
+    }
+}
+
+export class IconCSS extends Icon implements SArgumentable {
+    args: Args;
+}
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const JSX = { createElement: svg };

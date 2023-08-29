@@ -10,7 +10,7 @@ import { IVNodePostprocessor, SModelElement, svg } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 import { VNode } from 'snabbdom';
 
-import { InteractableCompartment } from '../graph/uml-compartment';
+import { InteractableCompartment } from '../graph/base/compartment';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const JSX = { createElement: svg };

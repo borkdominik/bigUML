@@ -19,7 +19,12 @@ import {
     fadeFeature,
     layoutableChildFeature,
     layoutContainerFeature,
-    RenderingContext, SCompartment, ShapeView, SNode, SShapeElement, svg
+    RenderingContext,
+    SCompartment,
+    ShapeView,
+    SNode,
+    SShapeElement,
+    svg
 } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 import { VNode } from 'snabbdom';
@@ -28,17 +33,11 @@ import { VNode } from 'snabbdom';
 const JSX = { createElement: svg };
 
 export class StickFigureNode extends SShapeElement {
-    static readonly DEFAULT_FEATURES = [
-        boundsFeature,
-        layoutContainerFeature,
-        fadeFeature,
-        alignFeature,
-        layoutableChildFeature
-    ];
+    static readonly DEFAULT_FEATURES = [boundsFeature, layoutContainerFeature, fadeFeature, alignFeature, layoutableChildFeature];
 }
 
 @injectable()
-export class ActorNodeView extends ShapeView {
+export class StickFigureView extends ShapeView {
     override render(element: StickFigureNode, context: RenderingContext): VNode | undefined {
         if (!this.isVisible(element, context)) {
             return undefined;

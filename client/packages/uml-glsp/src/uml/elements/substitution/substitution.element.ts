@@ -13,25 +13,9 @@ import { DefaultTypes } from '@eclipse-glsp/protocol';
 import { interfaces } from 'inversify';
 import { QualifiedUtil } from '../../qualified.utils';
 
-export function registerAssociationElement(
+export function registerSubstitutionElement(
     context: { bind: interfaces.Bind; isBound: interfaces.IsBound },
     representation: UmlDiagramType
 ): void {
-    const ASSOCIATION = QualifiedUtil.representationTypeId(representation, DefaultTypes.EDGE, 'Association');
-    const ASSOCIATION_AGGREGATION = QualifiedUtil.representationTemplateTypeId(
-        representation,
-        DefaultTypes.EDGE,
-        'aggregation',
-        'Association'
-    );
-    const ASSOCIATION_COMPOSITION = QualifiedUtil.representationTemplateTypeId(
-        representation,
-        DefaultTypes.EDGE,
-        'composition',
-        'Association'
-    );
-
-    configureModelElement(context, ASSOCIATION, SEdge, GEdgeView);
-    configureModelElement(context, ASSOCIATION_AGGREGATION, SEdge, GEdgeView);
-    configureModelElement(context, ASSOCIATION_COMPOSITION, SEdge, GEdgeView);
+    configureModelElement(context, QualifiedUtil.representationTypeId(representation, DefaultTypes.EDGE, 'Substitution'), SEdge, GEdgeView);
 }

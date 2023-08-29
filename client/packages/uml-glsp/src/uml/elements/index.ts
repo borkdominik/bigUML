@@ -6,5 +6,28 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-export * from './named-element/named-element.model';
+export * from './abstraction/abstraction.element';
+export * from './actor/actor.element';
+export * from './association/association.element';
+export * from './class/class.element';
+export * from './data-type/data-type.element';
+export * from './dependency/dependency.element';
+export * from './enumeration-literal/enumeration-literal.element';
+export * from './enumeration/enumeration.element';
+export * from './extend/extend.element';
+export * from './generalization/generalization.element';
+export * from './include/include.element';
+export * from './interface-realization/interface-realization.element';
+export * from './interface/interface.element';
 export * from './named-element/named-element.view';
+export * from './operation/operation.element';
+export * from './package-import/package-import.element';
+export * from './package-merge/package-merge.element';
+export * from './package/package.element';
+export * from './primitive-type/primitive-type.element';
+export * from './property/property-element';
+export * from './realization/realization.element';
+export * from './subject/subject.element';
+export * from './substitution/substitution.element';
+export * from './usage/usage.element';
+export * from './use-case/use-case.element';

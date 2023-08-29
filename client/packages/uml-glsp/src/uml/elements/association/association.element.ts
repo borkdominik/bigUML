@@ -8,33 +8,26 @@
  *********************************************************************************/
 
 import { UmlDiagramType } from '@borkdominik-biguml/uml-common';
-import { configureModelElement, SCompartmentView, SLabelView } from '@eclipse-glsp/client';
+import { configureModelElement, GEdgeView, SEdge } from '@eclipse-glsp/client';
 import { DefaultTypes } from '@eclipse-glsp/protocol';
 import { interfaces } from 'inversify';
-import { InteractableCompartment } from '../../../graph/base/compartment';
-import { SEditableLabel } from '../../../index';
 import { QualifiedUtil } from '../../qualified.utils';
 
-export function registerPropertyElement(
+export function registerAssociationElement(
     context: { bind: interfaces.Bind; isBound: interfaces.IsBound },
     representation: UmlDiagramType
 ): void {
+    configureModelElement(context, QualifiedUtil.representationTypeId(representation, DefaultTypes.EDGE, 'Association'), SEdge, GEdgeView);
     configureModelElement(
         context,
-        QualifiedUtil.representationTypeId(representation, DefaultTypes.COMPARTMENT, 'Property'),
-        InteractableCompartment,
-        SCompartmentView
+        QualifiedUtil.representationTemplateTypeId(representation, DefaultTypes.EDGE, 'aggregation', 'Association'),
+        SEdge,
+        GEdgeView
     );
     configureModelElement(
         context,
-        QualifiedUtil.representationTypeId(representation, DefaultTypes.LABEL, 'Property-type'),
-        SEditableLabel,
-        SLabelView
-    );
-    configureModelElement(
-        context,
-        QualifiedUtil.representationTypeId(representation, DefaultTypes.LABEL, 'Property-multiplicity'),
-        SEditableLabel,
-        SLabelView
+        QualifiedUtil.representationTemplateTypeId(representation, DefaultTypes.EDGE, 'composition', 'Association'),
+        SEdge,
+        GEdgeView
     );
 }

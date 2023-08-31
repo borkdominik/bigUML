@@ -21,6 +21,7 @@ import com.eclipsesource.uml.modelserver.shared.utils.reflection.GenericsUtil;
 import com.eclipsesource.uml.modelserver.shared.utils.reflection.ReflectionUtil;
 import com.google.inject.Inject;
 
+@Deprecated(forRemoval = true)
 public abstract class BaseDeleteElementHandler<T extends EObject> implements DiagramDeleteHandler<T> {
    protected final Class<T> elementType;
 

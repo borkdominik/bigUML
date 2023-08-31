@@ -24,7 +24,7 @@ import org.eclipse.uml2.uml.UseCase;
 import com.eclipsesource.uml.modelserver.shared.codec.ContributionDecoder;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.commands.AddShapeNotationCommand;
-import com.eclipsesource.uml.modelserver.uml.command.NodeCommandProvider;
+import com.eclipsesource.uml.modelserver.uml.command.provider.element.NodeCommandProvider;
 import com.eclipsesource.uml.modelserver.uml.elements.usecase.commands.CreateRootUseCaseSemanticCommand;
 import com.eclipsesource.uml.modelserver.uml.elements.usecase.commands.CreateUseCaseSemanticCommand;
 import com.eclipsesource.uml.modelserver.uml.elements.usecase.commands.UpdateUseCaseArgument;

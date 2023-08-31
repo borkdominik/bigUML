@@ -14,9 +14,9 @@ import java.util.Optional;
 
 import org.eclipse.emf.ecore.EObject;
 
-import com.eclipsesource.uml.modelserver.uml.command.EdgeCommandProvider;
-import com.eclipsesource.uml.modelserver.uml.command.create.CreateCommandProvider;
+import com.eclipsesource.uml.modelserver.uml.command.create.edge.CreateEdgeCommandProvider;
 import com.eclipsesource.uml.modelserver.uml.command.delete.DeleteCommandProvider;
+import com.eclipsesource.uml.modelserver.uml.command.provider.element.EdgeCommandProvider;
 import com.eclipsesource.uml.modelserver.uml.command.update.UpdateCommandProvider;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.TypeLiteral;
@@ -31,7 +31,7 @@ public abstract class EdgeCommandProviderDefinition extends EdgeDefinition {
    protected abstract Optional<TypeLiteral<? extends EdgeCommandProvider<?, ?, ?>>> commandProvider();
 
    @Override
-   protected void createCommandProvider(final Multibinder<CreateCommandProvider<? extends EObject>> contributions) {
+   protected void createCommandProvider(final Multibinder<CreateEdgeCommandProvider<? extends EObject>> contributions) {
       commandProvider().ifPresent(i -> contributions.addBinding().to(i));
    }
 

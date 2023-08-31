@@ -12,8 +12,8 @@ package com.eclipsesource.uml.modelserver.uml.manifest;
 
 import org.eclipse.emf.ecore.EObject;
 
-import com.eclipsesource.uml.modelserver.uml.command.create.CreateCommandProvider;
-import com.eclipsesource.uml.modelserver.uml.command.create.CreateCommandProviderContribution;
+import com.eclipsesource.uml.modelserver.uml.command.create.edge.CreateEdgeCommandProvider;
+import com.eclipsesource.uml.modelserver.uml.command.create.edge.CreateEdgeCommandProviderContribution;
 import com.eclipsesource.uml.modelserver.uml.command.delete.DeleteCommandProvider;
 import com.eclipsesource.uml.modelserver.uml.command.delete.DeleteCommandProviderContribution;
 import com.eclipsesource.uml.modelserver.uml.command.update.UpdateCommandProvider;
@@ -21,7 +21,7 @@ import com.eclipsesource.uml.modelserver.uml.command.update.UpdateCommandProvide
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.multibindings.Multibinder;
 
-public abstract class EdgeDefinition extends ElementDefinition implements CreateCommandProviderContribution,
+public abstract class EdgeDefinition extends ElementDefinition implements CreateEdgeCommandProviderContribution,
    DeleteCommandProviderContribution, UpdateCommandProviderContribution {
 
    public EdgeDefinition(final String id, final Representation representation) {
@@ -37,7 +37,7 @@ public abstract class EdgeDefinition extends ElementDefinition implements Create
    }
 
    protected abstract void createCommandProvider(
-      final Multibinder<CreateCommandProvider<? extends EObject>> contributions);
+      final Multibinder<CreateEdgeCommandProvider<? extends EObject>> contributions);
 
    protected abstract void deleteCommandProvider(
       final Multibinder<DeleteCommandProvider<? extends EObject>> contributions);

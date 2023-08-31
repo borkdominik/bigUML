@@ -20,7 +20,7 @@ import org.eclipse.uml2.uml.NamedElement;
 import com.eclipsesource.uml.modelserver.shared.codec.ContributionDecoder;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.commands.AddEdgeNotationCommand;
-import com.eclipsesource.uml.modelserver.uml.command.EdgeCommandProvider;
+import com.eclipsesource.uml.modelserver.uml.command.provider.element.EdgeCommandProvider;
 import com.eclipsesource.uml.modelserver.uml.elements.abstraction.commands.CreateAbstractionSemanticCommand;
 import com.eclipsesource.uml.modelserver.uml.elements.abstraction.commands.UpdateAbstractionArgument;
 import com.eclipsesource.uml.modelserver.uml.elements.abstraction.commands.UpdateAbstractionSemanticCommand;

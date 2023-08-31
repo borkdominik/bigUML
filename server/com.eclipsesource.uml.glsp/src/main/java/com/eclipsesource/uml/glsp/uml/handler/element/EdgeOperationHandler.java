@@ -32,7 +32,7 @@ import com.eclipsesource.uml.glsp.uml.configuration.ElementConfigurationAccessor
 import com.eclipsesource.uml.glsp.uml.configuration.ElementConfigurationRegistry;
 import com.eclipsesource.uml.modelserver.shared.utils.Type;
 import com.eclipsesource.uml.modelserver.shared.utils.reflection.ReflectionUtil;
-import com.eclipsesource.uml.modelserver.uml.command.create.CreateElementCommandContribution;
+import com.eclipsesource.uml.modelserver.uml.command.create.edge.CreateEdgeCommandContribution;
 import com.eclipsesource.uml.modelserver.uml.command.delete.DeleteElementCommandContribution;
 import com.eclipsesource.uml.modelserver.uml.command.reconnect.ReconnectElementCommandContribution;
 import com.eclipsesource.uml.modelserver.uml.command.update.UpdateElementCommandContribution;
@@ -147,7 +147,7 @@ public abstract class EdgeOperationHandler<TElement extends EObject, TSource ext
    }
 
    protected CCommand createCommand(final CreateEdgeOperation operation, final TSource source, final TTarget target) {
-      return CreateElementCommandContribution.createEdge(
+      return CreateEdgeCommandContribution.create(
          this.modelState.getUnsafeRepresentation(), Type.clazz(elementType), source, target,
          createArgument(operation, source, target));
    }

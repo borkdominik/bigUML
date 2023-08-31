@@ -14,9 +14,9 @@ import java.util.Optional;
 
 import org.eclipse.emf.ecore.EObject;
 
-import com.eclipsesource.uml.modelserver.uml.command.NodeCommandProvider;
-import com.eclipsesource.uml.modelserver.uml.command.create.CreateCommandProvider;
+import com.eclipsesource.uml.modelserver.uml.command.create.node.CreateNodeCommandProvider;
 import com.eclipsesource.uml.modelserver.uml.command.delete.DeleteCommandProvider;
+import com.eclipsesource.uml.modelserver.uml.command.provider.element.NodeCommandProvider;
 import com.eclipsesource.uml.modelserver.uml.command.update.UpdateCommandProvider;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.TypeLiteral;
@@ -31,7 +31,8 @@ public abstract class NodeCommandProviderDefinition extends NodeDefinition {
    protected abstract Optional<TypeLiteral<? extends NodeCommandProvider<?, ?>>> commandProvider();
 
    @Override
-   protected void createCommandProvider(final Multibinder<CreateCommandProvider<? extends EObject>> contributions) {
+   protected void createCommandProvider(
+      final Multibinder<CreateNodeCommandProvider<? extends EObject, ?>> contributions) {
       commandProvider().ifPresent(i -> contributions.addBinding().to(i));
    }
 

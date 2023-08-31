@@ -21,7 +21,7 @@ import org.eclipse.uml2.uml.InterfaceRealization;
 import com.eclipsesource.uml.modelserver.shared.codec.ContributionDecoder;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.commands.AddEdgeNotationCommand;
-import com.eclipsesource.uml.modelserver.uml.command.EdgeCommandProvider;
+import com.eclipsesource.uml.modelserver.uml.command.provider.element.EdgeCommandProvider;
 import com.eclipsesource.uml.modelserver.uml.elements.interface_realization.commands.CreateInterfaceRealizationSemanticCommand;
 import com.eclipsesource.uml.modelserver.uml.elements.interface_realization.commands.UpdateInterfaceRealizationArgument;
 import com.eclipsesource.uml.modelserver.uml.elements.interface_realization.commands.UpdateInterfaceRealizationSemanticCommand;

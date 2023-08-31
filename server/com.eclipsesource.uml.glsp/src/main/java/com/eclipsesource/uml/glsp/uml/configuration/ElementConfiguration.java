@@ -10,10 +10,14 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.configuration;
 
+import java.util.Set;
+
 import org.eclipse.emf.ecore.EObject;
 
 public interface ElementConfiguration<TElement extends EObject> {
    Class<TElement> getElementType();
 
    String typeId();
+
+   Set<String> allTypeIds();
 }

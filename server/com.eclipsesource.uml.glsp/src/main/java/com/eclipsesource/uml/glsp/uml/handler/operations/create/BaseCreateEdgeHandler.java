@@ -24,6 +24,7 @@ import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.eclipsesource.uml.modelserver.shared.utils.reflection.GenericsUtil;
 import com.google.inject.Inject;
 
+@Deprecated(forRemoval = true)
 public abstract class BaseCreateEdgeHandler<S, T> implements DiagramCreateEdgeHandler {
    protected final Set<String> elementTypeIds;
 

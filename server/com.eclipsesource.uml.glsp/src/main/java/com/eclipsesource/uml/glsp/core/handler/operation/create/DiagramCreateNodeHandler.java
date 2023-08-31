@@ -14,8 +14,10 @@ import java.util.Set;
 
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 
-public interface DiagramCreateNodeHandler {
+public interface DiagramCreateNodeHandler<TParent> {
    Set<String> getElementTypeIds();
+
+   Class<TParent> getParentType();
 
    void handleCreateNode(CreateNodeOperation operation);
 }

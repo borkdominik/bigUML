@@ -20,7 +20,7 @@ import org.eclipse.uml2.uml.PackageImport;
 import com.eclipsesource.uml.modelserver.shared.codec.ContributionDecoder;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.commands.AddEdgeNotationCommand;
-import com.eclipsesource.uml.modelserver.uml.command.EdgeCommandProvider;
+import com.eclipsesource.uml.modelserver.uml.command.provider.element.EdgeCommandProvider;
 import com.eclipsesource.uml.modelserver.uml.elements.package_import.commands.CreatePackageImportSemanticCommand;
 import com.eclipsesource.uml.modelserver.uml.elements.package_import.commands.UpdatePackageImportArgument;
 import com.eclipsesource.uml.modelserver.uml.elements.package_import.commands.UpdatePackageImportSemanticCommand;

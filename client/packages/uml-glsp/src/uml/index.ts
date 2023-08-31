@@ -9,8 +9,8 @@
 import { umlModule } from './di.config';
 import { umlCommunicationDiagramModule } from './diagram/communication/di.config';
 import { umlPackageDiagramModule } from './diagram/package/di.config';
-import { umlStateMachineDiagramModule } from './diagram/state_machine/di.config';
 import { umlClassDiagramModule } from './representation/class/class.module';
+import { umlStateMachineDiagramModule } from './representation/state-machine/state-machine.module';
 import { umlUseCaseDiagramModule } from './representation/usecase/use-case.module';
 
 export const umlDiagramModules = [

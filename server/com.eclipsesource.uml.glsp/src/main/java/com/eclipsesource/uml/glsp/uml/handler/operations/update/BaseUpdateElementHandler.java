@@ -22,6 +22,7 @@ import com.eclipsesource.uml.modelserver.shared.utils.reflection.GenericsUtil;
 import com.google.gson.Gson;
 import com.google.inject.Inject;
 
+@Deprecated(forRemoval = true)
 public abstract class BaseUpdateElementHandler<TElementType extends EObject, TUpdateArgument>
    implements DiagramUpdateHandler<TElementType> {
    protected final Class<TElementType> elementType;

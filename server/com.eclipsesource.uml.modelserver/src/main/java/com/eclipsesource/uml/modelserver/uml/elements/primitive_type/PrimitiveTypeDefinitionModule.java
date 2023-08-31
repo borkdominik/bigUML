@@ -13,7 +13,7 @@ package com.eclipsesource.uml.modelserver.uml.elements.primitive_type;
 import java.util.Optional;
 
 import com.eclipsesource.uml.modelserver.core.manifest.DiagramManifest;
-import com.eclipsesource.uml.modelserver.uml.command.NodeCommandProvider;
+import com.eclipsesource.uml.modelserver.uml.command.provider.element.NodeCommandProvider;
 import com.eclipsesource.uml.modelserver.uml.manifest.NodeCommandProviderDefinition;
 import com.google.inject.TypeLiteral;
 

@@ -20,7 +20,7 @@ import org.eclipse.uml2.uml.Substitution;
 import com.eclipsesource.uml.modelserver.shared.codec.ContributionDecoder;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.commands.AddEdgeNotationCommand;
-import com.eclipsesource.uml.modelserver.uml.command.EdgeCommandProvider;
+import com.eclipsesource.uml.modelserver.uml.command.provider.element.EdgeCommandProvider;
 import com.eclipsesource.uml.modelserver.uml.elements.substitution.commands.CreateSubstitutionSemanticCommand;
 import com.eclipsesource.uml.modelserver.uml.elements.substitution.commands.UpdateSubstitutionArgument;
 import com.eclipsesource.uml.modelserver.uml.elements.substitution.commands.UpdateSubstitutionSemanticCommand;

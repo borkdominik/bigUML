@@ -35,7 +35,7 @@ public final class ClassConfiguration extends RepresentationNodeConfiguration<Cl
    }
 
    public String abstractTypeId() {
-      return QualifiedUtil.templateTypeId(DefaultTypes.NODE, "abstract",
+      return QualifiedUtil.templateTypeId(representation, DefaultTypes.NODE, "abstract",
          Class.class.getSimpleName());
    }
 
@@ -49,8 +49,11 @@ public final class ClassConfiguration extends RepresentationNodeConfiguration<Cl
    }
 
    @Override
-   public Map<String, EClass> getTypeMappings() { return Map.of(
-      typeId(), GraphPackage.Literals.GNODE); }
+   public Map<String, EClass> getTypeMappings() {
+      return Map.of(
+         typeId(), GraphPackage.Literals.GNODE,
+         abstractTypeId(), GraphPackage.Literals.GNODE);
+   }
 
    @Override
    public Set<String> getGraphContainableElements() { return Set.of(typeId(), abstractTypeId()); }

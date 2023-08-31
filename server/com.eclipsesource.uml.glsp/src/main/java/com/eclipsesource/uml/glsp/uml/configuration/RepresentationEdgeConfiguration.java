@@ -10,6 +10,8 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.configuration;
 
+import java.util.Set;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.graph.DefaultTypes;
 
@@ -29,4 +31,8 @@ public abstract class RepresentationEdgeConfiguration<TEdge extends EObject>
          getElementType().getSimpleName());
    }
 
+   @Override
+   public Set<String> allTypeIds() {
+      return this.getTypeMappings().keySet();
+   }
 }

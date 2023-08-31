@@ -12,8 +12,8 @@ package com.eclipsesource.uml.modelserver.uml.manifest;
 
 import org.eclipse.emf.ecore.EObject;
 
-import com.eclipsesource.uml.modelserver.uml.command.create.CreateCommandProvider;
-import com.eclipsesource.uml.modelserver.uml.command.create.CreateCommandProviderContribution;
+import com.eclipsesource.uml.modelserver.uml.command.create.node.CreateNodeCommandProvider;
+import com.eclipsesource.uml.modelserver.uml.command.create.node.CreateNodeCommandProviderContribution;
 import com.eclipsesource.uml.modelserver.uml.command.delete.DeleteCommandProvider;
 import com.eclipsesource.uml.modelserver.uml.command.delete.DeleteCommandProviderContribution;
 import com.eclipsesource.uml.modelserver.uml.command.update.UpdateCommandProvider;
@@ -22,7 +22,8 @@ import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.multibindings.Multibinder;
 
 public abstract class NodeDefinition extends ElementDefinition
-   implements CreateCommandProviderContribution, DeleteCommandProviderContribution, UpdateCommandProviderContribution {
+   implements CreateNodeCommandProviderContribution, DeleteCommandProviderContribution,
+   UpdateCommandProviderContribution {
 
    public NodeDefinition(final String id, final Representation representation) {
       super(id, representation);
@@ -31,13 +32,13 @@ public abstract class NodeDefinition extends ElementDefinition
    @Override
    protected void configure() {
       super.configure();
-      contributeCreateCommandProvider(this::createCommandProvider);
+      contributeCreateNodeCommandProvider(this::createCommandProvider);
       contributeDeleteCommandProvider(this::deleteCommandProvider);
       contributeUpdateCommandProvider(this::updateCommandProvider);
    }
 
    protected abstract void createCommandProvider(
-      final Multibinder<CreateCommandProvider<? extends EObject>> contributions);
+      final Multibinder<CreateNodeCommandProvider<? extends EObject, ?>> contributions);
 
    protected abstract void deleteCommandProvider(
       final Multibinder<DeleteCommandProvider<? extends EObject>> contributions);

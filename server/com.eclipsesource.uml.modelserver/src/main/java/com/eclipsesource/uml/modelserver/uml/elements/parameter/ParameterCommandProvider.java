@@ -22,7 +22,7 @@ import org.eclipse.uml2.uml.Parameter;
 import com.eclipsesource.uml.modelserver.shared.codec.ContributionDecoder;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.commands.AddShapeNotationCommand;
-import com.eclipsesource.uml.modelserver.uml.command.NodeCommandProvider;
+import com.eclipsesource.uml.modelserver.uml.command.provider.element.NodeCommandProvider;
 import com.eclipsesource.uml.modelserver.uml.elements.parameter.commands.CreateParameterSemanticCommand;
 import com.eclipsesource.uml.modelserver.uml.elements.parameter.commands.UpdateParameterArgument;
 import com.eclipsesource.uml.modelserver.uml.elements.parameter.commands.UpdateParameterSemanticCommand;

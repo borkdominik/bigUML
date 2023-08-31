@@ -29,24 +29,28 @@ import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.eclipsesource.uml.glsp.uml.configuration.ElementConfigurationAccessor;
 import com.eclipsesource.uml.glsp.uml.configuration.ElementConfigurationRegistry;
 import com.eclipsesource.uml.glsp.uml.handler.operations.create.CreateLocationAwareNodeHandler;
-import com.eclipsesource.uml.modelserver.shared.utils.reflection.GenericsUtil;
+import com.eclipsesource.uml.modelserver.shared.utils.Type;
 import com.eclipsesource.uml.modelserver.shared.utils.reflection.ReflectionUtil;
-import com.eclipsesource.uml.modelserver.uml.command.create.CreateElementCommandContribution;
+import com.eclipsesource.uml.modelserver.uml.command.create.node.CreateNodeCommandContribution;
 import com.eclipsesource.uml.modelserver.uml.command.delete.DeleteElementCommandContribution;
 import com.eclipsesource.uml.modelserver.uml.command.update.UpdateElementCommandContribution;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.gson.Gson;
 import com.google.inject.Inject;
+import com.google.inject.TypeLiteral;
 
 public abstract class NodeOperationHandler<TElement extends EObject, TParent>
-   implements ElementConfigurationAccessor, CreateLocationAwareNodeHandler, DiagramCreateNodeHandler,
+   implements ElementConfigurationAccessor, CreateLocationAwareNodeHandler, DiagramCreateNodeHandler<TParent>,
    DiagramDeleteHandler<TElement>,
    DiagramUpdateHandler<TElement> {
    protected final Set<String> elementTypeIds;
-   protected final Class<TElement> elementType;
-   protected final Class<TParent> parentType;
    protected final Gson gson;
-   protected Representation representation;
+   protected final Representation representation;
+
+   @Inject
+   protected TypeLiteral<TElement> elementType;
+   @Inject
+   protected TypeLiteral<TParent> parentType;
 
    @Inject
    protected UmlModelServerAccess modelServerAccess;
@@ -62,8 +66,6 @@ public abstract class NodeOperationHandler<TElement extends EObject, TParent>
    public NodeOperationHandler(final Representation representation, final Set<String> typeIds) {
       this.representation = representation;
       this.elementTypeIds = typeIds;
-      this.elementType = GenericsUtil.getClassParameter(getClass(), NodeOperationHandler.class, 0);
-      this.parentType = GenericsUtil.getClassParameter(getClass(), NodeOperationHandler.class, 1);
       this.gson = new Gson();
    }
 
@@ -71,7 +73,10 @@ public abstract class NodeOperationHandler<TElement extends EObject, TParent>
    public Set<String> getElementTypeIds() { return elementTypeIds; }
 
    @Override
-   public Class<TElement> getElementType() { return elementType; }
+   public Class<TElement> getElementType() { return Type.clazz(elementType); }
+
+   @Override
+   public Class<TParent> getParentType() { return Type.clazz(parentType); }
 
    @Override
    public Representation representation() {
@@ -87,9 +92,9 @@ public abstract class NodeOperationHandler<TElement extends EObject, TParent>
    public void handleCreateNode(final CreateNodeOperation operation) {
       var containerId = operation.getContainerId();
       var container = getOrThrow(modelState.getIndex().getEObject(containerId),
-         parentType,
-         "No valid container with id " + containerId + " for container type " + parentType.getSimpleName()
-            + " found.");
+         getParentType(),
+         String.format("[%s] No valid container with id %s for container type %s found.", getClass().getSimpleName(),
+            containerId, getParentType().getSimpleName()));
 
       var command = createCommand(operation, container);
       send(command);
@@ -98,8 +103,9 @@ public abstract class NodeOperationHandler<TElement extends EObject, TParent>
    @Override
    public void handleDelete(final EObject object) {
       var element = ReflectionUtil.castOrThrow(object,
-         elementType,
-         "Object is not castable to " + elementType.getName() + ". it was " + object.getClass().getName());
+         getElementType(),
+         String.format("[%s] Object is not castable to %s. it was %s", getClass().getSimpleName(),
+            getElementType().getSimpleName(), object.getClass().getName()));
 
       var command = deleteCommand(element);
       send(command);
@@ -112,9 +118,9 @@ public abstract class NodeOperationHandler<TElement extends EObject, TParent>
    }
 
    protected CCommand createCommand(final CreateNodeOperation operation, final TParent parent) {
-      return CreateElementCommandContribution.createNode(
+      return CreateNodeCommandContribution.create(
          this.modelState.getUnsafeRepresentation(),
-         elementType,
+         getElementType(),
          parent,
          relativeLocationOf(modelState, operation).orElse(GraphUtil.point(0, 0)),
          createArgument(operation, parent));

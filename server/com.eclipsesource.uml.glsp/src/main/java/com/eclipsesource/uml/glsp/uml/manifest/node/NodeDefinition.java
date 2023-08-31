@@ -57,7 +57,7 @@ public abstract class NodeDefinition extends ElementDefinition
 
    protected abstract void diagramConfigurations(Multibinder<DiagramElementConfiguration.Node> contribution);
 
-   protected abstract void diagramCreateHandlers(Multibinder<DiagramCreateNodeHandler> contribution);
+   protected abstract void diagramCreateHandlers(Multibinder<DiagramCreateNodeHandler<?>> contribution);
 
    protected abstract void diagramDeleteHandlers(Multibinder<DiagramDeleteHandler<? extends EObject>> contribution);
 

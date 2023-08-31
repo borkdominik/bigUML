@@ -24,7 +24,8 @@ import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.eclipsesource.uml.modelserver.shared.utils.reflection.GenericsUtil;
 import com.google.inject.Inject;
 
-public abstract class BaseCreateChildNodeHandler<T> implements DiagramCreateNodeHandler {
+@Deprecated(forRemoval = true)
+public abstract class BaseCreateChildNodeHandler<T> implements DiagramCreateNodeHandler<T> {
    protected final Set<String> elementTypeIds;
    protected final Class<T> containerType;
 
@@ -46,6 +47,9 @@ public abstract class BaseCreateChildNodeHandler<T> implements DiagramCreateNode
 
    @Override
    public Set<String> getElementTypeIds() { return elementTypeIds; }
+
+   @Override
+   public Class<T> getParentType() { return containerType; }
 
    @Override
    public void handleCreateNode(final CreateNodeOperation operation) {

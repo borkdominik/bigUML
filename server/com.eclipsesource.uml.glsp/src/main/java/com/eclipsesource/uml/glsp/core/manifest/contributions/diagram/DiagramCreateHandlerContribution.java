@@ -28,17 +28,17 @@ public interface DiagramCreateHandlerContribution
    extends ContributionBinderSupplier, ContributionIdSupplier, ContributionRepresentationSupplier {
 
    default void contributeDiagramCreateNodeHandlers(
-      final Consumer<Multibinder<DiagramCreateNodeHandler>> consumer) {
+      final Consumer<Multibinder<DiagramCreateNodeHandler<?>>> consumer) {
       var binder = contributionBinder();
 
-      var multibinder = Multibinder.newSetBinder(binder, DiagramCreateNodeHandler.class, idNamed());
+      var multibinder = Multibinder.newSetBinder(binder, new TypeLiteral<DiagramCreateNodeHandler<?>>() {}, idNamed());
 
       consumer.accept(multibinder);
 
       MapBinder.newMapBinder(binder, new TypeLiteral<Representation>() {},
-         new TypeLiteral<Set<DiagramCreateNodeHandler>>() {})
+         new TypeLiteral<Set<DiagramCreateNodeHandler<?>>>() {})
          .addBinding(representation())
-         .to(Key.get(new TypeLiteral<Set<DiagramCreateNodeHandler>>() {}, idNamed()));
+         .to(Key.get(new TypeLiteral<Set<DiagramCreateNodeHandler<?>>>() {}, idNamed()));
    }
 
    default void contributeDiagramCreateEdgeHandlers(

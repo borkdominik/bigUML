@@ -20,6 +20,7 @@ import com.eclipsesource.uml.glsp.core.handler.operation.create.DiagramCreateNod
 import com.eclipsesource.uml.glsp.core.model.UmlModelServerAccess;
 import com.google.inject.Inject;
 
+@Deprecated(forRemoval = true)
 public abstract class BaseCreateNodeHandler implements DiagramCreateNodeHandler {
    protected final Set<String> elementTypeIds;
 

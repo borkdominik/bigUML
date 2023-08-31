@@ -10,6 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.shared.registry;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -113,7 +114,14 @@ public abstract class DiagramMultiKeyRegistry<K, V> implements Registry<Represen
       System.out.println("==== " + getClass().getName() + " ====");
       keys().stream().sorted((a, b) -> deriveKey(a).compareTo(deriveKey(b))).forEach(key -> {
          System.out.println("Key:\t" + deriveKey(key));
-         System.out.println("Value:\t" + get(key).get().getClass().getName());
+         var value = get(key).get();
+         if (value instanceof Collection) {
+            var values = (Collection<?>) value;
+            var classes = values.stream().map(v -> v.getClass().getName()).collect(Collectors.toList());
+            System.out.println("Values:\t" + String.join(", ", classes));
+         } else {
+            System.out.println("Value:\t" + value.getClass().getName());
+         }
          System.out.println();
       });
       System.out.println("==== END ====");

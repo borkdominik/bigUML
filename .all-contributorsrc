@@ -17,7 +17,9 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/13104167?v=4",
       "profile": "https://github.com/haydar-metin",
       "contributions": [
-        "code", "maintenance", "diagram"
+        "code",
+        "maintenance",
+        "diagram"
       ]
     },
     {
@@ -26,7 +28,8 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/61785275?v=4",
       "profile": "https://github.com/aylin-sarioglu",
       "contributions": [
-        "code", "diagram"
+        "code",
+        "diagram"
       ]
     },
     {
@@ -35,7 +38,8 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/23345501?v=4",
       "profile": "https://github.com/julia05",
       "contributions": [
-        "code", "diagram"
+        "code",
+        "diagram"
       ]
     },
     {
@@ -44,7 +48,8 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/57354440?v=4",
       "profile": "https://github.com/JakobD97",
       "contributions": [
-        "code", "diagram"
+        "code",
+        "diagram"
       ]
     },
     {
@@ -53,7 +58,8 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/7950094?v=4",
       "profile": "https://jan-mueller.at/",
       "contributions": [
-        "code", "diagram"
+        "code",
+        "diagram"
       ]
     },
     {
@@ -62,7 +68,8 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/18032955?v=4",
       "profile": "https://github.com/mrstexx",
       "contributions": [
-        "code", "diagram"
+        "code",
+        "diagram"
       ]
     },
     {
@@ -81,6 +88,36 @@
       "profile": "https://github.com/deweiiss",
       "contributions": [
         "code"
+      ]
+    },
+    {
+      "login": "granigd",
+      "name": "Dominik Granig",
+      "avatar_url": "https://avatars.githubusercontent.com/u/14920972?v=4",
+      "profile": "https://github.com/granigd",
+      "contributions": [
+        "code",
+        "diagram"
+      ]
+    },
+    {
+      "login": "DavidJaeger10",
+      "name": "DavidJaeger10",
+      "avatar_url": "https://avatars.githubusercontent.com/u/14921155?v=4",
+      "profile": "https://github.com/DavidJaeger10",
+      "contributions": [
+        "code",
+        "diagram"
+      ]
+    },
+    {
+      "login": "sschwantler",
+      "name": "Simon Schwantler",
+      "avatar_url": "https://avatars.githubusercontent.com/u/52577060?v=4",
+      "profile": "https://github.com/sschwantler",
+      "contributions": [
+        "code",
+        "diagram"
       ]
     }
   ],

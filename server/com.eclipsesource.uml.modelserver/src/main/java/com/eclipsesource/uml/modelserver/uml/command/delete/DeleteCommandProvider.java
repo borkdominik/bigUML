@@ -16,7 +16,7 @@ import org.eclipse.emf.ecore.EObject;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 
 public interface DeleteCommandProvider<TElement extends EObject> {
-   Class<? extends EObject> getElementType();
+   Class<TElement> getElementType();
 
    Command provideDeleteCommand(ModelContext context, TElement element);
 }

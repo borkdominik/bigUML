@@ -12,10 +12,8 @@ package com.eclipsesource.uml.glsp.core.handler.operation.create;
 
 import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSOperationHandler;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
-import org.eclipse.glsp.server.types.GLSPServerException;
 
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
-import com.eclipsesource.uml.modelserver.shared.registry.RepresentationKey;
 import com.google.inject.Inject;
 
 public class UmlCreateNodeOperationHandler extends EMSOperationHandler<CreateNodeOperation> {
@@ -29,7 +27,7 @@ public class UmlCreateNodeOperationHandler extends EMSOperationHandler<CreateNod
    public void executeOperation(final CreateNodeOperation operation) {
       var representation = modelState.getUnsafeRepresentation();
 
-      registry.access(RepresentationKey.of(representation, operation.getElementTypeId()))
+      registry.accessByParent(representation, operation.getElementTypeId(), operation.getContainerId())
          .handleCreateNode(operation);
    }
 

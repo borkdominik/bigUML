@@ -18,7 +18,7 @@ import org.eclipse.uml2.uml.Include;
 import com.eclipsesource.uml.modelserver.core.manifest.DiagramManifest;
 import com.eclipsesource.uml.modelserver.uml.behavior.Behavior;
 import com.eclipsesource.uml.modelserver.uml.behavior.cross_delete.BaseCrossReferenceDeleteBehavior;
-import com.eclipsesource.uml.modelserver.uml.command.EdgeCommandProvider;
+import com.eclipsesource.uml.modelserver.uml.command.provider.element.EdgeCommandProvider;
 import com.eclipsesource.uml.modelserver.uml.elements.include.behavior.IncludeReconnectBehavior;
 import com.eclipsesource.uml.modelserver.uml.manifest.EdgeCommandProviderDefinition;
 import com.google.inject.TypeLiteral;

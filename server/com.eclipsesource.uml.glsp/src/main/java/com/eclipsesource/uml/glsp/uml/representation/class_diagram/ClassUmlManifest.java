@@ -11,7 +11,6 @@
 package com.eclipsesource.uml.glsp.uml.representation.class_diagram;
 
 import com.eclipsesource.uml.glsp.core.manifest.DiagramManifest;
-import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramCreateHandlerContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramLabelEditValidatorContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.glsp.ActionHandlerContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.glsp.ClientActionContribution;
@@ -41,8 +40,7 @@ import com.eclipsesource.uml.glsp.uml.representation.class_diagram.handler.actio
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 
 public final class ClassUmlManifest extends DiagramManifest
-   implements DiagramCreateHandlerContribution,
-   ClientActionContribution, ActionHandlerContribution, DiagramLabelEditValidatorContribution {
+   implements ClientActionContribution, ActionHandlerContribution, DiagramLabelEditValidatorContribution {
 
    @Override
    public String id() {

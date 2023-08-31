@@ -13,6 +13,9 @@ package com.eclipsesource.uml.glsp.core.constants;
 import org.eclipse.uml2.uml.AggregationKind;
 
 public class CoreCSS {
+   public static final String STROKE_DASHED = "stroked";
+   public static final String NO_STROKE = "no-stroke";
+
    public static final String NODE = "uml-node";
    public static final String EDGE = "uml-edge";
    public static final String ELLIPSE = "uml-ellipse";

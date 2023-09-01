@@ -25,3 +25,4 @@ bundles
 # Local
 *.vsix
 *.zip
+/.idea/

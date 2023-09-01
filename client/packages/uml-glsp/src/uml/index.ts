@@ -8,6 +8,7 @@
  *********************************************************************************/
 import { umlModule } from './di.config';
 import { umlCommunicationDiagramModule } from './diagram/communication/di.config';
+import { umlDeploymentDiagramModule } from './diagram/deployment/di.config';
 import { umlPackageDiagramModule } from './diagram/package/di.config';
 import { umlClassDiagramModule } from './representation/class/class.module';
 import { umlStateMachineDiagramModule } from './representation/state-machine/state-machine.module';
@@ -19,5 +20,6 @@ export const umlDiagramModules = [
     umlCommunicationDiagramModule,
     umlUseCaseDiagramModule,
     umlPackageDiagramModule,
-    umlStateMachineDiagramModule
+    umlStateMachineDiagramModule,
+    umlDeploymentDiagramModule
 ];

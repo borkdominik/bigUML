@@ -10,20 +10,26 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.elements.package_;
 
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.glsp.graph.GraphPackage;
 import org.eclipse.glsp.server.types.ShapeTypeHint;
+import org.eclipse.uml2.uml.Artifact;
+import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.DataType;
+import org.eclipse.uml2.uml.DeploymentSpecification;
+import org.eclipse.uml2.uml.Device;
 import org.eclipse.uml2.uml.Enumeration;
+import org.eclipse.uml2.uml.ExecutionEnvironment;
 import org.eclipse.uml2.uml.Interface;
+import org.eclipse.uml2.uml.Model;
+import org.eclipse.uml2.uml.Package;
 import org.eclipse.uml2.uml.PrimitiveType;
 
 import com.eclipsesource.uml.glsp.uml.configuration.RepresentationNodeConfiguration;
-import com.eclipsesource.uml.glsp.uml.elements.class_.ClassConfiguration;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
@@ -52,16 +58,17 @@ public class PackageConfiguration extends RepresentationNodeConfiguration<org.ec
 
    @Override
    public Set<ShapeTypeHint> getShapeTypeHints() {
+
+      var children = new ArrayList<String>();
+
+      existingConfigurationTypeIds(
+         Set.of(Artifact.class, Class.class, Device.class, DeploymentSpecification.class, Enumeration.class,
+            ExecutionEnvironment.class, Interface.class, DataType.class, Model.class, org.eclipse.uml2.uml.Node.class,
+            PrimitiveType.class, Package.class))
+               .forEach(children::add);
+
       return Set.of(
-         new ShapeTypeHint(typeId(), true, true, true, false,
-            List.of(
-               configurationFor(org.eclipse.uml2.uml.Class.class).typeId(),
-               configurationFor(org.eclipse.uml2.uml.Class.class, ClassConfiguration.class).abstractTypeId(),
-               configurationFor(Enumeration.class).typeId(),
-               configurationFor(Interface.class).typeId(),
-               configurationFor(DataType.class).typeId(),
-               configurationFor(PrimitiveType.class).typeId(),
-               configurationFor(org.eclipse.uml2.uml.Package.class).typeId())));
+         new ShapeTypeHint(typeId(), true, true, true, false, children));
 
    }
 }

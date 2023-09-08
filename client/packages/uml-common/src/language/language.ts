@@ -25,7 +25,12 @@ export enum UmlDiagramType {
 }
 
 export namespace UmlDiagramTypeUtil {
-    export const supported: UmlDiagramType[] = [UmlDiagramType.CLASS, UmlDiagramType.USE_CASE, UmlDiagramType.STATE_MACHINE];
+    export const supported: UmlDiagramType[] = [
+        UmlDiagramType.CLASS,
+        UmlDiagramType.USE_CASE,
+        UmlDiagramType.STATE_MACHINE,
+        UmlDiagramType.DEPLOYMENT
+    ];
 
     export function parseString(diagramType: string): UmlDiagramType {
         return Object.values(UmlDiagramType).find(u => u.toUpperCase() === diagramType.toUpperCase()) ?? UmlDiagramType.NONE;

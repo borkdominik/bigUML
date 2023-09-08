@@ -10,6 +10,10 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.configuration;
 
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import org.eclipse.emf.ecore.EObject;
 
 import com.eclipsesource.uml.modelserver.unotation.Representation;
@@ -45,4 +49,8 @@ public abstract class RepresentationElementConfiguration<TElement extends EObjec
       return configurationRegistry.get();
    }
 
+   protected List<String> existingConfigurationTypeIds(final Set<Class<? extends EObject>> configurations) {
+      return existingConfigurations(configurations).stream().flatMap(c -> c.allTypeIds().stream())
+         .collect(Collectors.toList());
+   }
 }

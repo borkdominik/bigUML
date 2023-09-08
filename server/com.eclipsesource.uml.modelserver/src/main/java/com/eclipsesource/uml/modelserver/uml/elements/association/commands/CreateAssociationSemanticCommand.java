@@ -17,9 +17,9 @@ import org.eclipse.uml2.uml.Type;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.BaseCreateSemanticRelationCommand;
 
-public final class CreateAssociationSemanticCommand extends BaseCreateSemanticRelationCommand<Association, Type, Type> {
+public class CreateAssociationSemanticCommand extends BaseCreateSemanticRelationCommand<Association, Type, Type> {
 
-   private final CreateAssociationArgument argument;
+   protected final CreateAssociationArgument argument;
 
    public CreateAssociationSemanticCommand(final ModelContext context,
       final Type source, final Type target, final CreateAssociationArgument argument) {

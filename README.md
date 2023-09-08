@@ -53,13 +53,15 @@
 
 The UML 2 specification currently consists of **7 Structure Diagrams** and **7 Behavior Diagrams**.
 
+<!-- =========================== -->
 <details>
 <summary><strong>Class Diagram</strong></summary>
 
 <img src="./media/vscode-class.png" alt="Class Diagram" />
 
-</details>k
+</details>
 
+<!-- =========================== -->
 <details>
 <summary><strong>Use Case Diagram</strong></summary>
 
@@ -69,6 +71,7 @@ The UML 2 specification currently consists of **7 Structure Diagrams** and **7 B
 
 </details>
 
+<!-- =========================== -->
 <details>
 <summary><strong>Package Diagram</strong></summary>
 
@@ -78,6 +81,7 @@ Coming Soon!
 
 </details>
 
+<!-- =========================== -->
 <details>
 <summary><strong>State Machine Diagram</strong></summary>
 
@@ -87,6 +91,17 @@ Coming Soon!
 
 </details>
 
+<!-- =========================== -->
+<details>
+<summary><strong>Deployment Diagram</strong></summary>
+
+<img src="./media/vscode-deployment.png" alt="Deployment Diagram" />
+
+<em>Initial implementation provided by: [@MZeisler](https://github.com/MZeisler), [@@H0oKd](https://github.com/H0oKd)</em>
+
+</details>
+
+<!-- =========================== -->
 <details>
 <summary><strong>Progress</strong></summary>
 
@@ -94,7 +109,7 @@ Coming Soon!
 
 | Class  | Component | Deployment | Object | Package              | Profile | Composite |
 | ------ | --------- | ---------- | ------ | -------------------- | ------- | --------- |
-| Merged | -         | -          | -      | Merged, not released | -       | -         |
+| Merged | -         | Merged     | -      | Merged, not released | -       | -         |
 
 ### Behavior Diagrams
 
@@ -136,6 +151,8 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/deweiiss"><img src="https://avatars.githubusercontent.com/u/73828363?v=4?s=100" width="100px;" alt="Julian Weiß"/><br /><sub><b>Julian Weiß</b></sub></a><br /><a href="https://github.com/borkdominik/bigUML/commits?author=deweiiss" title="Code">💻</a></td>
     </tr>
     <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/MZeisler"><img src="https://avatars.githubusercontent.com/u/45333967?v=4?s=100" width="100px;" alt="MZeisler"/><br /><sub><b>MZeisler</b></sub></a><br /><a href="https://github.com/borkdominik/bigUML/commits?author=MZeisler" title="Code">💻</a> <a href="#diagram-MZeisler" title="Worked on a diagram">↔</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/H0oKd"><img src="https://avatars.githubusercontent.com/u/127870934?v=4?s=100" width="100px;" alt="Manuel Hude"/><br /><sub><b>Manuel Hude</b></sub></a><br /><a href="https://github.com/borkdominik/bigUML/commits?author=H0oKd" title="Code">💻</a> <a href="#diagram-H0oKd" title="Worked on a diagram">↔</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/sschwantler"><img src="https://avatars.githubusercontent.com/u/52577060?v=4?s=100" width="100px;" alt="Simon Schwantler"/><br /><sub><b>Simon Schwantler</b></sub></a><br /><a href="https://github.com/borkdominik/bigUML/commits?author=sschwantler" title="Code">💻</a> <a href="#diagram-sschwantler" title="Worked on a diagram">↔</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/mrstexx"><img src="https://avatars.githubusercontent.com/u/18032955?v=4?s=100" width="100px;" alt="Stefan Miljevic"/><br /><sub><b>Stefan Miljevic</b></sub></a><br /><a href="https://github.com/borkdominik/bigUML/commits?author=mrstexx" title="Code">💻</a> <a href="#diagram-mrstexx" title="Worked on a diagram">↔</a></td>
       <td align="center" valign="top" width="14.28%"><a href="http://model-engineering.info/"><img src="https://avatars.githubusercontent.com/u/60790671?v=4?s=100" width="100px;" alt="borkdominik"/><br /><sub><b>borkdominik</b></sub></a><br /><a href="#projectManagement-borkdominik" title="Project Management">📆</a></td>

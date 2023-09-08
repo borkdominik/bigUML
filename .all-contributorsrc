@@ -119,6 +119,26 @@
         "code",
         "diagram"
       ]
+    },
+    {
+      "login": "MZeisler",
+      "name": "MZeisler",
+      "avatar_url": "https://avatars.githubusercontent.com/u/45333967?v=4",
+      "profile": "https://github.com/MZeisler",
+      "contributions": [
+        "code",
+        "diagram"
+      ]
+    },
+    {
+      "login": "H0oKd",
+      "name": "Manuel Hude",
+      "avatar_url": "https://avatars.githubusercontent.com/u/127870934?v=4",
+      "profile": "https://github.com/H0oKd",
+      "contributions": [
+        "code",
+        "diagram"
+      ]
     }
   ],
   "types": {

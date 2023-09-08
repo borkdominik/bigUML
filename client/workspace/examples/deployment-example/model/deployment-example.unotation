@@ -3,8 +3,8 @@
   <semanticElement elementId="_gIz94f4XEe2lEYg1k-dtlg"/>
   <elements xsi:type="notation:Shape">
     <semanticElement elementId="_ytxRYP4YEe22XovT1PTA3Q"/>
-    <position x="-770.0" y="-60.0"/>
-    <size width="1023.8000020980835" height="558.0"/>
+    <position x="-550.0" y="-190.0"/>
+    <size width="1023.8489379882812" height="558.0"/>
   </elements>
   <elements xsi:type="notation:Shape">
     <semanticElement elementId="_13T1MP4YEe22XovT1PTA3Q"/>
@@ -55,7 +55,7 @@
   </elements>
   <elements xsi:type="notation:Shape">
     <semanticElement elementId="_t7fYsP4ZEe22XovT1PTA3Q"/>
-    <position x="590.0" y="10.0"/>
+    <position x="-270.0" y="470.0"/>
     <size width="543.2166738510132" height="403.8666648864746"/>
   </elements>
   <elements xsi:type="notation:Shape">
@@ -83,8 +83,8 @@
   </elements>
   <elements xsi:type="notation:Shape">
     <semanticElement elementId="_NcNNcP4aEe22XovT1PTA3Q"/>
-    <position x="670.0" y="540.0"/>
-    <size width="210.3833303451538" height="53.433332443237305"/>
+    <position x="540.0" y="640.0"/>
+    <size width="210.7141876220703" height="53.5"/>
   </elements>
   <elements xsi:type="notation:Edge">
     <semanticElement elementId="_PHMvoP4aEe22XovT1PTA3Q"/>

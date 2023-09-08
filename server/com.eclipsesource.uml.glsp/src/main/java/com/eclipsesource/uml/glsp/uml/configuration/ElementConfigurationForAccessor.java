@@ -11,6 +11,7 @@
 package com.eclipsesource.uml.glsp.uml.configuration;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.eclipse.emf.ecore.EObject;
 
@@ -23,6 +24,13 @@ public interface ElementConfigurationForAccessor {
 
    default Boolean existsConfigurationFor(final Set<Class<? extends EObject>> configurations) {
       return configurations.stream().allMatch(c -> configurationRegistry().get(representation(), c).isPresent());
+   }
+
+   default Set<ElementConfiguration<?>> existingConfigurations(final Set<Class<? extends EObject>> configurations) {
+      return configurations.stream()
+         .filter(c -> existsConfigurationFor(Set.of(c)))
+         .map(c -> (ElementConfiguration<?>) configurationFor(c))
+         .collect(Collectors.toSet());
    }
 
    default <TConfiguration extends ElementConfiguration<?>> TConfiguration configurationFor(

@@ -10,14 +10,17 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.elements.dependency;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.glsp.graph.GraphPackage;
 import org.eclipse.glsp.server.types.EdgeTypeHint;
+import org.eclipse.uml2.uml.Artifact;
 import org.eclipse.uml2.uml.Dependency;
+import org.eclipse.uml2.uml.DeploymentSpecification;
+import org.eclipse.uml2.uml.Device;
+import org.eclipse.uml2.uml.ExecutionEnvironment;
 import org.eclipse.uml2.uml.Interface;
 
 import com.eclipsesource.uml.glsp.uml.configuration.RepresentationEdgeConfiguration;
@@ -43,9 +46,21 @@ public class DependencyConfiguration extends RepresentationEdgeConfiguration<Dep
    public Set<EdgeTypeHint> getEdgeTypeHints() {
       return Set.of(
          new EdgeTypeHint(typeId(), true, true, true,
-            List.of(configurationFor(org.eclipse.uml2.uml.Class.class).typeId(),
-               configurationFor(Interface.class).typeId()),
-            List.of(configurationFor(org.eclipse.uml2.uml.Class.class).typeId(),
-               configurationFor(Interface.class).typeId())));
+            existingConfigurationTypeIds(Set.of(
+               Artifact.class,
+               Device.class,
+               DeploymentSpecification.class,
+               ExecutionEnvironment.class,
+               org.eclipse.uml2.uml.Node.class,
+               org.eclipse.uml2.uml.Class.class,
+               Interface.class)),
+            existingConfigurationTypeIds(Set.of(
+               Artifact.class,
+               Device.class,
+               DeploymentSpecification.class,
+               ExecutionEnvironment.class,
+               org.eclipse.uml2.uml.Node.class,
+               org.eclipse.uml2.uml.Class.class,
+               Interface.class))));
    }
 }

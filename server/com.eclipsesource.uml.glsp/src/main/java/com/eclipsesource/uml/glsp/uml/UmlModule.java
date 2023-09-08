@@ -12,8 +12,8 @@ package com.eclipsesource.uml.glsp.uml;
 
 import com.eclipsesource.uml.glsp.uml.configuration.ElementConfigurationRegistry;
 import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.manifest.CommunicationUmlManifest;
-import com.eclipsesource.uml.glsp.uml.diagram.deployment_diagram.manifest.DeploymentUmlManifest;
-import com.eclipsesource.uml.glsp.uml.representation.class_diagram.ClassUmlManifest;
+import com.eclipsesource.uml.glsp.uml.representation.class_.ClassUmlManifest;
+import com.eclipsesource.uml.glsp.uml.representation.deployment.DeploymentUmlManifest;
 import com.eclipsesource.uml.glsp.uml.representation.state_machine.StateMachineManifest;
 import com.eclipsesource.uml.glsp.uml.representation.use_case.UseCaseManifest;
 import com.google.inject.AbstractModule;

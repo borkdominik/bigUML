@@ -10,8 +10,6 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.elements.generalization;
 
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -19,6 +17,10 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.glsp.graph.GraphPackage;
 import org.eclipse.glsp.server.types.EdgeTypeHint;
 import org.eclipse.uml2.uml.Actor;
+import org.eclipse.uml2.uml.Artifact;
+import org.eclipse.uml2.uml.DeploymentSpecification;
+import org.eclipse.uml2.uml.Device;
+import org.eclipse.uml2.uml.ExecutionEnvironment;
 import org.eclipse.uml2.uml.Generalization;
 
 import com.eclipsesource.uml.glsp.uml.configuration.RepresentationEdgeConfiguration;
@@ -41,26 +43,23 @@ public class GeneralizationConfiguration extends RepresentationEdgeConfiguration
 
    @Override
    public Set<EdgeTypeHint> getEdgeTypeHints() {
-      var hints = new HashSet<EdgeTypeHint>();
-
-      if (existsConfigurationFor(Set.of(org.eclipse.uml2.uml.Class.class))) {
-         hints.addAll(Set.of(
-            new EdgeTypeHint(typeId(), true, true, true,
-               List.of(configurationFor(org.eclipse.uml2.uml.Class.class).typeId()),
-               List.of(configurationFor(org.eclipse.uml2.uml.Class.class).typeId()))
-
-         ));
-      }
-
-      if (existsConfigurationFor(Set.of(Actor.class))) {
-         hints.addAll(Set.of(
-            new EdgeTypeHint(typeId(), true, true, true,
-               List.of(configurationFor(Actor.class).typeId()),
-               List.of(configurationFor(Actor.class).typeId()))
-
-         ));
-      }
-
-      return hints;
+      return Set.of(
+         new EdgeTypeHint(typeId(), true, true, true,
+            existingConfigurationTypeIds(Set.of(
+               Actor.class,
+               Artifact.class,
+               Device.class,
+               DeploymentSpecification.class,
+               ExecutionEnvironment.class,
+               org.eclipse.uml2.uml.Node.class,
+               org.eclipse.uml2.uml.Class.class)),
+            existingConfigurationTypeIds(Set.of(
+               Actor.class,
+               Artifact.class,
+               Device.class,
+               DeploymentSpecification.class,
+               ExecutionEnvironment.class,
+               org.eclipse.uml2.uml.Node.class,
+               org.eclipse.uml2.uml.Class.class))));
    }
 }

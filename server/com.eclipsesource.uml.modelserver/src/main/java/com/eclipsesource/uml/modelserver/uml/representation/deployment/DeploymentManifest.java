@@ -21,9 +21,7 @@ import com.eclipsesource.uml.modelserver.uml.elements.generalization.Generalizat
 import com.eclipsesource.uml.modelserver.uml.elements.manifestation.ManifestationDefinitionModule;
 import com.eclipsesource.uml.modelserver.uml.elements.model.ModelDefinitionModule;
 import com.eclipsesource.uml.modelserver.uml.elements.node.NodeDefinitionModule;
-import com.eclipsesource.uml.modelserver.uml.elements.operation.OperationDefinitionModule;
 import com.eclipsesource.uml.modelserver.uml.elements.package_.PackageDefinitionModule;
-import com.eclipsesource.uml.modelserver.uml.elements.parameter.ParameterDefinitionModule;
 import com.eclipsesource.uml.modelserver.uml.elements.property.PropertyDefinitionModule;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 
@@ -44,8 +42,6 @@ public class DeploymentManifest extends DiagramManifest {
       install(new NodeDefinitionModule(this));
       install(new PackageDefinitionModule(this));
       install(new PropertyDefinitionModule(this));
-      install(new OperationDefinitionModule(this));
-      install(new ParameterDefinitionModule(this));
       install(new PackageDefinitionModule(this));
       install(new GeneralizationDefinitionModule(this));
       install(new CommunicationPathDefinitionModule(this));

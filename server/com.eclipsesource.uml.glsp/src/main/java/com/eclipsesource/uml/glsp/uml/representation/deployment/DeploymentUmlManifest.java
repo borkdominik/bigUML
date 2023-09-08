@@ -22,7 +22,9 @@ import com.eclipsesource.uml.glsp.uml.elements.generalization.GeneralizationDefi
 import com.eclipsesource.uml.glsp.uml.elements.manifestation.ManifestationDefinitionModule;
 import com.eclipsesource.uml.glsp.uml.elements.model.ModelDefinitionModule;
 import com.eclipsesource.uml.glsp.uml.elements.node.NodeDefinitionModule;
+import com.eclipsesource.uml.glsp.uml.elements.operation.OperationDefinitionModule;
 import com.eclipsesource.uml.glsp.uml.elements.package_.PackageDefinitionModule;
+import com.eclipsesource.uml.glsp.uml.elements.parameter.ParameterDefinitionModule;
 import com.eclipsesource.uml.glsp.uml.elements.property.PropertyDefinitionModule;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 
@@ -49,12 +51,14 @@ public class DeploymentUmlManifest extends DiagramManifest {
       install(new ModelDefinitionModule(this));
       install(new NodeDefinitionModule(this));
       install(new PackageDefinitionModule(this));
-      install(new PropertyDefinitionModule(this));
       install(new CommunicationPathDefinitionModule(this));
       install(new DependencyDefinitionModule(this));
       install(new ManifestationDefinitionModule(this));
       install(new DeploymentDefinitionModule(this));
       install(new GeneralizationDefinitionModule(this));
+      install(new ParameterDefinitionModule(this));
+      install(new PropertyDefinitionModule(this));
+      install(new OperationDefinitionModule(this));
 
       contributeToolPaletteConfiguration((contribution) -> {
          contribution.addBinding().to(DeploymentToolPaletteConfiguration.class);

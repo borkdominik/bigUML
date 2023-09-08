@@ -58,6 +58,7 @@ public class DeviceNodeMapper extends RepresentationGNodeMapper<Device, GNode>
       var siblings = new ArrayList<GModelElement>();
 
       siblings.addAll(mapHandler.handle(source.getGeneralizations()));
+      siblings.addAll(mapHandler.handle(source.getDeployments()));
 
       return siblings;
    }

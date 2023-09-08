@@ -57,6 +57,7 @@ public class NodeNodeMapper extends RepresentationGNodeMapper<Node, GNode>
       var siblings = new ArrayList<GModelElement>();
 
       siblings.addAll(mapHandler.handle(source.getGeneralizations()));
+      siblings.addAll(mapHandler.handle(source.getDeployments()));
 
       return siblings;
    }

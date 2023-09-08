@@ -39,17 +39,18 @@ public final class ManifestationEdgeMapper extends RepresentationGEdgeMapper<Man
 
    @Override
    public GEdge map(final Manifestation source) {
-      var client = source.getClients().get(0);
-      var clientId = idGenerator.getOrCreateId(client);
-      var supplier = source.getSuppliers().get(0);
-      var supplierId = idGenerator.getOrCreateId(supplier);
+      var edgeSource = source.getOwner();
+      var edgeSourceId = idGenerator.getOrCreateId(edgeSource);
+
+      var edgeTarget = source.getUtilizedElement();
+      var edgeTargetId = idGenerator.getOrCreateId(edgeTarget);
 
       var builder = new GEdgeBuilder(configuration().typeId())
          .id(idGenerator.getOrCreateId(source))
          .addCssClasses(List.of(CoreCSS.EDGE, CoreCSS.EDGE_DASHED))
          .addCssClass(CoreCSS.Marker.TENT.end())
-         .sourceId(clientId)
-         .targetId(supplierId)
+         .sourceId(edgeSourceId)
+         .targetId(edgeTargetId)
          .routerKind(GConstants.RouterKind.POLYLINE)
          .add(textEdgeBuilder(
             source,

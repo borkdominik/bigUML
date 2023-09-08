@@ -25,6 +25,8 @@ import org.eclipse.uml2.uml.Generalization;
 import org.eclipse.uml2.uml.Manifestation;
 import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.Node;
+import org.eclipse.uml2.uml.Operation;
+import org.eclipse.uml2.uml.Property;
 
 import com.eclipsesource.uml.glsp.core.features.tool_palette.PaletteItemUtil;
 import com.eclipsesource.uml.glsp.uml.features.tool_palette.RepresentationToolPaletteConfiguration;
@@ -38,7 +40,7 @@ public final class DeploymentToolPaletteConfiguration extends RepresentationTool
    @Override
    public List<PaletteItem> getItems(final Map<String, String> args) {
       return List.of(containers(),
-         relations());
+         relations(), features());
    }
 
    private PaletteItem containers() {
@@ -73,5 +75,13 @@ public final class DeploymentToolPaletteConfiguration extends RepresentationTool
          PaletteItemUtil.edge(configurationFor(Deployment.class).typeId(), "Deployment", "uml-deployment-icon"));
 
       return PaletteItem.createPaletteGroup("uml.classifier", "Relation", relations, "symbol-property");
+   }
+
+   private PaletteItem features() {
+      var features = List.of(
+         PaletteItemUtil.node(configurationFor(Property.class).typeId(), "Property", "uml-property-icon"),
+         PaletteItemUtil.node(configurationFor(Operation.class).typeId(), "Operation", "uml-operation-icon"));
+
+      return PaletteItem.createPaletteGroup("uml.classifier", "Feature", features, "symbol-property");
    }
 }

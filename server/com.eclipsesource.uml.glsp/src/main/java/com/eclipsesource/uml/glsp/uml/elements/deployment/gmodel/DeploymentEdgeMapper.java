@@ -47,8 +47,8 @@ public final class DeploymentEdgeMapper extends RepresentationGEdgeMapper<Deploy
          .id(idGenerator.getOrCreateId(source))
          .addCssClasses(List.of(CoreCSS.EDGE, CoreCSS.EDGE_DASHED))
          .addCssClass(CoreCSS.Marker.TENT.end())
-         .sourceId(clientId)
-         .targetId(supplierId)
+         .sourceId(supplierId)
+         .targetId(clientId)
          .routerKind(GConstants.RouterKind.POLYLINE)
          .add(textEdgeBuilder(
             source,

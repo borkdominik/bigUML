@@ -10,11 +10,14 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.elements.communication_path;
 
+import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 import org.eclipse.uml2.uml.CommunicationPath;
 import org.eclipse.uml2.uml.Node;
 
 import com.eclipsesource.uml.glsp.uml.configuration.ElementConfigurationRegistry;
 import com.eclipsesource.uml.glsp.uml.handler.element.EdgeOperationHandler;
+import com.eclipsesource.uml.modelserver.uml.elements.association.constants.AssociationType;
+import com.eclipsesource.uml.modelserver.uml.elements.communication_path.commands.CreateCommunicationPathArgument;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
@@ -26,6 +29,11 @@ public class CommunicationPathOperationHandler
    public CommunicationPathOperationHandler(@Assisted final Representation representation,
       final ElementConfigurationRegistry registry) {
       super(representation, registry.accessTyped(representation, CommunicationPath.class).typeId());
+   }
+
+   @Override
+   protected Object createArgument(final CreateEdgeOperation operation, final Node source, final Node target) {
+      return new CreateCommunicationPathArgument(AssociationType.ASSOCIATION);
    }
 
 }

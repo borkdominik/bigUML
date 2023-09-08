@@ -10,9 +10,11 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.shared.semantic;
 
+import org.eclipse.emf.ecore.EObject;
+
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 
-public abstract class BaseCreateSemanticChildCommand<TParent, TChild> extends BaseSemanticElementCommand
+public abstract class BaseCreateSemanticChildCommand<TParent, TChild extends EObject> extends BaseSemanticElementCommand
    implements SemanticElementSupplier<TChild> {
 
    protected TChild newSemanticElement;

@@ -34,25 +34,12 @@ public final class UpdateInstanceSpecificationSemanticCommand
       include(List.of(new UpdateNamedElementSemanticCommand(context, semanticElement, updateArgument)));
 
       updateArgument.classifierId().ifPresent(arg -> {
-         List<Classifier> classifiers = semanticElement.getClassifiers();
-         String[] actualName = semanticElement.getName().split(":");
-         String originalName = actualName[0];
-         StringBuilder classifiersString = new StringBuilder();
-         String updatedName;
+         var classifiers = semanticElement.getClassifiers();
 
-         Classifier element = semanticElementAccessor.getElement(arg, Classifier.class).get();
+         var element = semanticElementAccessor.getElement(arg, Classifier.class).get();
          if (!classifiers.contains(element)) {
-
-            classifiers.add(element); // Adds semantic element classifier to instance spec
-
-            for (Classifier val : classifiers) {
-               classifiersString.append(val.getName() + ",");
-            }
-            updatedName = originalName + ":" + classifiersString.substring(0, classifiersString.length() - 1);
-
-            semanticElement.setName(updatedName);
+            classifiers.add(element);
          }
-
       });
 
    }

@@ -8,6 +8,7 @@
  *********************************************************************************/
 
 import { ElementReferenceProperty } from '@borkdominik-biguml/uml-common';
+import { Combobox as FCombobox } from '@microsoft/fast-components';
 import { html, nothing, TemplateResult } from 'lit';
 import { property, query } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
@@ -138,14 +139,27 @@ export class PropertyPaletteReference extends BigElement {
 
     protected renderBody(item: ElementReferenceProperty): TemplateResult<1> {
         return html`<div class="body">
+            ${when(item.isAutocomplete, () => this.renderAutocomplete(item))}
             <div id="items">${item.references.map(ref => html`${this.renderItem(item, ref)}`)}</div>
             ${when(
-                item.creates.length > 0,
+                item.creates.length > 0 && !item.isAutocomplete,
                 () => html`<div class="actions">
                     <vscode-button appearance="primary" @click="${() => this.onCreate(item.creates[0])}"> Add </vscode-button>
                 </div>`
             )}
         </div>`;
+    }
+
+    protected renderAutocomplete(item: ElementReferenceProperty): TemplateResult<1> {
+        const onChange = (event: CustomEvent): void => {
+            const target = event.target as FCombobox;
+            this.onCreate(item.creates[target.selectedIndex]);
+            target.value = '';
+        };
+
+        return html`<vscode-combobox class="autocomplete" autocomplete="both" placeholder="Search for classifiers" @change="${onChange}">
+            ${item.creates.map(c => html`<vscode-option>${c.label}</vscode-option>`)}
+        </vscode-combobox>`;
     }
 
     protected renderItem(item: ElementReferenceProperty, ref: ElementReferenceProperty.Reference): TemplateResult<1> {

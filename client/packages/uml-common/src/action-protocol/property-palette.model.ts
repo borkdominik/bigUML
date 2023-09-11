@@ -74,6 +74,7 @@ export interface ElementReferenceProperty extends ElementProperty {
     references: ElementReferenceProperty.Reference[];
     creates: ElementReferenceProperty.CreateReference[];
     isOrderable: boolean;
+    isAutocomplete: boolean;
 }
 
 export namespace ElementReferenceProperty {

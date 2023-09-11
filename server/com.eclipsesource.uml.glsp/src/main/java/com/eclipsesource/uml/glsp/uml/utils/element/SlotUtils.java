@@ -16,17 +16,17 @@ import java.util.stream.Collectors;
 import org.eclipse.glsp.server.emf.EMFIdGenerator;
 import org.eclipse.uml2.uml.ValueSpecification;
 
-import com.eclipsesource.uml.glsp.features.property_palette.model.ElementReferencePropertyItemNoCreate;
+import com.eclipsesource.uml.glsp.features.property_palette.model.ElementReferenceWithAutocomplete;
 
 public class SlotUtils {
-   public static List<ElementReferencePropertyItemNoCreate.Reference> asReferences(
+   public static List<ElementReferenceWithAutocomplete.Reference> asReferences(
       final List<ValueSpecification> properties,
       final EMFIdGenerator idGenerator) {
       var references = properties.stream()
          .map(v -> {
             var label = v.getName() == null ? "Operation" : v.getName();
             var value = v.stringValue();
-            return new ElementReferencePropertyItemNoCreate.Reference("value" + properties.indexOf(v) + "  =  " + value,
+            return new ElementReferenceWithAutocomplete.Reference("value" + properties.indexOf(v) + "  =  " + value,
                idGenerator.getOrCreateId(v), false);
          })
          .collect(Collectors.toList());

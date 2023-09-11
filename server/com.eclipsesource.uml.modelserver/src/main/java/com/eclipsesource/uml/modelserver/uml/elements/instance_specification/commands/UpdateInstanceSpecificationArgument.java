@@ -31,7 +31,12 @@ public class UpdateInstanceSpecificationArgument extends UpdateNamedElementArgum
    public static class Builder<TArgument extends UpdateInstanceSpecificationArgument>
       extends UpdateNamedElementArgument.Builder<TArgument> {
 
-      public Builder<TArgument> classifierId(final Classifier value, final EMFIdGenerator id) {
+      public Builder<TArgument> classifierId(final String value) {
+         argument.classifierId = value;
+         return this;
+      }
+
+      public Builder<TArgument> classifier(final Classifier value, final EMFIdGenerator id) {
          argument.classifierId = id.getOrCreateId(value);
          return this;
       }

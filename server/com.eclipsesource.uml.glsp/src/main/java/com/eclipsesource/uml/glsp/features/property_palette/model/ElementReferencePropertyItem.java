@@ -20,15 +20,23 @@ public final class ElementReferencePropertyItem extends ElementPropertyItem {
    public final List<Reference> references;
    public final List<CreateReference> creates;
    public final Boolean isOrderable;
+   public final Boolean isAutocomplete;
 
    public ElementReferencePropertyItem(final String elementId, final String propertyId, final String label,
       final List<Reference> references, final List<CreateReference> creates, final Boolean isOrderable) {
+      this(elementId, propertyId, label, references, creates, isOrderable, false);
+   }
+
+   public ElementReferencePropertyItem(final String elementId, final String propertyId, final String label,
+      final List<Reference> references, final List<CreateReference> creates, final Boolean isOrderable,
+      final Boolean isAutocomplete) {
       super(elementId, propertyId, ElementPropertyType.REFERENCE);
 
       this.label = label;
       this.references = references;
       this.creates = creates;
       this.isOrderable = isOrderable;
+      this.isAutocomplete = isAutocomplete;
    }
 
    public static class Reference {

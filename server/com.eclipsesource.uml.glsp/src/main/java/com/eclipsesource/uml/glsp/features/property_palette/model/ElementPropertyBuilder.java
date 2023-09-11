@@ -58,73 +58,38 @@ public class ElementPropertyBuilder<TPropertyType extends Enum<TPropertyType>> {
       return this;
    }
 
-   public ElementPropertyBuilder<TPropertyType> chooseReference(final TPropertyType property, final String label,
-      final List<ElementChoicePropertyItem.Choice> choices,
-      final List<ElementReferencePropertyItem.Reference> references) {
-      return chooseReference(elementId, property, label, choices, references, List.of());
-   }
-
-   public ElementPropertyBuilder<TPropertyType> chooseReference(final TPropertyType property, final String label,
-      final List<ElementChoicePropertyItem.Choice> choices,
-      final List<ElementReferencePropertyItem.Reference> references,
-      final List<ElementReferencePropertyItem.CreateReference> creates) {
-      return chooseReference(elementId, property, label, choices, references, creates);
-   }
-
-   public ElementPropertyBuilder<TPropertyType> chooseReference(final String elementId, final TPropertyType property,
-      final String label,
-      final List<ElementChoicePropertyItem.Choice> choices,
-      final List<ElementReferencePropertyItem.Reference> references,
-      final List<ElementReferencePropertyItem.CreateReference> creates) {
-      items.add(new ElementChoicePropertyItem(elementId, property.name(), label, choices, null));
-      items.add(new ElementReferencePropertyItem(elementId, property.name(), label, references, List.of(), false));
-      return this;
-   }
-
-   public ElementPropertyBuilder<TPropertyType> referenceNoCreate(final TPropertyType property, final String label,
-      final List<ElementReferencePropertyItemNoCreate.Reference> references) {
-      return referenceNoCreate(elementId, property, label, references, List.of());
-   }
-
-   public ElementPropertyBuilder<TPropertyType> referenceNoCreate(final TPropertyType property, final String label,
-      final List<ElementReferencePropertyItemNoCreate.Reference> references,
-      final List<ElementReferencePropertyItemNoCreate.CreateReference> creates) {
-      return referenceNoCreate(elementId, property, label, references, creates);
-   }
-
-   public ElementPropertyBuilder<TPropertyType> referenceNoCreate(final String elementId, final TPropertyType property,
-      final String label,
-      final List<ElementReferencePropertyItemNoCreate.Reference> references,
-      final List<ElementReferencePropertyItemNoCreate.CreateReference> creates) {
-      items.add(
-         new ElementReferencePropertyItemNoCreate(elementId, property.name(), label, references, creates, false));
-      return this;
-   }
-
    public ElementPropertyBuilder<TPropertyType> reference(final TPropertyType property, final String label,
       final List<ElementReferencePropertyItem.Reference> references) {
-      return reference(elementId, property, label, references, List.of(), false);
+      return reference(elementId, property, label, references, List.of(), false, false);
    }
 
    public ElementPropertyBuilder<TPropertyType> reference(final TPropertyType property, final String label,
       final List<ElementReferencePropertyItem.Reference> references,
       final List<ElementReferencePropertyItem.CreateReference> creates) {
-      return reference(elementId, property, label, references, creates, false);
+      return reference(elementId, property, label, references, creates, false, false);
    }
 
    public ElementPropertyBuilder<TPropertyType> reference(final TPropertyType property, final String label,
       final List<ElementReferencePropertyItem.Reference> references,
       final List<ElementReferencePropertyItem.CreateReference> creates,
       final Boolean isOrderable) {
-      return reference(elementId, property, label, references, creates, isOrderable);
+      return reference(elementId, property, label, references, creates, isOrderable, false);
+   }
+
+   public ElementPropertyBuilder<TPropertyType> reference(final TPropertyType property, final String label,
+      final List<ElementReferencePropertyItem.Reference> references,
+      final List<ElementReferencePropertyItem.CreateReference> creates,
+      final Boolean isOrderable, final Boolean isAutocomplete) {
+      return reference(elementId, property, label, references, creates, isOrderable, isAutocomplete);
    }
 
    public ElementPropertyBuilder<TPropertyType> reference(final String elementId, final TPropertyType property,
       final String label,
       final List<ElementReferencePropertyItem.Reference> references,
       final List<ElementReferencePropertyItem.CreateReference> creates,
-      final Boolean isOrderable) {
-      items.add(new ElementReferencePropertyItem(elementId, property.name(), label, references, creates, isOrderable));
+      final Boolean isOrderable, final Boolean isAutocomplete) {
+      items.add(new ElementReferencePropertyItem(elementId, property.name(), label, references, creates, isOrderable,
+         isAutocomplete));
       return this;
    }
 

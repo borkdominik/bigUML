@@ -6,7 +6,6 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-
 import {
     provideVSCodeDesignSystem,
     vsCodeButton,
@@ -23,6 +22,7 @@ import {
     vsCodeTextArea,
     vsCodeTextField
 } from '@vscode/webview-ui-toolkit';
+import { bigCombobox } from './combobox/combobox.component';
 
 export function useToolkit(): void {
     provideVSCodeDesignSystem().register(
@@ -38,6 +38,7 @@ export function useToolkit(): void {
         vsCodePanelTab(),
         vsCodePanelView(),
         vsCodeTextField(),
-        vsCodeTextArea()
+        vsCodeTextArea(),
+        bigCombobox()
     );
 }

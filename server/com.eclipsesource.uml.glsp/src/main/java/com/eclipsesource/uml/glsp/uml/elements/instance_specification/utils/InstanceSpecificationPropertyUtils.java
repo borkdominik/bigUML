@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.uml.utils.element;
+package com.eclipsesource.uml.glsp.uml.elements.instance_specification.utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,27 +17,47 @@ import java.util.stream.Collectors;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.glsp.server.emf.EMFIdGenerator;
 import org.eclipse.uml2.uml.Class;
-import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.Element;
+import org.eclipse.uml2.uml.InstanceSpecification;
+import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.Property;
 
+import com.eclipsesource.uml.glsp.features.property_palette.handler.action.UpdateElementPropertyAction;
 import com.eclipsesource.uml.glsp.features.property_palette.model.ElementChoicePropertyItem;
 import com.eclipsesource.uml.glsp.features.property_palette.model.ElementReferencePropertyItem;
 
-public class ClassifierUtils {
-   public static List<ElementReferencePropertyItem.Reference> asReferences(final List<Classifier> properties,
+public class InstanceSpecificationPropertyUtils {
+   public static List<ElementReferencePropertyItem.Reference> classifiersAsReferences(
+      final InstanceSpecification instance,
       final EMFIdGenerator idGenerator) {
+      var properties = instance.getClassifiers();
       var references = properties.stream()
          .map(v -> {
             var label = v.getName() == null ? "Operation" : v.getName();
-            return new ElementReferencePropertyItem.Reference(idGenerator.getOrCreateId(v), label, v.getName());
+            return new ElementReferencePropertyItem.Reference(idGenerator.getOrCreateId(v), label, null, null,
+               false);
          })
          .collect(Collectors.toList());
 
       return references;
    }
 
-   public static List<Class> extractUMLClasses(final EList<Element> umlElements) {
+   public static List<ElementReferencePropertyItem.CreateReference> classifiersAsCreateReferences(
+      final InstanceSpecification instance, final EMFIdGenerator idGenerator, final String propertyId) {
+      var classList = extractUMLClasses(instance.getModel());
+
+      return classList.stream()
+         .filter(c -> !instance.getClassifiers().contains(c))
+         .map(c -> {
+            var action = new UpdateElementPropertyAction(idGenerator.getOrCreateId(instance), propertyId,
+               idGenerator.getOrCreateId(c));
+            return new ElementReferencePropertyItem.CreateReference(c.getName(), action);
+         })
+         .collect(Collectors.toList());
+   }
+
+   public static List<Class> extractUMLClasses(final Model root) {
+      var umlElements = root.getOwnedElements();
       List<Class> classList = new ArrayList<>();
 
       for (Object element : umlElements) {
@@ -74,12 +94,6 @@ public class ClassifierUtils {
       }
 
       return null;
-   }
-
-   public static List<ElementChoicePropertyItem.Choice> asChoices(final List<Class> classList) {
-      return classList.stream()
-         .map(c -> new ElementChoicePropertyItem.Choice(c.getName(), c.getName()))
-         .collect(Collectors.toList());
    }
 
    public static List<ElementChoicePropertyItem.Choice> propsAsChoices(final List<Property> properties) {

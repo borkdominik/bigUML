@@ -50,7 +50,17 @@ public class InstanceSpecificationNodeMapper extends RepresentationGNodeMapper<I
    protected GCompartment buildHeader(final InstanceSpecification source) {
       var header = compartmentHeaderBuilder(source)
          .layout(GConstants.Layout.VBOX);
-      header.add(buildIconVisibilityName(source, "--uml-instance-specification-icon"));
+      var name = source.getClassifiers().size() == 0 ? source.getName()
+         : String.format("%s:%s", source.getName(),
+            String.join(",",
+               source.getClassifiers().stream()
+                  .map(c -> c.getName()).collect(Collectors.toList())));
+
+      header.add(compartmentBuilder(source)
+         .layout(GConstants.Layout.HBOX)
+         .add(iconFromCssPropertyBuilder(source, "--uml-instance-specification-icon").build())
+         .add(visibilityBuilder(source).build())
+         .add(nameBuilder(source).text(name).build()).build());
 
       return header.build();
    }

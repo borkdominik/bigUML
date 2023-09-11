@@ -41,6 +41,7 @@
     "@borkdominik-biguml/uml-common": "*",
     "@eclipse-glsp/protocol": "next",
     "@floating-ui/dom": "^1.4.1",
+    "@microsoft/fast-foundation": "^2.49.1",
     "@vscode/webview-ui-toolkit": "^1.2.2",
     "lit": "^2.7.4",
     "lodash": "^4.17.21",

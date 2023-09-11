@@ -8,12 +8,14 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.features.property_palette.model;
+package com.eclipsesource.uml.glsp.uml.elements.instance_specification;
 
-public enum ElementPropertyType {
-   TEXT,
-   BOOL,
-   CHOICE,
-   REFERENCE,
-   CHOICEREFERENCE
+import com.eclipsesource.uml.glsp.core.manifest.DiagramManifest;
+import com.eclipsesource.uml.glsp.uml.manifest.node.NodeFactoryDefinition;
+
+public class InstanceSpecificationDefinitionModule extends NodeFactoryDefinition {
+
+   public InstanceSpecificationDefinitionModule(final DiagramManifest manifest) {
+      super(manifest.id(), manifest.representation(), InstanceSpecificationFactory.class);
+   }
 }

@@ -8,12 +8,16 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.features.property_palette.model;
+package com.eclipsesource.uml.modelserver.uml.elements.literal.commands;
 
-public enum ElementPropertyType {
-   TEXT,
-   BOOL,
-   CHOICE,
-   REFERENCE,
-   CHOICEREFERENCE
+import org.eclipse.uml2.uml.LiteralSpecification;
+
+public class AddLiteralArgument {
+   public final LiteralSpecification literalSpecification;
+
+   public AddLiteralArgument(final LiteralSpecification literalSpecification) {
+      super();
+      this.literalSpecification = literalSpecification;
+   }
+
 }

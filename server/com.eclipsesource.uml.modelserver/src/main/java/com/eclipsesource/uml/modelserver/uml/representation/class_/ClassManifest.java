@@ -19,8 +19,10 @@ import com.eclipsesource.uml.modelserver.uml.elements.dependency.DependencyDefin
 import com.eclipsesource.uml.modelserver.uml.elements.enumeration.EnumerationDefinitionModule;
 import com.eclipsesource.uml.modelserver.uml.elements.enumeration_literal.EnumerationLiteralDefinitionModule;
 import com.eclipsesource.uml.modelserver.uml.elements.generalization.GeneralizationDefinitionModule;
+import com.eclipsesource.uml.modelserver.uml.elements.instance_specification.InstanceSpecificationDefinitionModule;
 import com.eclipsesource.uml.modelserver.uml.elements.interface_.InterfaceDefinitionModule;
 import com.eclipsesource.uml.modelserver.uml.elements.interface_realization.InterfaceRealizationDefinitionModule;
+import com.eclipsesource.uml.modelserver.uml.elements.literal.LiteralDefinitionModule;
 import com.eclipsesource.uml.modelserver.uml.elements.operation.OperationDefinitionModule;
 import com.eclipsesource.uml.modelserver.uml.elements.package_.PackageDefinitionModule;
 import com.eclipsesource.uml.modelserver.uml.elements.package_import.PackageImportDefinitionModule;
@@ -29,6 +31,7 @@ import com.eclipsesource.uml.modelserver.uml.elements.parameter.ParameterDefinit
 import com.eclipsesource.uml.modelserver.uml.elements.primitive_type.PrimitiveTypeDefinitionModule;
 import com.eclipsesource.uml.modelserver.uml.elements.property.PropertyDefinitionModule;
 import com.eclipsesource.uml.modelserver.uml.elements.realization.RealizationDefinitionModule;
+import com.eclipsesource.uml.modelserver.uml.elements.slot.SlotDefinitionModule;
 import com.eclipsesource.uml.modelserver.uml.elements.substitution.SubstitutionDefinitionModule;
 import com.eclipsesource.uml.modelserver.uml.elements.usage.UsageDefinitionModule;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
@@ -63,6 +66,9 @@ public final class ClassManifest extends DiagramManifest {
       install(new RealizationDefinitionModule(this));
       install(new SubstitutionDefinitionModule(this));
       install(new UsageDefinitionModule(this));
+      install(new InstanceSpecificationDefinitionModule(this));
+      install(new LiteralDefinitionModule(this));
+      install(new SlotDefinitionModule(this));
    }
 
 }

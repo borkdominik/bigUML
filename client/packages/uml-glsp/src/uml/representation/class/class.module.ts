@@ -17,6 +17,7 @@ import {
     registerEnumerationElement,
     registerEnumerationLiteralElement,
     registerGeneralizationElement,
+    registerInstanceSpecificationElement,
     registerInterfaceElement,
     registerInterfaceRealizationElement,
     registerOperationElement,
@@ -26,6 +27,7 @@ import {
     registerPrimitiveTypeElement,
     registerPropertyElement,
     registerRealizationElement,
+    registerSlotElement,
     registerSubstitutionElement,
     registerUsageElement
 } from '../../elements/index';
@@ -41,6 +43,8 @@ export const umlClassDiagramModule = new ContainerModule((bind, unbind, isBound,
     registerPackageElement(context, UmlDiagramType.CLASS);
     registerPropertyElement(context, UmlDiagramType.CLASS);
     registerPrimitiveTypeElement(context, UmlDiagramType.CLASS);
+    registerSlotElement(context, UmlDiagramType.CLASS);
+    registerInstanceSpecificationElement(context, UmlDiagramType.CLASS);
 
     registerAbstractionElement(context, UmlDiagramType.CLASS);
     registerAssociationElement(context, UmlDiagramType.CLASS);

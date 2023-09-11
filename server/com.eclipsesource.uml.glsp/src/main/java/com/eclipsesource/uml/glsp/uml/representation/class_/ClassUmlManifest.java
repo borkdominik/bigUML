@@ -22,6 +22,7 @@ import com.eclipsesource.uml.glsp.uml.elements.dependency.DependencyDefinitionMo
 import com.eclipsesource.uml.glsp.uml.elements.enumeration.EnumerationDefinitionModule;
 import com.eclipsesource.uml.glsp.uml.elements.enumeration_literal.EnumerationLiteralDefinitionModule;
 import com.eclipsesource.uml.glsp.uml.elements.generalization.GeneralizationDefinitionModule;
+import com.eclipsesource.uml.glsp.uml.elements.instance_specification.InstanceSpecificationDefinitionModule;
 import com.eclipsesource.uml.glsp.uml.elements.interface_.InterfaceDefinitionModule;
 import com.eclipsesource.uml.glsp.uml.elements.interface_realization.InterfaceRealizationDefinitionModule;
 import com.eclipsesource.uml.glsp.uml.elements.operation.OperationDefinitionModule;
@@ -32,6 +33,7 @@ import com.eclipsesource.uml.glsp.uml.elements.parameter.ParameterDefinitionModu
 import com.eclipsesource.uml.glsp.uml.elements.primitive_type.PrimitiveTypeDefinitionModule;
 import com.eclipsesource.uml.glsp.uml.elements.property.PropertyDefinitionModule;
 import com.eclipsesource.uml.glsp.uml.elements.realization.RealizationDefinitionModule;
+import com.eclipsesource.uml.glsp.uml.elements.slot.SlotDefinitionModule;
 import com.eclipsesource.uml.glsp.uml.elements.substitution.SubstitutionDefinitionModule;
 import com.eclipsesource.uml.glsp.uml.elements.usage.UsageDefinitionModule;
 import com.eclipsesource.uml.glsp.uml.features.validation.BlankLabelEditValidator;
@@ -76,6 +78,8 @@ public final class ClassUmlManifest extends DiagramManifest
       install(new RealizationDefinitionModule(this));
       install(new SubstitutionDefinitionModule(this));
       install(new UsageDefinitionModule(this));
+      install(new SlotDefinitionModule(this));
+      install(new InstanceSpecificationDefinitionModule(this));
 
       contributeToolPaletteConfiguration((contribution) -> {
          contribution.addBinding().to(ClassToolPaletteConfiguration.class);

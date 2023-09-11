@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2023 EclipseSource and others.
+ * Copyright (c) 2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -8,12 +8,14 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.features.property_palette.model;
+package com.eclipsesource.uml.glsp.uml.elements.slot.gmodel.suffix;
 
-public enum ElementPropertyType {
-   TEXT,
-   BOOL,
-   CHOICE,
-   REFERENCE,
-   CHOICEREFERENCE
+import com.eclipsesource.uml.glsp.core.features.id_generator.BaseSuffixIdAppender;
+
+public final class SlotMultiplicityLabelSuffix extends BaseSuffixIdAppender {
+   public static final String SUFFIX = "_slot_multiplicity_label";
+
+   public SlotMultiplicityLabelSuffix() {
+      super(SUFFIX);
+   }
 }

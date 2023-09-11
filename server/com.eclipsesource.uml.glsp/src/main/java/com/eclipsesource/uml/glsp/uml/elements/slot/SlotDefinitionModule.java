@@ -8,12 +8,14 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.features.property_palette.model;
+package com.eclipsesource.uml.glsp.uml.elements.slot;
 
-public enum ElementPropertyType {
-   TEXT,
-   BOOL,
-   CHOICE,
-   REFERENCE,
-   CHOICEREFERENCE
+import com.eclipsesource.uml.glsp.core.manifest.DiagramManifest;
+import com.eclipsesource.uml.glsp.uml.manifest.node.NodeFactoryDefinition;
+
+public class SlotDefinitionModule extends NodeFactoryDefinition {
+
+   public SlotDefinitionModule(final DiagramManifest manifest) {
+      super(manifest.id(), manifest.representation(), SlotFactory.class);
+   }
 }

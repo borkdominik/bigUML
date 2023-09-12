@@ -13,6 +13,7 @@ package com.eclipsesource.uml.glsp.uml.features.property_palette;
 import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
 
 import java.util.Optional;
+import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.server.emf.EMFIdGenerator;
@@ -51,8 +52,10 @@ public abstract class BaseDiagramElementPropertyMapper<TElement extends EObject>
       this.gson = new Gson();
    }
 
-   @Override
    public Class<TElement> getElementType() { return elementType; }
+
+   @Override
+   public Set<Class<? extends TElement>> getElementTypes() { return Set.of(getElementType()); }
 
    public EMFIdGenerator getIdGenerator() { return this.idGenerator; }
 

@@ -30,8 +30,9 @@ public class CreateEdgeCommandProviderRegistry
          var representation = e.getKey();
 
          e.getValue().forEach(handler -> {
-            var elementType = handler.getElementType();
-            register(RepresentationKey.of(representation, elementType), handler);
+            handler.getElementTypes().forEach(type -> {
+               register(RepresentationKey.of(representation, type), handler);
+            });
          });
       });
 

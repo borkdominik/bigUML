@@ -147,7 +147,17 @@ export class PropertyPaletteReference extends BigElement {
             ${when(
                 item.creates.length > 0 && !item.isAutocomplete,
                 () => html`<div class="actions">
-                    <vscode-button appearance="primary" @click="${() => this.onCreate(item.creates[0])}"> Add </vscode-button>
+                    ${when(
+                        item.creates.length === 1,
+                        () =>
+                            html`<vscode-button appearance="primary" @click="${() => this.onCreate(item.creates[0])}">
+                                Add
+                            </vscode-button>`,
+                        () => html`<big-menu>
+                            ${item.creates.map(c => html` <big-menu-item @click="${() => this.onCreate(c)}">${c.label}</big-menu-item> `)}
+                            <vscode-button slot="menu-trigger" appearance="primary"> Add </vscode-button>
+                        </big-menu>`
+                    )}
                 </div>`
             )}
         </div>`;

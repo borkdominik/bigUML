@@ -15,7 +15,6 @@ import org.eclipse.uml2.uml.NamedElement;
 
 import com.eclipsesource.uml.glsp.uml.configuration.ElementConfigurationRegistry;
 import com.eclipsesource.uml.glsp.uml.handler.element.EdgeOperationHandler;
-import com.eclipsesource.uml.modelserver.shared.registry.RepresentationKey;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
@@ -27,5 +26,4 @@ public class AbstractionOperationHandler extends EdgeOperationHandler<Abstractio
       final ElementConfigurationRegistry registry) {
       super(representation, registry.accessTyped(representation, Abstraction.class).typeId());
    }
-
 }

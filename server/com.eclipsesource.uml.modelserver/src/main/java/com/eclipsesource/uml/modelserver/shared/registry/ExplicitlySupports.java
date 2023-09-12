@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2022 EclipseSource and others.
+ * Copyright (c) 2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -8,15 +8,13 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.core.handler.operation.reconnect_edge;
+package com.eclipsesource.uml.modelserver.shared.registry;
 
-import java.util.Set;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
 
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.glsp.server.operations.ReconnectEdgeOperation;
+public interface ExplicitlySupports {
 
-public interface DiagramReconnectEdgeHandler<TElementType extends EObject> {
-   Set<Class<? extends TElementType>> getElementTypes();
-
-   void handleReconnect(ReconnectEdgeOperation operation);
+   default boolean explicitlySupports(final Representation representation, final Object element) {
+      return false;
+   }
 }

@@ -30,7 +30,9 @@ public class DiagramReconnectEdgeHandlerRegistry
          var representation = e.getKey();
 
          e.getValue().forEach(handler -> {
-            register(RepresentationKey.of(representation, handler.getElementType()), handler);
+            handler.getElementTypes().forEach(type -> {
+               register(RepresentationKey.of(representation, type), handler);
+            });
          });
       });
 

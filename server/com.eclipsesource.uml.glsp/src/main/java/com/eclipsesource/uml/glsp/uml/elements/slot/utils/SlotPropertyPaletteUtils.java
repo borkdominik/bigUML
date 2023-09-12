@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 
 import org.eclipse.glsp.server.emf.EMFIdGenerator;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
+import org.eclipse.uml2.uml.LiteralSpecification;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Slot;
 import org.eclipse.uml2.uml.ValueSpecification;
@@ -23,6 +24,7 @@ import org.eclipse.uml2.uml.ValueSpecification;
 import com.eclipsesource.uml.glsp.core.handler.operation.delete.UmlDeleteOperation;
 import com.eclipsesource.uml.glsp.features.property_palette.model.ElementChoicePropertyItem;
 import com.eclipsesource.uml.glsp.features.property_palette.model.ElementReferencePropertyItem;
+import com.eclipsesource.uml.glsp.uml.elements.literal_specification.LiteralSpecificationConfiguration;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.RepresentationElementPropertyMapper;
 
 public class SlotPropertyPaletteUtils {
@@ -68,6 +70,30 @@ public class SlotPropertyPaletteUtils {
       return new ElementReferencePropertyItem.Builder(elementId, propertyId.name())
          .label(label)
          .references(specificationsAsReferences(slot.getValues(), mapper.getIdGenerator()))
+         .creates(List.of(
+            new ElementReferencePropertyItem.CreateReference.Builder(
+               "LiteralBoolean",
+               new CreateNodeOperation(
+                  mapper.configurationFor(LiteralSpecification.class, LiteralSpecificationConfiguration.class)
+                     .literalBooleanTypeId(),
+                  elementId))
+                     .build(),
+
+            new ElementReferencePropertyItem.CreateReference.Builder(
+               "LiteralString",
+               new CreateNodeOperation(
+                  mapper.configurationFor(LiteralSpecification.class, LiteralSpecificationConfiguration.class)
+                     .literalStringTypeId(),
+                  elementId))
+                     .build(),
+
+            new ElementReferencePropertyItem.CreateReference.Builder(
+               "LiteralInteger",
+               new CreateNodeOperation(
+                  mapper.configurationFor(LiteralSpecification.class, LiteralSpecificationConfiguration.class)
+                     .literalIntegerTypeId(),
+                  elementId))
+                     .build()))
          .build();
    }
 
@@ -78,9 +104,10 @@ public class SlotPropertyPaletteUtils {
          .map(v -> {
             var value = v.stringValue();
             var label = v.getName() == null ? value : String.format("%s=%s", v.getName(), value);
-
-            return new ElementReferencePropertyItem.Reference.Builder(idGenerator.getOrCreateId(v),
+            var id = idGenerator.getOrCreateId(v);
+            return new ElementReferencePropertyItem.Reference.Builder(id,
                label)
+                  .deleteActions(List.of(new UmlDeleteOperation(List.of(id))))
                   .build();
          })
          .collect(Collectors.toList());

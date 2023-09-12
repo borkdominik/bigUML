@@ -58,6 +58,6 @@ public class SlotConfiguration extends RepresentationNodeConfiguration<Slot> {
    @Override
    public Set<ShapeTypeHint> getShapeTypeHints() {
       return Set.of(
-         new ShapeTypeHint(typeId(), true, true, true, false, List.of()));
+         new ShapeTypeHint(typeId(), false, true, false, false, List.of()));
    }
 }

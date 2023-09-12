@@ -86,10 +86,13 @@ public abstract class EdgeOperationHandler<TElement extends EObject, TSource ext
    }
 
    @Override
+   public Class<? extends EObject> getElementType() { return Type.clazz(elementType); }
+
+   @Override
    public Set<String> getElementTypeIds() { return elementTypeIds; }
 
    @Override
-   public Class<TElement> getElementType() { return Type.clazz(elementType); }
+   public Set<Class<? extends TElement>> getElementTypes() { return Set.of(Type.clazz(elementType)); }
 
    @Override
    public void handleCreateEdge(final CreateEdgeOperation operation) {

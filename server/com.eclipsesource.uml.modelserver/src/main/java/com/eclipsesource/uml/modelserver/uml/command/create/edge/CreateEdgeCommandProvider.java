@@ -10,13 +10,15 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.command.create.edge;
 
+import java.util.Set;
+
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.ecore.EObject;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 
 public interface CreateEdgeCommandProvider<TElement extends EObject> {
-   Class<? extends EObject> getElementType();
+   Set<Class<? extends TElement>> getElementTypes();
 
    Command provideCreateEdgeCommand(ModelContext context);
 }

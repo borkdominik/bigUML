@@ -30,9 +30,11 @@ public class UpdateCommandProviderRegistry
       providers.entrySet().forEach(e -> {
          var representation = e.getKey();
 
-         e.getValue().forEach((value) -> {
-            register(RepresentationKey.of(representation, value.getElementType()),
-               (UpdateCommandProvider<EObject>) value);
+         e.getValue().forEach((handler) -> {
+            handler.getElementTypes().forEach(type -> {
+               register(RepresentationKey.of(representation, type),
+                  (UpdateCommandProvider<EObject>) handler);
+            });
          });
       });
 

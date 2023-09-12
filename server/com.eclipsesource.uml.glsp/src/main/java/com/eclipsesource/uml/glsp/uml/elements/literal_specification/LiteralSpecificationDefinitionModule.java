@@ -8,18 +8,14 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.uml.command.delete;
+package com.eclipsesource.uml.glsp.uml.elements.literal_specification;
 
-import java.util.Set;
+import com.eclipsesource.uml.glsp.core.manifest.DiagramManifest;
+import com.eclipsesource.uml.glsp.uml.manifest.node.NodeFactoryDefinition;
 
-import org.eclipse.emf.common.command.Command;
-import org.eclipse.emf.ecore.EObject;
+public class LiteralSpecificationDefinitionModule extends NodeFactoryDefinition {
 
-import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
-
-public interface DeleteCommandProvider<TElement extends EObject> {
-   Set<Class<? extends TElement>> getElementTypes();
-
-   Command provideDeleteCommand(ModelContext context, TElement element);
-
+   public LiteralSpecificationDefinitionModule(final DiagramManifest manifest) {
+      super(manifest.id(), manifest.representation(), LiteralSpecificationFactory.class);
+   }
 }

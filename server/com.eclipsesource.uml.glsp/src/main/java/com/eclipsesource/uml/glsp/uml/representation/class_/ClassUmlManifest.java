@@ -25,6 +25,7 @@ import com.eclipsesource.uml.glsp.uml.elements.generalization.GeneralizationDefi
 import com.eclipsesource.uml.glsp.uml.elements.instance_specification.InstanceSpecificationDefinitionModule;
 import com.eclipsesource.uml.glsp.uml.elements.interface_.InterfaceDefinitionModule;
 import com.eclipsesource.uml.glsp.uml.elements.interface_realization.InterfaceRealizationDefinitionModule;
+import com.eclipsesource.uml.glsp.uml.elements.literal_specification.LiteralSpecificationDefinitionModule;
 import com.eclipsesource.uml.glsp.uml.elements.operation.OperationDefinitionModule;
 import com.eclipsesource.uml.glsp.uml.elements.package_.PackageDefinitionModule;
 import com.eclipsesource.uml.glsp.uml.elements.package_import.PackageImportDefinitionModule;
@@ -80,6 +81,7 @@ public final class ClassUmlManifest extends DiagramManifest
       install(new UsageDefinitionModule(this));
       install(new SlotDefinitionModule(this));
       install(new InstanceSpecificationDefinitionModule(this));
+      install(new LiteralSpecificationDefinitionModule(this));
 
       contributeToolPaletteConfiguration((contribution) -> {
          contribution.addBinding().to(ClassToolPaletteConfiguration.class);

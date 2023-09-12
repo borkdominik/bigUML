@@ -41,6 +41,9 @@ public class CreateNodeCommandContribution extends UmlCommandContribution {
 
    public static CCommand create(final Representation representation, final Class<? extends EObject> elementType,
       final Object parent, final GPoint position, final Object argument) {
+      if (argument instanceof SerializableArgument) {
+         return create(representation, elementType, parent, position, (SerializableArgument) argument);
+      }
       return new ContributionEncoder().type(TYPE).representation(representation).elementType(elementType).parent(parent)
          .position(position)
          .embedJson(argument)

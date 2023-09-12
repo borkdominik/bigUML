@@ -32,7 +32,7 @@ public abstract class RepresentationCreateNodeCommandProvider<TElement extends E
    protected TypeLiteral<TParent> parentType;
 
    @Override
-   public Class<TElement> getElementType() { return Type.clazz(elementType); }
+   public Class<? extends TElement> getElementType() { return Type.clazz(elementType); }
 
    @Override
    public Class<TParent> getParentType() { return Type.clazz(parentType); }

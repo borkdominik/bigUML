@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_Cfp0UGmxEe2kLe5KTNzRtw" name="clazz">
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_Cfp0UGmxEe2kLe5KTNzRtw" name="object">
   <packagedElement xmi:type="uml:Class" xmi:id="_QE0EkK7gEe2EZoZ5sgiBCg" name="asd">
     <ownedAttribute xmi:id="_bM_S4K7gEe2EZoZ5sgiBCg" name="NewProperty1">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_bM_58K7gEe2EZoZ5sgiBCg" value="3"/>
@@ -20,6 +20,8 @@
   <packagedElement xmi:type="uml:InstanceSpecification" xmi:id="_gVrPMP5ZEe2EurDOEyjS8g" name="NewInstanceSpecification1">
     <slot xmi:id="_jkiX4P5ZEe2EurDOEyjS8g" definingFeature="_g69BoK7oEe2EZoZ5sgiBCg">
       <value xmi:type="uml:LiteralBoolean" xmi:id="_vDXysP5ZEe2EurDOEyjS8g" name="value0" value="true"/>
+      <value xmi:type="uml:LiteralBoolean" xmi:id="_dHYvcFF1Ee6c2ZT1z7tqeA" value="true"/>
+      <value xmi:type="uml:LiteralString" xmi:id="_oXSWYFF1Ee6c2ZT1z7tqeA" value="asd"/>
     </slot>
     <slot xmi:id="_kGvGAP5ZEe2EurDOEyjS8g" definingFeature="_oLnQsP5ZEe2EurDOEyjS8g">
       <value xmi:type="uml:LiteralString" xmi:id="_wEhtsP5ZEe2EurDOEyjS8g" name="value0" value="&quot;one&quot;"/>
@@ -30,7 +32,6 @@
       <value xmi:type="uml:LiteralInteger" xmi:id="_9x6DsP5ZEe2EurDOEyjS8g" name="value0" value="1"/>
       <value xmi:type="uml:LiteralInteger" xmi:id="_98KL4P5ZEe2EurDOEyjS8g" name="value1" value="2"/>
       <value xmi:type="uml:LiteralInteger" xmi:id="_-HeEAP5ZEe2EurDOEyjS8g" name="value2" value="3"/>
-      <value xmi:type="uml:LiteralInteger" xmi:id="_-o-1oP5ZEe2EurDOEyjS8g" name="value3" value="10"/>
     </slot>
   </packagedElement>
   <packagedElement xmi:type="uml:Interface" xmi:id="_na_sEP5ZEe2EurDOEyjS8g" name="NewInterface1">

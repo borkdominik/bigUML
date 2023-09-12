@@ -11,6 +11,7 @@
 package com.eclipsesource.uml.glsp.features.property_palette.mapper;
 
 import java.util.Optional;
+import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 
@@ -19,7 +20,7 @@ import com.eclipsesource.uml.glsp.features.property_palette.handler.action.Updat
 import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalette;
 
 public interface DiagramElementPropertyMapper<TElementType extends EObject> {
-   Class<TElementType> getElementType();
+   Set<Class<? extends TElementType>> getElementTypes();
 
    PropertyPalette map(TElementType source);
 

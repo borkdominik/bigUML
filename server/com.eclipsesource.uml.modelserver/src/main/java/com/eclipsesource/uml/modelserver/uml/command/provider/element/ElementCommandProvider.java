@@ -10,6 +10,8 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.command.provider.element;
 
+import java.util.Set;
+
 import org.eclipse.emf.ecore.EObject;
 
 import com.eclipsesource.uml.modelserver.shared.utils.Type;
@@ -23,6 +25,8 @@ public abstract class ElementCommandProvider<TElement extends EObject>
    @Inject
    protected TypeLiteral<TElement> elementType;
 
+   public Class<? extends TElement> getElementType() { return Type.clazz(elementType); }
+
    @Override
-   public Class<TElement> getElementType() { return Type.clazz(elementType); }
+   public Set<Class<? extends TElement>> getElementTypes() { return Set.of(getElementType()); }
 }

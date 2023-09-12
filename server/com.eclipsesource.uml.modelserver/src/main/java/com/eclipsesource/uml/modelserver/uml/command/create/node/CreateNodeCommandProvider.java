@@ -16,7 +16,7 @@ import org.eclipse.emf.ecore.EObject;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 
 public interface CreateNodeCommandProvider<TElement extends EObject, TParent> {
-   Class<TElement> getElementType();
+   Class<? extends TElement> getElementType();
 
    Class<TParent> getParentType();
 

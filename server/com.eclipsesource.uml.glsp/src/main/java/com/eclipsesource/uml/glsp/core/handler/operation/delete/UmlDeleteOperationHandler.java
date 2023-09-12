@@ -14,14 +14,12 @@ import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSOperationHandler;
-import org.eclipse.glsp.server.operations.DeleteOperation;
-import org.eclipse.glsp.server.types.GLSPServerException;
 
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.eclipsesource.uml.modelserver.shared.registry.RepresentationKey;
 import com.google.inject.Inject;
 
-public class UmlDeleteOperationHandler extends EMSOperationHandler<DeleteOperation> {
+public class UmlDeleteOperationHandler extends EMSOperationHandler<UmlDeleteOperation> {
 
    @Inject
    private DiagramDeleteHandlerRegistry registry;
@@ -30,7 +28,7 @@ public class UmlDeleteOperationHandler extends EMSOperationHandler<DeleteOperati
    private UmlModelState modelState;
 
    @Override
-   public void executeOperation(final DeleteOperation operation) {
+   public void executeOperation(final UmlDeleteOperation operation) {
       var representation = modelState.getUnsafeRepresentation();
 
       operation.getElementIds().forEach(elementId -> {
@@ -38,7 +36,7 @@ public class UmlDeleteOperationHandler extends EMSOperationHandler<DeleteOperati
             EObject.class, "Could not find semantic element for id '" + elementId + "', no delete operation executed.");
 
          registry.access(RepresentationKey.of(representation, semanticElement.getClass()))
-            .handleDelete(semanticElement);
+            .handleDelete(operation, semanticElement);
       });
    }
 

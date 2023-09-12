@@ -54,6 +54,8 @@ public abstract class BaseDiagramElementPropertyMapper<TElement extends EObject>
    @Override
    public Class<TElement> getElementType() { return elementType; }
 
+   public EMFIdGenerator getIdGenerator() { return this.idGenerator; }
+
    protected <TProperty extends Enum<TProperty>> ElementPropertyBuilder<TProperty> propertyBuilder(
       final Class<TProperty> property,
       final String elementId) {

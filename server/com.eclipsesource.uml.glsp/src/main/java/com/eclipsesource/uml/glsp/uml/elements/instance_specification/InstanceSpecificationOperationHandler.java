@@ -12,8 +12,10 @@ package com.eclipsesource.uml.glsp.uml.elements.instance_specification;
 
 import org.eclipse.uml2.uml.InstanceSpecification;
 
+import com.eclipsesource.uml.glsp.core.handler.operation.delete.UmlDeleteOperation;
 import com.eclipsesource.uml.glsp.uml.configuration.ElementConfigurationRegistry;
 import com.eclipsesource.uml.glsp.uml.handler.element.NodeOperationHandler;
+import com.eclipsesource.uml.modelserver.uml.elements.instance_specification.commands.DeleteInstanceSpecificationArgument;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
@@ -27,4 +29,14 @@ public class InstanceSpecificationOperationHandler
       super(representation, registry.accessTyped(representation, InstanceSpecification.class).typeId());
    }
 
+   @Override
+   protected Object deleteArgument(final UmlDeleteOperation operation, final InstanceSpecification element) {
+      var classifierId = operation.getArgs().get("classifierId");
+      if (classifierId != null && classifierId instanceof String) {
+         var id = (String) classifierId;
+         return new DeleteInstanceSpecificationArgument(id);
+      }
+
+      return super.deleteArgument(operation, element);
+   }
 }

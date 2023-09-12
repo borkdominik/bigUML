@@ -12,6 +12,7 @@ package com.eclipsesource.uml.glsp.uml.elements.instance_specification.utils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.eclipse.emf.common.util.EList;
@@ -22,36 +23,58 @@ import org.eclipse.uml2.uml.InstanceSpecification;
 import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.Property;
 
+import com.eclipsesource.uml.glsp.core.handler.operation.delete.UmlDeleteOperation;
 import com.eclipsesource.uml.glsp.features.property_palette.handler.action.UpdateElementPropertyAction;
 import com.eclipsesource.uml.glsp.features.property_palette.model.ElementChoicePropertyItem;
 import com.eclipsesource.uml.glsp.features.property_palette.model.ElementReferencePropertyItem;
+import com.eclipsesource.uml.glsp.uml.features.property_palette.RepresentationElementPropertyMapper;
 
 public class InstanceSpecificationPropertyUtils {
-   public static List<ElementReferencePropertyItem.Reference> classifiersAsReferences(
+   public static ElementReferencePropertyItem classifiers(final RepresentationElementPropertyMapper<?> mapper,
+      final InstanceSpecification instance, final Enum<?> propertyId,
+      final String label) {
+      var elementId = mapper.getIdGenerator().getOrCreateId(instance);
+
+      return new ElementReferencePropertyItem.Builder(elementId, propertyId.name())
+         .label(label)
+         .references(asReferences(instance, mapper.getIdGenerator()))
+         .creates(classifiersAsCreateReferences(mapper, instance, propertyId.name()))
+         .isAutocomplete(true)
+         .build();
+   }
+
+   public static List<ElementReferencePropertyItem.Reference> asReferences(
       final InstanceSpecification instance,
       final EMFIdGenerator idGenerator) {
-      var properties = instance.getClassifiers();
-      var references = properties.stream()
+      var parentId = idGenerator.getOrCreateId(instance);
+      var classifiers = instance.getClassifiers();
+      var references = classifiers.stream()
          .map(v -> {
-            var label = v.getName() == null ? "Operation" : v.getName();
-            return new ElementReferencePropertyItem.Reference(idGenerator.getOrCreateId(v), label, null, null,
-               false);
+            var label = v.getName() == null ? "Classifier" : v.getName();
+            var id = idGenerator.getOrCreateId(v);
+            var delete = new UmlDeleteOperation(List.of(parentId), Map.of("classifierId", id));
+
+            return new ElementReferencePropertyItem.Reference.Builder(id, label)
+               .deleteActions(List.of(delete))
+               .build();
          })
          .collect(Collectors.toList());
 
       return references;
    }
 
-   public static List<ElementReferencePropertyItem.CreateReference> classifiersAsCreateReferences(
-      final InstanceSpecification instance, final EMFIdGenerator idGenerator, final String propertyId) {
+   protected static List<ElementReferencePropertyItem.CreateReference> classifiersAsCreateReferences(
+      final RepresentationElementPropertyMapper<?> mapper, final InstanceSpecification instance,
+      final String propertyId) {
       var classList = extractUMLClasses(instance.getModel());
+      var idGenerator = mapper.getIdGenerator();
 
       return classList.stream()
          .filter(c -> !instance.getClassifiers().contains(c))
          .map(c -> {
             var action = new UpdateElementPropertyAction(idGenerator.getOrCreateId(instance), propertyId,
                idGenerator.getOrCreateId(c));
-            return new ElementReferencePropertyItem.CreateReference(c.getName(), action);
+            return new ElementReferencePropertyItem.CreateReference.Builder(c.getName(), action).build();
          })
          .collect(Collectors.toList());
    }

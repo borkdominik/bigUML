@@ -21,8 +21,8 @@ import com.eclipsesource.uml.glsp.features.property_palette.handler.action.Updat
 import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalette;
 import com.eclipsesource.uml.glsp.uml.elements.package_import.PackageImportConfiguration;
 import com.eclipsesource.uml.glsp.uml.elements.package_import.PackageImportOperationHandler;
+import com.eclipsesource.uml.glsp.uml.elements.package_import.utils.PackageImportPropertyPaletteUtils;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.RepresentationElementPropertyMapper;
-import com.eclipsesource.uml.glsp.uml.utils.element.PackageImportUtils;
 import com.eclipsesource.uml.glsp.uml.utils.element.VisibilityKindUtils;
 import com.eclipsesource.uml.modelserver.uml.elements.package_import.commands.UpdatePackageImportArgument;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
@@ -49,7 +49,7 @@ public class PackageImportPropertyMapper extends RepresentationElementPropertyMa
          .reference(
             PackageImportConfiguration.Property.IMPORTED_PACKAGE,
             "Imported Package",
-            PackageImportUtils.asReferenceFromPackage(List.of(source.getImportedPackage()), idGenerator),
+            PackageImportPropertyPaletteUtils.asReferenceFromPackage(List.of(source.getImportedPackage()), idGenerator),
             List.of(),
             false)
 

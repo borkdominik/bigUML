@@ -18,10 +18,10 @@ import org.eclipse.glsp.server.operations.Operation;
 public class UpdateOperation extends Operation {
 
    public static final String KIND = "updateOperation";
-   private String elementId;
+   protected String elementId;
 
-   private Map<String, String> context;
-   private Map<String, Object> args;
+   protected Map<String, String> context;
+   protected Map<String, Object> args;
 
    public UpdateOperation() {
       this(null);

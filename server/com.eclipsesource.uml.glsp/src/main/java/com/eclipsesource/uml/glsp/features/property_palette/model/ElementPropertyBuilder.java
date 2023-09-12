@@ -88,8 +88,15 @@ public class ElementPropertyBuilder<TPropertyType extends Enum<TPropertyType>> {
       final List<ElementReferencePropertyItem.Reference> references,
       final List<ElementReferencePropertyItem.CreateReference> creates,
       final Boolean isOrderable, final Boolean isAutocomplete) {
-      items.add(new ElementReferencePropertyItem(elementId, property.name(), label, references, creates, isOrderable,
-         isAutocomplete));
+      items.add(
+         new ElementReferencePropertyItem.Builder(elementId, property.name()).label(label).references(references)
+            .creates(creates).isOrderable(isOrderable)
+            .isAutocomplete(isAutocomplete).build());
+      return this;
+   }
+
+   public ElementPropertyBuilder<TPropertyType> reference(final ElementReferencePropertyItem item) {
+      items.add(item);
       return this;
    }
 

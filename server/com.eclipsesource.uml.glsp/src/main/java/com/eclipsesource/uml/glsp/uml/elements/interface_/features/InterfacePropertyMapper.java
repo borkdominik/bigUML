@@ -10,24 +10,19 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.elements.interface_.features;
 
-import java.util.List;
 import java.util.Optional;
 
-import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.uml2.uml.Interface;
-import org.eclipse.uml2.uml.Operation;
-import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.VisibilityKind;
 
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
 import com.eclipsesource.uml.glsp.features.property_palette.handler.action.UpdateElementPropertyAction;
-import com.eclipsesource.uml.glsp.features.property_palette.model.ElementReferencePropertyItem;
 import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalette;
 import com.eclipsesource.uml.glsp.uml.elements.interface_.InterfaceConfiguration;
 import com.eclipsesource.uml.glsp.uml.elements.interface_.InterfaceOperationHandler;
+import com.eclipsesource.uml.glsp.uml.elements.operation.utils.OperationPropertyPaletteUtils;
+import com.eclipsesource.uml.glsp.uml.elements.property.utils.PropertyPropertyPaletteUtils;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.RepresentationElementPropertyMapper;
-import com.eclipsesource.uml.glsp.uml.utils.element.OperationUtils;
-import com.eclipsesource.uml.glsp.uml.utils.element.PropertyUtils;
 import com.eclipsesource.uml.glsp.uml.utils.element.VisibilityKindUtils;
 import com.eclipsesource.uml.modelserver.uml.elements.interface_.commands.UpdateInterfaceArgument;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
@@ -53,21 +48,10 @@ public class InterfacePropertyMapper extends RepresentationElementPropertyMapper
             "Visibility",
             VisibilityKindUtils.asChoices(),
             source.getVisibility().getLiteral())
-         .reference(
-            InterfaceConfiguration.Property.OWNED_ATTRIBUTES,
-            "Owned Attribute",
-            PropertyUtils.asReferences(source.getOwnedAttributes(), idGenerator),
-            List.of(
-               new ElementReferencePropertyItem.CreateReference("Property",
-                  new CreateNodeOperation(configurationFor(Property.class).typeId(), elementId))))
-         .reference(
-            InterfaceConfiguration.Property.OWNED_ATTRIBUTES,
-            "Owned Operation",
-            OperationUtils.asReferences(source.getOwnedOperations(), idGenerator),
-            List.of(
-               new ElementReferencePropertyItem.CreateReference("Operation",
-                  new CreateNodeOperation(configurationFor(Operation.class).typeId(), elementId))))
-
+         .reference(PropertyPropertyPaletteUtils.asReference(this, elementId,
+            InterfaceConfiguration.Property.OWNED_ATTRIBUTES, "Owned Attribute", source.getOwnedAttributes()))
+         .reference(OperationPropertyPaletteUtils.asReference(this, elementId,
+            InterfaceConfiguration.Property.OWNED_OPERATIONS, "Owned Operation", source.getOwnedOperations()))
          .items();
 
       return new PropertyPalette(elementId, source.getName(), items);

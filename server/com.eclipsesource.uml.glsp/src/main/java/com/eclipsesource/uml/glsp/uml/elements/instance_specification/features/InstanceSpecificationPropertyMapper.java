@@ -46,14 +46,9 @@ public class InstanceSpecificationPropertyMapper extends RepresentationElementPr
             "Visibility",
             VisibilityKindUtils.asChoices(),
             source.getVisibility().getLiteral())
-         .reference(
-            InstanceSpecificationConfiguration.Property.CLASSIFIER,
-            "Owned Classifiers",
-            InstanceSpecificationPropertyUtils.classifiersAsReferences(source, idGenerator),
-            InstanceSpecificationPropertyUtils.classifiersAsCreateReferences(source, idGenerator,
-               InstanceSpecificationConfiguration.Property.CLASSIFIER.name()),
-            false,
-            true)
+         .reference(InstanceSpecificationPropertyUtils.classifiers(this, source,
+            InstanceSpecificationConfiguration.Property.CLASSIFIERS, "Classifiers"))
+
          .items();
 
       return new PropertyPalette(elementId, source.getName(), items);
@@ -78,7 +73,7 @@ public class InstanceSpecificationPropertyMapper extends RepresentationElementPr
                   .visibilityKind(VisibilityKind.get(action.getValue()))
                   .build());
             break;
-         case CLASSIFIER:
+         case CLASSIFIERS:
             operation = handler.withArgument(
                UpdateInstanceSpecificationArgument.by()
                   .classifierId(action.getValue())

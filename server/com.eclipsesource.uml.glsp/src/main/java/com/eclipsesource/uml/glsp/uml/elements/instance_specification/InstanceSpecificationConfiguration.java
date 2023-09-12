@@ -34,7 +34,7 @@ public class InstanceSpecificationConfiguration extends RepresentationNodeConfig
    public enum Property {
       NAME,
       VISIBILITY_KIND,
-      CLASSIFIER;
+      CLASSIFIERS;
    }
 
    @Override

@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.uml.utils.element;
+package com.eclipsesource.uml.glsp.uml.elements.package_import.utils;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,7 +19,7 @@ import org.eclipse.uml2.uml.PackageImport;
 
 import com.eclipsesource.uml.glsp.features.property_palette.model.ElementReferencePropertyItem;
 
-public class PackageImportUtils {
+public class PackageImportPropertyPaletteUtils {
 
    public static List<ElementReferencePropertyItem.Reference> asReferenceFromPackageImport(
       final List<PackageImport> packageImports,
@@ -27,8 +27,8 @@ public class PackageImportUtils {
       var references = packageImports.stream()
          .map(v -> {
             var label = String.format("<Package Import> %s", v.getImportedPackage().getName());
-            return new ElementReferencePropertyItem.Reference(idGenerator.getOrCreateId(v), label,
-               v.getImportedPackage().getName());
+            return new ElementReferencePropertyItem.Reference.Builder(idGenerator.getOrCreateId(v), label)
+               .name(v.getImportedPackage().getName()).build();
          })
          .collect(Collectors.toList());
 
@@ -40,7 +40,8 @@ public class PackageImportUtils {
       var references = packages.stream()
          .map(v -> {
             var label = String.format("<Package> %s", v.getName());
-            return new ElementReferencePropertyItem.Reference(idGenerator.getOrCreateId(v), label, v.getName());
+            return new ElementReferencePropertyItem.Reference.Builder(idGenerator.getOrCreateId(v), label)
+               .name(v.getName()).build();
          })
          .collect(Collectors.toList());
 

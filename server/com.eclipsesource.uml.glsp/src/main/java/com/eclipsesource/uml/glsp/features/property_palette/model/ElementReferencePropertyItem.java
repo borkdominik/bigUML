@@ -22,21 +22,58 @@ public final class ElementReferencePropertyItem extends ElementPropertyItem {
    public final Boolean isOrderable;
    public final Boolean isAutocomplete;
 
-   public ElementReferencePropertyItem(final String elementId, final String propertyId, final String label,
-      final List<Reference> references, final List<CreateReference> creates, final Boolean isOrderable) {
-      this(elementId, propertyId, label, references, creates, isOrderable, false);
+   protected ElementReferencePropertyItem(final Builder builder) {
+      super(builder, ElementPropertyType.REFERENCE);
+
+      this.label = builder.label;
+      this.references = builder.references;
+      this.creates = builder.creates;
+      this.isOrderable = builder.isOrderable;
+      this.isAutocomplete = builder.isAutocomplete;
    }
 
-   public ElementReferencePropertyItem(final String elementId, final String propertyId, final String label,
-      final List<Reference> references, final List<CreateReference> creates, final Boolean isOrderable,
-      final Boolean isAutocomplete) {
-      super(elementId, propertyId, ElementPropertyType.REFERENCE);
+   public static class Builder extends ElementPropertyItem.Builder {
 
-      this.label = label;
-      this.references = references;
-      this.creates = creates;
-      this.isOrderable = isOrderable;
-      this.isAutocomplete = isAutocomplete;
+      protected String label = null;
+      protected List<Reference> references = List.of();
+      protected List<CreateReference> creates = List.of();
+      protected Boolean isOrderable = false;
+      protected Boolean isAutocomplete = false;
+
+      public Builder(final String elementId, final String propertyId) {
+         super(elementId, propertyId);
+      }
+
+      public Builder label(final String label) {
+         this.label = label;
+         return this;
+      }
+
+      public Builder references(final List<Reference> references) {
+         this.references = references;
+         return this;
+      }
+
+      public Builder creates(final List<CreateReference> creates) {
+         this.creates = creates;
+         return this;
+      }
+
+      public Builder isOrderable(final Boolean isOrderable) {
+         this.isOrderable = isOrderable;
+         return this;
+      }
+
+      public Builder isAutocomplete(final Boolean isAutocomplete) {
+         this.isAutocomplete = isAutocomplete;
+         return this;
+      }
+
+      @Override
+      public ElementReferencePropertyItem build() {
+         return new ElementReferencePropertyItem(this);
+      }
+
    }
 
    public static class Reference {
@@ -44,20 +81,49 @@ public final class ElementReferencePropertyItem extends ElementPropertyItem {
       public final String label;
       public final String name;
       public final String hint;
-      public final Boolean isDeleteable;
+      public final List<Action> deleteActions;
 
-      public Reference(final String elementId, final String label, final String name) {
-         this(elementId, label, name, null, true);
+      protected Reference(final Builder builder) {
+         super();
+         this.elementId = builder.elementId;
+         this.label = builder.label;
+         this.name = builder.name;
+         this.hint = builder.hint;
+         this.deleteActions = builder.deleteActions;
       }
 
-      public Reference(final String elementId, final String label, final String name, final String hint,
-         final Boolean isDeleteable) {
-         super();
-         this.elementId = elementId;
-         this.label = label;
-         this.name = name;
-         this.hint = hint;
-         this.isDeleteable = isDeleteable;
+      public static class Builder {
+         protected String elementId;
+         protected String label;
+         protected String name;
+         protected String hint;
+         protected List<Action> deleteActions = List.of();
+
+         public Builder(final String elementId, final String label) {
+            super();
+            this.elementId = elementId;
+            this.label = label;
+         }
+
+         public Builder name(final String name) {
+            this.name = name;
+            return this;
+         }
+
+         public Builder hint(final String hint) {
+            this.hint = hint;
+            return this;
+         }
+
+         public Builder deleteActions(final List<Action> deleteActions) {
+            this.deleteActions = deleteActions;
+            return this;
+         }
+
+         public Reference build() {
+            return new Reference(this);
+         }
+
       }
    }
 
@@ -65,10 +131,25 @@ public final class ElementReferencePropertyItem extends ElementPropertyItem {
       public final String label;
       public final Action action;
 
-      public CreateReference(final String label, final Action action) {
+      public CreateReference(final Builder builder) {
          super();
-         this.label = label;
-         this.action = action;
+         this.label = builder.label;
+         this.action = builder.action;
+      }
+
+      public static class Builder {
+         protected String label;
+         protected Action action;
+
+         public Builder(final String label, final Action action) {
+            super();
+            this.label = label;
+            this.action = action;
+         }
+
+         public CreateReference build() {
+            return new CreateReference(this);
+         }
       }
    }
 }

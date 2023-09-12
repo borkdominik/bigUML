@@ -21,10 +21,10 @@ import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalett
 import com.eclipsesource.uml.glsp.uml.diagram.package_diagram.diagram.UmlPackage_Package;
 import com.eclipsesource.uml.glsp.uml.diagram.package_diagram.handler.operation.upackage.UpdatePackageHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.package_diagram.utils.PackageVisibilityUtils;
+import com.eclipsesource.uml.glsp.uml.elements.package_import.utils.PackageImportPropertyPaletteUtils;
+import com.eclipsesource.uml.glsp.uml.elements.package_merge.utils.PackageMergeUtils;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.BaseDiagramElementPropertyMapper;
 import com.eclipsesource.uml.glsp.uml.utils.element.ElementImportUtils;
-import com.eclipsesource.uml.glsp.uml.utils.element.PackageImportUtils;
-import com.eclipsesource.uml.glsp.uml.utils.element.PackageMergeUtils;
 import com.eclipsesource.uml.modelserver.uml.diagram.package_diagram.commands.upackage.UpdatePackageArgument;
 
 public class PackagePropertyMapper extends BaseDiagramElementPropertyMapper<Package> {
@@ -48,7 +48,7 @@ public class PackagePropertyMapper extends BaseDiagramElementPropertyMapper<Pack
          .reference(
             UmlPackage_Package.Property.PACKAGE_IMPORTS,
             "Package Import",
-            PackageImportUtils.asReferenceFromPackageImport(source.getPackageImports(), idGenerator))
+            PackageImportPropertyPaletteUtils.asReferenceFromPackageImport(source.getPackageImports(), idGenerator))
          .reference(
             UmlPackage_Package.Property.PACKAGE_MERGES,
             "Package Merge",

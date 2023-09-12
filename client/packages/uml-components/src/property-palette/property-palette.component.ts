@@ -17,7 +17,7 @@ import {
     RefreshPropertyPaletteAction,
     UpdateElementPropertyAction
 } from '@borkdominik-biguml/uml-common';
-import { Action, DeleteElementOperation } from '@eclipse-glsp/protocol';
+import { Action } from '@eclipse-glsp/protocol';
 import { Checkbox as VSCodeCheckbox, Dropdown as VSCodeDropdown, TextField as VSCodeTextField } from '@vscode/webview-ui-toolkit';
 import { html, nothing, PropertyValues, TemplateResult } from 'lit';
 import { property, state } from 'lit/decorators.js';
@@ -289,8 +289,8 @@ export class PropertyPalette extends BigElement {
 
     protected onPropertyDelete(event: CustomEvent<PropertyDeleteEventDetail>): void {
         this.dispatchEvent(
-            new CustomEvent<Action>('dispatch-action', {
-                detail: DeleteElementOperation.create(event.detail.elementIds)
+            new CustomEvent<Action[]>('dispatch-action', {
+                detail: event.detail.references.flatMap(r => r.deleteActions)
             })
         );
     }

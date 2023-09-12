@@ -10,6 +10,8 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.shared.codec.codecs;
 
+import java.util.Optional;
+
 import com.eclipsesource.uml.modelserver.shared.codec.CCommandProvider;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
@@ -46,6 +48,14 @@ public interface EmbeddedCodec {
    }
 
    interface Decoder extends CCommandProvider {
+      default <TObject> Optional<TObject> embedJsonOptional(final Class<TObject> clazz) {
+         try {
+            return Optional.of(embedJson(EMBEDDED_JSON, clazz));
+         } catch (Exception e) {
+            return Optional.empty();
+         }
+      }
+
       default <TObject> TObject embedJson(final Class<TObject> clazz) {
          return embedJson(EMBEDDED_JSON, clazz);
       }

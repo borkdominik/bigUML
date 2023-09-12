@@ -20,9 +20,9 @@ import com.eclipsesource.uml.glsp.features.property_palette.handler.action.Updat
 import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalette;
 import com.eclipsesource.uml.glsp.uml.elements.package_.PackageConfiguration;
 import com.eclipsesource.uml.glsp.uml.elements.package_.PackageOperationHandler;
+import com.eclipsesource.uml.glsp.uml.elements.package_import.utils.PackageImportPropertyPaletteUtils;
+import com.eclipsesource.uml.glsp.uml.elements.package_merge.utils.PackageMergeUtils;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.RepresentationElementPropertyMapper;
-import com.eclipsesource.uml.glsp.uml.utils.element.PackageImportUtils;
-import com.eclipsesource.uml.glsp.uml.utils.element.PackageMergeUtils;
 import com.eclipsesource.uml.glsp.uml.utils.element.VisibilityKindUtils;
 import com.eclipsesource.uml.modelserver.uml.elements.package_.commands.UpdatePackageArgument;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
@@ -51,7 +51,7 @@ public class PackagePropertyMapper extends RepresentationElementPropertyMapper<P
          .reference(
             PackageConfiguration.Property.PACKAGE_IMPORTS,
             "Package Import",
-            PackageImportUtils.asReferenceFromPackageImport(source.getPackageImports(), idGenerator))
+            PackageImportPropertyPaletteUtils.asReferenceFromPackageImport(source.getPackageImports(), idGenerator))
          .reference(
             PackageConfiguration.Property.PACKAGE_MERGES,
             "Package Merge",

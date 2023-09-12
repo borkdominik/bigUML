@@ -10,22 +10,18 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.elements.enumeration.features;
 
-import java.util.List;
 import java.util.Optional;
 
-import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.uml2.uml.Enumeration;
-import org.eclipse.uml2.uml.EnumerationLiteral;
 import org.eclipse.uml2.uml.VisibilityKind;
 
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
 import com.eclipsesource.uml.glsp.features.property_palette.handler.action.UpdateElementPropertyAction;
-import com.eclipsesource.uml.glsp.features.property_palette.model.ElementReferencePropertyItem;
 import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalette;
 import com.eclipsesource.uml.glsp.uml.elements.enumeration.EnumerationConfiguration;
 import com.eclipsesource.uml.glsp.uml.elements.enumeration.EnumerationOperationHandler;
+import com.eclipsesource.uml.glsp.uml.elements.enumeration_literal.utils.EnumerationLiteralPropertyPaletteUtils;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.RepresentationElementPropertyMapper;
-import com.eclipsesource.uml.glsp.uml.utils.element.EnumerationLiteralUtils;
 import com.eclipsesource.uml.glsp.uml.utils.element.VisibilityKindUtils;
 import com.eclipsesource.uml.modelserver.uml.elements.enumeration.commands.UpdateEnumerationArgument;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
@@ -51,14 +47,8 @@ public class EnumerationPropertyMapper extends RepresentationElementPropertyMapp
             "Visibility",
             VisibilityKindUtils.asChoices(),
             source.getVisibility().getLiteral())
-         .reference(
-            EnumerationConfiguration.Property.OWNED_LITERALS,
-            "Owned Literal",
-            EnumerationLiteralUtils.asReferences(source.getOwnedLiterals(), idGenerator),
-            List.of(
-               new ElementReferencePropertyItem.CreateReference("Enumeration Literal",
-                  new CreateNodeOperation(configurationFor(EnumerationLiteral.class).typeId(), elementId))))
-
+         .reference(EnumerationLiteralPropertyPaletteUtils.asReference(this, elementId,
+            EnumerationConfiguration.Property.OWNED_LITERALS, "Owned Literal", source.getOwnedLiterals()))
          .items();
 
       return new PropertyPalette(elementId, source.getName(), items);

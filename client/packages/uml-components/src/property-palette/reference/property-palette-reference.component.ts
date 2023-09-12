@@ -25,7 +25,7 @@ export function definePropertyPaletteReference(): void {
 }
 
 export interface PropertyDeleteEventDetail {
-    elementIds: string[];
+    references: ElementReferenceProperty.Reference[];
 }
 
 export interface PropertyNameChangeDetail {
@@ -124,15 +124,18 @@ export class PropertyPaletteReference extends BigElement {
         return html`
             <div class="header">
                 <h4 class="title">${item.label}</h4>
-                <div class="actions">
-                    <big-menu>
-                        <big-menu-item
-                            icon="codicon-trash"
-                            @click="${() => this.onDelete(item.references.filter(r => r.isDeleteable).map(i => i.elementId))}"
-                            >Delete all</big-menu-item
-                        >
-                    </big-menu>
-                </div>
+                ${when(
+                    item.references.some(r => r.deleteActions.length > 0),
+                    () => html`<div class="actions">
+                        <big-menu>
+                            <big-menu-item
+                                icon="codicon-trash"
+                                @click="${() => this.onDelete(item.references.filter(r => r.deleteActions.length > 0))}"
+                                >Delete all</big-menu-item
+                            >
+                        </big-menu>
+                    </div>`
+                )}
             </div>
         `;
     }
@@ -157,7 +160,7 @@ export class PropertyPaletteReference extends BigElement {
             target.value = '';
         };
 
-        return html`<vscode-combobox class="autocomplete" autocomplete="both" placeholder="Search for classifiers" @change="${onChange}">
+        return html`<vscode-combobox class="autocomplete" autocomplete="both" placeholder="${item.label}" @change="${onChange}">
             ${item.creates.map(c => html`<vscode-option>${c.label}</vscode-option>`)}
         </vscode-combobox>`;
     }
@@ -185,9 +188,9 @@ export class PropertyPaletteReference extends BigElement {
                     )}
                     <div class="item-actions">
                         ${when(
-                            ref.isDeleteable,
+                            ref.deleteActions.length > 0,
                             () => html`<big-tooltip>
-                                <vscode-button slot="anchor" appearance="icon" @click="${() => this.onDelete([ref.elementId])}">
+                                <vscode-button slot="anchor" appearance="icon" @click="${() => this.onDelete([ref])}">
                                     <div class="codicon codicon-trash"></div>
                                 </vscode-button>
                                 <span slot="text">Delete</span>
@@ -247,12 +250,12 @@ export class PropertyPaletteReference extends BigElement {
         );
     }
 
-    protected onDelete(elementIds: string[]): void {
-        if (elementIds.length > 0) {
+    protected onDelete(references: ElementReferenceProperty.Reference[]): void {
+        if (references.length > 0) {
             this.dispatchEvent(
                 new CustomEvent<PropertyDeleteEventDetail>('property-delete', {
                     detail: {
-                        elementIds
+                        references
                     }
                 })
             );

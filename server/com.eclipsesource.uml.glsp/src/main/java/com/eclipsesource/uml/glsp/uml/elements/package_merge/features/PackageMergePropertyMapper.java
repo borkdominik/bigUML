@@ -18,9 +18,9 @@ import org.eclipse.uml2.uml.PackageMerge;
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
 import com.eclipsesource.uml.glsp.features.property_palette.handler.action.UpdateElementPropertyAction;
 import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalette;
+import com.eclipsesource.uml.glsp.uml.elements.package_import.utils.PackageImportPropertyPaletteUtils;
 import com.eclipsesource.uml.glsp.uml.elements.package_merge.PackageMergeConfiguration;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.RepresentationElementPropertyMapper;
-import com.eclipsesource.uml.glsp.uml.utils.element.PackageImportUtils;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
@@ -40,7 +40,7 @@ public class PackageMergePropertyMapper extends RepresentationElementPropertyMap
          .reference(
             PackageMergeConfiguration.Property.MERGED_PACKAGE,
             "Imported Package",
-            PackageImportUtils.asReferenceFromPackage(List.of(source.getMergedPackage()), idGenerator),
+            PackageImportPropertyPaletteUtils.asReferenceFromPackage(List.of(source.getMergedPackage()), idGenerator),
             List.of(),
             false)
 

@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2022 EclipseSource and others.
+ * Copyright (c) 2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -8,12 +8,14 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.core.handler.operation.delete;
+package com.eclipsesource.uml.modelserver.uml.elements.instance_specification.commands;
 
-import org.eclipse.emf.ecore.EObject;
+public class DeleteInstanceSpecificationArgument {
+   public final String classifierId;
 
-public interface DiagramDeleteHandler<TElementType extends EObject> {
-   Class<TElementType> getElementType();
+   public DeleteInstanceSpecificationArgument(final String classifierId) {
+      super();
+      this.classifierId = classifierId;
+   }
 
-   void handleDelete(UmlDeleteOperation operation, EObject object);
 }

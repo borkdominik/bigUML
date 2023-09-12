@@ -23,6 +23,7 @@ import org.eclipse.glsp.server.types.GLSPServerException;
 
 import com.eclipsesource.uml.glsp.core.handler.operation.create.DiagramCreateEdgeHandler;
 import com.eclipsesource.uml.glsp.core.handler.operation.delete.DiagramDeleteHandler;
+import com.eclipsesource.uml.glsp.core.handler.operation.delete.UmlDeleteOperation;
 import com.eclipsesource.uml.glsp.core.handler.operation.reconnect_edge.DiagramReconnectEdgeHandler;
 import com.eclipsesource.uml.glsp.core.handler.operation.update.DiagramUpdateHandler;
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
@@ -109,12 +110,12 @@ public abstract class EdgeOperationHandler<TElement extends EObject, TSource ext
    }
 
    @Override
-   public void handleDelete(final EObject object) {
+   public void handleDelete(final UmlDeleteOperation operation, final EObject object) {
       var element = ReflectionUtil.castOrThrow(object,
          Type.clazz(elementType),
          "Object is not castable to " + Type.clazz(elementType).getName() + ". it was " + object.getClass().getName());
 
-      var command = deleteCommand(element);
+      var command = deleteCommand(operation, element);
       send(command);
    }
 
@@ -156,9 +157,13 @@ public abstract class EdgeOperationHandler<TElement extends EObject, TSource ext
       return null;
    }
 
-   protected CCommand deleteCommand(final TElement element) {
+   protected CCommand deleteCommand(final UmlDeleteOperation operation, final TElement element) {
       return DeleteElementCommandContribution.create(
-         this.modelState.getUnsafeRepresentation(), element);
+         this.modelState.getUnsafeRepresentation(), element, deleteArgument(operation, element));
+   }
+
+   protected Object deleteArgument(final UmlDeleteOperation operation, final TElement element) {
+      return gson.fromJson(gson.toJsonTree(operation.getArgs()), Object.class);
    }
 
    protected CCommand updateCommand(final UpdateOperation operation, final TElement element) {

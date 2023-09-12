@@ -8,23 +8,48 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.uml.utils.element;
+package com.eclipsesource.uml.glsp.uml.elements.parameter.utils;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.glsp.server.emf.EMFIdGenerator;
+import org.eclipse.glsp.server.operations.CreateNodeOperation;
+import org.eclipse.glsp.server.operations.DeleteOperation;
 import org.eclipse.uml2.uml.Parameter;
 
 import com.eclipsesource.uml.glsp.features.property_palette.model.ElementReferencePropertyItem;
+import com.eclipsesource.uml.glsp.uml.features.property_palette.RepresentationElementPropertyMapper;
+import com.eclipsesource.uml.glsp.uml.utils.element.TypeUtils;
 
-public class ParameterUtils {
+public class ParameterPropertyPaletteUtils {
+   public static ElementReferencePropertyItem asReference(final RepresentationElementPropertyMapper<?> mapper,
+      final String elementId, final Enum<?> propertyId,
+      final String label, final EList<Parameter> parameters) {
+      return new ElementReferencePropertyItem.Builder(elementId, propertyId.name())
+         .label(label)
+         .isOrderable(true)
+         .references(asReferences(parameters, mapper.getIdGenerator()))
+         .creates(List.of(
+            new ElementReferencePropertyItem.CreateReference.Builder(
+               "Parameter",
+               new CreateNodeOperation(mapper.configurationFor(Parameter.class).typeId(),
+                  elementId))
+                     .build()))
+         .build();
+   }
+
    public static List<ElementReferencePropertyItem.Reference> asReferences(final List<Parameter> parameters,
       final EMFIdGenerator idGenerator) {
       var references = parameters.stream()
          .map(v -> {
-            return new ElementReferencePropertyItem.Reference(idGenerator.getOrCreateId(v), asText(v), v.getName(),
-               asHint(v), true);
+            var id = idGenerator.getOrCreateId(v);
+            return new ElementReferencePropertyItem.Reference.Builder(id, asText(v))
+               .name(v.getName())
+               .hint(asHint(v))
+               .deleteActions(List.of(new DeleteOperation(List.of(id))))
+               .build();
          })
          .collect(Collectors.toList());
 

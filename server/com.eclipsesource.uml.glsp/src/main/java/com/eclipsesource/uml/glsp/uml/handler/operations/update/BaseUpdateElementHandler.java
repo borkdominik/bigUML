@@ -10,6 +10,8 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.handler.operations.update;
 
+import java.util.Set;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.glsp.server.types.GLSPServerException;
@@ -47,7 +49,7 @@ public abstract class BaseUpdateElementHandler<TElementType extends EObject, TUp
    }
 
    @Override
-   public Class<TElementType> getElementType() { return elementType; }
+   public Set<Class<? extends TElementType>> getElementTypes() { return Set.of(elementType); }
 
    @Override
    public void handleUpdate(final UpdateOperation operation, final TElementType element) {

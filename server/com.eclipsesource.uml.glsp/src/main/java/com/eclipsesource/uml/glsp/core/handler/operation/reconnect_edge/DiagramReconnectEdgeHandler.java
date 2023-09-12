@@ -10,11 +10,13 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.core.handler.operation.reconnect_edge;
 
+import java.util.Set;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.server.operations.ReconnectEdgeOperation;
 
 public interface DiagramReconnectEdgeHandler<TElementType extends EObject> {
-   Class<TElementType> getElementType();
+   Set<Class<? extends TElementType>> getElementTypes();
 
    void handleReconnect(ReconnectEdgeOperation operation);
 }

@@ -30,8 +30,9 @@ public class DeleteCommandProviderRegistry
          var representation = e.getKey();
 
          e.getValue().forEach(handler -> {
-            var elementType = handler.getElementType();
-            register(RepresentationKey.of(representation, elementType), (DeleteCommandProvider<EObject>) handler);
+            handler.getElementTypes().forEach(type -> {
+               register(RepresentationKey.of(representation, type), (DeleteCommandProvider<EObject>) handler);
+            });
          });
       });
 

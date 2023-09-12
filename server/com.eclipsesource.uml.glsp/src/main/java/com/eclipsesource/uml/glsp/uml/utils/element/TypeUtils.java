@@ -24,11 +24,11 @@ public class TypeUtils {
       var choices = typeInformation.stream()
          .map(v -> {
             var label = name(v);
-            return new ElementChoicePropertyItem.Choice(label, v.id, v.type);
+            return new ElementChoicePropertyItem.Choice.Builder(label, v.id).secondaryText(v.type).build();
          })
          .collect(Collectors.toList());
 
-      choices.add(new ElementChoicePropertyItem.Choice("<Undefined>", ""));
+      choices.add(new ElementChoicePropertyItem.Choice.Builder("<Undefined>", "").build());
       choices.sort((arg0, arg1) -> arg0.label.compareTo(arg1.label));
       return choices;
    }

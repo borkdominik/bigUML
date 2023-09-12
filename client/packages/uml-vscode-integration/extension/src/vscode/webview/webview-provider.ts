@@ -84,8 +84,8 @@ export abstract class UVWebviewProvider implements vscode.WebviewViewProvider {
         }
     }
 
-    protected onDidReceiveDispatchAction(message: ConnectionMessage<Action>): void {
-        this.actionDispatcher.dispatchToActiveClient(message.payload);
+    protected onDidReceiveDispatchAction(message: ConnectionMessage<Action | Action[]>): void {
+        this.actionDispatcher.dispatchToActiveClient(message.payload as Action[]);
     }
 
     protected postMessage(payload: any, client?: GlspVscodeClient): void {

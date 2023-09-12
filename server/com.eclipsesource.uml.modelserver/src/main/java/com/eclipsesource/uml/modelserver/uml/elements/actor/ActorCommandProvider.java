@@ -44,5 +44,4 @@ public class ActorCommandProvider extends NodeCommandProvider<Actor, Model> {
       var update = decoder.embedJson(UpdateActorArgument.class);
       return List.of(new UpdateActorSemanticCommand(context, element, update));
    }
-
 }

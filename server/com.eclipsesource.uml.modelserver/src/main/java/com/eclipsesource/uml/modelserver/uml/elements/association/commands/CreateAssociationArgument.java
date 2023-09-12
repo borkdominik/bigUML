@@ -46,7 +46,7 @@ public final class CreateAssociationArgument implements SerializableArgument {
          final JsonSerializationContext context) {
          var obj = new JsonObject();
          obj.addProperty("type", src.type.name());
-         return null;
+         return obj;
       }
    }
 

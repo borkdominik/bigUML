@@ -10,13 +10,16 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.command.delete;
 
+import java.util.Set;
+
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.ecore.EObject;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 
 public interface DeleteCommandProvider<TElement extends EObject> {
-   Class<TElement> getElementType();
+   Set<Class<? extends TElement>> getElementTypes();
 
    Command provideDeleteCommand(ModelContext context, TElement element);
+
 }

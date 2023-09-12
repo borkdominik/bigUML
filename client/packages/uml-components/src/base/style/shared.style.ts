@@ -13,6 +13,7 @@ export const defaultStyle = css`
     .title {
         text-transform: uppercase;
         margin: 6px 0;
+        word-wrap: break-word;
     }
 
     h4.secondary-title {

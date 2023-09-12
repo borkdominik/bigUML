@@ -22,6 +22,7 @@ import org.eclipse.glsp.server.types.GLSPServerException;
 
 import com.eclipsesource.uml.glsp.core.handler.operation.create.DiagramCreateNodeHandler;
 import com.eclipsesource.uml.glsp.core.handler.operation.delete.DiagramDeleteHandler;
+import com.eclipsesource.uml.glsp.core.handler.operation.delete.UmlDeleteOperation;
 import com.eclipsesource.uml.glsp.core.handler.operation.update.DiagramUpdateHandler;
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
 import com.eclipsesource.uml.glsp.core.model.UmlModelServerAccess;
@@ -76,6 +77,9 @@ public abstract class NodeOperationHandler<TElement extends EObject, TParent>
    public Class<TElement> getElementType() { return Type.clazz(elementType); }
 
    @Override
+   public Set<Class<? extends TElement>> getElementTypes() { return Set.of(Type.clazz(elementType)); }
+
+   @Override
    public Class<TParent> getParentType() { return Type.clazz(parentType); }
 
    @Override
@@ -101,13 +105,13 @@ public abstract class NodeOperationHandler<TElement extends EObject, TParent>
    }
 
    @Override
-   public void handleDelete(final EObject object) {
+   public void handleDelete(final UmlDeleteOperation operation, final EObject object) {
       var element = ReflectionUtil.castOrThrow(object,
          getElementType(),
          String.format("[%s] Object is not castable to %s. it was %s", getClass().getSimpleName(),
             getElementType().getSimpleName(), object.getClass().getName()));
 
-      var command = deleteCommand(element);
+      var command = deleteCommand(operation, element);
       send(command);
    }
 
@@ -130,9 +134,13 @@ public abstract class NodeOperationHandler<TElement extends EObject, TParent>
       return null;
    }
 
-   protected CCommand deleteCommand(final TElement element) {
+   protected CCommand deleteCommand(final UmlDeleteOperation operation, final TElement element) {
       return DeleteElementCommandContribution.create(
-         this.modelState.getUnsafeRepresentation(), element);
+         this.modelState.getUnsafeRepresentation(), element, deleteArgument(operation, element));
+   }
+
+   protected Object deleteArgument(final UmlDeleteOperation operation, final TElement element) {
+      return gson.fromJson(gson.toJsonTree(operation.getArgs()), Object.class);
    }
 
    protected CCommand updateCommand(final UpdateOperation operation, final TElement element) {

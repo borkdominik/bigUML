@@ -8,23 +8,24 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.uml.utils.element;
+package com.eclipsesource.uml.glsp.uml.elements.package_merge.utils;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.eclipse.glsp.server.emf.EMFIdGenerator;
-import org.eclipse.uml2.uml.EnumerationLiteral;
+import org.eclipse.uml2.uml.PackageMerge;
 
 import com.eclipsesource.uml.glsp.features.property_palette.model.ElementReferencePropertyItem;
 
-public class EnumerationLiteralUtils {
-   public static List<ElementReferencePropertyItem.Reference> asReferences(final List<EnumerationLiteral> literals,
+public class PackageMergeUtils {
+   public static List<ElementReferencePropertyItem.Reference> asReferences(final List<PackageMerge> packageMerges,
       final EMFIdGenerator idGenerator) {
-      var references = literals.stream()
+      var references = packageMerges.stream()
          .map(v -> {
-            var label = v.getName() == null ? "Enumeration Literal" : v.getName();
-            return new ElementReferencePropertyItem.Reference(idGenerator.getOrCreateId(v), label, v.getName());
+            var label = String.format("<Package Merge> %s", v.getMergedPackage().getName());
+            return new ElementReferencePropertyItem.Reference.Builder(idGenerator.getOrCreateId(v), label).name(
+               v.getMergedPackage().getName()).build();
          })
          .collect(Collectors.toList());
 

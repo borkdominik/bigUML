@@ -21,4 +21,24 @@ public abstract class ElementPropertyItem {
       this.propertyId = propertyId;
       this.type = type.name();
    }
+
+   protected ElementPropertyItem(final Builder builder, final ElementPropertyType type) {
+      super();
+      this.elementId = builder.elementId;
+      this.propertyId = builder.propertyId;
+      this.type = type.name();
+   }
+
+   public static abstract class Builder {
+      protected final String elementId;
+      protected final String propertyId;
+
+      public Builder(final String elementId, final String propertyId) {
+         super();
+         this.elementId = elementId;
+         this.propertyId = propertyId;
+      }
+
+      public abstract ElementPropertyItem build();
+   }
 }

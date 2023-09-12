@@ -11,24 +11,20 @@
 package com.eclipsesource.uml.glsp.uml.elements.operation.features;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
-import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.uml2.uml.CallConcurrencyKind;
 import org.eclipse.uml2.uml.Operation;
-import org.eclipse.uml2.uml.Parameter;
 import org.eclipse.uml2.uml.VisibilityKind;
 
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
 import com.eclipsesource.uml.glsp.features.property_palette.handler.action.UpdateElementPropertyAction;
-import com.eclipsesource.uml.glsp.features.property_palette.model.ElementReferencePropertyItem;
 import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalette;
 import com.eclipsesource.uml.glsp.uml.elements.operation.OperationConfiguration;
 import com.eclipsesource.uml.glsp.uml.elements.operation.OperationOperationHandler;
+import com.eclipsesource.uml.glsp.uml.elements.parameter.utils.ParameterPropertyPaletteUtils;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.RepresentationElementPropertyMapper;
 import com.eclipsesource.uml.glsp.uml.utils.element.CallConcurrencyKindUtils;
-import com.eclipsesource.uml.glsp.uml.utils.element.ParameterUtils;
 import com.eclipsesource.uml.glsp.uml.utils.element.VisibilityKindUtils;
 import com.eclipsesource.uml.modelserver.shared.model.NewListIndex;
 import com.eclipsesource.uml.modelserver.uml.elements.operation.commands.UpdateOperationArgument;
@@ -63,15 +59,8 @@ public class OperationPropertyMapper extends RepresentationElementPropertyMapper
             "Concurrency",
             CallConcurrencyKindUtils.asChoices(),
             source.getConcurrency().getLiteral())
-         .reference(
-            OperationConfiguration.Property.OWNED_PARAMETERS,
-            "Owned Parameters",
-            ParameterUtils.asReferences(source.getOwnedParameters(), idGenerator),
-            List.of(
-               new ElementReferencePropertyItem.CreateReference("Parameter",
-                  new CreateNodeOperation(configurationFor(Parameter.class).typeId(), elementId))),
-            true)
-
+         .reference(ParameterPropertyPaletteUtils.asReference(this, elementId,
+            OperationConfiguration.Property.OWNED_PARAMETERS, "Owned Parameters", source.getOwnedParameters()))
          .items();
 
       return new PropertyPalette(elementId, source.getName(), items);

@@ -10,13 +10,15 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.command.update;
 
+import java.util.Set;
+
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.ecore.EObject;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 
 public interface UpdateCommandProvider<TElement extends EObject> {
-   Class<TElement> getElementType();
+   Set<Class<? extends TElement>> getElementTypes();
 
    Command provideUpdateCommand(ModelContext context, TElement element);
 }

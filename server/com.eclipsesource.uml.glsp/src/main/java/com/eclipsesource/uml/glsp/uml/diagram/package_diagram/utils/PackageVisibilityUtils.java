@@ -33,7 +33,8 @@ public class PackageVisibilityUtils {
 
    public static List<ElementChoicePropertyItem.Choice> getVisibilityChoices() {
       return PackageUtils.VALID_VISIBILITIES.stream()
-         .map(v -> new ElementChoicePropertyItem.Choice(v.getLiteral(), v.getLiteral())).collect(Collectors.toList());
+         .map(v -> new ElementChoicePropertyItem.Choice.Builder(v.getLiteral(), v.getLiteral()).build())
+         .collect(Collectors.toList());
    }
 
 }

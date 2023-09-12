@@ -10,11 +10,14 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.handler.operations.delete;
 
+import java.util.Set;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.glsp.server.types.GLSPServerException;
 
 import com.eclipsesource.uml.glsp.core.handler.operation.delete.DiagramDeleteHandler;
+import com.eclipsesource.uml.glsp.core.handler.operation.delete.UmlDeleteOperation;
 import com.eclipsesource.uml.glsp.core.model.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.eclipsesource.uml.modelserver.shared.utils.reflection.GenericsUtil;
@@ -36,10 +39,10 @@ public abstract class BaseDeleteElementHandler<T extends EObject> implements Dia
    }
 
    @Override
-   public Class<T> getElementType() { return elementType; }
+   public Set<Class<? extends T>> getElementTypes() { return Set.of(elementType); }
 
    @Override
-   public void handleDelete(final EObject object) {
+   public void handleDelete(final UmlDeleteOperation operation, final EObject object) {
       var element = ReflectionUtil.castOrThrow(object,
          elementType,
          "Object is not castable to " + elementType.getName() + ". it was " + object.getClass().getName());

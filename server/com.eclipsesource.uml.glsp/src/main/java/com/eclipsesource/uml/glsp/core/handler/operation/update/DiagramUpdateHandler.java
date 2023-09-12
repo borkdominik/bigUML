@@ -10,10 +10,12 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.core.handler.operation.update;
 
+import java.util.Set;
+
 import org.eclipse.emf.ecore.EObject;
 
 public interface DiagramUpdateHandler<TElement extends EObject> {
-   Class<TElement> getElementType();
+   Set<Class<? extends TElement>> getElementTypes();
 
    void handleUpdate(final UpdateOperation operation, TElement element);
 }

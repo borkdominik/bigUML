@@ -19,9 +19,9 @@ import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.Operation;
 import org.eclipse.uml2.uml.ParameterDirectionKind;
 
+import com.eclipsesource.uml.glsp.uml.elements.parameter.utils.ParameterPropertyPaletteUtils;
 import com.eclipsesource.uml.glsp.uml.gmodel.RepresentationGModelMapper;
 import com.eclipsesource.uml.glsp.uml.gmodel.element.NamedElementGBuilder;
-import com.eclipsesource.uml.glsp.uml.utils.element.ParameterUtils;
 import com.eclipsesource.uml.glsp.uml.utils.element.TypeUtils;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
@@ -62,7 +62,7 @@ public final class OperationCompartmentMapper extends RepresentationGModelMapper
             builder.add(separatorBuilder(source, ",").build());
          }
 
-         builder.add(textBuilder(source, ParameterUtils.asText(parameters.get(i))).build());
+         builder.add(textBuilder(source, ParameterPropertyPaletteUtils.asText(parameters.get(i))).build());
       }
 
       builder.add(separatorBuilder(source, ")").build());

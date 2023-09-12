@@ -30,8 +30,9 @@ public class DiagramUpdateHandlerRegistry
          var representation = e.getKey();
 
          e.getValue().forEach(handler -> {
-            register(RepresentationKey.of(representation, handler.getElementType()),
-               (DiagramUpdateHandler<EObject>) handler);
+            handler.getElementTypes().forEach(type -> {
+               register(RepresentationKey.of(representation, type), (DiagramUpdateHandler<EObject>) handler);
+            });
          });
       });
 

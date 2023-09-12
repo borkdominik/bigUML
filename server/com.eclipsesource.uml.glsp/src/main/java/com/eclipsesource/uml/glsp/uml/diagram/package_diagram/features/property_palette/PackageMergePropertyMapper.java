@@ -19,8 +19,8 @@ import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
 import com.eclipsesource.uml.glsp.features.property_palette.handler.action.UpdateElementPropertyAction;
 import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalette;
 import com.eclipsesource.uml.glsp.uml.diagram.package_diagram.diagram.UmlPackage_PackageMerge;
+import com.eclipsesource.uml.glsp.uml.elements.package_import.utils.PackageImportPropertyPaletteUtils;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.BaseDiagramElementPropertyMapper;
-import com.eclipsesource.uml.glsp.uml.utils.element.PackageImportUtils;
 
 public class PackageMergePropertyMapper extends BaseDiagramElementPropertyMapper<PackageMerge> {
 
@@ -32,7 +32,7 @@ public class PackageMergePropertyMapper extends BaseDiagramElementPropertyMapper
          .reference(
             UmlPackage_PackageMerge.Property.MERGED_PACKAGE,
             "Merged Package",
-            PackageImportUtils.asReferenceFromPackage(List.of(source.getMergedPackage()), idGenerator),
+            PackageImportPropertyPaletteUtils.asReferenceFromPackage(List.of(source.getMergedPackage()), idGenerator),
             List.of(),
             false)
 

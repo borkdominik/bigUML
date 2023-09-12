@@ -8,7 +8,7 @@
  *********************************************************************************/
 import { Button as VSCodeButton } from '@vscode/webview-ui-toolkit';
 import { css, html, PropertyValues, TemplateResult } from 'lit';
-import { query } from 'lit/decorators.js';
+import { query, queryAssignedElements } from 'lit/decorators.js';
 import { BigElement } from '../base/component';
 import '../global';
 import { Tooltip } from '../tooltip/tooltip.component';
@@ -55,11 +55,18 @@ export class Menu extends BigElement {
         }
     }
 
+    @queryAssignedElements({ slot: 'test', flatten: true })
+    protected readonly triggerReference: HTMLElement[];
+
     protected override render(): TemplateResult<1> {
         return html`<big-tooltip .disabled=${this.contextMenu?.isVisible}>
-                <vscode-button slot="anchor" id="menu-button" appearance="icon" @click="${this.toggle}">
-                    <div class="codicon codicon-ellipsis"></div>
-                </vscode-button>
+                <div slot="anchor" id="menu-button" @click="${this.toggle}">
+                    <slot name="menu-trigger">
+                        <vscode-button appearance="icon">
+                            <div class="codicon codicon-ellipsis"></div>
+                        </vscode-button>
+                    </slot>
+                </div>
                 <span slot="text">More actions...</span>
             </big-tooltip>
             <big-context-menu id="context-menu" @visibility-change=${() => this.requestUpdate()}>

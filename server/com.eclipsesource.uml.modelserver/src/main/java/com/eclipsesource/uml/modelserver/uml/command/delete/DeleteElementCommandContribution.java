@@ -38,6 +38,11 @@ public class DeleteElementCommandContribution extends UmlCommandContribution {
          .ccommand();
    }
 
+   public static CCommand create(final Representation representation, final EObject parent, final Object argument) {
+      return new ContributionEncoder().type(TYPE).representation(representation).element(parent).embedJson(argument)
+         .ccommand();
+   }
+
    @Override
    protected Command toServer(final URI modelUri, final EditingDomain domain, final CCommand command)
       throws DecodingException {

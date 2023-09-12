@@ -10,23 +10,19 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.elements.deployment_specification.features;
 
-import java.util.List;
 import java.util.Optional;
 
-import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.uml2.uml.DeploymentSpecification;
-import org.eclipse.uml2.uml.Operation;
 import org.eclipse.uml2.uml.VisibilityKind;
 
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
 import com.eclipsesource.uml.glsp.features.property_palette.handler.action.UpdateElementPropertyAction;
-import com.eclipsesource.uml.glsp.features.property_palette.model.ElementReferencePropertyItem;
 import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalette;
 import com.eclipsesource.uml.glsp.uml.elements.deployment_specification.DeploymentSpecificationConfiguration;
 import com.eclipsesource.uml.glsp.uml.elements.deployment_specification.DeploymentSpecificationOperationHandler;
+import com.eclipsesource.uml.glsp.uml.elements.operation.utils.OperationPropertyPaletteUtils;
+import com.eclipsesource.uml.glsp.uml.elements.property.utils.PropertyPropertyPaletteUtils;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.RepresentationElementPropertyMapper;
-import com.eclipsesource.uml.glsp.uml.utils.element.OperationUtils;
-import com.eclipsesource.uml.glsp.uml.utils.element.PropertyUtils;
 import com.eclipsesource.uml.glsp.uml.utils.element.VisibilityKindUtils;
 import com.eclipsesource.uml.modelserver.uml.elements.deployment_specification.commands.UpdateDeploymentSpecificationArgument;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
@@ -53,25 +49,17 @@ public class DeploymentSpecificationPropertyMapper
          .text(DeploymentSpecificationConfiguration.Property.EXECUTION_LOCATION, "Execution location",
             source.getExecutionLocation())
          .bool(DeploymentSpecificationConfiguration.Property.IS_ABSTRACT, "Is abstract", source.isAbstract())
-         .reference(
-            DeploymentSpecificationConfiguration.Property.OWNED_ATTRIBUTES,
-            "Owned Attribute",
-            PropertyUtils.asReferences(source.getOwnedAttributes(), idGenerator),
-            List.of(
-               new ElementReferencePropertyItem.CreateReference("Property",
-                  new CreateNodeOperation(configurationFor(org.eclipse.uml2.uml.Property.class).typeId(), elementId))))
-         .reference(
-            DeploymentSpecificationConfiguration.Property.OWNED_ATTRIBUTES,
-            "Owned Operation",
-            OperationUtils.asReferences(source.getOwnedOperations(), idGenerator),
-            List.of(
-               new ElementReferencePropertyItem.CreateReference("Operation",
-                  new CreateNodeOperation(configurationFor(Operation.class).typeId(), elementId))))
          .choice(
             DeploymentSpecificationConfiguration.Property.VISIBILITY_KIND,
             "Visibility",
             VisibilityKindUtils.asChoices(),
             source.getVisibility().getLiteral())
+         .reference(PropertyPropertyPaletteUtils.asReference(this, elementId,
+            DeploymentSpecificationConfiguration.Property.OWNED_ATTRIBUTES, "Owned Attribute",
+            source.getOwnedAttributes()))
+         .reference(OperationPropertyPaletteUtils.asReference(this, elementId,
+            DeploymentSpecificationConfiguration.Property.OWNED_OPERATIONS, "Owned Operation",
+            source.getOwnedOperations()))
          .items();
 
       return new PropertyPalette(elementId, source.getName(), items);

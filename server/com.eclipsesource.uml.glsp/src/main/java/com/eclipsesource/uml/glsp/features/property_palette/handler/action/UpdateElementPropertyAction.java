@@ -15,12 +15,20 @@ import org.eclipse.glsp.server.actions.Action;
 public class UpdateElementPropertyAction extends Action {
    public static final String KIND = "updateElementProperty";
 
-   private String elementId;
-   private String propertyId;
-   private String value;
+   protected String elementId;
+   protected String propertyId;
+   protected String value;
 
    public UpdateElementPropertyAction() {
       super(KIND);
+   }
+
+   public UpdateElementPropertyAction(final String elementId, final String propertyId,
+      final String value) {
+      super(KIND);
+      this.elementId = elementId;
+      this.propertyId = propertyId;
+      this.value = value;
    }
 
    public String getElementId() { return elementId; }

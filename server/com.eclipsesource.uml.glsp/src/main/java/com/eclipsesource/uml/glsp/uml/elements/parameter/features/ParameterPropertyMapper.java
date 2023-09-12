@@ -25,10 +25,10 @@ import com.eclipsesource.uml.glsp.features.property_palette.handler.action.Updat
 import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalette;
 import com.eclipsesource.uml.glsp.uml.elements.parameter.ParameterConfiguration;
 import com.eclipsesource.uml.glsp.uml.elements.parameter.ParameterOperationHandler;
+import com.eclipsesource.uml.glsp.uml.elements.parameter.utils.ParameterDirectionKindUtils;
+import com.eclipsesource.uml.glsp.uml.elements.parameter.utils.ParameterEffectKindUtils;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.RepresentationElementPropertyMapper;
 import com.eclipsesource.uml.glsp.uml.utils.MultiplicityUtil;
-import com.eclipsesource.uml.glsp.uml.utils.element.ParameterDirectionKindUtils;
-import com.eclipsesource.uml.glsp.uml.utils.element.ParameterEffectKindUtils;
 import com.eclipsesource.uml.glsp.uml.utils.element.TypeUtils;
 import com.eclipsesource.uml.glsp.uml.utils.element.VisibilityKindUtils;
 import com.eclipsesource.uml.modelserver.uml.elements.parameter.commands.UpdateParameterArgument;

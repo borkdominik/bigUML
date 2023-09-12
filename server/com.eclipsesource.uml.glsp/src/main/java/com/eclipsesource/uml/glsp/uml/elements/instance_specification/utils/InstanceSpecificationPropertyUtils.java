@@ -15,17 +15,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.glsp.server.emf.EMFIdGenerator;
 import org.eclipse.uml2.uml.Class;
-import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.InstanceSpecification;
 import org.eclipse.uml2.uml.Model;
-import org.eclipse.uml2.uml.Property;
 
 import com.eclipsesource.uml.glsp.core.handler.operation.delete.UmlDeleteOperation;
 import com.eclipsesource.uml.glsp.features.property_palette.handler.action.UpdateElementPropertyAction;
-import com.eclipsesource.uml.glsp.features.property_palette.model.ElementChoicePropertyItem;
 import com.eclipsesource.uml.glsp.features.property_palette.model.ElementReferencePropertyItem;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.RepresentationElementPropertyMapper;
 
@@ -37,13 +33,13 @@ public class InstanceSpecificationPropertyUtils {
 
       return new ElementReferencePropertyItem.Builder(elementId, propertyId.name())
          .label(label)
-         .references(asReferences(instance, mapper.getIdGenerator()))
+         .references(classifiersAsReferences(instance, mapper.getIdGenerator()))
          .creates(classifiersAsCreateReferences(mapper, instance, propertyId.name()))
          .isAutocomplete(true)
          .build();
    }
 
-   public static List<ElementReferencePropertyItem.Reference> asReferences(
+   protected static List<ElementReferencePropertyItem.Reference> classifiersAsReferences(
       final InstanceSpecification instance,
       final EMFIdGenerator idGenerator) {
       var parentId = idGenerator.getOrCreateId(instance);
@@ -79,7 +75,7 @@ public class InstanceSpecificationPropertyUtils {
          .collect(Collectors.toList());
    }
 
-   public static List<Class> extractUMLClasses(final Model root) {
+   protected static List<Class> extractUMLClasses(final Model root) {
       var umlElements = root.getOwnedElements();
       List<Class> classList = new ArrayList<>();
 
@@ -92,37 +88,4 @@ public class InstanceSpecificationPropertyUtils {
 
       return classList;
    }
-
-   public static List<Property> extractUMLProperties(final EList<Element> umlElements) {
-      List<Property> propertyList = new ArrayList<>();
-
-      for (Object element : umlElements) {
-         if (element instanceof Property) {
-            Property umlProperty = (Property) element;
-            propertyList.add(umlProperty);
-         }
-      }
-
-      return propertyList;
-   }
-
-   public static Property getProperty(final List<Property> properties, final String propertyName) {
-      for (Object element : properties) {
-         if (element instanceof Property) {
-            Property umlProperty = (Property) element;
-            if (umlProperty.getName().equals(propertyName)) {
-               return umlProperty;
-            }
-         }
-      }
-
-      return null;
-   }
-
-   public static List<ElementChoicePropertyItem.Choice> propsAsChoices(final List<Property> properties) {
-      return properties.stream()
-         .map(c -> new ElementChoicePropertyItem.Choice(c.getName(), c.getName()))
-         .collect(Collectors.toList());
-   }
-
 }

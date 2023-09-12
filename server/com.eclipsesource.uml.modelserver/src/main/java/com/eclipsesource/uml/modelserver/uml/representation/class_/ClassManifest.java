@@ -22,7 +22,7 @@ import com.eclipsesource.uml.modelserver.uml.elements.generalization.Generalizat
 import com.eclipsesource.uml.modelserver.uml.elements.instance_specification.InstanceSpecificationDefinitionModule;
 import com.eclipsesource.uml.modelserver.uml.elements.interface_.InterfaceDefinitionModule;
 import com.eclipsesource.uml.modelserver.uml.elements.interface_realization.InterfaceRealizationDefinitionModule;
-import com.eclipsesource.uml.modelserver.uml.elements.literal.LiteralDefinitionModule;
+import com.eclipsesource.uml.modelserver.uml.elements.literal_specification.LiteralSpecificationDefinitionModule;
 import com.eclipsesource.uml.modelserver.uml.elements.operation.OperationDefinitionModule;
 import com.eclipsesource.uml.modelserver.uml.elements.package_.PackageDefinitionModule;
 import com.eclipsesource.uml.modelserver.uml.elements.package_import.PackageImportDefinitionModule;
@@ -67,7 +67,7 @@ public final class ClassManifest extends DiagramManifest {
       install(new SubstitutionDefinitionModule(this));
       install(new UsageDefinitionModule(this));
       install(new InstanceSpecificationDefinitionModule(this));
-      install(new LiteralDefinitionModule(this));
+      install(new LiteralSpecificationDefinitionModule(this));
       install(new SlotDefinitionModule(this));
    }
 

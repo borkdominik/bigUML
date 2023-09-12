@@ -54,7 +54,8 @@ public class ElementPropertyBuilder<TPropertyType extends Enum<TPropertyType>> {
    public ElementPropertyBuilder<TPropertyType> choice(final String elementId, final TPropertyType property,
       final String label,
       final List<ElementChoicePropertyItem.Choice> choices, final String choice) {
-      items.add(new ElementChoicePropertyItem(elementId, property.name(), label, choices, choice));
+      items.add(new ElementChoicePropertyItem.Builder(elementId, property.name()).label(label).choices(choices)
+         .choice(choice).build());
       return this;
    }
 
@@ -92,6 +93,11 @@ public class ElementPropertyBuilder<TPropertyType extends Enum<TPropertyType>> {
          new ElementReferencePropertyItem.Builder(elementId, property.name()).label(label).references(references)
             .creates(creates).isOrderable(isOrderable)
             .isAutocomplete(isAutocomplete).build());
+      return this;
+   }
+
+   public ElementPropertyBuilder<TPropertyType> choice(final ElementChoicePropertyItem item) {
+      items.add(item);
       return this;
    }
 

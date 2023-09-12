@@ -8,14 +8,14 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.uml.elements.literal.commands;
+package com.eclipsesource.uml.modelserver.uml.elements.literal_specification.commands;
 
 import org.eclipse.uml2.uml.LiteralSpecification;
 
-public class AddLiteralArgument {
+public class AddLiteralSpecificationArgument {
    public final LiteralSpecification literalSpecification;
 
-   public AddLiteralArgument(final LiteralSpecification literalSpecification) {
+   public AddLiteralSpecificationArgument(final LiteralSpecification literalSpecification) {
       super();
       this.literalSpecification = literalSpecification;
    }

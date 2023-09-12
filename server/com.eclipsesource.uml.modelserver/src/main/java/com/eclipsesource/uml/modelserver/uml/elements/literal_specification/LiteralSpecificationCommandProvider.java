@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.uml.elements.literal;
+package com.eclipsesource.uml.modelserver.uml.elements.literal_specification;
 
 import java.util.Collection;
 import java.util.List;
@@ -20,17 +20,17 @@ import org.eclipse.uml2.uml.Slot;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.uml.command.provider.element.NodeCommandProvider;
-import com.eclipsesource.uml.modelserver.uml.elements.literal.commands.AddLiteralArgument;
-import com.eclipsesource.uml.modelserver.uml.elements.literal.commands.AddLiteralSemanticCommand;
+import com.eclipsesource.uml.modelserver.uml.elements.literal_specification.commands.AddLiteralSpecificationArgument;
+import com.eclipsesource.uml.modelserver.uml.elements.literal_specification.commands.AddLiteralSpecificationSemanticCommand;
 
-public class LiteralCommandProvider extends NodeCommandProvider<LiteralSpecification, Slot> {
+public class LiteralSpecificationCommandProvider extends NodeCommandProvider<LiteralSpecification, Slot> {
 
    @Override
    protected Collection<Command> createModifications(final ModelContext context, final Slot parent,
       final GPoint position) {
       var decoder = context.decoder();
-      var argument = decoder.embedJson(AddLiteralArgument.class);
-      var semantic = new AddLiteralSemanticCommand(context, parent, argument);
+      var argument = decoder.embedJson(AddLiteralSpecificationArgument.class);
+      var semantic = new AddLiteralSpecificationSemanticCommand(context, parent, argument);
       return List.of(semantic);
    }
 }

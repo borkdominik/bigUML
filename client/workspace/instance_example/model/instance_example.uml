@@ -47,5 +47,4 @@
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_oZAMcv5ZEe2EurDOEyjS8g" value="1"/>
     </ownedAttribute>
   </packagedElement>
-  <packagedElement xmi:type="uml:Class" xmi:id="_k9tVEVC9Ee6CcYEFfebfzQ" name="NewClass1"/>
 </uml:Model>

@@ -31,7 +31,7 @@ public final class UpdateSlotSemanticCommand
    protected void updateSemanticElement(final Slot semanticElement, final UpdateSlotArgument updateArgument) {
       include(List.of(new UpdateElementSemanticCommand(context, semanticElement, updateArgument)));
 
-      updateArgument.definingFeature().ifPresent(arg -> {
+      updateArgument.definingFeatureId().ifPresent(arg -> {
          Property chosenProperty = semanticElementAccessor.getElement(arg, Property.class).get();
 
          semanticElement.setDefiningFeature(chosenProperty);

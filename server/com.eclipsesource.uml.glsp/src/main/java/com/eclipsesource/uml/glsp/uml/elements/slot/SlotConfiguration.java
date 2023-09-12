@@ -45,7 +45,7 @@ public class SlotConfiguration extends RepresentationNodeConfiguration<Slot> {
 
    public enum Property {
       DEFINING_FEATURE,
-      VALUE;
+      VALUES;
    }
 
    @Override

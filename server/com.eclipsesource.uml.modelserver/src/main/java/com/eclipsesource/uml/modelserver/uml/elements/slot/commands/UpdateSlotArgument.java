@@ -19,10 +19,10 @@ import com.eclipsesource.uml.modelserver.uml.elements.element.UpdateElementArgum
 
 public class UpdateSlotArgument extends UpdateElementArgument {
 
-   public String definingFeature;
+   public String definingFeatureId;
 
-   public Optional<String> definingFeature() {
-      return Optional.ofNullable(definingFeature);
+   public Optional<String> definingFeatureId() {
+      return Optional.ofNullable(definingFeatureId);
    }
 
    public static Builder<?> by() {
@@ -32,8 +32,13 @@ public class UpdateSlotArgument extends UpdateElementArgument {
    public static class Builder<TArgument extends UpdateSlotArgument>
       extends UpdateElementArgument.Builder<TArgument> {
 
+      public Builder<TArgument> definingFeatureId(final String value) {
+         argument.definingFeatureId = value;
+         return this;
+      }
+
       public Builder<TArgument> definingFeature(final Property value, final EMFIdGenerator id) {
-         argument.definingFeature = id.getOrCreateId(value);
+         argument.definingFeatureId = id.getOrCreateId(value);
          return this;
       }
    }

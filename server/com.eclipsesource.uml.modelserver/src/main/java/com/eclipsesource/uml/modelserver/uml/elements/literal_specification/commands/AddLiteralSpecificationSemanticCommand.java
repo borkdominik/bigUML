@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.uml.elements.literal.commands;
+package com.eclipsesource.uml.modelserver.uml.elements.literal_specification.commands;
 
 import org.eclipse.uml2.uml.LiteralSpecification;
 import org.eclipse.uml2.uml.Slot;
@@ -16,12 +16,12 @@ import org.eclipse.uml2.uml.Slot;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.BaseCreateSemanticChildCommand;
 
-public final class AddLiteralSemanticCommand extends BaseCreateSemanticChildCommand<Slot, LiteralSpecification> {
+public final class AddLiteralSpecificationSemanticCommand extends BaseCreateSemanticChildCommand<Slot, LiteralSpecification> {
 
-   protected final AddLiteralArgument argument;
+   protected final AddLiteralSpecificationArgument argument;
 
-   public AddLiteralSemanticCommand(final ModelContext context,
-      final Slot parent, final AddLiteralArgument argument) {
+   public AddLiteralSpecificationSemanticCommand(final ModelContext context,
+      final Slot parent, final AddLiteralSpecificationArgument argument) {
       super(context, parent);
       this.argument = argument;
    }

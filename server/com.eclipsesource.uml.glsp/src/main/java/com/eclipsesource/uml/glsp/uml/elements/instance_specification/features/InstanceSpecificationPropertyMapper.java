@@ -21,6 +21,7 @@ import com.eclipsesource.uml.glsp.features.property_palette.model.PropertyPalett
 import com.eclipsesource.uml.glsp.uml.elements.instance_specification.InstanceSpecificationConfiguration;
 import com.eclipsesource.uml.glsp.uml.elements.instance_specification.InstanceSpecificationOperationHandler;
 import com.eclipsesource.uml.glsp.uml.elements.instance_specification.utils.InstanceSpecificationPropertyUtils;
+import com.eclipsesource.uml.glsp.uml.elements.slot.utils.SlotPropertyPaletteUtils;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.RepresentationElementPropertyMapper;
 import com.eclipsesource.uml.glsp.uml.utils.element.VisibilityKindUtils;
 import com.eclipsesource.uml.modelserver.uml.elements.instance_specification.commands.UpdateInstanceSpecificationArgument;
@@ -48,6 +49,8 @@ public class InstanceSpecificationPropertyMapper extends RepresentationElementPr
             source.getVisibility().getLiteral())
          .reference(InstanceSpecificationPropertyUtils.classifiers(this, source,
             InstanceSpecificationConfiguration.Property.CLASSIFIERS, "Classifiers"))
+         .reference(SlotPropertyPaletteUtils.asReference(this, elementId,
+            InstanceSpecificationConfiguration.Property.SLOTS, "Slots", source.getSlots()))
 
          .items();
 

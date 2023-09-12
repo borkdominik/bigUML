@@ -8,19 +8,19 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.uml.utils.element;
+package com.eclipsesource.uml.glsp.uml.elements.parameter.utils;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.eclipse.uml2.uml.ParameterDirectionKind;
+import org.eclipse.uml2.uml.ParameterEffectKind;
 
 import com.eclipsesource.uml.glsp.features.property_palette.model.ElementChoicePropertyItem;
 
-public class ParameterDirectionKindUtils {
+public class ParameterEffectKindUtils {
    public static List<ElementChoicePropertyItem.Choice> asChoices() {
-      return ParameterDirectionKind.VALUES.stream()
-         .map(v -> new ElementChoicePropertyItem.Choice(v.getLiteral(), v.getLiteral()))
+      return ParameterEffectKind.VALUES.stream()
+         .map(v -> new ElementChoicePropertyItem.Choice.Builder(v.getLiteral(), v.getLiteral()).build())
          .collect(Collectors.toList());
    }
 }

@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.uml.elements.literal;
+package com.eclipsesource.uml.modelserver.uml.elements.literal_specification;
 
 import java.util.Optional;
 
@@ -17,14 +17,14 @@ import com.eclipsesource.uml.modelserver.uml.command.provider.element.NodeComman
 import com.eclipsesource.uml.modelserver.uml.manifest.NodeCommandProviderDefinition;
 import com.google.inject.TypeLiteral;
 
-public class LiteralDefinitionModule extends NodeCommandProviderDefinition {
+public class LiteralSpecificationDefinitionModule extends NodeCommandProviderDefinition {
 
-   public LiteralDefinitionModule(final DiagramManifest manifest) {
+   public LiteralSpecificationDefinitionModule(final DiagramManifest manifest) {
       super(manifest.id(), manifest.representation());
    }
 
    @Override
    protected Optional<TypeLiteral<? extends NodeCommandProvider<?, ?>>> commandProvider() {
-      return Optional.of(new TypeLiteral<LiteralCommandProvider>() {});
+      return Optional.of(new TypeLiteral<LiteralSpecificationCommandProvider>() {});
    }
 }

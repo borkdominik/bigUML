@@ -16,8 +16,8 @@ import org.eclipse.uml2.uml.Type;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.BaseCreateSemanticChildCommand;
+import com.eclipsesource.uml.modelserver.uml.elements.property.utils.PropertyUtil;
 import com.eclipsesource.uml.modelserver.uml.generator.ListNameGenerator;
-import com.eclipsesource.uml.modelserver.uml.util.PropertyUtil;
 
 public final class CreatePropertySemanticCommand extends BaseCreateSemanticChildCommand<AttributeOwner, Property> {
 

@@ -13,6 +13,7 @@ package com.eclipsesource.uml.modelserver.uml;
 import com.eclipsesource.uml.modelserver.core.manifest.contributions.CommandCodecContribution;
 import com.eclipsesource.uml.modelserver.uml.behavior.BehaviorRegistry;
 import com.eclipsesource.uml.modelserver.uml.behavior.cross_delete.CrossReferenceDeleter;
+import com.eclipsesource.uml.modelserver.uml.command.copy_paste.CopyPasteContribution;
 import com.eclipsesource.uml.modelserver.uml.command.create.edge.CreateEdgeCommandContribution;
 import com.eclipsesource.uml.modelserver.uml.command.create.node.CreateNodeCommandContribution;
 import com.eclipsesource.uml.modelserver.uml.command.create.node.CreateNodeCommandProviderRegistry;
@@ -30,7 +31,7 @@ import com.eclipsesource.uml.modelserver.uml.representation.use_case.UseCaseMani
 import com.google.inject.AbstractModule;
 import com.google.inject.Singleton;
 
-public class UmlModule extends AbstractModule implements CommandCodecContribution {
+public class ModelServerUmlModule extends AbstractModule implements CommandCodecContribution {
    @Override
    protected void configure() {
       super.configure();
@@ -56,6 +57,7 @@ public class UmlModule extends AbstractModule implements CommandCodecContributio
          contributions.addBinding(UpdateElementCommandContribution.TYPE).to(UpdateElementCommandContribution.class);
          contributions.addBinding(ReconnectElementCommandContribution.TYPE)
             .to(ReconnectElementCommandContribution.class);
+         contributions.addBinding(CopyPasteContribution.TYPE).to(CopyPasteContribution.class);
       });
    }
 }

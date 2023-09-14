@@ -8,9 +8,10 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.core.commands.copy_paste;
+package com.eclipsesource.uml.modelserver.uml.command.copy_paste;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -24,18 +25,23 @@ import org.eclipse.uml2.uml.Element;
 import com.eclipsesource.uml.modelserver.shared.extension.NotationElementAccessor;
 import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
-import com.eclipsesource.uml.modelserver.uml.features.copy_paste.NotMarkedEdgesCopyBehavior;
-import com.eclipsesource.uml.modelserver.uml.representation.class_.features.copy_paste.ClassCopyBehavior;
+import com.eclipsesource.uml.modelserver.uml.behavior.BehaviorRegistry;
+import com.eclipsesource.uml.modelserver.uml.behavior.copy_paste.ElementCopyPasteBehavior;
+import com.eclipsesource.uml.modelserver.uml.behavior.copy_paste.NotMarkedEdgesCopyBehavior;
+import com.google.inject.TypeLiteral;
 
-public class UmlPasteCompoundCommand extends CompoundCommand {
+public class CopyPasteCompoundCommand extends CompoundCommand {
    protected final SemanticElementAccessor semanticElementAccessor;
    protected final NotationElementAccessor notationElementAccessor;
-   protected final Set<CopyBehavior> copyBehaviors;
+   protected final Set<CopyPasteBehavior> copyBehaviors;
 
-   public UmlPasteCompoundCommand(final ModelContext context, final List<String> semanticElementIds) {
+   public CopyPasteCompoundCommand(final ModelContext context, final List<String> semanticElementIds,
+      final BehaviorRegistry registry) {
       this.semanticElementAccessor = new SemanticElementAccessor(context);
       this.notationElementAccessor = new NotationElementAccessor(context);
-      this.copyBehaviors = Set.of(new NotMarkedEdgesCopyBehavior(context), new ClassCopyBehavior(context));
+      this.copyBehaviors = new HashSet<>(List.of(new NotMarkedEdgesCopyBehavior(context)));
+      copyBehaviors
+         .addAll(registry.getAll(context.representation(), new TypeLiteral<ElementCopyPasteBehavior<EObject>>() {}));
 
       var selectedElements = semanticElementAccessor.getElements(semanticElementIds, Element.class);
       var filteredElements = filterElements(selectedElements);
@@ -55,20 +61,20 @@ public class UmlPasteCompoundCommand extends CompoundCommand {
 
       copier.analyzeSuspended();
       copier.copyReferences((behaviors) -> behaviors
-         .forEach(i -> i.modifyReferences(copier).forEach(this::append)));
+         .forEach(i -> i.modifyReferences(context, copier).forEach(this::append)));
 
       for (int i = 0; i < copied.size(); i++) {
          var semantic = elementsToCopy.get(i);
          var semanticCopy = copied.get(i);
 
          commands.add(
-            new UmlPasteSemanticElementCommand(context, semantic, semanticCopy));
+            new CopyPasteSemanticElementCommand(context, semantic, semanticCopy));
 
          notationElementAccessor.getElement(semantic).ifPresent(notation -> {
             var notationCopy = copy(context, notation);
 
             commands.add(
-               new UmlPasteNotationElementCommand(context, () -> semanticCopy, notationCopy));
+               new CopyPasteNotationElementCommand(context, () -> semanticCopy, notationCopy));
          });
 
          var originalTree = semantic.eAllContents();
@@ -84,8 +90,8 @@ public class UmlPasteCompoundCommand extends CompoundCommand {
                var childNotationCopy = copy(context, childNotation);
 
                commands.add(
-                  new UmlPasteNotationElementCommand(context, () -> childSemanticCopy, childNotationCopy,
-                     new UmlPasteNotationElementCommand.Options(false)));
+                  new CopyPasteNotationElementCommand(context, () -> childSemanticCopy, childNotationCopy,
+                     new CopyPasteNotationElementCommand.Options(false)));
             });
          }
       }

@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.core.commands.copy_paste;
+package com.eclipsesource.uml.modelserver.uml.command.copy_paste;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -30,7 +30,7 @@ import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 public class UmlCopier extends Copier {
 
    protected final ModelContext context;
-   protected final Set<CopyBehavior> copyBehaviors;
+   protected final Set<CopyPasteBehavior> copyBehaviors;
    protected final Collection<? extends EObject> elementsToCopy;
    protected final Collection<? extends EObject> selectedElements;
 
@@ -38,7 +38,7 @@ public class UmlCopier extends Copier {
 
    public ModelContext getContext() { return context; }
 
-   public Set<CopyBehavior> getCopyBehaviors() { return copyBehaviors; }
+   public Set<CopyPasteBehavior> getCopyBehaviors() { return copyBehaviors; }
 
    public Collection<? extends EObject> getElementsToCopy() { return elementsToCopy; }
 
@@ -48,7 +48,7 @@ public class UmlCopier extends Copier {
       this(context, Set.of(), Set.of(), Set.of());
    }
 
-   public UmlCopier(final ModelContext context, final Set<CopyBehavior> copyBehaviors,
+   public UmlCopier(final ModelContext context, final Set<CopyPasteBehavior> copyBehaviors,
       final Collection<? extends EObject> elementsToCopy,
       final Collection<? extends EObject> selectedElements) {
       this.context = context;
@@ -68,7 +68,7 @@ public class UmlCopier extends Copier {
                var target = (List<EObject>) value;
 
                var problem = target.stream().filter(t -> copyBehaviors.stream()
-                  .anyMatch(b -> b.shouldSuspend(this, t))).collect(Collectors.toList());
+                  .anyMatch(b -> b.shouldSuspend(this.context, this, t))).collect(Collectors.toList());
                var unproblematic = new ArrayList<>(target);
                unproblematic.removeAll(problem);
 
@@ -95,7 +95,7 @@ public class UmlCopier extends Copier {
                var list = (List<EObject>) problem;
 
                list.removeIf(e -> this.copyBehaviors.stream()
-                  .anyMatch(c -> c.removeFromSuspension(this, e)));
+                  .anyMatch(c -> c.removeFromSuspension(context, this, e)));
                var newValues = new ArrayList<Object>((List) s.value);
                newValues.removeAll(list);
                s.value = newValues;
@@ -124,7 +124,7 @@ public class UmlCopier extends Copier {
       }
    }
 
-   public void copyReferences(final Consumer<Set<CopyBehavior>> consumers) {
+   public void copyReferences(final Consumer<Set<CopyPasteBehavior>> consumers) {
       super.copyReferences();
       consumers.accept(copyBehaviors);
    }

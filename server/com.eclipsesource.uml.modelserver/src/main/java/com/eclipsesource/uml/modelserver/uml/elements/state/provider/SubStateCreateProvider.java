@@ -20,7 +20,7 @@ import org.eclipse.uml2.uml.State;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.commands.AddShapeNotationCommand;
-import com.eclipsesource.uml.modelserver.uml.command.provider.create.RepresentationCreateNodeCommandProvider;
+import com.eclipsesource.uml.modelserver.uml.command.create.node.provider.RepresentationCreateNodeCommandProvider;
 import com.eclipsesource.uml.modelserver.uml.elements.state.commands.CreateSubStateSemanticCommand;
 
 public class SubStateCreateProvider extends RepresentationCreateNodeCommandProvider<State, State> {

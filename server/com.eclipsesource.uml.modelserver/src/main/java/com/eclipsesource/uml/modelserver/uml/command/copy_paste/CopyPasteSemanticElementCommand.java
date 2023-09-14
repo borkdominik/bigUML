@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.core.commands.copy_paste;
+package com.eclipsesource.uml.modelserver.uml.command.copy_paste;
 
 import java.util.Collection;
 
@@ -20,12 +20,12 @@ import org.eclipse.uml2.uml.Element;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.BaseSemanticElementCommand;
 
-public class UmlPasteSemanticElementCommand extends BaseSemanticElementCommand {
+public class CopyPasteSemanticElementCommand extends BaseSemanticElementCommand {
 
    protected final Element copyElement;
    protected final Element originalElement;
 
-   public UmlPasteSemanticElementCommand(final ModelContext context, final Element original,
+   public CopyPasteSemanticElementCommand(final ModelContext context, final Element original,
       final Element copyElement) {
       super(context);
 

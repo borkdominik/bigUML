@@ -28,7 +28,7 @@ import org.eclipse.glsp.server.types.EditorContext;
 import com.eclipsesource.uml.glsp.core.handler.action.UmlRequestClipboardDataActionHandler;
 import com.eclipsesource.uml.glsp.core.model.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
-import com.eclipsesource.uml.modelserver.core.commands.copy_paste.UmlPasteContribution;
+import com.eclipsesource.uml.modelserver.uml.command.copy_paste.CopyPasteContribution;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -67,7 +67,8 @@ public class UmlPasteOperationHandler
    public void executePaste(final List<GModelElement> selectedElements, final EditorContext context) {
       if (selectedElements.size() > 0) {
          modelServerAccess.exec(
-            UmlPasteContribution.create(selectedElements.stream().map(e -> e.getId()).collect(Collectors.toList())));
+            CopyPasteContribution.create(modelState.getUnsafeRepresentation(),
+               selectedElements.stream().map(e -> e.getId()).collect(Collectors.toList())));
       }
    }
 

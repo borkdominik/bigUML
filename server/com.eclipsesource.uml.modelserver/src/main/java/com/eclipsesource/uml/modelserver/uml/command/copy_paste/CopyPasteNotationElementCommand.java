@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.core.commands.copy_paste;
+package com.eclipsesource.uml.modelserver.uml.command.copy_paste;
 
 import java.util.function.Supplier;
 
@@ -21,7 +21,7 @@ import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccesso
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.BaseNotationElementCommand;
 
-public class UmlPasteNotationElementCommand extends BaseNotationElementCommand {
+public class CopyPasteNotationElementCommand extends BaseNotationElementCommand {
 
    private static final int DEFAULT_POSITION_SHIFT = 30;
 
@@ -29,12 +29,12 @@ public class UmlPasteNotationElementCommand extends BaseNotationElementCommand {
    protected final Supplier<? extends EObject> semanticElementSupplier;
    protected final Options options;
 
-   public UmlPasteNotationElementCommand(final ModelContext context,
+   public CopyPasteNotationElementCommand(final ModelContext context,
       final Supplier<? extends EObject> semanticElementSupplier, final NotationElement notationCopy) {
       this(context, semanticElementSupplier, notationCopy, new Options());
    }
 
-   public UmlPasteNotationElementCommand(final ModelContext context,
+   public CopyPasteNotationElementCommand(final ModelContext context,
       final Supplier<? extends EObject> semanticElementSupplier, final NotationElement notationCopy,
       final Options options) {
       super(context);

@@ -24,7 +24,6 @@ import org.eclipse.uml2.uml.resource.UMLResource;
 import com.eclipsesource.uml.modelserver.core.codec.UmlCodecProvider;
 import com.eclipsesource.uml.modelserver.core.commands.change_bounds.UmlChangeBoundsContribution;
 import com.eclipsesource.uml.modelserver.core.commands.change_routing_points.UmlChangeRoutingPointsContribution;
-import com.eclipsesource.uml.modelserver.core.commands.copy_paste.UmlPasteContribution;
 import com.eclipsesource.uml.modelserver.core.commands.rename.UmlRenameElementContribution;
 import com.eclipsesource.uml.modelserver.core.controller.UmlSessionController;
 import com.eclipsesource.uml.modelserver.core.model.UmlModelRepository;
@@ -36,7 +35,7 @@ import com.eclipsesource.uml.modelserver.core.resource.notation.UmlNotationPacka
 import com.eclipsesource.uml.modelserver.core.resource.notation.UmlNotationResource;
 import com.eclipsesource.uml.modelserver.core.resource.uml.UmlPackageConfiguration;
 import com.eclipsesource.uml.modelserver.core.routing.UmlModelServerRouting;
-import com.eclipsesource.uml.modelserver.uml.UmlModule;
+import com.eclipsesource.uml.modelserver.uml.ModelServerUmlModule;
 
 public class UmlModelServerModule extends EMSNotationModelServerModule {
 
@@ -44,7 +43,7 @@ public class UmlModelServerModule extends EMSNotationModelServerModule {
    protected void configure() {
       super.configure();
 
-      install(new UmlModule());
+      install(new ModelServerUmlModule());
    }
 
    @Override
@@ -73,14 +72,10 @@ public class UmlModelServerModule extends EMSNotationModelServerModule {
    }
 
    @Override
-   protected String getSemanticFileExtension() {
-      return UMLResource.FILE_EXTENSION;
-   }
+   protected String getSemanticFileExtension() { return UMLResource.FILE_EXTENSION; }
 
    @Override
-   protected String getNotationFileExtension() {
-      return UmlNotationResource.FILE_EXTENSION;
-   }
+   protected String getNotationFileExtension() { return UmlNotationResource.FILE_EXTENSION; }
 
    @Override
    protected void configureEPackages(final MultiBinding<EPackageConfiguration> binding) {
@@ -95,11 +90,9 @@ public class UmlModelServerModule extends EMSNotationModelServerModule {
       super.configureCommandCodecs(binding);
       binding.remove(ChangeBoundsCommandContribution.TYPE);
       binding.remove(ChangeRoutingPointsCommandContribution.TYPE);
-      binding.remove(UmlPasteContribution.TYPE);
 
       binding.put(UmlChangeBoundsContribution.TYPE, UmlChangeBoundsContribution.class);
       binding.put(UmlChangeRoutingPointsContribution.TYPE, UmlChangeRoutingPointsContribution.class);
-      binding.put(UmlPasteContribution.TYPE, UmlPasteContribution.class);
       binding.put(UmlRenameElementContribution.TYPE, UmlRenameElementContribution.class);
 
    }

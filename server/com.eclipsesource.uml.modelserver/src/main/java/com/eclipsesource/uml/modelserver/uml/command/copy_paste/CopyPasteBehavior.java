@@ -8,19 +8,21 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.core.commands.copy_paste;
+package com.eclipsesource.uml.modelserver.uml.command.copy_paste;
 
 import java.util.List;
 
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.ecore.EObject;
 
-public interface CopyBehavior {
-   boolean shouldSuspend(UmlCopier copier, EObject original);
+import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 
-   boolean removeFromSuspension(UmlCopier copier, EObject original);
+public interface CopyPasteBehavior {
+   boolean shouldSuspend(ModelContext context, UmlCopier copier, EObject original);
 
-   default List<Command> modifyReferences(final UmlCopier copier) {
+   boolean removeFromSuspension(ModelContext context, UmlCopier copier, EObject original);
+
+   default List<Command> modifyReferences(final ModelContext context, final UmlCopier copier) {
       return List.of();
    }
 }

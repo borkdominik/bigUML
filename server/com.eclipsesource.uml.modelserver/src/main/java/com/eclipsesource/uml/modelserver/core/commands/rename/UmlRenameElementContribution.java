@@ -22,6 +22,7 @@ import com.eclipsesource.uml.modelserver.core.commands.noop.NoopCommand;
 import com.eclipsesource.uml.modelserver.shared.codec.ContributionDecoder;
 import com.eclipsesource.uml.modelserver.shared.codec.ContributionEncoder;
 
+@Deprecated
 public final class UmlRenameElementContribution extends BasicCommandContribution<Command> {
 
    public static final String TYPE = "uml:rename";

@@ -57,7 +57,7 @@ public class InstanceSpecificationCommandProvider extends NodeCommandProvider<In
                semanticAccessor.getElement(a.classifierId, Classifier.class).get()));
          }
 
-         return List.of();
+         return super.deleteModifications(context, element);
       }).orElse(super.deleteModifications(context, element));
    }
 

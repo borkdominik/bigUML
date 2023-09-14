@@ -10,7 +10,6 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.elements.region;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -52,15 +51,14 @@ public class RegionConfiguration extends RepresentationNodeConfiguration<Region>
 
       return Set.of(
          new ShapeTypeHint(typeId(), true, true, true, false,
-            List.of(
-               pseudo.initialStateTypeId(),
-               configurationFor(State.class).typeId(),
-               configurationFor(FinalState.class).typeId(),
+            existingConfigurationTypeIds(Set.of(pseudo.initialStateTypeId(),
                pseudo.choiceTypeId(),
                pseudo.joinTypeId(),
                pseudo.forkTypeId(),
                pseudo.shallowHistoryTypeId(),
-               pseudo.deepHistoryTypeId())));
+               pseudo.deepHistoryTypeId()),
+               Set.of(State.class,
+                  FinalState.class))));
    }
 
 }

@@ -10,7 +10,6 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.elements.deployment;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -45,14 +44,12 @@ public class DeploymentConfiguration extends RepresentationEdgeConfiguration<Dep
    public Set<EdgeTypeHint> getEdgeTypeHints() {
       return Set.of(
          new EdgeTypeHint(typeId(), true, true, true,
-            List.of(
-               configurationFor(Artifact.class).typeId(),
-               configurationFor(DeploymentSpecification.class).typeId()),
-
-            List.of(
-               configurationFor(Device.class).typeId(),
-               configurationFor(ExecutionEnvironment.class).typeId(),
-               configurationFor(org.eclipse.uml2.uml.Node.class).typeId())));
+            existingConfigurationTypeIds(Set.of(Artifact.class,
+               DeploymentSpecification.class)),
+            existingConfigurationTypeIds(Set.of(
+               Device.class,
+               ExecutionEnvironment.class,
+               org.eclipse.uml2.uml.Node.class))));
    }
 
 }

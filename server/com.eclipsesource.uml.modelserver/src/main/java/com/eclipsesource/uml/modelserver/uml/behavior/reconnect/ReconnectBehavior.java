@@ -10,7 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.behavior.reconnect;
 
-import java.util.Set;
+import java.util.List;
 
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.ecore.EObject;
@@ -19,5 +19,5 @@ import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.uml.behavior.Behavior;
 
 public interface ReconnectBehavior<TElement extends EObject> extends Behavior<TElement> {
-   Command reconnect(ModelContext context, TElement element, Set<String> sources, Set<String> targets);
+   Command reconnect(ModelContext context, TElement element, List<String> sources, List<String> targets);
 }

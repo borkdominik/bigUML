@@ -10,7 +10,6 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.elements.final_state;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -45,6 +44,6 @@ public class FinalStateConfiguration extends RepresentationNodeConfiguration<Fin
    @Override
    public Set<ShapeTypeHint> getShapeTypeHints() {
       return Set.of(
-         new ShapeTypeHint(typeId(), true, true, true, false, List.of()));
+         new ShapeTypeHint(typeId(), true, true, true, false, existingConfigurationTypeIds(Set.of())));
    }
 }

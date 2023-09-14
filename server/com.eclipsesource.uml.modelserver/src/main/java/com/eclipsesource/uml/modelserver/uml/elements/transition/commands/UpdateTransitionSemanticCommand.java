@@ -13,6 +13,7 @@ package com.eclipsesource.uml.modelserver.uml.elements.transition.commands;
 import java.util.List;
 
 import org.eclipse.uml2.uml.Transition;
+import org.eclipse.uml2.uml.Vertex;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.BaseUpdateSemanticElementCommand;
@@ -30,6 +31,14 @@ public class UpdateTransitionSemanticCommand
    protected void updateSemanticElement(final Transition semanticElement,
       final UpdateTransitionArgument updateArgument) {
       include(List.of(new UpdateNamedElementSemanticCommand(context, semanticElement, updateArgument)));
+
+      updateArgument.sourceId().ifPresent(arg -> {
+         semanticElement.setSource(semanticElementAccessor.getElement(arg, Vertex.class).get());
+      });
+
+      updateArgument.targetId().ifPresent(arg -> {
+         semanticElement.setTarget(semanticElementAccessor.getElement(arg, Vertex.class).get());
+      });
    }
 
 }

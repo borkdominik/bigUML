@@ -10,8 +10,6 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.elements.association;
 
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -61,40 +59,19 @@ public class AssociationConfiguration extends RepresentationEdgeConfiguration<As
 
    @Override
    public Set<EdgeTypeHint> getEdgeTypeHints() {
-      var hints = new HashSet<EdgeTypeHint>();
+      return Set.of(
+         new EdgeTypeHint(typeId(), true, true, true,
+            existingConfigurationTypeIds(Set.of(org.eclipse.uml2.uml.Class.class, Interface.class, Actor.class)),
+            existingConfigurationTypeIds(Set.of(org.eclipse.uml2.uml.Class.class, Interface.class, UseCase.class))),
 
-      if (existsConfigurationFor(Set.of(org.eclipse.uml2.uml.Class.class, Interface.class))) {
-         hints.addAll(Set.of(
-            new EdgeTypeHint(typeId(), true, true, true,
-               List.of(configurationFor(org.eclipse.uml2.uml.Class.class).typeId(),
-                  configurationFor(Interface.class).typeId()),
-               List.of(configurationFor(org.eclipse.uml2.uml.Class.class).typeId(),
-                  configurationFor(Interface.class).typeId())),
+         new EdgeTypeHint(aggregationTypeId(), true, true, true,
+            existingConfigurationTypeIds(Set.of(org.eclipse.uml2.uml.Class.class, Interface.class)),
+            existingConfigurationTypeIds(Set.of(org.eclipse.uml2.uml.Class.class, Interface.class))),
 
-            new EdgeTypeHint(aggregationTypeId(), true, true, true,
-               List.of(configurationFor(org.eclipse.uml2.uml.Class.class).typeId(),
-                  configurationFor(Interface.class).typeId()),
-               List.of(configurationFor(org.eclipse.uml2.uml.Class.class).typeId(),
-                  configurationFor(Interface.class).typeId())),
+         new EdgeTypeHint(compositionTypeId(), true, true, true,
+            existingConfigurationTypeIds(Set.of(org.eclipse.uml2.uml.Class.class, Interface.class)),
+            existingConfigurationTypeIds(Set.of(org.eclipse.uml2.uml.Class.class, Interface.class)))
 
-            new EdgeTypeHint(compositionTypeId(), true, true, true,
-               List.of(configurationFor(org.eclipse.uml2.uml.Class.class).typeId(),
-                  configurationFor(Interface.class).typeId()),
-               List.of(configurationFor(org.eclipse.uml2.uml.Class.class).typeId(),
-                  configurationFor(Interface.class).typeId()))
-
-         ));
-      }
-
-      if (existsConfigurationFor(Set.of(Actor.class, UseCase.class))) {
-         hints.addAll(Set.of(
-            new EdgeTypeHint(typeId(), true, true, true,
-               List.of(configurationFor(Actor.class).typeId()),
-               List.of(configurationFor(UseCase.class).typeId()))
-
-         ));
-      }
-
-      return hints;
+      );
    }
 }

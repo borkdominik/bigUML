@@ -10,7 +10,6 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.elements.usecase;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -44,6 +43,6 @@ public class UseCaseConfiguration extends RepresentationNodeConfiguration<UseCas
    @Override
    public Set<ShapeTypeHint> getShapeTypeHints() {
       return Set.of(
-         new ShapeTypeHint(typeId(), true, true, true, false, List.of()));
+         new ShapeTypeHint(typeId(), true, true, true, false, existingConfigurationTypeIds(Set.of())));
    }
 }

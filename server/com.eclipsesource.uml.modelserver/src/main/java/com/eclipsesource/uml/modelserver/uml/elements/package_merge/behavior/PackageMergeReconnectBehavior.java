@@ -10,8 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.elements.package_merge.behavior;
 
-import java.util.ArrayList;
-import java.util.Set;
+import java.util.List;
 
 import org.eclipse.uml2.uml.PackageMerge;
 
@@ -24,10 +23,10 @@ public class PackageMergeReconnectBehavior<TElement extends PackageMerge>
 
    @Override
    protected UpdatePackageMergeArgument argument(final ModelContext context, final TElement element,
-      final Set<String> sources,
-      final Set<String> targets) {
-      var nearestPackage = new ArrayList<>(sources).get(0);
-      var mergedPackage = new ArrayList<>(targets).get(0);
+      final List<String> sources,
+      final List<String> targets) {
+      var nearestPackage = sources.get(0);
+      var mergedPackage = targets.get(0);
 
       return UpdatePackageMergeArgument.by().nearestPackageId(nearestPackage).mergedPackageId(mergedPackage).build();
    }

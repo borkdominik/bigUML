@@ -10,7 +10,6 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.elements.state;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -46,7 +45,7 @@ public class StateConfiguration extends RepresentationNodeConfiguration<State> {
    @Override
    public Set<ShapeTypeHint> getShapeTypeHints() {
       return Set.of(
-         new ShapeTypeHint(typeId(), true, true, true, false, List.of(
-            configurationFor(Region.class).typeId(), typeId())));
+         new ShapeTypeHint(typeId(), true, true, true, false,
+            existingConfigurationTypeIds(Set.of(typeId()), Set.of(Region.class))));
    }
 }

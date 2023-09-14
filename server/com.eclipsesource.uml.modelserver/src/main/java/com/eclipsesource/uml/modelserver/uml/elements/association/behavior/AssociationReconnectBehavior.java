@@ -10,8 +10,8 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.elements.association.behavior;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.uml2.uml.Association;
 
@@ -23,9 +23,9 @@ public class AssociationReconnectBehavior<TElement extends Association> extends 
 
    @Override
    protected UpdateAssociationArgument argument(final ModelContext context, final TElement element,
-      final Set<String> sources,
-      final Set<String> targets) {
-      var ids = new HashSet<String>();
+      final List<String> sources,
+      final List<String> targets) {
+      var ids = new ArrayList<String>();
       ids.addAll(sources);
       ids.addAll(targets);
       return UpdateAssociationArgument.by().endTypeIds(ids).build();

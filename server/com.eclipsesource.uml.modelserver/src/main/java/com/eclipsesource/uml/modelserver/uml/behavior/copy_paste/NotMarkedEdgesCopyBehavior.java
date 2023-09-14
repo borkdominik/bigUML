@@ -8,35 +8,28 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.uml.features.copy_paste;
-
-import java.util.Set;
+package com.eclipsesource.uml.modelserver.uml.behavior.copy_paste;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.glsp.server.emf.model.notation.Edge;
-import org.eclipse.uml2.uml.Abstraction;
-import org.eclipse.uml2.uml.Association;
 
-import com.eclipsesource.uml.modelserver.core.commands.copy_paste.CopyBehavior;
-import com.eclipsesource.uml.modelserver.core.commands.copy_paste.UmlCopier;
 import com.eclipsesource.uml.modelserver.shared.extension.NotationElementAccessor;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.utils.UmlEcoreReferencesUtil;
+import com.eclipsesource.uml.modelserver.uml.command.copy_paste.CopyPasteBehavior;
+import com.eclipsesource.uml.modelserver.uml.command.copy_paste.UmlCopier;
 
-public class NotMarkedEdgesCopyBehavior implements CopyBehavior {
+public class NotMarkedEdgesCopyBehavior implements CopyPasteBehavior {
 
-   protected final ModelContext context;
    protected final NotationElementAccessor notationAccessor;
-   protected final Set<Class<?>> outsideElements = Set.of(Abstraction.class, Association.class);
 
    public NotMarkedEdgesCopyBehavior(final ModelContext context) {
-      this.context = context;
       this.notationAccessor = new NotationElementAccessor(context);
    }
 
    @Override
-   public boolean shouldSuspend(final UmlCopier copier, final EObject original) {
+   public boolean shouldSuspend(final ModelContext context, final UmlCopier copier, final EObject original) {
       var notation = this.notationAccessor.getElement(original);
       if (notation.isPresent()) {
          var notationElement = notation.get();
@@ -49,7 +42,7 @@ public class NotMarkedEdgesCopyBehavior implements CopyBehavior {
    }
 
    @Override
-   public boolean removeFromSuspension(final UmlCopier copier, final EObject original) {
+   public boolean removeFromSuspension(final ModelContext context, final UmlCopier copier, final EObject original) {
       var notation = this.notationAccessor.getElement(original);
 
       if (notation.isPresent()) {

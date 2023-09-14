@@ -10,7 +10,6 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.elements.artifact;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -53,11 +52,7 @@ public class ArtifactConfiguration extends RepresentationNodeConfiguration<Artif
    public Set<ShapeTypeHint> getShapeTypeHints() {
       return Set.of(
          new ShapeTypeHint(typeId(), true, true, true, false,
-            List.of(
-               configurationFor(org.eclipse.uml2.uml.Property.class).typeId(),
-               configurationFor(Operation.class).typeId(),
-               typeId(), // all levels
-               configurationFor(DeploymentSpecification.class).typeId() // only 1 lvl
-            )));
+            existingConfigurationTypeIds(Set.of(typeId()),
+               Set.of(org.eclipse.uml2.uml.Property.class, Operation.class, DeploymentSpecification.class))));
    }
 }

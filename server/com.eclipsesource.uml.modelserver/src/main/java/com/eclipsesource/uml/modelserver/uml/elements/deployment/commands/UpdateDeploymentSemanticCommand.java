@@ -12,11 +12,13 @@ package com.eclipsesource.uml.modelserver.uml.elements.deployment.commands;
 
 import java.util.List;
 
+import org.eclipse.uml2.uml.DeployedArtifact;
 import org.eclipse.uml2.uml.Deployment;
+import org.eclipse.uml2.uml.DeploymentTarget;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.BaseUpdateSemanticElementCommand;
-import com.eclipsesource.uml.modelserver.uml.elements.dependency.commands.UpdateDependencySemanticCommand;
+import com.eclipsesource.uml.modelserver.uml.elements.named_element.UpdateNamedElementSemanticCommand;
 
 public final class UpdateDeploymentSemanticCommand
    extends BaseUpdateSemanticElementCommand<Deployment, UpdateDeploymentArgument> {
@@ -29,8 +31,19 @@ public final class UpdateDeploymentSemanticCommand
    @Override
    protected void updateSemanticElement(final Deployment semanticElement,
       final UpdateDeploymentArgument updateArgument) {
-      include(List.of(new UpdateDependencySemanticCommand(context, semanticElement, updateArgument)));
+      include(List.of(new UpdateNamedElementSemanticCommand(context, semanticElement, updateArgument)));
 
+      updateArgument.clientIds().ifPresent(arg -> {
+         semanticElement.getClients().clear();
+         semanticElement.setLocation(semanticElementAccessor.getElements(arg, DeploymentTarget.class).get(0));
+      });
+
+      updateArgument.supplierIds().ifPresent(arg -> {
+         semanticElement.getSuppliers().clear();
+         semanticElement.getDeployedArtifacts().clear();
+         semanticElement.getDeployedArtifacts()
+            .addAll(semanticElementAccessor.getElements(arg, DeployedArtifact.class));
+      });
    }
 
 }

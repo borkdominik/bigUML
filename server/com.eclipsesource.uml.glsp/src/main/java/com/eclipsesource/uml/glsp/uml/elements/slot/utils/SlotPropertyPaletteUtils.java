@@ -123,15 +123,20 @@ public class SlotPropertyPaletteUtils {
       return new ElementChoicePropertyItem.Builder(elementId, propertyId.name())
          .label(label)
          .choices(propsAsChoices(properties, mapper.getIdGenerator()))
-         .choice(mapper.getIdGenerator().getOrCreateId(slot.getDefiningFeature()))
+         .choice(
+            slot.getDefiningFeature() != null ? mapper.getIdGenerator().getOrCreateId(slot.getDefiningFeature()) : null)
          .build();
    }
 
    protected static List<ElementChoicePropertyItem.Choice> propsAsChoices(final List<Property> properties,
       final EMFIdGenerator idGenerator) {
-      return properties.stream()
+      var choices = new ArrayList<ElementChoicePropertyItem.Choice>();
+      choices.add(new ElementChoicePropertyItem.Choice.Builder("<Undefined>", "").build());
+      choices.addAll(properties.stream()
          .map(c -> new ElementChoicePropertyItem.Choice.Builder(c.getName(), idGenerator.getOrCreateId(c)).build())
-         .collect(Collectors.toList());
+         .collect(Collectors.toList()));
+
+      return choices;
    }
 
    protected static List<Property> extractUMLProperties(final Slot slot) {

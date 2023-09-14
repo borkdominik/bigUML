@@ -10,7 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.behavior.reconnect;
 
-import java.util.Set;
+import java.util.List;
 
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.ecore.EObject;
@@ -33,8 +33,8 @@ public abstract class BaseReconnectBehavior<TElement extends EObject> implements
    public Class<? extends EObject> getElementType() { return (Class<? extends EObject>) elementType.getRawType(); }
 
    @Override
-   public Command reconnect(final ModelContext context, final TElement element, final Set<String> sources,
-      final Set<String> targets) {
+   public Command reconnect(final ModelContext context, final TElement element, final List<String> sources,
+      final List<String> targets) {
       var argument = argument(context, element, sources, targets);
       var command = UpdateElementCommandContribution.create(context.representation(), element, argument);
       var reconnectContext = context.with().command(command).build();
@@ -50,6 +50,6 @@ public abstract class BaseReconnectBehavior<TElement extends EObject> implements
    }
 
    protected abstract Object argument(final ModelContext context, final TElement element,
-      final Set<String> sources,
-      final Set<String> targets);
+      final List<String> sources,
+      final List<String> targets);
 }

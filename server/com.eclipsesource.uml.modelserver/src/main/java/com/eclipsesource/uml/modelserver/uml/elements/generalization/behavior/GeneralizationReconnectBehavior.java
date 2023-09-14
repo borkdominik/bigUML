@@ -10,8 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.elements.generalization.behavior;
 
-import java.util.ArrayList;
-import java.util.Set;
+import java.util.List;
 
 import org.eclipse.uml2.uml.Generalization;
 
@@ -22,10 +21,10 @@ import com.eclipsesource.uml.modelserver.uml.elements.generalization.commands.Up
 public class GeneralizationReconnectBehavior<TElement extends Generalization> extends BaseReconnectBehavior<TElement> {
    @Override
    protected UpdateGeneralizationArgument argument(final ModelContext context, final TElement element,
-      final Set<String> sources,
-      final Set<String> targets) {
-      var source = new ArrayList<>(sources).get(0);
-      var target = new ArrayList<>(targets).get(0);
+      final List<String> sources,
+      final List<String> targets) {
+      var source = sources.get(0);
+      var target = targets.get(0);
 
       return UpdateGeneralizationArgument.by().specificId(source).generalId(target).build();
    }

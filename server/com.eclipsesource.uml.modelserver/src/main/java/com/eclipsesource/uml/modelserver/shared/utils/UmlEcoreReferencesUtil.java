@@ -19,7 +19,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 
-import com.eclipsesource.uml.modelserver.core.commands.copy_paste.UmlCopier;
+import com.eclipsesource.uml.modelserver.uml.command.copy_paste.UmlCopier;
 
 public class UmlEcoreReferencesUtil {
    public static boolean hasAllReferencesAvailable(final UmlCopier copier, final EObject original) {

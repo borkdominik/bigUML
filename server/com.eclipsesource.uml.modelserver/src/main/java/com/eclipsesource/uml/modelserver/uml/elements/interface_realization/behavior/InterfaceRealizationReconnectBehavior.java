@@ -10,8 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.elements.interface_realization.behavior;
 
-import java.util.ArrayList;
-import java.util.Set;
+import java.util.List;
 
 import org.eclipse.uml2.uml.InterfaceRealization;
 
@@ -23,10 +22,10 @@ public class InterfaceRealizationReconnectBehavior<TElement extends InterfaceRea
    extends BaseReconnectBehavior<TElement> {
    @Override
    protected UpdateInterfaceRealizationArgument argument(final ModelContext context, final TElement element,
-      final Set<String> sources,
-      final Set<String> targets) {
-      var implementingClassifierId = new ArrayList<>(sources).get(0);
-      var contractId = new ArrayList<>(targets).get(0);
+      final List<String> sources,
+      final List<String> targets) {
+      var implementingClassifierId = sources.get(0);
+      var contractId = targets.get(0);
 
       return UpdateInterfaceRealizationArgument.by().implementingClassifierId(implementingClassifierId)
          .contractId(contractId).build();

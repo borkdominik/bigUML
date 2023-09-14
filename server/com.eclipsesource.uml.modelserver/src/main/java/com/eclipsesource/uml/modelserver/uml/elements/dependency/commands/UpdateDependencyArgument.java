@@ -10,6 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.elements.dependency.commands;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -20,14 +21,14 @@ import org.eclipse.uml2.uml.NamedElement;
 import com.eclipsesource.uml.modelserver.uml.elements.named_element.UpdateNamedElementArgument;
 
 public class UpdateDependencyArgument extends UpdateNamedElementArgument {
-   protected Set<String> clientIds;
-   protected Set<String> supplierIds;
+   protected List<String> clientIds;
+   protected List<String> supplierIds;
 
-   public Optional<Set<String>> clientIds() {
+   public Optional<List<String>> clientIds() {
       return Optional.ofNullable(clientIds);
    }
 
-   public Optional<Set<String>> supplierIds() {
+   public Optional<List<String>> supplierIds() {
       return Optional.ofNullable(supplierIds);
    }
 
@@ -38,23 +39,23 @@ public class UpdateDependencyArgument extends UpdateNamedElementArgument {
    public static class Builder<TArgument extends UpdateDependencyArgument>
       extends UpdateNamedElementArgument.Builder<TArgument> {
 
-      public Builder<TArgument> clientIds(final Set<String> value) {
+      public Builder<TArgument> clientIds(final List<String> value) {
          argument.clientIds = value;
          return this;
       }
 
       public Builder<TArgument> clients(final Set<NamedElement> value, final EMFIdGenerator id) {
-         argument.clientIds = value.stream().map(v -> id.getOrCreateId(v)).collect(Collectors.toUnmodifiableSet());
+         argument.clientIds = value.stream().map(v -> id.getOrCreateId(v)).collect(Collectors.toUnmodifiableList());
          return this;
       }
 
-      public Builder<TArgument> supplierIds(final Set<String> value) {
+      public Builder<TArgument> supplierIds(final List<String> value) {
          argument.supplierIds = value;
          return this;
       }
 
       public Builder<TArgument> suppliers(final Set<NamedElement> value, final EMFIdGenerator id) {
-         argument.supplierIds = value.stream().map(v -> id.getOrCreateId(v)).collect(Collectors.toUnmodifiableSet());
+         argument.supplierIds = value.stream().map(v -> id.getOrCreateId(v)).collect(Collectors.toUnmodifiableList());
          return this;
       }
 

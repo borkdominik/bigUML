@@ -10,7 +10,6 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.elements.transition;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -46,22 +45,21 @@ public class TransitionConfiguration extends RepresentationEdgeConfiguration<Tra
       var pseudo = configurationFor(Pseudostate.class, PseudostateConfiguration.class);
       return Set.of(
          new EdgeTypeHint(typeId(), true, true, true,
-            List.of(
-               configurationFor(State.class).typeId(),
-               pseudo.initialStateTypeId(),
+            existingConfigurationTypeIds(Set.of(pseudo.initialStateTypeId(),
+               pseudo.choiceTypeId(),
+               pseudo.joinTypeId(),
+               pseudo.forkTypeId(),
+               pseudo.shallowHistoryTypeId(),
+               pseudo.deepHistoryTypeId()), Set.of(State.class)),
+            existingConfigurationTypeIds(Set.of(
                pseudo.choiceTypeId(),
                pseudo.joinTypeId(),
                pseudo.forkTypeId(),
                pseudo.shallowHistoryTypeId(),
                pseudo.deepHistoryTypeId()),
-            List.of(
-               configurationFor(State.class).typeId(),
-               configurationFor(FinalState.class).typeId(),
-               pseudo.choiceTypeId(),
-               pseudo.joinTypeId(),
-               pseudo.forkTypeId(),
-               pseudo.shallowHistoryTypeId(),
-               pseudo.deepHistoryTypeId())));
+               Set.of(
+                  State.class,
+                  FinalState.class))));
    }
 
 }

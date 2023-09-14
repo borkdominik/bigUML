@@ -10,8 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.elements.include.behavior;
 
-import java.util.ArrayList;
-import java.util.Set;
+import java.util.List;
 
 import org.eclipse.uml2.uml.Include;
 
@@ -23,10 +22,10 @@ public class IncludeReconnectBehavior<TElement extends Include> extends BaseReco
 
    @Override
    protected UpdateIncludeArgument argument(final ModelContext context, final TElement element,
-      final Set<String> sources,
-      final Set<String> targets) {
-      var source = new ArrayList<>(sources).get(0);
-      var target = new ArrayList<>(targets).get(0);
+      final List<String> sources,
+      final List<String> targets) {
+      var source = sources.get(0);
+      var target = targets.get(0);
       return UpdateIncludeArgument.by().includingCaseId(source).additionId(target).build();
    }
 }

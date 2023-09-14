@@ -10,7 +10,6 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.elements.operation;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -62,7 +61,7 @@ public class OperationConfiguration extends RepresentationNodeConfiguration<Oper
    public Set<ShapeTypeHint> getShapeTypeHints() {
       return Set.of(
          new ShapeTypeHint(typeId(), false, true, false, false,
-            List.of(configurationFor(Parameter.class).typeId())));
+            existingConfigurationTypeIds(Set.of(Parameter.class))));
    }
 
 }

@@ -10,7 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.elements.dependency.behavior;
 
-import java.util.Set;
+import java.util.List;
 
 import org.eclipse.uml2.uml.Dependency;
 
@@ -22,8 +22,8 @@ public class DependencyReconnectBehavior<TElement extends Dependency> extends Ba
 
    @Override
    protected UpdateDependencyArgument argument(final ModelContext context, final TElement element,
-      final Set<String> sources,
-      final Set<String> targets) {
+      final List<String> sources,
+      final List<String> targets) {
       return UpdateDependencyArgument.by().clientIds(sources).supplierIds(targets).build();
    }
 }

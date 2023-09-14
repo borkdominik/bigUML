@@ -20,7 +20,7 @@ export function registerEnumerationElement(
 ): void {
     configureModelElement(
         context,
-        QualifiedUtil.representationTypeId(representation, DefaultTypes.COMPARTMENT, 'Enumeration'),
+        QualifiedUtil.representationTypeId(representation, DefaultTypes.NODE, 'Enumeration'),
         NamedElement,
         NamedElementView
     );

@@ -10,7 +10,6 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.elements.extend;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -42,8 +41,8 @@ public class ExtendConfiguration extends RepresentationEdgeConfiguration<Extend>
    public Set<EdgeTypeHint> getEdgeTypeHints() {
       return Set.of(
          new EdgeTypeHint(typeId(), true, true, true,
-            List.of(configurationFor(UseCase.class).typeId()),
-            List.of(configurationFor(UseCase.class).typeId())));
+            existingConfigurationTypeIds(Set.of(UseCase.class)),
+            existingConfigurationTypeIds(Set.of(UseCase.class))));
    }
 
 }

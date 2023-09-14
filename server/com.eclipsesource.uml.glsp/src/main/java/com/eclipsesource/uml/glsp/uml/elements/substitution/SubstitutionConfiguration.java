@@ -10,7 +10,6 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.elements.substitution;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -43,10 +42,10 @@ public class SubstitutionConfiguration extends RepresentationEdgeConfiguration<S
    public Set<EdgeTypeHint> getEdgeTypeHints() {
       return Set.of(
          new EdgeTypeHint(typeId(), true, true, true,
-            List.of(configurationFor(org.eclipse.uml2.uml.Class.class).typeId(),
-               configurationFor(Interface.class).typeId()),
-            List.of(configurationFor(org.eclipse.uml2.uml.Class.class).typeId(),
-               configurationFor(Interface.class).typeId())));
+            existingConfigurationTypeIds(Set.of(org.eclipse.uml2.uml.Class.class,
+               Interface.class)),
+            existingConfigurationTypeIds(Set.of(org.eclipse.uml2.uml.Class.class,
+               Interface.class))));
    }
 
 }

@@ -10,7 +10,6 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.elements.communication_path;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -44,13 +43,11 @@ public class CommunicationPathConfiguration extends RepresentationEdgeConfigurat
       // Applicable for Node, Device, ExecutionEnvironment
       return Set.of(
          new EdgeTypeHint(typeId(), true, true, true,
-            List.of(
-               configurationFor(org.eclipse.uml2.uml.Node.class).typeId(),
-               configurationFor(Device.class).typeId(),
-               configurationFor(ExecutionEnvironment.class).typeId()),
-            List.of(
-               configurationFor(org.eclipse.uml2.uml.Node.class).typeId(),
-               configurationFor(Device.class).typeId(),
-               configurationFor(ExecutionEnvironment.class).typeId())));
+            existingConfigurationTypeIds(Set.of(org.eclipse.uml2.uml.Node.class,
+               Device.class,
+               ExecutionEnvironment.class)),
+            existingConfigurationTypeIds(Set.of(org.eclipse.uml2.uml.Node.class,
+               Device.class,
+               ExecutionEnvironment.class))));
    }
 }

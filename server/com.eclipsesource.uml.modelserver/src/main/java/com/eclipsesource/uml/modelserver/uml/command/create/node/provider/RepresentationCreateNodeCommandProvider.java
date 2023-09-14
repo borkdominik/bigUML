@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.uml.command.provider.create;
+package com.eclipsesource.uml.modelserver.uml.command.create.node.provider;
 
 import java.util.Collection;
 

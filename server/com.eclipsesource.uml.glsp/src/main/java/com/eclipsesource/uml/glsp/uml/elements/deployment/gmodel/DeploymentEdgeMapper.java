@@ -38,17 +38,17 @@ public final class DeploymentEdgeMapper extends RepresentationGEdgeMapper<Deploy
 
    @Override
    public GEdge map(final Deployment source) {
-      var client = source.getClients().get(0);
-      var clientId = idGenerator.getOrCreateId(client);
-      var supplier = source.getSuppliers().get(0);
-      var supplierId = idGenerator.getOrCreateId(supplier);
+      var artifact = source.getDeployedArtifacts().get(0);
+      var edgeSourceId = idGenerator.getOrCreateId(artifact);
+      var location = source.getLocation();
+      var edgeTargetId = idGenerator.getOrCreateId(location);
 
       var builder = new GEdgeBuilder(configuration().typeId())
          .id(idGenerator.getOrCreateId(source))
          .addCssClasses(List.of(CoreCSS.EDGE, CoreCSS.EDGE_DASHED))
          .addCssClass(CoreCSS.Marker.TENT.end())
-         .sourceId(supplierId)
-         .targetId(clientId)
+         .sourceId(edgeSourceId)
+         .targetId(edgeTargetId)
          .routerKind(GConstants.RouterKind.POLYLINE)
          .add(textEdgeBuilder(
             source,

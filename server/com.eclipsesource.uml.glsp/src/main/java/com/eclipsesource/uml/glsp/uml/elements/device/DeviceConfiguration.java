@@ -10,7 +10,6 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.elements.device;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -51,11 +50,8 @@ public class DeviceConfiguration extends RepresentationNodeConfiguration<Device>
    public Set<ShapeTypeHint> getShapeTypeHints() {
       return Set.of(
          new ShapeTypeHint(typeId(), true, true, true, false,
-            List.of(
-               configuration().typeId(), // only on lvl 1
-               configurationFor(DeploymentSpecification.class).typeId(), // only on lvl 1
-               configurationFor(ExecutionEnvironment.class).typeId(), // only on lvl 1
-               configurationFor(org.eclipse.uml2.uml.Node.class).typeId() // only on lvl 1
-            )));
+            existingConfigurationTypeIds(Set.of(typeId()), Set.of(DeploymentSpecification.class,
+               ExecutionEnvironment.class,
+               org.eclipse.uml2.uml.Node.class))));
    }
 }

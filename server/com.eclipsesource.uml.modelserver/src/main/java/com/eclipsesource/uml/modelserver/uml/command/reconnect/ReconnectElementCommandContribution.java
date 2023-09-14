@@ -10,6 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.command.reconnect;
 
+import java.util.List;
 import java.util.Set;
 
 import org.eclipse.emf.common.command.Command;
@@ -52,8 +53,8 @@ public class ReconnectElementCommandContribution extends UmlCommandContribution 
       var decoder = new ContributionDecoder(ModelContext.of(modelUri, domain, command, injector));
       var context = decoder.context();
       var element = decoder.element(EObject.class).orElseThrow();
-      var sources = decoder.embedJson(SOURCES, new TypeToken<Set<String>>() {});
-      var targets = decoder.embedJson(TARGETS, new TypeToken<Set<String>>() {});
+      var sources = decoder.embedJson(SOURCES, new TypeToken<List<String>>() {});
+      var targets = decoder.embedJson(TARGETS, new TypeToken<List<String>>() {});
 
       return registry
          .access(context.representation(), element.getClass(), new TypeLiteral<ReconnectBehavior<EObject>>() {})

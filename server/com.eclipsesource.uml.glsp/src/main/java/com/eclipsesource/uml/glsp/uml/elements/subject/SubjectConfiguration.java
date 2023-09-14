@@ -10,7 +10,6 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.elements.subject;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -46,6 +45,6 @@ public class SubjectConfiguration extends RepresentationNodeConfiguration<Compon
    public Set<ShapeTypeHint> getShapeTypeHints() {
       return Set.of(
          new ShapeTypeHint(typeId(), true, true, true, false,
-            List.of(configurationFor(UseCase.class).typeId())));
+            existingConfigurationTypeIds(Set.of(UseCase.class))));
    }
 }

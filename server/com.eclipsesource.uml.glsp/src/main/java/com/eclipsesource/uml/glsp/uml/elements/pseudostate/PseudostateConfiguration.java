@@ -10,7 +10,6 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.elements.pseudostate;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -85,11 +84,11 @@ public class PseudostateConfiguration extends RepresentationNodeConfiguration<Ps
    @Override
    public Set<ShapeTypeHint> getShapeTypeHints() {
       return Set.of(
-         new ShapeTypeHint(choiceTypeId(), true, true, true, false, List.of()),
-         new ShapeTypeHint(deepHistoryTypeId(), true, true, true, false, List.of()),
-         new ShapeTypeHint(forkTypeId(), true, true, true, false, List.of()),
-         new ShapeTypeHint(initialStateTypeId(), true, true, true, false, List.of()),
-         new ShapeTypeHint(joinTypeId(), true, true, true, false, List.of()),
-         new ShapeTypeHint(shallowHistoryTypeId(), true, true, true, false, List.of()));
+         new ShapeTypeHint(choiceTypeId(), true, true, true, false, existingConfigurationTypeIds(Set.of())),
+         new ShapeTypeHint(deepHistoryTypeId(), true, true, true, false, existingConfigurationTypeIds(Set.of())),
+         new ShapeTypeHint(forkTypeId(), true, true, true, false, existingConfigurationTypeIds(Set.of())),
+         new ShapeTypeHint(initialStateTypeId(), true, true, true, false, existingConfigurationTypeIds(Set.of())),
+         new ShapeTypeHint(joinTypeId(), true, true, true, false, existingConfigurationTypeIds(Set.of())),
+         new ShapeTypeHint(shallowHistoryTypeId(), true, true, true, false, existingConfigurationTypeIds(Set.of())));
    }
 }

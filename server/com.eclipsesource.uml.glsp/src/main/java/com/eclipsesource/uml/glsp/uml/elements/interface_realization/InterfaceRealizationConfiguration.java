@@ -10,7 +10,6 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.elements.interface_realization;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -43,8 +42,8 @@ public class InterfaceRealizationConfiguration extends RepresentationEdgeConfigu
    public Set<EdgeTypeHint> getEdgeTypeHints() {
       return Set.of(
          new EdgeTypeHint(typeId(), true, true, true,
-            List.of(configurationFor(org.eclipse.uml2.uml.Class.class).typeId()),
-            List.of(configurationFor(Interface.class).typeId())));
+            existingConfigurationTypeIds(Set.of(org.eclipse.uml2.uml.Class.class)),
+            existingConfigurationTypeIds(Set.of(Interface.class))));
    }
 
 }

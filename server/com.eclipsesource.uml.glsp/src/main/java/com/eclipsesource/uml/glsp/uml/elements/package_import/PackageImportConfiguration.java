@@ -10,7 +10,6 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.elements.package_import;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -42,7 +41,7 @@ public class PackageImportConfiguration extends RepresentationEdgeConfiguration<
    public Set<EdgeTypeHint> getEdgeTypeHints() {
       return Set.of(
          new EdgeTypeHint(typeId(), true, true, true,
-            List.of(configurationFor(org.eclipse.uml2.uml.Package.class).typeId()),
-            List.of(configurationFor(org.eclipse.uml2.uml.Package.class).typeId())));
+            existingConfigurationTypeIds(Set.of(org.eclipse.uml2.uml.Package.class)),
+            existingConfigurationTypeIds(Set.of(org.eclipse.uml2.uml.Package.class))));
    }
 }

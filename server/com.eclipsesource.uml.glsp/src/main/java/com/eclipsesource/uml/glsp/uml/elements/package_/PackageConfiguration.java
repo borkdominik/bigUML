@@ -10,7 +10,6 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.elements.package_;
 
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
 
@@ -59,16 +58,12 @@ public class PackageConfiguration extends RepresentationNodeConfiguration<org.ec
    @Override
    public Set<ShapeTypeHint> getShapeTypeHints() {
 
-      var children = new ArrayList<String>();
-
-      existingConfigurationTypeIds(
-         Set.of(Artifact.class, Class.class, Device.class, DeploymentSpecification.class, Enumeration.class,
-            ExecutionEnvironment.class, Interface.class, DataType.class, Model.class, org.eclipse.uml2.uml.Node.class,
-            PrimitiveType.class, Package.class))
-               .forEach(children::add);
-
       return Set.of(
-         new ShapeTypeHint(typeId(), true, true, true, false, children));
+         new ShapeTypeHint(typeId(), true, true, true, false, existingConfigurationTypeIds(
+            Set.of(Artifact.class, Class.class, Device.class, DeploymentSpecification.class, Enumeration.class,
+               ExecutionEnvironment.class, Interface.class, DataType.class, Model.class,
+               org.eclipse.uml2.uml.Node.class,
+               PrimitiveType.class, Package.class))));
 
    }
 }

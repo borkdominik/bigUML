@@ -10,7 +10,6 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.elements.node;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -53,14 +52,9 @@ public class NodeConfiguration extends RepresentationNodeConfiguration<Node> {
    public Set<ShapeTypeHint> getShapeTypeHints() {
       return Set.of(
          new ShapeTypeHint(typeId(), true, true, true, false,
-            List.of(
-               configurationFor(Artifact.class).typeId(), // same behavior as artifact
-               configurationFor(Device.class).typeId(), // only on lvl 1 no children allowed !- not supported within
-                                                        // node
-               configurationFor(DeploymentSpecification.class).typeId(), // same behavior as DS !-- not supoprted within
-                                                                         // node
-               configurationFor(ExecutionEnvironment.class).typeId(), // only on lvl 1 no children allowed
-               typeId() // only on lvl 1 no children allowed
-            )));
+            existingConfigurationTypeIds(Set.of(typeId()), Set.of(Artifact.class,
+               Device.class,
+               DeploymentSpecification.class,
+               ExecutionEnvironment.class))));
    }
 }

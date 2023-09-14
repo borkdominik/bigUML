@@ -10,7 +10,6 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.elements.execution_environment;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -51,11 +50,8 @@ public class ExecutionEnvironmentConfiguration extends RepresentationNodeConfigu
    public Set<ShapeTypeHint> getShapeTypeHints() {
       return Set.of(
          new ShapeTypeHint(typeId(), true, true, true, false,
-            List.of(
-               configurationFor(Artifact.class).typeId(), // all levels of artifacts allowed
-               configurationFor(DeploymentSpecification.class).typeId(), // only on level 1
-               configuration().typeId() // only on level 1
-            )));
+            existingConfigurationTypeIds(Set.of(typeId()), Set.of(Artifact.class,
+               DeploymentSpecification.class))));
    }
 
 }

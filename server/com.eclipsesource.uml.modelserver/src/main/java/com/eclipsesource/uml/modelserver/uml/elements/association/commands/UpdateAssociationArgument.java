@@ -10,8 +10,8 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.elements.association.commands;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.eclipse.glsp.server.emf.EMFIdGenerator;
@@ -20,9 +20,9 @@ import org.eclipse.uml2.uml.Type;
 import com.eclipsesource.uml.modelserver.uml.elements.classifier.UpdateClassifierArgument;
 
 public class UpdateAssociationArgument extends UpdateClassifierArgument {
-   protected Set<String> endTypeIds;
+   protected List<String> endTypeIds;
 
-   public Optional<Set<String>> endTypeIds() {
+   public Optional<List<String>> endTypeIds() {
       return Optional.ofNullable(endTypeIds);
    }
 
@@ -33,13 +33,13 @@ public class UpdateAssociationArgument extends UpdateClassifierArgument {
    public static class Builder<TArgument extends UpdateAssociationArgument>
       extends UpdateClassifierArgument.Builder<TArgument> {
 
-      public Builder<TArgument> endTypeIds(final Set<String> value) {
+      public Builder<TArgument> endTypeIds(final List<String> value) {
          argument.endTypeIds = value;
          return this;
       }
 
-      public Builder<TArgument> endTypes(final Set<Type> value, final EMFIdGenerator id) {
-         argument.endTypeIds = value.stream().map(v -> id.getOrCreateId(v)).collect(Collectors.toUnmodifiableSet());
+      public Builder<TArgument> endTypes(final List<Type> value, final EMFIdGenerator id) {
+         argument.endTypeIds = value.stream().map(v -> id.getOrCreateId(v)).collect(Collectors.toUnmodifiableList());
          return this;
       }
    }

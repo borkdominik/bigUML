@@ -8,24 +8,24 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.uml.elements.include.behavior;
+package com.eclipsesource.uml.modelserver.uml.elements.transition.behavior;
 
 import java.util.List;
 
-import org.eclipse.uml2.uml.Include;
+import org.eclipse.uml2.uml.Transition;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.uml.behavior.reconnect.BaseReconnectBehavior;
-import com.eclipsesource.uml.modelserver.uml.elements.include.commands.UpdateIncludeArgument;
+import com.eclipsesource.uml.modelserver.uml.elements.transition.commands.UpdateTransitionArgument;
 
-public class IncludeReconnectBehavior<TElement extends Include> extends BaseReconnectBehavior<TElement> {
+public class TransitionReconnectBehavior<TElement extends Transition> extends BaseReconnectBehavior<TElement> {
 
    @Override
-   protected UpdateIncludeArgument argument(final ModelContext context, final TElement element,
+   protected UpdateTransitionArgument argument(final ModelContext context, final TElement element,
       final List<String> sources,
       final List<String> targets) {
-      var source = sources.get(0);
-      var target = targets.get(0);
-      return UpdateIncludeArgument.by().includingCaseId(source).additionId(target).build();
+      var sourceId = sources.get(0);
+      var targetId = targets.get(0);
+      return UpdateTransitionArgument.by().sourceId(sourceId).targetId(targetId).build();
    }
 }

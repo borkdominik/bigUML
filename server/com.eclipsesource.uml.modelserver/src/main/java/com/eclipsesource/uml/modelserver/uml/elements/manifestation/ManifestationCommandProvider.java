@@ -14,6 +14,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.emf.common.command.Command;
+import org.eclipse.uml2.uml.Artifact;
 import org.eclipse.uml2.uml.Manifestation;
 import org.eclipse.uml2.uml.PackageableElement;
 
@@ -26,9 +27,9 @@ import com.eclipsesource.uml.modelserver.uml.elements.manifestation.commands.Upd
 import com.eclipsesource.uml.modelserver.uml.elements.manifestation.commands.UpdateManifestationSemanticCommand;
 
 public class ManifestationCommandProvider
-   extends EdgeCommandProvider<Manifestation, PackageableElement, PackageableElement> {
+   extends EdgeCommandProvider<Manifestation, Artifact, PackageableElement> {
    @Override
-   protected Collection<Command> createModifications(final ModelContext context, final PackageableElement source,
+   protected Collection<Command> createModifications(final ModelContext context, final Artifact source,
       final PackageableElement target) {
       var semantic = new CreateManifestationSemanticCommand(context, source,
          target);

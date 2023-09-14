@@ -10,7 +10,6 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.elements.data_type;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -51,8 +50,8 @@ public class DataTypeConfiguration extends RepresentationNodeConfiguration<DataT
    public Set<ShapeTypeHint> getShapeTypeHints() {
       return Set.of(
          new ShapeTypeHint(typeId(), true, true, true, false,
-            List.of(configurationFor(org.eclipse.uml2.uml.Property.class).typeId(),
-               configurationFor(Operation.class).typeId())));
+            existingConfigurationTypeIds(Set.of(org.eclipse.uml2.uml.Property.class,
+               Operation.class))));
    }
 
 }

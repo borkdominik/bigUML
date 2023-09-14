@@ -10,7 +10,6 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.elements.parameter;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -55,6 +54,6 @@ public class ParameterConfiguration extends RepresentationNodeConfiguration<Para
    public Set<ShapeTypeHint> getShapeTypeHints() {
       return Set.of(
          new ShapeTypeHint(typeId(), false, true, false, false,
-            List.of()));
+            existingConfigurationTypeIds(Set.of())));
    }
 }

@@ -10,6 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.configuration;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -52,5 +53,13 @@ public abstract class RepresentationElementConfiguration<TElement extends EObjec
    protected List<String> existingConfigurationTypeIds(final Set<Class<? extends EObject>> configurations) {
       return existingConfigurations(configurations).stream().flatMap(c -> c.allTypeIds().stream())
          .collect(Collectors.toList());
+   }
+
+   protected List<String> existingConfigurationTypeIds(final Set<String> typeIds,
+      final Set<Class<? extends EObject>> configurations) {
+      var ids = new ArrayList<>(typeIds);
+      ids.addAll(existingConfigurations(configurations).stream().flatMap(c -> c.allTypeIds().stream())
+         .collect(Collectors.toList()));
+      return ids;
    }
 }

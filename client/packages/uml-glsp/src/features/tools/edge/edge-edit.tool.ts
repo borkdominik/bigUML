@@ -163,7 +163,6 @@ class UmlFeedbackEdgeSourceMovingMouseListener extends FeedbackEdgeSourceMovingM
         if (endAtMousePosition instanceof SConnectableElement && edge.target && isBoundsAware(edge.target)) {
             const anchor = this.computeAbsoluteAnchor(endAtMousePosition, Bounds.center(edge.target.bounds));
             if (Point.euclideanDistance(anchor, edgeEnd.position) > 1) {
-                console.log('SOURCE ANCHOR', anchor, position, Point.euclideanDistance(anchor, edgeEnd.position));
                 return [MoveAction.create([{ elementId: edgeEnd.id, toPosition: anchor }], { animate: false })];
             }
         } else {

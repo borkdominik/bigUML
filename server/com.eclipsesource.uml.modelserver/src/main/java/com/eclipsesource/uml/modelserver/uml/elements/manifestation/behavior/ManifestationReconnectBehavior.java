@@ -8,24 +8,23 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.uml.elements.include.behavior;
+package com.eclipsesource.uml.modelserver.uml.elements.manifestation.behavior;
 
 import java.util.List;
 
-import org.eclipse.uml2.uml.Include;
+import org.eclipse.uml2.uml.Manifestation;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
-import com.eclipsesource.uml.modelserver.uml.behavior.reconnect.BaseReconnectBehavior;
-import com.eclipsesource.uml.modelserver.uml.elements.include.commands.UpdateIncludeArgument;
+import com.eclipsesource.uml.modelserver.uml.elements.dependency.behavior.DependencyReconnectBehavior;
+import com.eclipsesource.uml.modelserver.uml.elements.manifestation.commands.UpdateManifestationArgument;
 
-public class IncludeReconnectBehavior<TElement extends Include> extends BaseReconnectBehavior<TElement> {
+public class ManifestationReconnectBehavior<TElement extends Manifestation>
+   extends DependencyReconnectBehavior<TElement> {
 
    @Override
-   protected UpdateIncludeArgument argument(final ModelContext context, final TElement element,
+   protected UpdateManifestationArgument argument(final ModelContext context, final TElement element,
       final List<String> sources,
       final List<String> targets) {
-      var source = sources.get(0);
-      var target = targets.get(0);
-      return UpdateIncludeArgument.by().includingCaseId(source).additionId(target).build();
+      return UpdateManifestationArgument.by().clientIds(sources).supplierIds(targets).build();
    }
 }

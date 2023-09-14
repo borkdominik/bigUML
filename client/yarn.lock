@@ -1716,7 +1716,7 @@
     tabbable "^5.2.0"
     tslib "^1.13.0"
 
-"@microsoft/fast-foundation@^2.46.2":
+"@microsoft/fast-foundation@^2.46.2", "@microsoft/fast-foundation@^2.49.1":
   version "2.49.1"
   resolved "https://registry.yarnpkg.com/@microsoft/fast-foundation/-/fast-foundation-2.49.1.tgz#f9cd36491d4d0080e694eaf0aece5672cdf7075a"
   integrity sha512-dSajlZeX+lkqjg4108XbIIhVLECgJTCG32bE8P6rNgo8XCPHVJBDiBejrF34lv5pO9Z2uGORZjeip/N0fPib+g==

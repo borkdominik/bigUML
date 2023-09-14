@@ -10,7 +10,6 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.elements.state_machine;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -47,6 +46,6 @@ public class StateMachineConfiguration extends RepresentationNodeConfiguration<S
    public Set<ShapeTypeHint> getShapeTypeHints() {
       return Set.of(
          new ShapeTypeHint(typeId(), true, true, true, false,
-            List.of(configurationFor(Region.class).typeId())));
+            existingConfigurationTypeIds(Set.of(Region.class))));
    }
 }

@@ -10,7 +10,6 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.elements.model;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -52,14 +51,12 @@ public class ModelConfiguration extends RepresentationNodeConfiguration<Model> {
    public Set<ShapeTypeHint> getShapeTypeHints() {
       return Set.of(
          new ShapeTypeHint(typeId(), true, true, true, false,
-            List.of(
-               configurationFor(Artifact.class).typeId(), // behavior deviates from original artifact only on lvl 1
-                                                          // allowed see
-               configurationFor(Device.class).typeId(), // see device behavior
-               configurationFor(DeploymentSpecification.class).typeId(), // see Deployment Sepc behavior
-               configurationFor(ExecutionEnvironment.class).typeId(), // see Execution Environment behavior
-               configuration().typeId(), // same behavior all levels
-               configurationFor(org.eclipse.uml2.uml.Node.class).typeId(), // same behavior as node
-               configurationFor(org.eclipse.uml2.uml.Package.class).typeId()))); // same behavior on all levels
+            existingConfigurationTypeIds(Set.of(typeId()), Set.of(
+               Artifact.class,
+               Device.class,
+               DeploymentSpecification.class,
+               ExecutionEnvironment.class,
+               org.eclipse.uml2.uml.Node.class,
+               org.eclipse.uml2.uml.Package.class))));
    }
 }

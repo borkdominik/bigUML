@@ -10,7 +10,6 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.elements.literal_specification;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -75,8 +74,8 @@ public class LiteralSpecificationConfiguration extends RepresentationNodeConfigu
    @Override
    public Set<ShapeTypeHint> getShapeTypeHints() {
       return Set.of(
-         new ShapeTypeHint(literalBooleanTypeId(), false, true, false, false, List.of()),
-         new ShapeTypeHint(literalStringTypeId(), false, true, false, false, List.of()),
-         new ShapeTypeHint(literalIntegerTypeId(), false, true, false, false, List.of()));
+         new ShapeTypeHint(literalBooleanTypeId(), false, true, false, false, existingConfigurationTypeIds(Set.of())),
+         new ShapeTypeHint(literalStringTypeId(), false, true, false, false, existingConfigurationTypeIds(Set.of())),
+         new ShapeTypeHint(literalIntegerTypeId(), false, true, false, false, existingConfigurationTypeIds(Set.of())));
    }
 }

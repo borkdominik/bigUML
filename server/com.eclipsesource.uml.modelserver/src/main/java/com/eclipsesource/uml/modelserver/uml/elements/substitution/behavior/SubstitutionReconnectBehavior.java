@@ -10,8 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.elements.substitution.behavior;
 
-import java.util.ArrayList;
-import java.util.Set;
+import java.util.List;
 
 import org.eclipse.uml2.uml.Substitution;
 
@@ -22,11 +21,12 @@ import com.eclipsesource.uml.modelserver.uml.elements.substitution.commands.Upda
 public class SubstitutionReconnectBehavior<TElement extends Substitution> extends BaseReconnectBehavior<TElement> {
    @Override
    protected UpdateSubstitutionArgument argument(final ModelContext context, final TElement element,
-      final Set<String> sources,
-      final Set<String> targets) {
-      var substitutedClassifier = new ArrayList<>(sources).get(0);
-      var contract = new ArrayList<>(targets).get(0);
+      final List<String> sources,
+      final List<String> targets) {
+      var substitutedClassifier = sources.get(0);
+      var contract = targets.get(0);
 
-      return UpdateSubstitutionArgument.by().substitutedClassifierId(substitutedClassifier).contractId(contract).build();
+      return UpdateSubstitutionArgument.by().substitutedClassifierId(substitutedClassifier).contractId(contract)
+         .build();
    }
 }

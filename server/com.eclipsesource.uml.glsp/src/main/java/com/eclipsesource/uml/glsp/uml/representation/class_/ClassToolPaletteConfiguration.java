@@ -21,6 +21,7 @@ import org.eclipse.uml2.uml.Dependency;
 import org.eclipse.uml2.uml.Enumeration;
 import org.eclipse.uml2.uml.EnumerationLiteral;
 import org.eclipse.uml2.uml.Generalization;
+import org.eclipse.uml2.uml.InstanceSpecification;
 import org.eclipse.uml2.uml.Interface;
 import org.eclipse.uml2.uml.InterfaceRealization;
 import org.eclipse.uml2.uml.Operation;
@@ -29,6 +30,7 @@ import org.eclipse.uml2.uml.PackageMerge;
 import org.eclipse.uml2.uml.PrimitiveType;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.Realization;
+import org.eclipse.uml2.uml.Slot;
 import org.eclipse.uml2.uml.Substitution;
 import org.eclipse.uml2.uml.Usage;
 
@@ -60,7 +62,9 @@ public final class ClassToolPaletteConfiguration extends RepresentationToolPalet
          PaletteItemUtil.node(configurationFor(PrimitiveType.class).typeId(), "Primitive Type",
             "uml-primitive-type-icon"),
          PaletteItemUtil.node(configurationFor(org.eclipse.uml2.uml.Package.class).typeId(), "Package",
-            "uml-package-icon"));
+            "uml-package-icon"),
+         PaletteItemUtil.node(configurationFor(InstanceSpecification.class).typeId(), "Instance Specification",
+            "uml-instance-specification-icon"));
 
       return PaletteItem.createPaletteGroup("uml.classifier", "Container", containers, "symbol-property");
    }
@@ -96,7 +100,9 @@ public final class ClassToolPaletteConfiguration extends RepresentationToolPalet
          PaletteItemUtil.node(configurationFor(Property.class).typeId(), "Property", "uml-property-icon"),
          PaletteItemUtil.node(configurationFor(EnumerationLiteral.class).typeId(), "Enumeration Literal",
             "uml-enumeration-literal-icon"),
-         PaletteItemUtil.node(configurationFor(Operation.class).typeId(), "Operation", "uml-operation-icon"));
+         PaletteItemUtil.node(configurationFor(Operation.class).typeId(), "Operation", "uml-operation-icon"),
+         PaletteItemUtil.node(configurationFor(Slot.class).typeId(), "Slot",
+            "uml-slot-icon"));
 
       return PaletteItem.createPaletteGroup("uml.classifier", "Feature", features, "symbol-property");
    }

@@ -167,6 +167,7 @@ Coming Soon!
 - **Language Complete**: Backend is language complete
 - **Property Palette Complete**: Property Palette supports all entries
 - **Outline View Complete**: Outline View is diagram specific
+- **Validation**: Diagram supports validation
 
 </details>
 

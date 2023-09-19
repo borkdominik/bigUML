@@ -77,6 +77,16 @@ Coming Soon!
 
 <!-- =========================== -->
 <details>
+<summary><strong>Communication Diagram</strong></summary>
+
+Coming Soon!
+
+<em>Initial implementation provided by: [@aylin-sarioglu](https://github.com/aylin-sarioglu), [@haydar-metin](https://github.com/haydar-metin)</em>
+
+</details>
+
+<!-- =========================== -->
+<details>
 <summary><strong>Deployment Diagram</strong></summary>
 
 <img src="./media/vscode-deployment.png" alt="Deployment Diagram" />
@@ -137,9 +147,9 @@ Coming Soon!
 
 ### Behavior Diagrams
 
-| Use Case | Activity | State Machine | Sequence                 | Communication         | Interaction | Timing |
-| -------- | -------- | ------------- | ------------------------ | --------------------- | ----------- | ------ |
-| Initial  | -        | Initial       | Contribution in progress | Initial, not released | -           | -      |
+| Use Case | Activity | State Machine | Sequence                 | Communication | Interaction | Timing |
+| -------- | -------- | ------------- | ------------------------ | ------------- | ----------- | ------ |
+| Initial  | -        | Initial       | Contribution in progress | Initial       | -           | -      |
 
 ### Extra
 
@@ -151,6 +161,12 @@ Coming Soon!
 
 1. **Initial**: Fundemental structure (client and server side) implemented
 1. **Beautification**: Improving the UI to respect the specification
+
+### Features
+
+- **Language Complete**: Backend is language complete
+- **Property Palette Complete**: Property Palette supports all entries
+- **Outline View Complete**: Outline View is diagram specific
 
 </details>
 

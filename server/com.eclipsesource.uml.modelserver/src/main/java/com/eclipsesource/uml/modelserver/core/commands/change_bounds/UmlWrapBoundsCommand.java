@@ -77,8 +77,11 @@ public class UmlWrapBoundsCommand extends BaseNotationElementCommand {
             .getOwnedElements()
             .stream()
             .filter(e -> {
-               var notation = notationElementAccessor.getElement(SemanticElementAccessor.getId(e)).get();
-               return notation instanceof Shape;
+               var notation = notationElementAccessor.getElement(SemanticElementAccessor.getId(e));
+               if (notation.isEmpty()) {
+                  return false;
+               }
+               return notation.get() instanceof Shape;
             })
             .map(e -> {
                return notationElementAccessor.getElement(SemanticElementAccessor.getId(e), Shape.class).get();

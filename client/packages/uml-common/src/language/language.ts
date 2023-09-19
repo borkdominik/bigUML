@@ -29,6 +29,7 @@ export namespace UmlDiagramTypeUtil {
     export const supported: UmlDiagramType[] = [
         UmlDiagramType.ACTIVITY,
         UmlDiagramType.CLASS,
+        UmlDiagramType.COMMUNICATION,
         UmlDiagramType.DEPLOYMENT,
         UmlDiagramType.INFORMATION_FLOW,
         UmlDiagramType.STATE_MACHINE,

@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2023 EclipseSource and others.
+ * Copyright (c) 2021-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -8,11 +8,13 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.uml.elements.final_state.gmodel;
+package com.eclipsesource.uml.glsp.uml.elements.lifeline.gmodel;
 
+import org.eclipse.glsp.graph.GCompartment;
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.builder.impl.GNodeBuilder;
-import org.eclipse.uml2.uml.FinalState;
+import org.eclipse.glsp.graph.util.GConstants;
+import org.eclipse.uml2.uml.Lifeline;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.uml.gmodel.RepresentationGNodeMapper;
@@ -21,22 +23,34 @@ import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
-public class FinalStateNodeMapper extends RepresentationGNodeMapper<FinalState, GNode>
-   implements NamedElementGBuilder<FinalState> {
+public class LifelineNodeMapper extends RepresentationGNodeMapper<Lifeline, GNode>
+   implements NamedElementGBuilder<Lifeline> {
 
    @Inject
-   public FinalStateNodeMapper(@Assisted final Representation representation) {
+   public LifelineNodeMapper(@Assisted final Representation representation) {
       super(representation);
    }
 
    @Override
-   public GNode map(final FinalState source) {
+   public GNode map(final Lifeline source) {
       var builder = new GNodeBuilder(configuration().typeId())
          .id(idGenerator.getOrCreateId(source))
-         .addCssClass(CoreCSS.NO_STROKE);
+         .layout(GConstants.Layout.VBOX)
+         .addCssClass(CoreCSS.NODE)
+         .add(buildHeader(source));
 
       applyShapeNotation(source, builder);
 
       return builder.build();
    }
+
+   protected GCompartment buildHeader(final Lifeline source) {
+      var header = compartmentHeaderBuilder(source)
+         .layout(GConstants.Layout.VBOX);
+
+      header.add(buildHeaderName(source, "--uml-lifeline-icon"));
+
+      return header.build();
+   }
+
 }

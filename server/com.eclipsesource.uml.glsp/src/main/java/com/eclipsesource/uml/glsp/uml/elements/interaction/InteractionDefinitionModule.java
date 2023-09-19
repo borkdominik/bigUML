@@ -8,18 +8,14 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.uml.elements.execution_environment.commands;
+package com.eclipsesource.uml.glsp.uml.elements.interaction;
 
-import com.eclipsesource.uml.modelserver.uml.elements.node.commands.UpdateNodeArgument;
+import com.eclipsesource.uml.glsp.core.manifest.DiagramManifest;
+import com.eclipsesource.uml.glsp.uml.manifest.node.NodeFactoryDefinition;
 
-public class UpdateExecutionEnvironmentArgument extends UpdateNodeArgument {
+public class InteractionDefinitionModule extends NodeFactoryDefinition {
 
-   public static Builder<?> by() {
-      return new Builder<>();
-   }
-
-   public static class Builder<TArgument extends UpdateExecutionEnvironmentArgument>
-      extends UpdateNodeArgument.Builder<TArgument> {
-
+   public InteractionDefinitionModule(final DiagramManifest manifest) {
+      super(manifest.id(), manifest.representation(), InteractionFactory.class);
    }
 }

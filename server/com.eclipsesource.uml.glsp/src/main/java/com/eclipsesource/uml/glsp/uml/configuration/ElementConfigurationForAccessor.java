@@ -22,6 +22,10 @@ public interface ElementConfigurationForAccessor {
 
    ElementConfigurationRegistry configurationRegistry();
 
+   default Boolean existsConfigurationFor(final Class<? extends EObject> configuration) {
+      return existsConfigurationFor(Set.of(configuration));
+   }
+
    default Boolean existsConfigurationFor(final Set<Class<? extends EObject>> configurations) {
       return configurations.stream().allMatch(c -> configurationRegistry().get(representation(), c).isPresent());
    }

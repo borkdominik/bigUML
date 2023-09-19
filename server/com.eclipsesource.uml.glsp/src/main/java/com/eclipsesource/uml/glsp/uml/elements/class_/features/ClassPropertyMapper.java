@@ -13,6 +13,7 @@ package com.eclipsesource.uml.glsp.uml.elements.class_.features;
 import java.util.Optional;
 
 import org.eclipse.uml2.uml.Class;
+import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.VisibilityKind;
 
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
@@ -40,7 +41,7 @@ public class ClassPropertyMapper extends RepresentationElementPropertyMapper<Cla
    public PropertyPalette map(final Class source) {
       var elementId = idGenerator.getOrCreateId(source);
 
-      var items = this.propertyBuilder(ClassConfiguration.Property.class, elementId)
+      var builder = this.propertyBuilder(ClassConfiguration.Property.class, elementId)
          .text(ClassConfiguration.Property.NAME, "Name", source.getName())
          .bool(ClassConfiguration.Property.IS_ABSTRACT, "Is abstract", source.isAbstract())
          .bool(ClassConfiguration.Property.IS_ACTIVE, "Is active", source.isActive())
@@ -48,14 +49,19 @@ public class ClassPropertyMapper extends RepresentationElementPropertyMapper<Cla
             ClassConfiguration.Property.VISIBILITY_KIND,
             "Visibility",
             VisibilityKindUtils.asChoices(),
-            source.getVisibility().getLiteral())
-         .reference(PropertyPropertyPaletteUtils.asReference(this, elementId,
-            ClassConfiguration.Property.OWNED_ATTRIBUTES, "Owned Attribute", source.getOwnedAttributes()))
-         .reference(OperationPropertyPaletteUtils.asReference(this, elementId,
-            ClassConfiguration.Property.OWNED_OPERATIONS, "Owned Operation", source.getOwnedOperations()))
-         .items();
+            source.getVisibility().getLiteral());
 
-      return new PropertyPalette(elementId, source.getName(), items);
+      if (existsConfigurationFor(Property.class)) {
+         builder.reference(PropertyPropertyPaletteUtils.asReference(this, elementId,
+            ClassConfiguration.Property.OWNED_ATTRIBUTES, "Owned Attribute", source.getOwnedAttributes()));
+      }
+
+      if (existsConfigurationFor(Property.class)) {
+         builder.reference(OperationPropertyPaletteUtils.asReference(this, elementId,
+            ClassConfiguration.Property.OWNED_OPERATIONS, "Owned Operation", source.getOwnedOperations()));
+      }
+
+      return new PropertyPalette(elementId, source.getName(), builder.items());
    }
 
    @Override

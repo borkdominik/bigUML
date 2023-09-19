@@ -27,6 +27,7 @@ export * from './execution-environment/execution-environment.element';
 export * from './extend/extend.element';
 export * from './generalization/generalization.element';
 export * from './include/include.element';
+export * from './information-flow/information-flow.element';
 export * from './instance-specification/instance-specification.element';
 export * from './interface-realization/interface-realization.element';
 export * from './interface/interface.element';

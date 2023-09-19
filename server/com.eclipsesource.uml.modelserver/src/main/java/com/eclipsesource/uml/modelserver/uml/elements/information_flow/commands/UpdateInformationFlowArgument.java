@@ -8,25 +8,17 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.uml.diagram.demo.manifest;
+package com.eclipsesource.uml.modelserver.uml.elements.information_flow.commands;
 
-import com.eclipsesource.uml.glsp.core.manifest.DiagramManifest;
-import com.eclipsesource.uml.modelserver.unotation.Representation;
+import com.eclipsesource.uml.modelserver.uml.elements.named_element.UpdateNamedElementArgument;
 
-public class DemoManifest extends DiagramManifest {
-
-   @Override
-   public String id() {
-      return representation().getName();
+public class UpdateInformationFlowArgument extends UpdateNamedElementArgument {
+   public static Builder<?> by() {
+      return new Builder<>();
    }
 
-   @Override
-   public Representation representation() {
-      return Representation.COMPONENT;
-   }
+   public static class Builder<TArgument extends UpdateInformationFlowArgument>
+      extends UpdateNamedElementArgument.Builder<TArgument> {
 
-   @Override
-   protected void configure() {
-      super.configure();
    }
 }

@@ -21,5 +21,6 @@
     <eLiterals name="STATE_MACHINE" value="11"/>
     <eLiterals name="TIMING" value="12"/>
     <eLiterals name="USE_CASE" value="13"/>
+    <eLiterals name="INFORMATION_FLOW" value="14" literal="INFORMATION_FLOW"/>
   </eClassifiers>
 </ecore:EPackage>

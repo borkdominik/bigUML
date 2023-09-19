@@ -21,6 +21,8 @@ public class CoreCSS {
    public static final String ELLIPSE = "uml-ellipse";
    public static final String PACKAGEABLE_NODE = "uml-packageable-node";
 
+   public static final String NODE_CONTAINER = "uml-node-container";
+
    public static final String EDGE_DOTTED = "uml-edge-dotted";
    public static final String EDGE_DASHED = "uml-edge-dashed";
 

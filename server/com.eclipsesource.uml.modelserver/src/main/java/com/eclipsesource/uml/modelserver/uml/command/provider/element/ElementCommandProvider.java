@@ -29,4 +29,5 @@ public abstract class ElementCommandProvider<TElement extends EObject>
 
    @Override
    public Set<Class<? extends TElement>> getElementTypes() { return Set.of(getElementType()); }
+
 }

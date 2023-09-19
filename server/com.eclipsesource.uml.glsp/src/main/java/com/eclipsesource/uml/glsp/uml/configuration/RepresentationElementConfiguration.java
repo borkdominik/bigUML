@@ -46,6 +46,9 @@ public abstract class RepresentationElementConfiguration<TElement extends EObjec
    public Class<TElement> getElementType() { return (Class<TElement>) elementType.getRawType(); }
 
    @Override
+   public Set<Class<? extends TElement>> getElementTypes() { return Set.of(getElementType()); }
+
+   @Override
    public ElementConfigurationRegistry configurationRegistry() {
       return configurationRegistry.get();
    }

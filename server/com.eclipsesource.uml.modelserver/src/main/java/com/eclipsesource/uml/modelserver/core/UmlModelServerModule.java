@@ -72,10 +72,14 @@ public class UmlModelServerModule extends EMSNotationModelServerModule {
    }
 
    @Override
-   protected String getSemanticFileExtension() { return UMLResource.FILE_EXTENSION; }
+   protected String getSemanticFileExtension() {
+      return UMLResource.FILE_EXTENSION;
+   }
 
    @Override
-   protected String getNotationFileExtension() { return UmlNotationResource.FILE_EXTENSION; }
+   protected String getNotationFileExtension() {
+      return UmlNotationResource.FILE_EXTENSION;
+   }
 
    @Override
    protected void configureEPackages(final MultiBinding<EPackageConfiguration> binding) {

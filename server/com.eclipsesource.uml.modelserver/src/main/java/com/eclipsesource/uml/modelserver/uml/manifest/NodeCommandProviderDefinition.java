@@ -10,6 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.uml.manifest;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.eclipse.emf.ecore.EObject;
@@ -28,21 +29,31 @@ public abstract class NodeCommandProviderDefinition extends NodeDefinition {
       super(id, representation);
    }
 
-   protected abstract Optional<TypeLiteral<? extends NodeCommandProvider<?, ?>>> commandProvider();
+   protected Optional<TypeLiteral<? extends NodeCommandProvider<?, ?>>> commandProvider() {
+      return Optional.empty();
+   }
+
+   protected Optional<List<TypeLiteral<? extends NodeCommandProvider<?, ?>>>> commandProviders() {
+      return Optional.empty();
+   }
 
    @Override
    protected void createCommandProvider(
       final Multibinder<CreateNodeCommandProvider<? extends EObject, ?>> contributions) {
       commandProvider().ifPresent(i -> contributions.addBinding().to(i));
+      commandProviders().ifPresent(is -> is.forEach(i -> contributions.addBinding().to(i)));
+
    }
 
    @Override
    protected void deleteCommandProvider(final Multibinder<DeleteCommandProvider<? extends EObject>> contributions) {
       commandProvider().ifPresent(i -> contributions.addBinding().to(i));
+      commandProviders().ifPresent(is -> is.forEach(i -> contributions.addBinding().to(i)));
    }
 
    @Override
    protected void updateCommandProvider(final Multibinder<UpdateCommandProvider<? extends EObject>> contributions) {
       commandProvider().ifPresent(i -> contributions.addBinding().to(i));
+      commandProviders().ifPresent(is -> is.forEach(i -> contributions.addBinding().to(i)));
    }
 }

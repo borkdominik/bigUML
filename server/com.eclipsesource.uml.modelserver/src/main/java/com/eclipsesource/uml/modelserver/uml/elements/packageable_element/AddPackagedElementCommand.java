@@ -39,7 +39,7 @@ public class AddPackagedElementCommand
    @Override
    protected PackageableElement createSemanticElement(final Package parent) {
       var element = supplier.apply(parent);
-      var nameGenerator = new ListNameGenerator(element.getClass(), parent.allNamespaces());
+      var nameGenerator = new ListNameGenerator(element.getClass(), parent.getPackagedElements());
       element.setName(nameGenerator.newName());
       parent.getPackagedElements().add(element);
       return element;

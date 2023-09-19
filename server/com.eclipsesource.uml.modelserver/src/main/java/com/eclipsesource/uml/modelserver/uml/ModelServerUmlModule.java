@@ -24,6 +24,7 @@ import com.eclipsesource.uml.modelserver.uml.command.update.UpdateCommandProvide
 import com.eclipsesource.uml.modelserver.uml.command.update.UpdateElementCommandContribution;
 import com.eclipsesource.uml.modelserver.uml.diagram.communication_diagram.manifest.CommunicationManifest;
 import com.eclipsesource.uml.modelserver.uml.diagram.package_diagram.manifest.PackageManifest;
+import com.eclipsesource.uml.modelserver.uml.representation.activity.ActivityManifest;
 import com.eclipsesource.uml.modelserver.uml.representation.class_.ClassManifest;
 import com.eclipsesource.uml.modelserver.uml.representation.deployment.DeploymentManifest;
 import com.eclipsesource.uml.modelserver.uml.representation.state_machine.StateMachineManifest;
@@ -42,6 +43,7 @@ public class ModelServerUmlModule extends AbstractModule implements CommandCodec
       install(new PackageManifest());
       install(new StateMachineManifest());
       install(new DeploymentManifest());
+      install(new ActivityManifest());
 
       bind(CreateNodeCommandProviderRegistry.class).in(Singleton.class);
       bind(DeleteCommandProviderRegistry.class).in(Singleton.class);

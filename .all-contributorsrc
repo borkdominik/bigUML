@@ -149,6 +149,36 @@
         "code",
         "diagram"
       ]
+    },
+    {
+      "login": "HolzingerAlexander",
+      "name": "Alexander Holzinger",
+      "avatar_url": "https://avatars.githubusercontent.com/u/8986802?v=4",
+      "profile": "https://github.com/HolzingerAlexander",
+      "contributions": [
+        "code",
+        "diagram"
+      ]
+    },
+    {
+      "login": "dellis66",
+      "name": "dellis66",
+      "avatar_url": "https://avatars.githubusercontent.com/u/128014459?v=4",
+      "profile": "https://github.com/dellis66",
+      "contributions": [
+        "code",
+        "diagram"
+      ]
+    },
+    {
+      "login": "nbzowski",
+      "name": "nbzowski",
+      "avatar_url": "https://avatars.githubusercontent.com/u/48189266?v=4",
+      "profile": "https://github.com/nbzowski",
+      "contributions": [
+        "code",
+        "diagram"
+      ]
     }
   ],
   "types": {

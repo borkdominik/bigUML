@@ -15,9 +15,13 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
 
 public interface ElementConfiguration<TElement extends EObject> {
-   Class<TElement> getElementType();
+   Class<? extends TElement> getElementType();
+
+   default Set<Class<? extends TElement>> getElementTypes() { return Set.of(getElementType()); }
 
    String typeId();
 
-   Set<String> allTypeIds();
+   default Set<String> allTypeIds() {
+      return Set.of(typeId());
+   }
 }

@@ -8,18 +8,16 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.uml.elements.execution_environment.commands;
+package com.eclipsesource.uml.modelserver.uml.elements.interaction.commands;
 
-import com.eclipsesource.uml.modelserver.uml.elements.node.commands.UpdateNodeArgument;
+import com.eclipsesource.uml.modelserver.uml.elements.named_element.UpdateNamedElementArgument;
 
-public class UpdateExecutionEnvironmentArgument extends UpdateNodeArgument {
+public class UpdateInteractionArgument extends UpdateNamedElementArgument {
 
    public static Builder<?> by() {
       return new Builder<>();
    }
 
-   public static class Builder<TArgument extends UpdateExecutionEnvironmentArgument>
-      extends UpdateNodeArgument.Builder<TArgument> {
-
-   }
+   public static final class Builder<TArgument extends UpdateInteractionArgument>
+      extends UpdateNamedElementArgument.Builder<TArgument> {}
 }

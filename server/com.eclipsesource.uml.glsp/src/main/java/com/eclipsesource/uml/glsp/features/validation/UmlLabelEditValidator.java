@@ -17,7 +17,6 @@ import org.eclipse.glsp.server.features.directediting.LabelEditValidator;
 import org.eclipse.glsp.server.features.directediting.ValidationStatus;
 
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
-import com.eclipsesource.uml.glsp.features.validation.validators.CommunicationValidator;
 import com.google.inject.Inject;
 
 public class UmlLabelEditValidator implements LabelEditValidator {
@@ -26,18 +25,11 @@ public class UmlLabelEditValidator implements LabelEditValidator {
    @Inject
    protected UmlModelState modelState;
 
-   @Inject
-   @CommunicationValidator
-   protected LabelEditValidator communicationLabelEditValidator;
-
    @Override
    public ValidationStatus validate(final String label, final GModelElement element) {
       var diagramType = modelState.getUnsafeRepresentation();
 
       switch (diagramType) {
-         case COMMUNICATION: {
-            return communicationLabelEditValidator.validate(label, element);
-         }
          default:
             LOGGER.debug("No labelEditValidator found for diagram type " + diagramType);
       }

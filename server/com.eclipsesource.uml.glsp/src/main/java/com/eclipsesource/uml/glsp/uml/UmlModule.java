@@ -11,9 +11,9 @@
 package com.eclipsesource.uml.glsp.uml;
 
 import com.eclipsesource.uml.glsp.uml.configuration.ElementConfigurationRegistry;
-import com.eclipsesource.uml.glsp.uml.diagram.communication_diagram.manifest.CommunicationUmlManifest;
 import com.eclipsesource.uml.glsp.uml.representation.activity.ActivityUmlManifest;
 import com.eclipsesource.uml.glsp.uml.representation.class_.ClassUmlManifest;
+import com.eclipsesource.uml.glsp.uml.representation.communication.CommunicationUmlManifest;
 import com.eclipsesource.uml.glsp.uml.representation.deployment.DeploymentUmlManifest;
 import com.eclipsesource.uml.glsp.uml.representation.information_flow.InformationFlowUmlManifest;
 import com.eclipsesource.uml.glsp.uml.representation.state_machine.StateMachineManifest;

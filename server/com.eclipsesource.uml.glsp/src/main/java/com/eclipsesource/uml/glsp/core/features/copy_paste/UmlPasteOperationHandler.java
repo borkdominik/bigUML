@@ -30,7 +30,6 @@ import com.eclipsesource.uml.glsp.core.model.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.eclipsesource.uml.modelserver.uml.command.copy_paste.CopyPasteContribution;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 public class UmlPasteOperationHandler
    extends EMSOperationHandler<PasteOperation> {
@@ -48,7 +47,7 @@ public class UmlPasteOperationHandler
 
    @Inject
    public UmlPasteOperationHandler(final GraphGsonConfigurationFactory gsonConfigurator) {
-      GsonBuilder builder = gsonConfigurator.configureGson();
+      var builder = gsonConfigurator.configureGson();
       gson = builder.create();
    }
 

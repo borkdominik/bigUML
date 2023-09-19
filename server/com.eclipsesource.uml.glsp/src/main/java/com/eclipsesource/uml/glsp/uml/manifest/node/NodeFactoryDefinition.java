@@ -10,6 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.manifest.node;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.eclipse.emf.ecore.EObject;
@@ -36,12 +37,17 @@ import com.google.inject.multibindings.Multibinder;
 
 public abstract class NodeFactoryDefinition extends NodeDefinition implements ElementConfigurationContribution {
 
-   protected final Class<?> factory;
+   protected final List<Class<?>> factories;
 
    public NodeFactoryDefinition(final String id, final Representation representation,
       final Class<?> factory) {
+      this(id, representation, List.of(factory));
+   }
+
+   public NodeFactoryDefinition(final String id, final Representation representation,
+      final List<Class<?>> factories) {
       super(id, representation);
-      this.factory = factory;
+      this.factories = factories;
    }
 
    @Override
@@ -50,8 +56,10 @@ public abstract class NodeFactoryDefinition extends NodeDefinition implements El
 
       contributeNodeConfigurations(this::elementConfigurations);
 
-      install(new FactoryModuleBuilder()
-         .build(this.factory));
+      factories.forEach(factory -> {
+         install(new FactoryModuleBuilder()
+            .build(factory));
+      });
    }
 
    protected <TFactory> Optional<Class<TFactory>> supports(final Class<?> factory, final Class<TFactory> support) {
@@ -62,59 +70,75 @@ public abstract class NodeFactoryDefinition extends NodeDefinition implements El
    }
 
    protected void elementConfigurations(final Multibinder<NodeConfiguration<?>> contribution) {
-      supports(factory, NodeConfigurationFactory.class)
-         .ifPresent(f -> contribution.addBinding()
-            .toProvider(new DIProvider<>(f, (fa) -> fa.nodeConfiguration(representation()))));
+      factories.forEach(factory -> {
+         supports(factory, NodeConfigurationFactory.class)
+            .ifPresent(f -> contribution.addBinding()
+               .toProvider(new DIProvider<>(f, (fa) -> fa.nodeConfiguration(representation()))));
+      });
    }
 
    @Override
    protected void diagramConfigurations(final Multibinder<Node> contribution) {
-      supports(factory, NodeConfigurationFactory.class)
-         .ifPresent(f -> contribution.addBinding()
-            .toProvider(new DIProvider<>(f, (fa) -> fa.nodeConfiguration(representation()))));
+      factories.forEach(factory -> {
+         supports(factory, NodeConfigurationFactory.class)
+            .ifPresent(f -> contribution.addBinding()
+               .toProvider(new DIProvider<>(f, (fa) -> fa.nodeConfiguration(representation()))));
+      });
    }
 
    @Override
    protected void diagramCreateHandlers(final Multibinder<DiagramCreateNodeHandler<?>> contribution) {
-      supports(factory, NodeOperationHandlerFactory.class)
-         .ifPresent(f -> contribution.addBinding()
-            .toProvider(new DIProvider<>(f, (fa) -> fa.nodeOperationHandler(representation()))));
+      factories.forEach(factory -> {
+         supports(factory, NodeOperationHandlerFactory.class)
+            .ifPresent(f -> contribution.addBinding()
+               .toProvider(new DIProvider<>(f, (fa) -> fa.nodeOperationHandler(representation()))));
+      });
    }
 
    @Override
    protected void diagramDeleteHandlers(final Multibinder<DiagramDeleteHandler<? extends EObject>> contribution) {
-      supports(factory, NodeOperationHandlerFactory.class)
-         .ifPresent(f -> contribution.addBinding()
-            .toProvider(new DIProvider<>(f, (fa) -> fa.nodeOperationHandler(representation()))));
+      factories.forEach(factory -> {
+         supports(factory, NodeOperationHandlerFactory.class)
+            .ifPresent(f -> contribution.addBinding()
+               .toProvider(new DIProvider<>(f, (fa) -> fa.nodeOperationHandler(representation()))));
+      });
    }
 
    @Override
    protected void diagramUpdateHandlers(final Multibinder<DiagramUpdateHandler<? extends EObject>> contribution) {
-      supports(factory, NodeOperationHandlerFactory.class)
-         .ifPresent(f -> contribution.addBinding()
-            .toProvider(new DIProvider<>(f, (fa) -> fa.nodeOperationHandler(representation()))));
+      factories.forEach(factory -> {
+         supports(factory, NodeOperationHandlerFactory.class)
+            .ifPresent(f -> contribution.addBinding()
+               .toProvider(new DIProvider<>(f, (fa) -> fa.nodeOperationHandler(representation()))));
+      });
    }
 
    @Override
    protected void gmodelMappers(
       final Multibinder<GModelMapper<? extends EObject, ? extends GModelElement>> contribution) {
-      supports(factory, GModelMapperFactory.class)
-         .ifPresent(f -> contribution.addBinding()
-            .toProvider(new DIProvider<>(f, (fa) -> fa.gmodel(representation()))));
+      factories.forEach(factory -> {
+         supports(factory, GModelMapperFactory.class)
+            .ifPresent(f -> contribution.addBinding()
+               .toProvider(new DIProvider<>(f, (fa) -> fa.gmodel(representation()))));
+      });
    }
 
    @Override
    protected void diagramLabelEditMappers(final Multibinder<DiagramLabelEditMapper<? extends EObject>> contribution) {
-      supports(factory, LabelEditMapperFactory.class)
-         .ifPresent(f -> contribution.addBinding()
-            .toProvider(new DIProvider<>(f, (fa) -> fa.labelEditMapper(representation()))));
+      factories.forEach(factory -> {
+         supports(factory, LabelEditMapperFactory.class)
+            .ifPresent(f -> contribution.addBinding()
+               .toProvider(new DIProvider<>(f, (fa) -> fa.labelEditMapper(representation()))));
+      });
    }
 
    @Override
    protected void diagramPropertyPaletteMappers(
       final Multibinder<DiagramElementPropertyMapper<? extends EObject>> contribution) {
-      supports(factory, PropertyMapperFactory.class)
-         .ifPresent(f -> contribution.addBinding()
-            .toProvider(new DIProvider<>(f, (fa) -> fa.elementPropertyMapper(representation()))));
+      factories.forEach(factory -> {
+         supports(factory, PropertyMapperFactory.class)
+            .ifPresent(f -> contribution.addBinding()
+               .toProvider(new DIProvider<>(f, (fa) -> fa.elementPropertyMapper(representation()))));
+      });
    }
 }

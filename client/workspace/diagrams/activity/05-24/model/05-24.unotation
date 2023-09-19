@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ASCII"?>
+<unotation:UmlDiagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:notation="http://www.eclipse.org/glsp/notation" xmlns:unotation="http://www.eclipsesource.com/glsp/uml/unotation" diagramType="ACTIVITY" representation="ACTIVITY">
+  <semanticElement elementId="_NzojMfouEe2lTNiiQqSz5w"/>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_OpbiwPouEe2lTNiiQqSz5w"/>
+    <position x="260.0" y="130.0"/>
+    <size width="500.0" height="500.0"/>
+  </elements>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_9HdHYfu6Ee2cyoqVpqDJMw"/>
+    <position x="80.0" y="120.0"/>
+    <size width="240.0" height="130.0"/>
+  </elements>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_92CEoPu6Ee2cyoqVpqDJMw"/>
+    <position x="35.0" y="81.71428489685059"/>
+    <size width="20.0" height="20.0"/>
+  </elements>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_-JoWEPu6Ee2cyoqVpqDJMw"/>
+    <position x="215.0" y="61.714284896850586"/>
+    <size width="20.0" height="20.0"/>
+  </elements>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_Tf4TQf1uEe2s8pDS-H1Ucw"/>
+    <position x="20.0" y="270.0"/>
+    <size width="50.0" height="50.0"/>
+  </elements>
+</unotation:UmlDiagram>

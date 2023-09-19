@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_b8jwUVYxEe6x-dkwHD7aJg" name="test">
+  <packagedElement xmi:type="uml:Activity" xmi:id="_0nMy8FbSEe6_7IvncPXFNQ" name="NewActivityImpl1" node="_EFTNwFbVEe6_7IvncPXFNQ">
+    <node xmi:type="uml:OpaqueAction" xmi:id="_EFTNwFbVEe6_7IvncPXFNQ" name="NewActivityNode1">
+      <inputValue xmi:id="_3CPxsVbVEe6VPZzj9ApULQ"/>
+    </node>
+  </packagedElement>
+</uml:Model>

@@ -7,11 +7,15 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 export * from './abstraction/abstraction.element';
+export * from './activity-node/activity-node.element';
+export * from './activity-partition/activity-partition.element';
+export * from './activity/activity.element';
 export * from './actor/actor.element';
 export * from './artifact/artifact.element';
 export * from './association/association.element';
 export * from './class/class.element';
 export * from './communication-path/communication-path.element';
+export * from './control-flow/control-flow.element';
 export * from './data-type/data-type.element';
 export * from './dependency/dependency.element';
 export * from './deployment-specification/deployment-specification.element';
@@ -34,6 +38,7 @@ export * from './operation/operation.element';
 export * from './package-import/package-import.element';
 export * from './package-merge/package-merge.element';
 export * from './package/package.element';
+export * from './pin/pin.element';
 export * from './primitive-type/primitive-type.element';
 export * from './property/property-element';
 export * from './realization/realization.element';

@@ -77,7 +77,7 @@ public abstract class NodeOperationHandler<TElement extends EObject, TParent>
    public Class<TElement> getElementType() { return Type.clazz(elementType); }
 
    @Override
-   public Set<Class<? extends TElement>> getElementTypes() { return Set.of(Type.clazz(elementType)); }
+   public Set<Class<? extends TElement>> getElementTypes() { return Set.of(getElementType()); }
 
    @Override
    public Class<TParent> getParentType() { return Type.clazz(parentType); }

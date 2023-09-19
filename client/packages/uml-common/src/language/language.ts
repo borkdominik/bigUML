@@ -26,10 +26,11 @@ export enum UmlDiagramType {
 
 export namespace UmlDiagramTypeUtil {
     export const supported: UmlDiagramType[] = [
+        UmlDiagramType.ACTIVITY,
         UmlDiagramType.CLASS,
-        UmlDiagramType.USE_CASE,
+        UmlDiagramType.DEPLOYMENT,
         UmlDiagramType.STATE_MACHINE,
-        UmlDiagramType.DEPLOYMENT
+        UmlDiagramType.USE_CASE
     ];
 
     export function parseString(diagramType: string): UmlDiagramType {

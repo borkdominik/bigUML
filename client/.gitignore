@@ -21,6 +21,7 @@ bundles
 
 # Files
 *.log
+.DS_Store
 
 # Local
 *.vsix

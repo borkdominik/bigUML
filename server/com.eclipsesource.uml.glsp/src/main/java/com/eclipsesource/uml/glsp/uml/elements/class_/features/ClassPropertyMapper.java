@@ -13,6 +13,7 @@ package com.eclipsesource.uml.glsp.uml.elements.class_.features;
 import java.util.Optional;
 
 import org.eclipse.uml2.uml.Class;
+import org.eclipse.uml2.uml.Operation;
 import org.eclipse.uml2.uml.Property;
 import org.eclipse.uml2.uml.VisibilityKind;
 
@@ -56,7 +57,7 @@ public class ClassPropertyMapper extends RepresentationElementPropertyMapper<Cla
             ClassConfiguration.Property.OWNED_ATTRIBUTES, "Owned Attribute", source.getOwnedAttributes()));
       }
 
-      if (existsConfigurationFor(Property.class)) {
+      if (existsConfigurationFor(Operation.class)) {
          builder.reference(OperationPropertyPaletteUtils.asReference(this, elementId,
             ClassConfiguration.Property.OWNED_OPERATIONS, "Owned Operation", source.getOwnedOperations()));
       }

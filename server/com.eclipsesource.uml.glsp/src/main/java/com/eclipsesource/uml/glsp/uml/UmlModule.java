@@ -16,6 +16,7 @@ import com.eclipsesource.uml.glsp.uml.representation.class_.ClassUmlManifest;
 import com.eclipsesource.uml.glsp.uml.representation.communication.CommunicationUmlManifest;
 import com.eclipsesource.uml.glsp.uml.representation.deployment.DeploymentUmlManifest;
 import com.eclipsesource.uml.glsp.uml.representation.information_flow.InformationFlowUmlManifest;
+import com.eclipsesource.uml.glsp.uml.representation.package_.PackageManifest;
 import com.eclipsesource.uml.glsp.uml.representation.state_machine.StateMachineManifest;
 import com.eclipsesource.uml.glsp.uml.representation.use_case.UseCaseManifest;
 import com.google.inject.AbstractModule;
@@ -32,7 +33,7 @@ public class UmlModule extends AbstractModule {
       install(new ClassUmlManifest());
       install(new CommunicationUmlManifest());
       install(new UseCaseManifest());
-      // install(new PackageManifest());
+      install(new PackageManifest());
       install(new StateMachineManifest());
       install(new DeploymentUmlManifest());
       install(new ActivityUmlManifest());

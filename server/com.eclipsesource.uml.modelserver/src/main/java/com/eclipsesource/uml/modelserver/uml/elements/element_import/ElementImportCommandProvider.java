@@ -8,39 +8,40 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.modelserver.uml.elements.dependency;
+package com.eclipsesource.uml.modelserver.uml.elements.element_import;
 
 import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.emf.common.command.Command;
-import org.eclipse.uml2.uml.Dependency;
-import org.eclipse.uml2.uml.NamedElement;
+import org.eclipse.uml2.uml.ElementImport;
+import org.eclipse.uml2.uml.PackageableElement;
 
 import com.eclipsesource.uml.modelserver.shared.codec.ContributionDecoder;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.commands.AddEdgeNotationCommand;
 import com.eclipsesource.uml.modelserver.uml.command.provider.element.EdgeCommandProvider;
-import com.eclipsesource.uml.modelserver.uml.elements.dependency.commands.CreateDependencySemanticCommand;
-import com.eclipsesource.uml.modelserver.uml.elements.dependency.commands.UpdateDependencyArgument;
-import com.eclipsesource.uml.modelserver.uml.elements.dependency.commands.UpdateDependencySemanticCommand;
+import com.eclipsesource.uml.modelserver.uml.elements.element_import.commands.CreateElementImportSemanticCommand;
+import com.eclipsesource.uml.modelserver.uml.elements.element_import.commands.UpdateElementImportArgument;
+import com.eclipsesource.uml.modelserver.uml.elements.element_import.commands.UpdateElementImportSemanticCommand;
 
-public class DependencyCommandProvider extends EdgeCommandProvider<Dependency, NamedElement, NamedElement> {
+public class ElementImportCommandProvider
+   extends EdgeCommandProvider<ElementImport, org.eclipse.uml2.uml.Package, PackageableElement> {
 
    @Override
-   protected Collection<Command> createModifications(final ModelContext context, final NamedElement source,
-      final NamedElement target) {
-      var semantic = new CreateDependencySemanticCommand(
-         context, source,
+   protected Collection<Command> createModifications(final ModelContext context,
+      final org.eclipse.uml2.uml.Package source,
+      final PackageableElement target) {
+      var semantic = new CreateElementImportSemanticCommand(context, source,
          target);
       var notation = new AddEdgeNotationCommand(context, semantic::getSemanticElement);
       return List.of(semantic, notation);
    }
 
    @Override
-   protected Collection<Command> updateModifications(final ModelContext context, final Dependency element) {
+   protected Collection<Command> updateModifications(final ModelContext context, final ElementImport element) {
       var decoder = new ContributionDecoder(context);
-      var update = decoder.embedJson(UpdateDependencyArgument.class);
-      return List.of(new UpdateDependencySemanticCommand(context, element, update));
+      var update = decoder.embedJson(UpdateElementImportArgument.class);
+      return List.of(new UpdateElementImportSemanticCommand(context, element, update));
    }
 }

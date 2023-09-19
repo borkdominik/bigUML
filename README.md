@@ -109,7 +109,7 @@ Coming Soon!
 <details>
 <summary><strong>Package Diagram</strong></summary>
 
-Coming Soon!
+<img src="./media/vscode-package.png" alt="Package Diagram" />
 
 <em>Initial implementation provided by: [@DerYeger](https://github.com/DerYeger), [@mrstexx](https://github.com/mrstexx)</em>
 

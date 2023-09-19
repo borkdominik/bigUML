@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="ASCII"?>
+<unotation:UmlDiagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:notation="http://www.eclipse.org/glsp/notation" xmlns:unotation="http://www.eclipsesource.com/glsp/uml/unotation" diagramType="information_flow" representation="INFORMATION_FLOW">
+  <semanticElement elementId="_B3EkoMjYEe2cqYEKfzCeBA"/>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_l8Fz4OwrEe2zFPm89aQ6qA"/>
+    <position x="1060.0" y="260.0"/>
+    <size width="160.0" height="77.0"/>
+  </elements>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_KpihUOwuEe293aR54qrTEg"/>
+    <position x="-10.0" y="90.0"/>
+    <size width="86.703125" height="103.0"/>
+  </elements>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_MVeesOwuEe293aR54qrTEg"/>
+    <position x="290.0" y="-40.0"/>
+    <size width="227.109375" height="53.0"/>
+  </elements>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_S6OlIOwuEe293aR54qrTEg"/>
+    <position x="270.0" y="260.0"/>
+    <size width="272.703125" height="53.0"/>
+  </elements>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_VBpkoOwuEe293aR54qrTEg"/>
+    <position x="690.0" y="-40.0"/>
+    <size width="256.015625" height="53.0"/>
+  </elements>
+  <elements xsi:type="notation:Edge">
+    <semanticElement elementId="_YayDoOwuEe293aR54qrTEg"/>
+    <bendPoints x="40.0" y="-10.0"/>
+  </elements>
+  <elements xsi:type="notation:Edge">
+    <semanticElement elementId="_qJ-pQOwuEe293aR54qrTEg"/>
+    <bendPoints x="40.0" y="290.0"/>
+  </elements>
+  <elements xsi:type="notation:Edge">
+    <semanticElement elementId="_Nv1hEPY4Ee20Prqg4tdD8g"/>
+  </elements>
+  <elements xsi:type="notation:Edge">
+    <semanticElement elementId="_Pw3ksPY4Ee20Prqg4tdD8g"/>
+    <bendPoints x="820.0" y="290.0"/>
+  </elements>
+  <elements xsi:type="notation:Edge">
+    <semanticElement elementId="_SFaaMPY4Ee20Prqg4tdD8g"/>
+  </elements>
+</unotation:UmlDiagram>

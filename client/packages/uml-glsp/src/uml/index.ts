@@ -12,6 +12,7 @@ import { umlPackageDiagramModule } from './diagram/package/di.config';
 import { umlActivityDiagramModule } from './representation/activity/activity.module';
 import { umlClassDiagramModule } from './representation/class/class.module';
 import { umlDeploymentDiagramModule } from './representation/deployment/deployment.module';
+import { umlInformationFlowDiagramModule } from './representation/information_flow/di.config';
 import { umlStateMachineDiagramModule } from './representation/state-machine/state-machine.module';
 import { umlUseCaseDiagramModule } from './representation/usecase/use-case.module';
 
@@ -23,5 +24,6 @@ export const umlDiagramModules = [
     umlPackageDiagramModule,
     umlStateMachineDiagramModule,
     umlDeploymentDiagramModule,
-    umlActivityDiagramModule
+    umlActivityDiagramModule,
+    umlInformationFlowDiagramModule
 ];

@@ -142,7 +142,15 @@ public enum Representation implements Enumerator {
     * @generated
     * @ordered
     */
-   USE_CASE(13, "USE_CASE", "USE_CASE");
+   USE_CASE(13, "USE_CASE", "USE_CASE"), /**
+    * The '<em><b>INFORMATION FLOW</b></em>' literal object.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @see #INFORMATION_FLOW_VALUE
+    * @generated
+    * @ordered
+    */
+   INFORMATION_FLOW(14, "INFORMATION_FLOW", "INFORMATION_FLOW");
 
    /**
     * The '<em><b>ACTIVITY</b></em>' literal value.
@@ -299,6 +307,17 @@ public enum Representation implements Enumerator {
    public static final int USE_CASE_VALUE = 13;
 
    /**
+    * The '<em><b>INFORMATION FLOW</b></em>' literal value.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @see #INFORMATION_FLOW
+    * @model
+    * @generated
+    * @ordered
+    */
+   public static final int INFORMATION_FLOW_VALUE = 14;
+
+   /**
     * An array of all the '<em><b>Representation</b></em>' enumerators.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
@@ -320,6 +339,7 @@ public enum Representation implements Enumerator {
          STATE_MACHINE,
          TIMING,
          USE_CASE,
+         INFORMATION_FLOW,
       };
 
    /**
@@ -390,6 +410,7 @@ public enum Representation implements Enumerator {
          case STATE_MACHINE_VALUE: return STATE_MACHINE;
          case TIMING_VALUE: return TIMING;
          case USE_CASE_VALUE: return USE_CASE;
+         case INFORMATION_FLOW_VALUE: return INFORMATION_FLOW;
       }
       return null;
    }

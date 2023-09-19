@@ -27,6 +27,7 @@
       <genEnumLiterals ecoreEnumLiteral="unotation.ecore#//Representation/STATE_MACHINE"/>
       <genEnumLiterals ecoreEnumLiteral="unotation.ecore#//Representation/TIMING"/>
       <genEnumLiterals ecoreEnumLiteral="unotation.ecore#//Representation/USE_CASE"/>
+      <genEnumLiterals ecoreEnumLiteral="unotation.ecore#//Representation/INFORMATION_FLOW"/>
     </genEnums>
     <genClasses ecoreClass="unotation.ecore#//UmlDiagram">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute unotation.ecore#//UmlDiagram/representation"/>

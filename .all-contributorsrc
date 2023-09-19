@@ -179,6 +179,26 @@
         "code",
         "diagram"
       ]
+    },
+    {
+      "login": "lforst",
+      "name": "Luca Forstner",
+      "avatar_url": "https://avatars.githubusercontent.com/u/8118419?v=4",
+      "profile": "https://github.com/lforst",
+      "contributions": [
+        "code",
+        "diagram"
+      ]
+    },
+    {
+      "login": "GallusHuber",
+      "name": "GallusHuber",
+      "avatar_url": "https://avatars.githubusercontent.com/u/71430360?v=4",
+      "profile": "https://github.com/GallusHuber",
+      "contributions": [
+        "code",
+        "diagram"
+      ]
     }
   ],
   "types": {

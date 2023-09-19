@@ -179,19 +179,13 @@ public class UmlCoreModule extends EMSGLSPNotationDiagramModule {
    }
 
    @Override
-   public String getDiagramType() {
-      return "umldiagram";
-   }
+   public String getDiagramType() { return "umldiagram"; }
 
    @Override
-   protected String getSemanticFileExtension() {
-      return UMLResource.FILE_EXTENSION;
-   }
+   protected String getSemanticFileExtension() { return UMLResource.FILE_EXTENSION; }
 
    @Override
-   protected String getNotationFileExtension() {
-      return UmlNotationResource.FILE_EXTENSION;
-   }
+   protected String getNotationFileExtension() { return UmlNotationResource.FILE_EXTENSION; }
 
    @Override
    protected void configureActionHandlers(final MultiBinding<ActionHandler> bindings) {

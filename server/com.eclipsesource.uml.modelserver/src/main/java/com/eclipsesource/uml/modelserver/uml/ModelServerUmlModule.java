@@ -27,6 +27,7 @@ import com.eclipsesource.uml.modelserver.uml.diagram.package_diagram.manifest.Pa
 import com.eclipsesource.uml.modelserver.uml.representation.activity.ActivityManifest;
 import com.eclipsesource.uml.modelserver.uml.representation.class_.ClassManifest;
 import com.eclipsesource.uml.modelserver.uml.representation.deployment.DeploymentManifest;
+import com.eclipsesource.uml.modelserver.uml.representation.information_flow.InformationFlowManifest;
 import com.eclipsesource.uml.modelserver.uml.representation.state_machine.StateMachineManifest;
 import com.eclipsesource.uml.modelserver.uml.representation.use_case.UseCaseManifest;
 import com.google.inject.AbstractModule;
@@ -44,6 +45,7 @@ public class ModelServerUmlModule extends AbstractModule implements CommandCodec
       install(new StateMachineManifest());
       install(new DeploymentManifest());
       install(new ActivityManifest());
+      install(new InformationFlowManifest());
 
       bind(CreateNodeCommandProviderRegistry.class).in(Singleton.class);
       bind(DeleteCommandProviderRegistry.class).in(Singleton.class);

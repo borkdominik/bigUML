@@ -11,7 +11,7 @@
     <packagedElement xmi:type="uml:Class" xmi:id="_gu8-gPn-Ee2smM55zuHUhw" name="Launcher"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Package" xmi:id="_kjCCMM4OEe2WfbpzO7t8-A" name="Utils">
-    <packagedElement xmi:type="uml:Dependency" xmi:id="_59v3UM4OEe2WfbpzO7t8-A" client="_kjCCMM4OEe2WfbpzO7t8-A" supplier="_4EHcMM4OEe2WfbpzO7t8-A"/>
+    <packageImport xmi:id="_0MLxcFb_Ee6LC_xTG-ChTA" importedPackage="_4EHcMM4OEe2WfbpzO7t8-A"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Package" xmi:id="_lJmS8M4OEe2WfbpzO7t8-A" name="Logic">
     <packageImport xmi:id="_qfI0QM4OEe2WfbpzO7t8-A" importedPackage="_kjCCMM4OEe2WfbpzO7t8-A" visibility="private"/>
@@ -21,6 +21,7 @@
       <elementImport xmi:id="_gg-iAPoAEe2smM55zuHUhw" importedElement="_dHjvIPoAEe2smM55zuHUhw"/>
       <packagedElement xmi:type="uml:Class" xmi:id="_PwW58Pn_Ee2smM55zuHUhw" name="ArrayList"/>
       <packagedElement xmi:type="uml:Class" xmi:id="_U4qQgPn_Ee2smM55zuHUhw" name="List" isAbstract="true"/>
+      <packagedElement xmi:type="uml:Abstraction" xmi:id="_lIB1wFb_Ee6LC_xTG-ChTA" client="_PwW58Pn_Ee2smM55zuHUhw" supplier="_U4qQgPn_Ee2smM55zuHUhw"/>
     </packagedElement>
     <packagedElement xmi:type="uml:Package" xmi:id="_Oj0OUPn_Ee2smM55zuHUhw" name="Math">
       <packagedElement xmi:type="uml:Class" xmi:id="_dHjvIPoAEe2smM55zuHUhw" name="Int"/>

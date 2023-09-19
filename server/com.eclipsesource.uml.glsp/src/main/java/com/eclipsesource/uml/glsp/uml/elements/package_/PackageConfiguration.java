@@ -44,6 +44,7 @@ public class PackageConfiguration extends RepresentationNodeConfiguration<org.ec
       NAME,
       URI,
       VISIBILITY_KIND,
+      ELEMENT_IMPORTS,
       PACKAGE_IMPORTS,
       PACKAGE_MERGES;
    }

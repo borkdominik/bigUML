@@ -21,6 +21,7 @@ export * from './dependency/dependency.element';
 export * from './deployment-specification/deployment-specification.element';
 export * from './deployment/deployment.element';
 export * from './device/device.element';
+export * from './element-import/element-import.element';
 export * from './enumeration-literal/enumeration-literal.element';
 export * from './enumeration/enumeration.element';
 export * from './execution-environment/execution-environment.element';

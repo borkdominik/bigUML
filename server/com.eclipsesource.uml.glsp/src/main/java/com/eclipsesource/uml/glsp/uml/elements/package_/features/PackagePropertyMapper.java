@@ -23,6 +23,7 @@ import com.eclipsesource.uml.glsp.uml.elements.package_.PackageOperationHandler;
 import com.eclipsesource.uml.glsp.uml.elements.package_import.utils.PackageImportPropertyPaletteUtils;
 import com.eclipsesource.uml.glsp.uml.elements.package_merge.utils.PackageMergeUtils;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.RepresentationElementPropertyMapper;
+import com.eclipsesource.uml.glsp.uml.utils.element.ElementImportUtils;
 import com.eclipsesource.uml.glsp.uml.utils.element.VisibilityKindUtils;
 import com.eclipsesource.uml.modelserver.uml.elements.package_.commands.UpdatePackageArgument;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
@@ -48,6 +49,10 @@ public class PackagePropertyMapper extends RepresentationElementPropertyMapper<P
             "Visibility",
             VisibilityKindUtils.asChoices(),
             source.getVisibility().getLiteral())
+         .reference(
+            PackageConfiguration.Property.ELEMENT_IMPORTS,
+            "Element Import",
+            ElementImportUtils.asReferenceFromElementImports(source.getElementImports(), idGenerator))
          .reference(
             PackageConfiguration.Property.PACKAGE_IMPORTS,
             "Package Import",

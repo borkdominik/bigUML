@@ -19,6 +19,10 @@
     stroke: var(--uml-border);
 }
 
+.uml-node-container {
+    border-radius: 20;
+}
+
 .uml-comp-separator {
     stroke-width: 1;
     stroke: var(--uml-edge);

@@ -24,6 +24,7 @@ public class Suffix {
 
    public String appendTo(final String suffix, final String id) {
       if (!appenders.containsKey(suffix)) {
+         printContent();
          throw new GLSPServerException("Suffix " + suffix + " is not known. Did you register it?");
       }
 
@@ -45,5 +46,15 @@ public class Suffix {
 
    public boolean hasSuffix(final String id) {
       return extractAppender(id).isPresent();
+   }
+
+   public void printContent() {
+      System.out.println("==== " + getClass().getName() + " ====");
+      appenders.keySet().stream().sorted().forEach(key -> {
+         System.out.println("Key:\t" + key);
+         System.out.println("Value:\t" + appenders.get(key).getClass().getName());
+         System.out.println();
+      });
+      System.out.println("==== END ====");
    }
 }

@@ -21,8 +21,8 @@ import org.eclipse.glsp.server.actions.AbstractActionHandler;
 import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.types.GLSPServerException;
 
-import com.eclipsesource.uml.glsp.core.common.RepresentationKey;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
+import com.eclipsesource.uml.modelserver.shared.registry.RepresentationKey;
 import com.google.inject.Inject;
 
 public class UpdateElementPropertyHandler extends AbstractActionHandler<UpdateElementPropertyAction> {
@@ -44,13 +44,7 @@ public class UpdateElementPropertyHandler extends AbstractActionHandler<UpdateEl
             EObject.class,
             "Could not find semantic element for id '" + elementId + "', no property updating executed.");
 
-         var mapper = registry.get(RepresentationKey.of(representation, semanticElement.getClass()))
-            .orElseThrow(
-               () -> {
-                  registry.printContent();
-                  return new GLSPServerException(
-                     "No property palette mapper found for class " + semanticElement.getClass().getName());
-               });
+         var mapper = registry.access(RepresentationKey.of(representation, semanticElement.getClass()));
 
          var operation = mapper
             .map(action)

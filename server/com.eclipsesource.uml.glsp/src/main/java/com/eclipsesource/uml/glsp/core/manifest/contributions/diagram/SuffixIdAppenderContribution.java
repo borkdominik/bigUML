@@ -13,7 +13,7 @@ package com.eclipsesource.uml.glsp.core.manifest.contributions.diagram;
 import java.util.function.Consumer;
 
 import com.eclipsesource.uml.glsp.core.features.id_generator.SuffixIdAppender;
-import com.eclipsesource.uml.glsp.core.manifest.contributions.ContributionBinderSupplier;
+import com.eclipsesource.uml.modelserver.shared.manifest.supplier.ContributionBinderSupplier;
 import com.google.inject.multibindings.MapBinder;
 
 public interface SuffixIdAppenderContribution extends ContributionBinderSupplier {

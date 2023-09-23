@@ -19,10 +19,10 @@ import com.eclipsesource.uml.glsp.core.gmodel.GModelMapHandler;
 import com.eclipsesource.uml.glsp.core.gmodel.GModelMapper;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.Suffix;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
-import com.eclipsesource.uml.glsp.core.utils.reflection.GenericsUtil;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.IdContextGeneratorGProvider;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.IdGeneratorGProvider;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.SuffixGProvider;
+import com.eclipsesource.uml.modelserver.shared.utils.reflection.GenericsUtil;
 import com.google.inject.Inject;
 
 public abstract class BaseGModelMapper<Source extends EObject, Target extends GModelElement>

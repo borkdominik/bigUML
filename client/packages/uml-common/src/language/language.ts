@@ -21,11 +21,20 @@ export enum UmlDiagramType {
     SEQUENCE = 'SEQUENCE',
     STATE_MACHINE = 'STATE_MACHINE',
     TIMING = 'TIMING',
-    USE_CASE = 'USE_CASE'
+    USE_CASE = 'USE_CASE',
+    INFORMATION_FLOW = 'INFORMATION_FLOW'
 }
 
 export namespace UmlDiagramTypeUtil {
-    export const supported: UmlDiagramType[] = [UmlDiagramType.CLASS, UmlDiagramType.USE_CASE];
+    export const supported: UmlDiagramType[] = [
+        UmlDiagramType.ACTIVITY,
+        UmlDiagramType.CLASS,
+        UmlDiagramType.COMMUNICATION,
+        UmlDiagramType.DEPLOYMENT,
+        UmlDiagramType.INFORMATION_FLOW,
+        UmlDiagramType.STATE_MACHINE,
+        UmlDiagramType.USE_CASE
+    ];
 
     export function parseString(diagramType: string): UmlDiagramType {
         return Object.values(UmlDiagramType).find(u => u.toUpperCase() === diagramType.toUpperCase()) ?? UmlDiagramType.NONE;

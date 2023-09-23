@@ -85,5 +85,10 @@ export namespace PropertyPaletteReferenceStyle {
         .reference-item .handle-empty {
             margin-left: 24px;
         }
+
+        .autocomplete {
+            margin-bottom: 6px;
+            width: 100%;
+        }
     `;
 }

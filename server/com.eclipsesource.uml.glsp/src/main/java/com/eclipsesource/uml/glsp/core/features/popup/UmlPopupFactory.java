@@ -21,8 +21,8 @@ import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.server.features.popup.PopupModelFactory;
 import org.eclipse.glsp.server.features.popup.RequestPopupModelAction;
 
-import com.eclipsesource.uml.glsp.core.common.RepresentationKey;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
+import com.eclipsesource.uml.modelserver.shared.registry.RepresentationKey;
 
 public class UmlPopupFactory implements PopupModelFactory {
    private static Logger LOGGER = LogManager.getLogger(UmlPopupFactory.class.getSimpleName());

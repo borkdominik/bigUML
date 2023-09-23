@@ -20,9 +20,9 @@ import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperation;
 import org.eclipse.glsp.server.types.GLSPServerException;
 
-import com.eclipsesource.uml.glsp.core.common.RepresentationKey;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.Suffix;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
+import com.eclipsesource.uml.modelserver.shared.registry.RepresentationKey;
 import com.google.inject.Inject;
 
 public class UmlLabelEditOperationHandler
@@ -51,13 +51,7 @@ public class UmlLabelEditOperationHandler
             EObject.class,
             "Could not find semantic element for id '" + elementId + "', no edit label operation executed.");
 
-         var mapper = registry.get(RepresentationKey.of(representation, semanticElement.getClass()))
-            .orElseThrow(
-               () -> {
-                  registry.printContent();
-                  return new GLSPServerException(
-                     "No edit label mapper found for class " + semanticElement.getClass().getName());
-               });
+         var mapper = registry.access(RepresentationKey.of(representation, semanticElement.getClass()));
 
          return (Action) mapper
             .map(operation)

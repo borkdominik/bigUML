@@ -20,8 +20,8 @@ import com.eclipsesource.uml.glsp.core.features.label_edit.validation.DiagramLab
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.Suffix;
 import com.eclipsesource.uml.glsp.core.model.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
-import com.eclipsesource.uml.glsp.core.utils.reflection.GenericsUtil;
-import com.eclipsesource.uml.glsp.core.utils.reflection.ReflectionUtil;
+import com.eclipsesource.uml.modelserver.shared.utils.reflection.GenericsUtil;
+import com.eclipsesource.uml.modelserver.shared.utils.reflection.ReflectionUtil;
 import com.google.inject.Inject;
 
 public abstract class BaseLabelEditValidator<TElementType extends Element>

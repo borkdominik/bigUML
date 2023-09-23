@@ -13,6 +13,7 @@ package com.eclipsesource.uml.glsp.uml.features.property_palette;
 import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
 
 import java.util.Optional;
+import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.server.emf.EMFIdGenerator;
@@ -21,11 +22,11 @@ import com.eclipsesource.uml.glsp.core.handler.operation.update.DiagramUpdateHan
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateHandlerOperationMapper;
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
-import com.eclipsesource.uml.glsp.core.utils.reflection.GenericsUtil;
 import com.eclipsesource.uml.glsp.features.property_palette.handler.action.UpdateElementPropertyAction;
 import com.eclipsesource.uml.glsp.features.property_palette.manifest.PropertyPaletteFeatureManifest;
 import com.eclipsesource.uml.glsp.features.property_palette.mapper.DiagramElementPropertyMapper;
 import com.eclipsesource.uml.glsp.features.property_palette.model.ElementPropertyBuilder;
+import com.eclipsesource.uml.modelserver.shared.utils.reflection.GenericsUtil;
 import com.google.gson.Gson;
 import com.google.inject.Inject;
 
@@ -51,8 +52,12 @@ public abstract class BaseDiagramElementPropertyMapper<TElement extends EObject>
       this.gson = new Gson();
    }
 
-   @Override
    public Class<TElement> getElementType() { return elementType; }
+
+   @Override
+   public Set<Class<? extends TElement>> getElementTypes() { return Set.of(getElementType()); }
+
+   public EMFIdGenerator getIdGenerator() { return this.idGenerator; }
 
    protected <TProperty extends Enum<TProperty>> ElementPropertyBuilder<TProperty> propertyBuilder(
       final Class<TProperty> property,
@@ -60,7 +65,7 @@ public abstract class BaseDiagramElementPropertyMapper<TElement extends EObject>
       return new ElementPropertyBuilder<>(elementId);
    }
 
-   protected <THandler extends DiagramUpdateHandler<TElement, TUpdateArgument>, TUpdateArgument> UpdateHandlerOperationMapper.Prepared<THandler, TElement, TUpdateArgument> getHandler(
+   protected <THandler extends DiagramUpdateHandler<TElement>, TUpdateArgument> UpdateHandlerOperationMapper.Prepared<THandler, TElement, TUpdateArgument> getHandler(
       final Class<THandler> handlerType, final UpdateElementPropertyAction action) {
       return handlerMapper.prepare(handlerType, getElement(action));
    }

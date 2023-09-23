@@ -1685,7 +1685,23 @@
   dependencies:
     cross-spawn "^7.0.1"
 
-"@microsoft/fast-element@^1.12.0", "@microsoft/fast-element@^1.6.2", "@microsoft/fast-element@^1.9.0":
+"@microsoft/fast-colors@^5.3.0":
+  version "5.3.1"
+  resolved "https://registry.yarnpkg.com/@microsoft/fast-colors/-/fast-colors-5.3.1.tgz#defc59874176e42316be7e6d24c31885ead8ca56"
+  integrity sha512-72RZXVfCbwQzvo5sXXkuLXLT7rMeYaSf5r/6ewQiv/trBtqpWRm4DEH2EilHw/iWTBKOXs1qZNQndgUMa5n4LA==
+
+"@microsoft/fast-components@^2.30.6":
+  version "2.30.6"
+  resolved "https://registry.yarnpkg.com/@microsoft/fast-components/-/fast-components-2.30.6.tgz#22449f41c300060831b3545c27906cea03a72476"
+  integrity sha512-q6nPiRyA/8HHqCbN4ClziJfOfFaTIVIyBUTSJTcO7ODzkr8oEin7VzKJNoIP/qMpKMkg90wxwLOucr6nsokApw==
+  dependencies:
+    "@microsoft/fast-colors" "^5.3.0"
+    "@microsoft/fast-element" "^1.10.1"
+    "@microsoft/fast-foundation" "^2.46.2"
+    "@microsoft/fast-web-utilities" "^5.4.1"
+    tslib "^1.13.0"
+
+"@microsoft/fast-element@^1.10.1", "@microsoft/fast-element@^1.12.0", "@microsoft/fast-element@^1.6.2", "@microsoft/fast-element@^1.9.0":
   version "1.12.0"
   resolved "https://registry.yarnpkg.com/@microsoft/fast-element/-/fast-element-1.12.0.tgz#aabfc75518c3a9000710cce5f66dfc677de8c254"
   integrity sha512-gQutuDHPKNxUEcQ4pypZT4Wmrbapus+P9s3bR/SEOLsMbNqNoXigGImITygI5zhb+aA5rzflM6O8YWkmRbGkPA==
@@ -1694,6 +1710,16 @@
   version "2.49.0"
   resolved "https://registry.yarnpkg.com/@microsoft/fast-foundation/-/fast-foundation-2.49.0.tgz#cfacc35fb48c713d08d1bb493476bafe88d77455"
   integrity sha512-Wk4e4QXFVtT5hPwhMfHyGY30kixM0td8aDs7bAD6NM2z2SCBNvpTTWp+FCjx0I0lpUMlMenb6wsw7pMWQreRkQ==
+  dependencies:
+    "@microsoft/fast-element" "^1.12.0"
+    "@microsoft/fast-web-utilities" "^5.4.1"
+    tabbable "^5.2.0"
+    tslib "^1.13.0"
+
+"@microsoft/fast-foundation@^2.46.2", "@microsoft/fast-foundation@^2.49.1":
+  version "2.49.1"
+  resolved "https://registry.yarnpkg.com/@microsoft/fast-foundation/-/fast-foundation-2.49.1.tgz#f9cd36491d4d0080e694eaf0aece5672cdf7075a"
+  integrity sha512-dSajlZeX+lkqjg4108XbIIhVLECgJTCG32bE8P6rNgo8XCPHVJBDiBejrF34lv5pO9Z2uGORZjeip/N0fPib+g==
   dependencies:
     "@microsoft/fast-element" "^1.12.0"
     "@microsoft/fast-web-utilities" "^5.4.1"

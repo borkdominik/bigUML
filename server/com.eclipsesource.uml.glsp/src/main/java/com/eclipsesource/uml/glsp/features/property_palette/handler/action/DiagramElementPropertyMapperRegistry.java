@@ -15,9 +15,9 @@ import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 
-import com.eclipsesource.uml.glsp.core.common.DiagramClassRegistry;
-import com.eclipsesource.uml.glsp.core.common.RepresentationKey;
 import com.eclipsesource.uml.glsp.features.property_palette.mapper.DiagramElementPropertyMapper;
+import com.eclipsesource.uml.modelserver.shared.registry.DiagramClassRegistry;
+import com.eclipsesource.uml.modelserver.shared.registry.RepresentationKey;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 
@@ -31,9 +31,10 @@ public class DiagramElementPropertyMapperRegistry
          var representation = e.getKey();
 
          e.getValue().forEach(mapper -> {
-            var key = mapper.getElementType();
-            register(RepresentationKey.of(representation, key),
-               (DiagramElementPropertyMapper<EObject>) mapper);
+            mapper.getElementTypes().forEach(key -> {
+               register(RepresentationKey.of(representation, key),
+                  (DiagramElementPropertyMapper<EObject>) mapper);
+            });
          });
       });
    }

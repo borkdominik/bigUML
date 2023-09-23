@@ -14,7 +14,7 @@ import java.util.function.Consumer;
 
 import org.eclipse.glsp.server.operations.OperationHandler;
 
-import com.eclipsesource.uml.glsp.core.manifest.contributions.ContributionBinderSupplier;
+import com.eclipsesource.uml.modelserver.shared.manifest.supplier.ContributionBinderSupplier;
 import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.Multibinder;
 

@@ -22,6 +22,11 @@ public interface DiagramElementConfiguration {
    Map<String, EClass> getTypeMappings();
 
    interface Node extends DiagramElementConfiguration {
+      /**
+       * Elements that can be added to the graph directly (i.e., root)
+       *
+       * @return Type IDs
+       */
       Set<String> getGraphContainableElements();
 
       Set<ShapeTypeHint> getShapeTypeHints();

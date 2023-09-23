@@ -10,10 +10,12 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.core.handler.operation.delete;
 
+import java.util.Set;
+
 import org.eclipse.emf.ecore.EObject;
 
 public interface DiagramDeleteHandler<TElementType extends EObject> {
-   Class<TElementType> getElementType();
+   Set<Class<? extends TElementType>> getElementTypes();
 
-   void handle(EObject object);
+   void handleDelete(UmlDeleteOperation operation, EObject object);
 }

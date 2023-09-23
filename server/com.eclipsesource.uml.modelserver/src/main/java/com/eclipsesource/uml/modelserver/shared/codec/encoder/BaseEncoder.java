@@ -16,10 +16,10 @@ import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
 
 import com.eclipsesource.uml.modelserver.shared.codec.CCommandProvider;
 
-public class BaseEncoder implements CCommandProvider {
+public abstract class BaseEncoder implements CCommandProvider {
    protected final CCompoundCommand command;
 
-   protected BaseEncoder() {
+   public BaseEncoder() {
       this.command = CCommandFactory.eINSTANCE.createCompoundCommand();
    }
 

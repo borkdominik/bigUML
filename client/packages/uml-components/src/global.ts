@@ -7,6 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
+import { Combobox } from '@microsoft/fast-components';
 import {
     Button,
     Checkbox,
@@ -46,6 +47,7 @@ declare global {
         'vscode-panel-view': PanelView;
         'vscode-text-field': TextField;
         'vscode-text-area': TextArea;
+        'vscode-combobox': Combobox;
         'big-context-menu': ContextMenu;
         'big-context-menu-item': ContextMenuItem;
         'big-property-palette': PropertyPalette;

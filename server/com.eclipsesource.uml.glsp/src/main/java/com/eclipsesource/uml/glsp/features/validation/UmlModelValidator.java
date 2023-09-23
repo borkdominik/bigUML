@@ -19,7 +19,6 @@ import org.eclipse.glsp.server.features.validation.Marker;
 import org.eclipse.glsp.server.features.validation.ModelValidator;
 
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
-import com.eclipsesource.uml.glsp.features.validation.validators.CommunicationValidator;
 import com.google.inject.Inject;
 
 public class UmlModelValidator implements ModelValidator {
@@ -28,18 +27,11 @@ public class UmlModelValidator implements ModelValidator {
    @Inject
    protected UmlModelState modelState;
 
-   @Inject
-   @CommunicationValidator
-   protected ModelValidator communicationValidator;
-
    @Override
    public List<Marker> validate(final GModelElement... elements) {
       var diagramType = modelState.getUnsafeRepresentation();
 
       switch (diagramType) {
-         case COMMUNICATION: {
-            return communicationValidator.validate(elements);
-         }
          default:
             LOGGER.debug("No modelValidator found for diagram type " + diagramType);
       }

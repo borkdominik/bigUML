@@ -22,8 +22,13 @@ public interface ElementCodec {
    String SEMANTIC_ELEMENT_ID = "semantic_element_id";
 
    interface Encoder<T> extends CCommandProvider {
+      default T element(final String key, final EObject element) {
+         ccommand().getProperties().put(key, SemanticElementAccessor.getId(element));
+         return (T) this;
+      }
+
       default T element(final EObject element) {
-         ccommand().getProperties().put(ElementCodec.SEMANTIC_ELEMENT_ID, SemanticElementAccessor.getId(element));
+         element(SEMANTIC_ELEMENT_ID, element);
          return (T) this;
       }
 

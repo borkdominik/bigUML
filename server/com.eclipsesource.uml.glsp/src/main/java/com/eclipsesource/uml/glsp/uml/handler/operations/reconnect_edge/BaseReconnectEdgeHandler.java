@@ -12,6 +12,8 @@ package com.eclipsesource.uml.glsp.uml.handler.operations.reconnect_edge;
 
 import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
 
+import java.util.Set;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.glsp.server.emf.EMFIdGenerator;
@@ -21,7 +23,7 @@ import org.eclipse.glsp.server.types.GLSPServerException;
 import com.eclipsesource.uml.glsp.core.handler.operation.reconnect_edge.DiagramReconnectEdgeHandler;
 import com.eclipsesource.uml.glsp.core.model.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
-import com.eclipsesource.uml.glsp.core.utils.reflection.GenericsUtil;
+import com.eclipsesource.uml.modelserver.shared.utils.reflection.GenericsUtil;
 import com.google.inject.Inject;
 
 public abstract class BaseReconnectEdgeHandler<TElementType extends EObject, TSourceType extends EObject, TTargetType extends EObject>
@@ -44,10 +46,10 @@ public abstract class BaseReconnectEdgeHandler<TElementType extends EObject, TSo
    }
 
    @Override
-   public Class<TElementType> getElementType() { return elementType; }
+   public Set<Class<? extends TElementType>> getElementTypes() { return Set.of(elementType); }
 
    @Override
-   public void handle(final ReconnectEdgeOperation operation) {
+   public void handleReconnect(final ReconnectEdgeOperation operation) {
       var elementId = operation.getEdgeElementId();
       var sourceId = operation.getSourceElementId();
       var targetId = operation.getTargetElementId();

@@ -14,9 +14,10 @@ import org.eclipse.emfcloud.modelserver.command.CCommand;
 
 import com.eclipsesource.uml.modelserver.shared.codec.CCommandProvider;
 import com.eclipsesource.uml.modelserver.shared.codec.ContextProvider;
+import com.eclipsesource.uml.modelserver.shared.codec.codecs.RepresentationCodec;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 
-public class BaseDecoder implements CCommandProvider, ContextProvider {
+public class BaseDecoder implements CCommandProvider, ContextProvider, RepresentationCodec.Decoder {
    protected final CCommand command;
    protected final ModelContext context;
 

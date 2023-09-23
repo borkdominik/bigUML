@@ -20,7 +20,7 @@ import com.eclipsesource.uml.glsp.features.property_palette.model.ElementChoiceP
 public class VisibilityKindUtils {
    public static List<ElementChoicePropertyItem.Choice> asChoices() {
       return VisibilityKind.VALUES.stream()
-         .map(v -> new ElementChoicePropertyItem.Choice(v.getLiteral(), v.getLiteral()))
+         .map(v -> new ElementChoicePropertyItem.Choice.Builder(v.getLiteral(), v.getLiteral()).build())
          .collect(Collectors.toList());
    }
 

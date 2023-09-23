@@ -13,8 +13,8 @@ package com.eclipsesource.uml.glsp.core.diagram;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.glsp.graph.DefaultTypes;
@@ -30,18 +30,26 @@ import com.google.inject.Inject;
 
 public class UmlDiagramConfiguration extends BaseDiagramConfiguration {
 
-   @Inject
+   @Deprecated
+   @Inject(optional = true)
    protected Map<Representation, DiagramConfiguration> diagramConfigurations;
    @Inject
    protected Map<Representation, Set<DiagramElementConfiguration.Node>> nodeConfigurations;
    @Inject
    protected Map<Representation, Set<DiagramElementConfiguration.Edge>> edgeConfigurations;
 
+   @Deprecated
+   protected Optional<Map<Representation, DiagramConfiguration>> diagramConfigurations() {
+      return Optional.ofNullable(diagramConfigurations);
+   }
+
    @Override
    public List<EdgeTypeHint> getEdgeTypeHints() {
-      var hints = diagramConfigurations.values().stream()
+      var hints = new ArrayList<EdgeTypeHint>();
+
+      diagramConfigurations().ifPresent(c -> c.values().stream()
          .flatMap(contribution -> contribution.getEdgeTypeHints().stream())
-         .collect(Collectors.toList());
+         .forEach(hints::add));
 
       edgeConfigurations.values().stream().flatMap(c -> c.stream())
          .flatMap(c -> c.getEdgeTypeHints().stream())
@@ -52,11 +60,12 @@ public class UmlDiagramConfiguration extends BaseDiagramConfiguration {
 
    @Override
    public List<ShapeTypeHint> getShapeTypeHints() {
-      List<ShapeTypeHint> hints = new ArrayList<>();
+      var hints = new ArrayList<ShapeTypeHint>();
+      var graphContainableElements = new ArrayList<String>();
 
-      var graphContainableElements = diagramConfigurations.values().stream()
+      diagramConfigurations().ifPresent(c -> c.values().stream()
          .flatMap(contribution -> contribution.getGraphContainableElements().stream())
-         .collect(Collectors.toList());
+         .forEach(graphContainableElements::add));
 
       nodeConfigurations.values().stream().flatMap(c -> c.stream())
          .flatMap(c -> c.getGraphContainableElements().stream())
@@ -66,9 +75,9 @@ public class UmlDiagramConfiguration extends BaseDiagramConfiguration {
          new ShapeTypeHint(DefaultTypes.GRAPH, false, false, false, false,
             graphContainableElements));
 
-      diagramConfigurations.values().stream()
+      diagramConfigurations().ifPresent(c -> c.values().stream()
          .flatMap(contribution -> contribution.getShapeTypeHints().stream())
-         .forEach(hints::add);
+         .forEach(hints::add));
 
       nodeConfigurations.values().stream().flatMap(c -> c.stream())
          .flatMap(c -> c.getShapeTypeHints().stream())
@@ -87,10 +96,9 @@ public class UmlDiagramConfiguration extends BaseDiagramConfiguration {
       mappings.put(CoreTypes.LABEL_EDGE_NAME, GraphPackage.Literals.GLABEL);
       mappings.put(CoreTypes.ICON_CSS, GraphPackage.Literals.GCOMPARTMENT);
 
-      diagramConfigurations.values().stream().map(contribution -> contribution.getTypeMappings())
-         .forEach(typeMappings -> {
-            mappings.putAll(typeMappings);
-         });
+      diagramConfigurations().ifPresent(c -> c.values().stream()
+         .map(contribution -> contribution.getTypeMappings())
+         .forEach(mappings::putAll));
 
       edgeConfigurations.values().stream().flatMap(c -> c.stream())
          .map(c -> c.getTypeMappings())

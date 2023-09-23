@@ -14,5 +14,6 @@ public enum ElementPropertyType {
    TEXT,
    BOOL,
    CHOICE,
-   REFERENCE
+   REFERENCE,
+   CHOICEREFERENCE
 }

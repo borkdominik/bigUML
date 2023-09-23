@@ -9,10 +9,6 @@
 import { UmlDiagramType } from '@borkdominik-biguml/uml-common';
 
 export namespace QualifiedUtil {
-    export function representationName(representation: UmlDiagramType, name: string): string {
-        return `${representation.toLowerCase()}__${name}`;
-    }
-
     export function representationTypeId(representation: UmlDiagramType, type: string, name: string): string {
         return `${type}:${representation.toLowerCase()}__${name}`;
     }

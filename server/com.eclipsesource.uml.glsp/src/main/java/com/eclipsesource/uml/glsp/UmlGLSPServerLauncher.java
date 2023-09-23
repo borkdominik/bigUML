@@ -19,7 +19,7 @@ import org.eclipse.glsp.server.launch.DefaultCLIParser;
 import org.eclipse.glsp.server.launch.SocketGLSPServerLauncher;
 import org.eclipse.glsp.server.utils.LaunchUtil;
 
-import com.eclipsesource.uml.glsp.core.UmlDiagramModule;
+import com.eclipsesource.uml.glsp.core.UmlCoreModule;
 import com.eclipsesource.uml.glsp.core.UmlServerModule;
 
 public class UmlGLSPServerLauncher {
@@ -36,7 +36,7 @@ public class UmlGLSPServerLauncher {
          int serverPort = parser.parseIntOption(DefaultCLIParser.OPTION_PORT, UML_DEFAULT_PORT, validator);
 
          var serverModule = new UmlServerModule()
-            .configureDiagramModule(new UmlDiagramModule());
+            .configureDiagramModule(new UmlCoreModule());
 
          var launcher = new SocketGLSPServerLauncher(serverModule);
          launcher.start("localhost", serverPort);

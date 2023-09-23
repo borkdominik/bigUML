@@ -18,13 +18,46 @@ public final class ElementChoicePropertyItem extends ElementPropertyItem {
    public final List<ElementChoicePropertyItem.Choice> choices;
    public final String choice;
 
-   public ElementChoicePropertyItem(final String elementId, final String propertyId, final String label,
-      final List<ElementChoicePropertyItem.Choice> choices, final String choice) {
-      super(elementId, propertyId, ElementPropertyType.CHOICE);
+   protected ElementChoicePropertyItem(final Builder builder) {
+      super(builder.elementId, builder.propertyId, ElementPropertyType.CHOICE);
 
-      this.choices = choices;
-      this.choice = choice;
-      this.label = label;
+      this.choices = builder.choices;
+      this.choice = builder.choice;
+      this.label = builder.label;
+   }
+
+   public static class Builder {
+      protected String elementId;
+      protected String propertyId;
+
+      protected String label;
+      protected List<ElementChoicePropertyItem.Choice> choices = List.of();
+      protected String choice;
+
+      public Builder(final String elementId, final String propertyId) {
+         super();
+         this.elementId = elementId;
+         this.propertyId = propertyId;
+      }
+
+      public Builder label(final String label) {
+         this.label = label;
+         return this;
+      }
+
+      public Builder choices(final List<ElementChoicePropertyItem.Choice> choices) {
+         this.choices = choices;
+         return this;
+      }
+
+      public Builder choice(final String choice) {
+         this.choice = choice;
+         return this;
+      }
+
+      public ElementChoicePropertyItem build() {
+         return new ElementChoicePropertyItem(this);
+      }
    }
 
    public static class Choice {
@@ -32,15 +65,32 @@ public final class ElementChoicePropertyItem extends ElementPropertyItem {
       public final String value;
       public final String secondaryText;
 
-      public Choice(final String label, final String value) {
-         this(label, value, null);
+      protected Choice(final Builder builder) {
+         this.label = builder.label;
+         this.value = builder.value;
+         this.secondaryText = builder.secondaryText;
       }
 
-      public Choice(final String label, final String value, final String secondaryText) {
-         super();
-         this.label = label;
-         this.value = value;
-         this.secondaryText = secondaryText;
+      public static class Builder {
+         protected String label;
+         protected String value;
+         protected String secondaryText;
+
+         public Builder(final String label, final String value) {
+            super();
+            this.label = label;
+            this.value = value;
+         }
+
+         public Builder secondaryText(final String secondaryText) {
+            this.secondaryText = secondaryText;
+            return this;
+         }
+
+         public Choice build() {
+            return new Choice(this);
+         }
+
       }
 
    }

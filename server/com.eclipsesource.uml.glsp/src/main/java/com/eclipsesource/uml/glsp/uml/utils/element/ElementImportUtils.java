@@ -27,8 +27,8 @@ public class ElementImportUtils {
       var references = packageImports.stream()
          .map(v -> {
             var label = String.format("<Element Import> %s", v.getImportedElement().getName());
-            return new ElementReferencePropertyItem.Reference(idGenerator.getOrCreateId(v), label,
-               v.getImportedElement().getName());
+            return new ElementReferencePropertyItem.Reference.Builder(idGenerator.getOrCreateId(v), label).name(
+               v.getImportedElement().getName()).build();
          })
          .collect(Collectors.toList());
 
@@ -41,7 +41,8 @@ public class ElementImportUtils {
       var references = packages.stream()
          .map(v -> {
             var label = String.format("<Packageable Element> %s", v.getName());
-            return new ElementReferencePropertyItem.Reference(idGenerator.getOrCreateId(v), label, v.getName());
+            return new ElementReferencePropertyItem.Reference.Builder(idGenerator.getOrCreateId(v), label)
+               .name(v.getName()).build();
          })
          .collect(Collectors.toList());
 

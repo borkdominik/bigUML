@@ -74,6 +74,7 @@ export interface ElementReferenceProperty extends ElementProperty {
     references: ElementReferenceProperty.Reference[];
     creates: ElementReferenceProperty.CreateReference[];
     isOrderable: boolean;
+    isAutocomplete: boolean;
 }
 
 export namespace ElementReferenceProperty {
@@ -84,7 +85,7 @@ export namespace ElementReferenceProperty {
         label: string;
         name?: string;
         hint?: string;
-        isDeleteable: boolean;
+        deleteActions: Action[];
     }
 
     export interface CreateReference {

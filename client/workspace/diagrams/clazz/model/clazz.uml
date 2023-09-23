@@ -22,6 +22,7 @@
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_VYM0AbK1Ee24ffphK9Na6g" value="1"/>
     </ownedAttribute>
     <interfaceRealization xmi:id="_ay8lcLK1Ee24ffphK9Na6g" client="_QE0EkK7gEe2EZoZ5sgiBCg" supplier="_9pVK8LK0Ee24ffphK9Na6g" contract="_9pVK8LK0Ee24ffphK9Na6g"/>
+    <interfaceRealization xmi:id="_3aiRsEXFEe6PxqGx6RvmrA" client="_QE0EkK7gEe2EZoZ5sgiBCg" supplier="_1-NdoEXFEe6PxqGx6RvmrA" contract="_1-NdoEXFEe6PxqGx6RvmrA"/>
     <ownedOperation xmi:id="_Cr6ZsK70Ee2EZoZ5sgiBCg" name="NewOperation3"/>
     <ownedOperation xmi:id="_r0YL0K70Ee2EZoZ5sgiBCg" name="NewOperation1">
       <ownedParameter xmi:id="_Pf5kMbFSEe2z_s-Al402-w" name="NewParameter1" type="_QE0EkK7gEe2EZoZ5sgiBCg" direction="return"/>
@@ -35,11 +36,15 @@
   <packagedElement xmi:type="uml:Enumeration" xmi:id="_8Q6mgLK0Ee24ffphK9Na6g" name="NewEnumeration1">
     <ownedLiteral xmi:id="__G-0sLK0Ee24ffphK9Na6g" name="NewEnumerationLiteral1"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Interface" xmi:id="_9pVK8LK0Ee24ffphK9Na6g" name="NewInterface1"/>
+  <packagedElement xmi:type="uml:Interface" xmi:id="_9pVK8LK0Ee24ffphK9Na6g" name="test"/>
   <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_-da6ULK0Ee24ffphK9Na6g" name="NewPrimitiveType1">
     <ownedAttribute xmi:id="_ipeAULK2Ee24ffphK9Na6g" name="NewProperty1" isStatic="true" isDerived="true">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_ipenYLK2Ee24ffphK9Na6g" value="1"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_ipenYbK2Ee24ffphK9Na6g" value="1"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_Epy0oEBdEe6ub88yN7dSRA" name="NewProperty2">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_EpzbsEBdEe6ub88yN7dSRA" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_EpzbsUBdEe6ub88yN7dSRA" value="1"/>
     </ownedAttribute>
   </packagedElement>
   <packagedElement xmi:type="uml:Abstraction" xmi:id="_J2H38LK1Ee24ffphK9Na6g" client="_QE0EkK7gEe2EZoZ5sgiBCg" supplier="_7Y-R4LK0Ee24ffphK9Na6g"/>
@@ -77,7 +82,7 @@
   <packagedElement xmi:type="uml:Class" xmi:id="_D0YigLK2Ee24ffphK9Na6g" name="NewClass6"/>
   <packagedElement xmi:type="uml:Class" xmi:id="_EWMPELK2Ee24ffphK9Na6g" name="NewClass7"/>
   <packagedElement xmi:type="uml:Usage" xmi:id="_FGLhkLK2Ee24ffphK9Na6g" client="_Mg74YLK1Ee24ffphK9Na6g" supplier="_D0YigLK2Ee24ffphK9Na6g"/>
-  <packagedElement xmi:type="uml:Class" xmi:id="_LjfcIbSLEe2pkZx4lGC8Ew" name="asd2" isAbstract="true">
+  <packagedElement xmi:type="uml:Class" xmi:id="_LjfcIbSLEe2pkZx4lGC8Ew" name="test" isAbstract="true">
     <ownedAttribute xmi:id="_ItfSANIcEe2rY5KN6ehSig" name="NewClass8" type="_j12MQL0cEe2besM683MlUA" association="_ItM-INIcEe2rY5KN6ehSig">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_Itf5ENIcEe2rY5KN6ehSig" value="1"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_ItggINIcEe2rY5KN6ehSig" value="1"/>
@@ -115,6 +120,11 @@
   <packagedElement xmi:type="uml:Package" xmi:id="_5TBTMCCrEe6XX-qz1apJUQ" name="NewPackage1">
     <packageImport xmi:id="_8glbYCCrEe6XX-qz1apJUQ" importedPackage="_ed5NMLK1Ee24ffphK9Na6g"/>
     <packageMerge xmi:id="_9VqCMCCrEe6XX-qz1apJUQ" mergedPackage="_dDtuMLK1Ee24ffphK9Na6g"/>
+    <packagedElement xmi:type="uml:Package" xmi:id="_yeXSoEXFEe6PxqGx6RvmrA" name="NewPackage1"/>
     <packagedElement xmi:type="uml:Class" xmi:id="_6PW_oCCrEe6XX-qz1apJUQ" name="NewClass1"/>
   </packagedElement>
+  <packagedElement xmi:type="uml:Interface" xmi:id="_WiUHIUQHEe6_cuHsPZbQUw" name="NewInterface1"/>
+  <packagedElement xmi:type="uml:Package" xmi:id="_ZWe34EQHEe6_cuHsPZbQUw" name="NewPackage3"/>
+  <packagedElement xmi:type="uml:Interface" xmi:id="_1-NdoEXFEe6PxqGx6RvmrA" name="NewInterface2"/>
+  <packagedElement xmi:type="uml:Abstraction" xmi:id="_pBi6cFb-Ee6LC_xTG-ChTA" client="_EWMPELK2Ee24ffphK9Na6g" supplier="_LjfcIbSLEe2pkZx4lGC8Ew"/>
 </uml:Model>

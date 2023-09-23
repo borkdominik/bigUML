@@ -10,8 +10,35 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.core.manifest;
 
+import com.eclipsesource.uml.modelserver.shared.manifest.supplier.ContributionBinderSupplier;
+import com.eclipsesource.uml.modelserver.shared.manifest.supplier.ContributionIdSupplier;
+import com.eclipsesource.uml.modelserver.shared.manifest.supplier.ContributionRepresentationSupplier;
+import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.AbstractModule;
+import com.google.inject.Binder;
 
-public class DiagramManifest extends AbstractModule {
+public abstract class DiagramManifest extends AbstractModule
+   implements ContributionBinderSupplier, ContributionIdSupplier, ContributionRepresentationSupplier {
 
+   protected final Representation representation;
+
+   public DiagramManifest(final Representation representation) {
+      super();
+      this.representation = representation;
+   }
+
+   @Override
+   public String id() {
+      return representation().getName();
+   }
+
+   @Override
+   public Representation representation() {
+      return this.representation;
+   }
+
+   @Override
+   public Binder contributionBinder() {
+      return binder();
+   }
 }

@@ -10,7 +10,6 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.core.manifest;
 
-import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramConfigurationContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramElementConfigurationContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.GModelMapperContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.ToolPaletteConfigurationContribution;
@@ -18,9 +17,8 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Binder;
 
 public abstract class DiagramManifest extends AbstractModule
-   implements DiagramConfigurationContribution, DiagramElementConfigurationContribution,
-   ToolPaletteConfigurationContribution,
-   GModelMapperContribution {
+   implements DiagramElementConfigurationContribution,
+   ToolPaletteConfigurationContribution, GModelMapperContribution {
 
    @Override
    public Binder contributionBinder() {

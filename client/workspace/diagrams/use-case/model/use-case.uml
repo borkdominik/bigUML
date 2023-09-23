@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_3QrbgRsaEe6wyY76TaevJQ" name="use-case">
-  <packagedElement xmi:type="uml:Actor" xmi:id="_dx0O0B8oEe6RP-EVI6EPJA" name="NewActor1"/>
+  <packagedElement xmi:type="uml:Actor" xmi:id="_dx0O0B8oEe6RP-EVI6EPJA" name="NewActor1">
+    <generalization xmi:id="_6OrWUE5iEe61GoEwgZL7FQ" general="_5kmekU5iEe61GoEwgZL7FQ"/>
+  </packagedElement>
   <packagedElement xmi:type="uml:UseCase" xmi:id="_eTUZYB8oEe6RP-EVI6EPJA" name="NewUseCase1"/>
   <packagedElement xmi:type="uml:Association" xmi:id="_e13FwB8oEe6RP-EVI6EPJA" memberEnd="_e13FwR8oEe6RP-EVI6EPJA _e1468B8oEe6RP-EVI6EPJA">
     <ownedEnd xmi:id="_e13FwR8oEe6RP-EVI6EPJA" name="NewUseCase1" type="_eTUZYB8oEe6RP-EVI6EPJA" association="_e13FwB8oEe6RP-EVI6EPJA">
@@ -12,4 +14,16 @@
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_e15iAR8oEe6RP-EVI6EPJA" value="1"/>
     </ownedEnd>
   </packagedElement>
+  <packagedElement xmi:type="uml:UseCase" xmi:id="_jVN44TeFEe6YwNJo51TMdA" name="NewUseCase2"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="_j8Z0sDeFEe6YwNJo51TMdA" memberEnd="_j8fUQDeFEe6YwNJo51TMdA _j8hJcDeFEe6YwNJo51TMdA">
+    <ownedEnd xmi:id="_j8fUQDeFEe6YwNJo51TMdA" name="NewUseCase2" type="_jVN44TeFEe6YwNJo51TMdA" association="_j8Z0sDeFEe6YwNJo51TMdA">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_j8giYDeFEe6YwNJo51TMdA" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_j8giYTeFEe6YwNJo51TMdA" value="1"/>
+    </ownedEnd>
+    <ownedEnd xmi:id="_j8hJcDeFEe6YwNJo51TMdA" name="NewActor1" type="_dx0O0B8oEe6RP-EVI6EPJA" association="_j8Z0sDeFEe6YwNJo51TMdA">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_j8hJcTeFEe6YwNJo51TMdA" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_j8hJcjeFEe6YwNJo51TMdA" value="1"/>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Actor" xmi:id="_5kmekU5iEe61GoEwgZL7FQ" name="NewActor2"/>
 </uml:Model>

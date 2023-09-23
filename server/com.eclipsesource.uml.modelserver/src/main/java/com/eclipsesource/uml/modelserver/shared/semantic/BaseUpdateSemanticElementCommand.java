@@ -10,6 +10,9 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.shared.semantic;
 
+import java.util.List;
+import java.util.function.Supplier;
+
 import org.eclipse.emf.ecore.EObject;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
@@ -17,27 +20,39 @@ import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 public abstract class BaseUpdateSemanticElementCommand<TSemanticElement extends EObject, TUpdateArgument>
    extends BaseSemanticElementCommand {
 
-   protected TSemanticElement semanticElement;
+   protected Supplier<TSemanticElement> semanticElementSupplier;
    protected TUpdateArgument updateArgument;
 
    public BaseUpdateSemanticElementCommand(final ModelContext context, final TSemanticElement semanticElement,
       final TUpdateArgument updateArgument) {
+      this(context, () -> semanticElement, updateArgument);
+   }
+
+   public BaseUpdateSemanticElementCommand(final ModelContext context,
+      final Supplier<TSemanticElement> semanticElementSupplier,
+      final TUpdateArgument updateArgument) {
       super(context);
-      this.semanticElement = semanticElement;
+      this.semanticElementSupplier = semanticElementSupplier;
       this.updateArgument = updateArgument;
    }
 
    @Override
    protected void doExecute() {
-      updateSemanticElement(this.semanticElement, this.updateArgument);
+      updateSemanticElement(this.semanticElementSupplier.get(), this.updateArgument);
    }
 
    /**
     * Updates the semantic element with the provided argument
     *
     * @param semanticElement Semantic element which will be updated
-    * @param updateArgument        Argument with the changes
+    * @param updateArgument  Argument with the changes
     */
-   abstract protected void updateSemanticElement(TSemanticElement semanticElement, TUpdateArgument updateArgument);
+   protected abstract void updateSemanticElement(final TSemanticElement semanticElement,
+      final TUpdateArgument updateArgument);
+
+   protected void include(
+      final List<BaseUpdateSemanticElementCommand<? super TSemanticElement, ? super TUpdateArgument>> commands) {
+      commands.forEach(c -> c.doExecute());
+   }
 
 }

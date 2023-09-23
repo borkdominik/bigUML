@@ -10,16 +10,16 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.shared.notation.commands;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.server.emf.model.notation.NotationElement;
-import org.eclipse.uml2.uml.Element;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.BaseNotationExistenceCheckedCommand;
 
-public class DeleteNotationElementCommand extends BaseNotationExistenceCheckedCommand<Element, NotationElement> {
+public class DeleteNotationElementCommand extends BaseNotationExistenceCheckedCommand<EObject, NotationElement> {
 
    public DeleteNotationElementCommand(final ModelContext context,
-      final Element semanticElement) {
+      final EObject semanticElement) {
       super(context, semanticElement);
    }
 

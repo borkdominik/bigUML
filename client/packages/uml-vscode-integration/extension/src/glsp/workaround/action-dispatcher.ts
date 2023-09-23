@@ -42,8 +42,10 @@ export class VSCodeActionDispatcher implements IActionDispatcher {
         this.connector = connector;
     }
 
-    dispatchToActiveClient(action: Action): void {
-        this.connector.sendActionToActiveClient(action);
+    dispatchToActiveClient(action: Action): void;
+    dispatchToActiveClient(action: Action[]): void;
+    dispatchToActiveClient(action: Action | Action[]): void {
+        this.connector.sendActionToActiveClient(action as Action[]);
     }
 
     dispatch(action: Action): Promise<void> {

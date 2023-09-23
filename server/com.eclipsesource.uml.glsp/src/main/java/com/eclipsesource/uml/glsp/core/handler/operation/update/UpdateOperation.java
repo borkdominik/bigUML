@@ -18,29 +18,23 @@ import org.eclipse.glsp.server.operations.Operation;
 public class UpdateOperation extends Operation {
 
    public static final String KIND = "updateOperation";
-   private String elementId;
-   private String contextId;
+   protected String elementId;
 
-   private Map<String, String> context;
-   private Map<String, Object> args;
+   protected Map<String, String> context;
+   protected Map<String, Object> args;
 
    public UpdateOperation() {
       this(null);
    }
 
    public UpdateOperation(final String elementId) {
-      this(elementId, "root");
+      this(elementId, new HashMap<>(), new HashMap<>());
    }
 
-   public UpdateOperation(final String elementId, final String contextId) {
-      this(elementId, contextId, new HashMap<>(), new HashMap<>());
-   }
-
-   public UpdateOperation(final String elementId, final String contextId, final Map<String, String> context,
+   public UpdateOperation(final String elementId, final Map<String, String> context,
       final Map<String, Object> args) {
       super(KIND);
       this.elementId = elementId;
-      this.contextId = contextId;
       this.context = context;
       this.args = args;
    }
@@ -56,9 +50,4 @@ public class UpdateOperation extends Operation {
    public Map<String, String> getContext() { return context; }
 
    public void setContext(final Map<String, String> context) { this.context = context; }
-
-   public String getContextId() { return contextId; }
-
-   public void setContextId(final String contextId) { this.contextId = contextId; }
-
 }

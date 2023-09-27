@@ -111,7 +111,8 @@ export class ServerManager {
                 vscode.window.showErrorMessage('Something went wrong. Please check the logs.');
 
                 let reason = 'Something went wrong.';
-                let details: string | undefined = 'Please check the logs.';
+                let details: string | undefined =
+                    'Please check the logs (Command: > Output: Show Output Channels... -> bigUML Modeling Tool).';
 
                 if (error instanceof Error) {
                     reason = error.message;

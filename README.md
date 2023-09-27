@@ -141,9 +141,9 @@ Coming Soon!
 
 ### Structure Diagrams
 
-| Class   | Component | Deployment | Object                | Package               | Profile | Composite |
-| ------- | --------- | ---------- | --------------------- | --------------------- | ------- | --------- |
-| Initial | -         | Initial    | Integrated into Class | Initial, not released | -       | -         |
+| Class   | Component | Deployment | Object                | Package | Profile | Composite |
+| ------- | --------- | ---------- | --------------------- | ------- | ------- | --------- |
+| Initial | -         | Initial    | Integrated into Class | Initial | -       | -         |
 
 ### Behavior Diagrams
 

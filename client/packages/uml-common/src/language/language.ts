@@ -32,6 +32,7 @@ export namespace UmlDiagramTypeUtil {
         UmlDiagramType.COMMUNICATION,
         UmlDiagramType.DEPLOYMENT,
         UmlDiagramType.INFORMATION_FLOW,
+        UmlDiagramType.PACKAGE,
         UmlDiagramType.STATE_MACHINE,
         UmlDiagramType.USE_CASE
     ];

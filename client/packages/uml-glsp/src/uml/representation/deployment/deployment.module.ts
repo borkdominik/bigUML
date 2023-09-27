@@ -27,6 +27,7 @@ import {
     registerManifestationElement,
     registerModelElement,
     registerNodeElement,
+    registerOperationElement,
     registerPackageElement,
     registerPropertyElement
 } from '../../elements/index';
@@ -42,6 +43,7 @@ export const umlDeploymentDiagramModule = new ContainerModule((bind, unbind, isB
     registerNodeElement(context, UmlDiagramType.DEPLOYMENT);
     registerPackageElement(context, UmlDiagramType.DEPLOYMENT);
     registerPropertyElement(context, UmlDiagramType.DEPLOYMENT);
+    registerOperationElement(context, UmlDiagramType.DEPLOYMENT);
     registerCommunicationPathElement(context, UmlDiagramType.DEPLOYMENT);
     registerDependencyElement(context, UmlDiagramType.DEPLOYMENT);
     registerManifestationElement(context, UmlDiagramType.DEPLOYMENT);

@@ -30,20 +30,25 @@ public class UmlToolPaletteItemProvider
    private static Logger LOGGER = LogManager.getLogger(UmlToolPaletteItemProvider.class.getSimpleName());
 
    @Inject
-   private Map<Representation, Set<ToolPaletteConfiguration>> palettes;
+   protected Map<Representation, Set<ToolPaletteConfiguration>> palettes;
 
    @Inject
-   private UmlModelState modelState;
+   protected UmlModelState modelState;
 
    @Override
    public List<PaletteItem> getItems(final Map<String, String> args) {
       var representation = modelState.getUnsafeRepresentation();
       var items = new ArrayList<PaletteItem>();
 
-      palettes.get(representation).stream()
-         .forEachOrdered(contribution -> {
-            items.addAll(contribution.getItems(args));
-         });
+      if (palettes.containsKey(representation)) {
+         palettes.get(representation).stream()
+            .forEachOrdered(contribution -> {
+               items.addAll(contribution.getItems(args));
+            });
+      } else {
+         throw new IllegalArgumentException(
+            String.format("Representation %s did not provide any tool palette items", representation));
+      }
 
       return items;
    }

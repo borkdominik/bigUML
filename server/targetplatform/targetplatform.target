@@ -28,7 +28,6 @@
 			<unit id="org.slf4j.api" version="1.7.30.v20200204-2150"/>
 			<unit id="javax.servlet" version="3.1.0.v201410161800"/>
 			<repository location="https://download.eclipse.org/tools/orbit/downloads/drops/R20220302172233/repository/"/>
-			<unit id="com.google.inject.assistedinject" version="5.0.1.v20210324-2015"/>
 		</location>
 		<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 			<unit id="org.eclipse.emfcloud.emfjson-jackson" version="2.0.0"/>
@@ -67,6 +66,11 @@
 		<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 			<repository location="mvn:org.eclipse.jetty:jetty-p2:10.0.13:zip:p2site"/>
 			<unit id="org.eclipse.jetty.websocket.servlet" version="10.0.13"/>
+		</location>
+		<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+			<repository location="https://download.eclipse.org/tools/orbit/downloads/drops/I20230403150144/repository"/>
+			<unit id="com.google.inject.assistedinject" version="5.0.1.v20221112-0806"/>
+			<unit id="com.google.inject.assistedinject.source" version="5.0.1.v20221112-0806"/>
 		</location>
 	</locations>
 </target>

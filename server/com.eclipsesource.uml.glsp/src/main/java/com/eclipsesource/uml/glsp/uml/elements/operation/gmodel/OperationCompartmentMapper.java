@@ -43,7 +43,8 @@ public final class OperationCompartmentMapper extends RepresentationGModelMapper
          .layoutOptions(new GLayoutOptions()
             .hGap(3)
             .resizeContainer(true))
-         .add(buildIconVisibilityName(source, "--uml-operation-icon"));
+         .add(visibilityBuilder(source).build())
+         .add(nameBuilder(source).build());
 
       applyParameters(source, builder);
       applyReturns(source, builder);

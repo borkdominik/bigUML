@@ -53,7 +53,7 @@ public final class EnumerationNodeMapper extends RepresentationGNodeMapper<Enume
          .layout(GConstants.Layout.VBOX);
 
       header.add(buildHeaderAnnotation(source, QuotationMark.quoteDoubleAngle("Enumeration")));
-      header.add(buildHeaderName(source, "--uml-enumeration-icon"));
+      header.add(buildHeaderName(source));
 
       return header.build();
    }

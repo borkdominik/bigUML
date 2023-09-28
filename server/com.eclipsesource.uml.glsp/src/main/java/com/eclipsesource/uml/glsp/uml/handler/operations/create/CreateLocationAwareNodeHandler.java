@@ -18,8 +18,8 @@ import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.utils.LayoutUtil;
 
+import com.eclipsesource.uml.glsp.core.gmodel.builder.CompartmentGBuilder;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
-import com.eclipsesource.uml.glsp.uml.gmodel.builder.CompartmentGBuilder;
 
 public interface CreateLocationAwareNodeHandler {
    default Optional<GPoint> relativeLocationOf(final UmlModelState modelState, final CreateNodeOperation operation) {

@@ -18,11 +18,11 @@ import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.NamedElement;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
+import com.eclipsesource.uml.glsp.core.gmodel.builder.CompartmentGBuilder;
+import com.eclipsesource.uml.glsp.core.gmodel.builder.IconCssGBuilder;
+import com.eclipsesource.uml.glsp.core.gmodel.builder.LabelGBuilder;
+import com.eclipsesource.uml.glsp.core.gmodel.builder.SeparatorGBuilder;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
-import com.eclipsesource.uml.glsp.uml.gmodel.builder.CompartmentGBuilder;
-import com.eclipsesource.uml.glsp.uml.gmodel.builder.IconCssGBuilder;
-import com.eclipsesource.uml.glsp.uml.gmodel.builder.LabelGBuilder;
-import com.eclipsesource.uml.glsp.uml.gmodel.builder.SeparatorGBuilder;
 
 public interface EdgeGBuilder
    extends LabelGBuilder, IconCssGBuilder, SeparatorGBuilder, CompartmentGBuilder {

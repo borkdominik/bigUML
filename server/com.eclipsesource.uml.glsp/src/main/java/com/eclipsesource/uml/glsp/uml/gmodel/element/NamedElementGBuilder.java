@@ -19,11 +19,11 @@ import org.eclipse.uml2.uml.NamedElement;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
+import com.eclipsesource.uml.glsp.core.gmodel.builder.CompartmentGBuilder;
+import com.eclipsesource.uml.glsp.core.gmodel.builder.IconCssGBuilder;
+import com.eclipsesource.uml.glsp.core.gmodel.builder.LabelGBuilder;
+import com.eclipsesource.uml.glsp.core.gmodel.builder.SeparatorGBuilder;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
-import com.eclipsesource.uml.glsp.uml.gmodel.builder.CompartmentGBuilder;
-import com.eclipsesource.uml.glsp.uml.gmodel.builder.IconCssGBuilder;
-import com.eclipsesource.uml.glsp.uml.gmodel.builder.LabelGBuilder;
-import com.eclipsesource.uml.glsp.uml.gmodel.builder.SeparatorGBuilder;
 import com.eclipsesource.uml.glsp.uml.utils.element.VisibilityKindUtils;
 
 public interface NamedElementGBuilder<TSource extends NamedElement>
@@ -45,6 +45,12 @@ public interface NamedElementGBuilder<TSource extends NamedElement>
          .add(iconFromCssPropertyBuilder(source, iconCSS).build())
          .add(visibilityBuilder(source).build())
          .add(nameBuilder(source).build());
+   }
+
+   default GLabel buildHeaderName(final NamedElement source) {
+      return nameBuilder(source)
+         .addCssClass(CoreCSS.FONT_BOLD)
+         .build();
    }
 
    default GCompartment buildHeaderName(final NamedElement source, final String iconCSS) {

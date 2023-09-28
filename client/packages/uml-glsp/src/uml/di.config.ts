@@ -8,14 +8,16 @@
  *********************************************************************************/
 import { configureModelElement, SLabel, SLabelView } from '@eclipse-glsp/client';
 import { ContainerModule } from 'inversify';
+import { SDivider, SDividerView } from '../graph/base/divider.view';
 import { IconCSS, IconCSSView, SEditableLabel } from '../index';
-import { UmlTypes } from './uml.types';
+import { UmlGModelTypes } from './uml.types';
 
 export const umlModule = new ContainerModule((bind, unbind, isBound, rebind) => {
     const context = { bind, unbind, isBound, rebind };
 
-    configureModelElement(context, UmlTypes.LABEL_NAME, SEditableLabel, SLabelView);
-    configureModelElement(context, UmlTypes.LABEL_EDGE_NAME, SEditableLabel, SLabelView);
-    configureModelElement(context, UmlTypes.LABEL_TEXT, SLabel, SLabelView);
-    configureModelElement(context, UmlTypes.ICON_CSS, IconCSS, IconCSSView);
+    configureModelElement(context, UmlGModelTypes.LABEL_NAME, SEditableLabel, SLabelView);
+    configureModelElement(context, UmlGModelTypes.LABEL_EDGE_NAME, SEditableLabel, SLabelView);
+    configureModelElement(context, UmlGModelTypes.LABEL_TEXT, SLabel, SLabelView);
+    configureModelElement(context, UmlGModelTypes.ICON_CSS, IconCSS, IconCSSView);
+    configureModelElement(context, UmlGModelTypes.DIVIDER, SDivider, SDividerView);
 });

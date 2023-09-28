@@ -72,7 +72,7 @@ public final class PackageNodeMapper extends RepresentationGNodeMapper<Package, 
       var builder = compartmentHeaderBuilder(source)
          .layout(GConstants.Layout.HBOX);
 
-      builder.add(buildHeaderName(source, "--uml-package-icon"));
+      builder.add(buildHeaderName(source));
 
       return builder.build();
    }

@@ -1,11 +1,16 @@
-.uml-text-underline {
+.uml-theme .uml-text-underline {
     text-decoration: underline;
 }
 
-.uml-font-bold {
+.uml-theme .uml-font-bold {
     font-weight: bold;
 }
 
-.uml-font-italic {
+.uml-theme .uml-font-italic {
     font-style: italic;
+}
+
+.uml-theme .uml-divider-subtitle {
+    fill: var(--uml-divider-subtitle);
+    font-size: small;
 }

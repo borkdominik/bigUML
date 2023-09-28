@@ -7,6 +7,8 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import {
+    alignFeature,
+    containerFeature,
     Deletable,
     deletableFeature,
     Hoverable,
@@ -23,7 +25,9 @@ export class InteractableCompartment extends SCompartment implements Selectable,
         deletableFeature,
         selectFeature,
         hoverFeedbackFeature,
-        popupFeature
+        popupFeature,
+        containerFeature,
+        alignFeature
     ];
 
     selected = false;

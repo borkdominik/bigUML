@@ -45,13 +45,13 @@ public final class PropertyCompartmentMapper extends RepresentationGModelMapper<
 
    @Override
    public GCompartment map(final Property source) {
+      var options = new GLayoutOptions()
+         .resizeContainer(true);
+      options.put("hGrab", true);
       var builder = new GCompartmentBuilder(configuration().typeId())
          .id(idGenerator.getOrCreateId(source))
          .layout(GConstants.Layout.HBOX)
-         .layoutOptions(new GLayoutOptions()
-            .hGap(3)
-            .resizeContainer(true))
-         .add(iconFromCssPropertyBuilder(source, "--uml-property-icon").build())
+         .layoutOptions(options)
          .add(visibilityBuilder(source).build());
 
       applyIsDerived(source, builder);

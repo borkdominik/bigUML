@@ -8,10 +8,10 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.uml.gmodel.provider;
+package com.eclipsesource.uml.glsp.core.gmodel.provider;
 
-import com.eclipsesource.uml.glsp.core.gmodel.suffix.Suffix;
+import org.eclipse.glsp.server.emf.EMFIdGenerator;
 
-public interface SuffixGProvider {
-   Suffix suffix();
+public interface IdGeneratorGProvider {
+   EMFIdGenerator idGenerator();
 }

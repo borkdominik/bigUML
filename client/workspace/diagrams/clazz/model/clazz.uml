@@ -35,6 +35,7 @@
   <packagedElement xmi:type="uml:Class" xmi:id="_7Y-R4LK0Ee24ffphK9Na6g" name="NewClass2" isAbstract="true"/>
   <packagedElement xmi:type="uml:Enumeration" xmi:id="_8Q6mgLK0Ee24ffphK9Na6g" name="NewEnumeration1">
     <ownedLiteral xmi:id="__G-0sLK0Ee24ffphK9Na6g" name="NewEnumerationLiteral1"/>
+    <ownedLiteral xmi:id="_tCeLgF5MEe6clY4Og8ubgQ" name="NewEnumerationLiteral2"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Interface" xmi:id="_9pVK8LK0Ee24ffphK9Na6g" name="test"/>
   <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_-da6ULK0Ee24ffphK9Na6g" name="NewPrimitiveType1">

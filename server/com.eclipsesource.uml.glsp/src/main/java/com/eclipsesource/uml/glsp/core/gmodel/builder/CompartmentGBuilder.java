@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.uml.gmodel.builder;
+package com.eclipsesource.uml.glsp.core.gmodel.builder;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.graph.DefaultTypes;
@@ -17,7 +17,7 @@ import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.util.GConstants;
 
 import com.eclipsesource.uml.glsp.core.constants.UmlLayoutConstants;
-import com.eclipsesource.uml.glsp.uml.gmodel.provider.IdContextGeneratorGProvider;
+import com.eclipsesource.uml.glsp.core.gmodel.provider.IdContextGeneratorGProvider;
 
 public interface CompartmentGBuilder extends IdContextGeneratorGProvider {
 
@@ -34,18 +34,21 @@ public interface CompartmentGBuilder extends IdContextGeneratorGProvider {
    }
 
    default GCompartmentBuilder fixedChildrenCompartmentBuilder(final EObject source) {
+      var options = new GLayoutOptions()
+         .hAlign(GConstants.HAlign.LEFT)
+         .resizeContainer(true);
+      options.put("hGrab", true);
       return new GCompartmentBuilder(DefaultTypes.COMPARTMENT)
          .id(idContextGenerator().getOrCreateId(source))
          .layout(GConstants.Layout.VBOX)
-         .layoutOptions(new GLayoutOptions()
-            .hAlign(GConstants.HAlign.LEFT)
-            .resizeContainer(true));
+         .layoutOptions(options);
    }
 
    default GCompartmentBuilder freeformChildrenCompartmentBuilder(final EObject source) {
       return new GCompartmentBuilder(DefaultTypes.COMPARTMENT)
          .id(idContextGenerator().getOrCreateId(source))
          .addArgument(CompartmentGBuilder.childrenContainerKey, true)
+         .addArgument("divider", true)
          .layout(UmlLayoutConstants.FREEFORM)
          .layoutOptions(new GLayoutOptions()
             .hAlign(GConstants.HAlign.LEFT)

@@ -37,9 +37,7 @@ public final class EnumerationLiteralCompartmentMapper
          .id(idGenerator.getOrCreateId(source))
          .layout(GConstants.Layout.HBOX)
          .layoutOptions(new GLayoutOptions()
-            .hGap(3)
             .resizeContainer(true))
-         .add(iconFromCssPropertyBuilder(source, "--uml-enumeration-literal-icon").build())
          .add(nameBuilder(source).build());
 
       return builder.build();

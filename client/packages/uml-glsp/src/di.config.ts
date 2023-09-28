@@ -48,7 +48,6 @@ import { umlToolFeedbackModule } from './features/tool-feedback/di.config';
 import umlToolPaletteModule from './features/tool-palette/di.config';
 import { umlToolsModule } from './features/tools/di.config';
 import { UmlFreeFormLayouter } from './graph/layout/uml-freeform.layout';
-import { UmlVBoxLayouter } from './graph/layout/uml-vbox.layout';
 import { SVGIdCreatorService } from './graph/svg-id-creator.service';
 import { UmlGraphProjectionView } from './graph/uml-graph-projection.view';
 import { umlDiagramModules } from './uml/index';
@@ -73,7 +72,6 @@ export default function createContainer(widgetId: string): Container {
         bind(SVGIdCreatorService).toSelf().inSingletonScope();
 
         configureLayout({ bind, isBound }, UmlFreeFormLayouter.KIND, UmlFreeFormLayouter);
-        configureLayout({ bind, isBound }, 'uml-vbox', UmlVBoxLayouter);
 
         configureDefaultModelElements(context);
 

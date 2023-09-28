@@ -121,7 +121,11 @@
   <packagedElement xmi:type="uml:Package" xmi:id="_5TBTMCCrEe6XX-qz1apJUQ" name="NewPackage1">
     <packageImport xmi:id="_8glbYCCrEe6XX-qz1apJUQ" importedPackage="_ed5NMLK1Ee24ffphK9Na6g"/>
     <packageMerge xmi:id="_9VqCMCCrEe6XX-qz1apJUQ" mergedPackage="_dDtuMLK1Ee24ffphK9Na6g"/>
-    <packagedElement xmi:type="uml:Package" xmi:id="_yeXSoEXFEe6PxqGx6RvmrA" name="NewPackage1"/>
+    <packagedElement xmi:type="uml:Package" xmi:id="_yeXSoEXFEe6PxqGx6RvmrA" name="NewPackage1">
+      <packagedElement xmi:type="uml:Package" xmi:id="_8F3cwF5NEe6clY4Og8ubgQ" name="NewPackage1">
+        <packagedElement xmi:type="uml:Class" xmi:id="_9jB-UF5NEe6clY4Og8ubgQ" name="NewClass1"/>
+      </packagedElement>
+    </packagedElement>
     <packagedElement xmi:type="uml:Class" xmi:id="_6PW_oCCrEe6XX-qz1apJUQ" name="NewClass1"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Interface" xmi:id="_WiUHIUQHEe6_cuHsPZbQUw" name="NewInterface1"/>

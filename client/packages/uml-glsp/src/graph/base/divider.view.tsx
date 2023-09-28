@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { containerFeature, isBoundsAware, RenderingContext, SCompartmentView, svg } from '@eclipse-glsp/client';
+import { containerFeature, RenderingContext, SCompartmentView, svg } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 import { VNode } from 'snabbdom';
 import { NamedElement } from '../../uml/elements/index';
@@ -20,12 +20,6 @@ const JSX = { createElement: svg };
 @injectable()
 export class SDividerView extends SCompartmentView {
     override render(element: SDivider, context: RenderingContext): VNode {
-        const translate = `translate(${element.bounds.x}, ${element.bounds.y})`;
-        let width = element.bounds.width;
-        if (isBoundsAware(element.parent)) {
-            width = element.parent.bounds.width;
-        }
-        console.log('Element', element);
         const view: any = (
             <g>
                 <path class-uml-comp-separator d={`M 0,0  L ${element.bounds.width},0`}></path>

@@ -1,8 +1,12 @@
 .uml-node {
     fill: var(--uml-node);
-    filter: drop-shadow(0.1rem 0.1rem 0.1rem rgba(0, 0, 0, 0.5));
     stroke-width: 1;
     stroke: var(--uml-border);
+}
+
+svg > g > .uml-node {
+    /* Blurs the SVGs */
+    /* filter: var(--svg-def-filter-drop-shadow);  */
 }
 
 .uml-node.mouseover:not(.selected) {

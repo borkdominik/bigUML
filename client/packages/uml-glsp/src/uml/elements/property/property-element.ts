@@ -8,11 +8,11 @@
  *********************************************************************************/
 
 import { UmlDiagramType } from '@borkdominik-biguml/uml-common';
-import { configureModelElement, SCompartmentView, SLabelView } from '@eclipse-glsp/client';
+import { configureModelElement, SCompartmentView } from '@eclipse-glsp/client';
 import { DefaultTypes } from '@eclipse-glsp/protocol';
 import { interfaces } from 'inversify';
 import { InteractableCompartment } from '../../../graph/base/compartment';
-import { SEditableLabel } from '../../../index';
+import { SEditableLabel, SEditableLabelView } from '../../../index';
 import { QualifiedUtil } from '../../qualified.utils';
 
 export function registerPropertyElement(
@@ -29,12 +29,12 @@ export function registerPropertyElement(
         context,
         QualifiedUtil.representationTypeId(representation, DefaultTypes.LABEL, 'Property-type'),
         SEditableLabel,
-        SLabelView
+        SEditableLabelView
     );
     configureModelElement(
         context,
         QualifiedUtil.representationTypeId(representation, DefaultTypes.LABEL, 'Property-multiplicity'),
         SEditableLabel,
-        SLabelView
+        SEditableLabelView
     );
 }

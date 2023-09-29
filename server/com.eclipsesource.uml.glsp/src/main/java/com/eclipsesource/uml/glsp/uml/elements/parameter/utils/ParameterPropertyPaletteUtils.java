@@ -59,7 +59,10 @@ public class ParameterPropertyPaletteUtils {
    public static String asText(final Parameter parameter) {
       var direction = parameter.getDirection().getLiteral();
       var name = parameter.getName();
-      var type = TypeUtils.name(parameter.getType());
+      var type = TypeUtils.name(parameter.getType(), null);
+      if (type == null) {
+         return String.format("%s %s", direction, name);
+      }
 
       return String.format("%s %s: %s", direction, name, type);
    }

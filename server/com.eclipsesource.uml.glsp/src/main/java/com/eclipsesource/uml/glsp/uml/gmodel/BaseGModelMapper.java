@@ -17,11 +17,11 @@ import org.eclipse.glsp.server.emf.EMFIdGenerator;
 import com.eclipsesource.uml.glsp.core.features.id_generator.IdCountContextGenerator;
 import com.eclipsesource.uml.glsp.core.gmodel.GModelMapHandler;
 import com.eclipsesource.uml.glsp.core.gmodel.GModelMapper;
+import com.eclipsesource.uml.glsp.core.gmodel.provider.IdContextGeneratorGProvider;
+import com.eclipsesource.uml.glsp.core.gmodel.provider.IdGeneratorGProvider;
+import com.eclipsesource.uml.glsp.core.gmodel.provider.SuffixGProvider;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.Suffix;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
-import com.eclipsesource.uml.glsp.uml.gmodel.provider.IdContextGeneratorGProvider;
-import com.eclipsesource.uml.glsp.uml.gmodel.provider.IdGeneratorGProvider;
-import com.eclipsesource.uml.glsp.uml.gmodel.provider.SuffixGProvider;
 import com.eclipsesource.uml.modelserver.shared.utils.reflection.GenericsUtil;
 import com.google.inject.Inject;
 

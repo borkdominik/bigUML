@@ -26,8 +26,7 @@ public class CoreCSS {
    public static final String EDGE_DOTTED = "uml-edge-dotted";
    public static final String EDGE_DASHED = "uml-edge-dashed";
 
-   public static final String LABEL_TRANSPARENT = "label-transparent";
-
+   public static final String DIVIDER_SUBTITLE = "uml-divider-subtitle";
    public static final String TEXT_UNDERLINE = "uml-text-underline";
    public static final String FONT_BOLD = "uml-font-bold";
    public static final String FONT_ITALIC = "uml-font-italic";

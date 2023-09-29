@@ -12,7 +12,6 @@ package com.eclipsesource.uml.glsp.uml.elements.class_.gmodel;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.eclipse.glsp.graph.GCompartment;
 import org.eclipse.glsp.graph.GModelElement;
@@ -25,13 +24,14 @@ import org.eclipse.uml2.uml.Class;
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.QuotationMark;
 import com.eclipsesource.uml.glsp.uml.gmodel.RepresentationGNodeMapper;
+import com.eclipsesource.uml.glsp.uml.gmodel.element.AttributesAndOperationsBuilder;
 import com.eclipsesource.uml.glsp.uml.gmodel.element.NamedElementGBuilder;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
 public final class ClassNodeMapper extends RepresentationGNodeMapper<Class, GNode>
-   implements NamedElementGBuilder<Class> {
+   implements NamedElementGBuilder<Class>, AttributesAndOperationsBuilder {
 
    @Inject
    public ClassNodeMapper(@Assisted final Representation representation) {
@@ -41,9 +41,10 @@ public final class ClassNodeMapper extends RepresentationGNodeMapper<Class, GNod
    @Override
    public GNode map(final Class source) {
       var builder = new GNodeBuilder(configuration().typeId());
-
+      var options = new GLayoutOptions();
       builder.id(idGenerator.getOrCreateId(source))
          .layout(GConstants.Layout.VBOX)
+         .layoutOptions(options)
          .addCssClass(CoreCSS.NODE)
          .add(buildHeader(source))
          .add(buildCompartment(source));
@@ -73,7 +74,7 @@ public final class ClassNodeMapper extends RepresentationGNodeMapper<Class, GNod
          header.add(buildHeaderAnnotation(source, QuotationMark.quoteDoubleAngle("Abstract")));
       }
 
-      header.add(buildHeaderName(source, "--uml-class-icon"));
+      header.add(buildHeaderName(source));
 
       return header.build();
    }
@@ -81,16 +82,9 @@ public final class ClassNodeMapper extends RepresentationGNodeMapper<Class, GNod
    protected GCompartment buildCompartment(final Class source) {
       var compartment = fixedChildrenCompartmentBuilder(source);
 
-      var propertyElements = source.getOwnedAttributes().stream()
-         .filter(p -> p.getAssociation() == null)
-         .map(mapHandler::handle)
-         .collect(Collectors.toList());
-      compartment.addAll(propertyElements);
-
-      var operationElements = source.getOwnedOperations().stream()
-         .map(mapHandler::handle)
-         .collect(Collectors.toList());
-      compartment.addAll(operationElements);
+      compartment
+         .addAll(listOfAttributesAndOperations(source, mapHandler, source.getOwnedAttributes(),
+            source.getOwnedOperations()));
 
       return compartment.build();
    }

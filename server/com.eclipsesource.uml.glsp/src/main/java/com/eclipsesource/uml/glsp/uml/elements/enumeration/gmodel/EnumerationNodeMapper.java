@@ -20,6 +20,7 @@ import org.eclipse.uml2.uml.Enumeration;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.QuotationMark;
+import com.eclipsesource.uml.glsp.core.gmodel.builder.DividerGBuilder;
 import com.eclipsesource.uml.glsp.uml.gmodel.RepresentationGNodeMapper;
 import com.eclipsesource.uml.glsp.uml.gmodel.element.NamedElementGBuilder;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
@@ -27,7 +28,7 @@ import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
 public final class EnumerationNodeMapper extends RepresentationGNodeMapper<Enumeration, GNode>
-   implements NamedElementGBuilder<Enumeration> {
+   implements NamedElementGBuilder<Enumeration>, DividerGBuilder {
 
    @Inject
    public EnumerationNodeMapper(@Assisted final Representation representation) {
@@ -53,13 +54,14 @@ public final class EnumerationNodeMapper extends RepresentationGNodeMapper<Enume
          .layout(GConstants.Layout.VBOX);
 
       header.add(buildHeaderAnnotation(source, QuotationMark.quoteDoubleAngle("Enumeration")));
-      header.add(buildHeaderName(source, "--uml-enumeration-icon"));
+      header.add(buildHeaderName(source));
 
       return header.build();
    }
 
    protected GCompartment buildLiterals(final Enumeration source) {
       var compartment = fixedChildrenCompartmentBuilder(source);
+      compartment.add(buildDivider(source, "Literals"));
 
       var literalElements = source.getOwnedLiterals().stream()
          .map(mapHandler::handle)

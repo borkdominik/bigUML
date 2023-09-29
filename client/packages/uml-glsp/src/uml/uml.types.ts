@@ -8,10 +8,12 @@
  *********************************************************************************/
 import { DefaultTypes } from '@eclipse-glsp/client';
 
-export namespace UmlTypes {
-    export const ICON = 'icon';
+export namespace UmlGModelTypes {
     export const LABEL_NAME = `${DefaultTypes.LABEL}:name`;
     export const LABEL_TEXT = `${DefaultTypes.LABEL}:text`;
     export const LABEL_EDGE_NAME = `${DefaultTypes.LABEL}:edge-name`;
+    export const ICON = 'icon';
     export const ICON_CSS = `${ICON}:css`;
+    export const DIVIDER = 'divider';
+    export const COMPARTMENT_INTERACTABLE = 'comp:interactable';
 }

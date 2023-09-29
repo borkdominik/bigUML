@@ -21,8 +21,8 @@ import org.eclipse.uml2.uml.Slot;
 import org.eclipse.uml2.uml.ValueSpecification;
 
 import com.eclipsesource.uml.glsp.core.features.id_generator.IdCountContextGenerator;
+import com.eclipsesource.uml.glsp.core.gmodel.builder.LabelGBuilder;
 import com.eclipsesource.uml.glsp.uml.gmodel.RepresentationGModelMapper;
-import com.eclipsesource.uml.glsp.uml.gmodel.builder.LabelGBuilder;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;

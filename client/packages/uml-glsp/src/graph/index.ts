@@ -8,5 +8,5 @@
  *********************************************************************************/
 export * from './base/compartment';
 export * from './base/icon.view';
-export * from './base/label';
+export * from './base/label.view';
 export * from './uml-graph-projection.view';

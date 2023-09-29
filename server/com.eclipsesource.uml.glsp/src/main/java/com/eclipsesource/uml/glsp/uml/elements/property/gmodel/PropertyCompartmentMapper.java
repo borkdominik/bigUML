@@ -10,8 +10,10 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.elements.property.gmodel;
 
+import java.util.List;
 import java.util.Optional;
 
+import org.eclipse.glsp.graph.DefaultTypes;
 import org.eclipse.glsp.graph.GCompartment;
 import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.builder.impl.GCompartmentBuilder;
@@ -45,24 +47,73 @@ public final class PropertyCompartmentMapper extends RepresentationGModelMapper<
 
    @Override
    public GCompartment map(final Property source) {
+      var options = new GLayoutOptions()
+         .resizeContainer(true);
       var builder = new GCompartmentBuilder(configuration().typeId())
          .id(idGenerator.getOrCreateId(source))
          .layout(GConstants.Layout.HBOX)
-         .layoutOptions(new GLayoutOptions()
-            .hGap(3)
-            .resizeContainer(true))
-         .add(iconFromCssPropertyBuilder(source, "--uml-property-icon").build())
+         .layoutOptions(options);
+
+      builder
+         .add(leftSide(source))
+         .add(rightSide(source));
+
+      applyIsStatic(source, builder);
+
+      return builder.build();
+   }
+
+   protected GCompartment leftSide(final Property source) {
+      var options = new GLayoutOptions()
+         .hGap(3)
+         .paddingTop(0.0)
+         .paddingRight(0.0)
+         .paddingBottom(0.0)
+         .paddingLeft(0.0)
+         .resizeContainer(true);
+      var builder = new GCompartmentBuilder(DefaultTypes.COMPARTMENT)
+         .id(idCountGenerator.getOrCreateId(source))
+         .layout(GConstants.Layout.HBOX)
+         .layoutOptions(options)
          .add(visibilityBuilder(source).build());
 
       applyIsDerived(source, builder);
 
-      builder
-         .add(nameBuilder(source).build())
-         .add(separatorBuilder(source, ":").build());
+      builder.add(nameBuilder(source).build());
 
-      applyType(source, builder);
-      applyMultiplicity(source, builder);
-      applyIsStatic(source, builder);
+      return builder.build();
+   }
+
+   protected GCompartment rightSide(final Property source) {
+      var options = new GLayoutOptions()
+         .hGap(3)
+         .paddingTop(0.0)
+         .paddingRight(0.0)
+         .paddingBottom(0.0)
+         .paddingLeft(0.0)
+         .resizeContainer(true);
+      var builder = new GCompartmentBuilder(DefaultTypes.COMPARTMENT)
+         .id(idCountGenerator.getOrCreateId(source))
+         .layout(GConstants.Layout.HBOX)
+         .layoutOptions(options);
+
+      var detailsBuilder = new GCompartmentBuilder(DefaultTypes.COMPARTMENT)
+         .id(idCountGenerator.getOrCreateId(source))
+         .layout(GConstants.Layout.HBOX)
+         .layoutOptions(new GLayoutOptions()
+            .hGap(3)
+            .paddingTop(0.0)
+            .paddingRight(0.0)
+            .paddingBottom(0.0)
+            .paddingLeft(0.0));
+
+      var applied = List.of(applyType(source, detailsBuilder), applyMultiplicity(source, detailsBuilder));
+
+      if (applied.stream().anyMatch(a -> a)) {
+         builder
+            .add(separatorBuilder(source, ":").build())
+            .add(detailsBuilder.build());
+      }
 
       return builder.build();
    }
@@ -74,26 +125,32 @@ public final class PropertyCompartmentMapper extends RepresentationGModelMapper<
          .build();
    }
 
-   protected void applyType(final Property source, final GCompartmentBuilder builder) {
-      Optional.ofNullable(source.getType()).ifPresentOrElse(type -> {
+   protected boolean applyType(final Property source, final GCompartmentBuilder builder) {
+      return Optional.ofNullable(source.getType()).map(type -> {
          var name = type.getName() == null || type.getName().isBlank()
             ? type.getClass().getSimpleName().replace("Impl", "")
             : type.getName();
          builder.add(buildTypeName(source, name));
-      }, () -> builder.add(buildTypeName(source, "<Undefined>")));
+         return true;
+      }).orElse(false);
    }
 
-   protected void applyMultiplicity(final Property source,
+   protected boolean applyMultiplicity(final Property source,
       final GCompartmentBuilder builder) {
       var multiplicity = MultiplicityUtil.getMultiplicity(source);
 
-      builder
-         .add(separatorBuilder(source, "[").build())
-         .add(new GLabelBuilder(configuration(PropertyConfiguration.class).multiplicityTypeId())
-            .id(suffix.appendTo(PropertyMultiplicityLabelSuffix.SUFFIX, idGenerator.getOrCreateId(source)))
-            .text(multiplicity)
-            .build())
-         .add(separatorBuilder(source, "]").build());
+      if (!multiplicity.equals("1")) {
+         builder
+            .add(separatorBuilder(source, "[").build())
+            .add(new GLabelBuilder(configuration(PropertyConfiguration.class).multiplicityTypeId())
+               .id(suffix.appendTo(PropertyMultiplicityLabelSuffix.SUFFIX, idGenerator.getOrCreateId(source)))
+               .text(multiplicity)
+               .build())
+            .add(separatorBuilder(source, "]").build());
+         return true;
+      }
+
+      return false;
    }
 
    protected void applyIsDerived(final Property source, final GCompartmentBuilder builder) {

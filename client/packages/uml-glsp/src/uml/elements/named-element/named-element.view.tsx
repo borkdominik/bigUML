@@ -6,11 +6,19 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { alignFeature, layoutableChildFeature, RectangularNodeView, RenderingContext, SCompartment, svg } from '@eclipse-glsp/client';
+import {
+    alignFeature,
+    hasArguments,
+    layoutableChildFeature,
+    RectangularNodeView,
+    RenderingContext,
+    SCompartment,
+    svg
+} from '@eclipse-glsp/client';
 import { DefaultTypes } from '@eclipse-glsp/protocol';
 import { injectable } from 'inversify';
 import { VNode } from 'snabbdom';
-import { LabeledNode } from '../../../graph/base/label';
+import { LabeledNode } from '../../../graph/base/label.view';
 
 export class NamedElement extends LabeledNode {
     static override readonly DEFAULT_FEATURES = [...LabeledNode.DEFAULT_FEATURES, alignFeature, layoutableChildFeature];
@@ -27,7 +35,12 @@ export class NamedElementView extends RectangularNodeView {
         }
 
         const compartment = element.children.find(
-            c => c instanceof SCompartment && c.type !== DefaultTypes.COMPARTMENT_HEADER && c.children.length > 0
+            c =>
+                c instanceof SCompartment &&
+                c.type !== DefaultTypes.COMPARTMENT_HEADER &&
+                c.children.length > 0 &&
+                hasArguments(c) &&
+                c.args['divider'] === true
         ) as SCompartment | undefined;
 
         return (

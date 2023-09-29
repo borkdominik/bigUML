@@ -52,8 +52,8 @@ export class UmlGraphProjectionView extends GLSPProjectionView {
                     refX='10'
                     refY='5'
                     markerUnits='userSpaceOnUse'
-                    markerWidth='10'
-                    markerHeight='10'
+                    markerWidth='20'
+                    markerHeight='20'
                     orient='auto-start-reverse'
                 >
                     <path d='M 0 0 L 10 5 L 0 10 L 0 0 z' fill='var(--uml-edge)' />
@@ -64,8 +64,8 @@ export class UmlGraphProjectionView extends GLSPProjectionView {
                     refX='10'
                     refY='5'
                     markerUnits='userSpaceOnUse'
-                    markerWidth='10'
-                    markerHeight='10'
+                    markerWidth='20'
+                    markerHeight='20'
                     orient='auto-start-reverse'
                 >
                     <path d='M 0 0 L 10 5 L 0 10 L 0 0 z' stroke='var(--uml-edge)' fill='var(--uml-editor-background)' />
@@ -76,8 +76,8 @@ export class UmlGraphProjectionView extends GLSPProjectionView {
                     refX='10'
                     refY='5'
                     markerUnits='userSpaceOnUse'
-                    markerWidth='10'
-                    markerHeight='10'
+                    markerWidth='20'
+                    markerHeight='20'
                     orient='auto-start-reverse'
                 >
                     <path d='M 0 0 L 10 5 L 0 10' stroke='var(--uml-edge)' fill='var(--uml-editor-background)' />
@@ -88,8 +88,8 @@ export class UmlGraphProjectionView extends GLSPProjectionView {
                     refX='20'
                     refY='5'
                     markerUnits='userSpaceOnUse'
-                    markerWidth='20'
-                    markerHeight='10'
+                    markerWidth='30'
+                    markerHeight='20'
                     orient='auto-start-reverse'
                 >
                     <path d='M 0 5 L 10 10 L 20 5 L 10 0 L 0 5 z' fill='var(--uml-edge)' />
@@ -100,8 +100,8 @@ export class UmlGraphProjectionView extends GLSPProjectionView {
                     refX='20'
                     refY='5'
                     markerUnits='userSpaceOnUse'
-                    markerWidth='20'
-                    markerHeight='10'
+                    markerWidth='30'
+                    markerHeight='20'
                     orient='auto-start-reverse'
                 >
                     <path d='M 0 5 L 10 10 L 20 5 L 10 0 L 0 5 z' stroke='var(--uml-edge)' fill='var(--uml-editor-background)' />

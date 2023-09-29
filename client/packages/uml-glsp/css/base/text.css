@@ -14,3 +14,11 @@
     fill: var(--uml-divider-subtitle);
     font-size: small;
 }
+
+.uml-theme .selected .editable-label {
+    cursor: pointer;
+}
+
+.uml-theme .selected .highlight-label {
+    fill: var(--uml-medium-blue);
+}

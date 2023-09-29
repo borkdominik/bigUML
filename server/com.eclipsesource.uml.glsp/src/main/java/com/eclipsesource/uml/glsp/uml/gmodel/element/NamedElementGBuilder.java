@@ -32,6 +32,7 @@ public interface NamedElementGBuilder<TSource extends NamedElement>
    default GLabelBuilder nameBuilder(final NamedElement source) {
       return new GLabelBuilder(CoreTypes.LABEL_NAME)
          .id(suffix().appendTo(NameLabelSuffix.SUFFIX, idGenerator().getOrCreateId(source)))
+         .addArgument("highlight", true)
          .text(source.getName());
    }
 

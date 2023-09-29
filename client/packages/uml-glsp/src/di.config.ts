@@ -51,7 +51,6 @@ import { UmlFreeFormLayouter } from './graph/layout/uml-freeform.layout';
 import { SVGIdCreatorService } from './graph/svg-id-creator.service';
 import { UmlGraphProjectionView } from './graph/uml-graph-projection.view';
 import { umlDiagramModules } from './uml/index';
-import { IconLabelCompartmentSelectionFeedback } from './views/feedback.postprocessor';
 
 export default function createContainer(widgetId: string): Container {
     const coreDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
@@ -68,7 +67,7 @@ export default function createContainer(widgetId: string): Container {
 
         bind(LastContainableElementTracker).toSelf().inSingletonScope();
         bind(TYPES.MouseListener).toService(LastContainableElementTracker);
-        bind(TYPES.IVNodePostprocessor).to(IconLabelCompartmentSelectionFeedback);
+        // bind(TYPES.IVNodePostprocessor).to(IconLabelCompartmentSelectionFeedback);
         bind(SVGIdCreatorService).toSelf().inSingletonScope();
 
         configureLayout({ bind, isBound }, UmlFreeFormLayouter.KIND, UmlFreeFormLayouter);

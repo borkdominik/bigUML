@@ -9,15 +9,25 @@
 import {
     EditableLabel,
     editLabelFeature,
+    getSubType,
+    hasArguments,
+    hoverFeedbackFeature,
+    isEdgeLayoutable,
     isEditableLabel,
     Nameable,
     nameFeature,
     RectangularNode,
+    RenderingContext,
     SChildElement,
+    setAttr,
+    ShapeView,
     SLabel,
+    svg,
     WithEditableLabel,
     withEditLabelFeature
 } from '@eclipse-glsp/client';
+import { injectable } from 'inversify';
+import { VNode } from 'snabbdom';
 
 export class LabeledNode extends RectangularNode implements WithEditableLabel, Nameable {
     static override readonly DEFAULT_FEATURES = [...RectangularNode.DEFAULT_FEATURES, nameFeature, withEditLabelFeature];
@@ -42,5 +52,33 @@ export class LabeledNode extends RectangularNode implements WithEditableLabel, N
 }
 
 export class SEditableLabel extends SLabel implements EditableLabel {
-    static override readonly DEFAULT_FEATURES = [...SLabel.DEFAULT_FEATURES, editLabelFeature];
+    static override readonly DEFAULT_FEATURES = [...SLabel.DEFAULT_FEATURES, editLabelFeature, hoverFeedbackFeature];
+
+    hoverFeedback = false;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const JSX = { createElement: svg };
+
+@injectable()
+export class SEditableLabelView extends ShapeView {
+    override render(element: SEditableLabel, context: RenderingContext): VNode | undefined {
+        if (!isEdgeLayoutable(element) && !this.isVisible(element, context)) {
+            return undefined;
+        }
+        let highlight = false;
+        if (hasArguments(element)) {
+            highlight = !!element.args['highlight'];
+        }
+        const vnode = (
+            <text class-sprotty-label={true} class-editable-label={true} class-highlight-label={highlight}>
+                {element.text}
+            </text>
+        );
+        const subType = getSubType(element);
+        if (subType) {
+            setAttr(vnode, 'class', subType);
+        }
+        return vnode;
+    }
 }

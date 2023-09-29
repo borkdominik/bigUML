@@ -25,6 +25,7 @@ public class ClassPopupMapper extends BasePopupMapper<Class> {
    protected Optional<GHtmlRootBuilder> createRoot(final Class element, final RequestPopupModelAction action) {
       var title = generateTitle(element.getName()).build();
       var body = generateBody(List.of(
+         String.format("Type: %s", Class.class.getSimpleName()),
          String.format("Attributes: %d",
             element.getOwnedAttributes().stream().filter(p -> p.getAssociation() == null).count()),
          String.format("Operations: %d", element.getOwnedOperations().size()))).build();

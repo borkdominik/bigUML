@@ -15,4 +15,5 @@ export namespace UmlGModelTypes {
     export const ICON = 'icon';
     export const ICON_CSS = `${ICON}:css`;
     export const DIVIDER = 'divider';
+    export const COMPARTMENT_INTERACTABLE = 'comp:interactable';
 }

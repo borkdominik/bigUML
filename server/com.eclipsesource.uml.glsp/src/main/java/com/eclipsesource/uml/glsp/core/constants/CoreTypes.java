@@ -21,6 +21,7 @@ public class CoreTypes {
    public static final String ICON_CSS = ICON + ":css";
 
    public static final String DIVIDER = "divider";
+   public static final String COMPARTMENT_INTERACTABLE = "comp:interactable";
 
    private CoreTypes() {}
 }

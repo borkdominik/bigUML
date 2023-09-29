@@ -99,14 +99,14 @@
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_twRooQ6rEe6fjfGdAXiDPQ" value="1"/>
     </ownedAttribute>
   </packagedElement>
-  <packagedElement xmi:type="uml:Class" xmi:id="_Uk2g0cymEe2SqIqlz0mqiA" name="NewClass9">
+  <packagedElement xmi:type="uml:Class" xmi:id="_Uk2g0cymEe2SqIqlz0mqiA" name="asd">
     <ownedAttribute xmi:id="_uKNqAc1tEe2aWMTUBOnCiQ" name="NewProperty1" type="_W7vZ8K79Ee2EZoZ5sgiBCg">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_uK1VEM1tEe2aWMTUBOnCiQ" value="3"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_uK1VEc1tEe2aWMTUBOnCiQ" value="5"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="_FbIkUQneEe6oz5iiWKzjmQ" name="NewProperty2">
-      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_FbOD4AneEe6oz5iiWKzjmQ" value="1"/>
-      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_FbOD4QneEe6oz5iiWKzjmQ" value="1"/>
+    <ownedAttribute xmi:id="_FbIkUQneEe6oz5iiWKzjmQ" name="NewProperty2" visibility="public">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_FbOD4AneEe6oz5iiWKzjmQ" value="5"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_FbOD4QneEe6oz5iiWKzjmQ" value="5"/>
     </ownedAttribute>
     <ownedOperation xmi:id="_45WxkM5PEe2J1pPdCxXkdw" name="NewOperation1" visibility="public">
       <ownedParameter xmi:id="_s3IHAA6TEe6d8MuomP4orQ" name="C"/>

@@ -18,7 +18,7 @@ import {
 import { DefaultTypes } from '@eclipse-glsp/protocol';
 import { injectable } from 'inversify';
 import { VNode } from 'snabbdom';
-import { LabeledNode } from '../../../graph/base/label';
+import { LabeledNode } from '../../../graph/base/label.view';
 
 export class NamedElement extends LabeledNode {
     static override readonly DEFAULT_FEATURES = [...LabeledNode.DEFAULT_FEATURES, alignFeature, layoutableChildFeature];

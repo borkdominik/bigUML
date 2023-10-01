@@ -1,6 +1,6 @@
 <!-- DEMO -->
 <p align="center">
-  <img src="./media/bigUML-demo.gif" alt="Demo" />
+  <img src="./media/bigUML-demo.gif" width="800px" alt="Demo" />
 </p>
 
 <!-- BADGES -->

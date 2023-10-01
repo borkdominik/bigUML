@@ -104,7 +104,7 @@ export class NewFileCreator {
         );
 
         vscode.window.showInformationMessage(
-            'Thank you for testing bigUML. We want to remind you that bigUML is still in the early development phase.',
+            'Thank you for testing bigUML. We want to remind you that bigUML is at an early stage of development.',
             'Close'
         );
         await vscode.commands.executeCommand('workbench.files.action.refreshFilesExplorer');

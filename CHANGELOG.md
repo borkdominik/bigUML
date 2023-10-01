@@ -8,7 +8,22 @@ All notable changes to this project will be documented in this file.
 
 ### What's Changed
 
-## [v0.3.0 - 2023-05-23](https://github.com/borkdominik/bigUML/releases/tag/v0.3.0)
+## [v0.4.0 - 2023-10-01](https://github.com/borkdominik/bigUML/releases/tag/v0.4.0
+
+### What's Changed
+
+- Improve server architecture by @haydar-metin in https://github.com/borkdominik/bigUML/pull/132
+- Add state-machine diagram by @haydar-metin, @granigd, @DavidJaeger10, @sschwantler in https://github.com/borkdominik/bigUML/pull/133
+- Add deployment diagram by @haydar-metin in https://github.com/borkdominik/bigUML/pull/134
+- Integrate object diagram to class diagram by @haydar-metin, @MZeisler, @H0oKd in https://github.com/borkdominik/bigUML/pull/135
+- Add missing features in diagrams by @haydar-metin in https://github.com/borkdominik/bigUML/pull/136
+- Add activity diagram by @haydar-metin, @HolzingerAlexander, @dellis66, @nbzowski in https://github.com/borkdominik/bigUML/pull/139
+- Add information flow diagram by @haydar-metin, @lforst, @GallusHuber in https://github.com/borkdominik/bigUML/pull/140
+- Adapt communication diagram by @haydar-metin, @aylin-sarioglu in https://github.com/borkdominik/bigUML/pull/141
+- Adapt package diagram to new architecture by @haydar-metin in https://github.com/borkdominik/bigUML/pull/142
+- Beautify class diagram - miscellaneous by @haydar-metin in https://github.com/borkdominik/bigUML/pull/144
+
+## [v0.3.0 - 2023-07-21](https://github.com/borkdominik/bigUML/releases/tag/v0.3.0)
 
 ### What's Changed
 

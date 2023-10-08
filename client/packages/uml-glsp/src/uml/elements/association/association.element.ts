@@ -8,26 +8,32 @@
  *********************************************************************************/
 
 import { UmlDiagramType } from '@borkdominik-biguml/uml-common';
-import { configureModelElement, GEdgeView, SEdge } from '@eclipse-glsp/client';
+import { configureModelElement, GEdgeView } from '@eclipse-glsp/client';
 import { DefaultTypes } from '@eclipse-glsp/protocol';
 import { interfaces } from 'inversify';
 import { QualifiedUtil } from '../../qualified.utils';
+import { UmlEdge } from '../uml-edge/uml-edge';
 
 export function registerAssociationElement(
     context: { bind: interfaces.Bind; isBound: interfaces.IsBound },
     representation: UmlDiagramType
 ): void {
-    configureModelElement(context, QualifiedUtil.representationTypeId(representation, DefaultTypes.EDGE, 'Association'), SEdge, GEdgeView);
+    configureModelElement(
+        context,
+        QualifiedUtil.representationTypeId(representation, DefaultTypes.EDGE, 'Association'),
+        UmlEdge,
+        GEdgeView
+    );
     configureModelElement(
         context,
         QualifiedUtil.representationTemplateTypeId(representation, DefaultTypes.EDGE, 'aggregation', 'Association'),
-        SEdge,
+        UmlEdge,
         GEdgeView
     );
     configureModelElement(
         context,
         QualifiedUtil.representationTemplateTypeId(representation, DefaultTypes.EDGE, 'composition', 'Association'),
-        SEdge,
+        UmlEdge,
         GEdgeView
     );
 }

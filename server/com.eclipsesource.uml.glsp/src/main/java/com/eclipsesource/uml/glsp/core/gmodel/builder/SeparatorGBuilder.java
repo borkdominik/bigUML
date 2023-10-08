@@ -8,27 +8,19 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.uml.gmodel.builder;
+package com.eclipsesource.uml.glsp.core.gmodel.builder;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
-import com.eclipsesource.uml.glsp.uml.gmodel.provider.IdContextGeneratorGProvider;
-import com.eclipsesource.uml.glsp.uml.gmodel.provider.IdGeneratorGProvider;
-import com.eclipsesource.uml.glsp.uml.gmodel.provider.SuffixGProvider;
+import com.eclipsesource.uml.glsp.core.gmodel.provider.IdContextGeneratorGProvider;
 
-public interface LabelGBuilder extends IdGeneratorGProvider, IdContextGeneratorGProvider, SuffixGProvider {
+public interface SeparatorGBuilder extends IdContextGeneratorGProvider {
 
-   default GLabelBuilder textBuilder(final EObject source, final String text) {
+   default GLabelBuilder separatorBuilder(final EObject source, final String text) {
       return new GLabelBuilder(CoreTypes.LABEL_TEXT)
          .id(idContextGenerator().getOrCreateId(source))
          .text(text);
-   }
-
-   default GLabelBuilder textBuilder(final EObject source, final String seperator, final String... text) {
-      return new GLabelBuilder(CoreTypes.LABEL_TEXT)
-         .id(idContextGenerator().getOrCreateId(source))
-         .text(String.join(seperator, text));
    }
 }

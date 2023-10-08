@@ -10,8 +10,6 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.elements.primitive_type.gmodel;
 
-import java.util.stream.Collectors;
-
 import org.eclipse.glsp.graph.GCompartment;
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.builder.impl.GNodeBuilder;
@@ -21,13 +19,14 @@ import org.eclipse.uml2.uml.PrimitiveType;
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.QuotationMark;
 import com.eclipsesource.uml.glsp.uml.gmodel.RepresentationGNodeMapper;
+import com.eclipsesource.uml.glsp.uml.gmodel.element.AttributesAndOperationsBuilder;
 import com.eclipsesource.uml.glsp.uml.gmodel.element.NamedElementGBuilder;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
 public final class PrimitiveTypeNodeMapper extends RepresentationGNodeMapper<PrimitiveType, GNode>
-   implements NamedElementGBuilder<PrimitiveType> {
+   implements NamedElementGBuilder<PrimitiveType>, AttributesAndOperationsBuilder {
 
    @Inject
    public PrimitiveTypeNodeMapper(@Assisted final Representation representation) {
@@ -53,24 +52,17 @@ public final class PrimitiveTypeNodeMapper extends RepresentationGNodeMapper<Pri
          .layout(GConstants.Layout.VBOX);
 
       header.add(buildHeaderAnnotation(source, QuotationMark.quoteDoubleAngle("PrimitiveType")));
-      header.add(buildHeaderName(source, "--uml-primitive-type-icon"));
+      header.add(buildHeaderName(source));
 
       return header.build();
    }
 
    protected GCompartment buildCompartment(final PrimitiveType source) {
-
       var compartment = fixedChildrenCompartmentBuilder(source);
 
-      var propertyElements = source.getOwnedAttributes().stream()
-         .map(mapHandler::handle)
-         .collect(Collectors.toList());
-      compartment.addAll(propertyElements);
-
-      var operationElements = source.getOwnedOperations().stream()
-         .map(mapHandler::handle)
-         .collect(Collectors.toList());
-      compartment.addAll(operationElements);
+      compartment
+         .addAll(listOfAttributesAndOperations(source, mapHandler, source.getOwnedAttributes(),
+            source.getOwnedOperations()));
 
       return compartment.build();
    }

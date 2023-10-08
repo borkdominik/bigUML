@@ -24,13 +24,14 @@ import org.eclipse.uml2.uml.Device;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.uml.gmodel.RepresentationGNodeMapper;
+import com.eclipsesource.uml.glsp.uml.gmodel.element.AttributesAndOperationsBuilder;
 import com.eclipsesource.uml.glsp.uml.gmodel.element.NamedElementGBuilder;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
 public class DeviceNodeMapper extends RepresentationGNodeMapper<Device, GNode>
-   implements NamedElementGBuilder<Device> {
+   implements NamedElementGBuilder<Device>, AttributesAndOperationsBuilder {
 
    @Inject
    public DeviceNodeMapper(@Assisted final Representation representation) {
@@ -79,16 +80,9 @@ public class DeviceNodeMapper extends RepresentationGNodeMapper<Device, GNode>
    protected GCompartment buildCompartment(final Device source) {
       var compartment = fixedChildrenCompartmentBuilder(source);
 
-      var propertyElements = source.getOwnedAttributes().stream()
-         .filter(p -> p.getAssociation() == null)
-         .map(mapHandler::handle)
-         .collect(Collectors.toList());
-      compartment.addAll(propertyElements);
-
-      var operationElements = source.getOwnedOperations().stream()
-         .map(mapHandler::handle)
-         .collect(Collectors.toList());
-      compartment.addAll(operationElements);
+      compartment
+         .addAll(listOfAttributesAndOperations(source, mapHandler, source.getOwnedAttributes(),
+            source.getOwnedOperations()));
 
       return compartment.build();
    }

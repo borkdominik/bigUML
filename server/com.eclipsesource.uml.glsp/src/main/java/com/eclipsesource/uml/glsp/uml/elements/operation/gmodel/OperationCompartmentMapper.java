@@ -12,6 +12,7 @@ package com.eclipsesource.uml.glsp.uml.elements.operation.gmodel;
 
 import java.util.stream.Collectors;
 
+import org.eclipse.glsp.graph.DefaultTypes;
 import org.eclipse.glsp.graph.GCompartment;
 import org.eclipse.glsp.graph.builder.impl.GCompartmentBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
@@ -43,15 +44,26 @@ public final class OperationCompartmentMapper extends RepresentationGModelMapper
          .layoutOptions(new GLayoutOptions()
             .hGap(3)
             .resizeContainer(true))
-         .add(buildIconVisibilityName(source, "--uml-operation-icon"));
+         .add(visibilityBuilder(source).build())
+         .add(nameBuilder(source).build())
+         .add(buildParameters(source));
 
-      applyParameters(source, builder);
       applyReturns(source, builder);
 
       return builder.build();
    }
 
-   protected void applyParameters(final Operation source, final GCompartmentBuilder builder) {
+   protected GCompartment buildParameters(final Operation source) {
+      var builder = new GCompartmentBuilder(DefaultTypes.COMPARTMENT)
+         .id(idCountGenerator.getOrCreateId(source))
+         .layout(GConstants.Layout.HBOX)
+         .layoutOptions(new GLayoutOptions()
+            .paddingTop(0.0)
+            .paddingRight(0.0)
+            .paddingBottom(0.0)
+            .paddingLeft(0.0)
+            .resizeContainer(true));
+
       var parameters = source.getOwnedParameters().stream()
          .filter(p -> p.getDirection() != ParameterDirectionKind.RETURN_LITERAL).collect(Collectors.toList());
 
@@ -62,10 +74,22 @@ public final class OperationCompartmentMapper extends RepresentationGModelMapper
             builder.add(separatorBuilder(source, ",").build());
          }
 
-         builder.add(textBuilder(source, ParameterPropertyPaletteUtils.asText(parameters.get(i))).build());
+         var parameterBuilder = new GCompartmentBuilder(DefaultTypes.COMPARTMENT)
+            .id(idCountGenerator.getOrCreateId(source))
+            .layout(GConstants.Layout.HBOX)
+            .layoutOptions(new GLayoutOptions()
+               .paddingTop(0.0)
+               .paddingRight(0.0)
+               .paddingBottom(0.0)
+               .paddingLeft(0.0)
+               .resizeContainer(true))
+            .add(textBuilder(source, ParameterPropertyPaletteUtils.asText(parameters.get(i))).build());
+         builder.add(parameterBuilder.build());
       }
 
       builder.add(separatorBuilder(source, ")").build());
+
+      return builder.build();
    }
 
    protected void applyReturns(final Operation source, final GCompartmentBuilder builder) {

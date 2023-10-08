@@ -1,9 +1,12 @@
 .uml-node {
     fill: var(--uml-node);
-    /*TODO: Causes blur effects in children*/
-    /*filter: var(--svg-def-filter-drop-shadow);*/
     stroke-width: 1;
     stroke: var(--uml-border);
+}
+
+svg > g > .uml-node {
+    /* Blurs the SVGs */
+    /* filter: var(--svg-def-filter-drop-shadow);  */
 }
 
 .uml-node.mouseover:not(.selected) {

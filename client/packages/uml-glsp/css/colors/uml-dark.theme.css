@@ -4,5 +4,5 @@
     --uml-drop-shadow: lightgrey;
     --uml-edge: var(--uml-light-blue);
     --uml-label: var(--uml-editor-foreground);
-    --uml-node: var(--uml-dark-blue);
+    --uml-node: var(--vscode-sideBar-background);
 }

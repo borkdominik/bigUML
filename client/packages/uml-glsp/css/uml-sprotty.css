@@ -20,7 +20,6 @@ svg {
 
 .sprotty text {
     fill: var(--uml-label);
-    font-weight: inherit;
     font-size: 100%;
 }
 

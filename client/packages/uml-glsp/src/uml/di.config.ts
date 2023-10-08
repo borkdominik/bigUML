@@ -6,16 +6,19 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { configureModelElement, SLabel, SLabelView } from '@eclipse-glsp/client';
+import { configureModelElement, SCompartmentView, SLabel, SLabelView } from '@eclipse-glsp/client';
 import { ContainerModule } from 'inversify';
-import { IconCSS, IconCSSView, SEditableLabel } from '../index';
-import { UmlTypes } from './uml.types';
+import { SDivider, SDividerView } from '../graph/base/divider.view';
+import { IconCSS, IconCSSView, InteractableCompartment, SEditableLabel, SEditableLabelView } from '../index';
+import { UmlGModelTypes } from './uml.types';
 
 export const umlModule = new ContainerModule((bind, unbind, isBound, rebind) => {
     const context = { bind, unbind, isBound, rebind };
 
-    configureModelElement(context, UmlTypes.LABEL_NAME, SEditableLabel, SLabelView);
-    configureModelElement(context, UmlTypes.LABEL_EDGE_NAME, SEditableLabel, SLabelView);
-    configureModelElement(context, UmlTypes.LABEL_TEXT, SLabel, SLabelView);
-    configureModelElement(context, UmlTypes.ICON_CSS, IconCSS, IconCSSView);
+    configureModelElement(context, UmlGModelTypes.LABEL_NAME, SEditableLabel, SEditableLabelView);
+    configureModelElement(context, UmlGModelTypes.LABEL_EDGE_NAME, SEditableLabel, SEditableLabelView);
+    configureModelElement(context, UmlGModelTypes.LABEL_TEXT, SLabel, SLabelView);
+    configureModelElement(context, UmlGModelTypes.ICON_CSS, IconCSS, IconCSSView);
+    configureModelElement(context, UmlGModelTypes.DIVIDER, SDivider, SDividerView);
+    configureModelElement(context, UmlGModelTypes.COMPARTMENT_INTERACTABLE, InteractableCompartment, SCompartmentView);
 });

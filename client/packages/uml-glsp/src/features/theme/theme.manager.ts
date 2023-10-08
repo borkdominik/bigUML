@@ -18,9 +18,13 @@ export class ThemeManager implements IActionHandler {
 
     updateTheme(theme: UmlTheme): void {
         if (theme === 'dark') {
+            document.getElementById(this.viewerOptions.hiddenDiv)?.classList.remove('uml-theme', 'uml-light-theme');
+            document.getElementById(this.viewerOptions.hiddenDiv)?.classList.add('uml-theme', 'uml-dark-theme');
             document.getElementById(this.viewerOptions.baseDiv)?.classList.remove('uml-theme', 'uml-light-theme');
             document.getElementById(this.viewerOptions.baseDiv)?.classList.add('uml-theme', 'uml-dark-theme');
         } else if (theme === 'light') {
+            document.getElementById(this.viewerOptions.hiddenDiv)?.classList.remove('uml-theme', 'uml-dark-theme');
+            document.getElementById(this.viewerOptions.hiddenDiv)?.classList.add('uml-theme', 'uml-light-theme');
             document.getElementById(this.viewerOptions.baseDiv)?.classList.remove('uml-theme', 'uml-dark-theme');
             document.getElementById(this.viewerOptions.baseDiv)?.classList.add('uml-theme', 'uml-light-theme');
         } else {

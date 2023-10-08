@@ -32,6 +32,10 @@ public abstract class BaseGNodeMapper<Source extends EObject, Target extends GNo
          }
       });
 
+      applyShapeSize(source, builder);
+   }
+
+   protected void applyShapeSize(final Source source, final GNodeBuilder builder) {
       getNotationSize(source).ifPresent(size -> {
          if (size != null) {
             builder.size(size);

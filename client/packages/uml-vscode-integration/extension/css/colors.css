@@ -4,6 +4,8 @@
     --uml-successBackground: var(--vscode-charts-green);
     --uml-errorForeground: var(--vscode-errorForeground);
 
+    --uml-divider-subtitle: var(--vscode-foreground);
+
     --uml-editor-background: var(--vscode-editor-background);
     --uml-editor-foreground: var(--vscode-editor-foreground);
 

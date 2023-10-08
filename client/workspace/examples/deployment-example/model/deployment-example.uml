@@ -27,6 +27,7 @@
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="__Wq2I_4ZEe22XovT1PTA3Q" value="1"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__Wq2JP4ZEe22XovT1PTA3Q" value="1"/>
     </ownedAttribute>
+    <deployment xmi:id="_edGZ8F7CEe6clY4Og8ubgQ" name="NewDeployment1" client="_t7fYsP4ZEe22XovT1PTA3Q" supplier="_NcNNcP4aEe22XovT1PTA3Q" deployedArtifact="_NcNNcP4aEe22XovT1PTA3Q"/>
     <nestedNode xmi:type="uml:ExecutionEnvironment" xmi:id="_vJOXIP4ZEe22XovT1PTA3Q" name="&lt;&lt;database system>>: Oracle 10g">
       <nestedClassifier xmi:type="uml:Artifact" xmi:id="_4cc2AP4ZEe22XovT1PTA3Q" name="&lt;&lt;schema>> Users"/>
       <nestedClassifier xmi:type="uml:Artifact" xmi:id="_4srqYP4ZEe22XovT1PTA3Q" name="&lt;&lt;schema>> Orders"/>
@@ -35,5 +36,4 @@
   </packagedElement>
   <packagedElement xmi:type="uml:CommunicationPath" xmi:id="__WmksP4ZEe22XovT1PTA3Q" name="&lt;&lt;protocol>> TCP/IP" memberEnd="__WqPEP4ZEe22XovT1PTA3Q __Wq2Iv4ZEe22XovT1PTA3Q"/>
   <packagedElement xmi:type="uml:Artifact" xmi:id="_NcNNcP4aEe22XovT1PTA3Q" name="deployed artifact"/>
-  <packagedElement xmi:type="uml:Deployment" xmi:id="_PHMvoP4aEe22XovT1PTA3Q" name="NewDeployment1" client="_NcNNcP4aEe22XovT1PTA3Q" supplier="_vJOXIP4ZEe22XovT1PTA3Q"/>
 </uml:Model>

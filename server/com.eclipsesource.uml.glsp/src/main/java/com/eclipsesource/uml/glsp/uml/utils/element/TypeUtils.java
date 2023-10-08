@@ -42,8 +42,12 @@ public class TypeUtils {
    }
 
    public static String name(final Type type) {
+      return name(type, "<Undefined>");
+   }
+
+   public static String name(final Type type, final String undefined) {
       if (type == null) {
-         return "<Undefined>";
+         return undefined;
       }
 
       return type.getName() == null

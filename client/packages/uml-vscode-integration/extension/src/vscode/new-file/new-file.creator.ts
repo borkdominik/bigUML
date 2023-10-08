@@ -103,6 +103,10 @@ export class NewFileCreator {
             'raw-json'
         );
 
+        vscode.window.showInformationMessage(
+            'Thank you for testing bigUML. We want to remind you that bigUML is at an early stage of development.',
+            'Close'
+        );
         await vscode.commands.executeCommand('workbench.files.action.refreshFilesExplorer');
         const filePath = vscode.Uri.file(modelUri.path().toString());
         await vscode.commands.executeCommand('vscode.openWith', filePath, VSCodeSettings.editor.viewType);

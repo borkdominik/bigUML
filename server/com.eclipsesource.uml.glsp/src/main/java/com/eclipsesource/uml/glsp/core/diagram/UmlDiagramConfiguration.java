@@ -95,6 +95,7 @@ public class UmlDiagramConfiguration extends BaseDiagramConfiguration {
       mappings.put(CoreTypes.LABEL_TEXT, GraphPackage.Literals.GLABEL);
       mappings.put(CoreTypes.LABEL_EDGE_NAME, GraphPackage.Literals.GLABEL);
       mappings.put(CoreTypes.ICON_CSS, GraphPackage.Literals.GCOMPARTMENT);
+      mappings.put(CoreTypes.DIVIDER, GraphPackage.Literals.GNODE);
 
       diagramConfigurations().ifPresent(c -> c.values().stream()
          .map(contribution -> contribution.getTypeMappings())

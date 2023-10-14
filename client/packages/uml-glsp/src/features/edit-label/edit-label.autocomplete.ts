@@ -108,7 +108,7 @@ export class EditLabelUIAutocomplete extends EditLabelUI {
         if (this.isAutocompleteLabel) {
             let result: EditLabelValidationResult = {
                 severity: 'error',
-                message: 'Please select from the dropdown (CTRL + SPACE)'
+                message: 'Please select from the dropdown'
             };
 
             if (this.autocompleteEntries.some(t => t.label === value)) {
@@ -215,12 +215,6 @@ export class EditLabelUIAutocomplete extends EditLabelUI {
     }
 
     protected handleAutocompleteMatch(event: KeyboardEvent): void {
-        if (matchesKeystroke(event, 'Space', 'ctrl')) {
-            if (this.isAutocompleteEnabled) {
-                this.showAutocomplete();
-            }
-        }
-
         if (this.isAutocompleteEnabled) {
             if (matchesKeystroke(event, 'ArrowDown')) {
                 this.currentFocus++;

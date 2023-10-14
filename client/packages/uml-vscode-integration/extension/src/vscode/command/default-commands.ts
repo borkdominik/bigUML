@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { CenterAction, FitToScreenAction, SelectAllAction } from '@eclipse-glsp/protocol';
+import { CenterAction, FitToScreenAction, RequestExportSvgAction, SelectAllAction } from '@eclipse-glsp/protocol';
 import * as vscode from 'vscode';
 import { UVGlspConnector } from '../../glsp/uv-glsp-connector';
 
@@ -35,11 +35,11 @@ export function configureDefaultCommands(context: CommandContext): void {
         }),
         vscode.commands.registerCommand(`${diagramPrefix}.show.umlPanel`, () => {
             vscode.commands.executeCommand('bigUML.panel.property-palette.focus');
-        })
-        /*
+        }),
         vscode.commands.registerCommand(`${diagramPrefix}.exportAsSVG`, () => {
             connector.sendActionToActiveClient(RequestExportSvgAction.create());
-        }),
+        })
+        /*
         vscode.commands.registerCommand(`${diagramPrefix}.layout`, () => {
             connector.sendActionToActiveClient(LayoutOperation.create([]));
         })

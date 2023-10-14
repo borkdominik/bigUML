@@ -28,6 +28,7 @@ import com.google.inject.TypeLiteral;
 import com.google.inject.name.Names;
 import com.google.inject.spi.ProviderInstanceBinding;
 
+@Deprecated(forRemoval = true)
 public class UpdateHandlerOperationMapper {
 
    protected final EMFIdGenerator idGenerator;
@@ -83,6 +84,7 @@ public class UpdateHandlerOperationMapper {
       return new Prepared<>(this.idGenerator, this.injector, Optional.of(representation), handlerType, element);
    }
 
+   @Deprecated
    public static class Prepared<THandler extends DiagramUpdateHandler<TElement>, TElement extends EObject, TUpdateArgument>
       extends UpdateHandlerOperationMapper {
 
@@ -113,7 +115,6 @@ public class UpdateHandlerOperationMapper {
          var updateBindings = injector
             .findBindingsByType(new TypeLiteral<Set<DiagramUpdateHandler<? extends EObject>>>() {}).stream()
             .filter(v -> {
-
                var key = v.getKey();
                var annotation = key.getAnnotation();
                if (annotation != null) {

@@ -14,7 +14,6 @@ import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.graph.GLabel;
-import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperation;
 import org.eclipse.glsp.server.types.GLSPServerException;
 
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.Suffix;
@@ -29,28 +28,25 @@ public class LabelExtractor {
    @Inject
    protected UmlModelState modelState;
 
-   public String extractElementId(final ApplyLabelEditOperation operation) {
-      var labelId = operation.getLabelId();
+   public String extractElementId(final String labelId) {
       return suffix.extractId(labelId)
          .orElseThrow(() -> new GLSPServerException("No elementId found by extractor for label " + labelId));
    }
 
-   public <TElement extends EObject> TElement extractElement(final ApplyLabelEditOperation operation,
+   public <TElement extends EObject> TElement extractElement(final String labelId,
       final Class<TElement> elementType) {
-      var elementId = extractElementId(operation);
+      var elementId = extractElementId(labelId);
       return getOrThrow(modelState.getIndex().getEObject(elementId),
          elementType,
          "Could not find semantic element for id '" + elementId + "'. LabelExtractor failed.");
    }
 
-   public GLabel extractLabel(final ApplyLabelEditOperation operation) {
-      var labelId = operation.getLabelId();
+   public GLabel extractLabel(final String labelId) {
       return getOrThrow(modelState.getIndex().get(labelId),
          GLabel.class, "No GLabel found for label " + labelId);
    }
 
-   public String extractLabelSuffix(final ApplyLabelEditOperation operation) {
-      var labelId = operation.getLabelId();
+   public String extractLabelSuffix(final String labelId) {
       return suffix.extractSuffix(labelId)
          .orElseThrow(() -> new GLSPServerException("No suffix found by extractor for label " + labelId));
    }

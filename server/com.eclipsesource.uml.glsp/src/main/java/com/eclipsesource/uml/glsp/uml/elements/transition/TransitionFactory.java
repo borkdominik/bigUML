@@ -11,15 +11,18 @@
 package com.eclipsesource.uml.glsp.uml.elements.transition;
 
 import com.eclipsesource.uml.glsp.uml.configuration.di.EdgeConfigurationFactory;
+import com.eclipsesource.uml.glsp.uml.elements.transition.features.TransitionLabelEditMapper;
 import com.eclipsesource.uml.glsp.uml.elements.transition.features.TransitionPropertyMapper;
 import com.eclipsesource.uml.glsp.uml.elements.transition.gmodel.TransitionEdgeMapper;
+import com.eclipsesource.uml.glsp.uml.features.label_edit.di.LabelEditMapperFactory;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.di.PropertyMapperFactory;
 import com.eclipsesource.uml.glsp.uml.gmodel.di.GModelMapperFactory;
 import com.eclipsesource.uml.glsp.uml.handler.di.EdgeOperationHandlerFactory;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 
 public interface TransitionFactory
-   extends EdgeConfigurationFactory, EdgeOperationHandlerFactory, GModelMapperFactory, PropertyMapperFactory {
+   extends EdgeConfigurationFactory, EdgeOperationHandlerFactory, GModelMapperFactory, PropertyMapperFactory,
+   LabelEditMapperFactory {
 
    @Override
    TransitionConfiguration edgeConfiguration(Representation representation);
@@ -32,4 +35,7 @@ public interface TransitionFactory
 
    @Override
    TransitionPropertyMapper elementPropertyMapper(Representation representation);
+
+   @Override
+   TransitionLabelEditMapper labelEditMapper(Representation representation);
 }

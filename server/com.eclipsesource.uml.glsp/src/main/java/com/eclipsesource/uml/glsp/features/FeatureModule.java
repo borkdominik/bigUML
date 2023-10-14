@@ -10,6 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.features;
 
+import com.eclipsesource.uml.glsp.features.autocomplete.manifest.AutocompleteFeatureManifest;
 import com.eclipsesource.uml.glsp.features.outline.manifest.OutlineFeatureManifest;
 import com.eclipsesource.uml.glsp.features.property_palette.manifest.PropertyPaletteFeatureManifest;
 import com.google.inject.AbstractModule;
@@ -22,5 +23,6 @@ public class FeatureModule extends AbstractModule {
 
       install(new OutlineFeatureManifest());
       install(new PropertyPaletteFeatureManifest());
+      install(new AutocompleteFeatureManifest());
    }
 }

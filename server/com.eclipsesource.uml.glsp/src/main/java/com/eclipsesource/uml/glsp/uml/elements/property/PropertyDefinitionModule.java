@@ -17,7 +17,10 @@ import com.eclipsesource.uml.glsp.core.features.label_edit.validation.DiagramLab
 import com.eclipsesource.uml.glsp.core.manifest.DiagramManifest;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramLabelEditValidatorContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.SuffixIdAppenderContribution;
+import com.eclipsesource.uml.glsp.features.autocomplete.manifest.contributions.DiagramAutocompleteEntriesProviderContribution;
+import com.eclipsesource.uml.glsp.features.autocomplete.provider.DiagramAutocompleteEntriesProvider;
 import com.eclipsesource.uml.glsp.uml.elements.property.features.PropertyLabelEditValidator;
+import com.eclipsesource.uml.glsp.uml.elements.property.features.PropertyTypeAutocompleteProvider;
 import com.eclipsesource.uml.glsp.uml.elements.property.gmodel.suffix.PropertyMultiplicityLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.elements.property.gmodel.suffix.PropertyTypeLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.manifest.node.NodeFactoryDefinition;
@@ -25,7 +28,8 @@ import com.google.inject.multibindings.MapBinder;
 import com.google.inject.multibindings.Multibinder;
 
 public class PropertyDefinitionModule extends NodeFactoryDefinition
-   implements SuffixIdAppenderContribution, DiagramLabelEditValidatorContribution {
+   implements SuffixIdAppenderContribution, DiagramLabelEditValidatorContribution,
+   DiagramAutocompleteEntriesProviderContribution {
 
    public PropertyDefinitionModule(final DiagramManifest manifest) {
       super(manifest.id(), manifest.representation(), PropertyFactory.class);
@@ -37,6 +41,7 @@ public class PropertyDefinitionModule extends NodeFactoryDefinition
 
       contributeSuffixIdAppenders(this::suffixIdAppenders);
       contributeDiagramLabelEditValidators(this::labelEditValidators);
+      contributeAutocompleteEntriesProviders(this::autocompleteEntriesProviders);
    }
 
    protected void suffixIdAppenders(final MapBinder<String, SuffixIdAppender> contribution) {
@@ -50,4 +55,8 @@ public class PropertyDefinitionModule extends NodeFactoryDefinition
       contribution.addBinding().to(PropertyLabelEditValidator.class);
    }
 
+   protected void autocompleteEntriesProviders(
+      final Multibinder<DiagramAutocompleteEntriesProvider> contribution) {
+      contribution.addBinding().to(PropertyTypeAutocompleteProvider.class);
+   }
 }

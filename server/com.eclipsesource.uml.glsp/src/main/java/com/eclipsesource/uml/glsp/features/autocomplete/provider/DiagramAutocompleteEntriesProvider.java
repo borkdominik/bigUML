@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2021 EclipseSource and others.
+ * Copyright (c) 2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -8,16 +8,16 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.uml.representation.class_.handler.action;
+package com.eclipsesource.uml.glsp.features.autocomplete.provider;
 
-import org.eclipse.glsp.server.actions.RequestAction;
+import java.util.List;
 
-public class RequestTypeInformationAction extends RequestAction<SetTypeInformationAction> {
+import org.eclipse.glsp.server.types.EditorContext;
 
-   public static String TYPE = "requestTypeInformation";
+import com.eclipsesource.uml.glsp.features.autocomplete.handler.action.AutocompleteEntryAction;
 
-   public RequestTypeInformationAction() {
-      super(TYPE);
-   }
+public interface DiagramAutocompleteEntriesProvider {
+   boolean handles(EditorContext context);
 
+   List<AutocompleteEntryAction> process(EditorContext context);
 }

@@ -39,5 +39,4 @@ public class UmlModule extends AbstractModule {
       install(new ActivityUmlManifest());
       install(new InformationFlowUmlManifest());
    }
-
 }

@@ -11,11 +11,13 @@ import { createUmlDiagramContainer } from '@borkdominik-biguml/uml-glsp/lib';
 import '@eclipse-glsp/vscode-integration-webview/css/glsp-vscode.css';
 
 import { RequestPropertyPaletteAction, SetPropertyPaletteAction } from '@borkdominik-biguml/uml-common';
-import { GLSPStarter } from '@eclipse-glsp/vscode-integration-webview';
+import { GLSPStarter, GLSPVscodeDiagramServer } from '@eclipse-glsp/vscode-integration-webview';
 import { GLSPDiagramIdentifier } from '@eclipse-glsp/vscode-integration-webview/lib/diagram-identifer';
 import { GLSPVscodeDiagramWidget } from '@eclipse-glsp/vscode-integration-webview/lib/glsp-vscode-diagram-widget';
 import { Container } from 'inversify';
+// eslint-disable-next-line no-restricted-imports
 import { SprottyDiagramIdentifier } from 'sprotty-vscode-webview';
+import { UVDiagramServer } from './vscode/uv-diagram.server';
 import { UVDiagramWidget } from './vscode/uv-diagram.widget';
 
 class UVStarter extends GLSPStarter {
@@ -28,9 +30,13 @@ class UVStarter extends GLSPStarter {
     protected override addVscodeBindings(container: Container, diagramIdentifier: GLSPDiagramIdentifier): void {
         super.addVscodeBindings(container, diagramIdentifier);
         container.unbind(GLSPVscodeDiagramWidget);
+        container.unbind(GLSPVscodeDiagramServer);
 
         container.bind(UVDiagramWidget).toSelf().inSingletonScope();
         container.bind(GLSPVscodeDiagramWidget).toService(UVDiagramWidget);
+
+        container.bind(UVDiagramServer).toSelf().inSingletonScope();
+        container.bind(GLSPVscodeDiagramServer).toService(UVDiagramServer);
     }
 
     protected override get extensionActionKinds(): string[] {

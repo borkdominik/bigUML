@@ -6,4 +6,12 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-export * from './edit-label.autocomplete';
+
+import { ExportSvgAction } from '@eclipse-glsp/protocol';
+import { GLSPVscodeDiagramServer } from '@eclipse-glsp/vscode-integration-webview';
+
+export class UVDiagramServer extends GLSPVscodeDiagramServer {
+    protected override handleExportSvgAction(action: ExportSvgAction): boolean {
+        return false;
+    }
+}

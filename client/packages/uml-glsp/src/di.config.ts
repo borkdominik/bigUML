@@ -48,7 +48,7 @@ import { FixedLogger } from './common/fixed-logger';
 import { UML_TYPES } from './di.types';
 import { CustomCopyPasteHandler, LastContainableElementTracker } from './features/copy-paste/copy-paste';
 import { EditLabelUIAutocomplete } from './features/edit-label';
-import { initializationModule, IOnceModelInitialized } from './features/initialization/di.config';
+import { IOnceModelInitialized, initializationModule } from './features/initialization/di.config';
 import { umlOutlineModule } from './features/outline/di.config';
 import propertyPaletteModule from './features/property-palette/di.config';
 import { themeModule } from './features/theme/di.config';
@@ -124,7 +124,7 @@ export default function createContainer(widgetId: string): Container {
         segmentPenalty: 50,
         // at least height of label to avoid labels overlap if
         // there two neighbour edges have labels on the position
-        idealNudgingDistance: 24,
+        idealNudgingDistance: 50,
         // 25 - height of label text + label offset. Such shape buffer distance is required to
         // avoid label over shape
         shapeBufferDistance: 25,

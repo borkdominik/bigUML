@@ -8,11 +8,15 @@
  *********************************************************************************/
 
 import { UmlDiagramType } from '@borkdominik-biguml/uml-common';
-import { configureModelElement, GEdgeView } from '@eclipse-glsp/client';
+import { GEdgeView, configureModelElement, editFeature } from '@eclipse-glsp/client';
 import { DefaultTypes } from '@eclipse-glsp/protocol';
 import { interfaces } from 'inversify';
+import { LibavoidEdge, RouteType } from 'sprotty-routing-libavoid';
 import { QualifiedUtil } from '../../qualified.utils';
-import { UmlEdge } from '../uml-edge/uml-edge';
+
+export class AssociationEdge extends LibavoidEdge {
+    override routeType = RouteType.Orthogonal;
+}
 
 export function registerAssociationElement(
     context: { bind: interfaces.Bind; isBound: interfaces.IsBound },
@@ -21,19 +25,22 @@ export function registerAssociationElement(
     configureModelElement(
         context,
         QualifiedUtil.representationTypeId(representation, DefaultTypes.EDGE, 'Association'),
-        UmlEdge,
-        GEdgeView
+        AssociationEdge,
+        GEdgeView,
+        { disable: [editFeature] }
     );
     configureModelElement(
         context,
         QualifiedUtil.representationTemplateTypeId(representation, DefaultTypes.EDGE, 'aggregation', 'Association'),
-        UmlEdge,
-        GEdgeView
+        AssociationEdge,
+        GEdgeView,
+        { disable: [editFeature] }
     );
     configureModelElement(
         context,
         QualifiedUtil.representationTemplateTypeId(representation, DefaultTypes.EDGE, 'composition', 'Association'),
-        UmlEdge,
-        GEdgeView
+        AssociationEdge,
+        GEdgeView,
+        { disable: [editFeature] }
     );
 }

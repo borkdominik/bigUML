@@ -48,7 +48,7 @@
     "reflect-metadata": "^0.1.13",
     "snabbdom": "^3.5.1",
     "sprotty": "next",
-    "sprotty-routing-libavoid": "^1.1.1"
+    "sprotty-routing-libavoid": "^1.2.0-beta.0"
   },
   "devDependencies": {
     "endent": "^2.1.0"

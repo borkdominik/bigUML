@@ -10,6 +10,8 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.gmodel.element;
 
+import java.util.List;
+
 import org.eclipse.glsp.graph.GCompartment;
 import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.builder.impl.GCompartmentBuilder;
@@ -26,6 +28,7 @@ import com.eclipsesource.uml.glsp.core.gmodel.builder.SeparatorGBuilder;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.utils.element.VisibilityKindUtils;
 
+@Deprecated(forRemoval = true)
 public interface NamedElementGBuilder<TSource extends NamedElement>
    extends LabelGBuilder, IconCssGBuilder, SeparatorGBuilder, CompartmentGBuilder {
 
@@ -51,6 +54,12 @@ public interface NamedElementGBuilder<TSource extends NamedElement>
    default GLabel buildHeaderName(final NamedElement source) {
       return nameBuilder(source)
          .addCssClass(CoreCSS.FONT_BOLD)
+         .build();
+   }
+
+   default GLabel buildHeaderName(final NamedElement source, final List<String> css) {
+      return nameBuilder(source)
+         .addCssClasses(css)
          .build();
    }
 

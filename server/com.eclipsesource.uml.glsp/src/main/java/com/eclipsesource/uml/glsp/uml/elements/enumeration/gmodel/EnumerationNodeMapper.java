@@ -20,15 +20,15 @@ import org.eclipse.uml2.uml.Enumeration;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.QuotationMark;
-import com.eclipsesource.uml.glsp.core.gmodel.builder.DividerGBuilder;
 import com.eclipsesource.uml.glsp.uml.gmodel.RepresentationGNodeMapper;
+import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGDividerBuilder;
 import com.eclipsesource.uml.glsp.uml.gmodel.element.NamedElementGBuilder;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
 public final class EnumerationNodeMapper extends RepresentationGNodeMapper<Enumeration, GNode>
-   implements NamedElementGBuilder<Enumeration>, DividerGBuilder {
+   implements NamedElementGBuilder<Enumeration> {
 
    @Inject
    public EnumerationNodeMapper(@Assisted final Representation representation) {
@@ -61,7 +61,7 @@ public final class EnumerationNodeMapper extends RepresentationGNodeMapper<Enume
 
    protected GCompartment buildLiterals(final Enumeration source) {
       var compartment = fixedChildrenCompartmentBuilder(source);
-      compartment.add(buildDivider(source, "Literals"));
+      compartment.add(new UmlGDividerBuilder<>(source, this).addSubtitle("Literals").build());
 
       var literalElements = source.getOwnedLiterals().stream()
          .map(mapHandler::handle)

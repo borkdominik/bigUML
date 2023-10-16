@@ -17,9 +17,10 @@ import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.util.GConstants;
 
 import com.eclipsesource.uml.glsp.core.constants.UmlLayoutConstants;
-import com.eclipsesource.uml.glsp.core.gmodel.provider.IdContextGeneratorGProvider;
+import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdContextGeneratorProvider;
 
-public interface CompartmentGBuilder extends IdContextGeneratorGProvider {
+@Deprecated(forRemoval = true)
+public interface CompartmentGBuilder extends GIdContextGeneratorProvider {
 
    String childrenContainerKey = "children-container";
 

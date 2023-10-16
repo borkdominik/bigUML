@@ -24,6 +24,7 @@ import com.eclipsesource.uml.glsp.core.gmodel.builder.LabelGBuilder;
 import com.eclipsesource.uml.glsp.core.gmodel.builder.SeparatorGBuilder;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
 
+@Deprecated(forRemoval = true)
 public interface EdgeGBuilder
    extends LabelGBuilder, IconCssGBuilder, SeparatorGBuilder, CompartmentGBuilder {
 

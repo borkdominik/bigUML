@@ -13,25 +13,16 @@ package com.eclipsesource.uml.glsp.uml.elements.class_.gmodel;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.glsp.graph.GCompartment;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GNode;
-import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
-import org.eclipse.glsp.graph.builder.impl.GNodeBuilder;
-import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.Class;
 
-import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
-import com.eclipsesource.uml.glsp.core.constants.QuotationMark;
 import com.eclipsesource.uml.glsp.uml.gmodel.RepresentationGNodeMapper;
-import com.eclipsesource.uml.glsp.uml.gmodel.element.AttributesAndOperationsBuilder;
-import com.eclipsesource.uml.glsp.uml.gmodel.element.NamedElementGBuilder;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
-public final class ClassNodeMapper extends RepresentationGNodeMapper<Class, GNode>
-   implements NamedElementGBuilder<Class>, AttributesAndOperationsBuilder {
+public final class ClassNodeMapper extends RepresentationGNodeMapper<Class, GNode> {
 
    @Inject
    public ClassNodeMapper(@Assisted final Representation representation) {
@@ -40,14 +31,7 @@ public final class ClassNodeMapper extends RepresentationGNodeMapper<Class, GNod
 
    @Override
    public GNode map(final Class source) {
-      var builder = new GNodeBuilder(configuration().typeId());
-      var options = new GLayoutOptions();
-      builder.id(idGenerator.getOrCreateId(source))
-         .layout(GConstants.Layout.VBOX)
-         .layoutOptions(options)
-         .addCssClass(CoreCSS.NODE)
-         .add(buildHeader(source))
-         .add(buildCompartment(source));
+      var builder = new GClassBuilder<>(source, this, configuration().typeId());
 
       applyShapeNotation(source, builder);
 
@@ -63,29 +47,5 @@ public final class ClassNodeMapper extends RepresentationGNodeMapper<Class, GNod
       siblings.addAll(mapHandler.handle(source.getSubstitutions()));
 
       return siblings;
-   }
-
-   protected GCompartment buildHeader(final Class source) {
-      var header = compartmentHeaderBuilder(source)
-         .layout(GConstants.Layout.VBOX)
-         .layoutOptions(new GLayoutOptions().hAlign(GConstants.HAlign.CENTER));
-
-      if (source.isAbstract()) {
-         header.add(buildHeaderAnnotation(source, QuotationMark.quoteDoubleAngle("Abstract")));
-      }
-
-      header.add(buildHeaderName(source));
-
-      return header.build();
-   }
-
-   protected GCompartment buildCompartment(final Class source) {
-      var compartment = fixedChildrenCompartmentBuilder(source);
-
-      compartment
-         .addAll(listOfAttributesAndOperations(source, mapHandler, source.getOwnedAttributes(),
-            source.getOwnedOperations()));
-
-      return compartment.build();
    }
 }

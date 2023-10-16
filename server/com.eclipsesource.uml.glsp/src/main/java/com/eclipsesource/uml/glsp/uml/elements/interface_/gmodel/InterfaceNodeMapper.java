@@ -18,15 +18,15 @@ import org.eclipse.uml2.uml.Interface;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.QuotationMark;
+import com.eclipsesource.uml.glsp.uml.elements.classifier.GClassifierBuilder;
 import com.eclipsesource.uml.glsp.uml.gmodel.RepresentationGNodeMapper;
-import com.eclipsesource.uml.glsp.uml.gmodel.element.AttributesAndOperationsBuilder;
 import com.eclipsesource.uml.glsp.uml.gmodel.element.NamedElementGBuilder;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
 public final class InterfaceNodeMapper extends RepresentationGNodeMapper<Interface, GNode>
-   implements NamedElementGBuilder<Interface>, AttributesAndOperationsBuilder {
+   implements NamedElementGBuilder<Interface> {
 
    @Inject
    public InterfaceNodeMapper(@Assisted final Representation representation) {
@@ -59,11 +59,13 @@ public final class InterfaceNodeMapper extends RepresentationGNodeMapper<Interfa
 
    protected GCompartment buildCompartment(final Interface source) {
       var compartment = fixedChildrenCompartmentBuilder(source);
+      var classifier = new GClassifierBuilder<>(source, this);
+      var attributes = classifier.listAttributes();
+      var operations = classifier.listOperations();
 
       compartment
-         .addAll(listOfAttributesAndOperations(source, mapHandler, source.getOwnedAttributes(),
-            source.getOwnedOperations()));
-
+         .addAll(attributes)
+         .addAll(operations);
       return compartment.build();
    }
 }

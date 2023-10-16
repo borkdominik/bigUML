@@ -10,28 +10,25 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.gmodel;
 
-import java.util.Optional;
-import java.util.stream.Collectors;
-
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.server.emf.EMFIdGenerator;
-import org.eclipse.glsp.server.emf.model.notation.NotationElement;
-import org.eclipse.glsp.server.emf.model.notation.Shape;
 
 import com.eclipsesource.uml.glsp.core.features.id_generator.IdCountContextGenerator;
 import com.eclipsesource.uml.glsp.core.gmodel.GModelMapHandler;
 import com.eclipsesource.uml.glsp.core.gmodel.GModelMapper;
-import com.eclipsesource.uml.glsp.core.gmodel.provider.IdContextGeneratorGProvider;
-import com.eclipsesource.uml.glsp.core.gmodel.provider.IdGeneratorGProvider;
-import com.eclipsesource.uml.glsp.core.gmodel.provider.SuffixGProvider;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.Suffix;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
+import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdContextGeneratorProvider;
+import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdGeneratorProvider;
+import com.eclipsesource.uml.glsp.uml.gmodel.provider.GModelMapHandlerProvider;
+import com.eclipsesource.uml.glsp.uml.gmodel.provider.GSuffixProvider;
 import com.eclipsesource.uml.modelserver.shared.utils.reflection.GenericsUtil;
 import com.google.inject.Inject;
 
 public abstract class BaseGModelMapper<Source extends EObject, Target extends GModelElement>
-   implements GModelMapper<Source, Target>, IdGeneratorGProvider, IdContextGeneratorGProvider, SuffixGProvider {
+   implements GModelMapper<Source, Target>, GIdGeneratorProvider, GIdContextGeneratorProvider, GSuffixProvider,
+   GModelMapHandlerProvider {
 
    protected final Class<Source> sourceType;
    protected final Class<Target> targetType;
@@ -75,5 +72,10 @@ public abstract class BaseGModelMapper<Source extends EObject, Target extends GM
    @Override
    public EMFIdGenerator idGenerator() {
       return idGenerator;
+   }
+
+   @Override
+   public GModelMapHandler gmodelMapHandler() {
+      return mapHandler;
    }
 }

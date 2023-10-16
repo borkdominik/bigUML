@@ -6,19 +6,28 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { alignFeature, containerFeature, RenderingContext, SCompartment, SCompartmentView, svg } from '@eclipse-glsp/client';
+import {
+    alignFeature,
+    boundsFeature,
+    fadeFeature,
+    IView,
+    layoutableChildFeature,
+    RenderingContext,
+    SShapeElement,
+    svg
+} from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 import { VNode } from 'snabbdom';
 
-export class SDivider extends SCompartment {
-    static override readonly DEFAULT_FEATURES = [...SCompartment.DEFAULT_FEATURES, containerFeature, alignFeature];
+export class SDivider extends SShapeElement {
+    static readonly DEFAULT_FEATURES = [boundsFeature, layoutableChildFeature, fadeFeature, alignFeature];
 }
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const JSX = { createElement: svg };
 
 @injectable()
-export class SDividerView extends SCompartmentView {
-    override render(element: SDivider, context: RenderingContext): VNode {
+export class SDividerView implements IView {
+    render(element: SDivider, context: RenderingContext): VNode {
         const view: any = (
             <g>
                 <path class-uml-comp-separator d={`M 0,0  L ${element.bounds.width},0`}></path>

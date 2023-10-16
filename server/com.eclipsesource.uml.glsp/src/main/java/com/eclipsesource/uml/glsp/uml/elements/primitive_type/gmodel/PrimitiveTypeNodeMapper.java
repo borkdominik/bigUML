@@ -18,15 +18,15 @@ import org.eclipse.uml2.uml.PrimitiveType;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.QuotationMark;
+import com.eclipsesource.uml.glsp.uml.elements.classifier.GClassifierBuilder;
 import com.eclipsesource.uml.glsp.uml.gmodel.RepresentationGNodeMapper;
-import com.eclipsesource.uml.glsp.uml.gmodel.element.AttributesAndOperationsBuilder;
 import com.eclipsesource.uml.glsp.uml.gmodel.element.NamedElementGBuilder;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
 public final class PrimitiveTypeNodeMapper extends RepresentationGNodeMapper<PrimitiveType, GNode>
-   implements NamedElementGBuilder<PrimitiveType>, AttributesAndOperationsBuilder {
+   implements NamedElementGBuilder<PrimitiveType> {
 
    @Inject
    public PrimitiveTypeNodeMapper(@Assisted final Representation representation) {
@@ -60,10 +60,13 @@ public final class PrimitiveTypeNodeMapper extends RepresentationGNodeMapper<Pri
    protected GCompartment buildCompartment(final PrimitiveType source) {
       var compartment = fixedChildrenCompartmentBuilder(source);
 
-      compartment
-         .addAll(listOfAttributesAndOperations(source, mapHandler, source.getOwnedAttributes(),
-            source.getOwnedOperations()));
+      var classifier = new GClassifierBuilder<>(source, this);
+      var attributes = classifier.listAttributes();
+      var operations = classifier.listOperations();
 
+      compartment
+         .addAll(attributes)
+         .addAll(operations);
       return compartment.build();
    }
 }

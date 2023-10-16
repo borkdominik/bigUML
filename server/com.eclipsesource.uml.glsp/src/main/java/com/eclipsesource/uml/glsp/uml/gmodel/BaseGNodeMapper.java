@@ -17,15 +17,16 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.graph.GDimension;
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.GPoint;
+import org.eclipse.glsp.graph.builder.AbstractGNodeBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
-import org.eclipse.glsp.graph.builder.impl.GNodeBuilder;
 import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.glsp.server.emf.model.notation.Shape;
 
-public abstract class BaseGNodeMapper<Source extends EObject, Target extends GNode>
-   extends BaseGModelMapper<Source, Target> {
+public abstract class BaseGNodeMapper<TSource extends EObject, TTarget extends GNode>
+   extends BaseGModelMapper<TSource, TTarget> {
 
-   protected void applyShapeNotation(final Source source, final GNodeBuilder builder) {
+   protected <TBuilder extends AbstractGNodeBuilder<?, ?>> void applyShapeNotation(final TSource source,
+      final TBuilder builder) {
       getNotationPosition(source).ifPresent(position -> {
          if (position != null) {
             builder.position(position);
@@ -35,7 +36,8 @@ public abstract class BaseGNodeMapper<Source extends EObject, Target extends GNo
       applyShapeSize(source, builder);
    }
 
-   protected void applyShapeSize(final Source source, final GNodeBuilder builder) {
+   protected <TBuilder extends AbstractGNodeBuilder<?, ?>> void applyShapeSize(final TSource source,
+      final TBuilder builder) {
       getNotationSize(source).ifPresent(size -> {
          if (size != null) {
             builder.size(size);
@@ -46,17 +48,17 @@ public abstract class BaseGNodeMapper<Source extends EObject, Target extends GNo
       });
    }
 
-   protected Optional<Shape> getNotation(final Source source) {
+   protected Optional<Shape> getNotation(final TSource source) {
       return modelState.getIndex().getNotation(source, Shape.class);
    }
 
-   protected Optional<GPoint> getNotationPosition(final Source source) {
+   protected Optional<GPoint> getNotationPosition(final TSource source) {
       return getNotation(source).map(shape -> shape.getPosition()).map(position -> {
          return GraphUtil.copy(position);
       });
    }
 
-   protected Optional<GDimension> getNotationSize(final Source source) {
+   protected Optional<GDimension> getNotationSize(final TSource source) {
       return getNotation(source).map(shape -> shape.getSize()).map(size -> {
          return GraphUtil.copy(size);
       });

@@ -14,9 +14,10 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
-import com.eclipsesource.uml.glsp.core.gmodel.provider.IdContextGeneratorGProvider;
+import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdContextGeneratorProvider;
 
-public interface IconCssGBuilder extends IdContextGeneratorGProvider {
+@Deprecated(forRemoval = true)
+public interface IconCssGBuilder extends GIdContextGeneratorProvider {
 
    default GLabelBuilder iconFromCssPropertyBuilder(final EObject source, final String cssProperty) {
       return new GLabelBuilder(CoreTypes.ICON_CSS)

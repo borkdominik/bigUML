@@ -23,15 +23,15 @@ import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.Device;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
+import com.eclipsesource.uml.glsp.uml.elements.classifier.GClassifierBuilder;
 import com.eclipsesource.uml.glsp.uml.gmodel.RepresentationGNodeMapper;
-import com.eclipsesource.uml.glsp.uml.gmodel.element.AttributesAndOperationsBuilder;
 import com.eclipsesource.uml.glsp.uml.gmodel.element.NamedElementGBuilder;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
 public class DeviceNodeMapper extends RepresentationGNodeMapper<Device, GNode>
-   implements NamedElementGBuilder<Device>, AttributesAndOperationsBuilder {
+   implements NamedElementGBuilder<Device> {
 
    @Inject
    public DeviceNodeMapper(@Assisted final Representation representation) {
@@ -80,9 +80,13 @@ public class DeviceNodeMapper extends RepresentationGNodeMapper<Device, GNode>
    protected GCompartment buildCompartment(final Device source) {
       var compartment = fixedChildrenCompartmentBuilder(source);
 
+      var classifier = new GClassifierBuilder<>(source, this);
+      var attributes = classifier.listAttributes();
+      var operations = classifier.listOperations();
+
       compartment
-         .addAll(listOfAttributesAndOperations(source, mapHandler, source.getOwnedAttributes(),
-            source.getOwnedOperations()));
+         .addAll(attributes)
+         .addAll(operations);
 
       return compartment.build();
    }

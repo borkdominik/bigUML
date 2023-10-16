@@ -14,11 +14,12 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
-import com.eclipsesource.uml.glsp.core.gmodel.provider.IdContextGeneratorGProvider;
-import com.eclipsesource.uml.glsp.core.gmodel.provider.IdGeneratorGProvider;
-import com.eclipsesource.uml.glsp.core.gmodel.provider.SuffixGProvider;
+import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdContextGeneratorProvider;
+import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdGeneratorProvider;
+import com.eclipsesource.uml.glsp.uml.gmodel.provider.GSuffixProvider;
 
-public interface LabelGBuilder extends IdGeneratorGProvider, IdContextGeneratorGProvider, SuffixGProvider {
+@Deprecated(forRemoval = true)
+public interface LabelGBuilder extends GIdGeneratorProvider, GIdContextGeneratorProvider, GSuffixProvider {
 
    default GLabelBuilder textBuilder(final EObject source, final String text) {
       return new GLabelBuilder(CoreTypes.LABEL_TEXT)

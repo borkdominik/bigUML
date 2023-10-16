@@ -8,10 +8,20 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.core.gmodel.provider;
+package com.eclipsesource.uml.glsp.uml.gmodel.builder;
 
-import com.eclipsesource.uml.glsp.core.features.id_generator.IdCountContextGenerator;
+import org.eclipse.glsp.graph.GShapeElement;
+import org.eclipse.glsp.graph.builder.GShapeElementBuilder;
 
-public interface IdContextGeneratorGProvider {
-   IdCountContextGenerator idContextGenerator();
+public abstract class UmlGShapeElementBuilder<TShape extends GShapeElement, TBuilder extends GShapeElementBuilder<TShape, TBuilder>>
+   extends GShapeElementBuilder<TShape, TBuilder> {
+
+   public UmlGShapeElementBuilder(final String type) {
+      super(type);
+   }
+
+   @Override
+   protected TBuilder self() {
+      return (TBuilder) this;
+   }
 }

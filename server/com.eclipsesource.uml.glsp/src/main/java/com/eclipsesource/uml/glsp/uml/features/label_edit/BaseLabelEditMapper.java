@@ -15,9 +15,8 @@ import java.util.Optional;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperation;
 
+import com.eclipsesource.uml.glsp.core.features.label_edit.ApplyLabelEditOperationLabelExtractor;
 import com.eclipsesource.uml.glsp.core.features.label_edit.DiagramLabelEditMapper;
-import com.eclipsesource.uml.glsp.core.features.label_edit.LabelExtractor;
-import com.eclipsesource.uml.glsp.core.gmodel.suffix.Suffix;
 import com.eclipsesource.uml.glsp.core.handler.operation.update.DiagramUpdateHandler;
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateHandlerOperationMapper;
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
@@ -34,10 +33,7 @@ public abstract class BaseLabelEditMapper<TElement extends EObject>
    protected UmlModelState modelState;
 
    @Inject
-   protected Suffix suffix;
-
-   @Inject
-   protected LabelExtractor labelExtractor;
+   protected ApplyLabelEditOperationLabelExtractor labelExtractor;
 
    @Inject
    protected UpdateHandlerOperationMapper handlerMapper;

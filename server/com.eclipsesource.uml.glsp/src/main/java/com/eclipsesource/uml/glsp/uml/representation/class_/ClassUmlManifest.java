@@ -12,8 +12,6 @@ package com.eclipsesource.uml.glsp.uml.representation.class_;
 
 import com.eclipsesource.uml.glsp.core.manifest.DiagramManifest;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramLabelEditValidatorContribution;
-import com.eclipsesource.uml.glsp.core.manifest.contributions.glsp.ActionHandlerContribution;
-import com.eclipsesource.uml.glsp.core.manifest.contributions.glsp.ClientActionContribution;
 import com.eclipsesource.uml.glsp.uml.elements.abstraction.AbstractionDefinitionModule;
 import com.eclipsesource.uml.glsp.uml.elements.association.AssociationDefinitionModule;
 import com.eclipsesource.uml.glsp.uml.elements.class_.ClassDefinitionModule;
@@ -38,12 +36,10 @@ import com.eclipsesource.uml.glsp.uml.elements.slot.SlotDefinitionModule;
 import com.eclipsesource.uml.glsp.uml.elements.substitution.SubstitutionDefinitionModule;
 import com.eclipsesource.uml.glsp.uml.elements.usage.UsageDefinitionModule;
 import com.eclipsesource.uml.glsp.uml.features.validation.BlankLabelEditValidator;
-import com.eclipsesource.uml.glsp.uml.representation.class_.handler.action.RequestTypeInformationHandler;
-import com.eclipsesource.uml.glsp.uml.representation.class_.handler.action.SetTypeInformationAction;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 
 public final class ClassUmlManifest extends DiagramManifest
-   implements ClientActionContribution, ActionHandlerContribution, DiagramLabelEditValidatorContribution {
+   implements DiagramLabelEditValidatorContribution {
 
    @Override
    public String id() {
@@ -85,13 +81,6 @@ public final class ClassUmlManifest extends DiagramManifest
 
       contributeToolPaletteConfiguration((contribution) -> {
          contribution.addBinding().to(ClassToolPaletteConfiguration.class);
-      });
-
-      contributeClientActions((contribution) -> {
-         contribution.addBinding().to(SetTypeInformationAction.class);
-      });
-      contributeActionHandlers((contribution) -> {
-         contribution.addBinding().to(RequestTypeInformationHandler.class);
       });
 
       contributeDiagramLabelEditValidators((contribution -> {

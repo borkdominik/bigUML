@@ -6,11 +6,12 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-export * from './action-protocol/autocomplete.action';
-export * from './action-protocol/outline.action';
-export * from './action-protocol/outline.model';
-export * from './action-protocol/property-palette.action';
-export * from './action-protocol/property-palette.model';
-export * from './environment/configuration';
-export * from './language/language';
-export * from './typescript.utils';
+
+import { ExportSvgAction } from '@eclipse-glsp/protocol';
+import { GLSPVscodeDiagramServer } from '@eclipse-glsp/vscode-integration-webview';
+
+export class UVDiagramServer extends GLSPVscodeDiagramServer {
+    protected override handleExportSvgAction(action: ExportSvgAction): boolean {
+        return false;
+    }
+}

@@ -6,5 +6,4 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-export * from './edit-label.actions';
 export * from './edit-label.autocomplete';

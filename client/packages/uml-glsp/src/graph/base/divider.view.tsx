@@ -6,46 +6,12 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import {
-    RenderingContext,
-    SCompartmentView,
-    alignFeature,
-    boundsFeature,
-    containerFeature,
-    deletableFeature,
-    fadeFeature,
-    hoverFeedbackFeature,
-    layoutContainerFeature,
-    layoutableChildFeature,
-    nameFeature,
-    popupFeature,
-    selectFeature,
-    svg,
-    withEditLabelFeature
-} from '@eclipse-glsp/client';
+import { alignFeature, containerFeature, RenderingContext, SCompartment, SCompartmentView, svg } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 import { VNode } from 'snabbdom';
-import { NamedElement } from '../../uml/elements/index';
 
-export class SDivider extends NamedElement {
-    static override readonly DEFAULT_FEATURES = [
-        // NamedElement features
-        alignFeature,
-        layoutableChildFeature,
-        // LabeledNode
-        nameFeature,
-        withEditLabelFeature,
-        // SNode
-        deletableFeature,
-        selectFeature,
-        boundsFeature,
-        layoutContainerFeature,
-        fadeFeature,
-        hoverFeedbackFeature,
-        popupFeature,
-        // additional
-        containerFeature
-    ];
+export class SDivider extends SCompartment {
+    static override readonly DEFAULT_FEATURES = [...SCompartment.DEFAULT_FEATURES, containerFeature, alignFeature];
 }
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const JSX = { createElement: svg };

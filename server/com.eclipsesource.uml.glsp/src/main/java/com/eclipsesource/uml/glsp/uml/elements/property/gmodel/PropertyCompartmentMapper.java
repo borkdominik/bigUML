@@ -24,6 +24,7 @@ import org.eclipse.uml2.uml.Property;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.features.id_generator.IdCountContextGenerator;
+import com.eclipsesource.uml.glsp.features.autocomplete.constants.AutocompleteConstants;
 import com.eclipsesource.uml.glsp.uml.elements.property.PropertyConfiguration;
 import com.eclipsesource.uml.glsp.uml.elements.property.gmodel.suffix.PropertyMultiplicityLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.elements.property.gmodel.suffix.PropertyTypeLabelSuffix;
@@ -122,6 +123,7 @@ public final class PropertyCompartmentMapper extends RepresentationGModelMapper<
       return new GLabelBuilder(configuration(PropertyConfiguration.class).typeTypeId())
          .id(suffix.appendTo(PropertyTypeLabelSuffix.SUFFIX, idGenerator.getOrCreateId(source)))
          .text(text)
+         .addArgument(AutocompleteConstants.GMODEL_FEATURE, true)
          .build();
    }
 

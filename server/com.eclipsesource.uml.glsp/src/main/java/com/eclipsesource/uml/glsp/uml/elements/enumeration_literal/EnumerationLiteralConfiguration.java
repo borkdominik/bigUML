@@ -14,13 +14,11 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.glsp.graph.DefaultTypes;
 import org.eclipse.glsp.graph.GraphPackage;
 import org.eclipse.glsp.server.types.ShapeTypeHint;
 import org.eclipse.uml2.uml.EnumerationLiteral;
 
 import com.eclipsesource.uml.glsp.uml.configuration.RepresentationNodeConfiguration;
-import com.eclipsesource.uml.glsp.uml.utils.QualifiedUtil;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
@@ -32,12 +30,6 @@ public class EnumerationLiteralConfiguration extends RepresentationNodeConfigura
       super(representation);
    }
 
-   @Override
-   public String typeId() {
-      return QualifiedUtil.representationTypeId(representation, DefaultTypes.COMPARTMENT,
-         getElementType().getSimpleName());
-   }
-
    public enum Property {
       NAME,
       VISIBILITY_KIND;
@@ -45,7 +37,7 @@ public class EnumerationLiteralConfiguration extends RepresentationNodeConfigura
 
    @Override
    public Map<String, EClass> getTypeMappings() { return Map.of(
-      typeId(), GraphPackage.Literals.GCOMPARTMENT); }
+      typeId(), GraphPackage.Literals.GNODE); }
 
    @Override
    public Set<String> getGraphContainableElements() { return Set.of(); }

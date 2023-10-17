@@ -15,21 +15,20 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.eclipse.glsp.graph.GModelElement;
-import org.eclipse.glsp.graph.GNode;
-import org.eclipse.glsp.graph.builder.AbstractGNodeBuilder;
 import org.eclipse.uml2.uml.AttributeOwner;
 import org.eclipse.uml2.uml.Classifier;
 import org.eclipse.uml2.uml.OperationOwner;
 
+import com.eclipsesource.uml.glsp.uml.elements.named_element.GNamedElementBuilder;
+import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGCompartmentBuilder;
 import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGDividerBuilder;
-import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGNamedElementBuilder;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdContextGeneratorProvider;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdGeneratorProvider;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GModelMapHandlerProvider;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GSuffixProvider;
 
-public class GClassifierBuilder<TSource extends Classifier & AttributeOwner & OperationOwner, TProvider extends GSuffixProvider & GIdGeneratorProvider & GIdContextGeneratorProvider & GModelMapHandlerProvider, TBuilder extends AbstractGNodeBuilder<GNode, TBuilder>>
-   extends UmlGNamedElementBuilder<TSource, TProvider, TBuilder> {
+public class GClassifierBuilder<TSource extends Classifier & AttributeOwner & OperationOwner, TProvider extends GSuffixProvider & GIdGeneratorProvider & GIdContextGeneratorProvider & GModelMapHandlerProvider, TBuilder extends GClassifierBuilder<TSource, TProvider, TBuilder>>
+   extends GNamedElementBuilder<TSource, TProvider, TBuilder> {
 
    public GClassifierBuilder(final TSource source, final TProvider provider) {
       super(source, provider);
@@ -37,6 +36,17 @@ public class GClassifierBuilder<TSource extends Classifier & AttributeOwner & Op
 
    public GClassifierBuilder(final TSource source, final TProvider provider, final String type) {
       super(source, provider, type);
+   }
+
+   protected void showAttributesAndOperations() {
+      var compartment = new UmlGCompartmentBuilder<>(source, provider)
+         .withVBoxLayout();
+
+      compartment
+         .addAll(listAttributes())
+         .addAll(listOperations());
+
+      add(compartment.build());
    }
 
    public List<GModelElement> listAttributes() {

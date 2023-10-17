@@ -10,23 +10,15 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.elements.instance_specification.gmodel;
 
-import java.util.stream.Collectors;
-
-import org.eclipse.glsp.graph.GCompartment;
 import org.eclipse.glsp.graph.GNode;
-import org.eclipse.glsp.graph.builder.impl.GNodeBuilder;
-import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.InstanceSpecification;
 
-import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.uml.gmodel.RepresentationGNodeMapper;
-import com.eclipsesource.uml.glsp.uml.gmodel.element.NamedElementGBuilder;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
-public class InstanceSpecificationNodeMapper extends RepresentationGNodeMapper<InstanceSpecification, GNode>
-   implements NamedElementGBuilder<InstanceSpecification> {
+public class InstanceSpecificationNodeMapper extends RepresentationGNodeMapper<InstanceSpecification, GNode> {
 
    @Inject
    public InstanceSpecificationNodeMapper(@Assisted final Representation representation) {
@@ -35,44 +27,11 @@ public class InstanceSpecificationNodeMapper extends RepresentationGNodeMapper<I
 
    @Override
    public GNode map(final InstanceSpecification source) {
-      var builder = new GNodeBuilder(configuration().typeId())
-         .id(idGenerator.getOrCreateId(source))
-         .layout(GConstants.Layout.VBOX)
-         .addCssClass(CoreCSS.NODE)
-         .add(buildHeader(source))
-         .add(buildCompartment(source));
+      var builder = new GInstanceSpecificationBuilder<>(source, this, configuration().typeId());
 
       applyShapeNotation(source, builder);
 
       return builder.build();
    }
 
-   protected GCompartment buildHeader(final InstanceSpecification source) {
-      var header = compartmentHeaderBuilder(source)
-         .layout(GConstants.Layout.VBOX);
-      var name = source.getClassifiers().size() == 0 ? source.getName()
-         : String.format("%s:%s", source.getName(),
-            String.join(",",
-               source.getClassifiers().stream()
-                  .map(c -> c.getName()).collect(Collectors.toList())));
-
-      header.add(compartmentBuilder(source)
-         .layout(GConstants.Layout.HBOX)
-         .add(iconFromCssPropertyBuilder(source, "--uml-instance-specification-icon").build())
-         .add(visibilityBuilder(source).build())
-         .add(nameBuilder(source).text(name).build()).build());
-
-      return header.build();
-   }
-
-   protected GCompartment buildCompartment(final InstanceSpecification source) {
-      var compartment = fixedChildrenCompartmentBuilder(source);
-
-      var slotElements = source.getSlots().stream()
-         .map(mapHandler::handle)
-         .collect(Collectors.toList());
-      compartment.addAll(slotElements);
-
-      return compartment.build();
-   }
 }

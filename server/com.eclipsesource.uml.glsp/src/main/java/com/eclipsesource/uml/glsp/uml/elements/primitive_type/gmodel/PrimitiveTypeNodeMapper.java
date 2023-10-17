@@ -10,23 +10,15 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.elements.primitive_type.gmodel;
 
-import org.eclipse.glsp.graph.GCompartment;
 import org.eclipse.glsp.graph.GNode;
-import org.eclipse.glsp.graph.builder.impl.GNodeBuilder;
-import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.PrimitiveType;
 
-import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
-import com.eclipsesource.uml.glsp.core.constants.QuotationMark;
-import com.eclipsesource.uml.glsp.uml.elements.classifier.GClassifierBuilder;
 import com.eclipsesource.uml.glsp.uml.gmodel.RepresentationGNodeMapper;
-import com.eclipsesource.uml.glsp.uml.gmodel.element.NamedElementGBuilder;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
-public final class PrimitiveTypeNodeMapper extends RepresentationGNodeMapper<PrimitiveType, GNode>
-   implements NamedElementGBuilder<PrimitiveType> {
+public final class PrimitiveTypeNodeMapper extends RepresentationGNodeMapper<PrimitiveType, GNode> {
 
    @Inject
    public PrimitiveTypeNodeMapper(@Assisted final Representation representation) {
@@ -35,38 +27,10 @@ public final class PrimitiveTypeNodeMapper extends RepresentationGNodeMapper<Pri
 
    @Override
    public GNode map(final PrimitiveType source) {
-      var builder = new GNodeBuilder(configuration().typeId())
-         .id(idGenerator.getOrCreateId(source))
-         .layout(GConstants.Layout.VBOX)
-         .addCssClass(CoreCSS.NODE)
-         .add(buildHeader(source))
-         .add(buildCompartment(source));
+      var builder = new GPrimitiveTypeBuilder<>(source, this, configuration().typeId());
 
       applyShapeNotation(source, builder);
 
       return builder.build();
-   }
-
-   protected GCompartment buildHeader(final PrimitiveType source) {
-      var header = compartmentHeaderBuilder(source)
-         .layout(GConstants.Layout.VBOX);
-
-      header.add(buildHeaderAnnotation(source, QuotationMark.quoteDoubleAngle("PrimitiveType")));
-      header.add(buildHeaderName(source));
-
-      return header.build();
-   }
-
-   protected GCompartment buildCompartment(final PrimitiveType source) {
-      var compartment = fixedChildrenCompartmentBuilder(source);
-
-      var classifier = new GClassifierBuilder<>(source, this);
-      var attributes = classifier.listAttributes();
-      var operations = classifier.listOperations();
-
-      compartment
-         .addAll(attributes)
-         .addAll(operations);
-      return compartment.build();
    }
 }

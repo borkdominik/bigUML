@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2021-2022 EclipseSource and others.
+ * Copyright (c) 2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -8,28 +8,27 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.uml.elements.data_type.gmodel;
+package com.eclipsesource.uml.glsp.uml.elements.enumeration_literal.gmodel;
 
 import org.eclipse.glsp.graph.GNode;
-import org.eclipse.uml2.uml.DataType;
+import org.eclipse.uml2.uml.EnumerationLiteral;
 
 import com.eclipsesource.uml.glsp.uml.gmodel.RepresentationGNodeMapper;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
-public final class DataTypeNodeMapper extends RepresentationGNodeMapper<DataType, GNode> {
+public final class EnumerationLiteralNodeMapper
+   extends RepresentationGNodeMapper<EnumerationLiteral, GNode> {
 
    @Inject
-   public DataTypeNodeMapper(@Assisted final Representation representation) {
+   public EnumerationLiteralNodeMapper(@Assisted final Representation representation) {
       super(representation);
    }
 
    @Override
-   public GNode map(final DataType source) {
-      var builder = new GDataTypeBuilder<>(source, this, configuration().typeId());
-
-      applyShapeNotation(source, builder);
+   public GNode map(final EnumerationLiteral source) {
+      var builder = new GEnumerationLiteralBuilder<>(source, this, configuration().typeId());
 
       return builder.build();
    }

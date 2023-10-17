@@ -22,8 +22,8 @@ import com.eclipsesource.uml.glsp.core.constants.UmlLayoutConstants;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdContextGeneratorProvider;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdGeneratorProvider;
 
-public class UmlGCompartmentBuilder<TProvider extends GIdGeneratorProvider & GIdContextGeneratorProvider>
-   extends AbstractGCompartmentBuilder<GCompartment, UmlGCompartmentBuilder<?>> {
+public class UmlGCompartmentBuilder<TProvider extends GIdGeneratorProvider & GIdContextGeneratorProvider, TBuilder extends UmlGCompartmentBuilder<TProvider, TBuilder>>
+   extends AbstractGCompartmentBuilder<GCompartment, TBuilder> {
    protected EObject source;
    protected TProvider provider;
 
@@ -44,17 +44,16 @@ public class UmlGCompartmentBuilder<TProvider extends GIdGeneratorProvider & GId
       this.id(provider.idContextGenerator().getOrCreateId(source));
    }
 
-   public UmlGCompartmentBuilder<?> withHeaderLayout() {
+   public TBuilder withHeaderLayout() {
       this.type(DefaultTypes.COMPARTMENT_HEADER)
          .layout(GConstants.Layout.VBOX)
          .layoutOptions(new GLayoutOptions().hAlign(GConstants.HAlign.CENTER));
       return self();
    }
 
-   public UmlGCompartmentBuilder<?> withFixedChildrenLayout() {
+   public TBuilder withVBoxLayout() {
       var options = new GLayoutOptions()
-         .hAlign(GConstants.HAlign.LEFT)
-         .resizeContainer(true);
+         .hAlign(GConstants.HAlign.LEFT);
       options.put("hGrab", true);
 
       this.type(DefaultTypes.COMPARTMENT)
@@ -64,7 +63,18 @@ public class UmlGCompartmentBuilder<TProvider extends GIdGeneratorProvider & GId
       return self();
    }
 
-   public UmlGCompartmentBuilder<?> asFreeformChildren() {
+   public TBuilder withHBoxLayout() {
+      var options = new GLayoutOptions()
+         .hAlign(GConstants.HAlign.LEFT);
+
+      this.type(DefaultTypes.COMPARTMENT)
+         .layout(GConstants.Layout.HBOX)
+         .layoutOptions(options);
+
+      return self();
+   }
+
+   public TBuilder withFreeformLayout() {
       this.type(DefaultTypes.COMPARTMENT)
          .addArgument("divider", true)
          .layout(UmlLayoutConstants.FREEFORM)
@@ -75,13 +85,29 @@ public class UmlGCompartmentBuilder<TProvider extends GIdGeneratorProvider & GId
       return self();
    }
 
+   public TBuilder appendLayoutOptions(final GLayoutOptions options) {
+      this.layoutOptions.putAll(options);
+
+      return self();
+   }
+
+   public TBuilder clearPadding() {
+      this.layoutOptions.putAll(new GLayoutOptions()
+         .paddingTop(0.0)
+         .paddingRight(0.0)
+         .paddingBottom(0.0)
+         .paddingLeft(0.0));
+
+      return self();
+   }
+
    @Override
    protected GCompartment instantiate() {
       return GraphFactory.eINSTANCE.createGCompartment();
    }
 
    @Override
-   protected UmlGCompartmentBuilder<?> self() {
-      return this;
+   protected TBuilder self() {
+      return (TBuilder) this;
    }
 }

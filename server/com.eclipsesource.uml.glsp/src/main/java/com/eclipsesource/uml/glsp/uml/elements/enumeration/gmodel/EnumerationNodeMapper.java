@@ -10,25 +10,15 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.elements.enumeration.gmodel;
 
-import java.util.stream.Collectors;
-
-import org.eclipse.glsp.graph.GCompartment;
 import org.eclipse.glsp.graph.GNode;
-import org.eclipse.glsp.graph.builder.impl.GNodeBuilder;
-import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.Enumeration;
 
-import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
-import com.eclipsesource.uml.glsp.core.constants.QuotationMark;
 import com.eclipsesource.uml.glsp.uml.gmodel.RepresentationGNodeMapper;
-import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGDividerBuilder;
-import com.eclipsesource.uml.glsp.uml.gmodel.element.NamedElementGBuilder;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
-public final class EnumerationNodeMapper extends RepresentationGNodeMapper<Enumeration, GNode>
-   implements NamedElementGBuilder<Enumeration> {
+public final class EnumerationNodeMapper extends RepresentationGNodeMapper<Enumeration, GNode> {
 
    @Inject
    public EnumerationNodeMapper(@Assisted final Representation representation) {
@@ -37,38 +27,11 @@ public final class EnumerationNodeMapper extends RepresentationGNodeMapper<Enume
 
    @Override
    public GNode map(final Enumeration source) {
-      var builder = new GNodeBuilder(configuration().typeId())
-         .id(idGenerator.getOrCreateId(source))
-         .layout(GConstants.Layout.VBOX)
-         .addCssClass(CoreCSS.NODE)
-         .add(buildHeader(source))
-         .add(buildLiterals(source));
+      var builder = new GEnumerationBuilder<>(source, this, configuration().typeId());
 
       applyShapeNotation(source, builder);
 
       return builder.build();
    }
 
-   protected GCompartment buildHeader(final Enumeration source) {
-      var header = compartmentHeaderBuilder(source)
-         .layout(GConstants.Layout.VBOX);
-
-      header.add(buildHeaderAnnotation(source, QuotationMark.quoteDoubleAngle("Enumeration")));
-      header.add(buildHeaderName(source));
-
-      return header.build();
-   }
-
-   protected GCompartment buildLiterals(final Enumeration source) {
-      var compartment = fixedChildrenCompartmentBuilder(source);
-      compartment.add(new UmlGDividerBuilder<>(source, this).addSubtitle("Literals").build());
-
-      var literalElements = source.getOwnedLiterals().stream()
-         .map(mapHandler::handle)
-         .collect(Collectors.toList());
-      compartment.addAll(literalElements);
-
-      return compartment.build();
-
-   }
 }

@@ -8,29 +8,28 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.uml.elements.data_type.gmodel;
+package com.eclipsesource.uml.glsp.uml.elements.property.gmodel;
 
 import org.eclipse.glsp.graph.GNode;
-import org.eclipse.uml2.uml.DataType;
+import org.eclipse.uml2.uml.Property;
 
 import com.eclipsesource.uml.glsp.uml.gmodel.RepresentationGNodeMapper;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
-public final class DataTypeNodeMapper extends RepresentationGNodeMapper<DataType, GNode> {
+public final class PropertyNodeMapper extends RepresentationGNodeMapper<Property, GNode> {
 
    @Inject
-   public DataTypeNodeMapper(@Assisted final Representation representation) {
+   public PropertyNodeMapper(@Assisted final Representation representation) {
       super(representation);
    }
 
    @Override
-   public GNode map(final DataType source) {
-      var builder = new GDataTypeBuilder<>(source, this, configuration().typeId());
-
-      applyShapeNotation(source, builder);
+   public GNode map(final Property source) {
+      var builder = new GPropertyBuilder<>(source, this, configuration().typeId());
 
       return builder.build();
    }
+
 }

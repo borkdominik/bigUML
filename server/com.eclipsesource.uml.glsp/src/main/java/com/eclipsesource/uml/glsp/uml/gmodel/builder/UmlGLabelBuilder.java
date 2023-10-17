@@ -26,7 +26,7 @@ public class UmlGLabelBuilder<TProvider extends GIdContextGeneratorProvider & GS
    protected final TProvider provider;
 
    public UmlGLabelBuilder(final EObject source, final TProvider provider) {
-      this(source, provider, CoreTypes.LABEL_NAME);
+      this(source, provider, CoreTypes.LABEL_TEXT);
    }
 
    public UmlGLabelBuilder(final EObject source, final TProvider provider, final String type) {

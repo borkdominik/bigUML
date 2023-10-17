@@ -12,16 +12,19 @@ import {
     layoutableChildFeature,
     RectangularNodeView,
     RenderingContext,
+    SArgumentable,
     SCompartment,
     svg
 } from '@eclipse-glsp/client';
-import { DefaultTypes } from '@eclipse-glsp/protocol';
+import { Args, DefaultTypes } from '@eclipse-glsp/protocol';
 import { injectable } from 'inversify';
 import { VNode } from 'snabbdom';
 import { LabeledNode } from '../../../graph/base/label.view';
 
-export class NamedElement extends LabeledNode {
+export class NamedElement extends LabeledNode implements SArgumentable {
     static override readonly DEFAULT_FEATURES = [...LabeledNode.DEFAULT_FEATURES, alignFeature, layoutableChildFeature];
+
+    args: Args = {};
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -43,9 +46,12 @@ export class NamedElementView extends RectangularNodeView {
                 c.args['divider'] === true
         ) as SCompartment | undefined;
 
+        // TODO: Remove after switching to builder based approach for all gmodels
         return (
             <g class-selected={element.selected} class-mouseover={element.hoverFeedback}>
-                <rect x={0} y={0} rx={2} ry={2} width={Math.max(0, element.bounds.width)} height={Math.max(0, element.bounds.height)} />
+                {(element.args['border'] === true || element.args['build_by'] === undefined) && (
+                    <rect x={0} y={0} rx={2} ry={2} width={Math.max(0, element.bounds.width)} height={Math.max(0, element.bounds.height)} />
+                )}
 
                 {compartment && (
                     <path

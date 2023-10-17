@@ -6,6 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
+import { provideFASTDesignSystem } from '@microsoft/fast-components';
 import {
     provideVSCodeDesignSystem,
     vsCodeButton,
@@ -38,7 +39,8 @@ export function useToolkit(): void {
         vsCodePanelTab(),
         vsCodePanelView(),
         vsCodeTextField(),
-        vsCodeTextArea(),
-        bigCombobox()
+        vsCodeTextArea()
     );
+
+    provideFASTDesignSystem().withPrefix('vscode').register(bigCombobox());
 }

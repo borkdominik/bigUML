@@ -132,4 +132,5 @@
   <packagedElement xmi:type="uml:Package" xmi:id="_ZWe34EQHEe6_cuHsPZbQUw" name="NewPackage3"/>
   <packagedElement xmi:type="uml:Interface" xmi:id="_1-NdoEXFEe6PxqGx6RvmrA" name="NewInterface2"/>
   <packagedElement xmi:type="uml:Abstraction" xmi:id="_pBi6cFb-Ee6LC_xTG-ChTA" client="_EWMPELK2Ee24ffphK9Na6g" supplier="_LjfcIbSLEe2pkZx4lGC8Ew"/>
+  <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_ts60gGzjEe6db6IJIcaasA" name="NewPrimitiveType2"/>
 </uml:Model>

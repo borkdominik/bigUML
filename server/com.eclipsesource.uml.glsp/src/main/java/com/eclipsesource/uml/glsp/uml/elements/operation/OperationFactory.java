@@ -13,7 +13,7 @@ package com.eclipsesource.uml.glsp.uml.elements.operation;
 import com.eclipsesource.uml.glsp.uml.configuration.di.NodeConfigurationFactory;
 import com.eclipsesource.uml.glsp.uml.elements.operation.features.OperationLabelEditMapper;
 import com.eclipsesource.uml.glsp.uml.elements.operation.features.OperationPropertyMapper;
-import com.eclipsesource.uml.glsp.uml.elements.operation.gmodel.OperationCompartmentMapper;
+import com.eclipsesource.uml.glsp.uml.elements.operation.gmodel.OperationNodeMapper;
 import com.eclipsesource.uml.glsp.uml.features.label_edit.di.LabelEditMapperFactory;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.di.PropertyMapperFactory;
 import com.eclipsesource.uml.glsp.uml.gmodel.di.GModelMapperFactory;
@@ -27,7 +27,7 @@ public interface OperationFactory
    OperationConfiguration nodeConfiguration(Representation representation);
 
    @Override
-   OperationCompartmentMapper gmodel(Representation representation);
+   OperationNodeMapper gmodel(Representation representation);
 
    @Override
    OperationOperationHandler nodeOperationHandler(Representation representation);

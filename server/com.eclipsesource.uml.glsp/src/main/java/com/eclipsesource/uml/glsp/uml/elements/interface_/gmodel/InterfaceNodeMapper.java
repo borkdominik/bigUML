@@ -10,23 +10,15 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.elements.interface_.gmodel;
 
-import org.eclipse.glsp.graph.GCompartment;
 import org.eclipse.glsp.graph.GNode;
-import org.eclipse.glsp.graph.builder.impl.GNodeBuilder;
-import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.Interface;
 
-import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
-import com.eclipsesource.uml.glsp.core.constants.QuotationMark;
-import com.eclipsesource.uml.glsp.uml.elements.classifier.GClassifierBuilder;
 import com.eclipsesource.uml.glsp.uml.gmodel.RepresentationGNodeMapper;
-import com.eclipsesource.uml.glsp.uml.gmodel.element.NamedElementGBuilder;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
-public final class InterfaceNodeMapper extends RepresentationGNodeMapper<Interface, GNode>
-   implements NamedElementGBuilder<Interface> {
+public final class InterfaceNodeMapper extends RepresentationGNodeMapper<Interface, GNode> {
 
    @Inject
    public InterfaceNodeMapper(@Assisted final Representation representation) {
@@ -35,37 +27,10 @@ public final class InterfaceNodeMapper extends RepresentationGNodeMapper<Interfa
 
    @Override
    public GNode map(final Interface source) {
-      var builder = new GNodeBuilder(configuration().typeId())
-         .id(idGenerator.getOrCreateId(source))
-         .layout(GConstants.Layout.VBOX)
-         .addCssClass(CoreCSS.NODE)
-         .add(buildHeader(source))
-         .add(buildCompartment(source));
+      var builder = new GInterfaceBuilder<>(source, this, configuration().typeId());
 
       applyShapeNotation(source, builder);
 
       return builder.build();
-   }
-
-   protected GCompartment buildHeader(final Interface source) {
-      var header = compartmentHeaderBuilder(source)
-         .layout(GConstants.Layout.VBOX);
-
-      header.add(buildHeaderAnnotation(source, QuotationMark.quoteDoubleAngle("Interface")));
-      header.add(buildHeaderName(source));
-
-      return header.build();
-   }
-
-   protected GCompartment buildCompartment(final Interface source) {
-      var compartment = fixedChildrenCompartmentBuilder(source);
-      var classifier = new GClassifierBuilder<>(source, this);
-      var attributes = classifier.listAttributes();
-      var operations = classifier.listOperations();
-
-      compartment
-         .addAll(attributes)
-         .addAll(operations);
-      return compartment.build();
    }
 }

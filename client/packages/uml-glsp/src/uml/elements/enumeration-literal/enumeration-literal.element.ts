@@ -8,11 +8,11 @@
  *********************************************************************************/
 
 import { UmlDiagramType } from '@borkdominik-biguml/uml-common';
-import { configureModelElement, SCompartmentView } from '@eclipse-glsp/client';
+import { configureModelElement } from '@eclipse-glsp/client';
 import { DefaultTypes } from '@eclipse-glsp/protocol';
 import { interfaces } from 'inversify';
-import { InteractableCompartment } from '../../../index';
 import { QualifiedUtil } from '../../qualified.utils';
+import { NamedElement, NamedElementView } from '../index';
 
 export function registerEnumerationLiteralElement(
     context: { bind: interfaces.Bind; isBound: interfaces.IsBound },
@@ -20,8 +20,8 @@ export function registerEnumerationLiteralElement(
 ): void {
     configureModelElement(
         context,
-        QualifiedUtil.representationTypeId(representation, DefaultTypes.COMPARTMENT, 'EnumerationLiteral'),
-        InteractableCompartment,
-        SCompartmentView
+        QualifiedUtil.representationTypeId(representation, DefaultTypes.NODE, 'EnumerationLiteral'),
+        NamedElement,
+        NamedElementView
     );
 }

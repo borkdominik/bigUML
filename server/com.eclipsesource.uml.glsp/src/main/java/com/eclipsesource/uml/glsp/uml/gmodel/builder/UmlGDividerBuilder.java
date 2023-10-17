@@ -52,7 +52,6 @@ public class UmlGDividerBuilder<TProvider extends GIdContextGeneratorProvider & 
          .text(subtitle)
          .addCssClass(CoreCSS.DIVIDER_SUBTITLE)
          .build());
-
       return self();
    }
 

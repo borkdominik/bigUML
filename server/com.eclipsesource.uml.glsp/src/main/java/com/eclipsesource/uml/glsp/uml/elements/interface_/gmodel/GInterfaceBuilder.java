@@ -8,24 +8,26 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.uml.elements.class_.gmodel;
+package com.eclipsesource.uml.glsp.uml.elements.interface_.gmodel;
 
 import java.util.List;
 
-import org.eclipse.uml2.uml.Class;
+import org.eclipse.uml2.uml.Interface;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
+import com.eclipsesource.uml.glsp.core.constants.QuotationMark;
 import com.eclipsesource.uml.glsp.uml.elements.classifier.GClassifierBuilder;
 import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGCompartmentBuilder;
+import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGLabelBuilder;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdContextGeneratorProvider;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdGeneratorProvider;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GModelMapHandlerProvider;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GSuffixProvider;
 
-public class GClassBuilder<TSource extends Class, TProvider extends GSuffixProvider & GIdGeneratorProvider & GIdContextGeneratorProvider & GModelMapHandlerProvider, TBuilder extends GClassBuilder<TSource, TProvider, TBuilder>>
+public class GInterfaceBuilder<TSource extends Interface, TProvider extends GSuffixProvider & GIdGeneratorProvider & GIdContextGeneratorProvider & GModelMapHandlerProvider, TBuilder extends GInterfaceBuilder<TSource, TProvider, TBuilder>>
    extends GClassifierBuilder<TSource, TProvider, TBuilder> {
 
-   public GClassBuilder(final TSource source, final TProvider provider, final String type) {
+   public GInterfaceBuilder(final TSource source, final TProvider provider, final String type) {
       super(source, provider, type);
    }
 
@@ -41,11 +43,11 @@ public class GClassBuilder<TSource extends Class, TProvider extends GSuffixProvi
       var header = new UmlGCompartmentBuilder<>(source, provider)
          .withHeaderLayout();
 
-      if (source.isAbstract()) {
-         header.add(buildName(source, List.of(CoreCSS.FONT_BOLD, CoreCSS.FONT_ITALIC)));
-      } else {
-         header.add(buildName(source, List.of(CoreCSS.FONT_BOLD)));
-      }
+      header.add(new UmlGLabelBuilder<>(source, provider)
+         .text(QuotationMark.quoteDoubleAngle("interface"))
+         .addCssClasses(List.of(CoreCSS.FONT_BOLD))
+         .build());
+      header.add(buildName(source, List.of(CoreCSS.FONT_BOLD)));
 
       add(header.build());
    }

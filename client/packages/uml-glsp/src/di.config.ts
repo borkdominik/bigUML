@@ -120,7 +120,7 @@ export default function createContainer(widgetId: string): Container {
     // Router options
     const router = container.get(LibavoidRouter);
     router.setOptions({
-        routingType: RouteType.Orthogonal,
+        routingType: RouteType.Orthogonal | RouteType.PolyLine,
         segmentPenalty: 50,
         // at least height of label to avoid labels overlap if
         // there two neighbour edges have labels on the position

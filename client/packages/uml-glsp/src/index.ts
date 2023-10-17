@@ -8,7 +8,7 @@
  *********************************************************************************/
 import 'reflect-metadata';
 
-import createUmlDiagramContainer from './di.config';
+import createUmlDiagramContainer, { loadExtensions as loadUmlDiagramExtensions } from './di.config';
 
 export * from './graph';
-export { createUmlDiagramContainer };
+export { createUmlDiagramContainer, loadUmlDiagramExtensions };

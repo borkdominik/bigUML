@@ -8,10 +8,15 @@
  *********************************************************************************/
 
 import { UmlDiagramType } from '@borkdominik-biguml/uml-common';
-import { configureModelElement, GEdgeView, SEdge } from '@eclipse-glsp/client';
+import { GEdgeView, configureModelElement, editFeature } from '@eclipse-glsp/client';
 import { DefaultTypes } from '@eclipse-glsp/protocol';
 import { interfaces } from 'inversify';
+import { LibavoidEdge, RouteType } from 'sprotty-routing-libavoid';
 import { QualifiedUtil } from '../../qualified.utils';
+
+export class InterfaceRealizationEdge extends LibavoidEdge {
+    override routeType = RouteType.PolyLine;
+}
 
 export function registerInterfaceRealizationElement(
     context: { bind: interfaces.Bind; isBound: interfaces.IsBound },
@@ -20,7 +25,8 @@ export function registerInterfaceRealizationElement(
     configureModelElement(
         context,
         QualifiedUtil.representationTypeId(representation, DefaultTypes.EDGE, 'InterfaceRealization'),
-        SEdge,
-        GEdgeView
+        InterfaceRealizationEdge,
+        GEdgeView,
+        { disable: [editFeature] }
     );
 }

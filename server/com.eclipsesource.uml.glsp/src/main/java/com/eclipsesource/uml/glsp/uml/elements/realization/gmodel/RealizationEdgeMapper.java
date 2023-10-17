@@ -46,7 +46,6 @@ public final class RealizationEdgeMapper extends RepresentationGEdgeMapper<Reali
          .addCssClass(CoreCSS.Marker.TRIANGLE_EMPTY.end())
          .sourceId(clientId)
          .targetId(supplierId)
-         .routerKind(GConstants.RouterKind.POLYLINE)
          .addArgument(GArguments.edgePadding(10));
 
       applyEdgeNotation(source, builder);

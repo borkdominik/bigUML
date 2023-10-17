@@ -1,4 +1,5 @@
 import * as es from 'esbuild';
+import { copy } from 'esbuild-plugin-copy';
 import * as fs from 'fs';
 
 const args = process.argv.slice(2);
@@ -27,7 +28,16 @@ const componentsConfig: es.BuildOptions = {
         '.gif': 'dataurl',
         '.ttf': 'dataurl'
     },
-    plugins: []
+    plugins: [
+        copy({
+            resolveFrom: 'cwd',
+            assets: {
+                from: ['../../uml-glsp/lib/libavoid.wasm'],
+                to: ['./bundles/editor/']
+            },
+            verbose: true
+        })
+    ]
 };
 
 (async () => {

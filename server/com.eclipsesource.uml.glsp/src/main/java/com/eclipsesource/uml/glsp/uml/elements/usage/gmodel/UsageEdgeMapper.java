@@ -48,7 +48,6 @@ public final class UsageEdgeMapper extends RepresentationGEdgeMapper<Usage, GEdg
          .addCssClass(CoreCSS.Marker.TENT.end())
          .sourceId(clientId)
          .targetId(supplierId)
-         .routerKind(GConstants.RouterKind.POLYLINE)
          .addArgument(GArguments.edgePadding(10))
          .add(textEdgeBuilder(
             source,

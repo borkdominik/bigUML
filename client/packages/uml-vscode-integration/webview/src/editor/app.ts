@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { createUmlDiagramContainer } from '@borkdominik-biguml/uml-glsp/lib';
+import { createUmlDiagramContainer, loadUmlDiagramExtensions } from '@borkdominik-biguml/uml-glsp/lib';
 
 import '@eclipse-glsp/vscode-integration-webview/css/glsp-vscode.css';
 
@@ -45,5 +45,7 @@ class UVStarter extends GLSPStarter {
 }
 
 export function launch(): void {
-    new UVStarter();
+    loadUmlDiagramExtensions().then(() => {
+        new UVStarter();
+    });
 }

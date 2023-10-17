@@ -41,7 +41,6 @@ public class AssociationEdgeMapper extends RepresentationGEdgeMapper<Association
       var builder = new GEdgeBuilder(configuration().typeId())
          .id(idGenerator.getOrCreateId(source))
          .addCssClass(CoreCSS.EDGE)
-         .routerKind(GConstants.RouterKind.POLYLINE)
          .addArgument(GArguments.edgePadding(10));
 
       applyName(source, builder);

@@ -8,14 +8,21 @@
  *********************************************************************************/
 
 import { UmlDiagramType } from '@borkdominik-biguml/uml-common';
-import { configureModelElement, GEdgeView, SEdge } from '@eclipse-glsp/client';
+import { GEdgeView, configureModelElement, editFeature } from '@eclipse-glsp/client';
 import { DefaultTypes } from '@eclipse-glsp/protocol';
 import { interfaces } from 'inversify';
+import { LibavoidEdge, RouteType } from 'sprotty-routing-libavoid';
 import { QualifiedUtil } from '../../qualified.utils';
+
+export class UsageEdge extends LibavoidEdge {
+    override routeType = RouteType.PolyLine;
+}
 
 export function registerUsageElement(
     context: { bind: interfaces.Bind; isBound: interfaces.IsBound },
     representation: UmlDiagramType
 ): void {
-    configureModelElement(context, QualifiedUtil.representationTypeId(representation, DefaultTypes.EDGE, 'Usage'), SEdge, GEdgeView);
+    configureModelElement(context, QualifiedUtil.representationTypeId(representation, DefaultTypes.EDGE, 'Usage'), UsageEdge, GEdgeView, {
+        disable: [editFeature]
+    });
 }

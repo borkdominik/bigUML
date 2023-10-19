@@ -11,6 +11,7 @@
 package com.eclipsesource.uml.glsp.uml;
 
 import com.eclipsesource.uml.glsp.uml.configuration.ElementConfigurationRegistry;
+import com.eclipsesource.uml.glsp.uml.diagram.sequence_diagram.manifest.SequenceUmlManifest;
 import com.eclipsesource.uml.glsp.uml.representation.activity.ActivityUmlManifest;
 import com.eclipsesource.uml.glsp.uml.representation.class_.ClassUmlManifest;
 import com.eclipsesource.uml.glsp.uml.representation.communication.CommunicationUmlManifest;
@@ -38,5 +39,6 @@ public class UmlModule extends AbstractModule {
       install(new DeploymentUmlManifest());
       install(new ActivityUmlManifest());
       install(new InformationFlowUmlManifest());
+      install(new SequenceUmlManifest());
    }
 }

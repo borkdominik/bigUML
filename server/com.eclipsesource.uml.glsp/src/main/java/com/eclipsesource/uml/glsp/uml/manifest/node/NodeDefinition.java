@@ -44,7 +44,7 @@ public abstract class NodeDefinition extends ElementDefinition
    protected void configure() {
       super.configure();
 
-      contributeDiagramElementConfiguration(this::diagramConfigurations, (edges) -> {});
+      contributeDiagramElementConfiguration(this::diagramConfigurations, (edges) -> {}, (ports) -> {});
       contributeDiagramCreateNodeHandlers(this::diagramCreateHandlers);
       contributeDiagramDeleteHandlers(this::diagramDeleteHandlers);
       contributeDiagramUpdateHandlers(this::diagramUpdateHandlers);

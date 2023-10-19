@@ -35,4 +35,8 @@ public interface DiagramElementConfiguration {
    interface Edge extends DiagramElementConfiguration {
       Set<EdgeTypeHint> getEdgeTypeHints();
    }
+
+   interface Port extends DiagramElementConfiguration {
+      Set<ShapeTypeHint> getShapeTypeHints();
+   }
 }

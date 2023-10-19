@@ -1,0 +1,28 @@
+/* SEQUENCE DIAGRAM*/
+.umlLifeline {
+    background-image: var(--uml-icon-lifeline);
+}
+
+.umlInteraction {
+    background-image: var(--uml-icon-interaction);
+}
+
+.umlMessage {
+    background-image: var(--uml-icon-message);
+}
+
+.umlMessageAsync {
+    background-image: var(--uml-icon-message-async);
+}
+
+.umlMessageSync {
+    background-image: var(--uml-icon-message-sync);
+}
+
+.umlassociation {
+    background-image: var(--uml-icon-association);
+}
+
+.umlproperty {
+    background-image: var(--uml-icon-property);
+}

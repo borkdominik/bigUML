@@ -65,6 +65,7 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory {
    public EObject create(EClass eClass) {
       switch (eClass.getClassifierID()) {
          case ModelPackage.NEW_DIAGRAM_REQUEST: return createNewDiagramRequest();
+         case ModelPackage.MESSAGE_ANCHOR: return createMessageAnchor();
          default:
             throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
       }
@@ -79,6 +80,17 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory {
    public NewDiagramRequest createNewDiagramRequest() {
       NewDiagramRequestImpl newDiagramRequest = new NewDiagramRequestImpl();
       return newDiagramRequest;
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   @Override
+   public MessageAnchor createMessageAnchor() {
+      MessageAnchorImpl messageAnchor = new MessageAnchorImpl();
+      return messageAnchor;
    }
 
    /**

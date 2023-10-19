@@ -8,6 +8,7 @@
  *********************************************************************************/
 import { changeCodiconClass, compare, createIcon, createToolGroup, PaletteItem, SModelRoot, ToolPalette } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
+import { ShiftMouseTool } from '../tools/shift-mouse-tool';
 
 const CLICKED_CSS_CLASS = 'clicked';
 const CHEVRON_DOWN_ICON_ID = 'chevron-right';
@@ -16,6 +17,12 @@ const PALETTE_ICON_ID = 'symbol-color';
 @injectable()
 export class UmlToolPalette extends ToolPalette {
     protected override defaultToolsButton: HTMLElement;
+
+    constructor() {
+        super();
+        // TODO: overwrite private member "getMessage" 🙀
+        (this as any).createHeaderTools = this.extendedCreateHeaderTools;
+    }
 
     override changeActiveButton(button?: HTMLElement): void {
         if (this.lastActivebutton) {
@@ -55,6 +62,40 @@ export class UmlToolPalette extends ToolPalette {
             };
             insertedDiv.appendChild(minimizeIcon);
         }
+    }
+
+    protected extendedCreateHeaderTools(): HTMLElement {
+        // as super
+        const headerTools = document.createElement('div');
+        headerTools.classList.add('header-tools');
+
+        this.defaultToolsButton = this.createDefaultToolButton();
+        headerTools.appendChild(this.defaultToolsButton);
+
+        const deleteToolButton = this.createMouseDeleteToolButton();
+        headerTools.appendChild(deleteToolButton);
+
+        const marqueeToolButton = this.createMarqueeToolButton();
+        headerTools.appendChild(marqueeToolButton);
+
+        const validateActionButton = this.createValidateButton();
+        headerTools.appendChild(validateActionButton);
+
+        const searchIcon = this.createSearchButton();
+        headerTools.appendChild(searchIcon);
+
+        // addition
+        const createShiftButton = this.createShiftButton();
+        headerTools.appendChild(createShiftButton);
+
+        return headerTools;
+    }
+
+    protected createShiftButton(): HTMLElement {
+        const verticalShiftToolButton = createIcon('split-vertical');
+        verticalShiftToolButton.title = 'Enable vertical shift tool [Alt + Click]';
+        verticalShiftToolButton.onclick = this.onClickStaticToolButton(verticalShiftToolButton, ShiftMouseTool.ID);
+        return verticalShiftToolButton;
     }
 
     protected override createBody(): void {

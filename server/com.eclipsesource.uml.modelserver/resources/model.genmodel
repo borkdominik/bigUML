@@ -12,5 +12,8 @@
     <genClasses ecoreClass="model.ecore#//NewDiagramRequest">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//NewDiagramRequest/diagramType"/>
     </genClasses>
+    <genClasses ecoreClass="model.ecore#//MessageAnchor">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//MessageAnchor/id"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>

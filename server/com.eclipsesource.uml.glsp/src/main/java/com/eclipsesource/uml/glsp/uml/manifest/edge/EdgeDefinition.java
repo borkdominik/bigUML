@@ -44,7 +44,7 @@ public abstract class EdgeDefinition extends ElementDefinition
    protected void configure() {
       super.configure();
 
-      contributeDiagramElementConfiguration((nodes) -> {}, this::diagramConfigurations);
+      contributeDiagramElementConfiguration((nodes) -> {}, this::diagramConfigurations, (ports) -> {});
       contributeDiagramCreateEdgeHandlers(this::diagramCreateHandlers);
       contributeDiagramDeleteHandlers(this::diagramDeleteHandlers);
       contributeDiagramUpdateHandlers(this::diagramUpdateHandlers);

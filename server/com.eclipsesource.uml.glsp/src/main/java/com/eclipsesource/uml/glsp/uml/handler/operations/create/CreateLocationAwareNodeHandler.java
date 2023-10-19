@@ -15,6 +15,7 @@ import java.util.Optional;
 import org.eclipse.glsp.graph.GCompartment;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GPoint;
+import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.utils.LayoutUtil;
 
@@ -25,9 +26,16 @@ public interface CreateLocationAwareNodeHandler {
    default Optional<GPoint> relativeLocationOf(final UmlModelState modelState, final CreateNodeOperation operation) {
       var absoluteLocation = operation.getLocation();
       var container = modelState.getIndex().get(operation.getContainerId()).orElseGet(modelState::getRoot);
-
       return absoluteLocation.map(location -> LayoutUtil.getRelativeLocation(location,
          getChildrenContainer(modelState, container).orElse(container)));
+   }
+
+   default GPoint relativeLocationOf(final UmlModelState modelState, final String containerId, final double x,
+      final double y) {
+      var absoluteLocation = GraphUtil.point(x, y);
+      var container = modelState.getIndex().get(containerId).orElseGet(modelState::getRoot);
+      return LayoutUtil.getRelativeLocation(absoluteLocation,
+         getChildrenContainer(modelState, container).orElse(container));
    }
 
    default Optional<GModelElement> getChildrenContainer(final UmlModelState modelState, final GModelElement container) {

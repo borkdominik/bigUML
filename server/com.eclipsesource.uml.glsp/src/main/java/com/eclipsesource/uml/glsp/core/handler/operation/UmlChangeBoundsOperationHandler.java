@@ -40,6 +40,10 @@ public class UmlChangeBoundsOperationHandler extends EMSOperationHandler<ChangeB
             .ifPresent(shape -> {
                changeBoundsMap.put(shape, element);
             });
+         modelState.getNotationDirectly(element.getElementId(), Shape.class)
+            .ifPresent(shape -> {
+               changeBoundsMap.put(shape, element);
+            });
       }
 
       modelServerAccess.exec(UmlChangeBoundsContribution.create(changeBoundsMap)).thenAccept(response -> {

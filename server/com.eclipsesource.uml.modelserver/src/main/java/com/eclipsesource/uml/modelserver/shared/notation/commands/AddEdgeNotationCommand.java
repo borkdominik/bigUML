@@ -23,7 +23,8 @@ public class AddEdgeNotationCommand extends BaseNotationElementCommand {
 
    protected Supplier<? extends EObject> semanticElementSupplier;
 
-   public AddEdgeNotationCommand(final ModelContext context, final Supplier<? extends EObject> semanticElementSupplier) {
+   public AddEdgeNotationCommand(final ModelContext context,
+      final Supplier<? extends EObject> semanticElementSupplier) {
       super(context);
       this.semanticElementSupplier = semanticElementSupplier;
    }

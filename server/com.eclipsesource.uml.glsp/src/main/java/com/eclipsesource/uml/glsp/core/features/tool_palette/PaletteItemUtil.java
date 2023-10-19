@@ -10,6 +10,8 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.core.features.tool_palette;
 
+import java.util.List;
+
 import org.eclipse.glsp.server.actions.TriggerEdgeCreationAction;
 import org.eclipse.glsp.server.actions.TriggerNodeCreationAction;
 import org.eclipse.glsp.server.features.toolpalette.PaletteItem;
@@ -23,5 +25,9 @@ public final class PaletteItemUtil {
 
    public static PaletteItem edge(final String elementTypeId, final String label, final String icon) {
       return new PaletteItem(elementTypeId, label, new TriggerEdgeCreationAction(elementTypeId), icon);
+   }
+
+   public static void sortAsListed(final List<PaletteItem> items) {
+      items.forEach(i -> i.setSortString(String.valueOf(items.indexOf(i))));
    }
 }

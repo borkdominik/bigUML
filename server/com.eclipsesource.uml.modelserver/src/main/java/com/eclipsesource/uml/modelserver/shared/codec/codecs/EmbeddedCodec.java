@@ -12,6 +12,8 @@ package com.eclipsesource.uml.modelserver.shared.codec.codecs;
 
 import java.util.Optional;
 
+import org.eclipse.emf.ecore.EObject;
+
 import com.eclipsesource.uml.modelserver.shared.codec.CCommandProvider;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
@@ -42,6 +44,16 @@ public interface EmbeddedCodec {
          var json = gson.toJson(value);
 
          ccommand().getProperties().put(key, json);
+
+         return (T) this;
+      }
+
+      default T embedJson(final String key, final EObject object) {
+
+         var gson = new Gson();
+         var property = gson.toJson(object);
+
+         ccommand().getProperties().put(key, property);
 
          return (T) this;
       }

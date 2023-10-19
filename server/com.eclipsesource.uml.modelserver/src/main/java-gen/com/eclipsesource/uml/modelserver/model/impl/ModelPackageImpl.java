@@ -10,6 +10,7 @@
  */
 package com.eclipsesource.uml.modelserver.model.impl;
 
+import com.eclipsesource.uml.modelserver.model.MessageAnchor;
 import com.eclipsesource.uml.modelserver.model.ModelFactory;
 import com.eclipsesource.uml.modelserver.model.ModelPackage;
 import com.eclipsesource.uml.modelserver.model.NewDiagramRequest;
@@ -33,6 +34,13 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
     * @generated
     */
    private EClass newDiagramRequestEClass = null;
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   private EClass messageAnchorEClass = null;
 
    /**
     * Creates an instance of the model <b>Package</b>, registered with
@@ -120,6 +128,26 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
     * @generated
     */
    @Override
+   public EClass getMessageAnchor() {
+      return messageAnchorEClass;
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   @Override
+   public EAttribute getMessageAnchor_Id() {
+      return (EAttribute)messageAnchorEClass.getEStructuralFeatures().get(0);
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   @Override
    public ModelFactory getModelFactory() {
       return (ModelFactory)getEFactoryInstance();
    }
@@ -145,6 +173,9 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
       // Create classes and their features
       newDiagramRequestEClass = createEClass(NEW_DIAGRAM_REQUEST);
       createEAttribute(newDiagramRequestEClass, NEW_DIAGRAM_REQUEST__DIAGRAM_TYPE);
+
+      messageAnchorEClass = createEClass(MESSAGE_ANCHOR);
+      createEAttribute(messageAnchorEClass, MESSAGE_ANCHOR__ID);
    }
 
    /**
@@ -179,6 +210,9 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
       // Initialize classes, features, and operations; add parameters
       initEClass(newDiagramRequestEClass, NewDiagramRequest.class, "NewDiagramRequest", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
       initEAttribute(getNewDiagramRequest_DiagramType(), ecorePackage.getEString(), "diagramType", null, 0, 1, NewDiagramRequest.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+      initEClass(messageAnchorEClass, MessageAnchor.class, "MessageAnchor", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+      initEAttribute(getMessageAnchor_Id(), ecorePackage.getEString(), "id", null, 0, 1, MessageAnchor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
       // Create resource
       createResource(eNS_URI);

@@ -11,5 +11,5 @@
 package com.eclipsesource.uml.glsp.core.constants;
 
 public class UmlLayoutConstants {
-   public static final String FREEFORM = "uml-freeform";
+    public static final String FREEFORM = "uml-freeform";
 }

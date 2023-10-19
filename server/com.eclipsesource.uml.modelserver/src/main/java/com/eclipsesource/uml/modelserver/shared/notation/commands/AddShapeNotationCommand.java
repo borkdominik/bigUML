@@ -26,13 +26,25 @@ public class AddShapeNotationCommand extends BaseNotationElementCommand {
    protected final GPoint shapePosition;
    protected final GDimension shapeSize;
    protected final Supplier<? extends EObject> semanticElementSupplier;
+   protected final Supplier<String> idSupplier;
 
    public AddShapeNotationCommand(final ModelContext context, final Supplier<? extends EObject> semanticElementSupplier,
       final GPoint position, final GDimension size) {
       super(context);
       this.semanticElementSupplier = semanticElementSupplier;
+      this.idSupplier = null;
       this.shapePosition = position;
       this.shapeSize = size;
+   }
+
+   public AddShapeNotationCommand(final ModelContext context, final Supplier<? extends EObject> semanticElementSupplier,
+      final Supplier<String> idSupplier,
+      final GPoint position, final GDimension size) {
+      super(context);
+      this.semanticElementSupplier = semanticElementSupplier;
+      this.shapePosition = position;
+      this.shapeSize = size;
+      this.idSupplier = idSupplier;
    }
 
    @Override
@@ -45,8 +57,11 @@ public class AddShapeNotationCommand extends BaseNotationElementCommand {
       }
 
       var semanticReference = NotationFactory.eINSTANCE.createSemanticElementReference();
-      semanticReference.setElementId(SemanticElementAccessor.getId(semanticElementSupplier.get()));
-
+      if (idSupplier != null) {
+         semanticReference.setElementId(idSupplier.get());
+      } else {
+         semanticReference.setElementId(SemanticElementAccessor.getId(semanticElementSupplier.get()));
+      }
       newShape.setSemanticElement(semanticReference);
 
       diagram.getElements().add(newShape);

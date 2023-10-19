@@ -22,4 +22,12 @@ public final class ElementTextPropertyItem extends ElementPropertyItem {
       this.text = text;
       this.label = label;
    }
+
+   public ElementTextPropertyItem(final String elementId, final String propertyId, final String label,
+      final String text, final Boolean disabled) {
+      super(elementId, propertyId, disabled, ElementPropertyType.TEXT);
+
+      this.text = text;
+      this.label = label;
+   }
 }

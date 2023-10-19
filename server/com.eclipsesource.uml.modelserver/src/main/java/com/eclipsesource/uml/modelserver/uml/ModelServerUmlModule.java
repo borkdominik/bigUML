@@ -22,6 +22,7 @@ import com.eclipsesource.uml.modelserver.uml.command.delete.DeleteElementCommand
 import com.eclipsesource.uml.modelserver.uml.command.reconnect.ReconnectElementCommandContribution;
 import com.eclipsesource.uml.modelserver.uml.command.update.UpdateCommandProviderRegistry;
 import com.eclipsesource.uml.modelserver.uml.command.update.UpdateElementCommandContribution;
+import com.eclipsesource.uml.modelserver.uml.diagram.sequence_diagram.manifest.SequenceManifest;
 import com.eclipsesource.uml.modelserver.uml.representation.activity.ActivityManifest;
 import com.eclipsesource.uml.modelserver.uml.representation.class_.ClassManifest;
 import com.eclipsesource.uml.modelserver.uml.representation.communication.CommunicationManifest;
@@ -46,6 +47,7 @@ public class ModelServerUmlModule extends AbstractModule implements CommandCodec
       install(new DeploymentManifest());
       install(new ActivityManifest());
       install(new InformationFlowManifest());
+      install(new SequenceManifest());
 
       bind(CreateNodeCommandProviderRegistry.class).in(Singleton.class);
       bind(DeleteCommandProviderRegistry.class).in(Singleton.class);

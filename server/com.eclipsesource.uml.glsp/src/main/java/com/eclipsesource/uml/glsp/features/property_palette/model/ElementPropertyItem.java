@@ -14,11 +14,22 @@ public abstract class ElementPropertyItem {
    public final String elementId;
    public final String propertyId;
    public final String type;
+   public final Boolean disabled;
 
    public ElementPropertyItem(final String elementId, final String propertyId, final ElementPropertyType type) {
       super();
       this.elementId = elementId;
       this.propertyId = propertyId;
+      this.disabled = false;
+      this.type = type.name();
+   }
+
+   public ElementPropertyItem(final String elementId, final String propertyId, final Boolean disabled,
+      final ElementPropertyType type) {
+      super();
+      this.elementId = elementId;
+      this.propertyId = propertyId;
+      this.disabled = disabled;
       this.type = type.name();
    }
 
@@ -26,6 +37,7 @@ public abstract class ElementPropertyItem {
       super();
       this.elementId = builder.elementId;
       this.propertyId = builder.propertyId;
+      this.disabled = false;
       this.type = type.name();
    }
 

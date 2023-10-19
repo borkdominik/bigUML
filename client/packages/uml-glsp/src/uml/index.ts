@@ -7,6 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import { umlModule } from './di.config';
+import { umlSequenceDiagramModule } from './diagram/sequence/di.config';
 import { umlActivityDiagramModule } from './representation/activity/activity.module';
 import { umlClassDiagramModule } from './representation/class/class.module';
 import { umlCommunicationDiagramModule } from './representation/communication/communication.module';
@@ -25,5 +26,6 @@ export const umlDiagramModules = [
     umlStateMachineDiagramModule,
     umlDeploymentDiagramModule,
     umlActivityDiagramModule,
-    umlInformationFlowDiagramModule
+    umlInformationFlowDiagramModule,
+    umlSequenceDiagramModule
 ];

@@ -33,6 +33,7 @@ public final class ElementChoicePropertyItem extends ElementPropertyItem {
       protected String label;
       protected List<ElementChoicePropertyItem.Choice> choices = List.of();
       protected String choice;
+      protected Boolean isReadonly;
 
       public Builder(final String elementId, final String propertyId) {
          super();
@@ -52,6 +53,11 @@ public final class ElementChoicePropertyItem extends ElementPropertyItem {
 
       public Builder choice(final String choice) {
          this.choice = choice;
+         return this;
+      }
+
+      public Builder isReadonly(final Boolean isReadonly) {
+         this.isReadonly = isReadonly;
          return this;
       }
 

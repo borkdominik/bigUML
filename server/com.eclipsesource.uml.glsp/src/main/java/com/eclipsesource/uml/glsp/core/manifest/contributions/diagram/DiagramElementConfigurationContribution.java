@@ -28,7 +28,8 @@ public interface DiagramElementConfigurationContribution
 
    default void contributeDiagramElementConfiguration(
       final Consumer<Multibinder<DiagramElementConfiguration.Node>> nodeConsumer,
-      final Consumer<Multibinder<DiagramElementConfiguration.Edge>> edgeConsumer) {
+      final Consumer<Multibinder<DiagramElementConfiguration.Edge>> edgeConsumer,
+      final Consumer<Multibinder<DiagramElementConfiguration.Port>> portConsumer) {
       var binder = contributionBinder();
 
       var nodeMultibinder = Multibinder.newSetBinder(binder,
@@ -37,9 +38,13 @@ public interface DiagramElementConfigurationContribution
       var edgeMultibinder = Multibinder.newSetBinder(binder,
          new TypeLiteral<DiagramElementConfiguration.Edge>() {},
          idNamed());
+      var portMultibinder = Multibinder.newSetBinder(binder,
+         new TypeLiteral<DiagramElementConfiguration.Port>() {},
+         idNamed());
 
       nodeConsumer.accept(nodeMultibinder);
       edgeConsumer.accept(edgeMultibinder);
+      portConsumer.accept(portMultibinder);
 
       MapBinder.newMapBinder(binder, new TypeLiteral<Representation>() {},
          new TypeLiteral<Set<DiagramElementConfiguration.Node>>() {})
@@ -49,5 +54,9 @@ public interface DiagramElementConfigurationContribution
          new TypeLiteral<Set<DiagramElementConfiguration.Edge>>() {})
          .addBinding(representation())
          .to(Key.get(new TypeLiteral<Set<DiagramElementConfiguration.Edge>>() {}, idNamed()));
+      MapBinder.newMapBinder(binder, new TypeLiteral<Representation>() {},
+         new TypeLiteral<Set<DiagramElementConfiguration.Port>>() {})
+         .addBinding(representation())
+         .to(Key.get(new TypeLiteral<Set<DiagramElementConfiguration.Port>>() {}, idNamed()));
    }
 }

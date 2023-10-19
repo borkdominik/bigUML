@@ -29,6 +29,9 @@ import { FeedbackEdgeEndView, SResizeHandleView } from '@eclipse-glsp/client/lib
 import { ContainerModule } from 'inversify';
 import { UmlDrawFeedbackEdgeSourceCommand } from './edge/edge-feedback.command';
 import { UmlFeedbackActionDispatcher } from './feedback-action-dispatcher';
+import { DrawFeedbackPositionedEdgeCommand, RemoveFeedbackPositionedEdgeCommand } from './creation-tool-feedback.extension';
+import { DrawHorizontalShiftCommand, RemoveHorizontalShiftCommand } from './horizontal-shift-tool-feedback';
+import { DrawVerticalShiftCommand, RemoveVerticalShiftCommand } from './vertical-shift-tool-feedback';
 
 export const umlToolFeedbackModule = new ContainerModule((bind, _unbind, isBound) => {
     const context = { bind, isBound };
@@ -62,4 +65,12 @@ export const umlToolFeedbackModule = new ContainerModule((bind, _unbind, isBound
     bind(LocationPostprocessor).toSelf().inSingletonScope();
     bind(TYPES.IVNodePostprocessor).toService(LocationPostprocessor);
     bind(TYPES.HiddenVNodePostprocessor).toService(LocationPostprocessor);
+
+    configureCommand({ bind, isBound }, DrawFeedbackPositionedEdgeCommand);
+    configureCommand({ bind, isBound }, RemoveFeedbackPositionedEdgeCommand);
+
+    configureCommand({ bind, isBound }, DrawVerticalShiftCommand);
+    configureCommand({ bind, isBound }, RemoveVerticalShiftCommand);
+    configureCommand({ bind, isBound }, DrawHorizontalShiftCommand);
+    configureCommand({ bind, isBound }, RemoveHorizontalShiftCommand);
 });

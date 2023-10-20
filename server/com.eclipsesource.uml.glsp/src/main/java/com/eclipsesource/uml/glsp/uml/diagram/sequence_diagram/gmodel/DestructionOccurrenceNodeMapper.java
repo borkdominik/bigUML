@@ -40,12 +40,9 @@ public class DestructionOccurrenceNodeMapper extends BaseGNodeMapper<Destruction
    protected void applyShapeNotation(final DestructionOccurrenceSpecification source, final GNodeBuilder builder) {
       modelState.getIndex().getNotation(source, Shape.class).ifPresent(shape -> {
          if (shape.getPosition() != null) {
-            // reset x position to 0 and put deletion at end of lifeline TODO: change interaction so lifeline is cut off
-            modelState.getIndex().getNotation(source.getCovered(), Shape.class).ifPresent(parentshape -> {
-               if (parentshape.getSize() != null) {
-                  builder.position(GraphUtil.point(0, parentshape.getSize().getHeight() - 60));
-               }
-            });
+            if (source.getCovered() != null) {
+               builder.position(GraphUtil.point(0, shape.getPosition().getY()));
+            }
          }
          if (shape.getSize() != null) {
             var size = GraphUtil.copy(shape.getSize());

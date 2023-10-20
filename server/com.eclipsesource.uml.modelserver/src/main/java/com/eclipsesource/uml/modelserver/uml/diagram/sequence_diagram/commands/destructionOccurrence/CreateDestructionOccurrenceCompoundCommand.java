@@ -22,26 +22,19 @@ import com.eclipsesource.uml.modelserver.shared.notation.commands.AddShapeNotati
 public final class CreateDestructionOccurrenceCompoundCommand extends CompoundCommand {
 
    CreateDestructionOccurrenceSemanticCommand command;
-   int size = 10;
+   double size = 10;
+   double verticalOffset = -44 - size / 2;
 
    public CreateDestructionOccurrenceCompoundCommand(final ModelContext context, final Lifeline parent,
       final GPoint position) {
 
       command = new CreateDestructionOccurrenceSemanticCommand(context, parent);
 
-      // TODO: implement in higher level, this only workaround
-      var verticalOffset = 40;
-
       this.append(command);
       this.append(
          new AddShapeNotationCommand(context, command::getSemanticElement,
             GraphUtil.point(0, position.getY() + verticalOffset),
             GraphUtil.dimension(size, size)));
-
-      // Alternative: just trigger the resizing of the lifeline and it will resize to fit the last element
-      // var modifyLifeline = new UmlChangeBoundsNotationCommand(context,
-      // parent, null, Optional.ofNullable(GraphUtil.dimension(0, position.getY())));
-      // this.append(modifyLifeline);
    }
 
    public DestructionOccurrenceSpecification getSemanticElement() { return command.getSemanticElement(); }

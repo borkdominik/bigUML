@@ -66,9 +66,17 @@ public class LifelineNodeMapper extends BaseGNodeMapper<Lifeline, GNode> impleme
          }
          if (shape.getSize() != null) {
             GDimension size = GraphUtil.copy(shape.getSize());
-            builder.size(size);
-            builder.layoutOptions(Map.of(
-               GLayoutOptions.KEY_PREF_HEIGHT, size.getHeight(), GLayoutOptions.KEY_PADDING_TOP, 0));
+
+            if (isDestructed(element)) {
+               builder.size(size.getWidth(), 0);
+               builder.layoutOptions(Map.of(
+                  GLayoutOptions.KEY_PREF_HEIGHT, 0, GLayoutOptions.KEY_PADDING_TOP, 0));
+            } else {
+               builder.size(size);
+               builder.layoutOptions(Map.of(
+                  GLayoutOptions.KEY_PREF_HEIGHT, size.getHeight(), GLayoutOptions.KEY_PADDING_TOP, 0));
+            }
+
          }
       });
    }

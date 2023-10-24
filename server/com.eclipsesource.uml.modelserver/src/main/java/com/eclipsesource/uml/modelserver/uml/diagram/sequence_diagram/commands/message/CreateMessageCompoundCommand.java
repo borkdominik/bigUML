@@ -33,23 +33,21 @@ public final class CreateMessageCompoundCommand extends CompoundCommand {
    double verticalFundLostPositioningCorrection = -54;
    double verticalPositionOnLifelineCorrection = -35;
    double verticalPositionCreateLifelineCorrection = -61;
+   double defaultDelay = 80;
 
    public CreateMessageCompoundCommand(final ModelContext context,
       final Lifeline source, final Lifeline target, final GPoint sourcePosition, final GPoint targetPosition,
       final UmlMessageSort sort, final UmlMessageKind kind) {
 
-      var defaultDelay = 80;
-      System.out.println("posY" + sourcePosition.getY());
-
-      var sourcePortCommand = new CreateMessageOccurrenceCompoundCommand(context, source,
+      var createSourceCommand = new CreateMessageOccurrenceCompoundCommand(context, source,
          sourcePosition);
-      this.append(sourcePortCommand);
+      this.append(createSourceCommand);
 
-      var targetPortCommand = new CreateMessageOccurrenceCompoundCommand(context, target,
+      var createTargetCommand = new CreateMessageOccurrenceCompoundCommand(context, target,
          targetPosition);
 
-      var command = new CreateMessageSemanticCommand(context, sourcePortCommand::getSemanticElement,
-         targetPortCommand::getSemanticElement, sort, kind);
+      var command = new CreateMessageSemanticCommand(context, createSourceCommand::getSemanticElement,
+         createTargetCommand::getSemanticElement, sort, kind);
 
       switch (sort) {
          case CREATE:
@@ -59,7 +57,7 @@ public final class CreateMessageCompoundCommand extends CompoundCommand {
 
             var targetCreatePortCommand = new CreateMessageOccurrenceCompoundCommand(context, target, sort);
 
-            command = new CreateMessageSemanticCommand(context, sourcePortCommand::getSemanticElement,
+            command = new CreateMessageSemanticCommand(context, createSourceCommand::getSemanticElement,
                targetCreatePortCommand::getSemanticElement, sort, kind);
             this.append(moveLifelineCommand);
             this.append(targetCreatePortCommand);
@@ -68,12 +66,12 @@ public final class CreateMessageCompoundCommand extends CompoundCommand {
          case DELETE:
             var targetDestroyPortCommand = new CreateDestructionOccurrenceCompoundCommand(context, target,
                targetPosition);
-            command = new CreateMessageSemanticCommand(context, sourcePortCommand::getSemanticElement,
+            command = new CreateMessageSemanticCommand(context, createSourceCommand::getSemanticElement,
                targetDestroyPortCommand::getSemanticElement, sort, kind);
             this.append(targetDestroyPortCommand);
             break;
          default:
-            this.append(targetPortCommand);
+            this.append(createTargetCommand);
             break;
       }
 
@@ -91,7 +89,7 @@ public final class CreateMessageCompoundCommand extends CompoundCommand {
 
             var executionSpecificationCommand = new CreateBehaviorExecutionCompoundCommand(context, target,
                targetPosition,
-               targetPortCommand::getSemanticElement, replySourcePortCommand::getSemanticElement);
+               createTargetCommand::getSemanticElement, replySourcePortCommand::getSemanticElement);
             this.append(replySourcePortCommand);
             this.append(replyTargetPortCommand);
             this.append(replyCommand);

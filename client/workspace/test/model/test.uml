@@ -1,2 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_vPcJgW6LEe6tFOiUcKQ2DQ" name="test"/>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_vPcJgW6LEe6tFOiUcKQ2DQ" name="test">
+  <packagedElement xmi:type="uml:Interaction" xmi:id="_oZkvkXGZEe6_PuwhiBRCIA" name="NewInteraction1">
+    <lifeline xmi:id="_ouhE0HGZEe6_PuwhiBRCIA" name="Lifeline1" coveredBy="_rGKRoHGZEe6_PuwhiBRCIA _5i19oHGZEe6_PuwhiBRCIA _NwQKwHGdEe6_PuwhiBRCIA"/>
+    <lifeline xmi:id="_qYR38HGZEe6_PuwhiBRCIA" name="NewLifeline1" coveredBy="_NwR_8HGdEe6_PuwhiBRCIA _VPgKkHGdEe6_PuwhiBRCIA"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_rGKRoHGZEe6_PuwhiBRCIA" name="foundReceiveEvent" covered="_ouhE0HGZEe6_PuwhiBRCIA" message="_rGKRoXGZEe6_PuwhiBRCIA"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_5i19oHGZEe6_PuwhiBRCIA" name="lostSendEvent" covered="_ouhE0HGZEe6_PuwhiBRCIA" message="_5i19oXGZEe6_PuwhiBRCIA"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_NwQKwHGdEe6_PuwhiBRCIA" name="createSendEvent" covered="_ouhE0HGZEe6_PuwhiBRCIA" message="_NwR_8XGdEe6_PuwhiBRCIA"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_NwR_8HGdEe6_PuwhiBRCIA" name="createReceiveEvent" covered="_qYR38HGZEe6_PuwhiBRCIA" message="_NwR_8XGdEe6_PuwhiBRCIA"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_VPgKkHGdEe6_PuwhiBRCIA" name="NewMessage1ReceiveEvent" covered="_qYR38HGZEe6_PuwhiBRCIA" message="_VPgKkXGdEe6_PuwhiBRCIA"/>
+    <message xmi:id="_rGKRoXGZEe6_PuwhiBRCIA" name="found" messageSort="asynchCall" receiveEvent="_rGKRoHGZEe6_PuwhiBRCIA"/>
+    <message xmi:id="_5i19oXGZEe6_PuwhiBRCIA" name="lost" messageSort="asynchCall" sendEvent="_5i19oHGZEe6_PuwhiBRCIA"/>
+    <message xmi:id="_NwR_8XGdEe6_PuwhiBRCIA" name="create" messageSort="createMessage" receiveEvent="_NwR_8HGdEe6_PuwhiBRCIA" sendEvent="_NwQKwHGdEe6_PuwhiBRCIA"/>
+    <message xmi:id="_VPgKkXGdEe6_PuwhiBRCIA" name="NewMessage1" messageSort="asynchCall" receiveEvent="_VPgKkHGdEe6_PuwhiBRCIA"/>
+  </packagedElement>
+</uml:Model>

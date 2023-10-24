@@ -25,6 +25,6 @@ export class LifelineElement extends NamedElement {
     }
 
     headerHeight(): number {
-        return 38;
+        return 40;
     }
 }

@@ -76,8 +76,8 @@ export class UmlEdgeCreationTool extends EdgeCreationTool {
 
 @injectable()
 export class UmlEdgeCreationToolMouseListener extends EdgeCreationToolMouseListener {
-    protected sourceLocation?: Point;
-    protected targetLocation?: Point;
+    protected sourcePosition?: Point;
+    protected targetPosition?: Point;
 
     constructor(protected override triggerAction: TriggerEdgeCreationAction, protected override tool: UmlEdgeCreationTool) {
         super(triggerAction, tool);
@@ -88,8 +88,8 @@ export class UmlEdgeCreationToolMouseListener extends EdgeCreationToolMouseListe
     protected override reinitialize(): void {
         this.source = undefined;
         this.target = undefined;
-        this.sourceLocation = undefined;
-        this.targetLocation = undefined;
+        this.sourcePosition = undefined;
+        this.targetPosition = undefined;
         this.currentTarget = undefined;
         this.allowedTarget = false;
         this.tool.dispatchFeedback([RemoveFeedbackPositionedEdgeAction.create()]);
@@ -102,13 +102,13 @@ export class UmlEdgeCreationToolMouseListener extends EdgeCreationToolMouseListe
                 if (this.currentTarget && this.allowedTarget) {
                     const sourcePoint = getAbsolutePosition(_element, event);
                     this.source = this.currentTarget.id;
-                    this.sourceLocation = sourcePoint;
+                    this.sourcePosition = sourcePoint;
                     if (_element.features?.has(sequence) || findParentByFeature(_element, isSequence) !== undefined) {
                         this.tool.dispatchFeedback([
                             DrawFeedbackPositionedEdgeAction.create({
                                 elementTypeId: this.triggerAction.elementTypeId,
                                 sourceId: this.source,
-                                sourcePosition: this.sourceLocation
+                                sourcePosition: this.sourcePosition
                             })
                         ]);
                     } else {
@@ -121,10 +121,10 @@ export class UmlEdgeCreationToolMouseListener extends EdgeCreationToolMouseListe
                 if (this.currentTarget && this.allowedTarget) {
                     const targetPoint = getAbsolutePosition(_element, event);
                     this.target = this.currentTarget.id;
-                    this.targetLocation = targetPoint;
+                    this.targetPosition = targetPoint;
                 }
             }
-            if (this.source && this.target && this.sourceLocation && this.targetLocation) {
+            if (this.source && this.target && this.sourcePosition && this.targetPosition) {
                 if (!event.altKey && this.source !== this.target) {
                     /* Default: horizontal Message*/
                     result.push(
@@ -134,8 +134,8 @@ export class UmlEdgeCreationToolMouseListener extends EdgeCreationToolMouseListe
                             targetElementId: this.target,
                             args: {
                                 ...this.triggerAction.args,
-                                sourceLocation: this.stringify(this.sourceLocation),
-                                targetLocation: this.stringify({ x: this.targetLocation.x, y: this.sourceLocation.y })
+                                sourcePosition: this.stringify(this.sourcePosition),
+                                targetPosition: this.stringify({ x: this.targetPosition.x, y: this.sourcePosition.y })
                             }
                         })
                     );
@@ -148,8 +148,8 @@ export class UmlEdgeCreationToolMouseListener extends EdgeCreationToolMouseListe
                             targetElementId: this.target,
                             args: {
                                 ...this.triggerAction.args,
-                                sourceLocation: this.stringify(this.sourceLocation),
-                                targetLocation: this.stringify(this.targetLocation)
+                                sourcePosition: this.stringify(this.sourcePosition),
+                                targetPosition: this.stringify(this.targetPosition)
                             }
                         })
                     );

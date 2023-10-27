@@ -44,21 +44,49 @@ public class BehaviorExecutionNodeMapper extends BaseGNodeMapper<BehaviorExecuti
    public void applyShapeNotation(final BehaviorExecutionSpecification element, final GNodeBuilder builder) {
 
       double fixedWidth = 10;
+      double occurrenceHeight = 10;
 
       modelState.getIndex().getNotation(element, Shape.class).ifPresent(shape -> {
          if (shape.getPosition() != null) {
+
+            var finish = modelState.getIndex().getNotation(element.getStart(), Shape.class);
+
             var centeredPosition = GraphUtil.copy(shape.getPosition());
             centeredPosition.setX(0);
+
+            modelState.getIndex().getNotation(element.getStart(), Shape.class).ifPresent(shapeStart -> {
+               modelState.getIndex().getNotation(element.getFinish(), Shape.class).ifPresent(shapeFinish -> {
+                  centeredPosition.setY(Math.min(shapeStart.getPosition().getY(), shapeFinish.getPosition().getY()));
+               });
+            });
+
             builder.position(centeredPosition);
             // builder.addLayoutOptions(new GLayoutOptions()
             // .hAlign(GConstants.HAlign.CENTER));
          }
          if (shape.getSize() != null) {
             GDimension size = GraphUtil.copy(shape.getSize());
-            builder.size(fixedWidth, size.getHeight());
-            builder.addLayoutOptions(Map.of(
-               GLayoutOptions.KEY_PREF_WIDTH, fixedWidth,
-               GLayoutOptions.KEY_PREF_HEIGHT, size.getHeight()));
+
+            modelState.getIndex().getNotation(element.getFinish(), Shape.class).ifPresent(shapeFinish -> {
+               modelState.getIndex().getNotation(element.getStart(), Shape.class).ifPresent(shapeStart -> {
+
+                  double height = Math.abs(shapeStart.getPosition().getY() - shapeFinish.getPosition().getY())
+                     + occurrenceHeight;
+
+                  builder.size(fixedWidth, height);
+                  builder.addLayoutOptions(Map.of(
+                     GLayoutOptions.KEY_PREF_WIDTH, fixedWidth,
+                     GLayoutOptions.KEY_PREF_HEIGHT, height));
+                  return;
+               });
+            });
+
+            if (element.getFinish() == null || element.getStart() == null) {
+               builder.size(fixedWidth, size.getHeight());
+               builder.addLayoutOptions(Map.of(
+                  GLayoutOptions.KEY_PREF_WIDTH, fixedWidth,
+                  GLayoutOptions.KEY_PREF_HEIGHT, size.getHeight()));
+            }
          }
       });
    }

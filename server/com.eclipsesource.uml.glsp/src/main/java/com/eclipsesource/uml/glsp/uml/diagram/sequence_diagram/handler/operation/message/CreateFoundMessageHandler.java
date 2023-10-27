@@ -38,11 +38,11 @@ public class CreateFoundMessageHandler
    protected CCommand createCommand(final CreateEdgeOperation operation, final Interaction source,
       final Lifeline target) {
 
-      var sourceLocation = operation.getArgs().get("sourceLocation").split(",");
+      var sourceLocation = operation.getArgs().get("sourcePosition").split(",");
       double sourceX = Double.parseDouble(sourceLocation[0]);
       double sourceY = Double.parseDouble(sourceLocation[1]);
 
-      var targetLocation = operation.getArgs().get("targetLocation").split(",");
+      var targetLocation = operation.getArgs().get("targetPosition").split(",");
       double targetX = Double.parseDouble(targetLocation[0]);
       double targetY = Double.parseDouble(targetLocation[1]);
 

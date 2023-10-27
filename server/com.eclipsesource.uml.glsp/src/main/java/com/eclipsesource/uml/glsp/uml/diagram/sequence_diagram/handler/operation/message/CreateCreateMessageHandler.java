@@ -41,13 +41,13 @@ public class CreateCreateMessageHandler
    @Override
    protected CCommand createCommand(final CreateEdgeOperation operation, final Lifeline source, final Lifeline target) {
 
-      var sourceLocation = operation.getArgs().get("sourceLocation").split(",");
-      double sourceX = Double.parseDouble(sourceLocation[0]);
-      double sourceY = Double.parseDouble(sourceLocation[1]);
+      var sourcePosition = operation.getArgs().get("sourcePosition").split(",");
+      double sourceX = Double.parseDouble(sourcePosition[0]);
+      double sourceY = Double.parseDouble(sourcePosition[1]);
 
-      var targetLocation = operation.getArgs().get("targetLocation").split(",");
-      double targetX = Double.parseDouble(targetLocation[0]);
-      double targetY = Double.parseDouble(targetLocation[1]); // could also set to 0 here
+      var targetPosition = operation.getArgs().get("targetPosition").split(",");
+      double targetX = Double.parseDouble(targetPosition[0]);
+      double targetY = Double.parseDouble(targetPosition[1]); // could also set to 0 here
 
       var keyword = UmlMessageSort.CREATE;
 
@@ -88,10 +88,10 @@ public class CreateCreateMessageHandler
       }
    }
 
-   private void validateCreationIsFirst(final Lifeline target, final GPoint relativeTargetLocation) {
+   private void validateCreationIsFirst(final Lifeline target, final GPoint relativeTargetPosition) {
       for (InteractionFragment fragment : target.getCoveredBys()) {
          modelState.getIndex().getNotation(fragment, Shape.class).ifPresent(shape -> {
-            if (shape.getPosition().getY() < relativeTargetLocation.getY()) {
+            if (shape.getPosition().getY() < relativeTargetPosition.getY()) {
                throw new GLSPServerException(
                   "Invalid modelling: The create message has to be the first message!");
             }

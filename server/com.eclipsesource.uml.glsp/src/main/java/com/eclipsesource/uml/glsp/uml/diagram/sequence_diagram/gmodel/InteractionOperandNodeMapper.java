@@ -28,6 +28,7 @@ import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.glsp.server.emf.model.notation.Shape;
 import org.eclipse.uml2.uml.CombinedFragment;
 import org.eclipse.uml2.uml.InteractionOperand;
+import org.eclipse.uml2.uml.InteractionUse;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
@@ -89,7 +90,17 @@ public class InteractionOperandNodeMapper extends BaseGNodeMapper<InteractionOpe
 
    protected GCompartment createCompartment(final InteractionOperand source) {
 
+      var combinedFragmentElements = source.getFragments().stream()
+         .filter(f -> f instanceof CombinedFragment)
+         .collect(Collectors.toList());
+
+      var interactinoUseElements = source.getFragments().stream()
+         .filter(f -> f instanceof InteractionUse)
+         .collect(Collectors.toList());
+
       var children = new LinkedList<EObject>();
+      children.addAll(combinedFragmentElements);
+      children.addAll(interactinoUseElements);
 
       return new GCompartmentBuilder(DefaultTypes.COMPARTMENT)
          .id(idCountGenerator.getOrCreateId(source))

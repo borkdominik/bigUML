@@ -76,7 +76,7 @@ public class SequenceToolPaletteConfiguration implements ToolPaletteConfiguratio
          createCombinedFragment,
          createInteractionOperand,
          // createOccurence, // for debugging
-         createExecution,
+         // createExecution,
          createInteractionUse);
       PaletteItemUtil.sortAsListed(nodes);
       return PaletteItem.createPaletteGroup("uml.classifier", "Nodes", nodes, "versions");

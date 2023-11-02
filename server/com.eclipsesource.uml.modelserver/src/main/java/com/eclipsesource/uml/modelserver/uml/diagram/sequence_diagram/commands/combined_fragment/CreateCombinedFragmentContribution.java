@@ -17,7 +17,7 @@ import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.emfcloud.modelserver.common.codecs.DecodingException;
 import org.eclipse.emfcloud.modelserver.edit.command.BasicCommandContribution;
 import org.eclipse.glsp.graph.GPoint;
-import org.eclipse.uml2.uml.Interaction;
+import org.eclipse.uml2.uml.InteractionFragment;
 
 import com.eclipsesource.uml.modelserver.core.commands.noop.NoopCommand;
 import com.eclipsesource.uml.modelserver.shared.codec.ContributionDecoder;
@@ -27,7 +27,7 @@ public class CreateCombinedFragmentContribution extends BasicCommandContribution
 
    public static final String TYPE = "sequence:add_combinedFragment";
 
-   public static CCommand create(final Interaction parent, final GPoint position) {
+   public static CCommand create(final InteractionFragment parent, final GPoint position) {
       return new ContributionEncoder().type(TYPE).parent(parent).position(position).ccommand();
    }
 
@@ -37,8 +37,8 @@ public class CreateCombinedFragmentContribution extends BasicCommandContribution
       var decoder = new ContributionDecoder(modelUri, domain, command);
 
       var context = decoder.context();
-      var parent = decoder.parent(Interaction.class);
       var position = decoder.position().get();
+      var parent = decoder.parent(InteractionFragment.class);
 
       return parent
          .<Command> map(p -> new CreateCombinedFragmentCompoundCommand(context, p, position))

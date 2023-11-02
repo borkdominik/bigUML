@@ -12,6 +12,8 @@ package com.eclipsesource.uml.modelserver.uml.diagram.sequence_diagram.commands.
 
 import org.eclipse.uml2.uml.CombinedFragment;
 import org.eclipse.uml2.uml.Interaction;
+import org.eclipse.uml2.uml.InteractionFragment;
+import org.eclipse.uml2.uml.InteractionOperand;
 import org.eclipse.uml2.uml.InteractionOperatorKind;
 import org.eclipse.uml2.uml.UMLPackage;
 
@@ -20,19 +22,32 @@ import com.eclipsesource.uml.modelserver.shared.semantic.BaseCreateSemanticChild
 import com.eclipsesource.uml.modelserver.uml.generator.ListNameGenerator;
 
 public final class CreateCombinedFragmentSemanticCommand
-   extends BaseCreateSemanticChildCommand<Interaction, CombinedFragment> {
+   extends BaseCreateSemanticChildCommand<InteractionFragment, CombinedFragment> {
 
-   public CreateCombinedFragmentSemanticCommand(final ModelContext context, final Interaction parent) {
+   public CreateCombinedFragmentSemanticCommand(final ModelContext context, final InteractionFragment parent) {
       super(context, parent);
    }
 
    @Override
-   protected CombinedFragment createSemanticElement(final Interaction parent) {
-      var nameGenerator = new ListNameGenerator(CombinedFragment.class,
-         parent.getFragments());
+   protected CombinedFragment createSemanticElement(final InteractionFragment parent) {
 
-      var combinedFragment = (CombinedFragment) parent.createFragment(nameGenerator.newName(),
-         UMLPackage.Literals.COMBINED_FRAGMENT);
+      CombinedFragment combinedFragment;
+
+      if (parent instanceof Interaction) {
+
+         var nameGenerator = new ListNameGenerator(CombinedFragment.class,
+            ((Interaction) parent).getFragments());
+
+         combinedFragment = (CombinedFragment) ((Interaction) parent).createFragment(nameGenerator.newName(),
+            UMLPackage.Literals.COMBINED_FRAGMENT);
+      } else {
+         // parent instanceof InteractionOperand
+         var nameGenerator = new ListNameGenerator(CombinedFragment.class,
+            ((InteractionOperand) parent).getFragments());
+
+         combinedFragment = (CombinedFragment) ((InteractionOperand) parent).createFragment(nameGenerator.newName(),
+            UMLPackage.Literals.COMBINED_FRAGMENT);
+      }
 
       // creating alt, since most popular
       combinedFragment.setInteractionOperator(InteractionOperatorKind.ALT_LITERAL);

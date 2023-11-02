@@ -13,7 +13,7 @@ package com.eclipsesource.uml.modelserver.uml.diagram.sequence_diagram.commands.
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.util.GraphUtil;
-import org.eclipse.uml2.uml.Interaction;
+import org.eclipse.uml2.uml.InteractionFragment;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.commands.AddShapeNotationCommand;
@@ -21,7 +21,7 @@ import com.eclipsesource.uml.modelserver.uml.diagram.sequence_diagram.commands.i
 
 public final class CreateCombinedFragmentCompoundCommand extends CompoundCommand {
 
-   public CreateCombinedFragmentCompoundCommand(final ModelContext context, final Interaction parent,
+   public CreateCombinedFragmentCompoundCommand(final ModelContext context, final InteractionFragment parent,
       final GPoint position) {
       var command = new CreateCombinedFragmentSemanticCommand(context, parent);
 

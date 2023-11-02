@@ -50,9 +50,11 @@ public class UmlSequence_InteractionOperand {
 
       @Override
       public Set<ShapeTypeHint> getShapeTypeHints() {
+         InteractionOperand test;
          return Set.of(
             new ShapeTypeHint(typeId(), true, true, true, false,
-               List.of()));
+               List.of(UmlSequence_CombinedFragment.typeId(),
+                  UmlSequence_InteractionUse.typeId())));
       }
    }
 

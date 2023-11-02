@@ -13,7 +13,7 @@ package com.eclipsesource.uml.glsp.uml.diagram.sequence_diagram.handler.operatio
 import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
-import org.eclipse.uml2.uml.Interaction;
+import org.eclipse.uml2.uml.InteractionFragment;
 
 import com.eclipsesource.uml.glsp.uml.diagram.sequence_diagram.diagram.UmlSequence_CombinedFragment;
 import com.eclipsesource.uml.glsp.uml.handler.operations.create.BaseCreateChildNodeHandler;
@@ -21,16 +21,23 @@ import com.eclipsesource.uml.glsp.uml.handler.operations.create.CreateLocationAw
 import com.eclipsesource.uml.modelserver.uml.diagram.sequence_diagram.commands.combined_fragment.CreateCombinedFragmentContribution;
 
 public class CreateCombinedFragmentHandler
-   extends BaseCreateChildNodeHandler<Interaction> implements CreateLocationAwareNodeHandler {
+   extends BaseCreateChildNodeHandler<InteractionFragment> implements CreateLocationAwareNodeHandler {
 
    public CreateCombinedFragmentHandler() {
       super(UmlSequence_CombinedFragment.typeId());
    }
 
    @Override
-   protected CCommand createCommand(final CreateNodeOperation operation, final Interaction parent) {
+   protected CCommand createCommand(final CreateNodeOperation operation, final InteractionFragment parent) {
       return CreateCombinedFragmentContribution.create(
          parent,
          relativeLocationOf(modelState, operation).orElse(GraphUtil.point(0, 0)));
    }
+   //
+   // @Override
+   // protected CCommand createCommand(final CreateNodeOperation operation, final InteractionFragment parent) {
+   // return CreateCombinedFragmentContribution.create(
+   // parent,
+   // relativeLocationOf(modelState, operation).orElse(GraphUtil.point(0, 0)));
+   // }
 }

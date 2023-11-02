@@ -53,7 +53,7 @@ public class UmlSelectionActionHandler extends AbstractEMSActionHandler<SelectAc
       var currentModelIndex = modelState.getIndex();
 
       // TODO: reactivate only with ALT!
-      boolean semanticSelectDisabled = true;
+      boolean semanticSelectDisabled = false;
       if (semanticSelectDisabled) {
          return listOf();
       }

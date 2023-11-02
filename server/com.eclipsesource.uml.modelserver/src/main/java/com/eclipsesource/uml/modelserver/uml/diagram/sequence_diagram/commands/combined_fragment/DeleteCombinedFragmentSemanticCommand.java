@@ -12,19 +12,35 @@ package com.eclipsesource.uml.modelserver.uml.diagram.sequence_diagram.commands.
 
 import org.eclipse.uml2.uml.CombinedFragment;
 import org.eclipse.uml2.uml.Interaction;
+import org.eclipse.uml2.uml.InteractionFragment;
+import org.eclipse.uml2.uml.InteractionOperand;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.semantic.BaseDeleteSemanticChildCommand;
 
 public class DeleteCombinedFragmentSemanticCommand
-   extends BaseDeleteSemanticChildCommand<Interaction, CombinedFragment> {
+   extends BaseDeleteSemanticChildCommand<InteractionFragment, CombinedFragment> {
 
    public DeleteCombinedFragmentSemanticCommand(final ModelContext context, final CombinedFragment semanticElement) {
-      super(context, semanticElement.getEnclosingInteraction(), semanticElement);
+      super(context, getEnclosingInteractionFragment(semanticElement), semanticElement);
    }
 
    @Override
-   protected void deleteSemanticElement(final Interaction parent, final CombinedFragment child) {
-      parent.getFragments().remove(child);
+   protected void deleteSemanticElement(final InteractionFragment parent, final CombinedFragment child) {
+      if (parent instanceof Interaction) {
+         ((Interaction) parent).getFragments().remove(child);
+      } else {
+         ((InteractionOperand) parent).getFragments().remove(child);
+      }
+   }
+
+   protected static InteractionFragment getEnclosingInteractionFragment(final CombinedFragment semanticElement) {
+      InteractionFragment parent;
+      parent = semanticElement.getEnclosingOperand();
+      if (parent == null) {
+         parent = semanticElement.getEnclosingInteraction();
+      }
+      return parent;
+
    }
 }

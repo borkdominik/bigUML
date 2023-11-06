@@ -11,7 +11,7 @@
 import { RectangularNodeView, RenderingContext, SChildElement, ShapeView, svg } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 import { VNode } from 'snabbdom';
-import { LabeledNode } from '../../../graph';
+import { LabeledNode } from '../../../features/graph/index';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const JSX = { createElement: svg };

@@ -8,7 +8,7 @@
  *********************************************************************************/
 import { configureModelElement, SCompartmentView, SLabel, SLabelView } from '@eclipse-glsp/client';
 import { ContainerModule } from 'inversify';
-import { SDivider, SDividerView } from '../graph/base/divider.view';
+import { SDivider, SDividerView } from '../features/graph/views/divider.view';
 import { IconCSS, IconCSSView, InteractableCompartment, SEditableLabel, SEditableLabelView } from '../index';
 import { UmlGModelTypes } from './uml.types';
 

@@ -19,7 +19,7 @@ import {
 } from '@eclipse-glsp/client';
 import { inject, injectable } from 'inversify';
 import { VNode } from 'snabbdom';
-import { SEditableLabel } from '../../../graph/index';
+import { SEditableLabel } from '../../../features/graph/index';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const JSX = { createElement: svg };

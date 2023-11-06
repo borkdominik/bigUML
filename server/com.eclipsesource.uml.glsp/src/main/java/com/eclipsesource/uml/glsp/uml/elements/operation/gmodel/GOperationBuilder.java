@@ -13,7 +13,6 @@ package com.eclipsesource.uml.glsp.uml.elements.operation.gmodel;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.Operation;
 import org.eclipse.uml2.uml.ParameterDirectionKind;
@@ -22,6 +21,7 @@ import com.eclipsesource.uml.glsp.uml.elements.named_element.GNamedElementBuilde
 import com.eclipsesource.uml.glsp.uml.elements.parameter.utils.ParameterPropertyPaletteUtils;
 import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGCompartmentBuilder;
 import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGLabelBuilder;
+import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGLayoutOptions;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdContextGeneratorProvider;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdGeneratorProvider;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GModelMapHandlerProvider;
@@ -38,7 +38,8 @@ public class GOperationBuilder<TSource extends Operation, TProvider extends GSuf
    @Override
    protected void prepareLayout() {
       this.layout(GConstants.Layout.HBOX)
-         .layoutOptions(new GLayoutOptions()
+         .layoutOptions(new UmlGLayoutOptions()
+            .clearPadding()
             .hGap(3)
             .resizeContainer(true));
    }
@@ -52,8 +53,7 @@ public class GOperationBuilder<TSource extends Operation, TProvider extends GSuf
 
    protected void showHeader() {
       var header = new UmlGCompartmentBuilder<>(source, provider)
-         .withHBoxLayout()
-         .clearPadding();
+         .withHBoxLayout();
 
       header.add(buildVisibility(source, List.of()));
       header.add(buildName(source, List.of()));
@@ -63,8 +63,7 @@ public class GOperationBuilder<TSource extends Operation, TProvider extends GSuf
 
    protected void showParameters() {
       var builder = new UmlGCompartmentBuilder<>(source, provider)
-         .withHBoxLayout()
-         .clearPadding();
+         .withHBoxLayout();
 
       var parameters = source.getOwnedParameters().stream()
          .filter(p -> p.getDirection() != ParameterDirectionKind.RETURN_LITERAL).collect(Collectors.toList());
@@ -78,7 +77,6 @@ public class GOperationBuilder<TSource extends Operation, TProvider extends GSuf
 
          var parameterBuilder = new UmlGCompartmentBuilder<>(source, provider)
             .withHBoxLayout()
-            .clearPadding()
             .add(new UmlGLabelBuilder<>(source, provider)
                .text(ParameterPropertyPaletteUtils.asText(parameters.get(i)))
                .build());

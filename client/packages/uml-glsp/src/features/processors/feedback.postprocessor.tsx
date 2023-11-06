@@ -10,7 +10,7 @@ import { IVNodePostprocessor, SModelElement, svg } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 import { VNode } from 'snabbdom';
 
-import { InteractableCompartment } from '../graph/base/compartment';
+import { InteractableCompartment } from '../graph/views/compartment';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const JSX = { createElement: svg };
@@ -21,7 +21,7 @@ const JSX = { createElement: svg };
 @injectable()
 export class IconLabelCompartmentSelectionFeedback implements IVNodePostprocessor {
     decorate(vnode: VNode, element: SModelElement): VNode {
-        if (element instanceof InteractableCompartment && (element.hoverFeedback || element.selected)) {
+        if (element instanceof InteractableCompartment && element.hoverFeedback) {
             const vPadding = -1;
             const hPadding = 3;
 
@@ -33,7 +33,6 @@ export class IconLabelCompartmentSelectionFeedback implements IVNodePostprocesso
                     height={element.bounds.height + vPadding}
                     class-selection-feedback={true}
                     class-hover={element.hoverFeedback}
-                    class-selected={element.selected}
                 />
             );
             if (!vnode.children) {

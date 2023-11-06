@@ -19,7 +19,7 @@ import {
 import { Args, DefaultTypes } from '@eclipse-glsp/protocol';
 import { injectable } from 'inversify';
 import { VNode } from 'snabbdom';
-import { LabeledNode } from '../../../graph/base/label.view';
+import { LabeledNode } from '../../../features/graph/views/label.view';
 
 export class NamedElement extends LabeledNode implements SArgumentable {
     static override readonly DEFAULT_FEATURES = [...LabeledNode.DEFAULT_FEATURES, alignFeature, layoutableChildFeature];

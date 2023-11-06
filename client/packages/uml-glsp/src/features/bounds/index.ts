@@ -6,7 +6,5 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-export * from './base/compartment';
-export * from './base/icon.view';
-export * from './base/label.view';
-export * from './uml-graph-projection.view';
+export * from './layout/uml-freeform.layout';
+export * from './layout/uml-layouter';

@@ -28,6 +28,7 @@ import {
     GridSnapper,
     LogLevel,
     overrideViewerOptions,
+    SCompartmentView,
     toolFeedbackModule,
     toolsModule,
     TYPES
@@ -36,10 +37,14 @@ import toolPaletteModule from '@eclipse-glsp/client/lib/features/tool-palette/di
 import { DefaultTypes } from '@eclipse-glsp/protocol';
 import { Container, ContainerModule } from 'inversify';
 import { UMLActionDispatcher } from './base/action-dispatcher';
-import { FixedLogger } from './common/fixed-logger';
+import { FixedLogger } from './base/fixed-logger';
 import { UML_TYPES } from './di.types';
+import { UmlLayouterExt } from './features/bounds/index';
+import { UmlFreeFormLayouter } from './features/bounds/layout/uml-freeform.layout';
 import { CustomCopyPasteHandler, LastContainableElementTracker } from './features/copy-paste/copy-paste';
 import { EditLabelUIAutocomplete } from './features/edit-label';
+import { SVGIdCreatorService, UmlCompartment } from './features/graph/index';
+import { UmlGraphProjectionView } from './features/graph/views/uml-graph-projection.view';
 import { initializationModule, IOnceModelInitialized } from './features/initialization/di.config';
 import { umlOutlineModule } from './features/outline/di.config';
 import propertyPaletteModule from './features/property-palette/di.config';
@@ -47,9 +52,6 @@ import { themeModule } from './features/theme/di.config';
 import { umlToolFeedbackModule } from './features/tool-feedback/di.config';
 import umlToolPaletteModule from './features/tool-palette/di.config';
 import { umlToolsModule } from './features/tools/di.config';
-import { UmlFreeFormLayouter } from './graph/layout/uml-freeform.layout';
-import { SVGIdCreatorService } from './graph/svg-id-creator.service';
-import { UmlGraphProjectionView } from './graph/uml-graph-projection.view';
 import { umlDiagramModules } from './uml/index';
 
 export default function createContainer(widgetId: string): Container {
@@ -74,8 +76,12 @@ export default function createContainer(widgetId: string): Container {
 
         // Configuration
         configureLayout({ bind, isBound }, UmlFreeFormLayouter.KIND, UmlFreeFormLayouter);
+
+        rebind(TYPES.Layouter).to(UmlLayouterExt);
+
         configureDefaultModelElements(context);
         configureModelElement(context, DefaultTypes.GRAPH, GLSPGraph, UmlGraphProjectionView);
+        configureModelElement(context, DefaultTypes.COMPARTMENT, UmlCompartment, SCompartmentView);
 
         configureViewerOptions(context, {
             needsClientLayout: true,

@@ -11,7 +11,7 @@ import { UmlDiagramType } from '@borkdominik-biguml/uml-common';
 import { configureModelElement, GEdgeView, SEdge } from '@eclipse-glsp/client';
 import { DefaultTypes } from '@eclipse-glsp/protocol';
 import { interfaces } from 'inversify';
-import { SEditableLabel } from '../../../graph/index';
+import { SEditableLabel } from '../../../features/graph/index';
 import { QualifiedUtil } from '../../qualified.utils';
 import { MessageArrowLabelView } from './message-arrow-label.view';
 

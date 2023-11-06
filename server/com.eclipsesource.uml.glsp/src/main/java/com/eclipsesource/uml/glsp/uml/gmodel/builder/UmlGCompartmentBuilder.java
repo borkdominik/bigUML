@@ -10,6 +10,9 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.gmodel.builder;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.graph.DefaultTypes;
 import org.eclipse.glsp.graph.GCompartment;
@@ -45,16 +48,21 @@ public class UmlGCompartmentBuilder<TProvider extends GIdGeneratorProvider & GId
    }
 
    public TBuilder withHeaderLayout() {
+      var options = new UmlGLayoutOptions()
+         .defaultPadding()
+         .hAlign(GConstants.HAlign.CENTER);
+      options.put("hGrab", true);
+
       this.type(DefaultTypes.COMPARTMENT_HEADER)
          .layout(GConstants.Layout.VBOX)
-         .layoutOptions(new GLayoutOptions().hAlign(GConstants.HAlign.CENTER));
+         .layoutOptions(options);
       return self();
    }
 
    public TBuilder withVBoxLayout() {
-      var options = new GLayoutOptions()
+      var options = new UmlGLayoutOptions()
+         .hGrab(true)
          .hAlign(GConstants.HAlign.LEFT);
-      options.put("hGrab", true);
 
       this.type(DefaultTypes.COMPARTMENT)
          .layout(GConstants.Layout.VBOX)
@@ -64,7 +72,7 @@ public class UmlGCompartmentBuilder<TProvider extends GIdGeneratorProvider & GId
    }
 
    public TBuilder withHBoxLayout() {
-      var options = new GLayoutOptions()
+      var options = new UmlGLayoutOptions()
          .hAlign(GConstants.HAlign.LEFT);
 
       this.type(DefaultTypes.COMPARTMENT)
@@ -85,19 +93,11 @@ public class UmlGCompartmentBuilder<TProvider extends GIdGeneratorProvider & GId
       return self();
    }
 
-   public TBuilder appendLayoutOptions(final GLayoutOptions options) {
-      this.layoutOptions.putAll(options);
-
-      return self();
-   }
-
-   public TBuilder clearPadding() {
-      this.layoutOptions.putAll(new GLayoutOptions()
-         .paddingTop(0.0)
-         .paddingRight(0.0)
-         .paddingBottom(0.0)
-         .paddingLeft(0.0));
-
+   public TBuilder addLayoutOptions(final Map<String, Object> layoutOptions) {
+      if (this.layoutOptions == null) {
+         this.layoutOptions = new LinkedHashMap<>();
+      }
+      this.layoutOptions.putAll(layoutOptions);
       return self();
    }
 

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_0_15UW50Ee6-TcONhyL7iw" name="test">
+  <packagedElement xmi:type="uml:Class" xmi:id="_1r01kG50Ee6-TcONhyL7iw" name="NewClass1">
+    <ownedAttribute xmi:id="_3capcG50Ee6-TcONhyL7iw" name="NewProperty1">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_3cb3kG50Ee6-TcONhyL7iw" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_3cb3kW50Ee6-TcONhyL7iw" value="1"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_BANSUHy3Ee6GAdiIif20Wg" name="NewProperty2">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_BANSUXy3Ee6GAdiIif20Wg" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_BANSUny3Ee6GAdiIif20Wg" value="1"/>
+    </ownedAttribute>
+    <ownedOperation xmi:id="_aqyw0G53Ee6-TcONhyL7iw" name="NewOperation1">
+      <ownedParameter xmi:id="_j6E-wHy4Ee6GAdiIif20Wg" name="NewParameter1"/>
+      <ownedParameter xmi:id="_kQG5IHy4Ee6GAdiIif20Wg" name="NewParameter2" direction="return"/>
+    </ownedOperation>
+    <ownedOperation xmi:id="_g1elUHy4Ee6GAdiIif20Wg" name="NewOperation2"/>
+  </packagedElement>
+</uml:Model>

@@ -15,7 +15,6 @@ import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.GraphFactory;
 import org.eclipse.glsp.graph.builder.AbstractGNodeBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
-import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.util.GConstants;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
@@ -38,12 +37,11 @@ public class UmlGDividerBuilder<TProvider extends GIdContextGeneratorProvider & 
    }
 
    protected void prepare() {
-      var nodeOptions = new GLayoutOptions();
-      nodeOptions.put("hGrab", true);
+      var options = new UmlGLayoutOptions().hGrab(true);
       this
          .id(provider.idContextGenerator().getOrCreateId(source))
          .layout(GConstants.Layout.HBOX)
-         .layoutOptions(nodeOptions);
+         .layoutOptions(options);
    }
 
    public UmlGDividerBuilder<TProvider> addSubtitle(final String subtitle) {

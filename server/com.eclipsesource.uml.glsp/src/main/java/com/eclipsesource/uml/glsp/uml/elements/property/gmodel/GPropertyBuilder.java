@@ -29,6 +29,7 @@ import com.eclipsesource.uml.glsp.uml.elements.property.gmodel.suffix.PropertyMu
 import com.eclipsesource.uml.glsp.uml.elements.property.gmodel.suffix.PropertyTypeLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGCompartmentBuilder;
 import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGLabelBuilder;
+import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGLayoutOptions;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdContextGeneratorProvider;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdGeneratorProvider;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GModelMapHandlerProvider;
@@ -45,7 +46,8 @@ public class GPropertyBuilder<TSource extends Property, TProvider extends GSuffi
    @Override
    protected void prepareLayout() {
       this.layout(GConstants.Layout.HBOX)
-         .layoutOptions(new GLayoutOptions()
+         .layoutOptions(new UmlGLayoutOptions()
+            .clearPadding()
             .hGap(3)
             .resizeContainer(true));
    }
@@ -59,8 +61,7 @@ public class GPropertyBuilder<TSource extends Property, TProvider extends GSuffi
 
    protected void showHeader() {
       var header = new UmlGCompartmentBuilder<>(source, provider)
-         .withHBoxLayout()
-         .clearPadding();
+         .withHBoxLayout();
 
       header.add(buildVisibility(source, List.of()));
       header.add(buildName(source, List.of()));
@@ -71,8 +72,7 @@ public class GPropertyBuilder<TSource extends Property, TProvider extends GSuffi
    protected void leftSide() {
       var builder = new UmlGCompartmentBuilder<>(source, provider)
          .withHBoxLayout()
-         .clearPadding()
-         .appendLayoutOptions(new GLayoutOptions().hGap(3));
+         .addLayoutOptions(new GLayoutOptions().hGap(3));
 
       builder.add(buildVisibility(source, List.of()));
 
@@ -88,8 +88,7 @@ public class GPropertyBuilder<TSource extends Property, TProvider extends GSuffi
    protected void rightSide() {
       var builder = new UmlGCompartmentBuilder<>(source, provider)
          .withHBoxLayout()
-         .clearPadding()
-         .appendLayoutOptions(new GLayoutOptions().hGap(3));
+         .addLayoutOptions(new GLayoutOptions().hGap(3));
 
       var applied = new ArrayList<GModelElement>();
       applied.add(buildType());
@@ -98,8 +97,7 @@ public class GPropertyBuilder<TSource extends Property, TProvider extends GSuffi
       if (applied.stream().anyMatch(a -> a != null)) {
          var detailsBuilder = new UmlGCompartmentBuilder<>(source, provider)
             .withHBoxLayout()
-            .clearPadding()
-            .appendLayoutOptions(new GLayoutOptions().hGap(3));
+            .addLayoutOptions(new GLayoutOptions().hGap(3));
 
          applied.forEach(a -> {
             if (a != null) {
@@ -109,9 +107,9 @@ public class GPropertyBuilder<TSource extends Property, TProvider extends GSuffi
          builder
             .add(new UmlGLabelBuilder<>(source, provider).text(":").build())
             .add(detailsBuilder.build());
-      }
 
-      add(builder.build());
+         add(builder.build());
+      }
    }
 
    protected GModelElement buildType() {
@@ -137,8 +135,7 @@ public class GPropertyBuilder<TSource extends Property, TProvider extends GSuffi
       if (!multiplicity.equals("1")) {
          var builder = new UmlGCompartmentBuilder<>(source, provider)
             .withHBoxLayout()
-            .clearPadding()
-            .appendLayoutOptions(new GLayoutOptions().hGap(3));
+            .addLayoutOptions(new GLayoutOptions().hGap(3));
 
          builder
             .add(new UmlGLabelBuilder<>(source, provider).text("[").build())

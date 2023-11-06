@@ -21,6 +21,9 @@ import com.eclipsesource.uml.glsp.uml.elements.data_type.gmodel.GDataTypeBuilder
 import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGCompartmentBuilder;
 import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGDividerBuilder;
 import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGLabelBuilder;
+import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGLayoutOptions;
+import com.eclipsesource.uml.glsp.uml.gmodel.constants.UmlGapValues;
+import com.eclipsesource.uml.glsp.uml.gmodel.constants.UmlPaddingValues;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdContextGeneratorProvider;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdGeneratorProvider;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GModelMapHandlerProvider;
@@ -55,15 +58,24 @@ public class GEnumerationBuilder<TSource extends Enumeration, TProvider extends 
    }
 
    protected void showEnumerationLiterals() {
-      var compartment = new UmlGCompartmentBuilder<>(source, provider)
+      var root = new UmlGCompartmentBuilder<>(source, provider)
          .withVBoxLayout();
-      compartment.add(new UmlGDividerBuilder<>(source, provider).build());
 
-      var literalElements = source.getOwnedLiterals().stream()
+      root.add(
+         new UmlGDividerBuilder<>(source, provider).build());
+
+      var elements = new UmlGCompartmentBuilder<>(source, provider)
+         .withVBoxLayout()
+         .addLayoutOptions(new UmlGLayoutOptions()
+            .paddingVertical(UmlPaddingValues.LEVEL_1)
+            .paddingHorizontal(UmlPaddingValues.LEVEL_2)
+            .vGap(UmlGapValues.LEVEL_1));
+
+      elements.addAll(source.getOwnedLiterals().stream()
          .map(e -> provider.gmodelMapHandler().handle(e))
-         .collect(Collectors.toList());
-      compartment.addAll(literalElements);
+         .collect(Collectors.toList()));
 
-      add(compartment.build());
+      root.add(elements.build());
+      add(root.build());
    }
 }

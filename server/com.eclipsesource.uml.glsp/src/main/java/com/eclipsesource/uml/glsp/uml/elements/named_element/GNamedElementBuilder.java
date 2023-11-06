@@ -49,11 +49,18 @@ public abstract class GNamedElementBuilder<TSource extends NamedElement, TProvid
    protected void prepareLayout() {
       super.prepareLayout();
 
-      var options = new GLayoutOptions();
-
       this.layout(GConstants.Layout.VBOX)
-         .layoutOptions(options)
+         .layoutOptions(this.prepareLayoutOptions())
          .addCssClass(CoreCSS.NODE);
+   }
+
+   protected GLayoutOptions prepareLayoutOptions() {
+      return new GLayoutOptions()
+         .paddingTop(0.0)
+         .paddingRight(0.0)
+         .paddingBottom(0.0)
+         .paddingLeft(0.0)
+         .paddingFactor(1.0);
    }
 
    @Override

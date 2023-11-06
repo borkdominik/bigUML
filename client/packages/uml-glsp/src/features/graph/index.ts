@@ -6,9 +6,9 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import 'reflect-metadata';
-
-import createUmlDiagramContainer from './di.config';
-
-export * from './features/graph/index';
-export { createUmlDiagramContainer };
+export * from './svg-id-creator.service';
+export * from './views/compartment';
+export * from './views/divider.view';
+export * from './views/icon.view';
+export * from './views/label.view';
+export * from './views/uml-graph-projection.view';

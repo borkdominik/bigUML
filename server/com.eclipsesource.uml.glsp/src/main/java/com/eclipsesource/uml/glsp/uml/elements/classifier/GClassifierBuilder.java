@@ -22,6 +22,9 @@ import org.eclipse.uml2.uml.OperationOwner;
 import com.eclipsesource.uml.glsp.uml.elements.named_element.GNamedElementBuilder;
 import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGCompartmentBuilder;
 import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGDividerBuilder;
+import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGLayoutOptions;
+import com.eclipsesource.uml.glsp.uml.gmodel.constants.UmlGapValues;
+import com.eclipsesource.uml.glsp.uml.gmodel.constants.UmlPaddingValues;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdContextGeneratorProvider;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdGeneratorProvider;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GModelMapHandlerProvider;
@@ -57,10 +60,25 @@ public class GClassifierBuilder<TSource extends Classifier & AttributeOwner & Op
          .collect(Collectors.toList());
 
       if (filteredProperties.size() > 0) {
-         entries.add(new UmlGDividerBuilder<>(source, provider).build());
-         entries.addAll(filteredProperties.stream()
+         var root = new UmlGCompartmentBuilder<>(source, provider)
+            .withVBoxLayout();
+
+         root.add(
+            new UmlGDividerBuilder<>(source, provider).build());
+
+         var elements = new UmlGCompartmentBuilder<>(source, provider)
+            .withVBoxLayout()
+            .addLayoutOptions(new UmlGLayoutOptions()
+               .paddingVertical(UmlPaddingValues.LEVEL_1)
+               .paddingHorizontal(UmlPaddingValues.LEVEL_2)
+               .vGap(UmlGapValues.LEVEL_1));
+
+         elements.addAll(filteredProperties.stream()
             .map(e -> provider.gmodelMapHandler().handle(e))
             .collect(Collectors.toList()));
+
+         root.add(elements.build());
+         entries.add(root.build());
       }
 
       return entries;
@@ -71,10 +89,23 @@ public class GClassifierBuilder<TSource extends Classifier & AttributeOwner & Op
       var operations = source.getOwnedOperations();
 
       if (operations.size() > 0) {
-         entries.add(new UmlGDividerBuilder<>(source, provider).build());
-         entries.addAll(operations.stream()
+         var container = new UmlGCompartmentBuilder<>(source, provider)
+            .withVBoxLayout();
+
+         var elementContainer = new UmlGCompartmentBuilder<>(source, provider)
+            .withVBoxLayout()
+            .addLayoutOptions(new UmlGLayoutOptions()
+               .paddingVertical(UmlPaddingValues.LEVEL_1)
+               .paddingHorizontal(UmlPaddingValues.LEVEL_2)
+               .vGap(UmlGapValues.LEVEL_1));
+
+         container.add(new UmlGDividerBuilder<>(source, provider).build());
+         elementContainer.addAll(operations.stream()
             .map(e -> provider.gmodelMapHandler().handle(e))
             .collect(Collectors.toList()));
+
+         container.add(elementContainer.build());
+         entries.add(container.build());
       }
 
       return entries;

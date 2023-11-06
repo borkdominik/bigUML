@@ -19,17 +19,20 @@ import {
     selectFeature
 } from '@eclipse-glsp/client';
 
-export class InteractableCompartment extends SCompartment implements Selectable, Deletable, Hoverable {
+export class UmlCompartment extends SCompartment implements Hoverable {
     static override readonly DEFAULT_FEATURES = [
         ...SCompartment.DEFAULT_FEATURES,
-        deletableFeature,
-        selectFeature,
         hoverFeedbackFeature,
         popupFeature,
         containerFeature,
         alignFeature
     ];
 
-    selected = false;
     hoverFeedback = false;
+}
+
+export class InteractableCompartment extends UmlCompartment implements Selectable, Deletable {
+    static override readonly DEFAULT_FEATURES = [...UmlCompartment.DEFAULT_FEATURES, deletableFeature, selectFeature];
+
+    selected = false;
 }

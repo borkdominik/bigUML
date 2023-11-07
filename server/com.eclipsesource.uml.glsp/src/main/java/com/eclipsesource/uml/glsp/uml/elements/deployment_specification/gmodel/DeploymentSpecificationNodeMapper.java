@@ -78,8 +78,8 @@ public class DeploymentSpecificationNodeMapper extends RepresentationGNodeMapper
       var compartment = fixedChildrenCompartmentBuilder(source);
 
       var classifier = new GClassifierBuilder<>(source, this);
-      var attributes = classifier.listAttributes();
-      var operations = classifier.listOperations();
+      var attributes = classifier.attributesAsGModels();
+      var operations = classifier.operationsAsGModels();
 
       compartment
          .addAll(attributes)

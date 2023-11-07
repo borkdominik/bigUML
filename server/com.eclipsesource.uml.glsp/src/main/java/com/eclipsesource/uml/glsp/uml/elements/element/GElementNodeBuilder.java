@@ -38,6 +38,14 @@ public abstract class GElementNodeBuilder<TSource extends Element, TProvider ext
       super(type);
       this.source = source;
       this.provider = provider;
+
+      this.prepare();
+   }
+
+   protected void prepare() {
+      prepareProperties();
+      prepareLayout();
+      prepareRepresentation();
    }
 
    /**
@@ -61,10 +69,6 @@ public abstract class GElementNodeBuilder<TSource extends Element, TProvider ext
 
    @Override
    protected void setProperties(final GNode node) {
-      // TODO: Overrides if properties are changed from outside
-      prepareProperties();
-      prepareLayout();
-      prepareRepresentation();
       super.setProperties(node);
 
       node.getArgs().put(BORDER_ARG, this.border);

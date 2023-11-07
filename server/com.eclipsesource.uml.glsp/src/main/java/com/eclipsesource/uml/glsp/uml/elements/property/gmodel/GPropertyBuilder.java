@@ -69,6 +69,11 @@ public class GPropertyBuilder<TSource extends Property, TProvider extends GSuffi
    }
 
    @Override
+   protected boolean hasChildren() {
+      return false;
+   }
+
+   @Override
    protected Optional<List<GModelElement>> initializeHeaderElements() {
       var elements = new ArrayList<GModelElement>();
       elements.addAll(leftSide(source));

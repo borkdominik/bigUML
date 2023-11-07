@@ -28,6 +28,7 @@ import com.eclipsesource.uml.glsp.uml.elements.element.GElementNodeBuilder;
 import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGCompartmentBuilder;
 import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGLabelBuilder;
 import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGLayoutOptions;
+import com.eclipsesource.uml.glsp.uml.gmodel.constants.UmlPaddingValues;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdContextGeneratorProvider;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdGeneratorProvider;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GSuffixProvider;
@@ -73,6 +74,8 @@ public abstract class GNamedElementBuilder<TSource extends NamedElement, TProvid
       showHeader(this.headerElements);
    }
 
+   protected abstract boolean hasChildren();
+
    public TBuilder headerElements(final List<GModelElement> elements) {
       this.headerElements = Optional.ofNullable(elements);
       return self();
@@ -84,12 +87,33 @@ public abstract class GNamedElementBuilder<TSource extends NamedElement, TProvid
 
    protected void showHeader(final Optional<List<GModelElement>> headerElements) {
       headerElements.ifPresent(elements -> {
-         var header = new UmlGCompartmentBuilder<>(source, provider)
-            .withHeaderLayout();
+         if (hasChildren()) {
+            var header = new UmlGCompartmentBuilder<>(source, provider)
+               .withHeaderLayout();
 
-         header.addAll(elements);
+            header.addAll(elements);
 
-         add(header.build());
+            add(header.build());
+         } else {
+            // Show the header centered
+            var header = new UmlGCompartmentBuilder<>(source, provider)
+               .layout(GConstants.Layout.HBOX)
+               .layoutOptions(new UmlGLayoutOptions()
+                  .padding(UmlPaddingValues.LEVEL_1, UmlPaddingValues.LEVEL_2)
+                  .hGrab(true)
+                  .vGrab(true)
+                  .vAlign(GConstants.VAlign.CENTER));
+            var alignment = new UmlGCompartmentBuilder<>(source, provider)
+               .layout(GConstants.Layout.VBOX)
+               .layoutOptions(new UmlGLayoutOptions()
+                  .hGrab(true)
+                  .hAlign(GConstants.HAlign.CENTER));
+
+            alignment.addAll(elements);
+            header.add(alignment.build());
+
+            add(header.build());
+         }
       });
    }
 

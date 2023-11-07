@@ -65,6 +65,11 @@ public class GOperationBuilder<TSource extends Operation, TProvider extends GSuf
    }
 
    @Override
+   protected boolean hasChildren() {
+      return false;
+   }
+
+   @Override
    protected Optional<List<GModelElement>> initializeHeaderElements() {
       return Optional.of(List.of(buildVisibility(source, List.of()),
          buildName(source, List.of())));
@@ -126,5 +131,4 @@ public class GOperationBuilder<TSource extends Operation, TProvider extends GSuf
          }
       }
    }
-
 }

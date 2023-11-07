@@ -14,7 +14,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.uml2.uml.Package;
@@ -38,7 +37,12 @@ public class GPackageBuilder<TSource extends Package, TProvider extends GSuffixP
    @Override
    protected void prepareRepresentation() {
       super.prepareRepresentation();
-      showChildren(source);
+      showPackagedElements(source);
+   }
+
+   @Override
+   protected boolean hasChildren() {
+      return getPackagedElements(source).size() > 0;
    }
 
    @Override
@@ -51,37 +55,39 @@ public class GPackageBuilder<TSource extends Package, TProvider extends GSuffixP
       var hAlign = GConstants.HAlign.LEFT;
       var vAlign = GConstants.VAlign.TOP;
       var gap = 0;
-
+   
       var builder = compartmentHeaderBuilder(source)
          .layout(GConstants.Layout.VBOX)
          .add(buildHeaderName(source, "--uml-package-icon"));
-
+   
       final var uri = source.getURI();
       if (uri != null && uri.length() > 0) {
          gap = 1;
          builder.add(new GLabelBuilder(CoreTypes.LABEL_TEXT).id(idContextGenerator().getOrCreateId(source))
             .text("{uri=" + uri.toString() + "}").build());
       }
-
+   
       final var nested = getPackagedElements(source).count();
       if (nested == 0 && !USE_PACKAGE_FOLDER_VIEW) {
          hAlign = GConstants.HAlign.CENTER;
          vAlign = GConstants.VAlign.CENTER;
       }
-
+   
       return builder.layoutOptions(new GLayoutOptions().vGap(gap).hAlign(hAlign).vAlign(vAlign)).build();
    }
    */
 
-   protected Stream<PackageableElement> getPackagedElements() { return source.getPackagedElements().stream(); }
+   protected List<PackageableElement> getPackagedElements(final TSource source) {
+      return source.getPackagedElements();
+   }
 
-   protected void showChildren(final TSource source) {
+   protected void showPackagedElements(final TSource source) {
       add(new UmlGCompartmentBuilder<>(source, provider)
          .withFreeformLayout()
-         .addAll(getPackagedElements()
+         .addAll(getPackagedElements(source).stream()
             .map(e -> provider.gmodelMapHandler().handle(e))
             .collect(Collectors.toList()))
-         .addAll(getPackagedElements()
+         .addAll(getPackagedElements(source).stream()
             .map(e -> provider.gmodelMapHandler().handleSiblings(e))
             .flatMap(Collection::stream)
             .collect(Collectors.toList()))

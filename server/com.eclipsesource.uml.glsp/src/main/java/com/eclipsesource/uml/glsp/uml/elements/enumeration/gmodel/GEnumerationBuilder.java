@@ -64,8 +64,7 @@ public class GEnumerationBuilder<TSource extends Enumeration, TProvider extends 
       var elements = new UmlGCompartmentBuilder<>(source, provider)
          .withVBoxLayout()
          .addLayoutOptions(new UmlGLayoutOptions()
-            .paddingVertical(UmlPaddingValues.LEVEL_1)
-            .paddingHorizontal(UmlPaddingValues.LEVEL_2)
+            .padding(UmlPaddingValues.LEVEL_1, UmlPaddingValues.LEVEL_2)
             .vGap(UmlGapValues.LEVEL_1));
 
       elements.addAll(source.getOwnedLiterals().stream()

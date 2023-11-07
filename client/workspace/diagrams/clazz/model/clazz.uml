@@ -88,6 +88,10 @@
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_Itf5ENIcEe2rY5KN6ehSig" value="1"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_ItggINIcEe2rY5KN6ehSig" value="1"/>
     </ownedAttribute>
+    <ownedAttribute xmi:id="_6e_uYH2CEe6bSrMxUmd9gg" name="NewProperty1">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_6fAVcH2CEe6bSrMxUmd9gg" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_6fA8gH2CEe6bSrMxUmd9gg" value="1"/>
+    </ownedAttribute>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="_j12MQL0cEe2besM683MlUA" name="NewClass8 a very ong name lets make it even longer" isAbstract="true">
     <ownedAttribute xmi:id="_ItggIdIcEe2rY5KN6ehSig" name="asd2" type="_LjfcIbSLEe2pkZx4lGC8Ew" association="_ItM-INIcEe2rY5KN6ehSig">

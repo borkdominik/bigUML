@@ -14,10 +14,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.uml2.uml.AttributeOwner;
 import org.eclipse.uml2.uml.Classifier;
+import org.eclipse.uml2.uml.Operation;
 import org.eclipse.uml2.uml.OperationOwner;
+import org.eclipse.uml2.uml.Property;
 
 import com.eclipsesource.uml.glsp.uml.elements.named_element.GNamedElementBuilder;
 import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGCompartmentBuilder;
@@ -47,26 +50,44 @@ public class GClassifierBuilder<TSource extends Classifier & AttributeOwner & Op
       showAttributesAndOperations(source);
    }
 
+   @Override
+   protected boolean hasChildren() {
+      return hasAttributesOrOperations(source);
+   }
+
+   protected boolean hasAttributesOrOperations(final TSource source) {
+      return attributes(source).size() > 0 || operations(source).size() > 0;
+   }
+
    protected void showAttributesAndOperations(final TSource source) {
       var compartment = new UmlGCompartmentBuilder<>(source, provider)
          .withVBoxLayout();
 
-      compartment
-         .addAll(listAttributes())
-         .addAll(listOperations());
+      var attributes = attributesAsGModels();
+      var operations = operationsAsGModels();
 
-      add(compartment.build());
+      if (attributes.size() > 0 || operations.size() > 0) {
+         compartment
+            .addAll(attributes)
+            .addAll(operations);
+
+         add(compartment.build());
+      }
+   }
+
+   protected List<Property> attributes(final TSource source) {
+      return source.getOwnedAttributes().stream()
+         .filter(p -> p.getAssociation() == null)
+         .collect(Collectors.toList());
    }
 
    // TODO: Make protected
-   public List<GModelElement> listAttributes() {
+   public List<GModelElement> attributesAsGModels() {
       var entries = new ArrayList<GModelElement>();
 
-      var filteredProperties = source.getOwnedAttributes().stream()
-         .filter(p -> p.getAssociation() == null)
-         .collect(Collectors.toList());
+      var properties = attributes(source);
 
-      if (filteredProperties.size() > 0) {
+      if (properties.size() > 0) {
          var root = new UmlGCompartmentBuilder<>(source, provider)
             .withVBoxLayout();
 
@@ -76,11 +97,10 @@ public class GClassifierBuilder<TSource extends Classifier & AttributeOwner & Op
          var elements = new UmlGCompartmentBuilder<>(source, provider)
             .withVBoxLayout()
             .addLayoutOptions(new UmlGLayoutOptions()
-               .paddingVertical(UmlPaddingValues.LEVEL_1)
-               .paddingHorizontal(UmlPaddingValues.LEVEL_2)
+               .padding(UmlPaddingValues.LEVEL_1, UmlPaddingValues.LEVEL_2)
                .vGap(UmlGapValues.LEVEL_1));
 
-         elements.addAll(filteredProperties.stream()
+         elements.addAll(properties.stream()
             .map(e -> provider.gmodelMapHandler().handle(e))
             .collect(Collectors.toList()));
 
@@ -91,9 +111,13 @@ public class GClassifierBuilder<TSource extends Classifier & AttributeOwner & Op
       return entries;
    }
 
-   public List<GModelElement> listOperations() {
+   protected EList<Operation> operations(final TSource source) {
+      return source.getOwnedOperations();
+   }
+
+   public List<GModelElement> operationsAsGModels() {
       var entries = new ArrayList<GModelElement>();
-      var operations = source.getOwnedOperations();
+      var operations = operations(source);
 
       if (operations.size() > 0) {
          var container = new UmlGCompartmentBuilder<>(source, provider)
@@ -102,8 +126,7 @@ public class GClassifierBuilder<TSource extends Classifier & AttributeOwner & Op
          var elementContainer = new UmlGCompartmentBuilder<>(source, provider)
             .withVBoxLayout()
             .addLayoutOptions(new UmlGLayoutOptions()
-               .paddingVertical(UmlPaddingValues.LEVEL_1)
-               .paddingHorizontal(UmlPaddingValues.LEVEL_2)
+               .padding(UmlPaddingValues.LEVEL_1, UmlPaddingValues.LEVEL_2)
                .vGap(UmlGapValues.LEVEL_1));
 
          container.add(new UmlGDividerBuilder<>(source, provider).build());

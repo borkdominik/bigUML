@@ -14,8 +14,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.uml2.uml.InstanceSpecification;
+import org.eclipse.uml2.uml.Slot;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.uml.elements.named_element.GNamedElementBuilder;
@@ -35,7 +37,12 @@ public class GInstanceSpecificationBuilder<TSource extends InstanceSpecification
    @Override
    protected void prepareRepresentation() {
       super.prepareRepresentation();
-      showBody();
+      showSlots(source);
+   }
+
+   @Override
+   protected boolean hasChildren() {
+      return slots(source).size() > 0;
    }
 
    @Override
@@ -49,11 +56,15 @@ public class GInstanceSpecificationBuilder<TSource extends InstanceSpecification
       return Optional.of(List.of(buildName(name, List.of(CoreCSS.FONT_BOLD))));
    }
 
-   protected void showBody() {
+   protected EList<Slot> slots(final TSource source) {
+      return source.getSlots();
+   }
+
+   protected void showSlots(final TSource source) {
       var compartment = new UmlGCompartmentBuilder<>(source, provider)
          .withVBoxLayout();
 
-      var slotElements = source.getSlots().stream()
+      var slotElements = slots(source).stream()
          .map(e -> provider.gmodelMapHandler().handle(e))
          .collect(Collectors.toList());
       compartment.addAll(slotElements);

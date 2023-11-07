@@ -27,7 +27,7 @@ public class UmlGLayoutOptions extends GLayoutOptions {
    }
 
    public UmlGLayoutOptions defaultPadding() {
-      this.putAll(new GLayoutOptions()
+      this.putAll(new UmlGLayoutOptions()
          .paddingTop(5.0)
          .paddingRight(10.0)
          .paddingBottom(5.0)
@@ -38,7 +38,7 @@ public class UmlGLayoutOptions extends GLayoutOptions {
    }
 
    public UmlGLayoutOptions padding(final Double padding) {
-      this.putAll(new GLayoutOptions()
+      this.putAll(new UmlGLayoutOptions()
          .paddingTop(padding)
          .paddingRight(padding)
          .paddingBottom(padding)
@@ -48,8 +48,17 @@ public class UmlGLayoutOptions extends GLayoutOptions {
       return this;
    }
 
+   public UmlGLayoutOptions padding(final Double vertical, final Double horizontal) {
+      this.putAll(new UmlGLayoutOptions()
+         .paddingVertical(vertical)
+         .paddingHorizontal(horizontal)
+         .paddingFactor(1.0));
+
+      return this;
+   }
+
    public UmlGLayoutOptions paddingHorizontal(final Double padding) {
-      this.putAll(new GLayoutOptions()
+      this.putAll(new UmlGLayoutOptions()
          .paddingRight(padding)
          .paddingLeft(padding)
          .paddingFactor(1.0));
@@ -58,7 +67,7 @@ public class UmlGLayoutOptions extends GLayoutOptions {
    }
 
    public UmlGLayoutOptions paddingVertical(final Double padding) {
-      this.putAll(new GLayoutOptions()
+      this.putAll(new UmlGLayoutOptions()
          .paddingTop(padding)
          .paddingBottom(padding)
          .paddingFactor(1.0));
@@ -67,7 +76,7 @@ public class UmlGLayoutOptions extends GLayoutOptions {
    }
 
    public UmlGLayoutOptions clearPadding() {
-      this.putAll(new GLayoutOptions()
+      this.putAll(new UmlGLayoutOptions()
          .paddingTop(0.0)
          .paddingRight(0.0)
          .paddingBottom(0.0)

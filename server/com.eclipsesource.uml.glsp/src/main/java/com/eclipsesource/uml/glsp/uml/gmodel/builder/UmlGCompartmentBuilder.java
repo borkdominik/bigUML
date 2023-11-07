@@ -18,10 +18,10 @@ import org.eclipse.glsp.graph.DefaultTypes;
 import org.eclipse.glsp.graph.GCompartment;
 import org.eclipse.glsp.graph.GraphFactory;
 import org.eclipse.glsp.graph.builder.AbstractGCompartmentBuilder;
-import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.util.GConstants;
 
 import com.eclipsesource.uml.glsp.core.constants.UmlLayoutConstants;
+import com.eclipsesource.uml.glsp.uml.gmodel.constants.UmlPaddingValues;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdContextGeneratorProvider;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdGeneratorProvider;
 
@@ -40,44 +40,41 @@ public class UmlGCompartmentBuilder<TProvider extends GIdGeneratorProvider & GId
       this.source = source;
       this.provider = provider;
 
-      this.prepare();
+      this.prepareProperties();
    }
 
-   protected void prepare() {
+   protected void prepareProperties() {
       this.id(provider.idContextGenerator().getOrCreateId(source));
    }
 
    public TBuilder withHeaderLayout() {
-      var options = new UmlGLayoutOptions()
-         .defaultPadding()
-         .hGrab(true)
-         .hAlign(GConstants.HAlign.CENTER);
-
       this.type(DefaultTypes.COMPARTMENT_HEADER)
          .layout(GConstants.Layout.VBOX)
-         .layoutOptions(options);
+         .layoutOptions(new UmlGLayoutOptions()
+            .padding(UmlPaddingValues.LEVEL_1, UmlPaddingValues.LEVEL_2)
+            .hGrab(true)
+            .hAlign(GConstants.HAlign.CENTER));
+
       return self();
    }
 
    public TBuilder withVBoxLayout() {
-      var options = new UmlGLayoutOptions()
-         .hGrab(true)
-         .hAlign(GConstants.HAlign.LEFT);
-
       this.type(DefaultTypes.COMPARTMENT)
          .layout(GConstants.Layout.VBOX)
-         .layoutOptions(options);
+         .layoutOptions(new UmlGLayoutOptions()
+            .clearPadding()
+            .hGrab(true)
+            .hAlign(GConstants.HAlign.LEFT));
 
       return self();
    }
 
    public TBuilder withHBoxLayout() {
-      var options = new UmlGLayoutOptions()
-         .hAlign(GConstants.HAlign.LEFT);
-
       this.type(DefaultTypes.COMPARTMENT)
          .layout(GConstants.Layout.HBOX)
-         .layoutOptions(options);
+         .layoutOptions(new UmlGLayoutOptions()
+            .clearPadding()
+            .hAlign(GConstants.HAlign.LEFT));
 
       return self();
    }
@@ -86,9 +83,9 @@ public class UmlGCompartmentBuilder<TProvider extends GIdGeneratorProvider & GId
       this.type(DefaultTypes.COMPARTMENT)
          .addArgument("divider", true)
          .layout(UmlLayoutConstants.FREEFORM)
-         .layoutOptions(new GLayoutOptions()
-            .hAlign(GConstants.HAlign.LEFT)
-            .resizeContainer(true));
+         .layoutOptions(new UmlGLayoutOptions()
+            .clearPadding()
+            .hAlign(GConstants.HAlign.LEFT));
 
       return self();
    }

@@ -11,8 +11,10 @@
 package com.eclipsesource.uml.glsp.uml.elements.instance_specification.gmodel;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.uml2.uml.InstanceSpecification;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
@@ -31,26 +33,20 @@ public class GInstanceSpecificationBuilder<TSource extends InstanceSpecification
    }
 
    @Override
-   protected void prepareAdditionals() {
-      super.prepareAdditionals();
-
-      showHeader();
+   protected void prepareRepresentation() {
+      super.prepareRepresentation();
       showBody();
    }
 
-   protected void showHeader() {
-      var header = new UmlGCompartmentBuilder<>(source, provider)
-         .withHeaderLayout();
-
+   @Override
+   protected Optional<List<GModelElement>> initializeHeaderElements() {
       var name = source.getClassifiers().size() == 0 ? source.getName()
          : String.format("%s:%s", source.getName(),
             String.join(",",
                source.getClassifiers().stream()
                   .map(c -> c.getName()).collect(Collectors.toList())));
 
-      header.add(buildName(name, List.of(CoreCSS.FONT_BOLD)));
-
-      add(header.build());
+      return Optional.of(List.of(buildName(name, List.of(CoreCSS.FONT_BOLD))));
    }
 
    protected void showBody() {

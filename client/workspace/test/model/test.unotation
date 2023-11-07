@@ -7,21 +7,6 @@
     <size width="280.0" height="167.0"/>
   </elements>
   <elements xsi:type="notation:Shape">
-    <semanticElement elementId="_3capcG50Ee6-TcONhyL7iw"/>
-    <position x="90.0" y="40.0"/>
-    <size width="160.0" height="50.0"/>
-  </elements>
-  <elements xsi:type="notation:Shape">
-    <semanticElement elementId="_aqyw0G53Ee6-TcONhyL7iw"/>
-    <position x="100.0" y="130.0"/>
-    <size width="160.0" height="50.0"/>
-  </elements>
-  <elements xsi:type="notation:Shape">
-    <semanticElement elementId="_BANSUHy3Ee6GAdiIif20Wg"/>
-    <position x="240.0" y="60.0"/>
-    <size width="160.0" height="50.0"/>
-  </elements>
-  <elements xsi:type="notation:Shape">
     <semanticElement elementId="_j6E-wHy4Ee6GAdiIif20Wg"/>
     <position/>
     <size width="160.0" height="50.0"/>

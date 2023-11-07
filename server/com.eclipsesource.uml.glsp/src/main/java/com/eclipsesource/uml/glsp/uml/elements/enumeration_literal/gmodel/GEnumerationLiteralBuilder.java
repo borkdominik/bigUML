@@ -11,13 +11,16 @@
 package com.eclipsesource.uml.glsp.uml.elements.enumeration_literal.gmodel;
 
 import java.util.List;
+import java.util.Optional;
 
+import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.EnumerationLiteral;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.uml.elements.instance_specification.gmodel.GInstanceSpecificationBuilder;
+import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGLayoutOptions;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdContextGeneratorProvider;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdGeneratorProvider;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GModelMapHandlerProvider;
@@ -31,21 +34,33 @@ public class GEnumerationLiteralBuilder<TSource extends EnumerationLiteral, TPro
    }
 
    @Override
-   protected void prepareLayout() {
-      var options = new GLayoutOptions();
+   protected void prepareProperties() {
+      super.prepareProperties();
+      border(false);
+   }
 
+   @Override
+   protected void prepareLayout() {
       this.layout(GConstants.Layout.HBOX)
-         .layoutOptions(options)
+         .layoutOptions(prepareLayoutOptions())
          .addCssClass(CoreCSS.NODE);
    }
 
    @Override
-   protected void prepareAdditionals() {
-      showHeader();
+   protected GLayoutOptions prepareLayoutOptions() {
+      return new UmlGLayoutOptions()
+         .clearPadding();
    }
 
    @Override
-   protected void showHeader() {
-      add(buildName(source, List.of()));
+   protected void showHeader(final Optional<List<GModelElement>> headerElements) {
+      headerElements.ifPresent(elements -> {
+         addAll(elements);
+      });
+   }
+
+   @Override
+   protected Optional<List<GModelElement>> initializeHeaderElements() {
+      return Optional.of(List.of(buildName(source, List.of())));
    }
 }

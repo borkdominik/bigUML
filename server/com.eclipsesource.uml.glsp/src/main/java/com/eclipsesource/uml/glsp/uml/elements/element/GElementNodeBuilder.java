@@ -20,7 +20,16 @@ import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdGeneratorProvider;
 
 public abstract class GElementNodeBuilder<TSource extends Element, TProvider extends GIdGeneratorProvider & GIdContextGeneratorProvider, TBuilder extends GElementNodeBuilder<TSource, TProvider, TBuilder>>
    extends AbstractGNodeBuilder<GNode, TBuilder> {
+   /*
+    * To identify if the GModel has been build by a builder
+    */
    public final String BUILD_BY = "build_by";
+   public final String BORDER_ARG = "border";
+
+   /*
+    * Draw a border around the element
+    */
+   protected boolean border = false;
 
    protected final TSource source;
    protected final TProvider provider;
@@ -31,24 +40,39 @@ public abstract class GElementNodeBuilder<TSource extends Element, TProvider ext
       this.provider = provider;
    }
 
-   protected void prepare() {
+   /**
+    * Prepare the required properties
+    */
+   protected void prepareProperties() {
       this.id(provider.idGenerator().getOrCreateId(source));
 
       // TODO: Remove after switching to builder based approach for all gmodels
       this.addArgument(BUILD_BY, "gbuilder");
 
-      prepareLayout();
-      prepareAdditionals();
+      border(true);
    }
 
+   /**
+    * Prepare the layout
+    */
    protected void prepareLayout() {}
 
-   protected void prepareAdditionals() {}
+   protected void prepareRepresentation() {}
 
    @Override
    protected void setProperties(final GNode node) {
-      prepare();
+      // TODO: Overrides if properties are changed from outside
+      prepareProperties();
+      prepareLayout();
+      prepareRepresentation();
       super.setProperties(node);
+
+      node.getArgs().put(BORDER_ARG, this.border);
+   }
+
+   public TBuilder border(final boolean enabled) {
+      this.border = enabled;
+      return self();
    }
 
    @Override

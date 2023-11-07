@@ -12,9 +12,11 @@ package com.eclipsesource.uml.glsp.uml.elements.package_.gmodel;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.uml2.uml.Package;
 import org.eclipse.uml2.uml.PackageableElement;
 
@@ -34,20 +36,14 @@ public class GPackageBuilder<TSource extends Package, TProvider extends GSuffixP
    }
 
    @Override
-   protected void prepareAdditionals() {
-      super.prepareAdditionals();
-
-      showHeader();
-      showChildren();
+   protected void prepareRepresentation() {
+      super.prepareRepresentation();
+      showChildren(source);
    }
 
-   protected void showHeader() {
-      var header = new UmlGCompartmentBuilder<>(source, provider)
-         .withHeaderLayout();
-
-      header.add(buildName(source, List.of(CoreCSS.FONT_BOLD)));
-
-      add(header.build());
+   @Override
+   protected Optional<List<GModelElement>> initializeHeaderElements() {
+      return Optional.of(List.of(buildName(source, List.of(CoreCSS.FONT_BOLD))));
    }
 
    /*-
@@ -55,31 +51,31 @@ public class GPackageBuilder<TSource extends Package, TProvider extends GSuffixP
       var hAlign = GConstants.HAlign.LEFT;
       var vAlign = GConstants.VAlign.TOP;
       var gap = 0;
-   
+
       var builder = compartmentHeaderBuilder(source)
          .layout(GConstants.Layout.VBOX)
          .add(buildHeaderName(source, "--uml-package-icon"));
-   
+
       final var uri = source.getURI();
       if (uri != null && uri.length() > 0) {
          gap = 1;
          builder.add(new GLabelBuilder(CoreTypes.LABEL_TEXT).id(idContextGenerator().getOrCreateId(source))
             .text("{uri=" + uri.toString() + "}").build());
       }
-   
+
       final var nested = getPackagedElements(source).count();
       if (nested == 0 && !USE_PACKAGE_FOLDER_VIEW) {
          hAlign = GConstants.HAlign.CENTER;
          vAlign = GConstants.VAlign.CENTER;
       }
-   
+
       return builder.layoutOptions(new GLayoutOptions().vGap(gap).hAlign(hAlign).vAlign(vAlign)).build();
    }
    */
 
    protected Stream<PackageableElement> getPackagedElements() { return source.getPackagedElements().stream(); }
 
-   protected void showChildren() {
+   protected void showChildren(final TSource source) {
       add(new UmlGCompartmentBuilder<>(source, provider)
          .withFreeformLayout()
          .addAll(getPackagedElements()

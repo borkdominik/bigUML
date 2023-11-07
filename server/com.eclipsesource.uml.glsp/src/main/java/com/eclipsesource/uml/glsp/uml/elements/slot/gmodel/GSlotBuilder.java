@@ -13,7 +13,6 @@ package com.eclipsesource.uml.glsp.uml.elements.slot.gmodel;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.Slot;
 import org.eclipse.uml2.uml.ValueSpecification;
@@ -21,6 +20,7 @@ import org.eclipse.uml2.uml.ValueSpecification;
 import com.eclipsesource.uml.glsp.uml.configuration.ElementConfigurationAccessor;
 import com.eclipsesource.uml.glsp.uml.elements.element.GElementNodeBuilder;
 import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGLabelBuilder;
+import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGLayoutOptions;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdContextGeneratorProvider;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdGeneratorProvider;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GSuffixProvider;
@@ -35,17 +35,17 @@ public class GSlotBuilder<TSource extends Slot, TProvider extends GIdGeneratorPr
    @Override
    protected void prepareLayout() {
       this.layout(GConstants.Layout.HBOX)
-         .layoutOptions(new GLayoutOptions()
-            .hGap(3)
-            .resizeContainer(true));
+         .layoutOptions(new UmlGLayoutOptions()
+            .hGap(3));
    }
 
    @Override
-   protected void prepareAdditionals() {
-      showHeader();
+   protected void prepareRepresentation() {
+      super.prepareRepresentation();
+      showHeader(source);
    }
 
-   protected void showHeader() {
+   protected void showHeader(final TSource source) {
       String definingFeature = "<UNDEFINED>";
       List<String> finalList = new ArrayList<>();
 

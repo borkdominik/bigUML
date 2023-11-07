@@ -41,7 +41,13 @@ public class GClassifierBuilder<TSource extends Classifier & AttributeOwner & Op
       super(source, provider, type);
    }
 
-   protected void showAttributesAndOperations() {
+   @Override
+   protected void prepareRepresentation() {
+      super.prepareRepresentation();
+      showAttributesAndOperations(source);
+   }
+
+   protected void showAttributesAndOperations(final TSource source) {
       var compartment = new UmlGCompartmentBuilder<>(source, provider)
          .withVBoxLayout();
 
@@ -52,6 +58,7 @@ public class GClassifierBuilder<TSource extends Classifier & AttributeOwner & Op
       add(compartment.build());
    }
 
+   // TODO: Make protected
    public List<GModelElement> listAttributes() {
       var entries = new ArrayList<GModelElement>();
 

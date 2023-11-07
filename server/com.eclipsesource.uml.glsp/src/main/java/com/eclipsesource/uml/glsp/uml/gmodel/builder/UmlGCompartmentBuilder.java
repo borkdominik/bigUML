@@ -50,8 +50,8 @@ public class UmlGCompartmentBuilder<TProvider extends GIdGeneratorProvider & GId
    public TBuilder withHeaderLayout() {
       var options = new UmlGLayoutOptions()
          .defaultPadding()
+         .hGrab(true)
          .hAlign(GConstants.HAlign.CENTER);
-      options.put("hGrab", true);
 
       this.type(DefaultTypes.COMPARTMENT_HEADER)
          .layout(GConstants.Layout.VBOX)

@@ -11,12 +11,13 @@
 package com.eclipsesource.uml.glsp.uml.elements.class_.gmodel;
 
 import java.util.List;
+import java.util.Optional;
 
+import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.uml2.uml.Class;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.uml.elements.classifier.GClassifierBuilder;
-import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGCompartmentBuilder;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdContextGeneratorProvider;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdGeneratorProvider;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GModelMapHandlerProvider;
@@ -30,23 +31,11 @@ public class GClassBuilder<TSource extends Class, TProvider extends GSuffixProvi
    }
 
    @Override
-   protected void prepareAdditionals() {
-      super.prepareAdditionals();
-
-      showHeader();
-      showAttributesAndOperations();
-   }
-
-   protected void showHeader() {
-      var header = new UmlGCompartmentBuilder<>(source, provider)
-         .withHeaderLayout();
-
+   protected Optional<List<GModelElement>> initializeHeaderElements() {
       if (source.isAbstract()) {
-         header.add(buildName(source, List.of(CoreCSS.FONT_BOLD, CoreCSS.FONT_ITALIC)));
-      } else {
-         header.add(buildName(source, List.of(CoreCSS.FONT_BOLD)));
+         return Optional.of(List.of(buildName(source, List.of(CoreCSS.FONT_BOLD, CoreCSS.FONT_ITALIC))));
       }
 
-      add(header.build());
+      return Optional.of(List.of(buildName(source, List.of(CoreCSS.FONT_BOLD))));
    }
 }

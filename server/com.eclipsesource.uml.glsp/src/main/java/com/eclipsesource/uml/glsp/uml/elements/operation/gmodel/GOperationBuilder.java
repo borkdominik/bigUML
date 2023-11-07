@@ -11,8 +11,11 @@
 package com.eclipsesource.uml.glsp.uml.elements.operation.gmodel;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.eclipse.glsp.graph.GModelElement;
+import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.Operation;
 import org.eclipse.uml2.uml.ParameterDirectionKind;
@@ -36,43 +39,61 @@ public class GOperationBuilder<TSource extends Operation, TProvider extends GSuf
    }
 
    @Override
-   protected void prepareLayout() {
-      this.layout(GConstants.Layout.HBOX)
-         .layoutOptions(new UmlGLayoutOptions()
-            .clearPadding()
-            .hGap(3)
-            .resizeContainer(true));
+   protected void prepareProperties() {
+      super.prepareProperties();
+      border(false);
    }
 
    @Override
-   protected void prepareAdditionals() {
-      showHeader();
-      showParameters();
-      showReturns();
+   protected void prepareLayout() {
+      this.layout(GConstants.Layout.HBOX)
+         .layoutOptions(prepareLayoutOptions());
    }
 
-   protected void showHeader() {
-      var header = new UmlGCompartmentBuilder<>(source, provider)
-         .withHBoxLayout();
-
-      header.add(buildVisibility(source, List.of()));
-      header.add(buildName(source, List.of()));
-
-      add(header.build());
+   @Override
+   protected GLayoutOptions prepareLayoutOptions() {
+      return new UmlGLayoutOptions()
+         .clearPadding()
+         .hGap(3);
    }
 
-   protected void showParameters() {
-      var builder = new UmlGCompartmentBuilder<>(source, provider)
+   @Override
+   protected void prepareRepresentation() {
+      super.prepareRepresentation();
+      showParameters(source);
+      showReturns(source);
+   }
+
+   @Override
+   protected Optional<List<GModelElement>> initializeHeaderElements() {
+      return Optional.of(List.of(buildVisibility(source, List.of()),
+         buildName(source, List.of())));
+   }
+
+   @Override
+   protected void showHeader(final Optional<List<GModelElement>> headerElements) {
+      headerElements.ifPresent(elements -> {
+         var header = new UmlGCompartmentBuilder<>(source, provider)
+            .withHBoxLayout();
+
+         header.addAll(elements);
+
+         add(header.build());
+      });
+   }
+
+   protected void showParameters(final TSource source) {
+      var root = new UmlGCompartmentBuilder<>(source, provider)
          .withHBoxLayout();
 
       var parameters = source.getOwnedParameters().stream()
          .filter(p -> p.getDirection() != ParameterDirectionKind.RETURN_LITERAL).collect(Collectors.toList());
 
-      builder.add(new UmlGLabelBuilder<>(source, provider).text("(").build());
+      root.add(new UmlGLabelBuilder<>(source, provider).text("(").build());
 
       for (int i = 0; i < parameters.size(); i++) {
          if (i > 0) {
-            builder.add(new UmlGLabelBuilder<>(source, provider).text(",").build());
+            root.add(new UmlGLabelBuilder<>(source, provider).text(",").build());
          }
 
          var parameterBuilder = new UmlGCompartmentBuilder<>(source, provider)
@@ -80,15 +101,15 @@ public class GOperationBuilder<TSource extends Operation, TProvider extends GSuf
             .add(new UmlGLabelBuilder<>(source, provider)
                .text(ParameterPropertyPaletteUtils.asText(parameters.get(i)))
                .build());
-         builder.add(parameterBuilder.build());
+         root.add(parameterBuilder.build());
       }
 
-      builder.add(new UmlGLabelBuilder<>(source, provider).text(")").build());
+      root.add(new UmlGLabelBuilder<>(source, provider).text(")").build());
 
-      add(builder.build());
+      add(root.build());
    }
 
-   protected void showReturns() {
+   protected void showReturns(final TSource source) {
       var parameters = source.getOwnedParameters().stream()
          .filter(p -> p.getDirection() == ParameterDirectionKind.RETURN_LITERAL).collect(Collectors.toList());
 

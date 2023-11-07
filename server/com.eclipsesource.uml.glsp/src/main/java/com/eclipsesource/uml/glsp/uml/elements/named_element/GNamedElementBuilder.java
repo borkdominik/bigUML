@@ -11,10 +11,11 @@
 package com.eclipsesource.uml.glsp.uml.elements.named_element;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.eclipse.glsp.graph.DefaultTypes;
 import org.eclipse.glsp.graph.GLabel;
-import org.eclipse.glsp.graph.GNode;
+import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.NamedElement;
@@ -24,7 +25,9 @@ import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.elements.element.GElementNodeBuilder;
+import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGCompartmentBuilder;
 import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGLabelBuilder;
+import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGLayoutOptions;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdContextGeneratorProvider;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdGeneratorProvider;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GSuffixProvider;
@@ -32,10 +35,10 @@ import com.eclipsesource.uml.glsp.uml.utils.element.VisibilityKindUtils;
 
 public abstract class GNamedElementBuilder<TSource extends NamedElement, TProvider extends GIdGeneratorProvider & GIdContextGeneratorProvider & GSuffixProvider, TBuilder extends GNamedElementBuilder<TSource, TProvider, TBuilder>>
    extends GElementNodeBuilder<TSource, TProvider, TBuilder> {
-   public final String BORDER_ARG = "border";
+
    public final String HIGHLIGHT_ARG = "highlight";
 
-   protected boolean border = false;
+   protected Optional<List<GModelElement>> headerElements = Optional.empty();
 
    public GNamedElementBuilder(final TSource source, final TProvider provider) {
       this(source, provider, DefaultTypes.NODE);
@@ -43,6 +46,12 @@ public abstract class GNamedElementBuilder<TSource extends NamedElement, TProvid
 
    public GNamedElementBuilder(final TSource source, final TProvider provider, final String type) {
       super(source, provider, type);
+   }
+
+   @Override
+   protected void prepareProperties() {
+      super.prepareProperties();
+      headerElements(initializeHeaderElements().orElse(null));
    }
 
    @Override
@@ -55,24 +64,33 @@ public abstract class GNamedElementBuilder<TSource extends NamedElement, TProvid
    }
 
    protected GLayoutOptions prepareLayoutOptions() {
-      return new GLayoutOptions()
-         .paddingTop(0.0)
-         .paddingRight(0.0)
-         .paddingBottom(0.0)
-         .paddingLeft(0.0)
-         .paddingFactor(1.0);
+      return new UmlGLayoutOptions().clearPadding();
    }
 
    @Override
-   protected void prepareAdditionals() {
-      super.prepareAdditionals();
-
-      border(true);
+   protected void prepareRepresentation() {
+      super.prepareRepresentation();
+      showHeader(this.headerElements);
    }
 
-   public TBuilder border(final boolean enabled) {
-      this.border = enabled;
+   public TBuilder headerElements(final List<GModelElement> elements) {
+      this.headerElements = Optional.ofNullable(elements);
       return self();
+   }
+
+   protected Optional<List<GModelElement>> initializeHeaderElements() {
+      return this.headerElements;
+   }
+
+   protected void showHeader(final Optional<List<GModelElement>> headerElements) {
+      headerElements.ifPresent(elements -> {
+         var header = new UmlGCompartmentBuilder<>(source, provider)
+            .withHeaderLayout();
+
+         header.addAll(elements);
+
+         add(header.build());
+      });
    }
 
    protected GLabel buildVisibility(final NamedElement element, final List<String> css) {
@@ -97,13 +115,6 @@ public abstract class GNamedElementBuilder<TSource extends NamedElement, TProvid
          .addCssClasses(css)
          .text(name)
          .build();
-   }
-
-   @Override
-   protected void setProperties(final GNode node) {
-      super.setProperties(node);
-
-      node.getArgs().put(BORDER_ARG, this.border);
    }
 
 }

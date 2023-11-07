@@ -11,13 +11,14 @@
 package com.eclipsesource.uml.glsp.uml.elements.primitive_type.gmodel;
 
 import java.util.List;
+import java.util.Optional;
 
+import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.uml2.uml.PrimitiveType;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.QuotationMark;
 import com.eclipsesource.uml.glsp.uml.elements.data_type.gmodel.GDataTypeBuilder;
-import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGCompartmentBuilder;
 import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGLabelBuilder;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdContextGeneratorProvider;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdGeneratorProvider;
@@ -32,17 +33,12 @@ public class GPrimitiveTypeBuilder<TSource extends PrimitiveType, TProvider exte
    }
 
    @Override
-   protected void showHeader() {
-      var header = new UmlGCompartmentBuilder<>(source, provider)
-         .withHeaderLayout();
-
-      header.add(new UmlGLabelBuilder<>(source, provider)
+   protected Optional<List<GModelElement>> initializeHeaderElements() {
+      return Optional.of(List.of(new UmlGLabelBuilder<>(source, provider)
          .text(QuotationMark.quoteDoubleAngle("primitive"))
          .addCssClasses(List.of(CoreCSS.FONT_BOLD))
-         .build());
-      header.add(buildName(source, List.of(CoreCSS.FONT_BOLD)));
-
-      add(header.build());
+         .build(),
+         buildName(source, List.of(CoreCSS.FONT_BOLD))));
    }
 
 }

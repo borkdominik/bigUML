@@ -44,49 +44,69 @@ public class GPropertyBuilder<TSource extends Property, TProvider extends GSuffi
    }
 
    @Override
-   protected void prepareLayout() {
-      this.layout(GConstants.Layout.HBOX)
-         .layoutOptions(new UmlGLayoutOptions()
-            .clearPadding()
-            .hGap(3)
-            .resizeContainer(true));
+   protected void prepareProperties() {
+      super.prepareProperties();
+      border(false);
    }
 
    @Override
-   protected void prepareAdditionals() {
-      leftSide();
-      rightSide();
-      applyIsStatic();
+   protected void prepareLayout() {
+      this.layout(GConstants.Layout.HBOX)
+         .layoutOptions(prepareLayoutOptions());
    }
 
-   protected void showHeader() {
-      var header = new UmlGCompartmentBuilder<>(source, provider)
-         .withHBoxLayout();
-
-      header.add(buildVisibility(source, List.of()));
-      header.add(buildName(source, List.of()));
-
-      add(header.build());
+   @Override
+   protected GLayoutOptions prepareLayoutOptions() {
+      return new UmlGLayoutOptions()
+         .clearPadding()
+         .hGap(3);
    }
 
-   protected void leftSide() {
-      var builder = new UmlGCompartmentBuilder<>(source, provider)
+   @Override
+   protected void prepareRepresentation() {
+      super.prepareRepresentation();
+      applyIsStatic(source);
+   }
+
+   @Override
+   protected Optional<List<GModelElement>> initializeHeaderElements() {
+      var elements = new ArrayList<GModelElement>();
+      elements.addAll(leftSide(source));
+      elements.addAll(rightSide(source));
+
+      return Optional.of(elements);
+   }
+
+   @Override
+   protected void showHeader(final Optional<List<GModelElement>> headerElements) {
+      headerElements.ifPresent(elements -> {
+         var header = new UmlGCompartmentBuilder<>(source, provider)
+            .withHBoxLayout();
+
+         header.addAll(elements);
+
+         add(header.build());
+      });
+   }
+
+   protected List<GModelElement> leftSide(final TSource source) {
+      var root = new UmlGCompartmentBuilder<>(source, provider)
          .withHBoxLayout()
          .addLayoutOptions(new GLayoutOptions().hGap(3));
 
-      builder.add(buildVisibility(source, List.of()));
+      root.add(buildVisibility(source, List.of()));
 
       if (source.isDerived()) {
-         builder.add(new UmlGLabelBuilder<>(source, provider).text("/").build());
+         root.add(new UmlGLabelBuilder<>(source, provider).text("/").build());
       }
 
-      builder.add(buildName(source, List.of()));
+      root.add(buildName(source, List.of()));
 
-      add(builder.build());
+      return List.of(root.build());
    }
 
-   protected void rightSide() {
-      var builder = new UmlGCompartmentBuilder<>(source, provider)
+   protected List<GModelElement> rightSide(final TSource source) {
+      var root = new UmlGCompartmentBuilder<>(source, provider)
          .withHBoxLayout()
          .addLayoutOptions(new GLayoutOptions().hGap(3));
 
@@ -104,12 +124,14 @@ public class GPropertyBuilder<TSource extends Property, TProvider extends GSuffi
                detailsBuilder.add(a);
             }
          });
-         builder
+         root
             .add(new UmlGLabelBuilder<>(source, provider).text(":").build())
             .add(detailsBuilder.build());
 
-         add(builder.build());
+         return List.of(root.build());
       }
+
+      return List.of();
    }
 
    protected GModelElement buildType() {
@@ -153,7 +175,7 @@ public class GPropertyBuilder<TSource extends Property, TProvider extends GSuffi
       return null;
    }
 
-   protected void applyIsStatic() {
+   protected void applyIsStatic(final TSource source) {
       if (source.isStatic()) {
          addCssClass(CoreCSS.TEXT_UNDERLINE);
       }

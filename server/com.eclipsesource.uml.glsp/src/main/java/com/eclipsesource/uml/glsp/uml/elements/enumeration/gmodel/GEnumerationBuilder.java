@@ -11,8 +11,10 @@
 package com.eclipsesource.uml.glsp.uml.elements.enumeration.gmodel;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.uml2.uml.Enumeration;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
@@ -37,27 +39,22 @@ public class GEnumerationBuilder<TSource extends Enumeration, TProvider extends 
    }
 
    @Override
-   protected void prepareAdditionals() {
-      border(true);
-      showHeader();
-      showEnumerationLiterals();
+   protected void prepareRepresentation() {
+      showHeader(this.headerElements);
+      showEnumerationLiterals(this.source);
    }
 
    @Override
-   protected void showHeader() {
-      var header = new UmlGCompartmentBuilder<>(source, provider)
-         .withHeaderLayout();
-
-      header.add(new UmlGLabelBuilder<>(source, provider)
-         .text(QuotationMark.quoteDoubleAngle("enumeration"))
-         .addCssClasses(List.of(CoreCSS.FONT_BOLD))
-         .build());
-      header.add(buildName(source, List.of(CoreCSS.FONT_BOLD)));
-
-      add(header.build());
+   protected Optional<List<GModelElement>> initializeHeaderElements() {
+      return Optional.of(List.of(
+         new UmlGLabelBuilder<>(source, provider)
+            .text(QuotationMark.quoteDoubleAngle("enumeration"))
+            .addCssClasses(List.of(CoreCSS.FONT_BOLD))
+            .build(),
+         buildName(source, List.of(CoreCSS.FONT_BOLD))));
    }
 
-   protected void showEnumerationLiterals() {
+   protected void showEnumerationLiterals(final TSource source) {
       var root = new UmlGCompartmentBuilder<>(source, provider)
          .withVBoxLayout();
 

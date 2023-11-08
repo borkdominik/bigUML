@@ -10,6 +10,8 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.elements.element;
 
+import java.util.Optional;
+
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.GraphFactory;
 import org.eclipse.glsp.graph.builder.AbstractGNodeBuilder;
@@ -29,7 +31,7 @@ public abstract class GElementNodeBuilder<TSource extends Element, TProvider ext
    /*
     * Draw a border around the element
     */
-   protected boolean border = false;
+   protected Optional<Boolean> border = Optional.empty();
 
    protected final TSource source;
    protected final TProvider provider;
@@ -38,8 +40,6 @@ public abstract class GElementNodeBuilder<TSource extends Element, TProvider ext
       super(type);
       this.source = source;
       this.provider = provider;
-
-      this.prepare();
    }
 
    protected void prepare() {
@@ -52,12 +52,16 @@ public abstract class GElementNodeBuilder<TSource extends Element, TProvider ext
     * Prepare the required properties
     */
    protected void prepareProperties() {
-      this.id(provider.idGenerator().getOrCreateId(source));
+      if (this.id == null) {
+         this.id(provider.idGenerator().getOrCreateId(source));
+      }
 
       // TODO: Remove after switching to builder based approach for all gmodels
       this.addArgument(BUILD_BY, "gbuilder");
 
-      border(true);
+      if (border.isEmpty()) {
+         border(true);
+      }
    }
 
    /**
@@ -69,13 +73,15 @@ public abstract class GElementNodeBuilder<TSource extends Element, TProvider ext
 
    @Override
    protected void setProperties(final GNode node) {
+      this.prepare();
+
       super.setProperties(node);
 
-      node.getArgs().put(BORDER_ARG, this.border);
+      this.border.ifPresent(v -> node.getArgs().put(BORDER_ARG, v));
    }
 
    public TBuilder border(final boolean enabled) {
-      this.border = enabled;
+      this.border = Optional.of(enabled);
       return self();
    }
 

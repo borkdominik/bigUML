@@ -63,12 +63,6 @@ public class GPropertyBuilder<TSource extends Property, TProvider extends GSuffi
    }
 
    @Override
-   protected void prepareRepresentation() {
-      super.prepareRepresentation();
-      applyIsStatic(source);
-   }
-
-   @Override
    protected boolean hasChildren() {
       return false;
    }
@@ -105,7 +99,13 @@ public class GPropertyBuilder<TSource extends Property, TProvider extends GSuffi
          root.add(new UmlGLabelBuilder<>(source, provider).text("/").build());
       }
 
-      root.add(buildName(source, List.of()));
+      var textCss = new ArrayList<String>();
+
+      if (source.isStatic()) {
+         textCss.add(CoreCSS.TEXT_UNDERLINE);
+      }
+
+      root.add(buildName(source, textCss));
 
       return List.of(root.build());
    }
@@ -179,11 +179,4 @@ public class GPropertyBuilder<TSource extends Property, TProvider extends GSuffi
 
       return null;
    }
-
-   protected void applyIsStatic(final TSource source) {
-      if (source.isStatic()) {
-         addCssClass(CoreCSS.TEXT_UNDERLINE);
-      }
-   }
-
 }

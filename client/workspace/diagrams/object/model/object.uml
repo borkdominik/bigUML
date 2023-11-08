@@ -48,4 +48,7 @@
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_oZAMcv5ZEe2EurDOEyjS8g" value="1"/>
     </ownedAttribute>
   </packagedElement>
+  <packagedElement xmi:type="uml:InstanceSpecification" xmi:id="_PvjcgH40Ee6bSrMxUmd9gg" name="">
+    <slot xmi:id="_qhp7IH42Ee6bSrMxUmd9gg" definingFeature="_bM_S4K7gEe2EZoZ5sgiBCg"/>
+  </packagedElement>
 </uml:Model>

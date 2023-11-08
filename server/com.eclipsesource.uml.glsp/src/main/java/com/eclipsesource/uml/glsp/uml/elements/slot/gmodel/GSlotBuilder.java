@@ -11,9 +11,10 @@
 package com.eclipsesource.uml.glsp.uml.elements.slot.gmodel;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
 
 import org.eclipse.glsp.graph.util.GConstants;
+import org.eclipse.uml2.uml.LiteralString;
 import org.eclipse.uml2.uml.Slot;
 import org.eclipse.uml2.uml.ValueSpecification;
 
@@ -33,9 +34,16 @@ public class GSlotBuilder<TSource extends Slot, TProvider extends GIdGeneratorPr
    }
 
    @Override
+   protected void prepareProperties() {
+      super.prepareProperties();
+      border(false);
+   }
+
+   @Override
    protected void prepareLayout() {
       this.layout(GConstants.Layout.HBOX)
          .layoutOptions(new UmlGLayoutOptions()
+            .clearPadding()
             .hGap(3));
    }
 
@@ -46,32 +54,46 @@ public class GSlotBuilder<TSource extends Slot, TProvider extends GIdGeneratorPr
    }
 
    protected void showHeader(final TSource source) {
-      String definingFeature = "<UNDEFINED>";
-      List<String> finalList = new ArrayList<>();
-
+      Optional<String> definingFeature = Optional.empty();
       var defFeature = source.getDefiningFeature();
 
       if (defFeature != null) {
-         definingFeature = defFeature.getName();
-      } else {
-         definingFeature = "<UNDEFINED>";
+         definingFeature = Optional.ofNullable(defFeature.getName());
       }
 
-      // builder.add(separatorBuilder(source, ":").build());
-      var valueList = source.getValues();
-      add(new UmlGLabelBuilder<>(source, provider)
-         .text(definingFeature)
-         .build());
-      if (!valueList.isEmpty()) {
-         for (ValueSpecification val : valueList) {
-            if (val.stringValue() != null) {
-               finalList.add(val.stringValue());
-            }
+      // TODO: Add type
 
+      var valueList = source.getValues();
+      if (valueList.size() > 0) {
+         var valuesAsStrings = new ArrayList<String>();
+
+         for (ValueSpecification val : valueList) {
+            if (val instanceof LiteralString) {
+               valuesAsStrings.add(String.format("\"%s\"", val.stringValue()));
+            } else if (val.stringValue() != null) {
+               valuesAsStrings.add(val.stringValue());
+            }
          }
 
+         var valueLabel = String.join(", ", valuesAsStrings);
+
+         definingFeature.ifPresentOrElse(f -> {
+            add(new UmlGLabelBuilder<>(source, provider)
+               .text(String.format("%s = %s", f, valueLabel))
+               .build());
+         }, () -> {
+            add(new UmlGLabelBuilder<>(source, provider)
+               .text(String.format("%s", valueLabel))
+               .build());
+         });
+
+      } else if (definingFeature.isPresent()) {
          add(new UmlGLabelBuilder<>(source, provider)
-            .text(" = " + finalList)
+            .text(String.format("%s", definingFeature.get()))
+            .build());
+      } else if (definingFeature.isEmpty()) {
+         add(new UmlGLabelBuilder<>(source, provider)
+            .text("<UNDEFINED>")
             .build());
       }
    }

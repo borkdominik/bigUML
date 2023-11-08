@@ -12,12 +12,14 @@ package com.eclipsesource.uml.glsp.uml.elements.parameter;
 
 import com.eclipsesource.uml.glsp.uml.configuration.di.NodeConfigurationFactory;
 import com.eclipsesource.uml.glsp.uml.elements.parameter.features.ParameterPropertyMapper;
+import com.eclipsesource.uml.glsp.uml.elements.parameter.gmodel.ParameterNodeMapper;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.di.PropertyMapperFactory;
+import com.eclipsesource.uml.glsp.uml.gmodel.di.GModelMapperFactory;
 import com.eclipsesource.uml.glsp.uml.handler.di.NodeOperationHandlerFactory;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 
 public interface ParameterFactory
-   extends NodeConfigurationFactory, NodeOperationHandlerFactory, PropertyMapperFactory {
+   extends NodeConfigurationFactory, NodeOperationHandlerFactory, PropertyMapperFactory, GModelMapperFactory {
    @Override
    ParameterConfiguration nodeConfiguration(Representation representation);
 
@@ -26,4 +28,7 @@ public interface ParameterFactory
 
    @Override
    ParameterPropertyMapper elementPropertyMapper(Representation representation);
+
+   @Override
+   ParameterNodeMapper gmodel(Representation representation);
 }

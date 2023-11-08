@@ -22,6 +22,9 @@ import org.eclipse.uml2.uml.Slot;
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.uml.elements.named_element.GNamedElementBuilder;
 import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGCompartmentBuilder;
+import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGDividerBuilder;
+import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGLayoutOptions;
+import com.eclipsesource.uml.glsp.uml.gmodel.constants.UmlPaddingValues;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdContextGeneratorProvider;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdGeneratorProvider;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GModelMapHandlerProvider;
@@ -48,12 +51,12 @@ public class GInstanceSpecificationBuilder<TSource extends InstanceSpecification
    @Override
    protected Optional<List<GModelElement>> initializeHeaderElements() {
       var name = source.getClassifiers().size() == 0 ? source.getName()
-         : String.format("%s:%s", source.getName(),
+         : String.format("%s : %s", source.getName(),
             String.join(",",
                source.getClassifiers().stream()
                   .map(c -> c.getName()).collect(Collectors.toList())));
 
-      return Optional.of(List.of(buildName(name, List.of(CoreCSS.FONT_BOLD))));
+      return Optional.of(List.of(buildName(name, List.of(CoreCSS.FONT_BOLD, CoreCSS.TEXT_UNDERLINE))));
    }
 
    protected EList<Slot> slots(final TSource source) {
@@ -61,14 +64,22 @@ public class GInstanceSpecificationBuilder<TSource extends InstanceSpecification
    }
 
    protected void showSlots(final TSource source) {
-      var compartment = new UmlGCompartmentBuilder<>(source, provider)
-         .withVBoxLayout();
+      var slots = slots(source);
 
-      var slotElements = slots(source).stream()
-         .map(e -> provider.gmodelMapHandler().handle(e))
-         .collect(Collectors.toList());
-      compartment.addAll(slotElements);
+      if (slots.size() > 0) {
+         add(new UmlGDividerBuilder<>(source, provider).build());
 
-      add(compartment.build());
+         var root = new UmlGCompartmentBuilder<>(source, provider)
+            .withVBoxLayout()
+            .addLayoutOptions(new UmlGLayoutOptions()
+               .padding(UmlPaddingValues.LEVEL_1, UmlPaddingValues.LEVEL_2));
+
+         root.addAll(slots(source).stream()
+            .map(e -> provider.gmodelMapHandler().handle(e))
+            .collect(Collectors.toList()));
+
+         add(root.build());
+      }
+
    }
 }

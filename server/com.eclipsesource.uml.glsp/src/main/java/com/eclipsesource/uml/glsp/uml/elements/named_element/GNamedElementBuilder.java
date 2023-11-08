@@ -82,7 +82,7 @@ public abstract class GNamedElementBuilder<TSource extends NamedElement, TProvid
    }
 
    protected Optional<List<GModelElement>> initializeHeaderElements() {
-      return this.headerElements;
+      return Optional.empty();
    }
 
    protected void showHeader(final Optional<List<GModelElement>> headerElements) {

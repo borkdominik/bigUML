@@ -8,21 +8,19 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.uml.elements.operation.gmodel;
+package com.eclipsesource.uml.glsp.uml.elements.parameter.gmodel;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.util.GConstants;
-import org.eclipse.uml2.uml.Operation;
+import org.eclipse.uml2.uml.Parameter;
 import org.eclipse.uml2.uml.ParameterDirectionKind;
 
-import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.uml.elements.named_element.GNamedElementBuilder;
+import com.eclipsesource.uml.glsp.uml.elements.parameter.utils.ParameterPropertyPaletteUtils;
 import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGCompartmentBuilder;
 import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGLabelBuilder;
 import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGLayoutOptions;
@@ -30,11 +28,12 @@ import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdContextGeneratorProvide
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdGeneratorProvider;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GModelMapHandlerProvider;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GSuffixProvider;
+import com.eclipsesource.uml.glsp.uml.utils.element.TypeUtils;
 
-public class GOperationBuilder<TSource extends Operation, TProvider extends GSuffixProvider & GIdGeneratorProvider & GIdContextGeneratorProvider & GModelMapHandlerProvider, TBuilder extends GOperationBuilder<TSource, TProvider, TBuilder>>
+public class GParameterBuilder<TSource extends Parameter, TProvider extends GSuffixProvider & GIdGeneratorProvider & GIdContextGeneratorProvider & GModelMapHandlerProvider, TBuilder extends GParameterBuilder<TSource, TProvider, TBuilder>>
    extends GNamedElementBuilder<TSource, TProvider, TBuilder> {
 
-   public GOperationBuilder(final TSource source, final TProvider provider, final String type) {
+   public GParameterBuilder(final TSource source, final TProvider provider, final String type) {
       super(source, provider, type);
    }
 
@@ -58,32 +57,13 @@ public class GOperationBuilder<TSource extends Operation, TProvider extends GSuf
    }
 
    @Override
-   protected void prepareRepresentation() {
-      super.prepareRepresentation();
-      showParameters(source);
-      showReturns(source);
-   }
-
-   @Override
    protected boolean hasChildren() {
       return false;
    }
 
    @Override
    protected Optional<List<GModelElement>> initializeHeaderElements() {
-      var textCss = new ArrayList<String>();
-
-      if (source.isStatic()) {
-         textCss.add(CoreCSS.TEXT_UNDERLINE);
-      }
-
-      if (source.isAbstract()) {
-         textCss.add(CoreCSS.FONT_ITALIC);
-      }
-
-      return Optional.of(List.of(
-         buildVisibility(source, List.of()),
-         buildName(source, textCss)));
+      return Optional.of(List.of(asLabel(source)));
    }
 
    @Override
@@ -98,42 +78,22 @@ public class GOperationBuilder<TSource extends Operation, TProvider extends GSuf
       });
    }
 
-   protected void showParameters(final TSource source) {
-      var root = new UmlGCompartmentBuilder<>(source, provider)
-         .withHBoxLayout();
-
-      var parameters = source.getOwnedParameters().stream()
-         .filter(p -> p.getDirection() != ParameterDirectionKind.RETURN_LITERAL).collect(Collectors.toList());
-
-      root.add(new UmlGLabelBuilder<>(source, provider).text("(").build());
-
-      for (int i = 0; i < parameters.size(); i++) {
-         if (i > 0) {
-            root.add(new UmlGLabelBuilder<>(source, provider).text(",").build());
-         }
-
-         root.add(provider.gmodelMapHandler().handle(parameters.get(i)));
+   protected GModelElement asLabel(final TSource source) {
+      if (source.getDirection() == ParameterDirectionKind.RETURN_LITERAL) {
+         return asReturnParameter(source);
       }
 
-      root.add(new UmlGLabelBuilder<>(source, provider).text(")").build());
-
-      add(root.build());
+      return asParameter(source);
    }
 
-   protected void showReturns(final TSource source) {
-      var parameters = source.getOwnedParameters().stream()
-         .filter(p -> p.getDirection() == ParameterDirectionKind.RETURN_LITERAL).collect(Collectors.toList());
+   protected GModelElement asParameter(final TSource source) {
+      return new UmlGLabelBuilder<>(source, provider)
+         .text(ParameterPropertyPaletteUtils.asText(source))
+         .build();
+   }
 
-      if (parameters.size() > 0) {
-         add(new UmlGLabelBuilder<>(source, provider).text(":").build());
-
-         for (int i = 0; i < parameters.size(); i++) {
-            if (i > 0) {
-               add(new UmlGLabelBuilder<>(source, provider).text(",").build());
-            }
-
-            add(provider.gmodelMapHandler().handle(parameters.get(i)));
-         }
-      }
+   protected GModelElement asReturnParameter(final TSource source) {
+      return new UmlGLabelBuilder<>(source, provider)
+         .text(String.format("%s", TypeUtils.asText(source.getType(), source))).build();
    }
 }

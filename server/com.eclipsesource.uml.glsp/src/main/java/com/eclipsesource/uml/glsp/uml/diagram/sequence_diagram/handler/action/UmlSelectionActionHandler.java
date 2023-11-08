@@ -28,7 +28,6 @@ import org.eclipse.uml2.uml.Message;
 import org.eclipse.uml2.uml.MessageEnd;
 import org.eclipse.uml2.uml.MessageOccurrenceSpecification;
 import org.eclipse.uml2.uml.MessageSort;
-import org.eclipse.uml2.uml.NamedElement;
 import org.eclipse.uml2.uml.OccurrenceSpecification;
 
 import com.eclipsesource.uml.glsp.core.model.UmlModelServerAccess;
@@ -84,94 +83,30 @@ public class UmlSelectionActionHandler extends AbstractEMSActionHandler<SelectAc
       selectedElementsIds.removeIf(t -> t == null);
 
       for (String elementId : selectedElementsIds) {
-         // evaluate possible children or siblings of element to be added to the selection
 
-         // if the element was already checked, we do not need to check again.
          if (checkedElementIDs.contains(elementId)) {
             continue;
          }
 
-         // mark as checked
          checkedElementIDs.add(elementId);
 
          System.out.println("selecting: " + elementId);
          var semanticElement = currentModelIndex.getEObject(elementId).get();
          if (semanticElement == null) {
-            // do nothing
             continue;
          }
-
-         System.out.println("checking 1: " + ((NamedElement) semanticElement).getName() + " // " + elementId);
-
          if (semanticElement instanceof Message) {
-            var sendEnd = ((Message) semanticElement).getSendEvent();
-            var receiveEnd = ((Message) semanticElement).getReceiveEvent();
-
-            if (sendEnd != null) {
-               addToSelectionIDs.add(SemanticElementAccessor.getId(sendEnd));
-            }
-            if (receiveEnd != null) {
-               addToSelectionIDs.add(SemanticElementAccessor.getId(receiveEnd));
-            }
+            checkElement(addToSelectionIDs, (Message) semanticElement);
+            continue;
          }
-
          if (semanticElement instanceof Lifeline) {
-            for (InteractionFragment fragment : ((Lifeline) semanticElement).getCoveredBys()) {
-               System.out.println("adding: " + fragment.getName());
-               addToSelectionIDs.add(SemanticElementAccessor.getId(fragment));
-            }
+            checkElement(addToSelectionIDs, (Lifeline) semanticElement);
             continue;
          }
-
          if (semanticElement instanceof OccurrenceSpecification) {
-            System.out.println("checking OS: " + ((OccurrenceSpecification) semanticElement).getName());
-
-            if (semanticElement instanceof MessageOccurrenceSpecification
-               && ((MessageOccurrenceSpecification) semanticElement).getMessage()
-                  .getMessageSort() == MessageSort.CREATE_MESSAGE_LITERAL
-               && ((MessageOccurrenceSpecification) semanticElement).getMessage()
-                  .getReceiveEvent() == semanticElement) {
-               // ignore CREATION reciveing OS,
-               continue;
-            }
-
-            getPositionfShape(semanticElement).ifPresent(refPosition -> {
-               var onSameLifeline = ((OccurrenceSpecification) semanticElement).getCovered().getCoveredBys();
-               addToSelectionIDs.addAll(
-                  onSameLifeline.stream()
-                     .filter(elem -> !selectedElementsIds.contains(SemanticElementAccessor.getId(elem)))
-                     .filter(elem -> !addToSelectionIDs.contains(SemanticElementAccessor.getId(elem)))
-                     .filter(elem -> getPositionfShape(elem).isPresent())
-                     .filter(elem -> getPositionfShape(elem).get().getY() >= refPosition.getY())
-                     // .filter(elem -> getPositionfShape(elem).get().getX() >= refPosition.getX())
-                     .map(elem -> SemanticElementAccessor.getId(elem))
-                     .collect(Collectors.toList()));
-            });
-
-            if (semanticElement instanceof MessageEnd) {
-               // // need to check if opposit end is at same absolute Y and X
-               // if so,then also select
-               // TODO: fix LOST and FOUND messages
-               // TODO: handle CREATE messages
-
-               var messageEnd = ((MessageEnd) semanticElement).oppositeEnd().get(0);
-               var messageEndId = SemanticElementAccessor.getId(messageEnd);
-
-               if (messageEnd.getMessage()
-                  .getMessageSort() == MessageSort.CREATE_MESSAGE_LITERAL) {
-                  // switch to lifeline
-                  var createdLifelineId = SemanticElementAccessor
-                     .getId(((MessageOccurrenceSpecification) messageEnd).getCovered());
-                  addToSelectionIDs.add(createdLifelineId);
-               } else {
-                  addToSelectionIDs.add(messageEndId);
-
-               }
-
-            }
+            checkElement(addToSelectionIDs, (OccurrenceSpecification) semanticElement);
             continue;
          }
-
       }
 
       selectedElementsIds.addAll(addToSelectionIDs);
@@ -179,18 +114,87 @@ public class UmlSelectionActionHandler extends AbstractEMSActionHandler<SelectAc
       removeDuplicates(checkedElementIDs);
 
       if (checkedElementIDs.containsAll(selectedElementsIds)) {
-         System.out.println("DONE");
          return new ArrayList<>();
-
       }
 
-      selectedElementsIds.addAll(
-         collectElements(i + 1, selectedElementsIds,
-            checkedElementIDs,
-            currentModelIndex));
+      selectedElementsIds.addAll(collectElements(i + 1, selectedElementsIds, checkedElementIDs, currentModelIndex));
 
       removeDuplicates(selectedElementsIds);
       return selectedElementsIds;
+   }
+
+   /**
+    * @param addToSelectionIDs
+    * @param semanticElement
+    */
+   private void checkElement(final List<String> addToSelectionIDs, final OccurrenceSpecification semanticElement) {
+
+      if (semanticElement instanceof MessageOccurrenceSpecification
+         && ((MessageOccurrenceSpecification) semanticElement).getMessage()
+            .getMessageSort() == MessageSort.CREATE_MESSAGE_LITERAL
+         && ((MessageOccurrenceSpecification) semanticElement).getMessage()
+            .getReceiveEvent() == semanticElement) {
+
+         var createdLifelineId = SemanticElementAccessor
+            .getId(((MessageOccurrenceSpecification) semanticElement).getCovered());
+         addToSelectionIDs.add(createdLifelineId);
+
+      } else {
+
+         getPositionfShape(semanticElement).ifPresent(refPosition -> {
+            var onSameLifeline = semanticElement.getCovered().getCoveredBys();
+            addToSelectionIDs.addAll(
+               onSameLifeline.stream()
+                  // .filter(elem -> !selectedElementsIds.contains(SemanticElementAccessor.getId(elem)))
+                  .filter(elem -> !addToSelectionIDs.contains(SemanticElementAccessor.getId(elem)))
+                  .filter(elem -> getPositionfShape(elem).isPresent())
+                  .filter(elem -> getPositionfShape(elem).get().getY() >= refPosition.getY())
+                  // .filter(elem -> getPositionfShape(elem).get().getX() >= refPosition.getX())
+                  .map(elem -> SemanticElementAccessor.getId(elem))
+                  .collect(Collectors.toList()));
+         });
+
+         if (semanticElement instanceof MessageEnd) {
+            // TODO: fix LOST and FOUND messages
+            // TODO: handle CREATE messages
+
+            var messageEnd = ((MessageEnd) semanticElement).oppositeEnd().get(0);
+            var messageEndId = SemanticElementAccessor.getId(messageEnd);
+            getPositionfShape(semanticElement).ifPresent(refPosition -> {
+               if (getPositionfShape(messageEnd).get().getY() >= refPosition.getY()) {
+                  addToSelectionIDs.add(messageEndId);
+               }
+            });
+
+         }
+      }
+   }
+
+   /**
+    * @param addToSelectionIDs
+    * @param semanticElement
+    */
+   private void checkElement(final List<String> addToSelectionIDs, final Lifeline semanticElement) {
+      for (InteractionFragment fragment : semanticElement.getCoveredBys()) {
+         System.out.println("adding: " + fragment.getName());
+         addToSelectionIDs.add(SemanticElementAccessor.getId(fragment));
+      }
+   }
+
+   /**
+    * @param addToSelectionIDs
+    * @param semanticElement
+    */
+   private void checkElement(final List<String> addToSelectionIDs, final Message semanticElement) {
+      var sendEnd = semanticElement.getSendEvent();
+      var receiveEnd = semanticElement.getReceiveEvent();
+
+      if (sendEnd != null) {
+         addToSelectionIDs.add(SemanticElementAccessor.getId(sendEnd));
+      }
+      if (receiveEnd != null) {
+         addToSelectionIDs.add(SemanticElementAccessor.getId(receiveEnd));
+      }
    }
 
    /**

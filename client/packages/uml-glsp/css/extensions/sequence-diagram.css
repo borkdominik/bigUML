@@ -35,9 +35,9 @@
 
 .uml-node .sequence__InteractionOperand rect {
     stroke-width: 1;
-    stroke-dasharray: 6;
+    /* stroke-dasharray: 6; */
     border-right: 0;
-    fill: none;
+    fill: rgba(8, 255, 177, 0.5);
 }
 
 .uml-node .sequence__MessageAnchor {

@@ -29,6 +29,9 @@ import {
 export const umlSequenceDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
     const context = { bind, unbind, isBound, rebind };
 
+    // DISABLE GRID SNAPPING
+    // unbind(TYPES.ISnapper);
+
     // INTERACTIONS
     configureModelElement(context, UmlSequenceTypes.INTERACTION, InteractionElement, InteractionNodeView);
 

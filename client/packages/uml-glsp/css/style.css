@@ -13,6 +13,7 @@
 @import 'base/node.css';
 @import 'base/text.css';
 @import 'base/marker.css';
+@import 'base/processors.css';
 
 @import 'extensions/uml-edit-label.css';
 @import 'extensions/uml-tool-palette.css';

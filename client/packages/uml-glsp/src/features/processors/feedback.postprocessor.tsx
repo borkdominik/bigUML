@@ -6,11 +6,9 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { IVNodePostprocessor, SModelElement, svg } from '@eclipse-glsp/client';
+import { hasArguments, isBoundsAware, isHoverable, isSelectable, IVNodePostprocessor, SModelElement, svg } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 import { VNode } from 'snabbdom';
-
-import { InteractableCompartment } from '../graph/views/compartment';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const JSX = { createElement: svg };
@@ -19,20 +17,26 @@ const JSX = { createElement: svg };
  * A NodeDecorator to install visual feedback on selected Compartments that hold icons and editable labels
  */
 @injectable()
-export class IconLabelCompartmentSelectionFeedback implements IVNodePostprocessor {
+export class CompartmentSelectionFeedback implements IVNodePostprocessor {
     decorate(vnode: VNode, element: SModelElement): VNode {
-        if (element instanceof InteractableCompartment && element.hoverFeedback) {
-            const vPadding = -1;
-            const hPadding = 3;
+        if (
+            hasArguments(element) &&
+            element.args['selection_border'] &&
+            isSelectable(element) &&
+            element.selected &&
+            isBoundsAware(element) &&
+            isHoverable(element)
+        ) {
+            const vPadding = 2;
+            const hPadding = 2;
 
             const feedback: any = (
                 <rect
                     x={-hPadding}
                     y={-vPadding}
-                    width={element.bounds.width + hPadding}
-                    height={element.bounds.height + vPadding}
-                    class-selection-feedback={true}
-                    class-hover={element.hoverFeedback}
+                    width={element.bounds.width + 2 * hPadding + 2}
+                    height={element.bounds.height + 2 * vPadding + 2}
+                    class-selection-border={true}
                 />
             );
             if (!vnode.children) {

@@ -10,7 +10,6 @@ import {
     EditableLabel,
     editLabelFeature,
     getSubType,
-    hasArguments,
     hoverFeedbackFeature,
     isEdgeLayoutable,
     isEditableLabel,
@@ -66,12 +65,9 @@ export class SEditableLabelView extends ShapeView {
         if (!isEdgeLayoutable(element) && !this.isVisible(element, context)) {
             return undefined;
         }
-        let highlight = false;
-        if (hasArguments(element)) {
-            highlight = !!element.args['highlight'];
-        }
+
         const vnode = (
-            <text class-sprotty-label={true} class-editable-label={true} class-highlight-label={highlight}>
+            <text class-sprotty-label={true} class-editable-label={true}>
                 {element.text}
             </text>
         );

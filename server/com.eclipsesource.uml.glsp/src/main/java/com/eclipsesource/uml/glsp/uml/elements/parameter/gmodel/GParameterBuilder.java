@@ -19,6 +19,7 @@ import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.Parameter;
 import org.eclipse.uml2.uml.ParameterDirectionKind;
 
+import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.uml.elements.named_element.GNamedElementBuilder;
 import com.eclipsesource.uml.glsp.uml.elements.parameter.utils.ParameterPropertyPaletteUtils;
 import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGCompartmentBuilder;
@@ -41,6 +42,7 @@ public class GParameterBuilder<TSource extends Parameter, TProvider extends GSuf
    protected void prepareProperties() {
       super.prepareProperties();
       border(false);
+      selectionBorder(true);
    }
 
    @Override
@@ -89,11 +91,14 @@ public class GParameterBuilder<TSource extends Parameter, TProvider extends GSuf
    protected GModelElement asParameter(final TSource source) {
       return new UmlGLabelBuilder<>(source, provider)
          .text(ParameterPropertyPaletteUtils.asText(source))
+         .addCssClass(CoreCSS.TEXT_INTERACTABLE)
          .build();
    }
 
    protected GModelElement asReturnParameter(final TSource source) {
       return new UmlGLabelBuilder<>(source, provider)
-         .text(String.format("%s", TypeUtils.asText(source.getType(), source))).build();
+         .text(String.format("%s", TypeUtils.asText(source.getType(), source)))
+         .addCssClass(CoreCSS.TEXT_INTERACTABLE)
+         .build();
    }
 }

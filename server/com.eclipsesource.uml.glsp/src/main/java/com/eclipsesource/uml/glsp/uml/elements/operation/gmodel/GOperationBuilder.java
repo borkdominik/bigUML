@@ -42,6 +42,7 @@ public class GOperationBuilder<TSource extends Operation, TProvider extends GSuf
    protected void prepareProperties() {
       super.prepareProperties();
       border(false);
+      selectionBorder(true);
    }
 
    @Override

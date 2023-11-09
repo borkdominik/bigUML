@@ -47,6 +47,7 @@ public class GPropertyBuilder<TSource extends Property, TProvider extends GSuffi
    protected void prepareProperties() {
       super.prepareProperties();
       border(false);
+      selectionBorder(true);
    }
 
    @Override
@@ -153,6 +154,7 @@ public class GPropertyBuilder<TSource extends Property, TProvider extends GSuffi
          .id(provider.suffix().appendTo(PropertyTypeLabelSuffix.SUFFIX, provider.idGenerator().getOrCreateId(source)))
          .text(text)
          .addArgument(AutocompleteConstants.GMODEL_FEATURE, true)
+         .addCssClass(CoreCSS.TEXT_INTERACTABLE)
          .build();
    }
 
@@ -171,6 +173,7 @@ public class GPropertyBuilder<TSource extends Property, TProvider extends GSuffi
                   .id(provider.suffix().appendTo(PropertyMultiplicityLabelSuffix.SUFFIX,
                      provider.idGenerator().getOrCreateId(source)))
                   .text(multiplicity)
+                  .addCssClass(CoreCSS.TEXT_INTERACTABLE)
                   .build())
             .add(new UmlGLabelBuilder<>(source, provider).text("]").build());
 

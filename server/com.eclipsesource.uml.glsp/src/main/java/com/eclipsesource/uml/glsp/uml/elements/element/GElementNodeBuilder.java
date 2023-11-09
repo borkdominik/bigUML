@@ -27,11 +27,16 @@ public abstract class GElementNodeBuilder<TSource extends Element, TProvider ext
     */
    public final String BUILD_BY = "build_by";
    public final String BORDER_ARG = "border";
+   public final String SELECTION_BORDER_ARG = "selection_border";
 
    /*
     * Draw a border around the element
     */
    protected Optional<Boolean> border = Optional.empty();
+   /*
+    * Draw a border around the element if the element is selected
+    */
+   protected Optional<Boolean> selectionBorder = Optional.empty();
 
    protected final TSource source;
    protected final TProvider provider;
@@ -71,6 +76,16 @@ public abstract class GElementNodeBuilder<TSource extends Element, TProvider ext
 
    protected void prepareRepresentation() {}
 
+   public TBuilder border(final boolean enabled) {
+      this.border = Optional.of(enabled);
+      return self();
+   }
+
+   public TBuilder selectionBorder(final boolean enabled) {
+      this.selectionBorder = Optional.of(enabled);
+      return self();
+   }
+
    @Override
    protected void setProperties(final GNode node) {
       this.prepare();
@@ -78,11 +93,8 @@ public abstract class GElementNodeBuilder<TSource extends Element, TProvider ext
       super.setProperties(node);
 
       this.border.ifPresent(v -> node.getArgs().put(BORDER_ARG, v));
-   }
 
-   public TBuilder border(final boolean enabled) {
-      this.border = Optional.of(enabled);
-      return self();
+      this.selectionBorder.ifPresent(v -> node.getArgs().put(SELECTION_BORDER_ARG, v));
    }
 
    @Override

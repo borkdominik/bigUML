@@ -15,10 +15,17 @@
     font-size: small;
 }
 
-.uml-theme .selected .editable-label {
+.uml-theme .editable-label,
+.uml-theme .uml-text-highlight,
+.uml-theme .uml-text-interactable {
     cursor: pointer;
 }
 
-.uml-theme .selected .highlight-label {
+.uml-theme .selected .uml-text-highlight,
+.uml-theme .uml-text-highlight:hover {
     fill: var(--uml-medium-blue);
+}
+
+.uml-theme .uml-text-interactable:hover {
+    fill: var(--uml-label-hoverForeground);
 }

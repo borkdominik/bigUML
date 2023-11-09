@@ -47,6 +47,7 @@ import { SVGIdCreatorService, UmlCompartment } from './features/graph/index';
 import { UmlGraphProjectionView } from './features/graph/views/uml-graph-projection.view';
 import { initializationModule, IOnceModelInitialized } from './features/initialization/di.config';
 import { umlOutlineModule } from './features/outline/di.config';
+import { CompartmentSelectionFeedback } from './features/processors/feedback.postprocessor';
 import propertyPaletteModule from './features/property-palette/di.config';
 import { themeModule } from './features/theme/di.config';
 import { umlToolFeedbackModule } from './features/tool-feedback/di.config';
@@ -72,6 +73,7 @@ export default function createContainer(widgetId: string): Container {
         // UI
         rebind(EditLabelUI).to(EditLabelUIAutocomplete);
         // bind(TYPES.IVNodePostprocessor).to(IconLabelCompartmentSelectionFeedback);
+        bind(TYPES.IVNodePostprocessor).to(CompartmentSelectionFeedback);
         bind(SVGIdCreatorService).toSelf().inSingletonScope();
 
         // Configuration

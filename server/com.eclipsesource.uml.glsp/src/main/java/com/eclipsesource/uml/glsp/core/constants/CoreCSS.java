@@ -29,6 +29,8 @@ public class CoreCSS {
 
    public static final String DIVIDER_SUBTITLE = "uml-divider-subtitle";
    public static final String TEXT_UNDERLINE = "uml-text-underline";
+   public static final String TEXT_INTERACTABLE = "uml-text-interactable";
+   public static final String TEXT_HIGHLIGHT = "uml-text-highlight";
    public static final String FONT_BOLD = "uml-font-bold";
    public static final String FONT_ITALIC = "uml-font-italic";
 

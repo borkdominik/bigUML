@@ -37,8 +37,6 @@ import com.eclipsesource.uml.glsp.uml.utils.element.VisibilityKindUtils;
 public abstract class GNamedElementBuilder<TSource extends NamedElement, TProvider extends GIdGeneratorProvider & GIdContextGeneratorProvider & GSuffixProvider, TBuilder extends GNamedElementBuilder<TSource, TProvider, TBuilder>>
    extends GElementNodeBuilder<TSource, TProvider, TBuilder> {
 
-   public final String HIGHLIGHT_ARG = "highlight";
-
    protected Optional<List<GModelElement>> headerElements = Optional.empty();
 
    public GNamedElementBuilder(final TSource source, final TProvider provider) {
@@ -65,6 +63,10 @@ public abstract class GNamedElementBuilder<TSource extends NamedElement, TProvid
    }
 
    protected GLayoutOptions prepareLayoutOptions() {
+      if (hasChildren()) {
+         return new UmlGLayoutOptions().clearPadding().paddingBottom(UmlPaddingValues.LEVEL_1);
+      }
+
       return new UmlGLayoutOptions().clearPadding();
    }
 
@@ -135,8 +137,8 @@ public abstract class GNamedElementBuilder<TSource extends NamedElement, TProvid
    protected GLabel buildName(final String name, final List<String> css) {
       return new UmlGLabelBuilder<>(source, provider, CoreTypes.LABEL_NAME)
          .id(provider.suffix().appendTo(NameLabelSuffix.SUFFIX, provider.idGenerator().getOrCreateId(source)))
-         .addArgument(HIGHLIGHT_ARG, true)
          .addCssClasses(css)
+         .addCssClass(CoreCSS.TEXT_HIGHLIGHT)
          .text(name)
          .build();
    }

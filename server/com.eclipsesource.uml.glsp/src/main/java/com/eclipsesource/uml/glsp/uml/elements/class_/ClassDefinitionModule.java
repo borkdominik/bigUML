@@ -12,7 +12,6 @@ package com.eclipsesource.uml.glsp.uml.elements.class_;
 
 import com.eclipsesource.uml.glsp.core.manifest.DiagramManifest;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.PopupMapperContribution;
-import com.eclipsesource.uml.glsp.uml.elements.class_.features.ClassPopupMapper;
 import com.eclipsesource.uml.glsp.uml.manifest.node.NodeFactoryDefinition;
 
 public class ClassDefinitionModule extends NodeFactoryDefinition implements PopupMapperContribution {
@@ -25,6 +24,6 @@ public class ClassDefinitionModule extends NodeFactoryDefinition implements Popu
    protected void configure() {
       super.configure();
 
-      contributePopupMappers(contribution -> contribution.addBinding().to(ClassPopupMapper.class));
+      // contributePopupMappers(contribution -> contribution.addBinding().to(ClassPopupMapper.class));
    }
 }

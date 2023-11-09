@@ -28,6 +28,15 @@ import com.google.inject.multibindings.Multibinder;
 public interface PopupMapperContribution
    extends ContributionBinderSupplier, ContributionIdSupplier, ContributionRepresentationSupplier {
 
+   interface Definition extends ContributionBinderSupplier {
+      default void definePopupMappersContribution() {
+         var binder = contributionBinder();
+
+         MapBinder.newMapBinder(binder, new TypeLiteral<Representation>() {},
+            new TypeLiteral<Set<PopupMapper<? extends EObject>>>() {});
+      }
+   }
+
    default void contributePopupMappers(
       final Consumer<Multibinder<PopupMapper<? extends EObject>>> consumer) {
       var binder = contributionBinder();

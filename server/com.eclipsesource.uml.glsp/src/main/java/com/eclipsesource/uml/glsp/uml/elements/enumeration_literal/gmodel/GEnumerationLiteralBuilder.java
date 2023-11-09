@@ -37,6 +37,7 @@ public class GEnumerationLiteralBuilder<TSource extends EnumerationLiteral, TPro
    protected void prepareProperties() {
       super.prepareProperties();
       border(false);
+      selectionBorder(true);
    }
 
    @Override

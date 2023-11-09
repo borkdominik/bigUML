@@ -50,7 +50,15 @@ export class NamedElementView extends RectangularNodeView {
         return (
             <g class-selected={element.selected} class-mouseover={element.hoverFeedback}>
                 {(element.args['border'] === true || element.args['build_by'] === undefined) && (
-                    <rect x={0} y={0} rx={2} ry={2} width={Math.max(0, element.bounds.width)} height={Math.max(0, element.bounds.height)} />
+                    <rect
+                        x={0}
+                        y={0}
+                        rx={2}
+                        ry={2}
+                        width={Math.max(0, element.bounds.width)}
+                        height={Math.max(0, element.bounds.height)}
+                        class-uml-node-background
+                    />
                 )}
 
                 {compartment && (

@@ -107,13 +107,7 @@ export class UmlGraphProjectionView extends GLSPProjectionView {
                     <path d='M 0 5 L 10 10 L 20 5 L 10 0 L 0 5 z' stroke='var(--uml-edge)' fill='var(--uml-editor-background)' />
                 </marker>
                 <filter id={this.svgIdCreator.createDefId(FILTER_DROP_SHADOW_ID)}>
-                    <feDropShadow
-                        dx='1.5'
-                        dy='1.5'
-                        stdDeviation='0.5'
-                        style-flood-color='var(--uml-drop-shadow)'
-                        style-flood-opacity='0.5'
-                    />
+                    <feDropShadow dx='3' dy='5' stdDeviation='3' style-flood-color='var(--uml-drop-shadow)' style-flood-opacity='1' />
                 </filter>
             </defs>
         ];

@@ -21,7 +21,7 @@
     cursor: pointer;
 }
 
-.uml-theme .selected .uml-text-highlight,
+.uml-theme .selected.uml-text-highlight,
 .uml-theme .uml-text-highlight:hover {
     fill: var(--uml-medium-blue);
 }

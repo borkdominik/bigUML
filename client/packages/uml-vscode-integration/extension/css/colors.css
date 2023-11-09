@@ -24,7 +24,7 @@
 :root {
     --uml-node: var(--vscode-sideBar-background);
     --uml-label: var(--uml-editor-foreground);
-    --uml-drop-shadow: lightgrey;
+    --uml-drop-shadow: var(--uml-widget-shadow);
     --uml-label: var(--uml-editor-foreground);
     --uml-label-hoverForeground: var(--vscode-menu-selectionForeground);
     --uml-node: var(--vscode-sideBar-background);

@@ -4,9 +4,10 @@
     stroke: var(--uml-border);
 }
 
-svg > g > .uml-node {
-    /* Blurs the SVGs */
-    /* filter: var(--svg-def-filter-drop-shadow);  */
+svg .uml-node .uml-node-background {
+    /* Inefficient the SVGs */
+    /* filter: var(--svg-def-filter-drop-shadow); */
+    filter: drop-shadow(2px 4px 4px var(--uml-drop-shadow));
 }
 
 .uml-node.mouseover:not(.selected) {

@@ -15,9 +15,9 @@
     font-size: small;
 }
 
-.uml-theme .editable-label,
-.uml-theme .uml-text-highlight,
-.uml-theme .uml-text-interactable {
+.uml-theme .editable-label:hover,
+.uml-theme .uml-text-highlight:hover,
+.uml-theme .uml-text-interactable:hover {
     cursor: pointer;
 }
 

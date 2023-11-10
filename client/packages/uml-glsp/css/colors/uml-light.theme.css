@@ -2,4 +2,5 @@
     --uml-border: var(--uml-medium-blue);
     --uml-edge: var(--uml-medium-blue);
     --uml-selection-border: rgba(0, 0, 0, 0.2);
+    --uml-graph-grid: rgba(0, 0, 0, 0.3);
 }

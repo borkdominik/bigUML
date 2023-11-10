@@ -1,0 +1,27 @@
+.sprotty {
+    height: 100%;
+    display: flex;
+}
+
+.sprotty .sprotty-graph {
+    background: var(--uml-diagram-background);
+    font-size: 15pt;
+    height: 100%;
+    width: 100%;
+}
+
+.sprotty .sprotty-graph.graph-grid {
+    background-image: radial-gradient(var(--uml-graph-grid) 1px, transparent 0);
+}
+
+.sprotty .sprotty-projection-bar.vertical.bordered-projection-bar {
+    width: var(--uml-scrollbar-rail-width);
+}
+
+.sprotty .sprotty-projection-bar.horizontal.bordered-projection-bar {
+    height: var(--uml-scrollbar-rail-width);
+}
+
+.sprotty .sprotty-projection-bar .projection-scroll-bar {
+    cursor: pointer;
+}

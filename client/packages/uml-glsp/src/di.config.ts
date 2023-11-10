@@ -17,6 +17,7 @@ import '@eclipse-glsp/client/css/glsp-sprotty.css';
 import '../css/style.css';
 
 import {
+    configureActionHandler,
     configureDefaultModelElements,
     configureLayout,
     configureModelElement,
@@ -25,7 +26,6 @@ import {
     EditLabelUI,
     GLSPActionDispatcher,
     GLSPGraph,
-    GridSnapper,
     LogLevel,
     overrideViewerOptions,
     SCompartmentView,
@@ -34,11 +34,12 @@ import {
     TYPES
 } from '@eclipse-glsp/client';
 import toolPaletteModule from '@eclipse-glsp/client/lib/features/tool-palette/di.config';
-import { DefaultTypes } from '@eclipse-glsp/protocol';
+import { DefaultTypes, SetViewportAction } from '@eclipse-glsp/protocol';
 import { Container, ContainerModule } from 'inversify';
 import { UMLActionDispatcher } from './base/action-dispatcher';
 import { FixedLogger } from './base/fixed-logger';
 import { UML_TYPES } from './di.types';
+import { GraphGridActionHandler, ShowGridAction, UmlGridSnapper } from './features/bounds/grid-snapper';
 import { UmlLayouterExt } from './features/bounds/index';
 import { UmlFreeFormLayouter } from './features/bounds/layout/uml-freeform.layout';
 import { CustomCopyPasteHandler, LastContainableElementTracker } from './features/copy-paste/copy-paste';
@@ -59,13 +60,19 @@ export default function createContainer(widgetId: string): Container {
     const coreDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
         const context = { bind, unbind, isBound, rebind };
 
-        // Common
+        // Default
         rebind(TYPES.ILogger).to(FixedLogger).inSingletonScope();
         rebind(TYPES.LogLevel).toConstantValue(LogLevel.info);
         rebind(GLSPActionDispatcher).to(UMLActionDispatcher).inSingletonScope();
-        bind(TYPES.ISnapper).to(GridSnapper);
 
-        // Common - Features
+        // Grid
+        bind(TYPES.ISnapper).to(UmlGridSnapper);
+        bind(GraphGridActionHandler).toSelf().inSingletonScope();
+        bind(UML_TYPES.IOnceModelInitialized).toService(GraphGridActionHandler);
+        configureActionHandler({ bind, isBound }, ShowGridAction.KIND, GraphGridActionHandler);
+        configureActionHandler({ bind, isBound }, SetViewportAction.KIND, GraphGridActionHandler);
+
+        // Features - Copy Paste
         rebind(TYPES.ICopyPasteHandler).to(CustomCopyPasteHandler);
         bind(LastContainableElementTracker).toSelf().inSingletonScope();
         bind(TYPES.MouseListener).toService(LastContainableElementTracker);

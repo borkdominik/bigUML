@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ASCII"?>
+<unotation:UmlDiagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:notation="http://www.eclipse.org/glsp/notation" xmlns:unotation="http://www.eclipsesource.com/glsp/uml/unotation" diagramType="SEQUENCE" representation="SEQUENCE">
+  <semanticElement elementId="_wxbWAYOaEe6dJt-oY0YLVA"/>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_xoCN4IOaEe6dJt-oY0YLVA"/>
+    <position x="-163.0" y="243.0"/>
+    <size width="593.546875" height="276.0"/>
+  </elements>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_x-_8YIOaEe6dJt-oY0YLVA"/>
+    <position x="40.0" y="30.0"/>
+    <size width="164.515625" height="179.0"/>
+  </elements>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_yl6LYIOaEe6dJt-oY0YLVA"/>
+    <position x="410.03125" y="30.0"/>
+    <size width="165.515625" height="183.0"/>
+  </elements>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_3v488IOaEe6dJt-oY0YLVA"/>
+    <position x="224.515625" y="30.0"/>
+    <size width="165.515625" height="184.0"/>
+  </elements>
+</unotation:UmlDiagram>

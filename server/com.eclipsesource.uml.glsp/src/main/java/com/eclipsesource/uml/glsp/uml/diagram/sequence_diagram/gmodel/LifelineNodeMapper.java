@@ -137,17 +137,15 @@ public class LifelineNodeMapper extends BaseGNodeMapper<Lifeline, GNode> impleme
 
    private boolean isCreated(final Lifeline lifeline) {
       return lifeline.getCoveredBys().stream()
-         .filter(f -> (f instanceof MessageEnd)
+         .anyMatch(f -> (f instanceof MessageEnd)
             && ((MessageEnd) f).getMessage().getMessageSort() == MessageSort.CREATE_MESSAGE_LITERAL
-            && ((MessageEnd) f).getMessage().getReceiveEvent() == f)
-         .count() > 0;
+            && ((MessageEnd) f).getMessage().getReceiveEvent() == f);
    }
 
    private boolean isDestructed(final Lifeline lifeline) {
       return lifeline.getCoveredBys().stream()
-         .filter(f -> (f instanceof MessageEnd)
+         .anyMatch(f -> (f instanceof MessageEnd)
             && ((MessageEnd) f).getMessage().getMessageSort() == MessageSort.DELETE_MESSAGE_LITERAL
-            && ((MessageEnd) f).getMessage().getReceiveEvent() == f)
-         .count() > 0;
+            && ((MessageEnd) f).getMessage().getReceiveEvent() == f);
    }
 }

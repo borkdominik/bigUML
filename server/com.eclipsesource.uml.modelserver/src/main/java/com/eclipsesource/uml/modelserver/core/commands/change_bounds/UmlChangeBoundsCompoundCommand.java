@@ -61,8 +61,9 @@ public class UmlChangeBoundsCompoundCommand extends CompoundCommand {
          append(createCommand(bound));
       });
 
+      append(new UmlSequenceLifelineLayoutCommand(context, bounds));
       append(new UmlSequenceWrapBoundsCommand(context, bounds));
-      append(new UmlSequenceWrapBoundsCommand(context, bounds));
+
    }
 
    private ElementAndBounds getBound(final CCommand command) {
@@ -92,16 +93,12 @@ public class UmlChangeBoundsCompoundCommand extends CompoundCommand {
       }
 
       if (element.get() instanceof Lifeline
-         && ((Lifeline) element.get()).getCoveredBys().stream()
-            .filter(f -> (f instanceof MessageEnd)
-               && ((MessageEnd) f).getMessage().getMessageSort() == MessageSort.CREATE_MESSAGE_LITERAL
-               && ((MessageEnd) f).getMessage().getReceiveEvent() == f)
-            .count() == 0) {
+         && !isCreated((Lifeline) element.get())) {
          return element
             .<Command> map(e -> new UmlChangeBoundsNotationCommand(
                context,
                e,
-               Optional.ofNullable(GraphUtil.point(bound.getNewPosition().getX(), 30)),
+               Optional.ofNullable(GraphUtil.point(bound.getNewPosition().getX(), 30.0)),
                Optional.ofNullable(bound.getNewSize())))
             .orElse(new NoopCommand("No element found for " + bound.getElementId()));
       }
@@ -113,6 +110,13 @@ public class UmlChangeBoundsCompoundCommand extends CompoundCommand {
             Optional.ofNullable(bound.getNewPosition()),
             Optional.ofNullable(bound.getNewSize())))
          .orElse(new NoopCommand("No element found for " + bound.getElementId()));
+   }
+
+   protected boolean isCreated(final Lifeline lifeline) {
+      return lifeline.getCoveredBys().stream()
+         .anyMatch(f -> (f instanceof MessageEnd)
+            && ((MessageEnd) f).getMessage().getMessageSort() == MessageSort.CREATE_MESSAGE_LITERAL
+            && ((MessageEnd) f).getMessage().getReceiveEvent() == f);
    }
 
 }

@@ -154,7 +154,6 @@ export class ShiftElementsMouseListener extends DragAwareMouseListener {
         return actions;
     }
 
-    // copy from change-bounds-tool
     protected handleMoveElementsOnServer(target: SModelElement): Operation[] {
         const result: Operation[] = [];
         const newBounds: ElementAndBounds[] = [];

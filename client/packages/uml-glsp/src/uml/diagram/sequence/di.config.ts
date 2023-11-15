@@ -11,7 +11,7 @@
 import '@eclipse-glsp/client/css/glsp-sprotty.css';
 import 'sprotty/css/edit-label.css';
 
-import { CircularNodeView, configureModelElement, PolylineEdgeView, SEdge, SPort } from '@eclipse-glsp/client/lib';
+import { CircularNodeView, configureModelElement, PolylineEdgeView, SEdge, SPort, TYPES } from '@eclipse-glsp/client/lib';
 import { ContainerModule } from 'inversify';
 
 import { NamedElement } from '../../elements';
@@ -30,7 +30,7 @@ export const umlSequenceDiagramModule = new ContainerModule((bind, unbind, isBou
     const context = { bind, unbind, isBound, rebind };
 
     // DISABLE GRID SNAPPING
-    // unbind(TYPES.ISnapper);
+    unbind(TYPES.ISnapper);
 
     // INTERACTIONS
     configureModelElement(context, UmlSequenceTypes.INTERACTION, InteractionElement, InteractionNodeView);

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_hYhrgHZ3Ee6zKJxt5gLA4w" name="seqMessages">
+  <packagedElement xmi:type="uml:Interaction" xmi:id="_h_EHEHZ3Ee6zKJxt5gLA4w" name="Interaction">
+    <lifeline xmi:id="_ijd0oHZ3Ee6zKJxt5gLA4w" name="Lifeline2" coveredBy="_oAjIYHZ3Ee6zKJxt5gLA4w _oAjvc3Z3Ee6zKJxt5gLA4w _uC3QIHZ3Ee6zKJxt5gLA4w _60VXgHZ3Ee6zKJxt5gLA4w _icz9kXZ4Ee6zKJxt5gLA4w _kmqmAXZ4Ee6zKJxt5gLA4w _np9-8HZ4Ee6zKJxt5gLA4w"/>
+    <lifeline xmi:id="_i3KMsHZ3Ee6zKJxt5gLA4w" name="Lifeline3" coveredBy="_oAjvcHZ3Ee6zKJxt5gLA4w _oAjvcnZ3Ee6zKJxt5gLA4w _oAkWgXZ3Ee6zKJxt5gLA4w _uC3QIXZ3Ee6zKJxt5gLA4w _np-mAHZ4Ee6zKJxt5gLA4w"/>
+    <lifeline xmi:id="_a4_m0HZ4Ee6zKJxt5gLA4w" name="Lifeline1" coveredBy="_icz9kHZ4Ee6zKJxt5gLA4w _kmqmAHZ4Ee6zKJxt5gLA4w"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_oAjIYHZ3Ee6zKJxt5gLA4w" name="syncSendEvent" covered="_ijd0oHZ3Ee6zKJxt5gLA4w" message="_oAjvcXZ3Ee6zKJxt5gLA4w"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_oAjvcHZ3Ee6zKJxt5gLA4w" name="syncReceiveEvent" covered="_i3KMsHZ3Ee6zKJxt5gLA4w" message="_oAjvcXZ3Ee6zKJxt5gLA4w"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_oAjvcnZ3Ee6zKJxt5gLA4w" name="returnSendEvent" covered="_i3KMsHZ3Ee6zKJxt5gLA4w" message="_oAkWgHZ3Ee6zKJxt5gLA4w"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_oAjvc3Z3Ee6zKJxt5gLA4w" name="returnReceiveEvent" covered="_ijd0oHZ3Ee6zKJxt5gLA4w" message="_oAkWgHZ3Ee6zKJxt5gLA4w"/>
+    <fragment xmi:type="uml:BehaviorExecutionSpecification" xmi:id="_oAkWgXZ3Ee6zKJxt5gLA4w" name="NewBehaviorExecutionSpecification1" covered="_i3KMsHZ3Ee6zKJxt5gLA4w" finish="_oAjvcnZ3Ee6zKJxt5gLA4w" start="_oAjvcHZ3Ee6zKJxt5gLA4w"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_uC3QIHZ3Ee6zKJxt5gLA4w" name="deleteSendEvent" covered="_ijd0oHZ3Ee6zKJxt5gLA4w" message="_uC3QInZ3Ee6zKJxt5gLA4w"/>
+    <fragment xmi:type="uml:DestructionOccurrenceSpecification" xmi:id="_uC3QIXZ3Ee6zKJxt5gLA4w" name="deleteReceiveEvent" covered="_i3KMsHZ3Ee6zKJxt5gLA4w" message="_uC3QInZ3Ee6zKJxt5gLA4w"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_60VXgHZ3Ee6zKJxt5gLA4w" name="foundReceiveEvent" covered="_ijd0oHZ3Ee6zKJxt5gLA4w" message="_60VXgXZ3Ee6zKJxt5gLA4w"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_icz9kHZ4Ee6zKJxt5gLA4w" name="asyncSendEvent" covered="_a4_m0HZ4Ee6zKJxt5gLA4w" message="_icz9knZ4Ee6zKJxt5gLA4w"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_icz9kXZ4Ee6zKJxt5gLA4w" name="asyncReceiveEvent" covered="_ijd0oHZ3Ee6zKJxt5gLA4w" message="_icz9knZ4Ee6zKJxt5gLA4w"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_kmqmAHZ4Ee6zKJxt5gLA4w" name="async + durationSendEvent" covered="_a4_m0HZ4Ee6zKJxt5gLA4w" message="_kmqmAnZ4Ee6zKJxt5gLA4w"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_kmqmAXZ4Ee6zKJxt5gLA4w" name="async + durationReceiveEvent" covered="_ijd0oHZ3Ee6zKJxt5gLA4w" message="_kmqmAnZ4Ee6zKJxt5gLA4w"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_np9-8HZ4Ee6zKJxt5gLA4w" name="createSendEvent" covered="_ijd0oHZ3Ee6zKJxt5gLA4w" message="_np-mAXZ4Ee6zKJxt5gLA4w"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_np-mAHZ4Ee6zKJxt5gLA4w" name="createReceiveEvent" covered="_i3KMsHZ3Ee6zKJxt5gLA4w" message="_np-mAXZ4Ee6zKJxt5gLA4w"/>
+    <message xmi:id="_oAjvcXZ3Ee6zKJxt5gLA4w" name="sync" receiveEvent="_oAjvcHZ3Ee6zKJxt5gLA4w" sendEvent="_oAjIYHZ3Ee6zKJxt5gLA4w"/>
+    <message xmi:id="_oAkWgHZ3Ee6zKJxt5gLA4w" name="return" messageSort="reply" receiveEvent="_oAjvc3Z3Ee6zKJxt5gLA4w" sendEvent="_oAjvcnZ3Ee6zKJxt5gLA4w"/>
+    <message xmi:id="_uC3QInZ3Ee6zKJxt5gLA4w" name="delete" messageSort="deleteMessage" receiveEvent="_uC3QIXZ3Ee6zKJxt5gLA4w" sendEvent="_uC3QIHZ3Ee6zKJxt5gLA4w"/>
+    <message xmi:id="_60VXgXZ3Ee6zKJxt5gLA4w" name="found" messageSort="asynchCall" receiveEvent="_60VXgHZ3Ee6zKJxt5gLA4w"/>
+    <message xmi:id="_icz9knZ4Ee6zKJxt5gLA4w" name="async" messageSort="asynchCall" receiveEvent="_icz9kXZ4Ee6zKJxt5gLA4w" sendEvent="_icz9kHZ4Ee6zKJxt5gLA4w"/>
+    <message xmi:id="_kmqmAnZ4Ee6zKJxt5gLA4w" name="async + duration" messageSort="asynchCall" receiveEvent="_kmqmAXZ4Ee6zKJxt5gLA4w" sendEvent="_kmqmAHZ4Ee6zKJxt5gLA4w"/>
+    <message xmi:id="_np-mAXZ4Ee6zKJxt5gLA4w" name="create" messageSort="createMessage" receiveEvent="_np-mAHZ4Ee6zKJxt5gLA4w" sendEvent="_np9-8HZ4Ee6zKJxt5gLA4w"/>
+  </packagedElement>
+</uml:Model>

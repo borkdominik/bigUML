@@ -18,6 +18,7 @@ import org.eclipse.glsp.server.types.ElementAndBounds;
 import org.eclipse.uml2.uml.BehaviorExecutionSpecification;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.ExecutionSpecification;
+import org.eclipse.uml2.uml.Lifeline;
 import org.eclipse.uml2.uml.Message;
 import org.eclipse.uml2.uml.MessageKind;
 import org.eclipse.uml2.uml.OccurrenceSpecification;
@@ -36,6 +37,7 @@ public class UmlSequenceWrapBoundsCommand extends UmlWrapBoundsCommand {
 
    @Override
    protected void doExecute() {
+
       bounds.forEach(bound -> {
          semanticElementAccessor.getElement(bound.getElementId(), Element.class).ifPresentOrElse(element -> {
             if (element instanceof BehaviorExecutionSpecification) {
@@ -138,5 +140,10 @@ public class UmlSequenceWrapBoundsCommand extends UmlWrapBoundsCommand {
                alignChild(edge, position);
             });
       }
+   }
+
+   protected boolean isLifeline(final ElementAndBounds bound) {
+      return !semanticElementAccessor.getElement(bound.getElementId(), Element.class)
+         .filter(element -> element instanceof Lifeline).isEmpty();
    }
 }

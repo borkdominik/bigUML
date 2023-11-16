@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_wxbWAYOaEe6dJt-oY0YLVA" name="lifelineOverlay">
   <packagedElement xmi:type="uml:Interaction" xmi:id="_xoCN4IOaEe6dJt-oY0YLVA" name="NewInteraction1">
-    <lifeline xmi:id="_x-_8YIOaEe6dJt-oY0YLVA" name="NewLifeline1"/>
+    <lifeline xmi:id="_x-_8YIOaEe6dJt-oY0YLVA" name="NewLifeline1" coveredBy="_bMetMYOiEe6yYammLv2axQ"/>
     <lifeline xmi:id="_yl6LYIOaEe6dJt-oY0YLVA" name="NewLifeline2"/>
-    <lifeline xmi:id="_3v488IOaEe6dJt-oY0YLVA" name="NewLifeline3"/>
+    <lifeline xmi:id="_3v488IOaEe6dJt-oY0YLVA" name="NewLifeline3" coveredBy="_bMkMwIOiEe6yYammLv2axQ"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_bMetMYOiEe6yYammLv2axQ" name="NewMessage1SendEvent" covered="_x-_8YIOaEe6dJt-oY0YLVA" message="_bMkz0IOiEe6yYammLv2axQ"/>
+    <fragment xmi:type="uml:MessageOccurrenceSpecification" xmi:id="_bMkMwIOiEe6yYammLv2axQ" name="NewMessage1ReceiveEvent" covered="_3v488IOaEe6dJt-oY0YLVA" message="_bMkz0IOiEe6yYammLv2axQ"/>
+    <message xmi:id="_bMkz0IOiEe6yYammLv2axQ" name="NewMessage1" messageSort="asynchCall" receiveEvent="_bMkMwIOiEe6yYammLv2axQ" sendEvent="_bMetMYOiEe6yYammLv2axQ"/>
   </packagedElement>
 </uml:Model>

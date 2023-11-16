@@ -52,9 +52,12 @@ public class UmlSequenceLifelineLayoutCommand extends UmlWrapBoundsCommand {
    protected void lifelineVerticalAlignmentHandler(final ModelContext context, final ElementAndBounds bound) {
       Lifeline ll = semanticElementAccessor.getElement(bound.getElementId(), Lifeline.class).get();
       if (!isCreated(ll)) {
-         Shape s = notationElementAccessor.getElement(bound.getElementId(), Shape.class).get();
-         s.getPosition().setY(defaultY);
-         bound.getNewPosition().setY(defaultY);
+         notationElementAccessor.getElement(bound.getElementId(), Shape.class)
+            .get()
+            .getPosition()
+            .setY(defaultY);
+         // bound.getNewPosition().setY(defaultY);
+         System.out.println("WAHA ->  UmlSequenceLifelineLayoutCommand");
       }
    }
 

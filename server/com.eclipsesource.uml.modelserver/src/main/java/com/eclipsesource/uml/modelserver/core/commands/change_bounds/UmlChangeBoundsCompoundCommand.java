@@ -59,6 +59,7 @@ public class UmlChangeBoundsCompoundCommand extends CompoundCommand {
 
       bounds.forEach(bound -> {
          append(createCommand(bound));
+         System.out.println("WAHA ->  appendCreateCommand");
       });
 
       append(new UmlSequenceLifelineLayoutCommand(context, bounds));

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_9PeIUWNfEe6HQ9HOU9V3eQ" name="evaluation">
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_9PeIUWNfEe6HQ9HOU9V3eQ" name="sequence-example">
   <packagedElement xmi:type="uml:Interaction" xmi:id="_9_G1gGNfEe6HQ9HOU9V3eQ" name="runJob">
     <lifeline xmi:id="_EjkoEGNgEe6HQ9HOU9V3eQ" name="L1:Database Job" coveredBy="_daDZcGNgEe6HQ9HOU9V3eQ _daFOoWNgEe6HQ9HOU9V3eQ"/>
     <lifeline xmi:id="_OHDJcGNgEe6HQ9HOU9V3eQ" name="L2: Spring Trancaction Interceptor" coveredBy="_daEnkGNgEe6HQ9HOU9V3eQ _daFOoGNgEe6HQ9HOU9V3eQ _daHD0GNgEe6HQ9HOU9V3eQ _K_OyAGNiEe6HQ9HOU9V3eQ _pBXeAGNkEe6HQ9HOU9V3eQ _PK_GEGQ5Ee6ukYF4_0bkeQ _gBBPEWQ5Ee6ukYF4_0bkeQ _1aAl4GQ5Ee6ukYF4_0bkeQ _1aBM8mQ5Ee6ukYF4_0bkeQ _OtO9oGQ6Ee6ukYF4_0bkeQ _OtPksWQ6Ee6ukYF4_0bkeQ _r4syQGQ6Ee6ukYF4_0bkeQ _uza28GQ6Ee6ukYF4_0bkeQ _uzbeAGQ6Ee6ukYF4_0bkeQ _voRl4WQ7Ee6KwPcvY16SsQ"/>

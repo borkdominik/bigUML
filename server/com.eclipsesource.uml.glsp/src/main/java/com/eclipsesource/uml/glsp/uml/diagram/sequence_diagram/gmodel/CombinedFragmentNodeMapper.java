@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.stream.Collectors;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.graph.DefaultTypes;
 import org.eclipse.glsp.graph.GCompartment;
 import org.eclipse.glsp.graph.GNode;
@@ -27,6 +28,7 @@ import org.eclipse.uml2.uml.InteractionOperand;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
+import com.eclipsesource.uml.glsp.core.gmodel.builder.CompartmentGBuilder;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.diagram.sequence_diagram.diagram.UmlSequence_CombinedFragment;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGNodeMapper;
@@ -109,5 +111,16 @@ public class CombinedFragmentNodeMapper extends BaseGNodeMapper<CombinedFragment
       return new GLabelBuilder(CoreTypes.LABEL_NAME)
          .id(suffix().appendTo(NameLabelSuffix.SUFFIX, idGenerator().getOrCreateId(source)))
          .text(source.getInteractionOperator().getName());
+   }
+
+   @Override
+   public GCompartmentBuilder freeformChildrenCompartmentBuilder(final EObject source) {
+      return new GCompartmentBuilder(DefaultTypes.COMPARTMENT)
+         .id(idContextGenerator().getOrCreateId(source))
+         .addArgument(CompartmentGBuilder.childrenContainerKey, true)
+         .layout(GConstants.Layout.FREEFORM)
+         .layoutOptions(new GLayoutOptions()
+            .hAlign(GConstants.HAlign.LEFT)
+            .resizeContainer(true));
    }
 }

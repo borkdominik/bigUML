@@ -33,6 +33,7 @@ import org.eclipse.uml2.uml.InteractionUse;
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 import com.eclipsesource.uml.glsp.core.features.id_generator.IdCountContextGenerator;
+import com.eclipsesource.uml.glsp.core.gmodel.builder.CompartmentGBuilder;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.diagram.sequence_diagram.diagram.UmlSequence_InteractionOperand;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGNodeMapper;
@@ -131,5 +132,16 @@ public class InteractionOperandNodeMapper extends BaseGNodeMapper<InteractionOpe
 
    protected boolean onlyChild(final InteractionOperand source) {
       return ((CombinedFragment) source.eContainer()).getOperands().size() == 1;
+   }
+
+   @Override
+   public GCompartmentBuilder freeformChildrenCompartmentBuilder(final EObject source) {
+      return new GCompartmentBuilder(DefaultTypes.COMPARTMENT)
+         .id(idContextGenerator().getOrCreateId(source))
+         .addArgument(CompartmentGBuilder.childrenContainerKey, true)
+         .layout(GConstants.Layout.FREEFORM)
+         .layoutOptions(new GLayoutOptions()
+            .hAlign(GConstants.HAlign.LEFT)
+            .resizeContainer(true));
    }
 }

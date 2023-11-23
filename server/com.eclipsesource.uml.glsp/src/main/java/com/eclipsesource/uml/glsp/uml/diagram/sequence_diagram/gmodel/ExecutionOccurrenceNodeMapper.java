@@ -10,13 +10,19 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.diagram.sequence_diagram.gmodel;
 
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.glsp.graph.DefaultTypes;
 import org.eclipse.glsp.graph.GNode;
+import org.eclipse.glsp.graph.builder.impl.GCompartmentBuilder;
+import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.builder.impl.GNodeBuilder;
+import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.glsp.server.emf.model.notation.Shape;
 import org.eclipse.uml2.uml.ExecutionOccurrenceSpecification;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
+import com.eclipsesource.uml.glsp.core.gmodel.builder.CompartmentGBuilder;
 import com.eclipsesource.uml.glsp.uml.diagram.sequence_diagram.diagram.UmlSequence_ExecutionOccurrence;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGNodeMapper;
 import com.eclipsesource.uml.glsp.uml.gmodel.element.NamedElementGBuilder;
@@ -48,5 +54,16 @@ public class ExecutionOccurrenceNodeMapper extends BaseGNodeMapper<ExecutionOccu
             builder.size(size);
          }
       });
+   }
+
+   @Override
+   public GCompartmentBuilder freeformChildrenCompartmentBuilder(final EObject source) {
+      return new GCompartmentBuilder(DefaultTypes.COMPARTMENT)
+         .id(idContextGenerator().getOrCreateId(source))
+         .addArgument(CompartmentGBuilder.childrenContainerKey, true)
+         .layout(GConstants.Layout.FREEFORM)
+         .layoutOptions(new GLayoutOptions()
+            .hAlign(GConstants.HAlign.LEFT)
+            .resizeContainer(true));
    }
 }

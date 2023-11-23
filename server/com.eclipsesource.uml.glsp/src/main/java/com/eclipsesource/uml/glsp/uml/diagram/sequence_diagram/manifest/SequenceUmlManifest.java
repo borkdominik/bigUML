@@ -16,7 +16,10 @@ import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramDel
 import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramLabelEditMapperContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.DiagramUpdateHandlerContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.glsp.ActionHandlerContribution;
+import com.eclipsesource.uml.glsp.core.manifest.contributions.glsp.OverrideActionHandlerContribution;
+import com.eclipsesource.uml.glsp.core.manifest.contributions.glsp.OverrideOperationHandlerContribution;
 import com.eclipsesource.uml.glsp.features.property_palette.manifest.contributions.DiagramElementPropertyMapperContribution;
+import com.eclipsesource.uml.glsp.uml.diagram.sequence_diagram.core.operations.SDChangeBoundsOperationHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.sequence_diagram.diagram.UmlSequence_BehaviorExecution;
 import com.eclipsesource.uml.glsp.uml.diagram.sequence_diagram.diagram.UmlSequence_CombinedFragment;
 import com.eclipsesource.uml.glsp.uml.diagram.sequence_diagram.diagram.UmlSequence_DestructionOccurrence;
@@ -51,6 +54,7 @@ import com.eclipsesource.uml.glsp.uml.diagram.sequence_diagram.gmodel.LifelineNo
 import com.eclipsesource.uml.glsp.uml.diagram.sequence_diagram.gmodel.MessageAnchorNodeMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.sequence_diagram.gmodel.MessageEdgeMapper;
 import com.eclipsesource.uml.glsp.uml.diagram.sequence_diagram.gmodel.MessageOccurrenceNodeMapper;
+import com.eclipsesource.uml.glsp.uml.diagram.sequence_diagram.handler.action.UmlSelectionActionHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.sequence_diagram.handler.operation.behaviorExecution.CreateBehaviorExecutionHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.sequence_diagram.handler.operation.behaviorExecution.DeleteBehaviorExecutionHandler;
 import com.eclipsesource.uml.glsp.uml.diagram.sequence_diagram.handler.operation.behaviorExecution.UpdateBehaviorExecutionHandler;
@@ -90,7 +94,8 @@ import com.eclipsesource.uml.modelserver.unotation.Representation;
 public class SequenceUmlManifest extends DiagramManifest
    implements DiagramCreateHandlerContribution,
    DiagramDeleteHandlerContribution, DiagramLabelEditMapperContribution, DiagramUpdateHandlerContribution,
-   DiagramElementPropertyMapperContribution, ActionHandlerContribution {
+   DiagramElementPropertyMapperContribution, ActionHandlerContribution, OverrideOperationHandlerContribution,
+   OverrideActionHandlerContribution {
 
    @Override
    public String id() {
@@ -105,6 +110,14 @@ public class SequenceUmlManifest extends DiagramManifest
    @Override
    protected void configure() {
       super.configure();
+
+      contributeOverrideOperationHandlers(c -> {
+         c.addBinding().to(SDChangeBoundsOperationHandler.class);
+      });
+
+      contributeOverrideActionHandlers((contribution) -> {
+         contribution.addBinding().to(UmlSelectionActionHandler.class); // it breaks a bit the marquee tool...
+      });
 
       contributeDiagramElementConfiguration((nodes) -> {
          nodes.addBinding().to(UmlSequence_Interaction.DiagramConfiguration.class);
@@ -123,14 +136,10 @@ public class SequenceUmlManifest extends DiagramManifest
 
       }, (edges) -> {
          edges.addBinding().to(UmlSequence_Message.DiagramConfiguration.class);
-      }, (ports) -> {});
+      });
 
       contributeToolPaletteConfiguration((contribution) -> {
          contribution.addBinding().to(SequenceToolPaletteConfiguration.class);
-      });
-
-      contributeActionHandlers((contribution) -> {
-         // contribution.addBinding().to(UmlSelectionActionHandler.class); // it breaks a bit the marquee tool...
       });
 
       contributeDiagramCreateNodeHandlers((contribution) -> {
@@ -220,21 +229,5 @@ public class SequenceUmlManifest extends DiagramManifest
          contribution.addBinding().to(InteractionUsePropertyMapper.class);
 
       });
-   }
-
-   public void configureAdditionals() {
-      /*
-       * TODO: Enable for validation
-       * bind(ModelValidator.class).annotatedWith(CommunicationValidator.class)
-       * .to(CommunicationModelValidator.class);
-       * bind(LabelEditValidator.class).annotatedWith(CommunicationValidator.class)
-       * .to(CommunicationLabelEditValidator.class);
-       * bind(new TypeLiteral<Validator<Interaction>>() {}).annotatedWith(CommunicationValidator.class)
-       * .to(InteractionValidator.class);
-       * bind(new TypeLiteral<Validator<Lifeline>>() {}).annotatedWith(CommunicationValidator.class)
-       * .to(LifelineValidator.class);
-       * bind(new TypeLiteral<Validator<Message>>() {}).annotatedWith(CommunicationValidator.class)
-       * .to(MessageValidator.class);
-       */
    }
 }

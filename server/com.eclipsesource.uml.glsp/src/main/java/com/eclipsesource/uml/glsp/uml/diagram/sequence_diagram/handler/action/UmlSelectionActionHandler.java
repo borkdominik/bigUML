@@ -35,6 +35,7 @@ import com.eclipsesource.uml.glsp.features.property_palette.handler.action.Diagr
 import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
 import com.google.inject.Inject;
 
+// TODO: Will not be triggered (SelectAction is client side)
 public class UmlSelectionActionHandler extends AbstractEMSActionHandler<SelectAction> {
 
    @Inject

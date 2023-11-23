@@ -19,12 +19,12 @@ import org.eclipse.uml2.uml.OccurrenceSpecification;
 import org.eclipse.uml2.uml.UMLPackage;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
-import com.eclipsesource.uml.modelserver.shared.semantic.BaseCreateSemanticChildRelationCommand;
+import com.eclipsesource.uml.modelserver.uml.diagram.sequence_diagram.shared.semantic.SDBaseCreateSemanticChildRelationCommand;
 import com.eclipsesource.uml.modelserver.uml.generator.ListNameGenerator;
 
 public final class CreateBehaviorExecutionSemanticCommand
    extends
-   BaseCreateSemanticChildRelationCommand<Lifeline, BehaviorExecutionSpecification, Supplier<OccurrenceSpecification>, Supplier<OccurrenceSpecification>> {
+   SDBaseCreateSemanticChildRelationCommand<Lifeline, BehaviorExecutionSpecification, Supplier<OccurrenceSpecification>, Supplier<OccurrenceSpecification>> {
 
    public CreateBehaviorExecutionSemanticCommand(final ModelContext context, final Lifeline parent,
       final Supplier<OccurrenceSpecification> occurrenceSpecification,

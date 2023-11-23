@@ -25,7 +25,7 @@ import org.eclipse.glsp.server.gson.GraphGsonConfigurationFactory;
 import org.eclipse.glsp.server.operations.PasteOperation;
 import org.eclipse.glsp.server.types.EditorContext;
 
-import com.eclipsesource.uml.glsp.core.handler.action.UmlRequestClipboardDataActionHandler;
+import com.eclipsesource.uml.glsp.core.handler.action.clipboard.UmlRequestClipboardDataActionHandler;
 import com.eclipsesource.uml.glsp.core.model.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 import com.eclipsesource.uml.modelserver.uml.command.copy_paste.CopyPasteContribution;

@@ -16,17 +16,17 @@ import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.uml2.uml.Interaction;
 import org.eclipse.uml2.uml.Lifeline;
 
-import com.eclipsesource.uml.modelserver.core.commands.change_bounds.UmlSequenceShiftShapeCommand;
 import com.eclipsesource.uml.modelserver.model.ModelFactory;
 import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.commands.AddEdgeNotationCommand;
-import com.eclipsesource.uml.modelserver.shared.notation.commands.AddShapeNotationCommand;
 import com.eclipsesource.uml.modelserver.uml.diagram.sequence_diagram.commands.behaviorExecution.CreateBehaviorExecutionCompoundCommand;
 import com.eclipsesource.uml.modelserver.uml.diagram.sequence_diagram.commands.destructionOccurrence.CreateDestructionOccurrenceCompoundCommand;
 import com.eclipsesource.uml.modelserver.uml.diagram.sequence_diagram.commands.messageOccurrence.CreateMessageOccurrenceCompoundCommand;
 import com.eclipsesource.uml.modelserver.uml.diagram.sequence_diagram.constants.UmlMessageKind;
 import com.eclipsesource.uml.modelserver.uml.diagram.sequence_diagram.constants.UmlMessageSort;
+import com.eclipsesource.uml.modelserver.uml.diagram.sequence_diagram.core.commands.SDShiftShapeCommand;
+import com.eclipsesource.uml.modelserver.uml.diagram.sequence_diagram.shared.notation.SDAddShapeNotationCommand;
 
 public final class CreateMessageCompoundCommand extends CompoundCommand {
 
@@ -52,7 +52,7 @@ public final class CreateMessageCompoundCommand extends CompoundCommand {
       switch (sort) {
          case CREATE:
 
-            var moveLifelineCommand = new UmlSequenceShiftShapeCommand(context, target,
+            var moveLifelineCommand = new SDShiftShapeCommand(context, target,
                shiftedYPosition(targetPosition, verticalPositionCreateLifelineCorrection));
 
             var targetCreatePortCommand = new CreateMessageOccurrenceCompoundCommand(context, target, sort);
@@ -111,7 +111,7 @@ public final class CreateMessageCompoundCommand extends CompoundCommand {
          targetPortCommand::getSemanticElement, sort, kind);
       this.append(command);
 
-      this.append(new AddShapeNotationCommand(context,
+      this.append(new SDAddShapeNotationCommand(context,
          () -> {
             var anchor = ModelFactory.eINSTANCE.createMessageAnchor();
             anchor.setId(SemanticElementAccessor.getId(command.getSemanticElement()) + "_MessageAnchor");
@@ -137,7 +137,7 @@ public final class CreateMessageCompoundCommand extends CompoundCommand {
          sourcePortCommand::getSemanticElement, null, sort, kind);
       this.append(command);
 
-      this.append(new AddShapeNotationCommand(context,
+      this.append(new SDAddShapeNotationCommand(context,
          () -> {
             var anchor = ModelFactory.eINSTANCE.createMessageAnchor();
             anchor.setId(SemanticElementAccessor.getId(command.getSemanticElement()) + "_MessageAnchor");

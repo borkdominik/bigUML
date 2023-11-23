@@ -13,6 +13,7 @@ package com.eclipsesource.uml.glsp.uml.diagram.sequence_diagram.gmodel;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.graph.DefaultTypes;
 import org.eclipse.glsp.graph.GCompartment;
 import org.eclipse.glsp.graph.GDimension;
@@ -29,6 +30,7 @@ import org.eclipse.uml2.uml.MessageEnd;
 import org.eclipse.uml2.uml.MessageSort;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
+import com.eclipsesource.uml.glsp.core.gmodel.builder.CompartmentGBuilder;
 import com.eclipsesource.uml.glsp.uml.diagram.sequence_diagram.constants.SequenceCSS;
 import com.eclipsesource.uml.glsp.uml.diagram.sequence_diagram.diagram.UmlSequence_Lifeline;
 import com.eclipsesource.uml.glsp.uml.gmodel.BaseGNodeMapper;
@@ -147,5 +149,16 @@ public class LifelineNodeMapper extends BaseGNodeMapper<Lifeline, GNode> impleme
          .anyMatch(f -> (f instanceof MessageEnd)
             && ((MessageEnd) f).getMessage().getMessageSort() == MessageSort.DELETE_MESSAGE_LITERAL
             && ((MessageEnd) f).getMessage().getReceiveEvent() == f);
+   }
+
+   @Override
+   public GCompartmentBuilder freeformChildrenCompartmentBuilder(final EObject source) {
+      return new GCompartmentBuilder(DefaultTypes.COMPARTMENT)
+         .id(idContextGenerator().getOrCreateId(source))
+         .addArgument(CompartmentGBuilder.childrenContainerKey, true)
+         .layout(GConstants.Layout.FREEFORM)
+         .layoutOptions(new GLayoutOptions()
+            .hAlign(GConstants.HAlign.LEFT)
+            .resizeContainer(true));
    }
 }

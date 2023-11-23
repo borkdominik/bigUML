@@ -9,8 +9,8 @@
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
 
-import { UML_LIFELINE_ANCHOR_KIND } from '../../../../features/change-bounds/uml-custom-lifeline-anchor';
 import { NamedElement } from '../../../elements';
+import { UML_LIFELINE_ANCHOR_KIND } from '../features/change-bounds/uml-custom-lifeline-anchor';
 import { sequence } from './interacton.model';
 
 export const sequence_lifeline = Symbol('sequence_lifeline');

@@ -27,7 +27,6 @@ public class UmlChangeBoundsNotationCommand extends BaseNotationElementCommand {
    protected final Optional<GDimension> shapeSize;
    protected final Shape shape;
    protected final Element element;
-   protected final Optional<String> notationElement;
 
    public UmlChangeBoundsNotationCommand(final ModelContext context,
       final Element semanticElement, final Optional<GPoint> shapePosition,
@@ -37,20 +36,7 @@ public class UmlChangeBoundsNotationCommand extends BaseNotationElementCommand {
       this.shapeSize = shapeSize;
 
       this.element = semanticElement;
-      this.notationElement = null;
       this.shape = notationElementAccessor.getElement(semanticId(), Shape.class).get();
-   }
-
-   public UmlChangeBoundsNotationCommand(final ModelContext context,
-      final Optional<String> notationElement, final Optional<GPoint> shapePosition,
-      final Optional<GDimension> shapeSize) {
-      super(context);
-      this.shapePosition = shapePosition;
-      this.shapeSize = shapeSize;
-
-      this.element = null;
-      this.notationElement = notationElement;
-      this.shape = notationElementAccessor.getElement(notationElement.get(), Shape.class).get();
    }
 
    /*-
@@ -63,9 +49,6 @@ public class UmlChangeBoundsNotationCommand extends BaseNotationElementCommand {
    }
 
    protected String semanticId() {
-      if (SemanticElementAccessor.getId(element) != null) {
-         return SemanticElementAccessor.getId(element);
-      }
-      return notationElement.get();
+      return SemanticElementAccessor.getId(element);
    }
 }

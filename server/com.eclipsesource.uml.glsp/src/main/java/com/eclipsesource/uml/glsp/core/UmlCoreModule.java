@@ -44,14 +44,15 @@ import com.eclipsesource.uml.glsp.core.gmodel.DiagramMapper;
 import com.eclipsesource.uml.glsp.core.gmodel.GModelMapHandler;
 import com.eclipsesource.uml.glsp.core.gmodel.GModelMapperRegistry;
 import com.eclipsesource.uml.glsp.core.gmodel.UmlGModelFactory;
-import com.eclipsesource.uml.glsp.core.handler.action.UmlOperationActionHandler;
-import com.eclipsesource.uml.glsp.core.handler.action.UmlRefreshModelActionHandler;
-import com.eclipsesource.uml.glsp.core.handler.action.UmlRequestClipboardDataActionHandler;
-import com.eclipsesource.uml.glsp.core.handler.action.UmlRequestEditValidationHandler;
-import com.eclipsesource.uml.glsp.core.handler.operation.UmlChangeBoundsOperationHandler;
-import com.eclipsesource.uml.glsp.core.handler.operation.UmlChangeRoutingPointsOperationHandler;
+import com.eclipsesource.uml.glsp.core.handler.action.UmlActionHandlerRegistry;
+import com.eclipsesource.uml.glsp.core.handler.action.clipboard.UmlRequestClipboardDataActionHandler;
+import com.eclipsesource.uml.glsp.core.handler.action.refresh.UmlRefreshModelActionHandler;
+import com.eclipsesource.uml.glsp.core.handler.action.validation.UmlRequestEditValidationHandler;
+import com.eclipsesource.uml.glsp.core.handler.operation.UmlOperationActionHandler;
 import com.eclipsesource.uml.glsp.core.handler.operation.UmlOperationHandlerRegistry;
 import com.eclipsesource.uml.glsp.core.handler.operation.UmlOverrideOperationHandlerRegistry;
+import com.eclipsesource.uml.glsp.core.handler.operation.change_bounds.UmlChangeBoundsOperationHandler;
+import com.eclipsesource.uml.glsp.core.handler.operation.change_bounds.UmlChangeRoutingPointsOperationHandler;
 import com.eclipsesource.uml.glsp.core.handler.operation.create.DiagramCreateEdgeHandlerRegistry;
 import com.eclipsesource.uml.glsp.core.handler.operation.create.DiagramCreateNodeHandlerRegistry;
 import com.eclipsesource.uml.glsp.core.handler.operation.create.UmlCreateEdgeOperationHandler;
@@ -171,6 +172,11 @@ public class UmlCoreModule extends EMSGLSPNotationDiagramModule {
    @Override
    protected Class<? extends UmlOperationHandlerRegistry> bindOperationHandlerRegistry() {
       return UmlOperationHandlerRegistry.class;
+   }
+
+   @Override
+   protected Class<? extends UmlActionHandlerRegistry> bindActionHandlerRegistry() {
+      return UmlActionHandlerRegistry.class;
    }
 
    @Override

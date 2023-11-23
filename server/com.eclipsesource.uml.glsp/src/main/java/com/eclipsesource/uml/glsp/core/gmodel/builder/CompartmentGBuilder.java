@@ -48,7 +48,8 @@ public interface CompartmentGBuilder extends IdContextGeneratorGProvider {
       return new GCompartmentBuilder(DefaultTypes.COMPARTMENT)
          .id(idContextGenerator().getOrCreateId(source))
          .addArgument(CompartmentGBuilder.childrenContainerKey, true)
-         .layout(GConstants.Layout.FREEFORM)
+         .addArgument("divider", true)
+         .layout(UmlLayoutConstants.FREEFORM)
          .layoutOptions(new GLayoutOptions()
             .hAlign(GConstants.HAlign.LEFT)
             .resizeContainer(true));

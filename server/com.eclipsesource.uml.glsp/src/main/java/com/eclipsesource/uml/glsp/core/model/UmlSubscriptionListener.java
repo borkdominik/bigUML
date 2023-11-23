@@ -19,7 +19,7 @@ import org.eclipse.emfcloud.modelserver.glsp.EMSSubscriptionListener;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.actions.SetDirtyStateAction;
 
-import com.eclipsesource.uml.glsp.core.handler.action.UmlRefreshModelAction;
+import com.eclipsesource.uml.glsp.core.handler.action.refresh.UmlRefreshModelAction;
 import com.eclipsesource.uml.glsp.core.utils.JsonUtils;
 import com.google.gson.Gson;
 

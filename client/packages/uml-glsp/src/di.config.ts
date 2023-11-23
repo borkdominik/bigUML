@@ -38,15 +38,11 @@ import { Container, ContainerModule } from 'inversify';
 import { UMLActionDispatcher } from './base/action-dispatcher';
 import { FixedLogger } from './common/fixed-logger';
 import { UML_TYPES } from './di.types';
-import { UmlLifelineAnchor } from './features/change-bounds/uml-custom-lifeline-anchor';
-import { UmlMovementRestrictor } from './features/change-bounds/uml-movement-restrictor';
-import { UmlSelectionService } from './features/change-bounds/uml-selection-service';
 import { CustomCopyPasteHandler, LastContainableElementTracker } from './features/copy-paste/copy-paste';
 import { EditLabelUIAutocomplete } from './features/edit-label';
 import { initializationModule, IOnceModelInitialized } from './features/initialization/di.config';
 import { umlOutlineModule } from './features/outline/di.config';
 import propertyPaletteModule from './features/property-palette/di.config';
-import { UmlPolylineEdgeRouter } from './features/routing/uml-polyline-routing';
 import { themeModule } from './features/theme/di.config';
 import { umlToolFeedbackModule } from './features/tool-feedback/di.config';
 import umlToolPaletteModule from './features/tool-palette/di.config';
@@ -60,32 +56,25 @@ export default function createContainer(widgetId: string): Container {
     const coreDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
         const context = { bind, unbind, isBound, rebind };
 
+        // Common
         rebind(TYPES.ILogger).to(FixedLogger).inSingletonScope();
         rebind(TYPES.LogLevel).toConstantValue(LogLevel.info);
         rebind(GLSPActionDispatcher).to(UMLActionDispatcher).inSingletonScope();
-
         bind(TYPES.ISnapper).to(GridSnapper);
+
+        // Common - Features
         rebind(TYPES.ICopyPasteHandler).to(CustomCopyPasteHandler);
-
-        rebind(TYPES.IEdgeRouter).to(UmlPolylineEdgeRouter);
-
-        rebind(EditLabelUI).to(EditLabelUIAutocomplete);
-
         bind(LastContainableElementTracker).toSelf().inSingletonScope();
         bind(TYPES.MouseListener).toService(LastContainableElementTracker);
+
+        // UI
+        rebind(EditLabelUI).to(EditLabelUIAutocomplete);
         // bind(TYPES.IVNodePostprocessor).to(IconLabelCompartmentSelectionFeedback);
         bind(SVGIdCreatorService).toSelf().inSingletonScope();
 
+        // Configuration
         configureLayout({ bind, isBound }, UmlFreeFormLayouter.KIND, UmlFreeFormLayouter);
-        bind(TYPES.IMovementRestrictor).to(UmlMovementRestrictor).inSingletonScope();
-
-        bind(UmlSelectionService).toSelf().inSingletonScope();
-        rebind(TYPES.SelectionService).toService(UmlSelectionService);
-
-        bind(TYPES.IAnchorComputer).to(UmlLifelineAnchor);
-
         configureDefaultModelElements(context);
-
         configureModelElement(context, DefaultTypes.GRAPH, GLSPGraph, UmlGraphProjectionView);
 
         configureViewerOptions(context, {

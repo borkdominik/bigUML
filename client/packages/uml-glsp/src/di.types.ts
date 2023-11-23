@@ -10,5 +10,6 @@ import { TYPES } from '@eclipse-glsp/client';
 
 export const UML_TYPES = {
     ...TYPES,
+    IShiftBehavior: Symbol('IShiftBehavior'),
     IOnceModelInitialized: Symbol('IOnceModelInitialized')
 };

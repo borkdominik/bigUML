@@ -76,6 +76,7 @@ public class UmlModelState extends EMSNotationModelState {
       return UmlModelIndex.getOrCreate(getRoot(), semanticIdConverter);
    }
 
+   // TODO: Sequence Diagram Specific
    public <T extends NotationElement> Optional<T> getNotationDirectly(final String id, final Class<T> clazz) {
       return safeCast(getNotationDirectly(id), clazz);
    }

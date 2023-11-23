@@ -17,13 +17,13 @@ import org.eclipse.uml2.uml.Message;
 import org.eclipse.uml2.uml.MessageOccurrenceSpecification;
 import org.eclipse.uml2.uml.MessageSort;
 
-import com.eclipsesource.uml.modelserver.core.commands.change_bounds.UmlSequenceShiftShapeCommand;
 import com.eclipsesource.uml.modelserver.shared.extension.NotationElementAccessor;
 import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.commands.DeleteNotationElementCommand;
-import com.eclipsesource.uml.modelserver.shared.notation.commands.DeleteNotationNotationElementCommand;
 import com.eclipsesource.uml.modelserver.uml.diagram.sequence_diagram.commands.messageOccurrence.DeleteMessageOccurrenceCompoundCommand;
+import com.eclipsesource.uml.modelserver.uml.diagram.sequence_diagram.core.commands.SDShiftShapeCommand;
+import com.eclipsesource.uml.modelserver.uml.diagram.sequence_diagram.shared.notation.SDDeleteNotationElementCommand;
 
 public class DeleteMessageCompoundCommand extends CompoundCommand {
 
@@ -49,7 +49,7 @@ public class DeleteMessageCompoundCommand extends CompoundCommand {
       if (notation instanceof Shape) {
          resetDistance = ((Shape) notation).getPosition().getY();
       }
-      this.append(new UmlSequenceShiftShapeCommand(context,
+      this.append(new SDShiftShapeCommand(context,
          createdLifeline,
          GraphUtil.point(0, fixedLifelineHeigt - correctionDistance - resetDistance)));
    }
@@ -67,7 +67,7 @@ public class DeleteMessageCompoundCommand extends CompoundCommand {
    private void deleteMessageAnchor(final ModelContext context, final Message semanticElement) {
       var anchorId = SemanticElementAccessor.getId(semanticElement) + "_MessageAnchor";
       var anchorShape = new NotationElementAccessor(context).getElement(anchorId, Shape.class).get();
-      this.append(new DeleteNotationNotationElementCommand(context, anchorShape));
+      this.append(new SDDeleteNotationElementCommand(context, anchorShape));
    }
 
 }

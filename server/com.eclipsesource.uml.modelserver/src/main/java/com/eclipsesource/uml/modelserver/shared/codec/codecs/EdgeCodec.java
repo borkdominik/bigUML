@@ -32,11 +32,6 @@ public interface EdgeCodec {
          ccommand().getProperties().put(EdgeCodec.TARGET_SEMANTIC_ELEMENT_ID, SemanticElementAccessor.getId(parent));
          return (T) this;
       }
-
-      default T sourcePosition(final EObject parent) {
-         ccommand().getProperties().put(EdgeCodec.TARGET_SEMANTIC_ELEMENT_ID, SemanticElementAccessor.getId(parent));
-         return (T) this;
-      }
    }
 
    interface Decoder extends CCommandProvider, ContextProvider {

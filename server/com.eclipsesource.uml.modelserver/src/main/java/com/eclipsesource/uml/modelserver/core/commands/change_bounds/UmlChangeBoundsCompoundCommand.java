@@ -18,16 +18,11 @@ import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emfcloud.modelserver.command.CCommand;
 import org.eclipse.emfcloud.modelserver.command.CCompoundCommand;
-import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.glsp.server.types.ElementAndBounds;
 import org.eclipse.uml2.uml.Element;
-import org.eclipse.uml2.uml.Lifeline;
-import org.eclipse.uml2.uml.MessageEnd;
-import org.eclipse.uml2.uml.MessageSort;
 
 import com.eclipsesource.uml.modelserver.core.commands.noop.NoopCommand;
 import com.eclipsesource.uml.modelserver.shared.codec.ContributionDecoder;
-import com.eclipsesource.uml.modelserver.shared.extension.NotationElementAccessor;
 import com.eclipsesource.uml.modelserver.shared.extension.SemanticElementAccessor;
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 
@@ -36,13 +31,11 @@ public class UmlChangeBoundsCompoundCommand extends CompoundCommand {
    protected final ModelContext context;
    protected final ContributionDecoder decoder;
    protected final SemanticElementAccessor semanticElementAccessor;
-   protected final NotationElementAccessor notationElementAccessor;
 
    public UmlChangeBoundsCompoundCommand(final ModelContext context) {
       this.context = context;
       this.decoder = new ContributionDecoder(context);
       this.semanticElementAccessor = new SemanticElementAccessor(context);
-      this.notationElementAccessor = new NotationElementAccessor(context);
 
       var command = context.command;
       var bounds = new ArrayList<ElementAndBounds>();
@@ -59,12 +52,8 @@ public class UmlChangeBoundsCompoundCommand extends CompoundCommand {
 
       bounds.forEach(bound -> {
          append(createCommand(bound));
-         System.out.println("WAHA ->  appendCreateCommand");
       });
-
-      append(new UmlSequenceLifelineLayoutCommand(context, bounds));
-      append(new UmlSequenceWrapBoundsCommand(context, bounds));
-
+      append(new UmlWrapBoundsCommand(context, bounds));
    }
 
    private ElementAndBounds getBound(final CCommand command) {
@@ -85,25 +74,6 @@ public class UmlChangeBoundsCompoundCommand extends CompoundCommand {
    private Command createCommand(final ElementAndBounds bound) {
       var element = semanticElementAccessor.getElement(bound.getElementId(), Element.class);
 
-      if (element.isEmpty()) {
-         return new UmlChangeBoundsNotationCommand(
-            context,
-            Optional.ofNullable(bound.getElementId()),
-            Optional.ofNullable(bound.getNewPosition()),
-            Optional.ofNullable(bound.getNewSize()));
-      }
-
-      if (element.get() instanceof Lifeline
-         && !isCreated((Lifeline) element.get())) {
-         return element
-            .<Command> map(e -> new UmlChangeBoundsNotationCommand(
-               context,
-               e,
-               Optional.ofNullable(GraphUtil.point(bound.getNewPosition().getX(), 30.0)),
-               Optional.ofNullable(bound.getNewSize())))
-            .orElse(new NoopCommand("No element found for " + bound.getElementId()));
-      }
-
       return element
          .<Command> map(e -> new UmlChangeBoundsNotationCommand(
             context,
@@ -111,13 +81,6 @@ public class UmlChangeBoundsCompoundCommand extends CompoundCommand {
             Optional.ofNullable(bound.getNewPosition()),
             Optional.ofNullable(bound.getNewSize())))
          .orElse(new NoopCommand("No element found for " + bound.getElementId()));
-   }
-
-   protected boolean isCreated(final Lifeline lifeline) {
-      return lifeline.getCoveredBys().stream()
-         .anyMatch(f -> (f instanceof MessageEnd)
-            && ((MessageEnd) f).getMessage().getMessageSort() == MessageSort.CREATE_MESSAGE_LITERAL
-            && ((MessageEnd) f).getMessage().getReceiveEvent() == f);
    }
 
 }

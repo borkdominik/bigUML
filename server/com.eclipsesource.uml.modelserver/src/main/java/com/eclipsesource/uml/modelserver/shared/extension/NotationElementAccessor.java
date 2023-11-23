@@ -20,17 +20,17 @@ import com.eclipsesource.uml.modelserver.shared.utils.UmlNotationUtil;
 import com.eclipsesource.uml.modelserver.unotation.UmlDiagram;
 
 public final class NotationElementAccessor {
-   private static UmlDiagram diagram;
+   private final UmlDiagram diagram;
 
    public NotationElementAccessor(final ModelContext context) {
       this(UmlNotationUtil.getDiagram(context));
    }
 
    public NotationElementAccessor(final UmlDiagram diagram) {
-      NotationElementAccessor.diagram = diagram;
+      this.diagram = diagram;
    }
 
-   public UmlDiagram getDiagram() { return NotationElementAccessor.diagram; }
+   public UmlDiagram getDiagram() { return diagram; }
 
    public <C extends NotationElement> Optional<C> getElement(final String semanticUri, final Class<C> clazz) {
       return getElement(semanticUri).map(element -> clazz.cast(element));

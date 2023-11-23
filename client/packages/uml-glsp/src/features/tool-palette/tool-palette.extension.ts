@@ -8,7 +8,7 @@
  *********************************************************************************/
 import { changeCodiconClass, compare, createIcon, createToolGroup, PaletteItem, SModelRoot, ToolPalette } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
-import { ShiftMouseTool } from '../tools/shift-mouse-tool';
+import { SDShiftMouseTool } from '../../uml/diagram/sequence/features/tools/shift-mouse-tool';
 
 const CLICKED_CSS_CLASS = 'clicked';
 const CHEVRON_DOWN_ICON_ID = 'chevron-right';
@@ -17,12 +17,6 @@ const PALETTE_ICON_ID = 'symbol-color';
 @injectable()
 export class UmlToolPalette extends ToolPalette {
     protected override defaultToolsButton: HTMLElement;
-
-    constructor() {
-        super();
-        // TODO: overwrite private member "getMessage" 🙀
-        (this as any).createHeaderTools = this.extendedCreateHeaderTools;
-    }
 
     override changeActiveButton(button?: HTMLElement): void {
         if (this.lastActivebutton) {
@@ -64,7 +58,18 @@ export class UmlToolPalette extends ToolPalette {
         }
     }
 
-    protected extendedCreateHeaderTools(): HTMLElement {
+    protected override createHeader(): void {
+        this.addMinimizePaletteButton();
+        const headerCompartment = document.createElement('div');
+        headerCompartment.classList.add('palette-header');
+        headerCompartment.append(this.createHeaderTitle());
+        headerCompartment.appendChild(this.overridecreateHeaderTools());
+        headerCompartment.appendChild((this.searchField = this.createHeaderSearchField()));
+        this.containerElement.appendChild(headerCompartment);
+    }
+
+    // TODO: This is private in base class
+    protected overridecreateHeaderTools(): HTMLElement {
         // as super
         const headerTools = document.createElement('div');
         headerTools.classList.add('header-tools');
@@ -94,7 +99,7 @@ export class UmlToolPalette extends ToolPalette {
     protected createShiftButton(): HTMLElement {
         const verticalShiftToolButton = createIcon('split-vertical');
         verticalShiftToolButton.title = 'Enable vertical shift tool [Alt + Click]';
-        verticalShiftToolButton.onclick = this.onClickStaticToolButton(verticalShiftToolButton, ShiftMouseTool.ID);
+        verticalShiftToolButton.onclick = this.onClickStaticToolButton(verticalShiftToolButton, SDShiftMouseTool.ID);
         return verticalShiftToolButton;
     }
 

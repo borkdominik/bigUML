@@ -11,12 +11,24 @@
 import '@eclipse-glsp/client/css/glsp-sprotty.css';
 import 'sprotty/css/edit-label.css';
 
-import { CircularNodeView, configureModelElement, PolylineEdgeView, SEdge, SPort, TYPES } from '@eclipse-glsp/client/lib';
-import { ContainerModule } from 'inversify';
+import { CircularNodeView, configureModelElement, GLSPScrollMouseListener, PolylineEdgeView, SEdge, SPort } from '@eclipse-glsp/client/lib';
+import { ContainerModule, interfaces } from 'inversify';
 
+import { UML_TYPES } from '../../../di.types';
 import { NamedElement } from '../../elements';
 import { LifelineElement } from './elements';
 import { InteractionElement } from './elements/interacton.model';
+import { SDLifelineAnchor } from './features/change-bounds/uml-custom-lifeline-anchor';
+import { SDMovementRestrictor } from './features/change-bounds/uml-movement-restrictor';
+import { SDSelectionService } from './features/change-bounds/uml-selection-service';
+import { SDPolylineEdgeRouter } from './features/routing/uml-polyline-routing';
+import { SD_HORIZONTAL_SHIFT } from './features/tool-feedback/horizontal-shift-tool-feedback';
+import { SD_VERTICAL_SHIFT } from './features/tool-feedback/vertical-shift-tool-feedback';
+import { SDHorizontalShiftNode, SDVerticalShiftNode } from './features/tools/model';
+import { SDShiftMouseTool } from './features/tools/shift-mouse-tool';
+import { SDShiftTool } from './features/tools/shift-tool';
+import { SDHorizontalShiftView, SDVerticalShiftView } from './features/tools/shift-tool-view';
+import { SDScrollMouseListener } from './features/viewport/uml-scroll-mouse-listener';
 import { UmlSequenceTypes } from './sequence.types';
 import {
     BehaviorExecutionNodeView,
@@ -29,8 +41,17 @@ import {
 export const umlSequenceDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
     const context = { bind, unbind, isBound, rebind };
 
-    // DISABLE GRID SNAPPING
-    unbind(TYPES.ISnapper);
+    // TODO: Sequence Diagram specific
+    unbind(UML_TYPES.ISnapper);
+    bind(SDSelectionService).toSelf().inSingletonScope();
+    rebind(UML_TYPES.SelectionService).toService(SDSelectionService);
+
+    bind(UML_TYPES.IMovementRestrictor).to(SDMovementRestrictor).inSingletonScope();
+    rebind(UML_TYPES.IEdgeRouter).to(SDPolylineEdgeRouter);
+    bind(UML_TYPES.IAnchorComputer).to(SDLifelineAnchor);
+    bind(SDScrollMouseListener).toSelf().inSingletonScope();
+    rebind(GLSPScrollMouseListener).toService(SDScrollMouseListener);
+    configureShiftTool(context);
 
     // INTERACTIONS
     configureModelElement(context, UmlSequenceTypes.INTERACTION, InteractionElement, InteractionNodeView);
@@ -65,3 +86,10 @@ export const umlSequenceDiagramModule = new ContainerModule((bind, unbind, isBou
     // MESSAGE_ANCHOR
     configureModelElement(context, UmlSequenceTypes.MESSAGE_ANCHOR, SPort, CircularNodeView);
 });
+
+export function configureShiftTool(context: { bind: interfaces.Bind; isBound: interfaces.IsBound }): void {
+    configureModelElement(context, SD_VERTICAL_SHIFT, SDVerticalShiftNode, SDVerticalShiftView);
+    configureModelElement(context, SD_HORIZONTAL_SHIFT, SDHorizontalShiftNode, SDHorizontalShiftView);
+    context.bind(UML_TYPES.IDefaultTool).to(SDShiftTool);
+    context.bind(UML_TYPES.ITool).to(SDShiftMouseTool);
+}

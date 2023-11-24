@@ -129,7 +129,6 @@ export function SDdrawFeedbackPositionedEdge(
     sourcePosition: Point,
     edgeTemplate?: Partial<SEdgeSchema>
 ): void {
-    console.log('drawFeedbackPositionedEdge called');
     const root = context.root;
     const sourceChild = root.index.getById(sourceId);
     if (!sourceChild) {
@@ -143,6 +142,7 @@ export function SDdrawFeedbackPositionedEdge(
     if (source.features?.has(sequence_lifeline)) {
         sourcePosition = { x: toAbsolutePosition(source).x + source.bounds.width / 2, y: sourcePosition.y };
     }
+
     const edgeStart = new SDFeedbackPositionedEdgeStart(sourcePosition, elementTypeId);
     edgeStart.bounds = {
         x: sourcePosition.x,
@@ -174,24 +174,20 @@ export function SDdrawFeedbackPositionedEdge(
         root.add(edgeStart);
         root.add(edgeEnd);
         root.add(feedbackEdge);
-        console.log('root:', root);
     }
 }
 
 export function SDremoveFeedbackEdge(root: SModelRoot): void {
-    console.log('removaALLLLLL');
     const feedbackEdge = root.index.getById(feedbackEdgeId(root));
     const feedbackEdgeStart = root.index.getById(SDfeedbackEdgeStartId(root));
     const feedbackEdgeEnd = root.index.getById(feedbackEdgeEndId(root));
     if (feedbackEdge instanceof SChildElement) {
-        console.log('edge be gone!');
         root.remove(feedbackEdge);
     }
     if (feedbackEdgeEnd instanceof SChildElement) {
         root.remove(feedbackEdgeEnd);
     }
     if (feedbackEdgeStart instanceof SChildElement) {
-        console.log('edgeStart be gone!');
         root.remove(feedbackEdgeStart);
     }
 }

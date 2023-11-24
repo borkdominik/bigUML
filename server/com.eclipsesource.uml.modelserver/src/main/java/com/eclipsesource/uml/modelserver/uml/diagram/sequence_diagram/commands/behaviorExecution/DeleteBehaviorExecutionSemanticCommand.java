@@ -27,14 +27,16 @@ public final class DeleteBehaviorExecutionSemanticCommand
    @Override
    protected void deleteSemanticElement(final Interaction parent, final BehaviorExecutionSpecification child) {
 
-      var start = child.getStart();
-      start.getCovereds().clear();
+      // var start = child.getStart();
+      // start.getCovereds().clear();
+      //
+      // var finish = child.getFinish();
+      // finish.getCovereds().clear();
 
-      var finish = child.getFinish();
-      finish.getCovereds().clear();
+      // parent.getFragments().remove(start);
+      // parent.getFragments().remove(finish);
 
-      parent.getFragments().remove(start);
-      parent.getFragments().remove(finish);
+      child.getCovereds().clear();
       parent.getFragments().remove(child);
    }
 }

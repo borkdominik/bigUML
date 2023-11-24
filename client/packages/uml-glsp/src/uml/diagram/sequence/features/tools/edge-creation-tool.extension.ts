@@ -47,7 +47,6 @@ export class SDEdgeCreationTool extends EdgeCreationTool {
         }
         this.creationToolMouseListener = new SDEdgeCreationToolMouseListener(this.triggerAction, this);
         this.mouseTool.register(this.creationToolMouseListener);
-        console.log('looking for:', this.triggerAction.elementTypeId);
         const extendedEdgeFeedback = [
             'edge:sequence__Message',
             'edge:sequence__reply__Message',
@@ -58,13 +57,18 @@ export class SDEdgeCreationTool extends EdgeCreationTool {
             'edge:sequence__lost__Message'
         ];
         if (extendedEdgeFeedback.includes(this.triggerAction.elementTypeId)) {
-            console.log('assigned FeedbackPositionedEdgeEndMovingMouseListener');
             this.feedbackEndMovingMouseListener = new SDFeedbackPositionedEdgeEndMovingMouseListener(this.anchorRegistry);
         } else {
             this.feedbackEndMovingMouseListener = new FeedbackEdgeEndMovingMouseListener(this.anchorRegistry);
         }
         this.mouseTool.register(this.feedbackEndMovingMouseListener);
         this.dispatchFeedback([cursorFeedbackAction(CursorCSS.OPERATION_NOT_ALLOWED)]);
+    }
+
+    override disable(): void {
+        this.mouseTool.deregister(this.creationToolMouseListener);
+        this.mouseTool.deregister(this.feedbackEndMovingMouseListener);
+        this.deregisterFeedback([SDRemoveFeedbackPositionedEdgeAction.create(), cursorFeedbackAction()]);
     }
 }
 

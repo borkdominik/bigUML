@@ -11,19 +11,37 @@
 package com.eclipsesource.uml.modelserver.uml.diagram.sequence_diagram.commands.messageOccurrence;
 
 import org.eclipse.emf.common.command.CompoundCommand;
+import org.eclipse.uml2.uml.BehaviorExecutionSpecification;
 import org.eclipse.uml2.uml.MessageOccurrenceSpecification;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.commands.DeleteNotationElementCommand;
+import com.eclipsesource.uml.modelserver.uml.diagram.sequence_diagram.commands.behaviorExecution.DeleteBehaviorExecutionCompoundCommand;
 
 public final class DeleteMessageOccurrenceCompoundCommand extends CompoundCommand {
    public DeleteMessageOccurrenceCompoundCommand(final ModelContext context,
       final MessageOccurrenceSpecification semanticElement) {
+      deleteReferencingExecutionSpecification(context, semanticElement);
+
       this.append(new DeleteMessageOccurreneSemanticCommand(context, semanticElement));
       this.append(new DeleteNotationElementCommand(context, semanticElement));
 
       // new SequenceDiagramCrossReferenceRemover(context)
       // .deleteCommandsFor(semanticElement)
       // .forEach(this::append);
+   }
+
+   private void deleteReferencingExecutionSpecification(
+      final ModelContext context,
+      final MessageOccurrenceSpecification semanticElement) {
+      semanticElement.getEnclosingInteraction()
+         .getFragments()
+         .stream()
+         .filter(f -> f instanceof BehaviorExecutionSpecification)
+         .map(b -> ((BehaviorExecutionSpecification) b))
+         .filter(b -> b.getStart() == semanticElement
+            || b.getFinish() == semanticElement)
+         .forEach(b -> this
+            .append(new DeleteBehaviorExecutionCompoundCommand(context, (b))));
    }
 }

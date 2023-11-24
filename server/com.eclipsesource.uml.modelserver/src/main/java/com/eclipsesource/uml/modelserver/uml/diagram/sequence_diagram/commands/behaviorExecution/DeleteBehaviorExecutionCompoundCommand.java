@@ -12,11 +12,9 @@ package com.eclipsesource.uml.modelserver.uml.diagram.sequence_diagram.commands.
 
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.uml2.uml.BehaviorExecutionSpecification;
-import org.eclipse.uml2.uml.ExecutionOccurrenceSpecification;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
 import com.eclipsesource.uml.modelserver.shared.notation.commands.DeleteNotationElementCommand;
-import com.eclipsesource.uml.modelserver.uml.diagram.sequence_diagram.commands.executionOccurrence.DeleteExecutionOccurrenceCompoundCommand;
 
 public final class DeleteBehaviorExecutionCompoundCommand extends CompoundCommand {
    public DeleteBehaviorExecutionCompoundCommand(final ModelContext context,
@@ -24,9 +22,13 @@ public final class DeleteBehaviorExecutionCompoundCommand extends CompoundComman
       this.append(new DeleteBehaviorExecutionSemanticCommand(context, semanticElement));
       this.append(new DeleteNotationElementCommand(context, semanticElement));
 
-      this.append(new DeleteExecutionOccurrenceCompoundCommand(context,
-         (ExecutionOccurrenceSpecification) semanticElement.getStart()));
-      this.append(new DeleteExecutionOccurrenceCompoundCommand(context,
-         (ExecutionOccurrenceSpecification) semanticElement.getFinish()));
+      // if (semanticElement.getStart() != null) {
+      // this.append(new DeleteExecutionOccurrenceCompoundCommand(context,
+      // (ExecutionOccurrenceSpecification) semanticElement.getStart()));
+      // }
+      // if (semanticElement.getFinish() != null) {
+      // this.append(new DeleteExecutionOccurrenceCompoundCommand(context,
+      // (ExecutionOccurrenceSpecification) semanticElement.getFinish()));
+      // }
    }
 }

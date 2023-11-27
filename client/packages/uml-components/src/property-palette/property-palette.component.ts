@@ -146,7 +146,7 @@ export class PropertyPalette extends BigElement {
 
         return html`<div class="grid-label">${item.label}</div>
             <div class="grid-value grid-flex">
-                <vscode-text-field .value="${item.text}" @change="${onChange}"></vscode-text-field>
+                <vscode-text-field .value="${item.text}" @change="${onChange}" ?disabled="${item.disabled}"></vscode-text-field>
             </div>`;
     }
 
@@ -158,7 +158,12 @@ export class PropertyPalette extends BigElement {
 
         return html`<div class="grid-label">${item.label}</div>
             <div class="grid-value">
-                <vscode-checkbox class="bool-item" ?checked="${item.value}" @change="${onChange}"></vscode-checkbox>
+                <vscode-checkbox
+                    class="bool-item"
+                    ?checked="${item.value}"
+                    @change="${onChange}"
+                    ?disabled="${item.disabled}"
+                ></vscode-checkbox>
             </div>`;
     }
 
@@ -170,7 +175,7 @@ export class PropertyPalette extends BigElement {
 
         return html`<div class="grid-label">${item.label}</div>
             <div class="grid-value grid-flex">
-                <vscode-dropdown .value="${item.choice}" @change="${onChange}">
+                <vscode-dropdown .value="${item.choice}" @change="${onChange}" ?disabled="${item.disabled}">
                     <div slot="selected-value">${item.choices.find(c => c.value === item.choice)?.label}</div>
                     ${item.choices.map(
                         choice =>

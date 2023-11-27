@@ -19,6 +19,7 @@ export interface ElementProperty {
     elementId: string;
     propertyId: string;
     type: 'TEXT' | 'BOOL' | 'CHOICE' | 'REFERENCE';
+    disabled: boolean;
 }
 
 export interface ElementTextProperty extends ElementProperty {

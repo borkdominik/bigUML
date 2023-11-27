@@ -17,6 +17,7 @@ import org.eclipse.emfcloud.modelserver.glsp.notation.integration.EMSGLSPNotatio
 import org.eclipse.emfcloud.modelserver.glsp.notation.integration.EMSNotationModelState;
 import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSChangeBoundsOperationHandler;
 import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSChangeRoutingPointsOperationHandler;
+import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.ActionHandler;
 import org.eclipse.glsp.server.di.MultiBinding;
 import org.eclipse.glsp.server.emf.EMFIdGenerator;
@@ -45,6 +46,7 @@ import com.eclipsesource.uml.glsp.core.gmodel.GModelMapHandler;
 import com.eclipsesource.uml.glsp.core.gmodel.GModelMapperRegistry;
 import com.eclipsesource.uml.glsp.core.gmodel.UmlGModelFactory;
 import com.eclipsesource.uml.glsp.core.handler.action.UmlActionHandlerRegistry;
+import com.eclipsesource.uml.glsp.core.handler.action.UmlOverrideActionHandlerRegistry;
 import com.eclipsesource.uml.glsp.core.handler.action.clipboard.UmlRequestClipboardDataActionHandler;
 import com.eclipsesource.uml.glsp.core.handler.action.refresh.UmlRefreshModelActionHandler;
 import com.eclipsesource.uml.glsp.core.handler.action.validation.UmlRequestEditValidationHandler;
@@ -96,6 +98,7 @@ public class UmlCoreModule extends EMSGLSPNotationDiagramModule {
 
    protected void configureRegistries() {
       bind(UmlOverrideOperationHandlerRegistry.class).in(Singleton.class);
+      bind(UmlOverrideActionHandlerRegistry.class).in(Singleton.class);
       bind(DiagramCreateNodeHandlerRegistry.class).in(Singleton.class);
       bind(DiagramCreateEdgeHandlerRegistry.class).in(Singleton.class);
       bind(DiagramDeleteHandlerRegistry.class).in(Singleton.class);
@@ -192,6 +195,11 @@ public class UmlCoreModule extends EMSGLSPNotationDiagramModule {
 
    @Override
    protected String getNotationFileExtension() { return UmlNotationResource.FILE_EXTENSION; }
+
+   @Override
+   protected void configureClientActions(final MultiBinding<Action> binding) {
+      super.configureClientActions(binding);
+   }
 
    @Override
    protected void configureActionHandlers(final MultiBinding<ActionHandler> bindings) {

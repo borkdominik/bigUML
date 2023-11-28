@@ -117,6 +117,16 @@ Coming Soon!
 
 <!-- =========================== -->
 <details>
+<summary><strong>Sequence Diagram</strong></summary>
+
+Coming Soon!
+
+<em>Initial implementation provided by: [@simonwaves](https://github.com/simowaves)</em>
+
+</details>
+
+<!-- =========================== -->
+<details>
 <summary><strong>State Machine Diagram</strong></summary>
 
 <img src="./media/vscode-state-machine.png" alt="State Machine Diagram" />
@@ -147,9 +157,9 @@ Coming Soon!
 
 ### Behavior Diagrams
 
-| Use Case | Activity | State Machine | Sequence                 | Communication | Interaction | Timing |
-| -------- | -------- | ------------- | ------------------------ | ------------- | ----------- | ------ |
-| Initial  | -        | Initial       | Contribution in progress | Initial       | -           | -      |
+| Use Case | Activity | State Machine | Sequence | Communication | Interaction | Timing |
+| -------- | -------- | ------------- | -------- | ------------- | ----------- | ------ |
+| Initial  | -        | Initial       | Initial  | Initial       | -           | -      |
 
 ### Extra
 
@@ -209,9 +219,10 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/MZeisler"><img src="https://avatars.githubusercontent.com/u/45333967?v=4?s=100" width="100px;" alt="MZeisler"/><br /><sub><b>MZeisler</b></sub></a><br /><a href="https://github.com/borkdominik/bigUML/commits?author=MZeisler" title="Code">💻</a> <a href="#diagram-MZeisler" title="Worked on a diagram">↔</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/H0oKd"><img src="https://avatars.githubusercontent.com/u/127870934?v=4?s=100" width="100px;" alt="Manuel Hude"/><br /><sub><b>Manuel Hude</b></sub></a><br /><a href="https://github.com/borkdominik/bigUML/commits?author=H0oKd" title="Code">💻</a> <a href="#diagram-H0oKd" title="Worked on a diagram">↔</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/sschwantler"><img src="https://avatars.githubusercontent.com/u/52577060?v=4?s=100" width="100px;" alt="Simon Schwantler"/><br /><sub><b>Simon Schwantler</b></sub></a><br /><a href="https://github.com/borkdominik/bigUML/commits?author=sschwantler" title="Code">💻</a> <a href="#diagram-sschwantler" title="Worked on a diagram">↔</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/mrstexx"><img src="https://avatars.githubusercontent.com/u/18032955?v=4?s=100" width="100px;" alt="Stefan Miljevic"/><br /><sub><b>Stefan Miljevic</b></sub></a><br /><a href="https://github.com/borkdominik/bigUML/commits?author=mrstexx" title="Code">💻</a> <a href="#diagram-mrstexx" title="Worked on a diagram">↔</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/simowaves"><img src="https://avatars.githubusercontent.com/u/45812752?v=4?s=100" width="100px;" alt="Simone Andreetto"/><br /><sub><b>Simone Andreetto</b></sub></a><br /><a href="https://github.com/borkdominik/bigUML/commits?author=simowaves" title="Code">💻</a> <a href="#diagram-simowaves" title="Worked on a diagram">↔</a></td>
     </tr>
     <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/mrstexx"><img src="https://avatars.githubusercontent.com/u/18032955?v=4?s=100" width="100px;" alt="Stefan Miljevic"/><br /><sub><b>Stefan Miljevic</b></sub></a><br /><a href="https://github.com/borkdominik/bigUML/commits?author=mrstexx" title="Code">💻</a> <a href="#diagram-mrstexx" title="Worked on a diagram">↔</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/vladfreeze"><img src="https://avatars.githubusercontent.com/u/58890859?v=4?s=100" width="100px;" alt="Vlad Vifor"/><br /><sub><b>Vlad Vifor</b></sub></a><br /><a href="https://github.com/borkdominik/bigUML/commits?author=vladfreeze" title="Code">💻</a> <a href="#diagram-vladfreeze" title="Worked on a diagram">↔</a></td>
       <td align="center" valign="top" width="14.28%"><a href="http://model-engineering.info/"><img src="https://avatars.githubusercontent.com/u/60790671?v=4?s=100" width="100px;" alt="borkdominik"/><br /><sub><b>borkdominik</b></sub></a><br /><a href="#projectManagement-borkdominik" title="Project Management">📆</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/dellis66"><img src="https://avatars.githubusercontent.com/u/128014459?v=4?s=100" width="100px;" alt="dellis66"/><br /><sub><b>dellis66</b></sub></a><br /><a href="https://github.com/borkdominik/bigUML/commits?author=dellis66" title="Code">💻</a> <a href="#diagram-dellis66" title="Worked on a diagram">↔</a></td>

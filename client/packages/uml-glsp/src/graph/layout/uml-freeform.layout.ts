@@ -16,6 +16,7 @@ import { AbstractLayoutOptions } from 'sprotty/lib/features/bounds/layout-option
 export class UmlFreeFormLayouter extends FreeFormLayouter {
     static override KIND = 'uml-freeform';
 
+    // Only sizeable children will be returned
     protected override getChildrenSize(
         container: SParentElement & LayoutContainer,
         containerOptions: AbstractLayoutOptions,

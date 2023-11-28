@@ -69,4 +69,12 @@ public interface NamedElementGBuilder<TSource extends NamedElement>
    default GCompartment buildIconVisibilityName(final NamedElement source, final String iconCSS) {
       return iconVisibilityNameBuilder(source, iconCSS).build();
    }
+
+   default GCompartment buildIconName(final NamedElement source, final String cssProperty) {
+      return compartmentBuilder(source)
+         .layout(GConstants.Layout.HBOX)
+         .add(iconFromCssPropertyBuilder(source, cssProperty).build())
+         .add(nameBuilder(source).build())
+         .build();
+   }
 }

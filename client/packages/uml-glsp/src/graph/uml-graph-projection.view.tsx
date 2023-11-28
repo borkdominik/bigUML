@@ -80,7 +80,7 @@ export class UmlGraphProjectionView extends GLSPProjectionView {
                     markerHeight='20'
                     orient='auto-start-reverse'
                 >
-                    <path d='M 0 0 L 10 5 L 0 10' stroke='var(--uml-edge)' fill='var(--uml-editor-background)' />
+                    <path d='M 0 0 L 10 5 L 0 10' stroke='var(--uml-edge)' fill='none' />
                 </marker>
                 <marker
                     id={this.svgIdCreator.createDefId(MARKER_DIAMOND_ID)}

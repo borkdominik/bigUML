@@ -30,7 +30,7 @@ public final class NotationElementAccessor {
       this.diagram = diagram;
    }
 
-   public UmlDiagram getDiagram() { return this.diagram; }
+   public UmlDiagram getDiagram() { return diagram; }
 
    public <C extends NotationElement> Optional<C> getElement(final String semanticUri, final Class<C> clazz) {
       return getElement(semanticUri).map(element -> clazz.cast(element));

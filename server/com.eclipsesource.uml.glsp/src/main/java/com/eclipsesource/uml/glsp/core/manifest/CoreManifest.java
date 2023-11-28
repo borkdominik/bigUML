@@ -17,20 +17,23 @@ import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.Suffix;
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateHandlerOperationMapper;
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperationMapper;
-import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.OverrideOperationHandlerContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.SuffixIdAppenderContribution;
+import com.eclipsesource.uml.glsp.core.manifest.contributions.glsp.OverrideActionHandlerContribution;
+import com.eclipsesource.uml.glsp.core.manifest.contributions.glsp.OverrideOperationHandlerContribution;
 import com.google.inject.AbstractModule;
 import com.google.inject.Binder;
 import com.google.inject.Singleton;
 
 public class CoreManifest extends AbstractModule
-   implements OverrideOperationHandlerContribution.Definition, SuffixIdAppenderContribution {
+   implements OverrideOperationHandlerContribution.Definition, OverrideActionHandlerContribution.Definition,
+   SuffixIdAppenderContribution {
 
    @Override
    protected void configure() {
       super.configure();
 
       defineOverrideOperationHandlerContribution();
+      defineOverrideActionHandlerContribution();
 
       contributeSuffixIdAppenders((contribution) -> {
          contribution.addBinding(NameLabelSuffix.SUFFIX).to(NameLabelSuffix.class);

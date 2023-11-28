@@ -80,6 +80,10 @@ public class ModelAdapterFactory extends AdapterFactoryImpl {
             return createNewDiagramRequestAdapter();
          }
          @Override
+         public Adapter caseMessageAnchor(MessageAnchor object) {
+            return createMessageAnchorAdapter();
+         }
+         @Override
          public Adapter defaultCase(EObject object) {
             return createEObjectAdapter();
          }
@@ -110,6 +114,20 @@ public class ModelAdapterFactory extends AdapterFactoryImpl {
     * @generated
     */
    public Adapter createNewDiagramRequestAdapter() {
+      return null;
+   }
+
+   /**
+    * Creates a new adapter for an object of class '{@link com.eclipsesource.uml.modelserver.model.MessageAnchor <em>Message Anchor</em>}'.
+    * <!-- begin-user-doc -->
+    * This default implementation returns null so that we can easily ignore cases;
+    * it's useful to ignore a case when inheritance will catch all the cases anyway.
+    * <!-- end-user-doc -->
+    * @return the new adapter.
+    * @see com.eclipsesource.uml.modelserver.model.MessageAnchor
+    * @generated
+    */
+   public Adapter createMessageAnchorAdapter() {
       return null;
    }
 

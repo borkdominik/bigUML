@@ -16,6 +16,7 @@ import java.util.function.Supplier;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.change.ChangeDescription;
 import org.eclipse.emfcloud.modelserver.command.CCommandExecutionResult;
 import org.eclipse.emfcloud.modelserver.emf.common.DefaultSessionController;
 
@@ -77,7 +78,18 @@ public class UmlSessionController extends DefaultSessionController {
       }
 
       broadcastIncrementalUpdatesV1(modeluri, execution);
-      broadcastIncrementalUpdatesV2(patches);
+      /*
+       * TODO: Parameter patches can be empty - this can cause the client to move an element to a specific location
+       * without updating it in the backend
+       * The client will have invalid data until it retrieves an update
+       * Issue: #150
+       */
+      var hasChanges = !((ChangeDescription) execution.get().getChangeDescription()).getObjectChanges().isEmpty();
+      if ((patches.get() == null || patches.get().isEmpty()) && hasChanges) {
+         broadcastFullUpdate(modeluri, root.get());
+      } else {
+         broadcastIncrementalUpdatesV2(patches);
+      }
 
       var type = execution.get().getType();
       switch (type) {

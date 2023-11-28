@@ -39,6 +39,15 @@ public interface ModelFactory extends EFactory {
    NewDiagramRequest createNewDiagramRequest();
 
    /**
+    * Returns a new object of class '<em>Message Anchor</em>'.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @return a new object of class '<em>Message Anchor</em>'.
+    * @generated
+    */
+   MessageAnchor createMessageAnchor();
+
+   /**
     * Returns the package supported by this factory.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->

@@ -56,24 +56,25 @@ export default function createContainer(widgetId: string): Container {
     const coreDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
         const context = { bind, unbind, isBound, rebind };
 
+        // Common
         rebind(TYPES.ILogger).to(FixedLogger).inSingletonScope();
         rebind(TYPES.LogLevel).toConstantValue(LogLevel.info);
         rebind(GLSPActionDispatcher).to(UMLActionDispatcher).inSingletonScope();
-
         bind(TYPES.ISnapper).to(GridSnapper);
+
+        // Common - Features
         rebind(TYPES.ICopyPasteHandler).to(CustomCopyPasteHandler);
-
-        rebind(EditLabelUI).to(EditLabelUIAutocomplete);
-
         bind(LastContainableElementTracker).toSelf().inSingletonScope();
         bind(TYPES.MouseListener).toService(LastContainableElementTracker);
+
+        // UI
+        rebind(EditLabelUI).to(EditLabelUIAutocomplete);
         // bind(TYPES.IVNodePostprocessor).to(IconLabelCompartmentSelectionFeedback);
         bind(SVGIdCreatorService).toSelf().inSingletonScope();
 
+        // Configuration
         configureLayout({ bind, isBound }, UmlFreeFormLayouter.KIND, UmlFreeFormLayouter);
-
         configureDefaultModelElements(context);
-
         configureModelElement(context, DefaultTypes.GRAPH, GLSPGraph, UmlGraphProjectionView);
 
         configureViewerOptions(context, {

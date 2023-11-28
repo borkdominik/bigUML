@@ -23,24 +23,34 @@ public class ElementPropertyBuilder<TPropertyType extends Enum<TPropertyType>> {
 
    public ElementPropertyBuilder<TPropertyType> text(final TPropertyType property, final String label,
       final String value) {
-      return text(elementId, property, label, value);
+      return text(elementId, property, label, value, false);
+   }
+
+   public ElementPropertyBuilder<TPropertyType> text(final TPropertyType property, final String label,
+      final String value, final Boolean isReadOnly) {
+      return text(elementId, property, label, value, isReadOnly);
    }
 
    public ElementPropertyBuilder<TPropertyType> text(final String elementId, final TPropertyType property,
       final String label,
-      final String value) {
-      items.add(new ElementTextPropertyItem(elementId, property.name(), label, value));
+      final String value, final Boolean isReadOnly) {
+      items.add(new ElementTextPropertyItem(elementId, property.name(), label, value, isReadOnly));
       return this;
    }
 
    public ElementPropertyBuilder<TPropertyType> bool(final TPropertyType property, final String label,
       final boolean value) {
-      return bool(elementId, property, label, value);
+      return bool(elementId, property, label, value, false);
+   }
+
+   public ElementPropertyBuilder<TPropertyType> bool(final TPropertyType property, final String label,
+      final boolean value, final Boolean isReadOnly) {
+      return bool(elementId, property, label, value, isReadOnly);
    }
 
    public ElementPropertyBuilder<TPropertyType> bool(final String elementId, final TPropertyType property,
       final String label,
-      final boolean value) {
+      final boolean value, final Boolean isReadOnly) {
       items.add(new ElementBoolPropertyItem(elementId, property.name(), label, value));
       return this;
    }
@@ -48,14 +58,20 @@ public class ElementPropertyBuilder<TPropertyType extends Enum<TPropertyType>> {
    public ElementPropertyBuilder<TPropertyType> choice(final TPropertyType property, final String label,
       final List<ElementChoicePropertyItem.Choice> choices,
       final String choice) {
-      return choice(elementId, property, label, choices, choice);
+      return choice(elementId, property, label, choices, choice, false);
+   }
+
+   public ElementPropertyBuilder<TPropertyType> choice(final TPropertyType property, final String label,
+      final List<ElementChoicePropertyItem.Choice> choices,
+      final String choice, final boolean isReadOnly) {
+      return choice(elementId, property, label, choices, choice, isReadOnly);
    }
 
    public ElementPropertyBuilder<TPropertyType> choice(final String elementId, final TPropertyType property,
       final String label,
-      final List<ElementChoicePropertyItem.Choice> choices, final String choice) {
+      final List<ElementChoicePropertyItem.Choice> choices, final String choice, final Boolean isReadonly) {
       items.add(new ElementChoicePropertyItem.Builder(elementId, property.name()).label(label).choices(choices)
-         .choice(choice).build());
+         .choice(choice).isReadonly(isReadonly).build());
       return this;
    }
 

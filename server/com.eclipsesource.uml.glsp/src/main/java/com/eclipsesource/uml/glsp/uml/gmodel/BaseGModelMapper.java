@@ -10,9 +10,14 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.gmodel;
 
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.server.emf.EMFIdGenerator;
+import org.eclipse.glsp.server.emf.model.notation.NotationElement;
+import org.eclipse.glsp.server.emf.model.notation.Shape;
 
 import com.eclipsesource.uml.glsp.core.features.id_generator.IdCountContextGenerator;
 import com.eclipsesource.uml.glsp.core.gmodel.GModelMapHandler;
@@ -71,5 +76,4 @@ public abstract class BaseGModelMapper<Source extends EObject, Target extends GM
    public EMFIdGenerator idGenerator() {
       return idGenerator;
    }
-
 }

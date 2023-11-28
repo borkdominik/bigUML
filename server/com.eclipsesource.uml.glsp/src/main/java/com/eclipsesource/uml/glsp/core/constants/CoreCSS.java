@@ -18,6 +18,7 @@ public class CoreCSS {
 
    public static final String NODE = "uml-node";
    public static final String EDGE = "uml-edge";
+   public static final String PORT = "uml-node"; // TODO revise to port
    public static final String ELLIPSE = "uml-ellipse";
    public static final String PACKAGEABLE_NODE = "uml-packageable-node";
 
@@ -37,7 +38,9 @@ public class CoreCSS {
       TRIANGLE_EMPTY("marker-triangle-empty"),
       TENT("marker-tent"),
       DIAMOND("marker-diamond"),
-      DIAMOND_EMPTY("marker-diamond-empty");
+      DIAMOND_EMPTY("marker-diamond-empty"),
+      CIRCLE("marker-circle"),
+      CIRCLE_EMPTY("marker-circle-empty");
 
       public String css;
 

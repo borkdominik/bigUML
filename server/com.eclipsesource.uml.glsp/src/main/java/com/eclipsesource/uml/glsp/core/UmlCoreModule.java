@@ -17,6 +17,7 @@ import org.eclipse.emfcloud.modelserver.glsp.notation.integration.EMSGLSPNotatio
 import org.eclipse.emfcloud.modelserver.glsp.notation.integration.EMSNotationModelState;
 import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSChangeBoundsOperationHandler;
 import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSChangeRoutingPointsOperationHandler;
+import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.ActionHandler;
 import org.eclipse.glsp.server.di.MultiBinding;
 import org.eclipse.glsp.server.emf.EMFIdGenerator;
@@ -44,14 +45,16 @@ import com.eclipsesource.uml.glsp.core.gmodel.DiagramMapper;
 import com.eclipsesource.uml.glsp.core.gmodel.GModelMapHandler;
 import com.eclipsesource.uml.glsp.core.gmodel.GModelMapperRegistry;
 import com.eclipsesource.uml.glsp.core.gmodel.UmlGModelFactory;
-import com.eclipsesource.uml.glsp.core.handler.action.UmlOperationActionHandler;
-import com.eclipsesource.uml.glsp.core.handler.action.UmlRefreshModelActionHandler;
-import com.eclipsesource.uml.glsp.core.handler.action.UmlRequestClipboardDataActionHandler;
-import com.eclipsesource.uml.glsp.core.handler.action.UmlRequestEditValidationHandler;
-import com.eclipsesource.uml.glsp.core.handler.operation.UmlChangeBoundsOperationHandler;
-import com.eclipsesource.uml.glsp.core.handler.operation.UmlChangeRoutingPointsOperationHandler;
+import com.eclipsesource.uml.glsp.core.handler.action.UmlActionHandlerRegistry;
+import com.eclipsesource.uml.glsp.core.handler.action.UmlOverrideActionHandlerRegistry;
+import com.eclipsesource.uml.glsp.core.handler.action.clipboard.UmlRequestClipboardDataActionHandler;
+import com.eclipsesource.uml.glsp.core.handler.action.refresh.UmlRefreshModelActionHandler;
+import com.eclipsesource.uml.glsp.core.handler.action.validation.UmlRequestEditValidationHandler;
+import com.eclipsesource.uml.glsp.core.handler.operation.UmlOperationActionHandler;
 import com.eclipsesource.uml.glsp.core.handler.operation.UmlOperationHandlerRegistry;
 import com.eclipsesource.uml.glsp.core.handler.operation.UmlOverrideOperationHandlerRegistry;
+import com.eclipsesource.uml.glsp.core.handler.operation.change_bounds.UmlChangeBoundsOperationHandler;
+import com.eclipsesource.uml.glsp.core.handler.operation.change_bounds.UmlChangeRoutingPointsOperationHandler;
 import com.eclipsesource.uml.glsp.core.handler.operation.create.DiagramCreateEdgeHandlerRegistry;
 import com.eclipsesource.uml.glsp.core.handler.operation.create.DiagramCreateNodeHandlerRegistry;
 import com.eclipsesource.uml.glsp.core.handler.operation.create.UmlCreateEdgeOperationHandler;
@@ -95,6 +98,7 @@ public class UmlCoreModule extends EMSGLSPNotationDiagramModule {
 
    protected void configureRegistries() {
       bind(UmlOverrideOperationHandlerRegistry.class).in(Singleton.class);
+      bind(UmlOverrideActionHandlerRegistry.class).in(Singleton.class);
       bind(DiagramCreateNodeHandlerRegistry.class).in(Singleton.class);
       bind(DiagramCreateEdgeHandlerRegistry.class).in(Singleton.class);
       bind(DiagramDeleteHandlerRegistry.class).in(Singleton.class);
@@ -174,6 +178,11 @@ public class UmlCoreModule extends EMSGLSPNotationDiagramModule {
    }
 
    @Override
+   protected Class<? extends UmlActionHandlerRegistry> bindActionHandlerRegistry() {
+      return UmlActionHandlerRegistry.class;
+   }
+
+   @Override
    protected Class<? extends PopupModelFactory> bindPopupModelFactory() {
       return UmlPopupFactory.class;
    }
@@ -186,6 +195,11 @@ public class UmlCoreModule extends EMSGLSPNotationDiagramModule {
 
    @Override
    protected String getNotationFileExtension() { return UmlNotationResource.FILE_EXTENSION; }
+
+   @Override
+   protected void configureClientActions(final MultiBinding<Action> binding) {
+      super.configureClientActions(binding);
+   }
 
    @Override
    protected void configureActionHandlers(final MultiBinding<ActionHandler> bindings) {

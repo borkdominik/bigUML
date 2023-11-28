@@ -37,3 +37,11 @@
 .marker-diamond-empty-end {
     marker-end: var(--svg-def-marker-diamond-empty);
 }
+
+.marker-circle-start {
+    marker-start: url('#marker-circle');
+}
+
+.marker-circle-end {
+    marker-end: url('#marker-circle');
+}

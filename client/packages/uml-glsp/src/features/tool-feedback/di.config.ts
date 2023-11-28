@@ -27,6 +27,18 @@ import {
 import { DrawMarqueeCommand, RemoveMarqueeCommand } from '@eclipse-glsp/client/lib/features/tool-feedback/marquee-tool-feedback';
 import { FeedbackEdgeEndView, SResizeHandleView } from '@eclipse-glsp/client/lib/features/tool-feedback/view';
 import { ContainerModule } from 'inversify';
+import {
+    SDDrawFeedbackPositionedEdgeCommand,
+    SDRemoveFeedbackPositionedEdgeCommand
+} from '../../uml/diagram/sequence/features/tool-feedback/creation-tool-feedback.extension';
+import {
+    SDDrawHorizontalShiftCommand,
+    SDRemoveHorizontalShiftCommand
+} from '../../uml/diagram/sequence/features/tool-feedback/horizontal-shift-tool-feedback';
+import {
+    SDDrawVerticalShiftCommand,
+    SDRemoveVerticalShiftCommand
+} from '../../uml/diagram/sequence/features/tool-feedback/vertical-shift-tool-feedback';
 import { UmlDrawFeedbackEdgeSourceCommand } from './edge/edge-feedback.command';
 import { UmlFeedbackActionDispatcher } from './feedback-action-dispatcher';
 
@@ -62,4 +74,12 @@ export const umlToolFeedbackModule = new ContainerModule((bind, _unbind, isBound
     bind(LocationPostprocessor).toSelf().inSingletonScope();
     bind(TYPES.IVNodePostprocessor).toService(LocationPostprocessor);
     bind(TYPES.HiddenVNodePostprocessor).toService(LocationPostprocessor);
+
+    configureCommand({ bind, isBound }, SDDrawFeedbackPositionedEdgeCommand);
+    configureCommand({ bind, isBound }, SDRemoveFeedbackPositionedEdgeCommand);
+
+    configureCommand({ bind, isBound }, SDDrawVerticalShiftCommand);
+    configureCommand({ bind, isBound }, SDRemoveVerticalShiftCommand);
+    configureCommand({ bind, isBound }, SDDrawHorizontalShiftCommand);
+    configureCommand({ bind, isBound }, SDRemoveHorizontalShiftCommand);
 });

@@ -25,6 +25,7 @@ import com.eclipsesource.uml.glsp.uml.gmodel.constants.UmlPaddingValues;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdContextGeneratorProvider;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdGeneratorProvider;
 
+@Deprecated
 public class UmlGCompartmentBuilder<TProvider extends GIdGeneratorProvider & GIdContextGeneratorProvider, TBuilder extends UmlGCompartmentBuilder<TProvider, TBuilder>>
    extends AbstractGCompartmentBuilder<GCompartment, TBuilder> {
    protected EObject source;

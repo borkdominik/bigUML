@@ -22,6 +22,7 @@ import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdContextGeneratorProvider;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GSuffixProvider;
 
+@Deprecated
 public class UmlGDividerBuilder<TProvider extends GIdContextGeneratorProvider & GSuffixProvider>
    extends AbstractGNodeBuilder<GNode, UmlGDividerBuilder<?>> {
 

@@ -31,11 +31,7 @@ public final class ClassNodeMapper extends RepresentationGNodeMapper<Class, GNod
 
    @Override
    public GNode map(final Class source) {
-      var builder = new GClassBuilder<>(source, this, configuration().typeId());
-
-      applyShapeNotation(source, builder);
-
-      return builder.build();
+      return new GClassBuilder2<>(gmodelContext, source, configuration().typeId()).build();
    }
 
    @Override

@@ -19,6 +19,7 @@ import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdContextGeneratorProvider;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GSuffixProvider;
 
+@Deprecated
 public class UmlGLabelBuilder<TProvider extends GIdContextGeneratorProvider & GSuffixProvider>
    extends AbstractGLabelBuilder<GLabel, UmlGLabelBuilder<?>> {
 

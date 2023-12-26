@@ -12,6 +12,7 @@ package com.eclipsesource.uml.glsp.uml.gmodel.provider;
 
 import org.eclipse.glsp.server.emf.EMFIdGenerator;
 
+@Deprecated
 public interface GIdGeneratorProvider {
    EMFIdGenerator idGenerator();
 }

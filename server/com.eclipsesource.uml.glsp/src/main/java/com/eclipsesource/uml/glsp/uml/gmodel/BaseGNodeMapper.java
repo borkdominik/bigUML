@@ -25,6 +25,7 @@ import org.eclipse.glsp.server.emf.model.notation.Shape;
 public abstract class BaseGNodeMapper<TSource extends EObject, TTarget extends GNode>
    extends BaseGModelMapper<TSource, TTarget> {
 
+   @Deprecated
    protected <TBuilder extends AbstractGNodeBuilder<?, ?>> void applyShapeNotation(final TSource source,
       final TBuilder builder) {
       getNotationPosition(source).ifPresent(position -> {
@@ -36,6 +37,7 @@ public abstract class BaseGNodeMapper<TSource extends EObject, TTarget extends G
       applyShapeSize(source, builder);
    }
 
+   @Deprecated
    protected <TBuilder extends AbstractGNodeBuilder<?, ?>> void applyShapeSize(final TSource source,
       final TBuilder builder) {
       getNotationSize(source).ifPresent(size -> {
@@ -48,16 +50,19 @@ public abstract class BaseGNodeMapper<TSource extends EObject, TTarget extends G
       });
    }
 
+   @Deprecated
    protected Optional<Shape> getNotation(final TSource source) {
       return modelState.getIndex().getNotation(source, Shape.class);
    }
 
+   @Deprecated
    protected Optional<GPoint> getNotationPosition(final TSource source) {
       return getNotation(source).map(shape -> shape.getPosition()).map(position -> {
          return GraphUtil.copy(position);
       });
    }
 
+   @Deprecated
    protected Optional<GDimension> getNotationSize(final TSource source) {
       return getNotation(source).map(shape -> shape.getSize()).map(size -> {
          return GraphUtil.copy(size);

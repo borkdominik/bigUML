@@ -1,15 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_0_15UW50Ee6-TcONhyL7iw" name="test">
-  <packagedElement xmi:type="uml:Class" xmi:id="_1r01kG50Ee6-TcONhyL7iw" name="NewClass1">
-    <ownedOperation xmi:id="_--EbUH4-Ee6bSrMxUmd9gg" name="NewOperation1">
-      <ownedParameter xmi:id="__5Mm0H4-Ee6bSrMxUmd9gg" name="NewParameter1" type="_1r01kG50Ee6-TcONhyL7iw">
-        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_BvFKYH4_Ee6bSrMxUmd9gg" value="1"/>
-        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_BvFxcH4_Ee6bSrMxUmd9gg" value="1"/>
-      </ownedParameter>
-      <ownedParameter xmi:id="_VAHgwH5AEe6bSrMxUmd9gg" name="NewParameter2" direction="return">
-        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_WbIGMH5AEe6bSrMxUmd9gg" value="1"/>
-        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_WbItQH5AEe6bSrMxUmd9gg" value="5"/>
-      </ownedParameter>
-    </ownedOperation>
-  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_1r01kG50Ee6-TcONhyL7iw" name="NewClass1"/>
 </uml:Model>

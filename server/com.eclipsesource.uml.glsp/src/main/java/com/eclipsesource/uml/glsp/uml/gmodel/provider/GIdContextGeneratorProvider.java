@@ -12,6 +12,7 @@ package com.eclipsesource.uml.glsp.uml.gmodel.provider;
 
 import com.eclipsesource.uml.glsp.core.features.id_generator.IdCountContextGenerator;
 
+@Deprecated
 public interface GIdContextGeneratorProvider {
    IdCountContextGenerator idContextGenerator();
 }

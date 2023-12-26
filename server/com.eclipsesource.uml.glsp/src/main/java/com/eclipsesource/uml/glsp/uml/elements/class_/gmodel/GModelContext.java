@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2022 EclipseSource and others.
+ * Copyright (c) 2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -8,34 +8,23 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.uml.gmodel;
+package com.eclipsesource.uml.glsp.uml.elements.class_.gmodel;
 
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.server.emf.EMFIdGenerator;
 
 import com.eclipsesource.uml.glsp.core.features.id_generator.IdCountContextGenerator;
 import com.eclipsesource.uml.glsp.core.gmodel.GModelMapHandler;
-import com.eclipsesource.uml.glsp.core.gmodel.GModelMapper;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.Suffix;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
-import com.eclipsesource.uml.glsp.uml.elements.class_.gmodel.GModelContext;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdContextGeneratorProvider;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdGeneratorProvider;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GModelMapHandlerProvider;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GSuffixProvider;
-import com.eclipsesource.uml.modelserver.shared.utils.reflection.GenericsUtil;
 import com.google.inject.Inject;
 
-public abstract class BaseGModelMapper<Source extends EObject, Target extends GModelElement>
-   implements GModelMapper<Source, Target>, GIdGeneratorProvider, GIdContextGeneratorProvider, GSuffixProvider,
+public class GModelContext
+   implements GIdGeneratorProvider, GIdContextGeneratorProvider, GSuffixProvider,
    GModelMapHandlerProvider {
-
-   protected final Class<Source> sourceType;
-   protected final Class<Target> targetType;
-
-   @Inject
-   protected GModelContext gmodelContext;
 
    @Inject
    protected UmlModelState modelState;
@@ -52,16 +41,9 @@ public abstract class BaseGModelMapper<Source extends EObject, Target extends GM
    @Inject
    protected IdCountContextGenerator idCountGenerator;
 
-   public BaseGModelMapper() {
-      this.sourceType = GenericsUtil.getClassParameter(getClass(), BaseGModelMapper.class, 0);
-      this.targetType = GenericsUtil.getClassParameter(getClass(), BaseGModelMapper.class, 1);
+   public UmlModelState modelState() {
+      return modelState;
    }
-
-   @Override
-   public Class<Source> getSourceType() { return sourceType; }
-
-   @Override
-   public Class<Target> getTargetType() { return targetType; }
 
    @Override
    public IdCountContextGenerator idContextGenerator() {
@@ -82,4 +64,5 @@ public abstract class BaseGModelMapper<Source extends EObject, Target extends GM
    public GModelMapHandler gmodelMapHandler() {
       return mapHandler;
    }
+
 }

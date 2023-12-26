@@ -12,6 +12,7 @@ package com.eclipsesource.uml.glsp.uml.gmodel.provider;
 
 import com.eclipsesource.uml.glsp.core.gmodel.GModelMapHandler;
 
+@Deprecated
 public interface GModelMapHandlerProvider {
    GModelMapHandler gmodelMapHandler();
 }

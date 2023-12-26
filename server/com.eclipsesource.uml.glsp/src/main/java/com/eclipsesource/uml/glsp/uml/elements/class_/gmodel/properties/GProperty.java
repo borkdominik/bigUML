@@ -8,11 +8,8 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.uml.gmodel.constants;
+package com.eclipsesource.uml.glsp.uml.elements.class_.gmodel.properties;
 
-public class UmlPaddingValues {
-   public static Double NONE = 0.0;
-   public static Double LEVEL_1 = 4.0;
-   public static Double LEVEL_2 = 8.0;
-   public static Double LEVEL_3 = 16.0;
+public interface GProperty {
+
 }

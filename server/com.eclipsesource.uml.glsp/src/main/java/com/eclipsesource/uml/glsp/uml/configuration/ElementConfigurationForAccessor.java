@@ -18,32 +18,35 @@ import org.eclipse.emf.ecore.EObject;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 
 public interface ElementConfigurationForAccessor {
-   Representation representation();
-
    ElementConfigurationRegistry configurationRegistry();
 
-   default Boolean existsConfigurationFor(final Class<? extends EObject> configuration) {
-      return existsConfigurationFor(Set.of(configuration));
+   default Boolean existsConfigurationFor(final Representation representation,
+      final Class<? extends EObject> configuration) {
+      return existsConfigurationFor(representation, Set.of(configuration));
    }
 
-   default Boolean existsConfigurationFor(final Set<Class<? extends EObject>> configurations) {
-      return configurations.stream().allMatch(c -> configurationRegistry().get(representation(), c).isPresent());
+   default Boolean existsConfigurationFor(final Representation representation,
+      final Set<Class<? extends EObject>> configurations) {
+      return configurations.stream().allMatch(c -> configurationRegistry().get(representation, c).isPresent());
    }
 
-   default Set<ElementConfiguration<?>> existingConfigurations(final Set<Class<? extends EObject>> configurations) {
+   default Set<ElementConfiguration<?>> existingConfigurations(final Representation representation,
+      final Set<Class<? extends EObject>> configurations) {
       return configurations.stream()
-         .filter(c -> existsConfigurationFor(Set.of(c)))
-         .map(c -> (ElementConfiguration<?>) configurationFor(c))
+         .filter(c -> existsConfigurationFor(representation, Set.of(c)))
+         .map(c -> (ElementConfiguration<?>) configurationFor(representation, c))
          .collect(Collectors.toSet());
    }
 
    default <TConfiguration extends ElementConfiguration<?>> TConfiguration configurationFor(
+      final Representation representation,
       final Class<? extends EObject> elementType) {
-      return configurationRegistry().accessTyped(representation(), elementType);
+      return configurationRegistry().accessTyped(representation, elementType);
    }
 
    default <TConfiguration extends ElementConfiguration<?>> TConfiguration configurationFor(
+      final Representation representation,
       final Class<? extends EObject> elementType, final Class<TConfiguration> configuration) {
-      return configurationRegistry().accessTyped(representation(), elementType, configuration);
+      return configurationRegistry().accessTyped(representation, elementType, configuration);
    }
 }

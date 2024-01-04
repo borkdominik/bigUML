@@ -13,7 +13,7 @@ package com.eclipsesource.uml.glsp.uml.elements.instance_specification;
 import com.eclipsesource.uml.glsp.uml.configuration.di.NodeConfigurationFactory;
 import com.eclipsesource.uml.glsp.uml.elements.instance_specification.features.InstanceSpecificationLabelEditMapper;
 import com.eclipsesource.uml.glsp.uml.elements.instance_specification.features.InstanceSpecificationPropertyMapper;
-import com.eclipsesource.uml.glsp.uml.elements.instance_specification.gmodel.InstanceSpecificationNodeMapper;
+import com.eclipsesource.uml.glsp.uml.elements.instance_specification.gmodel.InstanceSpecificationGModelMapper;
 import com.eclipsesource.uml.glsp.uml.features.label_edit.di.LabelEditMapperFactory;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.di.PropertyMapperFactory;
 import com.eclipsesource.uml.glsp.uml.gmodel.di.GModelMapperFactory;
@@ -27,7 +27,7 @@ public interface InstanceSpecificationFactory
    InstanceSpecificationConfiguration nodeConfiguration(Representation representation);
 
    @Override
-   InstanceSpecificationNodeMapper gmodel(Representation representation);
+   InstanceSpecificationGModelMapper gmodel(Representation representation);
 
    @Override
    InstanceSpecificationOperationHandler nodeOperationHandler(Representation representation);

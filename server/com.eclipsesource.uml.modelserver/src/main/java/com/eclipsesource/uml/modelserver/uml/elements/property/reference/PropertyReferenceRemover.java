@@ -18,14 +18,14 @@ import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.uml2.uml.Property;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
-import com.eclipsesource.uml.modelserver.uml.behavior.cross_delete.BaseCrossReferenceDeleteBehavior;
+import com.eclipsesource.uml.modelserver.uml.behavior.cross_delete.ExistenceBasedCrossReferenceDeleteBehavior;
 import com.eclipsesource.uml.modelserver.uml.elements.property.commands.UpdatePropertyArgument;
 import com.eclipsesource.uml.modelserver.uml.elements.property.commands.UpdatePropertySemanticCommand;
 
-public final class PropertyReferenceRemover extends BaseCrossReferenceDeleteBehavior<Property> {
+public final class PropertyReferenceRemover extends ExistenceBasedCrossReferenceDeleteBehavior<Property> {
 
    @Override
-   protected List<Command> process(final ModelContext context,
+   protected List<Command> handle(final ModelContext context,
       final Setting setting, final Property self,
       final EObject interest) {
 

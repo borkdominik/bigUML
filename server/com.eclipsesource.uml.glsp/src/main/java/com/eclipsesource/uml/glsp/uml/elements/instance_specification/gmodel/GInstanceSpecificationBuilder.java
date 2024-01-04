@@ -14,72 +14,59 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.glsp.graph.GModelElement;
+import org.eclipse.glsp.graph.GNode;
 import org.eclipse.uml2.uml.InstanceSpecification;
 import org.eclipse.uml2.uml.Slot;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
-import com.eclipsesource.uml.glsp.uml.elements.named_element.GNamedElementBuilder;
-import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGCompartmentBuilder;
-import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGDividerBuilder;
-import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGLayoutOptions;
-import com.eclipsesource.uml.glsp.uml.gmodel.constants.UmlPaddingValues;
-import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdContextGeneratorProvider;
-import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdGeneratorProvider;
-import com.eclipsesource.uml.glsp.uml.gmodel.provider.GModelMapHandlerProvider;
-import com.eclipsesource.uml.glsp.uml.gmodel.provider.GSuffixProvider;
+import com.eclipsesource.uml.glsp.sdk.cdk.GModelContext;
+import com.eclipsesource.uml.glsp.sdk.cdk.base.GCProvider;
+import com.eclipsesource.uml.glsp.sdk.cdk.gmodel.GCModelList;
+import com.eclipsesource.uml.glsp.sdk.ui.builder.GCNodeBuilder;
+import com.eclipsesource.uml.glsp.sdk.ui.components.list.GCList;
+import com.eclipsesource.uml.glsp.sdk.ui.components.list.GCListItem;
+import com.eclipsesource.uml.glsp.uml.elements.named_element.GCNamedElement;
 
-public class GInstanceSpecificationBuilder<TSource extends InstanceSpecification, TProvider extends GSuffixProvider & GIdGeneratorProvider & GIdContextGeneratorProvider & GModelMapHandlerProvider, TBuilder extends GInstanceSpecificationBuilder<TSource, TProvider, TBuilder>>
-   extends GNamedElementBuilder<TSource, TProvider, TBuilder> {
+public class GInstanceSpecificationBuilder<TOrigin extends InstanceSpecification>
+   extends GCNodeBuilder<TOrigin> {
 
-   public GInstanceSpecificationBuilder(final TSource source, final TProvider provider, final String type) {
-      super(source, provider, type);
+   public GInstanceSpecificationBuilder(final GModelContext context, final TOrigin origin, final String type) {
+      super(context, origin, type);
+   }
+
+   public List<Slot> slots() {
+      return origin.getSlots();
    }
 
    @Override
-   protected void prepareRepresentation() {
-      super.prepareRepresentation();
-      showSlots(source);
+   protected List<GCProvider> createComponentChildren(final GNode modelRoot, final GCModelList<?, ?> componentRoot) {
+      return List.of(createHeader(componentRoot), createBody(componentRoot));
    }
 
-   @Override
-   protected boolean hasChildren() {
-      return slots(source).size() > 0;
-   }
-
-   @Override
-   protected Optional<List<GModelElement>> initializeHeaderElements() {
-      var name = source.getClassifiers().size() == 0 ? source.getName()
-         : String.format("%s : %s", source.getName(),
+   protected GCProvider createHeader(final GCModelList<?, ?> root) {
+      var name = origin.getClassifiers().size() == 0 ? origin.getName()
+         : String.format("%s : %s", origin.getName(),
             String.join(",",
-               source.getClassifiers().stream()
+               origin.getClassifiers().stream()
                   .map(c -> c.getName()).collect(Collectors.toList())));
 
-      return Optional.of(List.of(buildName(name, List.of(CoreCSS.FONT_BOLD, CoreCSS.TEXT_UNDERLINE))));
+      var namedElementOptions = new GCNamedElement.Options(root);
+      namedElementOptions.name = Optional.of(name);
+      namedElementOptions.nameCss.add(CoreCSS.TEXT_UNDERLINE);
+
+      return new GCNamedElement<>(context, origin, namedElementOptions);
    }
 
-   protected EList<Slot> slots(final TSource source) {
-      return source.getSlots();
-   }
+   protected GCProvider createBody(final GCModelList<?, ?> root) {
+      var options = new GCList.Options();
+      options.dividerBeforeInserts = true;
+      var list = new GCList(context, origin, options);
 
-   protected void showSlots(final TSource source) {
-      var slots = slots(source);
+      list.addAll(slots().stream()
+         .map(e -> context.gmodelMapHandler().handle(e))
+         .map(e -> new GCListItem(context, origin, e))
+         .collect(Collectors.toList()));
 
-      if (slots.size() > 0) {
-         add(new UmlGDividerBuilder<>(source, provider).build());
-
-         var root = new UmlGCompartmentBuilder<>(source, provider)
-            .withVBoxLayout()
-            .addLayoutOptions(new UmlGLayoutOptions()
-               .padding(UmlPaddingValues.LEVEL_1, UmlPaddingValues.LEVEL_2));
-
-         root.addAll(slots(source).stream()
-            .map(e -> provider.gmodelMapHandler().handle(e))
-            .collect(Collectors.toList()));
-
-         add(root.build());
-      }
-
+      return list;
    }
 }

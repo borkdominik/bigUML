@@ -11,67 +11,49 @@
 package com.eclipsesource.uml.glsp.uml.elements.enumeration.gmodel;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.uml2.uml.Enumeration;
+import org.eclipse.uml2.uml.EnumerationLiteral;
 
-import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.QuotationMark;
+import com.eclipsesource.uml.glsp.sdk.cdk.GModelContext;
+import com.eclipsesource.uml.glsp.sdk.cdk.base.GCProvider;
+import com.eclipsesource.uml.glsp.sdk.cdk.gmodel.GCModelList;
+import com.eclipsesource.uml.glsp.sdk.ui.components.list.GCList;
+import com.eclipsesource.uml.glsp.sdk.ui.components.list.GCListItem;
 import com.eclipsesource.uml.glsp.uml.elements.data_type.gmodel.GDataTypeBuilder;
-import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGCompartmentBuilder;
-import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGDividerBuilder;
-import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGLabelBuilder;
-import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGLayoutOptions;
-import com.eclipsesource.uml.glsp.uml.gmodel.constants.UmlGapValues;
-import com.eclipsesource.uml.glsp.uml.gmodel.constants.UmlPaddingValues;
-import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdContextGeneratorProvider;
-import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdGeneratorProvider;
-import com.eclipsesource.uml.glsp.uml.gmodel.provider.GModelMapHandlerProvider;
-import com.eclipsesource.uml.glsp.uml.gmodel.provider.GSuffixProvider;
+import com.eclipsesource.uml.glsp.uml.elements.named_element.GCNamedElement;
 
-public class GEnumerationBuilder<TSource extends Enumeration, TProvider extends GSuffixProvider & GIdGeneratorProvider & GIdContextGeneratorProvider & GModelMapHandlerProvider, TBuilder extends GEnumerationBuilder<TSource, TProvider, TBuilder>>
-   extends GDataTypeBuilder<TSource, TProvider, TBuilder> {
+public final class GEnumerationBuilder<TOrigin extends Enumeration> extends GDataTypeBuilder<TOrigin> {
 
-   public GEnumerationBuilder(final TSource source, final TProvider provider, final String type) {
-      super(source, provider, type);
+   public GEnumerationBuilder(final GModelContext context, final TOrigin origin, final String type) {
+      super(context, origin, type);
+   }
+
+   public List<EnumerationLiteral> enumerationLiterals() {
+      return origin.getOwnedLiterals();
    }
 
    @Override
-   protected void prepareRepresentation() {
-      showHeader(this.headerElements);
-      showEnumerationLiterals(this.source);
+   protected GCProvider createHeader(final GCModelList<?, ?> container) {
+      var namedElementOptions = new GCNamedElement.Options(container);
+      namedElementOptions.prefix.add(QuotationMark.quoteDoubleAngle("enumeration"));
+
+      return new GCNamedElement<>(context, origin, namedElementOptions);
    }
 
    @Override
-   protected Optional<List<GModelElement>> initializeHeaderElements() {
-      return Optional.of(List.of(
-         new UmlGLabelBuilder<>(source, provider)
-            .text(QuotationMark.quoteDoubleAngle("enumeration"))
-            .addCssClasses(List.of(CoreCSS.FONT_BOLD))
-            .build(),
-         buildName(source, List.of(CoreCSS.FONT_BOLD))));
-   }
+   protected GCProvider createBody(final GCModelList<?, ?> container) {
+      var options = new GCList.Options();
+      options.dividerBeforeInserts = true;
+      var list = new GCList(context, origin, options);
 
-   protected void showEnumerationLiterals(final TSource source) {
-      var root = new UmlGCompartmentBuilder<>(source, provider)
-         .withVBoxLayout();
-
-      root.add(
-         new UmlGDividerBuilder<>(source, provider).build());
-
-      var elements = new UmlGCompartmentBuilder<>(source, provider)
-         .withVBoxLayout()
-         .addLayoutOptions(new UmlGLayoutOptions()
-            .padding(UmlPaddingValues.LEVEL_1, UmlPaddingValues.LEVEL_2)
-            .vGap(UmlGapValues.LEVEL_1));
-
-      elements.addAll(source.getOwnedLiterals().stream()
-         .map(e -> provider.gmodelMapHandler().handle(e))
+      list.addAll(enumerationLiterals().stream()
+         .map(e -> context.gmodelMapHandler().handle(e))
+         .map(e -> new GCListItem(context, origin, e))
          .collect(Collectors.toList()));
 
-      root.add(elements.build());
-      add(root.build());
+      return list;
    }
 }

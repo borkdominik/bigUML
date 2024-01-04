@@ -13,13 +13,13 @@ package com.eclipsesource.uml.glsp.uml.gmodel;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.graph.GNode;
 
-import com.eclipsesource.uml.glsp.uml.configuration.ElementConfigurationAccessor;
+import com.eclipsesource.uml.glsp.uml.configuration.RepresentationElementConfigurationAccessor;
 import com.eclipsesource.uml.glsp.uml.configuration.ElementConfigurationRegistry;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 
 public abstract class RepresentationGNodeMapper<TSource extends EObject, TTarget extends GNode>
-   extends BaseGNodeMapper<TSource, TTarget> implements ElementConfigurationAccessor {
+   extends BaseGNodeMapper<TSource, TTarget> implements RepresentationElementConfigurationAccessor {
 
    protected Representation representation;
 

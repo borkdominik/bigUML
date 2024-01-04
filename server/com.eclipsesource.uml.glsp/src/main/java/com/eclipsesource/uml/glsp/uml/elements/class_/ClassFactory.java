@@ -13,7 +13,7 @@ package com.eclipsesource.uml.glsp.uml.elements.class_;
 import com.eclipsesource.uml.glsp.uml.configuration.di.NodeConfigurationFactory;
 import com.eclipsesource.uml.glsp.uml.elements.class_.features.ClassLabelEditMapper;
 import com.eclipsesource.uml.glsp.uml.elements.class_.features.ClassPropertyMapper;
-import com.eclipsesource.uml.glsp.uml.elements.class_.gmodel.ClassNodeMapper;
+import com.eclipsesource.uml.glsp.uml.elements.class_.gmodel.ClassGModelMapper;
 import com.eclipsesource.uml.glsp.uml.features.label_edit.di.LabelEditMapperFactory;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.di.PropertyMapperFactory;
 import com.eclipsesource.uml.glsp.uml.gmodel.di.GModelMapperFactory;
@@ -27,7 +27,7 @@ public interface ClassFactory
    ClassConfiguration nodeConfiguration(Representation representation);
 
    @Override
-   ClassNodeMapper gmodel(Representation representation);
+   ClassGModelMapper gmodel(Representation representation);
 
    @Override
    ClassOperationHandler nodeOperationHandler(Representation representation);

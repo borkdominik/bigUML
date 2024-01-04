@@ -64,12 +64,14 @@ public abstract class NodeCommandProvider<TElement extends EObject, TParent>
    }
 
    protected Collection<Command> deleteModifications(final ModelContext context, final TElement element) {
-      var commands = new ArrayList<Command>(List.of(
+      var commands = new ArrayList<Command>();
+      deleter.deleteCommandsFor(context, element).forEach(commands::add);
+
+      commands.addAll(List.of(
          new CallbackSemanticCommand(context, c -> {
             EcoreUtil.delete(element);
          }),
          new DeleteNotationElementCommand(context, element)));
-      deleter.deleteCommandsFor(context, element).forEach(commands::add);
       return commands;
    }
 

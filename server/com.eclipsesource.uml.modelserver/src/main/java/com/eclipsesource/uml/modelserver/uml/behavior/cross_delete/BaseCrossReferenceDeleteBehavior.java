@@ -25,7 +25,10 @@ import com.eclipsesource.uml.modelserver.uml.command.update.UpdateCommandProvide
 import com.google.inject.Inject;
 import com.google.inject.TypeLiteral;
 
-public class BaseCrossReferenceDeleteBehavior<TElement extends EObject>
+/**
+ * Deletes the element if there is any reference to the deleted element
+ */
+public abstract class BaseCrossReferenceDeleteBehavior<TElement extends EObject>
    implements CrossReferenceDeleteBehavior<TElement> {
    @Inject
    protected TypeLiteral<TElement> elementType;
@@ -40,20 +43,22 @@ public class BaseCrossReferenceDeleteBehavior<TElement extends EObject>
    public Class<TElement> getElementType() { return (Class<TElement>) elementType.getRawType(); }
 
    @Override
+   public List<Command> process(final ModelContext context, final Setting setting, final EObject interest) {
+      return crossRemove(context, setting, interest);
+   }
+
+   @Override
    public List<Command> crossRemove(final ModelContext context, final Setting setting, final EObject interest) {
-      if (getElementType().isInstance(setting.getEObject())) {
-         return process(context, setting, getElementType().cast(setting.getEObject()), interest);
+      if (shouldHandle(context, setting, interest)) {
+         return handle(context, setting, getElementType().cast(setting.getEObject()), interest);
       }
 
       return List.of();
    }
 
-   @Override
-   public List<Command> process(final ModelContext context, final Setting setting, final EObject interest) {
-      return crossRemove(context, setting, interest);
-   }
+   protected abstract boolean shouldHandle(final ModelContext context, final Setting setting, final EObject interest);
 
-   protected List<Command> process(final ModelContext context,
+   protected List<Command> handle(final ModelContext context,
       final Setting setting, final TElement self,
       final EObject interest) {
       var command = deleteProviderFor(context, self).provideDeleteCommand(context, self);

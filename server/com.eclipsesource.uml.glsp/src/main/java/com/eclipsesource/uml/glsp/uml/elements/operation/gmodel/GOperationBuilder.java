@@ -10,131 +10,130 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.elements.operation.gmodel;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.eclipse.glsp.graph.GModelElement;
-import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
+import org.eclipse.glsp.graph.GNode;
+import org.eclipse.glsp.graph.builder.impl.GNodeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.Operation;
+import org.eclipse.uml2.uml.Parameter;
 import org.eclipse.uml2.uml.ParameterDirectionKind;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
-import com.eclipsesource.uml.glsp.uml.elements.named_element.GNamedElementBuilder;
+import com.eclipsesource.uml.glsp.sdk.cdk.GModelContext;
+import com.eclipsesource.uml.glsp.sdk.cdk.base.GCProvider;
+import com.eclipsesource.uml.glsp.sdk.cdk.gmodel.GCModelList;
+import com.eclipsesource.uml.glsp.sdk.ui.builder.GCModelBuilder;
+import com.eclipsesource.uml.glsp.sdk.ui.properties.GModelProperty;
+import com.eclipsesource.uml.glsp.sdk.ui.properties.GSelectionBorderProperty;
+import com.eclipsesource.uml.glsp.uml.elements.named_element.GCNamedElement;
 import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGCompartmentBuilder;
 import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGLabelBuilder;
 import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGLayoutOptions;
-import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdContextGeneratorProvider;
-import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdGeneratorProvider;
-import com.eclipsesource.uml.glsp.uml.gmodel.provider.GModelMapHandlerProvider;
-import com.eclipsesource.uml.glsp.uml.gmodel.provider.GSuffixProvider;
 
-public class GOperationBuilder<TSource extends Operation, TProvider extends GSuffixProvider & GIdGeneratorProvider & GIdContextGeneratorProvider & GModelMapHandlerProvider, TBuilder extends GOperationBuilder<TSource, TProvider, TBuilder>>
-   extends GNamedElementBuilder<TSource, TProvider, TBuilder> {
+public class GOperationBuilder<TOrigin extends Operation>
+   extends GCModelBuilder<TOrigin, GNode> {
+   protected final String type;
 
-   public GOperationBuilder(final TSource source, final TProvider provider, final String type) {
-      super(source, provider, type);
+   public GOperationBuilder(final GModelContext context, final TOrigin origin, final String type) {
+      super(context, origin);
+
+      this.type = type;
    }
 
-   @Override
-   protected void prepareProperties() {
-      super.prepareProperties();
-      border(false);
-      selectionBorder(true);
-   }
-
-   @Override
-   protected void prepareLayout() {
-      this.layout(GConstants.Layout.HBOX)
-         .layoutOptions(prepareLayoutOptions());
-   }
-
-   @Override
-   protected GLayoutOptions prepareLayoutOptions() {
-      return new UmlGLayoutOptions()
-         .clearPadding()
-         .hGap(3);
-   }
-
-   @Override
-   protected void prepareRepresentation() {
-      super.prepareRepresentation();
-      showParameters(source);
-      showReturns(source);
-   }
-
-   @Override
-   protected boolean hasChildren() {
-      return false;
-   }
-
-   @Override
-   protected Optional<List<GModelElement>> initializeHeaderElements() {
-      var textCss = new ArrayList<String>();
-
-      if (source.isStatic()) {
-         textCss.add(CoreCSS.TEXT_UNDERLINE);
-      }
-
-      if (source.isAbstract()) {
-         textCss.add(CoreCSS.FONT_ITALIC);
-      }
-
-      return Optional.of(List.of(
-         buildVisibility(source, List.of()),
-         buildName(source, textCss)));
-   }
-
-   @Override
-   protected void showHeader(final Optional<List<GModelElement>> headerElements) {
-      headerElements.ifPresent(elements -> {
-         var header = new UmlGCompartmentBuilder<>(source, provider)
-            .withHBoxLayout();
-
-         header.addAll(elements);
-
-         add(header.build());
-      });
-   }
-
-   protected void showParameters(final TSource source) {
-      var root = new UmlGCompartmentBuilder<>(source, provider)
-         .withHBoxLayout();
-
-      var parameters = source.getOwnedParameters().stream()
+   public List<Parameter> inputParameters() {
+      return origin.getOwnedParameters().stream()
          .filter(p -> p.getDirection() != ParameterDirectionKind.RETURN_LITERAL).collect(Collectors.toList());
+   }
 
-      root.add(new UmlGLabelBuilder<>(source, provider).text("(").build());
+   public List<Parameter> returnParameters() {
+      return origin.getOwnedParameters().stream()
+         .filter(p -> p.getDirection() == ParameterDirectionKind.RETURN_LITERAL).collect(Collectors.toList());
+   }
 
+   @Override
+   protected GNode createRootGModel() {
+      return new GNodeBuilder(type)
+         .id(context.idGenerator().getOrCreateId(origin))
+         .layout(GConstants.Layout.HBOX)
+         .layoutOptions(new UmlGLayoutOptions().clearPadding())
+         .addArgument("build_by", "gbuilder")
+         .addCssClass(CoreCSS.NODE)
+         .build();
+   }
+
+   @Override
+   protected List<GModelProperty> getRootGModelProperties() { return List.of(new GSelectionBorderProperty()); }
+
+   @Override
+   protected GCModelList<?, ?> createRootComponent(final GNode modelRoot) {
+      var root = new GCModelList<>(context, origin, new UmlGCompartmentBuilder<>(origin, context)
+         .withHBoxLayout()
+         .build());
+
+      root.addAll(List.of(createName(root), createInputParameters(root), createReturnParameters(root)));
+
+      return root;
+   }
+
+   protected GCProvider createName(final GCModelList<?, ?> root) {
+      var options = new GCNamedElement.Options(root);
+      options.inline = true;
+      options.showVisibility = true;
+      options.nameCssReplace = true;
+      options.nameCss.add(CoreCSS.TEXT_HIGHLIGHT);
+
+      if (origin.isStatic()) {
+         options.nameCss.add(CoreCSS.TEXT_UNDERLINE);
+      }
+      if (origin.isAbstract()) {
+         options.nameCss.add(CoreCSS.FONT_ITALIC);
+      }
+
+      return new GCNamedElement<>(context, origin, options);
+   }
+
+   protected GCProvider createInputParameters(final GCModelList<?, ?> root) {
+      var container = new GCModelList<>(context, origin, new UmlGCompartmentBuilder<>(origin, context)
+         .withHBoxLayout()
+         .build());
+
+      container.add(new UmlGLabelBuilder<>(origin, context).text("(").build());
+
+      var parameters = inputParameters();
       for (int i = 0; i < parameters.size(); i++) {
          if (i > 0) {
-            root.add(new UmlGLabelBuilder<>(source, provider).text(",").build());
+            container.add(new UmlGLabelBuilder<>(origin, context).text(",").build());
          }
 
-         root.add(provider.gmodelMapHandler().handle(parameters.get(i)));
+         container.add(context.gmodelMapHandler().handle(parameters.get(i)));
       }
 
-      root.add(new UmlGLabelBuilder<>(source, provider).text(")").build());
+      container.add(new UmlGLabelBuilder<>(origin, context).text(")").build());
 
-      add(root.build());
+      return container;
    }
 
-   protected void showReturns(final TSource source) {
-      var parameters = source.getOwnedParameters().stream()
-         .filter(p -> p.getDirection() == ParameterDirectionKind.RETURN_LITERAL).collect(Collectors.toList());
+   protected GCProvider createReturnParameters(final GCModelList<?, ?> root) {
+      var container = new GCModelList<>(context, origin, new UmlGCompartmentBuilder<>(origin, context)
+         .withHBoxLayout()
+         .build());
+
+      var parameters = returnParameters();
 
       if (parameters.size() > 0) {
-         add(new UmlGLabelBuilder<>(source, provider).text(":").build());
+         container.add(new UmlGLabelBuilder<>(origin, context).text(":").build());
 
          for (int i = 0; i < parameters.size(); i++) {
             if (i > 0) {
-               add(new UmlGLabelBuilder<>(source, provider).text(",").build());
+               container.add(new UmlGLabelBuilder<>(origin, context).text(",").build());
             }
 
-            add(provider.gmodelMapHandler().handle(parameters.get(i)));
+            container.add(context.gmodelMapHandler().handle(parameters.get(i)));
          }
       }
+
+      return container;
    }
 }

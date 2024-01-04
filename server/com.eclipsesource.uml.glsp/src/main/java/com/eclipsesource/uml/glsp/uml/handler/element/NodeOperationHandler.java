@@ -27,7 +27,7 @@ import com.eclipsesource.uml.glsp.core.handler.operation.update.DiagramUpdateHan
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
 import com.eclipsesource.uml.glsp.core.model.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
-import com.eclipsesource.uml.glsp.uml.configuration.ElementConfigurationAccessor;
+import com.eclipsesource.uml.glsp.uml.configuration.RepresentationElementConfigurationAccessor;
 import com.eclipsesource.uml.glsp.uml.configuration.ElementConfigurationRegistry;
 import com.eclipsesource.uml.glsp.uml.handler.operations.create.CreateLocationAwareNodeHandler;
 import com.eclipsesource.uml.modelserver.shared.utils.Type;
@@ -41,7 +41,7 @@ import com.google.inject.Inject;
 import com.google.inject.TypeLiteral;
 
 public abstract class NodeOperationHandler<TElement extends EObject, TParent>
-   implements ElementConfigurationAccessor, CreateLocationAwareNodeHandler, DiagramCreateNodeHandler<TParent>,
+   implements RepresentationElementConfigurationAccessor, CreateLocationAwareNodeHandler, DiagramCreateNodeHandler<TParent>,
    DiagramDeleteHandler<TElement>,
    DiagramUpdateHandler<TElement> {
    protected final Set<String> elementTypeIds;

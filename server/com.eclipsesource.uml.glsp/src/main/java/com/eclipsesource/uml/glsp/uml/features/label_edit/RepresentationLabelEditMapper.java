@@ -15,13 +15,13 @@ import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperation;
 
 import com.eclipsesource.uml.glsp.core.handler.operation.update.DiagramUpdateHandler;
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateHandlerOperationMapper;
-import com.eclipsesource.uml.glsp.uml.configuration.ElementConfigurationAccessor;
+import com.eclipsesource.uml.glsp.uml.configuration.RepresentationElementConfigurationAccessor;
 import com.eclipsesource.uml.glsp.uml.configuration.ElementConfigurationRegistry;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 
 public abstract class RepresentationLabelEditMapper<TElement extends EObject>
-   extends BaseLabelEditMapper<TElement> implements ElementConfigurationAccessor {
+   extends BaseLabelEditMapper<TElement> implements RepresentationElementConfigurationAccessor {
 
    protected Representation representation;
 

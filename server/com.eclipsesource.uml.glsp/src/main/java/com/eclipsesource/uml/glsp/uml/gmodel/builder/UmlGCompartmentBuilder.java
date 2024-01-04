@@ -25,7 +25,6 @@ import com.eclipsesource.uml.glsp.uml.gmodel.constants.UmlPaddingValues;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdContextGeneratorProvider;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdGeneratorProvider;
 
-@Deprecated
 public class UmlGCompartmentBuilder<TProvider extends GIdGeneratorProvider & GIdContextGeneratorProvider, TBuilder extends UmlGCompartmentBuilder<TProvider, TBuilder>>
    extends AbstractGCompartmentBuilder<GCompartment, TBuilder> {
    protected EObject source;
@@ -48,6 +47,7 @@ public class UmlGCompartmentBuilder<TProvider extends GIdGeneratorProvider & GId
       this.id(provider.idContextGenerator().getOrCreateId(source));
    }
 
+   @Deprecated
    public TBuilder withHeaderLayout() {
       this.type(DefaultTypes.COMPARTMENT_HEADER)
          .layout(GConstants.Layout.VBOX)
@@ -55,6 +55,17 @@ public class UmlGCompartmentBuilder<TProvider extends GIdGeneratorProvider & GId
             .padding(UmlPaddingValues.LEVEL_1, UmlPaddingValues.LEVEL_2)
             .hGrab(true)
             .hAlign(GConstants.HAlign.CENTER));
+
+      return self();
+   }
+
+   public TBuilder withRootComponentLayout() {
+      this.withVBoxLayout()
+         .addLayoutOptions(new UmlGLayoutOptions()
+            .clearPadding()
+            .hGrab(true)
+            .vGrab(true)
+            .hAlign(GConstants.HAlign.LEFT));
 
       return self();
    }

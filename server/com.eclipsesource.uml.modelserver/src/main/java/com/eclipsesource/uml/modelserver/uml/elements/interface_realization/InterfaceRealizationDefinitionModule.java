@@ -17,7 +17,7 @@ import org.eclipse.uml2.uml.InterfaceRealization;
 
 import com.eclipsesource.uml.modelserver.core.manifest.DiagramManifest;
 import com.eclipsesource.uml.modelserver.uml.behavior.Behavior;
-import com.eclipsesource.uml.modelserver.uml.behavior.cross_delete.BaseCrossReferenceDeleteBehavior;
+import com.eclipsesource.uml.modelserver.uml.behavior.cross_delete.ExistenceBasedCrossReferenceDeleteBehavior;
 import com.eclipsesource.uml.modelserver.uml.command.provider.element.EdgeCommandProvider;
 import com.eclipsesource.uml.modelserver.uml.elements.interface_realization.behavior.InterfaceRealizationReconnectBehavior;
 import com.eclipsesource.uml.modelserver.uml.manifest.EdgeCommandProviderDefinition;
@@ -38,7 +38,7 @@ public class InterfaceRealizationDefinitionModule extends EdgeCommandProviderDef
    @Override
    protected void behaviors(final Multibinder<Behavior<? extends EObject>> contributions) {
       contributions.addBinding().to(new TypeLiteral<InterfaceRealizationReconnectBehavior<InterfaceRealization>>() {});
-      contributions.addBinding().to(new TypeLiteral<BaseCrossReferenceDeleteBehavior<InterfaceRealization>>() {});
+      contributions.addBinding().to(new TypeLiteral<ExistenceBasedCrossReferenceDeleteBehavior<InterfaceRealization>>() {});
    }
 
 }

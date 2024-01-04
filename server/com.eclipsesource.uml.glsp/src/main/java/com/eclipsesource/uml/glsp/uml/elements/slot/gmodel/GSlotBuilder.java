@@ -11,59 +11,76 @@
 package com.eclipsesource.uml.glsp.uml.elements.slot.gmodel;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
+import org.eclipse.glsp.graph.GNode;
+import org.eclipse.glsp.graph.builder.impl.GNodeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.LiteralString;
 import org.eclipse.uml2.uml.Slot;
 import org.eclipse.uml2.uml.ValueSpecification;
 
-import com.eclipsesource.uml.glsp.uml.configuration.ElementConfigurationAccessor;
-import com.eclipsesource.uml.glsp.uml.elements.element.GElementNodeBuilder;
+import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
+import com.eclipsesource.uml.glsp.sdk.cdk.GModelContext;
+import com.eclipsesource.uml.glsp.sdk.cdk.base.GCProvider;
+import com.eclipsesource.uml.glsp.sdk.cdk.gmodel.GCModelList;
+import com.eclipsesource.uml.glsp.sdk.ui.builder.GCModelBuilder;
+import com.eclipsesource.uml.glsp.sdk.ui.properties.GModelProperty;
+import com.eclipsesource.uml.glsp.sdk.ui.properties.GSelectionBorderProperty;
+import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGCompartmentBuilder;
 import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGLabelBuilder;
 import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGLayoutOptions;
-import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdContextGeneratorProvider;
-import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdGeneratorProvider;
-import com.eclipsesource.uml.glsp.uml.gmodel.provider.GSuffixProvider;
 
-public class GSlotBuilder<TSource extends Slot, TProvider extends GIdGeneratorProvider & GIdContextGeneratorProvider & GSuffixProvider & ElementConfigurationAccessor, TBuilder extends GSlotBuilder<TSource, TProvider, TBuilder>>
-   extends GElementNodeBuilder<TSource, TProvider, TBuilder> {
+public class GSlotBuilder<TOrigin extends Slot>
+   extends GCModelBuilder<TOrigin, GNode> {
+   protected final String type;
 
-   public GSlotBuilder(final TSource source, final TProvider provider, final String type) {
-      super(source, provider, type);
+   public GSlotBuilder(final GModelContext context, final TOrigin origin, final String type) {
+      super(context, origin);
+
+      this.type = type;
    }
 
    @Override
-   protected void prepareProperties() {
-      super.prepareProperties();
-      border(false);
+   protected GNode createRootGModel() {
+      return new GNodeBuilder(type)
+         .id(context.idGenerator().getOrCreateId(origin))
+         .layout(GConstants.Layout.HBOX)
+         .layoutOptions(new UmlGLayoutOptions().clearPadding())
+         .addArgument("build_by", "gbuilder")
+         .addCssClass(CoreCSS.NODE)
+         .build();
    }
 
    @Override
-   protected void prepareLayout() {
-      this.layout(GConstants.Layout.HBOX)
-         .layoutOptions(new UmlGLayoutOptions()
-            .clearPadding()
-            .hGap(3));
-   }
+   protected List<GModelProperty> getRootGModelProperties() { return List.of(new GSelectionBorderProperty()); }
 
    @Override
-   protected void prepareRepresentation() {
-      super.prepareRepresentation();
-      showHeader(source);
+   protected GCModelList<?, ?> createRootComponent(final GNode modelRoot) {
+      var root = new GCModelList<>(context, origin, new UmlGCompartmentBuilder<>(origin, context)
+         .withHBoxLayout()
+         .build());
+
+      root.addAll(List.of(createHeader(root)));
+
+      return root;
    }
 
-   protected void showHeader(final TSource source) {
+   protected GCProvider createHeader(final GCModelList<?, ?> root) {
+      var container = new GCModelList<>(context, origin, new UmlGCompartmentBuilder<>(origin, context)
+         .withHBoxLayout()
+         .build());
+
       Optional<String> definingFeature = Optional.empty();
-      var defFeature = source.getDefiningFeature();
+      var defFeature = origin.getDefiningFeature();
 
       if (defFeature != null) {
          definingFeature = Optional.ofNullable(defFeature.getName());
       }
 
       // TODO: Add type
-
-      var valueList = source.getValues();
+      var valueList = origin.getValues();
       if (valueList.size() > 0) {
          var valuesAsStrings = new ArrayList<String>();
 
@@ -78,24 +95,25 @@ public class GSlotBuilder<TSource extends Slot, TProvider extends GIdGeneratorPr
          var valueLabel = String.join(", ", valuesAsStrings);
 
          definingFeature.ifPresentOrElse(f -> {
-            add(new UmlGLabelBuilder<>(source, provider)
+            container.add(new UmlGLabelBuilder<>(origin, context)
                .text(String.format("%s = %s", f, valueLabel))
                .build());
          }, () -> {
-            add(new UmlGLabelBuilder<>(source, provider)
+            container.add(new UmlGLabelBuilder<>(origin, context)
                .text(String.format("%s", valueLabel))
                .build());
          });
 
       } else if (definingFeature.isPresent()) {
-         add(new UmlGLabelBuilder<>(source, provider)
+         container.add(new UmlGLabelBuilder<>(origin, context)
             .text(String.format("%s", definingFeature.get()))
             .build());
       } else if (definingFeature.isEmpty()) {
-         add(new UmlGLabelBuilder<>(source, provider)
+         container.add(new UmlGLabelBuilder<>(origin, context)
             .text("<UNDEFINED>")
             .build());
       }
-   }
 
+      return container;
+   }
 }

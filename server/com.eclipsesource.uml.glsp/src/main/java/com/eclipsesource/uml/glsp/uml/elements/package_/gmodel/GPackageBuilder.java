@@ -12,42 +12,56 @@ package com.eclipsesource.uml.glsp.uml.elements.package_.gmodel;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.eclipse.glsp.graph.GModelElement;
+import org.eclipse.glsp.graph.GNode;
 import org.eclipse.uml2.uml.Package;
 import org.eclipse.uml2.uml.PackageableElement;
 
-import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
-import com.eclipsesource.uml.glsp.uml.elements.named_element.GNamedElementBuilder;
+import com.eclipsesource.uml.glsp.core.constants.QuotationMark;
+import com.eclipsesource.uml.glsp.sdk.cdk.GModelContext;
+import com.eclipsesource.uml.glsp.sdk.cdk.base.GCProvider;
+import com.eclipsesource.uml.glsp.sdk.cdk.gmodel.GCModelElement;
+import com.eclipsesource.uml.glsp.sdk.cdk.gmodel.GCModelList;
+import com.eclipsesource.uml.glsp.sdk.ui.builder.GCNodeBuilder;
+import com.eclipsesource.uml.glsp.uml.elements.named_element.GCNamedElement;
 import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGCompartmentBuilder;
-import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdContextGeneratorProvider;
-import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdGeneratorProvider;
-import com.eclipsesource.uml.glsp.uml.gmodel.provider.GModelMapHandlerProvider;
-import com.eclipsesource.uml.glsp.uml.gmodel.provider.GSuffixProvider;
 
-public class GPackageBuilder<TSource extends Package, TProvider extends GSuffixProvider & GIdGeneratorProvider & GIdContextGeneratorProvider & GModelMapHandlerProvider, TBuilder extends GPackageBuilder<TSource, TProvider, TBuilder>>
-   extends GNamedElementBuilder<TSource, TProvider, TBuilder> {
+public class GPackageBuilder<TOrigin extends Package> extends GCNodeBuilder<TOrigin> {
 
-   public GPackageBuilder(final TSource source, final TProvider provider, final String type) {
-      super(source, provider, type);
+   public GPackageBuilder(final GModelContext context, final TOrigin origin, final String type) {
+      super(context, origin, type);
+   }
+
+   public List<PackageableElement> packageableElements() {
+      return origin.getPackagedElements();
    }
 
    @Override
-   protected void prepareRepresentation() {
-      super.prepareRepresentation();
-      showPackagedElements(source);
+   protected List<GCProvider> createComponentChildren(final GNode modelRoot, final GCModelList<?, ?> componentRoot) {
+      return List.of(createHeader(componentRoot), createBody(componentRoot));
    }
 
-   @Override
-   protected boolean hasChildren() {
-      return getPackagedElements(source).size() > 0;
+   protected GCProvider createHeader(final GCModelList<?, ?> root) {
+      var namedElementOptions = new GCNamedElement.Options(root);
+      namedElementOptions.prefix.add(QuotationMark.quoteDoubleAngle("interface"));
+
+      return new GCNamedElement<>(context, origin, namedElementOptions);
    }
 
-   @Override
-   protected Optional<List<GModelElement>> initializeHeaderElements() {
-      return Optional.of(List.of(buildName(source, List.of(CoreCSS.FONT_BOLD))));
+   protected GCProvider createBody(final GCModelList<?, ?> root) {
+      var comp = new UmlGCompartmentBuilder<>(origin, context)
+         .withFreeformLayout()
+         .addAll(packageableElements().stream()
+            .map(e -> context.gmodelMapHandler().handle(e))
+            .collect(Collectors.toList()))
+         .addAll(packageableElements().stream()
+            .map(e -> context.gmodelMapHandler().handleSiblings(e))
+            .flatMap(Collection::stream)
+            .collect(Collectors.toList()))
+         .build();
+
+      return new GCModelElement<>(context, origin, comp);
    }
 
    /*-
@@ -55,42 +69,25 @@ public class GPackageBuilder<TSource extends Package, TProvider extends GSuffixP
       var hAlign = GConstants.HAlign.LEFT;
       var vAlign = GConstants.VAlign.TOP;
       var gap = 0;
-   
+
       var builder = compartmentHeaderBuilder(source)
          .layout(GConstants.Layout.VBOX)
          .add(buildHeaderName(source, "--uml-package-icon"));
-   
+
       final var uri = source.getURI();
       if (uri != null && uri.length() > 0) {
          gap = 1;
          builder.add(new GLabelBuilder(CoreTypes.LABEL_TEXT).id(idContextGenerator().getOrCreateId(source))
             .text("{uri=" + uri.toString() + "}").build());
       }
-   
+
       final var nested = getPackagedElements(source).count();
       if (nested == 0 && !USE_PACKAGE_FOLDER_VIEW) {
          hAlign = GConstants.HAlign.CENTER;
          vAlign = GConstants.VAlign.CENTER;
       }
-   
+
       return builder.layoutOptions(new GLayoutOptions().vGap(gap).hAlign(hAlign).vAlign(vAlign)).build();
    }
    */
-
-   protected List<PackageableElement> getPackagedElements(final TSource source) {
-      return source.getPackagedElements();
-   }
-
-   protected void showPackagedElements(final TSource source) {
-      add(new UmlGCompartmentBuilder<>(source, provider)
-         .withFreeformLayout()
-         .addAll(getPackagedElements(source).stream()
-            .map(e -> provider.gmodelMapHandler().handle(e))
-            .collect(Collectors.toList()))
-         .addAll(getPackagedElements(source).stream()
-            .map(e -> provider.gmodelMapHandler().handleSiblings(e))
-            .flatMap(Collection::stream)
-            .collect(Collectors.toList()))
-         .build());
-   }
 }

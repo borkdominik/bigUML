@@ -10,6 +10,7 @@
  ********************************************************************************/
 package com.eclipsesource.uml.modelserver.shared.notation.commands;
 
+import java.util.Optional;
 import java.util.function.Supplier;
 
 import org.eclipse.emf.ecore.EObject;
@@ -23,26 +24,31 @@ import com.eclipsesource.uml.modelserver.shared.notation.BaseNotationElementComm
 
 public class AddShapeNotationCommand extends BaseNotationElementCommand {
 
-   protected final GPoint shapePosition;
-   protected final GDimension shapeSize;
+   protected final Optional<GPoint> shapePosition;
+   protected final Optional<GDimension> shapeSize;
    protected final Supplier<? extends EObject> semanticElementSupplier;
+
+   public AddShapeNotationCommand(final ModelContext context,
+      final Supplier<? extends EObject> semanticElementSupplier) {
+      super(context);
+      this.semanticElementSupplier = semanticElementSupplier;
+      this.shapePosition = Optional.empty();
+      this.shapeSize = Optional.empty();
+   }
 
    public AddShapeNotationCommand(final ModelContext context, final Supplier<? extends EObject> semanticElementSupplier,
       final GPoint position, final GDimension size) {
       super(context);
       this.semanticElementSupplier = semanticElementSupplier;
-      this.shapePosition = position;
-      this.shapeSize = size;
+      this.shapePosition = Optional.of(position);
+      this.shapeSize = Optional.of(size);
    }
 
    @Override
    protected void doExecute() {
       var newShape = NotationFactory.eINSTANCE.createShape();
-      newShape.setPosition(this.shapePosition);
-
-      if (this.shapeSize != null) {
-         newShape.setSize(shapeSize);
-      }
+      this.shapePosition.ifPresent(pos -> newShape.setPosition(pos));
+      this.shapeSize.ifPresent(size -> newShape.setSize(size));
 
       var semanticReference = NotationFactory.eINSTANCE.createSemanticElementReference();
       semanticReference.setElementId(SemanticElementAccessor.getId(semanticElementSupplier.get()));

@@ -29,7 +29,7 @@ import com.eclipsesource.uml.glsp.core.handler.operation.update.DiagramUpdateHan
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperation;
 import com.eclipsesource.uml.glsp.core.model.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
-import com.eclipsesource.uml.glsp.uml.configuration.ElementConfigurationAccessor;
+import com.eclipsesource.uml.glsp.uml.configuration.RepresentationElementConfigurationAccessor;
 import com.eclipsesource.uml.glsp.uml.configuration.ElementConfigurationRegistry;
 import com.eclipsesource.uml.modelserver.shared.utils.Type;
 import com.eclipsesource.uml.modelserver.shared.utils.reflection.ReflectionUtil;
@@ -43,7 +43,7 @@ import com.google.inject.Inject;
 import com.google.inject.TypeLiteral;
 
 public abstract class EdgeOperationHandler<TElement extends EObject, TSource extends EObject, TTarget extends EObject>
-   implements ElementConfigurationAccessor, DiagramCreateEdgeHandler, DiagramDeleteHandler<TElement>,
+   implements RepresentationElementConfigurationAccessor, DiagramCreateEdgeHandler, DiagramDeleteHandler<TElement>,
    DiagramUpdateHandler<TElement>, DiagramReconnectEdgeHandler<TElement> {
    protected final Set<String> elementTypeIds;
    @Inject

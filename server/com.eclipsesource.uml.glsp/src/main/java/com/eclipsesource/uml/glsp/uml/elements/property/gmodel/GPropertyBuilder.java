@@ -14,134 +14,125 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.eclipse.glsp.graph.GLabel;
-import org.eclipse.glsp.graph.GModelElement;
+import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
+import org.eclipse.glsp.graph.builder.impl.GNodeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.Property;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.features.autocomplete.constants.AutocompleteConstants;
-import com.eclipsesource.uml.glsp.uml.configuration.ElementConfigurationAccessor;
-import com.eclipsesource.uml.glsp.uml.elements.named_element.GNamedElementBuilder;
+import com.eclipsesource.uml.glsp.sdk.cdk.GModelContext;
+import com.eclipsesource.uml.glsp.sdk.cdk.base.GCProvider;
+import com.eclipsesource.uml.glsp.sdk.cdk.gmodel.GCModelList;
+import com.eclipsesource.uml.glsp.sdk.ui.builder.GCModelBuilder;
+import com.eclipsesource.uml.glsp.sdk.ui.components.label.GCLabel;
+import com.eclipsesource.uml.glsp.sdk.ui.properties.GModelProperty;
+import com.eclipsesource.uml.glsp.sdk.ui.properties.GSelectionBorderProperty;
+import com.eclipsesource.uml.glsp.uml.elements.named_element.GCNamedElement;
 import com.eclipsesource.uml.glsp.uml.elements.property.PropertyConfiguration;
 import com.eclipsesource.uml.glsp.uml.elements.property.gmodel.suffix.PropertyMultiplicityLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.elements.property.gmodel.suffix.PropertyTypeLabelSuffix;
 import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGCompartmentBuilder;
 import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGLabelBuilder;
 import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGLayoutOptions;
-import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdContextGeneratorProvider;
-import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdGeneratorProvider;
-import com.eclipsesource.uml.glsp.uml.gmodel.provider.GModelMapHandlerProvider;
-import com.eclipsesource.uml.glsp.uml.gmodel.provider.GSuffixProvider;
 import com.eclipsesource.uml.glsp.uml.utils.MultiplicityUtil;
+import com.eclipsesource.uml.glsp.uml.utils.element.VisibilityKindUtils;
 
-public class GPropertyBuilder<TSource extends Property, TProvider extends GSuffixProvider & GIdGeneratorProvider & GIdContextGeneratorProvider & GModelMapHandlerProvider & ElementConfigurationAccessor, TBuilder extends GPropertyBuilder<TSource, TProvider, TBuilder>>
-   extends GNamedElementBuilder<TSource, TProvider, TBuilder> {
+public class GPropertyBuilder<TOrigin extends Property>
+   extends GCModelBuilder<TOrigin, GNode> {
+   protected final String type;
 
-   public GPropertyBuilder(final TSource source, final TProvider provider, final String type) {
-      super(source, provider, type);
+   public GPropertyBuilder(final GModelContext context, final TOrigin origin, final String type) {
+      super(context, origin);
+
+      this.type = type;
    }
 
    @Override
-   protected void prepareProperties() {
-      super.prepareProperties();
-      border(false);
-      selectionBorder(true);
+   protected GNode createRootGModel() {
+      return new GNodeBuilder(type)
+         .id(context.idGenerator().getOrCreateId(origin))
+         .layout(GConstants.Layout.HBOX)
+         .layoutOptions(new UmlGLayoutOptions().clearPadding())
+         .addArgument("build_by", "gbuilder")
+         .addCssClass(CoreCSS.NODE)
+         .build();
    }
 
    @Override
-   protected void prepareLayout() {
-      this.layout(GConstants.Layout.HBOX)
-         .layoutOptions(prepareLayoutOptions());
-   }
+   protected List<GModelProperty> getRootGModelProperties() { return List.of(new GSelectionBorderProperty()); }
 
    @Override
-   protected GLayoutOptions prepareLayoutOptions() {
-      return new UmlGLayoutOptions()
-         .clearPadding()
-         .hGap(3);
-   }
-
-   @Override
-   protected boolean hasChildren() {
-      return false;
-   }
-
-   @Override
-   protected Optional<List<GModelElement>> initializeHeaderElements() {
-      var elements = new ArrayList<GModelElement>();
-      elements.addAll(leftSide(source));
-      elements.addAll(rightSide(source));
-
-      return Optional.of(elements);
-   }
-
-   @Override
-   protected void showHeader(final Optional<List<GModelElement>> headerElements) {
-      headerElements.ifPresent(elements -> {
-         var header = new UmlGCompartmentBuilder<>(source, provider)
-            .withHBoxLayout();
-
-         header.addAll(elements);
-
-         add(header.build());
-      });
-   }
-
-   protected List<GModelElement> leftSide(final TSource source) {
-      var root = new UmlGCompartmentBuilder<>(source, provider)
+   protected GCModelList<?, ?> createRootComponent(final GNode modelRoot) {
+      var root = new GCModelList<>(context, origin, new UmlGCompartmentBuilder<>(origin, context)
          .withHBoxLayout()
-         .addLayoutOptions(new GLayoutOptions().hGap(3));
+         .build());
 
-      root.add(buildVisibility(source, List.of()));
+      root.addAll(List.of(leftSide(root), rightSide(root)));
 
-      if (source.isDerived()) {
-         root.add(new UmlGLabelBuilder<>(source, provider).text("/").build());
+      return root;
+   }
+
+   protected GCProvider leftSide(final GCModelList<?, ?> root) {
+      var container = new GCModelList<>(context, origin, new UmlGCompartmentBuilder<>(origin, context)
+         .withHBoxLayout()
+         .build());
+
+      container.add(
+         new GCLabel(context, origin,
+            new GCLabel.Options(VisibilityKindUtils.asSingleLabel(origin.getVisibility()))));
+
+      if (origin.isDerived()) {
+         container.add(new GCLabel(context, origin,
+            new GCLabel.Options("/")));
       }
 
-      var textCss = new ArrayList<String>();
+      var options = new GCNamedElement.Options(root);
+      options.inline = true;
+      options.nameCssReplace = true;
+      options.nameCss.add(CoreCSS.TEXT_HIGHLIGHT);
 
-      if (source.isStatic()) {
-         textCss.add(CoreCSS.TEXT_UNDERLINE);
+      if (origin.isStatic()) {
+         options.nameCss.add(CoreCSS.TEXT_UNDERLINE);
       }
 
-      root.add(buildName(source, textCss));
+      container.add(new GCNamedElement<>(context, origin, options));
 
-      return List.of(root.build());
+      return container;
    }
 
-   protected List<GModelElement> rightSide(final TSource source) {
-      var root = new UmlGCompartmentBuilder<>(source, provider)
+   protected GCProvider rightSide(final GCModelList<?, ?> root) {
+      var container = new GCModelList<>(context, origin, new UmlGCompartmentBuilder<>(origin, context)
          .withHBoxLayout()
-         .addLayoutOptions(new GLayoutOptions().hGap(3));
+         .addLayoutOptions(new GLayoutOptions().hGap(3))
+         .build());
 
-      var applied = new ArrayList<GModelElement>();
+      var applied = new ArrayList<GCProvider>();
       applied.add(buildType());
       applied.add(buildMultiplicity());
 
       if (applied.stream().anyMatch(a -> a != null)) {
-         var detailsBuilder = new UmlGCompartmentBuilder<>(source, provider)
+         var details = new GCModelList<>(context, origin, new UmlGCompartmentBuilder<>(origin, context)
             .withHBoxLayout()
-            .addLayoutOptions(new GLayoutOptions().hGap(3));
+            .addLayoutOptions(new GLayoutOptions().hGap(3))
+            .build());
 
          applied.forEach(a -> {
             if (a != null) {
-               detailsBuilder.add(a);
+               details.add(a);
             }
          });
-         root
-            .add(new UmlGLabelBuilder<>(source, provider).text(":").build())
-            .add(detailsBuilder.build());
 
-         return List.of(root.build());
+         container.add(new UmlGLabelBuilder<>(origin, context).text(":").build());
+         container.add(details);
       }
 
-      return List.of();
+      return container;
    }
 
-   protected GModelElement buildType() {
-      return Optional.ofNullable(source.getType()).map(type -> {
+   protected GCProvider buildType() {
+      return Optional.ofNullable(origin.getType()).map(type -> {
          var name = type.getName() == null || type.getName().isBlank()
             ? type.getClass().getSimpleName().replace("Impl", "")
             : type.getName();
@@ -149,35 +140,41 @@ public class GPropertyBuilder<TSource extends Property, TProvider extends GSuffi
       }).orElse(null);
    }
 
-   protected GLabel buildTypeName(final String text) {
-      return new UmlGLabelBuilder<>(source, provider, provider.configuration(PropertyConfiguration.class).typeTypeId())
-         .id(provider.suffix().appendTo(PropertyTypeLabelSuffix.SUFFIX, provider.idGenerator().getOrCreateId(source)))
-         .text(text)
-         .addArgument(AutocompleteConstants.GMODEL_FEATURE, true)
-         .addCssClass(CoreCSS.TEXT_INTERACTABLE)
-         .build();
+   protected GCProvider buildTypeName(final String text) {
+      var options = new GCLabel.Options(text);
+      options.id = Optional.of(context.suffix().appendTo(PropertyTypeLabelSuffix.SUFFIX,
+         context.idGenerator().getOrCreateId(origin)));
+
+      options.type = context.configurationFor(context.representation(), Property.class, PropertyConfiguration.class)
+         .typeTypeId();
+      options.css.add(CoreCSS.TEXT_INTERACTABLE);
+      options.arguments.put(AutocompleteConstants.GMODEL_FEATURE, true);
+
+      return new GCLabel(context, origin, options);
    }
 
-   protected GModelElement buildMultiplicity() {
-      var multiplicity = MultiplicityUtil.getMultiplicity(source);
+   protected GCProvider buildMultiplicity() {
+      var multiplicity = MultiplicityUtil.getMultiplicity(origin);
 
       if (!multiplicity.equals("1")) {
-         var builder = new UmlGCompartmentBuilder<>(source, provider)
+         var container = new GCModelList<>(context, origin, new UmlGCompartmentBuilder<>(origin, context)
             .withHBoxLayout()
-            .addLayoutOptions(new GLayoutOptions().hGap(3));
+            .addLayoutOptions(new GLayoutOptions().hGap(3))
+            .build());
 
-         builder
-            .add(new UmlGLabelBuilder<>(source, provider).text("[").build())
-            .add(new UmlGLabelBuilder<>(source, provider,
-               provider.configuration(PropertyConfiguration.class).multiplicityTypeId())
-                  .id(provider.suffix().appendTo(PropertyMultiplicityLabelSuffix.SUFFIX,
-                     provider.idGenerator().getOrCreateId(source)))
-                  .text(multiplicity)
-                  .addCssClass(CoreCSS.TEXT_INTERACTABLE)
-                  .build())
-            .add(new UmlGLabelBuilder<>(source, provider).text("]").build());
+         container.addAllGModels(List.of(
+            new UmlGLabelBuilder<>(origin, context).text("[").build(),
+            new UmlGLabelBuilder<>(origin, context,
+               context.configurationFor(context.representation(), Property.class, PropertyConfiguration.class)
+                  .multiplicityTypeId())
+                     .id(context.suffix().appendTo(PropertyMultiplicityLabelSuffix.SUFFIX,
+                        context.idGenerator().getOrCreateId(origin)))
+                     .text(multiplicity)
+                     .addCssClass(CoreCSS.TEXT_INTERACTABLE)
+                     .build(),
+            new UmlGLabelBuilder<>(origin, context).text("]").build()));
 
-         return builder.build();
+         return container;
       }
 
       return null;

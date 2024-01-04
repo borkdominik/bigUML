@@ -10,35 +10,26 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.uml.elements.primitive_type.gmodel;
 
-import java.util.List;
-import java.util.Optional;
-
-import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.uml2.uml.PrimitiveType;
 
-import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.QuotationMark;
+import com.eclipsesource.uml.glsp.sdk.cdk.GModelContext;
+import com.eclipsesource.uml.glsp.sdk.cdk.base.GCProvider;
+import com.eclipsesource.uml.glsp.sdk.cdk.gmodel.GCModelList;
 import com.eclipsesource.uml.glsp.uml.elements.data_type.gmodel.GDataTypeBuilder;
-import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGLabelBuilder;
-import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdContextGeneratorProvider;
-import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdGeneratorProvider;
-import com.eclipsesource.uml.glsp.uml.gmodel.provider.GModelMapHandlerProvider;
-import com.eclipsesource.uml.glsp.uml.gmodel.provider.GSuffixProvider;
+import com.eclipsesource.uml.glsp.uml.elements.named_element.GCNamedElement;
 
-public class GPrimitiveTypeBuilder<TSource extends PrimitiveType, TProvider extends GSuffixProvider & GIdGeneratorProvider & GIdContextGeneratorProvider & GModelMapHandlerProvider, TBuilder extends GPrimitiveTypeBuilder<TSource, TProvider, TBuilder>>
-   extends GDataTypeBuilder<TSource, TProvider, TBuilder> {
+public final class GPrimitiveTypeBuilder<TOrigin extends PrimitiveType> extends GDataTypeBuilder<TOrigin> {
 
-   public GPrimitiveTypeBuilder(final TSource source, final TProvider provider, final String type) {
-      super(source, provider, type);
+   public GPrimitiveTypeBuilder(final GModelContext context, final TOrigin origin, final String type) {
+      super(context, origin, type);
    }
 
    @Override
-   protected Optional<List<GModelElement>> initializeHeaderElements() {
-      return Optional.of(List.of(new UmlGLabelBuilder<>(source, provider)
-         .text(QuotationMark.quoteDoubleAngle("primitive"))
-         .addCssClasses(List.of(CoreCSS.FONT_BOLD))
-         .build(),
-         buildName(source, List.of(CoreCSS.FONT_BOLD))));
-   }
+   protected GCProvider createHeader(final GCModelList<?, ?> container) {
+      var namedElementOptions = new GCNamedElement.Options(container);
+      namedElementOptions.prefix.add(QuotationMark.quoteDoubleAngle("primitive"));
 
+      return new GCNamedElement<>(context, origin, namedElementOptions);
+   }
 }

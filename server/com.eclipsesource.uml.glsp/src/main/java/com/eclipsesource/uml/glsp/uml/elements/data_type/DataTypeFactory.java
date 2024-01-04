@@ -13,7 +13,7 @@ package com.eclipsesource.uml.glsp.uml.elements.data_type;
 import com.eclipsesource.uml.glsp.uml.configuration.di.NodeConfigurationFactory;
 import com.eclipsesource.uml.glsp.uml.elements.data_type.features.DataTypeLabelEditMapper;
 import com.eclipsesource.uml.glsp.uml.elements.data_type.features.DataTypePropertyMapper;
-import com.eclipsesource.uml.glsp.uml.elements.data_type.gmodel.DataTypeNodeMapper;
+import com.eclipsesource.uml.glsp.uml.elements.data_type.gmodel.DataTypeGModelMapper;
 import com.eclipsesource.uml.glsp.uml.features.label_edit.di.LabelEditMapperFactory;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.di.PropertyMapperFactory;
 import com.eclipsesource.uml.glsp.uml.gmodel.di.GModelMapperFactory;
@@ -27,7 +27,7 @@ public interface DataTypeFactory
    DataTypeConfiguration nodeConfiguration(Representation representation);
 
    @Override
-   DataTypeNodeMapper gmodel(Representation representation);
+   DataTypeGModelMapper gmodel(Representation representation);
 
    @Override
    DataTypeOperationHandler nodeOperationHandler(Representation representation);

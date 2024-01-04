@@ -19,7 +19,7 @@ import com.eclipsesource.uml.glsp.core.gmodel.GModelMapHandler;
 import com.eclipsesource.uml.glsp.core.gmodel.GModelMapper;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.Suffix;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
-import com.eclipsesource.uml.glsp.uml.elements.class_.gmodel.GModelContext;
+import com.eclipsesource.uml.glsp.sdk.cdk.GModelContext;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdContextGeneratorProvider;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdGeneratorProvider;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GModelMapHandlerProvider;

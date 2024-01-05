@@ -12,7 +12,7 @@ package com.eclipsesource.uml.glsp.uml.elements.substitution;
 
 import com.eclipsesource.uml.glsp.uml.configuration.di.EdgeConfigurationFactory;
 import com.eclipsesource.uml.glsp.uml.elements.substitution.features.SubstitutionPropertyMapper;
-import com.eclipsesource.uml.glsp.uml.elements.substitution.gmodel.SubstitutionEdgeMapper;
+import com.eclipsesource.uml.glsp.uml.elements.substitution.gmodel.SubstitutionGModelMapper;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.di.PropertyMapperFactory;
 import com.eclipsesource.uml.glsp.uml.gmodel.di.GModelMapperFactory;
 import com.eclipsesource.uml.glsp.uml.handler.di.EdgeOperationHandlerFactory;
@@ -25,7 +25,7 @@ public interface SubstitutionFactory
    SubstitutionConfiguration edgeConfiguration(Representation representation);
 
    @Override
-   SubstitutionEdgeMapper gmodel(Representation representation);
+   SubstitutionGModelMapper gmodel(Representation representation);
 
    @Override
    SubstitutionOperationHandler edgeOperationHandler(Representation representation);

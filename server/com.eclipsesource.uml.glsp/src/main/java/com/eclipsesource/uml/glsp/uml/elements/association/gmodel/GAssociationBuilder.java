@@ -18,6 +18,7 @@ import org.eclipse.glsp.graph.GEdge;
 import org.eclipse.glsp.graph.builder.impl.GEdgePlacementBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.Association;
+import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.Property;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
@@ -41,9 +42,7 @@ public class GAssociationBuilder<TOrigin extends Association> extends GCEdgeBuil
 
    @Override
    public EObject source() {
-      var source = sourceProperty();
-      return source.getOwner() instanceof Association ? source.getType()
-         : source.getOwner();
+      return sourceElement();
    }
 
    public Property sourceProperty() {
@@ -51,17 +50,26 @@ public class GAssociationBuilder<TOrigin extends Association> extends GCEdgeBuil
       return memberEnds.get(0);
    }
 
+   public Element sourceElement() {
+      var source = sourceProperty();
+      return source.getOwner() instanceof Association ? source.getType()
+         : source.getOwner();
+   }
+
    @Override
    public EObject target() {
-      var target = targetProperty();
-      return target.getOwner() instanceof Association ? target.getType()
-         : target.getOwner();
+      return targetElement();
    }
 
    public Property targetProperty() {
       var memberEnds = origin.getMemberEnds();
       return memberEnds.get(1);
+   }
 
+   public Element targetElement() {
+      var target = targetProperty();
+      return target.getOwner() instanceof Association ? target.getType()
+         : target.getOwner();
    }
 
    @Override
@@ -98,19 +106,22 @@ public class GAssociationBuilder<TOrigin extends Association> extends GCEdgeBuil
 
       var memberEndId = context.idGenerator().getOrCreateId(memberEnd);
 
-      var lo1 = new GCNameLabel.Options(memberEnd.getName());
-      lo1.edgePlacement = new GEdgePlacementBuilder()
+      var name = new GCNameLabel.Options(memberEnd.getName());
+      name.css.clear();
+      name.css.add(CoreCSS.TEXT_HIGHLIGHT);
+      name.edgePlacement = new GEdgePlacementBuilder()
          .side(labelSide)
          .position(position)
          .rotate(true)
          .offset(10d)
          .build();
 
-      var lo2 = new GCNameLabel.Options(MultiplicityUtil.getMultiplicity(memberEnd));
-      lo2.id = Optional.of(context.suffix().appendTo(PropertyMultiplicityLabelSuffix.SUFFIX, memberEndId));
-      lo2.type = context.configurationFor(context.representation(), Property.class, PropertyConfiguration.class)
+      var multiplicity = new GCNameLabel.Options(MultiplicityUtil.getMultiplicity(memberEnd));
+      multiplicity.id = Optional.of(context.suffix().appendTo(PropertyMultiplicityLabelSuffix.SUFFIX, memberEndId));
+      multiplicity.type = context
+         .configurationFor(context.representation(), Property.class, PropertyConfiguration.class)
          .multiplicityTypeId();
-      lo2.edgePlacement = new GEdgePlacementBuilder()
+      multiplicity.edgePlacement = new GEdgePlacementBuilder()
          .side(multiplicitySide)
          .position(position)
          .offset(10d)
@@ -121,8 +132,8 @@ public class GAssociationBuilder<TOrigin extends Association> extends GCEdgeBuil
       edge.getCssClasses().add(position < 0.5d ? marker.start() : marker.end());
 
       return List.of(
-         new GCNameLabel(context, memberEnd, lo1),
-         new GCLabel(context, memberEnd, lo2));
+         new GCNameLabel(context, memberEnd, name),
+         new GCLabel(context, memberEnd, multiplicity));
    }
 
 }

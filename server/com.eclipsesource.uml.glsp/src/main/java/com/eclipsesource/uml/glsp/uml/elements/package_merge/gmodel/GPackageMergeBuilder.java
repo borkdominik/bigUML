@@ -8,34 +8,56 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.uml.elements.abstraction.gmodel;
+package com.eclipsesource.uml.glsp.uml.elements.package_merge.gmodel;
 
 import java.util.List;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.graph.GEdge;
-import org.eclipse.uml2.uml.Abstraction;
+import org.eclipse.uml2.uml.Package;
+import org.eclipse.uml2.uml.PackageMerge;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.QuotationMark;
 import com.eclipsesource.uml.glsp.sdk.cdk.GModelContext;
 import com.eclipsesource.uml.glsp.sdk.cdk.base.GCProvider;
 import com.eclipsesource.uml.glsp.sdk.cdk.gmodel.GCModelList;
+import com.eclipsesource.uml.glsp.sdk.ui.builder.GCEdgeBuilder;
 import com.eclipsesource.uml.glsp.sdk.utils.StreamUtils;
-import com.eclipsesource.uml.glsp.uml.elements.dependency.gmodel.GDependencyBuilder;
 
-public class GAbstractionBuilder<TOrigin extends Abstraction> extends GDependencyBuilder<TOrigin> {
+public class GPackageMergeBuilder<TOrigin extends PackageMerge> extends GCEdgeBuilder<TOrigin> {
 
-   public GAbstractionBuilder(final GModelContext context, final TOrigin origin, final String type) {
+   public GPackageMergeBuilder(final GModelContext context, final TOrigin origin, final String type) {
       super(context, origin, type);
    }
 
    @Override
+   public EObject source() {
+      return nearestPackage();
+   }
+
+   public Package nearestPackage() {
+      return origin.getNearestPackage();
+   }
+
+   @Override
+   public EObject target() {
+      return mergedPackage();
+   }
+
+   public Package mergedPackage() {
+      return origin.getMergedPackage();
+   }
+
+   @Override
    protected List<GCProvider> createComponentChildren(final GEdge gmodelRoot, final GCModelList<?, ?> componentRoot) {
-      return List.of(createCenteredLabel(QuotationMark.quoteDoubleAngle("abstraction")));
+      return List.of(createCenteredLabel(QuotationMark.quoteDoubleAngle("merge")));
    }
 
    @Override
    protected List<String> getRootGModelCss() {
-      return StreamUtils.concat(super.getDefaultCss(), List.of(CoreCSS.EDGE_DASHED, CoreCSS.Marker.TENT.end()));
+      return StreamUtils.concat(super.getDefaultCss(),
+         List.of(CoreCSS.EDGE_DASHED, CoreCSS.Marker.TENT.end()));
    }
+
 }

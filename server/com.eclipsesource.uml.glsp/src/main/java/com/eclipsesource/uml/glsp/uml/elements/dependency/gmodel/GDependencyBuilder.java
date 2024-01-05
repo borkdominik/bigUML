@@ -8,34 +8,54 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.uml.elements.abstraction.gmodel;
+package com.eclipsesource.uml.glsp.uml.elements.dependency.gmodel;
 
 import java.util.List;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.graph.GEdge;
-import org.eclipse.uml2.uml.Abstraction;
+import org.eclipse.uml2.uml.Dependency;
+import org.eclipse.uml2.uml.NamedElement;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
-import com.eclipsesource.uml.glsp.core.constants.QuotationMark;
 import com.eclipsesource.uml.glsp.sdk.cdk.GModelContext;
 import com.eclipsesource.uml.glsp.sdk.cdk.base.GCProvider;
 import com.eclipsesource.uml.glsp.sdk.cdk.gmodel.GCModelList;
+import com.eclipsesource.uml.glsp.sdk.ui.builder.GCEdgeBuilder;
 import com.eclipsesource.uml.glsp.sdk.utils.StreamUtils;
-import com.eclipsesource.uml.glsp.uml.elements.dependency.gmodel.GDependencyBuilder;
 
-public class GAbstractionBuilder<TOrigin extends Abstraction> extends GDependencyBuilder<TOrigin> {
+public class GDependencyBuilder<TOrigin extends Dependency> extends GCEdgeBuilder<TOrigin> {
 
-   public GAbstractionBuilder(final GModelContext context, final TOrigin origin, final String type) {
+   public GDependencyBuilder(final GModelContext context, final TOrigin origin, final String type) {
       super(context, origin, type);
    }
 
    @Override
-   protected List<GCProvider> createComponentChildren(final GEdge gmodelRoot, final GCModelList<?, ?> componentRoot) {
-      return List.of(createCenteredLabel(QuotationMark.quoteDoubleAngle("abstraction")));
+   public EObject source() {
+      return clients().get(0);
+   }
+
+   public List<NamedElement> clients() {
+      return origin.getClients();
+   }
+
+   @Override
+   public EObject target() {
+      return suppliers().get(0);
+   }
+
+   public List<NamedElement> suppliers() {
+      return origin.getSuppliers();
    }
 
    @Override
    protected List<String> getRootGModelCss() {
       return StreamUtils.concat(super.getDefaultCss(), List.of(CoreCSS.EDGE_DASHED, CoreCSS.Marker.TENT.end()));
    }
+
+   @Override
+   protected List<GCProvider> createComponentChildren(final GEdge gmodelRoot, final GCModelList<?, ?> componentRoot) {
+      return List.of();
+   }
+
 }

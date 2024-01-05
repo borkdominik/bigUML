@@ -27,6 +27,7 @@ import com.eclipsesource.uml.glsp.sdk.cdk.base.GCProvider;
 import com.eclipsesource.uml.glsp.sdk.cdk.gmodel.GCModelList;
 import com.eclipsesource.uml.glsp.sdk.ui.builder.GCModelBuilder;
 import com.eclipsesource.uml.glsp.sdk.ui.properties.GModelProperty;
+import com.eclipsesource.uml.glsp.sdk.ui.properties.GNotationProperty;
 import com.eclipsesource.uml.glsp.sdk.ui.properties.GSelectionBorderProperty;
 import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGCompartmentBuilder;
 import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGLabelBuilder;
@@ -55,6 +56,9 @@ public class GSlotBuilder<TOrigin extends Slot>
 
    @Override
    protected List<GModelProperty> getRootGModelProperties() { return List.of(new GSelectionBorderProperty()); }
+
+   @Override
+   protected List<GNotationProperty> getRootGNotationProperties() { return List.of(); }
 
    @Override
    protected GCModelList<?, ?> createRootComponent(final GNode modelRoot) {

@@ -8,25 +8,25 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.uml.representation.use_case.elements.association;
+package com.eclipsesource.uml.glsp.uml.elements.abstraction.gmodel;
 
 import org.eclipse.glsp.graph.GEdge;
-import org.eclipse.uml2.uml.Association;
+import org.eclipse.uml2.uml.Abstraction;
 
-import com.eclipsesource.uml.glsp.uml.elements.association.gmodel.AssociationGModelMapper;
+import com.eclipsesource.uml.glsp.uml.gmodel.RepresentationGEdgeMapper;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
-public final class UseCaseAssociationEdgeMapper extends AssociationGModelMapper {
+public final class AbstractionGModelMapper extends RepresentationGEdgeMapper<Abstraction, GEdge> {
 
    @Inject
-   public UseCaseAssociationEdgeMapper(@Assisted final Representation representation) {
+   public AbstractionGModelMapper(@Assisted final Representation representation) {
       super(representation);
    }
 
    @Override
-   public GEdge map(final Association source) {
-      return new GUseCaseAssociationBuilder<>(gmodelContext, source, configuration().typeId()).buildGModel();
+   public GEdge map(final Abstraction source) {
+      return new GAbstractionBuilder<>(gmodelContext, source, configuration().typeId()).buildGModel();
    }
 }

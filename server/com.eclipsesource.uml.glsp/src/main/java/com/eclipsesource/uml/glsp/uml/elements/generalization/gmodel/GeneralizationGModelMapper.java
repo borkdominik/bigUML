@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2021 EclipseSource and others.
+ * Copyright (c) 2023 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -8,25 +8,25 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.uml.representation.use_case.elements.association;
+package com.eclipsesource.uml.glsp.uml.elements.generalization.gmodel;
 
 import org.eclipse.glsp.graph.GEdge;
-import org.eclipse.uml2.uml.Association;
+import org.eclipse.uml2.uml.Generalization;
 
-import com.eclipsesource.uml.glsp.uml.elements.association.gmodel.AssociationGModelMapper;
+import com.eclipsesource.uml.glsp.uml.gmodel.RepresentationGEdgeMapper;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
-public final class UseCaseAssociationEdgeMapper extends AssociationGModelMapper {
+public class GeneralizationGModelMapper extends RepresentationGEdgeMapper<Generalization, GEdge> {
 
    @Inject
-   public UseCaseAssociationEdgeMapper(@Assisted final Representation representation) {
+   public GeneralizationGModelMapper(@Assisted final Representation representation) {
       super(representation);
    }
 
    @Override
-   public GEdge map(final Association source) {
-      return new GUseCaseAssociationBuilder<>(gmodelContext, source, configuration().typeId()).buildGModel();
+   public GEdge map(final Generalization source) {
+      return new GGeneralizationBuilder<>(gmodelContext, source, configuration().typeId()).buildGModel();
    }
 }

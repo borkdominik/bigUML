@@ -13,7 +13,7 @@ package com.eclipsesource.uml.glsp.uml.elements.association;
 import com.eclipsesource.uml.glsp.uml.configuration.di.EdgeConfigurationFactory;
 import com.eclipsesource.uml.glsp.uml.elements.association.features.AssociationLabelEditMapper;
 import com.eclipsesource.uml.glsp.uml.elements.association.features.AssociationPropertyMapper;
-import com.eclipsesource.uml.glsp.uml.elements.association.gmodel.AssociationEdgeMapper;
+import com.eclipsesource.uml.glsp.uml.elements.association.gmodel.AssociationGModelMapper;
 import com.eclipsesource.uml.glsp.uml.features.label_edit.di.LabelEditMapperFactory;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.di.PropertyMapperFactory;
 import com.eclipsesource.uml.glsp.uml.gmodel.di.GModelMapperFactory;
@@ -28,7 +28,7 @@ public interface AssociationFactory
    AssociationConfiguration edgeConfiguration(Representation representation);
 
    @Override
-   AssociationEdgeMapper gmodel(Representation representation);
+   AssociationGModelMapper gmodel(Representation representation);
 
    @Override
    AssociationOperationHandler edgeOperationHandler(Representation representation);

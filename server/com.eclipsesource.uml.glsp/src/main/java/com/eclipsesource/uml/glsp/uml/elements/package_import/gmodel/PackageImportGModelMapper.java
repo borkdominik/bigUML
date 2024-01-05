@@ -8,26 +8,25 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.uml.elements.association.gmodel;
+package com.eclipsesource.uml.glsp.uml.elements.package_import.gmodel;
 
 import org.eclipse.glsp.graph.GEdge;
-import org.eclipse.uml2.uml.Association;
+import org.eclipse.uml2.uml.PackageImport;
 
 import com.eclipsesource.uml.glsp.uml.gmodel.RepresentationGEdgeMapper;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
-public class AssociationEdgeMapper extends RepresentationGEdgeMapper<Association, GEdge> {
+public final class PackageImportGModelMapper extends RepresentationGEdgeMapper<PackageImport, GEdge> {
 
    @Inject
-   public AssociationEdgeMapper(@Assisted final Representation representation) {
+   public PackageImportGModelMapper(@Assisted final Representation representation) {
       super(representation);
    }
 
    @Override
-   public GEdge map(final Association source) {
-      return new GAssociationBuilder<>(gmodelContext, source, configuration().typeId()).buildGModel();
+   public GEdge map(final PackageImport source) {
+      return new GPackageImportBuilder<>(gmodelContext, source, configuration().typeId()).buildGModel();
    }
-
 }

@@ -8,12 +8,12 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.uml.elements.abstraction.gmodel;
+package com.eclipsesource.uml.glsp.uml.elements.usage.gmodel;
 
 import java.util.List;
 
 import org.eclipse.glsp.graph.GEdge;
-import org.eclipse.uml2.uml.Abstraction;
+import org.eclipse.uml2.uml.Usage;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.core.constants.QuotationMark;
@@ -23,15 +23,15 @@ import com.eclipsesource.uml.glsp.sdk.cdk.gmodel.GCModelList;
 import com.eclipsesource.uml.glsp.sdk.utils.StreamUtils;
 import com.eclipsesource.uml.glsp.uml.elements.dependency.gmodel.GDependencyBuilder;
 
-public class GAbstractionBuilder<TOrigin extends Abstraction> extends GDependencyBuilder<TOrigin> {
+public class GUsageBuilder<TOrigin extends Usage> extends GDependencyBuilder<TOrigin> {
 
-   public GAbstractionBuilder(final GModelContext context, final TOrigin origin, final String type) {
+   public GUsageBuilder(final GModelContext context, final TOrigin origin, final String type) {
       super(context, origin, type);
    }
 
    @Override
    protected List<GCProvider> createComponentChildren(final GEdge gmodelRoot, final GCModelList<?, ?> componentRoot) {
-      return List.of(createCenteredLabel(QuotationMark.quoteDoubleAngle("abstraction")));
+      return List.of(createCenteredLabel(QuotationMark.quoteDoubleAngle("use")));
    }
 
    @Override

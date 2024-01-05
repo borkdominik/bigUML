@@ -8,34 +8,33 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.eclipsesource.uml.glsp.uml.elements.abstraction.gmodel;
+package com.eclipsesource.uml.glsp.uml.elements.realization.gmodel;
 
 import java.util.List;
 
 import org.eclipse.glsp.graph.GEdge;
-import org.eclipse.uml2.uml.Abstraction;
+import org.eclipse.uml2.uml.Realization;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
-import com.eclipsesource.uml.glsp.core.constants.QuotationMark;
 import com.eclipsesource.uml.glsp.sdk.cdk.GModelContext;
 import com.eclipsesource.uml.glsp.sdk.cdk.base.GCProvider;
 import com.eclipsesource.uml.glsp.sdk.cdk.gmodel.GCModelList;
 import com.eclipsesource.uml.glsp.sdk.utils.StreamUtils;
-import com.eclipsesource.uml.glsp.uml.elements.dependency.gmodel.GDependencyBuilder;
+import com.eclipsesource.uml.glsp.uml.elements.abstraction.gmodel.GAbstractionBuilder;
 
-public class GAbstractionBuilder<TOrigin extends Abstraction> extends GDependencyBuilder<TOrigin> {
+public class GRealizationBuilder<TOrigin extends Realization> extends GAbstractionBuilder<TOrigin> {
 
-   public GAbstractionBuilder(final GModelContext context, final TOrigin origin, final String type) {
+   public GRealizationBuilder(final GModelContext context, final TOrigin origin, final String type) {
       super(context, origin, type);
    }
 
    @Override
    protected List<GCProvider> createComponentChildren(final GEdge gmodelRoot, final GCModelList<?, ?> componentRoot) {
-      return List.of(createCenteredLabel(QuotationMark.quoteDoubleAngle("abstraction")));
+      return List.of();
    }
 
    @Override
    protected List<String> getRootGModelCss() {
-      return StreamUtils.concat(super.getDefaultCss(), List.of(CoreCSS.EDGE_DASHED, CoreCSS.Marker.TENT.end()));
+      return StreamUtils.concat(super.getDefaultCss(), List.of(CoreCSS.EDGE_DASHED, CoreCSS.Marker.TRIANGLE_EMPTY.end()));
    }
 }

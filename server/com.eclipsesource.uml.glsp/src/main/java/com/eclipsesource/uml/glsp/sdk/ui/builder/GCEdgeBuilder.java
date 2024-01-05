@@ -16,12 +16,14 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.graph.GEdge;
 import org.eclipse.glsp.graph.builder.impl.GArguments;
 import org.eclipse.glsp.graph.builder.impl.GEdgeBuilder;
+import org.eclipse.glsp.graph.builder.impl.GEdgePlacementBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
 import com.eclipsesource.uml.glsp.sdk.cdk.GModelContext;
 import com.eclipsesource.uml.glsp.sdk.cdk.base.GCProvider;
 import com.eclipsesource.uml.glsp.sdk.cdk.gmodel.GCModelList;
+import com.eclipsesource.uml.glsp.sdk.ui.components.label.GCLabel;
 import com.eclipsesource.uml.glsp.sdk.ui.properties.GBendingPointProperty;
 import com.eclipsesource.uml.glsp.sdk.ui.properties.GNotationProperty;
 
@@ -52,13 +54,17 @@ public abstract class GCEdgeBuilder<TOrigin extends EObject>
    protected GEdge createRootGModel() {
       return new GEdgeBuilder(type)
          .id(context.idGenerator().getOrCreateId(origin))
-         .addCssClass(CoreCSS.EDGE)
+         .addCssClasses(getRootGModelCss())
          .routerKind(GConstants.RouterKind.POLYLINE)
          .addArgument(GArguments.edgePadding(10))
          .sourceId(sourceId())
          .targetId(targetId())
          .build();
    }
+
+   protected List<String> getRootGModelCss() { return getDefaultCss(); }
+
+   protected List<String> getDefaultCss() { return List.of(CoreCSS.EDGE); }
 
    @Override
    protected List<GNotationProperty> getRootGNotationProperties() {
@@ -75,4 +81,16 @@ public abstract class GCEdgeBuilder<TOrigin extends EObject>
    }
 
    protected abstract List<GCProvider> createComponentChildren(GEdge gmodelRoot, GCModelList<?, ?> componentRoot);
+
+   protected GCProvider createCenteredLabel(final String label) {
+      var options = new GCLabel.Options(label);
+      options.edgePlacement = new GEdgePlacementBuilder()
+         .side(GConstants.EdgeSide.TOP)
+         .position(0.5d)
+         .offset(10d)
+         .rotate(true)
+         .build();
+
+      return new GCLabel(context, origin, options);
+   }
 }

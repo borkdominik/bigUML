@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
-<!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl --><target name="Uml GLSP Editor Targetplatform 2022-03" sequenceNumber="1647851159">
+<!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl --><target name="Uml GLSP Editor Targetplatform 2023-12" sequenceNumber="1647851159">
 	<locations>
 		<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 			<unit id="org.eclipse.emf.edit" version="2.17.0.v20220201-1551"/>
-			<unit id="org.eclipse.equinox.executable.feature.group" version="3.8.1500.v20220210-1108"/>
 			<unit id="org.eclipse.core.runtime.feature.feature.group" version="1.2.1600.v20220215-2237"/>
 			<unit id="org.eclipse.uml2.uml" version="5.5.0.v20210228-1829"/>
 			<unit id="org.eclipse.uml2.uml.resources" version="5.5.0.v20210228-1829"/>
@@ -13,30 +12,15 @@
 			<repository location="http://download.eclipse.org/releases/2022-03"/>
 		</location>
 		<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-			<unit id="org.apache.log4j" version="1.2.19.v20220208-1728"/>
-			<unit id="org.apache.logging.log4j" version="2.17.1.v20220106-2156"/>
 			<unit id="com.google.gson" version="2.8.9.v20220111-1409"/>
 			<unit id="com.google.inject" version="5.0.1.v20210324-2015"/>
 			<unit id="com.google.guava" version="30.1.0.v20210127-2300"/>
-			<unit id="ch.qos.logback.slf4j" version="1.2.3.v20200428-2012"/>
 			<unit id="org.apache.commons.io" version="2.8.0.v20210415-0900"/>
-			<unit id="org.mockito" version="2.23.0.v20200310-1642"/>
-			<unit id="net.bytebuddy.byte-buddy" version="1.9.0.v20181107-1410"/>
-			<unit id="net.bytebuddy.byte-buddy-agent" version="1.9.0.v20181106-1534"/>
-			<unit id="org.objenesis" version="2.6.0.v20180420-1519"/>
-			<unit id="org.hamcrest" version="2.2.0.v20210711-0821"/>
 			<unit id="org.slf4j.api" version="1.7.30.v20200204-2150"/>
+			<unit id="ch.qos.logback.slf4j" version="1.2.3.v20200428-2012"/>
 			<unit id="javax.servlet" version="3.1.0.v201410161800"/>
 			<repository location="https://download.eclipse.org/tools/orbit/downloads/drops/R20220302172233/repository/"/>
-		</location>
-		<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-			<unit id="org.eclipse.emfcloud.emfjson-jackson" version="2.0.0"/>
-			<repository location="https://download.eclipse.org/emfcloud/emfjson-jackson/p2/releases/2.0.0/"/>
-		</location>
-		<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-			<unit id="org.eclipse.jetty.server" version="9.4.44.v20210927"/>
-			<unit id="org.eclipse.jetty.websocket.server" version="9.4.44.v20210927"/>
-			<repository location="https://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.4.44.v20210927/"/>
+			<unit id="org.slf4j.apis.log4j" version="1.7.30.v20200204-2150"/>
 		</location>
 		<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 			<repository location="https://download.eclipse.org/elk/updates/releases/0.8.1/"/>
@@ -44,6 +28,10 @@
 			<unit id="org.eclipse.elk.graph" version="0.8.1"/>
 			<unit id="org.eclipse.elk.graph.text" version="0.8.1"/>
 			<unit id="org.eclipse.elk.alg.layered" version="0.8.1"/>
+		</location>
+		<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+			<unit id="org.eclipse.emfcloud.emfjson-jackson" version="2.0.0"/>
+			<repository location="https://download.eclipse.org/emfcloud/emfjson-jackson/p2/releases/2.0.0/"/>
 		</location>
 		<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 			<repository location="https://download.eclipse.org/emfcloud/modelserver/p2/integration/0.8.0.I20230217/"/>
@@ -55,22 +43,34 @@
 			<unit id="org.eclipse.emfcloud.modelserver.glsp.feature.feature.group" version="0.8.0.I20230217"/>
 			<unit id="org.eclipse.emfcloud.modelserver.glsp.feature.source.feature.group" version="0.8.0.I20230217"/>
 		</location>
+	    <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+	      <unit id="org.eclipse.jetty.websocket.javax.server" version="10.0.13"/>
+	      <repository location="mvn:org.eclipse.jetty:jetty-p2:10.0.13:zip:p2site"/>
+	    </location>
 		<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-			<repository location="https://download.eclipse.org/glsp/server/p2/nightly/1.1/1.1.0.202302221634/"/>
-			<unit id="org.eclipse.glsp.graph" version="1.1.0.202302221634"/>
-			<unit id="org.eclipse.glsp.layout" version="1.1.0.202302221634"/>
-			<unit id="org.eclipse.glsp.server" version="1.1.0.202302221634"/>
-			<unit id="org.eclipse.glsp.server.emf" version="1.1.0.202302221634"/>
-			<unit id="org.eclipse.glsp.server.websocket" version="1.1.0.202302221634"/>
-		</location>
-		<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-			<repository location="mvn:org.eclipse.jetty:jetty-p2:10.0.13:zip:p2site"/>
-			<unit id="org.eclipse.jetty.websocket.servlet" version="10.0.13"/>
+			<unit id="org.eclipse.jetty.server" version="9.4.44.v20210927"/>
+			<unit id="org.eclipse.jetty.websocket.server" version="9.4.44.v20210927"/>
+			<repository location="https://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.4.44.v20210927/"/>
 		</location>
 		<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 			<repository location="https://download.eclipse.org/tools/orbit/downloads/drops/I20230403150144/repository"/>
 			<unit id="com.google.inject.assistedinject" version="5.0.1.v20221112-0806"/>
 			<unit id="com.google.inject.assistedinject.source" version="5.0.1.v20221112-0806"/>
+		</location>
+		<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+			<repository location="https://download.eclipse.org/glsp/server/p2/releases/2.0.0/"/>
+			<unit id="org.eclipse.glsp.feature.feature.group" version="2.0.0"/>
+			<unit id="org.eclipse.glsp.feature.source.feature.group" version="2.0.0"/>
+			<unit id="org.eclipse.glsp.layout" version="2.0.0"/>
+			<unit id="org.eclipse.glsp.layout.source" version="2.0.0"/>
+			<unit id="org.eclipse.glsp.server.emf" version="2.0.0"/>
+			<unit id="org.eclipse.glsp.server.emf.source" version="2.0.0"/>
+			<unit id="org.eclipse.glsp.server.websocket" version="2.0.0"/>
+			<unit id="org.eclipse.glsp.server.websocket.source" version="2.0.0"/>
+		</location>
+		<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+			<repository location="https://download.eclipse.org/glsp/ide/p2/releases/2.0.0/"/>
+			<unit id="org.eclipse.glsp.ide.feature.feature.group" version="2.0.0"/>
 		</location>
 	</locations>
 </target>

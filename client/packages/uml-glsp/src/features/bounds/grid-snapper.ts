@@ -10,14 +10,11 @@
 import {
     Action,
     GetViewportAction,
-    GLSPActionDispatcher,
-    hasBooleanProp,
+    GLSPActionDispatcher, GModelElement, hasBooleanProp,
     IActionHandler,
     ISnapper,
     Point,
-    SetViewportAction,
-    SModelElement,
-    TYPES,
+    SetViewportAction, TYPES,
     ViewerOptions,
     Viewport,
     ViewportResult
@@ -33,7 +30,7 @@ export class UmlGridSnapper implements ISnapper {
 
     constructor(public grid: { x: number; y: number } = { x: UmlGridSnapper.GRID_X, y: UmlGridSnapper.GRID_Y }) {}
 
-    snap(position: Point, element: SModelElement): Point {
+    snap(position: Point, element: GModelElement): Point {
         return {
             x: Math.round(position.x / this.grid.x) * this.grid.x,
             y: Math.round(position.y / this.grid.y) * this.grid.y

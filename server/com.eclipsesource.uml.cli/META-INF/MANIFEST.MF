@@ -7,7 +7,7 @@ Bundle-Version: 0.1.0.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
-Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-RequiredExecutionEnvironment: JavaSE-17
 Require-Bundle: com.eclipsesource.uml.glsp;bundle-version="0.1.0",
  com.eclipsesource.uml.modelserver;bundle-version="0.1.0",
  org.apache.commons.cli;bundle-version="1.4.0"

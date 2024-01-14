@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import { GlspVscodeClient, GlspVscodeConnector } from '@eclipse-glsp/vscode-integration';
-import { GLSPIsReadyAction } from 'packages/uml-common/lib/index';
+import { GLSPIsReadyAction } from 'packages/uml-protocol/lib/index';
 import * as vscode from 'vscode';
 import { ThemeIntegration } from '../../features/theme/theme-integration';
 import { getBundleUri, getUri } from '../../utilities/webview';

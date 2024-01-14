@@ -13,7 +13,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { OutlineTreeNode, RequestOutlineAction, SetOutlineAction } from '@borkdominik-biguml/uml-common';
+import { OutlineTreeNode, RequestOutlineAction, SetOutlineAction } from '@borkdominik-biguml/uml-protocol';
 import { Action, IActionHandler, ICommand, SelectAllAction } from '@eclipse-glsp/client';
 import { SelectAction } from '@eclipse-glsp/vscode-integration';
 import { inject, injectable, postConstruct } from 'inversify';

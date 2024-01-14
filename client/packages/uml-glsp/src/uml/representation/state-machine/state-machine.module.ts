@@ -13,7 +13,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  **/
-import { UmlDiagramType } from '@borkdominik-biguml/uml-common';
+import { UmlDiagramType } from '@borkdominik-biguml/uml-protocol';
 import { ContainerModule } from 'inversify';
 import { registerFinalStateElement } from '../../elements/final-state/final-state.element';
 import { registerPseudoStateElement } from '../../elements/pseudo-state/pseudo-state.element';

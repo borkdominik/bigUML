@@ -268,9 +268,9 @@
     "@jridgewell/trace-mapping" "0.3.9"
 
 "@eclipse-emfcloud/modelserver-client@next":
-  version "0.8.0-next.d7db15a.92"
-  resolved "https://registry.yarnpkg.com/@eclipse-emfcloud/modelserver-client/-/modelserver-client-0.8.0-next.d7db15a.92.tgz#a79d4bf52deccbe0a038af612fb8981faaf04ce4"
-  integrity sha512-a4NrHVlSX84APNYBclljWKppV9qoZ2N6I5uhqdUSU0oqqkL8b2G5wvRbnSIZBbqADtjD8Ijx+39ynA3mBXy27g==
+  version "0.8.0-next.68f5427.97"
+  resolved "https://registry.yarnpkg.com/@eclipse-emfcloud/modelserver-client/-/modelserver-client-0.8.0-next.68f5427.97.tgz#8144cf6f2d46ed641e40546a7c110520375ad062"
+  integrity sha512-Ly0+LZiLzXe9ABzrhiwdX7SLw5Mak0s7f9Xp1othY+7zoh7/F+jnUnHBH9ezXRlhKWO49LPe5EF/UBGfsP3dGw==
   dependencies:
     axios "^0.24.0"
     events "^3.3.0"
@@ -3587,9 +3587,9 @@ flatted@^3.1.0:
   integrity sha512-5nqDSxl8nn5BSNxyR3n4I6eDmbolI6WT+QqR547RwxQapgjQBmtktdP+HTBb/a/zLsbzERTONyUB5pefh5TtjQ==
 
 follow-redirects@^1.14.4:
-  version "1.15.2"
-  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.15.2.tgz#b460864144ba63f2681096f274c4e57026da2c13"
-  integrity sha512-VQLG33o04KaQ8uYi2tVNbdrWp1QWxNNea+nmIB4EVM28v0hmP17z7aG1+wAkNzVq4KeXTq3221ye5qTJP91JwA==
+  version "1.15.5"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.15.5.tgz#54d4d6d062c0fa7d9d17feb008461550e3ba8020"
+  integrity sha512-vSFWUON1B+yAw1VN4xMfxgn5fTUiaOzAJCKBwIIgT/+7CuGy9+r+5gITvP62j3RmaD5Ph65UaERdOSRGUzZtgw==
 
 follow-redirects@^1.15.4:
   version "1.15.4"

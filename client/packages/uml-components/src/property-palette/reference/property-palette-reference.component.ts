@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { ElementReferenceProperty } from '@borkdominik-biguml/uml-common';
+import { ElementReferenceProperty } from '@borkdominik-biguml/uml-protocol';
 import { Combobox as FCombobox } from '@microsoft/fast-components';
 import { html, nothing, TemplateResult } from 'lit';
 import { property, query } from 'lit/decorators.js';
@@ -126,15 +126,16 @@ export class PropertyPaletteReference extends BigElement {
                 <h4 class="title">${item.label}</h4>
                 ${when(
                     item.references.some(r => r.deleteActions.length > 0),
-                    () => html`<div class="actions">
-                        <big-menu>
-                            <big-menu-item
-                                icon="codicon-trash"
-                                @click="${() => this.onDelete(item.references.filter(r => r.deleteActions.length > 0))}"
-                                >Delete all</big-menu-item
-                            >
-                        </big-menu>
-                    </div>`
+                    () =>
+                        html`<div class="actions">
+                            <big-menu>
+                                <big-menu-item
+                                    icon="codicon-trash"
+                                    @click="${() => this.onDelete(item.references.filter(r => r.deleteActions.length > 0))}"
+                                    >Delete all</big-menu-item
+                                >
+                            </big-menu>
+                        </div>`
                 )}
             </div>
         `;
@@ -146,19 +147,23 @@ export class PropertyPaletteReference extends BigElement {
             <div id="items">${item.references.map(ref => html`${this.renderItem(item, ref)}`)}</div>
             ${when(
                 item.creates.length > 0 && !item.isAutocomplete,
-                () => html`<div class="actions">
-                    ${when(
-                        item.creates.length === 1,
-                        () =>
-                            html`<vscode-button appearance="primary" @click="${() => this.onCreate(item.creates[0])}">
-                                Add
-                            </vscode-button>`,
-                        () => html`<big-menu>
-                            ${item.creates.map(c => html` <big-menu-item @click="${() => this.onCreate(c)}">${c.label}</big-menu-item> `)}
-                            <vscode-button slot="menu-trigger" appearance="primary"> Add </vscode-button>
-                        </big-menu>`
-                    )}
-                </div>`
+                () =>
+                    html`<div class="actions">
+                        ${when(
+                            item.creates.length === 1,
+                            () =>
+                                html`<vscode-button appearance="primary" @click="${() => this.onCreate(item.creates[0])}">
+                                    Add
+                                </vscode-button>`,
+                            () =>
+                                html`<big-menu>
+                                    ${item.creates.map(
+                                        c => html` <big-menu-item @click="${() => this.onCreate(c)}">${c.label}</big-menu-item> `
+                                    )}
+                                    <vscode-button slot="menu-trigger" appearance="primary"> Add </vscode-button>
+                                </big-menu>`
+                        )}
+                    </div>`
             )}
         </div>`;
     }
@@ -188,23 +193,25 @@ export class PropertyPaletteReference extends BigElement {
                     ${when(
                         ref.name === undefined,
                         () => html`<div class="label">${ref.label}</div>`,
-                        () => html`<div class="name">
-                            <vscode-text-field
-                                .value="${ref.name}"
-                                @change="${(event: any) => this.onNameChange(ref, event.target?.value)}"
-                            >
-                            </vscode-text-field>
-                        </div>`
+                        () =>
+                            html`<div class="name">
+                                <vscode-text-field
+                                    .value="${ref.name}"
+                                    @change="${(event: any) => this.onNameChange(ref, event.target?.value)}"
+                                >
+                                </vscode-text-field>
+                            </div>`
                     )}
                     <div class="item-actions">
                         ${when(
                             ref.deleteActions.length > 0,
-                            () => html`<big-tooltip>
-                                <vscode-button slot="anchor" appearance="icon" @click="${() => this.onDelete([ref])}">
-                                    <div class="codicon codicon-trash"></div>
-                                </vscode-button>
-                                <span slot="text">Delete</span>
-                            </big-tooltip>`
+                            () =>
+                                html`<big-tooltip>
+                                    <vscode-button slot="anchor" appearance="icon" @click="${() => this.onDelete([ref])}">
+                                        <div class="codicon codicon-trash"></div>
+                                    </vscode-button>
+                                    <span slot="text">Delete</span>
+                                </big-tooltip>`
                         )}
                         <big-tooltip>
                             <vscode-button slot="anchor" appearance="icon" @click="${() => this.onNavigate(ref)}">

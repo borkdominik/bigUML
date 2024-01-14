@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { ElementProperties, RefreshPropertyPaletteAction, SetPropertyPaletteAction } from '@borkdominik-biguml/uml-common';
+import { ElementProperties, RefreshPropertyPaletteAction, SetPropertyPaletteAction } from '@borkdominik-biguml/uml-protocol';
 import { Action } from '@eclipse-glsp/protocol';
 import { html, TemplateResult } from 'lit';
 import { query, state } from 'lit/decorators.js';

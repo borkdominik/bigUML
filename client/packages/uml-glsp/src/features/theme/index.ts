@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-export * from './glsp-server.launcher';
-export * from './modelserver.launcher';
-export * from './server-launcher';
-export * from './server.manager';
+
+export * from './theme.actions';
+export * from './theme.manager';
+export * from './uml-theme.module';

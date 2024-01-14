@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { AutocompleteEntry } from '@borkdominik-biguml/uml-common';
+import { AutocompleteEntry } from '@borkdominik-biguml/uml-protocol';
 import {
     ApplyLabelEditOperation,
     CommitModelAction,

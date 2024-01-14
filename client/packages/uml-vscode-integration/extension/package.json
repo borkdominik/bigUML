@@ -237,10 +237,9 @@
     "onView:bigUML.outlineView"
   ],
   "dependencies": {
-    "@borkdominik-biguml/uml-common": "*",
     "@borkdominik-biguml/uml-glsp": "*",
-    "@borkdominik-biguml/uml-integration": "*",
-    "@borkdominik-biguml/uml-modelserver": "*",
+    "@borkdominik-biguml/uml-protocol": "*",
+    "@eclipse-emfcloud/modelserver-client": "next",
     "@eclipse-glsp/client": "next",
     "@eclipse-glsp/vscode-integration": "next",
     "@vscode/codicons": "^0.0.25",

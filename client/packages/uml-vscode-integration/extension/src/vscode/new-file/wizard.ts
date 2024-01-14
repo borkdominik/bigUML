@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { UmlDiagramType } from '@borkdominik-biguml/uml-common';
+import { UmlDiagramType } from '@borkdominik-biguml/uml-protocol';
 import {
     CancellationToken,
     Disposable,

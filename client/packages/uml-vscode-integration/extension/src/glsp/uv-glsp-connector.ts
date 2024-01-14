@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { OutlineTreeNode, RequestOutlineAction, SetOutlineAction } from '@borkdominik-biguml/uml-common';
+import { OutlineTreeNode, RequestOutlineAction, SetOutlineAction } from '@borkdominik-biguml/uml-protocol';
 import {
     Action,
     ActionMessage,

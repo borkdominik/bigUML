@@ -38,7 +38,7 @@
     "watch": "tsc -w"
   },
   "dependencies": {
-    "@borkdominik-biguml/uml-common": "*",
+    "@borkdominik-biguml/uml-protocol": "*",
     "@eclipse-glsp/protocol": "next",
     "@floating-ui/dom": "^1.4.1",
     "@microsoft/fast-components": "^2.30.6",
@@ -46,9 +46,9 @@
     "@vscode/webview-ui-toolkit": "^1.2.2",
     "lit": "^2.7.4",
     "lodash": "^4.17.21",
+    "react": "18.2.0",
     "sortablejs": "^1.15.0",
-    "uuid": "^9.0.0",
-    "react": "18.2.0"
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@types/sortablejs": "1.15.1",

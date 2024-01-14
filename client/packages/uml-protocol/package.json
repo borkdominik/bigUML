@@ -1,7 +1,7 @@
 {
-  "name": "@borkdominik-biguml/uml-glsp",
+  "name": "@borkdominik-biguml/uml-protocol",
   "version": "0.4.0",
-  "description": "UML-GLSP",
+  "description": "UML-Protocol",
   "homepage": "https://github.com/borkdominik/bigUML",
   "bugs": "https://github.com/borkdominik/bigUML/issues",
   "repository": {
@@ -24,32 +24,19 @@
       "url": "https://me.big.tuwien.ac.at/"
     }
   ],
+  "main": "lib/index",
   "files": [
     "lib",
-    "src",
-    "css",
-    "resources"
+    "src"
   ],
   "scripts": {
     "build": "tsc -b && yarn run lint",
     "clean": "rimraf lib tsconfig.tsbuildinfo",
-    "icons": "tsx ./scripts/icons.ts",
     "lint": "eslint -c ./.eslintrc.js --ext .ts,.tsx ./src",
     "lint:fix": "eslint --fix -c ./.eslintrc.js --ext .ts,.tsx ./src",
     "prepare": "yarn run clean && yarn run build",
     "watch": "tsc -w"
   },
-  "dependencies": {
-    "@borkdominik-biguml/uml-protocol": "*",
-    "@eclipse-glsp/client": "next",
-    "@eclipse-glsp/protocol": "next",
-    "balloon-css": "^0.5.0",
-    "inversify": "^6.0.1",
-    "reflect-metadata": "^0.1.13",
-    "snabbdom": "^3.5.1",
-    "sprotty": "next"
-  },
-  "devDependencies": {
-    "endent": "^2.1.0"
-  }
+  "dependencies": {},
+  "devDependencies": {}
 }

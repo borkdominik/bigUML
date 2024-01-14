@@ -8,7 +8,7 @@
  *********************************************************************************/
 
 import { UmlDiagramType } from '@borkdominik-biguml/uml-common';
-import { configureModelElement, GEdgeView, SEdge } from '@eclipse-glsp/client';
+import { configureModelElement, GEdge, GEdgeView } from '@eclipse-glsp/client';
 import { DefaultTypes } from '@eclipse-glsp/protocol';
 import { interfaces } from 'inversify';
 import { QualifiedUtil } from '../../qualified.utils';
@@ -17,5 +17,5 @@ export function registerSubstitutionElement(
     context: { bind: interfaces.Bind; isBound: interfaces.IsBound },
     representation: UmlDiagramType
 ): void {
-    configureModelElement(context, QualifiedUtil.representationTypeId(representation, DefaultTypes.EDGE, 'Substitution'), SEdge, GEdgeView);
+    configureModelElement(context, QualifiedUtil.representationTypeId(representation, DefaultTypes.EDGE, 'Substitution'), GEdge, GEdgeView);
 }

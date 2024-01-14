@@ -59,10 +59,10 @@ export class OutlineTreeProvider implements vscode.TreeDataProvider<OutlineTreeN
                     this.select([this.selectionToUpdateContext.selectedId], treeView);
                 }
             }),
-            this.connector.onSelectionUpdate(selection => this.select(selection, treeView)),
+            this.connector.onSelectionUpdate(selection => this.select(selection.selectedElementsIDs, treeView)),
             this.connector.onDidClientViewStateChange(() => {
                 setTimeout(() => {
-                    if (this.connector.clients.every(c => !c.webviewPanel.active)) {
+                    if (this.connector.clients.every(c => !c.webviewEndpoint.webviewPanel.active)) {
                         this.onNodesChanged([]);
                     } else {
                         this.connector.sendActionToActiveClient(RequestOutlineAction.create());

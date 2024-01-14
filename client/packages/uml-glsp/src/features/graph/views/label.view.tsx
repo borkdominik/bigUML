@@ -8,20 +8,14 @@
  *********************************************************************************/
 import {
     EditableLabel,
-    editLabelFeature,
-    getSubType,
-    hoverFeedbackFeature,
+    editLabelFeature, GChildElement, getSubType, GLabel, hoverFeedbackFeature,
     isEdgeLayoutable,
     isEditableLabel,
     Nameable,
     nameFeature,
     RectangularNode,
-    RenderingContext,
-    SChildElement,
-    setAttr,
-    ShapeView,
-    SLabel,
-    svg,
+    RenderingContext, setAttr,
+    ShapeView, svg,
     WithEditableLabel,
     withEditLabelFeature
 } from '@eclipse-glsp/client';
@@ -31,7 +25,7 @@ import { VNode } from 'snabbdom';
 export class LabeledNode extends RectangularNode implements WithEditableLabel, Nameable {
     static override readonly DEFAULT_FEATURES = [...RectangularNode.DEFAULT_FEATURES, nameFeature, withEditLabelFeature];
 
-    get editableLabel(): (SChildElement & EditableLabel) | undefined {
+    get editableLabel(): (GChildElement & EditableLabel) | undefined {
         const headerComp = this.children.find(element => element.type === 'comp:header');
         if (headerComp) {
             const label = headerComp.children.find(element => element.type === 'label:heading');
@@ -50,8 +44,8 @@ export class LabeledNode extends RectangularNode implements WithEditableLabel, N
     }
 }
 
-export class SEditableLabel extends SLabel implements EditableLabel {
-    static override readonly DEFAULT_FEATURES = [...SLabel.DEFAULT_FEATURES, editLabelFeature, hoverFeedbackFeature];
+export class SEditableLabel extends GLabel implements EditableLabel {
+    static override readonly DEFAULT_FEATURES = [...GLabel.DEFAULT_FEATURES, editLabelFeature, hoverFeedbackFeature];
 
     hoverFeedback = false;
 }

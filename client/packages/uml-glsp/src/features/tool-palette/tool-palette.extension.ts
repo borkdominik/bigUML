@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { changeCodiconClass, compare, createIcon, createToolGroup, PaletteItem, SModelRoot, ToolPalette } from '@eclipse-glsp/client';
+import { changeCodiconClass, compare, createIcon, createToolGroup, GModelRoot, PaletteItem, ToolPalette } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 import { SDShiftMouseTool } from '../../uml/diagram/sequence/features/tools/shift-mouse-tool';
 
@@ -19,19 +19,19 @@ export class UmlToolPalette extends ToolPalette {
     protected override defaultToolsButton: HTMLElement;
 
     override changeActiveButton(button?: HTMLElement): void {
-        if (this.lastActivebutton) {
-            this.lastActivebutton.classList.remove(CLICKED_CSS_CLASS);
+        if (this.lastActiveButton) {
+            this.lastActiveButton.classList.remove(CLICKED_CSS_CLASS);
         }
         if (button) {
             button.classList.add(CLICKED_CSS_CLASS);
-            this.lastActivebutton = button;
+            this.lastActiveButton = button;
         } else {
             this.defaultToolsButton?.classList.add(CLICKED_CSS_CLASS);
-            this.lastActivebutton = this.defaultToolsButton;
+            this.lastActiveButton = this.defaultToolsButton;
         }
     }
 
-    protected override onBeforeShow(_containerElement: HTMLElement, root: Readonly<SModelRoot>): void {
+    protected override onBeforeShow(_containerElement: HTMLElement, root: Readonly<GModelRoot>): void {
         this.modelRootId = root.id;
     }
 

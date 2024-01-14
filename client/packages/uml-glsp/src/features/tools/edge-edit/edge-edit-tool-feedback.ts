@@ -12,15 +12,13 @@ import {
     CommandReturn,
     DrawFeedbackEdgeSourceAction,
     DrawFeedbackEdgeSourceCommand,
-    FeedbackEdgeEnd,
-    feedbackEdgeEndId,
-    feedbackEdgeId,
     findParentByFeature,
     isBoundsAware,
     isConnectable,
     isRoutable,
     TYPES
 } from '@eclipse-glsp/client';
+import { FeedbackEdgeEnd, feedbackEdgeEndId, feedbackEdgeId } from '@eclipse-glsp/client/lib/features/tools/edge-creation/dangling-edge-feedback';
 import { inject, injectable } from 'inversify';
 
 @injectable()

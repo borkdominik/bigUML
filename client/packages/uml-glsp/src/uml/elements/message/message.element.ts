@@ -8,7 +8,7 @@
  *********************************************************************************/
 
 import { UmlDiagramType } from '@borkdominik-biguml/uml-common';
-import { configureModelElement, GEdgeView, SEdge } from '@eclipse-glsp/client';
+import { configureModelElement, GEdge, GEdgeView } from '@eclipse-glsp/client';
 import { DefaultTypes } from '@eclipse-glsp/protocol';
 import { interfaces } from 'inversify';
 import { SEditableLabel } from '../../../features/graph/index';
@@ -25,5 +25,5 @@ export function registerMessageElement(
         SEditableLabel,
         MessageArrowLabelView
     );
-    configureModelElement(context, QualifiedUtil.representationTypeId(representation, DefaultTypes.EDGE, 'Message'), SEdge, GEdgeView);
+    configureModelElement(context, QualifiedUtil.representationTypeId(representation, DefaultTypes.EDGE, 'Message'), GEdge, GEdgeView);
 }

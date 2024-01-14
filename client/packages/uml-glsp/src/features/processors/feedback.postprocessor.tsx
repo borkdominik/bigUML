@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { hasArguments, isBoundsAware, isHoverable, isSelectable, IVNodePostprocessor, SModelElement, svg } from '@eclipse-glsp/client';
+import { GModelElement, hasArgs, isBoundsAware, isHoverable, isSelectable, IVNodePostprocessor, svg } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 import { VNode } from 'snabbdom';
 
@@ -18,9 +18,9 @@ const JSX = { createElement: svg };
  */
 @injectable()
 export class CompartmentSelectionFeedback implements IVNodePostprocessor {
-    decorate(vnode: VNode, element: SModelElement): VNode {
+    decorate(vnode: VNode, element: GModelElement): VNode {
         if (
-            hasArguments(element) &&
+            hasArgs(element) &&
             element.args['selection_border'] &&
             isSelectable(element) &&
             element.selected &&

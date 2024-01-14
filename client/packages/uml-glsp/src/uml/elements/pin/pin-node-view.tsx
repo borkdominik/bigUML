@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-import { RectangularNodeView, RenderingContext, SChildElement, ShapeView, svg } from '@eclipse-glsp/client';
+import { GChildElement, RectangularNodeView, RenderingContext, ShapeView, svg } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 import { VNode } from 'snabbdom';
 import { LabeledNode } from '../../../features/graph/index';
@@ -18,7 +18,7 @@ const JSX = { createElement: svg };
 
 @injectable()
 export class PinPortView extends ShapeView {
-    render(model: SChildElement, context: RenderingContext): VNode {
+    render(model: GChildElement, context: RenderingContext): VNode {
         const pin = model.parent as LabeledNode;
         const w = pin.bounds.width;
         const h = pin.bounds.height;

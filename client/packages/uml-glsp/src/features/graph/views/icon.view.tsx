@@ -7,28 +7,21 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import {
-    Args,
-    boundsFeature,
+    Args, ArgsAware, boundsFeature,
     Deletable,
     deletableFeature,
-    fadeFeature,
-    Hoverable,
+    fadeFeature, GCompartment, GShapeElement, Hoverable,
     hoverFeedbackFeature,
     IView,
     layoutableChildFeature,
     layoutContainerFeature,
-    RenderingContext,
-    SArgumentable,
-    SCompartment,
-    Selectable,
-    selectFeature,
-    SShapeElement,
-    svg
+    RenderingContext, Selectable,
+    selectFeature, svg
 } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 import { VNode } from 'snabbdom';
 
-export class Icon extends SShapeElement {
+export class Icon extends GShapeElement {
     iconImageName: string;
 
     override hasFeature(feature: symbol): boolean {
@@ -38,11 +31,11 @@ export class Icon extends SShapeElement {
     }
 }
 
-export class IconCSS extends Icon implements SArgumentable {
+export class IconCSS extends Icon implements ArgsAware {
     args: Args;
 }
 
-export class IconLabelCompartment extends SCompartment implements Selectable, Deletable, Hoverable {
+export class IconLabelCompartment extends GCompartment implements Selectable, Deletable, Hoverable {
     selected = false;
     hoverFeedback = false;
 

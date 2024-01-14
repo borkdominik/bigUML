@@ -13,7 +13,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { DefaultTypes, RenderingContext, SCompartment, ShapeView, svg } from '@eclipse-glsp/client';
+import { DefaultTypes, GCompartment, RenderingContext, ShapeView, svg } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 import { VNode } from 'snabbdom';
 import { PackageElement } from './package-element.model';
@@ -35,12 +35,12 @@ export class PackageElementView extends ShapeView {
         const translate = `translate(${element.bounds.x}, ${element.bounds.y})`;
 
         const compartmentHeader = element.children.find(
-            c => c instanceof SCompartment && c.type === DefaultTypes.COMPARTMENT_HEADER && c.children.length > 0
-        ) as SCompartment | undefined;
+            c => c instanceof GCompartment && c.type === DefaultTypes.COMPARTMENT_HEADER && c.children.length > 0
+        ) as GCompartment | undefined;
 
         // const compartmentBody = element.children.find(
-        //     c => c instanceof SCompartment && c.type !== DefaultTypes.COMPARTMENT_HEADER && c.children.length > 0
-        // ) as SCompartment | undefined;
+        //     c => c instanceof GCompartment && c.type !== DefaultTypes.COMPARTMENT_HEADER && c.children.length > 0
+        // ) as GCompartment | undefined;
 
         const headerHeight = compartmentHeader ? compartmentHeader.bounds.height + HEIGHT_OFFSET : HEADER_HEIGHT;
 

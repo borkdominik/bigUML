@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { configureModelElement, SCompartmentView, SLabel, SLabelView } from '@eclipse-glsp/client';
+import { configureModelElement, GCompartmentView, GLabel, GLabelView } from '@eclipse-glsp/client';
 import { ContainerModule } from 'inversify';
 import { SDivider, SDividerView } from '../features/graph/views/divider.view';
 import { IconCSS, IconCSSView, InteractableCompartment, SEditableLabel, SEditableLabelView } from '../index';
@@ -17,8 +17,8 @@ export const umlModule = new ContainerModule((bind, unbind, isBound, rebind) => 
 
     configureModelElement(context, UmlGModelTypes.LABEL_NAME, SEditableLabel, SEditableLabelView);
     configureModelElement(context, UmlGModelTypes.LABEL_EDGE_NAME, SEditableLabel, SEditableLabelView);
-    configureModelElement(context, UmlGModelTypes.LABEL_TEXT, SLabel, SLabelView);
+    configureModelElement(context, UmlGModelTypes.LABEL_TEXT, GLabel, GLabelView);
     configureModelElement(context, UmlGModelTypes.ICON_CSS, IconCSS, IconCSSView);
     configureModelElement(context, UmlGModelTypes.DIVIDER, SDivider, SDividerView);
-    configureModelElement(context, UmlGModelTypes.COMPARTMENT_INTERACTABLE, InteractableCompartment, SCompartmentView);
+    configureModelElement(context, UmlGModelTypes.COMPARTMENT_INTERACTABLE, InteractableCompartment, GCompartmentView);
 });

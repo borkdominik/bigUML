@@ -21,22 +21,20 @@ import {
     configureDefaultModelElements,
     configureLayout,
     configureModelElement,
-    configureViewerOptions,
-    createDiagramContainer,
+    edgeEditToolModule,
     EditLabelUI,
+    GCompartmentView,
+    GGraph,
     GLSPActionDispatcher,
-    GLSPGraph,
+    initializeDiagramContainer,
     LogLevel,
-    overrideViewerOptions,
-    SCompartmentView,
-    toolFeedbackModule,
-    toolsModule,
+    toolPaletteModule,
     TYPES
 } from '@eclipse-glsp/client';
-import toolPaletteModule from '@eclipse-glsp/client/lib/features/tool-palette/di.config';
-import { DefaultTypes, SetViewportAction } from '@eclipse-glsp/protocol';
+import { bindOrRebind, ContainerConfiguration, DefaultTypes, SetViewportAction } from '@eclipse-glsp/protocol';
 import { Container, ContainerModule } from 'inversify';
 import { UMLActionDispatcher } from './base/action-dispatcher';
+import { umlFeedbackModule } from './base/feedback/feedback-module';
 import { FixedLogger } from './base/fixed-logger';
 import { UML_TYPES } from './di.types';
 import { GraphGridActionHandler, ShowGridAction, UmlGridSnapper } from './features/bounds/grid-snapper';
@@ -51,75 +49,66 @@ import { umlOutlineModule } from './features/outline/di.config';
 import { CompartmentSelectionFeedback } from './features/processors/feedback.postprocessor';
 import propertyPaletteModule from './features/property-palette/di.config';
 import { themeModule } from './features/theme/di.config';
-import { umlToolFeedbackModule } from './features/tool-feedback/di.config';
 import umlToolPaletteModule from './features/tool-palette/di.config';
-import { umlToolsModule } from './features/tools/di.config';
+import { umlEdgeEditToolModule } from './features/tools/edge-edit/uml-edge-edit-module';
+import { umlToolManagerModule } from './features/tools/tool-manager/tool-manager-module';
 import { umlDiagramModules } from './uml/index';
 
-export default function createContainer(widgetId: string): Container {
-    const coreDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
-        const context = { bind, unbind, isBound, rebind };
+export const coreDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
+    const context = { bind, unbind, isBound, rebind };
 
-        // Default
-        rebind(TYPES.ILogger).to(FixedLogger).inSingletonScope();
-        rebind(TYPES.LogLevel).toConstantValue(LogLevel.info);
-        rebind(GLSPActionDispatcher).to(UMLActionDispatcher).inSingletonScope();
+    // Default
+    bindOrRebind(context, TYPES.ILogger).to(FixedLogger).inSingletonScope();
+    bindOrRebind(context, TYPES.LogLevel).toConstantValue(LogLevel.info);
+    rebind(GLSPActionDispatcher).to(UMLActionDispatcher).inSingletonScope();
 
-        // Grid
-        bind(TYPES.ISnapper).to(UmlGridSnapper);
-        bind(GraphGridActionHandler).toSelf().inSingletonScope();
-        bind(UML_TYPES.IOnceModelInitialized).toService(GraphGridActionHandler);
-        configureActionHandler({ bind, isBound }, ShowGridAction.KIND, GraphGridActionHandler);
-        configureActionHandler({ bind, isBound }, SetViewportAction.KIND, GraphGridActionHandler);
+    // Grid
+    bind(TYPES.ISnapper).to(UmlGridSnapper);
+    bind(GraphGridActionHandler).toSelf().inSingletonScope();
+    bind(UML_TYPES.IOnceModelInitialized).toService(GraphGridActionHandler);
+    configureActionHandler({ bind, isBound }, ShowGridAction.KIND, GraphGridActionHandler);
+    configureActionHandler({ bind, isBound }, SetViewportAction.KIND, GraphGridActionHandler);
 
-        // Features - Copy Paste
-        rebind(TYPES.ICopyPasteHandler).to(CustomCopyPasteHandler);
-        bind(LastContainableElementTracker).toSelf().inSingletonScope();
-        bind(TYPES.MouseListener).toService(LastContainableElementTracker);
+    // Features - Copy Paste
+    rebind(TYPES.ICopyPasteHandler).to(CustomCopyPasteHandler);
+    rebind(EditLabelUI).to(EditLabelUIAutocomplete);
 
-        // UI
-        rebind(EditLabelUI).to(EditLabelUIAutocomplete);
-        // bind(TYPES.IVNodePostprocessor).to(IconLabelCompartmentSelectionFeedback);
-        bind(TYPES.IVNodePostprocessor).to(CompartmentSelectionFeedback);
-        bind(SVGIdCreatorService).toSelf().inSingletonScope();
+    bind(LastContainableElementTracker).toSelf().inSingletonScope();
+    bind(TYPES.MouseListener).toService(LastContainableElementTracker);
+    bind(TYPES.IVNodePostprocessor).to(CompartmentSelectionFeedback);
+    bind(SVGIdCreatorService).toSelf().inSingletonScope();
 
-        // Configuration
-        configureLayout({ bind, isBound }, UmlFreeFormLayouter.KIND, UmlFreeFormLayouter);
+    configureLayout({ bind, isBound }, UmlFreeFormLayouter.KIND, UmlFreeFormLayouter);
 
-        rebind(TYPES.Layouter).to(UmlLayouterExt);
+    rebind(TYPES.Layouter).to(UmlLayouterExt);
 
-        configureDefaultModelElements(context);
-        configureModelElement(context, DefaultTypes.GRAPH, GLSPGraph, UmlGraphProjectionView);
-        configureModelElement(context, DefaultTypes.COMPARTMENT, UmlCompartment, SCompartmentView);
+    configureDefaultModelElements(context);
 
-        configureViewerOptions(context, {
-            needsClientLayout: true,
-            baseDiv: widgetId
-        });
-    });
+    configureModelElement(context, DefaultTypes.GRAPH, GGraph, UmlGraphProjectionView);
+    configureModelElement(context, DefaultTypes.COMPARTMENT, UmlCompartment, GCompartmentView);
+});
 
-    const container = createDiagramContainer(
-        { exclude: toolPaletteModule },
-        { exclude: toolFeedbackModule },
-        { exclude: toolsModule },
+export function createUmlDiagramContainer(...containerConfiguration: ContainerConfiguration): Container {
+    const container = initializeUmlDiagramContainer(new Container(), ...containerConfiguration);
+    onceModelInitialized(container);
+    return container;
+}
+
+export function initializeUmlDiagramContainer(container: Container, ...containerConfiguration: ContainerConfiguration): Container {
+    return initializeDiagramContainer(
+        container,
         coreDiagramModule,
         initializationModule,
         themeModule,
-        umlToolPaletteModule,
-        umlToolFeedbackModule,
-        umlToolsModule,
+        umlFeedbackModule,
+        umlToolManagerModule,
         umlOutlineModule,
         propertyPaletteModule,
-        ...umlDiagramModules
+        ...umlDiagramModules,
+        { add: umlToolPaletteModule, remove: toolPaletteModule },
+        { add: umlEdgeEditToolModule, remove: edgeEditToolModule },
+        ...containerConfiguration
     );
-
-    overrideViewerOptions(container, {
-        baseDiv: widgetId,
-        hiddenDiv: widgetId + '_hidden'
-    });
-    onceModelInitialized(container);
-
-    return container;
 }
 
 function onceModelInitialized(container: Container): void {

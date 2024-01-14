@@ -8,7 +8,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-import { DefaultTypes, RectangularNodeView, RenderingContext, SCompartment, svg } from '@eclipse-glsp/client';
+import { DefaultTypes, GCompartment, RectangularNodeView, RenderingContext, svg } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 import { VNode } from 'snabbdom';
 
@@ -25,8 +25,8 @@ export class RegionNodeView extends RectangularNodeView {
         }
 
         const compartment = node.children.find(
-            c => c instanceof SCompartment && c.type !== DefaultTypes.COMPARTMENT_HEADER && c.children.length > 0
-        ) as SCompartment | undefined;
+            c => c instanceof GCompartment && c.type !== DefaultTypes.COMPARTMENT_HEADER && c.children.length > 0
+        ) as GCompartment | undefined;
 
         const regionNode: any = (
             <g class-node={true} class-selected={node.selected} class-mouseover={node.hoverFeedback}>

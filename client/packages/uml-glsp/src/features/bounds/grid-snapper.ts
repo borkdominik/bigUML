@@ -87,7 +87,7 @@ export class GraphGridActionHandler implements IActionHandler, IOnceModelInitial
         if (GraphGridActionHandler.ENABLED) {
             this.actionDispatcher.requestUntil<ViewportResult>(GetViewportAction.create()).then(result => {
                 this.showGrid(true);
-                this.moveGrid(result.viewport);
+                this.moveGrid(result!.viewport);
             });
         }
     }

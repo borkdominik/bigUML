@@ -10,14 +10,9 @@ import { RefreshPropertyPaletteAction, RequestPropertyPaletteAction, SetProperty
 import {
     Action,
     ActionDispatcher,
-    EditorContextService,
-    IActionHandler,
-    ICommand,
-    SelectAction,
-    SetDirtyStateAction,
-    SModelRoot,
-    SModelRootListener,
-    TYPES
+    EditorContextService, GModelRoot, IActionHandler,
+    ICommand, ISModelRootListener, SelectAction,
+    SetDirtyStateAction, TYPES
 } from '@eclipse-glsp/client';
 import { inject, injectable } from 'inversify';
 
@@ -25,7 +20,7 @@ import { inject, injectable } from 'inversify';
  * TODO: Workaround until the webview (property palette) can handle the actions directly
  */
 @injectable()
-export class PropertyPaletteHandler implements IActionHandler, SModelRootListener {
+export class PropertyPaletteHandler implements IActionHandler, ISModelRootListener {
     @inject(TYPES.IActionDispatcher) protected readonly actionDispatcher: ActionDispatcher;
     @inject(EditorContextService) protected readonly editorContext: EditorContextService;
     protected activeElementId?: string;
@@ -40,7 +35,7 @@ export class PropertyPaletteHandler implements IActionHandler, SModelRootListene
         }
     }
 
-    modelRootChanged(root: Readonly<SModelRoot>): void {
+    modelRootChanged(root: Readonly<GModelRoot>): void {
         this.request();
     }
 

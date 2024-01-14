@@ -32,8 +32,7 @@
     "**/@eclipse-glsp/protocol": "2.0.0",
     "**/@eclipse-glsp/vscode-integration": "2.0.0",
     "**/@eclipse-glsp/vscode-integration-webview": "2.0.0",
-    "**/inversify": "5.1.1",
-    "**/sprotty": "0.13.0-next.f4445dd.342",
+    "**/inversify": "6.0.1",
     "**/vscode-jsonrpc": "8.1.0"
   },
   "devDependencies": {

@@ -8,17 +8,14 @@
  *********************************************************************************/
 import { AutocompleteEntry } from '@borkdominik-biguml/uml-common';
 import {
-    ApplyLabelEditAction,
+    ApplyLabelEditOperation,
     CommitModelAction,
     EditLabelUI,
     EditLabelValidationResult,
     EditorContextService,
-    GLSPActionDispatcher,
-    hasArguments,
+    GLSPActionDispatcher, GModelRoot, hasArgs,
     RequestContextActions,
-    SetContextActions,
-    SModelRoot,
-    TYPES
+    SetContextActions, TYPES
 } from '@eclipse-glsp/client';
 import { inject, injectable } from 'inversify';
 import { KeyboardModifier, KeyCode, matchesKeystroke } from 'sprotty/lib/utils/keyboard';
@@ -44,7 +41,7 @@ export class EditLabelUIAutocomplete extends EditLabelUI {
             return false;
         }
 
-        if (hasArguments(this.label)) {
+        if (hasArgs(this.label)) {
             return this.label.args[AutocompleteConstants.gmodelFeature] === true;
         }
 
@@ -74,7 +71,7 @@ export class EditLabelUIAutocomplete extends EditLabelUI {
         containerElement.appendChild(element);
     }
 
-    protected override onBeforeShow(containerElement: HTMLElement, root: Readonly<SModelRoot>, ...contextElementIds: string[]): void {
+    protected override onBeforeShow(containerElement: HTMLElement, root: Readonly<GModelRoot>, ...contextElementIds: string[]): void {
         super.onBeforeShow(containerElement, root, ...contextElementIds);
 
         // request entries
@@ -91,7 +88,7 @@ export class EditLabelUIAutocomplete extends EditLabelUI {
         });
     }
 
-    public override show(root: Readonly<SModelRoot>, ...contextElementIds: string[]): void {
+    public override show(root: Readonly<GModelRoot>, ...contextElementIds: string[]): void {
         super.show(root, ...contextElementIds);
         if (this.isAutocompleteLabel) {
             this.showAutocomplete();
@@ -154,7 +151,7 @@ export class EditLabelUIAutocomplete extends EditLabelUI {
                 return;
             }
         }
-        this.actionDispatcher.dispatchAll([ApplyLabelEditAction.create(this.labelId, this.editControl.value), CommitModelAction.create()]);
+        this.actionDispatcher.dispatchAll([ApplyLabelEditOperation.create({labelId: this.labelId, text: this.editControl.value}), CommitModelAction.create()]);
         this.hide();
     }
 

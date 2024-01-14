@@ -39,7 +39,7 @@
     "@eclipse-glsp/protocol": "next",
     "@eclipse-glsp/vscode-integration-webview": "next",
     "@vscode/codicons": "^0.0.25",
-    "inversify": "^5.1.1",
+    "inversify": "^6.0.1",
     "reflect-metadata": "^0.1.13",
     "sprotty-vscode-webview": "next"
   },

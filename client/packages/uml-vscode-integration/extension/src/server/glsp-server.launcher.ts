@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import { osUtils, UmlServerLauncherOptions } from '@borkdominik-biguml/uml-integration';
-import { SocketGlspVscodeServer } from '@eclipse-glsp/vscode-integration/lib/quickstart-components/socket-glsp-vscode-server';
+import { SocketGlspVscodeServer } from '@eclipse-glsp/vscode-integration/lib/node/quickstart-components/socket-glsp-vscode-server';
 import { ContainerModule, inject, injectable } from 'inversify';
 import * as path from 'path';
 import { TYPES } from '../di.types';
@@ -66,8 +66,10 @@ export class UmlGLSPServerLauncher extends UVServerLauncher {
     }
 
     override async ping(): Promise<void> {
-        const server = new SocketGlspVscodeServer({ clientId: 'ping_1', clientName: 'ping', serverPort: this.options.server.port });
+        const server = new SocketGlspVscodeServer({ clientId: 'ping_1', clientName: 'ping', connectionOptions: {
+            port: this.options.server.port
+        } });
         await server.start();
-        await server.stop();
+        await server.dispose();
     }
 }

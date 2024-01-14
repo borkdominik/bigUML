@@ -7,21 +7,19 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import {
-    alignFeature,
     containerFeature,
     Deletable,
-    deletableFeature,
-    Hoverable,
+    deletableFeature, GCompartment, Hoverable,
     hoverFeedbackFeature,
-    popupFeature,
-    SCompartment,
-    Selectable,
+    popupFeature, Selectable,
     selectFeature
 } from '@eclipse-glsp/client';
+// eslint-disable-next-line no-restricted-imports
+import { alignFeature } from 'sprotty';
 
-export class UmlCompartment extends SCompartment implements Hoverable {
+export class UmlCompartment extends GCompartment implements Hoverable {
     static override readonly DEFAULT_FEATURES = [
-        ...SCompartment.DEFAULT_FEATURES,
+        ...GCompartment.DEFAULT_FEATURES,
         hoverFeedbackFeature,
         popupFeature,
         containerFeature,

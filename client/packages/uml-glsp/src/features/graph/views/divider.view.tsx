@@ -7,19 +7,17 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import {
-    alignFeature,
     boundsFeature,
-    fadeFeature,
-    IView,
+    fadeFeature, GShapeElement, IView,
     layoutableChildFeature,
-    RenderingContext,
-    SShapeElement,
-    svg
+    RenderingContext, svg
 } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 import { VNode } from 'snabbdom';
+// eslint-disable-next-line no-restricted-imports
+import { alignFeature } from 'sprotty';
 
-export class SDivider extends SShapeElement {
+export class SDivider extends GShapeElement {
     static readonly DEFAULT_FEATURES = [boundsFeature, layoutableChildFeature, fadeFeature, alignFeature];
 }
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

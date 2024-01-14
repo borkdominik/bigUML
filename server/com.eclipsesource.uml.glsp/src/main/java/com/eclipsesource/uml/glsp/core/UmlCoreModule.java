@@ -10,11 +10,9 @@
  ********************************************************************************/
 package com.eclipsesource.uml.glsp.core;
 
-import org.eclipse.emfcloud.modelserver.glsp.EMSModelState;
 import org.eclipse.emfcloud.modelserver.glsp.actions.handlers.EMSOperationActionHandler;
 import org.eclipse.emfcloud.modelserver.glsp.actions.handlers.EMSRefreshModelActionHandler;
 import org.eclipse.emfcloud.modelserver.glsp.notation.integration.EMSGLSPNotationDiagramModule;
-import org.eclipse.emfcloud.modelserver.glsp.notation.integration.EMSNotationModelState;
 import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSChangeBoundsOperationHandler;
 import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSChangeRoutingPointsOperationHandler;
 import org.eclipse.glsp.server.actions.Action;
@@ -81,14 +79,8 @@ public class UmlCoreModule extends EMSGLSPNotationDiagramModule {
    @Override
    protected void configureBase() {
       super.configureBase();
-      configureFixes();
       configureGModel();
       configureRegistries();
-   }
-
-   protected void configureFixes() {
-      bind(EMSModelState.class).to(bindGModelState());
-      bind(EMSNotationModelState.class).to(bindGModelState());
    }
 
    protected void configureGModel() {

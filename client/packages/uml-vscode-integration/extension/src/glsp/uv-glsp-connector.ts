@@ -11,10 +11,10 @@ import {
     Action,
     ActionMessage,
     Args,
+    Disposable,
     GlspVscodeClient,
     GlspVscodeConnector,
     GlspVscodeServer,
-    InitializeResult,
     MessageOrigin,
     MessageProcessingResult,
     RedoAction,
@@ -38,7 +38,7 @@ export class UVGlspConnector<TDocument extends vscode.CustomDocument = vscode.Cu
     }
 
     get activeClient(): GlspVscodeClient<TDocument> | undefined {
-        return this.clients.find(c => c.webviewPanel.active);
+        return this.clients.find(c => c.webviewEndpoint.webviewPanel.active);
     }
 
     protected readonly onDidActiveClientChangeEmitter = new vscode.EventEmitter<GlspVscodeClient<TDocument>>();
@@ -76,35 +76,61 @@ export class UVGlspConnector<TDocument extends vscode.CustomDocument = vscode.Cu
         return this.documentMap.get(document);
     }
 
-    public override async registerClient(client: GlspVscodeClient<TDocument>): Promise<InitializeResult> {
+    public override async registerClient(client: GlspVscodeClient<TDocument>): Promise<void> {
+        const toDispose: Disposable[] = [
+            Disposable.create(() => {
+                this.diagnostics.set(client.document.uri, undefined); // this clears the diagnostics for the file
+                this.clientMap.delete(client.clientId);
+                this.documentMap.delete(client.document);
+                this.clientSelectionMap.delete(client.clientId);
+            })
+        ];
+        // Cleanup when client panel is closed
+        const panelOnDisposeListener = client.webviewEndpoint.webviewPanel.onDidDispose(async () => {
+            this.onClientDispose(client, toDispose);
+            panelOnDisposeListener.dispose();
+        });
+
         this.clientMap.set(client.clientId, client);
         this.documentMap.set(client.document, client.clientId);
 
-        const clientMessageListener = client.onClientMessage(message => {
-            this.onClientMessage(client, message);
-        });
+        toDispose.push(
+            client.webviewEndpoint.onActionMessage(message => {
+                this.onClientMessage(client, message);
+            })
+        );
 
-        const viewStateListener = client.webviewPanel.onDidChangeViewState(e => {
-            this.onClientViewStateChange(client, e);
-        });
+        toDispose.push(
+            client.webviewEndpoint.webviewPanel.onDidChangeViewState(e => {
+                this.onClientViewStateChange(client, e);
+            })
+        );
 
-        const panelOnDisposeListener = client.webviewPanel.onDidDispose(() => {
-            this.onClientDispose(client, [clientMessageListener, viewStateListener, panelOnDisposeListener]);
-        });
+        toDispose.push(
+            client.webviewEndpoint.webviewPanel.onDidChangeViewState(e => {
+                if (e.webviewPanel.active) {
+                    this.selectionUpdateEmitter.fire(
+                        this.clientSelectionMap.get(client.clientId) || { selectedElementsIDs: [], deselectedElementsIDs: [] }
+                    );
+                }
+            })
+        );
 
-        // Initialize client session
+        // Initialize glsp client
         const glspClient = await this.options.server.glspClient;
-        const initializeParams = await this.createInitializeClientSessionParams(client);
-        await glspClient.initializeClientSession(initializeParams);
-        return this.options.server.initializeResult;
+        toDispose.push(client.webviewEndpoint.initialize(glspClient));
+        toDispose.unshift(
+            Disposable.create(() =>
+                glspClient.disposeClientSession({ clientSessionId: client.clientId, args: this.disposeClientSessionArgs(client) })
+            )
+        );
     }
 
     public broadcastActionToClients(action: Action): void {
         this.clientMap.forEach(client => {
-            client.onSendToClientEmitter.fire({
+            client.webviewEndpoint.sendMessage({
                 clientId: client.clientId,
-                action: action,
-                __localDispatch: true
+                action: action
             });
         });
     }
@@ -209,25 +235,15 @@ export class UVGlspConnector<TDocument extends vscode.CustomDocument = vscode.Cu
     protected onClientViewStateChange(client: GlspVscodeClient<TDocument>, event: vscode.WebviewPanelOnDidChangeViewStateEvent): void {
         if (event.webviewPanel.active) {
             this.onDidActiveClientChangeEmitter.fire(client);
-            this.selectionUpdateEmitter.fire(this.clientSelectionMap.get(client.clientId) || []);
+            this.selectionUpdateEmitter.fire(
+                this.clientSelectionMap.get(client.clientId) || { selectedElementsIDs: [], deselectedElementsIDs: [] }
+            );
         }
         this.onDidClientViewStateChangeEmitter.fire(client);
     }
 
     protected onClientDispose(client: GlspVscodeClient<TDocument>, disposables: vscode.Disposable[]): void {
-        this.diagnostics.set(client.document.uri, undefined); // this clears the diagnostics for the file
-        this.clientMap.delete(client.clientId);
-        this.documentMap.delete(client.document);
-        this.clientSelectionMap.delete(client.clientId);
-
-        this.options.server.glspClient.then(gc => {
-            gc.disposeClientSession({
-                clientSessionId: client.clientId,
-                args: this.disposeClientSessionArgs(client)
-            });
-        });
-
-        disposables.forEach(d => d.dispose());
+        disposables.forEach(disposable => disposable.dispose());
         this.onDidClientDisposeEmitter.fire(client);
     }
 

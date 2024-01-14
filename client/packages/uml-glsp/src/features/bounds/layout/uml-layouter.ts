@@ -7,12 +7,12 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { BoundsData, isLayoutContainer, LayoutContainer, Layouter, SModelElement, SParentElement } from '@eclipse-glsp/client';
-import { StatefulLayouterExt } from '@eclipse-glsp/client/lib/features/layout/layouter';
+import { BoundsData, GModelElement, GParentElement, isLayoutContainer, LayoutContainer, Layouter } from '@eclipse-glsp/client';
+import { StatefulLayouterExt } from '@eclipse-glsp/client/lib/features/bounds/layouter';
 import { isEqual } from 'lodash';
 
 export class UmlLayouterExt extends Layouter {
-    override layout(element2boundsData: Map<SModelElement, BoundsData>): void {
+    override layout(element2boundsData: Map<GModelElement, BoundsData>): void {
         new UmlStatefulLayouterExt(element2boundsData, this.layoutRegistry, this.logger).layout();
     }
 }
@@ -54,8 +54,8 @@ export class UmlStatefulLayouterExt extends StatefulLayouterExt {
         } while (rerun);
     }
 
-    protected allLayoutContainers(): (SParentElement & LayoutContainer)[] {
-        const containers: (SParentElement & LayoutContainer)[] = [];
+    protected allLayoutContainers(): (GParentElement & LayoutContainer)[] {
+        const containers: (GParentElement & LayoutContainer)[] = [];
         this.elementToBoundsData.forEach((data, element) => {
             if (isLayoutContainer(element)) {
                 containers.push(element);

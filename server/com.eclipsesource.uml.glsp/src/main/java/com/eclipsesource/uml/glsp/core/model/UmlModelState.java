@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emfcloud.modelserver.glsp.notation.integration.EMSNotationModelState;
+import org.eclipse.emfcloud.modelserver.glsp.notation.integration.EMSNotationModelStateImpl;
 import org.eclipse.glsp.graph.GModelIndex;
 import org.eclipse.glsp.graph.GModelRoot;
 import org.eclipse.glsp.server.emf.model.notation.NotationElement;
@@ -28,7 +28,7 @@ import org.eclipse.glsp.server.types.GLSPServerException;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.eclipsesource.uml.modelserver.unotation.UmlDiagram;
 
-public class UmlModelState extends EMSNotationModelState {
+public class UmlModelState extends EMSNotationModelStateImpl {
    private static final Logger LOGGER = LogManager.getLogger(UmlModelState.class);
 
    @Override

@@ -92,7 +92,7 @@ export function configureActionHandler(
     constr: interfaces.ServiceIdentifier<IActionHandler>
 ): void {
     if (typeof constr === 'function') {
-        if (!isInjectable(constr)) {
+        if (!isInjectable(constr as any)) {
             throw new Error(`Action handlers should be @injectable: ${constr.name}`);
         }
         if (!context.isBound(constr)) {

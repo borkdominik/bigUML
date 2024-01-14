@@ -7,8 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { Action, EnableDefaultToolsAction, EnableToolsAction, hasArrayProp, IActionHandler, ICommand } from '@eclipse-glsp/client';
-import { GLSPToolManager } from '@eclipse-glsp/client/lib/base/tool-manager/glsp-tool-manager';
+import { Action, hasArrayProp, ICommand, ToolManager, ToolManagerActionHandler, TYPES } from '@eclipse-glsp/client';
 import { inject, injectable } from 'inversify';
 
 export interface ChangeToolsStateAction extends Action {
@@ -30,7 +29,7 @@ export namespace ChangeToolsStateAction {
 }
 
 @injectable()
-export class UmlToolManager extends GLSPToolManager {
+export class UmlToolManager extends ToolManager {
     change(toolIds: string[], enabled: boolean): void {
         const tools = toolIds.map(id => this.tool(id));
         tools.forEach(tool => {
@@ -52,17 +51,15 @@ export class UmlToolManager extends GLSPToolManager {
 }
 
 @injectable()
-export class UmlToolManagerActionHandler implements IActionHandler {
-    @inject(UmlToolManager)
-    readonly toolManager: UmlToolManager;
+export class UmlToolManagerActionHandler extends ToolManagerActionHandler {
+    @inject(TYPES.IToolManager)
+    override readonly toolManager: UmlToolManager;
 
-    handle(action: Action): void | ICommand | Action {
-        if (EnableDefaultToolsAction.is(action)) {
-            this.toolManager.enableDefaultTools();
-        } else if (EnableToolsAction.is(action)) {
-            this.toolManager.enable(action.toolIds);
-        } else if (ChangeToolsStateAction.is(action)) {
+    override handle(action: Action): void | ICommand | Action {
+        if (ChangeToolsStateAction.is(action)) {
             this.toolManager.change(action.toolIds, action.enabled);
+        } else {
+            super.handle(action);
         }
     }
 }

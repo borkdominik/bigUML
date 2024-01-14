@@ -6,9 +6,8 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { ActionMessage, GLSPDiagramIdentifier } from '@eclipse-glsp/vscode-integration';
+import { GLSPDiagramIdentifier, WebviewEndpoint } from '@eclipse-glsp/vscode-integration';
 import { inject, injectable, postConstruct } from 'inversify';
-import { isWebviewReadyMessage } from 'sprotty-vscode-protocol';
 import * as vscode from 'vscode';
 import { TYPES } from '../../di.types';
 import { ThemeIntegration } from '../../features/theme/theme-integration';
@@ -209,69 +208,19 @@ export class UmlDiagramEditorProvider implements vscode.CustomEditorProvider, Se
             clientId
         };
 
-        // Promise that resolves when sprotty sends its ready-message
-        const clientReady = new Promise<void>(resolve => {
-            const messageListener = resource.webviewPanel.webview.onDidReceiveMessage((message: unknown) => {
-                if (isWebviewReadyMessage(message)) {
-                    resolve();
-                    messageListener.dispose();
-                }
-            });
-        });
-
-        const sendMessageToWebview = async (message: unknown): Promise<void> => {
-            clientReady.then(() => {
-                if (resource.webviewPanel.active) {
-                    resource.webviewPanel.webview.postMessage(message);
-                } else {
-                    console.log('Message stalled for webview:', resource.document.uri.path, message);
-                    const viewStateListener = resource.webviewPanel.onDidChangeViewState(() => {
-                        viewStateListener.dispose();
-                        sendMessageToWebview(message);
-                    });
-                }
-            });
-        };
-
-        const receiveMessageFromServerEmitter = new vscode.EventEmitter<unknown>();
-        const sendMessageToServerEmitter = new vscode.EventEmitter<unknown>();
-
-        resource.webviewPanel.onDidDispose(() => {
-            receiveMessageFromServerEmitter.dispose();
-            sendMessageToServerEmitter.dispose();
-        });
-
-        // Listen for Messages from webview (only after ready-message has been received)
-        clientReady.then(() => {
-            resource.webviewPanel.webview.onDidReceiveMessage((message: unknown) => {
-                if (ActionMessage.is(message)) {
-                    sendMessageToServerEmitter.fire(message);
-                }
-            });
-        });
-
-        // Listen for Messages from server
-        receiveMessageFromServerEmitter.event(message => {
-            if (ActionMessage.is(message)) {
-                sendMessageToWebview(message);
-            }
+        const endpoint = new WebviewEndpoint({
+            diagramIdentifier,
+            messenger: this.connector.messenger,
+            webviewPanel: resource.webviewPanel
         });
 
         // Register document/diagram panel/model in vscode connector
-        const initializeResult = await this.connector.registerClient({
+        await this.connector.registerClient({
             clientId: diagramIdentifier.clientId,
             diagramType: diagramIdentifier.diagramType,
             document: resource.document,
-            webviewPanel: resource.webviewPanel,
-            onClientMessage: sendMessageToServerEmitter.event,
-            onSendToClientEmitter: receiveMessageFromServerEmitter
+            webviewEndpoint: endpoint
         });
-
-        diagramIdentifier.initializeResult = initializeResult;
-        // Initialize diagram
-        sendMessageToWebview(diagramIdentifier);
-
-        return clientReady;
     }
 }
 

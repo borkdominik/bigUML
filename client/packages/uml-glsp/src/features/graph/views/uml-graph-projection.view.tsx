@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { EdgeRouterRegistry, GLSPProjectionView, IViewArgs, RenderingContext, svg, ViewportRootElement } from '@eclipse-glsp/client';
+import { EdgeRouterRegistry, GLSPProjectionView, GViewportRootElement, IViewArgs, RenderingContext, svg } from '@eclipse-glsp/client';
 import { inject, injectable } from 'inversify';
 import { h, VNode, VNodeStyle } from 'snabbdom';
 import { SVGIdCreatorService } from '../svg-id-creator.service';
@@ -24,12 +24,12 @@ const FILTER_DROP_SHADOW_ID = 'filter-drop-shadow';
 @injectable()
 export class UmlGraphProjectionView extends GLSPProjectionView {
     @inject(EdgeRouterRegistry)
-    protected edgeRouterRegistry: EdgeRouterRegistry;
+    override edgeRouterRegistry: EdgeRouterRegistry;
 
     @inject(SVGIdCreatorService)
     protected svgIdCreator: SVGIdCreatorService;
 
-    protected override renderSvg(model: Readonly<ViewportRootElement>, context: RenderingContext, args?: IViewArgs): VNode {
+    protected override renderSvg(model: Readonly<GViewportRootElement>, context: RenderingContext, args?: IViewArgs): VNode {
         const edgeRouting = this.edgeRouterRegistry.routeAllChildren(model);
         const transform = `scale(${model.zoom}) translate(${-model.scroll.x},${-model.scroll.y})`;
         const ns = 'http://www.w3.org/2000/svg';

@@ -6,11 +6,11 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { GLSPVscodeDiagramWidget } from '@eclipse-glsp/vscode-integration-webview/lib/glsp-vscode-diagram-widget';
+import { GLSPDiagramWidget } from '@eclipse-glsp/vscode-integration-webview/lib/glsp-diagram-widget';
 import { injectable, postConstruct } from 'inversify';
 
 @injectable()
-export class UVDiagramWidget extends GLSPVscodeDiagramWidget {
+export class UmlDiagramWidget extends GLSPDiagramWidget {
     protected containerDiv: HTMLDivElement | null;
 
     @postConstruct()
@@ -21,7 +21,7 @@ export class UVDiagramWidget extends GLSPVscodeDiagramWidget {
     }
 
     protected override initializeHtml(): void {
-        this.containerDiv = document.getElementById(this.diagramIdentifier.clientId + '_container') as HTMLDivElement | null;
+        this.containerDiv = document.getElementById(this.clientId + '_container') as HTMLDivElement | null;
         if (this.containerDiv) {
             const svgContainer = document.createElement('div');
             svgContainer.id = this.viewerOptions.baseDiv;
@@ -30,17 +30,6 @@ export class UVDiagramWidget extends GLSPVscodeDiagramWidget {
             const hiddenContainer = document.createElement('div');
             hiddenContainer.id = this.viewerOptions.hiddenDiv;
             document.body.appendChild(hiddenContainer);
-
-            const statusDiv = document.createElement('div');
-            statusDiv.setAttribute('class', 'sprotty-status');
-            this.containerDiv.appendChild(statusDiv);
-
-            this.statusIconDiv = document.createElement('div');
-            statusDiv.appendChild(this.statusIconDiv);
-
-            this.statusMessageDiv = document.createElement('div');
-            this.statusMessageDiv.setAttribute('class', 'sprotty-status-message');
-            statusDiv.appendChild(this.statusMessageDiv);
 
             this.containerDiv.addEventListener('mouseenter', e => this.handleMouseEnter(e));
             this.containerDiv.addEventListener('mouseleave', e => this.handleMouseLeave(e));

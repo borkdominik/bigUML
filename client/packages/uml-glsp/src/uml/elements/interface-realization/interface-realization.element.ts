@@ -8,7 +8,7 @@
  *********************************************************************************/
 
 import { UmlDiagramType } from '@borkdominik-biguml/uml-common';
-import { configureModelElement, GEdgeView, SEdge } from '@eclipse-glsp/client';
+import { configureModelElement, GEdge, GEdgeView } from '@eclipse-glsp/client';
 import { DefaultTypes } from '@eclipse-glsp/protocol';
 import { interfaces } from 'inversify';
 import { QualifiedUtil } from '../../qualified.utils';
@@ -20,7 +20,7 @@ export function registerInterfaceRealizationElement(
     configureModelElement(
         context,
         QualifiedUtil.representationTypeId(representation, DefaultTypes.EDGE, 'InterfaceRealization'),
-        SEdge,
+        GEdge,
         GEdgeView
     );
 }

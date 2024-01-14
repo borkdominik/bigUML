@@ -7,21 +7,19 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import {
-    alignFeature,
-    hasArguments,
+    ArgsAware, GCompartment, hasArgs,
     layoutableChildFeature,
     RectangularNodeView,
-    RenderingContext,
-    SArgumentable,
-    SCompartment,
-    svg
+    RenderingContext, svg
 } from '@eclipse-glsp/client';
 import { Args, DefaultTypes } from '@eclipse-glsp/protocol';
 import { injectable } from 'inversify';
 import { VNode } from 'snabbdom';
 import { LabeledNode } from '../../../features/graph/views/label.view';
+// eslint-disable-next-line no-restricted-imports
+import { alignFeature } from 'sprotty';
 
-export class NamedElement extends LabeledNode implements SArgumentable {
+export class NamedElement extends LabeledNode implements ArgsAware {
     static override readonly DEFAULT_FEATURES = [...LabeledNode.DEFAULT_FEATURES, alignFeature, layoutableChildFeature];
 
     args: Args = {};
@@ -39,12 +37,12 @@ export class NamedElementView extends RectangularNodeView {
 
         const compartment = element.children.find(
             c =>
-                c instanceof SCompartment &&
+                c instanceof GCompartment &&
                 c.type !== DefaultTypes.COMPARTMENT_HEADER &&
                 c.children.length > 0 &&
-                hasArguments(c) &&
+                hasArgs(c) &&
                 c.args['divider'] === true
-        ) as SCompartment | undefined;
+        ) as GCompartment | undefined;
 
         // TODO: Remove after switching to builder based approach for all gmodels
         return (

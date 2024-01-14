@@ -34,14 +34,14 @@
 			<repository location="https://download.eclipse.org/emfcloud/emfjson-jackson/p2/releases/2.0.0/"/>
 		</location>
 		<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-			<repository location="https://download.eclipse.org/emfcloud/modelserver/p2/integration/0.8.0.I20230217/"/>
-			<unit id="org.eclipse.emfcloud.modelserver.feature.feature.group" version="0.8.0.I20230217"/>
-			<unit id="org.eclipse.emfcloud.modelserver.feature.source.feature.group" version="0.8.0.I20230217"/>
+			<repository location="https://download.eclipse.org/emfcloud/modelserver/p2/nightly/0.7/0.7.0.202308161629/"/>
+			<unit id="org.eclipse.emfcloud.modelserver.feature.feature.group" version="0.7.0.202308161629"/>
+			<unit id="org.eclipse.emfcloud.modelserver.feature.source.feature.group" version="0.7.0.202308161629"/>
 		</location>
 		<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-			<repository location="https://download.eclipse.org/emfcloud/modelserver-glsp-integration/p2/integration/0.8.0.I20230217/"/>
-			<unit id="org.eclipse.emfcloud.modelserver.glsp.feature.feature.group" version="0.8.0.I20230217"/>
-			<unit id="org.eclipse.emfcloud.modelserver.glsp.feature.source.feature.group" version="0.8.0.I20230217"/>
+			<repository location="https://download.eclipse.org/emfcloud/modelserver-glsp-integration/p2/nightly/0.7/0.7.0.202306021453/"/>
+			<unit id="org.eclipse.emfcloud.modelserver.glsp.feature.feature.group" version="0.7.0.202306021453"/>
+			<unit id="org.eclipse.emfcloud.modelserver.glsp.feature.source.feature.group" version="0.7.0.202306021453"/>
 		</location>
 	    <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 	      <unit id="org.eclipse.jetty.websocket.javax.server" version="10.0.13"/>

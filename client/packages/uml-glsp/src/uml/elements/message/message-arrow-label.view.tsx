@@ -7,15 +7,9 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import {
-    EdgeRouterRegistry,
-    getSubType,
-    Point,
+    EdgeRouterRegistry, GEdge, getSubType, GLabelView, Point,
     RenderingContext,
-    RoutedPoint,
-    SEdge,
-    setAttr,
-    SLabelView,
-    svg
+    RoutedPoint, setAttr, svg
 } from '@eclipse-glsp/client';
 import { inject, injectable } from 'inversify';
 import { VNode } from 'snabbdom';
@@ -25,13 +19,13 @@ import { SEditableLabel } from '../../../features/graph/index';
 const JSX = { createElement: svg };
 
 @injectable()
-export class MessageArrowLabelView extends SLabelView {
+export class MessageArrowLabelView extends GLabelView {
     @inject(EdgeRouterRegistry) edgeRouterRegistry: EdgeRouterRegistry;
 
     override render(labelNode: Readonly<SEditableLabel>, context: RenderingContext): VNode {
         let rotation = 0;
         if (labelNode.edgePlacement !== undefined) {
-            const parent = labelNode.parent as SEdge;
+            const parent = labelNode.parent as GEdge;
             const segments = this.edgeRouterRegistry.route(parent);
             const router = this.edgeRouterRegistry.get(parent.routerKind);
 

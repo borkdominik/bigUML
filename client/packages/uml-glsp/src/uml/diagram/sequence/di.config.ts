@@ -11,7 +11,17 @@
 import '@eclipse-glsp/client/css/glsp-sprotty.css';
 import 'sprotty/css/edit-label.css';
 
-import { CircularNodeView, configureModelElement, GLSPScrollMouseListener, PolylineEdgeView, SEdge, SPort } from '@eclipse-glsp/client/lib';
+import {
+    bindOrRebind,
+    CircularNodeView,
+    configureCommand,
+    configureModelElement,
+    EdgeCreationTool,
+    GLSPScrollMouseListener,
+    PolylineEdgeView,
+    SEdge,
+    SPort
+} from '@eclipse-glsp/client/lib';
 import { ContainerModule, interfaces } from 'inversify';
 
 import { UML_TYPES } from '../../../di.types';
@@ -22,8 +32,21 @@ import { SDLifelineAnchor } from './features/change-bounds/uml-custom-lifeline-a
 import { SDMovementRestrictor } from './features/change-bounds/uml-movement-restrictor';
 import { SDSelectionService } from './features/change-bounds/uml-selection-service';
 import { SDPolylineEdgeRouter } from './features/routing/uml-polyline-routing';
-import { SD_HORIZONTAL_SHIFT } from './features/tool-feedback/horizontal-shift-tool-feedback';
-import { SD_VERTICAL_SHIFT } from './features/tool-feedback/vertical-shift-tool-feedback';
+import {
+    SDDrawFeedbackPositionedEdgeCommand,
+    SDRemoveFeedbackPositionedEdgeCommand
+} from './features/tool-feedback/creation-tool-feedback.extension';
+import {
+    SDDrawHorizontalShiftCommand,
+    SDRemoveHorizontalShiftCommand,
+    SD_HORIZONTAL_SHIFT
+} from './features/tool-feedback/horizontal-shift-tool-feedback';
+import {
+    SDDrawVerticalShiftCommand,
+    SDRemoveVerticalShiftCommand,
+    SD_VERTICAL_SHIFT
+} from './features/tool-feedback/vertical-shift-tool-feedback';
+import { SDEdgeCreationTool } from './features/tools/edge-creation-tool.extension';
 import { SDHorizontalShiftNode, SDVerticalShiftNode } from './features/tools/model';
 import { SDShiftMouseTool } from './features/tools/shift-mouse-tool';
 import { SDShiftTool } from './features/tools/shift-tool';
@@ -52,6 +75,16 @@ export const umlSequenceDiagramModule = new ContainerModule((bind, unbind, isBou
     bind(SDScrollMouseListener).toSelf().inSingletonScope();
     rebind(GLSPScrollMouseListener).toService(SDScrollMouseListener);
     configureShiftTool(context);
+
+    bindOrRebind(context, EdgeCreationTool).to(SDEdgeCreationTool).inSingletonScope();
+
+    configureCommand({ bind, isBound }, SDDrawFeedbackPositionedEdgeCommand);
+    configureCommand({ bind, isBound }, SDRemoveFeedbackPositionedEdgeCommand);
+
+    configureCommand({ bind, isBound }, SDDrawVerticalShiftCommand);
+    configureCommand({ bind, isBound }, SDRemoveVerticalShiftCommand);
+    configureCommand({ bind, isBound }, SDDrawHorizontalShiftCommand);
+    configureCommand({ bind, isBound }, SDRemoveHorizontalShiftCommand);
 
     // INTERACTIONS
     configureModelElement(context, UmlSequenceTypes.INTERACTION, InteractionElement, InteractionNodeView);

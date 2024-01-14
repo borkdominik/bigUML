@@ -8,21 +8,27 @@
  *********************************************************************************/
 import {
     EditableLabel,
-    editLabelFeature, GChildElement, getSubType, GLabel, hoverFeedbackFeature,
+    editLabelFeature,
+    GChildElement,
+    getSubType,
+    GLabel,
+    hoverFeedbackFeature,
     isEdgeLayoutable,
     isEditableLabel,
     Nameable,
     nameFeature,
     RectangularNode,
-    RenderingContext, setAttr,
-    ShapeView, svg,
+    RenderingContext,
+    setAttr,
+    ShapeView,
+    svg,
     WithEditableLabel,
     withEditLabelFeature
 } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 import { VNode } from 'snabbdom';
 
-export class LabeledNode extends RectangularNode implements WithEditableLabel, Nameable {
+export class GLabeledNode extends RectangularNode implements WithEditableLabel, Nameable {
     static override readonly DEFAULT_FEATURES = [...RectangularNode.DEFAULT_FEATURES, nameFeature, withEditLabelFeature];
 
     get editableLabel(): (GChildElement & EditableLabel) | undefined {
@@ -44,7 +50,7 @@ export class LabeledNode extends RectangularNode implements WithEditableLabel, N
     }
 }
 
-export class SEditableLabel extends GLabel implements EditableLabel {
+export class GEditableLabel extends GLabel implements EditableLabel {
     static override readonly DEFAULT_FEATURES = [...GLabel.DEFAULT_FEATURES, editLabelFeature, hoverFeedbackFeature];
 
     hoverFeedback = false;
@@ -54,8 +60,8 @@ export class SEditableLabel extends GLabel implements EditableLabel {
 const JSX = { createElement: svg };
 
 @injectable()
-export class SEditableLabelView extends ShapeView {
-    override render(element: SEditableLabel, context: RenderingContext): VNode | undefined {
+export class GEditableLabelView extends ShapeView {
+    override render(element: GEditableLabel, context: RenderingContext): VNode | undefined {
         if (!isEdgeLayoutable(element) && !this.isVisible(element, context)) {
             return undefined;
         }

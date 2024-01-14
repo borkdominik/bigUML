@@ -6,7 +6,15 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { changeCodiconClass, compare, createIcon, createToolGroup, GModelRoot, PaletteItem, ToolPalette } from '@eclipse-glsp/client';
+import {
+    changeCodiconClass,
+    createIcon,
+    GModelRoot,
+    PaletteItem,
+    RequestContextActions,
+    SetContextActions,
+    ToolPalette
+} from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 import { SDShiftMouseTool } from '../../uml/diagram/sequence/features/tools/shift-mouse-tool';
 
@@ -17,6 +25,11 @@ const PALETTE_ICON_ID = 'symbol-color';
 @injectable()
 export class UmlToolPalette extends ToolPalette {
     protected override defaultToolsButton: HTMLElement;
+
+    protected override onBeforeShow(_containerElement: HTMLElement, root: Readonly<GModelRoot>): void {
+        // Removed max height
+        this.modelRootId = root.id;
+    }
 
     override changeActiveButton(button?: HTMLElement): void {
         if (this.lastActiveButton) {
@@ -31,11 +44,8 @@ export class UmlToolPalette extends ToolPalette {
         }
     }
 
-    protected override onBeforeShow(_containerElement: HTMLElement, root: Readonly<GModelRoot>): void {
-        this.modelRootId = root.id;
-    }
-
     protected override addMinimizePaletteButton(): void {
+        // Removed max height
         const baseDiv = document.getElementById(this.options.baseDiv);
         const minPaletteDiv = document.createElement('div');
         minPaletteDiv.classList.add('minimize-palette-button');
@@ -58,18 +68,7 @@ export class UmlToolPalette extends ToolPalette {
         }
     }
 
-    protected override createHeader(): void {
-        this.addMinimizePaletteButton();
-        const headerCompartment = document.createElement('div');
-        headerCompartment.classList.add('palette-header');
-        headerCompartment.append(this.createHeaderTitle());
-        headerCompartment.appendChild(this.overridecreateHeaderTools());
-        headerCompartment.appendChild((this.searchField = this.createHeaderSearchField()));
-        this.containerElement.appendChild(headerCompartment);
-    }
-
-    // TODO: This is private in base class
-    protected overridecreateHeaderTools(): HTMLElement {
+    protected override createHeaderTools(): HTMLElement {
         // as super
         const headerTools = document.createElement('div');
         headerTools.classList.add('header-tools');
@@ -89,7 +88,7 @@ export class UmlToolPalette extends ToolPalette {
         const searchIcon = this.createSearchButton();
         headerTools.appendChild(searchIcon);
 
-        // addition
+        // TODO: Sequence Specific
         const createShiftButton = this.createShiftButton();
         headerTools.appendChild(createShiftButton);
 
@@ -103,38 +102,9 @@ export class UmlToolPalette extends ToolPalette {
         return verticalShiftToolButton;
     }
 
-    protected override createBody(): void {
-        const bodyDiv = document.createElement('div');
-        bodyDiv.classList.add('palette-body');
-        let tabIndex = 0;
-        this.paletteItems.sort(compare).forEach(item => {
-            if (item.children) {
-                const group = createToolGroup(item);
-                item.children
-                    .sort(compare)
-                    .forEach(child => group.appendChild(this.createUmlToolButton(child, tabIndex++, child.icon || '')));
-                bodyDiv.appendChild(group);
-            } else {
-                bodyDiv.appendChild(this.createUmlToolButton(item, tabIndex++, item.icon || 'umlclass'));
-            }
-        });
-        if (this.paletteItems.length === 0) {
-            const noResultsDiv = document.createElement('div');
-            noResultsDiv.innerText = 'No results found.';
-            noResultsDiv.classList.add('tool-button');
-            bodyDiv.appendChild(noResultsDiv);
-        }
-        // Remove existing body to refresh filtered entries
-        if (this.bodyDiv) {
-            this.containerElement.removeChild(this.bodyDiv);
-        }
-        this.containerElement.appendChild(bodyDiv);
-        this.bodyDiv = bodyDiv;
-    }
-
-    protected createUmlToolButton(item: PaletteItem, index: number, icon: string): HTMLElement {
+    protected override createToolButton(item: PaletteItem, index: number): HTMLElement {
         const button = document.createElement('div');
-        button.appendChild(this.createUmlIcon(icon));
+        button.appendChild(this.createUmlIcon(item.icon || ''));
         button.tabIndex = index;
         button.classList.add('tool-button');
         button.classList.add('uml-tool-button');
@@ -148,5 +118,24 @@ export class UmlToolPalette extends ToolPalette {
         const icon = document.createElement('div');
         icon.classList.add(...['umlimg', cssClass]);
         return icon;
+    }
+
+    override async preRequestModel(): Promise<void> {
+        // in this phase, the notation is still not loaded
+        return;
+    }
+
+    async postRequestModel(): Promise<void> {
+        const requestAction = RequestContextActions.create({
+            contextId: ToolPalette.ID,
+            editorContext: {
+                selectedElementIds: []
+            }
+        });
+        const response = await this.actionDispatcher.request<SetContextActions>(requestAction);
+        this.paletteItems = response.actions.map(e => e as PaletteItem);
+        if (!this.editorContext.isReadonly) {
+            this.show(this.editorContext.modelRoot);
+        }
     }
 }

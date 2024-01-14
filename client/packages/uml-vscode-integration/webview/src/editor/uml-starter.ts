@@ -10,11 +10,14 @@ import { createUmlDiagramContainer } from '@borkdominik-biguml/uml-glsp/lib';
 
 import '@eclipse-glsp/vscode-integration-webview/css/glsp-vscode.css';
 
-import { ContainerConfiguration } from '@eclipse-glsp/protocol';
+import { GLSPIsReadyAction } from '@borkdominik-biguml/uml-common';
+import { IActionDispatcher, IDiagramStartup, TYPES } from '@eclipse-glsp/client';
+import { bindAsService, bindOrRebind, ContainerConfiguration, MaybePromise } from '@eclipse-glsp/protocol';
 import { GLSPStarter } from '@eclipse-glsp/vscode-integration-webview';
 import { GLSPDiagramIdentifier } from '@eclipse-glsp/vscode-integration-webview/lib/diagram-identifier';
+import { ExtensionActionKind } from '@eclipse-glsp/vscode-integration-webview/lib/features/default/extension-action-handler';
 import { GLSPDiagramWidget } from '@eclipse-glsp/vscode-integration-webview/lib/glsp-diagram-widget';
-import { Container } from 'inversify';
+import { Container, inject, injectable } from 'inversify';
 import { UmlDiagramWidget } from './diagram.widget';
 
 class UVStarter extends GLSPStarter {
@@ -26,7 +29,9 @@ class UVStarter extends GLSPStarter {
 
     protected override addVscodeBindings(container: Container, diagramIdentifier: GLSPDiagramIdentifier): void {
         container.bind(UmlDiagramWidget).toSelf().inSingletonScope();
-        container.rebind(GLSPDiagramWidget).toService(UmlDiagramWidget);
+        bindOrRebind(container, GLSPDiagramWidget).toService(UmlDiagramWidget);
+        container.bind(ExtensionActionKind).toConstantValue(GLSPIsReadyAction.KIND);
+        bindAsService(container, TYPES.IDiagramStartup, GLSPReadyStartup);
     }
 
     /* TODO: Removed
@@ -38,4 +43,14 @@ class UVStarter extends GLSPStarter {
 
 export function launch(): void {
     new UVStarter();
+}
+
+@injectable()
+class GLSPReadyStartup implements IDiagramStartup {
+    @inject(TYPES.IActionDispatcher)
+    protected actionDispatcher: IActionDispatcher;
+
+    public postRequestModel(): MaybePromise<void> {
+        this.actionDispatcher.dispatch(GLSPIsReadyAction.create());
+    }
 }

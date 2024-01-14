@@ -7,21 +7,28 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import {
-    Args, ArgsAware, boundsFeature,
+    Args,
+    ArgsAware,
+    boundsFeature,
     Deletable,
     deletableFeature,
-    fadeFeature, GCompartment, GShapeElement, Hoverable,
+    fadeFeature,
+    GCompartment,
+    GShapeElement,
+    Hoverable,
     hoverFeedbackFeature,
     IView,
     layoutableChildFeature,
     layoutContainerFeature,
-    RenderingContext, Selectable,
-    selectFeature, svg
+    RenderingContext,
+    Selectable,
+    selectFeature,
+    svg
 } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 import { VNode } from 'snabbdom';
 
-export class Icon extends GShapeElement {
+export class GIcon extends GShapeElement {
     iconImageName: string;
 
     override hasFeature(feature: symbol): boolean {
@@ -31,11 +38,11 @@ export class Icon extends GShapeElement {
     }
 }
 
-export class IconCSS extends Icon implements ArgsAware {
+export class GIconCSS extends GIcon implements ArgsAware {
     args: Args;
 }
 
-export class IconLabelCompartment extends GCompartment implements Selectable, Deletable, Hoverable {
+export class GIconLabelCompartment extends GCompartment implements Selectable, Deletable, Hoverable {
     selected = false;
     hoverFeedback = false;
 
@@ -48,8 +55,8 @@ export class IconLabelCompartment extends GCompartment implements Selectable, De
 const JSX = { createElement: svg };
 
 @injectable()
-export class IconView implements IView {
-    render(element: Icon, context: RenderingContext): VNode {
+export class GIconView implements IView {
+    render(element: GIcon, context: RenderingContext): VNode {
         let image;
         if (element.iconImageName) {
             image = require('../../resources/images/' + element.iconImageName);
@@ -66,8 +73,8 @@ export class IconView implements IView {
 }
 
 @injectable()
-export class IconCSSView implements IView {
-    render(element: IconCSS, context: RenderingContext): VNode {
+export class GIconCSSView implements IView {
+    render(element: GIconCSS, context: RenderingContext): VNode {
         let image;
 
         const propertyArg = element.args['property'];

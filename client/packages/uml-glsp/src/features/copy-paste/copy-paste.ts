@@ -8,8 +8,12 @@
  *********************************************************************************/
 import {
     Args,
-    containerFeature, GChildElement, GModelElement, MouseListener,
-    PasteOperation, ServerCopyPasteHandler
+    containerFeature,
+    GChildElement,
+    GModelElement,
+    MouseListener,
+    PasteOperation,
+    ServerCopyPasteHandler
 } from '@eclipse-glsp/client';
 import { Action } from '@eclipse-glsp/protocol';
 import { inject, injectable } from 'inversify';
@@ -54,7 +58,7 @@ export class LastContainableElementTracker extends MouseListener {
 }
 
 @injectable()
-export class CustomCopyPasteHandler extends ServerCopyPasteHandler {
+export class UmlServerCopyPasteHandler extends ServerCopyPasteHandler {
     @inject(LastContainableElementTracker) protected containableElementTracker: LastContainableElementTracker;
 
     override handlePaste(event: ClipboardEvent): void {

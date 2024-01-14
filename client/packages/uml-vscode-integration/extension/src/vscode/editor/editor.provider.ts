@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { GLSPDiagramIdentifier, WebviewEndpoint } from '@eclipse-glsp/vscode-integration';
+import { GLSPDiagramIdentifier, GlspVscodeClient, WebviewEndpoint } from '@eclipse-glsp/vscode-integration';
 import { inject, injectable, postConstruct } from 'inversify';
 import * as vscode from 'vscode';
 import { TYPES } from '../../di.types';
@@ -25,8 +25,7 @@ export class UmlDiagramEditorProvider implements vscode.CustomEditorProvider, Se
 
     protected editors: {
         [key: string]: {
-            clientId: string;
-            clientReady: Promise<void>;
+            client: GlspVscodeClient;
             resource: WebviewResource;
             webview: WebviewResolver;
         };
@@ -99,12 +98,11 @@ export class UmlDiagramEditorProvider implements vscode.CustomEditorProvider, Se
             token
         };
         const clientId = this.generateClientId();
-        const clientReady = this.prepareGLSP(clientId, resource);
-        const webview = this.createEditorBasedOnState(resource, clientId, clientReady);
+        const client = await this.prepareGLSPClient(clientId, resource);
+        const webview = this.createEditorBasedOnState(resource, client);
 
         this.editors[document.uri.toString()] = {
-            clientId,
-            clientReady,
+            client,
             resource,
             webview
         };
@@ -146,7 +144,7 @@ export class UmlDiagramEditorProvider implements vscode.CustomEditorProvider, Se
                     active.webview.finish(resource);
                 }
 
-                const webview = this.createGLSPResolver(active.clientId, active.clientReady);
+                const webview = this.createGLSPResolver(active.client);
                 await webview.resolve(resource);
                 this.editors[key].webview = webview;
             }
@@ -157,11 +155,11 @@ export class UmlDiagramEditorProvider implements vscode.CustomEditorProvider, Se
         return `${this.diagramType}_${this.viewCounter++}`;
     }
 
-    protected createEditorBasedOnState(resource: WebviewResource, clientId: string, clientReady: Promise<void>): WebviewResolver {
+    protected createEditorBasedOnState(resource: WebviewResource, client: GlspVscodeClient): WebviewResolver {
         let resolver: WebviewResolver;
 
         if (this.serverManagerState.state === 'servers-launched') {
-            resolver = this.createGLSPResolver(clientId, clientReady);
+            resolver = this.createGLSPResolver(client);
         } else if (this.serverManagerState.state === 'error') {
             resolver = this.createErrorResolver(resource);
         } else {
@@ -189,10 +187,9 @@ export class UmlDiagramEditorProvider implements vscode.CustomEditorProvider, Se
         return resolver;
     }
 
-    protected createGLSPResolver(clientId: string, clientReady: Promise<void>): GLSPWebviewResolver {
+    protected createGLSPResolver(client: GlspVscodeClient): GLSPWebviewResolver {
         return new GLSPWebviewResolver({
-            clientId,
-            clientReady,
+            client,
             context: this.context,
             diagramType: this.diagramType,
             connector: this.connector,
@@ -200,7 +197,7 @@ export class UmlDiagramEditorProvider implements vscode.CustomEditorProvider, Se
         });
     }
 
-    protected async prepareGLSP(clientId: string, resource: WebviewResource): Promise<void> {
+    protected async prepareGLSPClient(clientId: string, resource: WebviewResource): Promise<GlspVscodeClient> {
         // This is used to initialize GLSP for our diagram
         const diagramIdentifier: GLSPDiagramIdentifier = {
             diagramType: this.diagramType,
@@ -214,13 +211,15 @@ export class UmlDiagramEditorProvider implements vscode.CustomEditorProvider, Se
             webviewPanel: resource.webviewPanel
         });
 
-        // Register document/diagram panel/model in vscode connector
-        await this.connector.registerClient({
+        const client: GlspVscodeClient = {
             clientId: diagramIdentifier.clientId,
             diagramType: diagramIdentifier.diagramType,
             document: resource.document,
             webviewEndpoint: endpoint
-        });
+        };
+        await this.connector.registerClient(client);
+
+        return client;
     }
 }
 

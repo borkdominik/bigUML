@@ -8,6 +8,4 @@
  *********************************************************************************/
 import 'reflect-metadata';
 
-export * from './di.config';
-export * from './features/graph/index';
-
+export * from './uml-glsp.module';

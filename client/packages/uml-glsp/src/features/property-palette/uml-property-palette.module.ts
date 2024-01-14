@@ -7,17 +7,14 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import { RefreshPropertyPaletteAction } from '@borkdominik-biguml/uml-common';
-import { configureActionHandler, SelectAction, SetDirtyStateAction } from '@eclipse-glsp/client';
-import { ContainerModule } from 'inversify';
+import { configureActionHandler, FeatureModule, SelectAction, SetDirtyStateAction } from '@eclipse-glsp/client';
 import { PropertyPaletteHandler } from './property-palette.handler';
 
-const propertyPaletteModule = new ContainerModule((bind, _unbind, isBound, rebind) => {
-    const context = { bind, _unbind, isBound, rebind };
+export const umlPropertyPaletteModule = new FeatureModule((bind, unbind, isBound, rebind) => {
+    const context = { bind, unbind, isBound, rebind };
 
     bind(PropertyPaletteHandler).toSelf().inSingletonScope();
     configureActionHandler(context, SelectAction.KIND, PropertyPaletteHandler);
     configureActionHandler(context, SetDirtyStateAction.KIND, PropertyPaletteHandler);
     configureActionHandler(context, RefreshPropertyPaletteAction.KIND, PropertyPaletteHandler);
 });
-
-export default propertyPaletteModule;

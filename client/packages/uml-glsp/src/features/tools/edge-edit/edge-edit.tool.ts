@@ -8,22 +8,41 @@
  *********************************************************************************/
 
 import {
-    Action, Bounds, ChangeBoundsTool, CursorCSS,
+    Action,
+    Bounds,
+    ChangeBoundsTool,
+    CursorCSS,
     cursorFeedbackAction,
-    Disposable, DrawFeedbackEdgeSourceAction, EdgeEditListener, EdgeEditTool, FeedbackEdgeRouteMovingMouseListener,
+    Disposable,
+    DrawFeedbackEdgeSourceAction,
+    EdgeEditListener,
+    EdgeEditTool,
+    FeedbackEdgeRouteMovingMouseListener,
     FeedbackEdgeSourceMovingMouseListener,
     FeedbackEdgeTargetMovingMouseListener,
     findChildrenAtPosition,
-    findParentByFeature, GConnectableElement, getAbsolutePosition, GModelElement, GReconnectHandle, GRoutableElement, HideEdgeReconnectHandlesFeedbackAction,
+    findParentByFeature,
+    GConnectableElement,
+    getAbsolutePosition,
+    GModelElement,
+    GReconnectHandle,
+    GRoutableElement,
+    HideEdgeReconnectHandlesFeedbackAction,
     isBoundsAware,
-    isConnectable, isSourceRoutingHandle,
+    isConnectable,
+    isSourceRoutingHandle,
     isTargetRoutingHandle,
     MoveAction,
-    Point, toAbsoluteBounds
+    Point,
+    toAbsoluteBounds
 } from '@eclipse-glsp/client';
 import { ISelectionListener } from '@eclipse-glsp/client/lib/base/selection-service';
-import { DrawFeedbackEdgeAction, FeedbackEdgeEnd, feedbackEdgeEndId } from '@eclipse-glsp/client/lib/features/tools/edge-creation/dangling-edge-feedback';
-import { ChangeToolsStateAction } from '../tool-manager/tool-manager';
+import {
+    DrawFeedbackEdgeAction,
+    FeedbackEdgeEnd,
+    feedbackEdgeEndId
+} from '@eclipse-glsp/client/lib/features/tools/edge-creation/dangling-edge-feedback';
+import { ChangeToolsStateAction } from '../tool-manager/uml-tool-manager';
 
 export class UmlEdgeEditTool extends EdgeEditTool {
     static override ID = 'uml.edge-edit-tool';

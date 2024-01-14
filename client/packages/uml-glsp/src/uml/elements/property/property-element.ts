@@ -11,8 +11,8 @@ import { UmlDiagramType } from '@borkdominik-biguml/uml-common';
 import { configureModelElement } from '@eclipse-glsp/client';
 import { DefaultTypes } from '@eclipse-glsp/protocol';
 import { interfaces } from 'inversify';
-import { SEditableLabel, SEditableLabelView } from '../../../index';
 import { QualifiedUtil } from '../../qualified.utils';
+import { GEditableLabel, GEditableLabelView } from '../../views/label.view';
 import { NamedElement, NamedElementView } from '../index';
 
 export function registerPropertyElement(
@@ -28,13 +28,13 @@ export function registerPropertyElement(
     configureModelElement(
         context,
         QualifiedUtil.representationTypeId(representation, DefaultTypes.LABEL, 'Property-type'),
-        SEditableLabel,
-        SEditableLabelView
+        GEditableLabel,
+        GEditableLabelView
     );
     configureModelElement(
         context,
         QualifiedUtil.representationTypeId(representation, DefaultTypes.LABEL, 'Property-multiplicity'),
-        SEditableLabel,
-        SEditableLabelView
+        GEditableLabel,
+        GEditableLabelView
     );
 }

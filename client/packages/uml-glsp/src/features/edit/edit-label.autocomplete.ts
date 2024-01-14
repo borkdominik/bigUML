@@ -13,9 +13,12 @@ import {
     EditLabelUI,
     EditLabelValidationResult,
     EditorContextService,
-    GLSPActionDispatcher, GModelRoot, hasArgs,
+    GLSPActionDispatcher,
+    GModelRoot,
+    hasArgs,
     RequestContextActions,
-    SetContextActions, TYPES
+    SetContextActions,
+    TYPES
 } from '@eclipse-glsp/client';
 import { inject, injectable } from 'inversify';
 import { KeyboardModifier, KeyCode, matchesKeystroke } from 'sprotty/lib/utils/keyboard';
@@ -151,7 +154,10 @@ export class EditLabelUIAutocomplete extends EditLabelUI {
                 return;
             }
         }
-        this.actionDispatcher.dispatchAll([ApplyLabelEditOperation.create({labelId: this.labelId, text: this.editControl.value}), CommitModelAction.create()]);
+        this.actionDispatcher.dispatchAll([
+            ApplyLabelEditOperation.create({ labelId: this.labelId, text: this.editControl.value }),
+            CommitModelAction.create()
+        ]);
         this.hide();
     }
 

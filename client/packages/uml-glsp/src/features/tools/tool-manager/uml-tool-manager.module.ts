@@ -7,18 +7,14 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import {
-    bindOrRebind,
-    configureActionHandler, FeatureModule,
-    ToolManager, ToolManagerActionHandler
-} from '@eclipse-glsp/client';
-import { ChangeToolsStateAction, UmlToolManager, UmlToolManagerActionHandler } from './tool-manager';
+import { bindOrRebind, configureActionHandler, FeatureModule, ToolManagerActionHandler, TYPES } from '@eclipse-glsp/client';
+import { ChangeToolsStateAction, UmlToolManager, UmlToolManagerActionHandler } from './uml-tool-manager';
 
 export const umlToolManagerModule = new FeatureModule((bind, unbind, isBound, rebind) => {
     const context = { bind, unbind, isBound, rebind };
 
-    bindOrRebind(context, ToolManager).to(UmlToolManager).inSingletonScope();
-
+    bindOrRebind(context, TYPES.IToolManager).to(UmlToolManager).inSingletonScope();
     bindOrRebind(context, ToolManagerActionHandler).to(UmlToolManagerActionHandler).inSingletonScope();
+
     configureActionHandler({ bind, isBound }, ChangeToolsStateAction.KIND, UmlToolManagerActionHandler);
 });

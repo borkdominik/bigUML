@@ -11,15 +11,14 @@
 import { DefaultTypes, GCompartment, RectangularNodeView, RenderingContext, svg } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 import { VNode } from 'snabbdom';
-
-import { LabeledNode } from '../../../features/graph/index';
+import { GLabeledNode } from '../../views/label.view';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const JSX = { createElement: svg };
 
 @injectable()
 export class RegionNodeView extends RectangularNodeView {
-    override render(node: LabeledNode, context: RenderingContext): VNode | undefined {
+    override render(node: GLabeledNode, context: RenderingContext): VNode | undefined {
         if (!this.isVisible(node, context)) {
             return undefined;
         }

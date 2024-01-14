@@ -7,18 +7,11 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import { GLSPDiagramWidget } from '@eclipse-glsp/vscode-integration-webview/lib/glsp-diagram-widget';
-import { injectable, postConstruct } from 'inversify';
+import { injectable } from 'inversify';
 
 @injectable()
 export class UmlDiagramWidget extends GLSPDiagramWidget {
     protected containerDiv: HTMLDivElement | null;
-
-    @postConstruct()
-    override initialize(): void {
-        super.initialize();
-
-        this.dispatchInitialActions();
-    }
 
     protected override initializeHtml(): void {
         this.containerDiv = document.getElementById(this.clientId + '_container') as HTMLDivElement | null;
@@ -45,6 +38,4 @@ export class UmlDiagramWidget extends GLSPDiagramWidget {
         this.containerDiv?.classList.add('mouse-leave');
         this.containerDiv?.classList.remove('mouse-enter');
     }
-
-    protected dispatchInitialActions(): void {}
 }

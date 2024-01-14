@@ -10,17 +10,20 @@
 import {
     Action,
     GetViewportAction,
-    GLSPActionDispatcher, GModelElement, hasBooleanProp,
+    GLSPActionDispatcher,
+    GModelElement,
+    hasBooleanProp,
     IActionHandler,
+    IDiagramStartup,
     ISnapper,
     Point,
-    SetViewportAction, TYPES,
+    SetViewportAction,
+    TYPES,
     ViewerOptions,
     Viewport,
     ViewportResult
 } from '@eclipse-glsp/client';
 import { inject, injectable } from 'inversify';
-import { IOnceModelInitialized } from '../initialization/di.config';
 
 @injectable()
 export class UmlGridSnapper implements ISnapper {
@@ -59,7 +62,7 @@ export namespace ShowGridAction {
 }
 
 @injectable()
-export class GraphGridActionHandler implements IActionHandler, IOnceModelInitialized {
+export class GraphGridActionHandler implements IActionHandler, IDiagramStartup {
     static ZOOM_HIDE_THRESHOLD = 0.4;
     static CSS_CLASS = 'graph-grid';
     static ENABLED = false;
@@ -83,7 +86,7 @@ export class GraphGridActionHandler implements IActionHandler, IOnceModelInitial
         }
     }
 
-    onceModelInitialized(): void {
+    postModelInitialization(): void {
         if (GraphGridActionHandler.ENABLED) {
             this.actionDispatcher.requestUntil<ViewportResult>(GetViewportAction.create()).then(result => {
                 this.showGrid(true);

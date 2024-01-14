@@ -11,7 +11,7 @@
 import { GChildElement, RectangularNodeView, RenderingContext, ShapeView, svg } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 import { VNode } from 'snabbdom';
-import { LabeledNode } from '../../../features/graph/index';
+import { GLabeledNode } from '../../views/label.view';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const JSX = { createElement: svg };
@@ -19,7 +19,7 @@ const JSX = { createElement: svg };
 @injectable()
 export class PinPortView extends ShapeView {
     render(model: GChildElement, context: RenderingContext): VNode {
-        const pin = model.parent as LabeledNode;
+        const pin = model.parent as GLabeledNode;
         const w = pin.bounds.width;
         const h = pin.bounds.height;
         const pinPort: any = (
@@ -33,7 +33,7 @@ export class PinPortView extends ShapeView {
 
 @injectable()
 export class PinNodeView extends RectangularNodeView {
-    override render(node: LabeledNode, context: RenderingContext): VNode {
+    override render(node: GLabeledNode, context: RenderingContext): VNode {
         // const w = node.bounds.width;
         const pinNode: any = (
             <g

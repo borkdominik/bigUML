@@ -13,14 +13,15 @@ import { injectable } from 'inversify';
 export class UmlFeedbackActionDispatcher extends FeedbackActionDispatcher {
     constructor() {
         super();
-        // overwrite private member "getMessage" 🙀
-        (this as any).dispatch = this.fixedDispatch;
     }
 
-    private fixedDispatch(actions: Action[], feedbackEmitter: IFeedbackEmitter): void {
-        this.actionDispatcher()
-            .then(dispatcher => dispatcher.dispatchAll(actions))
-            .then(() => this.logger.log(this, 'Dispatched feedback actions for', feedbackEmitter))
-            .catch(reason => this.logger.error(this, 'Failed to dispatch feedback actions', reason));
+    protected override async dispatchFeedback(actions: Action[], feedbackEmitter: IFeedbackEmitter): Promise<void> {
+        try {
+            const actionDispatcher = await this.actionDispatcher();
+            await actionDispatcher.dispatchAll(actions);
+            this.logger.log(this, 'Dispatched feedback actions for', feedbackEmitter);
+        } catch (reason) {
+            this.logger.error(this, 'Failed to dispatch feedback actions', reason);
+        }
     }
 }

@@ -9,15 +9,18 @@
 import {
     containerFeature,
     Deletable,
-    deletableFeature, GCompartment, Hoverable,
+    deletableFeature,
+    GCompartment,
+    Hoverable,
     hoverFeedbackFeature,
-    popupFeature, Selectable,
+    popupFeature,
+    Selectable,
     selectFeature
 } from '@eclipse-glsp/client';
 // eslint-disable-next-line no-restricted-imports
 import { alignFeature } from 'sprotty';
 
-export class UmlCompartment extends GCompartment implements Hoverable {
+export class GUmlCompartment extends GCompartment implements Hoverable {
     static override readonly DEFAULT_FEATURES = [
         ...GCompartment.DEFAULT_FEATURES,
         hoverFeedbackFeature,
@@ -29,8 +32,8 @@ export class UmlCompartment extends GCompartment implements Hoverable {
     hoverFeedback = false;
 }
 
-export class InteractableCompartment extends UmlCompartment implements Selectable, Deletable {
-    static override readonly DEFAULT_FEATURES = [...UmlCompartment.DEFAULT_FEATURES, deletableFeature, selectFeature];
+export class GInteractableCompartment extends GUmlCompartment implements Selectable, Deletable {
+    static override readonly DEFAULT_FEATURES = [...GUmlCompartment.DEFAULT_FEATURES, deletableFeature, selectFeature];
 
     selected = false;
 }

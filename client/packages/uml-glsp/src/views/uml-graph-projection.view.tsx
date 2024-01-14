@@ -9,7 +9,7 @@
 import { EdgeRouterRegistry, GLSPProjectionView, GViewportRootElement, IViewArgs, RenderingContext, svg } from '@eclipse-glsp/client';
 import { inject, injectable } from 'inversify';
 import { h, VNode, VNodeStyle } from 'snabbdom';
-import { SVGIdCreatorService } from '../svg-id-creator.service';
+import { SVGIdCreatorService } from './services/svg-id-creator.service';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const JSX = { createElement: svg };

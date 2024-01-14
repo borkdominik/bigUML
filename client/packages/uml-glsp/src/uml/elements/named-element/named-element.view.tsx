@@ -6,21 +6,16 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import {
-    ArgsAware, GCompartment, hasArgs,
-    layoutableChildFeature,
-    RectangularNodeView,
-    RenderingContext, svg
-} from '@eclipse-glsp/client';
+import { ArgsAware, GCompartment, hasArgs, layoutableChildFeature, RectangularNodeView, RenderingContext, svg } from '@eclipse-glsp/client';
 import { Args, DefaultTypes } from '@eclipse-glsp/protocol';
 import { injectable } from 'inversify';
 import { VNode } from 'snabbdom';
-import { LabeledNode } from '../../../features/graph/views/label.view';
 // eslint-disable-next-line no-restricted-imports
 import { alignFeature } from 'sprotty';
+import { GLabeledNode } from '../../views/label.view';
 
-export class NamedElement extends LabeledNode implements ArgsAware {
-    static override readonly DEFAULT_FEATURES = [...LabeledNode.DEFAULT_FEATURES, alignFeature, layoutableChildFeature];
+export class NamedElement extends GLabeledNode implements ArgsAware {
+    static override readonly DEFAULT_FEATURES = [...GLabeledNode.DEFAULT_FEATURES, alignFeature, layoutableChildFeature];
 
     args: Args = {};
 }

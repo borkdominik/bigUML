@@ -251,6 +251,7 @@
   },
   "devDependencies": {
     "@borkdominik-biguml/uml-vscode-integration-webview": "*",
+    "@eclipse-glsp/vscode-integration-webview": "next",
     "@types/urijs": "1.19.11",
     "@types/vscode": "^1.63.0",
     "@vscode/vsce": "^2.15.0"

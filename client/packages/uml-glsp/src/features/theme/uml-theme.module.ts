@@ -11,7 +11,7 @@ import { ContainerModule } from 'inversify';
 import { SetUmlThemeAction } from './theme.actions';
 import { ThemeManager } from './theme.manager';
 
-export const themeModule = new ContainerModule((bind, _unbind, isBound, rebind) => {
+export const umlThemeModule = new ContainerModule((bind, _unbind, isBound, rebind) => {
     const context = { bind, _unbind, isBound, rebind };
 
     bind(ThemeManager).toSelf().inSingletonScope();

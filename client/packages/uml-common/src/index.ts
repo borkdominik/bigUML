@@ -7,6 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 export * from './action-protocol/autocomplete.action';
+export * from './action-protocol/editor.actions';
 export * from './action-protocol/outline.action';
 export * from './action-protocol/outline.model';
 export * from './action-protocol/property-palette.action';

@@ -147,6 +147,11 @@ export class OutlineTreeProvider implements vscode.TreeDataProvider<OutlineTreeN
     }
 
     protected select(selection: string[], treeView: vscode.TreeView<OutlineTreeNode>): void {
+        if (this.storage.data.length === 0) {
+            console.warn('Outline tree has no data. Did you provide it?');
+            return;
+        }
+
         if (selection.length === 1 && selection[0] === null) {
             const node = this.storage.data[0];
             this.selectionToUpdateContext = {

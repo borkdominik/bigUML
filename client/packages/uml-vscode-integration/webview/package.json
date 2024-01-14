@@ -36,6 +36,7 @@
     "@borkdominik-biguml/uml-common": "*",
     "@borkdominik-biguml/uml-components": "*",
     "@borkdominik-biguml/uml-glsp": "*",
+    "@eclipse-glsp/client": "next",
     "@eclipse-glsp/protocol": "next",
     "@eclipse-glsp/vscode-integration-webview": "next",
     "@vscode/codicons": "^0.0.25",

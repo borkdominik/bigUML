@@ -58,15 +58,24 @@ export class UVGlspConnector<TDocument extends vscode.CustomDocument = vscode.Cu
             logging: false,
             onBeforeReceiveMessageFromClient: (message, callback) => {
                 callback(message, true);
+                // Run also through the extension (TODO: maybe not required)
                 if (ActionMessage.is(message)) {
                     this.actionDispatcher.dispatch(message.action);
                 }
             },
             onBeforeReceiveMessageFromServer: (message, callback) => {
                 callback(message, true);
+                // Run also through the extension
                 if (ActionMessage.is(message)) {
                     this.actionDispatcher.dispatch(message.action);
                 }
+            },
+            onBeforePropagateMessageToServer: (_originalMessage, processedMessage, _messageChanged) => {
+                if (ActionMessage.is(processedMessage) && (processedMessage as any).__localDispatch === true) {
+                    return undefined;
+                }
+
+                return processedMessage;
             }
         });
         this.actionDispatcher.connect(this);
@@ -106,16 +115,6 @@ export class UVGlspConnector<TDocument extends vscode.CustomDocument = vscode.Cu
             })
         );
 
-        toDispose.push(
-            client.webviewEndpoint.webviewPanel.onDidChangeViewState(e => {
-                if (e.webviewPanel.active) {
-                    this.selectionUpdateEmitter.fire(
-                        this.clientSelectionMap.get(client.clientId) || { selectedElementsIDs: [], deselectedElementsIDs: [] }
-                    );
-                }
-            })
-        );
-
         // Initialize glsp client
         const glspClient = await this.options.server.glspClient;
         toDispose.push(client.webviewEndpoint.initialize(glspClient));
@@ -124,6 +123,13 @@ export class UVGlspConnector<TDocument extends vscode.CustomDocument = vscode.Cu
                 glspClient.disposeClientSession({ clientSessionId: client.clientId, args: this.disposeClientSessionArgs(client) })
             )
         );
+
+        client.webviewEndpoint.ready.then(() => {
+            if (client.webviewEndpoint.webviewPanel.active) {
+                this.onDidActiveClientChangeEmitter.fire(client);
+                this.onDidClientViewStateChangeEmitter.fire(client);
+            }
+        });
     }
 
     public broadcastActionToClients(action: Action): void {
@@ -147,6 +153,15 @@ export class UVGlspConnector<TDocument extends vscode.CustomDocument = vscode.Cu
 
     public override sendActionToClient(clientId: string, action: Action): void {
         super.sendActionToClient(clientId, action);
+    }
+
+    protected override sendMessageToClient(clientId: string, message: unknown): void {
+        const client = this.clientMap.get(clientId);
+        if (client && ActionMessage.is(message)) {
+            client.webviewEndpoint.sendMessage(message);
+        } else {
+            console.info('Message has been ignored and not send to client', client, message);
+        }
     }
 
     protected override handleSetDirtyStateAction(
@@ -179,8 +194,8 @@ export class UVGlspConnector<TDocument extends vscode.CustomDocument = vscode.Cu
 
     protected handleSetOutlineAction(
         message: ActionMessage<SetOutlineAction>,
-        _client: GlspVscodeClient<TDocument> | undefined,
-        _origin: MessageOrigin
+        client: GlspVscodeClient<TDocument> | undefined,
+        origin: MessageOrigin
     ): MessageProcessingResult {
         const nodes = message.action.outlineTreeNodes;
         this.onOutlineChangedEmitter.fire(nodes);
@@ -224,11 +239,11 @@ export class UVGlspConnector<TDocument extends vscode.CustomDocument = vscode.Cu
             const client = this.clientMap.get(message.clientId);
             if (SetOutlineAction.is(message.action)) {
                 return this.handleSetOutlineAction(message as ActionMessage<SetOutlineAction>, client, origin);
-            }
-            if (UpdateModelAction.is(message.action)) {
+            } else if (UpdateModelAction.is(message.action)) {
                 return this.handleUpdateModelAction(message as ActionMessage<UpdateModelAction>, client, origin);
             }
         }
+
         return super.processMessage(message, origin);
     }
 

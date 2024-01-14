@@ -16,6 +16,7 @@ import java.util.Optional;
 import org.eclipse.emf.ecore.EObject;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
+import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
 import com.eclipsesource.uml.glsp.sdk.cdk.GModelContext;
 
@@ -23,10 +24,15 @@ public class GCNameLabel
    extends GCLabel {
    public static final String CSS_ID = "gc-name-label";
 
-   public GCNameLabel(final GModelContext context, final EObject source, final Options options) {
-      super(context, source, options);
+   public GCNameLabel(final GModelContext context, final EObject origin, final Options options) {
+      super(context, origin, options);
+      init();
+   }
+
+   protected void init() {
       options.id = Optional
-         .of(context.suffix().appendTo(NameLabelSuffix.SUFFIX, context.idGenerator().getOrCreateId(source)));
+         .of(context.suffix().appendTo(NameLabelSuffix.SUFFIX, context.idGenerator().getOrCreateId(origin)));
+      options.type = CoreTypes.LABEL_NAME;
    }
 
    @Override

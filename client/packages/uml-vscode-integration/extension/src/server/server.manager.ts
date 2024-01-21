@@ -165,7 +165,7 @@ export class ServerManager {
 }
 
 export namespace ServerManager {
-    export const MIN_JAVA = 11;
+    export const MIN_JAVA = 17;
     export const JAVA_MISSING_MESSAGE = `Starting bigUML failed. Please install Java ${MIN_JAVA}+ on your machine.`;
 
     export type ActiveState = 'none' | 'error' | 'assertion-succeeded' | 'launching-server' | 'servers-launched';

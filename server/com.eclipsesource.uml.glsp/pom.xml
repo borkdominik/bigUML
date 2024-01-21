@@ -3,7 +3,9 @@
 	Public License v. 2.0 which is available at https://www.eclipse.org/legal/epl-2.0, 
 	or the MIT License which is available at https://opensource.org/licenses/MIT. 
 	SPDX-License-Identifier: EPL-2.0 OR MIT -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>com.eclipsesource.uml.glsp</artifactId>
 	<packaging>eclipse-plugin</packaging>
@@ -68,7 +70,8 @@
 						<version>${maven.shade.version}</version>
 						<configuration>
 							<transformers>
-								<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+								<transformer
+									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
 									<mainClass>com.eclipsesource.uml.glsp.UmlGLSPServerLauncher</mainClass>
 									<!-- Due to Log4j 2 Performance issue with Java 11, see also https://issues.apache.org/jira/browse/LOG4J2-2537 -->
 									<manifestEntries>
@@ -124,11 +127,4 @@
 			</build>
 		</profile>
 	</profiles>
-	<dependencies>
-		<dependency>
-			<groupId>com.eclipsesource.uml</groupId>
-			<artifactId>com.eclipsesource.uml.modelserver</artifactId>
-			<version>0.1.0-SNAPSHOT</version>
-		</dependency>
-	</dependencies>
 </project>

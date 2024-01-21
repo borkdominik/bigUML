@@ -65,7 +65,8 @@
 						<version>${maven.shade.version}</version>
 						<configuration>
 							<transformers>
-								<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+								<transformer
+									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
 									<mainClass>com.eclipsesource.uml.cli.Main</mainClass>
 									<!-- Due to Log4j 2 Performance issue with Java 11, see also https://issues.apache.org/jira/browse/LOG4J2-2537 -->
 									<manifestEntries>
@@ -108,6 +109,12 @@
 									</excludes>
 								</filter>
 							</filters>
+							<artifactSet>
+								<excludes>
+									<exclude>com.eclipsesource.uml:com.eclipsesource.uml.cli-log4j-slf4j2-impl-2.19.0.jar:jar:*</exclude>
+									<exclude>com.eclipsesource.uml:com.eclipsesource.uml.cli-org.apache.logging.log4j-2.17.1.v20220106-2156.jar:*</exclude>
+								</excludes>
+							</artifactSet>
 							<shadedArtifactAttached>true</shadedArtifactAttached>
 							<shadedClassifierName>standalone</shadedClassifierName>
 							<minimizeJar>false</minimizeJar>

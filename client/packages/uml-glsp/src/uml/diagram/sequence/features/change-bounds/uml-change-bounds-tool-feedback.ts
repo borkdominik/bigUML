@@ -11,15 +11,15 @@ import {
     ElementMove,
     FeedbackMoveMouseListener,
     findParentByFeature,
+    GModelElement,
     isMoveable,
     isViewport,
-    MoveAction,
-    SModelElement
+    MoveAction
 } from '@eclipse-glsp/client';
 
 // TODO: Sequence Diagram Specific - NOT USED
 export class SDFeedbackMoveMouseListener extends FeedbackMoveMouseListener {
-    protected override getElementMoves(target: SModelElement, event: MouseEvent, finished: boolean): MoveAction | undefined {
+    protected override getElementMoves(target: GModelElement, event: MouseEvent, finished: boolean): MoveAction | undefined {
         console.log('LALLALAAL');
         if (!this.startDragPosition) {
             return undefined;

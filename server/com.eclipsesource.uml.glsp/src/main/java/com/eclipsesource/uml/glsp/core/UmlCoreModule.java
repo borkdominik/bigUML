@@ -15,7 +15,6 @@ import org.eclipse.emfcloud.modelserver.glsp.actions.handlers.EMSRefreshModelAct
 import org.eclipse.emfcloud.modelserver.glsp.notation.integration.EMSGLSPNotationDiagramModule;
 import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSChangeBoundsOperationHandler;
 import org.eclipse.emfcloud.modelserver.glsp.operations.handlers.EMSChangeRoutingPointsOperationHandler;
-import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.ActionHandler;
 import org.eclipse.glsp.server.di.MultiBinding;
 import org.eclipse.glsp.server.emf.EMFIdGenerator;
@@ -187,11 +186,6 @@ public class UmlCoreModule extends EMSGLSPNotationDiagramModule {
 
    @Override
    protected String getNotationFileExtension() { return UmlNotationResource.FILE_EXTENSION; }
-
-   @Override
-   protected void configureClientActions(final MultiBinding<Action> binding) {
-      super.configureClientActions(binding);
-   }
 
    @Override
    protected void configureActionHandlers(final MultiBinding<ActionHandler> bindings) {

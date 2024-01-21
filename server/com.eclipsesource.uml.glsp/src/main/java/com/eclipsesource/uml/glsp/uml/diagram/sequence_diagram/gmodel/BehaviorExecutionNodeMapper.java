@@ -45,7 +45,6 @@ public class BehaviorExecutionNodeMapper extends BaseGNodeMapper<BehaviorExecuti
       return builder.build();
    }
 
-   @Override
    public void applyShapeNotation(final BehaviorExecutionSpecification element, final GNodeBuilder builder) {
 
       double fixedWidth = 10;

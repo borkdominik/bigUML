@@ -7,19 +7,18 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { SEdge, SModelRoot } from '@eclipse-glsp/client';
-import { SelectionService } from '@eclipse-glsp/client/lib/features/select/selection-service';
+import { GEdge, GModelRoot, SelectionService } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 
 @injectable()
 export class SDSelectionService extends SelectionService {
-    override updateSelection(root: Readonly<SModelRoot>, select: string[], deselect: string[]): void {
+    override updateSelection(root: Readonly<GModelRoot>, select: string[], deselect: string[]): void {
         if (root === undefined || root.index === undefined || select.length === 0) {
             return super.updateSelection(root, select, deselect);
         } else {
             select.forEach(elementId => {
                 const element = root.index.getById(elementId);
-                if (element?.type === 'edge:sequence__Message' && element instanceof SEdge) {
+                if (element?.type === 'edge:sequence__Message' && element instanceof GEdge) {
                     if (!select.includes(element.sourceId)) {
                         select.push(element.sourceId);
                     }

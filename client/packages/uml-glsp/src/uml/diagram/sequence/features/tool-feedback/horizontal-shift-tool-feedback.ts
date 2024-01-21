@@ -11,10 +11,10 @@ import {
     CommandExecutionContext,
     CommandReturn,
     FeedbackCommand,
+    GChildElement,
+    GModelElement,
+    GModelRoot,
     MouseListener,
-    SChildElement,
-    SModelElement,
-    SModelRoot,
     TYPES
 } from '@eclipse-glsp/client';
 import { Action, hasObjectProp, Point } from '@eclipse-glsp/protocol';
@@ -86,12 +86,12 @@ export class SDHorizontalShiftEndMovingMouseListener extends MouseListener {
         super();
     }
 
-    override mouseMove(target: SModelElement, event: MouseEvent): Action[] {
+    override mouseMove(target: GModelElement, event: MouseEvent): Action[] {
         return [];
     }
 }
 
-export function SDhorizontalShiftId(root: SModelRoot): string {
+export function SDhorizontalShiftId(root: GModelRoot): string {
     return root.id + '_' + SD_HORIZONTAL_SHIFT;
 }
 
@@ -113,9 +113,9 @@ export function SDdrawHorizontalShift(context: CommandExecutionContext, startPoi
     root.add(horizontalShift);
 }
 
-export function SDremoveHorizontalShift(root: SModelRoot): void {
+export function SDremoveHorizontalShift(root: GModelRoot): void {
     const horizontalShift = root.index.getById(SDhorizontalShiftId(root));
-    if (horizontalShift instanceof SChildElement) {
+    if (horizontalShift instanceof GChildElement) {
         root.remove(horizontalShift);
     }
 }

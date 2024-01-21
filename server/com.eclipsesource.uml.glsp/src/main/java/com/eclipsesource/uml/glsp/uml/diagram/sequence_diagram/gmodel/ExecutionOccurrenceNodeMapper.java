@@ -42,7 +42,6 @@ public class ExecutionOccurrenceNodeMapper extends BaseGNodeMapper<ExecutionOccu
       return builder.build();
    }
 
-   @Override
    protected void applyShapeNotation(final ExecutionOccurrenceSpecification source, final GNodeBuilder builder) {
       modelState.getIndex().getNotation(source, Shape.class).ifPresent(shape -> {
          if (shape.getPosition() != null) {

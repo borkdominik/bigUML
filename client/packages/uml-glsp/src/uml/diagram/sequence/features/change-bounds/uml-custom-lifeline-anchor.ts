@@ -6,18 +6,18 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { almostEquals, Bounds, Point, PolylineEdgeRouter, RectangleAnchor, SConnectableElement } from '@eclipse-glsp/client';
+import { almostEquals, Bounds, GConnectableElement, Point, PolylineEdgeRouter, RectangleAnchor } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 
 export const UML_LIFELINE_ANCHOR_KIND = 'uml_lifeline';
 
 @injectable()
 export class SDLifelineAnchor extends RectangleAnchor {
-    override get kind() {
+    override get kind(): string {
         return PolylineEdgeRouter.KIND + ':' + UML_LIFELINE_ANCHOR_KIND;
     }
 
-    override getAnchor(connectable: SConnectableElement, refPoint: Point, offset = 0): Point {
+    override getAnchor(connectable: GConnectableElement, refPoint: Point, offset = 0): Point {
         const verticaloffset = 20;
         const bounds = connectable.bounds;
         const c = Bounds.center(bounds);
@@ -39,9 +39,12 @@ class NearestPointFinder {
     protected currentBest: Point | undefined;
     protected currentDist = -1;
 
-    constructor(protected centerPoint: Point, protected refPoint: Point) {}
+    constructor(
+        protected centerPoint: Point,
+        protected refPoint: Point
+    ) {}
 
-    addCandidate(x: number, y: number) {
+    addCandidate(x: number, y: number): void {
         const dx = this.refPoint.x - x;
         const dy = this.refPoint.y - y;
         const dist = dx * dx + dy * dy;

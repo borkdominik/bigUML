@@ -111,7 +111,6 @@ public class InteractionOperandNodeMapper extends BaseGNodeMapper<InteractionOpe
          .build();
    }
 
-   @Override
    protected void applyShapeNotation(final InteractionOperand source, final GNodeBuilder builder) {
       modelState.getIndex().getNotation(source, Shape.class).ifPresent(shape -> {
          modelState.getIndex().getNotation(source.eContainer(), Shape.class).ifPresent(parentshape -> {

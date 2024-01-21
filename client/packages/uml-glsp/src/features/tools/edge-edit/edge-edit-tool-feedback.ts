@@ -18,7 +18,11 @@ import {
     isRoutable,
     TYPES
 } from '@eclipse-glsp/client';
-import { FeedbackEdgeEnd, feedbackEdgeEndId, feedbackEdgeId } from '@eclipse-glsp/client/lib/features/tools/edge-creation/dangling-edge-feedback';
+import {
+    FeedbackEdgeEnd,
+    feedbackEdgeEndId,
+    feedbackEdgeId
+} from '@eclipse-glsp/client/lib/features/tools/edge-creation/dangling-edge-feedback';
 import { inject, injectable } from 'inversify';
 
 @injectable()

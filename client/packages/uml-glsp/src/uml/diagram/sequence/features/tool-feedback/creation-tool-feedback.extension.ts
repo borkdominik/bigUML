@@ -6,33 +6,36 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { Action, Point, SEdgeSchema } from '@eclipse-glsp/protocol';
+import { Action, GEdgeSchema, Point } from '@eclipse-glsp/protocol';
 import { inject, injectable } from 'inversify';
 
 import {
     CommandExecutionContext,
     CommandReturn,
-    defaultFeedbackEdgeSchema,
     FeedbackCommand,
-    FeedbackEdgeEnd,
-    feedbackEdgeEndId,
     FeedbackEdgeEndMovingMouseListener,
-    feedbackEdgeId,
     findParentByFeature,
+    GChildElement,
+    GDanglingAnchor,
     getAbsolutePosition,
+    GModelElement,
+    GModelRoot,
+    GRoutableElement,
     isBoundsAware,
     isConnectable,
     isRoutable,
     MoveAction,
-    SChildElement,
-    SDanglingAnchor,
-    SModelElement,
-    SModelRoot,
-    SRoutableElement,
     toAbsolutePosition,
     TYPES
 } from '@eclipse-glsp/client';
 import { sequence_lifeline } from '../../elements';
+
+import {
+    defaultFeedbackEdgeSchema,
+    FeedbackEdgeEnd,
+    feedbackEdgeEndId,
+    feedbackEdgeId
+} from '@eclipse-glsp/client/lib/features/tools/edge-creation/dangling-edge-feedback';
 
 // TODO: Sequence Diagram Specific
 
@@ -41,7 +44,7 @@ export interface SDDrawFeedbackPositionedEdgeAction extends Action {
     elementTypeId: string;
     sourceId: string;
     sourcePosition: Point;
-    edgeSchema?: SEdgeSchema;
+    edgeSchema?: GEdgeSchema;
 }
 
 export namespace SDDrawFeedbackPositionedEdgeAction {
@@ -55,7 +58,7 @@ export namespace SDDrawFeedbackPositionedEdgeAction {
         elementTypeId: string;
         sourceId: string;
         sourcePosition: Point;
-        edgeSchema?: SEdgeSchema;
+        edgeSchema?: GEdgeSchema;
     }): SDDrawFeedbackPositionedEdgeAction {
         return {
             kind: KIND,
@@ -110,12 +113,12 @@ export class SDRemoveFeedbackPositionedEdgeCommand extends FeedbackCommand {
     }
 }
 
-export class SDFeedbackPositionedEdgeEnd extends SDanglingAnchor {
+export class SDFeedbackPositionedEdgeEnd extends GDanglingAnchor {
     static readonly TYPE = 'feedback-positioned-edge-end';
     constructor(
         readonly sourcePosition: Point,
         readonly elementTypeId: string,
-        public feedbackEdge: SRoutableElement | undefined = undefined,
+        public feedbackEdge: GRoutableElement | undefined = undefined,
         override readonly type: string = SDFeedbackPositionedEdgeEnd.TYPE
     ) {
         super();
@@ -127,7 +130,7 @@ export function SDdrawFeedbackPositionedEdge(
     elementTypeId: string,
     sourceId: string,
     sourcePosition: Point,
-    edgeTemplate?: Partial<SEdgeSchema>
+    edgeTemplate?: Partial<GEdgeSchema>
 ): void {
     const root = context.root;
     const sourceChild = root.index.getById(sourceId);
@@ -159,7 +162,7 @@ export function SDdrawFeedbackPositionedEdge(
     edgeEnd.id = feedbackEdgeEndId(root);
     edgeEnd.position = toAbsolutePosition(source);
 
-    const edgeSchema: SEdgeSchema = {
+    const edgeSchema: GEdgeSchema = {
         id: feedbackEdgeId(root),
         type: 'edge:sequence__Message', // TODO: check what this should be, remove hardcodeing
         sourceId: edgeStart.id,
@@ -177,32 +180,32 @@ export function SDdrawFeedbackPositionedEdge(
     }
 }
 
-export function SDremoveFeedbackEdge(root: SModelRoot): void {
+export function SDremoveFeedbackEdge(root: GModelRoot): void {
     const feedbackEdge = root.index.getById(feedbackEdgeId(root));
     const feedbackEdgeStart = root.index.getById(SDfeedbackEdgeStartId(root));
     const feedbackEdgeEnd = root.index.getById(feedbackEdgeEndId(root));
-    if (feedbackEdge instanceof SChildElement) {
+    if (feedbackEdge instanceof GChildElement) {
         root.remove(feedbackEdge);
     }
-    if (feedbackEdgeEnd instanceof SChildElement) {
+    if (feedbackEdgeEnd instanceof GChildElement) {
         root.remove(feedbackEdgeEnd);
     }
-    if (feedbackEdgeStart instanceof SChildElement) {
+    if (feedbackEdgeStart instanceof GChildElement) {
         root.remove(feedbackEdgeStart);
     }
 }
 export const SD_EDGESTART = 'feedback_anchor_start';
 
-export function SDfeedbackEdgeStartId(root: SModelRoot): string {
+export function SDfeedbackEdgeStartId(root: GModelRoot): string {
     return root.id + '_' + SD_EDGESTART;
 }
 
-export class SDFeedbackPositionedEdgeStart extends SDanglingAnchor {
+export class SDFeedbackPositionedEdgeStart extends GDanglingAnchor {
     static readonly TYPE = SD_EDGESTART;
     constructor(
         readonly sourcePoistion: Point,
         readonly elementTypeId: string,
-        public feedbackEdge: SRoutableElement | undefined = undefined,
+        public feedbackEdge: GRoutableElement | undefined = undefined,
         override readonly type: string = FeedbackEdgeEnd.TYPE
     ) {
         super();
@@ -210,7 +213,7 @@ export class SDFeedbackPositionedEdgeStart extends SDanglingAnchor {
 }
 
 export class SDFeedbackPositionedEdgeEndMovingMouseListener extends FeedbackEdgeEndMovingMouseListener {
-    override mouseMove(target: SModelElement, event: MouseEvent): Action[] {
+    override mouseMove(target: GModelElement, event: MouseEvent): Action[] {
         const root = target.root;
         const edgeEnd = root.index.getById(feedbackEdgeEndId(root));
         if (!(edgeEnd instanceof FeedbackEdgeEnd) || !edgeEnd.feedbackEdge) {

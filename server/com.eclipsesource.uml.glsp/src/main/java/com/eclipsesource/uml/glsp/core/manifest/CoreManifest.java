@@ -17,7 +17,6 @@ import com.eclipsesource.uml.glsp.core.gmodel.suffix.NameLabelSuffix;
 import com.eclipsesource.uml.glsp.core.gmodel.suffix.Suffix;
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateHandlerOperationMapper;
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateOperationMapper;
-import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.OverrideOperationHandlerContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.PopupMapperContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.diagram.SuffixIdAppenderContribution;
 import com.eclipsesource.uml.glsp.core.manifest.contributions.glsp.OverrideOperationHandlerContribution;
@@ -34,7 +33,6 @@ public class CoreManifest extends AbstractModule
       super.configure();
 
       defineOverrideOperationHandlerContribution();
-      defineOverrideActionHandlerContribution();
       definePopupMappersContribution();
 
       contributeSuffixIdAppenders((contribution) -> {

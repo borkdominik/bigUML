@@ -42,7 +42,6 @@ public class DestructionOccurrenceNodeMapper extends BaseGNodeMapper<Destruction
       return builder.build();
    }
 
-   @Override
    protected void applyShapeNotation(final DestructionOccurrenceSpecification source, final GNodeBuilder builder) {
       modelState.getIndex().getNotation(source, Shape.class).ifPresent(shape -> {
          if (shape.getPosition() != null) {

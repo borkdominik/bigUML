@@ -17,14 +17,15 @@ import {
     configureCommand,
     configureModelElement,
     EdgeCreationTool,
+    GEdge,
     GLSPScrollMouseListener,
+    GPort,
     PolylineEdgeView,
-    SEdge,
-    SPort
+    SelectionService
 } from '@eclipse-glsp/client/lib';
 import { ContainerModule, interfaces } from 'inversify';
 
-import { UML_TYPES } from '../../../di.types';
+import { UML_TYPES } from '../../../uml-glsp.types';
 import { NamedElement } from '../../elements';
 import { LifelineElement } from './elements';
 import { InteractionElement } from './elements/interacton.model';
@@ -66,8 +67,7 @@ export const umlSequenceDiagramModule = new ContainerModule((bind, unbind, isBou
 
     // TODO: Sequence Diagram specific
     unbind(UML_TYPES.ISnapper);
-    bind(SDSelectionService).toSelf().inSingletonScope();
-    rebind(UML_TYPES.SelectionService).toService(SDSelectionService);
+    bindOrRebind(context, SelectionService).to(SDSelectionService).inSingletonScope();
 
     bind(UML_TYPES.IMovementRestrictor).to(SDMovementRestrictor).inSingletonScope();
     rebind(UML_TYPES.IEdgeRouter).to(SDPolylineEdgeRouter);
@@ -105,19 +105,19 @@ export const umlSequenceDiagramModule = new ContainerModule((bind, unbind, isBou
     configureModelElement(context, UmlSequenceTypes.INTERACTION_USE, NamedElement, InteractionNodeView);
 
     // MESSAGE_OCCURRENCE
-    configureModelElement(context, UmlSequenceTypes.MESSAGE_OCCURRENCE, SPort, CircularNodeView);
+    configureModelElement(context, UmlSequenceTypes.MESSAGE_OCCURRENCE, GPort, CircularNodeView);
 
     // EXECUTION_OCCURRENCE
-    configureModelElement(context, UmlSequenceTypes.EXECUTION_OCCURRENCE, SPort, CircularNodeView);
+    configureModelElement(context, UmlSequenceTypes.EXECUTION_OCCURRENCE, GPort, CircularNodeView);
 
     // DESTRUCTION_OCCURRENCE
-    configureModelElement(context, UmlSequenceTypes.DESTRUCTION_OCCURRENCE, SPort, DestructionOccurrenceNodeView);
+    configureModelElement(context, UmlSequenceTypes.DESTRUCTION_OCCURRENCE, GPort, DestructionOccurrenceNodeView);
 
     // MESSAGES
-    configureModelElement(context, UmlSequenceTypes.MESSAGE, SEdge, PolylineEdgeView);
+    configureModelElement(context, UmlSequenceTypes.MESSAGE, GEdge, PolylineEdgeView);
 
     // MESSAGE_ANCHOR
-    configureModelElement(context, UmlSequenceTypes.MESSAGE_ANCHOR, SPort, CircularNodeView);
+    configureModelElement(context, UmlSequenceTypes.MESSAGE_ANCHOR, GPort, CircularNodeView);
 });
 
 export function configureShiftTool(context: { bind: interfaces.Bind; isBound: interfaces.IsBound }): void {

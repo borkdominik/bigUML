@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { IMovementRestrictor, isNotUndefined, Point, SCompartment, SModelElement, SNode, SPort } from '@eclipse-glsp/client';
+import { GCompartment, GModelElement, GNode, GPort, IMovementRestrictor, isNotUndefined, Point } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 import { NamedElement } from '../../../../elements';
 import { UmlSequenceTypes } from '../../sequence.types';
@@ -15,14 +15,14 @@ import { UmlSequenceTypes } from '../../sequence.types';
 // TODO: Sequence Diagram specific
 @injectable()
 export class SDMovementRestrictor implements IMovementRestrictor {
-    validate(element: SModelElement, newLocation?: Point | undefined): boolean {
+    validate(element: GModelElement, newLocation?: Point | undefined): boolean {
         // limit OCCURRENCE & EXECUTION SPEC movement
         const distanceLimit = 40;
 
         if (
-            (element instanceof SPort || element instanceof NamedElement) &&
+            (element instanceof GPort || element instanceof NamedElement) &&
             ((element.type === UmlSequenceTypes.MESSAGE_OCCURRENCE &&
-                (element.parent as SCompartment).parent.type === UmlSequenceTypes.LIFELINE) ||
+                (element.parent as GCompartment).parent.type === UmlSequenceTypes.LIFELINE) ||
                 element.type === UmlSequenceTypes.DESTRUCTION_OCCURRENCE ||
                 element.type === UmlSequenceTypes.EXECUTION_OCCURRENCE ||
                 element.type === UmlSequenceTypes.BEHAVIOR_EXECUTION)
@@ -34,7 +34,7 @@ export class SDMovementRestrictor implements IMovementRestrictor {
         // limit LIFELINE movement
         const normalPositionY = 30;
         if (
-            element instanceof SNode &&
+            element instanceof GNode &&
             element.type === UmlSequenceTypes.LIFELINE &&
             !element.cssClasses?.includes('uml-sequence-lifeline-created')
         ) {

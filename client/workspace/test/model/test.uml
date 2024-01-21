@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_0_15UW50Ee6-TcONhyL7iw" name="test">
+  <packagedElement xmi:type="uml:Class" xmi:id="_E-6xUKsfEe6ML8DQYKn3dw" name="asd">
+    <ownedAttribute xmi:id="_H9gpYKsfEe6ML8DQYKn3dw" name="NewClass3" type="_HNdsgKsfEe6ML8DQYKn3dw" association="_H9Z7sKsfEe6ML8DQYKn3dw">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_H9hQcKsfEe6ML8DQYKn3dw" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_H9h3gKsfEe6ML8DQYKn3dw" value="1"/>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_FceQAKsfEe6ML8DQYKn3dw" name="NewClass2"/>
+  <packagedElement xmi:type="uml:Abstraction" xmi:id="_GwPlAKsfEe6ML8DQYKn3dw" client="_E-6xUKsfEe6ML8DQYKn3dw" supplier="_FceQAKsfEe6ML8DQYKn3dw"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="_HNdsgKsfEe6ML8DQYKn3dw" name="NewClass32">
+    <ownedAttribute xmi:id="_H9h3gasfEe6ML8DQYKn3dw" name="NewClass1" type="_E-6xUKsfEe6ML8DQYKn3dw" association="_H9Z7sKsfEe6ML8DQYKn3dw">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_H9iekKsfEe6ML8DQYKn3dw" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_H9iekasfEe6ML8DQYKn3dw" value="1"/>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_H9Z7sKsfEe6ML8DQYKn3dw" memberEnd="_H9gpYKsfEe6ML8DQYKn3dw _H9h3gasfEe6ML8DQYKn3dw"/>
+</uml:Model>

@@ -13,7 +13,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { OutlineTreeNode, RequestOutlineAction, SetOutlineAction } from '@borkdominik-biguml/uml-common';
+import { OutlineTreeNode, RequestOutlineAction, SetOutlineAction } from '@borkdominik-biguml/uml-protocol';
 import { Action, IActionHandler, ICommand, SelectAllAction } from '@eclipse-glsp/client';
 import { SelectAction } from '@eclipse-glsp/vscode-integration';
 import { inject, injectable, postConstruct } from 'inversify';
@@ -59,10 +59,10 @@ export class OutlineTreeProvider implements vscode.TreeDataProvider<OutlineTreeN
                     this.select([this.selectionToUpdateContext.selectedId], treeView);
                 }
             }),
-            this.connector.onSelectionUpdate(selection => this.select(selection, treeView)),
+            this.connector.onSelectionUpdate(selection => this.select(selection.selectedElementsIDs, treeView)),
             this.connector.onDidClientViewStateChange(() => {
                 setTimeout(() => {
-                    if (this.connector.clients.every(c => !c.webviewPanel.active)) {
+                    if (this.connector.clients.every(c => !c.webviewEndpoint.webviewPanel.active)) {
                         this.onNodesChanged([]);
                     } else {
                         this.connector.sendActionToActiveClient(RequestOutlineAction.create());
@@ -147,6 +147,11 @@ export class OutlineTreeProvider implements vscode.TreeDataProvider<OutlineTreeN
     }
 
     protected select(selection: string[], treeView: vscode.TreeView<OutlineTreeNode>): void {
+        if (this.storage.data.length === 0) {
+            console.warn('Outline tree has no data. Did you provide it?');
+            return;
+        }
+
         if (selection.length === 1 && selection[0] === null) {
             const node = this.storage.data[0];
             this.selectionToUpdateContext = {

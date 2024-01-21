@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { UmlDiagramType } from '@borkdominik-biguml/uml-common';
+import { UmlDiagramType } from '@borkdominik-biguml/uml-protocol';
 import { configureModelElement } from '@eclipse-glsp/client';
 import { DefaultTypes } from '@eclipse-glsp/protocol';
 import { interfaces } from 'inversify';

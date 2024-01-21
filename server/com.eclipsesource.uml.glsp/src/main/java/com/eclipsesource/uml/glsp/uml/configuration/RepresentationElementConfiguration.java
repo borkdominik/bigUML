@@ -23,7 +23,7 @@ import com.google.inject.Provider;
 import com.google.inject.TypeLiteral;
 
 public abstract class RepresentationElementConfiguration<TElement extends EObject>
-   implements ElementConfiguration<TElement>, ElementConfigurationAccessor {
+   implements ElementConfiguration<TElement>, RepresentationElementConfigurationAccessor {
 
    @Inject
    protected TypeLiteral<TElement> elementType;

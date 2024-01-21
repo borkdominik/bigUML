@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { UmlDiagramType } from '@borkdominik-biguml/uml-common';
+import { UmlDiagramType } from '@borkdominik-biguml/uml-protocol';
 import { ContainerModule } from 'inversify';
 import {
     registerAbstractionElement,
@@ -24,6 +24,7 @@ import {
     registerPackageElement,
     registerPackageImportElement,
     registerPackageMergeElement,
+    registerParameterElement,
     registerPrimitiveTypeElement,
     registerPropertyElement,
     registerRealizationElement,
@@ -41,6 +42,7 @@ export const umlClassDiagramModule = new ContainerModule((bind, unbind, isBound,
     registerInterfaceElement(context, UmlDiagramType.CLASS);
     registerOperationElement(context, UmlDiagramType.CLASS);
     registerPackageElement(context, UmlDiagramType.CLASS);
+    registerParameterElement(context, UmlDiagramType.CLASS);
     registerPropertyElement(context, UmlDiagramType.CLASS);
     registerPrimitiveTypeElement(context, UmlDiagramType.CLASS);
     registerSlotElement(context, UmlDiagramType.CLASS);

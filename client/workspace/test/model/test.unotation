@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ASCII"?>
+<unotation:UmlDiagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:notation="http://www.eclipse.org/glsp/notation" xmlns:unotation="http://www.eclipsesource.com/glsp/uml/unotation" diagramType="CLASS">
+  <semanticElement elementId="_0_15UW50Ee6-TcONhyL7iw"/>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_E-6xUKsfEe6ML8DQYKn3dw"/>
+    <position x="170.0" y="280.0"/>
+    <size width="160.0" height="50.0"/>
+  </elements>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_FceQAKsfEe6ML8DQYKn3dw"/>
+    <position x="400.0" y="450.0"/>
+    <size width="160.0" height="50.0"/>
+  </elements>
+  <elements xsi:type="notation:Edge">
+    <semanticElement elementId="_GwPlAKsfEe6ML8DQYKn3dw"/>
+  </elements>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_HNdsgKsfEe6ML8DQYKn3dw"/>
+    <position x="500.0" y="140.0"/>
+    <size width="160.0" height="50.0"/>
+  </elements>
+  <elements xsi:type="notation:Edge">
+    <semanticElement elementId="_H9Z7sKsfEe6ML8DQYKn3dw"/>
+  </elements>
+</unotation:UmlDiagram>

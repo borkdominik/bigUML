@@ -23,7 +23,7 @@ import org.eclipse.glsp.server.types.GLSPServerException;
 import com.eclipsesource.uml.glsp.core.handler.operation.create.DiagramCreateNodeHandler;
 import com.eclipsesource.uml.glsp.core.model.UmlModelServerAccess;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
-import com.eclipsesource.uml.glsp.uml.configuration.ElementConfigurationAccessor;
+import com.eclipsesource.uml.glsp.uml.configuration.RepresentationElementConfigurationAccessor;
 import com.eclipsesource.uml.glsp.uml.configuration.ElementConfigurationRegistry;
 import com.eclipsesource.uml.modelserver.shared.utils.Type;
 import com.eclipsesource.uml.modelserver.uml.command.create.node.CreateNodeCommandContribution;
@@ -32,7 +32,7 @@ import com.google.inject.Inject;
 import com.google.inject.TypeLiteral;
 
 public class RepresentationCreateNodeHandler<TElement extends EObject, TParent>
-   implements ElementConfigurationAccessor, CreateLocationAwareNodeHandler, DiagramCreateNodeHandler<TParent> {
+   implements RepresentationElementConfigurationAccessor, CreateLocationAwareNodeHandler, DiagramCreateNodeHandler<TParent> {
    protected final Set<String> elementTypeIds;
    protected final Representation representation;
 

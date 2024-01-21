@@ -15,7 +15,6 @@ import java.util.List;
 
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.glsp.graph.GPoint;
-import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.uml2.uml.Enumeration;
 import org.eclipse.uml2.uml.EnumerationLiteral;
 
@@ -35,7 +34,7 @@ public class EnumerationLiteralCommandProvider
       final GPoint position) {
       var semantic = new CreateEnumerationLiteralSemanticCommand(context, parent);
       var notation = new AddShapeNotationCommand(
-         context, semantic::getSemanticElement, position, GraphUtil.dimension(160, 50));
+         context, semantic::getSemanticElement);
       return List.of(semantic, notation);
    }
 

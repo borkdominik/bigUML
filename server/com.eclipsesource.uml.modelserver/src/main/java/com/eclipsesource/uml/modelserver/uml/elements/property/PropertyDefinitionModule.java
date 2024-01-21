@@ -13,9 +13,11 @@ package com.eclipsesource.uml.modelserver.uml.elements.property;
 import java.util.Optional;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.uml2.uml.Property;
 
 import com.eclipsesource.uml.modelserver.core.manifest.DiagramManifest;
 import com.eclipsesource.uml.modelserver.uml.behavior.Behavior;
+import com.eclipsesource.uml.modelserver.uml.behavior.cross_delete.DescendantBasedCrossReferenceDeleteBehavior;
 import com.eclipsesource.uml.modelserver.uml.command.provider.element.NodeCommandProvider;
 import com.eclipsesource.uml.modelserver.uml.elements.property.behavior.PropertyCopyPasteBehavior;
 import com.eclipsesource.uml.modelserver.uml.elements.property.reference.PropertyReferenceRemover;
@@ -38,6 +40,6 @@ public class PropertyDefinitionModule extends NodeCommandProviderDefinition {
    protected void behaviors(final Multibinder<Behavior<? extends EObject>> contributions) {
       contributions.addBinding().to(PropertyReferenceRemover.class);
       contributions.addBinding().to(PropertyCopyPasteBehavior.class);
-
+      contributions.addBinding().to(new TypeLiteral<DescendantBasedCrossReferenceDeleteBehavior<Property>>() {});
    }
 }

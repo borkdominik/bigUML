@@ -60,7 +60,6 @@ public class LifelineNodeMapper extends BaseGNodeMapper<Lifeline, GNode> impleme
       return builder.build();
    }
 
-   @Override
    protected void applyShapeNotation(final Lifeline element, final GNodeBuilder builder) {
       modelState.getIndex().getNotation(element, Shape.class).ifPresent(shape -> {
          if (shape.getPosition() != null) {

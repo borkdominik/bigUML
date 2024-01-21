@@ -33,12 +33,6 @@ public class PropertyConfiguration extends RepresentationNodeConfiguration<Prope
       super(representation);
    }
 
-   @Override
-   public String typeId() {
-      return QualifiedUtil.representationTypeId(representation, DefaultTypes.COMPARTMENT,
-         getElementType().getSimpleName());
-   }
-
    public String typeTypeId() {
       return QualifiedUtil.typeId(representation, DefaultTypes.LABEL,
          ID + "-type");
@@ -67,7 +61,7 @@ public class PropertyConfiguration extends RepresentationNodeConfiguration<Prope
    @Override
    public Map<String, EClass> getTypeMappings() {
       return Map.of(
-         typeId(), GraphPackage.Literals.GCOMPARTMENT,
+         typeId(), GraphPackage.Literals.GNODE,
          typeTypeId(), GraphPackage.Literals.GLABEL,
          multiplicityTypeId(), GraphPackage.Literals.GLABEL);
    }

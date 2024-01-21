@@ -7,6 +7,6 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 export * from './glsp-server.launcher';
-export * from './launcher';
 export * from './modelserver.launcher';
+export * from './server-launcher';
 export * from './server.manager';

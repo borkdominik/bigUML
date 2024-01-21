@@ -13,7 +13,7 @@ package com.eclipsesource.uml.glsp.uml.elements.enumeration;
 import com.eclipsesource.uml.glsp.uml.configuration.di.NodeConfigurationFactory;
 import com.eclipsesource.uml.glsp.uml.elements.enumeration.features.EnumerationLabelEditMapper;
 import com.eclipsesource.uml.glsp.uml.elements.enumeration.features.EnumerationPropertyMapper;
-import com.eclipsesource.uml.glsp.uml.elements.enumeration.gmodel.EnumerationNodeMapper;
+import com.eclipsesource.uml.glsp.uml.elements.enumeration.gmodel.EnumerationGModelMapper;
 import com.eclipsesource.uml.glsp.uml.features.label_edit.di.LabelEditMapperFactory;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.di.PropertyMapperFactory;
 import com.eclipsesource.uml.glsp.uml.gmodel.di.GModelMapperFactory;
@@ -27,7 +27,7 @@ public interface EnumerationFactory
    EnumerationConfiguration nodeConfiguration(Representation representation);
 
    @Override
-   EnumerationNodeMapper gmodel(Representation representation);
+   EnumerationGModelMapper gmodel(Representation representation);
 
    @Override
    EnumerationOperationHandler nodeOperationHandler(Representation representation);

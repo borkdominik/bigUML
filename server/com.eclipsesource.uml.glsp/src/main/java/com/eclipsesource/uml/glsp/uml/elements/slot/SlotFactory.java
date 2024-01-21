@@ -12,7 +12,7 @@ package com.eclipsesource.uml.glsp.uml.elements.slot;
 
 import com.eclipsesource.uml.glsp.uml.configuration.di.NodeConfigurationFactory;
 import com.eclipsesource.uml.glsp.uml.elements.slot.features.SlotPropertyMapper;
-import com.eclipsesource.uml.glsp.uml.elements.slot.gmodel.SlotCompartmentMapper;
+import com.eclipsesource.uml.glsp.uml.elements.slot.gmodel.SlotGModelMapper;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.di.PropertyMapperFactory;
 import com.eclipsesource.uml.glsp.uml.gmodel.di.GModelMapperFactory;
 import com.eclipsesource.uml.glsp.uml.handler.di.NodeOperationHandlerFactory;
@@ -24,7 +24,7 @@ public interface SlotFactory
    SlotConfiguration nodeConfiguration(Representation representation);
 
    @Override
-   SlotCompartmentMapper gmodel(Representation representation);
+   SlotGModelMapper gmodel(Representation representation);
 
    @Override
    SlotOperationHandler nodeOperationHandler(Representation representation);

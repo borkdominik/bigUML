@@ -7,14 +7,14 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { Bounds, Point, PolylineEdgeRouter, RoutedPoint, SRoutableElement } from '@eclipse-glsp/client';
+import { Bounds, GRoutableElement, Point, PolylineEdgeRouter, RoutedPoint } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 import { LifelineElement } from '../../elements';
 
 // TODO: Sequence Diagram Specific
 @injectable()
 export class SDPolylineEdgeRouter extends PolylineEdgeRouter {
-    override route(edge: SRoutableElement): RoutedPoint[] {
+    override route(edge: GRoutableElement): RoutedPoint[] {
         const source = edge.source;
         const target = edge.target;
         if (source === undefined || target === undefined) {

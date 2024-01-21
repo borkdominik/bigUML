@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
+    <booleanAttribute key="org.eclipse.debug.core.ATTR_FORCE_SYSTEM_CONSOLE_ENCODING" value="false"/>
     <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
         <listEntry value="/com.eclipsesource.uml.glsp/src/main/java/com/eclipsesource/uml/glsp/UmlGLSPServerLauncher.java"/>
     </listAttribute>
@@ -19,4 +20,5 @@
     <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="--logLevel=debug"/>
     <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="com.eclipsesource.uml.glsp"/>
     <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.m2e.launchconfig.sourcepathProvider"/>
+    <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="--add-opens java.base/java.util=ALL-UNNAMED"/>
 </launchConfiguration>

@@ -45,7 +45,7 @@ public class ParameterConfiguration extends RepresentationNodeConfiguration<Para
 
    @Override
    public Map<String, EClass> getTypeMappings() { return Map.of(
-      typeId(), GraphPackage.Literals.GCOMPARTMENT); }
+      typeId(), GraphPackage.Literals.GNODE); }
 
    @Override
    public Set<String> getGraphContainableElements() { return Set.of(); }

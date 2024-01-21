@@ -12,7 +12,7 @@ package com.eclipsesource.uml.glsp.uml.elements.realization;
 
 import com.eclipsesource.uml.glsp.uml.configuration.di.EdgeConfigurationFactory;
 import com.eclipsesource.uml.glsp.uml.elements.realization.features.RealizationPropertyMapper;
-import com.eclipsesource.uml.glsp.uml.elements.realization.gmodel.RealizationEdgeMapper;
+import com.eclipsesource.uml.glsp.uml.elements.realization.gmodel.RealizationGModelMapper;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.di.PropertyMapperFactory;
 import com.eclipsesource.uml.glsp.uml.gmodel.di.GModelMapperFactory;
 import com.eclipsesource.uml.glsp.uml.handler.di.EdgeOperationHandlerFactory;
@@ -25,7 +25,7 @@ public interface RealizationFactory
    RealizationConfiguration edgeConfiguration(Representation representation);
 
    @Override
-   RealizationEdgeMapper gmodel(Representation representation);
+   RealizationGModelMapper gmodel(Representation representation);
 
    @Override
    RealizationOperationHandler edgeOperationHandler(Representation representation);

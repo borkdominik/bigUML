@@ -20,3 +20,10 @@
 
     --uml-widget-shadow: var(--vscode-widget-shadow);
 }
+
+:root {
+    --uml-node: var(--vscode-sideBar-background);
+    --uml-drop-shadow: var(--uml-widget-shadow);
+    --uml-label: var(--vscode-foreground);
+    --uml-label-hoverForeground: var(--vscode-menu-selectionForeground);
+}

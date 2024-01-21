@@ -48,7 +48,7 @@ public class ElementImportEdgeMapper extends RepresentationGEdgeMapper<ElementIm
          .addCssClass(CoreCSS.Marker.TENT.end())
          .sourceId(nearestPackageId)
          .targetId(importedPackageId)
-         .routerKind(GConstants.RouterKind.MANHATTAN)
+         .routerKind(GConstants.RouterKind.POLYLINE)
          .add(buildLabel(source));
 
       applyEdgeNotation(source, builder);

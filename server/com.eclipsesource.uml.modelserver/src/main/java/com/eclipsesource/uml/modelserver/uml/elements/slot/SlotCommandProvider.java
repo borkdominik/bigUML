@@ -15,7 +15,6 @@ import java.util.List;
 
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.glsp.graph.GPoint;
-import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.uml2.uml.InstanceSpecification;
 import org.eclipse.uml2.uml.Slot;
 
@@ -34,7 +33,7 @@ public class SlotCommandProvider extends NodeCommandProvider<Slot, InstanceSpeci
       final GPoint position) {
       var semantic = new CreateSlotSemanticCommand(context, parent);
       var notation = new AddShapeNotationCommand(
-         context, semantic::getSemanticElement, position, GraphUtil.dimension(160, 50));
+         context, semantic::getSemanticElement);
       return List.of(semantic, notation);
    }
 

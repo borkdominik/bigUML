@@ -40,11 +40,11 @@
     "watch": "tsc -w"
   },
   "dependencies": {
-    "@borkdominik-biguml/uml-common": "*",
+    "@borkdominik-biguml/uml-protocol": "*",
     "@eclipse-glsp/client": "next",
     "@eclipse-glsp/protocol": "next",
     "balloon-css": "^0.5.0",
-    "inversify": "^5.1.1",
+    "inversify": "^6.0.1",
     "reflect-metadata": "^0.1.13",
     "snabbdom": "^3.5.1",
     "sprotty": "next"

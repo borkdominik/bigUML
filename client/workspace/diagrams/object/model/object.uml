@@ -17,7 +17,7 @@
       <ownedParameter xmi:id="_huGJQbFuEe21bf9NlKs9Kg" name="NewParameter4"/>
     </ownedOperation>
   </packagedElement>
-  <packagedElement xmi:type="uml:InstanceSpecification" xmi:id="_gVrPMP5ZEe2EurDOEyjS8g" name="NewInstanceSpecification1">
+  <packagedElement xmi:type="uml:InstanceSpecification" xmi:id="_gVrPMP5ZEe2EurDOEyjS8g" name="NewInstanceSpecification1" classifier="_QE0EkK7gEe2EZoZ5sgiBCg">
     <slot xmi:id="_jkiX4P5ZEe2EurDOEyjS8g" definingFeature="_g69BoK7oEe2EZoZ5sgiBCg">
       <value xmi:type="uml:LiteralBoolean" xmi:id="_vDXysP5ZEe2EurDOEyjS8g" name="value0" value="true"/>
       <value xmi:type="uml:LiteralBoolean" xmi:id="_dHYvcFF1Ee6c2ZT1z7tqeA" value="true"/>
@@ -47,5 +47,8 @@
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_oZAMcf5ZEe2EurDOEyjS8g" value="1"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_oZAMcv5ZEe2EurDOEyjS8g" value="1"/>
     </ownedAttribute>
+  </packagedElement>
+  <packagedElement xmi:type="uml:InstanceSpecification" xmi:id="_PvjcgH40Ee6bSrMxUmd9gg" name="">
+    <slot xmi:id="_qhp7IH42Ee6bSrMxUmd9gg" definingFeature="_bM_S4K7gEe2EZoZ5sgiBCg"/>
   </packagedElement>
 </uml:Model>

@@ -6,7 +6,8 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { GlspVscodeConnector } from '@eclipse-glsp/vscode-integration';
+import { GlspVscodeClient, GlspVscodeConnector } from '@eclipse-glsp/vscode-integration';
+import { GLSPIsReadyAction } from 'packages/uml-protocol/lib/index';
 import * as vscode from 'vscode';
 import { ThemeIntegration } from '../../features/theme/theme-integration';
 import { getBundleUri, getUri } from '../../utilities/webview';
@@ -14,8 +15,7 @@ import { WebviewResolver, WebviewResource } from './webview';
 
 export interface GLSPWebviewData {
     readonly diagramType: string;
-    readonly clientId: string;
-    readonly clientReady: Promise<void>;
+    readonly client: GlspVscodeClient;
     readonly context: vscode.ExtensionContext;
     readonly themeIntegration: ThemeIntegration;
     readonly connector: GlspVscodeConnector;
@@ -25,7 +25,11 @@ export class GLSPWebviewResolver implements WebviewResolver {
     constructor(protected readonly data: GLSPWebviewData) {}
 
     public async resolve(resource: WebviewResource): Promise<void> {
-        this.data.clientReady.then(() => this.data.themeIntegration.updateTheme(this.data.clientId));
+        this.data.client.webviewEndpoint.onActionMessage(m => {
+            if (GLSPIsReadyAction.is(m.action)) {
+                this.data.themeIntegration.updateTheme(this.data.client);
+            }
+        });
 
         const webview = resource.webviewPanel.webview;
         const extensionUri = this.data.context.extensionUri;
@@ -53,8 +57,8 @@ export class GLSPWebviewResolver implements WebviewResolver {
                     <link href="${bundleCSSUri}" rel="stylesheet" />
                     </head>
                     <body style="overflow: hidden;">
-                        <div id="${this.data.clientId}_container" style="height: 100%;"></div>
-                        <div id="${this.data.clientId}_loading" class="client-loading loading-animation"></div>
+                        <div id="${this.data.client.clientId}_container" style="height: 100%;"></div>
+                        <div id="${this.data.client.clientId}_loading" class="client-loading loading-animation"></div>
 
                         <script src="${bundleJSUri}"></script>
                     </body>

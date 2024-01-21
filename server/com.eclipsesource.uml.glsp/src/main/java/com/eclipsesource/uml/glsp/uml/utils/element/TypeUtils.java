@@ -14,9 +14,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.eclipse.uml2.uml.MultiplicityElement;
 import org.eclipse.uml2.uml.Type;
 
 import com.eclipsesource.uml.glsp.features.property_palette.model.ElementChoicePropertyItem;
+import com.eclipsesource.uml.glsp.uml.utils.MultiplicityUtil;
 import com.eclipsesource.uml.modelserver.core.models.TypeInformation;
 
 public class TypeUtils {
@@ -54,4 +56,26 @@ public class TypeUtils {
          ? type.getClass().getSimpleName().replace("Impl", "")
          : type.getName();
    }
+
+   public static String asText(final Type type, final MultiplicityElement element) {
+      return asText(type, "<Undefined>", element);
+   }
+
+   public static String asText(final Type type, final String undefined, final MultiplicityElement element) {
+      var name = name(type, undefined);
+      if (name == null) {
+         return undefined;
+      }
+
+      var multiplicity = MultiplicityUtil.getMultiplicity(element);
+
+      var label = name;
+
+      if (!multiplicity.equals("1")) {
+         label += String.format("[%s]", multiplicity);
+      }
+
+      return label;
+   }
+
 }

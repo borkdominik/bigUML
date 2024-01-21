@@ -16,8 +16,6 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -33,9 +31,6 @@ import org.eclipse.uml2.uml.resource.UMLResource;
 import com.fasterxml.jackson.databind.JsonNode;
 
 public class UmlCodec extends XmiCodec {
-
-   private static Logger LOGGER = LogManager.getLogger(UmlCodec.class.getSimpleName());
-
    @Override
    public JsonNode encode(final EObject eObject) throws EncodingException {
       Resource originalResource = eObject.eResource();
@@ -83,7 +78,6 @@ public class UmlCodec extends XmiCodec {
       Resource result = resourceSet.getResource(uri, false);
       if (result != null && !(result instanceof UMLResource)) {
          // Replace it
-         LOGGER.warn(String.format("Replacing resource '%s' with a UMLResource", modelURI));
          result.unload();
          resourceSet.getResources().remove(result);
          result = null;

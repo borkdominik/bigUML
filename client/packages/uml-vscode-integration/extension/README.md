@@ -31,16 +31,16 @@
 
 ## Diagrams
 
-Currently, **bigUML** has *basic* support for the following UML diagram types:
+Currently, **bigUML** has _basic_ support for the following UML diagram types:
 
-- Activity Diagram
-- Class Diagram
-- Communication Diagram
-- Deployment Diagram
-- Information Flow Diagram
-- Package Diagram
-- State Machine Diagram
-- Use Case Diagram
+-   Activity Diagram
+-   Class Diagram
+-   Communication Diagram
+-   Deployment Diagram
+-   Information Flow Diagram
+-   Package Diagram
+-   State Machine Diagram
+-   Use Case Diagram
 
 You can [learn more](https://github.com/borkdominik/bigUML/) about the progress of each diagram type in the repository.
 
@@ -50,7 +50,7 @@ Get in touch if you want to contribute!
 
 ## Requirements
 
-This extension requires Java JRE 11+ to run.
+This extension requires Java JRE 17+ to run.
 
 _In the background, the GLSP and the ModelServer will be started. You can get the port of the started server from the `output` channel `bigUML Modeling Tool`._
 
@@ -71,7 +71,6 @@ You can create a new model by either using the command `bigUML: New Empty UML Di
   <img src="https://github.com/borkdominik/bigUML/assets/13104167/07d49ee9-66ad-47a8-bb1c-b37cbed547c2" alt="New File" width="600" />
 </p>
 
-
 ### CRUD Operations
 
 You can use the Tool Palette to create new nodes and edges. Afterward, you can reposition and resize them.
@@ -79,8 +78,6 @@ You can use the Tool Palette to create new nodes and edges. Afterward, you can r
 <p align="center">
   <img src="https://github.com/borkdominik/bigUML/assets/13104167/5eacb841-dc28-41e3-b904-d494c3b4b5d4" alt="CRUD Operations" width="600" />
 </p>
-
-
 
 ## Learn More
 

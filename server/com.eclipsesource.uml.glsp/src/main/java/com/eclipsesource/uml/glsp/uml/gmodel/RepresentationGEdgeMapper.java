@@ -13,13 +13,13 @@ package com.eclipsesource.uml.glsp.uml.gmodel;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.graph.GEdge;
 
-import com.eclipsesource.uml.glsp.uml.configuration.ElementConfigurationAccessor;
+import com.eclipsesource.uml.glsp.uml.configuration.RepresentationElementConfigurationAccessor;
 import com.eclipsesource.uml.glsp.uml.configuration.ElementConfigurationRegistry;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 
 public abstract class RepresentationGEdgeMapper<TSource extends EObject, TTarget extends GEdge>
-   extends BaseGEdgeMapper<TSource, TTarget> implements ElementConfigurationAccessor {
+   extends BaseGEdgeMapper<TSource, TTarget> implements RepresentationElementConfigurationAccessor {
 
    protected Representation representation;
 

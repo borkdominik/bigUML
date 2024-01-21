@@ -19,7 +19,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.emfcloud.modelserver.glsp.actions.handlers.AbstractEMSActionHandler;
 import org.eclipse.glsp.server.actions.Action;
-import org.eclipse.glsp.server.actions.ServerMessageAction;
+import org.eclipse.glsp.server.actions.MessageAction;
 import org.eclipse.glsp.server.features.validation.Marker;
 import org.eclipse.glsp.server.features.validation.ModelValidator;
 import org.eclipse.glsp.server.features.validation.RequestMarkersAction;
@@ -63,15 +63,13 @@ public class UmlRequestMarkersHandler extends AbstractEMSActionHandler<RequestMa
       return listOf(new SetMarkersAction(markers), notificationAction);
    }
 
-   private ServerMessageAction getValidationNotification(final List<Marker> listOfMarkers) {
+   private MessageAction getValidationNotification(final List<Marker> listOfMarkers) {
       if (listOfMarkers.size() == 0) {
-         return new ServerMessageAction(Severity.INFO,
-            "The state of the diagram is valid.",
-            3000);
+         return new MessageAction(Severity.INFO,
+            "The state of the diagram is valid.");
       }
 
-      return new ServerMessageAction(Severity.ERROR,
-         "The state of the diagram is invalid. Please check the indicators on the diagram.",
-         4000);
+      return new MessageAction(Severity.ERROR,
+         "The state of the diagram is invalid. Please check the indicators on the diagram.");
    }
 }

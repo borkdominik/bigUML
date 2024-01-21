@@ -1,5 +1,9 @@
 {
+  "name": "client",
+  "version": "1.0.0",
   "private": true,
+  "license": "MIT",
+  "main": "index.js",
   "workspaces": {
     "packages": [
       "packages/*",
@@ -24,52 +28,21 @@
     "watch": "lerna run --parallel watch"
   },
   "resolutions": {
-    "**/@eclipse-emfcloud/modelserver-theia": "0.8.0-theia-cr02",
-    "**/@eclipse-glsp/client": "1.1.0-next.40987f7.225",
-    "**/@eclipse-glsp/protocol": "1.1.0-next.40987f7.225",
-    "**/@eclipse-glsp/vscode-integration": "1.1.0-RC05",
-    "**/@eclipse-glsp/vscode-integration-webview": "1.1.0-RC05",
-    "**/@theia/application-manager": "1.35.0",
-    "**/@theia/application-package": "1.35.0",
-    "**/@theia/cli": "1.35.0",
-    "**/@theia/core": "1.35.0",
-    "**/@theia/editor": "1.35.0",
-    "**/@theia/file-search": "1.35.0",
-    "**/@theia/filesystem": "1.35.0",
-    "**/@theia/keymaps": "1.35.0",
-    "**/@theia/markers": "1.35.0",
-    "**/@theia/messages": "1.35.0",
-    "**/@theia/monaco": "1.35.0",
-    "**/@theia/navigator": "1.35.0",
-    "**/@theia/outline-view": "1.35.0",
-    "**/@theia/output": "1.35.0",
-    "**/@theia/plugin-dev": "1.35.0",
-    "**/@theia/plugin-ext": "1.35.0",
-    "**/@theia/plugin-ext-vscode": "1.35.0",
-    "**/@theia/plugin-metrics": "1.35.0",
-    "**/@theia/preferences": "1.35.0",
-    "**/@theia/process": "1.35.0",
-    "**/@theia/search-in-workspace": "1.35.0",
-    "**/@theia/task": "1.35.0",
-    "**/@theia/terminal": "1.35.0",
-    "**/@theia/typehierarchy": "1.35.0",
-    "**/@theia/userstorage": "1.35.0",
-    "**/@theia/variable-resolver": "1.35.0",
-    "**/@theia/vsx-registry": "1.35.0",
-    "**/@theia/workspace": "1.35.0",
-    "**/inversify": "5.1.1",
-    "**/sprotty": "0.13.0-next.f4445dd.342",
+    "**/@eclipse-glsp/client": "2.0.0",
+    "**/@eclipse-glsp/protocol": "2.0.0",
+    "**/@eclipse-glsp/vscode-integration": "2.0.0",
+    "**/@eclipse-glsp/vscode-integration-webview": "2.0.0",
+    "**/inversify": "6.0.1",
     "**/vscode-jsonrpc": "8.1.0"
   },
   "devDependencies": {
-    "@eclipse-glsp/dev": "^1.1.0-RC06",
-    "@eclipse-glsp/eslint-config": "^1.1.0-RC06",
-    "@eclipse-glsp/prettier-config": "^1.1.0-RC06",
-    "@eclipse-glsp/ts-config": "^1.1.0-RC06",
+    "@eclipse-glsp/dev": "^2.0.0",
+    "@eclipse-glsp/eslint-config": "^2.0.0",
     "@types/lodash": "^4.14.195",
     "@types/node": "^20.4.2",
     "esbuild": "^0.17.10",
-    "eslint": "^8.41.0",
+    "eslint": "^8.56.0",
+    "lerna": "^7.1.1",
     "tsx": "^3.12.3",
     "typescript": "^4.9.5"
   },
@@ -77,9 +50,5 @@
   "engines": {
     "node": ">=16.15.1 < 17",
     "yarn": ">=1.7.0 <2"
-  },
-  "name": "client",
-  "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT"
+  }
 }

@@ -6,8 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { SetOutlineAction, SetPropertyPaletteAction } from '@borkdominik-biguml/uml-common';
-import { ModelServerConfig } from '@borkdominik-biguml/uml-modelserver';
+import { SetOutlineAction, SetPropertyPaletteAction } from '@borkdominik-biguml/uml-protocol';
 import { IActionDispatcher } from '@eclipse-glsp/client';
 import { Container, ContainerModule } from 'inversify';
 import * as vscode from 'vscode';
@@ -18,6 +17,7 @@ import { ThemeIntegration } from './features/theme/theme-integration';
 import { UVGlspConnector } from './glsp/uv-glsp-connector';
 import { UVGlspServer } from './glsp/uv-glsp-server';
 import { ActionHandlerRegistry, configureActionHandler, VSCodeActionDispatcher } from './glsp/workaround/action-dispatcher';
+import { ModelServerConfig } from './modelserver/config';
 import { UVModelServerClient } from './modelserver/uv-modelserver.client';
 import { GlspServerConfig, glspServerModule } from './server/glsp-server.launcher';
 import { modelServerModule } from './server/modelserver.launcher';

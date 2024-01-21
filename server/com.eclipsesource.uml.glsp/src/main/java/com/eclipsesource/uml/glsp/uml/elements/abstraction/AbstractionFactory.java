@@ -12,7 +12,7 @@ package com.eclipsesource.uml.glsp.uml.elements.abstraction;
 
 import com.eclipsesource.uml.glsp.uml.configuration.di.EdgeConfigurationFactory;
 import com.eclipsesource.uml.glsp.uml.elements.abstraction.features.AbstractionPropertyMapper;
-import com.eclipsesource.uml.glsp.uml.elements.abstraction.gmodel.AbstractionEdgeMapper;
+import com.eclipsesource.uml.glsp.uml.elements.abstraction.gmodel.AbstractionGModelMapper;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.di.PropertyMapperFactory;
 import com.eclipsesource.uml.glsp.uml.gmodel.di.GModelMapperFactory;
 import com.eclipsesource.uml.glsp.uml.handler.di.EdgeOperationHandlerFactory;
@@ -25,7 +25,7 @@ public interface AbstractionFactory
    AbstractionConfiguration edgeConfiguration(Representation representation);
 
    @Override
-   AbstractionEdgeMapper gmodel(Representation representation);
+   AbstractionGModelMapper gmodel(Representation representation);
 
    @Override
    AbstractionOperationHandler edgeOperationHandler(Representation representation);

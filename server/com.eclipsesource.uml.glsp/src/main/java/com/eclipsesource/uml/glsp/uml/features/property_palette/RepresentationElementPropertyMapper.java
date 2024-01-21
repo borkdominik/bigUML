@@ -15,13 +15,13 @@ import org.eclipse.emf.ecore.EObject;
 import com.eclipsesource.uml.glsp.core.handler.operation.update.DiagramUpdateHandler;
 import com.eclipsesource.uml.glsp.core.handler.operation.update.UpdateHandlerOperationMapper;
 import com.eclipsesource.uml.glsp.features.property_palette.handler.action.UpdateElementPropertyAction;
-import com.eclipsesource.uml.glsp.uml.configuration.ElementConfigurationAccessor;
+import com.eclipsesource.uml.glsp.uml.configuration.RepresentationElementConfigurationAccessor;
 import com.eclipsesource.uml.glsp.uml.configuration.ElementConfigurationRegistry;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 
 public abstract class RepresentationElementPropertyMapper<TElement extends EObject>
-   extends BaseDiagramElementPropertyMapper<TElement> implements ElementConfigurationAccessor {
+   extends BaseDiagramElementPropertyMapper<TElement> implements RepresentationElementConfigurationAccessor {
 
    protected Representation representation;
 

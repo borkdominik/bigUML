@@ -7,13 +7,13 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { UmlDiagramType } from '@borkdominik-biguml/uml-common';
-import { configureModelElement, SCompartmentView } from '@eclipse-glsp/client';
+import { UmlDiagramType } from '@borkdominik-biguml/uml-protocol';
+import { configureModelElement } from '@eclipse-glsp/client';
 import { DefaultTypes } from '@eclipse-glsp/protocol';
 import { interfaces } from 'inversify';
-import { InteractableCompartment } from '../../../graph/base/compartment';
-import { SEditableLabel, SEditableLabelView } from '../../../index';
 import { QualifiedUtil } from '../../qualified.utils';
+import { GEditableLabel, GEditableLabelView } from '../../views/label.view';
+import { NamedElement, NamedElementView } from '../index';
 
 export function registerPropertyElement(
     context: { bind: interfaces.Bind; isBound: interfaces.IsBound },
@@ -21,20 +21,20 @@ export function registerPropertyElement(
 ): void {
     configureModelElement(
         context,
-        QualifiedUtil.representationTypeId(representation, DefaultTypes.COMPARTMENT, 'Property'),
-        InteractableCompartment,
-        SCompartmentView
+        QualifiedUtil.representationTypeId(representation, DefaultTypes.NODE, 'Property'),
+        NamedElement,
+        NamedElementView
     );
     configureModelElement(
         context,
         QualifiedUtil.representationTypeId(representation, DefaultTypes.LABEL, 'Property-type'),
-        SEditableLabel,
-        SEditableLabelView
+        GEditableLabel,
+        GEditableLabelView
     );
     configureModelElement(
         context,
         QualifiedUtil.representationTypeId(representation, DefaultTypes.LABEL, 'Property-multiplicity'),
-        SEditableLabel,
-        SEditableLabelView
+        GEditableLabel,
+        GEditableLabelView
     );
 }

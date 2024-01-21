@@ -12,7 +12,7 @@ package com.eclipsesource.uml.glsp.uml.elements.dependency;
 
 import com.eclipsesource.uml.glsp.uml.configuration.di.EdgeConfigurationFactory;
 import com.eclipsesource.uml.glsp.uml.elements.dependency.features.DependencyPropertyMapper;
-import com.eclipsesource.uml.glsp.uml.elements.dependency.gmodel.DependencyEdgeMapper;
+import com.eclipsesource.uml.glsp.uml.elements.dependency.gmodel.DependencyGModelMapper;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.di.PropertyMapperFactory;
 import com.eclipsesource.uml.glsp.uml.gmodel.di.GModelMapperFactory;
 import com.eclipsesource.uml.glsp.uml.handler.di.EdgeOperationHandlerFactory;
@@ -25,7 +25,7 @@ public interface DependencyFactory
    DependencyConfiguration edgeConfiguration(Representation representation);
 
    @Override
-   DependencyEdgeMapper gmodel(Representation representation);
+   DependencyGModelMapper gmodel(Representation representation);
 
    @Override
    DependencyOperationHandler edgeOperationHandler(Representation representation);

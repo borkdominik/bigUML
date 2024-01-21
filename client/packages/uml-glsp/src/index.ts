@@ -8,7 +8,4 @@
  *********************************************************************************/
 import 'reflect-metadata';
 
-import createUmlDiagramContainer from './di.config';
-
-export * from './graph';
-export { createUmlDiagramContainer };
+export * from './uml-glsp.module';

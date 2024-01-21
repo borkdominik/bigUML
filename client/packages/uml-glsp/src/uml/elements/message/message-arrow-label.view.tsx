@@ -8,30 +8,30 @@
  *********************************************************************************/
 import {
     EdgeRouterRegistry,
+    GEdge,
     getSubType,
+    GLabelView,
     Point,
     RenderingContext,
     RoutedPoint,
-    SEdge,
     setAttr,
-    SLabelView,
     svg
 } from '@eclipse-glsp/client';
 import { inject, injectable } from 'inversify';
 import { VNode } from 'snabbdom';
-import { SEditableLabel } from '../../../graph/index';
+import { GEditableLabel } from '../../views/label.view';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const JSX = { createElement: svg };
 
 @injectable()
-export class MessageArrowLabelView extends SLabelView {
+export class MessageArrowLabelView extends GLabelView {
     @inject(EdgeRouterRegistry) edgeRouterRegistry: EdgeRouterRegistry;
 
-    override render(labelNode: Readonly<SEditableLabel>, context: RenderingContext): VNode {
+    override render(labelNode: Readonly<GEditableLabel>, context: RenderingContext): VNode {
         let rotation = 0;
         if (labelNode.edgePlacement !== undefined) {
-            const parent = labelNode.parent as SEdge;
+            const parent = labelNode.parent as GEdge;
             const segments = this.edgeRouterRegistry.route(parent);
             const router = this.edgeRouterRegistry.get(parent.routerKind);
 

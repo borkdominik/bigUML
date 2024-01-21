@@ -43,7 +43,6 @@ public class MessageOccurrenceNodeMapper extends BaseGNodeMapper<MessageOccurren
       return builder.build();
    }
 
-   @Override
    protected void applyShapeNotation(final MessageOccurrenceSpecification source, final GNodeBuilder builder) {
       modelState.getIndex().getNotation(source, Shape.class).ifPresent(shape -> {
          if (shape.getPosition() != null) {

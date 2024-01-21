@@ -37,19 +37,23 @@ public class UmlToolPaletteItemProvider
 
    @Override
    public List<PaletteItem> getItems(final Map<String, String> args) {
-      var representation = modelState.getUnsafeRepresentation();
-      var items = new ArrayList<PaletteItem>();
+      return modelState.getRepresentation().map(representation -> {
+         var items = new ArrayList<PaletteItem>();
 
-      if (palettes.containsKey(representation)) {
-         palettes.get(representation).stream()
-            .forEachOrdered(contribution -> {
-               items.addAll(contribution.getItems(args));
-            });
-      } else {
-         throw new IllegalArgumentException(
-            String.format("Representation %s did not provide any tool palette items", representation));
-      }
+         if (palettes.containsKey(representation)) {
+            palettes.get(representation).stream()
+               .forEachOrdered(contribution -> {
+                  items.addAll(contribution.getItems(args));
+               });
+         } else {
+            throw new IllegalArgumentException(
+               String.format("Representation %s did not provide any tool palette items", representation));
+         }
 
-      return items;
+         return items;
+      }).orElseGet(() -> {
+         LOGGER.warn("Could not read representation from modelstate.");
+         return new ArrayList<>();
+      });
    }
 }

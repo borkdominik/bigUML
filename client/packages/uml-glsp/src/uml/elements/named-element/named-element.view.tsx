@@ -6,22 +6,18 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import {
-    alignFeature,
-    hasArguments,
-    layoutableChildFeature,
-    RectangularNodeView,
-    RenderingContext,
-    SCompartment,
-    svg
-} from '@eclipse-glsp/client';
-import { DefaultTypes } from '@eclipse-glsp/protocol';
+import { ArgsAware, GCompartment, hasArgs, layoutableChildFeature, RectangularNodeView, RenderingContext, svg } from '@eclipse-glsp/client';
+import { Args, DefaultTypes } from '@eclipse-glsp/protocol';
 import { injectable } from 'inversify';
 import { VNode } from 'snabbdom';
-import { LabeledNode } from '../../../graph/base/label.view';
+// eslint-disable-next-line no-restricted-imports
+import { alignFeature } from 'sprotty';
+import { GLabeledNode } from '../../views/label.view';
 
-export class NamedElement extends LabeledNode {
-    static override readonly DEFAULT_FEATURES = [...LabeledNode.DEFAULT_FEATURES, alignFeature, layoutableChildFeature];
+export class NamedElement extends GLabeledNode implements ArgsAware {
+    static override readonly DEFAULT_FEATURES = [...GLabeledNode.DEFAULT_FEATURES, alignFeature, layoutableChildFeature];
+
+    args: Args = {};
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -36,16 +32,27 @@ export class NamedElementView extends RectangularNodeView {
 
         const compartment = element.children.find(
             c =>
-                c instanceof SCompartment &&
+                c instanceof GCompartment &&
                 c.type !== DefaultTypes.COMPARTMENT_HEADER &&
                 c.children.length > 0 &&
-                hasArguments(c) &&
+                hasArgs(c) &&
                 c.args['divider'] === true
-        ) as SCompartment | undefined;
+        ) as GCompartment | undefined;
 
+        // TODO: Remove after switching to builder based approach for all gmodels
         return (
             <g class-selected={element.selected} class-mouseover={element.hoverFeedback}>
-                <rect x={0} y={0} rx={2} ry={2} width={Math.max(0, element.bounds.width)} height={Math.max(0, element.bounds.height)} />
+                {(element.args['border'] === true || element.args['build_by'] === undefined) && (
+                    <rect
+                        x={0}
+                        y={0}
+                        rx={2}
+                        ry={2}
+                        width={Math.max(0, element.bounds.width)}
+                        height={Math.max(0, element.bounds.height)}
+                        class-uml-node-background
+                    />
+                )}
 
                 {compartment && (
                     <path

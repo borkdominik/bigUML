@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { RefreshPropertyPaletteAction, SetPropertyPaletteAction } from '@borkdominik-biguml/uml-common';
+import { RefreshPropertyPaletteAction, SetPropertyPaletteAction } from '@borkdominik-biguml/uml-protocol';
 import { Action, IActionHandler } from '@eclipse-glsp/client';
 import { inject, injectable, postConstruct } from 'inversify';
 import { TYPES } from '../../di.types';
@@ -35,7 +35,7 @@ export class PropertyPaletteProvider extends UVWebviewProvider implements IActio
         });
         this.connector.onDidClientViewStateChange(() => {
             setTimeout(() => {
-                if (this.connector.clients.every(c => !c.webviewPanel.active)) {
+                if (this.connector.clients.every(c => !c.webviewEndpoint.webviewPanel.active)) {
                     this.postMessage(SetPropertyPaletteAction.create());
                 }
             }, 100);

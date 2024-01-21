@@ -6,14 +6,14 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { ModelServerConfig } from '@borkdominik-biguml/uml-modelserver/lib/config';
-import { UmlModelServerClient } from '@borkdominik-biguml/uml-modelserver/lib/modelserver.client';
 import { inject, injectable } from 'inversify';
 import URI from 'urijs';
 import * as vscode from 'vscode';
 import { TYPES } from '../di.types';
 import { ServerManager, ServerManagerStateListener } from '../server/server.manager';
 import { OutputChannel } from '../vscode/output/output.channel';
+import { ModelServerConfig } from './config';
+import { UmlModelServerClient } from './modelserver.client';
 
 @injectable()
 export class UVModelServerClient extends UmlModelServerClient implements ServerManagerStateListener {

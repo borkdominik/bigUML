@@ -31,14 +31,8 @@ public class SlotConfiguration extends RepresentationNodeConfiguration<Slot> {
       super(representation);
    }
 
-   @Override
-   public String typeId() {
-      return QualifiedUtil.representationTypeId(representation, DefaultTypes.COMPARTMENT,
-         getElementType().getSimpleName());
-   }
-
    public String definingFeatureTypeId() {
-      return QualifiedUtil.representationTypeId(Representation.CLASS, DefaultTypes.LABEL,
+      return QualifiedUtil.representationTypeId(representation, DefaultTypes.LABEL,
          getElementType().getSimpleName() + "-defining-feature");
    }
 
@@ -49,7 +43,7 @@ public class SlotConfiguration extends RepresentationNodeConfiguration<Slot> {
 
    @Override
    public Map<String, EClass> getTypeMappings() { return Map.of(
-      typeId(), GraphPackage.Literals.GCOMPARTMENT); }
+      typeId(), GraphPackage.Literals.GNODE); }
 
    @Override
    public Set<String> getGraphContainableElements() { return Set.of(); }

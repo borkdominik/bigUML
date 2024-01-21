@@ -8,25 +8,24 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-import { DefaultTypes, RectangularNodeView, RenderingContext, SCompartment, svg } from '@eclipse-glsp/client';
+import { DefaultTypes, GCompartment, RectangularNodeView, RenderingContext, svg } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 import { VNode } from 'snabbdom';
-
-import { LabeledNode } from '../../../graph';
+import { GLabeledNode } from '../../views/label.view';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const JSX = { createElement: svg };
 
 @injectable()
 export class RegionNodeView extends RectangularNodeView {
-    override render(node: LabeledNode, context: RenderingContext): VNode | undefined {
+    override render(node: GLabeledNode, context: RenderingContext): VNode | undefined {
         if (!this.isVisible(node, context)) {
             return undefined;
         }
 
         const compartment = node.children.find(
-            c => c instanceof SCompartment && c.type !== DefaultTypes.COMPARTMENT_HEADER && c.children.length > 0
-        ) as SCompartment | undefined;
+            c => c instanceof GCompartment && c.type !== DefaultTypes.COMPARTMENT_HEADER && c.children.length > 0
+        ) as GCompartment | undefined;
 
         const regionNode: any = (
             <g class-node={true} class-selected={node.selected} class-mouseover={node.hoverFeedback}>

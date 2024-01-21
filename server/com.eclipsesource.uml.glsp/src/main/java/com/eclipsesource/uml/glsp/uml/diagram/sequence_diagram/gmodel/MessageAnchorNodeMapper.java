@@ -34,7 +34,6 @@ public class MessageAnchorNodeMapper extends BaseGNodeMapper<MessageAnchor, GNod
       return builder.build();
    }
 
-   @Override
    protected void applyShapeNotation(final MessageAnchor source, final GNodeBuilder builder) {
       var id = source.getId();
 

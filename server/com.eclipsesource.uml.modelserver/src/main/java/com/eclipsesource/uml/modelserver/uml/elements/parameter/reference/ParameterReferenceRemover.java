@@ -18,14 +18,14 @@ import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.uml2.uml.Parameter;
 
 import com.eclipsesource.uml.modelserver.shared.model.ModelContext;
-import com.eclipsesource.uml.modelserver.uml.behavior.cross_delete.BaseCrossReferenceDeleteBehavior;
+import com.eclipsesource.uml.modelserver.uml.behavior.cross_delete.ExistenceBasedCrossReferenceDeleteBehavior;
 import com.eclipsesource.uml.modelserver.uml.elements.parameter.commands.UpdateParameterArgument;
 import com.eclipsesource.uml.modelserver.uml.elements.parameter.commands.UpdateParameterSemanticCommand;
 
-public final class ParameterReferenceRemover extends BaseCrossReferenceDeleteBehavior<Parameter> {
+public final class ParameterReferenceRemover extends ExistenceBasedCrossReferenceDeleteBehavior<Parameter> {
 
    @Override
-   protected List<Command> process(final ModelContext context, final Setting setting, final Parameter self,
+   protected List<Command> handle(final ModelContext context, final Setting setting, final Parameter self,
       final EObject interest) {
       if (interest.equals(self.getType())) {
          return List.of(new UpdateParameterSemanticCommand(

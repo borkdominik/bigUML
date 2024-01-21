@@ -7,6 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import { SetUmlThemeAction, UmlTheme } from '@borkdominik-biguml/uml-glsp/lib/features/theme';
+import { GlspVscodeClient } from '@eclipse-glsp/vscode-integration';
 import { inject, injectable, postConstruct } from 'inversify';
 import * as vscode from 'vscode';
 import { TYPES } from '../../di.types';
@@ -27,8 +28,8 @@ export class ThemeIntegration {
         this.onChange(e => this.refresh());
     }
 
-    updateTheme(clientId: string): void {
-        this.connector.sendActionToClient(clientId, this.createAction());
+    updateTheme(client: GlspVscodeClient): void {
+        this.connector.sendActionToClient(client.clientId, this.createAction());
     }
 
     refresh(): void {

@@ -11,13 +11,13 @@
 package com.eclipsesource.uml.glsp.uml.features.tool_palette;
 
 import com.eclipsesource.uml.glsp.core.features.tool_palette.ToolPaletteConfiguration;
-import com.eclipsesource.uml.glsp.uml.configuration.ElementConfigurationForAccessor;
+import com.eclipsesource.uml.glsp.uml.configuration.RepresentationElementConfigurationForAccessor;
 import com.eclipsesource.uml.glsp.uml.configuration.ElementConfigurationRegistry;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 
 public abstract class RepresentationToolPaletteConfiguration
-   implements ToolPaletteConfiguration, ElementConfigurationForAccessor {
+   implements ToolPaletteConfiguration, RepresentationElementConfigurationForAccessor {
 
    @Inject
    protected ElementConfigurationRegistry configurationRegistry;

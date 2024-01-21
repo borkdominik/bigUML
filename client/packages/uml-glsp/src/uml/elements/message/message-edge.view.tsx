@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { angleOfPoint, Point, PolylineEdgeView, RenderingContext, SEdge, svg, toDegrees } from '@eclipse-glsp/client';
+import { angleOfPoint, GEdge, Point, PolylineEdgeView, RenderingContext, svg, toDegrees } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 import { VNode } from 'snabbdom';
 
@@ -15,7 +15,7 @@ const JSX = { createElement: svg };
 
 @injectable()
 export class MessageEdgeView extends PolylineEdgeView {
-    protected override renderAdditionals(edge: SEdge, segments: Point[], context: RenderingContext): VNode[] {
+    protected override renderAdditionals(edge: GEdge, segments: Point[], context: RenderingContext): VNode[] {
         const p1 = segments[segments.length - 2];
         const p2 = segments[segments.length - 1];
         const flowEdge: any = [

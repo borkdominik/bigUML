@@ -10,7 +10,7 @@ fs.rmSync(outdir, { recursive: true, force: true });
 const componentsConfig: es.BuildOptions = {
     bundle: true,
     minify: process.env.NODE_ENV === 'production',
-    sourcemap: process.env.NODE_ENV !== 'production',
+    sourcemap: process.env.NODE_ENV !== 'production' ? 'inline' : false,
     // target: 'es2020',
     format: 'esm',
     entryNames: '[dir]/bundle',

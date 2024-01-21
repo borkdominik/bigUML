@@ -11,10 +11,21 @@
 import '@eclipse-glsp/client/css/glsp-sprotty.css';
 import 'sprotty/css/edit-label.css';
 
-import { CircularNodeView, configureModelElement, GLSPScrollMouseListener, PolylineEdgeView, SEdge, SPort } from '@eclipse-glsp/client/lib';
+import {
+    bindOrRebind,
+    CircularNodeView,
+    configureCommand,
+    configureModelElement,
+    EdgeCreationTool,
+    GEdge,
+    GLSPScrollMouseListener,
+    GPort,
+    PolylineEdgeView,
+    SelectionService
+} from '@eclipse-glsp/client/lib';
 import { ContainerModule, interfaces } from 'inversify';
 
-import { UML_TYPES } from '../../../di.types';
+import { UML_TYPES } from '../../../uml-glsp.types';
 import { NamedElement } from '../../elements';
 import { LifelineElement } from './elements';
 import { InteractionElement } from './elements/interacton.model';
@@ -22,8 +33,21 @@ import { SDLifelineAnchor } from './features/change-bounds/uml-custom-lifeline-a
 import { SDMovementRestrictor } from './features/change-bounds/uml-movement-restrictor';
 import { SDSelectionService } from './features/change-bounds/uml-selection-service';
 import { SDPolylineEdgeRouter } from './features/routing/uml-polyline-routing';
-import { SD_HORIZONTAL_SHIFT } from './features/tool-feedback/horizontal-shift-tool-feedback';
-import { SD_VERTICAL_SHIFT } from './features/tool-feedback/vertical-shift-tool-feedback';
+import {
+    SDDrawFeedbackPositionedEdgeCommand,
+    SDRemoveFeedbackPositionedEdgeCommand
+} from './features/tool-feedback/creation-tool-feedback.extension';
+import {
+    SDDrawHorizontalShiftCommand,
+    SDRemoveHorizontalShiftCommand,
+    SD_HORIZONTAL_SHIFT
+} from './features/tool-feedback/horizontal-shift-tool-feedback';
+import {
+    SDDrawVerticalShiftCommand,
+    SDRemoveVerticalShiftCommand,
+    SD_VERTICAL_SHIFT
+} from './features/tool-feedback/vertical-shift-tool-feedback';
+import { SDEdgeCreationTool } from './features/tools/edge-creation-tool.extension';
 import { SDHorizontalShiftNode, SDVerticalShiftNode } from './features/tools/model';
 import { SDShiftMouseTool } from './features/tools/shift-mouse-tool';
 import { SDShiftTool } from './features/tools/shift-tool';
@@ -43,8 +67,7 @@ export const umlSequenceDiagramModule = new ContainerModule((bind, unbind, isBou
 
     // TODO: Sequence Diagram specific
     unbind(UML_TYPES.ISnapper);
-    bind(SDSelectionService).toSelf().inSingletonScope();
-    rebind(UML_TYPES.SelectionService).toService(SDSelectionService);
+    bindOrRebind(context, SelectionService).to(SDSelectionService).inSingletonScope();
 
     bind(UML_TYPES.IMovementRestrictor).to(SDMovementRestrictor).inSingletonScope();
     rebind(UML_TYPES.IEdgeRouter).to(SDPolylineEdgeRouter);
@@ -52,6 +75,16 @@ export const umlSequenceDiagramModule = new ContainerModule((bind, unbind, isBou
     bind(SDScrollMouseListener).toSelf().inSingletonScope();
     rebind(GLSPScrollMouseListener).toService(SDScrollMouseListener);
     configureShiftTool(context);
+
+    bindOrRebind(context, EdgeCreationTool).to(SDEdgeCreationTool).inSingletonScope();
+
+    configureCommand({ bind, isBound }, SDDrawFeedbackPositionedEdgeCommand);
+    configureCommand({ bind, isBound }, SDRemoveFeedbackPositionedEdgeCommand);
+
+    configureCommand({ bind, isBound }, SDDrawVerticalShiftCommand);
+    configureCommand({ bind, isBound }, SDRemoveVerticalShiftCommand);
+    configureCommand({ bind, isBound }, SDDrawHorizontalShiftCommand);
+    configureCommand({ bind, isBound }, SDRemoveHorizontalShiftCommand);
 
     // INTERACTIONS
     configureModelElement(context, UmlSequenceTypes.INTERACTION, InteractionElement, InteractionNodeView);
@@ -72,19 +105,19 @@ export const umlSequenceDiagramModule = new ContainerModule((bind, unbind, isBou
     configureModelElement(context, UmlSequenceTypes.INTERACTION_USE, NamedElement, InteractionNodeView);
 
     // MESSAGE_OCCURRENCE
-    configureModelElement(context, UmlSequenceTypes.MESSAGE_OCCURRENCE, SPort, CircularNodeView);
+    configureModelElement(context, UmlSequenceTypes.MESSAGE_OCCURRENCE, GPort, CircularNodeView);
 
     // EXECUTION_OCCURRENCE
-    configureModelElement(context, UmlSequenceTypes.EXECUTION_OCCURRENCE, SPort, CircularNodeView);
+    configureModelElement(context, UmlSequenceTypes.EXECUTION_OCCURRENCE, GPort, CircularNodeView);
 
     // DESTRUCTION_OCCURRENCE
-    configureModelElement(context, UmlSequenceTypes.DESTRUCTION_OCCURRENCE, SPort, DestructionOccurrenceNodeView);
+    configureModelElement(context, UmlSequenceTypes.DESTRUCTION_OCCURRENCE, GPort, DestructionOccurrenceNodeView);
 
     // MESSAGES
-    configureModelElement(context, UmlSequenceTypes.MESSAGE, SEdge, PolylineEdgeView);
+    configureModelElement(context, UmlSequenceTypes.MESSAGE, GEdge, PolylineEdgeView);
 
     // MESSAGE_ANCHOR
-    configureModelElement(context, UmlSequenceTypes.MESSAGE_ANCHOR, SPort, CircularNodeView);
+    configureModelElement(context, UmlSequenceTypes.MESSAGE_ANCHOR, GPort, CircularNodeView);
 });
 
 export function configureShiftTool(context: { bind: interfaces.Bind; isBound: interfaces.IsBound }): void {

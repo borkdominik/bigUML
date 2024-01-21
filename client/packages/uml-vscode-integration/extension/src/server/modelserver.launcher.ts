@@ -6,13 +6,14 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { osUtils, UmlServerLauncherOptions } from '@borkdominik-biguml/uml-integration';
-import { ModelServerConfig } from '@borkdominik-biguml/uml-modelserver/lib/config';
 import { ContainerModule, inject, injectable } from 'inversify';
 import * as path from 'path';
 import { TYPES } from '../di.types';
+import { ModelServerConfig } from '../modelserver/config';
 import { OutputChannel } from '../vscode/output/output.channel';
-import { UVServerLauncher } from './launcher';
+import { UmlServerLauncherOptions } from './launcher';
+import { osUtils } from './os';
+import { UVServerLauncher } from './server-launcher';
 
 const MODEL_SERVER_PATH = '../server';
 const MODEL_SERVER_VERSION = '0.1.0-SNAPSHOT';

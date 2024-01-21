@@ -6,17 +6,13 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { Combobox, comboboxTemplate } from '@microsoft/fast-foundation';
+import { fastCombobox } from '@microsoft/fast-components';
 import { bigComboxboxStyles } from './combobox.style';
 
-export const bigCombobox = Combobox.compose({
-    baseName: 'combobox',
-    template: comboboxTemplate,
-    styles: bigComboxboxStyles as any,
-    shadowOptions: {
-        delegatesFocus: true
-    },
-    indicator: `
+export const bigCombobox = (): any =>
+    fastCombobox({
+        styles: bigComboxboxStyles as any,
+        indicator: `
     <svg 
         class="select-indicator"
         part="select-indicator"
@@ -33,4 +29,4 @@ export const bigCombobox = Combobox.compose({
         />
     </svg>
 `
-});
+    });

@@ -7,35 +7,29 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { Action, BaseGLSPTool, EnableToolsAction, KeyListener, KeyTool, SModelElement } from '@eclipse-glsp/client';
-import { inject, injectable } from 'inversify';
+import { Action, BaseEditTool, EnableToolsAction, GModelElement, KeyListener } from '@eclipse-glsp/client';
+import { injectable } from 'inversify';
 import { SDShiftMouseTool } from './shift-mouse-tool';
 
 // TODO: Sequence Diagram Specific
 @injectable()
-export class SDShiftTool extends BaseGLSPTool {
+export class SDShiftTool extends BaseEditTool {
     static ID = 'glsp.vertical-shift-tool';
 
     protected shiftKeyListener: SDShiftKeyListener = new SDShiftKeyListener();
-
-    @inject(KeyTool) protected readonly keytool: KeyTool;
 
     get id(): string {
         return SDShiftTool.ID;
     }
 
     enable(): void {
-        this.keyTool.register(this.shiftKeyListener);
-    }
-
-    disable(): void {
-        this.keyTool.deregister(this.shiftKeyListener);
+        this.toDisposeOnDisable.push(this.keyTool.registerListener(this.shiftKeyListener));
     }
 }
 
 @injectable()
 export class SDShiftKeyListener extends KeyListener {
-    override keyDown(element: SModelElement, event: KeyboardEvent): Action[] {
+    override keyDown(element: GModelElement, event: KeyboardEvent): Action[] {
         if (event.altKey) {
             return [EnableToolsAction.create([SDShiftMouseTool.ID])];
         }

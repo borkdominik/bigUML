@@ -23,15 +23,15 @@ import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.uml2.uml.DeploymentSpecification;
 
 import com.eclipsesource.uml.glsp.core.constants.CoreCSS;
+import com.eclipsesource.uml.glsp.uml.elements.classifier.GClassifierBuilder;
 import com.eclipsesource.uml.glsp.uml.gmodel.RepresentationGNodeMapper;
-import com.eclipsesource.uml.glsp.uml.gmodel.element.AttributesAndOperationsBuilder;
 import com.eclipsesource.uml.glsp.uml.gmodel.element.NamedElementGBuilder;
 import com.eclipsesource.uml.modelserver.unotation.Representation;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
 public class DeploymentSpecificationNodeMapper extends RepresentationGNodeMapper<DeploymentSpecification, GNode>
-   implements NamedElementGBuilder<DeploymentSpecification>, AttributesAndOperationsBuilder {
+   implements NamedElementGBuilder<DeploymentSpecification> {
 
    @Inject
    public DeploymentSpecificationNodeMapper(@Assisted final Representation representation) {
@@ -77,9 +77,13 @@ public class DeploymentSpecificationNodeMapper extends RepresentationGNodeMapper
    protected GCompartment buildCompartment(final DeploymentSpecification source) {
       var compartment = fixedChildrenCompartmentBuilder(source);
 
+      var classifier = new GClassifierBuilder<>(source, this);
+      var attributes = classifier.attributesAsGModels();
+      var operations = classifier.operationsAsGModels();
+
       compartment
-         .addAll(listOfAttributesAndOperations(source, mapHandler, source.getOwnedAttributes(),
-            source.getOwnedOperations()));
+         .addAll(attributes)
+         .addAll(operations);
 
       return compartment.build();
    }

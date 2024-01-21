@@ -1,38 +1,6 @@
-.sprotty {
-    height: 100%;
-    display: flex;
-}
-
-svg {
-    border-style: solid;
-    border-width: 1px;
-    border-color: var(--uml-edge);
-    height: 100%;
-    width: 100%;
-}
-
-.sprotty-graph {
-    background: var(--uml-diagram-background);
-    font-size: 15pt;
-    height: 100%;
-    width: 100%;
-}
-
 .sprotty text {
     fill: var(--uml-label);
     font-size: 100%;
-}
-
-.selection-feedback {
-    fill: none;
-}
-
-.selection-feedback.hover {
-    stroke-width: 0.75;
-}
-
-.selection-feedback.selected {
-    stroke-width: 1.5;
 }
 
 .sprotty-missing {
@@ -50,16 +18,4 @@ svg {
 
 .sprotty-popup-body > p {
     margin-bottom: 2px;
-}
-
-.sprotty-projection-bar.vertical.bordered-projection-bar {
-    width: var(--uml-scrollbar-rail-width);
-}
-
-.sprotty-projection-bar.horizontal.bordered-projection-bar {
-    height: var(--uml-scrollbar-rail-width);
-}
-
-.sprotty-projection-bar .projection-scroll-bar {
-    cursor: pointer;
 }

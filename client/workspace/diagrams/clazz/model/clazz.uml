@@ -88,6 +88,10 @@
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_Itf5ENIcEe2rY5KN6ehSig" value="1"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_ItggINIcEe2rY5KN6ehSig" value="1"/>
     </ownedAttribute>
+    <ownedAttribute xmi:id="_6e_uYH2CEe6bSrMxUmd9gg" name="NewProperty1">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_6fAVcH2CEe6bSrMxUmd9gg" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_6fA8gH2CEe6bSrMxUmd9gg" value="1"/>
+    </ownedAttribute>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="_j12MQL0cEe2besM683MlUA" name="NewClass8 a very ong name lets make it even longer" isAbstract="true">
     <ownedAttribute xmi:id="_ItggIdIcEe2rY5KN6ehSig" name="asd2" type="_LjfcIbSLEe2pkZx4lGC8Ew" association="_ItM-INIcEe2rY5KN6ehSig">
@@ -114,7 +118,7 @@
       <ownedParameter xmi:id="_8YNeEM5PEe2J1pPdCxXkdw" name="A" type="_MHjIALK1Ee24ffphK9Na6g"/>
       <ownedParameter xmi:id="_e-0x0dI3Ee2XPc95mjsJSg" name="B" type="_j12MQL0cEe2besM683MlUA" direction="return"/>
     </ownedOperation>
-    <ownedOperation xmi:id="_cnNi0A6TEe6YqPebT2u7JA" name="NewOperation2"/>
+    <ownedOperation xmi:id="_cnNi0A6TEe6YqPebT2u7JA" name="NewOperation2" isStatic="true"/>
     <ownedOperation xmi:id="_cwVCkA6TEe6YqPebT2u7JA" name="NewOperation3"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="_ItM-INIcEe2rY5KN6ehSig" memberEnd="_ItfSANIcEe2rY5KN6ehSig _ItggIdIcEe2rY5KN6ehSig"/>
@@ -132,4 +136,5 @@
   <packagedElement xmi:type="uml:Package" xmi:id="_ZWe34EQHEe6_cuHsPZbQUw" name="NewPackage3"/>
   <packagedElement xmi:type="uml:Interface" xmi:id="_1-NdoEXFEe6PxqGx6RvmrA" name="NewInterface2"/>
   <packagedElement xmi:type="uml:Abstraction" xmi:id="_pBi6cFb-Ee6LC_xTG-ChTA" client="_EWMPELK2Ee24ffphK9Na6g" supplier="_LjfcIbSLEe2pkZx4lGC8Ew"/>
+  <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_ts60gGzjEe6db6IJIcaasA" name="NewPrimitiveType2"/>
 </uml:Model>

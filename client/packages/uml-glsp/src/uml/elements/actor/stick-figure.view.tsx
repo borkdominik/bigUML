@@ -14,25 +14,20 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 import {
-    alignFeature,
     boundsFeature,
-    fadeFeature,
-    layoutableChildFeature,
+    fadeFeature, GCompartment, GNode, GShapeElement, layoutableChildFeature,
     layoutContainerFeature,
-    RenderingContext,
-    SCompartment,
-    ShapeView,
-    SNode,
-    SShapeElement,
-    svg
+    RenderingContext, ShapeView, svg
 } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 import { VNode } from 'snabbdom';
+// eslint-disable-next-line no-restricted-imports
+import { alignFeature } from 'sprotty';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const JSX = { createElement: svg };
 
-export class StickFigureNode extends SShapeElement {
+export class StickFigureNode extends GShapeElement {
     static readonly DEFAULT_FEATURES = [boundsFeature, layoutContainerFeature, fadeFeature, alignFeature, layoutableChildFeature];
 }
 
@@ -43,7 +38,7 @@ export class StickFigureView extends ShapeView {
             return undefined;
         }
 
-        const actorParentNode = (element.parent as SCompartment).parent as SNode;
+        const actorParentNode = (element.parent as GCompartment).parent as GNode;
 
         return (
             <g class-selected={actorParentNode.selected} class-mouseover={actorParentNode.hoverFeedback}>

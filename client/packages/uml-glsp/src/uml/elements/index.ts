@@ -43,6 +43,7 @@ export * from './operation/operation.element';
 export * from './package-import/package-import.element';
 export * from './package-merge/package-merge.element';
 export * from './package/package.element';
+export * from './parameter/parameter-element';
 export * from './pin/pin.element';
 export * from './primitive-type/primitive-type.element';
 export * from './property/property-element';

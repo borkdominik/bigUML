@@ -21,7 +21,9 @@ export function configureDefaultCommands(context: CommandContext): void {
 
     let selectedElements: string[] = [];
 
-    extensionContext.subscriptions.push(connector.onSelectionUpdate(_selectedElements => (selectedElements = _selectedElements)));
+    extensionContext.subscriptions.push(
+        connector.onSelectionUpdate(_selectedElements => (selectedElements = _selectedElements.selectedElementsIDs))
+    );
 
     extensionContext.subscriptions.push(
         vscode.commands.registerCommand(`${diagramPrefix}.fit`, () => {
@@ -48,8 +50,8 @@ export function configureDefaultCommands(context: CommandContext): void {
 
     extensionContext.subscriptions.push(
         connector.onSelectionUpdate(n => {
-            selectedElements = n;
-            vscode.commands.executeCommand('setContext', `${diagramPrefix}.editorSelectedElementsAmount`, n.length);
+            selectedElements = n.selectedElementsIDs;
+            vscode.commands.executeCommand('setContext', `${diagramPrefix}.editorSelectedElementsAmount`, selectedElements.length);
         })
     );
 }

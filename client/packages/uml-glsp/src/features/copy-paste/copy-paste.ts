@@ -9,11 +9,11 @@
 import {
     Args,
     containerFeature,
+    GChildElement,
+    GModelElement,
     MouseListener,
     PasteOperation,
-    SChildElement,
-    ServerCopyPasteHandler,
-    SModelElement
+    ServerCopyPasteHandler
 } from '@eclipse-glsp/client';
 import { Action } from '@eclipse-glsp/protocol';
 import { inject, injectable } from 'inversify';
@@ -36,19 +36,19 @@ function getClipboardIdFromDataTransfer(dataTransfer: DataTransfer): string | un
 
 @injectable()
 export class LastContainableElementTracker extends MouseListener {
-    private lastContainableElement?: SChildElement;
+    private lastContainableElement?: GChildElement;
 
-    public get(): SChildElement | undefined {
+    public get(): GChildElement | undefined {
         return this.lastContainableElement;
     }
 
-    override mouseOver(target: SModelElement, event: MouseEvent): Action[] {
+    override mouseOver(target: GModelElement, event: MouseEvent): Action[] {
         let container = target;
-        while (!container.hasFeature(containerFeature) && container instanceof SChildElement) {
+        while (!container.hasFeature(containerFeature) && container instanceof GChildElement) {
             container = container.parent;
         }
 
-        if (container instanceof SChildElement) {
+        if (container instanceof GChildElement) {
             this.lastContainableElement = container;
         } else {
             this.lastContainableElement = undefined;
@@ -58,13 +58,13 @@ export class LastContainableElementTracker extends MouseListener {
 }
 
 @injectable()
-export class CustomCopyPasteHandler extends ServerCopyPasteHandler {
+export class UmlServerCopyPasteHandler extends ServerCopyPasteHandler {
     @inject(LastContainableElementTracker) protected containableElementTracker: LastContainableElementTracker;
 
     override handlePaste(event: ClipboardEvent): void {
         if (event.clipboardData && this.shouldPaste(event)) {
             const clipboardId = getClipboardIdFromDataTransfer(event.clipboardData);
-            const clipboardData = this.clipboadService.get(clipboardId);
+            const clipboardData = this.clipboardService.get(clipboardId);
             const containableElement = this.containableElementTracker.get();
 
             if (clipboardData) {

@@ -24,10 +24,10 @@ import com.google.inject.Inject;
 
 public class GModelMapHandler {
    @Inject
-   private GModelMapperRegistry registry;
+   protected GModelMapperRegistry registry;
 
    @Inject
-   private UmlModelState modelState;
+   protected UmlModelState modelState;
 
    public GModelElement handle(final EObject source) {
       var representation = modelState.getUnsafeRepresentation();

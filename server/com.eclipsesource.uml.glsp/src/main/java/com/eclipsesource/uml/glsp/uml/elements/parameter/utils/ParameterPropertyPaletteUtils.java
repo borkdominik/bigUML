@@ -59,18 +59,23 @@ public class ParameterPropertyPaletteUtils {
    public static String asText(final Parameter parameter) {
       var direction = parameter.getDirection().getLiteral();
       var name = parameter.getName();
-      var type = TypeUtils.name(parameter.getType(), null);
-      if (type == null) {
-         return String.format("%s %s", direction, name);
+      var type = TypeUtils.asText(parameter.getType(), null, parameter);
+
+      var label = direction + " " + name;
+
+      if (type != null) {
+         label += " " + type;
       }
 
-      return String.format("%s %s: %s", direction, name, type);
+      return label;
    }
 
    public static String asHint(final Parameter parameter) {
       var direction = parameter.getDirection().getLiteral();
-      var type = TypeUtils.name(parameter.getType());
+      var type = TypeUtils.asText(parameter.getType(), parameter);
 
-      return String.format("%s: %s", direction, type);
+      var label = direction + " " + type;
+
+      return label;
    }
 }

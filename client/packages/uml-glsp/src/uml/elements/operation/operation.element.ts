@@ -7,12 +7,12 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { UmlDiagramType } from '@borkdominik-biguml/uml-common';
-import { configureModelElement, SCompartmentView } from '@eclipse-glsp/client';
+import { UmlDiagramType } from '@borkdominik-biguml/uml-protocol';
+import { configureModelElement } from '@eclipse-glsp/client';
 import { DefaultTypes } from '@eclipse-glsp/protocol';
 import { interfaces } from 'inversify';
-import { InteractableCompartment } from '../../../graph/base/compartment';
 import { QualifiedUtil } from '../../qualified.utils';
+import { NamedElement, NamedElementView } from '../index';
 
 export function registerOperationElement(
     context: { bind: interfaces.Bind; isBound: interfaces.IsBound },
@@ -20,8 +20,8 @@ export function registerOperationElement(
 ): void {
     configureModelElement(
         context,
-        QualifiedUtil.representationTypeId(representation, DefaultTypes.COMPARTMENT, 'Operation'),
-        InteractableCompartment,
-        SCompartmentView
+        QualifiedUtil.representationTypeId(representation, DefaultTypes.NODE, 'Operation'),
+        NamedElement,
+        NamedElementView
     );
 }

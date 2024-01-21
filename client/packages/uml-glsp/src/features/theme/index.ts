@@ -6,6 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-export * from './di.config';
+
 export * from './theme.actions';
 export * from './theme.manager';
+export * from './uml-theme.module';

@@ -13,11 +13,11 @@ package com.eclipsesource.uml.modelserver.uml.elements.parameter;
 import java.util.Optional;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.uml2.uml.Abstraction;
+import org.eclipse.uml2.uml.Parameter;
 
 import com.eclipsesource.uml.modelserver.core.manifest.DiagramManifest;
 import com.eclipsesource.uml.modelserver.uml.behavior.Behavior;
-import com.eclipsesource.uml.modelserver.uml.behavior.cross_delete.BaseCrossReferenceDeleteBehavior;
+import com.eclipsesource.uml.modelserver.uml.behavior.cross_delete.DescendantBasedCrossReferenceDeleteBehavior;
 import com.eclipsesource.uml.modelserver.uml.command.provider.element.NodeCommandProvider;
 import com.eclipsesource.uml.modelserver.uml.manifest.NodeCommandProviderDefinition;
 import com.google.inject.TypeLiteral;
@@ -36,7 +36,7 @@ public class ParameterDefinitionModule extends NodeCommandProviderDefinition {
 
    @Override
    protected void behaviors(final Multibinder<Behavior<? extends EObject>> contributions) {
-      contributions.addBinding().to(new TypeLiteral<BaseCrossReferenceDeleteBehavior<Abstraction>>() {});
+      contributions.addBinding().to(new TypeLiteral<DescendantBasedCrossReferenceDeleteBehavior<Parameter>>() {});
    }
 
 }

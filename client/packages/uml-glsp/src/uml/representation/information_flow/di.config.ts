@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { UmlDiagramType } from '@borkdominik-biguml/uml-common';
+import { UmlDiagramType } from '@borkdominik-biguml/uml-protocol';
 import { ContainerModule } from 'inversify';
 import { registerActorElement, registerClassElement, registerInformationFlowElement } from '../../elements/index';
 

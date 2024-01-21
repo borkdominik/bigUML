@@ -16,4 +16,14 @@
     <position x="700.0" y="20.0"/>
     <size width="334.255202293396" height="186.5"/>
   </elements>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_PvjcgH40Ee6bSrMxUmd9gg"/>
+    <position x="290.0" y="480.0"/>
+    <size width="120.0" height="70.0"/>
+  </elements>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_qhp7IH42Ee6bSrMxUmd9gg"/>
+    <position/>
+    <size width="160.0" height="50.0"/>
+  </elements>
 </unotation:UmlDiagram>

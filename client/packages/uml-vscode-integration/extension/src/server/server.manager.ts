@@ -6,12 +6,13 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { java, UmlServerLauncher } from '@borkdominik-biguml/uml-integration';
 import { ContainerModule, inject, injectable, multiInject } from 'inversify';
 import * as vscode from 'vscode';
 import { TYPES } from '../di.types';
 import { VSCodeSettings } from '../language';
 import { OutputChannel } from '../vscode/output/output.channel';
+import { java } from './java';
+import { UmlServerLauncher } from './launcher';
 
 export interface ServerManagerStateListener {
     serverManagerStateChanged(manager: ServerManager, state: ServerManager.State): void | Promise<void>;
@@ -164,7 +165,7 @@ export class ServerManager {
 }
 
 export namespace ServerManager {
-    export const MIN_JAVA = 11;
+    export const MIN_JAVA = 17;
     export const JAVA_MISSING_MESSAGE = `Starting bigUML failed. Please install Java ${MIN_JAVA}+ on your machine.`;
 
     export type ActiveState = 'none' | 'error' | 'assertion-succeeded' | 'launching-server' | 'servers-launched';

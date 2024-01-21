@@ -12,7 +12,7 @@ package com.eclipsesource.uml.glsp.uml.elements.package_merge;
 
 import com.eclipsesource.uml.glsp.uml.configuration.di.EdgeConfigurationFactory;
 import com.eclipsesource.uml.glsp.uml.elements.package_merge.features.PackageMergePropertyMapper;
-import com.eclipsesource.uml.glsp.uml.elements.package_merge.gmodel.PackageMergeEdgeMapper;
+import com.eclipsesource.uml.glsp.uml.elements.package_merge.gmodel.PackageMergeGModelMapper;
 import com.eclipsesource.uml.glsp.uml.features.property_palette.di.PropertyMapperFactory;
 import com.eclipsesource.uml.glsp.uml.gmodel.di.GModelMapperFactory;
 import com.eclipsesource.uml.glsp.uml.handler.di.EdgeOperationHandlerFactory;
@@ -25,7 +25,7 @@ public interface PackageMergeFactory
    PackageMergeConfiguration edgeConfiguration(Representation representation);
 
    @Override
-   PackageMergeEdgeMapper gmodel(Representation representation);
+   PackageMergeGModelMapper gmodel(Representation representation);
 
    @Override
    PackageMergeOperationHandler edgeOperationHandler(Representation representation);

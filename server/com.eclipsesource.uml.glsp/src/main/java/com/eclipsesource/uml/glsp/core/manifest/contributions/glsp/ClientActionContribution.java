@@ -13,7 +13,7 @@ package com.eclipsesource.uml.glsp.core.manifest.contributions.glsp;
 import java.util.function.Consumer;
 
 import org.eclipse.glsp.server.actions.Action;
-import org.eclipse.glsp.server.di.GLSPModule;
+import org.eclipse.glsp.server.di.ClientSessionModule;
 
 import com.eclipsesource.uml.modelserver.shared.manifest.supplier.ContributionBinderSupplier;
 import com.google.inject.multibindings.Multibinder;
@@ -23,6 +23,7 @@ public interface ClientActionContribution extends ContributionBinderSupplier {
 
    default void contributeClientActions(
       final Consumer<Multibinder<Action>> consumer) {
-      consumer.accept(Multibinder.newSetBinder(contributionBinder(), Action.class, Names.named(GLSPModule.CLIENT_ACTIONS)));
+      consumer.accept(
+         Multibinder.newSetBinder(contributionBinder(), Action.class, Names.named(ClientSessionModule.CLIENT_ACTIONS)));
    }
 }

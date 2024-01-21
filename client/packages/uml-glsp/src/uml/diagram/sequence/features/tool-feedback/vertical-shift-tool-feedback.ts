@@ -11,10 +11,10 @@ import {
     CommandExecutionContext,
     CommandReturn,
     FeedbackCommand,
+    GChildElement,
+    GModelElement,
+    GModelRoot,
     MouseListener,
-    SChildElement,
-    SModelElement,
-    SModelRoot,
     TYPES
 } from '@eclipse-glsp/client';
 import { Action, hasObjectProp, Point } from '@eclipse-glsp/protocol';
@@ -86,12 +86,12 @@ export class SDVerticalShiftEndMovingMouseListener extends MouseListener {
         super();
     }
 
-    override mouseMove(target: SModelElement, event: MouseEvent): Action[] {
+    override mouseMove(target: GModelElement, event: MouseEvent): Action[] {
         return [];
     }
 }
 
-export function SDverticalShiftId(root: SModelRoot): string {
+export function SDverticalShiftId(root: GModelRoot): string {
     return root.id + '_' + SD_VERTICAL_SHIFT;
 }
 
@@ -113,9 +113,9 @@ export function SDdrawVerticalShift(context: CommandExecutionContext, startPoint
     root.add(verticalShift);
 }
 
-export function SDremoveVerticalShift(root: SModelRoot): void {
+export function SDremoveVerticalShift(root: GModelRoot): void {
     const verticalShift = root.index.getById(SDverticalShiftId(root));
-    if (verticalShift instanceof SChildElement) {
+    if (verticalShift instanceof GChildElement) {
         root.remove(verticalShift);
     }
 }

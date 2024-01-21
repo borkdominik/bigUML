@@ -7,33 +7,33 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import {
-    BaseGLSPTool,
+    BaseEditTool,
     BoundsAware,
     CursorCSS,
     cursorFeedbackAction,
     DragAwareMouseListener,
     EnableDefaultToolsAction,
     forEachElement,
+    GChildElement,
     getAbsolutePosition,
+    GModelElement,
+    GModelRoot,
     isNonRoutableSelectedMovableBoundsAware,
     isSelectable,
     PointPositionUpdater,
-    SChildElement,
-    SModelElement,
-    SModelRoot,
     toAbsoluteBounds,
     toElementAndBounds
 } from '@eclipse-glsp/client';
 import { Action, ChangeBoundsOperation, ElementAndBounds, Operation, Point, SelectAction, SetBoundsAction } from '@eclipse-glsp/protocol';
 import { inject, injectable, optional } from 'inversify';
-import { UML_TYPES } from '../../../../../di.types';
+import { UML_TYPES } from '../../../../../uml-glsp.types';
 import { SDRemoveHorizontalShiftAction } from '../tool-feedback/horizontal-shift-tool-feedback';
 import { SDRemoveVerticalShiftAction } from '../tool-feedback/vertical-shift-tool-feedback';
 import { SDIShiftBehavior, SDShiftUtil } from './shift-behavior';
 
 // TODO: Sequence Diagram Specific
 @injectable()
-export class SDShiftMouseTool extends BaseGLSPTool {
+export class SDShiftMouseTool extends BaseEditTool {
     static ID = 'glsp.shift-mouse-tool';
 
     @inject(UML_TYPES.IShiftBehavior) @optional() protected shiftBehavior: SDIShiftBehavior;
@@ -44,21 +44,21 @@ export class SDShiftMouseTool extends BaseGLSPTool {
         return SDShiftMouseTool.ID;
     }
 
-    enable(): void {
-        this.shiftElementsMouseListener = new SDShiftElementsMouseListener(this.editorContext.modelRoot, this.shiftBehavior);
-        this.mouseTool.register(this.shiftElementsMouseListener);
-        this.dispatchFeedback([cursorFeedbackAction(CursorCSS.MOVE)]);
+    protected createShiftElementsMouseListener(): DragAwareMouseListener {
+        return new SDShiftElementsMouseListener(this.editorContext.modelRoot, this.shiftBehavior);
     }
 
-    disable(): void {
-        this.mouseTool.deregister(this.shiftElementsMouseListener);
-        this.deregisterFeedback([cursorFeedbackAction()]);
+    enable(): void {
+        this.toDisposeOnDisable.push(
+            this.mouseTool.registerListener(this.createShiftElementsMouseListener()),
+            this.registerFeedback([cursorFeedbackAction(CursorCSS.MOVE)], this, [cursorFeedbackAction()])
+        );
     }
 }
 
 export class SDShiftElementsMouseListener extends DragAwareMouseListener {
     protected shiftUtil: SDShiftUtil;
-    protected elements: (SModelElement & BoundsAware)[];
+    protected elements: (GModelElement & BoundsAware)[];
     protected edges: SVGGElement[];
     protected previouslySelected: string[];
     protected isActive = false;
@@ -67,21 +67,21 @@ export class SDShiftElementsMouseListener extends DragAwareMouseListener {
     protected shiftOrientation: string;
     protected lastPosition: Point;
     protected pointPositionUpdater: PointPositionUpdater;
-    protected initalTarget: SModelElement;
+    protected initalTarget: GModelElement;
 
-    constructor(root: SModelRoot, shiftBehavior: SDIShiftBehavior | undefined) {
+    constructor(root: GModelRoot, shiftBehavior: SDIShiftBehavior | undefined) {
         super();
         this.shiftUtil = new SDShiftUtil(shiftBehavior);
         this.elements = Array.from(
             root.index
                 .all()
-                .map(e => e as SModelElement & BoundsAware)
+                .map(e => e as GModelElement & BoundsAware)
                 .filter(e => isSelectable(e))
         );
         this.pointPositionUpdater = new PointPositionUpdater();
     }
 
-    override mouseDown(target: SModelElement, event: MouseEvent): Action[] {
+    override mouseDown(target: GModelElement, event: MouseEvent): Action[] {
         this.isActive = true;
         this.startmouseDownPosition = getAbsolutePosition(target, event);
         this.lastPosition = this.startmouseDownPosition;
@@ -90,7 +90,7 @@ export class SDShiftElementsMouseListener extends DragAwareMouseListener {
         return [SelectAction.create({ deselectedElementsIDs: this.elements.map(e => e.id) })];
     }
 
-    override mouseMove(target: SModelElement, event: MouseEvent): Action[] {
+    override mouseMove(target: GModelElement, event: MouseEvent): Action[] {
         const actions: Action[] = [];
         if (this.isActive) {
             const newPosition = getAbsolutePosition(target, event);
@@ -133,7 +133,7 @@ export class SDShiftElementsMouseListener extends DragAwareMouseListener {
         return actions;
     }
 
-    override mouseUp(target: SModelElement, event: MouseEvent): Action[] {
+    override mouseUp(target: GModelElement, event: MouseEvent): Action[] {
         this.isActive = false;
         const actions: Action[] = [
             SDRemoveVerticalShiftAction.create(),
@@ -145,14 +145,14 @@ export class SDShiftElementsMouseListener extends DragAwareMouseListener {
         return actions;
     }
 
-    protected handleMoveElementsOnServer(target: SModelElement): Operation[] {
+    protected handleMoveElementsOnServer(target: GModelElement): Operation[] {
         const result: Operation[] = [];
         const newBounds: ElementAndBounds[] = [];
-        const selectedElements: (SModelElement & BoundsAware)[] = [];
+        const selectedElements: (GModelElement & BoundsAware)[] = [];
         forEachElement(target.index, isNonRoutableSelectedMovableBoundsAware, element => {
             selectedElements.push(element);
         });
-        const selectionSet: Set<SModelElement & BoundsAware> = new Set(selectedElements);
+        const selectionSet: Set<GModelElement & BoundsAware> = new Set(selectedElements);
 
         selectedElements
             .filter(element => !this.isChildOfSelected(selectionSet, element))
@@ -164,16 +164,16 @@ export class SDShiftElementsMouseListener extends DragAwareMouseListener {
         return result;
     }
 
-    protected handleMoveElementsOnClient(target: SModelElement, offset: Point): Action[] {
+    protected handleMoveElementsOnClient(target: GModelElement, offset: Point): Action[] {
         const result: Action[] = [];
         const newBounds: ElementAndBounds[] = [];
-        const selectedElements: (SModelElement & BoundsAware)[] = [];
+        const selectedElements: (GModelElement & BoundsAware)[] = [];
 
         forEachElement(target.index, isNonRoutableSelectedMovableBoundsAware, element => {
             selectedElements.push(element);
         });
 
-        const selectionSet: Set<SModelElement & BoundsAware> = new Set(selectedElements);
+        const selectionSet: Set<GModelElement & BoundsAware> = new Set(selectedElements);
 
         selectedElements
             .filter(element => !this.isChildOfSelected(selectionSet, element))
@@ -188,8 +188,8 @@ export class SDShiftElementsMouseListener extends DragAwareMouseListener {
     }
 
     // copy from change-bounds-tool
-    protected isChildOfSelected(selectedElements: Set<SModelElement>, element: SModelElement): boolean {
-        while (element instanceof SChildElement) {
+    protected isChildOfSelected(selectedElements: Set<GModelElement>, element: GModelElement): boolean {
+        while (element instanceof GChildElement) {
             element = element.parent;
             if (selectedElements.has(element)) {
                 return true;

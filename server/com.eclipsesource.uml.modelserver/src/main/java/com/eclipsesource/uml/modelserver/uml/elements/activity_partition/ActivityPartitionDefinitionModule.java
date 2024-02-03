@@ -12,10 +12,16 @@ package com.eclipsesource.uml.modelserver.uml.elements.activity_partition;
 
 import java.util.Optional;
 
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.uml2.uml.ActivityPartition;
+
 import com.eclipsesource.uml.modelserver.core.manifest.DiagramManifest;
+import com.eclipsesource.uml.modelserver.uml.behavior.Behavior;
+import com.eclipsesource.uml.modelserver.uml.behavior.cross_delete.DescendantBasedCrossReferenceDeleteBehavior;
 import com.eclipsesource.uml.modelserver.uml.command.provider.element.NodeCommandProvider;
 import com.eclipsesource.uml.modelserver.uml.manifest.NodeCommandProviderDefinition;
 import com.google.inject.TypeLiteral;
+import com.google.inject.multibindings.Multibinder;
 
 public class ActivityPartitionDefinitionModule extends NodeCommandProviderDefinition {
 
@@ -26,5 +32,12 @@ public class ActivityPartitionDefinitionModule extends NodeCommandProviderDefini
    @Override
    protected Optional<TypeLiteral<? extends NodeCommandProvider<?, ?>>> commandProvider() {
       return Optional.of(new TypeLiteral<ActivityPartitionCommandProvider>() {});
+   }
+
+   @Override
+   protected void behaviors(final Multibinder<Behavior<? extends EObject>> contributions) {
+      super.behaviors(contributions);
+      contributions.addBinding()
+         .to(new TypeLiteral<DescendantBasedCrossReferenceDeleteBehavior<ActivityPartition>>() {});
    }
 }

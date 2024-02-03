@@ -79,6 +79,10 @@ public class GCList extends GCModelList<EObject, GModelElement> implements GCIde
 
    @Override
    protected Optional<GModelElement> createRootGModel() {
+      if (this.options.rootGModel.isPresent()) {
+         return this.options.rootGModel;
+      }
+
       return Optional.of(new UmlGCompartmentBuilder<>(origin, context)
          .withVBoxLayout()
          .addLayoutOptions(new UmlGLayoutOptions()
@@ -89,6 +93,7 @@ public class GCList extends GCModelList<EObject, GModelElement> implements GCIde
 
    public static class Options {
       public boolean dividerBeforeInserts = false;
+      public Optional<GModelElement> rootGModel = Optional.empty();
    }
 
 }

@@ -12,7 +12,7 @@ import { configureModelElement, GEdge, GEdgeView } from '@eclipse-glsp/client';
 import { DefaultTypes } from '@eclipse-glsp/protocol';
 import { interfaces } from 'inversify';
 import { QualifiedUtil } from '../../qualified.utils';
-import { GEditableLabel } from '../../views/label.view';
+import { GEditableLabel } from '../../views/uml-label.view';
 import { MessageArrowLabelView } from './message-arrow-label.view';
 
 export function registerMessageElement(

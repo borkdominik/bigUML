@@ -12,7 +12,7 @@ import { configureModelElement } from '@eclipse-glsp/client';
 import { DefaultTypes } from '@eclipse-glsp/protocol';
 import { interfaces } from 'inversify';
 import { QualifiedUtil } from '../../qualified.utils';
-import { GEditableLabel, GEditableLabelView } from '../../views/label.view';
+import { GEditableLabel, GEditableLabelView } from '../../views/uml-label.view';
 import { NamedElement, NamedElementView } from '../index';
 
 export function registerPropertyElement(

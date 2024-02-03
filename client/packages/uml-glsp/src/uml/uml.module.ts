@@ -8,11 +8,12 @@
  *********************************************************************************/
 import { configureModelElement, GCompartmentView, GLabel, GLabelView } from '@eclipse-glsp/client';
 import { ContainerModule } from 'inversify';
-import { GInteractableCompartment } from '../views/compartment';
+import { GUmlCompartment } from '../views/uml-compartment';
 import { UmlGModelTypes } from './uml.types';
-import { GDivider, GDividerView } from './views/divider.view';
-import { GIconCSS, GIconCSSView } from './views/icon.view';
-import { GEditableLabel, GEditableLabelView } from './views/label.view';
+import { GCompartmentContainer } from './views/uml-compartment';
+import { GDivider, GDividerView } from './views/uml-divider.view';
+import { GIconCSS, GIconCSSView } from './views/uml-icon.view';
+import { GEditableLabel, GEditableLabelView } from './views/uml-label.view';
 
 export const umlModule = new ContainerModule((bind, unbind, isBound, rebind) => {
     const context = { bind, unbind, isBound, rebind };
@@ -22,5 +23,6 @@ export const umlModule = new ContainerModule((bind, unbind, isBound, rebind) => 
     configureModelElement(context, UmlGModelTypes.LABEL_TEXT, GLabel, GLabelView);
     configureModelElement(context, UmlGModelTypes.ICON_CSS, GIconCSS, GIconCSSView);
     configureModelElement(context, UmlGModelTypes.DIVIDER, GDivider, GDividerView);
-    configureModelElement(context, UmlGModelTypes.COMPARTMENT_INTERACTABLE, GInteractableCompartment, GCompartmentView);
+    configureModelElement(context, UmlGModelTypes.COMPARTMENT_HEADER, GUmlCompartment, GCompartmentView);
+    configureModelElement(context, UmlGModelTypes.COMPARTMENT_CONTAINER, GCompartmentContainer, GCompartmentView);
 });

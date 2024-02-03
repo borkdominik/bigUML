@@ -9,9 +9,9 @@
 
 import { configureDefaultModelElements, configureModelElement, GCompartmentView, GGraph, TYPES } from '@eclipse-glsp/client';
 import { DefaultTypes, FeatureModule } from '@eclipse-glsp/protocol';
-import { GUmlCompartment } from './compartment';
 import { CompartmentSelectionFeedback } from './processors/feedback.postprocessor';
 import { SVGIdCreatorService } from './services/svg-id-creator.service';
+import { GUmlCompartment } from './uml-compartment';
 import { UmlGraphProjectionView } from './uml-graph-projection.view';
 
 export const umlBaseViewsModule = new FeatureModule((bind, unbind, isBound, rebind) => {

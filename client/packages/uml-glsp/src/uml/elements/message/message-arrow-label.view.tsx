@@ -19,7 +19,7 @@ import {
 } from '@eclipse-glsp/client';
 import { inject, injectable } from 'inversify';
 import { VNode } from 'snabbdom';
-import { GEditableLabel } from '../../views/label.view';
+import { GEditableLabel } from '../../views/uml-label.view';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const JSX = { createElement: svg };

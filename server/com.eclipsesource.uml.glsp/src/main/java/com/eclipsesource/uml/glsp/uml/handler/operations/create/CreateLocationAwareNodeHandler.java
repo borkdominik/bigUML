@@ -19,6 +19,7 @@ import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.utils.LayoutUtil;
 
+import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 import com.eclipsesource.uml.glsp.core.gmodel.builder.CompartmentGBuilder;
 import com.eclipsesource.uml.glsp.core.model.UmlModelState;
 
@@ -39,7 +40,33 @@ public interface CreateLocationAwareNodeHandler {
    }
 
    default Optional<GModelElement> getChildrenContainer(final UmlModelState modelState, final GModelElement container) {
-      return container.getChildren().stream().filter(GCompartment.class::isInstance)
-         .filter(comp -> comp.getArgs().containsKey(CompartmentGBuilder.childrenContainerKey)).findFirst();
+      var childContainer = container.getChildren()
+         .stream()
+         .filter(GCompartment.class::isInstance)
+         .filter(comp -> comp.getArgs().containsKey(CompartmentGBuilder.childrenContainerKey))
+         .findFirst();
+
+      if (childContainer.isPresent()) {
+         return childContainer;
+      }
+
+      var rootComponentContainer = container.getChildren()
+         .stream()
+         .filter(GCompartment.class::isInstance)
+         .filter(comp -> comp.getType().equals(CoreTypes.COMPARTMENT_ROOT_COMPONENT))
+         .findFirst();
+
+      if (rootComponentContainer.isPresent()) {
+         return rootComponentContainer.flatMap(c -> {
+            Optional<GModelElement> child = c.getChildren().stream()
+               .filter(GCompartment.class::isInstance)
+               .filter(comp -> comp.getType().equals(CoreTypes.COMPARTMENT_CONTAINER))
+               .findFirst();
+
+            return child;
+         });
+      }
+
+      return Optional.empty();
    }
 }

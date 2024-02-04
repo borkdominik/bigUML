@@ -23,6 +23,7 @@ import { umlBaseModule } from './base/uml-base.module';
 import { umlBoundsModule } from './features/bounds/uml-bounds.module';
 import { umlCopyPasteModule } from './features/copy-paste/uml-copy-paste.module';
 import { umlEditModule } from './features/edit/uml-edit.module';
+import { umlTypeHintsModule } from './features/hints/uml-type-hints.module';
 import { umlLoadingModule } from './features/loading/uml-loading.module';
 import { umlOutlineModule } from './features/outline/uml-outline.module';
 import { umlPropertyPaletteModule } from './features/property-palette/uml-property-palette.module';
@@ -52,6 +53,7 @@ export function initializeUmlDiagramContainer(container: Container, ...container
         umlToolManagerModule,
         umlOutlineModule,
         umlPropertyPaletteModule,
+        umlTypeHintsModule,
         { add: umlToolPaletteModule, remove: toolPaletteModule },
         { add: umlEdgeEditToolModule, remove: edgeEditToolModule },
         ...umlDiagramModules,

@@ -101,6 +101,12 @@ public class UmlDiagramConfiguration extends BaseDiagramConfiguration {
          .map(contribution -> contribution.getTypeMappings())
          .forEach(mappings::putAll));
 
+      nodeConfigurations.values().stream().flatMap(c -> c.stream())
+         .map(c -> c.getTypeMappings())
+         .forEach(typeMappings -> {
+            mappings.putAll(typeMappings);
+         });
+
       edgeConfigurations.values().stream().flatMap(c -> c.stream())
          .map(c -> c.getTypeMappings())
          .forEach(typeMappings -> {

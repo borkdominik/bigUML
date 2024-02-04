@@ -11,7 +11,7 @@
 import { CircularNodeView, RenderingContext, svg } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 import { VNode } from 'snabbdom';
-import { GLabeledNode } from '../../views/label.view';
+import { GLabeledNode } from '../../views/uml-label.view';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const JSX = { createElement: svg };

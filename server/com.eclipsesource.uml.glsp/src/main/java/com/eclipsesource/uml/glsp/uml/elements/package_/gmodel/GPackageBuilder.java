@@ -18,10 +18,8 @@ import org.eclipse.glsp.graph.GNode;
 import org.eclipse.uml2.uml.Package;
 import org.eclipse.uml2.uml.PackageableElement;
 
-import com.eclipsesource.uml.glsp.core.constants.QuotationMark;
 import com.eclipsesource.uml.glsp.sdk.cdk.GModelContext;
 import com.eclipsesource.uml.glsp.sdk.cdk.base.GCProvider;
-import com.eclipsesource.uml.glsp.sdk.cdk.gmodel.GCModelElement;
 import com.eclipsesource.uml.glsp.sdk.cdk.gmodel.GCModelList;
 import com.eclipsesource.uml.glsp.sdk.ui.builder.GCNodeBuilder;
 import com.eclipsesource.uml.glsp.uml.elements.named_element.GCNamedElement;
@@ -44,24 +42,23 @@ public class GPackageBuilder<TOrigin extends Package> extends GCNodeBuilder<TOri
 
    protected GCProvider createHeader(final GCModelList<?, ?> root) {
       var namedElementOptions = new GCNamedElement.Options(root);
-      namedElementOptions.prefix.add(QuotationMark.quoteDoubleAngle("interface"));
-
       return new GCNamedElement<>(context, origin, namedElementOptions);
    }
 
    protected GCProvider createBody(final GCModelList<?, ?> root) {
-      var comp = new UmlGCompartmentBuilder<>(origin, context)
+      var list = new GCModelList<>(context, origin, new UmlGCompartmentBuilder<>(origin, context)
          .withFreeformLayout()
-         .addAll(packageableElements().stream()
-            .map(e -> context.gmodelMapHandler().handle(e))
-            .collect(Collectors.toList()))
-         .addAll(packageableElements().stream()
-            .map(e -> context.gmodelMapHandler().handleSiblings(e))
-            .flatMap(Collection::stream)
-            .collect(Collectors.toList()))
-         .build();
+         .build());
 
-      return new GCModelElement<>(context, origin, comp);
+      list.addAllGModels(packageableElements().stream()
+         .map(e -> context.gmodelMapHandler().handle(e))
+         .collect(Collectors.toList()));
+      list.addAllGModels(packageableElements().stream()
+         .map(e -> context.gmodelMapHandler().handleSiblings(e))
+         .flatMap(Collection::stream)
+         .collect(Collectors.toList()));
+
+      return list;
    }
 
    /*-

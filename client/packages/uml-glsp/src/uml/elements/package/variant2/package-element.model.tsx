@@ -14,6 +14,6 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 
-import { GLabeledNode } from '../../../views/label.view';
+import { GLabeledNode } from '../../../views/uml-label.view';
 
 export class PackageElement extends GLabeledNode {}

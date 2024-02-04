@@ -20,6 +20,7 @@ import org.eclipse.glsp.graph.GraphFactory;
 import org.eclipse.glsp.graph.builder.AbstractGCompartmentBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
 
+import com.eclipsesource.uml.glsp.core.constants.CoreTypes;
 import com.eclipsesource.uml.glsp.core.constants.UmlLayoutConstants;
 import com.eclipsesource.uml.glsp.uml.gmodel.constants.UmlPaddingValues;
 import com.eclipsesource.uml.glsp.uml.gmodel.provider.GIdContextGeneratorProvider;
@@ -66,7 +67,7 @@ public class UmlGCompartmentBuilder<TProvider extends GIdGeneratorProvider & GId
             .hGrab(true)
             .vGrab(true)
             .hAlign(GConstants.HAlign.LEFT));
-
+      this.type(CoreTypes.COMPARTMENT_ROOT_COMPONENT);
       return self();
    }
 
@@ -92,8 +93,7 @@ public class UmlGCompartmentBuilder<TProvider extends GIdGeneratorProvider & GId
    }
 
    public TBuilder withFreeformLayout() {
-      this.type(DefaultTypes.COMPARTMENT)
-         .addArgument("divider", true)
+      this.type(CoreTypes.COMPARTMENT_CONTAINER)
          .layout(UmlLayoutConstants.FREEFORM)
          .layoutOptions(new UmlGLayoutOptions()
             .clearPadding()

@@ -24,5 +24,6 @@ export const umlModule = new ContainerModule((bind, unbind, isBound, rebind) => 
     configureModelElement(context, UmlGModelTypes.ICON_CSS, GIconCSS, GIconCSSView);
     configureModelElement(context, UmlGModelTypes.DIVIDER, GDivider, GDividerView);
     configureModelElement(context, UmlGModelTypes.COMPARTMENT_HEADER, GUmlCompartment, GCompartmentView);
+    configureModelElement(context, UmlGModelTypes.COMPARTMENT_ROOT_COMPONENT, GUmlCompartment, GCompartmentView);
     configureModelElement(context, UmlGModelTypes.COMPARTMENT_CONTAINER, GCompartmentContainer, GCompartmentView);
 });

@@ -12,7 +12,6 @@ package com.eclipsesource.uml.glsp.uml.elements.package_.gmodel;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.eclipse.glsp.graph.GNode;
@@ -23,7 +22,6 @@ import com.eclipsesource.uml.glsp.sdk.cdk.GModelContext;
 import com.eclipsesource.uml.glsp.sdk.cdk.base.GCProvider;
 import com.eclipsesource.uml.glsp.sdk.cdk.gmodel.GCModelList;
 import com.eclipsesource.uml.glsp.sdk.ui.builder.GCNodeBuilder;
-import com.eclipsesource.uml.glsp.sdk.ui.components.list.GCList;
 import com.eclipsesource.uml.glsp.uml.elements.named_element.GCNamedElement;
 import com.eclipsesource.uml.glsp.uml.gmodel.builder.UmlGCompartmentBuilder;
 
@@ -48,11 +46,9 @@ public class GPackageBuilder<TOrigin extends Package> extends GCNodeBuilder<TOri
    }
 
    protected GCProvider createBody(final GCModelList<?, ?> root) {
-      var options = new GCList.Options();
-      options.rootGModel = Optional.of(new UmlGCompartmentBuilder<>(origin, context)
+      var list = new GCModelList<>(context, origin, new UmlGCompartmentBuilder<>(origin, context)
          .withFreeformLayout()
          .build());
-      var list = new GCList(context, origin, options);
 
       list.addAllGModels(packageableElements().stream()
          .map(e -> context.gmodelMapHandler().handle(e))
@@ -70,24 +66,24 @@ public class GPackageBuilder<TOrigin extends Package> extends GCNodeBuilder<TOri
       var hAlign = GConstants.HAlign.LEFT;
       var vAlign = GConstants.VAlign.TOP;
       var gap = 0;
-   
+
       var builder = compartmentHeaderBuilder(source)
          .layout(GConstants.Layout.VBOX)
          .add(buildHeaderName(source, "--uml-package-icon"));
-   
+
       final var uri = source.getURI();
       if (uri != null && uri.length() > 0) {
          gap = 1;
          builder.add(new GLabelBuilder(CoreTypes.LABEL_TEXT).id(idContextGenerator().getOrCreateId(source))
             .text("{uri=" + uri.toString() + "}").build());
       }
-   
+
       final var nested = getPackagedElements(source).count();
       if (nested == 0 && !USE_PACKAGE_FOLDER_VIEW) {
          hAlign = GConstants.HAlign.CENTER;
          vAlign = GConstants.VAlign.CENTER;
       }
-   
+
       return builder.layoutOptions(new GLayoutOptions().vGap(gap).hAlign(hAlign).vAlign(vAlign)).build();
    }
    */

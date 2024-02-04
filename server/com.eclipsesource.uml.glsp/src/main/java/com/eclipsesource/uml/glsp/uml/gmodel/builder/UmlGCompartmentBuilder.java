@@ -67,7 +67,7 @@ public class UmlGCompartmentBuilder<TProvider extends GIdGeneratorProvider & GId
             .hGrab(true)
             .vGrab(true)
             .hAlign(GConstants.HAlign.LEFT));
-
+      this.type(CoreTypes.COMPARTMENT_ROOT_COMPONENT);
       return self();
    }
 

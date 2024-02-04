@@ -21,6 +21,7 @@ public class CoreTypes {
    public static final String ICON_CSS = ICON + ":css";
 
    public static final String DIVIDER = "divider";
+   public static final String COMPARTMENT_ROOT_COMPONENT = "comp:root-component";
    public static final String COMPARTMENT_CONTAINER = "comp:container";
 
    private CoreTypes() {}

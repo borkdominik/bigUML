@@ -16,5 +16,6 @@ export namespace UmlGModelTypes {
     export const ICON_CSS = `${ICON}:css`;
     export const DIVIDER = 'divider';
     export const COMPARTMENT_HEADER = 'comp:header';
+    export const COMPARTMENT_ROOT_COMPONENT = 'comp:root-component';
     export const COMPARTMENT_CONTAINER = 'comp:container';
 }

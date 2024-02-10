@@ -16,7 +16,7 @@ import '@eclipse-glsp/client/css/glsp-sprotty.css';
 
 import '../css/style.css';
 
-import { edgeEditToolModule, initializeDiagramContainer, LogLevel, toolPaletteModule, TYPES } from '@eclipse-glsp/client';
+import { initializeDiagramContainer, LogLevel, TYPES } from '@eclipse-glsp/client';
 import { bindOrRebind, ContainerConfiguration } from '@eclipse-glsp/protocol';
 import { Container } from 'inversify';
 import { umlBaseModule } from './base/uml-base.module';
@@ -54,8 +54,8 @@ export function initializeUmlDiagramContainer(container: Container, ...container
         umlOutlineModule,
         umlPropertyPaletteModule,
         umlTypeHintsModule,
-        { add: umlToolPaletteModule, remove: toolPaletteModule },
-        { add: umlEdgeEditToolModule, remove: edgeEditToolModule },
+        umlToolPaletteModule,
+        umlEdgeEditToolModule,
         ...umlDiagramModules,
         ...containerConfiguration
     );

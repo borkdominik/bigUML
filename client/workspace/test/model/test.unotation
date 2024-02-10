@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="ASCII"?>
+<unotation:UmlDiagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:notation="http://www.eclipse.org/glsp/notation" xmlns:unotation="http://www.eclipsesource.com/glsp/uml/unotation" diagramType="CLASS">
+  <semanticElement elementId="_IWpMoMgfEe6ZePECiGJkXg"/>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_JR1pkMgfEe6ZePECiGJkXg"/>
+    <position x="327.0" y="198.0"/>
+    <size width="160.0" height="50.0"/>
+  </elements>
+</unotation:UmlDiagram>

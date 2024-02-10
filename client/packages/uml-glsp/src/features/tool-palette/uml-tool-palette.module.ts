@@ -6,13 +6,15 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { bindAsService, configureActionHandler, EnableDefaultToolsAction, FeatureModule, TYPES } from '@eclipse-glsp/client';
-
+import { bindOrRebind, FeatureModule, ToolPalette, toolPaletteModule } from '@eclipse-glsp/client';
 import { UmlToolPalette } from './uml-tool-palette.extension';
 
-export const umlToolPaletteModule = new FeatureModule((bind, unbind, isBound, rebind) => {
-    const context = { bind, unbind, isBound, rebind };
-    bindAsService(context, TYPES.IUIExtension, UmlToolPalette);
-    bind(TYPES.IDiagramStartup).toService(UmlToolPalette);
-    configureActionHandler(context, EnableDefaultToolsAction.KIND, UmlToolPalette);
-});
+export const umlToolPaletteModule = new FeatureModule(
+    (bind, unbind, isBound, rebind) => {
+        const context = { bind, unbind, isBound, rebind };
+        bindOrRebind(context, ToolPalette).to(UmlToolPalette).inSingletonScope();
+    },
+    {
+        requires: toolPaletteModule
+    }
+);

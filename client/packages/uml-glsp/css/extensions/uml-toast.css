@@ -1,0 +1,5 @@
+.uml-theme .toast-container {
+    background: var(--uml-notifications-background);
+    color: var(--uml-notifications-foreground);
+    border: 1px solid var(--uml-notifications-border);
+}

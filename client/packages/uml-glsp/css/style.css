@@ -20,6 +20,7 @@
 @import 'extensions/uml-tool-palette.css';
 @import 'extensions/uml-editor-panel.css';
 @import 'extensions/uml-property-palette.css';
+@import 'extensions/uml-toast.css';
 @import 'extensions/shift-tool.css';
 
 @import 'diagram/package/style.css';

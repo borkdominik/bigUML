@@ -16,10 +16,27 @@ import '@eclipse-glsp/client/css/glsp-sprotty.css';
 
 import '../css/style.css';
 
-import { initializeDiagramContainer, LogLevel, TYPES } from '@eclipse-glsp/client';
+import {
+    glspFocusTrackerModule,
+    glspToastModule,
+    initializeDiagramContainer,
+    LogLevel,
+    moveZoomModule,
+    toolPaletteModule,
+    TYPES,
+    viewKeyToolsModule
+} from '@eclipse-glsp/client';
+import { keyboardToolPaletteModule } from '@eclipse-glsp/client/lib/features/accessibility/keyboard-tool-palette/keyboard-tool-palette-module';
 import { bindOrRebind, ContainerConfiguration } from '@eclipse-glsp/protocol';
 import { Container } from 'inversify';
 import { umlBaseModule } from './base/uml-base.module';
+import {
+    umlElementNavigationModule,
+    umlFallbackActionModule,
+    umlKeyboardControlToolsModule,
+    umlResizeElementModule,
+    umlSearchPaletteModule
+} from './features/accessibility/uml-accessibility.module';
 import { umlBoundsModule } from './features/bounds/uml-bounds.module';
 import { umlCopyPasteModule } from './features/copy-paste/uml-copy-paste.module';
 import { umlEditModule } from './features/edit/uml-edit.module';
@@ -41,10 +58,26 @@ export function createUmlDiagramContainer(...containerConfiguration: ContainerCo
 }
 
 export function initializeUmlDiagramContainer(container: Container, ...containerConfiguration: ContainerConfiguration): Container {
+    const accessibility: ContainerConfiguration = [
+        glspToastModule,
+        glspFocusTrackerModule,
+        moveZoomModule,
+        viewKeyToolsModule,
+        keyboardToolPaletteModule,
+        umlResizeElementModule,
+        umlSearchPaletteModule,
+        umlKeyboardControlToolsModule,
+        umlElementNavigationModule
+    ];
+
     return initializeDiagramContainer(
         container,
+        // GLSP
+        ...accessibility,
+        // UML
         umlBaseModule,
         umlBaseViewsModule,
+        umlFallbackActionModule,
         umlBoundsModule,
         umlCopyPasteModule,
         umlEditModule,
@@ -54,7 +87,7 @@ export function initializeUmlDiagramContainer(container: Container, ...container
         umlOutlineModule,
         umlPropertyPaletteModule,
         umlTypeHintsModule,
-        umlToolPaletteModule,
+        { add: umlToolPaletteModule, remove: toolPaletteModule },
         umlEdgeEditToolModule,
         ...umlDiagramModules,
         ...containerConfiguration

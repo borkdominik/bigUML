@@ -1,3 +1,22 @@
+/* Reset until accessibility supports integrations */
+.uml-theme .accessibility-tool-palette .header-tools i {
+    margin: 0;
+}
+
+.uml-theme .accessibility-tool-palette .header-tools .key-shortcut {
+    top: 0;
+    right: 0;
+}
+
+.uml-theme .accessibility-tool-palette .tool-button .key-shortcut {
+    left: 0;
+}
+
+.uml-theme .accessibility-tool-palette .tool-button .key-shortcut,
+.uml-theme .accessibility-tool-palette .header-tools .key-shortcut {
+    position: relative;
+}
+
 /* Override */
 .uml-theme .tool-palette {
     max-height: 80%;
@@ -11,11 +30,33 @@
     overflow: visible;
 }
 
-.uml-theme .tool-palette .palette-body {
+.uml-theme .tool-palette .palette-header .header-tools .uml-theme .tool-palette .palette-body {
     overflow-y: auto;
     height: 100%;
 }
 
-.uml-theme .uml-tool-button {
+.uml-theme .tool-palette .palette-body {
+    overflow: auto;
+}
+
+.uml-theme .tool-button {
     display: flex;
+}
+
+.uml-theme .accessibility-tool-palette .tool-button .key-shortcut,
+.uml-theme .accessibility-tool-palette .header-tools .key-shortcut {
+    background: var(--uml-editor-background);
+    color: var(--uml-editor-foreground);
+    border: 1px solid var(--uml-widget-border);
+}
+
+.uml-theme .accessibility-tool-palette .tool-button .key-shortcut {
+    margin-right: 4px;
+}
+
+.uml-theme .accessibility-tool-palette .header-tools > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 4px;
 }

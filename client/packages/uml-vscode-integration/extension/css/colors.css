@@ -19,6 +19,11 @@
     --uml-secondaryBar-background: var(--vscode-editorHoverWidget-statusBarBackground);
 
     --uml-widget-shadow: var(--vscode-widget-shadow);
+    --uml-widget-border: var(--vscode-widget-border);
+
+    --uml-notifications-foreground: var(--vscode-notifications-foreground);
+    --uml-notifications-background: var(--vscode-notifications-background);
+    --uml-notifications-border: var(--vscode-notifications-border);
 }
 
 :root {

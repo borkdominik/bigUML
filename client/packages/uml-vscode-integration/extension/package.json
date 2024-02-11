@@ -119,19 +119,55 @@
         "key": "alt+f",
         "mac": "alt+f",
         "command": "bigUML.fit",
-        "when": "focusedView == '' && !inputFocus && activeCustomEditorId == 'bigUML.diagramView'"
+        "when": "activeCustomEditorId == 'bigUML.diagramView'"
       },
       {
         "key": "alt+c",
         "mac": "alt+c",
         "command": "bigUML.center",
-        "when": "focusedView == '' && !inputFocus && activeCustomEditorId == 'bigUML.diagramView'"
+        "when": "activeCustomEditorId == 'bigUML.diagramView'"
       },
       {
         "key": "ctrl+a",
         "mac": "ctrl+a",
         "command": "bigUML.selectAll",
-        "when": "focusedView == '' && !inputFocus && activeCustomEditorId == 'bigUML.diagramView'"
+        "when": "activeCustomEditorId == 'bigUML.diagramView'"
+      },
+      {
+        "key": "alt+a",
+        "mac": "alt+a",
+        "command": "bigUML.editor.activateResizeMode",
+        "when": "activeCustomEditorId == 'bigUML.diagramView'"
+      },
+      {
+        "key": "ctrl+f",
+        "mac": "ctrl+f",
+        "command": "bigUML.editor.showSearch",
+        "when": "activeCustomEditorId == 'bigUML.diagramView'"
+      },
+      {
+        "key": "alt+p",
+        "mac": "alt+p",
+        "command": "bigUML.editor.focusToolPalette",
+        "when": "activeCustomEditorId == 'bigUML.diagramView'"
+      },
+      {
+        "key": "alt+g",
+        "mac": "alt+g",
+        "command": "bigUML.editor.focusDiagram",
+        "when": "activeCustomEditorId == 'bigUML.diagramView'"
+      },
+      {
+        "key": "n",
+        "mac": "n",
+        "command": "bigUML.editor.enablePrimaryElementNavigator",
+        "when": "activeCustomEditorId == 'bigUML.diagramView' && bigUML.editorSelectedElementsAmount == 1"
+      },
+      {
+        "key": "alt+n",
+        "mac": "alt+n",
+        "command": "bigUML.editor.enableSecondaryElementNavigator",
+        "when": "activeCustomEditorId == 'bigUML.diagramView' && bigUML.editorSelectedElementsAmount == 1"
       }
     ],
     "languages": [

@@ -7,28 +7,74 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import {
+    Action,
     changeCodiconClass,
     createIcon,
     GModelRoot,
+    ICommand,
+    KeyCode,
+    MarqueeMouseTool,
+    matchesKeystroke,
+    MouseDeleteTool,
     PaletteItem,
     RequestContextActions,
+    RequestMarkersAction,
     SetContextActions,
     ToolPalette
 } from '@eclipse-glsp/client';
+import { KeyboardToolPalette } from '@eclipse-glsp/client/lib/features/accessibility/keyboard-tool-palette/keyboard-tool-palette';
 import { injectable } from 'inversify';
 import { SDShiftMouseTool } from '../../uml/diagram/sequence/features/tools/shift-mouse-tool';
 
 const CLICKED_CSS_CLASS = 'clicked';
 const CHEVRON_DOWN_ICON_ID = 'chevron-right';
 const PALETTE_ICON_ID = 'symbol-color';
+const AVAILABLE_KEYS: KeyCode[] = [
+    'KeyA',
+    'KeyB',
+    'KeyC',
+    'KeyD',
+    'KeyE',
+    'KeyF',
+    'KeyG',
+    'KeyH',
+    'KeyI',
+    'KeyJ',
+    'KeyK',
+    'KeyL',
+    'KeyM',
+    'KeyN',
+    'KeyO',
+    'KeyP',
+    'KeyQ',
+    'KeyR',
+    'KeyS',
+    'KeyT',
+    'KeyU',
+    'KeyV',
+    'KeyX',
+    'KeyY',
+    'KeyZ'
+];
+
+const SEARCH_ICON_ID = 'search';
+const SELECTION_TOOL_KEY: KeyCode[] = ['Digit1', 'Numpad1'];
+const DELETION_TOOL_KEY: KeyCode[] = ['Digit2', 'Numpad2'];
+const MARQUEE_TOOL_KEY: KeyCode[] = ['Digit3', 'Numpad3'];
+const VALIDATION_TOOL_KEY: KeyCode[] = ['Digit4', 'Numpad4'];
+const SEARCH_TOOL_KEY: KeyCode[] = ['Digit5', 'Numpad5'];
 
 @injectable()
-export class UmlToolPalette extends ToolPalette {
+export class UmlToolPalette extends KeyboardToolPalette {
     protected override defaultToolsButton: HTMLElement;
 
     protected override onBeforeShow(_containerElement: HTMLElement, root: Readonly<GModelRoot>): void {
         // Removed max height
         this.modelRootId = root.id;
+    }
+
+    override handle(action: Action): void | Action | ICommand {
+        return super.handle(action);
     }
 
     override changeActiveButton(button?: HTMLElement): void {
@@ -69,30 +115,85 @@ export class UmlToolPalette extends ToolPalette {
     }
 
     protected override createHeaderTools(): HTMLElement {
-        // as super
-        const headerTools = document.createElement('div');
-        headerTools.classList.add('header-tools');
-
-        this.defaultToolsButton = this.createDefaultToolButton();
-        headerTools.appendChild(this.defaultToolsButton);
-
-        const deleteToolButton = this.createMouseDeleteToolButton();
-        headerTools.appendChild(deleteToolButton);
-
-        const marqueeToolButton = this.createMarqueeToolButton();
-        headerTools.appendChild(marqueeToolButton);
-
-        const validateActionButton = this.createValidateButton();
-        headerTools.appendChild(validateActionButton);
-
-        const searchIcon = this.createSearchButton();
-        headerTools.appendChild(searchIcon);
+        const headerTools = super.createHeaderTools();
 
         // TODO: Sequence Specific
         const createShiftButton = this.createShiftButton();
         headerTools.appendChild(createShiftButton);
 
         return headerTools;
+    }
+
+    protected override createDefaultToolButton(): HTMLElement {
+        const container = document.createElement('div');
+        const icon = createIcon('inspect');
+        icon.id = 'btn_default_tools';
+        icon.title = 'Enable selection tool';
+
+        container.onclick = this.onClickStaticToolButton(container);
+        container.appendChild(this.createKeyboardShotcut(SELECTION_TOOL_KEY[0]));
+        container.appendChild(icon);
+
+        return container;
+    }
+
+    protected override createMouseDeleteToolButton(): HTMLElement {
+        const container = document.createElement('div');
+        const icon = createIcon('chrome-close');
+
+        container.onclick = this.onClickStaticToolButton(container, MouseDeleteTool.ID);
+        container.appendChild(this.createKeyboardShotcut(DELETION_TOOL_KEY[0]));
+        container.appendChild(icon);
+
+        return container;
+    }
+
+    protected override createMarqueeToolButton(): HTMLElement {
+        const container = document.createElement('div');
+        const icon = createIcon('screen-full');
+
+        container.onclick = this.onClickStaticToolButton(container, MarqueeMouseTool.ID);
+        container.appendChild(this.createKeyboardShotcut(MARQUEE_TOOL_KEY[0]));
+        container.appendChild(icon);
+
+        return container;
+    }
+
+    protected override createValidateButton(): HTMLElement {
+        const container = document.createElement('div');
+        const icon = createIcon('pass');
+        icon.title = 'Validate model';
+
+        container.onclick = _event => {
+            const modelIds: string[] = [this.modelRootId];
+            this.actionDispatcher.dispatch(RequestMarkersAction.create(modelIds));
+        };
+        container.appendChild(this.createKeyboardShotcut(VALIDATION_TOOL_KEY[0]));
+        container.appendChild(icon);
+
+        return container;
+    }
+
+    protected override createSearchButton(): HTMLElement {
+        const container = document.createElement('div');
+        const icon = createIcon(SEARCH_ICON_ID);
+        icon.classList.add('search-icon');
+        icon.title = 'Filter palette entries';
+        container.onclick = _ev => {
+            const searchField = document.getElementById(this.containerElement.id + '_search_field');
+            if (searchField) {
+                if (searchField.style.display === 'none') {
+                    searchField.style.display = '';
+                    searchField.focus();
+                } else {
+                    searchField.style.display = 'none';
+                }
+            }
+        };
+        container.appendChild(this.createKeyboardShotcut(SEARCH_TOOL_KEY[0]));
+        container.appendChild(icon);
+
+        return container;
     }
 
     protected createShiftButton(): HTMLElement {
@@ -102,21 +203,45 @@ export class UmlToolPalette extends ToolPalette {
         return verticalShiftToolButton;
     }
 
-    protected override createToolButton(item: PaletteItem, index: number): HTMLElement {
+    protected override createKeyboardToolButton(item: PaletteItem, tabIndex: number, buttonIndex: number): HTMLElement {
         const button = document.createElement('div');
-        button.appendChild(this.createUmlIcon(item.icon || ''));
-        button.tabIndex = index;
+        // add keyboard index
+        if (buttonIndex < AVAILABLE_KEYS.length) {
+            button.appendChild(this.createKeyboardShotcut(AVAILABLE_KEYS[buttonIndex]));
+        }
+        button.tabIndex = tabIndex;
         button.classList.add('tool-button');
-        button.classList.add('uml-tool-button');
+        if (item.icon) {
+            button.appendChild(this.createIcon(item.icon));
+        }
         button.insertAdjacentText('beforeend', item.label);
-        button.onclick = super.onClickCreateToolButton(button, item);
-        button.onkeydown = ev => this.clearToolOnEscape(ev);
+        button.onclick = this.onClickCreateToolButton(button, item);
+
+        button.onkeydown = ev => {
+            this.clickToolOnEnter(ev, button, item);
+            this.clearToolOnEscape(ev);
+
+            if (matchesKeystroke(ev, 'ArrowDown')) {
+                if (buttonIndex + 1 > this.keyboardIndexButtonMapping.size - 1) {
+                    this.selectItemViaArrowKey(this.keyboardIndexButtonMapping.get(0));
+                } else {
+                    this.selectItemViaArrowKey(this.keyboardIndexButtonMapping.get(buttonIndex + 1));
+                }
+            } else if (matchesKeystroke(ev, 'ArrowUp')) {
+                if (buttonIndex - 1 < 0) {
+                    this.selectItemViaArrowKey(this.keyboardIndexButtonMapping.get(this.keyboardIndexButtonMapping.size - 1));
+                } else {
+                    this.selectItemViaArrowKey(this.keyboardIndexButtonMapping.get(buttonIndex - 1));
+                }
+            }
+        };
+
         return button;
     }
 
-    protected createUmlIcon(cssClass: string): HTMLDivElement {
+    protected createIcon(cssClass: string): HTMLDivElement {
         const icon = document.createElement('div');
-        icon.classList.add(...['umlimg', cssClass]);
+        icon.classList.add(...['uml-icon', cssClass]);
         return icon;
     }
 

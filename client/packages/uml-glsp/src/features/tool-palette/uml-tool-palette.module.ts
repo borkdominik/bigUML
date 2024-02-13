@@ -6,13 +6,17 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { bindAsService, configureActionHandler, EnableDefaultToolsAction, FeatureModule, TYPES } from '@eclipse-glsp/client';
-
+import { bindOrRebind, FeatureModule } from '@eclipse-glsp/client';
+import { KeyboardToolPalette } from '@eclipse-glsp/client/lib/features/accessibility/keyboard-tool-palette/keyboard-tool-palette';
+import { keyboardToolPaletteModule } from '@eclipse-glsp/client/lib/features/accessibility/keyboard-tool-palette/keyboard-tool-palette-module';
 import { UmlToolPalette } from './uml-tool-palette.extension';
 
-export const umlToolPaletteModule = new FeatureModule((bind, unbind, isBound, rebind) => {
-    const context = { bind, unbind, isBound, rebind };
-    bindAsService(context, TYPES.IUIExtension, UmlToolPalette);
-    bind(TYPES.IDiagramStartup).toService(UmlToolPalette);
-    configureActionHandler(context, EnableDefaultToolsAction.KIND, UmlToolPalette);
-});
+export const umlToolPaletteModule = new FeatureModule(
+    (bind, unbind, isBound, rebind) => {
+        const context = { bind, unbind, isBound, rebind };
+        bindOrRebind(context, KeyboardToolPalette).to(UmlToolPalette).inSingletonScope();
+    },
+    {
+        requires: keyboardToolPaletteModule
+    }
+);

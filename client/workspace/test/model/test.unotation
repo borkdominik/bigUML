@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ASCII"?>
+<unotation:UmlDiagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:notation="http://www.eclipse.org/glsp/notation" xmlns:unotation="http://www.eclipsesource.com/glsp/uml/unotation" diagramType="CLASS">
+  <semanticElement elementId="_IWpMoMgfEe6ZePECiGJkXg"/>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_JR1pkMgfEe6ZePECiGJkXg"/>
+    <position x="327.0" y="258.0"/>
+    <size width="160.0" height="50.0"/>
+  </elements>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_MBjQwMgiEe6ZePECiGJkXg"/>
+    <position x="468.68678848097056" y="16.0"/>
+    <size width="160.0" height="50.0"/>
+  </elements>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_OKEk8Mj9Ee6ZePECiGJkXg"/>
+    <position x="725.0" y="211.0"/>
+    <size width="160.0" height="50.0"/>
+  </elements>
+  <elements xsi:type="notation:Edge">
+    <semanticElement elementId="_O0RYgMj9Ee6ZePECiGJkXg"/>
+  </elements>
+  <elements xsi:type="notation:Edge">
+    <semanticElement elementId="_PlL4EMj9Ee6ZePECiGJkXg"/>
+  </elements>
+  <elements xsi:type="notation:Edge">
+    <semanticElement elementId="_QZbYcMj9Ee6ZePECiGJkXg"/>
+  </elements>
+  <elements xsi:type="notation:Shape">
+    <semanticElement elementId="_RG0p8Mj9Ee6ZePECiGJkXg"/>
+    <position x="165.0" y="94.0"/>
+    <size width="160.0" height="50.0"/>
+  </elements>
+  <elements xsi:type="notation:Edge">
+    <semanticElement elementId="_d6IkYMj9Ee6ZePECiGJkXg"/>
+  </elements>
+  <elements xsi:type="notation:Edge">
+    <semanticElement elementId="_ertyUMj9Ee6ZePECiGJkXg"/>
+  </elements>
+</unotation:UmlDiagram>

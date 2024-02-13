@@ -6,6 +6,8 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
+import { EnableToolsAction, SetUIExtensionVisibilityAction, ToolPalette } from '@eclipse-glsp/client';
+import { FocusDomAction } from '@eclipse-glsp/client/lib/features/accessibility/actions';
 import { CenterAction, FitToScreenAction, RequestExportSvgAction, SelectAllAction } from '@eclipse-glsp/protocol';
 import * as vscode from 'vscode';
 import { UVGlspConnector } from '../../glsp/uv-glsp-connector';
@@ -40,6 +42,29 @@ export function configureDefaultCommands(context: CommandContext): void {
         }),
         vscode.commands.registerCommand(`${diagramPrefix}.exportAsSVG`, () => {
             connector.sendActionToActiveClient(RequestExportSvgAction.create());
+        }),
+        vscode.commands.registerCommand(`${diagramPrefix}.editor.activateResizeMode`, () => {
+            connector.sendActionToActiveClient(EnableToolsAction.create(['glsp.resize-tool']));
+        }),
+        vscode.commands.registerCommand(`${diagramPrefix}.editor.showSearch`, () => {
+            connector.sendActionToActiveClient(
+                SetUIExtensionVisibilityAction.create({
+                    extensionId: 'search-autocomplete-palette',
+                    visible: true
+                })
+            );
+        }),
+        vscode.commands.registerCommand(`${diagramPrefix}.editor.focusToolPalette`, () => {
+            connector.sendActionToActiveClient(FocusDomAction.create(ToolPalette.ID));
+        }),
+        vscode.commands.registerCommand(`${diagramPrefix}.editor.focusDiagram`, () => {
+            connector.sendActionToActiveClient(FocusDomAction.create('graph'));
+        }),
+        vscode.commands.registerCommand(`${diagramPrefix}.editor.enablePrimaryElementNavigator`, () => {
+            connector.sendActionToActiveClient(EnableToolsAction.create(['uml.primary-element-navigator-tool']));
+        }),
+        vscode.commands.registerCommand(`${diagramPrefix}.editor.enableSecondaryElementNavigator`, () => {
+            connector.sendActionToActiveClient(EnableToolsAction.create(['uml.secondary-element-navigator-tool']));
         })
         /*
         vscode.commands.registerCommand(`${diagramPrefix}.layout`, () => {

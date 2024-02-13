@@ -6,9 +6,20 @@ All notable changes to this project will be documented in this file.
 
 ## [v0.x.x - Unreleased]
 
+-
+
+## [v0.5.0 - 2024-02-13](https://github.com/borkdominik/bigUML/releases/tag/v0.5.0)
+
 ### What's Changed
 
-## [v0.4.0 - 2023-10-01](https://github.com/borkdominik/bigUML/releases/tag/v0.4.0
+- Introduce label autocomplete with generic approach by @haydar-metin in https://github.com/borkdominik/bigUML/pull/146
+- Allow to export diagrams as SVGs by @haydar-metin in https://github.com/borkdominik/bigUML/pull/147
+- Add sequence diagram by @haydar-metin, @simowaves in https://github.com/borkdominik/bigUML/pull/149
+- Update GLSP to 2.0.0 and introduce initial CDK by @haydar-metin in https://github.com/borkdominik/bigUML/pull/152
+- Fix various bugs of diagrams by @haydar-metin in https://github.com/borkdominik/bigUML/pull/153
+- Update to GLSP-Client 2.1.0 & enable accessibility features by @haydar-metin in https://github.com/borkdominik/bigUML/pull/154
+
+## [v0.4.0 - 2023-10-01](https://github.com/borkdominik/bigUML/releases/tag/v0.4.0)
 
 ### What's Changed
 

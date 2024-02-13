@@ -39,6 +39,7 @@ Currently, **bigUML** has _basic_ support for the following UML diagram types:
 -   Deployment Diagram
 -   Information Flow Diagram
 -   Package Diagram
+-   Sequence Diagram
 -   State Machine Diagram
 -   Use Case Diagram
 

@@ -20,6 +20,7 @@ import org.eclipse.uml2.uml.LiteralBoolean;
 import org.eclipse.uml2.uml.LiteralInteger;
 import org.eclipse.uml2.uml.LiteralSpecification;
 import org.eclipse.uml2.uml.LiteralString;
+import org.eclipse.uml2.uml.LiteralUnlimitedNatural;
 import org.eclipse.uml2.uml.Slot;
 
 import com.eclipsesource.uml.modelserver.shared.codec.ContributionDecoder;
@@ -34,7 +35,8 @@ public class LiteralSpecificationCommandProvider extends NodeCommandProvider<Lit
 
    @Override
    public Set<Class<? extends LiteralSpecification>> getElementTypes() {
-      return Set.of(getElementType(), LiteralBoolean.class, LiteralString.class, LiteralInteger.class);
+      return Set.of(getElementType(), LiteralBoolean.class, LiteralString.class, LiteralInteger.class,
+         LiteralUnlimitedNatural.class);
    }
 
    @Override

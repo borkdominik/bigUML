@@ -57,7 +57,7 @@ export class UmlEdgeEditTool extends EdgeEditTool {
         // install feedback move mouse listener for client-side move updates
         this.feedbackEdgeSourceMovingListener = new UmlFeedbackEdgeSourceMovingMouseListener(this.anchorRegistry, this.feedbackDispatcher);
         this.feedbackEdgeTargetMovingListener = new UmlFeedbackEdgeTargetMovingMouseListener(this.anchorRegistry, this.feedbackDispatcher);
-        this.feedbackMovingListener = new UmlFeedbackEdgeRouteMovingMouseListener(this.edgeRouterRegistry, this.snapper);
+        this.feedbackMovingListener = new UmlFeedbackEdgeRouteMovingMouseListener(this.positionSnapper, this.edgeRouterRegistry);
 
         this.toDisposeOnDisable.push(
             Disposable.create(() => this.edgeEditListener.reset()),

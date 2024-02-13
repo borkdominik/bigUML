@@ -7,20 +7,12 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import {
-    ElementMove,
-    FeedbackMoveMouseListener,
-    findParentByFeature,
-    GModelElement,
-    isMoveable,
-    isViewport,
-    MoveAction
-} from '@eclipse-glsp/client';
+import { FeedbackMoveMouseListener } from '@eclipse-glsp/client';
 
 // TODO: Sequence Diagram Specific - NOT USED
 export class SDFeedbackMoveMouseListener extends FeedbackMoveMouseListener {
+    /*
     protected override getElementMoves(target: GModelElement, event: MouseEvent, finished: boolean): MoveAction | undefined {
-        console.log('LALLALAAL');
         if (!this.startDragPosition) {
             return undefined;
         }
@@ -74,4 +66,5 @@ export class SDFeedbackMoveMouseListener extends FeedbackMoveMouseListener {
             return undefined;
         }
     }
+    */
 }

@@ -250,7 +250,7 @@ export class UmlToolPalette extends KeyboardToolPalette {
         return;
     }
 
-    async postRequestModel(): Promise<void> {
+    override async postRequestModel(): Promise<void> {
         const requestAction = RequestContextActions.create({
             contextId: ToolPalette.ID,
             editorContext: {

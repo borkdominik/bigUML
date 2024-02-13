@@ -291,12 +291,12 @@
     semver "^7.5.1"
     shelljs "^0.8.5"
 
-"@eclipse-glsp/client@2.0.0", "@eclipse-glsp/client@next", "@eclipse-glsp/client@~2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@eclipse-glsp/client/-/client-2.0.0.tgz#1100d7b2de0b4a92f4397417cc196fe7324af0f5"
-  integrity sha512-Bi3Pxv0jgr8uyKTtxivPEfD6nHYPB35a0+eaq5wjxymB3VlX3Fgguy+dAmO9P2FexRN/d4Wh8ZwWhtjC3XP0AQ==
+"@eclipse-glsp/client@2.1.0", "@eclipse-glsp/client@next":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@eclipse-glsp/client/-/client-2.1.0.tgz#324c48e243cb24d454c9c4a38dcd7effea92b729"
+  integrity sha512-OxQhgcz1VJnmj4IYMSz7Xp4bk50yX/nvrcdVyBvnWJ0S2FF9rJZcdMykooMg19N0nfnG+cjzVa4lbd5Mf975XQ==
   dependencies:
-    "@eclipse-glsp/sprotty" "~2.0.0"
+    "@eclipse-glsp/sprotty" "2.1.0"
     autocompleter "^9.1.0"
     file-saver "^2.0.5"
     lodash "4.17.21"
@@ -373,21 +373,21 @@
   dependencies:
     prettier-plugin-packagejson "~2.4.6"
 
-"@eclipse-glsp/protocol@2.0.0", "@eclipse-glsp/protocol@next", "@eclipse-glsp/protocol@~2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@eclipse-glsp/protocol/-/protocol-2.0.0.tgz#d09fa068c32dadf678696c987feded1790f3099b"
-  integrity sha512-6vFP2aY0+9AcrWvAtNFzcDX00z/rEFwTzYXg9ucDEYwYn105DUadhMruwSn9rsWLxf2movBzEkLSE2TNOX1PkQ==
+"@eclipse-glsp/protocol@2.1.0", "@eclipse-glsp/protocol@next":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@eclipse-glsp/protocol/-/protocol-2.1.0.tgz#e76a65a4815c969bfb86a1ab202ad24384a317cc"
+  integrity sha512-CUcVbsjiddDWEuhWKDLgfqslmau2QT6QTF9LyA4/y6Eomv5s8nTexeBMI6hCWL4sHgMfQ4t2zI9zV2a5gIow4A==
   dependencies:
     sprotty-protocol "0.15.0-next.044bba2.13"
     uuid "7.0.3"
     vscode-jsonrpc "^8.0.2"
 
-"@eclipse-glsp/sprotty@~2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@eclipse-glsp/sprotty/-/sprotty-2.0.0.tgz#dc3915a2ec8959ffbc0b518854820d46f7af5cef"
-  integrity sha512-bXnPwYhyw/dOl4YSGcMciBCJp6toYesa0v8U4iDs0P+x7/Q9yMAPBRYKajxKzyuoVs09hvCkNUVEM1e4cRQ1BA==
+"@eclipse-glsp/sprotty@2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@eclipse-glsp/sprotty/-/sprotty-2.1.0.tgz#4adf93dd501dc65426f7beac145ac007fcb37aa9"
+  integrity sha512-STBH3Af9sTD102mfgr0kplMSkvkkWIOMGLjr7Hl+b5yx8niMrFmy6HGIBVpyw9mb5DW+6eKN+3QjyslTetL8TA==
   dependencies:
-    "@eclipse-glsp/protocol" "~2.0.0"
+    "@eclipse-glsp/protocol" "2.1.0"
     autocompleter "^9.1.0"
     snabbdom "^3.5.1"
     sprotty "1.0.0"
@@ -398,20 +398,20 @@
   resolved "https://registry.yarnpkg.com/@eclipse-glsp/ts-config/-/ts-config-2.0.0.tgz#91ef448f7a63a88b7752098dee47bac3cc66e7aa"
   integrity sha512-Y4XzSzK0pmE9yWoJYjlWKn1pZbxdpcCRH0H1YLE6oRoM7kaNpEqPIEkkHhqweqW/RaxfTSpj/WWqmhso9lWHyg==
 
-"@eclipse-glsp/vscode-integration-webview@2.0.0", "@eclipse-glsp/vscode-integration-webview@next":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@eclipse-glsp/vscode-integration-webview/-/vscode-integration-webview-2.0.0.tgz#ccf61dbbdbb25b2f1cad3715fe57538a3be9bac5"
-  integrity sha512-fQN57enrqF+J0+ZFNmRYOmV1UMsjakt/1mV2Hu/ccHNZ3JzbH7mZBgm/g0+63mUrWZPaWLl09TxSZGsVjUICrw==
+"@eclipse-glsp/vscode-integration-webview@2.1.0", "@eclipse-glsp/vscode-integration-webview@next":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@eclipse-glsp/vscode-integration-webview/-/vscode-integration-webview-2.1.0.tgz#c61b5781f9821b2edaeb7246e4fb29f6118bb619"
+  integrity sha512-QeYuZuyKQvR4vWPXTfqk9drpgVd4MbthwGB++14WlBXS5hwWIprLAHyYX8oVtagDyQR+1N/G3rwbUBeFnV16/w==
   dependencies:
-    "@eclipse-glsp/client" "~2.0.0"
+    "@eclipse-glsp/client" "2.1.0"
     vscode-messenger-webview "^0.4.5"
 
-"@eclipse-glsp/vscode-integration@2.0.0", "@eclipse-glsp/vscode-integration@next":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@eclipse-glsp/vscode-integration/-/vscode-integration-2.0.0.tgz#f9e198f27f599b7db77a9ab0649591b2711b91a8"
-  integrity sha512-B/y+M7iPc0WS0BDv/CN66YZsaSBqh4TVw6lcAxKIKdHly1R/oOHMIfsCETHZtnyTWxB1YzZ+mragc5yFc29qBA==
+"@eclipse-glsp/vscode-integration@2.1.0", "@eclipse-glsp/vscode-integration@next":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@eclipse-glsp/vscode-integration/-/vscode-integration-2.1.0.tgz#ff737904a55a037690086bff2073f48d4c7ade43"
+  integrity sha512-OyyM0cGEhO3OIAu3l7M3BGaaSQdTivnnsngw41pIbU607PwT9D3CJ6Btr5Cl/Dj9cUBqP6APbKo5cK5siDGQLQ==
   dependencies:
-    "@eclipse-glsp/protocol" "~2.0.0"
+    "@eclipse-glsp/protocol" "2.1.0"
     vscode-jsonrpc "^8.0.2"
     vscode-messenger "^0.4.5"
     ws "^8.13.0"

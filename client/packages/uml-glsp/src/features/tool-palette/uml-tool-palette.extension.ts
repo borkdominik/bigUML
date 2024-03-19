@@ -65,7 +65,7 @@ const VALIDATION_TOOL_KEY: KeyCode[] = ['Digit4', 'Numpad4'];
 const SEARCH_TOOL_KEY: KeyCode[] = ['Digit5', 'Numpad5'];
 
 @injectable()
-export class UmlToolPalette extends KeyboardToolPalette {
+export class UMLToolPalette extends KeyboardToolPalette {
     protected override defaultToolsButton: HTMLElement;
 
     protected override onBeforeShow(_containerElement: HTMLElement, root: Readonly<GModelRoot>): void {

@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2023 EclipseSource and others.
+ * Copyright (c) 2023 borkdominik and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,9 +15,15 @@
  ********************************************************************************/
 import {
     boundsFeature,
-    fadeFeature, GCompartment, GNode, GShapeElement, layoutableChildFeature,
+    fadeFeature,
+    GCompartment,
+    GNode,
+    GShapeElement,
+    layoutableChildFeature,
     layoutContainerFeature,
-    RenderingContext, ShapeView, svg
+    RenderingContext,
+    ShapeView,
+    svg
 } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 import { VNode } from 'snabbdom';
@@ -43,7 +49,7 @@ export class StickFigureView extends ShapeView {
         return (
             <g class-selected={actorParentNode.selected} class-mouseover={actorParentNode.hoverFeedback}>
                 <line x1='0' y1='0' x2='43' y2='0' visibility='hidden' /> {/* For alignment */}
-                {/* Stickfigure https://commons.wikimedia.org/wiki/File:Uml-UseCase-Generalisierung3.svg */}
+                {/* Stickfigure https://commons.wikimedia.org/wiki/File:UML-UseCase-Generalisierung3.svg */}
                 <circle cx='21' cy='15' r='8' />
                 <line x1='21' y1='23' x2='21' y2='43' />
                 <line x1='6' y1='31' x2='36' y2='31' />

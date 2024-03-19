@@ -7,9 +7,8 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { UmlDiagramType } from '@borkdominik-biguml/uml-protocol';
+import { UMLDiagramType } from '@borkdominik-biguml/uml-protocol';
 import { configureModelElement } from '@eclipse-glsp/client';
-import { DefaultTypes } from '@eclipse-glsp/protocol';
 import { interfaces } from 'inversify';
 import { QualifiedUtil } from '../../qualified.utils';
 import { GEditableLabel, GEditableLabelView } from '../../views/uml-label.view';
@@ -17,24 +16,9 @@ import { NamedElement, NamedElementView } from '../index';
 
 export function registerPropertyElement(
     context: { bind: interfaces.Bind; isBound: interfaces.IsBound },
-    representation: UmlDiagramType
+    representation: UMLDiagramType
 ): void {
-    configureModelElement(
-        context,
-        QualifiedUtil.representationTypeId(representation, DefaultTypes.NODE, 'Property'),
-        NamedElement,
-        NamedElementView
-    );
-    configureModelElement(
-        context,
-        QualifiedUtil.representationTypeId(representation, DefaultTypes.LABEL, 'Property-type'),
-        GEditableLabel,
-        GEditableLabelView
-    );
-    configureModelElement(
-        context,
-        QualifiedUtil.representationTypeId(representation, DefaultTypes.LABEL, 'Property-multiplicity'),
-        GEditableLabel,
-        GEditableLabelView
-    );
+    configureModelElement(context, QualifiedUtil.typeId(representation, 'Property'), NamedElement, NamedElementView);
+    configureModelElement(context, QualifiedUtil.typeId(representation, 'PropertyType'), GEditableLabel, GEditableLabelView);
+    configureModelElement(context, QualifiedUtil.typeId(representation, 'PropertyMultiplicity'), GEditableLabel, GEditableLabelView);
 }

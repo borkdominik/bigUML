@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { UmlDiagramType } from '@borkdominik-biguml/uml-protocol';
+import { UMLDiagramType } from '@borkdominik-biguml/uml-protocol';
 import {
     CancellationToken,
     Disposable,
@@ -28,7 +28,7 @@ import {
 export async function newDiagramWizard(
     context: ExtensionContext,
     options: {
-        diagramTypes: UmlDiagramType[];
+        diagramTypes: UMLDiagramType[];
         nameValidator: (name: string) => Promise<string | undefined>;
     }
 ): Promise<State> {
@@ -110,7 +110,7 @@ interface QuickPickParameters<T extends QuickPickItem> {
 }
 
 interface DiagramTypeQuickPick extends QuickPickItem {
-    diagramType: UmlDiagramType;
+    diagramType: UMLDiagramType;
 }
 
 interface InputBoxParameters {

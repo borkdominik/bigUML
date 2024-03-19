@@ -10,7 +10,7 @@
 import { GCompartment, GModelElement, GNode, GPort, IMovementRestrictor, isNotUndefined, Point } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 import { NamedElement } from '../../../../elements';
-import { UmlSequenceTypes } from '../../sequence.types';
+import { UMLSequenceTypes } from '../../sequence.types';
 
 // TODO: Sequence Diagram specific
 @injectable()
@@ -21,11 +21,11 @@ export class SDMovementRestrictor implements IMovementRestrictor {
 
         if (
             (element instanceof GPort || element instanceof NamedElement) &&
-            ((element.type === UmlSequenceTypes.MESSAGE_OCCURRENCE &&
-                (element.parent as GCompartment).parent.type === UmlSequenceTypes.LIFELINE) ||
-                element.type === UmlSequenceTypes.DESTRUCTION_OCCURRENCE ||
-                element.type === UmlSequenceTypes.EXECUTION_OCCURRENCE ||
-                element.type === UmlSequenceTypes.BEHAVIOR_EXECUTION)
+            ((element.type === UMLSequenceTypes.MESSAGE_OCCURRENCE &&
+                (element.parent as GCompartment).parent.type === UMLSequenceTypes.LIFELINE) ||
+                element.type === UMLSequenceTypes.DESTRUCTION_OCCURRENCE ||
+                element.type === UMLSequenceTypes.EXECUTION_OCCURRENCE ||
+                element.type === UMLSequenceTypes.BEHAVIOR_EXECUTION)
         ) {
             if (isNotUndefined(newLocation) && (Math.abs(newLocation.x) > distanceLimit || element.position.y + newLocation.y < 0)) {
                 return false;
@@ -35,7 +35,7 @@ export class SDMovementRestrictor implements IMovementRestrictor {
         const normalPositionY = 30;
         if (
             element instanceof GNode &&
-            element.type === UmlSequenceTypes.LIFELINE &&
+            element.type === UMLSequenceTypes.LIFELINE &&
             !element.cssClasses?.includes('uml-sequence-lifeline-created')
         ) {
             if (isNotUndefined(newLocation) && Math.abs(newLocation.y - normalPositionY) > distanceLimit) {

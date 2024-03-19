@@ -6,43 +6,37 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { createUmlDiagramContainer } from '@borkdominik-biguml/uml-glsp/lib';
+import { createUMLDiagramContainer } from '@borkdominik-biguml/uml-glsp/lib';
 
 import '@eclipse-glsp/vscode-integration-webview/css/glsp-vscode.css';
 
 import { GLSPIsReadyAction } from '@borkdominik-biguml/uml-protocol';
 import { IActionDispatcher, IDiagramStartup, TYPES } from '@eclipse-glsp/client';
-import { bindAsService, bindOrRebind, ContainerConfiguration, MaybePromise } from '@eclipse-glsp/protocol';
+import { ContainerConfiguration, MaybePromise, bindAsService, bindOrRebind } from '@eclipse-glsp/protocol';
 import { GLSPStarter } from '@eclipse-glsp/vscode-integration-webview';
 import { GLSPDiagramIdentifier } from '@eclipse-glsp/vscode-integration-webview/lib/diagram-identifier';
 import { ExtensionActionKind } from '@eclipse-glsp/vscode-integration-webview/lib/features/default/extension-action-handler';
 import { GLSPDiagramWidget } from '@eclipse-glsp/vscode-integration-webview/lib/glsp-diagram-widget';
 import { Container, inject, injectable } from 'inversify';
-import { UmlDiagramWidget } from './diagram.widget';
+import { UMLDiagramWidget } from './diagram.widget';
 
-class UVStarter extends GLSPStarter {
+class UMLStarter extends GLSPStarter {
     createContainer(...containerConfiguration: ContainerConfiguration): Container {
-        const container = createUmlDiagramContainer(...containerConfiguration);
+        const container = createUMLDiagramContainer(...containerConfiguration);
 
         return container;
     }
 
     protected override addVscodeBindings(container: Container, diagramIdentifier: GLSPDiagramIdentifier): void {
-        container.bind(UmlDiagramWidget).toSelf().inSingletonScope();
-        bindOrRebind(container, GLSPDiagramWidget).toService(UmlDiagramWidget);
+        container.bind(UMLDiagramWidget).toSelf().inSingletonScope();
+        bindOrRebind(container, GLSPDiagramWidget).toService(UMLDiagramWidget);
         container.bind(ExtensionActionKind).toConstantValue(GLSPIsReadyAction.KIND);
         bindAsService(container, TYPES.IDiagramStartup, GLSPReadyStartup);
     }
-
-    /* TODO: Removed
-    protected override get extensionActionKinds(): string[] {
-        return [...super.extensionActionKinds, RequestPropertyPaletteAction.KIND, SetPropertyPaletteAction.KIND];
-    }
-    */
 }
 
 export function launch(): void {
-    new UVStarter();
+    new UMLStarter();
 }
 
 @injectable()

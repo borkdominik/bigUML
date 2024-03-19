@@ -62,10 +62,12 @@ export class EditLabelUIAutocomplete extends EditLabelUI {
         element.style.top = '0px';
         element.style.left = '0px';
         element.addEventListener('keyup', event => {
+            event.stopPropagation();
             this.onContentChange(event as KeyboardEvent, element.value);
             this.validateLabelIfContentChange(event as KeyboardEvent, element.value);
         });
         element.addEventListener('keydown', event => {
+            event.stopPropagation();
             this.handleAutocompleteMatch(event as KeyboardEvent);
             this.hideIfEscapeEvent(event as KeyboardEvent);
         });

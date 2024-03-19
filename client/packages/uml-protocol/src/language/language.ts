@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-export enum UmlDiagramType {
+export enum UMLDiagramType {
     NONE = '',
     ACTIVITY = 'ACTIVITY',
     CLASS = 'CLASS',
@@ -25,20 +25,10 @@ export enum UmlDiagramType {
     INFORMATION_FLOW = 'INFORMATION_FLOW'
 }
 
-export namespace UmlDiagramTypeUtil {
-    export const supported: UmlDiagramType[] = [
-        UmlDiagramType.ACTIVITY,
-        UmlDiagramType.CLASS,
-        UmlDiagramType.COMMUNICATION,
-        UmlDiagramType.DEPLOYMENT,
-        UmlDiagramType.INFORMATION_FLOW,
-        UmlDiagramType.PACKAGE,
-        UmlDiagramType.SEQUENCE,
-        UmlDiagramType.STATE_MACHINE,
-        UmlDiagramType.USE_CASE
-    ];
+export namespace UMLDiagramTypeUtil {
+    export const supported: UMLDiagramType[] = [UMLDiagramType.CLASS];
 
-    export function parseString(diagramType: string): UmlDiagramType {
-        return Object.values(UmlDiagramType).find(u => u.toUpperCase() === diagramType.toUpperCase()) ?? UmlDiagramType.NONE;
+    export function parseString(diagramType: string): UMLDiagramType {
+        return Object.values(UMLDiagramType).find(u => u.toUpperCase() === diagramType.toUpperCase()) ?? UMLDiagramType.NONE;
     }
 }

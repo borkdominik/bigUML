@@ -6,12 +6,14 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { Action, hasObjectProp, hasStringProp } from '@eclipse-glsp/client';
-import { GlspVscodeClient } from '@eclipse-glsp/vscode-integration';
+import { Action, ActionMessage } from '@eclipse-glsp/client';
 import { inject, postConstruct } from 'inversify';
+import { ActionMessageNotification } from 'packages/uml-protocol/lib';
 import * as vscode from 'vscode';
+import { Messenger } from 'vscode-messenger';
+import { MessageParticipant } from 'vscode-messenger-common';
 import { TYPES } from '../../di.types';
-import { VSCodeActionDispatcher } from '../../glsp/workaround/action-dispatcher';
+import { UMLGLSPConnector } from '../../glsp/uml-glsp-connector';
 
 export interface ProviderWebviewContext {
     webviewView: vscode.WebviewView;
@@ -19,30 +21,17 @@ export interface ProviderWebviewContext {
     token: vscode.CancellationToken;
 }
 
-export interface ConnectionMessage<T> {
-    command: string;
-    payload: T;
-    requestId?: string;
-    clientId?: string;
-    error?: any;
-}
-
-export namespace ConnectionData {
-    export function is(message: object): message is ConnectionMessage<any> {
-        return hasStringProp(message, 'command') && hasObjectProp(message, 'payload');
-    }
-}
-
-export abstract class UVWebviewProvider implements vscode.WebviewViewProvider {
+export abstract class UMLWebviewProvider implements vscode.WebviewViewProvider {
     abstract id: string;
     protected readonly retainContextWhenHidden: boolean = false;
 
     @inject(TYPES.ExtensionContext)
     protected readonly extension: vscode.ExtensionContext;
+    @inject(TYPES.Connector)
+    protected readonly connector: UMLGLSPConnector;
 
-    @inject(TYPES.IActionDispatcher)
-    protected readonly actionDispatcher: VSCodeActionDispatcher;
-
+    protected messenger: Messenger;
+    protected messageParticipant?: MessageParticipant;
     protected providerContext?: ProviderWebviewContext;
 
     @postConstruct()
@@ -52,6 +41,8 @@ export abstract class UVWebviewProvider implements vscode.WebviewViewProvider {
                 retainContextWhenHidden: this.retainContextWhenHidden
             }
         });
+
+        this.messenger = this.connector.messenger;
     }
 
     resolveWebviewView(
@@ -67,35 +58,38 @@ export abstract class UVWebviewProvider implements vscode.WebviewViewProvider {
             token
         };
 
-        webview.onDidReceiveMessage(this.onDidReceiveMessage.bind(this));
-
         webview.options = {
             enableScripts: true
         };
 
         this.resolveHTML(this.providerContext);
+
+        this.messageParticipant = this.messenger.registerWebviewView(webviewView);
+        this.messenger.onNotification(
+            ActionMessageNotification,
+            msg => {
+                this.onActionMessage(msg);
+            },
+            {
+                sender: this.messageParticipant
+            }
+        );
     }
 
     protected abstract resolveHTML(providerContext: ProviderWebviewContext): void;
 
-    protected onDidReceiveMessage(message: any): void {
-        if (ConnectionData.is(message) && message.command === 'dispatch-action') {
-            this.onDidReceiveDispatchAction(message);
-        }
+    protected onActionMessage(message: ActionMessage): void {
+        this.connector.sendActionToActiveClient(message.action);
     }
 
-    protected onDidReceiveDispatchAction(message: ConnectionMessage<Action | Action[]>): void {
-        this.actionDispatcher.dispatchToActiveClient(message.payload as Action[]);
-    }
-
-    protected postMessage(payload: any, client?: GlspVscodeClient): void {
-        if (this.providerContext === undefined) {
+    protected sendActionToWebview(action: Action): void {
+        if (this.messageParticipant === undefined) {
             return;
         }
 
-        this.providerContext.webviewView.webview.postMessage({
-            clientId: client?.clientId,
-            payload
+        this.messenger.sendNotification(ActionMessageNotification, this.messageParticipant, {
+            action,
+            clientId: this.connector.activeClient?.clientId
         });
     }
 }

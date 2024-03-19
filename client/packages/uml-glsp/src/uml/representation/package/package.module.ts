@@ -12,7 +12,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { UmlDiagramType } from '@borkdominik-biguml/uml-protocol';
+import { UMLDiagramType } from '@borkdominik-biguml/uml-protocol';
 import { ContainerModule } from 'inversify';
 import {
     registerAbstractionElement,
@@ -27,12 +27,12 @@ import {
 export const umlPackageDiagramModule = new ContainerModule((bind, undbind, isBound, rebind) => {
     const context = { bind, undbind, isBound, rebind };
 
-    registerClassElement(context, UmlDiagramType.PACKAGE);
-    registerPackageElement(context, UmlDiagramType.PACKAGE);
+    registerClassElement(context, UMLDiagramType.PACKAGE);
+    registerPackageElement(context, UMLDiagramType.PACKAGE);
 
-    registerAbstractionElement(context, UmlDiagramType.PACKAGE);
-    registerDependencyElement(context, UmlDiagramType.PACKAGE);
-    registerElementImportElement(context, UmlDiagramType.PACKAGE);
-    registerPackageImportElement(context, UmlDiagramType.PACKAGE);
-    registerPackageMergeElement(context, UmlDiagramType.PACKAGE);
+    registerAbstractionElement(context, UMLDiagramType.PACKAGE);
+    registerDependencyElement(context, UMLDiagramType.PACKAGE);
+    registerElementImportElement(context, UMLDiagramType.PACKAGE);
+    registerPackageImportElement(context, UMLDiagramType.PACKAGE);
+    registerPackageMergeElement(context, UMLDiagramType.PACKAGE);
 });

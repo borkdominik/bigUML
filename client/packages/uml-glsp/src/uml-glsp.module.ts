@@ -51,13 +51,13 @@ import { umlToolManagerModule } from './features/tools/tool-manager/uml-tool-man
 import { umlDiagramModules } from './uml/index';
 import { umlBaseViewsModule } from './views/uml-base-views.module';
 
-export function createUmlDiagramContainer(...containerConfiguration: ContainerConfiguration): Container {
-    const container = initializeUmlDiagramContainer(new Container(), ...containerConfiguration);
+export function createUMLDiagramContainer(...containerConfiguration: ContainerConfiguration): Container {
+    const container = initializeUMLDiagramContainer(new Container(), ...containerConfiguration);
     bindOrRebind(container, TYPES.LogLevel).toConstantValue(LogLevel.info);
     return container;
 }
 
-export function initializeUmlDiagramContainer(container: Container, ...containerConfiguration: ContainerConfiguration): Container {
+export function initializeUMLDiagramContainer(container: Container, ...containerConfiguration: ContainerConfiguration): Container {
     const accessibility: ContainerConfiguration = [
         glspToastModule,
         glspFocusTrackerModule,

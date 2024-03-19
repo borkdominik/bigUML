@@ -7,13 +7,19 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { ElementProperties, RefreshPropertyPaletteAction, SetPropertyPaletteAction } from '@borkdominik-biguml/uml-protocol';
-import { Action } from '@eclipse-glsp/protocol';
-import { html, TemplateResult } from 'lit';
+import {
+    ActionMessageNotification,
+    ElementProperties,
+    RefreshPropertyPaletteAction,
+    SetPropertyPaletteAction
+} from '@borkdominik-biguml/uml-protocol';
+import { Action, ActionMessage } from '@eclipse-glsp/protocol';
+import { TemplateResult, html } from 'lit';
 import { query, state } from 'lit/decorators.js';
+import { HOST_EXTENSION } from 'vscode-messenger-common';
 import { BigElement } from '../../base/component';
 import { useToolkit } from '../../toolkit';
-import { VSCodeConnection } from '../../vscode/vscode-api';
+import { messenger } from '../../vscode/messenger';
 import { PropertyPalette } from '../property-palette.component';
 
 export function definePropertyPaletteWebview(): void {
@@ -26,8 +32,6 @@ export class PropertyPaletteWebview extends BigElement {
 
     @state()
     protected elementProperties?: ElementProperties;
-
-    protected connection = VSCodeConnection.instance();
     protected clientId?: string;
 
     override connectedCallback(): void {
@@ -38,9 +42,18 @@ export class PropertyPaletteWebview extends BigElement {
             event.stopImmediatePropagation();
         });
 
-        this.connection.listen(this.onConnectionAction.bind(this), Action.is);
+        messenger.onNotification<ActionMessage>(ActionMessageNotification, message => {
+            const { clientId, action } = message;
+            if (SetPropertyPaletteAction.is(action)) {
+                this.clientId = clientId;
+                this.elementProperties = action.palette;
+            } else {
+                console.warn('Unsupported action', action);
+            }
+        });
+        messenger.start();
 
-        this.dispatchAction(RefreshPropertyPaletteAction.create());
+        this.sendNotification(RefreshPropertyPaletteAction.create());
     }
 
     protected override render(): TemplateResult<1> {
@@ -52,24 +65,14 @@ export class PropertyPaletteWebview extends BigElement {
         ></big-property-palette>`;
     }
 
-    protected onConnectionAction(action: Action, clientId: string): void {
-        if (SetPropertyPaletteAction.is(action)) {
-            this.clientId = clientId;
-            this.elementProperties = action.palette;
-        } else {
-            console.warn('Unsupported action', action);
-        }
-    }
-
     protected onDispatchAction(event: CustomEvent<Action>): void {
-        this.dispatchAction(event.detail);
+        this.sendNotification(event.detail);
     }
 
-    protected dispatchAction(payload: Action): void {
-        this.connection.post<Action>({
+    protected sendNotification(action: Action): void {
+        messenger.sendNotification(ActionMessageNotification, HOST_EXTENSION, {
             clientId: this.clientId,
-            command: 'dispatch-action',
-            payload
+            action
         });
     }
 }

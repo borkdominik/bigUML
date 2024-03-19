@@ -6,28 +6,35 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { UmlDiagramType } from '@borkdominik-biguml/uml-protocol';
+import { NewFileResponseAction, RequestNewFileAction, UMLDiagramType } from '@borkdominik-biguml/uml-protocol';
+import { Disposable, DisposableCollection } from '@eclipse-glsp/client';
 import { inject, injectable } from 'inversify';
 import URIJS from 'urijs';
 import * as vscode from 'vscode';
 import { TYPES } from '../../di.types';
-import { UVLangugageEnvironment, VSCodeSettings } from '../../language';
-import { UVModelServerClient } from '../../modelserver/uv-modelserver.client';
-import { UmlDiagramEditorProvider } from '../editor/editor.provider';
+import { IDESessionClient } from '../../glsp/ide-session-client';
+import { UMLLangugageEnvironment, VSCodeSettings } from '../../language';
+import { UMLDiagramEditorProvider } from '../editor/editor.provider';
 import { newDiagramWizard } from './wizard';
 
 const nameRegex = /^([\w_-]+\/?)*[\w_-]+$/;
 
 @injectable()
-export class NewFileCreator {
+export class NewFileCreator implements Disposable {
+    protected toDispose = new DisposableCollection();
+
     constructor(
-        @inject(TYPES.ModelServerClient)
-        protected readonly modelServerClient: UVModelServerClient,
+        @inject(TYPES.IDESessionClient)
+        protected readonly session: IDESessionClient,
         @inject(TYPES.EditorProvider)
-        protected readonly editor: UmlDiagramEditorProvider,
+        protected readonly editor: UMLDiagramEditorProvider,
         @inject(TYPES.ExtensionContext)
         protected readonly context: vscode.ExtensionContext
     ) {}
+
+    dispose(): void {
+        this.toDispose.dispose();
+    }
 
     async create(targetUri?: vscode.Uri): Promise<void> {
         const workspaces = vscode.workspace.workspaceFolders;
@@ -37,14 +44,9 @@ export class NewFileCreator {
         }
 
         const rootUri = targetUri ?? workspace.uri;
-        let prefixPath = '';
-        if (targetUri !== undefined) {
-            const relativePath = targetUri.path.replace(workspace.uri.path, '').slice(1);
-            prefixPath = relativePath.length === 0 ? '' : relativePath + '/';
-        }
 
         const wizard = await newDiagramWizard(this.context, {
-            diagramTypes: UVLangugageEnvironment.supportedTypes,
+            diagramTypes: UMLLangugageEnvironment.supportedTypes,
             nameValidator: async input => {
                 if (!input || input.trim().length === 0) {
                     return 'Name can not be empty';
@@ -56,13 +58,6 @@ export class NewFileCreator {
 
                 if (!nameRegex.test(input)) {
                     return 'Invalid input - only [0-9, a-z, A-Z, /, -, _] allowed';
-                }
-
-                const models = await this.modelServerClient.getAll();
-                const newModelUri = `${prefixPath}${this.diagramDestination(input)}`;
-
-                if (models.some(model => model.modeluri === newModelUri)) {
-                    return 'Model already exists';
                 }
 
                 try {
@@ -83,33 +78,35 @@ export class NewFileCreator {
         });
 
         if (wizard !== undefined) {
-            await this.createUmlDiagram(rootUri, wizard.name.trim(), wizard.diagramPick.diagramType);
+            await this.createUMLDiagram(rootUri, wizard.name.trim(), wizard.diagramPick.diagramType);
         }
     }
 
-    protected async createUmlDiagram(rootUri: vscode.Uri, diagramName: string, diagramType: UmlDiagramType): Promise<void> {
+    protected async createUMLDiagram(rootUri: vscode.Uri, diagramName: string, diagramType: UMLDiagramType): Promise<void> {
         const workspaceRoot = new URIJS(decodeURIComponent(this.rootDestination(rootUri)));
         const modelUri = new URIJS(workspaceRoot + '/' + this.diagramDestination(diagramName));
 
-        await this.modelServerClient.create(
-            modelUri,
-            {
-                data: {
-                    $type: 'com.eclipsesource.uml.modelserver.model.impl.NewDiagramRequestImpl',
-                    diagramType
-                }
-            },
-            undefined,
-            'raw-json'
-        );
+        const client = await this.session.client();
+        client.sendActionMessage({
+            action: RequestNewFileAction.create(diagramType, modelUri.path()),
+            clientId: client.id
+        });
+        const dispose = client.onActionMessage(async message => {
+            if (NewFileResponseAction.is(message.action)) {
+                dispose.dispose();
 
-        vscode.window.showInformationMessage(
-            'Thank you for testing bigUML. We want to remind you that bigUML is at an early stage of development.',
-            'Close'
-        );
-        await vscode.commands.executeCommand('workbench.files.action.refreshFilesExplorer');
-        const filePath = vscode.Uri.file(modelUri.path().toString());
-        await vscode.commands.executeCommand('vscode.openWith', filePath, VSCodeSettings.editor.viewType);
+                vscode.window.showInformationMessage(
+                    'Thank you for testing bigUML. We want to remind you that bigUML is at an early stage of development.',
+                    'Close'
+                );
+                await vscode.commands.executeCommand('workbench.files.action.refreshFilesExplorer');
+                await vscode.commands.executeCommand(
+                    'vscode.openWith',
+                    vscode.Uri.file(`${message.action.sourceUri}.uml`),
+                    VSCodeSettings.editor.viewType
+                );
+            }
+        }, client.id);
     }
 
     protected rootDestination(uri: vscode.Uri): string {
@@ -132,7 +129,7 @@ export class NewFileCreator {
 
         return {
             folder: prefix,
-            path: `${prefix}/model/${name}.uml`
+            path: `${prefix}/${name}`
         };
     }
 

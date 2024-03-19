@@ -8,10 +8,10 @@
  *********************************************************************************/
 import { containerFeature, Hoverable } from '@eclipse-glsp/client';
 // eslint-disable-next-line no-restricted-imports
-import { GUmlCompartment } from '../../views/uml-compartment';
+import { GUMLCompartment } from '../../views/uml-compartment';
 
-export class GCompartmentContainer extends GUmlCompartment implements Hoverable {
-    static override readonly DEFAULT_FEATURES = [...GUmlCompartment.DEFAULT_FEATURES, containerFeature];
+export class GCompartmentContainer extends GUMLCompartment implements Hoverable {
+    static override readonly DEFAULT_FEATURES = [...GUMLCompartment.DEFAULT_FEATURES, containerFeature];
 
     hoverFeedback = false;
 }

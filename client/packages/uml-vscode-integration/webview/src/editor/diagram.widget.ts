@@ -10,7 +10,7 @@ import { GLSPDiagramWidget } from '@eclipse-glsp/vscode-integration-webview/lib/
 import { injectable } from 'inversify';
 
 @injectable()
-export class UmlDiagramWidget extends GLSPDiagramWidget {
+export class UMLDiagramWidget extends GLSPDiagramWidget {
     protected containerDiv: HTMLDivElement | null;
 
     protected override initializeHtml(): void {

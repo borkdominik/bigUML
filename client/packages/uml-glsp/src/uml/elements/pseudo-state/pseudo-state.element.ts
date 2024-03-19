@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { UmlDiagramType } from '@borkdominik-biguml/uml-protocol';
+import { UMLDiagramType } from '@borkdominik-biguml/uml-protocol';
 import { configureModelElement, DefaultTypes } from '@eclipse-glsp/client';
 import { interfaces } from 'inversify';
 import { QualifiedUtil } from '../../qualified.utils';
@@ -20,7 +20,7 @@ import { ShallowHistoryNodeView } from './shallow_history_node_view';
 
 export function registerPseudoStateElement(
     context: { bind: interfaces.Bind; isBound: interfaces.IsBound },
-    representation: UmlDiagramType
+    representation: UMLDiagramType
 ): void {
     configureModelElement(
         context,

@@ -49,12 +49,12 @@ import { inject, injectable } from 'inversify';
 
 export const umlFallbackActionModule = new FeatureModule((bind, unbind, isBound, rebind) => {
     const context = { bind, unbind, isBound, rebind };
-    bind(UmlFallbackActionHandler).toSelf().inSingletonScope();
-    configureActionHandler(context, SetAccessibleKeyShortcutAction.KIND, UmlFallbackActionHandler);
+    bind(UMLFallbackActionHandler).toSelf().inSingletonScope();
+    configureActionHandler(context, SetAccessibleKeyShortcutAction.KIND, UMLFallbackActionHandler);
 });
 
 @injectable()
-export class UmlFallbackActionHandler implements IActionHandler {
+export class UMLFallbackActionHandler implements IActionHandler {
     @inject(TYPES.ILogger)
     protected logger: ILogger;
 
@@ -74,27 +74,27 @@ export const umlResizeElementModule = new FeatureModule((bind, unbind, isBound, 
     const context = { bind, unbind, isBound, rebind };
     bind(ResizeElementHandler).toSelf().inSingletonScope();
     configureActionHandler(context, ResizeElementAction.KIND, ResizeElementHandler);
-    bindAsService(context, TYPES.ITool, UmlResizeTool);
+    bindAsService(context, TYPES.ITool, UMLResizeTool);
 });
 
 @injectable()
-export class UmlResizeTool extends BaseEditTool {
+export class UMLResizeTool extends BaseEditTool {
     static ID = 'glsp.resize-tool';
 
     get id(): string {
-        return UmlResizeTool.ID;
+        return UMLResizeTool.ID;
     }
 
     @inject(SelectionService) readonly selectionService: SelectionService;
 
-    protected createResizeKeyListener(): UmlResizeKeyListener {
-        return new UmlResizeKeyListener(this);
+    protected createResizeKeyListener(): UMLResizeKeyListener {
+        return new UMLResizeKeyListener(this);
     }
 
     enable(): void {
         this.actionDispatcher.dispatch(
             ShowToastMessageAction.create({
-                id: Symbol.for(UmlResizeKeyListener.name),
+                id: Symbol.for(UMLResizeKeyListener.name),
                 message: "Resize On: Use plus(+) and minus(-) to resize, '0' for default size. Press 'ESC' to exit."
             })
         );
@@ -104,7 +104,7 @@ export class UmlResizeTool extends BaseEditTool {
     override disable(): void {
         this.actionDispatcher.dispatch(
             ShowToastMessageAction.createWithTimeout({
-                id: Symbol.for(UmlResizeKeyListener.name),
+                id: Symbol.for(UMLResizeKeyListener.name),
                 message: "Resize Off: Press 'ALT'+'A' for resize mode."
             })
         );
@@ -113,8 +113,8 @@ export class UmlResizeTool extends BaseEditTool {
 }
 
 @injectable()
-export class UmlResizeKeyListener extends KeyListener {
-    constructor(protected readonly tool: UmlResizeTool) {
+export class UMLResizeKeyListener extends KeyListener {
+    constructor(protected readonly tool: UMLResizeTool) {
         super();
     }
 
@@ -203,18 +203,18 @@ import { RepositionAction } from '@eclipse-glsp/client/lib/features/viewport/rep
 
 export const umlElementNavigationModule = new FeatureModule((bind, unbind, isBound, rebind) => {
     const context = { bind, unbind, isBound, rebind };
-    bindAsService(context, TYPES.ITool, UmlPrimaryElementNavigatorTool);
-    bindAsService(context, TYPES.ITool, UmlSecondaryElementNavigatorTool);
+    bindAsService(context, TYPES.ITool, UMLPrimaryElementNavigatorTool);
+    bindAsService(context, TYPES.ITool, UMLSecondaryElementNavigatorTool);
     bindAsService(context, TYPES.IElementNavigator, PositionNavigator);
     bindAsService(context, TYPES.ILocalElementNavigator, LocalElementNavigator);
 });
 
 @injectable()
-export class UmlPrimaryElementNavigatorTool implements Tool {
+export class UMLPrimaryElementNavigatorTool implements Tool {
     static ID = 'uml.primary-element-navigator-tool';
 
     get id(): string {
-        return UmlPrimaryElementNavigatorTool.ID;
+        return UMLPrimaryElementNavigatorTool.ID;
     }
 
     isEditTool = false;
@@ -249,11 +249,11 @@ export class UmlPrimaryElementNavigatorTool implements Tool {
 }
 
 @injectable()
-export class UmlSecondaryElementNavigatorTool implements Tool {
+export class UMLSecondaryElementNavigatorTool implements Tool {
     static ID = 'uml.secondary-element-navigator-tool';
 
     get id(): string {
-        return UmlSecondaryElementNavigatorTool.ID;
+        return UMLSecondaryElementNavigatorTool.ID;
     }
 
     isEditTool = false;

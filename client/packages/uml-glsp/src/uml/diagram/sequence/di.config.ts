@@ -38,14 +38,14 @@ import {
     SDRemoveFeedbackPositionedEdgeCommand
 } from './features/tool-feedback/creation-tool-feedback.extension';
 import {
+    SD_HORIZONTAL_SHIFT,
     SDDrawHorizontalShiftCommand,
-    SDRemoveHorizontalShiftCommand,
-    SD_HORIZONTAL_SHIFT
+    SDRemoveHorizontalShiftCommand
 } from './features/tool-feedback/horizontal-shift-tool-feedback';
 import {
+    SD_VERTICAL_SHIFT,
     SDDrawVerticalShiftCommand,
-    SDRemoveVerticalShiftCommand,
-    SD_VERTICAL_SHIFT
+    SDRemoveVerticalShiftCommand
 } from './features/tool-feedback/vertical-shift-tool-feedback';
 import { SDEdgeCreationTool } from './features/tools/edge-creation-tool.extension';
 import { SDHorizontalShiftNode, SDVerticalShiftNode } from './features/tools/model';
@@ -53,7 +53,7 @@ import { SDShiftMouseTool } from './features/tools/shift-mouse-tool';
 import { SDShiftTool } from './features/tools/shift-tool';
 import { SDHorizontalShiftView, SDVerticalShiftView } from './features/tools/shift-tool-view';
 import { SDScrollMouseListener } from './features/viewport/uml-scroll-mouse-listener';
-import { UmlSequenceTypes } from './sequence.types';
+import { UMLSequenceTypes } from './sequence.types';
 import {
     BehaviorExecutionNodeView,
     DestructionOccurrenceNodeView,
@@ -87,37 +87,37 @@ export const umlSequenceDiagramModule = new ContainerModule((bind, unbind, isBou
     configureCommand({ bind, isBound }, SDRemoveHorizontalShiftCommand);
 
     // INTERACTIONS
-    configureModelElement(context, UmlSequenceTypes.INTERACTION, InteractionElement, InteractionNodeView);
+    configureModelElement(context, UMLSequenceTypes.INTERACTION, InteractionElement, InteractionNodeView);
 
     // LIFELINE
-    configureModelElement(context, UmlSequenceTypes.LIFELINE, LifelineElement, LifelineNodeView);
+    configureModelElement(context, UMLSequenceTypes.LIFELINE, LifelineElement, LifelineNodeView);
 
     // BEHAVIOR_EXECUTION
-    configureModelElement(context, UmlSequenceTypes.BEHAVIOR_EXECUTION, NamedElement, BehaviorExecutionNodeView);
+    configureModelElement(context, UMLSequenceTypes.BEHAVIOR_EXECUTION, NamedElement, BehaviorExecutionNodeView);
 
     // COMBINED_FRAGMENT
-    configureModelElement(context, UmlSequenceTypes.COMBINED_FRAGMENT, NamedElement, InteractionNodeView);
+    configureModelElement(context, UMLSequenceTypes.COMBINED_FRAGMENT, NamedElement, InteractionNodeView);
 
     // INTERACTIO_OPERAND
-    configureModelElement(context, UmlSequenceTypes.INTERACTIO_OPERAND, NamedElement, InteractionOperandNodeView);
+    configureModelElement(context, UMLSequenceTypes.INTERACTIO_OPERAND, NamedElement, InteractionOperandNodeView);
 
     // INTERACTION_USE
-    configureModelElement(context, UmlSequenceTypes.INTERACTION_USE, NamedElement, InteractionNodeView);
+    configureModelElement(context, UMLSequenceTypes.INTERACTION_USE, NamedElement, InteractionNodeView);
 
     // MESSAGE_OCCURRENCE
-    configureModelElement(context, UmlSequenceTypes.MESSAGE_OCCURRENCE, GPort, CircularNodeView);
+    configureModelElement(context, UMLSequenceTypes.MESSAGE_OCCURRENCE, GPort, CircularNodeView);
 
     // EXECUTION_OCCURRENCE
-    configureModelElement(context, UmlSequenceTypes.EXECUTION_OCCURRENCE, GPort, CircularNodeView);
+    configureModelElement(context, UMLSequenceTypes.EXECUTION_OCCURRENCE, GPort, CircularNodeView);
 
     // DESTRUCTION_OCCURRENCE
-    configureModelElement(context, UmlSequenceTypes.DESTRUCTION_OCCURRENCE, GPort, DestructionOccurrenceNodeView);
+    configureModelElement(context, UMLSequenceTypes.DESTRUCTION_OCCURRENCE, GPort, DestructionOccurrenceNodeView);
 
     // MESSAGES
-    configureModelElement(context, UmlSequenceTypes.MESSAGE, GEdge, PolylineEdgeView);
+    configureModelElement(context, UMLSequenceTypes.MESSAGE, GEdge, PolylineEdgeView);
 
     // MESSAGE_ANCHOR
-    configureModelElement(context, UmlSequenceTypes.MESSAGE_ANCHOR, GPort, CircularNodeView);
+    configureModelElement(context, UMLSequenceTypes.MESSAGE_ANCHOR, GPort, CircularNodeView);
 });
 
 export function configureShiftTool(context: { bind: interfaces.Bind; isBound: interfaces.IsBound }): void {

@@ -6,8 +6,8 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { UmlDiagramType } from '../language/language';
+import { UMLDiagramType } from '../language/language';
 
-export interface UmlLanguageEnvironment {
-    supportedTypes: UmlDiagramType[];
+export interface UMLLanguageEnvironment {
+    supportedTypes: UMLDiagramType[];
 }

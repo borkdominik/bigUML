@@ -10,7 +10,7 @@ import { Action, FeedbackActionDispatcher, IFeedbackEmitter } from '@eclipse-gls
 import { injectable } from 'inversify';
 
 @injectable()
-export class UmlFeedbackActionDispatcher extends FeedbackActionDispatcher {
+export class UMLFeedbackActionDispatcher extends FeedbackActionDispatcher {
     constructor() {
         super();
     }

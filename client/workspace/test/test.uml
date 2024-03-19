@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ASCII"?>
+<uml:Model xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_Ixd8AN8LEe6XScRLwR9PWg">
+  <packagedElement xsi:type="uml:Class" xmi:id="_bTBD8OVTEe6SfvU2dCv3fA" name="Class">
+    <ownedAttribute xmi:id="_x4cYsOVTEe6Z8qg2ONz04A" name="Class" type="_beJ88OVTEe6SfvU2dCv3fA" aggregation="shared" association="_x4bxoOVTEe6Z8qg2ONz04A">
+      <lowerValue xsi:type="uml:LiteralInteger" xmi:id="_x4cYseVTEe6Z8qg2ONz04A" value="1"/>
+      <upperValue xsi:type="uml:LiteralUnlimitedNatural" xmi:id="_x4cYsuVTEe6Z8qg2ONz04A" value="1"/>
+    </ownedAttribute>
+    <ownedOperation xmi:id="_eScpgOVTEe6SfvU2dCv3fA" name="Operation"/>
+  </packagedElement>
+  <packagedElement xsi:type="uml:Class" xmi:id="_beJ88OVTEe6SfvU2dCv3fA" name="Class">
+    <ownedAttribute xmi:id="_x4c_wOVTEe6Z8qg2ONz04A" name="asd" type="_bTBD8OVTEe6SfvU2dCv3fA" association="_x4bxoOVTEe6Z8qg2ONz04A">
+      <lowerValue xsi:type="uml:LiteralInteger" xmi:id="_x4c_weVTEe6Z8qg2ONz04A" value="1"/>
+      <upperValue xsi:type="uml:LiteralUnlimitedNatural" xmi:id="_x4c_wuVTEe6Z8qg2ONz04A" value="1"/>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xsi:type="uml:Association" xmi:id="_x4bxoOVTEe6Z8qg2ONz04A" memberEnd="_x4cYsOVTEe6Z8qg2ONz04A _x4c_wOVTEe6Z8qg2ONz04A"/>
+</uml:Model>

@@ -8,15 +8,15 @@
  *********************************************************************************/
 import { Action, IActionHandler, ICommand, TYPES, ViewerOptions } from '@eclipse-glsp/client';
 import { inject, injectable } from 'inversify';
-import { SetUmlThemeAction } from './theme.actions';
+import { SetUMLThemeAction } from './theme.actions';
 
-export type UmlTheme = 'dark' | 'light';
+export type UMLTheme = 'dark' | 'light';
 
 @injectable()
 export class ThemeManager implements IActionHandler {
     @inject(TYPES.ViewerOptions) protected readonly viewerOptions: ViewerOptions;
 
-    updateTheme(theme: UmlTheme): void {
+    updateTheme(theme: UMLTheme): void {
         if (theme === 'dark') {
             document.getElementById(this.viewerOptions.hiddenDiv)?.classList.remove('uml-theme', 'uml-light-theme');
             document.getElementById(this.viewerOptions.hiddenDiv)?.classList.add('uml-theme', 'uml-dark-theme');
@@ -33,7 +33,7 @@ export class ThemeManager implements IActionHandler {
     }
 
     handle(action: Action): void | Action | ICommand {
-        if (SetUmlThemeAction.is(action)) {
+        if (SetUMLThemeAction.is(action)) {
             this.updateTheme(action.theme);
         }
     }

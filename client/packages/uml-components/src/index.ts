@@ -11,4 +11,4 @@ export * from './base';
 export * from './menu';
 export * from './property-palette';
 export * from './toolkit';
-export * from './vscode/vscode-api';
+export * from './vscode/messenger';

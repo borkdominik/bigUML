@@ -8,7 +8,7 @@
  *********************************************************************************/
 import { DefaultTypes } from '@eclipse-glsp/client';
 
-export namespace UmlGModelTypes {
+export namespace UMLGModelTypes {
     export const LABEL_NAME = `${DefaultTypes.LABEL}:name`;
     export const LABEL_TEXT = `${DefaultTypes.LABEL}:text`;
     export const LABEL_EDGE_NAME = `${DefaultTypes.LABEL}:edge-name`;

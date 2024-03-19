@@ -13,7 +13,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  **/
-import { UmlDiagramType } from '@borkdominik-biguml/uml-protocol';
+import { UMLDiagramType } from '@borkdominik-biguml/uml-protocol';
 import { ContainerModule } from 'inversify';
 import { registerFinalStateElement } from '../../elements/final-state/final-state.element';
 import { registerPseudoStateElement } from '../../elements/pseudo-state/pseudo-state.element';
@@ -24,10 +24,10 @@ import { registerTransitionElement } from '../../elements/transition/transition.
 
 export const umlStateMachineDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
     const context = { bind, unbind, isBound, rebind };
-    registerFinalStateElement(context, UmlDiagramType.STATE_MACHINE);
-    registerRegionElement(context, UmlDiagramType.STATE_MACHINE);
-    registerStateElement(context, UmlDiagramType.STATE_MACHINE);
-    registerStateMachineElement(context, UmlDiagramType.STATE_MACHINE);
-    registerPseudoStateElement(context, UmlDiagramType.STATE_MACHINE);
-    registerTransitionElement(context, UmlDiagramType.STATE_MACHINE);
+    registerFinalStateElement(context, UMLDiagramType.STATE_MACHINE);
+    registerRegionElement(context, UMLDiagramType.STATE_MACHINE);
+    registerStateElement(context, UMLDiagramType.STATE_MACHINE);
+    registerStateMachineElement(context, UMLDiagramType.STATE_MACHINE);
+    registerPseudoStateElement(context, UMLDiagramType.STATE_MACHINE);
+    registerTransitionElement(context, UMLDiagramType.STATE_MACHINE);
 });

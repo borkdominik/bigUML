@@ -23,15 +23,15 @@ import {
     TextArea,
     TextField
 } from '@vscode/webview-ui-toolkit';
+import { VsCodeApi } from 'vscode-messenger-webview';
 import { ContextMenu, ContextMenuItem } from './menu/context-menu.component';
 import { Menu, MenuItem } from './menu/menu.component';
 import { PropertyPalette, PropertyPaletteWebview } from './property-palette';
 import { PropertyPaletteReference } from './property-palette/reference/property-palette-reference.component';
 import { Tooltip } from './tooltip/tooltip.component';
-import { VSCodeApi } from './vscode/vscode-api';
 
 declare global {
-    function acquireVsCodeApi(): VSCodeApi;
+    function acquireVsCodeApi(): VsCodeApi;
 
     interface HTMLElementTagNameMap {
         'vscode-button': Button;

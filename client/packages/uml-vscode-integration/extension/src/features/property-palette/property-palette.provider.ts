@@ -8,24 +8,18 @@
  *********************************************************************************/
 
 import { RefreshPropertyPaletteAction, SetPropertyPaletteAction } from '@borkdominik-biguml/uml-protocol';
-import { Action, IActionHandler } from '@eclipse-glsp/client';
-import { inject, injectable, postConstruct } from 'inversify';
-import { TYPES } from '../../di.types';
-import { UVGlspConnector } from '../../glsp/uv-glsp-connector';
+import { injectable, postConstruct } from 'inversify';
 import { VSCodeSettings } from '../../language';
 import { getBundleUri, getUri } from '../../utilities/webview';
-import { ProviderWebviewContext, UVWebviewProvider } from '../../vscode/webview/webview-provider';
+import { ProviderWebviewContext, UMLWebviewProvider } from '../../vscode/webview/webview-provider';
 
 @injectable()
-export class PropertyPaletteProvider extends UVWebviewProvider implements IActionHandler {
+export class PropertyPaletteProvider extends UMLWebviewProvider {
     get id(): string {
         return VSCodeSettings.propertyPalette.viewId;
     }
 
     protected override retainContextWhenHidden = true;
-
-    @inject(TYPES.Connector)
-    protected readonly connector: UVGlspConnector;
 
     @postConstruct()
     override initialize(): void {
@@ -33,24 +27,25 @@ export class PropertyPaletteProvider extends UVWebviewProvider implements IActio
         this.connector.onDidActiveClientChange(client => {
             this.connector.sendActionToClient(client.clientId, RefreshPropertyPaletteAction.create());
         });
+
         this.connector.onDidClientViewStateChange(() => {
             setTimeout(() => {
                 if (this.connector.clients.every(c => !c.webviewEndpoint.webviewPanel.active)) {
-                    this.postMessage(SetPropertyPaletteAction.create());
+                    this.sendActionToWebview(SetPropertyPaletteAction.create());
                 }
             }, 100);
         });
-        this.connector.onDidClientDispose(client => {
+        this.connector.onDidClientDispose(() => {
             if (this.connector.documents.length === 0) {
-                this.postMessage(SetPropertyPaletteAction.create(), client);
+                this.sendActionToWebview(SetPropertyPaletteAction.create());
             }
         });
-    }
-
-    handle(action: Action): void {
-        if (this.connector.activeClient && SetPropertyPaletteAction.is(action)) {
-            this.postMessage(action, this.connector.activeClient);
-        }
+        this.connector.onActionMessage(message => {
+            const { action } = message;
+            if (SetPropertyPaletteAction.is(action)) {
+                this.sendActionToWebview(action);
+            }
+        });
     }
 
     protected resolveHTML(providerContext: ProviderWebviewContext): void {

@@ -8,8 +8,8 @@
  *********************************************************************************/
 import { configureModelElement, GCompartmentView, GLabel, GLabelView } from '@eclipse-glsp/client';
 import { ContainerModule } from 'inversify';
-import { GUmlCompartment } from '../views/uml-compartment';
-import { UmlGModelTypes } from './uml.types';
+import { GUMLCompartment } from '../views/uml-compartment';
+import { UMLGModelTypes } from './uml.types';
 import { GCompartmentContainer } from './views/uml-compartment';
 import { GDivider, GDividerView } from './views/uml-divider.view';
 import { GIconCSS, GIconCSSView } from './views/uml-icon.view';
@@ -18,12 +18,12 @@ import { GEditableLabel, GEditableLabelView } from './views/uml-label.view';
 export const umlModule = new ContainerModule((bind, unbind, isBound, rebind) => {
     const context = { bind, unbind, isBound, rebind };
 
-    configureModelElement(context, UmlGModelTypes.LABEL_NAME, GEditableLabel, GEditableLabelView);
-    configureModelElement(context, UmlGModelTypes.LABEL_EDGE_NAME, GEditableLabel, GEditableLabelView);
-    configureModelElement(context, UmlGModelTypes.LABEL_TEXT, GLabel, GLabelView);
-    configureModelElement(context, UmlGModelTypes.ICON_CSS, GIconCSS, GIconCSSView);
-    configureModelElement(context, UmlGModelTypes.DIVIDER, GDivider, GDividerView);
-    configureModelElement(context, UmlGModelTypes.COMPARTMENT_HEADER, GUmlCompartment, GCompartmentView);
-    configureModelElement(context, UmlGModelTypes.COMPARTMENT_ROOT_COMPONENT, GUmlCompartment, GCompartmentView);
-    configureModelElement(context, UmlGModelTypes.COMPARTMENT_CONTAINER, GCompartmentContainer, GCompartmentView);
+    configureModelElement(context, UMLGModelTypes.LABEL_NAME, GEditableLabel, GEditableLabelView);
+    configureModelElement(context, UMLGModelTypes.LABEL_EDGE_NAME, GEditableLabel, GEditableLabelView);
+    configureModelElement(context, UMLGModelTypes.LABEL_TEXT, GLabel, GLabelView);
+    configureModelElement(context, UMLGModelTypes.ICON_CSS, GIconCSS, GIconCSSView);
+    configureModelElement(context, UMLGModelTypes.DIVIDER, GDivider, GDividerView);
+    configureModelElement(context, UMLGModelTypes.COMPARTMENT_HEADER, GUMLCompartment, GCompartmentView);
+    configureModelElement(context, UMLGModelTypes.COMPARTMENT_ROOT_COMPONENT, GUMLCompartment, GCompartmentView);
+    configureModelElement(context, UMLGModelTypes.COMPARTMENT_CONTAINER, GCompartmentContainer, GCompartmentView);
 });

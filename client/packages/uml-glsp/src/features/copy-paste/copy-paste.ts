@@ -58,7 +58,7 @@ export class LastContainableElementTracker extends MouseListener {
 }
 
 @injectable()
-export class UmlServerCopyPasteHandler extends ServerCopyPasteHandler {
+export class UMLServerCopyPasteHandler extends ServerCopyPasteHandler {
     @inject(LastContainableElementTracker) protected containableElementTracker: LastContainableElementTracker;
 
     override handlePaste(event: ClipboardEvent): void {

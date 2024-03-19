@@ -275,14 +275,15 @@
   "dependencies": {
     "@borkdominik-biguml/uml-glsp": "*",
     "@borkdominik-biguml/uml-protocol": "*",
-    "@eclipse-emfcloud/modelserver-client": "next",
     "@eclipse-glsp/client": "next",
     "@eclipse-glsp/vscode-integration": "next",
     "@vscode/codicons": "^0.0.25",
     "inversify": "6.0.1",
     "lodash": "^4.17.21",
     "reflect-metadata": "^0.1.13",
-    "urijs": "^1.19.11"
+    "urijs": "^1.19.11",
+    "vscode-messenger": "^0.4.5",
+    "vscode-messenger-common": "^0.4.5"
   },
   "devDependencies": {
     "@borkdominik-biguml/uml-vscode-integration-webview": "*",

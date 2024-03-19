@@ -186,13 +186,7 @@ Coming Soon!
 Get started with bigUML, learn fundamentals, explore advanced topics, or go through tutorials with our documentation.
 
 - [Changelog](./CHANGELOG.md)
-- [Getting Started](./docs/getting-started.md)
 - [Documentation](./docs/README.md)
-- [Tutorials](./docs/tutorial/README.md)
-
-## Development Setup
-
-Need help concerning the setup? Then go right to [Requirements](./docs/requirements.md) and continue with [Getting Started](./docs/getting-started.md).
 
 ## Contributors ✨
 

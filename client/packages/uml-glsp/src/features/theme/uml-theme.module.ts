@@ -8,12 +8,12 @@
  *********************************************************************************/
 import { configureActionHandler } from '@eclipse-glsp/client';
 import { ContainerModule } from 'inversify';
-import { SetUmlThemeAction } from './theme.actions';
+import { SetUMLThemeAction } from './theme.actions';
 import { ThemeManager } from './theme.manager';
 
 export const umlThemeModule = new ContainerModule((bind, _unbind, isBound, rebind) => {
     const context = { bind, _unbind, isBound, rebind };
 
     bind(ThemeManager).toSelf().inSingletonScope();
-    configureActionHandler(context, SetUmlThemeAction.KIND, ThemeManager);
+    configureActionHandler(context, SetUMLThemeAction.KIND, ThemeManager);
 });

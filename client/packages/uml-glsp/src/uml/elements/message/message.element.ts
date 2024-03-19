@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { UmlDiagramType } from '@borkdominik-biguml/uml-protocol';
+import { UMLDiagramType } from '@borkdominik-biguml/uml-protocol';
 import { configureModelElement, GEdge, GEdgeView } from '@eclipse-glsp/client';
 import { DefaultTypes } from '@eclipse-glsp/protocol';
 import { interfaces } from 'inversify';
@@ -17,7 +17,7 @@ import { MessageArrowLabelView } from './message-arrow-label.view';
 
 export function registerMessageElement(
     context: { bind: interfaces.Bind; isBound: interfaces.IsBound },
-    representation: UmlDiagramType
+    representation: UMLDiagramType
 ): void {
     configureModelElement(
         context,
@@ -25,5 +25,5 @@ export function registerMessageElement(
         GEditableLabel,
         MessageArrowLabelView
     );
-    configureModelElement(context, QualifiedUtil.representationTypeId(representation, DefaultTypes.EDGE, 'Message'), GEdge, GEdgeView);
+    configureModelElement(context, QualifiedUtil.typeId(representation, 'Message'), GEdge, GEdgeView);
 }

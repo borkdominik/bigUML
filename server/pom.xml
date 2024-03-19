@@ -4,17 +4,15 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.eclipsesource.uml</groupId>
-	<artifactId>com.eclipsesource.uml.parent</artifactId>
+	<groupId>com.borkdominik.big</groupId>
+	<artifactId>com.borkdominik.big.parent</artifactId>
 	<packaging>pom</packaging>
 	<version>0.1.0-SNAPSHOT</version>	
 	<name>Uml Editor Parent</name>
 	
 	<modules>
 		<module>./targetplatform</module>
-		<module>./com.eclipsesource.uml.cli</module>
-		<module>./com.eclipsesource.uml.modelserver</module>
-		<module>./com.eclipsesource.uml.glsp</module>
+		<module>./com.borkdominik.big.glsp.uml</module>
 	</modules>
 	
 
@@ -57,8 +55,8 @@
 				<configuration>
 					<target>
 						<artifact>
-							<groupId>com.eclipsesource.uml</groupId>
-							<artifactId>com.eclipsesource.uml.target</artifactId>
+							<groupId>com.borkdominik.big</groupId>
+							<artifactId>com.borkdominik.big.glsp.uml.target</artifactId>
 							<version>0.1.0-SNAPSHOT</version>
 						</artifact>
 					</target>

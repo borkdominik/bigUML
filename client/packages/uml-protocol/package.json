@@ -37,6 +37,10 @@
     "prepare": "yarn run clean && yarn run build",
     "watch": "tsc -w"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@eclipse-glsp/client": "next",
+    "@eclipse-glsp/protocol": "next",
+    "vscode-messenger-common": "^0.4.5"
+  },
   "devDependencies": {}
 }

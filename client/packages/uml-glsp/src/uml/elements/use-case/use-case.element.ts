@@ -7,9 +7,8 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { UmlDiagramType } from '@borkdominik-biguml/uml-protocol';
+import { UMLDiagramType } from '@borkdominik-biguml/uml-protocol';
 import { configureModelElement } from '@eclipse-glsp/client';
-import { DefaultTypes } from '@eclipse-glsp/protocol';
 import { interfaces } from 'inversify';
 import { QualifiedUtil } from '../../qualified.utils';
 import { NamedElement } from '../index';
@@ -17,12 +16,7 @@ import { UseCaseView } from './use-case.view';
 
 export function registerUseCaseElement(
     context: { bind: interfaces.Bind; isBound: interfaces.IsBound },
-    representation: UmlDiagramType
+    representation: UMLDiagramType
 ): void {
-    configureModelElement(
-        context,
-        QualifiedUtil.representationTypeId(representation, DefaultTypes.NODE, 'UseCase'),
-        NamedElement,
-        UseCaseView
-    );
+    configureModelElement(context, QualifiedUtil.typeId(representation, 'UseCase'), NamedElement, UseCaseView);
 }

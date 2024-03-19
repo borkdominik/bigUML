@@ -6,15 +6,31 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { Action, IActionHandler } from '@eclipse-glsp/client';
-import { injectable } from 'inversify';
+import { RequestOutlineAction } from '@borkdominik-biguml/uml-protocol';
+import { Action, GModelRoot, IActionHandler, IDiagramStartup, IGModelRootListener, MaybePromise, TYPES } from '@eclipse-glsp/client';
+import { inject, injectable } from 'inversify';
+import { UMLActionDispatcher } from '../../base/action-dispatcher';
 
-/**
- * TODO: Workaround until the webview (property palette) can handle the actions directly
- */
 @injectable()
-export class OutlineActionHandler implements IActionHandler {
+export class OutlineService implements IActionHandler, IDiagramStartup, IGModelRootListener {
+    @inject(TYPES.IActionDispatcherProvider) protected actionDispatcher: () => Promise<UMLActionDispatcher>;
+
     handle(action: Action): void | Action {
         // nothing to do
+        // the code will be handled outside of GLSP
+    }
+
+    modelRootChanged(root: Readonly<GModelRoot>): void {
+        this.request();
+    }
+
+    postModelInitialization(): MaybePromise<void> {
+        return this.request();
+    }
+
+    protected async request(): Promise<void> {
+        const actionDispatcher = await this.actionDispatcher();
+        await actionDispatcher.onceModelInitialized();
+        await actionDispatcher.dispatch(RequestOutlineAction.create());
     }
 }

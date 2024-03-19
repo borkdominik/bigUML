@@ -8,13 +8,13 @@
  *********************************************************************************/
 
 import { ApplyTypeHintsCommand, typeHintsModule } from '@eclipse-glsp/client';
-import { bindOrRebind, FeatureModule } from '@eclipse-glsp/protocol';
-import { UmlApplyTypeHintsCommand } from './uml-type-hint.provider';
+import { FeatureModule, bindOrRebind } from '@eclipse-glsp/protocol';
+import { UMLApplyTypeHintsCommand } from './uml-type-hint.provider';
 
 export const umlTypeHintsModule = new FeatureModule(
     (bind, unbind, isBound, rebind) => {
         const context = { bind, unbind, isBound, rebind };
-        bindOrRebind(context, ApplyTypeHintsCommand).to(UmlApplyTypeHintsCommand);
+        bindOrRebind(context, ApplyTypeHintsCommand).to(UMLApplyTypeHintsCommand);
     },
     {
         requires: typeHintsModule

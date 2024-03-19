@@ -8,7 +8,7 @@
  *********************************************************************************/
 import { EdgeRouterRegistry, GLSPProjectionView, GViewportRootElement, IViewArgs, RenderingContext, svg } from '@eclipse-glsp/client';
 import { inject, injectable } from 'inversify';
-import { h, VNode, VNodeStyle } from 'snabbdom';
+import { VNode, VNodeStyle, h } from 'snabbdom';
 import { SVGIdCreatorService } from './services/svg-id-creator.service';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -22,7 +22,7 @@ const MARKER_DIAMONG_EMPTY_ID = 'marker-diamond-empty';
 const FILTER_DROP_SHADOW_ID = 'filter-drop-shadow';
 
 @injectable()
-export class UmlGraphProjectionView extends GLSPProjectionView {
+export class UMLGraphProjectionView extends GLSPProjectionView {
     @inject(EdgeRouterRegistry)
     override edgeRouterRegistry: EdgeRouterRegistry;
 

@@ -7,9 +7,8 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { UmlDiagramType } from '@borkdominik-biguml/uml-protocol';
+import { UMLDiagramType } from '@borkdominik-biguml/uml-protocol';
 import { configureModelElement } from '@eclipse-glsp/client';
-import { DefaultTypes } from '@eclipse-glsp/protocol';
 import { interfaces } from 'inversify';
 import { QualifiedUtil } from '../../qualified.utils';
 import { NamedElement } from '../index';
@@ -17,12 +16,7 @@ import { FinalNodeView } from './final_node_view';
 
 export function registerFinalStateElement(
     context: { bind: interfaces.Bind; isBound: interfaces.IsBound },
-    representation: UmlDiagramType
+    representation: UMLDiagramType
 ): void {
-    configureModelElement(
-        context,
-        QualifiedUtil.representationTypeId(representation, DefaultTypes.NODE, 'FinalState'),
-        NamedElement,
-        FinalNodeView
-    );
+    configureModelElement(context, QualifiedUtil.typeId(representation, 'FinalState'), NamedElement, FinalNodeView);
 }

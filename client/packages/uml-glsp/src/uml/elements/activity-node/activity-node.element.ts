@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { UmlDiagramType } from '@borkdominik-biguml/uml-protocol';
+import { UMLDiagramType } from '@borkdominik-biguml/uml-protocol';
 import { CircularNode, configureModelElement, DiamondNode } from '@eclipse-glsp/client';
 import { DefaultTypes } from '@eclipse-glsp/protocol';
 import { interfaces } from 'inversify';
@@ -23,27 +23,12 @@ import { InitialNodeView } from './control-nodes/initial-node-view';
 
 export function registerActivityNodeElement(
     context: { bind: interfaces.Bind; isBound: interfaces.IsBound },
-    representation: UmlDiagramType
+    representation: UMLDiagramType
 ): void {
     // Actions
-    configureModelElement(
-        context,
-        QualifiedUtil.representationTypeId(representation, DefaultTypes.NODE, 'OpaqueAction'),
-        NamedElement,
-        NamedElementView
-    );
-    configureModelElement(
-        context,
-        QualifiedUtil.representationTypeId(representation, DefaultTypes.NODE, 'AcceptEventAction'),
-        NamedElement,
-        AcceptEventActionView
-    );
-    configureModelElement(
-        context,
-        QualifiedUtil.representationTypeId(representation, DefaultTypes.NODE, 'SendSignalAction'),
-        NamedElement,
-        SendSignalActionView
-    );
+    configureModelElement(context, QualifiedUtil.typeId(representation, 'OpaqueAction'), NamedElement, NamedElementView);
+    configureModelElement(context, QualifiedUtil.typeId(representation, 'AcceptEventAction'), NamedElement, AcceptEventActionView);
+    configureModelElement(context, QualifiedUtil.typeId(representation, 'SendSignalAction'), NamedElement, SendSignalActionView);
     // Control Nodes
     configureModelElement(
         context,
@@ -83,17 +68,12 @@ export function registerActivityNodeElement(
     );
     configureModelElement(
         context,
-        QualifiedUtil.representationTypeId(UmlDiagramType.ACTIVITY, DefaultTypes.NODE_CIRCLE, 'FlowFinalNode'),
+        QualifiedUtil.representationTypeId(UMLDiagramType.ACTIVITY, DefaultTypes.NODE_CIRCLE, 'FlowFinalNode'),
         CircularNode,
         FlowFinalNodeView
     );
     // Object nodes
-    configureModelElement(
-        context,
-        QualifiedUtil.representationTypeId(representation, DefaultTypes.NODE, 'CentralBufferNode'),
-        NamedElement,
-        NamedElementView
-    );
+    configureModelElement(context, QualifiedUtil.typeId(representation, 'CentralBufferNode'), NamedElement, NamedElementView);
     configureModelElement(
         context,
         QualifiedUtil.representationTypeId(representation, DefaultTypes.PORT, 'ActivityParameterNode'),

@@ -19,7 +19,7 @@ import {
 } from '@borkdominik-biguml/uml-protocol';
 import { Action } from '@eclipse-glsp/protocol';
 import { Checkbox as VSCodeCheckbox, Dropdown as VSCodeDropdown, TextField as VSCodeTextField } from '@vscode/webview-ui-toolkit';
-import { html, nothing, PropertyValues, TemplateResult } from 'lit';
+import { PropertyValues, TemplateResult, html, nothing } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { keyed } from 'lit/directives/keyed.js';
 import { when } from 'lit/directives/when.js';
@@ -242,7 +242,7 @@ export class PropertyPalette extends BigElement {
             new CustomEvent<Action>('dispatch-action', {
                 detail: UpdateElementPropertyAction.create({
                     elementId: element.elementId,
-                    propertyId: `${element.propertyId}_INDEX`,
+                    propertyId: `${element.propertyId}_index`,
                     value: JSON.stringify(updates)
                 })
             })
@@ -277,7 +277,7 @@ export class PropertyPalette extends BigElement {
             new CustomEvent<Action>('dispatch-action', {
                 detail: UpdateElementPropertyAction.create({
                     elementId,
-                    propertyId: 'NAME',
+                    propertyId: 'name',
                     value: name
                 })
             })

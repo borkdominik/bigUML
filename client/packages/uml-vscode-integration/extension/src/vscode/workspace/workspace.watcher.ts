@@ -6,16 +6,12 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { inject, injectable, postConstruct } from 'inversify';
-import URI from 'urijs';
-import * as vscode from 'vscode';
-import { TYPES } from '../../di.types';
-import { VSCodeSettings } from '../../language';
-import { UVModelServerClient } from '../../modelserver/uv-modelserver.client';
+import { injectable } from 'inversify';
 
 @injectable()
 export class WorkspaceWatcher {
-    constructor(@inject(TYPES.ModelServerClient) protected readonly modelServerClient: UVModelServerClient) {}
+    /*
+    constructor(@inject(TYPES.ModelServerClient) protected readonly modelServerClient: ModelServerClient) {}
 
     @postConstruct()
     initialize(): void {
@@ -27,11 +23,11 @@ export class WorkspaceWatcher {
             });
             e.waitUntil(promise);
 
-            const workspaceUmlFiles = await vscode.workspace.findFiles(`**/*.${VSCodeSettings.editor.extension}`);
+            const workspaceUMLFiles = await vscode.workspace.findFiles(`** /*.${VSCodeSettings.editor.extension}`);
             const jobs: Promise<unknown>[] = [];
 
             e.files.forEach(df => {
-                const umlFiles = workspaceUmlFiles.filter(uf => uf.path.startsWith(df.path));
+                const umlFiles = workspaceUMLFiles.filter(uf => uf.path.startsWith(df.path));
 
                 umlFiles.forEach(uf => {
                     const uri = new URI(decodeURIComponent(uf.toString()));
@@ -43,4 +39,5 @@ export class WorkspaceWatcher {
             promiseResolve!(undefined);
         });
     }
+    */
 }

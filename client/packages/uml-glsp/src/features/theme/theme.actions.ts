@@ -7,21 +7,21 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import { Action, hasStringProp } from '@eclipse-glsp/protocol';
-import type { UmlTheme } from './theme.manager';
+import type { UMLTheme } from './theme.manager';
 
-export interface SetUmlThemeAction extends Action {
-    kind: typeof SetUmlThemeAction.KIND;
-    theme: UmlTheme;
+export interface SetUMLThemeAction extends Action {
+    kind: typeof SetUMLThemeAction.KIND;
+    theme: UMLTheme;
 }
 
-export namespace SetUmlThemeAction {
-    export const KIND = 'setUmlTheme';
+export namespace SetUMLThemeAction {
+    export const KIND = 'setUMLTheme';
 
-    export function is(object: any): object is SetUmlThemeAction {
+    export function is(object: any): object is SetUMLThemeAction {
         return Action.hasKind(object, KIND) && hasStringProp(object, 'theme');
     }
 
-    export function create(theme: UmlTheme): SetUmlThemeAction {
+    export function create(theme: UMLTheme): SetUMLThemeAction {
         return { kind: KIND, theme };
     }
 }

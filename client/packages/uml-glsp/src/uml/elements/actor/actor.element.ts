@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { UmlDiagramType } from '@borkdominik-biguml/uml-protocol';
+import { UMLDiagramType } from '@borkdominik-biguml/uml-protocol';
 import { configureModelElement } from '@eclipse-glsp/client';
 import { DefaultTypes } from '@eclipse-glsp/protocol';
 import { interfaces } from 'inversify';
@@ -18,9 +18,9 @@ import { StickFigureNode, StickFigureView } from './stick-figure.view';
 
 export function registerActorElement(
     context: { bind: interfaces.Bind; isBound: interfaces.IsBound },
-    representation: UmlDiagramType
+    representation: UMLDiagramType
 ): void {
-    configureModelElement(context, QualifiedUtil.representationTypeId(representation, DefaultTypes.NODE, 'Actor'), NamedElement, ActorView);
+    configureModelElement(context, QualifiedUtil.typeId(representation, 'Actor'), NamedElement, ActorView);
     configureModelElement(
         context,
         QualifiedUtil.representationTemplateTypeId(representation, DefaultTypes.NODE, 'GModel', 'STICKFIGURE'),

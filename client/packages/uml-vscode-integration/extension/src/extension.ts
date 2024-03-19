@@ -12,32 +12,30 @@ import { Container } from 'inversify';
 import * as vscode from 'vscode';
 import { createContainer } from './di.config';
 import { TYPES } from './di.types';
-import { UVGlspConnector } from './glsp/uv-glsp-connector';
-import { UVGlspServer } from './glsp/uv-glsp-server';
+import { UMLGLSPConnector } from './glsp/uml-glsp-connector';
+import { UMLGLSPServer } from './glsp/uml-glsp-server';
 import { VSCodeSettings } from './language';
-import { createGLSPServerConfig, createModelServerConfig, ServerManager } from './server';
+import { createGLSPServerConfig, ServerManager } from './server';
 import { configureDefaultCommands } from './vscode/command/default-commands';
 
 let diContainer: Container | undefined;
 
 export async function activate(context: vscode.ExtensionContext): Promise<void> {
     const glspServerConfig = await createGLSPServerConfig();
-    const modelServerConfig = await createModelServerConfig();
 
     diContainer = createContainer(context, {
-        glspServerConfig,
-        modelServerConfig
+        glspServerConfig
     });
 
     configureDefaultCommands({
         extensionContext: context,
-        connector: diContainer.get<UVGlspConnector>(TYPES.Connector),
+        connector: diContainer.get<UMLGLSPConnector>(TYPES.Connector),
         diagramPrefix: VSCodeSettings.commands.prefix
     });
 
     diContainer.getAll<any>(TYPES.RootInitialization);
     await diContainer.get<ServerManager>(TYPES.ServerManager).start();
-    diContainer.get<UVGlspServer>(TYPES.GlspServer).start();
+    diContainer.get<UMLGLSPServer>(TYPES.GlspServer).start();
 
     vscode.commands.executeCommand('setContext', `${VSCodeSettings.name}.isRunning`, true);
 }

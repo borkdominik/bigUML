@@ -11,13 +11,13 @@ import { BoundsData, GModelElement, GParentElement, isLayoutContainer, LayoutCon
 import { StatefulLayouterExt } from '@eclipse-glsp/client/lib/features/bounds/layouter';
 import { isEqual } from 'lodash';
 
-export class UmlLayouterExt extends Layouter {
+export class UMLLayouterExt extends Layouter {
     override layout(element2boundsData: Map<GModelElement, BoundsData>): void {
-        new UmlStatefulLayouterExt(element2boundsData, this.layoutRegistry, this.logger).layout();
+        new UMLStatefulLayouterExt(element2boundsData, this.layoutRegistry, this.logger).layout();
     }
 }
 
-export class UmlStatefulLayouterExt extends StatefulLayouterExt {
+export class UMLStatefulLayouterExt extends StatefulLayouterExt {
     override layout(): void {
         // First pass: apply layout with cleared container data. Will get
         // preferred size for all elements (Children first, then parents)

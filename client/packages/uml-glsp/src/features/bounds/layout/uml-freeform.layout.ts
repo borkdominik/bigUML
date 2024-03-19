@@ -13,7 +13,7 @@ import { injectable } from 'inversify';
 import { AbstractLayoutOptions } from 'sprotty/lib/features/bounds/layout-options';
 
 @injectable()
-export class UmlFreeFormLayouter extends FreeFormLayouter {
+export class UMLFreeFormLayouter extends FreeFormLayouter {
     static override KIND = 'uml-freeform';
 
     // Only sizeable children will be returned

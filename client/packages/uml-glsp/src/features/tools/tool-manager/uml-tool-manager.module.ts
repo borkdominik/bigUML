@@ -8,13 +8,13 @@
  *********************************************************************************/
 
 import { bindOrRebind, configureActionHandler, FeatureModule, ToolManagerActionHandler, TYPES } from '@eclipse-glsp/client';
-import { ChangeToolsStateAction, UmlToolManager, UmlToolManagerActionHandler } from './uml-tool-manager';
+import { ChangeToolsStateAction, UMLToolManager, UMLToolManagerActionHandler } from './uml-tool-manager';
 
 export const umlToolManagerModule = new FeatureModule((bind, unbind, isBound, rebind) => {
     const context = { bind, unbind, isBound, rebind };
 
-    bindOrRebind(context, TYPES.IToolManager).to(UmlToolManager).inSingletonScope();
-    bindOrRebind(context, ToolManagerActionHandler).to(UmlToolManagerActionHandler).inSingletonScope();
+    bindOrRebind(context, TYPES.IToolManager).to(UMLToolManager).inSingletonScope();
+    bindOrRebind(context, ToolManagerActionHandler).to(UMLToolManagerActionHandler).inSingletonScope();
 
-    configureActionHandler({ bind, isBound }, ChangeToolsStateAction.KIND, UmlToolManagerActionHandler);
+    configureActionHandler({ bind, isBound }, ChangeToolsStateAction.KIND, UMLToolManagerActionHandler);
 });

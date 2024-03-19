@@ -7,14 +7,14 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import { RefreshPropertyPaletteAction } from '@borkdominik-biguml/uml-protocol';
-import { configureActionHandler, FeatureModule, SelectAction, SetDirtyStateAction } from '@eclipse-glsp/client';
+import { configureActionHandler, FeatureModule, SelectAction, TYPES } from '@eclipse-glsp/client';
 import { PropertyPaletteHandler } from './property-palette.handler';
 
 export const umlPropertyPaletteModule = new FeatureModule((bind, unbind, isBound, rebind) => {
     const context = { bind, unbind, isBound, rebind };
 
     bind(PropertyPaletteHandler).toSelf().inSingletonScope();
+    bind(TYPES.IGModelRootListener).toService(PropertyPaletteHandler);
     configureActionHandler(context, SelectAction.KIND, PropertyPaletteHandler);
-    configureActionHandler(context, SetDirtyStateAction.KIND, PropertyPaletteHandler);
     configureActionHandler(context, RefreshPropertyPaletteAction.KIND, PropertyPaletteHandler);
 });

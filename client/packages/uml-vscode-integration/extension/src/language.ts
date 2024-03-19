@@ -6,14 +6,15 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { UmlDiagramTypeUtil, UmlLanguageEnvironment } from '@borkdominik-biguml/uml-protocol';
+import { UMLDiagramTypeUtil, UMLLanguageEnvironment } from '@borkdominik-biguml/uml-protocol';
 
-export const UVLangugageEnvironment: UmlLanguageEnvironment = {
-    supportedTypes: UmlDiagramTypeUtil.supported
+export const UMLLangugageEnvironment: UMLLanguageEnvironment = {
+    supportedTypes: UMLDiagramTypeUtil.supported
 };
 
 export const VSCodeSettings = {
     name: 'bigUML',
+    diagramType: 'umldiagram',
     commands: {
         prefix: 'bigUML'
     },

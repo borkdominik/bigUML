@@ -11,9 +11,9 @@ import { ContainerModule, inject, injectable } from 'inversify';
 import * as path from 'path';
 import { TYPES } from '../di.types';
 import { OutputChannel } from '../vscode/output/output.channel';
-import { UmlServerLauncherOptions } from './launcher';
+import { ServerLauncherOptions } from './launcher';
 import { osUtils } from './os';
-import { UVServerLauncher } from './server-launcher';
+import { UMLServerLauncher } from './server-launcher';
 
 const GLSP_SERVER_PATH = '../server';
 const GLSP_SERVER_VERSION = '0.1.0-SNAPSHOT';
@@ -26,7 +26,7 @@ export interface GlspServerConfig {
 
 export function glspServerModule(config: GlspServerConfig): ContainerModule {
     return new ContainerModule(bind => {
-        const launchOptions: UmlServerLauncherOptions = {
+        const launchOptions: ServerLauncherOptions = {
             executable: JAVA_EXECUTABLE,
             additionalArgs: ['glspserver', `--port=${config.port}`],
             logging: true || process.env.UML_GLSP_SERVER_LOGGING === 'true',
@@ -39,9 +39,10 @@ export function glspServerModule(config: GlspServerConfig): ContainerModule {
         };
 
         bind(TYPES.GlspServerLaunchOptions).toConstantValue(launchOptions);
+        bind(TYPES.GlspServerConfig).toConstantValue(config);
 
-        bind(UmlGLSPServerLauncher).toSelf().inSingletonScope();
-        bind(TYPES.GlspServerLauncher).toService(UmlGLSPServerLauncher);
+        bind(UMLGLSPServerLauncher).toSelf().inSingletonScope();
+        bind(TYPES.GlspServerLauncher).toService(UMLGLSPServerLauncher);
         bind(TYPES.ServerLauncher).toService(TYPES.GlspServerLauncher);
         bind(TYPES.Disposable).toService(TYPES.GlspServerLauncher);
     });
@@ -54,13 +55,13 @@ export async function createGLSPServerConfig(): Promise<GlspServerConfig> {
 }
 
 @injectable()
-export class UmlGLSPServerLauncher extends UVServerLauncher {
+export class UMLGLSPServerLauncher extends UMLServerLauncher {
     get isEnabled(): boolean {
         return process.env.UML_GLSP_SERVER_DEBUG !== 'true';
     }
 
     constructor(
-        @inject(TYPES.GlspServerLaunchOptions) options: UmlServerLauncherOptions,
+        @inject(TYPES.GlspServerLaunchOptions) options: ServerLauncherOptions,
         @inject(TYPES.OutputChannel) outputChannel: OutputChannel
     ) {
         super(options, outputChannel);

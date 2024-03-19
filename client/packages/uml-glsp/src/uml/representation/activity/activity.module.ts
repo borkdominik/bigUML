@@ -12,7 +12,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { UmlDiagramType } from '@borkdominik-biguml/uml-protocol';
+import { UMLDiagramType } from '@borkdominik-biguml/uml-protocol';
 import { ContainerModule } from 'inversify';
 import {
     registerActivityElement,
@@ -24,9 +24,9 @@ import {
 
 export const umlActivityDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
     const context = { bind, unbind, isBound, rebind };
-    registerActivityElement(context, UmlDiagramType.ACTIVITY);
-    registerActivityNodeElement(context, UmlDiagramType.ACTIVITY);
-    registerActivityPartitionElement(context, UmlDiagramType.ACTIVITY);
-    registerPinElement(context, UmlDiagramType.ACTIVITY);
-    registerControlFlowElement(context, UmlDiagramType.ACTIVITY);
+    registerActivityElement(context, UMLDiagramType.ACTIVITY);
+    registerActivityNodeElement(context, UMLDiagramType.ACTIVITY);
+    registerActivityPartitionElement(context, UMLDiagramType.ACTIVITY);
+    registerPinElement(context, UMLDiagramType.ACTIVITY);
+    registerControlFlowElement(context, UMLDiagramType.ACTIVITY);
 });

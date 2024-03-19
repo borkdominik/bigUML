@@ -12,7 +12,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { UmlDiagramType } from '@borkdominik-biguml/uml-protocol';
+import { UMLDiagramType } from '@borkdominik-biguml/uml-protocol';
 import { ContainerModule } from 'inversify';
 import {
     registerArtifactElement,
@@ -35,19 +35,19 @@ import {
 export const umlDeploymentDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
     const context = { bind, unbind, isBound, rebind };
 
-    registerDeploymentSpecificationElement(context, UmlDiagramType.DEPLOYMENT);
-    registerArtifactElement(context, UmlDiagramType.DEPLOYMENT);
-    registerDeviceElement(context, UmlDiagramType.DEPLOYMENT);
-    registerExecutionEnvironmentElement(context, UmlDiagramType.DEPLOYMENT);
-    registerModelElement(context, UmlDiagramType.DEPLOYMENT);
-    registerNodeElement(context, UmlDiagramType.DEPLOYMENT);
-    registerPackageElement(context, UmlDiagramType.DEPLOYMENT);
-    registerPropertyElement(context, UmlDiagramType.DEPLOYMENT);
-    registerOperationElement(context, UmlDiagramType.DEPLOYMENT);
-    registerParameterElement(context, UmlDiagramType.DEPLOYMENT);
-    registerCommunicationPathElement(context, UmlDiagramType.DEPLOYMENT);
-    registerDependencyElement(context, UmlDiagramType.DEPLOYMENT);
-    registerManifestationElement(context, UmlDiagramType.DEPLOYMENT);
-    registerDeploymentElement(context, UmlDiagramType.DEPLOYMENT);
-    registerGeneralizationElement(context, UmlDiagramType.DEPLOYMENT);
+    registerDeploymentSpecificationElement(context, UMLDiagramType.DEPLOYMENT);
+    registerArtifactElement(context, UMLDiagramType.DEPLOYMENT);
+    registerDeviceElement(context, UMLDiagramType.DEPLOYMENT);
+    registerExecutionEnvironmentElement(context, UMLDiagramType.DEPLOYMENT);
+    registerModelElement(context, UMLDiagramType.DEPLOYMENT);
+    registerNodeElement(context, UMLDiagramType.DEPLOYMENT);
+    registerPackageElement(context, UMLDiagramType.DEPLOYMENT);
+    registerPropertyElement(context, UMLDiagramType.DEPLOYMENT);
+    registerOperationElement(context, UMLDiagramType.DEPLOYMENT);
+    registerParameterElement(context, UMLDiagramType.DEPLOYMENT);
+    registerCommunicationPathElement(context, UMLDiagramType.DEPLOYMENT);
+    registerDependencyElement(context, UMLDiagramType.DEPLOYMENT);
+    registerManifestationElement(context, UMLDiagramType.DEPLOYMENT);
+    registerDeploymentElement(context, UMLDiagramType.DEPLOYMENT);
+    registerGeneralizationElement(context, UMLDiagramType.DEPLOYMENT);
 });

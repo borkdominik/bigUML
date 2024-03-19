@@ -26,12 +26,12 @@ import {
 import { inject, injectable } from 'inversify';
 
 @injectable()
-export class UmlGridSnapper implements ISnapper {
+export class UMLGridSnapper implements ISnapper {
     static GRID_X = 10;
     static GRID_Y = 10;
     static CSS_FACTOR = 5;
 
-    constructor(public grid: { x: number; y: number } = { x: UmlGridSnapper.GRID_X, y: UmlGridSnapper.GRID_Y }) {}
+    constructor(public grid: { x: number; y: number } = { x: UMLGridSnapper.GRID_X, y: UMLGridSnapper.GRID_Y }) {}
 
     snap(position: Point, element: GModelElement): Point {
         return {
@@ -115,11 +115,11 @@ export class GraphGridActionHandler implements IActionHandler, IDiagramStartup {
                     this.showGrid(true);
                 }
 
-                const newPosX = (-viewport.scroll.x + UmlGridSnapper.CSS_FACTOR * UmlGridSnapper.GRID_X) * viewport.zoom;
-                const newPosY = (-viewport.scroll.y + UmlGridSnapper.CSS_FACTOR * UmlGridSnapper.GRID_Y) * viewport.zoom;
+                const newPosX = (-viewport.scroll.x + UMLGridSnapper.CSS_FACTOR * UMLGridSnapper.GRID_X) * viewport.zoom;
+                const newPosY = (-viewport.scroll.y + UMLGridSnapper.CSS_FACTOR * UMLGridSnapper.GRID_Y) * viewport.zoom;
                 graph.style.backgroundPosition = `${newPosX}px ${newPosY}px`;
 
-                const newSize = UmlGridSnapper.CSS_FACTOR * UmlGridSnapper.GRID_X * 2 * viewport.zoom;
+                const newSize = UMLGridSnapper.CSS_FACTOR * UMLGridSnapper.GRID_X * 2 * viewport.zoom;
                 graph.style.backgroundSize = `${newSize}px ${newSize}px`;
             }
         }

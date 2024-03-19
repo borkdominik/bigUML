@@ -10,12 +10,12 @@ import { EnableToolsAction, SetUIExtensionVisibilityAction, ToolPalette } from '
 import { FocusDomAction } from '@eclipse-glsp/client/lib/features/accessibility/actions';
 import { CenterAction, FitToScreenAction, RequestExportSvgAction, SelectAllAction } from '@eclipse-glsp/protocol';
 import * as vscode from 'vscode';
-import { UVGlspConnector } from '../../glsp/uv-glsp-connector';
+import { UMLGLSPConnector } from '../../glsp/uml-glsp-connector';
 
 export interface CommandContext {
     extensionContext: vscode.ExtensionContext;
     diagramPrefix: string;
-    connector: UVGlspConnector;
+    connector: UMLGLSPConnector;
 }
 export function configureDefaultCommands(context: CommandContext): void {
     // keep track of diagram specific element selection.

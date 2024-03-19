@@ -48,7 +48,9 @@
     "lodash": "^4.17.21",
     "react": "18.2.0",
     "sortablejs": "^1.15.0",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "vscode-messenger-common": "^0.4.5",
+    "vscode-messenger-webview": "^0.4.5"
   },
   "devDependencies": {
     "@types/sortablejs": "1.15.1",

@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020-2021 EclipseSource and others.
+ * Copyright (c) 2020-2021 borkdominik and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -14,18 +14,18 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 import { OutlineTreeNode, RequestOutlineAction, SetOutlineAction } from '@borkdominik-biguml/uml-protocol';
-import { Action, IActionHandler, ICommand, SelectAllAction } from '@eclipse-glsp/client';
+import { SelectAllAction } from '@eclipse-glsp/client';
 import { SelectAction } from '@eclipse-glsp/vscode-integration';
 import { inject, injectable, postConstruct } from 'inversify';
 import * as vscode from 'vscode';
 import { TYPES } from '../../di.types';
-import { UVGlspConnector } from '../../glsp/uv-glsp-connector';
+import { UMLGLSPConnector } from '../../glsp/uml-glsp-connector';
 import { VSCodeSettings } from '../../language';
 
 @injectable()
-export class OutlineTreeProvider implements vscode.TreeDataProvider<OutlineTreeNode>, vscode.Disposable, IActionHandler {
+export class OutlineTreeProvider implements vscode.TreeDataProvider<OutlineTreeNode>, vscode.Disposable {
     @inject(TYPES.Connector)
-    protected readonly connector: UVGlspConnector;
+    protected readonly connector: UMLGLSPConnector;
 
     protected readonly iconMap = new Map<string, vscode.ThemeIcon>([
         ['model', vscode.ThemeIcon.Folder],
@@ -73,14 +73,14 @@ export class OutlineTreeProvider implements vscode.TreeDataProvider<OutlineTreeN
                 if (this.connector.documents.length === 0) {
                     this.onNodesChanged([]);
                 }
+            }),
+            this.connector.onActionMessage(message => {
+                const { action } = message;
+                if (SetOutlineAction.is(action)) {
+                    this.onNodesChanged(action.outlineTreeNodes);
+                }
             })
         );
-    }
-
-    handle(action: Action): void | Action | ICommand {
-        if (SetOutlineAction.is(action)) {
-            this.onNodesChanged(action.outlineTreeNodes);
-        }
     }
 
     dispose(): void {
@@ -128,7 +128,11 @@ export class OutlineTreeProvider implements vscode.TreeDataProvider<OutlineTreeN
         return vscode.TreeItemCollapsibleState.None;
     }
 
-    protected requestSelection(selection: OutlineTreeNode): void {
+    protected requestSelection(selection?: OutlineTreeNode): void {
+        if (selection === undefined) {
+            return;
+        }
+
         const selectedId = selection.semanticUri;
 
         if (selection.isRoot || this.selectionToUpdateContext.selectedId === selectedId) {

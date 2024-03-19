@@ -11,7 +11,7 @@ import * as fs from 'fs';
 import * as net from 'net';
 import { osUtils } from './os';
 
-export interface UmlServerLauncherOptions {
+export interface ServerLauncherOptions {
     readonly executable: string;
     readonly additionalArgs?: string[];
     readonly logging?: boolean;
@@ -23,11 +23,11 @@ export interface UmlServerLauncherOptions {
     };
 }
 
-export abstract class UmlServerLauncher {
-    protected readonly options: Required<UmlServerLauncherOptions>;
+export abstract class ServerLauncher {
+    protected readonly options: Required<ServerLauncherOptions>;
     protected serverProcess?: childProcess.ChildProcess;
 
-    constructor(options: UmlServerLauncherOptions) {
+    constructor(options: ServerLauncherOptions) {
         this.options = {
             logging: false,
             additionalArgs: [],

@@ -11,7 +11,7 @@ import { ApplyTypeHintsCommand, getElementTypeId, GModelElement, GModelElementSc
 import { injectable } from 'inversify';
 
 @injectable()
-export class UmlApplyTypeHintsCommand extends ApplyTypeHintsCommand {
+export class UMLApplyTypeHintsCommand extends ApplyTypeHintsCommand {
     protected override isContainableElement(input: GModelElement | GModelElementSchema | string, hint: ShapeTypeHint): boolean {
         const elementType = getElementTypeId(input);
         return hint.containableElementTypeIds?.some(type => elementType === type) ?? false;

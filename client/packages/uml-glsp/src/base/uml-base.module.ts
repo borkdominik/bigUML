@@ -9,12 +9,12 @@
 
 import { bindOrRebind, FeatureModule, GLSPActionDispatcher, TYPES } from '@eclipse-glsp/client';
 import { UMLActionDispatcher } from './action-dispatcher';
-import { UmlFeedbackActionDispatcher } from './feedback/feedback-action-dispatcher';
+import { UMLFeedbackActionDispatcher } from './feedback/feedback-action-dispatcher';
 import { FixedLogger } from './fixed-logger';
 
 export const umlBaseModule = new FeatureModule((bind, unbind, isBound, rebind) => {
     const context = { bind, unbind, isBound, rebind };
     bindOrRebind(context, TYPES.ILogger).to(FixedLogger).inSingletonScope();
     bindOrRebind(context, GLSPActionDispatcher).to(UMLActionDispatcher).inSingletonScope();
-    bindOrRebind(context, TYPES.IFeedbackActionDispatcher).to(UmlFeedbackActionDispatcher).inSingletonScope();
+    bindOrRebind(context, TYPES.IFeedbackActionDispatcher).to(UMLFeedbackActionDispatcher).inSingletonScope();
 });

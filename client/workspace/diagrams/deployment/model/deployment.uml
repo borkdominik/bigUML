@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_mpbRME5mEe6S7pAvFAOv0g" name="deployment">
-  <packagedElement xmi:type="uml:Artifact" xmi:id="_SlAEIE5nEe6i141Nr0z2zA" name="NewArtifactImpl1"/>
-  <packagedElement xmi:type="uml:ExecutionEnvironment" xmi:id="_TLWScE5nEe6i141Nr0z2zA" name="NewExecutionEnvironmentImpl1"/>
-</uml:Model>

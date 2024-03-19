@@ -11,7 +11,7 @@ import { inject, injectable, postConstruct } from 'inversify';
 import * as vscode from 'vscode';
 import { TYPES } from '../../di.types';
 import { ThemeIntegration } from '../../features/theme/theme-integration';
-import { UVGlspConnector } from '../../glsp/uv-glsp-connector';
+import { UMLGLSPConnector } from '../../glsp/uml-glsp-connector';
 import { VSCodeSettings } from '../../language';
 import { ServerManager, ServerManagerStateListener } from '../../server/server.manager';
 import { ErrorWebviewResolver } from './error.webview';
@@ -20,9 +20,7 @@ import { InitializingWebviewResolver } from './initializing.webview';
 import { WebviewResolver, WebviewResource } from './webview';
 
 @injectable()
-export class UmlDiagramEditorProvider implements vscode.CustomEditorProvider, ServerManagerStateListener {
-    diagramType = 'umldiagram';
-
+export class UMLDiagramEditorProvider implements vscode.CustomEditorProvider, ServerManagerStateListener {
     protected editors: {
         [key: string]: {
             client: GlspVscodeClient;
@@ -39,7 +37,7 @@ export class UmlDiagramEditorProvider implements vscode.CustomEditorProvider, Se
     constructor(
         @inject(TYPES.ExtensionContext) protected readonly context: vscode.ExtensionContext,
         @inject(TYPES.Theme) protected readonly themeIntegration: ThemeIntegration,
-        @inject(TYPES.Connector) protected readonly connector: UVGlspConnector
+        @inject(TYPES.Connector) protected readonly connector: UMLGLSPConnector
     ) {
         this.onDidChangeCustomDocument = this.connector.onDidChangeCustomDocument;
     }
@@ -66,7 +64,7 @@ export class UmlDiagramEditorProvider implements vscode.CustomEditorProvider, Se
     }
 
     revertCustomDocument(document: vscode.CustomDocument, _cancellation: vscode.CancellationToken): Thenable<void> {
-        return this.connector.revertDocument(document, this.diagramType);
+        return this.connector.revertDocument(document, VSCodeSettings.diagramType);
     }
 
     backupCustomDocument(
@@ -152,7 +150,7 @@ export class UmlDiagramEditorProvider implements vscode.CustomEditorProvider, Se
     }
 
     protected generateClientId(): string {
-        return `${this.diagramType}_${this.viewCounter++}`;
+        return `${VSCodeSettings.diagramType}_${this.viewCounter++}`;
     }
 
     protected createEditorBasedOnState(resource: WebviewResource, client: GlspVscodeClient): WebviewResolver {
@@ -191,7 +189,7 @@ export class UmlDiagramEditorProvider implements vscode.CustomEditorProvider, Se
         return new GLSPWebviewResolver({
             client,
             context: this.context,
-            diagramType: this.diagramType,
+            diagramType: VSCodeSettings.diagramType,
             connector: this.connector,
             themeIntegration: this.themeIntegration
         });
@@ -200,7 +198,7 @@ export class UmlDiagramEditorProvider implements vscode.CustomEditorProvider, Se
     protected async prepareGLSPClient(clientId: string, resource: WebviewResource): Promise<GlspVscodeClient> {
         // This is used to initialize GLSP for our diagram
         const diagramIdentifier: GLSPDiagramIdentifier = {
-            diagramType: this.diagramType,
+            diagramType: VSCodeSettings.diagramType,
             uri: EditorProvider.serializeUri(resource.document.uri),
             clientId
         };

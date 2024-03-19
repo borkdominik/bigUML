@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="unotation" nsURI="http://www.borkdominik.com/big-glsp/uml/unotation"
+    nsPrefix="unotation">
+  <eClassifiers xsi:type="ecore:EClass" name="UMLDiagram" eSuperTypes="platform:/plugin/org.eclipse.glsp.server.emf/model/notation.ecore#//Diagram"/>
+  <eClassifiers xsi:type="ecore:EEnum" name="Representation">
+    <eLiterals name="ACTIVITY"/>
+    <eLiterals name="CLASS" value="1"/>
+    <eLiterals name="COMMUNICATION" value="2" literal="COMMUNICATION"/>
+    <eLiterals name="COMPONENT" value="3"/>
+    <eLiterals name="COMPOSITE" value="4"/>
+    <eLiterals name="DEPLOYMENT" value="5"/>
+    <eLiterals name="INTERACTION" value="6"/>
+    <eLiterals name="OBJECT" value="7"/>
+    <eLiterals name="PACKAGE" value="8"/>
+    <eLiterals name="PROFILE" value="9"/>
+    <eLiterals name="SEQUENCE" value="10"/>
+    <eLiterals name="STATE_MACHINE" value="11"/>
+    <eLiterals name="TIMING" value="12"/>
+    <eLiterals name="USE_CASE" value="13"/>
+    <eLiterals name="INFORMATION_FLOW" value="14" literal="INFORMATION_FLOW"/>
+  </eClassifiers>
+</ecore:EPackage>

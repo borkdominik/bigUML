@@ -6,12 +6,12 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { SetUmlThemeAction, UmlTheme } from '@borkdominik-biguml/uml-glsp/lib/features/theme';
+import { SetUMLThemeAction, UMLTheme } from '@borkdominik-biguml/uml-glsp/lib/features/theme';
 import { GlspVscodeClient } from '@eclipse-glsp/vscode-integration';
 import { inject, injectable, postConstruct } from 'inversify';
 import * as vscode from 'vscode';
 import { TYPES } from '../../di.types';
-import { UVGlspConnector } from '../../glsp/uv-glsp-connector';
+import { UMLGLSPConnector } from '../../glsp/uml-glsp-connector';
 
 @injectable()
 export class ThemeIntegration {
@@ -19,7 +19,7 @@ export class ThemeIntegration {
 
     constructor(
         @inject(TYPES.Connector)
-        protected readonly connector: UVGlspConnector
+        protected readonly connector: UMLGLSPConnector
     ) {}
 
     @postConstruct()
@@ -44,12 +44,12 @@ export class ThemeIntegration {
         this.disposables.push(vscode.window.onDidChangeActiveColorTheme(cb));
     }
 
-    protected createAction(): SetUmlThemeAction {
-        return SetUmlThemeAction.create(mapTheme(vscode.window.activeColorTheme));
+    protected createAction(): SetUMLThemeAction {
+        return SetUMLThemeAction.create(mapTheme(vscode.window.activeColorTheme));
     }
 }
 
-function mapTheme(theme: vscode.ColorTheme): UmlTheme {
+function mapTheme(theme: vscode.ColorTheme): UMLTheme {
     switch (theme.kind) {
         case vscode.ColorThemeKind.Dark:
         case vscode.ColorThemeKind.HighContrast:

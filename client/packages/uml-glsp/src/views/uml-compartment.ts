@@ -10,6 +10,6 @@ import { GCompartment } from '@eclipse-glsp/client';
 // eslint-disable-next-line no-restricted-imports
 import { alignFeature } from 'sprotty';
 
-export class GUmlCompartment extends GCompartment {
+export class GUMLCompartment extends GCompartment {
     static override readonly DEFAULT_FEATURES = [...GCompartment.DEFAULT_FEATURES, alignFeature];
 }

@@ -12,7 +12,7 @@ import { TYPES } from '../di.types';
 import { VSCodeSettings } from '../language';
 import { OutputChannel } from '../vscode/output/output.channel';
 import { java } from './java';
-import { UmlServerLauncher } from './launcher';
+import { ServerLauncher } from './launcher';
 
 export interface ServerManagerStateListener {
     serverManagerStateChanged(manager: ServerManager, state: ServerManager.State): void | Promise<void>;
@@ -40,7 +40,7 @@ export class ServerManager {
 
     constructor(
         @inject(TYPES.OutputChannel) protected readonly output: OutputChannel,
-        @multiInject(TYPES.ServerLauncher) protected readonly launchers: UmlServerLauncher[],
+        @multiInject(TYPES.ServerLauncher) protected readonly launchers: ServerLauncher[],
         @multiInject(TYPES.ServerManagerStateListener) protected readonly listeners: ServerManagerStateListener[]
     ) {
         this.listeners.forEach(l => l.serverManagerStateChanged(this, this.state));
@@ -190,12 +190,12 @@ export namespace ServerManager {
 
     export interface LaunchingServerState extends CommonState {
         readonly state: 'launching-server';
-        readonly launcher: UmlServerLauncher;
+        readonly launcher: ServerLauncher;
     }
 
     export interface ServerLaunchedState extends CommonState {
         readonly state: 'servers-launched';
-        readonly launchers: UmlServerLauncher[];
+        readonly launchers: ServerLauncher[];
     }
 
     export type State = NoneState | ErrorState | AssertionSucceededState | LaunchingServerState | ServerLaunchedState;

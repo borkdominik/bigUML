@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { UmlDiagramType } from '@borkdominik-biguml/uml-protocol';
+import { UMLDiagramType } from '@borkdominik-biguml/uml-protocol';
 import { ContainerModule } from 'inversify';
 import {
     registerAbstractionElement,
@@ -35,27 +35,27 @@ import {
 
 export const umlClassDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
     const context = { bind, unbind, isBound, rebind };
-    registerClassElement(context, UmlDiagramType.CLASS);
-    registerDataTypeElement(context, UmlDiagramType.CLASS);
-    registerEnumerationElement(context, UmlDiagramType.CLASS);
-    registerEnumerationLiteralElement(context, UmlDiagramType.CLASS);
-    registerInterfaceElement(context, UmlDiagramType.CLASS);
-    registerOperationElement(context, UmlDiagramType.CLASS);
-    registerPackageElement(context, UmlDiagramType.CLASS);
-    registerParameterElement(context, UmlDiagramType.CLASS);
-    registerPropertyElement(context, UmlDiagramType.CLASS);
-    registerPrimitiveTypeElement(context, UmlDiagramType.CLASS);
-    registerSlotElement(context, UmlDiagramType.CLASS);
-    registerInstanceSpecificationElement(context, UmlDiagramType.CLASS);
+    registerClassElement(context, UMLDiagramType.CLASS);
+    registerDataTypeElement(context, UMLDiagramType.CLASS);
+    registerEnumerationElement(context, UMLDiagramType.CLASS);
+    registerEnumerationLiteralElement(context, UMLDiagramType.CLASS);
+    registerInterfaceElement(context, UMLDiagramType.CLASS);
+    registerOperationElement(context, UMLDiagramType.CLASS);
+    registerPackageElement(context, UMLDiagramType.CLASS);
+    registerParameterElement(context, UMLDiagramType.CLASS);
+    registerPropertyElement(context, UMLDiagramType.CLASS);
+    registerPrimitiveTypeElement(context, UMLDiagramType.CLASS);
+    registerSlotElement(context, UMLDiagramType.CLASS);
+    registerInstanceSpecificationElement(context, UMLDiagramType.CLASS);
 
-    registerAbstractionElement(context, UmlDiagramType.CLASS);
-    registerAssociationElement(context, UmlDiagramType.CLASS);
-    registerDependencyElement(context, UmlDiagramType.CLASS);
-    registerInterfaceRealizationElement(context, UmlDiagramType.CLASS);
-    registerGeneralizationElement(context, UmlDiagramType.CLASS);
-    registerRealizationElement(context, UmlDiagramType.CLASS);
-    registerSubstitutionElement(context, UmlDiagramType.CLASS);
-    registerUsageElement(context, UmlDiagramType.CLASS);
-    registerPackageImportElement(context, UmlDiagramType.CLASS);
-    registerPackageMergeElement(context, UmlDiagramType.CLASS);
+    registerAbstractionElement(context, UMLDiagramType.CLASS);
+    registerAssociationElement(context, UMLDiagramType.CLASS);
+    registerDependencyElement(context, UMLDiagramType.CLASS);
+    registerInterfaceRealizationElement(context, UMLDiagramType.CLASS);
+    registerGeneralizationElement(context, UMLDiagramType.CLASS);
+    registerRealizationElement(context, UMLDiagramType.CLASS);
+    registerSubstitutionElement(context, UMLDiagramType.CLASS);
+    registerUsageElement(context, UMLDiagramType.CLASS);
+    registerPackageImportElement(context, UMLDiagramType.CLASS);
+    registerPackageMergeElement(context, UMLDiagramType.CLASS);
 });

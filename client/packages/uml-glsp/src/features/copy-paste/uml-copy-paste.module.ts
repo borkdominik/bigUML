@@ -10,12 +10,12 @@
 import { TYPES } from '@eclipse-glsp/client';
 import { copyPasteModule } from '@eclipse-glsp/client/lib/features/copy-paste/copy-paste-modules';
 import { bindAsService, bindOrRebind, FeatureModule } from '@eclipse-glsp/protocol';
-import { LastContainableElementTracker, UmlServerCopyPasteHandler } from './copy-paste';
+import { LastContainableElementTracker, UMLServerCopyPasteHandler } from './copy-paste';
 
 export const umlCopyPasteModule = new FeatureModule(
     (bind, unbind, isBound, rebind) => {
         const context = { bind, unbind, isBound, rebind };
-        bindOrRebind(context, TYPES.ICopyPasteHandler).to(UmlServerCopyPasteHandler);
+        bindOrRebind(context, TYPES.ICopyPasteHandler).to(UMLServerCopyPasteHandler);
         bindAsService(context, TYPES.MouseListener, LastContainableElementTracker);
     },
     {

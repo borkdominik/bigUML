@@ -7,13 +7,13 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { UmlDiagramType } from '@borkdominik-biguml/uml-protocol';
+import { UMLDiagramType } from '@borkdominik-biguml/uml-protocol';
 import { ContainerModule } from 'inversify';
 import { registerActorElement, registerClassElement, registerInformationFlowElement } from '../../elements/index';
 
 export const umlInformationFlowDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
     const context = { bind, unbind, isBound, rebind };
-    registerClassElement(context, UmlDiagramType.INFORMATION_FLOW);
-    registerActorElement(context, UmlDiagramType.INFORMATION_FLOW);
-    registerInformationFlowElement(context, UmlDiagramType.INFORMATION_FLOW);
+    registerClassElement(context, UMLDiagramType.INFORMATION_FLOW);
+    registerActorElement(context, UMLDiagramType.INFORMATION_FLOW);
+    registerInformationFlowElement(context, UMLDiagramType.INFORMATION_FLOW);
 });

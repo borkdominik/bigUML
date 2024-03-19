@@ -15,9 +15,9 @@
     font-size: small;
 }
 
-.uml-theme .editable-label:hover,
-.uml-theme .uml-text-highlight:hover,
-.uml-theme .uml-text-interactable:hover {
+.uml-theme [data-svg-metadata-type='graph']:not(.edge-modification-not-allowed-mode):not(.node-creation-mode) .editable-label:hover,
+.uml-theme [data-svg-metadata-type='graph']:not(.edge-modification-not-allowed-mode):not(.node-creation-mode) .uml-text-highlight:hover,
+.uml-theme [data-svg-metadata-type='graph']:not(.edge-modification-not-allowed-mode):not(.node-creation-mode) .uml-text-interactable:hover {
     cursor: pointer;
 }
 

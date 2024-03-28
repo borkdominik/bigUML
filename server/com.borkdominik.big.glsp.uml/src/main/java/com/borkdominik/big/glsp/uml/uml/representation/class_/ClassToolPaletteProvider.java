@@ -15,8 +15,8 @@ import java.util.Map;
 
 import org.eclipse.glsp.server.features.toolpalette.PaletteItem;
 
-import com.borkdominik.big.glsp.server.core.features.tool_palette.BGPaletteItemUtil;
 import com.borkdominik.big.glsp.server.core.features.tool_palette.BGBaseToolPaletteProvider;
+import com.borkdominik.big.glsp.server.core.features.tool_palette.BGPaletteItemUtil;
 import com.borkdominik.big.glsp.uml.uml.UMLTypes;
 import com.borkdominik.big.glsp.uml.unotation.Representation;
 
@@ -56,6 +56,8 @@ public final class ClassToolPaletteProvider extends BGBaseToolPaletteProvider {
             "Aggregation",
             "uml-association-shared-icon"),
          BGPaletteItemUtil.edge(UMLTypes.DEPENDENCY.prefix(representation), "Dependency", "uml-dependency-icon"),
+         BGPaletteItemUtil.edge(UMLTypes.ELEMENT_IMPORT.prefix(representation), "Element Import",
+            "uml-package-import-icon"),
          BGPaletteItemUtil.edge(UMLTypes.GENERALIZATION.prefix(representation), "Generalization",
             "uml-generalization-icon"),
          BGPaletteItemUtil.edge(UMLTypes.INTERFACE_REALIZATION.prefix(representation), "Interface Realization",

@@ -29,7 +29,7 @@ public class PackageImportPropertyPaletteUtils {
             var p = v.getImportedPackage();
             var label = String.format("<Package Import> %s", p.getName());
             return ElementReferencePropertyItem.Reference.builder()
-               .elementId(idGenerator.getOrCreateId(v))
+               .elementId(idGenerator.getOrCreateId(p))
                .label(label)
                .name(p.getName())
                .build();

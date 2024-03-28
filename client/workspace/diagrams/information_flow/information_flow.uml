@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="ASCII"?>
+<uml:Model xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_90nxMO0yEe6z1oa-gGLtSA">
+  <packagedElement xsi:type="uml:Actor" xmi:id="_gxI-cO0zEe6ONuorAhNLBg" name="Actor"/>
+  <packagedElement xsi:type="uml:Class" xmi:id="_hIr7wO0zEe6ONuorAhNLBg" name="Class"/>
+  <packagedElement xsi:type="uml:InformationFlow" xmi:id="_WQMSwe00Ee6OVo2Q_ZmZIQ" name=">>" informationSource="_gxI-cO0zEe6ONuorAhNLBg" informationTarget="_hIr7wO0zEe6ONuorAhNLBg"/>
+  <packagedElement xsi:type="uml:Class" xmi:id="_eta9wO00Ee6OVo2Q_ZmZIQ" name="Class"/>
+  <packagedElement xsi:type="uml:InformationFlow" xmi:id="_lmoRQO00Ee6N1LQzs4Gq-A" informationSource="_hIr7wO0zEe6ONuorAhNLBg" informationTarget="_eta9wO00Ee6OVo2Q_ZmZIQ"/>
+</uml:Model>

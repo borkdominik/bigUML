@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="ASCII"?>
+<unotation:UMLDiagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:notation="http://www.eclipse.org/glsp/notation" xmlns:unotation="http://www.borkdominik.com/big-glsp/uml/unotation" xmi:id="_ePaoke0zEe6ONuorAhNLBg" diagramType="CLASS">
+  <semanticElement xmi:id="_ePgIIe0zEe6ONuorAhNLBg" elementId="_ePgIIO0zEe6ONuorAhNLBg"/>
+  <elements xsi:type="notation:Shape" xmi:id="_ep0FkO0zEe6ONuorAhNLBg">
+    <semanticElement xmi:id="_ep0Fke0zEe6ONuorAhNLBg" elementId="_epxCQO0zEe6ONuorAhNLBg"/>
+    <position xmi:id="_ep0Fku0zEe6ONuorAhNLBg" x="379.0" y="322.0"/>
+    <size xmi:id="_ep0Fk-0zEe6ONuorAhNLBg" width="60.0" height="45.0"/>
+  </elements>
+  <elements xsi:type="notation:Shape" xmi:id="_e22cAO0zEe6ONuorAhNLBg">
+    <semanticElement xmi:id="_e22cAe0zEe6ONuorAhNLBg" elementId="_e2z_wO0zEe6ONuorAhNLBg"/>
+    <position xmi:id="_e22cAu0zEe6ONuorAhNLBg" x="640.0" y="327.0"/>
+    <size xmi:id="_e22cA-0zEe6ONuorAhNLBg" width="60.0" height="45.0"/>
+  </elements>
+  <elements xsi:type="notation:Edge" xmi:id="_f8DwkO0zEe6ONuorAhNLBg">
+    <semanticElement xmi:id="_f8Dwke0zEe6ONuorAhNLBg" elementId="_fbBgEO0zEe6ONuorAhNLBg"/>
+  </elements>
+  <elements xsi:type="notation:Shape" xmi:id="_hCURMO03Ee6l1tMMQqtO_Q">
+    <semanticElement xmi:id="_hCURMe03Ee6l1tMMQqtO_Q" elementId="_hCTDEO03Ee6l1tMMQqtO_Q"/>
+    <position xmi:id="_jly6kO03Ee6l1tMMQqtO_Q" x="356.0" y="516.0"/>
+    <size xmi:id="_jlzhoO03Ee6l1tMMQqtO_Q" width="113.171875" height="45.0"/>
+  </elements>
+  <elements xsi:type="notation:Shape" xmi:id="_hSRYwO03Ee6l1tMMQqtO_Q">
+    <semanticElement xmi:id="_hSRYwe03Ee6l1tMMQqtO_Q" elementId="_hSQxsO03Ee6l1tMMQqtO_Q"/>
+    <position xmi:id="_kKI9wO03Ee6l1tMMQqtO_Q" x="698.0" y="508.0"/>
+    <size xmi:id="_kKI9we03Ee6l1tMMQqtO_Q" width="113.171875" height="45.0"/>
+  </elements>
+  <elements xsi:type="notation:Edge" xmi:id="_iQwaQO03Ee6l1tMMQqtO_Q">
+    <semanticElement xmi:id="_iQwaQe03Ee6l1tMMQqtO_Q" elementId="_iQvzMO03Ee6l1tMMQqtO_Q"/>
+  </elements>
+</unotation:UMLDiagram>

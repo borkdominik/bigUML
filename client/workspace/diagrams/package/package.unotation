@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="ASCII"?>
+<unotation:UMLDiagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:notation="http://www.eclipse.org/glsp/notation" xmlns:unotation="http://www.borkdominik.com/big-glsp/uml/unotation" xmi:id="_E0HWEe03Ee6l1tMMQqtO_Q" diagramType="PACKAGE">
+  <semanticElement xmi:id="_E0iz4O03Ee6l1tMMQqtO_Q" elementId="_E0bfIO03Ee6l1tMMQqtO_Q"/>
+  <elements xsi:type="notation:Shape" xmi:id="_FSde8O03Ee6l1tMMQqtO_Q">
+    <semanticElement xmi:id="_FSde8e03Ee6l1tMMQqtO_Q" elementId="_FSaboO03Ee6l1tMMQqtO_Q"/>
+    <position xmi:id="_GC2aEO03Ee6l1tMMQqtO_Q" x="796.0" y="273.0"/>
+    <size xmi:id="_GC2aEe03Ee6l1tMMQqtO_Q" width="85.37239456176758" height="45.0"/>
+  </elements>
+  <elements xsi:type="notation:Shape" xmi:id="_FkqpQO03Ee6l1tMMQqtO_Q">
+    <semanticElement xmi:id="_FkqpQe03Ee6l1tMMQqtO_Q" elementId="_FkpbIO03Ee6l1tMMQqtO_Q"/>
+    <position xmi:id="_1ho1EO03Ee6Z2ZKhrJBG8w" x="426.0" y="259.0"/>
+    <size xmi:id="_1ho1Ee03Ee6Z2ZKhrJBG8w" width="113.171875" height="45.0"/>
+  </elements>
+  <elements xsi:type="notation:Edge" xmi:id="_GLbuUO03Ee6l1tMMQqtO_Q">
+    <semanticElement xmi:id="_GLbuUe03Ee6l1tMMQqtO_Q" elementId="_GLbHQO03Ee6l1tMMQqtO_Q"/>
+  </elements>
+  <elements xsi:type="notation:Shape" xmi:id="_LmwHgO03Ee6l1tMMQqtO_Q">
+    <semanticElement xmi:id="_LmwHge03Ee6l1tMMQqtO_Q" elementId="_LmvgcO03Ee6l1tMMQqtO_Q"/>
+    <position xmi:id="_MP5LIO03Ee6l1tMMQqtO_Q" x="627.0" y="430.0"/>
+    <size xmi:id="_MP5LIe03Ee6l1tMMQqtO_Q" width="85.37239456176758" height="45.0"/>
+  </elements>
+  <elements xsi:type="notation:Shape" xmi:id="_Mq0MkO03Ee6l1tMMQqtO_Q">
+    <semanticElement xmi:id="_Mq0Mke03Ee6l1tMMQqtO_Q" elementId="_MqzlgO03Ee6l1tMMQqtO_Q"/>
+    <position xmi:id="_Mq0Mku03Ee6l1tMMQqtO_Q" x="442.0" y="483.0"/>
+    <size xmi:id="_Mq0Mk-03Ee6l1tMMQqtO_Q" width="60.0" height="45.0"/>
+  </elements>
+  <elements xsi:type="notation:Edge" xmi:id="_NYKawe03Ee6l1tMMQqtO_Q">
+    <semanticElement xmi:id="_NYKawu03Ee6l1tMMQqtO_Q" elementId="_NYKawO03Ee6l1tMMQqtO_Q"/>
+  </elements>
+  <elements xsi:type="notation:Shape" xmi:id="_SgtB4O03Ee6l1tMMQqtO_Q">
+    <semanticElement xmi:id="_SgtB4e03Ee6l1tMMQqtO_Q" elementId="_SgrzwO03Ee6l1tMMQqtO_Q"/>
+    <position xmi:id="_T5G_QO03Ee6l1tMMQqtO_Q" x="631.0" y="106.0"/>
+    <size xmi:id="_T5G_Qe03Ee6l1tMMQqtO_Q" width="113.171875" height="45.0"/>
+  </elements>
+  <elements xsi:type="notation:Edge" xmi:id="_S7HtAO03Ee6l1tMMQqtO_Q">
+    <semanticElement xmi:id="_S7HtAe03Ee6l1tMMQqtO_Q" elementId="_S7HF8O03Ee6l1tMMQqtO_Q"/>
+  </elements>
+</unotation:UMLDiagram>

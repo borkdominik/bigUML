@@ -9,7 +9,6 @@
 
 import { UMLDiagramType } from '@borkdominik-biguml/uml-protocol';
 import { configureModelElement } from '@eclipse-glsp/client';
-import { DefaultTypes } from '@eclipse-glsp/protocol';
 import { interfaces } from 'inversify';
 import { QualifiedUtil } from '../../qualified.utils';
 import { NamedElement } from '../index';
@@ -21,10 +20,5 @@ export function registerActorElement(
     representation: UMLDiagramType
 ): void {
     configureModelElement(context, QualifiedUtil.typeId(representation, 'Actor'), NamedElement, ActorView);
-    configureModelElement(
-        context,
-        QualifiedUtil.representationTemplateTypeId(representation, DefaultTypes.NODE, 'GModel', 'STICKFIGURE'),
-        StickFigureNode,
-        StickFigureView
-    );
+    configureModelElement(context, QualifiedUtil.typeId(representation, 'ActorStickfigure'), StickFigureNode, StickFigureView);
 }

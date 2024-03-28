@@ -26,7 +26,7 @@ public class PackageMergePropertyPaletteUtils {
             var p = v.getMergedPackage();
             var label = String.format("<Package Merge> %s", p.getName());
             return ElementReferencePropertyItem.Reference.builder()
-               .elementId(idGenerator.getOrCreateId(v))
+               .elementId(idGenerator.getOrCreateId(p))
                .label(label)
                .name(p.getName())
                .build();

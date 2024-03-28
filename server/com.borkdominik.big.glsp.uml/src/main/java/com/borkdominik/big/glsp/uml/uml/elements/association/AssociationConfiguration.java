@@ -51,7 +51,7 @@ public class AssociationConfiguration extends BGBaseEdgeConfiguration {
                .existingConfigurationTypeIds(Set.of(UMLTypes.CLASS, UMLTypes.INTERFACE, UMLTypes.ACTOR)),
             elementConfig()
                .existingConfigurationTypeIds(
-                  Set.of(UMLTypes.CLASS, UMLTypes.INTERFACE, UMLTypes.USECASE))),
+                  Set.of(UMLTypes.CLASS, UMLTypes.INTERFACE, UMLTypes.USE_CASE))),
 
          new EdgeTypeHint(aggregationTypeId, true, true, true,
             elementConfig().existingConfigurationTypeIds(Set.of(UMLTypes.CLASS, UMLTypes.INTERFACE)),

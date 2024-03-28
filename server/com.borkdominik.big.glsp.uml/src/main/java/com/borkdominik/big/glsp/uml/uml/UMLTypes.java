@@ -81,6 +81,7 @@ public enum UMLTypes implements BGTypeProvider {
    ASSOCIATION(List.of(Association.class)),
    CLASS(List.of(org.eclipse.uml2.uml.Class.class)),
    COMMUNICATION_PATH(List.of(CommunicationPath.class)),
+   COMPONENT(List.of(Component.class)),
    COMPOSITION("Composition"),
    CONTROL_FLOW(List.of(ControlFlow.class)),
    DATA_TYPE(List.of(DataType.class)),
@@ -123,11 +124,10 @@ public enum UMLTypes implements BGTypeProvider {
    SLOT(List.of(Slot.class)),
    STATE(List.of(State.class)),
    STATE_MACHINE(List.of(StateMachine.class)),
-   SUBJECT(List.of(Component.class)),
    SUBSTITUTION(List.of(Substitution.class)),
    TRANSITION(List.of(Transition.class)),
    USAGE(List.of(Usage.class)),
-   USECASE(List.of(UseCase.class));
+   USE_CASE(List.of(UseCase.class));
 
    private final String typeId;
    private final Collection<Class<? extends EObject>> handledElements;

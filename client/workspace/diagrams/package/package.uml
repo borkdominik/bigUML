@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ASCII"?>
+<uml:Model xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_E0bfIO03Ee6l1tMMQqtO_Q">
+  <packagedElement xsi:type="uml:Package" xmi:id="_FkpbIO03Ee6l1tMMQqtO_Q" name="Package">
+    <elementImport xmi:id="_GLbHQO03Ee6l1tMMQqtO_Q" alias="" importedElement="_FSaboO03Ee6l1tMMQqtO_Q"/>
+    <packageImport xmi:id="_NYKawO03Ee6l1tMMQqtO_Q" importedPackage="_MqzlgO03Ee6l1tMMQqtO_Q"/>
+    <packageMerge xmi:id="_S7HF8O03Ee6l1tMMQqtO_Q" mergedPackage="_SgrzwO03Ee6l1tMMQqtO_Q"/>
+  </packagedElement>
+  <packagedElement xsi:type="uml:Class" xmi:id="_FSaboO03Ee6l1tMMQqtO_Q" name="Class"/>
+  <packagedElement xsi:type="uml:Class" xmi:id="_LmvgcO03Ee6l1tMMQqtO_Q" name="Class"/>
+  <packagedElement xsi:type="uml:Package" xmi:id="_MqzlgO03Ee6l1tMMQqtO_Q" name="Package"/>
+  <packagedElement xsi:type="uml:Package" xmi:id="_SgrzwO03Ee6l1tMMQqtO_Q" name="Package"/>
+</uml:Model>

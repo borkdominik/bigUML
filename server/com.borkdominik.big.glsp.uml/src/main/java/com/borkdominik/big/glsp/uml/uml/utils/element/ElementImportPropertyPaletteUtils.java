@@ -26,11 +26,13 @@ public class ElementImportPropertyPaletteUtils {
       final EMFIdGenerator idGenerator) {
       var references = packageImports.stream()
          .map(v -> {
-            var label = String.format("<Element Import> %s", v.getImportedElement().getName());
+            var p = v.getImportedElement();
+            var label = String.format("<Element Import> %s", p.getName());
             return ElementReferencePropertyItem.Reference.builder()
-               .elementId(idGenerator.getOrCreateId(v))
+               .elementId(idGenerator.getOrCreateId(p))
                .label(label).name(
-               v.getImportedElement().getName()).build();
+                  p.getName())
+               .build();
          })
          .collect(Collectors.toList());
 

@@ -12,6 +12,9 @@ package com.borkdominik.big.glsp.uml.uml;
 
 import com.borkdominik.big.glsp.uml.uml.elements.type.TypeInformationProvider;
 import com.borkdominik.big.glsp.uml.uml.representation.class_.UMLClassManifest;
+import com.borkdominik.big.glsp.uml.uml.representation.information_flow.UMLInformationFlowManifest;
+import com.borkdominik.big.glsp.uml.uml.representation.package_.UMLPackageManifest;
+import com.borkdominik.big.glsp.uml.uml.representation.use_case.UMLUseCaseManifest;
 import com.google.inject.AbstractModule;
 import com.google.inject.Singleton;
 
@@ -24,5 +27,8 @@ public class UMLModule extends AbstractModule {
       bind(TypeInformationProvider.class).in(Singleton.class);
 
       install(new UMLClassManifest());
+      install(new UMLInformationFlowManifest());
+      install(new UMLPackageManifest());
+      install(new UMLUseCaseManifest());
    }
 }

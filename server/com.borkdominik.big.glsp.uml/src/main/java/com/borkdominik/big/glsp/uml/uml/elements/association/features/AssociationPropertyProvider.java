@@ -21,6 +21,7 @@ import com.borkdominik.big.glsp.server.core.model.BGTypeProvider;
 import com.borkdominik.big.glsp.server.features.property_palette.model.ElementPropertyBuilder;
 import com.borkdominik.big.glsp.server.features.property_palette.model.ElementPropertyItem;
 import com.borkdominik.big.glsp.server.features.property_palette.provider.integrations.BGEMFElementPropertyProvider;
+import com.borkdominik.big.glsp.uml.uml.UMLTypes;
 import com.borkdominik.big.glsp.uml.uml.elements.element.VisibilityKindUtils;
 import com.borkdominik.big.glsp.uml.uml.elements.multiplicity_element.MultiplicityElementPropertyProvider;
 import com.borkdominik.big.glsp.uml.uml.elements.multiplicity_element.MultiplicityUtil;
@@ -39,34 +40,39 @@ public class AssociationPropertyProvider extends BGEMFElementPropertyProvider<As
    @Override
    public List<ElementPropertyItem> doProvide(final Association element) {
       var memberEnds = element.getMemberEnds();
-      var sourceProperty = memberEnds.get(0);
-      var sourcePropertyId = idGenerator.getOrCreateId(sourceProperty);
-      var targetProperty = memberEnds.get(1);
-      var targetPropertyId = idGenerator.getOrCreateId(targetProperty);
-
-      var sourceProperties = new ElementPropertyBuilder(sourcePropertyId)
-         .text(NamedElementPropertyProvider.NAME, "Source Name", sourceProperty.getName())
-         .choice(
-            NamedElementPropertyProvider.VISIBILITY_KIND,
-            "Source Visibility",
-            VisibilityKindUtils.asChoices(),
-            sourceProperty.getVisibility().getLiteral())
-         .text(MultiplicityElementPropertyProvider.MULTIPLICITY, "Source Multiplicity",
-            MultiplicityUtil.getMultiplicity(sourceProperty));
-
-      var targetProperties = new ElementPropertyBuilder(targetPropertyId)
-         .text(NamedElementPropertyProvider.NAME, "Target Name", targetProperty.getName())
-         .choice(
-            NamedElementPropertyProvider.VISIBILITY_KIND,
-            "Target Visibility",
-            VisibilityKindUtils.asChoices(),
-            targetProperty.getVisibility().getLiteral())
-         .text(MultiplicityElementPropertyProvider.MULTIPLICITY, "Target Multiplicity",
-            MultiplicityUtil.getMultiplicity(targetProperty));
 
       var properties = new ArrayList<ElementPropertyItem>();
-      properties.addAll(sourceProperties.items());
-      properties.addAll(targetProperties.items());
+      properties.addAll(provideIfConfigured(Set.of(UMLTypes.PROPERTY), () -> {
+         var sourceProperty = memberEnds.get(0);
+         var sourcePropertyId = idGenerator.getOrCreateId(sourceProperty);
+
+         return new ElementPropertyBuilder(sourcePropertyId)
+            .text(NamedElementPropertyProvider.NAME, "Source Name", sourceProperty.getName())
+            .choice(
+               NamedElementPropertyProvider.VISIBILITY_KIND,
+               "Source Visibility",
+               VisibilityKindUtils.asChoices(),
+               sourceProperty.getVisibility().getLiteral())
+            .text(MultiplicityElementPropertyProvider.MULTIPLICITY, "Source Multiplicity",
+               MultiplicityUtil.getMultiplicity(sourceProperty))
+            .items();
+
+      }));
+      properties.addAll(provideIfConfigured(Set.of(UMLTypes.PROPERTY), () -> {
+         var targetProperty = memberEnds.get(1);
+         var targetPropertyId = idGenerator.getOrCreateId(targetProperty);
+
+         return new ElementPropertyBuilder(targetPropertyId)
+            .text(NamedElementPropertyProvider.NAME, "Target Name", targetProperty.getName())
+            .choice(
+               NamedElementPropertyProvider.VISIBILITY_KIND,
+               "Target Visibility",
+               VisibilityKindUtils.asChoices(),
+               targetProperty.getVisibility().getLiteral())
+            .text(MultiplicityElementPropertyProvider.MULTIPLICITY, "Target Multiplicity",
+               MultiplicityUtil.getMultiplicity(targetProperty))
+            .items();
+      }));
       return properties;
    }
 }

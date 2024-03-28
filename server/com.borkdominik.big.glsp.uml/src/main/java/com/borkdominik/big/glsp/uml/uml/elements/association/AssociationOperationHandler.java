@@ -17,6 +17,7 @@ import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.util.Enumerator;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 import org.eclipse.glsp.server.operations.DeleteOperation;
 import org.eclipse.glsp.server.operations.ReconnectEdgeOperation;
@@ -81,13 +82,15 @@ public class AssociationOperationHandler extends BGEMFEdgeOperationHandler<Assoc
       var semanticElement = modelState.getElementIndex().getSemanticOrThrow(object, Association.class);
 
       var command = new CompoundCommand();
+      for (var end : semanticElement.getMemberEnds()) {
+         if (!EcoreUtil.isAncestor(semanticElement, end)) {
+            command.append(new BGDeleteElementSemanticCommand(commandContext, modelState.getSemanticModel(), end));
+         }
+      }
+
       command
          .append(new BGDeleteElementSemanticCommand(commandContext, modelState.getSemanticModel(), semanticElement));
       command.append(new BGEMFDeleteNotationCommand(commandContext, semanticElement));
-
-      for (var end : semanticElement.getMemberEnds()) {
-         command.append(new BGDeleteElementSemanticCommand(commandContext, modelState.getSemanticModel(), end));
-      }
 
       return Optional.of(command);
    }

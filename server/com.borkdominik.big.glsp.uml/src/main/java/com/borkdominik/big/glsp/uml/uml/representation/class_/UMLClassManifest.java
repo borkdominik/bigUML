@@ -12,14 +12,9 @@ package com.borkdominik.big.glsp.uml.uml.representation.class_;
 
 import org.eclipse.emf.common.util.Enumerator;
 
-import com.borkdominik.big.glsp.server.core.features.direct_editing.BGDirectEditContribution;
 import com.borkdominik.big.glsp.server.core.features.direct_editing.implementations.BGEMFDefaultDirectEditHandler;
-import com.borkdominik.big.glsp.server.core.features.tool_palette.BGToolPaletteContribution;
-import com.borkdominik.big.glsp.server.core.handler.operation.delete.BGDeleteOperationContribution;
 import com.borkdominik.big.glsp.server.core.handler.operation.delete.implementations.BGEMFDefaultDeleteHandler;
-import com.borkdominik.big.glsp.server.core.handler.operation.reconnect_edge.BGReconnectEdgeOperationContribution;
 import com.borkdominik.big.glsp.server.core.manifest.BGRepresentationManifest;
-import com.borkdominik.big.glsp.server.features.property_palette.BGPropertyPaletteContribution;
 import com.borkdominik.big.glsp.uml.uml.customizations.UMLDefaultPropertyPaletteProvider;
 import com.borkdominik.big.glsp.uml.uml.customizations.UMLDefaultReconnectElementHandler;
 import com.borkdominik.big.glsp.uml.uml.elements.abstraction.AbstractionElementManifest;
@@ -55,30 +50,11 @@ public final class UMLClassManifest extends BGRepresentationManifest {
    protected void configure() {
       super.configure();
 
-      install(new BGToolPaletteContribution(BGToolPaletteContribution.Options.builder()
-         .manifest(this)
-         .concrete(ClassToolPaletteProvider.class)
-         .build()));
-
-      install(new BGDeleteOperationContribution(BGDeleteOperationContribution.Options.builder()
-         .manifest(this)
-         .defaultHandler(BGEMFDefaultDeleteHandler.class)
-         .build()));
-
-      install(new BGDirectEditContribution(BGDirectEditContribution.Options.builder()
-         .manifest(this)
-         .defaultDirectEditHandler(BGEMFDefaultDirectEditHandler.class)
-         .build()));
-
-      install(new BGReconnectEdgeOperationContribution(BGReconnectEdgeOperationContribution.Options.builder()
-         .manifest(this)
-         .defaultHandler(UMLDefaultReconnectElementHandler.class)
-         .build()));
-
-      install(new BGPropertyPaletteContribution(BGPropertyPaletteContribution.Options.builder()
-         .manifest(this)
-         .defaultPaletteProvider(UMLDefaultPropertyPaletteProvider.class)
-         .build()));
+      bindToolPalette(ClassToolPaletteProvider.class);
+      bindDefaultDeleteOperation(BGEMFDefaultDeleteHandler.class);
+      bindDefaultDirectEdit(BGEMFDefaultDirectEditHandler.class);
+      bindDefaultReconnectOperation(UMLDefaultReconnectElementHandler.class);
+      bindDefaultPropertyPalette(UMLDefaultPropertyPaletteProvider.class);
 
       install(new ClassElementManifest(this));
       install(new EnumerationElementManifest(this));

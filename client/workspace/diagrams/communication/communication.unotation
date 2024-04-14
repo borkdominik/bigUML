@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ASCII"?>
+<unotation:UMLDiagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:notation="http://www.eclipse.org/glsp/notation" xmlns:unotation="http://www.borkdominik.com/big-glsp/uml/unotation" xmi:id="_CBe74PpoEe6nNu4tDhLsXg" diagramType="COMMUNICATION">
+  <semanticElement xmi:id="_CBgKAPpoEe6nNu4tDhLsXg" elementId="_CBe74fpoEe6nNu4tDhLsXg"/>
+  <elements xsi:type="notation:Shape" xmi:id="_CypTEPpoEe6nNu4tDhLsXg">
+    <semanticElement xmi:id="_CypTEfpoEe6nNu4tDhLsXg" elementId="_Cym20PpoEe6nNu4tDhLsXg"/>
+    <position xmi:id="_omTskPpoEe6Se-xdprjTuw" x="522.0" y="202.0"/>
+    <size xmi:id="_omTskfpoEe6Se-xdprjTuw" width="255.0130157470703" height="279.5"/>
+  </elements>
+  <elements xsi:type="notation:Shape" xmi:id="_DemaIPpoEe6nNu4tDhLsXg">
+    <semanticElement xmi:id="_DemaIfpoEe6nNu4tDhLsXg" elementId="_DelzEPpoEe6nNu4tDhLsXg"/>
+    <position xmi:id="_saRtcPpoEe6Se-xdprjTuw" x="90.0" y="205.0"/>
+    <size xmi:id="_saSUgPpoEe6Se-xdprjTuw" width="122.01301574707031" height="45.0"/>
+  </elements>
+  <elements xsi:type="notation:Shape" xmi:id="_Dy09sPpoEe6nNu4tDhLsXg">
+    <semanticElement xmi:id="_Dy09sfpoEe6nNu4tDhLsXg" elementId="_Dy0WoPpoEe6nNu4tDhLsXg"/>
+    <position xmi:id="_uvIE8PpoEe6Se-xdprjTuw" x="93.0" y="40.0"/>
+    <size xmi:id="_uvIE8fpoEe6Se-xdprjTuw" width="121.82421875" height="45.0"/>
+  </elements>
+  <elements xsi:type="notation:Edge" xmi:id="_XHWiYfpoEe6Se-xdprjTuw">
+    <semanticElement xmi:id="_XHWiYvpoEe6Se-xdprjTuw" elementId="_XHUGIPpoEe6Se-xdprjTuw"/>
+  </elements>
+</unotation:UMLDiagram>

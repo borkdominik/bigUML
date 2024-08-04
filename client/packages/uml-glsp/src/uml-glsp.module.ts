@@ -44,6 +44,7 @@ import { umlTypeHintsModule } from './features/hints/uml-type-hints.module';
 import { umlLoadingModule } from './features/loading/uml-loading.module';
 import { umlOutlineModule } from './features/outline/uml-outline.module';
 import { umlPropertyPaletteModule } from './features/property-palette/uml-property-palette.module';
+import { umlTextInputPaletteModule } from './features/text-input/uml-text-input-palette.module';
 import { umlThemeModule } from './features/theme/uml-theme.module';
 import { umlToolPaletteModule } from './features/tool-palette/uml-tool-palette.module';
 import { umlEdgeEditToolModule } from './features/tools/edge-edit/uml-edge-edit-module';
@@ -86,6 +87,7 @@ export function initializeUMLDiagramContainer(container: Container, ...container
         umlToolManagerModule,
         umlOutlineModule,
         umlPropertyPaletteModule,
+        umlTextInputPaletteModule,
         umlTypeHintsModule,
         { add: umlToolPaletteModule, remove: toolPaletteModule },
         umlEdgeEditToolModule,

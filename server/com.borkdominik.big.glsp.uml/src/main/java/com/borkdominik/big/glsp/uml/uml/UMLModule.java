@@ -11,6 +11,7 @@
 package com.borkdominik.big.glsp.uml.uml;
 
 import com.borkdominik.big.glsp.uml.uml.elements.type.TypeInformationProvider;
+import com.borkdominik.big.glsp.uml.uml.representation.activity.UMLActivityManifest;
 import com.borkdominik.big.glsp.uml.uml.representation.class_.UMLClassManifest;
 import com.borkdominik.big.glsp.uml.uml.representation.communication.UMLCommunicationManifest;
 import com.borkdominik.big.glsp.uml.uml.representation.deployment.UMLDeploymentManifest;
@@ -28,6 +29,7 @@ public class UMLModule extends AbstractModule {
 
       bind(TypeInformationProvider.class).in(Singleton.class);
 
+      install(new UMLActivityManifest());
       install(new UMLClassManifest());
       install(new UMLCommunicationManifest());
       install(new UMLDeploymentManifest());

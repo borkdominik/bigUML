@@ -27,6 +27,7 @@ export enum UMLDiagramType {
 
 export namespace UMLDiagramTypeUtil {
     export const supported: UMLDiagramType[] = [
+        UMLDiagramType.ACTIVITY,
         UMLDiagramType.CLASS,
         UMLDiagramType.COMMUNICATION,
         UMLDiagramType.DEPLOYMENT,

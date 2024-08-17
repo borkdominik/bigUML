@@ -10,9 +10,7 @@
  ********************************************************************************/
 package com.borkdominik.big.glsp.uml.uml.elements.package_.gmodel;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.uml2.uml.Package;
@@ -37,7 +35,7 @@ public class GPackageBuilder<TOrigin extends Package> extends GCNodeBuilder<TOri
 
    @Override
    protected List<GCProvider> createComponentChildren(final GNode modelRoot, final GCModelList<?, ?> componentRoot) {
-      return List.of(createHeader(componentRoot), createBody(componentRoot));
+      return List.of(createHeader(componentRoot), createPackageBody(componentRoot));
    }
 
    protected GCProvider createHeader(final GCModelList<?, ?> root) {
@@ -47,18 +45,12 @@ public class GPackageBuilder<TOrigin extends Package> extends GCNodeBuilder<TOri
       return new GCNamedElement<>(context, origin, namedElementOptions);
    }
 
-   protected GCProvider createBody(final GCModelList<?, ?> root) {
+   protected GCProvider createPackageBody(final GCModelList<?, ?> root) {
       var list = new GCModelList<>(context, origin, new BCCompartmentBuilder<>(origin, context)
          .withFreeformLayout()
          .build());
 
-      list.addAllGModels(packageableElements().stream()
-         .map(e -> context.mapHandler.handle(e))
-         .collect(Collectors.toList()));
-      list.addAllGModels(packageableElements().stream()
-         .map(e -> context.mapHandler.handleSiblings(e))
-         .flatMap(Collection::stream)
-         .collect(Collectors.toList()));
+      list.addAll(providersOf(this.packageableElements()));
 
       return list;
    }
@@ -68,24 +60,24 @@ public class GPackageBuilder<TOrigin extends Package> extends GCNodeBuilder<TOri
       var hAlign = GConstants.HAlign.LEFT;
       var vAlign = GConstants.VAlign.TOP;
       var gap = 0;
-
+   
       var builder = compartmentHeaderBuilder(source)
          .layout(GConstants.Layout.VBOX)
          .add(buildHeaderName(source, "--uml-package-icon"));
-
+   
       final var uri = source.getURI();
       if (uri != null && uri.length() > 0) {
          gap = 1;
          builder.add(new GLabelBuilder(CoreTypes.LABEL_TEXT).id(idContextGenerator().getOrCreateId(source))
             .text("{uri=" + uri.toString() + "}").build());
       }
-
+   
       final var nested = getPackagedElements(source).count();
       if (nested == 0 && !USE_PACKAGE_FOLDER_VIEW) {
          hAlign = GConstants.HAlign.CENTER;
          vAlign = GConstants.VAlign.CENTER;
       }
-
+   
       return builder.layoutOptions(new GLayoutOptions().vGap(gap).hAlign(hAlign).vAlign(vAlign)).build();
    }
    */

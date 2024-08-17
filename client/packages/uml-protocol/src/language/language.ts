@@ -29,6 +29,7 @@ export namespace UMLDiagramTypeUtil {
     export const supported: UMLDiagramType[] = [
         UMLDiagramType.CLASS,
         UMLDiagramType.COMMUNICATION,
+        UMLDiagramType.DEPLOYMENT,
         UMLDiagramType.INFORMATION_FLOW,
         UMLDiagramType.PACKAGE,
         UMLDiagramType.USE_CASE

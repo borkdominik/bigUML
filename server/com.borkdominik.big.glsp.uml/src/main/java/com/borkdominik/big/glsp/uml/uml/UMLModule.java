@@ -13,6 +13,7 @@ package com.borkdominik.big.glsp.uml.uml;
 import com.borkdominik.big.glsp.uml.uml.elements.type.TypeInformationProvider;
 import com.borkdominik.big.glsp.uml.uml.representation.class_.UMLClassManifest;
 import com.borkdominik.big.glsp.uml.uml.representation.communication.UMLCommunicationManifest;
+import com.borkdominik.big.glsp.uml.uml.representation.deployment.UMLDeploymentManifest;
 import com.borkdominik.big.glsp.uml.uml.representation.information_flow.UMLInformationFlowManifest;
 import com.borkdominik.big.glsp.uml.uml.representation.package_.UMLPackageManifest;
 import com.borkdominik.big.glsp.uml.uml.representation.use_case.UMLUseCaseManifest;
@@ -29,6 +30,7 @@ public class UMLModule extends AbstractModule {
 
       install(new UMLClassManifest());
       install(new UMLCommunicationManifest());
+      install(new UMLDeploymentManifest());
       install(new UMLInformationFlowManifest());
       install(new UMLPackageManifest());
       install(new UMLUseCaseManifest());

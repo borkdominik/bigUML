@@ -12,23 +12,30 @@
  */
 
 import {
+    AutocompleteSuggestion,
     BaseEditTool,
+    codiconCSSString,
     configureActionHandler,
     EnableDefaultToolsAction,
     findParentByFeature,
+    GChildElement,
     GEdge,
     GLSPActionDispatcher,
     GModelElement,
     GModelRoot,
+    GNode,
     IActionHandler,
+    IAutocompleteSuggestionProvider,
     ICommand,
     ILogger,
     isBoundsAware,
+    isNameable,
     isSelectable,
     isSelected,
     KeyListener,
     KeyTool,
     matchesKeystroke,
+    name,
     Selectable,
     SelectableBoundsAware,
     SelectionService,
@@ -154,11 +161,84 @@ export class UMLResizeKeyListener extends KeyListener {
     }
 }
 
-import { SearchAutocompletePalette } from '@eclipse-glsp/client/lib/features/accessibility/search/search-palette';
+import {
+    RevealEdgeElementAutocompleteSuggestionProvider,
+    RevealNamedElementAutocompleteSuggestionProvider,
+    RevealNodesWithoutNameAutocompleteSuggestionProvider,
+    SearchAutocompletePalette
+} from '@eclipse-glsp/client/lib/features/accessibility/search/search-palette';
+
+export class UMLRevealNamedElementAutocompleteSuggestionProvider extends RevealNamedElementAutocompleteSuggestionProvider {
+    override async retrieveSuggestions(root: Readonly<GModelRoot>, text: string): Promise<AutocompleteSuggestion[]> {
+        const nameables = toArray(root.index.all().filter(element => isNameable(element)));
+        return nameables.map(nameable => ({
+            element: nameable,
+            action: {
+                label: `[${nameable.type.split('__').at(-1)}] ${name(nameable) ?? '<no-name>'}`,
+                actions: this.getActions(nameable),
+                icon: codiconCSSString('eye')
+            }
+        }));
+    }
+}
+
+export class UMLRevealEdgeElementAutocompleteSuggestionProvider extends RevealEdgeElementAutocompleteSuggestionProvider {
+    override async retrieveSuggestions(root: Readonly<GModelRoot>, text: string): Promise<AutocompleteSuggestion[]> {
+        const edges = toArray(root.index.all().filter(element => element instanceof GEdge)) as GEdge[];
+        return edges.map(edge => ({
+            element: edge,
+            action: {
+                label: `[${edge.type.split('__').at(-1)}] ${this.getEdgeLabel(root, edge)}`,
+                actions: this.getActions(edge),
+                icon: codiconCSSString('arrow-both')
+            }
+        }));
+    }
+}
+export class UMLSearchAutocompletePalette extends SearchAutocompletePalette {
+    protected override getSuggestionProviders(root: Readonly<GModelRoot>, input: string): IAutocompleteSuggestionProvider[] {
+        return [
+            new UMLRevealNamedElementAutocompleteSuggestionProvider(),
+            new UMLRevealEdgeElementAutocompleteSuggestionProvider(),
+            new RevealNodesWithoutNameAutocompleteSuggestionProvider()
+        ];
+    }
+
+    protected override getHiddenElements(root: Readonly<GModelRoot>, suggestions: AutocompleteSuggestion[]): GModelElement[] {
+        const hidden = toArray(
+            root.index
+                .all()
+                .filter(element => element instanceof GNode || element instanceof GEdge)
+                .filter(element => suggestions.find(suggestion => suggestion.element.id === element.id) === undefined)
+        );
+
+        return hidden.filter(h => {
+            if (h instanceof GChildElement) {
+                let element = h;
+                while (element.parent !== undefined) {
+                    if (hidden.includes(element.parent)) {
+                        console.log('IT CONTAINS', element.parent, hidden);
+                        return false;
+                    }
+
+                    if (element.parent instanceof GChildElement) {
+                        console.log('PARENT', element.parent);
+                        element = element.parent;
+                    } else {
+                        console.log('BREAK', element);
+                        break;
+                    }
+                }
+            }
+
+            return true;
+        });
+    }
+}
 
 export const umlSearchPaletteModule = new FeatureModule((bind, unbind, isBound, rebind) => {
     const context = { bind, unbind, isBound, rebind };
-    bindAsService(context, TYPES.IUIExtension, SearchAutocompletePalette);
+    bindAsService(context, TYPES.IUIExtension, UMLSearchAutocompletePalette);
 });
 
 import { SetEdgeTargetSelectionAction } from '@eclipse-glsp/client/lib/features/accessibility/edge-autocomplete/action';

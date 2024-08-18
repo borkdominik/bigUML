@@ -8,7 +8,7 @@
  *********************************************************************************/
 
 import { UMLDiagramType } from '@borkdominik-biguml/uml-protocol';
-import { configureModelElement, DefaultTypes } from '@eclipse-glsp/client';
+import { configureModelElement } from '@eclipse-glsp/client';
 import { interfaces } from 'inversify';
 import { QualifiedUtil } from '../../qualified.utils';
 import { NamedElement } from '../index';
@@ -22,40 +22,10 @@ export function registerPseudoStateElement(
     context: { bind: interfaces.Bind; isBound: interfaces.IsBound },
     representation: UMLDiagramType
 ): void {
-    configureModelElement(
-        context,
-        QualifiedUtil.representationTypeId(representation, DefaultTypes.NODE_CIRCLE, 'InitialState'),
-        NamedElement,
-        InitialNodeView
-    );
-    configureModelElement(
-        context,
-        QualifiedUtil.representationTypeId(representation, DefaultTypes.NODE_DIAMOND, 'Choice'),
-        NamedElement,
-        ChoiceNodeView
-    );
-    configureModelElement(
-        context,
-        QualifiedUtil.representationTypeId(representation, DefaultTypes.NODE_RECTANGLE, 'Join'),
-        NamedElement,
-        ForkJoinNodeView
-    );
-    configureModelElement(
-        context,
-        QualifiedUtil.representationTypeId(representation, DefaultTypes.NODE_RECTANGLE, 'Fork'),
-        NamedElement,
-        ForkJoinNodeView
-    );
-    configureModelElement(
-        context,
-        QualifiedUtil.representationTypeId(representation, DefaultTypes.NODE_CIRCLE, 'DeepHistory'),
-        NamedElement,
-        DeepHistoryNodeView
-    );
-    configureModelElement(
-        context,
-        QualifiedUtil.representationTypeId(representation, DefaultTypes.NODE_CIRCLE, 'ShallowHistory'),
-        NamedElement,
-        ShallowHistoryNodeView
-    );
+    configureModelElement(context, QualifiedUtil.typeId(representation, 'InitialState'), NamedElement, InitialNodeView);
+    configureModelElement(context, QualifiedUtil.typeId(representation, 'Choice'), NamedElement, ChoiceNodeView);
+    configureModelElement(context, QualifiedUtil.typeId(representation, 'Join'), NamedElement, ForkJoinNodeView);
+    configureModelElement(context, QualifiedUtil.typeId(representation, 'Fork'), NamedElement, ForkJoinNodeView);
+    configureModelElement(context, QualifiedUtil.typeId(representation, 'DeepHistory'), NamedElement, DeepHistoryNodeView);
+    configureModelElement(context, QualifiedUtil.typeId(representation, 'ShallowHistory'), NamedElement, ShallowHistoryNodeView);
 }

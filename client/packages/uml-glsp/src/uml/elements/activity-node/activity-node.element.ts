@@ -9,7 +9,6 @@
 
 import { UMLDiagramType } from '@borkdominik-biguml/uml-protocol';
 import { CircularNode, configureModelElement, DiamondNode } from '@eclipse-glsp/client';
-import { DefaultTypes } from '@eclipse-glsp/protocol';
 import { interfaces } from 'inversify';
 import { QualifiedUtil } from '../../qualified.utils';
 import { NamedElement, NamedElementView } from '../index';
@@ -30,54 +29,14 @@ export function registerActivityNodeElement(
     configureModelElement(context, QualifiedUtil.typeId(representation, 'AcceptEventAction'), NamedElement, AcceptEventActionView);
     configureModelElement(context, QualifiedUtil.typeId(representation, 'SendSignalAction'), NamedElement, SendSignalActionView);
     // Control Nodes
-    configureModelElement(
-        context,
-        QualifiedUtil.representationTypeId(representation, DefaultTypes.NODE_CIRCLE, 'ActivityFinalNode'),
-        CircularNode,
-        ActivityFinalNodeView
-    );
-    configureModelElement(
-        context,
-        QualifiedUtil.representationTypeId(representation, DefaultTypes.NODE_CIRCLE, 'InitialNode'),
-        CircularNode,
-        InitialNodeView
-    );
-    configureModelElement(
-        context,
-        QualifiedUtil.representationTypeId(representation, DefaultTypes.NODE_DIAMOND, 'DecisionNode'),
-        DiamondNode,
-        DecisionMergeNodeView
-    );
-    configureModelElement(
-        context,
-        QualifiedUtil.representationTypeId(representation, DefaultTypes.NODE_DIAMOND, 'MergeNode'),
-        DiamondNode,
-        DecisionMergeNodeView
-    );
-    configureModelElement(
-        context,
-        QualifiedUtil.representationTypeId(representation, DefaultTypes.NODE_RECTANGLE, 'ForkNode'),
-        NamedElement,
-        ForkJoinNodeView
-    );
-    configureModelElement(
-        context,
-        QualifiedUtil.representationTypeId(representation, DefaultTypes.NODE_RECTANGLE, 'JoinNode'),
-        NamedElement,
-        ForkJoinNodeView
-    );
-    configureModelElement(
-        context,
-        QualifiedUtil.representationTypeId(UMLDiagramType.ACTIVITY, DefaultTypes.NODE_CIRCLE, 'FlowFinalNode'),
-        CircularNode,
-        FlowFinalNodeView
-    );
+    configureModelElement(context, QualifiedUtil.typeId(representation, 'ActivityFinalNode'), CircularNode, ActivityFinalNodeView);
+    configureModelElement(context, QualifiedUtil.typeId(representation, 'InitialNode'), CircularNode, InitialNodeView);
+    configureModelElement(context, QualifiedUtil.typeId(representation, 'DecisionNode'), DiamondNode, DecisionMergeNodeView);
+    configureModelElement(context, QualifiedUtil.typeId(representation, 'MergeNode'), DiamondNode, DecisionMergeNodeView);
+    configureModelElement(context, QualifiedUtil.typeId(representation, 'ForkNode'), NamedElement, ForkJoinNodeView);
+    configureModelElement(context, QualifiedUtil.typeId(representation, 'JoinNode'), NamedElement, ForkJoinNodeView);
+    configureModelElement(context, QualifiedUtil.typeId(representation, 'FlowFinalNode'), CircularNode, FlowFinalNodeView);
     // Object nodes
     configureModelElement(context, QualifiedUtil.typeId(representation, 'CentralBufferNode'), NamedElement, NamedElementView);
-    configureModelElement(
-        context,
-        QualifiedUtil.representationTypeId(representation, DefaultTypes.PORT, 'ActivityParameterNode'),
-        NamedElement,
-        NamedElementView
-    );
+    configureModelElement(context, QualifiedUtil.typeId(representation, 'ActivityParameterNode'), NamedElement, NamedElementView);
 }

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="ASCII"?>
+<uml:Model xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_mG1wQF1fEe-9_ao3yXnBWg">
+  <packagedElement xsi:type="uml:Activity" xmi:id="_I-lVwF1hEe-i0bVDVO__3A" name="Activity" partition="_S1PVAF1lEe-IvY5upVMEEw">
+    <ownedGroup xsi:type="uml:ActivityPartition" xmi:id="_S1PVAF1lEe-IvY5upVMEEw" name="ActivityPartition" node="_UtxSAV1nEe-zHvSe_BdYlg _VAojoF1nEe-zHvSe_BdYlg"/>
+    <edge xsi:type="uml:ControlFlow" xmi:id="_WBm4cF1nEe-zHvSe_BdYlg" target="_UtxSAV1nEe-zHvSe_BdYlg" source="_VAojoF1nEe-zHvSe_BdYlg"/>
+    <ownedNode xsi:type="uml:ActivityFinalNode" xmi:id="_UtxSAV1nEe-zHvSe_BdYlg" name="ActivityFinalNode" incoming="_WBm4cF1nEe-zHvSe_BdYlg" inPartition="_S1PVAF1lEe-IvY5upVMEEw"/>
+    <ownedNode xsi:type="uml:DecisionNode" xmi:id="_VAojoF1nEe-zHvSe_BdYlg" name="DecisionNode" outgoing="_WBm4cF1nEe-zHvSe_BdYlg" inPartition="_S1PVAF1lEe-IvY5upVMEEw"/>
+  </packagedElement>
+</uml:Model>

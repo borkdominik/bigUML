@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ASCII"?>
+<uml:Model xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_OhvfgF1lEe-IvY5upVMEEw">
+  <packagedElement xsi:type="uml:StateMachine" xmi:id="_cobbcF1nEe-zHvSe_BdYlg" name="StateMachine">
+    <region xmi:id="_lGsoQF1nEe-zHvSe_BdYlg" name="Region">
+      <transition xmi:id="_C4-lQF1oEe-Q-Zxa_dS6FQ" source="_msb3AF1nEe-zHvSe_BdYlg" target="_BnyDIF1oEe-Q-Zxa_dS6FQ"/>
+      <transition xmi:id="_D4b3IF1oEe-Q-Zxa_dS6FQ" source="_B3IGsF1oEe-Q-Zxa_dS6FQ" target="_msb3AF1nEe-zHvSe_BdYlg"/>
+      <subvertex xsi:type="uml:Pseudostate" xmi:id="_msb3AF1nEe-zHvSe_BdYlg" name="Pseudostate" kind="choice"/>
+      <subvertex xsi:type="uml:Pseudostate" xmi:id="_4d-mAF1nEe-zHvSe_BdYlg" name="Pseudostate" kind="deepHistory"/>
+      <subvertex xsi:type="uml:FinalState" xmi:id="_AwoYsV1oEe-Q-Zxa_dS6FQ" name="FinalState"/>
+      <subvertex xsi:type="uml:Pseudostate" xmi:id="_BE28QF1oEe-Q-Zxa_dS6FQ" name="Pseudostate" kind="fork"/>
+      <subvertex xsi:type="uml:Pseudostate" xmi:id="_BnyDIF1oEe-Q-Zxa_dS6FQ" name="Pseudostate" kind="join"/>
+      <subvertex xsi:type="uml:Pseudostate" xmi:id="_B3IGsF1oEe-Q-Zxa_dS6FQ" name="Pseudostate" kind="shallowHistory"/>
+      <subvertex xsi:type="uml:State" xmi:id="_FxaK8F1oEe-Q-Zxa_dS6FQ" name="State">
+        <region xmi:id="_KQBrUF1oEe-Q-Zxa_dS6FQ" name="Region">
+          <subvertex xsi:type="uml:Pseudostate" xmi:id="_K0nmIF1oEe-Q-Zxa_dS6FQ" name="Pseudostate" kind="choice"/>
+        </region>
+      </subvertex>
+    </region>
+  </packagedElement>
+</uml:Model>

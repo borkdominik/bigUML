@@ -43,7 +43,8 @@ public class ActivityGModelMapper extends BGEMFElementGModelMapper<Activity, GNo
    public List<GModelElement> mapSiblings(final Activity source) {
       var siblings = new ArrayList<GModelElement>();
 
-      siblings.addAll(mapHandler.handle(source.getEdges()));
+      // Edges are rendered within
+      // siblings.addAll(mapHandler.handle(source.getEdges()));
 
       return siblings;
    }

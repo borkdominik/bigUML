@@ -28,6 +28,7 @@ import org.eclipse.uml2.uml.ForkNode;
 import org.eclipse.uml2.uml.InitialNode;
 import org.eclipse.uml2.uml.JoinNode;
 import org.eclipse.uml2.uml.MergeNode;
+import org.eclipse.uml2.uml.OpaqueAction;
 import org.eclipse.uml2.uml.SendSignalAction;
 
 import com.borkdominik.big.glsp.server.core.model.BGTypeProvider;
@@ -49,12 +50,17 @@ public class ActivityNodeGModelMapper extends BGEMFElementGModelMapper<ActivityN
 
    @Override
    public GNode map(final ActivityNode source) {
+      // Actions
       if (source instanceof AcceptEventAction s) {
          return new GActionBuilder<>(gcmodelContext, s, UMLTypes.ACCEPT_EVENT_ACTION.prefix(representation))
+            .buildGModel();
+      } else if (source instanceof OpaqueAction s) {
+         return new GActionBuilder<>(gcmodelContext, s, UMLTypes.OPAQUE_ACTION.prefix(representation))
             .buildGModel();
       } else if (source instanceof SendSignalAction s) {
          return new GActionBuilder<>(gcmodelContext, s, UMLTypes.SEND_SIGNAL_ACTION.prefix(representation))
             .buildGModel();
+         // Control Nodes
       } else if (source instanceof ActivityFinalNode s) {
          return new GControlNodeBuilder<>(gcmodelContext, s, UMLTypes.ACTIVITY_FINAL_NODE.prefix(representation))
             .buildGModel();
@@ -76,6 +82,7 @@ public class ActivityNodeGModelMapper extends BGEMFElementGModelMapper<ActivityN
       } else if (source instanceof MergeNode s) {
          return new GControlNodeBuilder<>(gcmodelContext, s, UMLTypes.MERGE_NODE.prefix(representation))
             .buildGModel();
+         // Object Nodes
       } else if (source instanceof CentralBufferNode s) {
          return new GObjectNodeBuilder<>(gcmodelContext, s, UMLTypes.CENTRAL_BUFFER_NODE.prefix(representation))
             .buildGModel();
@@ -91,9 +98,6 @@ public class ActivityNodeGModelMapper extends BGEMFElementGModelMapper<ActivityN
    @Override
    public List<GModelElement> mapSiblings(final ActivityNode source) {
       var siblings = new ArrayList<GModelElement>();
-
-      siblings.addAll(mapHandler.handle(source.getIncomings()));
-      siblings.addAll(mapHandler.handle(source.getOutgoings()));
 
       return siblings;
    }

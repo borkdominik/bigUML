@@ -47,7 +47,7 @@
   "scripts": {
     "build": "tsx .esbuild.mts",
     "build:prod": "yarn clean && yarn build --minify",
-    "clean": "rimraf lib bundles tsconfig.tsbuildinfo server/**/*.log",
+    "clean": "rimraf lib bundles tsconfig.tsbuildinfo",
     "lint": "eslint --ext .ts,.tsx ./src",
     "lint:ci": "yarn lint -o eslint.xml -f checkstyle",
     "lint:fix": "eslint --fix --ext .ts,.tsx ./src",

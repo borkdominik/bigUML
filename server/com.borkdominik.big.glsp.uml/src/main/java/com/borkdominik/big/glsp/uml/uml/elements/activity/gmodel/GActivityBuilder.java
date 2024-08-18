@@ -46,7 +46,11 @@ public final class GActivityBuilder<TOrigin extends Activity> extends GCNodeBuil
          .build());
 
       list.addAll(providersOf(this.origin.getPartitions()));
-      list.addAll(providersOf(this.origin.getNodes()));
+      list.addAll(providersOf(this.origin.getNodes()
+         .stream()
+         .filter(n -> n.getInPartitions().size() == 0)
+         .toList()));
+      list.addAll(providersOf(this.origin.getEdges()));
 
       return list;
    }

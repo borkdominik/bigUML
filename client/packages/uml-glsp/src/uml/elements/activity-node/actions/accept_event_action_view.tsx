@@ -13,8 +13,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { GCompartment, IViewArgs, RectangularNodeView, RenderingContext, svg } from '@eclipse-glsp/client';
-import { DefaultTypes } from '@eclipse-glsp/protocol';
+import { IViewArgs, RectangularNodeView, RenderingContext, svg } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 import { VNode } from 'snabbdom';
 import { NamedElement } from '../../index';
@@ -39,20 +38,9 @@ export class AcceptEventActionView extends RectangularNodeView {
             { x: 0 - notchWidth, y: element.bounds.height }
         ];
 
-        const compartment = element.children.find(
-            c => c instanceof GCompartment && c.type !== DefaultTypes.COMPARTMENT_HEADER && c.children.length > 0
-        ) as GCompartment | undefined;
-
         return (
             <g class-selected={element.selected} class-mouseover={element.hoverFeedback}>
                 <polygon points={points.map(p => `${p.x},${p.y}`).join(' ')}></polygon>
-
-                {compartment && (
-                    <path
-                        class-uml-comp-separator
-                        d={`M 0,${compartment.position.y}  L ${element.bounds.width},${compartment.position.y}`}
-                    ></path>
-                )}
 
                 {context.renderChildren(element)}
             </g>

@@ -33,6 +33,7 @@ export namespace UMLDiagramTypeUtil {
         UMLDiagramType.DEPLOYMENT,
         UMLDiagramType.INFORMATION_FLOW,
         UMLDiagramType.PACKAGE,
+        UMLDiagramType.STATE_MACHINE,
         UMLDiagramType.USE_CASE
     ];
 

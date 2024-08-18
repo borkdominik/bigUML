@@ -8,13 +8,13 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-package com.borkdominik.big.glsp.uml.uml.elements.pin.gmodel;
+package com.borkdominik.big.glsp.uml.uml.elements.state.gmodel;
 
 import java.util.Set;
 
 import org.eclipse.emf.common.util.Enumerator;
 import org.eclipse.glsp.graph.GNode;
-import org.eclipse.uml2.uml.Pin;
+import org.eclipse.uml2.uml.State;
 
 import com.borkdominik.big.glsp.server.core.model.BGTypeProvider;
 import com.borkdominik.big.glsp.server.elements.gmodel.BGEMFElementGModelMapper;
@@ -22,17 +22,18 @@ import com.borkdominik.big.glsp.uml.uml.UMLTypes;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
-public class PinGModelMapper extends BGEMFElementGModelMapper<Pin, GNode> {
+public class StateGModelMapper extends BGEMFElementGModelMapper<State, GNode> {
 
    @Inject
-   public PinGModelMapper(@Assisted final Enumerator representation,
+   public StateGModelMapper(@Assisted final Enumerator representation,
       @Assisted final Set<BGTypeProvider> elementTypes) {
       super(representation, elementTypes);
    }
 
    @Override
-   public GNode map(final Pin source) {
-      return new GPinBuilder<>(gcmodelContext, source, UMLTypes.PIN.prefix(representation))
+   public GNode map(final State source) {
+      return new GStateBuilder<>(gcmodelContext, source, UMLTypes.STATE.prefix(representation))
          .buildGModel();
    }
+
 }

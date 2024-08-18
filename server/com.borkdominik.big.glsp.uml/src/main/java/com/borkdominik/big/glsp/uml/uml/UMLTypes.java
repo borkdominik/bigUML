@@ -53,7 +53,10 @@ import org.eclipse.uml2.uml.Interface;
 import org.eclipse.uml2.uml.InterfaceRealization;
 import org.eclipse.uml2.uml.JoinNode;
 import org.eclipse.uml2.uml.Lifeline;
+import org.eclipse.uml2.uml.LiteralBoolean;
+import org.eclipse.uml2.uml.LiteralInteger;
 import org.eclipse.uml2.uml.LiteralSpecification;
+import org.eclipse.uml2.uml.LiteralString;
 import org.eclipse.uml2.uml.Manifestation;
 import org.eclipse.uml2.uml.MergeNode;
 import org.eclipse.uml2.uml.Message;
@@ -97,6 +100,7 @@ public enum UMLTypes implements BGTypeProvider {
    ARTIFACT(List.of(Artifact.class)),
    ASSOCIATION(List.of(Association.class)),
    CENTRAL_BUFFER_NODE(List.of(CentralBufferNode.class)),
+   CHOICE("Choice"),
    CLASS(List.of(org.eclipse.uml2.uml.Class.class)),
    COMMUNICATION_PATH(List.of(CommunicationPath.class)),
    COMPONENT(List.of(Component.class)),
@@ -104,6 +108,7 @@ public enum UMLTypes implements BGTypeProvider {
    CONTROL_FLOW(List.of(ControlFlow.class)),
    DATA_TYPE(List.of(DataType.class)),
    DECISION_NODE(List.of(DecisionNode.class)),
+   DEEP_HISTORY("DeepHistory"),
    DEPENDENCY(List.of(Dependency.class)),
    DEPLOYMENT(List.of(Deployment.class)),
    DEPLOYMENT_SPECIFICATION(List.of(DeploymentSpecification.class)),
@@ -114,20 +119,26 @@ public enum UMLTypes implements BGTypeProvider {
    EXECUTION_ENVIRONMENT(List.of(ExecutionEnvironment.class)),
    EXTEND(List.of(Extend.class)),
    FINAL_STATE(List.of(FinalState.class)),
+   FORK("Fork"),
    FORK_NODE(List.of(ForkNode.class)),
    FLOW_FINAL_NODE(List.of(FlowFinalNode.class)),
    GENERALIZATION(List.of(Generalization.class)),
    INCLUDE(List.of(Include.class)),
    INFORMATION_FLOW(List.of(InformationFlow.class)),
    INITIAL_NODE(List.of(InitialNode.class)),
+   INITIAL_STATE("InitialState"),
    INPUT_PIN(List.of(InputPin.class)),
    INSTANCE_SPECIFICATION(List.of(InstanceSpecification.class)),
    INTERACTION(List.of(Interaction.class)),
    INTERFACE(List.of(Interface.class)),
    INTERFACE_REALIZATION(List.of(InterfaceRealization.class)),
+   JOIN("Join"),
    JOIN_NODE(List.of(JoinNode.class)),
    LIFELINE(List.of(Lifeline.class)),
+   LITERAL_BOOLEAN(List.of(LiteralBoolean.class)),
+   LITERAL_INTEGER(List.of(LiteralInteger.class)),
    LITERAL_SPECIFICATION(List.of(LiteralSpecification.class)),
+   LITERAL_STRING(List.of(LiteralString.class)),
    MANIFESTATION(List.of(Manifestation.class)),
    MERGE_NODE(List.of(MergeNode.class)),
    MESSAGE(List.of(Message.class)),
@@ -149,6 +160,7 @@ public enum UMLTypes implements BGTypeProvider {
    REALIZATION(List.of(Realization.class)),
    REGION(List.of(Region.class)),
    SEND_SIGNAL_ACTION(List.of(SendSignalAction.class)),
+   SHALLOW_HISTORY("ShallowHistory"),
    SLOT(List.of(Slot.class)),
    STATE(List.of(State.class)),
    STATE_MACHINE(List.of(StateMachine.class)),

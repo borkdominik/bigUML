@@ -25,7 +25,7 @@ import com.borkdominik.big.glsp.server.sdk.ui.components.list.GCListItem;
 import com.borkdominik.big.glsp.uml.uml.elements.data_type.gmodel.GDataTypeBuilder;
 import com.borkdominik.big.glsp.uml.uml.elements.named_element.GCNamedElement;
 
-public final class GEnumerationBuilder<TOrigin extends Enumeration> extends GDataTypeBuilder<TOrigin> {
+public class GEnumerationBuilder<TOrigin extends Enumeration> extends GDataTypeBuilder<TOrigin> {
 
    public GEnumerationBuilder(final GCModelContext context, final TOrigin origin, final String type) {
       super(context, origin, type);

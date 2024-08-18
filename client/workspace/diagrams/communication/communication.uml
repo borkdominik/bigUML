@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ASCII"?>
+<uml:Model xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_CBe74fpoEe6nNu4tDhLsXg">
+  <packagedElement xsi:type="uml:Interaction" xmi:id="_Cym20PpoEe6nNu4tDhLsXg" name="Interaction">
+    <lifeline xmi:id="_DelzEPpoEe6nNu4tDhLsXg" name="Lifeline B" coveredBy="_E3QPIfpoEe6nNu4tDhLsXg _XHWiYPpoEe6Se-xdprjTuw"/>
+    <lifeline xmi:id="_Dy0WoPpoEe6nNu4tDhLsXg" name="Lifeline A" coveredBy="_E3QPIPpoEe6nNu4tDhLsXg _XHV7UPpoEe6Se-xdprjTuw"/>
+    <fragment xsi:type="uml:MessageOccurrenceSpecification" xmi:id="_E3QPIPpoEe6nNu4tDhLsXg" covered="_Dy0WoPpoEe6nNu4tDhLsXg"/>
+    <fragment xsi:type="uml:MessageOccurrenceSpecification" xmi:id="_E3QPIfpoEe6nNu4tDhLsXg" covered="_DelzEPpoEe6nNu4tDhLsXg"/>
+    <fragment xsi:type="uml:MessageOccurrenceSpecification" xmi:id="_XHV7UPpoEe6Se-xdprjTuw" covered="_Dy0WoPpoEe6nNu4tDhLsXg" message="_XHUGIPpoEe6Se-xdprjTuw"/>
+    <fragment xsi:type="uml:MessageOccurrenceSpecification" xmi:id="_XHWiYPpoEe6Se-xdprjTuw" covered="_DelzEPpoEe6nNu4tDhLsXg" message="_XHUGIPpoEe6Se-xdprjTuw"/>
+    <message xmi:id="_XHUGIPpoEe6Se-xdprjTuw" name="Message" receiveEvent="_XHWiYPpoEe6Se-xdprjTuw" sendEvent="_XHV7UPpoEe6Se-xdprjTuw"/>
+  </packagedElement>
+</uml:Model>

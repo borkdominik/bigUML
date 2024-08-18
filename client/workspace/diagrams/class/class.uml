@@ -1,20 +1,36 @@
 <?xml version="1.0" encoding="ASCII"?>
 <uml:Model xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_ePgIIO0zEe6ONuorAhNLBg">
-  <packagedElement xsi:type="uml:Package" xmi:id="_hCTDEO03Ee6l1tMMQqtO_Q" name="Package"/>
-  <packagedElement xsi:type="uml:Class" xmi:id="_epxCQO0zEe6ONuorAhNLBg" name="Class">
-    <ownedAttribute xmi:id="_fbL4IO0zEe6ONuorAhNLBg" name="Class" type="_e2z_wO0zEe6ONuorAhNLBg" association="_fbBgEO0zEe6ONuorAhNLBg">
-      <lowerValue xsi:type="uml:LiteralInteger" xmi:id="_fbNGQO0zEe6ONuorAhNLBg" value="1"/>
-      <upperValue xsi:type="uml:LiteralUnlimitedNatural" xmi:id="_fbNtUO0zEe6ONuorAhNLBg" value="1"/>
+  <packagedElement xsi:type="uml:Class" xmi:id="_e2z_wO0zEe6ONuorAhNLBg" name="LectureController">
+    <ownedAttribute xmi:id="_sz4U4PgmEe6ut-tKD2_jgQ" name="lectureService" visibility="protected" type="_l84A0PgmEe6ut-tKD2_jgQ">
+      <lowerValue xsi:type="uml:LiteralInteger" xmi:id="_sz4U4fgmEe6ut-tKD2_jgQ" value="1"/>
+      <upperValue xsi:type="uml:LiteralUnlimitedNatural" xmi:id="_sz4U4vgmEe6ut-tKD2_jgQ" value="1"/>
     </ownedAttribute>
+    <ownedOperation xmi:id="_si-yIPgmEe6ut-tKD2_jgQ" name="studentsCountInModelEngineering">
+      <ownedParameter xmi:id="_7XfIQPgmEe6ut-tKD2_jgQ" name="Parameter" type="_bv-H8PgmEe6ut-tKD2_jgQ" direction="return"/>
+    </ownedOperation>
   </packagedElement>
-  <packagedElement xsi:type="uml:Class" xmi:id="_e2z_wO0zEe6ONuorAhNLBg" name="Class">
-    <ownedAttribute xmi:id="_fbOUYO0zEe6ONuorAhNLBg" name="Class" type="_epxCQO0zEe6ONuorAhNLBg" association="_fbBgEO0zEe6ONuorAhNLBg">
-      <lowerValue xsi:type="uml:LiteralInteger" xmi:id="_fbOUYe0zEe6ONuorAhNLBg" value="1"/>
-      <upperValue xsi:type="uml:LiteralUnlimitedNatural" xmi:id="_fbO7cO0zEe6ONuorAhNLBg" value="1"/>
-    </ownedAttribute>
+  <packagedElement xsi:type="uml:PrimitiveType" xmi:id="_bv-H8PgmEe6ut-tKD2_jgQ" name="Integer"/>
+  <packagedElement xsi:type="uml:PrimitiveType" xmi:id="_b_tNEPgmEe6ut-tKD2_jgQ" name="String"/>
+  <packagedElement xsi:type="uml:Enumeration" xmi:id="_ejibwPgmEe6ut-tKD2_jgQ" name="Role">
+    <ownedLiteral xmi:id="_f5ilYPgmEe6ut-tKD2_jgQ" name="Student" classifier="_ejibwPgmEe6ut-tKD2_jgQ"/>
+    <ownedLiteral xmi:id="_gG8vQPgmEe6ut-tKD2_jgQ" name="Teacher" classifier="_ejibwPgmEe6ut-tKD2_jgQ"/>
   </packagedElement>
-  <packagedElement xsi:type="uml:Association" xmi:id="_fbBgEO0zEe6ONuorAhNLBg" memberEnd="_fbL4IO0zEe6ONuorAhNLBg _fbOUYO0zEe6ONuorAhNLBg"/>
-  <packagedElement xsi:type="uml:Package" xmi:id="_hSQxsO03Ee6l1tMMQqtO_Q" name="Package">
-    <packageImport xmi:id="_iQvzMO03Ee6l1tMMQqtO_Q" importedPackage="_hCTDEO03Ee6l1tMMQqtO_Q"/>
+  <packagedElement xsi:type="uml:Interface" xmi:id="_l84A0PgmEe6ut-tKD2_jgQ" name="LectureService">
+    <ownedOperation xmi:id="_u7pSoPgmEe6ut-tKD2_jgQ" name="studentsCountInLecture">
+      <ownedParameter xmi:id="__O--QPgmEe6ut-tKD2_jgQ" name="lectureId" type="_b_tNEPgmEe6ut-tKD2_jgQ"/>
+      <ownedParameter xmi:id="__SpWQPgmEe6ut-tKD2_jgQ" name="Parameter" type="_bv-H8PgmEe6ut-tKD2_jgQ" direction="return"/>
+    </ownedOperation>
   </packagedElement>
+  <packagedElement xsi:type="uml:Class" xmi:id="_nsWaYPgmEe6ut-tKD2_jgQ" name="LecutreImpl">
+    <interfaceRealization xmi:id="_xR6mcPgmEe6ut-tKD2_jgQ" client="_nsWaYPgmEe6ut-tKD2_jgQ" supplier="_l84A0PgmEe6ut-tKD2_jgQ" contract="_l84A0PgmEe6ut-tKD2_jgQ"/>
+  </packagedElement>
+  <packagedElement xsi:type="uml:Interface" xmi:id="_o_3QsPgmEe6ut-tKD2_jgQ" name="LectureRepository">
+    <ownedOperation xmi:id="_vvNdkPgmEe6ut-tKD2_jgQ" name="countBy">
+      <ownedParameter xmi:id="_YY3MwPgnEe6ut-tKD2_jgQ" name="students" type="_b_tNEPgmEe6ut-tKD2_jgQ"/>
+      <ownedParameter xmi:id="_YiPyQPgnEe6ut-tKD2_jgQ" name="role" type="_ejibwPgmEe6ut-tKD2_jgQ"/>
+      <ownedParameter xmi:id="_bluKUPgnEe6ut-tKD2_jgQ" name="Parameter" type="_bv-H8PgmEe6ut-tKD2_jgQ" direction="return"/>
+    </ownedOperation>
+  </packagedElement>
+  <packagedElement xsi:type="uml:Usage" xmi:id="_wm2QMPgmEe6ut-tKD2_jgQ" client="_e2z_wO0zEe6ONuorAhNLBg" supplier="_l84A0PgmEe6ut-tKD2_jgQ"/>
+  <packagedElement xsi:type="uml:Usage" xmi:id="_yLTFgPgmEe6ut-tKD2_jgQ" client="_nsWaYPgmEe6ut-tKD2_jgQ" supplier="_o_3QsPgmEe6ut-tKD2_jgQ"/>
 </uml:Model>

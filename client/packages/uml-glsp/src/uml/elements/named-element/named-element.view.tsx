@@ -9,9 +9,13 @@
 import {
     ArgsAware,
     containerFeature,
+    EditableLabel,
+    GChildElement,
     GCompartment,
     hasArgs,
+    isEditableLabel,
     layoutableChildFeature,
+    nameFeature,
     RectangularNodeView,
     RenderingContext,
     svg
@@ -24,9 +28,35 @@ import { alignFeature } from 'sprotty';
 import { GLabeledNode } from '../../views/uml-label.view';
 
 export class NamedElement extends GLabeledNode implements ArgsAware {
-    static override readonly DEFAULT_FEATURES = [...GLabeledNode.DEFAULT_FEATURES, containerFeature, alignFeature, layoutableChildFeature];
+    static override readonly DEFAULT_FEATURES = [
+        ...GLabeledNode.DEFAULT_FEATURES,
+        nameFeature,
+        containerFeature,
+        alignFeature,
+        layoutableChildFeature
+    ];
+
+    override get editableLabel(): (GChildElement & EditableLabel) | undefined {
+        return find(this.children, isEditableLabel);
+    }
 
     args: Args = {};
+}
+
+function find<T extends GChildElement>(items: ReadonlyArray<GChildElement>, pred: (item: GChildElement) => item is T): T | undefined {
+    for (let i = 0; i < items.length; i++) {
+        const item = items[i];
+        if (pred(item)) {
+            return item;
+        }
+
+        const found = find(item.children, pred);
+        if (found) {
+            return found;
+        }
+    }
+
+    return undefined;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

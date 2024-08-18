@@ -43,7 +43,7 @@ public class GAssociationBuilder<TOrigin extends Association> extends GCEdgeBuil
 
    @Override
    public EObject source() {
-      return sourceElement();
+      return sourcePropertyElement();
    }
 
    public Property sourceProperty() {
@@ -51,7 +51,7 @@ public class GAssociationBuilder<TOrigin extends Association> extends GCEdgeBuil
       return memberEnds.get(0);
    }
 
-   public Element sourceElement() {
+   public Element sourcePropertyElement() {
       var source = sourceProperty();
       return source.getOwner() instanceof Association ? source.getType()
          : source.getOwner();
@@ -59,7 +59,7 @@ public class GAssociationBuilder<TOrigin extends Association> extends GCEdgeBuil
 
    @Override
    public EObject target() {
-      return targetElement();
+      return targetPropertyElement();
    }
 
    public Property targetProperty() {
@@ -67,7 +67,7 @@ public class GAssociationBuilder<TOrigin extends Association> extends GCEdgeBuil
       return memberEnds.get(1);
    }
 
-   public Element targetElement() {
+   public Element targetPropertyElement() {
       var target = targetProperty();
       return target.getOwner() instanceof Association ? target.getType()
          : target.getOwner();

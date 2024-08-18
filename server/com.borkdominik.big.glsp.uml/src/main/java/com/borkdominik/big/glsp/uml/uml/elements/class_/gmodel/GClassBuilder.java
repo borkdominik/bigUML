@@ -14,6 +14,7 @@ import java.util.List;
 
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.uml2.uml.Class;
+import org.eclipse.uml2.uml.Classifier;
 
 import com.borkdominik.big.glsp.server.core.constants.BGCoreCSS;
 import com.borkdominik.big.glsp.server.sdk.cdk.GCModelContext;
@@ -30,6 +31,10 @@ public class GClassBuilder<TOrigin extends Class> extends GCNodeBuilder<TOrigin>
    protected final GCOperationOwner<TOrigin> operationOwner;
    protected final GCAttributeOwner<TOrigin> attributeOwner;
 
+   public List<Classifier> nestedClassifiers() {
+      return this.origin.getNestedClassifiers();
+   }
+
    public GClassBuilder(final GCModelContext context, final TOrigin source, final String type) {
       super(context, source, type);
       this.operationOwner = new GCOperationOwner<>(context, source);
@@ -38,7 +43,7 @@ public class GClassBuilder<TOrigin extends Class> extends GCNodeBuilder<TOrigin>
 
    @Override
    protected List<GCProvider> createComponentChildren(final GNode modelRoot, final GCModelList<?, ?> componentRoot) {
-      return List.of(createHeader(componentRoot), createBody(componentRoot));
+      return List.of(createHeader(componentRoot), createClassBody(componentRoot));
    }
 
    protected GCProvider createHeader(final GCModelList<?, ?> root) {
@@ -52,7 +57,7 @@ public class GClassBuilder<TOrigin extends Class> extends GCNodeBuilder<TOrigin>
       return new GCNamedElement<>(context, origin, namedElementOptions.build());
    }
 
-   protected GCProvider createBody(final GCModelList<?, ?> root) {
+   protected GCProvider createClassBody(final GCModelList<?, ?> root) {
       var options = GCList.Options.builder()
          .dividerBeforeInserts(true)
          .build();

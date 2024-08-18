@@ -19,7 +19,7 @@ import com.borkdominik.big.glsp.uml.uml.commands.UMLCreateNodeCommand;
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 
-public final class CreatePackagableElementCommand<TElement extends PackageableElement>
+public class CreatePackagableElementCommand<TElement extends PackageableElement>
    extends UMLCreateNodeCommand<TElement, Package, CreatePackagableElementCommand.Argument<TElement>> {
 
    @Getter

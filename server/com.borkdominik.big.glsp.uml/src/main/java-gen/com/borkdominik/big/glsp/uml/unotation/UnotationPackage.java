@@ -136,10 +136,7 @@ public interface UnotationPackage extends EPackage {
     * @see com.borkdominik.big.glsp.uml.unotation.impl.UnotationPackageImpl#getRepresentation()
     * @generated
     */
-   int REPRESENTATION = 1;
-
-
-   /**
+   int REPRESENTATION = 1;   /**
     * Returns the meta object for class '{@link com.borkdominik.big.glsp.uml.unotation.UMLDiagram <em>UML Diagram</em>}'.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->

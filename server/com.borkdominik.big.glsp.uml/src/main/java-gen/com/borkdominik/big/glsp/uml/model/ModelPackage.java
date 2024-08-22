@@ -135,10 +135,7 @@ public interface ModelPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int MESSAGE_ANCHOR_OPERATION_COUNT = 0;
-
-
-   /**
+   int MESSAGE_ANCHOR_OPERATION_COUNT = 0;   /**
     * Returns the meta object for class '{@link com.borkdominik.big.glsp.uml.model.NewDiagramRequest <em>New Diagram Request</em>}'.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->

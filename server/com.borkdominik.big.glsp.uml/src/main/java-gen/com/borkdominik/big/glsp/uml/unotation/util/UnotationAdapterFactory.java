@@ -107,7 +107,6 @@ public class UnotationAdapterFactory extends AdapterFactoryImpl {
       return modelSwitch.doSwitch((EObject)target);
    }
 
-
    /**
     * Creates a new adapter for an object of class '{@link com.borkdominik.big.glsp.uml.unotation.UMLDiagram <em>UML Diagram</em>}'.
     * <!-- begin-user-doc -->

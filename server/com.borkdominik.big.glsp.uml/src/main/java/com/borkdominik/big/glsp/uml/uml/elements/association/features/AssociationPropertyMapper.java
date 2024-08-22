@@ -27,10 +27,7 @@ public class AssociationPropertyMapper { /*-
       var memberEndSecond = memberEnds.get(1);
       var memberEndSecondId = idGenerator.getOrCreateId(memberEndSecond);
 
-      List<ElementPropertyItem> items = new ArrayList<>();
-
-
-      items.addAll(this.propertyBuilder(PropertyConfiguration.Property.class, memberEndFirstId)
+      List<ElementPropertyItem> items = new ArrayList<>();      items.addAll(this.propertyBuilder(PropertyConfiguration.Property.class, memberEndFirstId)
          .text(PropertyConfiguration.Property.NAME, "Source Name", memberEndFirst.getName())
          .text(PropertyConfiguration.Property.MULTIPLICITY, "Source Multiplicity",
             MultiplicityUtil.getMultiplicity(memberEndFirst))

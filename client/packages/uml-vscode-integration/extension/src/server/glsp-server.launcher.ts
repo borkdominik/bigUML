@@ -17,7 +17,7 @@ import { UMLServerLauncher } from './server-launcher';
 
 const GLSP_SERVER_PATH = '../server';
 const GLSP_SERVER_VERSION = '0.1.0-SNAPSHOT';
-const GLSP_EXECUTABLE = `com.eclipsesource.uml.cli-${GLSP_SERVER_VERSION}-standalone.jar`;
+const GLSP_EXECUTABLE = `com.borkdominik.big.glsp.uml-${GLSP_SERVER_VERSION}-glsp.jar`;
 const JAVA_EXECUTABLE = path.join(__dirname, GLSP_SERVER_PATH, GLSP_EXECUTABLE);
 
 export interface GlspServerConfig {
@@ -28,7 +28,7 @@ export function glspServerModule(config: GlspServerConfig): ContainerModule {
     return new ContainerModule(bind => {
         const launchOptions: ServerLauncherOptions = {
             executable: JAVA_EXECUTABLE,
-            additionalArgs: ['glspserver', `--port=${config.port}`],
+            additionalArgs: [`--port=${config.port}`],
             logging: true || process.env.UML_GLSP_SERVER_LOGGING === 'true',
             server: {
                 name: 'GLSPServer',

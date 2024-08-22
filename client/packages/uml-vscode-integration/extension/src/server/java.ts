@@ -13,7 +13,10 @@ export namespace java {
         return new Promise<string | undefined>((resolve, reject) => {
             const spawn = childProcess.spawn('java', ['-version'], { timeout: 5 * 1000 });
             let allData = '';
-            spawn.on('error', err => resolve(undefined));
+            spawn.on('error', err => {
+                console.error(err);
+                resolve(undefined);
+            });
 
             spawn.stderr.on('data', data => {
                 allData += data;

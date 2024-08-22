@@ -15,23 +15,13 @@ const BACKEND_VERSION = '0.1.0-SNAPSHOT';
 const targetDirs = [join(__dirname, '..', 'packages', 'uml-vscode-integration', 'extension', 'server')];
 
 // Backend Java CLI
-const cliPath = join(__dirname, '..', '..', 'server', 'com.eclipsesource.uml.cli');
-const cliExecutable = `com.eclipsesource.uml.cli-${BACKEND_VERSION}-standalone.jar`;
-const cliJarPath = join(cliPath, 'target', cliExecutable);
+const path = join(__dirname, '..', '..', 'server', 'com.borkdominik.big.glsp.uml');
+const executable = `com.borkdominik.big.glsp.uml-${BACKEND_VERSION}-glsp.jar`;
+const jarPath = join(path, 'target', executable);
 
-log('### Start copying CLI JAR.. ###');
+log('### Start copying server JAR.. ###');
 targetDirs.forEach(targetDir => {
-    copyBackendFile(cliJarPath, `${targetDir}`, cliExecutable);
+    copyBackendFile(jarPath, `${targetDir}`, executable);
 });
 
 console.log();
-
-// Model Server
-
-const modelServerPath = join(__dirname, '..', '..', 'server', 'com.eclipsesource.uml.modelserver');
-const modelServerLogConfigPath = join(modelServerPath, 'log4j2-embedded.xml');
-
-log('### Start copying Model Server log4j2 config.. ###');
-targetDirs.forEach(targetDir => {
-    copyBackendFile(modelServerLogConfigPath, `${targetDir}`, 'log4j2-embedded.xml');
-});

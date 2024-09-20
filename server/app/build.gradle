@@ -1,0 +1,71 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'eclipse'
+    id 'dev.equo.p2deps' version '1.7.7'
+    id 'com.gradleup.shadow' version '8.3.2'
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+p2deps {
+    into('implementation') {
+        p2repo('https://download.eclipse.org/releases/2023-09/202309131000/')
+        install('org.eclipse.uml2.uml')
+    }
+}
+
+dependencies {
+    implementation 'com.borkdominik.big:com.borkdominik.big.glsp.server:0.1.0'
+    implementation 'org.eclipse.emf:org.eclipse.emf.common:2.31.0'
+    implementation 'org.eclipse.elk:org.eclipse.elk.alg.layered:0.8.1'
+    implementation 'org.apache.logging.log4j:log4j-core:2.19.0'
+    implementation 'org.apache.logging.log4j:log4j-api:2.19.0'
+    implementation 'com.google.inject.extensions:guice-assistedinject:7.0.0'
+
+    implementation platform(project(':platform'))
+    implementation 'org.eclipse.glsp:org.eclipse.glsp.server'
+    implementation 'org.eclipse.glsp:org.eclipse.glsp.server.emf'
+    implementation 'org.eclipse.glsp:org.eclipse.glsp.layout'
+
+    implementation project(':model')
+}
+
+java {
+    archivesBaseName = 'bigUML'
+    version = '0.1.0'
+    withSourcesJar()
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+eclipse {
+    classpath {
+        baseSourceOutputDir = file('build')
+    }
+}
+
+sourceSets {
+    main {
+        java {
+            setSrcDirs(['src/main/java-gen', 'src/main/java'])
+        }
+    }
+}
+
+/*********************************************************************************************************************
+ * Application configuration
+ ********************************************************************************************************************* */
+
+application {
+    mainClass = 'com.borkdominik.big.glsp.uml.core.launch.UMLServerLauncher'
+    application
+}
+
+run {
+    args = ["--logLevel=debug"]
+}

@@ -311,7 +311,8 @@ export class UMLPrimaryElementNavigatorTool implements Tool {
             ShowToastMessageAction.create({
                 id: Symbol.for(PrimaryElementNavigatorKeyListener.name),
                 message:
-                    "Primary Navigation On: Use arrow keys to select preceding (←) or succeding (→) elements. Use the up (↑) and down (↓) arrows to navigate paths. Press 'ESC' to exit."
+                    'Primary Navigation On: Use arrow keys to select preceding (←) or succeding (→) elements.' +
+                    "Use the up (↑) and down (↓) arrows to navigate paths. Press 'ESC' to exit."
             })
         );
         this.keytool.register(this.elementNavigatorKeyListener);
@@ -350,7 +351,8 @@ export class UMLSecondaryElementNavigatorTool implements Tool {
             ShowToastMessageAction.create({
                 id: Symbol.for(PrimaryElementNavigatorKeyListener.name),
                 message:
-                    "Secondary Navigation On: Navigate nearest elements using arrow keys: (↑) for above, (↓) for below, (←) for previous, (→) for next element. Press 'ESC' to exit."
+                    'Secondary Navigation On: Navigate nearest elements using arrow keys: (↑) for above,' +
+                    "(↓) for below, (←) for previous, (→) for next element. Press 'ESC' to exit."
             })
         );
         this.keytool.register(this.elementNavigatorKeyListener);

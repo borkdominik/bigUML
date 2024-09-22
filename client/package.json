@@ -18,11 +18,11 @@
     ]
   },
   "scripts": {
-    "build:server": "cd ../server && mvn clean install && cd ../client && yarn copy:server",
+    "build:server": "cd ../server && ./gradlew clean shadowJar && cd ../client && yarn copy:server",
     "check:headers": "glsp checkHeaders .",
     "copy:server": "tsx ./scripts/copy-server.ts",
     "depcheck": "npx depcheck --config .depcheck.yml",
-    "package": "cd packages/uml-vscode-integration/extension && yarn vscode:package && mv ./*.vsix ${INIT_CWD}/release/vsix",
+    "package": "yarn build:server && cd packages/uml-vscode-integration/extension && yarn vscode:package && mv ./*.vsix ${INIT_CWD}/release/vsix",
     "package:zip": "yarn package && cd ${INIT_CWD} && zip -r ./release-$(date +%Y%m%d-%H%M).zip ./release",
     "prepare": "lerna run prepare",
     "watch": "lerna run --parallel watch"
@@ -48,7 +48,7 @@
   },
   "packageManager": "yarn@1.22.19",
   "engines": {
-    "node": ">=16.15.1 < 17",
+    "node": ">=16.15.1 < 22",
     "yarn": ">=1.7.0 <2"
   }
 }

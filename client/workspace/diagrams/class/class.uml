@@ -13,7 +13,7 @@
   <packagedElement xsi:type="uml:PrimitiveType" xmi:id="_b_tNEPgmEe6ut-tKD2_jgQ" name="String"/>
   <packagedElement xsi:type="uml:Enumeration" xmi:id="_ejibwPgmEe6ut-tKD2_jgQ" name="Role">
     <ownedLiteral xmi:id="_f5ilYPgmEe6ut-tKD2_jgQ" name="Student" classifier="_ejibwPgmEe6ut-tKD2_jgQ"/>
-    <ownedLiteral xmi:id="_gG8vQPgmEe6ut-tKD2_jgQ" name="Teacher" classifier="_ejibwPgmEe6ut-tKD2_jgQ"/>
+    <ownedLiteral xmi:id="_gG8vQPgmEe6ut-tKD2_jgQ" name="Teacher" visibility="public" classifier="_ejibwPgmEe6ut-tKD2_jgQ"/>
   </packagedElement>
   <packagedElement xsi:type="uml:Interface" xmi:id="_l84A0PgmEe6ut-tKD2_jgQ" name="LectureService">
     <ownedOperation xmi:id="_u7pSoPgmEe6ut-tKD2_jgQ" name="studentsCountInLecture">

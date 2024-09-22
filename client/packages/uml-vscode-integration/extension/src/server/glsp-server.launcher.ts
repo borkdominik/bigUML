@@ -16,8 +16,8 @@ import { osUtils } from './os';
 import { UMLServerLauncher } from './server-launcher';
 
 const GLSP_SERVER_PATH = '../server';
-const GLSP_SERVER_VERSION = '0.1.0-SNAPSHOT';
-const GLSP_EXECUTABLE = `com.borkdominik.big.glsp.uml-${GLSP_SERVER_VERSION}-glsp.jar`;
+const GLSP_SERVER_VERSION = '0.1.0';
+const GLSP_EXECUTABLE = `bigUML-${GLSP_SERVER_VERSION}-all.jar`;
 const JAVA_EXECUTABLE = path.join(__dirname, GLSP_SERVER_PATH, GLSP_EXECUTABLE);
 
 export interface GlspServerConfig {

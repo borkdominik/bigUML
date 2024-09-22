@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?pde?>
+<!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl --><target name="bigUML Targetplatform 2023-12" sequenceNumber="1647851159">
+	<locations>
+		<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+      	  <unit id="org.eclipse.emf.sdk.feature.group" version="2.35.0.v20230829-0934"/>
+		  <unit id="org.eclipse.uml2.uml" version="5.5.0.v20221116-1811"/>
+		  <unit id="org.eclipse.uml2.uml.resources" version="5.5.0.v20221116-1811"/>
+	      <repository location="http://download.eclipse.org/releases/2023-09"/>
+	    </location>
+		<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+			<repository location="https://download.eclipse.org/glsp/server/p2/releases/2.0.0/"/>
+			<unit id="org.eclipse.glsp.feature.feature.group" version="2.0.0"/>
+			<unit id="org.eclipse.glsp.feature.source.feature.group" version="2.0.0"/>
+			<unit id="org.eclipse.glsp.server.emf" version="2.0.0"/>
+			<unit id="org.eclipse.glsp.server.emf.source" version="2.0.0"/>
+		</location>
+	</locations>
+</target>

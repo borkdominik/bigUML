@@ -120,6 +120,9 @@ export class ServerManager {
                     details = error.stack;
                 }
 
+                this.output.appendLine(reason);
+                this.output.appendLine(details ?? 'No details available.');
+
                 this.state = {
                     state: 'error',
                     reason,

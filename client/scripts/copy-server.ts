@@ -11,13 +11,13 @@ import { copyBackendFile, log } from './copy-utils';
 
 // Idea taken from https://github.com/eclipse-emfcloud/coffee-editor/blob/master/client/coffee-servers/scripts/copy-servers.ts
 
-const BACKEND_VERSION = '0.1.0-SNAPSHOT';
+const BACKEND_VERSION = '0.1.0';
 const targetDirs = [join(__dirname, '..', 'packages', 'uml-vscode-integration', 'extension', 'server')];
 
 // Backend Java CLI
-const path = join(__dirname, '..', '..', 'server', 'com.borkdominik.big.glsp.uml');
-const executable = `com.borkdominik.big.glsp.uml-${BACKEND_VERSION}-glsp.jar`;
-const jarPath = join(path, 'target', executable);
+const path = join(__dirname, '..', '..', 'server', 'app', 'build', 'libs');
+const executable = `bigUML-${BACKEND_VERSION}-all.jar`;
+const jarPath = join(path, executable);
 
 log('### Start copying server JAR.. ###');
 targetDirs.forEach(targetDir => {

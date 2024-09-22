@@ -1,0 +1,60 @@
+plugins {
+    id 'java-library'
+    id 'eclipse'
+    id 'maven-publish'
+    id 'dev.equo.p2deps' version '1.7.7'
+}
+
+repositories {
+    mavenCentral()
+}
+
+group = "com.borkdominik.big"
+version = "0.1.0"
+
+p2deps {
+    into('implementation') {
+        p2repo('https://download.eclipse.org/releases/2023-09/202309131000/')
+        install('org.eclipse.emf.ecore')
+        install('org.eclipse.emf.ecore.xmi')
+    }
+}
+
+dependencies {
+    implementation platform(project(':platform'))
+
+    implementation 'org.eclipse.glsp:org.eclipse.glsp.server'
+    implementation 'org.eclipse.glsp:org.eclipse.glsp.server.emf'
+    implementation 'org.eclipse.glsp:org.eclipse.glsp.layout'
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = 'com.borkdominik.big.glsp.uml.model'
+            from components.java 
+        }
+    }
+} 
+
+java {
+    withSourcesJar()
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+eclipse {
+    classpath {
+        baseSourceOutputDir = file('build')
+    }
+}
+
+sourceSets {
+    main {
+        java {
+            setSrcDirs(['src/main/java-gen', 'src/main/java'])
+        }
+    }
+}
+

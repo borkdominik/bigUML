@@ -209,6 +209,24 @@
         "code",
         "diagram"
       ]
+    },
+    {
+      "login": "lorenzk23",
+      "name": "Lorenz Kothmayr",
+      "avatar_url": "https://avatars.githubusercontent.com/u/64857422?v=4",
+      "profile": "https://github.com/lorenzk23",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "nadinPandin",
+      "name": "nadinPandin",
+      "avatar_url": "https://avatars.githubusercontent.com/u/128092561?v=4",
+      "profile": "https://github.com/nadinPandin",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "types": {

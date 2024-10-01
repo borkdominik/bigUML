@@ -7,6 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import { Container, ContainerModule } from 'inversify';
+import { minimapModule } from 'packages/uml-vscode-integration/extension/src/features/minimap/minimap.module';
 import * as vscode from 'vscode';
 import { TYPES } from './di.types';
 import { outlineModule } from './features/outline/outline.module';
@@ -52,7 +53,8 @@ export function createContainer(
         vscodeModule,
         themeModule,
         propertyPaletteModule,
-        outlineModule
+        outlineModule,
+        minimapModule
     );
 
     return container;

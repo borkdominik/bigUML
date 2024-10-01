@@ -27,5 +27,8 @@ export const VSCodeSettings = {
     },
     outline: {
         viewId: 'bigUML.panel.outline'
-    }
+    },
+    minimap: {
+        viewId: 'bigUML.panel.minimap'
+    },
 } as const;

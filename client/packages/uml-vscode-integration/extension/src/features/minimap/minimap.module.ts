@@ -7,9 +7,11 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-export * from './base';
-export * from './menu';
-export * from './minimap';
-export * from './property-palette';
-export * from './toolkit';
-export * from './vscode/messenger';
+import { ContainerModule } from 'inversify';
+import { TYPES } from '../../di.types';
+import { MinimapProvider } from './minimap.provider';
+
+export const minimapModule = new ContainerModule(bind => {
+    bind(MinimapProvider).toSelf().inSingletonScope();
+    bind(TYPES.RootInitialization).toService(MinimapProvider);
+});

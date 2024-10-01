@@ -248,6 +248,12 @@
           "when": "bigUML.isRunning"
         },
         {
+          "id": "bigUML.panel.minimap",
+          "name": "Minimap",
+          "type": "webview",
+          "when": "bigUML.isRunning"
+        },
+        {
           "id": "bigUML.panel.outline",
           "name": "Diagram Outline",
           "type": "tree",

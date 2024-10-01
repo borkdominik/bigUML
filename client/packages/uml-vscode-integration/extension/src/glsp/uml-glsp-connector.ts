@@ -53,6 +53,12 @@ export class UMLGLSPConnector<TDocument extends vscode.CustomDocument = vscode.C
         super({
             server: glspServer,
             logging: false,
+            onBeforeReceiveMessageFromClient: (message, callback) => {
+                if (ActionMessage.is(message)) {
+                    this.onActionMessageEmitter.fire(message);
+                }
+                callback(message);
+            },
             onBeforePropagateMessageToServer: (_originalMessage, processedMessage, _messageChanged) => {
                 if (ActionMessage.is(processedMessage) && (processedMessage as any).__localDispatch === true) {
                     return undefined;

@@ -32,6 +32,7 @@ export abstract class UMLWebviewProvider implements vscode.WebviewViewProvider {
 
     protected messenger: Messenger;
     protected messageParticipant?: MessageParticipant;
+    protected webviewView?: vscode.WebviewView;
     protected providerContext?: ProviderWebviewContext;
 
     @postConstruct()
@@ -50,6 +51,7 @@ export abstract class UMLWebviewProvider implements vscode.WebviewViewProvider {
         context: vscode.WebviewViewResolveContext<unknown>,
         token: vscode.CancellationToken
     ): void | Thenable<void> {
+        this.webviewView = webviewView;
         const webview = webviewView.webview;
 
         this.providerContext = {
@@ -63,6 +65,7 @@ export abstract class UMLWebviewProvider implements vscode.WebviewViewProvider {
         };
 
         this.resolveHTML(this.providerContext);
+        webviewView.onDidChangeVisibility(() => this.onWebviewVisiblitlyChanged());
 
         this.messageParticipant = this.messenger.registerWebviewView(webviewView);
         this.messenger.onNotification(
@@ -77,6 +80,10 @@ export abstract class UMLWebviewProvider implements vscode.WebviewViewProvider {
     }
 
     protected abstract resolveHTML(providerContext: ProviderWebviewContext): void;
+
+    protected onWebviewVisiblitlyChanged(): void {
+        // Nothing to do
+    }
 
     protected onActionMessage(message: ActionMessage): void {
         this.connector.sendActionToActiveClient(message.action);

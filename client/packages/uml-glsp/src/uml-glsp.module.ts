@@ -26,7 +26,9 @@ import {
     TYPES,
     viewKeyToolsModule
 } from '@eclipse-glsp/client';
-import { keyboardToolPaletteModule } from '@eclipse-glsp/client/lib/features/accessibility/keyboard-tool-palette/keyboard-tool-palette-module';
+import {
+    keyboardToolPaletteModule
+} from '@eclipse-glsp/client/lib/features/accessibility/keyboard-tool-palette/keyboard-tool-palette-module';
 import { bindOrRebind, ContainerConfiguration } from '@eclipse-glsp/protocol';
 import { Container } from 'inversify';
 import { umlBaseModule } from './base/uml-base.module';
@@ -42,6 +44,7 @@ import { umlCopyPasteModule } from './features/copy-paste/uml-copy-paste.module'
 import { umlEditModule } from './features/edit/uml-edit.module';
 import { umlTypeHintsModule } from './features/hints/uml-type-hints.module';
 import { umlLoadingModule } from './features/loading/uml-loading.module';
+import { umlMinimapModule } from './features/minimap/uml-minimap.module';
 import { umlOutlineModule } from './features/outline/uml-outline.module';
 import { umlPropertyPaletteModule } from './features/property-palette/uml-property-palette.module';
 import { umlThemeModule } from './features/theme/uml-theme.module';
@@ -85,6 +88,7 @@ export function initializeUMLDiagramContainer(container: Container, ...container
         umlThemeModule,
         umlToolManagerModule,
         umlOutlineModule,
+        umlMinimapModule,
         umlPropertyPaletteModule,
         umlTypeHintsModule,
         { add: umlToolPaletteModule, remove: toolPaletteModule },

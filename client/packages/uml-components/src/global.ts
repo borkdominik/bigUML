@@ -26,6 +26,7 @@ import {
 import { VsCodeApi } from 'vscode-messenger-webview';
 import { ContextMenu, ContextMenuItem } from './menu/context-menu.component';
 import { Menu, MenuItem } from './menu/menu.component';
+import { Minimap, MinimapWebview } from './minimap';
 import { PropertyPalette, PropertyPaletteWebview } from './property-palette';
 import { PropertyPaletteReference } from './property-palette/reference/property-palette-reference.component';
 import { Tooltip } from './tooltip/tooltip.component';
@@ -53,6 +54,8 @@ declare global {
         'big-property-palette': PropertyPalette;
         'big-property-palette-reference': PropertyPaletteReference;
         'big-property-palette-webview': PropertyPaletteWebview;
+        'big-minimap': Minimap;
+        'big-minimap-webview': MinimapWebview;
         'big-menu': Menu;
         'big-menu-item': MenuItem;
         'big-tooltip': Tooltip;

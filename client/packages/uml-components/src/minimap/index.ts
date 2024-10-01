@@ -7,9 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-export * from './base';
-export * from './menu';
-export * from './minimap';
-export * from './property-palette';
-export * from './toolkit';
-export * from './vscode/messenger';
+export * from './minimap.component';
+export * from './minimap.style';
+export * from './web';
+

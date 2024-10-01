@@ -10,9 +10,9 @@ import { createUMLDiagramContainer } from '@borkdominik-biguml/uml-glsp/lib';
 
 import '@eclipse-glsp/vscode-integration-webview/css/glsp-vscode.css';
 
-import { GLSPIsReadyAction } from '@borkdominik-biguml/uml-protocol';
-import { IActionDispatcher, IDiagramStartup, TYPES } from '@eclipse-glsp/client';
-import { ContainerConfiguration, MaybePromise, bindAsService, bindOrRebind } from '@eclipse-glsp/protocol';
+import { GLSPIsReadyAction, MinimapExportSvgAction } from '@borkdominik-biguml/uml-protocol';
+import { IActionDispatcher, IDiagramStartup, InitializeCanvasBoundsAction, TYPES } from '@eclipse-glsp/client';
+import { ContainerConfiguration, MaybePromise, SetViewportAction, bindAsService, bindOrRebind } from '@eclipse-glsp/protocol';
 import { GLSPStarter } from '@eclipse-glsp/vscode-integration-webview';
 import { GLSPDiagramIdentifier } from '@eclipse-glsp/vscode-integration-webview/lib/diagram-identifier';
 import { ExtensionActionKind } from '@eclipse-glsp/vscode-integration-webview/lib/features/default/extension-action-handler';
@@ -31,6 +31,9 @@ class UMLStarter extends GLSPStarter {
         container.bind(UMLDiagramWidget).toSelf().inSingletonScope();
         bindOrRebind(container, GLSPDiagramWidget).toService(UMLDiagramWidget);
         container.bind(ExtensionActionKind).toConstantValue(GLSPIsReadyAction.KIND);
+        container.bind(ExtensionActionKind).toConstantValue(MinimapExportSvgAction.KIND);
+        container.bind(ExtensionActionKind).toConstantValue(SetViewportAction.KIND); // necessary to have it in the provider loop
+        container.bind(ExtensionActionKind).toConstantValue(InitializeCanvasBoundsAction.KIND); // necessary to have it in the provider loop
         bindAsService(container, TYPES.IDiagramStartup, GLSPReadyStartup);
     }
 }

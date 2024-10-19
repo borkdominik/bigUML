@@ -1,0 +1,3 @@
+[submodule "server/lib/bigGLSP-framework"]
+	path = server/lib/bigGLSP-framework
+	url = git@github.com:glsp-extensions/bigGLSP-framework.git

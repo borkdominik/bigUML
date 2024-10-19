@@ -7,3 +7,11 @@ include 'app'
 include 'model'
 include 'platform'
 
+// Framework
+
+includeBuild('./lib/bigGLSP-framework/plugins/bigGLSP-server-java') {
+    name = 'bigGLSP-framework'
+    dependencySubstitution {
+        substitute module('com.borkdominik.big:com.borkdominik.big.glsp.server') using project(':lib')
+    }
+}

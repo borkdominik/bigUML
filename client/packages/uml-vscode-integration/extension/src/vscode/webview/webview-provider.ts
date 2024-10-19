@@ -6,14 +6,11 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { Action, ActionMessage } from '@eclipse-glsp/client';
 import { inject, postConstruct } from 'inversify';
-import { ActionMessageNotification } from 'packages/uml-protocol/lib';
 import * as vscode from 'vscode';
-import { Messenger } from 'vscode-messenger';
-import { MessageParticipant } from 'vscode-messenger-common';
 import { TYPES } from '../../di.types';
 import { UMLGLSPConnector } from '../../glsp/uml-glsp-connector';
+import { UMLWebviewExtensionHostConnection, UMLWebviewViewConnection } from './webview-connection';
 
 export interface ProviderWebviewContext {
     webviewView: vscode.WebviewView;
@@ -30,20 +27,21 @@ export abstract class UMLWebviewProvider implements vscode.WebviewViewProvider {
     @inject(TYPES.Connector)
     protected readonly connector: UMLGLSPConnector;
 
-    protected messenger: Messenger;
-    protected messageParticipant?: MessageParticipant;
+    @inject(UMLWebviewExtensionHostConnection)
+    protected readonly extensionHostConnection: UMLWebviewExtensionHostConnection;
+    @inject(UMLWebviewViewConnection)
+    protected readonly webviewViewConnection: UMLWebviewViewConnection;
+
     protected webviewView?: vscode.WebviewView;
     protected providerContext?: ProviderWebviewContext;
 
     @postConstruct()
-    initialize(): void {
+    protected init(): void {
         vscode.window.registerWebviewViewProvider(this.id, this, {
             webviewOptions: {
                 retainContextWhenHidden: this.retainContextWhenHidden
             }
         });
-
-        this.messenger = this.connector.messenger;
     }
 
     resolveWebviewView(
@@ -65,38 +63,22 @@ export abstract class UMLWebviewProvider implements vscode.WebviewViewProvider {
         };
 
         this.resolveHTML(this.providerContext);
-        webviewView.onDidChangeVisibility(() => this.onWebviewVisiblitlyChanged());
 
-        this.messageParticipant = this.messenger.registerWebviewView(webviewView);
-        this.messenger.onNotification(
-            ActionMessageNotification,
-            msg => {
-                this.onActionMessage(msg);
-            },
-            {
-                sender: this.messageParticipant
-            }
-        );
+        this.initConnection(this.providerContext);
+        this.handleConnection();
     }
 
     protected abstract resolveHTML(providerContext: ProviderWebviewContext): void;
 
-    protected onWebviewVisiblitlyChanged(): void {
-        // Nothing to do
+    protected initConnection(providerContext: ProviderWebviewContext): void {
+        this.webviewViewConnection.listen(providerContext);
+        this.extensionHostConnection.listen(providerContext, this.webviewViewConnection, { forwardCache: true });
     }
 
-    protected onActionMessage(message: ActionMessage): void {
-        this.connector.sendActionToActiveClient(message.action);
-    }
-
-    protected sendActionToWebview(action: Action): void {
-        if (this.messageParticipant === undefined) {
-            return;
-        }
-
-        this.messenger.sendNotification(ActionMessageNotification, this.messageParticipant, {
-            action,
-            clientId: this.connector.activeClient?.clientId
+    protected handleConnection(): void {
+        // Per default, forward all messages from the webview to the extension host
+        this.webviewViewConnection.onActionMessage(message => {
+            this.extensionHostConnection.send(message.action);
         });
     }
 }

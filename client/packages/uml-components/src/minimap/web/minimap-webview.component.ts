@@ -105,7 +105,6 @@ export class MinimapWebview extends BigElement {
 
     // With this method it is possible to send messages to the extension, in this case minimap-webview.component.ts
     protected sendNotification(action: Action): void {
-        console.log('Sending Notification', action, ActionMessageNotification, HOST_EXTENSION);
         messenger.sendNotification(ActionMessageNotification, HOST_EXTENSION, {
             clientId: this.clientId,
             action

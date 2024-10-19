@@ -16,6 +16,7 @@ import { NewFileCommand } from './new-file/new-file.command';
 import { NewFileCreator } from './new-file/new-file.creator';
 import { OutputChannel } from './output/output.channel';
 import { Settings } from './settings/settings';
+import { UMLWebviewExtensionHostConnection, UMLWebviewViewConnection } from './webview/webview-connection';
 import { WorkspaceWatcher } from './workspace/workspace.watcher';
 
 export const vscodeModule = new ContainerModule(bind => {
@@ -44,4 +45,7 @@ export const vscodeModule = new ContainerModule(bind => {
 
     bind(WorkspaceWatcher).toSelf().inSingletonScope();
     bind(TYPES.RootInitialization).toService(WorkspaceWatcher);
+
+    bind(UMLWebviewExtensionHostConnection).toSelf();
+    bind(UMLWebviewViewConnection).toSelf();
 });

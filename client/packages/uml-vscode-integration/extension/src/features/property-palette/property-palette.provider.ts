@@ -22,30 +22,10 @@ export class PropertyPaletteProvider extends UMLWebviewProvider {
     protected override retainContextWhenHidden = true;
 
     @postConstruct()
-    override initialize(): void {
-        super.initialize();
-        this.connector.onDidActiveClientChange(client => {
-            this.connector.sendActionToClient(client.clientId, RefreshPropertyPaletteAction.create());
-        });
+    protected override init(): void {
+        super.init();
 
-        this.connector.onDidClientViewStateChange(() => {
-            setTimeout(() => {
-                if (this.connector.clients.every(c => !c.webviewEndpoint.webviewPanel.active)) {
-                    this.sendActionToWebview(SetPropertyPaletteAction.create());
-                }
-            }, 100);
-        });
-        this.connector.onDidClientDispose(() => {
-            if (this.connector.documents.length === 0) {
-                this.sendActionToWebview(SetPropertyPaletteAction.create());
-            }
-        });
-        this.connector.onActionMessage(message => {
-            const { action } = message;
-            if (SetPropertyPaletteAction.is(action)) {
-                this.sendActionToWebview(action);
-            }
-        });
+        this.extensionHostConnection.cacheActions([SetPropertyPaletteAction.KIND]);
     }
 
     protected resolveHTML(providerContext: ProviderWebviewContext): void {
@@ -70,5 +50,18 @@ export class PropertyPaletteProvider extends UMLWebviewProvider {
             <script type="module" src="${bundleJSUri}"></script>
         </body>
         </html>`;
+    }
+
+    protected override handleConnection(): void {
+        super.handleConnection();
+
+        this.extensionHostConnection.onDidActiveClientChange(client => {
+            this.extensionHostConnection.sendTo(client.clientId, RefreshPropertyPaletteAction.create());
+        });
+        this.extensionHostConnection.onNoActiveClient(() => {
+            if (this.connector.documents.length === 0) {
+                this.webviewViewConnection.send(SetPropertyPaletteAction.create());
+            }
+        });
     }
 }

@@ -4,9 +4,18 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## [v0.x.x - Unreleased]
+## [v0.6.0 - 2024-12-05](https://github.com/borkdominik/bigUML/releases/tag/v0.6.0)
 
--
+## What's Changed
+
+- Use bigGLSP-framework and remove the modelserver by @haydar-metin in https://github.com/borkdominik/bigUML/pull/156
+- Migrate use case / information flow / package diagram by @haydar-metin in https://github.com/borkdominik/bigUML/pull/157
+- Migrate communication / deployment / activity / state machine diagram by @haydar-metin in https://github.com/borkdominik/bigUML/pull/163
+- Fix maven build by @haydar-metin in https://github.com/borkdominik/bigUML/pull/165
+- Switch builder to gradle by @haydar-metin in https://github.com/borkdominik/bigUML/pull/166
+- Introduce minimap by @haydar-metin in https://github.com/borkdominik/bigUML/pull/167
+- Streamline extension webview provider through connection classes by @haydar-metin in https://github.com/borkdominik/bigUML/pull/168
+- Add model resources action by @haydar-metin in https://github.com/borkdominik/bigUML/pull/169
 
 ## [v0.5.0 - 2024-02-13](https://github.com/borkdominik/bigUML/releases/tag/v0.5.0)
 

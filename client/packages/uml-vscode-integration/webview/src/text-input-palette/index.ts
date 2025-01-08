@@ -6,11 +6,8 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
+import 'reflect-metadata';
 
-export * from './base';
-export * from './menu';
-export * from './minimap';
-export * from './property-palette';
-export * from './text-input';
-export * from './toolkit';
-export * from './vscode/messenger';
+import { useTextInputPaletteWebviewDesignSystem } from '@borkdominik-biguml/uml-components';
+
+useTextInputPaletteWebviewDesignSystem();

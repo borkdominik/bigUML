@@ -7,10 +7,8 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-export * from './base';
-export * from './menu';
-export * from './minimap';
-export * from './property-palette';
-export * from './text-input';
-export * from './toolkit';
-export * from './vscode/messenger';
+export * from './reference';
+export * from './text-input-palette.component';
+export * from './text-input-palette.style';
+export * from './web';
+

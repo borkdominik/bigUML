@@ -7,10 +7,11 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-export * from './base';
-export * from './menu';
-export * from './minimap';
-export * from './property-palette';
-export * from './text-input';
-export * from './toolkit';
-export * from './vscode/messenger';
+import { ContainerModule } from 'inversify';
+import { TYPES } from '../../di.types';
+import { TextInputPaletteProvider } from './text-input-palette.provider';
+
+export const textInputModule = new ContainerModule(bind => {
+    bind(TextInputPaletteProvider).toSelf().inSingletonScope();
+    bind(TYPES.RootInitialization).toService(TextInputPaletteProvider);
+});

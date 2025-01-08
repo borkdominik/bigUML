@@ -248,6 +248,12 @@
           "when": "bigUML.isRunning"
         },
         {
+          "id": "bigUML.panel.text-input-palette",
+          "name": "NLI Integration",
+          "type": "webview",
+          "when": "bigUML.isRunning"
+        },
+        {
           "id": "bigUML.panel.minimap",
           "name": "Minimap",
           "type": "webview",

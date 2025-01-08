@@ -14,7 +14,7 @@ const componentsConfig: es.BuildOptions = {
     // target: 'es2020',
     format: 'esm',
     entryNames: '[dir]/bundle',
-    entryPoints: ['./src/editor/index.ts', './src/property-palette/index.ts', './src/minimap/index.ts'],
+    entryPoints: ['./src/editor/index.ts', './src/property-palette/index.ts', './src/minimap/index.ts', './src/text-input-palette/index.ts'],
     outbase: 'src',
     outdir,
     color: true,

@@ -12,6 +12,7 @@ import * as vscode from 'vscode';
 import { TYPES } from './di.types';
 import { outlineModule } from './features/outline/outline.module';
 import { propertyPaletteModule } from './features/property-palette/property-palette.module';
+import { textInputModule } from './features/text-input/text-input-palette.module';
 import { themeModule } from './features/theme/theme.module';
 import { IDEServer } from './glsp/ide-server';
 import { IDESessionClient } from './glsp/ide-session-client';
@@ -53,6 +54,7 @@ export function createContainer(
         vscodeModule,
         themeModule,
         propertyPaletteModule,
+        textInputModule,
         outlineModule,
         minimapModule
     );

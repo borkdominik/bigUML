@@ -12,3 +12,4 @@ export * from './text-input-palette.component';
 export * from './text-input-palette.style';
 export * from './web';
 
+export const NLI_SERVER_URL: string = "http://localhost:8000";

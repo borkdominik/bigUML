@@ -21,6 +21,7 @@ import { BigElement } from '../base/component';
 import '../global';
 import { messenger } from '../vscode/messenger';
 import { TextInputPaletteStyle } from './text-input-palette.style';
+import { NLI_SERVER_URL } from './index';
 
 const umlTypesMap = new Map<string, string>([
     ["class", "CLASS__Class"],
@@ -49,18 +50,11 @@ export class TextInputPalette extends BigElement {
     protected umlModel?: BGModelResource;
     @property({ type: Object })
     protected unotationModel?: BGModelResource;
-
     @property({ type: Object })
-    protected audioFilePath?: string;
-    @property({ type: Object })
-    protected audioBlob?: Blob;
-
-    @state() inputText = '...';
+    protected inputText: string = '...';
 
     @state()
     protected navigationIds: { [key: string]: { from: string; to: string }[] } = {};
-
-    private BASE_URL: string = "http://localhost:8000";
 
     protected override render(): TemplateResult<1> {
         return html`<div>${this.headerTemplate()} ${this.bodyTemplate()}</div>`;
@@ -88,40 +82,8 @@ export class TextInputPalette extends BigElement {
         this.sendNotification({ kind: 'startRecording' });
     }
 
-    protected async transcribeAudio(): Promise<void> {
-        if (this.audioBlob === undefined) {
-            console.error("Cannot transcribe, audio blob is undefined");
-            return;
-        }
-        const formData = new FormData();
-        formData.append("file", new File([this.audioBlob], "recording.wav", { type: "audio/wav" }));
-
-        try {
-            const response = await fetch(this.BASE_URL + '/transcribe/', {
-                headers: {
-                    'accept': 'application/json',
-                    // 'content-type' is omitted to allow fetch to set it automatically
-                },
-                method: 'POST',
-                body: formData,
-            });
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
-            const data = await response.json();
-            console.log(`Transcription: ${data.transcription}`);
-            this.inputText = data.transcription;
-
-        } catch (error) {
-            console.error("Error transcribing audio:", error);
-        }
-    }
-
-
     protected async onStartIntent(): Promise<void> {
-        const response = await fetch(this.BASE_URL + `/intent/?user_query=${this.inputText}`, {
+        const response = await fetch(NLI_SERVER_URL + `/intent/?user_query=${this.inputText}`, {
             headers: {
                 accept: 'application/json'
             }
@@ -156,8 +118,6 @@ export class TextInputPalette extends BigElement {
             FOCUS_INTENT = "Focus",
             MOVE = "Move"
         }
-        console.log("### Handle Intent ###");
-        console.log(intent);
         const elementId = this.properties?.elementId;
 
         switch(intent) {
@@ -235,7 +195,7 @@ export class TextInputPalette extends BigElement {
     }
 
     protected async findIdByName(name: string, datatype: string) {
-        const response = await fetch(this.BASE_URL + `/find-id?name=${name}&element_type=${datatype}`, {
+        const response = await fetch(NLI_SERVER_URL + `/find-id?name=${name}&element_type=${datatype}`, {
             headers: {
                 'accept': 'application/json',
                 'content-type': 'application/json;charset=UTF-8'
@@ -257,7 +217,7 @@ export class TextInputPalette extends BigElement {
         // todo only use root if nothing is selected
         const root_json = await this.findIdByName("root", "root");
 
-        const response = await fetch(this.BASE_URL + `/create-container/?user_query=${this.inputText}`, {
+        const response = await fetch(NLI_SERVER_URL + `/create-container/?user_query=${this.inputText}`, {
             headers: {
                 accept: 'application/json'
             },
@@ -290,7 +250,7 @@ export class TextInputPalette extends BigElement {
 
     // abstract parent for addAttribute and addMethod
     protected async addValue() {
-        const response = await fetch(this.BASE_URL + `/add-value/?user_query=${this.inputText}`, {
+        const response = await fetch(NLI_SERVER_URL + `/add-value/?user_query=${this.inputText}`, {
             headers: {
                 'accept': 'application/json',
                 'content-type': 'application/json;charset=UTF-8'
@@ -308,7 +268,7 @@ export class TextInputPalette extends BigElement {
     }
 
     protected async updateValue() {
-        const response = await fetch(this.BASE_URL + `/update-value/?user_query=${this.inputText}`, {
+        const response = await fetch(NLI_SERVER_URL + `/update-value/?user_query=${this.inputText}`, {
             headers: {
                 accept: 'application/json'
             },
@@ -358,7 +318,7 @@ export class TextInputPalette extends BigElement {
     }
 
     protected async createRelation() {
-        const response = await fetch(this.BASE_URL + `/add-relation/?user_query=${this.inputText}`, {
+        const response = await fetch(NLI_SERVER_URL + `/add-relation/?user_query=${this.inputText}`, {
             headers: {
                 'accept': 'application/json',
                 'content-type': 'application/json;charset=UTF-8'
@@ -442,7 +402,7 @@ export class TextInputPalette extends BigElement {
     }
 
     protected async find_element(query: string) {
-        const response = await fetch(this.BASE_URL + `/focus/?user_query=${query}`, {
+        const response = await fetch(NLI_SERVER_URL + `/focus/?user_query=${query}`, {
             headers: {
                 'accept': 'application/json',
                 'content-type': 'application/json;charset=UTF-8'
@@ -469,7 +429,7 @@ export class TextInputPalette extends BigElement {
     }
 
     protected async moveElement(focusedElement: string) {
-        const response = await fetch(this.BASE_URL + `/move/?user_query=${this.inputText}`, {
+        const response = await fetch(NLI_SERVER_URL + `/move/?user_query=${this.inputText}`, {
             headers: {
                 'accept': 'application/json',
                 'content-type': 'application/json;charset=UTF-8'
@@ -506,7 +466,6 @@ export class TextInputPalette extends BigElement {
                 <vscode-text-field .value="${this.inputText}" @input="${(event: any) => (this.inputText = event.target?.value)}"></vscode-text-field>
                 <div style="display: flex; gap: 10px;">
                     <vscode-button appearance="primary" @click="${this.onRecordActionMessageStart}"> Start Recording </vscode-button>
-                    <vscode-button appearance="primary" @click="${this.transcribeAudio}"> Transcribe </vscode-button>
                     <vscode-button appearance="primary" @click="${this.onStartIntent}"> Send Command </vscode-button>
                 </div>
             </div>

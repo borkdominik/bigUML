@@ -92,7 +92,8 @@ export class TextInputPaletteProvider extends UMLWebviewProvider {
         try {
             const outputPath = path.join(this.tempDir, `${this.fileName}.wav`);
             this.recordingProcess = exec(
-                `sox -d -b 16 -e signed -c 1 -r 16k "${outputPath}" trim 0 5`, // silence 1 0.1 3% 1 3.0 3%
+                `sox -d -b 16 -e signed -c 1 -r 16k "${outputPath}" trim 0 5`,
+                //`sox -d -b 16 -e signed -c 1 -r 16k "${outputPath}" silence 1 0.5 1% 1 0.5 1%`,
                 (error, stdout, stderr) => {
                     if (error) {
                         vscode.window.showErrorMessage(`Recording error: ${error.message}`);
@@ -100,7 +101,7 @@ export class TextInputPaletteProvider extends UMLWebviewProvider {
                         return;
                     }
                     if (stderr) {
-                        vscode.window.showWarningMessage(`SoX Warning: ${stderr}`);
+                        console.trace(`SoX Warning: ${stderr}`);
                     }
                     vscode.window.showInformationMessage(`Recording saved: ${outputPath}`);
                     const fileBuffer = fs.readFileSync(outputPath);

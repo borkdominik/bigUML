@@ -23,6 +23,7 @@ import { BigElement } from '../../base/component';
 import { useToolkit } from '../../toolkit';
 import { messenger } from '../../vscode/messenger';
 import { TextInputPalette } from '../text-input-palette.component';
+import { NLI_SERVER_URL } from '../index';
 
 export function defineTextInputPaletteWebview(): void {
     customElements.define('big-text-input-palette-webview', TextInputPaletteWebview);
@@ -43,6 +44,8 @@ export class TextInputPaletteWebview extends BigElement {
     protected audioFilePath?: string;
     @state()
     protected audioBlob?: Blob;
+    @state()
+    protected inputText?: string;
 
     override connectedCallback(): void {
         super.connectedCallback();
@@ -55,30 +58,19 @@ export class TextInputPaletteWebview extends BigElement {
         messenger.onNotification<ActionMessage>(ActionMessageNotification, message => {
             const { clientId, action } = message;
 
-            let log = true;
-
             if (AudioRecordingCompleteAction.is(action)) {
                 const { filePath, fileData } = action;
                 this.audioFilePath = filePath;
                 const fileBlob = new Blob([new Uint8Array(fileData)], { type: 'audio/wav' });
                 this.audioBlob = fileBlob;
+                this.transcribeAudio();
             } else if (SetPropertyPaletteAction.is(action)) {
                 this.clientId = clientId;
                 this.elementProperties = action.palette;
             } else if (ModelResourcesResponseAction.is(action)) {
                 this.umlModel = action.resources.uml as BGModelResource;
                 this.unotationModel = action.resources.unotation as BGModelResource;
-            } else {
-                log = false;
             }
-            
-            if (log) {
-                console.log("On Notification text-input-palette-webview.component.ts");
-                console.log(action);
-                console.log(this.elementProperties);
-                console.log(this.clientId);
-            }
-
         });
         messenger.start();
 
@@ -94,8 +86,7 @@ export class TextInputPaletteWebview extends BigElement {
             .properties="${this.elementProperties}"
             .umlModel="${this.umlModel}"
             .unotationModel="${this.unotationModel}"
-            .audioFilePath="${this.audioFilePath}"
-            .audioBlob="${this.audioBlob}"
+            .inputText="${this.inputText}"
             @dispatch-action="${this.onDispatchAction}"
         ></big-text-input-palette>`;
     }
@@ -110,5 +101,36 @@ export class TextInputPaletteWebview extends BigElement {
             clientId: this.clientId,
             action
         });
+    }
+
+    protected async transcribeAudio(): Promise<void> {
+        if (this.audioBlob === undefined) {
+            console.error("Cannot transcribe, audio blob is undefined");
+            return;
+        }
+        const formData = new FormData();
+        formData.append("file", new File([this.audioBlob], "recording.wav", { type: "audio/wav" }));
+
+        try {
+            const response = await fetch(NLI_SERVER_URL + '/transcribe/', {
+                headers: {
+                    'accept': 'application/json',
+                    // 'content-type' is omitted to allow fetch to set it automatically
+                },
+                method: 'POST',
+                body: formData,
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            console.log(`Transcription: ${data.transcription}`);
+            this.inputText = data.transcription;
+
+        } catch (error) {
+            console.error("Error transcribing audio:", error);
+        }
     }
 }

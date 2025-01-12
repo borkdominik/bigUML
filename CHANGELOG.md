@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [v0.6.2 - 2025-01-09](https://github.com/borkdominik/bigUML/releases/tag/v0.6.2)
+
+## What's Changed
+
+- Fix UMLModelMigrator.java by @sschwantler in https://github.com/borkdominik/bigUML/pull/175
+
+## [v0.6.1 - 2025-01-03](https://github.com/borkdominik/bigUML/releases/tag/v0.6.2)
+
+## What's Changed
+
+- Introduce model migration by @haydar-metin in https://github.com/borkdominik/bigUML/pull/173
+
 ## [v0.6.0 - 2024-12-05](https://github.com/borkdominik/bigUML/releases/tag/v0.6.0)
 
 ## What's Changed

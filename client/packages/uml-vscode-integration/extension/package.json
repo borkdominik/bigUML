@@ -1,7 +1,7 @@
 {
   "name": "umldiagram",
   "displayName": "bigUML Modeling Tool",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "description": "Graphical UML Editor",
   "categories": [
     "Programming Languages",
@@ -56,6 +56,8 @@
     "vscode:package": "vsce package --yarn",
     "vscode:package-pre": "yarn vscode:package --pre-release",
     "vscode:prepublish": "yarn build:prod",
+    "vscode:release": "vsce publish --yarn",
+    "vscode:release-pre": "vsce publish --pre-release --yarn",
     "watch": "yarn build --watch"
   },
   "contributes": {
@@ -307,7 +309,7 @@
   "engines": {
     "vscode": "^1.63.0"
   },
-  "icon": "./resources/logo.png",
+  "icon": "resources/logo.png",
   "galleryBanner": {
     "color": "#1d1d1d",
     "theme": "dark"

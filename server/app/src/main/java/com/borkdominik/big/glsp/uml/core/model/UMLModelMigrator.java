@@ -1,6 +1,7 @@
 package com.borkdominik.big.glsp.uml.core.model;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -13,18 +14,19 @@ import org.eclipse.glsp.server.types.GLSPServerException;
 public class UMLModelMigrator {
     public void migrateNotationModel(ResourceSet resourceSet, URI sourceURI, RequestModelAction action) {
         try {
-            var filePath = sourceURI.toFileString();
-            var content = new String(Files.readAllBytes(Paths.get(filePath)), StandardCharsets.UTF_8);
+            var javaUri = new java.net.URI(sourceURI.toString());
+            var filePath = Paths.get(javaUri);
+            var content = Files.readString(filePath);
 
-            if (content.indexOf("unotation:UmlDiagram") >= 0) {
+            if (content.contains("unotation:UmlDiagram")) {
                 content = content.replace("xmlns:unotation=\"http://www.eclipsesource.com/glsp/uml/unotation\"",
                         "xmlns:unotation=\"http://www.borkdominik.com/big-glsp/uml/unotation\"");
                 content = content.replace("<unotation:UmlDiagram", "<unotation:UMLDiagram");
                 content = content.replace("</unotation:UmlDiagram>", "</unotation:UMLDiagram>");
 
-                Files.write(Paths.get(filePath), content.getBytes(StandardCharsets.UTF_8));
+                Files.writeString(filePath, content);
             }
-        } catch (IOException e) {
+        } catch (IOException|URISyntaxException e) {
             throw new GLSPServerException("Failed to update the notation model file", e);
         }
     }

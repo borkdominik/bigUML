@@ -39,13 +39,13 @@ public class PackageOperationHandler extends BGEMFNodeOperationHandler<Package, 
       var argument = CreatePackagableElementCommand.Argument
          .<Package> createPackageableElementArgumentBuilder()
          .supplier((x) -> {
-            var name = "Package";
-            if (operation.getArgs() != null) {
-               if (operation.getArgs().containsKey("name")) {
-                  name = operation.getArgs().get("name");
-               }
-            }
-            return x.createNestedPackage(name);
+             var name = "Package";
+             if (operation.getArgs() != null) {
+                 if (operation.getArgs().containsKey("name")) {
+                     name = operation.getArgs().get("name");
+                 }
+             }
+             return x.createNestedPackage(name);
          })
          .build();
 

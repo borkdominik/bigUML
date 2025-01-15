@@ -46,6 +46,8 @@ export class TextInputPaletteWebview extends BigElement {
     protected audioBlob?: Blob;
     @state()
     protected inputText?: string;
+    @state()
+    protected programmaticChange?: boolean;
 
     override connectedCallback(): void {
         super.connectedCallback();
@@ -87,6 +89,7 @@ export class TextInputPaletteWebview extends BigElement {
             .umlModel="${this.umlModel}"
             .unotationModel="${this.unotationModel}"
             .inputText="${this.inputText}"
+            .programmaticChange=${this.programmaticChange}"
             @dispatch-action="${this.onDispatchAction}"
         ></big-text-input-palette>`;
     }
@@ -104,6 +107,7 @@ export class TextInputPaletteWebview extends BigElement {
     }
 
     protected async transcribeAudio(): Promise<void> {
+        this.programmaticChange = false;
         if (this.audioBlob === undefined) {
             console.error("Cannot transcribe, audio blob is undefined");
             return;
@@ -127,8 +131,8 @@ export class TextInputPaletteWebview extends BigElement {
 
             const data = await response.json();
             console.log(`Transcription: ${data.transcription}`);
+            this.programmaticChange = true;
             this.inputText = data.transcription;
-
         } catch (error) {
             console.error("Error transcribing audio:", error);
         }

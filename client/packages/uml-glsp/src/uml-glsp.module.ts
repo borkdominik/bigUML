@@ -43,8 +43,8 @@ import { umlBoundsModule } from './features/bounds/uml-bounds.module';
 import { umlCopyPasteModule } from './features/copy-paste/uml-copy-paste.module';
 import { umlEditModule } from './features/edit/uml-edit.module';
 import { umlTypeHintsModule } from './features/hints/uml-type-hints.module';
-import { umlLoadingModule } from './features/loading/uml-loading.module';
-import { umlMinimapModule } from './features/minimap/uml-minimap.module';
+import { umlLoadingModule } from './features/loading/uml-loading.module'; 
+// import { umlMinimapModule } from './features/minimap/uml-minimap.module'; todo enable minimap when delete bug is fixed
 import { umlOutlineModule } from './features/outline/uml-outline.module';
 import { umlPropertyPaletteModule } from './features/property-palette/uml-property-palette.module';
 import { umlTextInputPaletteModule } from './features/text-input/uml-text-input-palette.module';
@@ -89,7 +89,7 @@ export function initializeUMLDiagramContainer(container: Container, ...container
         umlThemeModule,
         umlToolManagerModule,
         umlOutlineModule,
-        umlMinimapModule,
+//        umlMinimapModule, todo enable when delete bug is fixed
         umlPropertyPaletteModule,
         umlTextInputPaletteModule,
         umlTypeHintsModule,

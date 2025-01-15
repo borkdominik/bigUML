@@ -13,7 +13,7 @@ import {
     ElementProperties,
     UpdateElementPropertyAction
 } from '@borkdominik-biguml/uml-protocol';
-import { Action, ChangeBoundsOperation, CreateEdgeOperation, CreateNodeOperation, DeleteElementOperation, Dimension, ElementAndBounds, SelectAction } from '@eclipse-glsp/protocol';
+import { Action, ChangeBoundsOperation, CreateEdgeOperation, CreateNodeOperation, DeleteElementOperation, Dimension, ElementAndBounds, SelectAction, UndoAction } from '@eclipse-glsp/protocol';
 import { PropertyValues, TemplateResult, html } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { HOST_EXTENSION } from 'vscode-messenger-common';
@@ -51,7 +51,11 @@ export class TextInputPalette extends BigElement {
     @property({ type: Object })
     protected unotationModel?: BGModelResource;
     @property({ type: Object })
-    protected inputText: string = '...';
+    inputText: string = '...';
+    @property({ type: Object })
+    programmaticChange: boolean;
+
+    private inputHistory: string[] = []; // todo display somewhere to prefill inputText
 
     @state()
     protected navigationIds: { [key: string]: { from: string; to: string }[] } = {};
@@ -68,6 +72,11 @@ export class TextInputPalette extends BigElement {
                 this.navigationIds[this.clientId] = [];
             }
         }
+        if (changedProperties.has('inputText') && this.programmaticChange) {
+            console.log("input text changed from NLI server");
+            this.onStartIntent();
+        }
+        this.programmaticChange = false;
     }
 
     protected headerTemplate(): TemplateResult<1> {
@@ -83,6 +92,11 @@ export class TextInputPalette extends BigElement {
     }
 
     protected async onStartIntent(): Promise<void> {
+        if (this.inputText !== undefined) {
+            this.inputHistory.push(this.inputText);
+        }
+
+        console.log(this.inputHistory);
         const response = await fetch(NLI_SERVER_URL + `/intent/?user_query=${this.inputText}`, {
             headers: {
                 accept: 'application/json'
@@ -116,7 +130,8 @@ export class TextInputPalette extends BigElement {
             CREATE_RELATION = "AddRelation",
             DELETE_INTENT = "Delete",
             FOCUS_INTENT = "Focus",
-            MOVE = "Move"
+            MOVE = "Move",
+            UNDO = "Undo"
         }
         const elementId = this.properties?.elementId;
 
@@ -169,25 +184,30 @@ export class TextInputPalette extends BigElement {
                 break;
             }
             case Intents.DELETE_INTENT: {
-                if (elementId !== undefined) {
-                    this.deleteElement(elementId);
-                } else {
-                    console.error("Nothing selected");
-                }
-
+                this.deleteElement(elementId);
                 break;
             }
             case Intents.FOCUS_INTENT: {
                 this.focusElement();
                 break;
             }
-            case Intents.MOVE:
+            case Intents.MOVE: {
                 if (elementId !== undefined) {
                     this.moveElement(elementId);
                 } else {
                     console.error("Nothing selected");
                 }
                 break;
+            }
+            case Intents.UNDO: {
+                // todo not persisted?
+                this.dispatchEvent(
+                    new CustomEvent('dispatch-action', {
+                        detail: UndoAction.create()
+                    })
+                );
+                break;
+            }
             default: {
                 console.error("Buhu ;(");
             }
@@ -349,7 +369,13 @@ export class TextInputPalette extends BigElement {
         );
     }
 
-    protected async deleteElement(focusedElement: string) {
+    protected async deleteElement(focusedElement?: string) {
+
+        if (focusedElement === undefined) {
+            const json = await this.find_element();
+            focusedElement = json.element_id;
+        }
+
         const elementIdList: string[] = focusedElement ? [focusedElement] : [];
         this.dispatchEvent(
             new CustomEvent('dispatch-action', {
@@ -401,8 +427,8 @@ export class TextInputPalette extends BigElement {
         );
     }
 
-    protected async find_element(query: string) {
-        const response = await fetch(NLI_SERVER_URL + `/focus/?user_query=${query}`, {
+    protected async find_element() {
+        const response = await fetch(NLI_SERVER_URL + `/focus/?user_query=${this.inputText}`, {
             headers: {
                 'accept': 'application/json',
                 'content-type': 'application/json;charset=UTF-8'
@@ -420,7 +446,7 @@ export class TextInputPalette extends BigElement {
     }
 
     protected async focusElement() {
-        const json = await this.find_element(this.inputText);
+        const json = await this.find_element();
         this.dispatchEvent(
             new CustomEvent('dispatch-action', {
                 detail: SelectAction.create({ selectedElementsIDs: [json.element_id], deselectedElementsIDs: true })

@@ -13,7 +13,7 @@ import { VSCodeSettings } from '../../language';
 import { getBundleUri, getUri } from '../../utilities/webview';
 import { ProviderWebviewContext, UMLWebviewProvider } from '../../vscode/webview/webview-provider';
 import { InitializeCanvasBoundsAction, SetViewportAction } from '@eclipse-glsp/client';
-import { AudioRecordingCompleteAction, MinimapExportSvgAction, ModelResourcesResponseAction, RequestMinimapExportSvgAction, RequestModelResourcesAction, SetPropertyPaletteAction } from '@borkdominik-biguml/uml-protocol';
+import { AudioRecordingCompleteAction, ModelResourcesResponseAction, RequestModelResourcesAction, SetPropertyPaletteAction } from '@borkdominik-biguml/uml-protocol';
 import { exec, ChildProcess } from 'child_process';
 import * as path from 'path';
 import * as vscode from 'vscode';
@@ -34,7 +34,7 @@ export class TextInputPaletteProvider extends UMLWebviewProvider {
     @postConstruct()
     override init(): void {
         super.init();
-        this.extensionHostConnection.cacheActions([InitializeCanvasBoundsAction.KIND, SetViewportAction.KIND, MinimapExportSvgAction.KIND, SetPropertyPaletteAction.KIND]);
+        this.extensionHostConnection.cacheActions([InitializeCanvasBoundsAction.KIND, SetViewportAction.KIND, SetPropertyPaletteAction.KIND]);
     }
 
     protected resolveHTML(providerContext: ProviderWebviewContext): void {
@@ -67,7 +67,6 @@ export class TextInputPaletteProvider extends UMLWebviewProvider {
                 // =============== FORWARD DATA TO WEBVIEW ===============
                 console.log('ModelResourcesResponseAction', message.action);
                 this.webviewViewConnection.send(message.action);
-                this.extensionHostConnection.send(RequestMinimapExportSvgAction.create());
             }
         });
 
@@ -76,7 +75,6 @@ export class TextInputPaletteProvider extends UMLWebviewProvider {
             console.log("webviewViewConnection.onActionMessage", message.action);
             if (message.action.kind === 'textInputReady') {
                 // =============== REQUEST MODEL RESOURCES ===============
-                this.extensionHostConnection.send(RequestMinimapExportSvgAction.create()); //
                 this.extensionHostConnection.send(RequestModelResourcesAction.create());
                 this.extensionHostConnection.forwardCachedActionsToWebview();
             } else if (message.action.kind === 'startRecording') {

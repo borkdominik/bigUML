@@ -2,7 +2,6 @@ package com.borkdominik.big.glsp.uml.core.model;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -14,7 +13,7 @@ import org.eclipse.glsp.server.types.GLSPServerException;
 public class UMLModelMigrator {
     public void migrateNotationModel(ResourceSet resourceSet, URI sourceURI, RequestModelAction action) {
         try {
-            var javaUri = new java.net.URI(sourceURI.toString());
+            var javaUri = new java.net.URI(sourceURI.scheme(), sourceURI.authority(), sourceURI.path(), sourceURI.query(), sourceURI.fragment());
             var filePath = Paths.get(javaUri);
             var content = Files.readString(filePath);
 
@@ -23,6 +22,7 @@ public class UMLModelMigrator {
                         "xmlns:unotation=\"http://www.borkdominik.com/big-glsp/uml/unotation\"");
                 content = content.replace("<unotation:UmlDiagram", "<unotation:UMLDiagram");
                 content = content.replace("</unotation:UmlDiagram>", "</unotation:UMLDiagram>");
+                content = content.replaceAll("representation=\"(\\w+)\"", "");
 
                 Files.writeString(filePath, content);
             }

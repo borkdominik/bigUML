@@ -88,31 +88,45 @@ export class TextInputPalette extends BigElement {
     }
 
     protected async onRecordActionMessageStart(): Promise<void> {
+        const recordButton = this.renderRoot.querySelector('#recordButton') as HTMLElement;
+
+    if (recordButton) {
+        recordButton.setAttribute('disabled', 'true');
+        recordButton.textContent = 'Recording...';
+    }
         this.sendNotification({ kind: 'startRecording' });
     }
 
     protected async onStartIntent(): Promise<void> {
-        if (this.inputText !== undefined) {
-            this.inputHistory.push(this.inputText);
-        }
+        try {
+            if (this.inputText !== undefined) {
+                this.inputHistory.push(this.inputText);
+            }  
 
-        console.log(this.inputHistory);
-        const response = await fetch(NLI_SERVER_URL + `/intent/?user_query=${this.inputText}`, {
-            headers: {
-                accept: 'application/json'
+            console.log(this.inputHistory);
+            const response = await fetch(NLI_SERVER_URL + `/intent/?user_query=${this.inputText}`, {
+                headers: {
+                    accept: 'application/json'
+                }
+            })
+            if (!response.ok) {
+                console.error(response.text)
             }
-        })
-        if (!response.ok) {
-            console.error(response.text)
-        }
-        const json = await response.json();
+            const json = await response.json();
+    
+            await this.handleIntent(json.intent);
+        } finally {
+            const recordButton = this.renderRoot.querySelector('#recordButton') as HTMLElement;
+            if (recordButton) {
+                recordButton.removeAttribute('disabled');
+                recordButton.textContent = 'Start Recording';
+            }
 
-        await this.handleIntent(json.intent);
+            await this.sleep(1000); // this is the most hacky solution ever to delay the update until the server did the change
 
-        await this.sleep(1000); // this is the most hacky solution ever to delay the update until the server did the change
-
-        console.log("Sending Notification from component");
-        this.sendNotification({ kind: 'requestModelResources' });
+            console.log("Sending Notification from component");
+            this.sendNotification({ kind: 'requestModelResources' });
+        }    
     }
 
     protected async sleep(ms: number): Promise<void> {
@@ -491,7 +505,7 @@ export class TextInputPalette extends BigElement {
             <div class="grid-value grid-flex">
                 <vscode-text-field .value="${this.inputText}" @input="${(event: any) => (this.inputText = event.target?.value)}"></vscode-text-field>
                 <div style="display: flex; gap: 10px;">
-                    <vscode-button appearance="primary" @click="${this.onRecordActionMessageStart}"> Start Recording </vscode-button>
+                    <vscode-button id="recordButton" appearance="primary" @click="${this.onRecordActionMessageStart}"> Start Recording </vscode-button>
                     <vscode-button appearance="primary" @click="${this.onStartIntent}"> Send Command </vscode-button>
                 </div>
             </div>

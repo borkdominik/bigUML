@@ -119,7 +119,6 @@ export class TextInputPaletteWebview extends BigElement {
             const response = await fetch(NLI_SERVER_URL + '/transcribe/', {
                 headers: {
                     'accept': 'application/json',
-                    // 'content-type' is omitted to allow fetch to set it automatically
                 },
                 method: 'POST',
                 body: formData,

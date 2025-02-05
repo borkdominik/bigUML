@@ -1,5 +1,7 @@
 app/bin/
 
+.settings
+
 # Ignore Gradle project-specific cache directory
 .gradle
 

@@ -27,10 +27,14 @@ const umlTypesMap = new Map<string, string>([
     ["class", "CLASS__Class"],
     ["interface", "CLASS__Interface"],
     ["data type", "CLASS__DataType"],
+    ["datatype", "CLASS__DataType"],
+    ["type", "CLASS__DataType"],
     ["enumeration", "CLASS__Enumeration"],
     ["instance", "CLASS__Instance"],
     ["package", "CLASS__Package"],
-    ["primitive type", "CLASS__PrimitiveType"]
+    ["primitive type", "CLASS__PrimitiveType"],
+    ["primitive datatype", "CLASS__PrimitiveType"],
+    ["primitive data type", "CLASS__PrimitiveType"]
 ]);
 
 export function defineTextInputPalette(): void {
@@ -77,6 +81,7 @@ export class TextInputPalette extends BigElement {
             this.onStartIntent();
         }
         this.programmaticChange = false;
+        this.resetRecordButton();
     }
 
     protected headerTemplate(): TemplateResult<1> {
@@ -85,6 +90,10 @@ export class TextInputPalette extends BigElement {
 
     protected bodyTemplate(): TemplateResult<1> {
         return this.textFieldWithButtonTemplate();
+    }
+
+    protected async clearInput() {
+        this.inputText = "";
     }
 
     protected async onRecordActionMessageStart(): Promise<void> {
@@ -101,7 +110,7 @@ export class TextInputPalette extends BigElement {
         try {
             if (this.inputText !== undefined) {
                 this.inputHistory.push(this.inputText);
-            }  
+            }
 
             console.log(this.inputHistory);
             const response = await fetch(NLI_SERVER_URL + `/intent/?user_query=${this.inputText}`, {
@@ -113,24 +122,28 @@ export class TextInputPalette extends BigElement {
                 console.error(response.text)
             }
             const json = await response.json();
-    
+
             await this.handleIntent(json.intent);
         } finally {
-            const recordButton = this.renderRoot.querySelector('#recordButton') as HTMLElement;
-            if (recordButton) {
-                recordButton.removeAttribute('disabled');
-                recordButton.textContent = 'Start Recording';
-            }
+            this.resetRecordButton();
 
             await this.sleep(1000); // this is the most hacky solution ever to delay the update until the server did the change
 
             console.log("Sending Notification from component");
             this.sendNotification({ kind: 'requestModelResources' });
-        }    
+        }
     }
 
     protected async sleep(ms: number): Promise<void> {
         return new Promise((resolve) => setTimeout(resolve, ms));
+    }
+
+    protected async resetRecordButton() {
+        const recordButton = this.renderRoot.querySelector('#recordButton') as HTMLElement;
+        if (recordButton) {
+            recordButton.removeAttribute('disabled');
+            recordButton.textContent = 'Start Recording';
+        }
     }
 
     protected async handleIntent(intent: string) {
@@ -262,7 +275,7 @@ export class TextInputPalette extends BigElement {
         }
         const json = await response.json();
 
-        const containerType = umlTypesMap.get(json.container_type) ?? `CLASS__Class`;
+        const containerType = umlTypesMap.get(json.element_type) ?? `CLASS__Class`;
 
         this.dispatchEvent(
             new CustomEvent('dispatch-action', {
@@ -274,7 +287,7 @@ export class TextInputPalette extends BigElement {
                         y: 0
                     },
                     args: {
-                        name: json.container_name,
+                        name: json.element_name,
                         is_abstract: json.is_abstract
                     }
                 })
@@ -318,16 +331,41 @@ export class TextInputPalette extends BigElement {
         const json = await this.addValue();
         console.error(json);
 
-        // todo handle CLASS__Parameter for methods, either by checking here or by introducing own intent
+        // since there is currently no way to determine if a parameter should be added to a class/enum or a method, all events are triggered
         this.dispatchEvent(
             new CustomEvent('dispatch-action', {
                 detail: CreateNodeOperation.create(`CLASS__Property`,
                 {
                     containerId: focusedElement,
                     args: {
-                        name: json.value_name,
+                        name: json.element_name,
                         type_id: json.value_datatype,
                         visibility: json.value_visibility
+                    }
+                })
+            })
+        );
+
+        this.dispatchEvent(
+            new CustomEvent('dispatch-action', {
+                detail: CreateNodeOperation.create(`CLASS__Parameter`,
+                {
+                    containerId: focusedElement,
+                    args: {
+                        name: json.element_name,
+                        type_id: json.value_datatype
+                    }
+                })
+            })
+        );
+
+        this.dispatchEvent(
+            new CustomEvent('dispatch-action', {
+                detail: CreateNodeOperation.create(`CLASS__EnumerationLiteral`,
+                {
+                    containerId: focusedElement,
+                    args: {
+                        name: json.element_name
                     }
                 })
             })
@@ -343,7 +381,7 @@ export class TextInputPalette extends BigElement {
                 {
                     containerId: focusedElement,
                     args: {
-                        name: json.value_name,
+                        name: json.element_name,
                         visibility: json.value_visibility
                     }
                 })
@@ -377,7 +415,9 @@ export class TextInputPalette extends BigElement {
                     elementTypeId: "CLASS__" + relation_type,
                     sourceElementId: json.class_from_id,
                     targetElementId: json.class_to_id,
-                    args: {}
+                    args: {
+                        name: json.relation_name
+                    }
                 })
             })
         );
@@ -385,8 +425,10 @@ export class TextInputPalette extends BigElement {
 
     protected async deleteElement(focusedElement?: string) {
 
-        if (focusedElement === undefined) {
-            const json = await this.find_element();
+        const json = await this.find_element();
+
+        if (json.element_id !== undefined) {
+
             focusedElement = json.element_id;
         }
 
@@ -503,10 +545,25 @@ export class TextInputPalette extends BigElement {
     protected textFieldWithButtonTemplate(): TemplateResult<1> {
         return html`
             <div class="grid-value grid-flex">
-                <vscode-text-field .value="${this.inputText}" @input="${(event: any) => (this.inputText = event.target?.value)}"></vscode-text-field>
+                <vscode-text-field 
+                    .value="${this.inputText}" 
+                    @input="${(event: any) => (this.inputText = event.target?.value)}"
+                >
+                    <span 
+                        slot="end" 
+                        class="codicon codicon-close" 
+                        style="cursor: pointer;" 
+                        @click="${this.clearInput}"
+                    ></span>
+                </vscode-text-field>
+
                 <div style="display: flex; gap: 10px;">
-                    <vscode-button id="recordButton" appearance="primary" @click="${this.onRecordActionMessageStart}"> Start Recording </vscode-button>
-                    <vscode-button appearance="primary" @click="${this.onStartIntent}"> Send Command </vscode-button>
+                    <vscode-button id="recordButton" appearance="primary" @click="${this.onRecordActionMessageStart}">
+                        Start Recording
+                    </vscode-button>
+                    <vscode-button appearance="primary" @click="${this.onStartIntent}">
+                        Send Command
+                    </vscode-button>
                 </div>
             </div>
         `

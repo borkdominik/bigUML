@@ -39,7 +39,14 @@ public class DependencyOperationHandler extends BGEMFEdgeOperationHandler<Depend
       var argument = UMLCreateEdgeCommand.Argument
          .<Dependency, NamedElement, NamedElement> createEdgeArgumentBuilder()
          .supplier((s, t) -> {
-            return s.createDependency(t);
+            var name = "";
+            if (operation.getArgs() != null) {
+               name = operation.getArgs().getOrDefault("name", null);
+
+            }
+            var x = s.createDependency(t);
+            x.setName(name);
+            return x;
          })
          .build();
 

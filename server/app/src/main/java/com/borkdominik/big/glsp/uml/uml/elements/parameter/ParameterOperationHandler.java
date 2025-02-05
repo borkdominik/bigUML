@@ -16,6 +16,8 @@ import org.eclipse.emf.common.util.Enumerator;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.uml2.uml.Operation;
 import org.eclipse.uml2.uml.Parameter;
+import org.eclipse.uml2.uml.Type;
+import org.eclipse.uml2.uml.VisibilityKind;
 
 import com.borkdominik.big.glsp.server.core.commands.semantic.BGCreateNodeSemanticCommand;
 import com.borkdominik.big.glsp.server.core.model.BGTypeProvider;
@@ -39,7 +41,25 @@ public class ParameterOperationHandler extends BGEMFNodeOperationHandler<Paramet
       final Operation parent) {
       var argument = UMLCreateNodeCommand.Argument
          .<Parameter, Operation> createChildArgumentBuilder()
-         .supplier((x) -> x.createOwnedParameter(null, null))
+         .supplier((x) -> {
+            String name = null;
+            Type type = null;
+
+            if (operation.getArgs() != null) {
+               name = operation.getArgs().getOrDefault("name", null);
+
+               String type_id = operation.getArgs().getOrDefault("type_id", null);
+               if (type_id != null) {
+                  type = modelState.getElementIndex().getOrThrow(type_id, Type.class);
+               }
+            }
+
+            var element = x.createOwnedParameter(name, type);
+            element.setLower(1);
+            element.setUpper(1);
+
+            return element;
+         })
          .build();
 
       return new UMLCreateNodeCommand<>(commandContext, parent, argument);

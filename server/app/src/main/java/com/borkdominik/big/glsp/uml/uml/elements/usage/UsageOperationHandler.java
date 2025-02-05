@@ -39,7 +39,14 @@ public class UsageOperationHandler extends BGEMFEdgeOperationHandler<Usage, Name
       var argument = UMLCreateEdgeCommand.Argument
          .<Usage, NamedElement, NamedElement> createEdgeArgumentBuilder()
          .supplier((s, t) -> {
-            return s.createUsage(t);
+            var name = "";
+            if (operation.getArgs() != null) {
+               name = operation.getArgs().getOrDefault("name", null);
+
+            }
+            var x = s.createUsage(t);
+            x.setName(name);
+            return x;
          })
          .build();
 

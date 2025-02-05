@@ -15,7 +15,7 @@ import {
     BGModelResource,
     AudioRecordingCompleteAction
 } from '@borkdominik-biguml/uml-protocol';
-import { Action, ActionMessage } from '@eclipse-glsp/protocol';
+import { Action, ActionMessage, SelectAction } from '@eclipse-glsp/protocol';
 import { TemplateResult, html } from 'lit';
 import { query, state } from 'lit/decorators.js';
 import { HOST_EXTENSION } from 'vscode-messenger-common';
@@ -70,6 +70,15 @@ export class TextInputPaletteWebview extends BigElement {
                 this.clientId = clientId;
                 this.elementProperties = action.palette;
             } else if (ModelResourcesResponseAction.is(action)) {
+                const changedId = this.findNewElementXmiId(this.umlModel?.content, action.resources.uml.content);
+                
+                if (changedId !== undefined) {
+                    console.log("Dispatching focus event for id " + changedId);
+                    this.sendNotification(SelectAction.create({ selectedElementsIDs: [changedId], deselectedElementsIDs: true })
+                    );
+                }
+
+
                 this.umlModel = action.resources.uml as BGModelResource;
                 this.unotationModel = action.resources.unotation as BGModelResource;
             }
@@ -136,4 +145,37 @@ export class TextInputPaletteWebview extends BigElement {
             console.error("Error transcribing audio:", error);
         }
     }
+
+    protected findNewElementXmiId(xml1: string | undefined, xml2: string | undefined): string | undefined {
+        if (xml1 === undefined || xml2 === undefined) {
+            return undefined;
+        }
+
+        const parser = new DOMParser();
+        const doc1 = parser.parseFromString(xml1, "application/xml");
+        const doc2 = parser.parseFromString(xml2, "application/xml");
+      
+        const getAllXmiIds = (doc: Document): Set<string> => {
+            const elements = doc.getElementsByTagName("*");
+            const ids = new Set<string>();
+            for (let i = 0; i < elements.length; i++) {
+              const el = elements[i];
+              const id = el.getAttribute("xmi:id") || el.getAttributeNS("http://www.omg.org/XMI", "id");
+              if (id) ids.add(id);
+            }
+            return ids;
+          };
+      
+        const ids1 = getAllXmiIds(doc1);
+        const ids2 = getAllXmiIds(doc2);
+     
+        for (const id of ids2) {
+          if (!ids1.has(id)) {
+            return id; // Return the first new ID found
+          }
+        }
+      
+        return undefined; // No new element found
+      }
+      
 }

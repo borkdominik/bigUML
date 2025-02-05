@@ -40,10 +40,16 @@ public class AbstractionOperationHandler extends BGEMFEdgeOperationHandler<Abstr
       var argument = UMLCreateEdgeCommand.Argument
          .<Abstraction, NamedElement, NamedElement> createEdgeArgumentBuilder()
          .supplier((s, t) -> {
+             var name = "";
+             if (operation.getArgs() != null) {
+                 name = operation.getArgs().getOrDefault("name", null);
+
+             }
             var element = UMLFactory.eINSTANCE.createAbstraction();
 
             element.getClients().add(source);
             element.getSuppliers().add(target);
+            element.setName(name);
 
             source.getNearestPackage().getPackagedElements().add(element);
             return element;

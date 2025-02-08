@@ -58,8 +58,8 @@ export class TextInputPalette extends BigElement {
     inputText: string = '...';
     @property({ type: Object })
     programmaticChange: boolean;
-
-    private inputHistory: string[] = []; // todo display somewhere to prefill inputText
+    @property({ type: Array })
+    private inputHistory: string[] = [];
 
     @state()
     protected navigationIds: { [key: string]: { from: string; to: string }[] } = {};
@@ -78,14 +78,16 @@ export class TextInputPalette extends BigElement {
         }
         if (changedProperties.has('inputText') && this.programmaticChange) {
             console.log("input text changed from NLI server");
-            this.onStartIntent();
+            if (this.inputText) {
+                this.onStartIntent();
+            }
         }
         this.programmaticChange = false;
         this.resetRecordButton();
     }
 
     protected headerTemplate(): TemplateResult<1> {
-        return html`<header>Query</header>`;
+        return html`<header></header>`;
     }
 
     protected bodyTemplate(): TemplateResult<1> {
@@ -94,6 +96,15 @@ export class TextInputPalette extends BigElement {
 
     protected async clearInput() {
         this.inputText = "";
+    }
+
+    handleInput(event: Event) {
+        const target = event.target as HTMLInputElement;
+        this.inputText = target.value;
+    }
+
+    selectHistoryEntry(entry: string) {
+        this.inputText = entry;
     }
 
     protected async onRecordActionMessageStart(): Promise<void> {
@@ -108,7 +119,12 @@ export class TextInputPalette extends BigElement {
 
     protected async onStartIntent(): Promise<void> {
         try {
-            if (this.inputText !== undefined) {
+            if (!this.inputText) {
+                console.warn("Input text is empty, nothing todo");
+                return;
+            }
+
+            if (!this.inputHistory.includes(this.inputText)) {
                 this.inputHistory.push(this.inputText);
             }
 
@@ -545,18 +561,6 @@ export class TextInputPalette extends BigElement {
     protected textFieldWithButtonTemplate(): TemplateResult<1> {
         return html`
             <div class="grid-value grid-flex">
-                <vscode-text-field 
-                    .value="${this.inputText}" 
-                    @input="${(event: any) => (this.inputText = event.target?.value)}"
-                >
-                    <span 
-                        slot="end" 
-                        class="codicon codicon-close" 
-                        style="cursor: pointer;" 
-                        @click="${this.clearInput}"
-                    ></span>
-                </vscode-text-field>
-
                 <div style="display: flex; gap: 10px;">
                     <vscode-button id="recordButton" appearance="primary" @click="${this.onRecordActionMessageStart}">
                         Start Recording
@@ -564,6 +568,22 @@ export class TextInputPalette extends BigElement {
                     <vscode-button appearance="primary" @click="${this.onStartIntent}">
                         Send Command
                     </vscode-button>
+                </div>
+
+                <vscode-text-field .value="${this.inputText}" @input="${this.handleInput}" @focus="${this.requestUpdate}"
+                    @keydown="${(event: KeyboardEvent) => event.key === 'Enter' && this.onStartIntent()}">
+                    <span slot="end" class="codicon codicon-close" style="cursor: pointer;" @click="${this.clearInput}"></span>
+                </vscode-text-field>
+
+                <div style="max-height: 150px; overflow-y: auto; border: 1px solid var(--vscode-editorWidget-border);">
+                    ${this.inputHistory.slice().reverse().map(
+                    entry => html`
+                    <vscode-option .value="${entry}" @click="${() => this.selectHistoryEntry(entry)}"
+                        style="display: block; width: 100%;">
+                        ${entry.length > 20 ? entry.substring(0, 20) + "..." : entry}
+                    </vscode-option>
+                    `
+                    )}
                 </div>
             </div>
         `

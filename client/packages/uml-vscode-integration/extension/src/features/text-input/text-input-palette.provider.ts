@@ -13,7 +13,7 @@ import { VSCodeSettings } from '../../language';
 import { getBundleUri, getUri } from '../../utilities/webview';
 import { ProviderWebviewContext, UMLWebviewProvider } from '../../vscode/webview/webview-provider';
 import { InitializeCanvasBoundsAction, SetViewportAction } from '@eclipse-glsp/client';
-import { AudioRecordingCompleteAction, ModelResourcesResponseAction, RequestModelResourcesAction, SetPropertyPaletteAction } from '@borkdominik-biguml/uml-protocol';
+import { AudioRecordingCompleteAction, ExportHistoryAction, ModelResourcesResponseAction, RequestModelResourcesAction, SetPropertyPaletteAction } from '@borkdominik-biguml/uml-protocol';
 import { exec, ChildProcess } from 'child_process';
 import * as path from 'path';
 import * as vscode from 'vscode';
@@ -22,7 +22,8 @@ import * as fs from 'fs';
 @injectable()
 export class TextInputPaletteProvider extends UMLWebviewProvider {
     private recordingProcess: ChildProcess | null = null;
-    private tempDir: string = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath || '/tmp';
+    private logFolderName = Date.now().toString();
+    private tempDir: string = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath + '/logs/' + this.logFolderName || '/logs' + this.logFolderName;
     private fileName: string = 'recording';
 
     get id(): string {
@@ -35,6 +36,13 @@ export class TextInputPaletteProvider extends UMLWebviewProvider {
     override init(): void {
         super.init();
         this.extensionHostConnection.cacheActions([InitializeCanvasBoundsAction.KIND, SetViewportAction.KIND, SetPropertyPaletteAction.KIND]);
+        fs.mkdir(this.tempDir, {recursive: true},
+            (err) => {
+                if (err) {
+                    return console.error(err);
+                }
+                console.log('Directory created successfully!');
+            });
     }
 
     protected resolveHTML(providerContext: ProviderWebviewContext): void {
@@ -65,21 +73,23 @@ export class TextInputPaletteProvider extends UMLWebviewProvider {
         this.extensionHostConnection.onActionMessage(message => {
             if (ModelResourcesResponseAction.is(message.action)) {
                 // =============== FORWARD DATA TO WEBVIEW ===============
-                console.log('ModelResourcesResponseAction', message.action);
                 this.webviewViewConnection.send(message.action);
             }
         });
 
         // ==== Webview View Connection ====
         this.webviewViewConnection.onActionMessage(message => {
-            console.log("webviewViewConnection.onActionMessage", message.action);
             if (message.action.kind === 'textInputReady') {
                 // =============== REQUEST MODEL RESOURCES ===============
                 this.extensionHostConnection.send(RequestModelResourcesAction.create());
                 this.extensionHostConnection.forwardCachedActionsToWebview();
             } else if (message.action.kind === 'startRecording') {
                 this.startRecording();
-            } else {
+            } else if (ExportHistoryAction.is(message.action)) {
+                const inputHistory = new Map<string, string>(message.action.inputHistory);
+                this.exportHistory(inputHistory);
+
+            }else {
                 this.extensionHostConnection.send(message.action);
             }
         });
@@ -88,6 +98,7 @@ export class TextInputPaletteProvider extends UMLWebviewProvider {
     // Start Recording Method
     private startRecording(): void {
         try {
+            this.fileName = Date.now().toString();
             const outputPath = path.join(this.tempDir, `${this.fileName}.wav`);
             this.recordingProcess = exec(
                 `sox -d -b 16 -e signed -c 1 -r 16k "${outputPath}" trim 0 5`,
@@ -104,7 +115,7 @@ export class TextInputPaletteProvider extends UMLWebviewProvider {
                     vscode.window.showInformationMessage(`Recording saved: ${outputPath}`);
                     const fileBuffer = fs.readFileSync(outputPath);
                     const uint8Array = new Uint8Array(fileBuffer); // Convert Buffer to Uint8Array
-                    const action = AudioRecordingCompleteAction.create(outputPath, uint8Array);
+                    const action = AudioRecordingCompleteAction.create(outputPath, uint8Array, this.fileName);
                     this.webviewViewConnection.send(action);
                     // Send SIGINT to ensure process termination
                     if (this.recordingProcess && !this.recordingProcess.killed) {
@@ -118,5 +129,19 @@ export class TextInputPaletteProvider extends UMLWebviewProvider {
             vscode.window.showErrorMessage(`Failed to start recording: ${error}`);
             console.error(`Failed to start recording: ${error}`);
         }
+    }
+
+    private exportHistory(inputHistory: Map<string, string>): void {
+        const filePath = this.tempDir + '/history.csv';
+        const csvContent = "Timestamp,Query\n" +
+            Array.from(inputHistory).map(([key, value]) => `${key},${value}`).join("\n");
+
+        fs.writeFile(filePath, csvContent, 'utf-8', (err) => {
+            if (err) {
+                console.error("Failed to write CSV file:", err);
+            } else {
+                console.log("CSV file saved successfully:", filePath);
+            }
+        });
     }
 }

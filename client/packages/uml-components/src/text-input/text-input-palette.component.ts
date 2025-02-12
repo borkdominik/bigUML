@@ -11,6 +11,7 @@ import {
     ActionMessageNotification,
     BGModelResource,
     ElementProperties,
+    ExportHistoryAction,
     UpdateElementPropertyAction
 } from '@borkdominik-biguml/uml-protocol';
 import { Action, ChangeBoundsOperation, CreateEdgeOperation, CreateNodeOperation, DeleteElementOperation, Dimension, ElementAndBounds, SelectAction, UndoAction } from '@eclipse-glsp/protocol';
@@ -58,8 +59,10 @@ export class TextInputPalette extends BigElement {
     inputText: string = '...';
     @property({ type: Object })
     programmaticChange: boolean;
-    @property({ type: Array })
-    private inputHistory: string[] = [];
+    @property({ type: Object })
+    recordingTimestamp: string;
+    @property({ type: Map })
+    private inputHistory = new Map<string, string>();
 
     @state()
     protected navigationIds: { [key: string]: { from: string; to: string }[] } = {};
@@ -123,10 +126,11 @@ export class TextInputPalette extends BigElement {
                 console.warn("Input text is empty, nothing todo");
                 return;
             }
-
-            if (!this.inputHistory.includes(this.inputText)) {
-                this.inputHistory.push(this.inputText);
+            
+            if (!this.programmaticChange) {
+                this.recordingTimestamp = "text-input-" + Date.now().toString();
             }
+            this.inputHistory.set(this.recordingTimestamp, this.inputText);
 
             console.log(this.inputHistory);
             const response = await fetch(NLI_SERVER_URL + `/intent/?user_query=${this.inputText}`, {
@@ -142,6 +146,7 @@ export class TextInputPalette extends BigElement {
             await this.handleIntent(json.intent);
         } finally {
             this.resetRecordButton();
+            this.sendNotification(ExportHistoryAction.create(this.inputHistory));
 
             await this.sleep(1000); // this is the most hacky solution ever to delay the update until the server did the change
 
@@ -576,11 +581,11 @@ export class TextInputPalette extends BigElement {
                 </vscode-text-field>
 
                 <div style="max-height: 150px; overflow-y: auto; border: 1px solid var(--vscode-editorWidget-border);">
-                    ${this.inputHistory.slice().reverse().map(
+                    ${Array.from(this.inputHistory.values()).reverse().map(
                     entry => html`
                     <vscode-option .value="${entry}" @click="${() => this.selectHistoryEntry(entry)}"
                         style="display: block; width: 100%;">
-                        ${entry.length > 20 ? entry.substring(0, 20) + "..." : entry}
+                        ${entry.length > 40 ? entry.substring(0, 40) + "..." : entry}
                     </vscode-option>
                     `
                     )}

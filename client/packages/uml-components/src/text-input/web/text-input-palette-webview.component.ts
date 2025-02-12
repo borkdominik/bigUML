@@ -48,6 +48,8 @@ export class TextInputPaletteWebview extends BigElement {
     protected inputText?: string;
     @state()
     protected programmaticChange?: boolean;
+    @state()
+    protected recordingTimestamp?: string;
 
     override connectedCallback(): void {
         super.connectedCallback();
@@ -61,17 +63,17 @@ export class TextInputPaletteWebview extends BigElement {
             const { clientId, action } = message;
 
             if (AudioRecordingCompleteAction.is(action)) {
-                const { filePath, fileData } = action;
+                const { filePath, fileData, recordingTimestamp } = action;
                 this.audioFilePath = filePath;
                 const fileBlob = new Blob([new Uint8Array(fileData)], { type: 'audio/wav' });
                 this.audioBlob = fileBlob;
-                this.transcribeAudio();
+                this.transcribeAudio(recordingTimestamp);
             } else if (SetPropertyPaletteAction.is(action)) {
                 this.clientId = clientId;
                 this.elementProperties = action.palette;
             } else if (ModelResourcesResponseAction.is(action)) {
                 const changedId = this.findNewElementXmiId(this.umlModel?.content, action.resources.uml.content);
-                
+
                 if (changedId !== undefined) {
                     console.log("Dispatching focus event for id " + changedId);
                     this.sendNotification(SelectAction.create({ selectedElementsIDs: [changedId], deselectedElementsIDs: true })
@@ -98,7 +100,8 @@ export class TextInputPaletteWebview extends BigElement {
             .umlModel="${this.umlModel}"
             .unotationModel="${this.unotationModel}"
             .inputText="${this.inputText}"
-            .programmaticChange=${this.programmaticChange}"
+            .programmaticChange="${this.programmaticChange}"
+            .recordingTimestamp="${this.recordingTimestamp}"
             @dispatch-action="${this.onDispatchAction}"
         ></big-text-input-palette>`;
     }
@@ -115,7 +118,7 @@ export class TextInputPaletteWebview extends BigElement {
         });
     }
 
-    protected async transcribeAudio(): Promise<void> {
+    protected async transcribeAudio(recordingTimestamp: string): Promise<void> {
         this.programmaticChange = false;
         if (this.audioBlob === undefined) {
             console.error("Cannot transcribe, audio blob is undefined");
@@ -140,9 +143,13 @@ export class TextInputPaletteWebview extends BigElement {
             const data = await response.json();
             console.log(`Transcription: ${data.transcription}`);
             this.programmaticChange = true;
+            this.recordingTimestamp = recordingTimestamp;
             this.inputText = data.transcription;
         } catch (error) {
             console.error("Error transcribing audio:", error);
+            this.programmaticChange = false;
+            this.recordingTimestamp = recordingTimestamp;
+            this.inputText = "";
         }
     }
 
@@ -154,7 +161,7 @@ export class TextInputPaletteWebview extends BigElement {
         const parser = new DOMParser();
         const doc1 = parser.parseFromString(xml1, "application/xml");
         const doc2 = parser.parseFromString(xml2, "application/xml");
-      
+
         const getAllXmiIds = (doc: Document): Set<string> => {
             const elements = doc.getElementsByTagName("*");
             const ids = new Set<string>();
@@ -165,17 +172,17 @@ export class TextInputPaletteWebview extends BigElement {
             }
             return ids;
           };
-      
+
         const ids1 = getAllXmiIds(doc1);
         const ids2 = getAllXmiIds(doc2);
-     
+
         for (const id of ids2) {
           if (!ids1.has(id)) {
             return id; // Return the first new ID found
           }
         }
-      
+
         return undefined; // No new element found
       }
-      
+
 }

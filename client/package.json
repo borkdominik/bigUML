@@ -4,36 +4,20 @@
   "private": true,
   "license": "MIT",
   "main": "index.js",
-  "workspaces": {
-    "packages": [
-      "packages/*",
-      "packages/uml-vscode-integration/*"
-    ],
-    "nohoist": [
-      "**/path",
-      "**/path/**",
-      "umldiagram/@vscode/codicons",
-      "umldiagram/@vscode/codicons/**",
-      "umldiagram/@borkdominik-biguml/uml-vscode-integration-webview"
-    ]
-  },
+  "workspaces": [
+    "packages/*",
+    "packages/uml-vscode-integration/*"
+  ],
   "scripts": {
-    "build:server": "cd ../server && ./gradlew clean shadowJar && cd ../client && yarn copy:server",
+    "build": "lerna run build",
+    "build:server": "cd ../server && ./gradlew clean shadowJar && cd ../client && npm copy:server",
     "check:headers": "glsp checkHeaders .",
+    "clean": "lerna run clean",
     "copy:server": "tsx ./scripts/copy-server.ts",
     "depcheck": "npx depcheck --config .depcheck.yml",
-    "package": "yarn build:server && cd packages/uml-vscode-integration/extension && yarn vscode:package && mv ./*.vsix ${INIT_CWD}/release/vsix",
-    "package:zip": "yarn package && cd ${INIT_CWD} && zip -r ./release-$(date +%Y%m%d-%H%M).zip ./release",
-    "prepare": "lerna run prepare",
+    "package": "npm run build:server && cd packages/uml-vscode-integration/extension && npm vscode:package && mv ./*.vsix ${INIT_CWD}/release/vsix",
+    "package:zip": "npm package && cd ${INIT_CWD} && zip -r ./release-$(date +%Y%m%d-%H%M).zip ./release",
     "watch": "lerna run --parallel watch"
-  },
-  "resolutions": {
-    "**/@eclipse-glsp/client": "2.1.0",
-    "**/@eclipse-glsp/protocol": "2.1.0",
-    "**/@eclipse-glsp/vscode-integration": "2.1.0",
-    "**/@eclipse-glsp/vscode-integration-webview": "2.1.0",
-    "**/inversify": "6.0.1",
-    "**/vscode-jsonrpc": "8.1.0"
   },
   "devDependencies": {
     "@eclipse-glsp/dev": "^2.0.0",
@@ -42,13 +26,19 @@
     "@types/node": "^20.4.2",
     "esbuild": "^0.17.10",
     "eslint": "^8.56.0",
-    "lerna": "^7.1.1",
+    "lerna": "^8.1.9",
     "tsx": "^3.12.3",
-    "typescript": "^4.9.5"
+    "typescript": "^5.7.3"
   },
-  "packageManager": "yarn@1.22.19",
   "engines": {
-    "node": ">=16.15.1 < 22",
-    "yarn": ">=1.7.0 <2"
+    "node": ">=20 < 22"
+  },
+  "overrides": {
+    "@eclipse-glsp/client": "2.1.0",
+    "@eclipse-glsp/protocol": "2.1.0",
+    "@eclipse-glsp/vscode-integration": "2.1.0",
+    "@eclipse-glsp/vscode-integration-webview": "2.1.0",
+    "inversify": "6.0.1",
+    "vscode-jsonrpc": "8.1.0"
   }
 }

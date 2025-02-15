@@ -37,7 +37,8 @@
     }
   ],
   "publisher": "BIGModelingTools",
-  "main": "./lib/main",
+  "type": "module",
+  "main": "./lib/main.cjs",
   "files": [
     "lib",
     "src",
@@ -45,20 +46,20 @@
     "pack"
   ],
   "scripts": {
-    "build": "tsx .esbuild.mts",
-    "build:prod": "yarn clean && yarn build --minify",
-    "clean": "rimraf lib bundles tsconfig.tsbuildinfo",
-    "lint": "eslint --ext .ts,.tsx ./src",
-    "lint:ci": "yarn lint -o eslint.xml -f checkstyle",
-    "lint:fix": "eslint --fix --ext .ts,.tsx ./src",
+    "build": "npm run clean && npm run compile",
+    "clean": "rimraf lib tsconfig.tsbuildinfo",
+    "compile": "tsx .esbuild.mts",
+    "compile:prod": "npm run clean && npm run compile --minify",
+    "lint": "eslint -c ./.eslintrc.cjs --ext .ts,.tsx ./src",
+    "lint:ci": "npm lint -o eslint.xml -f checkstyle",
+    "lint:fix": "eslint  -c ./.eslintrc.cjs --fix --ext .ts,.tsx ./src",
     "lint:ts": "tsc -noEmit",
-    "prepare": "yarn clean && yarn build",
-    "vscode:package": "vsce package --yarn",
-    "vscode:package-pre": "yarn vscode:package --pre-release",
-    "vscode:prepublish": "yarn build:prod",
-    "vscode:release": "vsce publish --yarn",
-    "vscode:release-pre": "vsce publish --pre-release --yarn",
-    "watch": "yarn build --watch"
+    "vscode:package": "vsce package --npm",
+    "vscode:package-pre": "npm vscode:package --pre-release",
+    "vscode:prepublish": "npm run compile:prod",
+    "vscode:release": "vsce publish --npm",
+    "vscode:release-pre": "vsce publish --pre-release --npm",
+    "watch": "npm run compile --watch"
   },
   "contributes": {
     "commands": [
@@ -281,10 +282,9 @@
     "onView:bigUML.outlineView"
   ],
   "dependencies": {
-    "@borkdominik-biguml/uml-glsp": "*",
     "@borkdominik-biguml/uml-protocol": "*",
-    "@eclipse-glsp/client": "next",
-    "@eclipse-glsp/vscode-integration": "next",
+    "@eclipse-glsp/protocol": "*",
+    "@eclipse-glsp/vscode-integration": "*",
     "@vscode/codicons": "^0.0.25",
     "inversify": "6.0.1",
     "lodash": "^4.17.21",
@@ -295,7 +295,7 @@
   },
   "devDependencies": {
     "@borkdominik-biguml/uml-vscode-integration-webview": "*",
-    "@eclipse-glsp/vscode-integration-webview": "next",
+    "@eclipse-glsp/vscode-integration-webview": "*",
     "@types/urijs": "1.19.11",
     "@types/vscode": "^1.63.0",
     "@vscode/vsce": "^2.15.0"

@@ -9,8 +9,8 @@
 import { GlspVscodeClient, GlspVscodeConnector } from '@eclipse-glsp/vscode-integration';
 import { GLSPIsReadyAction } from 'packages/uml-protocol/lib/index';
 import * as vscode from 'vscode';
-import { ThemeIntegration } from '../../features/theme/theme-integration';
-import { getBundleUri, getUri } from '../../utilities/webview';
+import { ThemeIntegration } from '../../features/theme/theme-integration.js';
+import { getBundleUri, getUri } from '../../utilities/webview.js';
 import { WebviewResolver, WebviewResource } from './webview';
 
 export interface GLSPWebviewData {
@@ -33,7 +33,7 @@ export class GLSPWebviewResolver implements WebviewResolver {
 
         const webview = resource.webviewPanel.webview;
         const extensionUri = this.data.context.extensionUri;
-        const codiconsCSSUri = getUri(webview, extensionUri, ['node_modules', '@vscode/codicons', 'dist', 'codicon.css']);
+        const codiconsCSSUri = getUri(webview, extensionUri, ['css', 'codicon.css']);
         const mainCSSUri = getUri(webview, extensionUri, ['lib', 'main.css']);
 
         const bundleJSUri = getBundleUri(webview, extensionUri, ['editor', 'bundle.js']);

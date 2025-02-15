@@ -9,10 +9,14 @@ const extensionConfig: es.BuildOptions = {
     minify: process.env.NODE_ENV === 'production' || minify,
     sourcemap: process.env.NODE_ENV !== 'production' || !minify,
     entryPoints: ['./src/index.ts'],
-    outfile: './lib/main.js',
+    outfile: './lib/main.cjs',
     platform: 'node',
     mainFields: ['module', 'main'],
+    // VSCode uses CJS
     format: 'cjs',
+    outExtension: {
+        '.js': '.cjs'
+    },
     external: ['vscode'],
     color: true,
     logLevel: 'info',

@@ -8,7 +8,7 @@
  *********************************************************************************/
 
 import { ContainerModule } from 'inversify';
-import { TYPES } from '../../di.types';
+import { TYPES } from '../../di.types.js';
 import { PropertyPaletteProvider } from './property-palette.provider';
 
 export const propertyPaletteModule = new ContainerModule(bind => {

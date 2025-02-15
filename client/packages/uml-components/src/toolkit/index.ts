@@ -23,7 +23,7 @@ import {
     vsCodeTextArea,
     vsCodeTextField
 } from '@vscode/webview-ui-toolkit';
-import { bigCombobox } from './combobox/combobox.component';
+import { bigCombobox } from './combobox/combobox.component.js';
 
 export function useToolkit(): void {
     provideVSCodeDesignSystem().register(

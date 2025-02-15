@@ -11,7 +11,7 @@ import { autoUpdate, computePosition, flip, shift } from '@floating-ui/dom';
 import { html, nothing, PropertyValues, TemplateResult } from 'lit';
 import { property, query } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
-import { BigElement } from '../base/component';
+import { BigElement } from '../base/component.js';
 import { ContextMenuItemStyle, ContextMenuStyle } from './context-menu.style';
 
 export function defineContextMenu(): void {

@@ -7,12 +7,12 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { defineContextMenu } from '../../menu/context-menu.component';
-import { defineMenu } from '../../menu/menu.component';
+import { defineContextMenu } from '../../menu/context-menu.component.js';
+import { defineMenu } from '../../menu/menu.component.js';
 import { useToolkit } from '../../toolkit';
-import { defineTooltip } from '../../tooltip/tooltip.component';
-import { defineMinimap } from '../minimap.component';
-import { defineMinimapWebview } from './minimap-webview.component';
+import { defineTooltip } from '../../tooltip/tooltip.component.js';
+import { defineMinimap } from '../minimap.component.js';
+import { defineMinimapWebview } from './minimap-webview.component.js';
 
 export function useMinimapWebviewDesignSystem(): void {
     useToolkit();

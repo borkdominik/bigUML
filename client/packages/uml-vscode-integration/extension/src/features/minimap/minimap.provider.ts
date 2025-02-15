@@ -7,12 +7,13 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
+import { InitializeCanvasBoundsAction } from '@borkdominik-biguml/uml-glsp';
 import { MinimapExportSvgAction, RequestMinimapExportSvgAction } from '@borkdominik-biguml/uml-protocol';
-import { InitializeCanvasBoundsAction, SetModelAction, SetViewportAction, UpdateModelAction } from '@eclipse-glsp/client';
+import { SetModelAction, SetViewportAction, UpdateModelAction } from '@eclipse-glsp/protocol';
 import { injectable, postConstruct } from 'inversify';
-import { VSCodeSettings } from '../../language';
-import { getBundleUri, getUri } from '../../utilities/webview';
-import { ProviderWebviewContext, UMLWebviewProvider } from '../../vscode/webview/webview-provider';
+import { VSCodeSettings } from '../../language.js';
+import { getBundleUri, getUri } from '../../utilities/webview.js';
+import { ProviderWebviewContext, UMLWebviewProvider } from '../../vscode/webview/webview-provider.js';
 
 @injectable()
 export class MinimapProvider extends UMLWebviewProvider {
@@ -33,7 +34,7 @@ export class MinimapProvider extends UMLWebviewProvider {
         const webview = providerContext.webviewView.webview;
         const extensionUri = this.extension.extensionUri;
 
-        const codiconsCSSUri = getUri(webview, extensionUri, ['node_modules', '@vscode/codicons', 'dist', 'codicon.css']);
+        const codiconsCSSUri = getUri(webview, extensionUri, ['css', 'codicon.css']);
         const bundleJSUri = getBundleUri(webview, extensionUri, ['minimap', 'bundle.js']);
 
         webview.html = `<!DOCTYPE html>

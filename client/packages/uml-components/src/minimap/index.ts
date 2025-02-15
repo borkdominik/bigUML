@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-export * from './minimap.component';
+export * from './minimap.component.js';
 export * from './minimap.style';
 export * from './web';
 

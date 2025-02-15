@@ -7,6 +7,6 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-export * from './design-system';
-export * from './minimap-webview.component';
+export * from './design-system.js';
+export * from './minimap-webview.component.js';
 

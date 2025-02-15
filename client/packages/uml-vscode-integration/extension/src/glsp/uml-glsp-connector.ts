@@ -22,7 +22,7 @@ import {
 } from '@eclipse-glsp/vscode-integration';
 import { inject, injectable } from 'inversify';
 import * as vscode from 'vscode';
-import { TYPES } from '../di.types';
+import { TYPES } from '../di.types.js';
 import { IDEServerClientId } from './ide-server';
 
 @injectable()

@@ -7,5 +7,6 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-export * from './component';
+export * from './component.js';
 export * from './style';
+

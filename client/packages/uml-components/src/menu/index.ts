@@ -7,6 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-export * from './context-menu.component';
+export * from './context-menu.component.js';
 export * from './context-menu.style';
-export * from './menu.component';
+export * from './menu.component.js';
+

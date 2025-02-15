@@ -7,14 +7,14 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { Action, ActionMessage } from '@eclipse-glsp/client';
+import { Action, ActionMessage } from '@eclipse-glsp/protocol';
 import { ActionMessageNotification, GlspVscodeClient } from '@eclipse-glsp/vscode-integration';
 import { inject, injectable, postConstruct } from 'inversify';
 import * as vscode from 'vscode';
 import { Messenger } from 'vscode-messenger';
 import { MessageParticipant } from 'vscode-messenger-common';
-import { TYPES } from '../../di.types';
-import { UMLGLSPConnector } from '../../glsp/uml-glsp-connector';
+import { TYPES } from '../../di.types.js';
+import { UMLGLSPConnector } from '../../glsp/uml-glsp-connector.js';
 import type { ProviderWebviewContext } from './webview-provider';
 
 /**

@@ -13,10 +13,10 @@ import { Action, ActionMessage, ExportSvgAction, SetViewportAction } from '@ecli
 import { TemplateResult, html } from 'lit';
 import { query, state } from 'lit/decorators.js';
 import { HOST_EXTENSION } from 'vscode-messenger-common';
-import { BigElement } from '../../base/component';
+import { BigElement } from '../../base/component.js';
 import { useToolkit } from '../../toolkit';
-import { messenger } from '../../vscode/messenger';
-import { Minimap } from '../minimap.component';
+import { messenger } from '../../vscode/messenger.js';
+import { Minimap } from '../minimap.component.js';
 
 export function defineMinimapWebview(): void {
     customElements.define('big-minimap-webview', MinimapWebview);

@@ -9,9 +9,9 @@
 
 import { RefreshPropertyPaletteAction, SetPropertyPaletteAction } from '@borkdominik-biguml/uml-protocol';
 import { injectable, postConstruct } from 'inversify';
-import { VSCodeSettings } from '../../language';
-import { getBundleUri, getUri } from '../../utilities/webview';
-import { ProviderWebviewContext, UMLWebviewProvider } from '../../vscode/webview/webview-provider';
+import { VSCodeSettings } from '../../language.js';
+import { getBundleUri, getUri } from '../../utilities/webview.js';
+import { ProviderWebviewContext, UMLWebviewProvider } from '../../vscode/webview/webview-provider.js';
 
 @injectable()
 export class PropertyPaletteProvider extends UMLWebviewProvider {
@@ -32,7 +32,7 @@ export class PropertyPaletteProvider extends UMLWebviewProvider {
         const webview = providerContext.webviewView.webview;
         const extensionUri = this.extension.extensionUri;
 
-        const codiconsCSSUri = getUri(webview, extensionUri, ['node_modules', '@vscode/codicons', 'dist', 'codicon.css']);
+        const codiconsCSSUri = getUri(webview, extensionUri, ['css', 'codicon.css']);
         const bundleJSUri = getBundleUri(webview, extensionUri, ['property-palette', 'bundle.js']);
 
         webview.html = `<!DOCTYPE html>

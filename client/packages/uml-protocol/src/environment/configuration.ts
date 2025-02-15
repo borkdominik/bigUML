@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { UMLDiagramType } from '../language/language';
+import { UMLDiagramType } from '../language/language.js';
 
 export interface UMLLanguageEnvironment {
     supportedTypes: UMLDiagramType[];

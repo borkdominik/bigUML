@@ -13,10 +13,15 @@ Execute the command:
 - Linux: `./gradlew clean build`
 - Windows: `./gradlew.bat clean build`
 
-Running the application:
+Running (+ building) the application:
 
 - Linux: `./gradlew run`
 - Windows: `./gradlew.bat run`
+
+Auto build:
+
+- Linux: `./gradlew -t build`
+- Windows: `./gradlew.bat -t build`
 
 ## IDE
 
@@ -30,4 +35,4 @@ Recommended Extensions:
 
 - [Extension Pack for Java](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-pack)
 
-The IDE will rebuild the changes for you - see status bar for progress.
+The IDE will **rebuild** the changes for you - see status bar for progress. You only need to restart the application.

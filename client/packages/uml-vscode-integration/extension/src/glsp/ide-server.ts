@@ -8,8 +8,8 @@
  *********************************************************************************/
 import { SocketGlspVscodeServer } from '@eclipse-glsp/vscode-integration/lib/node/quickstart-components/socket-glsp-vscode-server';
 import { inject, injectable } from 'inversify';
-import { TYPES } from '../di.types';
-import { GlspServerConfig } from '../server/glsp-server.launcher';
+import { TYPES } from '../di.types.js';
+import { GlspServerConfig } from '../server/glsp-server.launcher.js';
 
 export const IDEServerClientId = 'ide.server';
 

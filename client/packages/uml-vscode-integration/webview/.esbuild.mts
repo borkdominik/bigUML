@@ -1,4 +1,5 @@
 import * as es from 'esbuild';
+import { copy } from 'esbuild-plugin-copy';
 import * as fs from 'fs';
 
 const args = process.argv.slice(2);
@@ -27,7 +28,15 @@ const componentsConfig: es.BuildOptions = {
         '.gif': 'dataurl',
         '.ttf': 'dataurl'
     },
-    plugins: []
+    plugins: [
+        copy({
+            assets: {
+                from: ['./bundles/**/*'],
+                to: ['../../extension/webviews']
+            },
+            watch: true
+        })
+    ]
 };
 
 (async () => {

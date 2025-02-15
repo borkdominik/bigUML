@@ -7,7 +7,8 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-export * from './property-palette.component';
+export * from './property-palette.component.js';
 export * from './property-palette.style';
 export * from './reference';
 export * from './web';
+

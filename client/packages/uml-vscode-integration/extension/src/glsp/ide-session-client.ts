@@ -7,10 +7,10 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { Deferred, Disposable, GLSPClient } from '@eclipse-glsp/client';
+import { Deferred, Disposable, GLSPClient } from '@eclipse-glsp/protocol';
 import { inject, injectable } from 'inversify';
-import { TYPES } from '../di.types';
-import { VSCodeSettings } from '../language';
+import { TYPES } from '../di.types.js';
+import { VSCodeSettings } from '../language.js';
 import { IDEServer, IDEServerClientId } from './ide-server';
 
 @injectable()

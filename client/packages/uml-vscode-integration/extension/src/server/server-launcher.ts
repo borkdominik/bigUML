@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { OutputChannel } from '../vscode/output/output.channel';
+import { OutputChannel } from '../vscode/output/output.channel.js';
 import { ServerLauncher, ServerLauncherOptions } from './launcher';
 
 export abstract class UMLServerLauncher extends ServerLauncher {

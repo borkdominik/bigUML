@@ -24,6 +24,9 @@
       "url": "https://me.big.tuwien.ac.at/"
     }
   ],
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "files": [
     "lib",
     "src",
@@ -31,23 +34,23 @@
     "resources"
   ],
   "scripts": {
-    "build": "tsc -b && yarn run lint",
+    "build": "npm run clean && npm run compile",
     "clean": "rimraf lib tsconfig.tsbuildinfo",
+    "compile": "tsc -b && npm run lint",
     "icons": "tsx ./scripts/icons.ts",
-    "lint": "eslint -c ./.eslintrc.js --ext .ts,.tsx ./src",
-    "lint:fix": "eslint --fix -c ./.eslintrc.js --ext .ts,.tsx ./src",
-    "prepare": "yarn run clean && yarn run build",
+    "lint": "eslint -c ./.eslintrc.cjs --ext .ts,.tsx ./src",
+    "lint:fix": "eslint --fix -c ./.eslintrc.cjs --ext .ts,.tsx ./src",
     "watch": "tsc -w"
   },
   "dependencies": {
     "@borkdominik-biguml/uml-protocol": "*",
-    "@eclipse-glsp/client": "next",
-    "@eclipse-glsp/protocol": "next",
+    "@eclipse-glsp/client": "*",
+    "@eclipse-glsp/protocol": "*",
     "balloon-css": "^0.5.0",
     "inversify": "^6.0.1",
     "reflect-metadata": "^0.1.13",
     "snabbdom": "^3.5.1",
-    "sprotty": "next"
+    "sprotty": "*"
   },
   "devDependencies": {
     "endent": "^2.1.0"

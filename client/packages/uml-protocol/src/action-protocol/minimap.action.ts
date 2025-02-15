@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { Action, Bounds, RequestAction, ResponseAction } from '@eclipse-glsp/client';
+import { Action, Bounds, RequestAction, ResponseAction } from '@eclipse-glsp/protocol';
 
 /**
  * A `RequestMinimapExportSvgAction` is sent by the client to initiate the SVG export of the current diagram.
@@ -49,8 +49,12 @@ export namespace MinimapExportSvgAction {
         return Action.hasKind(object, KIND);
     }
 
-    export function create(svg?: string, elementId?: string, modelBounds?: Bounds,
-        options: { responseId?: string } = {}): MinimapExportSvgAction {
+    export function create(
+        svg?: string,
+        elementId?: string,
+        modelBounds?: Bounds,
+        options: { responseId?: string } = {}
+    ): MinimapExportSvgAction {
         return {
             kind: KIND,
             svg,

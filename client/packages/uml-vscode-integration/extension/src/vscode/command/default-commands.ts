@@ -6,11 +6,12 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { EnableToolsAction, SetUIExtensionVisibilityAction, ToolPalette } from '@eclipse-glsp/client';
-import { FocusDomAction } from '@eclipse-glsp/client/lib/features/accessibility/actions';
+// TODO: Problematic
+import { EnableToolsAction, FocusDomAction } from '@borkdominik-biguml/uml-glsp';
 import { CenterAction, FitToScreenAction, RequestExportSvgAction, SelectAllAction } from '@eclipse-glsp/protocol';
+import { SetUIExtensionVisibilityAction } from '@eclipse-glsp/sprotty/node_modules/sprotty/src/base/ui-extensions/ui-extension-registry.js';
 import * as vscode from 'vscode';
-import { UMLGLSPConnector } from '../../glsp/uml-glsp-connector';
+import { UMLGLSPConnector } from '../../glsp/uml-glsp-connector.js';
 
 export interface CommandContext {
     extensionContext: vscode.ExtensionContext;
@@ -55,7 +56,7 @@ export function configureDefaultCommands(context: CommandContext): void {
             );
         }),
         vscode.commands.registerCommand(`${diagramPrefix}.editor.focusToolPalette`, () => {
-            connector.sendActionToActiveClient(FocusDomAction.create(ToolPalette.ID));
+            connector.sendActionToActiveClient(FocusDomAction.create('tool-palette'));
         }),
         vscode.commands.registerCommand(`${diagramPrefix}.editor.focusDiagram`, () => {
             connector.sendActionToActiveClient(FocusDomAction.create('graph'));

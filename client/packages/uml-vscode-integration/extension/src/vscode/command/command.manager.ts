@@ -8,7 +8,7 @@
  *********************************************************************************/
 import { inject, injectable, multiInject, postConstruct } from 'inversify';
 import * as vscode from 'vscode';
-import { TYPES } from '../../di.types';
+import { TYPES } from '../../di.types.js';
 import { VSCodeCommand } from './command';
 
 @injectable()

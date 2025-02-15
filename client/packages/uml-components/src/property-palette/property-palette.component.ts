@@ -24,10 +24,10 @@ import { property, state } from 'lit/decorators.js';
 import { keyed } from 'lit/directives/keyed.js';
 import { when } from 'lit/directives/when.js';
 import { groupBy } from 'lodash';
-import { BigElement } from '../base/component';
+import { BigElement } from '../base/component.js';
 import '../global';
 import { PropertyPaletteStyle } from './property-palette.style';
-import { PropertyDeleteEventDetail, PropertyNameChangeDetail, PropertyOrderDetail } from './reference/property-palette-reference.component';
+import { PropertyDeleteEventDetail, PropertyNameChangeDetail, PropertyOrderDetail } from './reference/property-palette-reference.component.js';
 
 export function definePropertyPalette(): void {
     customElements.define('big-property-palette', PropertyPalette);

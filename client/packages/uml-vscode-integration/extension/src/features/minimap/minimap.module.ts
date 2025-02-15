@@ -8,7 +8,7 @@
  *********************************************************************************/
 
 import { ContainerModule } from 'inversify';
-import { TYPES } from '../../di.types';
+import { TYPES } from '../../di.types.js';
 import { MinimapProvider } from './minimap.provider';
 
 export const minimapModule = new ContainerModule(bind => {

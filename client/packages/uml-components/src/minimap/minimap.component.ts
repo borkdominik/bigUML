@@ -11,7 +11,7 @@ import { TemplateResult, html, svg } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { keyed } from 'lit/directives/keyed.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
-import { BigElement } from '../base/component';
+import { BigElement } from '../base/component.js';
 import '../global';
 import { MinimapPaletteStyle as MinimapStyle } from './minimap.style';
 

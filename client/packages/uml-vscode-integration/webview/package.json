@@ -24,28 +24,30 @@
       "url": "https://me.big.tuwien.ac.at/"
     }
   ],
+  "type": "module",
   "scripts": {
-    "build": "tsx .esbuild.mts",
+    "build": "npm run clean && npm run compile",
     "clean": "rimraf lib tsconfig.tsbuildinfo ",
+    "compile": "tsx .esbuild.mts",
     "lint": "eslint --ext .ts,.tsx ./src",
-    "lint:ci": "yarn lint -o eslint.xml -f checkstyle",
-    "prepare": "yarn clean && yarn build",
-    "watch": "yarn build --watch"
+    "lint:ci": "npm lint -o eslint.xml -f checkstyle",
+    "watch": "npm run compile --watch"
   },
   "dependencies": {
     "@borkdominik-biguml/uml-components": "*",
     "@borkdominik-biguml/uml-glsp": "*",
     "@borkdominik-biguml/uml-protocol": "*",
-    "@eclipse-glsp/client": "next",
-    "@eclipse-glsp/protocol": "next",
-    "@eclipse-glsp/vscode-integration-webview": "next",
+    "@eclipse-glsp/client": "*",
+    "@eclipse-glsp/protocol": "*",
+    "@eclipse-glsp/vscode-integration-webview": "*",
     "@vscode/codicons": "^0.0.25",
     "inversify": "^6.0.1",
     "reflect-metadata": "^0.1.13",
-    "sprotty-vscode-webview": "next"
+    "sprotty-vscode-webview": "*"
   },
   "devDependencies": {
     "esbuild": "^0.17.10",
+    "esbuild-plugin-copy": "^2.1.1",
     "eslint": "^8.15.0"
   }
 }

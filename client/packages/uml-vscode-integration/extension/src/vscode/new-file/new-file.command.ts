@@ -8,7 +8,7 @@
  *********************************************************************************/
 import { inject, injectable } from 'inversify';
 import { Uri } from 'vscode';
-import { VSCodeCommand } from '../command/command';
+import { VSCodeCommand } from '../command/command.js';
 import { NewFileCreator } from './new-file.creator';
 
 @injectable()

@@ -9,11 +9,11 @@
 import { GLSPDiagramIdentifier, GlspVscodeClient, WebviewEndpoint } from '@eclipse-glsp/vscode-integration';
 import { inject, injectable, postConstruct } from 'inversify';
 import * as vscode from 'vscode';
-import { TYPES } from '../../di.types';
-import { ThemeIntegration } from '../../features/theme/theme-integration';
-import { UMLGLSPConnector } from '../../glsp/uml-glsp-connector';
-import { VSCodeSettings } from '../../language';
-import { ServerManager, ServerManagerStateListener } from '../../server/server.manager';
+import { TYPES } from '../../di.types.js';
+import { ThemeIntegration } from '../../features/theme/theme-integration.js';
+import { UMLGLSPConnector } from '../../glsp/uml-glsp-connector.js';
+import { VSCodeSettings } from '../../language.js';
+import { ServerManager, ServerManagerStateListener } from '../../server/server.manager.js';
 import { ErrorWebviewResolver } from './error.webview';
 import { GLSPWebviewResolver } from './glsp.webview';
 import { InitializingWebviewResolver } from './initializing.webview';

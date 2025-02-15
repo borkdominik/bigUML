@@ -9,8 +9,8 @@
 import { SocketGlspVscodeServer } from '@eclipse-glsp/vscode-integration/lib/node/quickstart-components/socket-glsp-vscode-server';
 import { ContainerModule, inject, injectable } from 'inversify';
 import * as path from 'path';
-import { TYPES } from '../di.types';
-import { OutputChannel } from '../vscode/output/output.channel';
+import { TYPES } from '../di.types.js';
+import { OutputChannel } from '../vscode/output/output.channel.js';
 import { ServerLauncherOptions } from './launcher';
 import { osUtils } from './os';
 import { UMLServerLauncher } from './server-launcher';

@@ -29,17 +29,18 @@
     "lib",
     "src"
   ],
+  "type": "module",
   "scripts": {
-    "build": "tsc -b && yarn run lint",
+    "compile": "tsc -b && npm run lint",
     "clean": "rimraf lib tsconfig.tsbuildinfo",
-    "lint": "eslint -c ./.eslintrc.js --ext .ts,.tsx ./src",
-    "lint:fix": "eslint --fix -c ./.eslintrc.js --ext .ts,.tsx ./src",
-    "prepare": "yarn run clean && yarn run build",
+    "lint": "eslint -c ./.eslintrc.cjs --ext .ts,.tsx ./src",
+    "lint:fix": "eslint --fix -c ./.eslintrc.cjs --ext .ts,.tsx ./src",
+    "build": "npm run clean && yarn run compile",
     "watch": "tsc -w"
   },
   "dependencies": {
     "@borkdominik-biguml/uml-protocol": "*",
-    "@eclipse-glsp/protocol": "next",
+    "@eclipse-glsp/protocol": "*",
     "@floating-ui/dom": "^1.4.1",
     "@microsoft/fast-components": "^2.30.6",
     "@microsoft/fast-foundation": "^2.49.1",

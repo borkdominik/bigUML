@@ -8,7 +8,7 @@
  *********************************************************************************/
 
 import { ContainerModule } from 'inversify';
-import { TYPES } from '../di.types';
+import { TYPES } from '../di.types.js';
 import { CommandManager } from './command/command.manager';
 import { DisposableManager } from './disposable/disposable.manager';
 import { UMLDiagramEditorProvider } from './editor/editor.provider';

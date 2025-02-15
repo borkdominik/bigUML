@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { LabeledAction } from '@eclipse-glsp/client';
+import { LabeledAction } from '@eclipse-glsp/protocol';
 
 export interface AutocompleteEntry extends LabeledAction {
     hint?: string;

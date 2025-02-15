@@ -17,10 +17,10 @@ import { Action, ActionMessage } from '@eclipse-glsp/protocol';
 import { TemplateResult, html } from 'lit';
 import { query, state } from 'lit/decorators.js';
 import { HOST_EXTENSION } from 'vscode-messenger-common';
-import { BigElement } from '../../base/component';
+import { BigElement } from '../../base/component.js';
 import { useToolkit } from '../../toolkit';
-import { messenger } from '../../vscode/messenger';
-import { PropertyPalette } from '../property-palette.component';
+import { messenger } from '../../vscode/messenger.js';
+import { PropertyPalette } from '../property-palette.component.js';
 
 export function definePropertyPaletteWebview(): void {
     customElements.define('big-property-palette-webview', PropertyPaletteWebview);

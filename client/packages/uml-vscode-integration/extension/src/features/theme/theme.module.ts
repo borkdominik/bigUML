@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import { ContainerModule } from 'inversify';
-import { TYPES } from '../../di.types';
+import { TYPES } from '../../di.types.js';
 import { ThemeIntegration } from './theme-integration';
 
 export const themeModule = new ContainerModule(bind => {

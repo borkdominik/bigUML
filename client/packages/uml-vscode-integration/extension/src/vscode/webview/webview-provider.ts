@@ -8,9 +8,9 @@
  *********************************************************************************/
 import { inject, postConstruct } from 'inversify';
 import * as vscode from 'vscode';
-import { TYPES } from '../../di.types';
-import { UMLGLSPConnector } from '../../glsp/uml-glsp-connector';
-import { UMLWebviewExtensionHostConnection, UMLWebviewViewConnection } from './webview-connection';
+import { TYPES } from '../../di.types.js';
+import { UMLGLSPConnector } from '../../glsp/uml-glsp-connector.js';
+import { UMLWebviewExtensionHostConnection, UMLWebviewViewConnection } from './webview-connection.js';
 
 export interface ProviderWebviewContext {
     webviewView: vscode.WebviewView;

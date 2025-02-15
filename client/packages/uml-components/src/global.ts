@@ -24,12 +24,12 @@ import {
     TextField
 } from '@vscode/webview-ui-toolkit';
 import { VsCodeApi } from 'vscode-messenger-webview';
-import { ContextMenu, ContextMenuItem } from './menu/context-menu.component';
-import { Menu, MenuItem } from './menu/menu.component';
+import { ContextMenu, ContextMenuItem } from './menu/context-menu.component.js';
+import { Menu, MenuItem } from './menu/menu.component.js';
 import { Minimap, MinimapWebview } from './minimap';
 import { PropertyPalette, PropertyPaletteWebview } from './property-palette';
-import { PropertyPaletteReference } from './property-palette/reference/property-palette-reference.component';
-import { Tooltip } from './tooltip/tooltip.component';
+import { PropertyPaletteReference } from './property-palette/reference/property-palette-reference.component.js';
+import { Tooltip } from './tooltip/tooltip.component.js';
 
 declare global {
     function acquireVsCodeApi(): VsCodeApi;

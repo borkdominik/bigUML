@@ -8,9 +8,9 @@
  *********************************************************************************/
 import { ContainerModule, inject, injectable, multiInject } from 'inversify';
 import * as vscode from 'vscode';
-import { TYPES } from '../di.types';
-import { VSCodeSettings } from '../language';
-import { OutputChannel } from '../vscode/output/output.channel';
+import { TYPES } from '../di.types.js';
+import { VSCodeSettings } from '../language.js';
+import { OutputChannel } from '../vscode/output/output.channel.js';
 import { java } from './java';
 import { ServerLauncher } from './launcher';
 

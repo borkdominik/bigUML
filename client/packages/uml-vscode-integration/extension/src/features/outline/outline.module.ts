@@ -8,7 +8,7 @@
  *********************************************************************************/
 
 import { ContainerModule } from 'inversify';
-import { TYPES } from '../../di.types';
+import { TYPES } from '../../di.types.js';
 import { OutlineTreeProvider } from './outline-tree.provider';
 
 export const outlineModule = new ContainerModule(bind => {

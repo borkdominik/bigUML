@@ -7,5 +7,6 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-export * from './design-system';
-export * from './property-palette-webview.component';
+export * from './design-system.js';
+export * from './property-palette-webview.component.js';
+

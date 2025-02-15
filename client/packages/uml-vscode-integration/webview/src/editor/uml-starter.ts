@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { createUMLDiagramContainer } from '@borkdominik-biguml/uml-glsp/lib';
+import { createUMLDiagramContainer } from '@borkdominik-biguml/uml-glsp/lib/browser';
 
 import '@eclipse-glsp/vscode-integration-webview/css/glsp-vscode.css';
 
@@ -14,11 +14,11 @@ import { GLSPIsReadyAction, MinimapExportSvgAction, ModelResourcesResponseAction
 import { IActionDispatcher, IDiagramStartup, InitializeCanvasBoundsAction, TYPES } from '@eclipse-glsp/client';
 import { ContainerConfiguration, MaybePromise, SetViewportAction, bindAsService, bindOrRebind } from '@eclipse-glsp/protocol';
 import { GLSPStarter } from '@eclipse-glsp/vscode-integration-webview';
-import { GLSPDiagramIdentifier } from '@eclipse-glsp/vscode-integration-webview/lib/diagram-identifier';
-import { ExtensionActionKind } from '@eclipse-glsp/vscode-integration-webview/lib/features/default/extension-action-handler';
-import { GLSPDiagramWidget } from '@eclipse-glsp/vscode-integration-webview/lib/glsp-diagram-widget';
+import { GLSPDiagramIdentifier } from '@eclipse-glsp/vscode-integration-webview/lib/diagram-identifier.js';
+import { ExtensionActionKind } from '@eclipse-glsp/vscode-integration-webview/lib/features/default/extension-action-handler.js';
+import { GLSPDiagramWidget } from '@eclipse-glsp/vscode-integration-webview/lib/glsp-diagram-widget.js';
 import { Container, inject, injectable } from 'inversify';
-import { UMLDiagramWidget } from './diagram.widget';
+import { UMLDiagramWidget } from './diagram.widget.js';
 
 class UMLStarter extends GLSPStarter {
     createContainer(...containerConfiguration: ContainerConfiguration): Container {

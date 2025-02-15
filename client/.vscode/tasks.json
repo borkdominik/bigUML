@@ -10,7 +10,7 @@
         "kind": "build",
         "isDefault": true
       },
-      "command": "yarn",
+      "command": "npm install",
       "presentation": {
         "reveal": "always",
         "panel": "new"
@@ -21,7 +21,7 @@
       "label": "Watch all packages",
       "type": "shell",
       "group": "build",
-      "command": "yarn watch",
+      "command": "npm run watch",
       "presentation": {
         "reveal": "always",
         "panel": "new"
@@ -32,7 +32,7 @@
       "label": "Build server",
       "type": "shell",
       "group": "build",
-      "command": "yarn build:server",
+      "command": "npm run build:server",
       "presentation": {
         "reveal": "always",
         "panel": "new"
@@ -42,7 +42,7 @@
     {
       "label": "Copy server",
       "type": "shell",
-      "command": "yarn copy:server",
+      "command": "npm copy:server",
       "presentation": {
         "reveal": "always",
         "panel": "new"

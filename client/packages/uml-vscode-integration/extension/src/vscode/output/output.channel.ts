@@ -8,7 +8,7 @@
  *********************************************************************************/
 import { inject, injectable } from 'inversify';
 import * as vscode from 'vscode';
-import { TYPES } from '../../di.types';
+import { TYPES } from '../../di.types.js';
 
 @injectable()
 export class OutputChannel {

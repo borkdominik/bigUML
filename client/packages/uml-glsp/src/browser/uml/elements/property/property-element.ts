@@ -7,9 +7,9 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { UMLDiagramType } from '@borkdominik-biguml/uml-protocol';
+import { type UMLDiagramType } from '@borkdominik-biguml/uml-protocol';
 import { configureModelElement } from '@eclipse-glsp/client';
-import { interfaces } from 'inversify';
+import { type interfaces } from 'inversify';
 import { QualifiedUtil } from '../../qualified.utils.js';
 import { GEditableLabel, GEditableLabelView } from '../../views/uml-label.view.js';
 import { NamedElement, NamedElementView } from '../index.js';

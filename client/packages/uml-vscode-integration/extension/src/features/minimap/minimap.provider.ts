@@ -13,7 +13,7 @@ import { SetModelAction, SetViewportAction, UpdateModelAction } from '@eclipse-g
 import { injectable, postConstruct } from 'inversify';
 import { VSCodeSettings } from '../../language.js';
 import { getBundleUri, getUri } from '../../utilities/webview.js';
-import { ProviderWebviewContext, UMLWebviewProvider } from '../../vscode/webview/webview-provider.js';
+import { type ProviderWebviewContext, UMLWebviewProvider } from '../../vscode/webview/webview-provider.js';
 
 @injectable()
 export class MinimapProvider extends UMLWebviewProvider {

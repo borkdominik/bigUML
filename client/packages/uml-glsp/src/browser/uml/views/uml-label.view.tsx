@@ -7,26 +7,26 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import {
-    EditableLabel,
+    type EditableLabel,
     editLabelFeature,
-    GChildElement,
+    type GChildElement,
     getSubType,
     GLabel,
     hoverFeedbackFeature,
     isEdgeLayoutable,
     isEditableLabel,
-    Nameable,
+    type Nameable,
     nameFeature,
     RectangularNode,
-    RenderingContext,
+    type RenderingContext,
     setAttr,
     ShapeView,
     svg,
-    WithEditableLabel,
+    type WithEditableLabel,
     withEditLabelFeature
 } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
-import { VNode } from 'snabbdom';
+import { type VNode } from 'snabbdom';
 
 export class GLabeledNode extends RectangularNode implements WithEditableLabel, Nameable {
     static override readonly DEFAULT_FEATURES = [...RectangularNode.DEFAULT_FEATURES, nameFeature, withEditLabelFeature];

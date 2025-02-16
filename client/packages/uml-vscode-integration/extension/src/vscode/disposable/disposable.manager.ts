@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import { inject, injectable, multiInject, postConstruct } from 'inversify';
-import * as vscode from 'vscode';
+import type * as vscode from 'vscode';
 import { TYPES } from '../../di.types.js';
 
 export interface Disposable {

@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { BoundsData, GModelElement, GParentElement, isLayoutContainer, LayoutContainer, Layouter } from '@eclipse-glsp/client';
+import { type BoundsData, type GModelElement, type GParentElement, isLayoutContainer, type LayoutContainer, Layouter } from '@eclipse-glsp/client';
 import { StatefulLayouterExt } from '@eclipse-glsp/client/lib/features/bounds/layouter.js';
 import { isEqual } from 'lodash';
 

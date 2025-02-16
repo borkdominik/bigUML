@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { Bounds, GRoutableElement, Point, PolylineEdgeRouter, RoutedPoint } from '@eclipse-glsp/client';
+import { Bounds, type GRoutableElement, Point, PolylineEdgeRouter, type RoutedPoint } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 import { LifelineElement } from '../../elements/index.js';
 

@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { Action, hasArrayProp, ICommand, ToolManager, ToolManagerActionHandler } from '@eclipse-glsp/client';
+import { Action, hasArrayProp, type ICommand, ToolManager, ToolManagerActionHandler } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 
 export interface ChangeToolsStateAction extends Action {

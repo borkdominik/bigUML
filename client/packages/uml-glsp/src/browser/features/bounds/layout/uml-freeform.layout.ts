@@ -6,10 +6,10 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { GParentElement, isSizeable, LayoutContainer, StatefulLayouter } from '@eclipse-glsp/client';
+import { type GParentElement, isSizeable, type LayoutContainer, type StatefulLayouter } from '@eclipse-glsp/client';
 import { FreeFormLayouter } from '@eclipse-glsp/client/lib/features/bounds/freeform-layout.js';
 import { Dimension } from '@eclipse-glsp/protocol';
-import { AbstractLayoutOptions } from '@eclipse-glsp/sprotty';
+import { type AbstractLayoutOptions } from '@eclipse-glsp/sprotty';
 import { injectable } from 'inversify';
 
 @injectable()

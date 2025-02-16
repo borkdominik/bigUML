@@ -14,10 +14,10 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 import { injectable } from 'inversify';
-import { VNode } from 'snabbdom';
+import { type VNode } from 'snabbdom';
 
-import { RectangularNodeView, RenderingContext, svg } from '@eclipse-glsp/client';
-import { SDVerticalShiftNode } from './model.js';
+import { RectangularNodeView, type RenderingContext, svg } from '@eclipse-glsp/client';
+import { type SDVerticalShiftNode } from './model.js';
 
 // TODO: Sequence Diagram Specific
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

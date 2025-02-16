@@ -23,7 +23,7 @@ import {
     PolylineEdgeView,
     SelectionService
 } from '@eclipse-glsp/client/lib';
-import { ContainerModule, interfaces } from 'inversify';
+import { ContainerModule, type interfaces } from 'inversify';
 
 import { UML_TYPES } from '../../../uml-glsp.types.js';
 import { NamedElement } from '../../elements/index.js';

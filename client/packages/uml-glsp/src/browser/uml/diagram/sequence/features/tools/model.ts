@@ -8,7 +8,7 @@
  *********************************************************************************/
 
 import { boundsFeature, RectangularNode } from '@eclipse-glsp/client';
-import { Point } from '@eclipse-glsp/protocol';
+import { type Point } from '@eclipse-glsp/protocol';
 
 // TODO: Sequence Diagram Specific
 export class SDVerticalShiftNode extends RectangularNode {

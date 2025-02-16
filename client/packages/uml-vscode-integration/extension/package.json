@@ -52,7 +52,7 @@
     "compile:prod": "npm run clean && npm run compile --minify",
     "lint": "eslint -c ./eslint.config.mjs",
     "lint:ci": "npm lint -o eslint.xml -f checkstyle",
-    "lint:fix": "eslint  -c ./eslint.config.mjs --fix",
+    "lint:fix": "eslint --fix -c ./eslint.config.mjs",
     "lint:ts": "tsc -noEmit",
     "vscode:package": "vsce package --npm",
     "vscode:package-pre": "npm vscode:package --pre-release",

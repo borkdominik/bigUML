@@ -13,12 +13,18 @@
     "noImplicitReturns": true,
     "strict": true,
     "incremental": true,
+    "esModuleInterop": true,
+    "noFallthroughCasesInSwitch": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
     // Needs to be disabled to support property injection
     "strictPropertyInitialization": false,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "downlevelIteration": true,
     "resolveJsonModule": true,
+
+    // Language
     "moduleResolution": "Node16",
     "module": "Node16",
     "target": "ES2022",
@@ -27,11 +33,7 @@
     "sourceMap": true,
     "types": ["node", "reflect-metadata"],
     "baseUrl": ".",
-    "reactNamespace": "JSX",
-    "esModuleInterop": true,
-    "noFallthroughCasesInSwitch": true,
-    "allowSyntheticDefaultImports": true,
-    "forceConsistentCasingInFileNames": true
+    "reactNamespace": "JSX"
   },
   "exclude": ["**/node_modules", "**/.eslintrc.js"],
   "include": ["**/scripts", "packages/*/src", "packages/uml-vscode-integration/*/src"]

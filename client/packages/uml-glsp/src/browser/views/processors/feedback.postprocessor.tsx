@@ -6,9 +6,9 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { GModelElement, hasArgs, isBoundsAware, isHoverable, isSelectable, IVNodePostprocessor, svg } from '@eclipse-glsp/client';
+import { type GModelElement, hasArgs, isBoundsAware, isHoverable, isSelectable, type IVNodePostprocessor, svg } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
-import { VNode } from 'snabbdom';
+import { type VNode } from 'snabbdom';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const JSX = { createElement: svg };

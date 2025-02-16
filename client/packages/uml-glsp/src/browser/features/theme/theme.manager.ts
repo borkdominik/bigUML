@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { Action, IActionHandler, ICommand, TYPES, ViewerOptions } from '@eclipse-glsp/client';
+import { type Action, type IActionHandler, type ICommand, TYPES, type ViewerOptions } from '@eclipse-glsp/client';
 import { inject, injectable } from 'inversify';
 import { SetUMLThemeAction, type UMLTheme } from '../../../common/features/theme/theme.actions.js';
 

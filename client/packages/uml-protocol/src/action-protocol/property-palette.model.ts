@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { Action } from '@eclipse-glsp/protocol';
+import { type Action } from '@eclipse-glsp/protocol';
 
 export interface ElementProperties {
     elementId: string;

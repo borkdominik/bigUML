@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { containerFeature, Hoverable } from '@eclipse-glsp/client';
+import { containerFeature, type Hoverable } from '@eclipse-glsp/client';
 import { GUMLCompartment } from '../../views/uml-compartment.js';
 
 export class GCompartmentContainer extends GUMLCompartment implements Hoverable {

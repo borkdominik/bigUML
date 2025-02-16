@@ -27,7 +27,7 @@ import {
     viewKeyToolsModule
 } from '@eclipse-glsp/client';
 import { keyboardToolPaletteModule } from '@eclipse-glsp/client/lib/features/accessibility/keyboard-tool-palette/keyboard-tool-palette-module.js';
-import { bindOrRebind, ContainerConfiguration } from '@eclipse-glsp/protocol';
+import { bindOrRebind, type ContainerConfiguration } from '@eclipse-glsp/protocol';
 import { Container } from 'inversify';
 import { umlBaseModule } from './base/uml-base.module.js';
 import {

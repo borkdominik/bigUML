@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { WebviewResolver, WebviewResource } from './webview.js';
+import { type WebviewResolver, type WebviewResource } from './webview.js';
 
 export class ErrorWebviewResolver implements WebviewResolver {
     async error(resource: WebviewResource, message: string, details?: string): Promise<void> {

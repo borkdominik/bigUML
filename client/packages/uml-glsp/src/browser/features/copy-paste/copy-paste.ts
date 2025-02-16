@@ -7,15 +7,15 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import {
-    Args,
+    type Args,
     containerFeature,
     GChildElement,
-    GModelElement,
+    type GModelElement,
     MouseListener,
     PasteOperation,
     ServerCopyPasteHandler
 } from '@eclipse-glsp/client';
-import { Action } from '@eclipse-glsp/protocol';
+import { type Action } from '@eclipse-glsp/protocol';
 import { inject, injectable } from 'inversify';
 
 const CLIPBOARD_DATA_FORMAT = 'text/plain';

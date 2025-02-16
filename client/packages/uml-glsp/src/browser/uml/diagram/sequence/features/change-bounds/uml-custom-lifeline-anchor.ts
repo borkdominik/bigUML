@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { almostEquals, Bounds, GConnectableElement, Point, PolylineEdgeRouter, RectangleAnchor } from '@eclipse-glsp/client';
+import { almostEquals, Bounds, type GConnectableElement, type Point, PolylineEdgeRouter, RectangleAnchor } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 
 export const UML_LIFELINE_ANCHOR_KIND = 'uml_lifeline';

@@ -7,22 +7,22 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import {
-    ArgsAware,
+    type ArgsAware,
     containerFeature,
-    EditableLabel,
-    GChildElement,
+    type EditableLabel,
+    type GChildElement,
     GCompartment,
     hasArgs,
     isEditableLabel,
     layoutableChildFeature,
     nameFeature,
     RectangularNodeView,
-    RenderingContext,
+    type RenderingContext,
     svg
 } from '@eclipse-glsp/client';
-import { Args, DefaultTypes } from '@eclipse-glsp/protocol';
+import { type Args, DefaultTypes } from '@eclipse-glsp/protocol';
 import { injectable } from 'inversify';
-import { VNode } from 'snabbdom';
+import { type VNode } from 'snabbdom';
 // eslint-disable-next-line no-restricted-imports
 import { alignFeature } from 'sprotty';
 import { GLabeledNode } from '../../views/uml-label.view.js';

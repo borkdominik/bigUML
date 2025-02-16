@@ -16,17 +16,17 @@
 import {
     boundsFeature,
     fadeFeature,
-    GCompartment,
-    GNode,
+    type GCompartment,
+    type GNode,
     GShapeElement,
     layoutableChildFeature,
     layoutContainerFeature,
-    RenderingContext,
+    type RenderingContext,
     ShapeView,
     svg
 } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
-import { VNode } from 'snabbdom';
+import { type VNode } from 'snabbdom';
 // eslint-disable-next-line no-restricted-imports
 import { alignFeature } from 'sprotty';
 

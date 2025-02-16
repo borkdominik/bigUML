@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import { arrow, autoUpdate, computePosition, flip, offset, shift } from '@floating-ui/dom';
-import { css, html, PropertyValueMap, TemplateResult } from 'lit';
+import { css, html, type PropertyValueMap, type TemplateResult } from 'lit';
 import { property, query, queryAssignedElements } from 'lit/decorators.js';
 import { BigElement } from '../base/index.js';
 

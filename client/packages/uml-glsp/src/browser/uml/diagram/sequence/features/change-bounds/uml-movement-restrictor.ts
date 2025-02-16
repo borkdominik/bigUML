@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { GCompartment, GModelElement, GNode, GPort, IMovementRestrictor, isNotUndefined, Point } from '@eclipse-glsp/client';
+import { type GCompartment, type GModelElement, GNode, GPort, type IMovementRestrictor, isNotUndefined, type Point } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 import { NamedElement } from '../../../../elements/index.js';
 import { UMLSequenceTypes } from '../../sequence.types.js';

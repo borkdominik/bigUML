@@ -9,7 +9,7 @@
 import { inject, injectable, multiInject, postConstruct } from 'inversify';
 import * as vscode from 'vscode';
 import { TYPES } from '../../di.types.js';
-import { VSCodeCommand } from './command.js';
+import { type VSCodeCommand } from './command.js';
 
 @injectable()
 export class CommandManager {

@@ -8,7 +8,7 @@
  *********************************************************************************/
 
 import {
-    Action,
+    type Action,
     Bounds,
     ChangeBoundsTool,
     CursorCSS,
@@ -24,9 +24,9 @@ import {
     findParentByFeature,
     GConnectableElement,
     getAbsolutePosition,
-    GModelElement,
-    GReconnectHandle,
-    GRoutableElement,
+    type GModelElement,
+    type GReconnectHandle,
+    type GRoutableElement,
     HideEdgeReconnectHandlesFeedbackAction,
     isBoundsAware,
     isConnectable,
@@ -36,7 +36,7 @@ import {
     Point,
     toAbsoluteBounds
 } from '@eclipse-glsp/client';
-import { ISelectionListener } from '@eclipse-glsp/client/lib/base/selection-service.js';
+import { type ISelectionListener } from '@eclipse-glsp/client/lib/base/selection-service.js';
 import {
     DrawFeedbackEdgeAction,
     FeedbackEdgeEnd,

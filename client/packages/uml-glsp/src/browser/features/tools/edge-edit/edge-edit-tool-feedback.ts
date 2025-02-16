@@ -8,9 +8,9 @@
  *********************************************************************************/
 
 import {
-    CommandExecutionContext,
-    CommandReturn,
-    DrawFeedbackEdgeSourceAction,
+    type CommandExecutionContext,
+    type CommandReturn,
+    type DrawFeedbackEdgeSourceAction,
     DrawFeedbackEdgeSourceCommand,
     findParentByFeature,
     isBoundsAware,

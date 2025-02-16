@@ -10,9 +10,9 @@ import { ContainerModule, inject, injectable, multiInject } from 'inversify';
 import * as vscode from 'vscode';
 import { TYPES } from '../di.types.js';
 import { VSCodeSettings } from '../language.js';
-import { OutputChannel } from '../vscode/output/output.channel.js';
+import { type OutputChannel } from '../vscode/output/output.channel.js';
 import { java } from './java.js';
-import { ServerLauncher } from './launcher.js';
+import { type ServerLauncher } from './launcher.js';
 
 export interface ServerManagerStateListener {
     serverManagerStateChanged(manager: ServerManager, state: ServerManager.State): void | Promise<void>;

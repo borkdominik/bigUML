@@ -10,18 +10,18 @@
 import {
     Action,
     GetViewportAction,
-    GLSPActionDispatcher,
-    GModelElement,
+    type GLSPActionDispatcher,
+    type GModelElement,
     hasBooleanProp,
-    IActionHandler,
-    IDiagramStartup,
-    ISnapper,
-    Point,
+    type IActionHandler,
+    type IDiagramStartup,
+    type ISnapper,
+    type Point,
     SetViewportAction,
     TYPES,
-    ViewerOptions,
-    Viewport,
-    ViewportResult
+    type ViewerOptions,
+    type Viewport,
+    type ViewportResult
 } from '@eclipse-glsp/client';
 import { inject, injectable } from 'inversify';
 

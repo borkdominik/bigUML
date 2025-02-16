@@ -11,7 +11,7 @@
 // Licensed under the MIT License.
 
 import { css } from '@microsoft/fast-element';
-import { ComboboxOptions, disabledCursor, display, ElementDefinitionContext, focusVisible } from '@microsoft/fast-foundation';
+import { type ComboboxOptions, disabledCursor, display, type ElementDefinitionContext, focusVisible } from '@microsoft/fast-foundation';
 import {
     borderWidth,
     cornerRadius,

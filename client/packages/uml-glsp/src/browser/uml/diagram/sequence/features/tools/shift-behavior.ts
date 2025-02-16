@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { Point } from '@eclipse-glsp/protocol';
+import { type Point } from '@eclipse-glsp/protocol';
 import { SDDrawHorizontalShiftAction } from '../tool-feedback/horizontal-shift-tool-feedback.js';
 import { SDDrawVerticalShiftAction } from '../tool-feedback/vertical-shift-tool-feedback.js';
 

@@ -8,7 +8,7 @@
  *********************************************************************************/
 import {
     BaseEditTool,
-    BoundsAware,
+    type BoundsAware,
     CursorCSS,
     cursorFeedbackAction,
     DragAwareMouseListener,
@@ -16,20 +16,20 @@ import {
     forEachElement,
     GChildElement,
     getAbsolutePosition,
-    GModelElement,
-    GModelRoot,
+    type GModelElement,
+    type GModelRoot,
     isNonRoutableSelectedMovableBoundsAware,
     isSelectable,
     PointPositionUpdater,
     toAbsoluteBounds,
     toElementAndBounds
 } from '@eclipse-glsp/client';
-import { Action, ChangeBoundsOperation, ElementAndBounds, Operation, Point, SelectAction, SetBoundsAction } from '@eclipse-glsp/protocol';
+import { type Action, ChangeBoundsOperation, type ElementAndBounds, type Operation, Point, SelectAction, SetBoundsAction } from '@eclipse-glsp/protocol';
 import { inject, injectable, optional } from 'inversify';
 import { UML_TYPES } from '../../../../../uml-glsp.types.js';
 import { SDRemoveHorizontalShiftAction } from '../tool-feedback/horizontal-shift-tool-feedback.js';
 import { SDRemoveVerticalShiftAction } from '../tool-feedback/vertical-shift-tool-feedback.js';
-import { SDIShiftBehavior, SDShiftUtil } from './shift-behavior.js';
+import { type SDIShiftBehavior, SDShiftUtil } from './shift-behavior.js';
 
 // TODO: Sequence Diagram Specific
 @injectable()

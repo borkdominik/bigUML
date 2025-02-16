@@ -6,18 +6,18 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { GLSPDiagramIdentifier, GlspVscodeClient, WebviewEndpoint } from '@eclipse-glsp/vscode-integration';
+import { type GLSPDiagramIdentifier, type GlspVscodeClient, WebviewEndpoint } from '@eclipse-glsp/vscode-integration';
 import { inject, injectable, postConstruct } from 'inversify';
 import * as vscode from 'vscode';
 import { TYPES } from '../../di.types.js';
-import { ThemeIntegration } from '../../features/theme/theme-integration.js';
-import { UMLGLSPConnector } from '../../glsp/uml-glsp-connector.js';
+import { type ThemeIntegration } from '../../features/theme/theme-integration.js';
+import { type UMLGLSPConnector } from '../../glsp/uml-glsp-connector.js';
 import { VSCodeSettings } from '../../language.js';
-import { ServerManager, ServerManagerStateListener } from '../../server/server.manager.js';
+import { type ServerManager, type ServerManagerStateListener } from '../../server/server.manager.js';
 import { ErrorWebviewResolver } from './error.webview.js';
 import { GLSPWebviewResolver } from './glsp.webview.js';
 import { InitializingWebviewResolver } from './initializing.webview.js';
-import { WebviewResolver, WebviewResource } from './webview.js';
+import { type WebviewResolver, type WebviewResource } from './webview.js';
 
 @injectable()
 export class UMLDiagramEditorProvider implements vscode.CustomEditorProvider, ServerManagerStateListener {

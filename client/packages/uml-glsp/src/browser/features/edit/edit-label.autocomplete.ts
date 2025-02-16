@@ -6,21 +6,21 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { AutocompleteEntry } from '@borkdominik-biguml/uml-protocol';
+import { type AutocompleteEntry } from '@borkdominik-biguml/uml-protocol';
 import {
     ApplyLabelEditOperation,
     CommitModelAction,
     EditLabelUI,
-    EditLabelValidationResult,
+    type EditLabelValidationResult,
     EditorContextService,
-    GLSPActionDispatcher,
-    GModelRoot,
+    type GLSPActionDispatcher,
+    type GModelRoot,
     hasArgs,
     RequestContextActions,
     SetContextActions,
     TYPES
 } from '@eclipse-glsp/client';
-import { KeyboardModifier, KeyCode, matchesKeystroke } from '@eclipse-glsp/sprotty';
+import { type KeyboardModifier, type KeyCode, matchesKeystroke } from '@eclipse-glsp/sprotty';
 import { inject, injectable } from 'inversify';
 import { AutocompleteConstants } from '../autocomplete/autocomplete.constants.js';
 

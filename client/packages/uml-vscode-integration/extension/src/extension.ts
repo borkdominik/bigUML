@@ -8,14 +8,14 @@
  *********************************************************************************/
 import '../css/colors.css';
 
-import { Container } from 'inversify';
+import { type Container } from 'inversify';
 import * as vscode from 'vscode';
 import { createContainer } from './di.config.js';
 import { TYPES } from './di.types.js';
-import { UMLGLSPConnector } from './glsp/uml-glsp-connector.js';
-import { UMLGLSPServer } from './glsp/uml-glsp-server.js';
+import { type UMLGLSPConnector } from './glsp/uml-glsp-connector.js';
+import { type UMLGLSPServer } from './glsp/uml-glsp-server.js';
 import { VSCodeSettings } from './language.js';
-import { createGLSPServerConfig, ServerManager } from './server/index.js';
+import { createGLSPServerConfig, type ServerManager } from './server/index.js';
 import { configureDefaultCommands } from './vscode/command/default-commands.js';
 
 let diContainer: Container | undefined;

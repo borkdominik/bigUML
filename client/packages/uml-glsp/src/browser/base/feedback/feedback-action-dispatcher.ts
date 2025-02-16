@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { Action, FeedbackActionDispatcher, IFeedbackEmitter } from '@eclipse-glsp/client';
+import { type Action, FeedbackActionDispatcher, type IFeedbackEmitter } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 
 @injectable()

@@ -7,9 +7,9 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { UMLDiagramType } from '@borkdominik-biguml/uml-protocol';
+import { type UMLDiagramType } from '@borkdominik-biguml/uml-protocol';
 import { configureModelElement, GEdge, GEdgeView } from '@eclipse-glsp/client';
-import { interfaces } from 'inversify';
+import { type interfaces } from 'inversify';
 import { QualifiedUtil } from '../../qualified.utils.js';
 
 export function registerAbstractionElement(

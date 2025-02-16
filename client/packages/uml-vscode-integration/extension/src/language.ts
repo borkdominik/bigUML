@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { UMLDiagramTypeUtil, UMLLanguageEnvironment } from '@borkdominik-biguml/uml-protocol';
+import { UMLDiagramTypeUtil, type UMLLanguageEnvironment } from '@borkdominik-biguml/uml-protocol';
 
 export const UMLLangugageEnvironment: UMLLanguageEnvironment = {
     supportedTypes: UMLDiagramTypeUtil.supported

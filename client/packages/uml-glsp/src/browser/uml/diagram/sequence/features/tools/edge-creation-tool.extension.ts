@@ -15,16 +15,16 @@ import {
     FeedbackEdgeEndMovingMouseListener,
     findParentByFeature,
     getAbsolutePosition,
-    GModelElement,
+    type GModelElement,
     isCtrlOrCmd,
-    ISnapper,
+    type ISnapper,
     TYPES
 } from '@eclipse-glsp/client';
 import {
     DrawFeedbackEdgeAction,
     RemoveFeedbackEdgeAction
 } from '@eclipse-glsp/client/lib/features/tools/edge-creation/dangling-edge-feedback.js';
-import { Action, CreateEdgeOperation, Point } from '@eclipse-glsp/protocol';
+import { type Action, CreateEdgeOperation, type Point } from '@eclipse-glsp/protocol';
 import { inject, injectable, optional } from 'inversify';
 import { sequence } from '../../elements/index.js';
 import { isSequence } from '../../elements/interacton.model.js';

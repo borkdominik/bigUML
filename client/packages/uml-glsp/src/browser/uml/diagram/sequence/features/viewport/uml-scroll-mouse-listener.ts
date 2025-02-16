@@ -6,10 +6,10 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { Action } from '@eclipse-glsp/protocol';
+import { type Action } from '@eclipse-glsp/protocol';
 import { injectable } from 'inversify';
 
-import { EnableToolsAction, GLSPScrollMouseListener, IActionHandler, ICommand } from '@eclipse-glsp/client';
+import { EnableToolsAction, GLSPScrollMouseListener, type IActionHandler, type ICommand } from '@eclipse-glsp/client';
 import { SDShiftMouseTool } from '../tools/shift-mouse-tool.js';
 
 // TODO: Sequence Diagram Specific

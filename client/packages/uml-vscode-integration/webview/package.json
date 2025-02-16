@@ -31,6 +31,7 @@
     "compile": "tsx .esbuild.mts",
     "lint": "eslint -c ./eslint.config.mjs",
     "lint:ci": "npm run lint -o eslint.xml -f checkstyle",
+    "lint:fix": "eslint --fix -c ./eslint.config.mjs",
     "watch": "npm run compile --watch"
   },
   "dependencies": {

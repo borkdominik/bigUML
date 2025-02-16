@@ -6,21 +6,21 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { Action, GEdgeSchema, Point } from '@eclipse-glsp/protocol';
+import { Action, type GEdgeSchema, Point } from '@eclipse-glsp/protocol';
 import { inject, injectable } from 'inversify';
 
 import {
-    CommandExecutionContext,
-    CommandReturn,
+    type CommandExecutionContext,
+    type CommandReturn,
     FeedbackCommand,
     FeedbackEdgeEndMovingMouseListener,
     findParentByFeature,
     GChildElement,
     GDanglingAnchor,
     getAbsolutePosition,
-    GModelElement,
-    GModelRoot,
-    GRoutableElement,
+    type GModelElement,
+    type GModelRoot,
+    type GRoutableElement,
     isBoundsAware,
     isConnectable,
     isRoutable,

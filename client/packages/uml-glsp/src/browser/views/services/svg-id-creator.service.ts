@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { TYPES, ViewerOptions } from '@eclipse-glsp/client';
+import { TYPES, type ViewerOptions } from '@eclipse-glsp/client';
 import { inject, injectable } from 'inversify';
 
 export const SVGIdCreatorOptions = {

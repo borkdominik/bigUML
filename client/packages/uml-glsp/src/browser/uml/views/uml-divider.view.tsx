@@ -6,9 +6,9 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { boundsFeature, fadeFeature, GShapeElement, IView, layoutableChildFeature, RenderingContext, svg } from '@eclipse-glsp/client';
+import { boundsFeature, fadeFeature, GShapeElement, type IView, layoutableChildFeature, type RenderingContext, svg } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
-import { VNode } from 'snabbdom';
+import { type VNode } from 'snabbdom';
 // eslint-disable-next-line no-restricted-imports
 import { alignFeature } from 'sprotty';
 

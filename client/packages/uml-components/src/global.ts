@@ -7,29 +7,29 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { Combobox } from '@microsoft/fast-components';
+import { type Combobox } from '@microsoft/fast-components';
 import {
-    Button,
-    Checkbox,
-    DataGrid,
-    DataGridCell,
-    DataGridRow,
-    Divider,
-    Dropdown,
-    Option,
-    Panels,
-    PanelTab,
-    PanelView,
-    TextArea,
-    TextField
+    type Button,
+    type Checkbox,
+    type DataGrid,
+    type DataGridCell,
+    type DataGridRow,
+    type Divider,
+    type Dropdown,
+    type Option,
+    type Panels,
+    type PanelTab,
+    type PanelView,
+    type TextArea,
+    type TextField
 } from '@vscode/webview-ui-toolkit';
-import { VsCodeApi } from 'vscode-messenger-webview';
-import { ContextMenu, ContextMenuItem } from './menu/context-menu.component.js';
-import { Menu, MenuItem } from './menu/menu.component.js';
-import { Minimap, MinimapWebview } from './minimap/index.js';
-import { PropertyPalette, PropertyPaletteWebview } from './property-palette/index.js';
-import { PropertyPaletteReference } from './property-palette/reference/property-palette-reference.component.js';
-import { Tooltip } from './tooltip/tooltip.component.js';
+import { type VsCodeApi } from 'vscode-messenger-webview';
+import { type ContextMenu, type ContextMenuItem } from './menu/context-menu.component.js';
+import { type Menu, type MenuItem } from './menu/menu.component.js';
+import { type Minimap, type MinimapWebview } from './minimap/index.js';
+import { type PropertyPalette, type PropertyPaletteWebview } from './property-palette/index.js';
+import { type PropertyPaletteReference } from './property-palette/reference/property-palette-reference.component.js';
+import { type Tooltip } from './tooltip/tooltip.component.js';
 
 declare global {
     function acquireVsCodeApi(): VsCodeApi;

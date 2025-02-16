@@ -6,15 +6,15 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { UMLDiagramType } from '@borkdominik-biguml/uml-protocol';
+import { type UMLDiagramType } from '@borkdominik-biguml/uml-protocol';
 import {
-    CancellationToken,
-    Disposable,
-    ExtensionContext,
-    QuickInput,
-    QuickInputButton,
+    type CancellationToken,
+    type Disposable,
+    type ExtensionContext,
+    type QuickInput,
+    type QuickInputButton,
     QuickInputButtons,
-    QuickPickItem,
+    type QuickPickItem,
     window
 } from 'vscode';
 

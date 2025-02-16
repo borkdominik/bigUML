@@ -8,7 +8,7 @@
  *********************************************************************************/
 import { Container, ContainerModule } from 'inversify';
 import { minimapModule } from 'packages/uml-vscode-integration/extension/src/features/minimap/minimap.module.js';
-import * as vscode from 'vscode';
+import type * as vscode from 'vscode';
 import { TYPES } from './di.types.js';
 import { outlineModule } from './features/outline/outline.module.js';
 import { propertyPaletteModule } from './features/property-palette/property-palette.module.js';
@@ -17,7 +17,7 @@ import { IDEServer } from './glsp/ide-server.js';
 import { IDESessionClient } from './glsp/ide-session-client.js';
 import { UMLGLSPConnector } from './glsp/uml-glsp-connector.js';
 import { UMLGLSPServer } from './glsp/uml-glsp-server.js';
-import { GlspServerConfig, glspServerModule } from './server/glsp-server.launcher.js';
+import { type GlspServerConfig, glspServerModule } from './server/glsp-server.launcher.js';
 import { serverManagerModule } from './server/server.manager.js';
 import { vscodeModule } from './vscode/vscode.module.js';
 

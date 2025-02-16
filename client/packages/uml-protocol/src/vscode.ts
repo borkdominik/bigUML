@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { ActionMessage } from '@eclipse-glsp/protocol';
-import { NotificationType } from 'vscode-messenger-common';
+import { type ActionMessage } from '@eclipse-glsp/protocol';
+import { type NotificationType } from 'vscode-messenger-common';
 
 export const ActionMessageNotification: NotificationType<ActionMessage> = { method: 'actionMessage' };

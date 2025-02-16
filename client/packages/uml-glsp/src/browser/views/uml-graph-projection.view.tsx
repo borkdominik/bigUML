@@ -6,9 +6,9 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { GLSPProjectionView, GViewportRootElement, IViewArgs, RenderingContext, svg } from '@eclipse-glsp/client';
+import { GLSPProjectionView, type GViewportRootElement, type IViewArgs, type RenderingContext, svg } from '@eclipse-glsp/client';
 import { inject, injectable } from 'inversify';
-import { VNode, VNodeStyle, h } from 'snabbdom';
+import { type VNode, type VNodeStyle, h } from 'snabbdom';
 import { SVGIdCreatorService } from './services/svg-id-creator.service.js';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

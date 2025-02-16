@@ -8,16 +8,16 @@
  *********************************************************************************/
 import { MinimapExportSvgAction, RequestMinimapExportSvgAction } from '@borkdominik-biguml/uml-protocol';
 import {
-    Action,
-    CommandExecutionContext,
-    CommandResult,
+    type Action,
+    type CommandExecutionContext,
+    type CommandResult,
     EditorContextService,
-    GModelElement,
+    type GModelElement,
     GModelRoot,
     HiddenCommand,
-    IActionHandler,
-    IVNodePostprocessor,
-    RequestAction,
+    type IActionHandler,
+    type IVNodePostprocessor,
+    type RequestAction,
     SvgExporter,
     TYPES,
     isExportable,
@@ -26,7 +26,7 @@ import {
     isViewport
 } from '@eclipse-glsp/client';
 import { inject, injectable } from 'inversify';
-import { VNode } from 'snabbdom';
+import { type VNode } from 'snabbdom';
 import { v4 as uuid } from 'uuid';
 
 // The following implementation follows the standard implementation

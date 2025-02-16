@@ -11,13 +11,13 @@ import { createUMLDiagramContainer } from '@borkdominik-biguml/uml-glsp/lib/brow
 import '@eclipse-glsp/vscode-integration-webview/css/glsp-vscode.css';
 
 import { GLSPIsReadyAction, MinimapExportSvgAction, ModelResourcesResponseAction } from '@borkdominik-biguml/uml-protocol';
-import { IActionDispatcher, IDiagramStartup, InitializeCanvasBoundsAction, TYPES } from '@eclipse-glsp/client';
-import { ContainerConfiguration, MaybePromise, SetViewportAction, bindAsService, bindOrRebind } from '@eclipse-glsp/protocol';
+import { type IActionDispatcher, type IDiagramStartup, InitializeCanvasBoundsAction, TYPES } from '@eclipse-glsp/client';
+import { type ContainerConfiguration, type MaybePromise, SetViewportAction, bindAsService, bindOrRebind } from '@eclipse-glsp/protocol';
 import { GLSPStarter } from '@eclipse-glsp/vscode-integration-webview';
-import { GLSPDiagramIdentifier } from '@eclipse-glsp/vscode-integration-webview/lib/diagram-identifier.js';
+import { type GLSPDiagramIdentifier } from '@eclipse-glsp/vscode-integration-webview/lib/diagram-identifier.js';
 import { ExtensionActionKind } from '@eclipse-glsp/vscode-integration-webview/lib/features/default/extension-action-handler.js';
 import { GLSPDiagramWidget } from '@eclipse-glsp/vscode-integration-webview/lib/glsp-diagram-widget.js';
-import { Container, inject, injectable } from 'inversify';
+import { type Container, inject, injectable } from 'inversify';
 import { UMLDiagramWidget } from './diagram.widget.js';
 
 class UMLStarter extends GLSPStarter {

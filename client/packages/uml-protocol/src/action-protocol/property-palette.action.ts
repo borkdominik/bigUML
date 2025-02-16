@@ -7,8 +7,8 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { Action, hasStringProp, RequestAction, ResponseAction } from '@eclipse-glsp/protocol';
-import { ElementProperties } from './property-palette.model.js';
+import { Action, hasStringProp, RequestAction, type ResponseAction } from '@eclipse-glsp/protocol';
+import { type ElementProperties } from './property-palette.model.js';
 
 export interface RequestPropertyPaletteAction extends RequestAction<SetPropertyPaletteAction> {
     kind: typeof RequestPropertyPaletteAction.KIND;

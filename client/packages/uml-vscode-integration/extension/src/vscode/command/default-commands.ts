@@ -11,7 +11,7 @@ import { EnableToolsAction, FocusDomAction } from '@borkdominik-biguml/uml-glsp'
 import { CenterAction, FitToScreenAction, RequestExportSvgAction, SelectAllAction } from '@eclipse-glsp/protocol';
 import { SetUIExtensionVisibilityAction } from '@eclipse-glsp/sprotty/node_modules/sprotty/src/base/ui-extensions/ui-extension-registry.js';
 import * as vscode from 'vscode';
-import { UMLGLSPConnector } from '../../glsp/uml-glsp-connector.js';
+import { type UMLGLSPConnector } from '../../glsp/uml-glsp-connector.js';
 
 export interface CommandContext {
     extensionContext: vscode.ExtensionContext;

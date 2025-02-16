@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { GLSPActionDispatcher, RequestAction, ResponseAction } from '@eclipse-glsp/client';
+import { GLSPActionDispatcher, RequestAction, type ResponseAction } from '@eclipse-glsp/client';
 
 export class UMLActionDispatcher extends GLSPActionDispatcher {
     override requestUntil<Res extends ResponseAction>(

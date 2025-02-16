@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { Action, Bounds, RequestAction, ResponseAction } from '@eclipse-glsp/protocol';
+import { Action, type Bounds, RequestAction, type ResponseAction } from '@eclipse-glsp/protocol';
 
 /**
  * A `RequestMinimapExportSvgAction` is sent by the client to initiate the SVG export of the current diagram.

@@ -6,12 +6,12 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { GlspVscodeClient, GlspVscodeConnector } from '@eclipse-glsp/vscode-integration';
+import { type GlspVscodeClient, type GlspVscodeConnector } from '@eclipse-glsp/vscode-integration';
 import { GLSPIsReadyAction } from 'packages/uml-protocol/lib/index';
-import * as vscode from 'vscode';
-import { ThemeIntegration } from '../../features/theme/theme-integration.js';
+import type * as vscode from 'vscode';
+import { type ThemeIntegration } from '../../features/theme/theme-integration.js';
 import { getBundleUri, getUri } from '../../utilities/webview.js';
-import { WebviewResolver, WebviewResource } from './webview.js';
+import { type WebviewResolver, type WebviewResource } from './webview.js';
 
 export interface GLSPWebviewData {
     readonly diagramType: string;

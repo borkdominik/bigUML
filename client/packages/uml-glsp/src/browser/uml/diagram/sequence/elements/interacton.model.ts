@@ -9,7 +9,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
 
-import { GModelElement } from '@eclipse-glsp/client';
+import { type GModelElement } from '@eclipse-glsp/client';
 import { NamedElement } from '../../../elements/index.js';
 
 export const sequence = Symbol('sequence');

@@ -13,13 +13,13 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { OutlineTreeNode, RequestOutlineAction, SetOutlineAction } from '@borkdominik-biguml/uml-protocol';
+import { type OutlineTreeNode, RequestOutlineAction, SetOutlineAction } from '@borkdominik-biguml/uml-protocol';
 import { SelectAllAction } from '@eclipse-glsp/protocol';
 import { SelectAction } from '@eclipse-glsp/vscode-integration';
 import { inject, injectable, postConstruct } from 'inversify';
 import * as vscode from 'vscode';
 import { TYPES } from '../../di.types.js';
-import { UMLGLSPConnector } from '../../glsp/uml-glsp-connector.js';
+import { type UMLGLSPConnector } from '../../glsp/uml-glsp-connector.js';
 import { VSCodeSettings } from '../../language.js';
 
 @injectable()

@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import { injectable, postConstruct } from 'inversify';
-import { ConfigurationScope, ConfigurationTarget, workspace, WorkspaceConfiguration, WorkspaceFolder } from 'vscode';
+import { type ConfigurationScope, ConfigurationTarget, workspace, type WorkspaceConfiguration, type WorkspaceFolder } from 'vscode';
 
 export namespace SettingKeys {
     export const section = 'bigUML' as const;

@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import * as vscode from 'vscode';
+import type * as vscode from 'vscode';
 
 export interface WebviewResource {
     document: vscode.CustomDocument;

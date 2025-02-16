@@ -13,10 +13,10 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { RenderingContext, ShapeView, svg } from '@eclipse-glsp/client';
+import { type RenderingContext, ShapeView, svg } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
-import { VNode } from 'snabbdom';
-import { NamedElement } from '../named-element/named-element.view.js';
+import { type VNode } from 'snabbdom';
+import { type NamedElement } from '../named-element/named-element.view.js';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const JSX = { createElement: svg };

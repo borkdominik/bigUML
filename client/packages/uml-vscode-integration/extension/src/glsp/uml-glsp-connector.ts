@@ -7,17 +7,17 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import {
-    Action,
+    type Action,
     ActionMessage,
-    Args,
+    type Args,
     Disposable,
-    GlspVscodeClient,
+    type GlspVscodeClient,
     GlspVscodeConnector,
-    GlspVscodeServer,
+    type GlspVscodeServer,
     MessageOrigin,
-    MessageProcessingResult,
+    type MessageProcessingResult,
     RedoAction,
-    SetDirtyStateAction,
+    type SetDirtyStateAction,
     UndoAction
 } from '@eclipse-glsp/vscode-integration';
 import { inject, injectable } from 'inversify';

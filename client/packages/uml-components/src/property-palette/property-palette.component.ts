@@ -10,16 +10,16 @@
 import {
     ElementBoolProperty,
     ElementChoiceProperty,
-    ElementProperties,
-    ElementProperty,
+    type ElementProperties,
+    type ElementProperty,
     ElementReferenceProperty,
     ElementTextProperty,
     RefreshPropertyPaletteAction,
     UpdateElementPropertyAction
 } from '@borkdominik-biguml/uml-protocol';
-import { Action } from '@eclipse-glsp/protocol';
-import { Checkbox as VSCodeCheckbox, Dropdown as VSCodeDropdown, TextField as VSCodeTextField } from '@vscode/webview-ui-toolkit';
-import { PropertyValues, TemplateResult, html, nothing } from 'lit';
+import { type Action } from '@eclipse-glsp/protocol';
+import { type Checkbox as VSCodeCheckbox, type Dropdown as VSCodeDropdown, type TextField as VSCodeTextField } from '@vscode/webview-ui-toolkit';
+import { type PropertyValues, type TemplateResult, html, nothing } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { keyed } from 'lit/directives/keyed.js';
 import { when } from 'lit/directives/when.js';
@@ -28,9 +28,9 @@ import { BigElement } from '../base/component.js';
 import '../global.js';
 import { PropertyPaletteStyle } from './property-palette.style';
 import {
-    PropertyDeleteEventDetail,
-    PropertyNameChangeDetail,
-    PropertyOrderDetail
+    type PropertyDeleteEventDetail,
+    type PropertyNameChangeDetail,
+    type PropertyOrderDetail
 } from './reference/property-palette-reference.component.js';
 
 export function definePropertyPalette(): void {

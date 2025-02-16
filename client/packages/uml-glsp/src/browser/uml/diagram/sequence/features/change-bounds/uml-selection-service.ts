@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { GEdge, GModelRoot, SelectionService } from '@eclipse-glsp/client';
+import { GEdge, type GModelRoot, SelectionService } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 
 @injectable()

@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { css, CSSResult, unsafeCSS } from 'lit';
+import { css, type CSSResult, unsafeCSS } from 'lit';
 
 const codiconCSS = document.getElementById('codicon-css') as HTMLLinkElement | null;
 if (codiconCSS === null) {

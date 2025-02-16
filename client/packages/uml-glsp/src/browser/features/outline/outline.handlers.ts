@@ -7,9 +7,9 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import { RequestOutlineAction } from '@borkdominik-biguml/uml-protocol';
-import { Action, GModelRoot, IActionHandler, IDiagramStartup, IGModelRootListener, MaybePromise, TYPES } from '@eclipse-glsp/client';
+import { type Action, type GModelRoot, type IActionHandler, type IDiagramStartup, type IGModelRootListener, type MaybePromise, TYPES } from '@eclipse-glsp/client';
 import { inject, injectable } from 'inversify';
-import { UMLActionDispatcher } from '../../base/action-dispatcher.js';
+import { type UMLActionDispatcher } from '../../base/action-dispatcher.js';
 
 @injectable()
 export class OutlineService implements IActionHandler, IDiagramStartup, IGModelRootListener {

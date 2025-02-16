@@ -8,10 +8,10 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-import { CircularNodeView, RenderingContext, svg } from '@eclipse-glsp/client';
+import { CircularNodeView, type RenderingContext, svg } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
-import { VNode } from 'snabbdom';
-import { GLabeledNode } from '../../views/uml-label.view.js';
+import { type VNode } from 'snabbdom';
+import { type GLabeledNode } from '../../views/uml-label.view.js';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const JSX = { createElement: svg };

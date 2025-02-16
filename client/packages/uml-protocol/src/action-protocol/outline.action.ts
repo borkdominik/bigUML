@@ -6,9 +6,9 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { Action, hasObjectProp, RequestAction, ResponseAction } from '@eclipse-glsp/protocol';
+import { Action, hasObjectProp, type RequestAction, type ResponseAction } from '@eclipse-glsp/protocol';
 
-import { OutlineTreeNode } from './outline.model.js';
+import { type OutlineTreeNode } from './outline.model.js';
 
 export interface RequestOutlineAction extends RequestAction<SetOutlineAction> {
     kind: typeof RequestOutlineAction.KIND;

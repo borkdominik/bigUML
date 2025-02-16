@@ -7,17 +7,17 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import {
-    AnchorComputerRegistry,
-    CommandExecutionContext,
-    CommandReturn,
+    type AnchorComputerRegistry,
+    type CommandExecutionContext,
+    type CommandReturn,
     FeedbackCommand,
     GChildElement,
-    GModelElement,
-    GModelRoot,
+    type GModelElement,
+    type GModelRoot,
     MouseListener,
     TYPES
 } from '@eclipse-glsp/client';
-import { Action, hasObjectProp, Point } from '@eclipse-glsp/protocol';
+import { Action, hasObjectProp, type Point } from '@eclipse-glsp/protocol';
 import { inject, injectable } from 'inversify';
 
 export interface SDDrawHorizontalShiftAction extends Action {

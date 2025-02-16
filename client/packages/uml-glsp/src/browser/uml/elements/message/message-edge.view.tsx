@@ -6,9 +6,9 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { angleOfPoint, GEdge, Point, PolylineEdgeView, RenderingContext, svg, toDegrees } from '@eclipse-glsp/client';
+import { angleOfPoint, type GEdge, type Point, PolylineEdgeView, type RenderingContext, svg, toDegrees } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
-import { VNode } from 'snabbdom';
+import { type VNode } from 'snabbdom';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const JSX = { createElement: svg };

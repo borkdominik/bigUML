@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { ApplyTypeHintsCommand, getElementTypeId, GModelElement, GModelElementSchema, ShapeTypeHint } from '@eclipse-glsp/client';
+import { ApplyTypeHintsCommand, getElementTypeId, type GModelElement, type GModelElementSchema, type ShapeTypeHint } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 
 @injectable()

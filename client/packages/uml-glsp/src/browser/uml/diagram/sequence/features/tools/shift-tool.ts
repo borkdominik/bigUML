@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { Action, BaseEditTool, EnableToolsAction, GModelElement, KeyListener } from '@eclipse-glsp/client';
+import { type Action, BaseEditTool, EnableToolsAction, type GModelElement, KeyListener } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 import { SDShiftMouseTool } from './shift-mouse-tool.js';
 

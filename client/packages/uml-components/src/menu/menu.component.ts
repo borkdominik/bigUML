@@ -6,13 +6,13 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { Button as VSCodeButton } from '@vscode/webview-ui-toolkit';
-import { css, html, PropertyValues, TemplateResult } from 'lit';
+import { type Button as VSCodeButton } from '@vscode/webview-ui-toolkit';
+import { css, html, type PropertyValues, type TemplateResult } from 'lit';
 import { query, queryAssignedElements } from 'lit/decorators.js';
 import { BigElement } from '../base/component.js';
 import '../global.js';
-import { Tooltip } from '../tooltip/tooltip.component.js';
-import { ContextMenu, ContextMenuItem } from './context-menu.component.js';
+import { type Tooltip } from '../tooltip/tooltip.component.js';
+import { type ContextMenu, ContextMenuItem } from './context-menu.component.js';
 
 export function defineMenu(): void {
     customElements.define('big-menu', Menu);

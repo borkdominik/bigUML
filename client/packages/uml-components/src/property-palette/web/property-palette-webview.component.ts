@@ -9,18 +9,18 @@
 
 import {
     ActionMessageNotification,
-    ElementProperties,
+    type ElementProperties,
     RefreshPropertyPaletteAction,
     SetPropertyPaletteAction
 } from '@borkdominik-biguml/uml-protocol';
-import { Action, ActionMessage } from '@eclipse-glsp/protocol';
-import { TemplateResult, html } from 'lit';
+import { type Action, type ActionMessage } from '@eclipse-glsp/protocol';
+import { type TemplateResult, html } from 'lit';
 import { query, state } from 'lit/decorators.js';
 import { HOST_EXTENSION } from 'vscode-messenger-common';
 import { BigElement } from '../../base/component.js';
 import { useToolkit } from '../../toolkit/index.js';
 import { messenger } from '../../vscode/messenger.js';
-import { PropertyPalette } from '../property-palette.component.js';
+import { type PropertyPalette } from '../property-palette.component.js';
 
 export function definePropertyPaletteWebview(): void {
     customElements.define('big-property-palette-webview', PropertyPaletteWebview);

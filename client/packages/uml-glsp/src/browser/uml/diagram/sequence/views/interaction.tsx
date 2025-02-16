@@ -8,11 +8,11 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR MIT
  ********************************************************************************/
-import { DefaultTypes, GCompartment, RectangularNodeView, RenderingContext, svg } from '@eclipse-glsp/client';
+import { DefaultTypes, GCompartment, RectangularNodeView, type RenderingContext, svg } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
-import { VNode } from 'snabbdom';
+import { type VNode } from 'snabbdom';
 
-import { InteractionElement } from '../elements/interacton.model.js';
+import { type InteractionElement } from '../elements/interacton.model.js';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const JSX = { createElement: svg };

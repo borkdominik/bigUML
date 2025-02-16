@@ -8,18 +8,18 @@
  *********************************************************************************/
 import {
     EdgeRouterRegistry,
-    GEdge,
+    type GEdge,
     getSubType,
     GLabelView,
-    Point,
-    RenderingContext,
-    RoutedPoint,
+    type Point,
+    type RenderingContext,
+    type RoutedPoint,
     setAttr,
     svg
 } from '@eclipse-glsp/client';
 import { inject, injectable } from 'inversify';
-import { VNode } from 'snabbdom';
-import { GEditableLabel } from '../../views/uml-label.view.js';
+import { type VNode } from 'snabbdom';
+import { type GEditableLabel } from '../../views/uml-label.view.js';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const JSX = { createElement: svg };

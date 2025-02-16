@@ -7,19 +7,19 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import {
-    Action,
+    type Action,
     changeCodiconClass,
     createIcon,
-    GModelRoot,
-    ICommand,
-    KeyCode,
+    type GModelRoot,
+    type ICommand,
+    type KeyCode,
     MarqueeMouseTool,
     matchesKeystroke,
     MouseDeleteTool,
-    PaletteItem,
+    type PaletteItem,
     RequestContextActions,
     RequestMarkersAction,
-    SetContextActions,
+    type SetContextActions,
     ToolPalette
 } from '@eclipse-glsp/client';
 import { KeyboardToolPalette } from '@eclipse-glsp/client/lib/features/accessibility/keyboard-tool-palette/keyboard-tool-palette.js';

@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { Action, RequestAction, ResponseAction } from '@eclipse-glsp/protocol';
+import { Action, RequestAction, type ResponseAction } from '@eclipse-glsp/protocol';
 
 export interface RequestModelResourcesAction extends RequestAction<ModelResourcesResponseAction> {
     kind: typeof RequestModelResourcesAction.KIND;

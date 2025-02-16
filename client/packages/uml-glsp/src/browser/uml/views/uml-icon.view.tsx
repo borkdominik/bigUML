@@ -7,26 +7,26 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import {
-    Args,
-    ArgsAware,
+    type Args,
+    type ArgsAware,
     boundsFeature,
-    Deletable,
+    type Deletable,
     deletableFeature,
     fadeFeature,
     GCompartment,
     GShapeElement,
-    Hoverable,
+    type Hoverable,
     hoverFeedbackFeature,
-    IView,
+    type IView,
     layoutableChildFeature,
     layoutContainerFeature,
-    RenderingContext,
-    Selectable,
+    type RenderingContext,
+    type Selectable,
     selectFeature,
     svg
 } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
-import { VNode } from 'snabbdom';
+import { type VNode } from 'snabbdom';
 
 export class GIcon extends GShapeElement {
     iconImageName: string;

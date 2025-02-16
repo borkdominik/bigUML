@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { IDiagramStartup, TYPES, ViewerOptions } from '@eclipse-glsp/client';
+import { type IDiagramStartup, TYPES, type ViewerOptions } from '@eclipse-glsp/client';
 import { bindAsService, FeatureModule } from '@eclipse-glsp/protocol';
 import { inject, injectable } from 'inversify';
 

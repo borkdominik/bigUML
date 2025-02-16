@@ -9,14 +9,14 @@
 
 import { ActionMessageNotification, MinimapExportSvgAction } from '@borkdominik-biguml/uml-protocol';
 import { InitializeCanvasBoundsAction } from '@eclipse-glsp/client';
-import { Action, ActionMessage, ExportSvgAction, SetViewportAction } from '@eclipse-glsp/protocol';
-import { TemplateResult, html } from 'lit';
+import { type Action, type ActionMessage, ExportSvgAction, SetViewportAction } from '@eclipse-glsp/protocol';
+import { type TemplateResult, html } from 'lit';
 import { query, state } from 'lit/decorators.js';
 import { HOST_EXTENSION } from 'vscode-messenger-common';
 import { BigElement } from '../../base/component.js';
 import { useToolkit } from '../../toolkit/index.js';
 import { messenger } from '../../vscode/messenger.js';
-import { Minimap } from '../minimap.component.js';
+import { type Minimap } from '../minimap.component.js';
 
 export function defineMinimapWebview(): void {
     customElements.define('big-minimap-webview', MinimapWebview);

@@ -6,10 +6,10 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { RefreshPropertyPaletteAction, RequestPropertyPaletteAction, SetPropertyPaletteAction } from '@borkdominik-biguml/uml-protocol';
-import { Action, GModelRoot, IActionHandler, ICommand, IGModelRootListener, SelectAction, TYPES } from '@eclipse-glsp/client';
+import { RefreshPropertyPaletteAction, RequestPropertyPaletteAction, type SetPropertyPaletteAction } from '@borkdominik-biguml/uml-protocol';
+import { type Action, type GModelRoot, type IActionHandler, type ICommand, type IGModelRootListener, SelectAction, TYPES } from '@eclipse-glsp/client';
 import { inject, injectable } from 'inversify';
-import { UMLActionDispatcher } from '../../base/action-dispatcher.js';
+import { type UMLActionDispatcher } from '../../base/action-dispatcher.js';
 
 @injectable()
 export class PropertyPaletteHandler implements IActionHandler, IGModelRootListener {

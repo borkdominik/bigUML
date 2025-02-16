@@ -26,6 +26,7 @@
   ],
   "type": "module",
   "main": "lib/index",
+  "types": "lib/index.d.ts",
   "files": [
     "lib",
     "src"

@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { TemplateResult, html, svg } from 'lit';
+import { type TemplateResult, html, svg } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { keyed } from 'lit/directives/keyed.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';

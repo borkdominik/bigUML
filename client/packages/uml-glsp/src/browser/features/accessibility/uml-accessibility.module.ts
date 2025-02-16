@@ -12,7 +12,7 @@
  */
 
 import {
-    AutocompleteSuggestion,
+    type AutocompleteSuggestion,
     BaseEditTool,
     codiconCSSString,
     configureActionHandler,
@@ -20,14 +20,14 @@ import {
     findParentByFeature,
     GChildElement,
     GEdge,
-    GLSPActionDispatcher,
-    GModelElement,
-    GModelRoot,
+    type GLSPActionDispatcher,
+    type GModelElement,
+    type GModelRoot,
     GNode,
-    IActionHandler,
-    IAutocompleteSuggestionProvider,
-    ICommand,
-    ILogger,
+    type IActionHandler,
+    type IAutocompleteSuggestionProvider,
+    type ICommand,
+    type ILogger,
     isBoundsAware,
     isNameable,
     isSelectable,
@@ -36,16 +36,16 @@ import {
     KeyTool,
     matchesKeystroke,
     name,
-    Selectable,
-    SelectableBoundsAware,
+    type Selectable,
+    type SelectableBoundsAware,
     SelectionService,
     toArray,
-    Tool,
+    type Tool,
     TYPES
 } from '@eclipse-glsp/client';
 import { SetAccessibleKeyShortcutAction } from '@eclipse-glsp/client/lib/features/accessibility/key-shortcut/accessible-key-shortcut.js';
 import {
-    Action,
+    type Action,
     bindAsService,
     FeatureModule,
     SelectAction,
@@ -276,7 +276,7 @@ export const umlKeyboardControlToolsModule = new FeatureModule((bind, unbind, is
     bindAsService(context, TYPES.IUIExtension, GridSearchPalette);
 });
 
-import { ElementNavigator } from '@eclipse-glsp/client/lib/features/accessibility/element-navigation/element-navigator.js';
+import { type ElementNavigator } from '@eclipse-glsp/client/lib/features/accessibility/element-navigation/element-navigator.js';
 import { LocalElementNavigator } from '@eclipse-glsp/client/lib/features/accessibility/element-navigation/local-element-navigator.js';
 import { PositionNavigator } from '@eclipse-glsp/client/lib/features/accessibility/element-navigation/position-navigator.js';
 import { RepositionAction } from '@eclipse-glsp/client/lib/features/viewport/reposition.js';

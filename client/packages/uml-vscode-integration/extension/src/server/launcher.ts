@@ -9,7 +9,7 @@
 import * as childProcess from 'child_process';
 import * as fs from 'fs';
 import * as net from 'net';
-import { osUtils } from './os';
+import { osUtils } from './os.js';
 
 export interface ServerLauncherOptions {
     readonly executable: string;
@@ -102,15 +102,15 @@ export abstract class ServerLauncher {
         // Nothing to do
     }
 
-    protected onStdoutData(data: string | Buffer): void {
+    protected onStdoutData(_data: string | Buffer): void {
         // Nothing to do
     }
 
-    protected onStderrData(data: string | Buffer): void {
+    protected onStderrData(_data: string | Buffer): void {
         // Nothing to do
     }
 
-    protected onProcessError(error: Error): void {
+    protected onProcessError(_error: Error): void {
         // Nothing to do
     }
 }

@@ -14,10 +14,10 @@ import { ThemeIntegration } from '../../features/theme/theme-integration.js';
 import { UMLGLSPConnector } from '../../glsp/uml-glsp-connector.js';
 import { VSCodeSettings } from '../../language.js';
 import { ServerManager, ServerManagerStateListener } from '../../server/server.manager.js';
-import { ErrorWebviewResolver } from './error.webview';
-import { GLSPWebviewResolver } from './glsp.webview';
-import { InitializingWebviewResolver } from './initializing.webview';
-import { WebviewResolver, WebviewResource } from './webview';
+import { ErrorWebviewResolver } from './error.webview.js';
+import { GLSPWebviewResolver } from './glsp.webview.js';
+import { InitializingWebviewResolver } from './initializing.webview.js';
+import { WebviewResolver, WebviewResource } from './webview.js';
 
 @injectable()
 export class UMLDiagramEditorProvider implements vscode.CustomEditorProvider, ServerManagerStateListener {

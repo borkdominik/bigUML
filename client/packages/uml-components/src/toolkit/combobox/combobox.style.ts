@@ -31,8 +31,7 @@ import {
     typeRampBaseLineHeight
 } from '@vscode/webview-ui-toolkit/dist/design-tokens';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const bigComboxboxStyles = (context: ElementDefinitionContext, definition: ComboboxOptions) => css`
+export const bigComboxboxStyles = (_context: ElementDefinitionContext, _definition: ComboboxOptions) => css`
     ${display('inline-flex')} :host {
         background: ${dropdownBackground};
         box-sizing: border-box;

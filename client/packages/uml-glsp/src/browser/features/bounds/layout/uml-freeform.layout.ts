@@ -19,7 +19,7 @@ export class UMLFreeFormLayouter extends FreeFormLayouter {
     // Only sizeable children will be returned
     protected override getChildrenSize(
         container: GParentElement & LayoutContainer,
-        containerOptions: AbstractLayoutOptions,
+        _containerOptions: AbstractLayoutOptions,
         layouter: StatefulLayouter
     ): Dimension {
         let maxX = 0;

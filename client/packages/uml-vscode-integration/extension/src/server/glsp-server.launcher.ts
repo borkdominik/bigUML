@@ -6,14 +6,14 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { SocketGlspVscodeServer } from '@eclipse-glsp/vscode-integration/lib/node/quickstart-components/socket-glsp-vscode-server';
+import { SocketGlspVscodeServer } from '@eclipse-glsp/vscode-integration/lib/node/quickstart-components/socket-glsp-vscode-server.js';
 import { ContainerModule, inject, injectable } from 'inversify';
 import * as path from 'path';
 import { TYPES } from '../di.types.js';
 import { OutputChannel } from '../vscode/output/output.channel.js';
-import { ServerLauncherOptions } from './launcher';
-import { osUtils } from './os';
-import { UMLServerLauncher } from './server-launcher';
+import { ServerLauncherOptions } from './launcher.js';
+import { osUtils } from './os.js';
+import { UMLServerLauncher } from './server-launcher.js';
 
 const GLSP_SERVER_PATH = '../server';
 const GLSP_SERVER_VERSION = '0.1.0';
@@ -29,7 +29,7 @@ export function glspServerModule(config: GlspServerConfig): ContainerModule {
         const launchOptions: ServerLauncherOptions = {
             executable: JAVA_EXECUTABLE,
             additionalArgs: [`--port=${config.port}`],
-            logging: true || process.env.UML_GLSP_SERVER_LOGGING === 'true',
+            logging: process.env.UML_GLSP_SERVER_LOGGING === 'true',
             server: {
                 name: 'GLSPServer',
                 port: config.port,

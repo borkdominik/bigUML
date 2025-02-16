@@ -35,8 +35,8 @@
     "build": "npm run clean && npm run compile",
     "clean": "rimraf lib tsconfig.tsbuildinfo",
     "compile": "tsc -b && npm run lint",
-    "lint": "eslint -c ./.eslintrc.cjs --ext .ts,.tsx ./src",
-    "lint:fix": "eslint --fix -c ./.eslintrc.js --ext .ts,.tsx ./src",
+    "lint": "eslint -c ./eslint.config.mjs",
+    "lint:fix": "eslint --fix -c ./eslint.config.mjs",
     "watch": "tsc -w"
   },
   "dependencies": {

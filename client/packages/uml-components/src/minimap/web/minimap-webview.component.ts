@@ -14,7 +14,7 @@ import { TemplateResult, html } from 'lit';
 import { query, state } from 'lit/decorators.js';
 import { HOST_EXTENSION } from 'vscode-messenger-common';
 import { BigElement } from '../../base/component.js';
-import { useToolkit } from '../../toolkit';
+import { useToolkit } from '../../toolkit/index.js';
 import { messenger } from '../../vscode/messenger.js';
 import { Minimap } from '../minimap.component.js';
 

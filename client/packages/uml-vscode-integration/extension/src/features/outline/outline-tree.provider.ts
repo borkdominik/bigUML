@@ -69,7 +69,7 @@ export class OutlineTreeProvider implements vscode.TreeDataProvider<OutlineTreeN
                     }
                 }, 100);
             }),
-            this.connector.onDidClientDispose(client => {
+            this.connector.onDidClientDispose(_client => {
                 if (this.connector.documents.length === 0) {
                     this.onNodesChanged([]);
                 }

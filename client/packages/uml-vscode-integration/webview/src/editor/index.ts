@@ -8,6 +8,6 @@
  *********************************************************************************/
 import 'reflect-metadata';
 
-import { launch } from './uml-starter';
+import { launch } from './uml-starter.js';
 
 launch();

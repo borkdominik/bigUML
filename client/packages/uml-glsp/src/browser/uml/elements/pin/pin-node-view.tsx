@@ -18,7 +18,7 @@ const JSX = { createElement: svg };
 
 @injectable()
 export class PinPortView extends ShapeView {
-    render(model: GChildElement, context: RenderingContext): VNode {
+    render(model: GChildElement, _context: RenderingContext): VNode {
         const pin = model.parent as GLabeledNode;
         const w = pin.bounds.width;
         const h = pin.bounds.height;

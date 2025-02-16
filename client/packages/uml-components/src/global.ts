@@ -26,8 +26,8 @@ import {
 import { VsCodeApi } from 'vscode-messenger-webview';
 import { ContextMenu, ContextMenuItem } from './menu/context-menu.component.js';
 import { Menu, MenuItem } from './menu/menu.component.js';
-import { Minimap, MinimapWebview } from './minimap';
-import { PropertyPalette, PropertyPaletteWebview } from './property-palette';
+import { Minimap, MinimapWebview } from './minimap/index.js';
+import { PropertyPalette, PropertyPaletteWebview } from './property-palette/index.js';
 import { PropertyPaletteReference } from './property-palette/reference/property-palette-reference.component.js';
 import { Tooltip } from './tooltip/tooltip.component.js';
 

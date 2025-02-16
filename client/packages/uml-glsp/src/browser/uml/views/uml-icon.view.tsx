@@ -59,6 +59,7 @@ export class GIconView implements IView {
     render(element: GIcon, context: RenderingContext): VNode {
         let image;
         if (element.iconImageName) {
+            // eslint-disable-next-line @typescript-eslint/no-require-imports
             image = require('../../resources/images/' + element.iconImageName);
         }
 

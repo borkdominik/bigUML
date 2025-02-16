@@ -68,10 +68,10 @@ export namespace osUtils {
             srv.listen(0, () => {
                 if (srv.address()) {
                     const port = (srv.address() as net.AddressInfo).port;
-                    srv.close(err => res(port));
+                    srv.close(_err => res(port));
                 }
 
-                srv.close(err => rej());
+                srv.close(_err => rej());
             });
         });
     }

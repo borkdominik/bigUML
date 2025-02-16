@@ -9,7 +9,7 @@
 
 import { ContainerModule } from 'inversify';
 import { TYPES } from '../../di.types.js';
-import { MinimapProvider } from './minimap.provider';
+import { MinimapProvider } from './minimap.provider.js';
 
 export const minimapModule = new ContainerModule(bind => {
     bind(MinimapProvider).toSelf().inSingletonScope();

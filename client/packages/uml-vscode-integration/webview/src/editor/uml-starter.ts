@@ -27,7 +27,7 @@ class UMLStarter extends GLSPStarter {
         return container;
     }
 
-    protected override addVscodeBindings(container: Container, diagramIdentifier: GLSPDiagramIdentifier): void {
+    protected override addVscodeBindings(container: Container, _diagramIdentifier: GLSPDiagramIdentifier): void {
         container.bind(UMLDiagramWidget).toSelf().inSingletonScope();
         bindOrRebind(container, GLSPDiagramWidget).toService(UMLDiagramWidget);
         container.bind(ExtensionActionKind).toConstantValue(GLSPIsReadyAction.KIND);

@@ -42,7 +42,7 @@ export class LastContainableElementTracker extends MouseListener {
         return this.lastContainableElement;
     }
 
-    override mouseOver(target: GModelElement, event: MouseEvent): Action[] {
+    override mouseOver(target: GModelElement, _event: MouseEvent): Action[] {
         let container = target;
         while (!container.hasFeature(containerFeature) && container instanceof GChildElement) {
             container = container.parent;

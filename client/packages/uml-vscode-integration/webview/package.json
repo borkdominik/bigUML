@@ -29,8 +29,8 @@
     "build": "npm run clean && npm run compile",
     "clean": "rimraf lib tsconfig.tsbuildinfo ",
     "compile": "tsx .esbuild.mts",
-    "lint": "eslint --ext .ts,.tsx ./src",
-    "lint:ci": "npm lint -o eslint.xml -f checkstyle",
+    "lint": "eslint -c ./eslint.config.mjs",
+    "lint:ci": "npm run lint -o eslint.xml -f checkstyle",
     "watch": "npm run compile --watch"
   },
   "dependencies": {
@@ -44,10 +44,5 @@
     "inversify": "^6.0.1",
     "reflect-metadata": "^0.1.13",
     "sprotty-vscode-webview": "*"
-  },
-  "devDependencies": {
-    "esbuild": "^0.17.10",
-    "esbuild-plugin-copy": "^2.1.1",
-    "eslint": "^8.15.0"
   }
 }

@@ -23,7 +23,7 @@ const JSX = { createElement: svg };
 
 @injectable()
 export class AcceptEventActionView extends RectangularNodeView {
-    override render(element: NamedElement, context: RenderingContext, args?: IViewArgs): VNode | undefined {
+    override render(element: NamedElement, context: RenderingContext, _args?: IViewArgs): VNode | undefined {
         if (!this.isVisible(element, context)) {
             return undefined;
         }

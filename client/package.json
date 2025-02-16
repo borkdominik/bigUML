@@ -15,20 +15,30 @@
     "clean": "lerna run clean",
     "copy:server": "tsx ./scripts/copy-server.ts",
     "depcheck": "npx depcheck --config .depcheck.yml",
+    "lint": "lerna run lint",
+    "lint:fix": "lerna run lint:fix",
     "package": "npm run build:server && cd packages/uml-vscode-integration/extension && npm vscode:package && mv ./*.vsix ${INIT_CWD}/release/vsix",
     "package:zip": "npm package && cd ${INIT_CWD} && zip -r ./release-$(date +%Y%m%d-%H%M).zip ./release",
     "watch": "lerna run --parallel watch"
   },
   "devDependencies": {
-    "@eclipse-glsp/dev": "^2.0.0",
-    "@eclipse-glsp/eslint-config": "^2.0.0",
+    "@eclipse-glsp/prettier-config": "^2.3.0",
+    "@eclipse-glsp/ts-config": "^2.3.0",
+    "@eslint/js": "^9.20.0",
     "@types/lodash": "^4.14.195",
     "@types/node": "^20.4.2",
+    "chai": "^5.2.0",
     "esbuild": "^0.17.10",
-    "eslint": "^8.56.0",
+    "esbuild-plugin-copy": "^2.1.1",
+    "eslint": "^9.20.1",
+    "eslint-plugin-header": "^3.1.1",
+    "eslint-plugin-n": "^17.15.1",
+    "globals": "^15.15.0",
     "lerna": "^8.1.9",
+    "rimraf": "^6.0.1",
     "tsx": "^3.12.3",
-    "typescript": "^5.7.3"
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.24.0"
   },
   "engines": {
     "node": ">=20 < 22"

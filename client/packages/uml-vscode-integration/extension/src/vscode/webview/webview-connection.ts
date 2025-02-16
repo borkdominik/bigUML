@@ -15,7 +15,7 @@ import { Messenger } from 'vscode-messenger';
 import { MessageParticipant } from 'vscode-messenger-common';
 import { TYPES } from '../../di.types.js';
 import { UMLGLSPConnector } from '../../glsp/uml-glsp-connector.js';
-import type { ProviderWebviewContext } from './webview-provider';
+import type { ProviderWebviewContext } from './webview-provider.js';
 
 /**
  * Connection for the UML webview extension.
@@ -83,7 +83,7 @@ export class UMLWebviewExtensionHostConnection {
      *
      * Direction: Extension host -> Webview provider
      */
-    listen(context: ProviderWebviewContext, webviewViewConnection: UMLWebviewViewConnection, options?: { forwardCache: boolean }): void {
+    listen(_context: ProviderWebviewContext, webviewViewConnection: UMLWebviewViewConnection, options?: { forwardCache: boolean }): void {
         this._webviewViewConnection = webviewViewConnection;
 
         this.connector.onDidClientViewStateChange(() => this.onDidClientViewStateChangeEmitter.fire());

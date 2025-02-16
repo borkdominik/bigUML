@@ -23,7 +23,7 @@ import {
 import { inject, injectable } from 'inversify';
 import * as vscode from 'vscode';
 import { TYPES } from '../di.types.js';
-import { IDEServerClientId } from './ide-server';
+import { IDEServerClientId } from './ide-server.js';
 
 @injectable()
 export class UMLGLSPConnector<TDocument extends vscode.CustomDocument = vscode.CustomDocument> extends GlspVscodeConnector<TDocument> {
@@ -180,7 +180,7 @@ export class UMLGLSPConnector<TDocument extends vscode.CustomDocument = vscode.C
         // return { processedMessage: GlspVscodeConnector.NO_PROPAGATION_MESSAGE, messageChanged: true };
     }
 
-    protected onClientMessage(client: GlspVscodeClient<TDocument>, message: unknown): void {
+    protected onClientMessage(_client: GlspVscodeClient<TDocument>, message: unknown): void {
         if (this.options.logging) {
             if (ActionMessage.is(message)) {
                 console.log(`Client (${message.clientId}): ${message.action.kind}`, message.action);

@@ -9,15 +9,15 @@
 
 import { ContainerModule } from 'inversify';
 import { TYPES } from '../di.types.js';
-import { CommandManager } from './command/command.manager';
-import { DisposableManager } from './disposable/disposable.manager';
-import { UMLDiagramEditorProvider } from './editor/editor.provider';
-import { NewFileCommand } from './new-file/new-file.command';
-import { NewFileCreator } from './new-file/new-file.creator';
-import { OutputChannel } from './output/output.channel';
-import { Settings } from './settings/settings';
-import { UMLWebviewExtensionHostConnection, UMLWebviewViewConnection } from './webview/webview-connection';
-import { WorkspaceWatcher } from './workspace/workspace.watcher';
+import { CommandManager } from './command/command.manager.js';
+import { DisposableManager } from './disposable/disposable.manager.js';
+import { UMLDiagramEditorProvider } from './editor/editor.provider.js';
+import { NewFileCommand } from './new-file/new-file.command.js';
+import { NewFileCreator } from './new-file/new-file.creator.js';
+import { OutputChannel } from './output/output.channel.js';
+import { Settings } from './settings/settings.js';
+import { UMLWebviewExtensionHostConnection, UMLWebviewViewConnection } from './webview/webview-connection.js';
+import { WorkspaceWatcher } from './workspace/workspace.watcher.js';
 
 export const vscodeModule = new ContainerModule(bind => {
     bind(CommandManager).toSelf().inSingletonScope();

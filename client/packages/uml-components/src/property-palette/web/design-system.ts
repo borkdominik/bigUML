@@ -9,10 +9,10 @@
 
 import { defineContextMenu } from '../../menu/context-menu.component.js';
 import { defineMenu } from '../../menu/menu.component.js';
-import { useToolkit } from '../../toolkit';
+import { useToolkit } from '../../toolkit/index.js';
 import { defineTooltip } from '../../tooltip/tooltip.component.js';
 import { definePropertyPalette } from '../property-palette.component.js';
-import { definePropertyPaletteReference } from '../reference';
+import { definePropertyPaletteReference } from '../reference/index.js';
 import { definePropertyPaletteWebview } from './property-palette-webview.component.js';
 
 export function usePropertyPaletteWebviewDesignSystem(): void {

@@ -24,7 +24,7 @@ export class PropertyPaletteHandler implements IActionHandler, IGModelRootListen
         }
     }
 
-    modelRootChanged(root: Readonly<GModelRoot>): void {
+    modelRootChanged(_root: Readonly<GModelRoot>): void {
         this.request(this.activeElementId);
     }
 

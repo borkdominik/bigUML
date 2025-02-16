@@ -18,11 +18,12 @@
         "${workspaceFolder}/packages/*/lib/**/*.js",
         "${workspaceFolder}/packages/uml-vscode-integration/extension/lib/**/*.js",
         "${workspaceFolder}/packages/uml-vscode-integration/webview/bundles/**/*.js",
-        "${workspaceFolder}/application/node_modules/@eclipse-glsp/*/lib/**/*.js",
-      ],      
+        "${workspaceFolder}/application/node_modules/@eclipse-glsp/*/lib/**/*.js"
+      ],
       "env": {
         "UML_GLSP_SERVER_DEBUG": "true",
-        "UML_GLSP_SERVER_PORT": "5007"
+        "UML_GLSP_SERVER_PORT": "5007",
+        "UML_GLSP_SERVER_LOGGING": "true"
       }
     },
     {
@@ -38,8 +39,8 @@
       "outFiles": [
         "${workspaceFolder}/packages/*/lib/**/*.js",
         "${workspaceFolder}/packages/uml-vscode-integration/*/lib/**/*.js",
-        "${workspaceFolder}/application/node_modules/@eclipse-glsp/*/lib/**/*.js",
-      ],  
+        "${workspaceFolder}/application/node_modules/@eclipse-glsp/*/lib/**/*.js"
+      ],
       "env": {
         "UML_GLSP_SERVER_DEBUG": "false",
         "UML_GLSP_SERVER_LOGGING": "false",

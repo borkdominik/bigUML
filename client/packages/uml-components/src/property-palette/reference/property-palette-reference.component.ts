@@ -14,10 +14,9 @@ import { property, query } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { keyed } from 'lit/directives/keyed.js';
 import { when } from 'lit/directives/when.js';
-// eslint-disable-next-line import/no-named-as-default
 import Sortable from 'sortablejs';
 import { BigElement } from '../../base/component.js';
-import '../../global';
+import '../../global.js';
 import { PropertyPaletteReferenceStyle } from './property-palette-reference.style';
 
 export function definePropertyPaletteReference(): void {

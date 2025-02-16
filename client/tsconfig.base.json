@@ -1,19 +1,37 @@
 {
-  "extends": "@eclipse-glsp/ts-config/tsconfig.json",
+  "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
-    "baseUrl": ".",
-    "reactNamespace": "JSX",
+    "skipLibCheck": true,
+    "declaration": true,
+    "declarationMap": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "strictNullChecks": true,
+    "noImplicitOverride": true,
+    "noEmitOnError": false,
+    "noUnusedLocals": true,
+    "noImplicitReturns": true,
+    "strict": true,
+    "incremental": true,
+    // Needs to be disabled to support property injection
+    "strictPropertyInitialization": false,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "downlevelIteration": true,
+    "resolveJsonModule": true,
     "moduleResolution": "Node16",
     "module": "Node16",
     "target": "ES2022",
+    "jsx": "react",
     "lib": ["ESNext", "DOM"],
+    "sourceMap": true,
+    "types": ["node", "reflect-metadata"],
+    "baseUrl": ".",
+    "reactNamespace": "JSX",
     "esModuleInterop": true,
     "noFallthroughCasesInSwitch": true,
     "allowSyntheticDefaultImports": true,
-    "forceConsistentCasingInFileNames": true,
-    "paths": {
-      "@borkdominik-biguml/uml-glsp": ["packages/uml-glsp/src/*"]
-    }
+    "forceConsistentCasingInFileNames": true
   },
   "exclude": ["**/node_modules", "**/.eslintrc.js"],
   "include": ["**/scripts", "packages/*/src", "packages/uml-vscode-integration/*/src"]

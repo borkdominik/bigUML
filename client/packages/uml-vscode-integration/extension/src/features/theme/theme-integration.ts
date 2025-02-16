@@ -25,7 +25,7 @@ export class ThemeIntegration {
     @postConstruct()
     initialize(): void {
         this.refresh();
-        this.onChange(e => this.refresh());
+        this.onChange(_e => this.refresh());
     }
 
     updateTheme(client: GlspVscodeClient): void {

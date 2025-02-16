@@ -9,7 +9,7 @@
 import { arrow, autoUpdate, computePosition, flip, offset, shift } from '@floating-ui/dom';
 import { css, html, PropertyValueMap, TemplateResult } from 'lit';
 import { property, query, queryAssignedElements } from 'lit/decorators.js';
-import { BigElement } from '../base';
+import { BigElement } from '../base/index.js';
 
 export function defineTooltip(): void {
     customElements.define('big-tooltip', Tooltip);

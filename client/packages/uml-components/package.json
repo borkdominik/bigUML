@@ -24,18 +24,18 @@
       "url": "https://me.big.tuwien.ac.at/"
     }
   ],
+  "type": "module",
   "main": "lib/index",
   "files": [
     "lib",
     "src"
   ],
-  "type": "module",
   "scripts": {
-    "compile": "tsc -b && npm run lint",
-    "clean": "rimraf lib tsconfig.tsbuildinfo",
-    "lint": "eslint -c ./.eslintrc.cjs --ext .ts,.tsx ./src",
-    "lint:fix": "eslint --fix -c ./.eslintrc.cjs --ext .ts,.tsx ./src",
     "build": "npm run clean && yarn run compile",
+    "clean": "rimraf lib tsconfig.tsbuildinfo",
+    "compile": "tsc -b && npm run lint",
+    "lint": "eslint -c ./eslint.config.mjs",
+    "lint:fix": "eslint --fix -c ./eslint.config.mjs",
     "watch": "tsc -w"
   },
   "dependencies": {

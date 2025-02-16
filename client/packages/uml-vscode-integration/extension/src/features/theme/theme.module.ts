@@ -8,7 +8,7 @@
  *********************************************************************************/
 import { ContainerModule } from 'inversify';
 import { TYPES } from '../../di.types.js';
-import { ThemeIntegration } from './theme-integration';
+import { ThemeIntegration } from './theme-integration.js';
 
 export const themeModule = new ContainerModule(bind => {
     bind(ThemeIntegration).toSelf().inSingletonScope();

@@ -9,7 +9,7 @@
 
 import { ContainerModule } from 'inversify';
 import { TYPES } from '../../di.types.js';
-import { PropertyPaletteProvider } from './property-palette.provider';
+import { PropertyPaletteProvider } from './property-palette.provider.js';
 
 export const propertyPaletteModule = new ContainerModule(bind => {
     bind(PropertyPaletteProvider).toSelf().inSingletonScope();

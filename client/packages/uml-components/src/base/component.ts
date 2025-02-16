@@ -8,7 +8,7 @@
  *********************************************************************************/
 
 import { LitElement } from 'lit';
-import { codiconStyle, defaultStyle } from './style';
+import { codiconStyle, defaultStyle } from './style/index.js';
 
 export class BigElement extends LitElement {
     static override styles = [codiconStyle, defaultStyle];

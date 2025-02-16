@@ -26,7 +26,7 @@ import {
  * This first part uses the helper class `MultiStepInput` that wraps the API for the multi-step case.
  */
 export async function newDiagramWizard(
-    context: ExtensionContext,
+    _context: ExtensionContext,
     options: {
         diagramTypes: UMLDiagramType[];
         nameValidator: (name: string) => Promise<string | undefined>;
@@ -63,12 +63,12 @@ export async function newDiagramWizard(
 
     function shouldResume(): Promise<boolean> {
         // Could show a notification with the option to resume.
-        return new Promise<boolean>((resolve, reject) => {
+        return new Promise<boolean>((_resolve, _reject) => {
             // noop
         });
     }
 
-    async function getAvailableDiagrams(state: Partial<State>, token?: CancellationToken): Promise<DiagramTypeQuickPick[]> {
+    async function getAvailableDiagrams(_state: Partial<State>, _token?: CancellationToken): Promise<DiagramTypeQuickPick[]> {
         return options.diagramTypes.map(type => ({ label: type.toString(), diagramType: type }));
     }
 
@@ -212,6 +212,7 @@ class MultiStepInput {
     async showInputBox<P extends InputBoxParameters>(options: P): Promise<string> {
         const disposables: Disposable[] = [];
         try {
+            // eslint-disable-next-line no-async-promise-executor
             return await new Promise<string>(async (resolve, reject) => {
                 const input = window.createInputBox();
                 input.title = options.title;

@@ -7,19 +7,19 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import { Container, ContainerModule } from 'inversify';
-import { minimapModule } from 'packages/uml-vscode-integration/extension/src/features/minimap/minimap.module';
+import { minimapModule } from 'packages/uml-vscode-integration/extension/src/features/minimap/minimap.module.js';
 import * as vscode from 'vscode';
-import { TYPES } from './di.types';
-import { outlineModule } from './features/outline/outline.module';
-import { propertyPaletteModule } from './features/property-palette/property-palette.module';
-import { themeModule } from './features/theme/theme.module';
-import { IDEServer } from './glsp/ide-server';
-import { IDESessionClient } from './glsp/ide-session-client';
-import { UMLGLSPConnector } from './glsp/uml-glsp-connector';
-import { UMLGLSPServer } from './glsp/uml-glsp-server';
-import { GlspServerConfig, glspServerModule } from './server/glsp-server.launcher';
-import { serverManagerModule } from './server/server.manager';
-import { vscodeModule } from './vscode/vscode.module';
+import { TYPES } from './di.types.js';
+import { outlineModule } from './features/outline/outline.module.js';
+import { propertyPaletteModule } from './features/property-palette/property-palette.module.js';
+import { themeModule } from './features/theme/theme.module.js';
+import { IDEServer } from './glsp/ide-server.js';
+import { IDESessionClient } from './glsp/ide-session-client.js';
+import { UMLGLSPConnector } from './glsp/uml-glsp-connector.js';
+import { UMLGLSPServer } from './glsp/uml-glsp-server.js';
+import { GlspServerConfig, glspServerModule } from './server/glsp-server.launcher.js';
+import { serverManagerModule } from './server/server.manager.js';
+import { vscodeModule } from './vscode/vscode.module.js';
 
 export function createContainer(
     extensionContext: vscode.ExtensionContext,
@@ -33,7 +33,7 @@ export function createContainer(
 
     container.bind(TYPES.ExtensionContext).toConstantValue(extensionContext);
 
-    const coreModule = new ContainerModule((bind, unbind, isBound, rebind) => {
+    const coreModule = new ContainerModule((bind, _unbind, _isBound, _rebind) => {
         bind(UMLGLSPServer).toSelf().inSingletonScope();
         bind(TYPES.GlspServer).toService(UMLGLSPServer);
         bind(TYPES.Disposable).toService(UMLGLSPServer);

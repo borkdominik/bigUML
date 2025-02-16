@@ -15,7 +15,7 @@ import { TYPES } from '../../di.types.js';
 import { IDESessionClient } from '../../glsp/ide-session-client.js';
 import { UMLLangugageEnvironment, VSCodeSettings } from '../../language.js';
 import { UMLDiagramEditorProvider } from '../editor/editor.provider.js';
-import { newDiagramWizard } from './wizard';
+import { newDiagramWizard } from './wizard.js';
 
 const nameRegex = /^([\w_-]+\/?)*[\w_-]+$/;
 
@@ -69,7 +69,7 @@ export class NewFileCreator implements Disposable {
                             return 'Provided path is not empty';
                         }
                     }
-                } catch (error) {
+                } catch (_error) {
                     // No op
                 }
 

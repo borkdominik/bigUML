@@ -86,7 +86,7 @@ export class SDHorizontalShiftEndMovingMouseListener extends MouseListener {
         super();
     }
 
-    override mouseMove(target: GModelElement, event: MouseEvent): Action[] {
+    override mouseMove(_target: GModelElement, _event: MouseEvent): Action[] {
         return [];
     }
 }

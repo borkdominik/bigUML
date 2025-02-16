@@ -6,9 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-/* eslint-disable max-len */
-
-import { WebviewResolver, WebviewResource } from './webview';
+import { WebviewResolver, WebviewResource } from './webview.js';
 
 export class ErrorWebviewResolver implements WebviewResolver {
     async error(resource: WebviewResource, message: string, details?: string): Promise<void> {

@@ -12,7 +12,7 @@ import { property, state } from 'lit/decorators.js';
 import { keyed } from 'lit/directives/keyed.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import { BigElement } from '../base/component.js';
-import '../global';
+import '../global.js';
 import { MinimapPaletteStyle as MinimapStyle } from './minimap.style';
 
 export function defineMinimap(): void {
@@ -138,7 +138,7 @@ export class Minimap extends BigElement {
         }
     }
 
-    private throttle<T extends(...args: any[]) => void>(func: T, limit: number): T {
+    private throttle<T extends (...args: any[]) => void>(func: T, limit: number): T {
         let lastFunc: number;
         let lastRan: number;
         return function executedFunction(...args: any[]) {
@@ -147,20 +147,17 @@ export class Minimap extends BigElement {
                 lastRan = Date.now();
             } else {
                 clearTimeout(lastFunc);
-                lastFunc = window.setTimeout(
-                    () => {
-                        if (Date.now() - lastRan >= limit) {
-                            func(...args);
-                            lastRan = Date.now();
-                        }
-                    },
-                    limit - (Date.now() - lastRan)
-                );
+                lastFunc = window.setTimeout(() => {
+                    if (Date.now() - lastRan >= limit) {
+                        func(...args);
+                        lastRan = Date.now();
+                    }
+                }, limit - (Date.now() - lastRan));
             }
         } as T;
     }
 
-    public updateViewport(x: number, y: number, newX: number, newY: number): void {
+    public updateViewport(_x: number, _y: number, newX: number, newY: number): void {
         if (!this.modelBounds || !this.canvasBounds) {
             return;
         }

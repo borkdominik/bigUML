@@ -15,12 +15,12 @@ import { UMLActionDispatcher } from '../../base/action-dispatcher.js';
 export class OutlineService implements IActionHandler, IDiagramStartup, IGModelRootListener {
     @inject(TYPES.IActionDispatcherProvider) protected actionDispatcher: () => Promise<UMLActionDispatcher>;
 
-    handle(action: Action): void | Action {
+    handle(_action: Action): void | Action {
         // nothing to do
         // the code will be handled outside of GLSP
     }
 
-    modelRootChanged(root: Readonly<GModelRoot>): void {
+    modelRootChanged(_root: Readonly<GModelRoot>): void {
         this.request();
     }
 

@@ -19,7 +19,7 @@ const JSX = { createElement: svg };
 
 @injectable()
 export class CommentNodeView extends RectangularNodeView {
-    override render(element: NamedElement, context: RenderingContext): VNode {
+    override render(element: NamedElement, _context: RenderingContext): VNode {
         const cornerDim = 10;
 
         const commentNode: any = (

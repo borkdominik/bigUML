@@ -26,7 +26,7 @@ export class UMLGraphProjectionView extends GLSPProjectionView {
     @inject(SVGIdCreatorService)
     protected svgIdCreator: SVGIdCreatorService;
 
-    protected override renderSvg(model: Readonly<GViewportRootElement>, context: RenderingContext, args?: IViewArgs): VNode {
+    protected override renderSvg(model: Readonly<GViewportRootElement>, context: RenderingContext, _args?: IViewArgs): VNode {
         const edgeRouting = this.edgeRouterRegistry.routeAllChildren(model);
         const transform = `scale(${model.zoom}) translate(${-model.scroll.x},${-model.scroll.y})`;
         const ns = 'http://www.w3.org/2000/svg';
@@ -40,7 +40,7 @@ export class UMLGraphProjectionView extends GLSPProjectionView {
         );
     }
 
-    protected renderAdditionals(context: RenderingContext): VNode[] {
+    protected renderAdditionals(_context: RenderingContext): VNode[] {
         const directedEdgeAdds: any = [
             <defs>
                 <marker
@@ -112,7 +112,7 @@ export class UMLGraphProjectionView extends GLSPProjectionView {
         return directedEdgeAdds;
     }
 
-    protected renderStyle(context: RenderingContext): VNodeStyle {
+    protected renderStyle(_context: RenderingContext): VNodeStyle {
         return {
             height: '100%',
             '--svg-def-marker-triangle': `url(#${this.svgIdCreator.createDefId(MARKER_TRIANGLE_ID)})`,

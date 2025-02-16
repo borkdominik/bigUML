@@ -7,10 +7,9 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-export * from './base';
-export * from './menu';
-export * from './minimap';
-export * from './property-palette';
-export * from './toolkit';
+export * from './base/index.js';
+export * from './menu/index.js';
+export * from './minimap/index.js';
+export * from './property-palette/index.js';
+export * from './toolkit/index.js';
 export * from './vscode/messenger.js';
-

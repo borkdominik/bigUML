@@ -133,7 +133,7 @@ export class SDShiftElementsMouseListener extends DragAwareMouseListener {
         return actions;
     }
 
-    override mouseUp(target: GModelElement, event: MouseEvent): Action[] {
+    override mouseUp(target: GModelElement, _event: MouseEvent): Action[] {
         this.isActive = false;
         const actions: Action[] = [
             SDRemoveVerticalShiftAction.create(),

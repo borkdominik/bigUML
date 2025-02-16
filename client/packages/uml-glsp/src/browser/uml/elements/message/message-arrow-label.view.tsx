@@ -28,7 +28,7 @@ const JSX = { createElement: svg };
 export class MessageArrowLabelView extends GLabelView {
     @inject(EdgeRouterRegistry) edgeRouterRegistry: EdgeRouterRegistry;
 
-    override render(labelNode: Readonly<GEditableLabel>, context: RenderingContext): VNode {
+    override render(labelNode: Readonly<GEditableLabel>, _context: RenderingContext): VNode {
         let rotation = 0;
         if (labelNode.edgePlacement !== undefined) {
             const parent = labelNode.parent as GEdge;

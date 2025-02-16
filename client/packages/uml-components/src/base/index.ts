@@ -8,5 +8,4 @@
  *********************************************************************************/
 
 export * from './component.js';
-export * from './style';
-
+export * from './style/index.js';

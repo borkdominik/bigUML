@@ -18,7 +18,7 @@ const JSX = { createElement: svg };
 
 @injectable()
 export class FinalNodeView extends CircularNodeView {
-    override render(node: GLabeledNode, context: RenderingContext): VNode {
+    override render(node: GLabeledNode, _context: RenderingContext): VNode {
         const radius = this.getRadius(node);
 
         const finalNode: any = (

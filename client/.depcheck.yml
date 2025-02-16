@@ -1,2 +1,2 @@
-ignores: ['eslint-*', '@eclipse-glsp/eslint-config']
+ignores: ['eslint-*']
 ignorePatterns: ['src-old', 'lib']

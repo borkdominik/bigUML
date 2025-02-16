@@ -25,9 +25,13 @@ import { keyed } from 'lit/directives/keyed.js';
 import { when } from 'lit/directives/when.js';
 import { groupBy } from 'lodash';
 import { BigElement } from '../base/component.js';
-import '../global';
+import '../global.js';
 import { PropertyPaletteStyle } from './property-palette.style';
-import { PropertyDeleteEventDetail, PropertyNameChangeDetail, PropertyOrderDetail } from './reference/property-palette-reference.component.js';
+import {
+    PropertyDeleteEventDetail,
+    PropertyNameChangeDetail,
+    PropertyOrderDetail
+} from './reference/property-palette-reference.component.js';
 
 export function definePropertyPalette(): void {
     customElements.define('big-property-palette', PropertyPalette);

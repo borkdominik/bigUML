@@ -9,7 +9,7 @@
 
 import { ContainerModule } from 'inversify';
 import { TYPES } from '../../di.types.js';
-import { OutlineTreeProvider } from './outline-tree.provider';
+import { OutlineTreeProvider } from './outline-tree.provider.js';
 
 export const outlineModule = new ContainerModule(bind => {
     bind(OutlineTreeProvider).toSelf().inSingletonScope();

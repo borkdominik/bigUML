@@ -29,7 +29,7 @@ export class SDShiftTool extends BaseEditTool {
 
 @injectable()
 export class SDShiftKeyListener extends KeyListener {
-    override keyDown(element: GModelElement, event: KeyboardEvent): Action[] {
+    override keyDown(_element: GModelElement, event: KeyboardEvent): Action[] {
         if (event.altKey) {
             return [EnableToolsAction.create([SDShiftMouseTool.ID])];
         }

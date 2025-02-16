@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { GLSPDiagramWidget } from '@eclipse-glsp/vscode-integration-webview/lib/glsp-diagram-widget';
+import { GLSPDiagramWidget } from '@eclipse-glsp/vscode-integration-webview/lib/glsp-diagram-widget.js';
 import { injectable } from 'inversify';
 
 @injectable()
@@ -29,12 +29,12 @@ export class UMLDiagramWidget extends GLSPDiagramWidget {
         }
     }
 
-    handleMouseEnter(e: MouseEvent): void {
+    handleMouseEnter(_e: MouseEvent): void {
         this.containerDiv?.classList.add('mouse-enter');
         this.containerDiv?.classList.remove('mouse-leave');
     }
 
-    handleMouseLeave(e: MouseEvent): void {
+    handleMouseLeave(_e: MouseEvent): void {
         this.containerDiv?.classList.add('mouse-leave');
         this.containerDiv?.classList.remove('mouse-enter');
     }

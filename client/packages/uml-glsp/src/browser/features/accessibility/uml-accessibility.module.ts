@@ -125,7 +125,7 @@ export class UMLResizeKeyListener extends KeyListener {
         super();
     }
 
-    override keyDown(element: GModelElement, event: KeyboardEvent): Action[] {
+    override keyDown(_element: GModelElement, event: KeyboardEvent): Action[] {
         if (this.matchesDeactivateResizeModeKeystroke(event)) {
             return [EnableDefaultToolsAction.create()];
         }
@@ -169,7 +169,7 @@ import {
 } from '@eclipse-glsp/client/lib/features/accessibility/search/search-palette.js';
 
 export class UMLRevealNamedElementAutocompleteSuggestionProvider extends RevealNamedElementAutocompleteSuggestionProvider {
-    override async retrieveSuggestions(root: Readonly<GModelRoot>, text: string): Promise<AutocompleteSuggestion[]> {
+    override async retrieveSuggestions(root: Readonly<GModelRoot>, _text: string): Promise<AutocompleteSuggestion[]> {
         const nameables = toArray(root.index.all().filter(element => isNameable(element)));
         return nameables.map(nameable => ({
             element: nameable,
@@ -183,7 +183,7 @@ export class UMLRevealNamedElementAutocompleteSuggestionProvider extends RevealN
 }
 
 export class UMLRevealEdgeElementAutocompleteSuggestionProvider extends RevealEdgeElementAutocompleteSuggestionProvider {
-    override async retrieveSuggestions(root: Readonly<GModelRoot>, text: string): Promise<AutocompleteSuggestion[]> {
+    override async retrieveSuggestions(root: Readonly<GModelRoot>, _text: string): Promise<AutocompleteSuggestion[]> {
         const edges = toArray(root.index.all().filter(element => element instanceof GEdge)) as GEdge[];
         return edges.map(edge => ({
             element: edge,
@@ -196,7 +196,7 @@ export class UMLRevealEdgeElementAutocompleteSuggestionProvider extends RevealEd
     }
 }
 export class UMLSearchAutocompletePalette extends SearchAutocompletePalette {
-    protected override getSuggestionProviders(root: Readonly<GModelRoot>, input: string): IAutocompleteSuggestionProvider[] {
+    protected override getSuggestionProviders(_root: Readonly<GModelRoot>, _input: string): IAutocompleteSuggestionProvider[] {
         return [
             new UMLRevealNamedElementAutocompleteSuggestionProvider(),
             new UMLRevealEdgeElementAutocompleteSuggestionProvider(),

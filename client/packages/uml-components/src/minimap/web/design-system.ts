@@ -9,7 +9,7 @@
 
 import { defineContextMenu } from '../../menu/context-menu.component.js';
 import { defineMenu } from '../../menu/menu.component.js';
-import { useToolkit } from '../../toolkit';
+import { useToolkit } from '../../toolkit/index.js';
 import { defineTooltip } from '../../tooltip/tooltip.component.js';
 import { defineMinimap } from '../minimap.component.js';
 import { defineMinimapWebview } from './minimap-webview.component.js';

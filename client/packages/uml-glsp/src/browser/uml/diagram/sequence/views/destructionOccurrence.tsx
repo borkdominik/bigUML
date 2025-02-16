@@ -18,7 +18,7 @@ const JSX = { createElement: svg };
 
 @injectable()
 export class DestructionOccurrenceNodeView extends RectangularNodeView {
-    override render(element: NamedElement, context: RenderingContext): VNode {
+    override render(element: NamedElement, _context: RenderingContext): VNode {
         /*
         {/* <rect x={0} y={0} rx={2} ry={2} width={Math.max(0, element.bounds.width)} height={Math.max(0, element.bounds.height)} /> }
         */

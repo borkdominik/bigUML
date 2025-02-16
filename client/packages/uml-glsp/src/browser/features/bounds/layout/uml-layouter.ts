@@ -56,7 +56,7 @@ export class UMLStatefulLayouterExt extends StatefulLayouterExt {
 
     protected allLayoutContainers(): (GParentElement & LayoutContainer)[] {
         const containers: (GParentElement & LayoutContainer)[] = [];
-        this.elementToBoundsData.forEach((data, element) => {
+        this.elementToBoundsData.forEach((_data, element) => {
             if (isLayoutContainer(element)) {
                 containers.push(element);
             }

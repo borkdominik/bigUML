@@ -126,7 +126,7 @@ export class EditLabelUIAutocomplete extends EditLabelUI {
         return super.validateLabel(value);
     }
 
-    protected onContentChange(event: KeyboardEvent, value: string): void {
+    protected onContentChange(_event: KeyboardEvent, value: string): void {
         if (this.isAutocompleteEnabled && this.previousLabelContent !== value) {
             // recreate autocomplete list if value changed
             this.showAutocomplete();

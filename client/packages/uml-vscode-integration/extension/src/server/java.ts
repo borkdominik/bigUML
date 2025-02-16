@@ -10,7 +10,7 @@ import * as childProcess from 'child_process';
 
 export namespace java {
     export function installedVersion(): Promise<string | undefined> {
-        return new Promise<string | undefined>((resolve, reject) => {
+        return new Promise<string | undefined>((resolve, _reject) => {
             const spawn = childProcess.spawn('java', ['-version'], { timeout: 5 * 1000 });
             let allData = '';
             spawn.on('error', err => {

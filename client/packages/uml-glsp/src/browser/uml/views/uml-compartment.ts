@@ -7,7 +7,6 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import { containerFeature, Hoverable } from '@eclipse-glsp/client';
-// eslint-disable-next-line no-restricted-imports
 import { GUMLCompartment } from '../../views/uml-compartment.js';
 
 export class GCompartmentContainer extends GUMLCompartment implements Hoverable {

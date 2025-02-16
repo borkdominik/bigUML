@@ -11,8 +11,8 @@ import * as vscode from 'vscode';
 import { TYPES } from '../di.types.js';
 import { VSCodeSettings } from '../language.js';
 import { OutputChannel } from '../vscode/output/output.channel.js';
-import { java } from './java';
-import { ServerLauncher } from './launcher';
+import { java } from './java.js';
+import { ServerLauncher } from './launcher.js';
 
 export interface ServerManagerStateListener {
     serverManagerStateChanged(manager: ServerManager, state: ServerManager.State): void | Promise<void>;

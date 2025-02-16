@@ -9,6 +9,5 @@
 
 export * from './property-palette.component.js';
 export * from './property-palette.style';
-export * from './reference';
-export * from './web';
-
+export * from './reference/index.js';
+export * from './web/index.js';

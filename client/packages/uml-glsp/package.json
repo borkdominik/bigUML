@@ -38,8 +38,8 @@
     "clean": "rimraf lib tsconfig.tsbuildinfo",
     "compile": "tsc -b && npm run lint",
     "icons": "tsx ./scripts/icons.ts",
-    "lint": "eslint -c ./.eslintrc.cjs --ext .ts,.tsx ./src",
-    "lint:fix": "eslint --fix -c ./.eslintrc.cjs --ext .ts,.tsx ./src",
+    "lint": "eslint -c ./eslint.config.mjs",
+    "lint:fix": "eslint --fix -c ./eslint.config.mjs",
     "watch": "tsc -w"
   },
   "dependencies": {

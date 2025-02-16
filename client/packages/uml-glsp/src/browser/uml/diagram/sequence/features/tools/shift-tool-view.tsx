@@ -27,7 +27,7 @@ const markerColor = 'LightSlateGrey';
 
 @injectable()
 export class SDVerticalShiftView extends RectangularNodeView {
-    override render(node: SDVerticalShiftNode, context: RenderingContext): VNode {
+    override render(node: SDVerticalShiftNode, _context: RenderingContext): VNode {
         const graph = (
             <g>
                 <defs>
@@ -67,7 +67,7 @@ export class SDVerticalShiftView extends RectangularNodeView {
 
 @injectable()
 export class SDHorizontalShiftView extends RectangularNodeView {
-    override render(node: SDVerticalShiftNode, context: RenderingContext): VNode {
+    override render(node: SDVerticalShiftNode, _context: RenderingContext): VNode {
         const graph = (
             <g class-colorful-marker={true}>
                 <defs>

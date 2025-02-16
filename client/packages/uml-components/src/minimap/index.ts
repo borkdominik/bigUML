@@ -9,5 +9,4 @@
 
 export * from './minimap.component.js';
 export * from './minimap.style';
-export * from './web';
-
+export * from './web/index.js';

@@ -11,7 +11,7 @@ import { GLSPIsReadyAction } from 'packages/uml-protocol/lib/index';
 import * as vscode from 'vscode';
 import { ThemeIntegration } from '../../features/theme/theme-integration.js';
 import { getBundleUri, getUri } from '../../utilities/webview.js';
-import { WebviewResolver, WebviewResource } from './webview';
+import { WebviewResolver, WebviewResource } from './webview.js';
 
 export interface GLSPWebviewData {
     readonly diagramType: string;

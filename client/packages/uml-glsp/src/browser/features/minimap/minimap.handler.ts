@@ -68,7 +68,7 @@ export class MinimapHandler implements IActionHandler {
     @inject(EditorContextService) protected editorContextService: EditorContextService;
     @inject(MinimapGLSPSvgExporter) protected exporter: MinimapGLSPSvgExporter;
 
-    handle(action: Action): void | Action {
+    handle(_action: Action): void | Action {
         // this.exporter.export(this.editorContextService.modelRoot);
     }
 }

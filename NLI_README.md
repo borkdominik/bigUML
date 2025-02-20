@@ -3,9 +3,10 @@
 Following is a short setup guide on how to get started with the natural language interface for the BigUML editor.
 
 ## Requirements
-
-Java 17 JDK: Java 17 is required
-You'll need to install [Sox](https://sourceforge.net/projects/sox/) for audio recording.
++ [VS Code](https://code.visualstudio.com/)
++ [Java 17 JDK](https://www.oracle.com/java/technologies/javase/jdk14-archive-downloads.html)
++ [Docker](https://www.docker.com/get-started/)
++ [Sox](https://sourceforge.net/projects/sox/) for audio recording
 
 ## NLI Server
 
@@ -49,7 +50,7 @@ If you don't want to use voice recording, but input the query directly in the te
 
 # Logs
 
-All recorded audio snippets and the transcription history will be stored in the folder logs of your workspace folder.
+All recorded audio snippets and the transcription history will be stored in the folder `logs` of your workspace directory.
 
 <img src="./media/nli/animals_logs.png" alt="drawing" style="width:800px;"/>
 

@@ -24,6 +24,8 @@ On the first startup, this may take some time as the speech-to-text model must b
 
 The extention can be installed from the `.vsix` file, see [tutorial](https://code.visualstudio.com/docs/editor/extension-marketplace#_install-from-a-vsix). 
 
+The `.vsix` can be found at [the latest release](https://github.com/sschwantler/bigUML/releases/latest)
+
 # Usage
 
 Once the setup is done, open VS Code.

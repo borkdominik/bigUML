@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "license": "MIT",
-  "main": "index.js",
+  "type": "module",
   "workspaces": [
-    "packages/*",
-    "packages/uml-vscode-integration/*"
+    "application/*",
+    "packages/*"
   ],
   "scripts": {
     "build": "lerna run build",
@@ -19,6 +19,7 @@
     "lint:fix": "lerna run lint:fix",
     "package": "npm run build:server && cd packages/uml-vscode-integration/extension && npm vscode:package && mv ./*.vsix ${INIT_CWD}/release/vsix",
     "package:zip": "npm package && cd ${INIT_CWD} && zip -r ./release-$(date +%Y%m%d-%H%M).zip ./release",
+    "start:server": "cd ../server && ./gradlew run",
     "watch": "lerna run --parallel watch"
   },
   "devDependencies": {
@@ -26,19 +27,23 @@
     "@types/lodash": "^4.14.195",
     "@types/node": "^20.4.2",
     "chai": "^5.2.0",
+    "concurrently": "^9.1.2",
     "esbuild": "^0.17.10",
     "esbuild-plugin-copy": "^2.1.1",
     "eslint": "^9.20.1",
     "eslint-plugin-header": "^3.1.1",
     "eslint-plugin-n": "^17.15.1",
+    "eslint-plugin-react": "^7.37.4",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "glob": "^11.0.1",
     "globals": "^15.15.0",
     "lerna": "^8.1.9",
-    "rimraf": "^6.0.1",
-    "tsx": "^3.12.3",
     "prettier": "^3.5.1",
+    "prettier-plugin-packagejson": "^2.5.8",
+    "rimraf": "^6.0.1",
+    "tsx": "^4.19.3",
     "typescript": "^5.7.3",
-    "typescript-eslint": "^8.24.0",
-    "prettier-plugin-packagejson": "^2.5.8"
+    "typescript-eslint": "^8.24.0"
   },
   "engines": {
     "node": ">=20 < 22"

@@ -4,6 +4,7 @@ node_modules
 lib
 build
 bundles
+dist
 *.tsbuildinfo
 
 # Project

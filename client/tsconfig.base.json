@@ -1,40 +1,38 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "module": "NodeNext",
     "skipLibCheck": true,
+    "emitDecoratorMetadata": true,
+    "sourceMap": true,
+
+    "moduleResolution": "nodenext",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "moduleDetection": "force",
+    "incremental": true,
+    "esModuleInterop": true,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "preserveWatchOutput": true,
+
+    /* Linting */
+    "noEmitOnError": false,
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
     "declaration": true,
     "declarationMap": true,
     "noImplicitAny": true,
     "noImplicitThis": true,
     "strictNullChecks": true,
     "noImplicitOverride": true,
-    "noEmitOnError": false,
-    "noUnusedLocals": true,
     "noImplicitReturns": true,
-    "strict": true,
-    "incremental": true,
-    "esModuleInterop": true,
-    "noFallthroughCasesInSwitch": true,
-    "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
-    // Needs to be disabled to support property injection
-    "strictPropertyInitialization": false,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "downlevelIteration": true,
-    "resolveJsonModule": true,
-
-    // Language
-    "moduleResolution": "Node16",
-    "module": "Node16",
-    "target": "ES2022",
-    "jsx": "react",
-    "lib": ["ESNext", "DOM"],
-    "sourceMap": true,
-    "types": ["node", "reflect-metadata"],
-    "baseUrl": ".",
-    "reactNamespace": "JSX"
-  },
-  "exclude": ["**/node_modules", "**/.eslintrc.js"],
-  "include": ["**/scripts", "packages/*/src", "packages/uml-vscode-integration/*/src"]
+    "strictPropertyInitialization": false
+  }
 }

@@ -25,7 +25,12 @@
     }
   ],
   "type": "module",
-  "main": "lib/index.js",
+  "exports": {
+    ".": {
+      "import": "./lib/index.js",
+      "require": "./lib/index.js"
+    }
+  },
   "types": "lib/index.d.ts",
   "files": [
     "lib",
@@ -35,13 +40,12 @@
     "build": "npm run clean && npm run compile",
     "clean": "rimraf lib tsconfig.tsbuildinfo",
     "compile": "tsc -b && npm run lint",
-    "lint": "eslint -c ./eslint.config.mjs",
-    "lint:fix": "eslint --fix -c ./eslint.config.mjs",
+    "lint": "eslint -c ./eslint.config.js",
+    "lint:fix": "eslint --fix -c ./eslint.config.js",
     "watch": "tsc -w"
   },
   "dependencies": {
-    "@eclipse-glsp/protocol": "*",
-    "vscode-messenger-common": "^0.4.5"
+    "@eclipse-glsp/protocol": "*"
   },
   "devDependencies": {}
 }

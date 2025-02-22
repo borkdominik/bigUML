@@ -6,17 +6,9 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-export * from './action-protocol/autocomplete.action.js';
-export * from './action-protocol/editor.actions.js';
-export * from './action-protocol/minimap.action.js';
 export * from './action-protocol/model.action.js';
 export * from './action-protocol/new-file.action.js';
-export * from './action-protocol/outline.action.js';
-export * from './action-protocol/outline.model.js';
-export * from './action-protocol/property-palette.action.js';
-export * from './action-protocol/property-palette.model.js';
-export * from './environment/configuration.js';
+export * from './action-protocol/reexport.js';
+export * from './action-protocol/utils.js';
 export * from './language/language.js';
-export * from './typescript.utils.js';
-export * from './vscode.js';
-
+export * from './language/uml-adapter.js';

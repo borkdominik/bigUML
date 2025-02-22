@@ -9,23 +9,33 @@
 
 import { Action, RequestAction, type ResponseAction } from '@eclipse-glsp/protocol';
 
+export type ModelResourceFormat = 'json' | 'xml';
+
 export interface RequestModelResourcesAction extends RequestAction<ModelResourcesResponseAction> {
     kind: typeof RequestModelResourcesAction.KIND;
+    formats?: ModelResourceFormat[];
 }
 export namespace RequestModelResourcesAction {
     export const KIND = 'requestModelResources';
 
-    export function create(): RequestModelResourcesAction {
+    export function create(options: Omit<RequestModelResourcesAction, 'kind' | 'requestId'>): RequestModelResourcesAction {
         return {
             kind: KIND,
-            requestId: RequestAction.generateRequestId()
+            requestId: RequestAction.generateRequestId(),
+            ...options
         };
     }
 }
 
+export interface ModelResource {
+    content: string;
+    format: ModelResourceFormat;
+    uri: string;
+}
+
 export interface ModelResourcesResponseAction extends ResponseAction {
     kind: typeof ModelResourcesResponseAction.KIND;
-    resources: Record<string, string>;
+    resources: Record<string, ModelResource>;
 }
 
 export namespace ModelResourcesResponseAction {

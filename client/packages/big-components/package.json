@@ -1,0 +1,76 @@
+{
+  "name": "@borkdominik-biguml/big-components",
+  "version": "0.6.3",
+  "description": "big-components",
+  "homepage": "https://github.com/borkdominik/bigUML",
+  "bugs": "https://github.com/borkdominik/bigUML/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/borkdominik/bigUML.git"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Business Informatics Group (TU Wien)"
+  },
+  "contributors": [
+    {
+      "name": "Business Informatics Group (TU Wien)",
+      "email": "dominik.bork@tuwien.ac.at",
+      "url": "https://me.big.tuwien.ac.at/"
+    },
+    {
+      "name": "Haydar Metin",
+      "email": "dev@haydar.metin.at",
+      "url": "https://me.big.tuwien.ac.at/"
+    }
+  ],
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./lib/browser/index.d.ts",
+      "default": "./lib/browser/index.js"
+    }
+  },
+  "types": "./lib/browser/index.d.ts",
+  "files": [
+    "lib",
+    "src"
+  ],
+  "scripts": {
+    "build": "npm run clean && npm run compile && npm run lint",
+    "clean": "rimraf lib node_modules/.tmp",
+    "compile": "tsc -b",
+    "lint": "eslint -c ./eslint.config.js",
+    "lint:fix": "npm run lint -- --fix",
+    "tsc": "tsc",
+    "watch": "npm run compile -- --watch"
+  },
+  "dependencies": {
+    "@borkdominik-biguml/big-vscode-integration": "*",
+    "@borkdominik-biguml/uml-protocol": "*",
+    "@eclipse-glsp/protocol": "*",
+    "@floating-ui/dom": "^1.4.1",
+    "@microsoft/fast-components": "^2.30.6",
+    "@microsoft/fast-foundation": "^2.49.1",
+    "@vscode/webview-ui-toolkit": "^1.2.2",
+    "lit": "^2.7.4",
+    "lodash": "^4.17.21",
+    "sortablejs": "^1.15.0",
+    "uuid": "^9.0.0",
+    "vscode-messenger-common": "^0.4.5",
+    "vscode-messenger-webview": "^0.4.5"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "@types/sortablejs": "1.15.1",
+    "@types/uuid": "^9.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "ts-lit-plugin": "^1.2.1"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  }
+}

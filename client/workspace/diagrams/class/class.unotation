@@ -106,4 +106,9 @@
     <position xmi:id="_bluxYfgnEe6ut-tKD2_jgQ"/>
     <size xmi:id="_bluxYvgnEe6ut-tKD2_jgQ" width="60.0" height="45.0"/>
   </elements>
+  <elements xsi:type="notation:Shape" xmi:id="_Uos1IPHuEe-vY-PZwRg7wA">
+    <semanticElement xmi:id="_Uos1IfHuEe-vY-PZwRg7wA" elementId="_UosOEPHuEe-vY-PZwRg7wA"/>
+    <position xmi:id="_Uos1IvHuEe-vY-PZwRg7wA"/>
+    <size xmi:id="_Uos1I_HuEe-vY-PZwRg7wA" width="60.0" height="45.0"/>
+  </elements>
 </unotation:UMLDiagram>

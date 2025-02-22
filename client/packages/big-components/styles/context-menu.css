@@ -1,0 +1,62 @@
+.big-context-menu {
+    display: none;
+    width: max-content;
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-width: 160px;
+    outline: 1px solid var(--vscode-menu-border);
+    border-radius: 5px;
+    color: var(--vscode-menu-foreground);
+    background-color: var(--vscode-menu-background);
+    box-shadow: 0 2px 8px var(--vscode-widget-shadow);
+    z-index: 9100;
+}
+
+.big-context-menu[popup-show] {
+    display: block;
+}
+
+.big-context-menu-bar {
+    padding: 4px 0;
+}
+
+.big-context-menu-actions {
+    display: flex;
+    flex-direction: column;
+}
+
+.big-context-menu-action {
+    display: flex;
+    flex-direction: row;
+    height: 2em;
+    text-decoration: none;
+    color: var(--vscode-menu-foreground);
+    outline-offset: -1px;
+    align-items: center;
+    position: relative;
+    margin: 0 4px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.big-context-menu-action:hover {
+    color: var(--vscode-menu-selectionForeground);
+    background-color: var(--vscode-menu-selectionBackground);
+    outline: 1px solid var(--vscode-menu-selectionBorder);
+    outline-offset: -1px;
+}
+
+.big-context-menu-action .big-context-menu-action-icon {
+    position: absolute;
+    width: 2em;
+    font-size: 13px;
+    line-height: 13px;
+}
+
+.big-context-menu-action .big-context-menu-action-label {
+    flex: 1 1 auto;
+    padding: 0 2em;
+    font-size: 13px;
+    line-height: 13px;
+}

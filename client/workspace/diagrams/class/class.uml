@@ -9,7 +9,9 @@
       <ownedParameter xmi:id="_7XfIQPgmEe6ut-tKD2_jgQ" name="Parameter" type="_bv-H8PgmEe6ut-tKD2_jgQ" direction="return"/>
     </ownedOperation>
   </packagedElement>
-  <packagedElement xsi:type="uml:PrimitiveType" xmi:id="_bv-H8PgmEe6ut-tKD2_jgQ" name="Integer"/>
+  <packagedElement xsi:type="uml:PrimitiveType" xmi:id="_bv-H8PgmEe6ut-tKD2_jgQ" name="Integer">
+    <ownedOperation xmi:id="_UosOEPHuEe-vY-PZwRg7wA" name="Operation"/>
+  </packagedElement>
   <packagedElement xsi:type="uml:PrimitiveType" xmi:id="_b_tNEPgmEe6ut-tKD2_jgQ" name="String"/>
   <packagedElement xsi:type="uml:Enumeration" xmi:id="_ejibwPgmEe6ut-tKD2_jgQ" name="Role">
     <ownedLiteral xmi:id="_f5ilYPgmEe6ut-tKD2_jgQ" name="Student" classifier="_ejibwPgmEe6ut-tKD2_jgQ"/>

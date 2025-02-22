@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "../../tsconfig.lib.json",
+  "compilerOptions": {
+    "tsBuildInfoFile": "node_modules/.tmp/tsconfig.lib.tsbuildinfo",
+    "outDir": "lib",
+    "rootDir": "src",
+    "jsx": "react"
+  },
+  "include": ["src/browser", "src/web", "src/global.d.ts"]
+}

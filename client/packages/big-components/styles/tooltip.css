@@ -1,0 +1,71 @@
+.big-tooltip {
+    display: none;
+    width: max-content;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 4px;
+    outline: 1px solid var(--vscode-menu-border);
+    border-radius: 5px;
+    color: var(--vscode-menu-foreground);
+    background-color: var(--vscode-menu-background);
+    box-shadow: 0 2px 8px var(--vscode-widget-shadow);
+    z-index: 9000;
+}
+
+.big-tooltip[popup-show] {
+    display: block;
+    animation: 0.5s ease 0s normal forwards 1 fadein;
+}
+
+.big-tooltip .big-tooltip-arrow {
+    position: absolute;
+    margin-top: 6px;
+    margin-left: -6px;
+}
+
+.big-tooltip .big-tooltip-arrow:before,
+.big-tooltip .big-tooltip-arrow:after {
+    position: absolute;
+    width: 0;
+    height: 0;
+    content: '';
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom-width: 6px;
+    border-bottom-style: solid;
+}
+
+.big-tooltip .big-tooltip-arrow:before {
+    top: -8px; /* extra -1 pixel offset at the top */
+    border-bottom-color: var(--vscode-menu-border);
+}
+
+.big-tooltip .big-tooltip-arrow:after {
+    top: -6px;
+    border-bottom-color: var(--vscode-menu-background);
+}
+
+@keyframes fadein {
+    0% {
+        opacity: 0;
+    }
+    99% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes fadein {
+    99% {
+        opacity: 0;
+    }
+    66% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}

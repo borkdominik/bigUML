@@ -6,7 +6,7 @@ Following is a short setup guide on how to get started with the natural language
 + [VS Code](https://code.visualstudio.com/)
 + [Java 17 JDK](https://www.oracle.com/java/technologies/javase/jdk14-archive-downloads.html)
 + [Docker](https://www.docker.com/get-started/)
-+ [Sox](https://sourceforge.net/projects/sox/) for audio recording
++ [Sox](https://sourceforge.net/projects/sox/files/sox/14.4.1/) **version 14.4.1** for audio recording
 
 ## NLI Server
 
@@ -24,6 +24,14 @@ On the first startup, this may take some time as the speech-to-text model must b
 ## VS Code Extention
 
 The extention can be installed from the `.vsix` file, see [tutorial](https://code.visualstudio.com/docs/editor/extension-marketplace#_install-from-a-vsix). 
+
+You can manually install a VS Code extension packaged in a .vsix file. Using the Install from VSIX command in the Extensions view command dropdown, or the Extensions: Install from VSIX command in the Command Palette, point to the .vsix file.
+
+You can also install using the VS Code --install-extension command-line switch providing the path to the .vsix file.
+
+```cmd
+code --install-extension myextension.vsix
+```
 
 The `.vsix` can be found at [the latest release](https://github.com/sschwantler/bigUML/releases/latest)
 

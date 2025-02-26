@@ -67,7 +67,7 @@ All recorded audio snippets and the transcription history will be stored in the 
 <img src="./media/nli/fast_animals_v2.gif" style="width:800px;" alt="Demo" />
 
 # Troubleshooting
-If you experience any issues, contact [simon.schwantler@student.tuwien.ac.at](mailto:simon.schwantler@student.tuwien.ac.at).
+If you experience any issues, contact simon.schwantler[AT]gmx.at
 
 
 # Useful Commands

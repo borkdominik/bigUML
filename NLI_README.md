@@ -3,6 +3,9 @@
 Following is a short setup guide on how to get started with the natural language interface for the BigUML editor.
 
 ## Requirements
+
+Make sure that you have the following tools installed, before you proceed with the next steps.
+
 + [VS Code](https://code.visualstudio.com/)
 + [Java 17 JDK](https://www.oracle.com/java/technologies/javase/jdk14-archive-downloads.html)
 + [Docker](https://www.docker.com/get-started/)
@@ -21,19 +24,17 @@ docker run -p 8000:8000 sschwantler/nli4uml
 ```
 On the first startup, this may take some time as the speech-to-text model must be downloaded.
 
-## VS Code Extention
+## VS Code Extension
 
-The extention can be installed from the `.vsix` file, see [tutorial](https://code.visualstudio.com/docs/editor/extension-marketplace#_install-from-a-vsix). 
+The `.vsix` can be found at [the latest release](https://github.com/sschwantler/bigUML/releases/latest).
 
-You can manually install a VS Code extension packaged in a .vsix file. Using the Install from VSIX command in the Extensions view command dropdown, or the Extensions: Install from VSIX command in the Command Palette, point to the .vsix file.
+Please refer to the official [tutorial](https://code.visualstudio.com/docs/editor/extension-marketplace#_install-from-a-vsix) on how to install an extention from `.vsix`.
 
 You can also install using the VS Code --install-extension command-line switch providing the path to the .vsix file.
 
 ```cmd
 code --install-extension myextension.vsix
 ```
-
-The `.vsix` can be found at [the latest release](https://github.com/sschwantler/bigUML/releases/latest)
 
 # Usage
 

@@ -12,6 +12,7 @@ import {
     BGModelResource,
     ElementProperties,
     ExportHistoryAction,
+    NliErrorAction,
     UpdateElementPropertyAction
 } from '@borkdominik-biguml/uml-protocol';
 import { Action, ChangeBoundsOperation, CreateEdgeOperation, CreateNodeOperation, DeleteElementOperation, Dimension, ElementAndBounds, SelectAction, UndoAction } from '@eclipse-glsp/protocol';
@@ -80,7 +81,6 @@ export class TextInputPalette extends BigElement {
             }
         }
         if (changedProperties.has('inputText') && this.programmaticChange) {
-            console.log("input text changed from NLI server");
             if (this.inputText) {
                 this.onStartIntent();
             }
@@ -111,19 +111,30 @@ export class TextInputPalette extends BigElement {
     }
 
     protected async onRecordActionMessageStart(): Promise<void> {
+
+        if (!await this.isNliServerRunning()) {
+            this.showErrorMsg("NLI Server not ready, make sure it is running at " + NLI_SERVER_URL);
+            return;
+        }
+
         const recordButton = this.renderRoot.querySelector('#recordButton') as HTMLElement;
 
-    if (recordButton) {
-        recordButton.setAttribute('disabled', 'true');
-        recordButton.textContent = 'Recording...';
-    }
+        if (recordButton) {
+            recordButton.setAttribute('disabled', 'true');
+            recordButton.textContent = 'Recording...';
+        }
         this.sendNotification({ kind: 'startRecording' });
     }
 
     protected async onStartIntent(): Promise<void> {
         try {
             if (!this.inputText) {
-                console.warn("Input text is empty, nothing todo");
+                this.showErrorMsg("Input text is empty, nothing todo");
+                return;
+            }
+
+            if (!await this.isNliServerRunning()) {
+                this.showErrorMsg("NLI Server not ready, make sure it is running at " + NLI_SERVER_URL);
                 return;
             }
             
@@ -132,18 +143,18 @@ export class TextInputPalette extends BigElement {
             }
             this.inputHistory.set(this.recordingTimestamp, this.inputText);
 
-            console.log(this.inputHistory);
-            const response = await fetch(NLI_SERVER_URL + `/intent/?user_query=${this.inputText}`, {
-                headers: {
-                    accept: 'application/json'
-                }
-            })
-            if (!response.ok) {
-                console.error(response.text)
-            }
-            const json = await response.json();
+            const intent = await this.getIntent();
 
-            await this.handleIntent(json.intent);
+            await this.handleIntent(intent);
+        } catch (error) {
+            let errorMessage = "Unknown error occurred.";
+
+            if (error instanceof Error) {
+                errorMessage = error.message || error.toString();
+            }
+
+            this.showErrorMsg(errorMessage);
+
         } finally {
             this.resetRecordButton();
             this.sendNotification(ExportHistoryAction.create(this.inputHistory));
@@ -192,7 +203,7 @@ export class TextInputPalette extends BigElement {
                 if (elementId !== undefined) {
                     this.addAttribute(elementId);
                 } else {
-                    console.error("Nothing selected");
+                    this.showErrorMsg("Nothing selected, please make sure to select an element");
                 }
                 break;
             }
@@ -200,7 +211,7 @@ export class TextInputPalette extends BigElement {
                 if (elementId !== undefined) {
                     this.addMethod(elementId);
                 } else {
-                    console.error("Nothing selected");
+                    this.showErrorMsg("Nothing selected, please make sure to select an element");
                 }
                 break;
             }
@@ -208,7 +219,7 @@ export class TextInputPalette extends BigElement {
                 if (elementId !== undefined) {
                     this.changeName(elementId);
                 } else {
-                    console.error("Nothing selected");
+                    this.showErrorMsg("Nothing selected, please make sure to select an element");
                 }
                 break;
             }
@@ -216,14 +227,14 @@ export class TextInputPalette extends BigElement {
                 if (elementId !== undefined) {
                     this.changeVisibility(elementId);
                 } else {
-                    console.error("Nothing selected");
+                    this.showErrorMsg("Nothing selected, please make sure to select an element");
                 }
                 break;
             case Intents.CHANGE_DATATYPE_INTENT:
                 if (elementId !== undefined) {
                     this.changeDatatype(elementId);
                 } else {
-                    console.error("Nothing selected");
+                    this.showErrorMsg("Nothing selected, please make sure to select an element");
                 }
                 break;
                 break
@@ -243,7 +254,7 @@ export class TextInputPalette extends BigElement {
                 if (elementId !== undefined) {
                     this.moveElement(elementId);
                 } else {
-                    console.error("Nothing selected");
+                    this.showErrorMsg("Nothing selected, please make sure to select an element");
                 }
                 break;
             }
@@ -276,7 +287,7 @@ export class TextInputPalette extends BigElement {
         });
 
         if (!response.ok) {
-            console.error(response.text);
+            this.showErrorMsg("Error while processing command");
         }
         return await response.json();
     }
@@ -292,7 +303,7 @@ export class TextInputPalette extends BigElement {
             method: "POST"
         });
         if (!response.ok) {
-            console.error(response.text);
+            this.showErrorMsg("Error while processing command");
         }
         const json = await response.json();
 
@@ -330,7 +341,7 @@ export class TextInputPalette extends BigElement {
             })
         });
         if (!response.ok) {
-            console.error(response.text);
+            this.showErrorMsg("Error while processing command");
         }
         return await response.json();
     }
@@ -343,14 +354,13 @@ export class TextInputPalette extends BigElement {
             method: "POST"
         });
         if (!response.ok) {
-            console.error(response.text);
+            this.showErrorMsg("Error while processing command");
         }
         return await response.json();
     }
 
     protected async addAttribute(focusedElement: string) {
         const json = await this.addValue();
-        console.error(json);
 
         // since there is currently no way to determine if a parameter should be added to a class/enum or a method, all events are triggered
         this.dispatchEvent(
@@ -423,7 +433,7 @@ export class TextInputPalette extends BigElement {
             })
         });
         if (!response.ok) {
-            console.error(response.text);
+            this.showErrorMsg("Error while processing command");
         }
         const json = await response.json();
 
@@ -517,7 +527,7 @@ export class TextInputPalette extends BigElement {
             })
         });
         if (!response.ok) {
-            console.error(response.text);
+            this.showErrorMsg("Error while processing command");
         }
         return await response.json();
     }
@@ -544,7 +554,7 @@ export class TextInputPalette extends BigElement {
             })
         });
         if (!response.ok) {
-            console.error(response.text);
+            this.showErrorMsg("Error while processing command");
         }
         const json = await response.json();
         const elementAndBounds: ElementAndBounds = {
@@ -599,5 +609,41 @@ export class TextInputPalette extends BigElement {
             clientId: this.clientId,
             action
         });
+    }
+
+    protected async getIntent(): Promise<string> {
+        const response = await fetch(NLI_SERVER_URL + `/intent/?user_query=${this.inputText}`, {
+            headers: {
+                accept: 'application/json'
+            }
+        })
+        if (!response.ok) {
+            this.showErrorMsg(await response.text());
+        }
+        const json = await response.json();
+        return json.intent;
+    }
+
+    protected async isNliServerRunning(timeout = 1000): Promise<boolean> {
+        const controller = new AbortController();
+        const signal = controller.signal;
+        
+        const timeoutId = setTimeout(() => controller.abort(), timeout);
+    
+        try {
+            const response = await fetch(NLI_SERVER_URL + "/ping", { method: "GET", signal });
+    
+            clearTimeout(timeoutId);
+    
+            return response.status === 204 || response.status === 404;
+        } catch (error) {
+            clearTimeout(timeoutId);
+            return false;
+        }
+    }
+
+    protected async showErrorMsg(msg: string) {
+        console.log(msg);
+        this.sendNotification(NliErrorAction.create(msg));
     }
 }

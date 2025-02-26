@@ -14,6 +14,7 @@ export * from './action-protocol/new-file.action';
 export * from './action-protocol/outline.action';
 export * from './action-protocol/audio.action';
 export * from './action-protocol/export-history.action';
+export * from './action-protocol/nli-error.action';
 export * from './action-protocol/outline.model';
 export * from './action-protocol/property-palette.action';
 export * from './action-protocol/property-palette.model';

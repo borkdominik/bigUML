@@ -13,7 +13,7 @@ import { VSCodeSettings } from '../../language';
 import { getBundleUri, getUri } from '../../utilities/webview';
 import { ProviderWebviewContext, UMLWebviewProvider } from '../../vscode/webview/webview-provider';
 import { InitializeCanvasBoundsAction, SetViewportAction } from '@eclipse-glsp/client';
-import { AudioRecordingCompleteAction, ExportHistoryAction, ModelResourcesResponseAction, RequestModelResourcesAction, SetPropertyPaletteAction } from '@borkdominik-biguml/uml-protocol';
+import { AudioRecordingCompleteAction, ExportHistoryAction, NliErrorAction, ModelResourcesResponseAction, RequestModelResourcesAction, SetPropertyPaletteAction } from '@borkdominik-biguml/uml-protocol';
 import { exec, ChildProcess } from 'child_process';
 import * as path from 'path';
 import * as vscode from 'vscode';
@@ -36,13 +36,7 @@ export class TextInputPaletteProvider extends UMLWebviewProvider {
     override init(): void {
         super.init();
         this.extensionHostConnection.cacheActions([InitializeCanvasBoundsAction.KIND, SetViewportAction.KIND, SetPropertyPaletteAction.KIND]);
-        fs.mkdir(this.tempDir, {recursive: true},
-            (err) => {
-                if (err) {
-                    return console.error(err);
-                }
-                console.log('Directory created successfully!');
-            });
+        this.ensureDirectoryExists();
     }
 
     protected resolveHTML(providerContext: ProviderWebviewContext): void {
@@ -88,7 +82,8 @@ export class TextInputPaletteProvider extends UMLWebviewProvider {
             } else if (ExportHistoryAction.is(message.action)) {
                 const inputHistory = new Map<string, string>(message.action.inputHistory);
                 this.exportHistory(inputHistory);
-
+            } else if (NliErrorAction.is(message.action)) {
+                vscode.window.showErrorMessage(`${message.action.message}`);
             }else {
                 this.extensionHostConnection.send(message.action);
             }
@@ -98,6 +93,7 @@ export class TextInputPaletteProvider extends UMLWebviewProvider {
     // Start Recording Method
     private startRecording(): void {
         try {
+            this.ensureDirectoryExists();
             this.fileName = Date.now().toString();
             const outputPath = path.join(this.tempDir, `${this.fileName}.wav`);
             this.recordingProcess = exec(
@@ -144,4 +140,20 @@ export class TextInputPaletteProvider extends UMLWebviewProvider {
             }
         });
     }
+
+    protected ensureDirectoryExists(): void {
+        fs.access(this.tempDir, fs.constants.F_OK, (err) => {
+            if (err) {
+                fs.mkdir(this.tempDir, { recursive: true }, (mkdirErr) => {
+                    if (mkdirErr) {
+                        return console.error("Failed to create directory:", mkdirErr);
+                    }
+                    console.log('Directory created successfully!');
+                });
+            } else {
+                console.log("Directory already exists.");
+            }
+        });
+    }
+
 }

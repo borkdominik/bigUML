@@ -99,8 +99,10 @@ There are no predefined datatypes, they must also be created before referenced.
 - Remove the class called computer
 - Delete interface named university
 
-+ Add an aggregation between computer and smartphone
-+ Between classes school and university, create a composition
+
++ Add an generalization from cat to animal
++ Between classes school and university, create a composition called attends
++ Create an association called teaches linking teacher with student
 
 - Move it to the left of the class school
 - Place it north of the interface school

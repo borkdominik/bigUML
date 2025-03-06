@@ -59,7 +59,7 @@ export class TextInputPalette extends BigElement {
     @property({ type: Object })
     inputText: string = '...';
     @property({ type: Object })
-    programmaticChange: boolean;
+    programmaticChange: boolean = false;
     @property({ type: Object })
     recordingTimestamp: string;
     @property({ type: Map })
@@ -82,10 +82,10 @@ export class TextInputPalette extends BigElement {
         }
         if (changedProperties.has('inputText') && this.programmaticChange) {
             if (this.inputText) {
-                this.onStartIntent();
+                this.onStartIntent().then(result => this.programmaticChange = false);
             }
         }
-        this.programmaticChange = false;
+
         this.resetRecordButton();
     }
 

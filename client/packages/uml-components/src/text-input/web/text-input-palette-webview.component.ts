@@ -120,6 +120,7 @@ export class TextInputPaletteWebview extends BigElement {
 
     protected async transcribeAudio(recordingTimestamp: string): Promise<void> {
         this.programmaticChange = false;
+        this.recordingTimestamp = recordingTimestamp;
         if (this.audioBlob === undefined) {
             console.error("Cannot transcribe, audio blob is undefined");
             return;
@@ -142,13 +143,10 @@ export class TextInputPaletteWebview extends BigElement {
 
             const data = await response.json();
             console.log(`Transcription: ${data.transcription}`);
-            this.programmaticChange = true;
-            this.recordingTimestamp = recordingTimestamp;
             this.inputText = data.transcription;
+            this.programmaticChange = true;
         } catch (error) {
             console.error("Error transcribing audio:", error);
-            this.programmaticChange = false;
-            this.recordingTimestamp = recordingTimestamp;
             this.inputText = "";
         }
     }

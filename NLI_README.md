@@ -74,6 +74,8 @@ If you experience any issues, contact **"simon.schwantler[AT]gmx.at"**
 
 Commands can be provided in natural language. Following are some suggestions.
 
+Note that new elements will always be positioned in the top-left corner of your editor's view. If you place multiple elements subsequently, they will be placed on top of each other.
+
 Note that some commands require a selected element (e.g. change name, change visibility, change datatype, move).
 There are no predefined datatypes, they must also be created before referenced.
 
@@ -104,5 +106,6 @@ There are no predefined datatypes, they must also be created before referenced.
 + Between classes school and university, create a composition called attends
 + Create an association called teaches linking teacher with student
 
-- Move it to the left of the class school
-- Place it north of the interface school
+- Move it to the bottom of class computer
+- Place it right of the class school
+- Position it south of the interface school

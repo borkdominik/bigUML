@@ -67,17 +67,21 @@ All recorded audio snippets and the transcription history will be stored in the 
 <img src="./media/nli/fast_animals_v2.gif" style="width:800px;" alt="Demo" />
 
 # Troubleshooting
-If you experience any issues, contact **"simon.schwantler[AT]gmx.at"**
+If you experience any issues, contact **"dominik.bork@tuwien.ac.at"**
 
+# Limitations
 
-# Useful Commands
-
-Commands can be provided in natural language. Following are some suggestions.
+Each command can only support one operation at a time. Therefore it is not possible to perform multiple operations at once. 
+For example, the command "Create a class person with the public attribute name" is not supported and should be provided as two commands (create class, add atttribute).
 
 Note that new elements will always be positioned in the top-left corner of your editor's view. If you place multiple elements subsequently, they will be placed on top of each other.
 
 Note that some commands require a selected element (e.g. change name, change visibility, change datatype, move).
 There are no predefined datatypes, they must also be created before referenced.
+
+# Useful Commands
+
+Commands can be provided in natural language. Following are some suggestions.
 
 + Create a class named computer
 + Define a interface called university
@@ -86,7 +90,6 @@ There are no predefined datatypes, they must also be created before referenced.
 
 - Focus on class computer
 - Select the interface university
-
 
 + Add a public attribute named size of type string
 + Introduce a private attribute color with datatype string

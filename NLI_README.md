@@ -74,7 +74,7 @@ If you experience any issues, contact **"dominik.bork@tuwien.ac.at"**
 Each command can only support one operation at a time. Therefore it is not possible to perform multiple operations at once. 
 For example, the command "Create a class person with the public attribute name" is not supported and should be provided as two commands (create class, add atttribute).
 
-Note that new elements will always be positioned in the top-left corner of your editor's view. If you place multiple elements subsequently, they will be placed on top of each other.
+Note that new elements will always be positioned in the top-left corner of your editor's view. If you place multiple elements subsequently, they will be placed on top of each other. Make sure to position them correctly.
 
 Note that some commands require a selected element (e.g. change name, change visibility, change datatype, move).
 There are no predefined datatypes, they must also be created before referenced.

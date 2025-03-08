@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
-import { VSCodeDropdown, VSCodeOption } from '@vscode/webview-ui-toolkit/react';
+import { VSCodeDropdown, VSCodeOption } from '@vscode/webview-ui-toolkit/react/index.js';
 import { useCallback, useState, type ReactElement } from 'react';
 
 export interface BigDropdownProps {

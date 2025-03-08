@@ -7,8 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { ApplyTypeHintsCommand, typeHintsModule } from '@eclipse-glsp/client';
-import { FeatureModule, bindOrRebind } from '@eclipse-glsp/protocol';
+import { ApplyTypeHintsCommand, FeatureModule, bindOrRebind, typeHintsModule } from '@eclipse-glsp/client';
 import { UMLApplyTypeHintsCommand } from './uml-type-hint.provider.js';
 
 export const umlTypeHintsModule = new FeatureModule(

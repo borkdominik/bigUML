@@ -80,14 +80,11 @@ export class SDEdgeCreationToolMouseListener extends EdgeCreationToolMouseListen
     protected sourcePosition?: Point;
     protected targetPosition?: Point;
 
-    protected override reinitialize(): void {
-        this.source = undefined;
-        this.target = undefined;
+    override dispose(): void {
         this.sourcePosition = undefined;
         this.targetPosition = undefined;
-        this.currentTarget = undefined;
-        this.allowedTarget = false;
         this.tool.registerFeedback([SDRemoveFeedbackPositionedEdgeAction.create()]);
+        super.dispose();
     }
 
     override nonDraggingMouseUp(_element: GModelElement, event: MouseEvent): Action[] {
@@ -153,7 +150,7 @@ export class SDEdgeCreationToolMouseListener extends EdgeCreationToolMouseListen
                 if (!isCtrlOrCmd(event)) {
                     result.push(EnableDefaultToolsAction.create());
                 } else {
-                    this.reinitialize();
+                    this.dispose();
                 }
             }
         } else if (event.button === 2) {

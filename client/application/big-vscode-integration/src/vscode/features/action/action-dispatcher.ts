@@ -67,20 +67,14 @@ export class ActionDispatcher implements Disposable {
     }
 
     dispatch(action: Action | Action[]): void {
-        if (Array.isArray(action)) {
-            action.forEach(a => this.connector.sendActionToActiveClient(a));
-        } else {
-            this.connector.sendActionToActiveClient({
-                ...action
-            });
-        }
+        this.dispatchToClient(undefined, action);
     }
 
-    dispatchToClient(clientId: string, action: Action | Action[]): void {
+    dispatchToClient(clientId: string | undefined, action: Action | Action[]): void {
         if (Array.isArray(action)) {
-            action.forEach(a => this.connector.sendActionToClient(clientId, a));
+            action.forEach(a => this.connector.dispatchAction(a, clientId));
         } else {
-            this.connector.sendActionToClient(clientId, action);
+            this.connector.dispatchAction(action, clientId);
         }
     }
 

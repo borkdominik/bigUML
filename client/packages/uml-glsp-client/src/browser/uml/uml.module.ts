@@ -6,8 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { configureModelElement, GCompartmentView, GLabel, GLabelView } from '@eclipse-glsp/client';
-import { ContainerModule } from 'inversify';
+import { configureModelElement, FeatureModule, GCompartmentView, GLabel, GLabelView } from '@eclipse-glsp/client';
 import { GUMLCompartment } from '../views/uml-compartment.js';
 import { UMLGModelTypes } from './uml.types.js';
 import { GCompartmentContainer } from './views/uml-compartment.js';
@@ -15,7 +14,7 @@ import { GDivider, GDividerView } from './views/uml-divider.view.js';
 import { GIconCSS, GIconCSSView } from './views/uml-icon.view.js';
 import { GEditableLabel, GEditableLabelView } from './views/uml-label.view.js';
 
-export const umlModule = new ContainerModule((bind, unbind, isBound, rebind) => {
+export const umlModule = new FeatureModule((bind, unbind, isBound, rebind) => {
     const context = { bind, unbind, isBound, rebind };
 
     configureModelElement(context, UMLGModelTypes.LABEL_NAME, GEditableLabel, GEditableLabelView);

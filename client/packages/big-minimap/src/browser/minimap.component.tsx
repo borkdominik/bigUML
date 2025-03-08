@@ -56,6 +56,8 @@ export function Minimap(): ReactElement {
             } else if (InitializeCanvasBoundsAction.KIND === action.kind) {
                 setCanvasBounds((action as InitializeCanvasBoundsAction).newCanvasBounds);
             }
+
+            console.log('Minimap action', action);
         });
     }, [listenAction]);
 
@@ -191,7 +193,7 @@ export function Minimap(): ReactElement {
                     className='svg'
                     ref={svgRef}
                     id='mySVG'
-                    viewBox={`0 0 ${modelBounds?.width} ${modelBounds?.height}`}
+                    viewBox={`0 0 ${modelBounds?.width ?? 0} ${modelBounds?.height ?? 0}`}
                     onMouseDown={startDrag}
                 >
                     <g dangerouslySetInnerHTML={{ __html: svg || '' }} />

@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
-import { VSCodeButton } from '@vscode/webview-ui-toolkit/react';
+import { VSCodeButton } from '@vscode/webview-ui-toolkit/react/index.js';
 import { Children, isValidElement, useCallback, useRef, useState, type ReactNode } from 'react';
 import { BigTooltip } from '../tooltip/tooltip.component.js';
 import { ContextMenu, ContextMenuItem } from './context-menu.component.js';

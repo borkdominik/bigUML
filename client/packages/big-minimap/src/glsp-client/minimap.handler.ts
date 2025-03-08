@@ -11,11 +11,13 @@ import {
     type Action,
     type CommandExecutionContext,
     type CommandResult,
+    EditorContextService,
     GLSPSvgExporter,
     type GModelElement,
     GModelRoot,
     HiddenCommand,
     type IVNodePostprocessor,
+    type RequestExportSvgAction,
     TYPES,
     isExportable,
     isHoverable,
@@ -24,32 +26,32 @@ import {
 } from '@eclipse-glsp/client';
 import { inject, injectable } from 'inversify';
 import { type VNode } from 'snabbdom';
-import { v4 as uuid } from 'uuid';
 
 // The following implementation follows the standard implementation
 // https://github.com/eclipse-glsp/glsp-client/blob/master/packages/client/src/features/export/glsp-svg-exporter.ts
 
 @injectable()
 export class MinimapGLSPSvgExporter extends GLSPSvgExporter {
-    override export(root: GModelRoot): void {
+    @inject(EditorContextService)
+    protected readonly editorContext: EditorContextService;
+
+    override export(root: GModelRoot, request?: RequestExportSvgAction): void {
         if (typeof document !== 'undefined') {
-            const svgElement = this.findSvgElement();
+            let svgElement = this.findSvgElement();
             if (svgElement) {
-                // createSvg requires the svg to have a non-empty id, so we generate one if necessary
-                const originalId = svgElement.id;
-                try {
-                    svgElement.id = originalId || uuid();
-                    // provide generated svg code with respective sizing for proper viewing in browser and remove undesired border
-                    const bounds = this.getBounds(root);
-                    const svg = this.createSvg(svgElement, root).replace(
-                        'style="',
-                        `style="width: ${bounds.width}px !important;height: ${bounds.height}px !important;border: none !important;`
-                    );
-                    // do not give request/response id here as otherwise the action is treated as an unrequested response
-                    this.actionDispatcher.dispatch(MinimapExportSvgAction.create(svg, root.id, bounds));
-                } finally {
-                    svgElement.id = originalId;
-                }
+                svgElement = this.prepareSvgElement(svgElement, root, request);
+                const serializedSvg = this.createSvg(svgElement, root, request?.options ?? {}, request);
+                const svgExport = this.getSvgExport(serializedSvg, svgElement, root, request);
+                const bounds = this.getBounds(root, document);
+                // do not give request/response id here as otherwise the action is treated as an unrequested response
+                this.actionDispatcher.dispatch(
+                    MinimapExportSvgAction.create(svgExport, root.id, {
+                        x: bounds.x,
+                        y: bounds.y,
+                        width: bounds.width,
+                        height: bounds.height
+                    })
+                );
             }
         }
     }
@@ -63,7 +65,6 @@ export class MinimapExportSvgCommand extends HiddenCommand {
     }
 
     execute(context: CommandExecutionContext): CommandResult {
-        console.log('MinimapExportSvgCommand.execute', context);
         if (isExportable(context.root)) {
             const root = context.modelFactory.createRoot(context.root);
             if (isExportable(root)) {
@@ -80,7 +81,6 @@ export class MinimapExportSvgCommand extends HiddenCommand {
                     }
                 });
 
-                console.warn('MinimapExportSvgCommand.root', root);
                 return {
                     model: root,
                     modelChanged: true,
@@ -109,9 +109,8 @@ export class MinimapExportSvgPostprocessor implements IVNodePostprocessor {
     }
 
     postUpdate(cause?: Action): void {
-        console.log('MinimapExportSvgPostprocessor.postUpdate', cause);
-        if (this.root) {
-            // this.svgExporter.export(this.root);
+        if (this.root && RequestMinimapExportSvgAction.is(cause)) {
+            this.svgExporter.export(this.root);
         }
     }
 }

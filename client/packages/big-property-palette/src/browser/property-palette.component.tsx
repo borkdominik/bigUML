@@ -9,7 +9,7 @@
 
 import { BigCheckbox, BigDropdown, BigTextField, VSCodeContext } from '@borkdominik-biguml/big-components';
 import { type Action } from '@eclipse-glsp/protocol';
-import { VSCodeButton, VSCodeDivider, VSCodeTextField } from '@vscode/webview-ui-toolkit/react';
+import { VSCodeButton, VSCodeDivider, VSCodeTextField } from '@vscode/webview-ui-toolkit/react/index.js';
 import { groupBy } from 'lodash';
 import { useCallback, useContext, useEffect, useState, type ChangeEvent, type ReactElement } from 'react';
 import {

@@ -7,8 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { type IDiagramStartup, TYPES, type ViewerOptions } from '@eclipse-glsp/client';
-import { bindAsService, FeatureModule } from '@eclipse-glsp/protocol';
+import { bindAsService, FeatureModule, type IDiagramStartup, TYPES, type ViewerOptions } from '@eclipse-glsp/client';
 import { inject, injectable } from 'inversify';
 
 export const umlLoadingModule = new FeatureModule((bind, unbind, isBound, rebind) => {

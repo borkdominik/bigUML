@@ -7,10 +7,10 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import { UMLDiagramType } from '@borkdominik-biguml/uml-protocol';
-import { ContainerModule } from 'inversify';
+import { FeatureModule } from '@eclipse-glsp/client';
 import { registerInteractionElement, registerLifelineElement, registerMessageElement } from '../../elements/index.js';
 
-export const umlCommunicationDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
+export const umlCommunicationDiagramModule = new FeatureModule((bind, unbind, isBound, rebind) => {
     const context = { bind, unbind, isBound, rebind };
 
     registerInteractionElement(context, UMLDiagramType.COMMUNICATION);

@@ -17,14 +17,14 @@ import {
     configureCommand,
     configureModelElement,
     EdgeCreationTool,
+    FeatureModule,
     GEdge,
     GLSPScrollMouseListener,
     GPort,
     PolylineEdgeView,
     SelectionService
-} from '@eclipse-glsp/client/lib';
-import { ContainerModule, type interfaces } from 'inversify';
-
+} from '@eclipse-glsp/client';
+import { type interfaces } from 'inversify';
 import { UML_TYPES } from '../../../uml-glsp.types.js';
 import { NamedElement } from '../../elements/index.js';
 import { LifelineElement } from './elements/index.js';
@@ -62,7 +62,7 @@ import {
     LifelineNodeView
 } from './views/index.js';
 
-export const umlSequenceDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
+export const umlSequenceDiagramModule = new FeatureModule((bind, unbind, isBound, rebind) => {
     const context = { bind, unbind, isBound, rebind };
 
     // TODO: Sequence Diagram specific

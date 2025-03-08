@@ -35,17 +35,17 @@ export class MinimapProvider extends BIGReactWebview {
     }
 
     protected override handleConnection(): void {
-        // super.handleConnection();
+        super.handleConnection();
 
         this.toDispose.push(
             this.actionCache.onDidChange(message => this.webviewConnector.dispatch(message)),
             this.webviewConnector.onReady(() => {
-                this.actionDispatcher.dispatch(RequestMinimapExportSvgAction.create());
+                this.requestSVG();
                 this.webviewConnector.dispatch(this.actionCache.getActions());
             }),
             this.webviewConnector.onVisible(() => this.webviewConnector.dispatch(this.actionCache.getActions())),
             this.connectionManager.onDidActiveClientChange(() => {
-                this.actionDispatcher.dispatch(RequestMinimapExportSvgAction.create());
+                this.requestSVG();
             }),
             this.connectionManager.onNoActiveClient(() => {
                 this.webviewConnector.dispatch(MinimapExportSvgAction.create());
@@ -54,8 +54,15 @@ export class MinimapProvider extends BIGReactWebview {
                 this.webviewConnector.dispatch(MinimapExportSvgAction.create());
             }),
             this.modelState.onDidChangeModelState(() => {
-                // this.actionDispatcher.dispatch(RequestMinimapExportSvgAction.create());
+                this.requestSVG();
             })
         );
+    }
+
+    protected requestSVG(): void {
+        // Wait for updates to be applied
+        setTimeout(() => {
+            this.actionDispatcher.dispatch(RequestMinimapExportSvgAction.create());
+        }, 200);
     }
 }

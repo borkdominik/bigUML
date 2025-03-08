@@ -49,11 +49,13 @@
     "node": ">=20 < 22"
   },
   "overrides": {
-    "@eclipse-glsp/client": "2.1.0",
-    "@eclipse-glsp/protocol": "2.1.0",
-    "@eclipse-glsp/vscode-integration": "2.1.0",
-    "@eclipse-glsp/vscode-integration-webview": "2.1.0",
-    "inversify": "6.0.1",
-    "vscode-jsonrpc": "8.1.0"
+    "@eclipse-glsp/client": "2.3.0",
+    "@eclipse-glsp/protocol": "2.3.0",
+    "@eclipse-glsp/vscode-integration": "2.3.0",
+    "@eclipse-glsp/vscode-integration-webview": "2.3.0",
+    "inversify": "6.1.6",
+    "@borkdominik-biguml/uml-glsp-client": {
+      "inversify": "6.1.3"
+    }
   }
 }

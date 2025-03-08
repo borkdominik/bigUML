@@ -129,21 +129,6 @@ export class BIGGLSPVSCodeConnector<
         );
     }
 
-    public override sendActionToActiveClient(action: Action): void;
-    public override sendActionToActiveClient(action: Action[]): void;
-    public override sendActionToActiveClient(action: Action | Action[]): void {
-        console.warn('sendActionToActiveClient', action);
-        if (Array.isArray(action)) {
-            action.forEach(a => super.sendActionToActiveClient(a));
-        } else {
-            super.sendActionToActiveClient(action);
-        }
-    }
-
-    public override sendActionToClient(clientId: string, action: Action): void {
-        super.sendActionToClient(clientId, action);
-    }
-
     public sendActionToActiveServer(action: Action): void {
         this.clientMap.forEach(client => {
             if (client.webviewEndpoint.webviewPanel.active) {

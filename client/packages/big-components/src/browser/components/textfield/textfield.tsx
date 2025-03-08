@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
-import { VSCodeTextField } from '@vscode/webview-ui-toolkit/react';
+import { VSCodeTextField } from '@vscode/webview-ui-toolkit/react/index.js';
 import { throttle } from 'lodash';
 import type React from 'react';
 import { useCallback, useMemo, useState, type ReactElement } from 'react';

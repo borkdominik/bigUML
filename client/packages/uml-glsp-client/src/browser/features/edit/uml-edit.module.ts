@@ -7,8 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { EditLabelUI } from '@eclipse-glsp/client';
-import { bindOrRebind, FeatureModule } from '@eclipse-glsp/protocol';
+import { bindOrRebind, EditLabelUI, FeatureModule } from '@eclipse-glsp/client';
 import { EditLabelUIAutocomplete } from './edit-label.autocomplete.js';
 
 export const umlEditModule = new FeatureModule((bind, unbind, isBound, rebind) => {

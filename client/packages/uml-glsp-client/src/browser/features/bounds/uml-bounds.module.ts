@@ -7,11 +7,12 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { configureActionHandler, configureLayout, TYPES } from '@eclipse-glsp/client';
+import { bindOrRebind, configureActionHandler, configureLayout, FeatureModule, GLSPHiddenBoundsUpdater, TYPES } from '@eclipse-glsp/client';
 import { boundsModule } from '@eclipse-glsp/client/lib/features/bounds/bounds-module.js';
-import { bindOrRebind, FeatureModule, SetViewportAction } from '@eclipse-glsp/protocol';
+import { SetViewportAction } from '@eclipse-glsp/protocol';
 import { GraphGridActionHandler, ShowGridAction, UMLGridSnapper } from './grid-snapper.js';
 import { UMLFreeFormLayouter, UMLLayouterExt } from './index.js';
+import { UMLHiddenBoundsUpdater } from './uml-hidden-bounds-updater.js';
 
 export const umlBoundsModule = new FeatureModule(
     (bind, unbind, isBound, rebind) => {
@@ -25,6 +26,7 @@ export const umlBoundsModule = new FeatureModule(
         bind(TYPES.IDiagramStartup).toService(GraphGridActionHandler);
         configureActionHandler(context, ShowGridAction.KIND, GraphGridActionHandler);
         configureActionHandler(context, SetViewportAction.KIND, GraphGridActionHandler);
+        rebind(GLSPHiddenBoundsUpdater).to(UMLHiddenBoundsUpdater).inSingletonScope();
     },
     { requires: boundsModule }
 );

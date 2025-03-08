@@ -8,10 +8,10 @@
  *********************************************************************************/
 
 import { UMLDiagramType } from '@borkdominik-biguml/uml-protocol';
-import { ContainerModule } from 'inversify';
+import { FeatureModule } from '@eclipse-glsp/client';
 import { registerActorElement, registerClassElement, registerInformationFlowElement } from '../../elements/index.js';
 
-export const umlInformationFlowDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
+export const umlInformationFlowDiagramModule = new FeatureModule((bind, unbind, isBound, rebind) => {
     const context = { bind, unbind, isBound, rebind };
     registerClassElement(context, UMLDiagramType.INFORMATION_FLOW);
     registerActorElement(context, UMLDiagramType.INFORMATION_FLOW);

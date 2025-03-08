@@ -13,7 +13,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 import { UMLDiagramType } from '@borkdominik-biguml/uml-protocol';
-import { ContainerModule } from 'inversify';
+import { FeatureModule } from '@eclipse-glsp/client';
 import {
     registerAbstractionElement,
     registerClassElement,
@@ -24,7 +24,7 @@ import {
     registerPackageMergeElement
 } from '../../elements/index.js';
 
-export const umlPackageDiagramModule = new ContainerModule((bind, undbind, isBound, rebind) => {
+export const umlPackageDiagramModule = new FeatureModule((bind, undbind, isBound, rebind) => {
     const context = { bind, undbind, isBound, rebind };
 
     registerClassElement(context, UMLDiagramType.PACKAGE);

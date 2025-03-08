@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import { UMLDiagramType } from '@borkdominik-biguml/uml-protocol';
-import { ContainerModule } from 'inversify';
+import { FeatureModule } from '@eclipse-glsp/client';
 import {
     registerAbstractionElement,
     registerAssociationElement,
@@ -33,7 +33,7 @@ import {
     registerUsageElement
 } from '../../elements/index.js';
 
-export const umlClassDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
+export const umlClassDiagramModule = new FeatureModule((bind, unbind, isBound, rebind) => {
     const context = { bind, unbind, isBound, rebind };
     registerClassElement(context, UMLDiagramType.CLASS);
     registerDataTypeElement(context, UMLDiagramType.CLASS);

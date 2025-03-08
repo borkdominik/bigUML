@@ -17,8 +17,7 @@ export class UMLFeedbackActionDispatcher extends FeedbackActionDispatcher {
 
     protected override async dispatchFeedback(actions: Action[], feedbackEmitter: IFeedbackEmitter): Promise<void> {
         try {
-            const actionDispatcher = await this.actionDispatcher();
-            await actionDispatcher.dispatchAll(actions);
+            await this.actionDispatcher.dispatchAll(actions);
             this.logger.log(this, 'Dispatched feedback actions for', feedbackEmitter);
         } catch (reason) {
             this.logger.error(this, 'Failed to dispatch feedback actions', reason);

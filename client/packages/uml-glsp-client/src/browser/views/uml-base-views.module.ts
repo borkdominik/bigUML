@@ -7,8 +7,15 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { configureDefaultModelElements, configureModelElement, GCompartmentView, GGraph, TYPES } from '@eclipse-glsp/client';
-import { DefaultTypes, FeatureModule } from '@eclipse-glsp/protocol';
+import {
+    configureDefaultModelElements,
+    configureModelElement,
+    DefaultTypes,
+    FeatureModule,
+    GCompartmentView,
+    GGraph,
+    TYPES
+} from '@eclipse-glsp/client';
 import { CompartmentSelectionFeedback } from './processors/feedback.postprocessor.js';
 import { SVGIdCreatorService } from './services/svg-id-creator.service.js';
 import { GUMLCompartment } from './uml-compartment.js';

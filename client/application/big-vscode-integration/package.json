@@ -58,9 +58,11 @@
     "@eclipse-glsp/vscode-integration-webview": "*",
     "@types/vscode": "^1.63.0",
     "@vscode/codicons": "^0.0.25",
-    "inversify": "^6.0.1",
-    "reflect-metadata": "^0.1.13",
+    "reflect-metadata": "^0.2.2",
     "vscode-messenger": "^0.4.5",
     "vscode-messenger-common": "^0.4.5"
+  },
+  "peerDependencies": {
+    "inversify": "^6.1.3"
   }
 }

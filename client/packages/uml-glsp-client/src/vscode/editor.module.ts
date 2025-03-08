@@ -8,11 +8,11 @@
  **********************************************************************************/
 
 import { TYPES } from '@borkdominik-biguml/big-vscode-integration/vscode';
-import { ContainerModule } from 'inversify';
+import { FeatureModule } from '@eclipse-glsp/client';
 import { UMLDiagramEditorProvider, UMLDiagramEditorSettings } from './editor.provider.js';
 
 export function editorModule(settings: UMLDiagramEditorSettings) {
-    return new ContainerModule(bind => {
+    return new FeatureModule(bind => {
         bind(UMLDiagramEditorSettings).toConstantValue(settings);
         bind(UMLDiagramEditorProvider).toSelf().inSingletonScope();
         bind(TYPES.EditorProvider).toService(UMLDiagramEditorProvider);

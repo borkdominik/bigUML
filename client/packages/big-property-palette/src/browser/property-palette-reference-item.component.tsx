@@ -9,7 +9,7 @@
 
 import { BigMenu, BigMenuItem, BigTextField, BigTooltip, classNames, VSCodeContext } from '@borkdominik-biguml/big-components';
 import { CompoundOperation } from '@eclipse-glsp/protocol';
-import { VSCodeButton, VSCodeCheckbox, VSCodeOption } from '@vscode/webview-ui-toolkit/react';
+import { VSCodeButton, VSCodeCheckbox, VSCodeOption } from '@vscode/webview-ui-toolkit/react/index.js';
 import { useCallback, useContext, useEffect, useRef, useState, type ChangeEvent, type ReactElement } from 'react';
 import Sortable from 'sortablejs';
 import { UpdateElementPropertyAction, type ElementReferenceProperty } from '../common/index.js';

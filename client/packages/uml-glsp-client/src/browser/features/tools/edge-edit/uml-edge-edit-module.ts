@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-
+/*
 import { bindOrRebind, DrawFeedbackEdgeSourceCommand, EdgeEditTool, edgeEditToolModule, FeatureModule } from '@eclipse-glsp/client';
 import { UMLDrawFeedbackEdgeSourceCommand } from './edge-edit-tool-feedback.js';
 import { UMLEdgeEditTool } from './edge-edit.tool.js';
@@ -21,3 +21,4 @@ export const umlEdgeEditToolModule = new FeatureModule(
         requires: edgeEditToolModule
     }
 );
+*/

@@ -7,10 +7,10 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import { TYPES } from '@borkdominik-biguml/big-vscode-integration/vscode';
-import { ContainerModule } from 'inversify';
+import { FeatureModule } from '@eclipse-glsp/client';
 import { ThemeIntegration } from './theme-integration.js';
 
-export const themeModule = new ContainerModule(bind => {
+export const themeModule = new FeatureModule(bind => {
     bind(ThemeIntegration).toSelf().inSingletonScope();
     bind(TYPES.Theme).toService(ThemeIntegration);
     bind(TYPES.Disposable).toService(ThemeIntegration);

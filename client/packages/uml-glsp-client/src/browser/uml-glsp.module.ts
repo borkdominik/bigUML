@@ -17,6 +17,7 @@ import '@eclipse-glsp/client/css/glsp-sprotty.css';
 import '../../css/style.css';
 
 import {
+    bindOrRebind,
     glspFocusTrackerModule,
     glspToastModule,
     initializeDiagramContainer,
@@ -24,10 +25,10 @@ import {
     moveZoomModule,
     toolPaletteModule,
     TYPES,
-    viewKeyToolsModule
+    viewKeyToolsModule,
+    type ContainerConfiguration
 } from '@eclipse-glsp/client';
 import { keyboardToolPaletteModule } from '@eclipse-glsp/client/lib/features/accessibility/keyboard-tool-palette/keyboard-tool-palette-module.js';
-import { bindOrRebind, type ContainerConfiguration } from '@eclipse-glsp/protocol';
 import { Container } from 'inversify';
 import { umlBaseModule } from './base/uml-base.module.js';
 import {
@@ -44,14 +45,13 @@ import { umlTypeHintsModule } from './features/hints/uml-type-hints.module.js';
 import { umlLoadingModule } from './features/loading/uml-loading.module.js';
 import { umlThemeModule } from './features/theme/uml-theme.module.js';
 import { umlToolPaletteModule } from './features/tool-palette/uml-tool-palette.module.js';
-import { umlEdgeEditToolModule } from './features/tools/edge-edit/uml-edge-edit-module.js';
 import { umlToolManagerModule } from './features/tools/tool-manager/uml-tool-manager.module.js';
 import { umlDiagramModules } from './uml/index.js';
 import { umlBaseViewsModule } from './views/uml-base-views.module.js';
 
 export function createUMLDiagramContainer(...containerConfiguration: ContainerConfiguration): Container {
     const container = initializeUMLDiagramContainer(new Container(), ...containerConfiguration);
-    bindOrRebind(container, TYPES.LogLevel).toConstantValue(LogLevel.log);
+    bindOrRebind(container, TYPES.LogLevel).toConstantValue(LogLevel.info);
     return container;
 }
 
@@ -84,7 +84,6 @@ export function initializeUMLDiagramContainer(container: Container, ...container
         umlToolManagerModule,
         umlTypeHintsModule,
         { add: umlToolPaletteModule, remove: toolPaletteModule },
-        umlEdgeEditToolModule,
         ...umlDiagramModules,
         ...containerConfiguration
     );

@@ -13,7 +13,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 import { UMLDiagramType } from '@borkdominik-biguml/uml-protocol';
-import { ContainerModule } from 'inversify';
+import { FeatureModule } from '@eclipse-glsp/client';
 import {
     registerActivityElement,
     registerActivityNodeElement,
@@ -22,7 +22,7 @@ import {
     registerPinElement
 } from '../../elements/index.js';
 
-export const umlActivityDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
+export const umlActivityDiagramModule = new FeatureModule((bind, unbind, isBound, rebind) => {
     const context = { bind, unbind, isBound, rebind };
     registerActivityElement(context, UMLDiagramType.ACTIVITY);
     registerActivityNodeElement(context, UMLDiagramType.ACTIVITY);

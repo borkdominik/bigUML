@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-
+/*
 import {
     type CommandExecutionContext,
     type CommandReturn,
@@ -68,3 +68,4 @@ function drawFeedbackEdgeSource(context: CommandExecutionContext, targetId: stri
         root.add(feedbackEdge);
     }
 }
+*/

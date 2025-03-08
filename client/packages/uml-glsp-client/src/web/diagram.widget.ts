@@ -10,32 +10,4 @@ import { GLSPDiagramWidget } from '@eclipse-glsp/vscode-integration-webview/lib/
 import { injectable } from 'inversify';
 
 @injectable()
-export class UMLDiagramWidget extends GLSPDiagramWidget {
-    protected containerDiv: HTMLDivElement | null;
-
-    protected override initializeHtml(): void {
-        this.containerDiv = document.getElementById(this.clientId + '_container') as HTMLDivElement | null;
-        if (this.containerDiv) {
-            const svgContainer = document.createElement('div');
-            svgContainer.id = this.viewerOptions.baseDiv;
-            this.containerDiv.appendChild(svgContainer);
-
-            const hiddenContainer = document.createElement('div');
-            hiddenContainer.id = this.viewerOptions.hiddenDiv;
-            document.body.appendChild(hiddenContainer);
-
-            this.containerDiv.addEventListener('mouseenter', e => this.handleMouseEnter(e));
-            this.containerDiv.addEventListener('mouseleave', e => this.handleMouseLeave(e));
-        }
-    }
-
-    handleMouseEnter(_e: MouseEvent): void {
-        this.containerDiv?.classList.add('mouse-enter');
-        this.containerDiv?.classList.remove('mouse-leave');
-    }
-
-    handleMouseLeave(_e: MouseEvent): void {
-        this.containerDiv?.classList.add('mouse-leave');
-        this.containerDiv?.classList.remove('mouse-enter');
-    }
-}
+export class UMLDiagramWidget extends GLSPDiagramWidget {}

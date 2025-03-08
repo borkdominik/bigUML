@@ -11,8 +11,15 @@ import { minimapModule } from '@borkdominik-biguml/big-minimap/glsp-client';
 import { outlineModule } from '@borkdominik-biguml/big-outline/glsp-client';
 import { propertyPaletteModule } from '@borkdominik-biguml/big-property-palette/glsp-client';
 import { ModelResourcesResponseAction } from '@borkdominik-biguml/uml-protocol';
-import { type IActionDispatcher, type IDiagramStartup, TYPES } from '@eclipse-glsp/client';
-import { type ContainerConfiguration, type MaybePromise, bindAsService, bindOrRebind } from '@eclipse-glsp/protocol';
+import {
+    type ContainerConfiguration,
+    type IActionDispatcher,
+    type IDiagramStartup,
+    TYPES,
+    bindAsService,
+    bindOrRebind
+} from '@eclipse-glsp/client';
+import { type MaybePromise } from '@eclipse-glsp/protocol';
 import { GLSPStarter } from '@eclipse-glsp/vscode-integration-webview';
 import '@eclipse-glsp/vscode-integration-webview/css/glsp-vscode.css';
 import { type GLSPDiagramIdentifier } from '@eclipse-glsp/vscode-integration-webview/lib/diagram-identifier.js';

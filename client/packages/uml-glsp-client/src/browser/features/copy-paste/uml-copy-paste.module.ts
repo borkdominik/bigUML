@@ -7,9 +7,8 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { TYPES } from '@eclipse-glsp/client';
+import { bindAsService, bindOrRebind, FeatureModule, TYPES } from '@eclipse-glsp/client';
 import { copyPasteModule } from '@eclipse-glsp/client/lib/features/copy-paste/copy-paste-modules.js';
-import { bindAsService, bindOrRebind, FeatureModule } from '@eclipse-glsp/protocol';
 import { LastContainableElementTracker, UMLServerCopyPasteHandler } from './copy-paste.js';
 
 export const umlCopyPasteModule = new FeatureModule(

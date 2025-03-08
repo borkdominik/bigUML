@@ -14,9 +14,11 @@
 import {
     type AutocompleteSuggestion,
     BaseEditTool,
+    bindAsService,
     codiconCSSString,
     configureActionHandler,
     EnableDefaultToolsAction,
+    FeatureModule,
     findParentByFeature,
     GChildElement,
     GEdge,
@@ -44,14 +46,7 @@ import {
     TYPES
 } from '@eclipse-glsp/client';
 import { SetAccessibleKeyShortcutAction } from '@eclipse-glsp/client/lib/features/accessibility/key-shortcut/accessible-key-shortcut.js';
-import {
-    type Action,
-    bindAsService,
-    FeatureModule,
-    SelectAction,
-    TriggerEdgeCreationAction,
-    TriggerNodeCreationAction
-} from '@eclipse-glsp/protocol';
+import { type Action, SelectAction, TriggerEdgeCreationAction, TriggerNodeCreationAction } from '@eclipse-glsp/protocol';
 import { inject, injectable } from 'inversify';
 
 export const umlFallbackActionModule = new FeatureModule((bind, unbind, isBound, rebind) => {

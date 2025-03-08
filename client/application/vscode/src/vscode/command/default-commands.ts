@@ -9,8 +9,8 @@
 import { TYPES, type BIGGLSPVSCodeConnector, type GLSPDiagramSettings } from '@borkdominik-biguml/big-vscode-integration/vscode';
 import { EnableToolsAction, FocusDomAction } from '@borkdominik-biguml/uml-protocol';
 import { CenterAction, FitToScreenAction, RequestExportSvgAction, SelectAllAction } from '@eclipse-glsp/protocol';
-import { SetUIExtensionVisibilityAction } from '@eclipse-glsp/sprotty/node_modules/sprotty/src/base/ui-extensions/ui-extension-registry.js';
 import { inject, injectable, postConstruct } from 'inversify';
+import { SetUIExtensionVisibilityAction } from 'sprotty/lib/base/ui-extensions/ui-extension-registry.js';
 import * as vscode from 'vscode';
 
 @injectable()

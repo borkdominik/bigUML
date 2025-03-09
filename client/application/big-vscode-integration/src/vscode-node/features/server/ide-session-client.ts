@@ -11,7 +11,7 @@ import { Deferred, type Disposable, type GLSPClient } from '@eclipse-glsp/protoc
 import { inject, injectable } from 'inversify';
 import type { GLSPDiagramSettings } from '../../../vscode/features/glsp/settings.js';
 import { TYPES } from '../../../vscode/vscode-common.types.js';
-import { IDEServerClientId, type IDEServer } from './ide-server.js';
+import { type IDEServer, IDEServerClientId } from './ide-server.js';
 
 @injectable()
 export class IDESessionClient implements Disposable {
@@ -45,6 +45,7 @@ export class IDESessionClient implements Disposable {
                 clientActionKinds: ['newFileResponse'],
                 diagramType: this.diagramSettings.diagramType
             });
+            (this._client as any)['id'] = IDEServerClientId;
             this.readyDeferred.resolve();
         } catch (error) {
             this.readyDeferred.reject(error);

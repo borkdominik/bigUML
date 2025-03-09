@@ -8,7 +8,7 @@
  **********************************************************************************/
 
 import { RequestModelResourcesAction, type ModelResource, type UMLSourceModel } from '@borkdominik-biguml/uml-protocol';
-import { DisposableCollection, SetDirtyStateAction, type Disposable, type TypeGuard } from '@eclipse-glsp/vscode-integration';
+import { DisposableCollection, UpdateModelAction, type Disposable, type TypeGuard } from '@eclipse-glsp/vscode-integration';
 import { inject, injectable, postConstruct, preDestroy } from 'inversify';
 import * as vscode from 'vscode';
 import { TYPES } from '../../../vscode-common.types.js';
@@ -88,7 +88,7 @@ export class ExperimentalGLSPServerModelState implements Disposable {
                 await this.refreshModelState();
             }),
             this.actionListener.registerServerListener(async message => {
-                if (SetDirtyStateAction.is(message.action)) {
+                if (UpdateModelAction.is(message.action)) {
                     await this.refreshModelState();
                 }
             })

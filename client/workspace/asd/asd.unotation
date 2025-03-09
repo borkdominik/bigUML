@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="ASCII"?>
+<unotation:UMLDiagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:notation="http://www.eclipse.org/glsp/notation" xmlns:unotation="http://www.borkdominik.com/big-glsp/uml/unotation" xmi:id="_SdyzYPzcEe-anr6WWOTZ4Q" diagramType="CLASS">
+  <semanticElement xmi:id="_SeDSEPzcEe-anr6WWOTZ4Q" elementId="_Sd8kYPzcEe-anr6WWOTZ4Q"/>
+  <elements xsi:type="notation:Shape" xmi:id="_aRNsYPzcEe-anr6WWOTZ4Q">
+    <semanticElement xmi:id="_aRNsYfzcEe-anr6WWOTZ4Q" elementId="_aRNFUPzcEe-anr6WWOTZ4Q"/>
+    <position xmi:id="_OBvpYPzdEe-anr6WWOTZ4Q" x="394.0" y="282.0"/>
+    <size xmi:id="_OBvpYfzdEe-anr6WWOTZ4Q" width="168.156727770653" height="105.1426809319467"/>
+  </elements>
+  <elements xsi:type="notation:Shape" xmi:id="_bEu0APzcEe-anr6WWOTZ4Q">
+    <semanticElement xmi:id="_bEu0AfzcEe-anr6WWOTZ4Q" elementId="_bEuM8PzcEe-anr6WWOTZ4Q"/>
+    <position xmi:id="_G6gCcPz0Ee-anr6WWOTZ4Q" x="256.7882175340542" y="240.18383209009852"/>
+    <size xmi:id="_G6gCcfz0Ee-anr6WWOTZ4Q" width="80.3254165649414" height="80.24757385253906"/>
+  </elements>
+  <elements xsi:type="notation:Shape" xmi:id="_Mu9L0fzdEe-anr6WWOTZ4Q">
+    <semanticElement xmi:id="_Mu9L0vzdEe-anr6WWOTZ4Q" elementId="_Mu5hcPzdEe-anr6WWOTZ4Q"/>
+    <position xmi:id="_Mu9L0_zdEe-anr6WWOTZ4Q" x="73.47335641818773" y="14.919093666726894"/>
+    <size xmi:id="_Mu9L1PzdEe-anr6WWOTZ4Q" width="60.0" height="45.0"/>
+  </elements>
+  <elements xsi:type="notation:Shape" xmi:id="_NEev4PzdEe-anr6WWOTZ4Q">
+    <semanticElement xmi:id="_NEev4fzdEe-anr6WWOTZ4Q" elementId="_NEeI0PzdEe-anr6WWOTZ4Q"/>
+    <position xmi:id="_NEev4vzdEe-anr6WWOTZ4Q" x="42.93936158764615" y="29.266392442523568"/>
+    <size xmi:id="_NEev4_zdEe-anr6WWOTZ4Q" width="60.0" height="45.0"/>
+  </elements>
+  <elements xsi:type="notation:Shape" xmi:id="_NwHt4PzdEe-anr6WWOTZ4Q">
+    <semanticElement xmi:id="_NwHt4fzdEe-anr6WWOTZ4Q" elementId="_NwHG0PzdEe-anr6WWOTZ4Q"/>
+    <position xmi:id="_P26bQPzdEe-anr6WWOTZ4Q" x="97.94067165647539"/>
+    <size xmi:id="_P26bQfzdEe-anr6WWOTZ4Q" width="96.3254165649414" height="45.30476379394531"/>
+  </elements>
+  <elements xsi:type="notation:Shape" xmi:id="_O3zHoPzdEe-anr6WWOTZ4Q">
+    <semanticElement xmi:id="_O3zHofzdEe-anr6WWOTZ4Q" elementId="_O3ygkPzdEe-anr6WWOTZ4Q"/>
+    <position xmi:id="_PSNywPzdEe-anr6WWOTZ4Q" y="37.611164654407276"/>
+    <size xmi:id="_PSOZ0PzdEe-anr6WWOTZ4Q" width="116.2903823852539" height="45.30476379394531"/>
+  </elements>
+  <elements xsi:type="notation:Shape" xmi:id="_RMrUUfzdEe-anr6WWOTZ4Q">
+    <semanticElement xmi:id="_RMrUUvzdEe-anr6WWOTZ4Q" elementId="_RMrUUPzdEe-anr6WWOTZ4Q"/>
+    <position xmi:id="_RXaksPzdEe-anr6WWOTZ4Q" x="272.9895435994909" y="480.9483233434487"/>
+    <size xmi:id="_RXaksfzdEe-anr6WWOTZ4Q" width="66.6938705444336" height="45.0"/>
+  </elements>
+  <elements xsi:type="notation:Edge" xmi:id="_SDWdoPzdEe-anr6WWOTZ4Q">
+    <semanticElement xmi:id="_SDWdofzdEe-anr6WWOTZ4Q" elementId="_SDVPgPzdEe-anr6WWOTZ4Q"/>
+  </elements>
+  <elements xsi:type="notation:Edge" xmi:id="_TK7JsPzdEe-anr6WWOTZ4Q">
+    <semanticElement xmi:id="_TK7JsfzdEe-anr6WWOTZ4Q" elementId="_TK6ioPzdEe-anr6WWOTZ4Q"/>
+    <bendPoints xmi:id="_G6gCcvz0Ee-anr6WWOTZ4Q" x="537.1197783150245" y="422.8369449938052"/>
+  </elements>
+</unotation:UMLDiagram>

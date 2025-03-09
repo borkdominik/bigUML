@@ -22,7 +22,7 @@ import {
 } from '@eclipse-glsp/vscode-integration';
 import { inject, injectable } from 'inversify';
 import * as vscode from 'vscode';
-import { IDEServerClientId } from '../../../vscode-node/features/server/ide-server.js';
+import { VscodeAction } from '../../../common/vscode.action.js';
 import { TYPES } from '../../vscode-common.types.js';
 
 @injectable()
@@ -152,8 +152,6 @@ export class BIGGLSPVSCodeConnector<
         const client = this.clientMap.get(clientId);
         if (client && ActionMessage.is(message)) {
             client.webviewEndpoint.sendMessage(message);
-        } else if (clientId !== IDEServerClientId) {
-            console.info('Message has been ignored and not send to client', client, message);
         }
     }
 
@@ -162,6 +160,7 @@ export class BIGGLSPVSCodeConnector<
         client: GlspVscodeClient<TDocument> | undefined,
         _origin: MessageOrigin
     ): MessageProcessingResult {
+        super.handleSetDirtyStateAction(message, client, _origin);
         if (client) {
             const reason = message.action.reason || '';
             if (reason === 'save') {
@@ -215,10 +214,7 @@ export class BIGGLSPVSCodeConnector<
             return processed;
         }
 
-        if (
-            ActionMessage.is(message) &&
-            (this.vscodeHandledActions.has(message.action.kind) || ('__localDispatch' in message && message.__localDispatch === true))
-        ) {
+        if (ActionMessage.is(message) && VscodeAction.isExtensionOnly(message.action)) {
             return {
                 processedMessage: undefined,
                 messageChanged: true

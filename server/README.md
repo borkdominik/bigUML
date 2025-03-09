@@ -23,6 +23,11 @@ Auto build:
 - Linux: `./gradlew -t build`
 - Windows: `./gradlew.bat -t build`
 
+Refresh Dependencies:
+
+- Linux: `./gradlew --refresh-dependencies`
+- Linux: `./gradlew.bat --refresh-dependencies`
+
 ## IDE
 
 The development environment has been tested with Visual Studio Code (VSCode), and it is recommended for quick and lightweight development. However, since the project uses Gradle for building and managing dependencies, support for other IDEs such as IntelliJ IDEA and Eclipse should still be possible. You can import the project into these environments using their respective Gradle integration tools.

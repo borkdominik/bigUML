@@ -6,15 +6,15 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import type { IDESessionClient } from '@borkdominik-biguml/big-vscode-integration/node';
 import { TYPES } from '@borkdominik-biguml/big-vscode-integration/vscode';
+import type { IDESessionClient } from '@borkdominik-biguml/big-vscode-integration/vscode-node';
+import type { UMLDiagramEditorProvider } from '@borkdominik-biguml/uml-glsp-client/vscode';
 import { NewFileResponseAction, RequestNewFileAction, type UMLDiagramType } from '@borkdominik-biguml/uml-protocol';
 import { type Disposable, DisposableCollection } from '@eclipse-glsp/protocol';
 import { inject, injectable } from 'inversify';
 import URIJS from 'urijs';
 import * as vscode from 'vscode';
 import { UMLLangugageEnvironment, VSCodeSettings } from '../../language.js';
-import { type UMLDiagramEditorProvider } from '../editor/editor.provider.js';
 import { newDiagramWizard } from './wizard.js';
 
 const nameRegex = /^([\w_-]+\/?)*[\w_-]+$/;

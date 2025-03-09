@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { GLSPActionDispatcher, RequestAction, type ResponseAction } from '@eclipse-glsp/client';
+import { ActionDispatcher, GLSPActionDispatcher, OptionalAction, RequestAction, ResponseAction, type Action } from '@eclipse-glsp/client';
 
 export class UMLActionDispatcher extends GLSPActionDispatcher {
     override requestUntil<Res extends ResponseAction>(
@@ -39,5 +39,29 @@ export class UMLActionDispatcher extends GLSPActionDispatcher {
         this.timeouts.set(requestId, timeout);
 
         return super.request(action);
+    }
+
+    protected override handleAction(action: Action): Promise<void> {
+        if (ResponseAction.hasValidResponseId(action)) {
+            // clear timeout
+            const timeout = this.timeouts.get(action.responseId);
+            if (timeout !== undefined) {
+                clearTimeout(timeout);
+                this.timeouts.delete(action.responseId);
+            }
+
+            // Check if we have a pending request for the response.
+            // If not the  we clear the responseId => action will be dispatched normally
+            const deferred = this.requests.get(action.responseId);
+            if (deferred === undefined && !action.responseId.startsWith('_vscode')) {
+                action.responseId = '';
+            }
+        }
+
+        if (!this.hasHandler(action) && OptionalAction.is(action)) {
+            return Promise.resolve();
+        }
+
+        return ActionDispatcher.prototype['handleAction'].call(this, action);
     }
 }

@@ -13,10 +13,11 @@ import {
     Deferred,
     type Disposable,
     DisposableCollection,
-    type RequestAction,
+    RequestAction,
     ResponseAction
 } from '@eclipse-glsp/vscode-integration';
 import { inject, injectable, postConstruct, preDestroy } from 'inversify';
+import { VscodeAction } from '../../../common/vscode.action.js';
 import { TYPES } from '../../vscode-common.types.js';
 import type { BIGGLSPVSCodeConnector } from '../connector/glsp-vscode-connector.js';
 
@@ -56,10 +57,10 @@ export class ActionDispatcher implements Disposable {
     }
 
     request<Res extends ResponseAction>(action: RequestAction<Res>): Promise<ActionMessage<Res>> {
-        if (!action.requestId) {
-            return Promise.reject(new Error('Request without requestId'));
+        if (!action.requestId || action.requestId === '') {
+            action.requestId = RequestAction.generateRequestId();
         }
-        action.requestId = `_vscode_${action.requestId}`;
+        action.requestId = VscodeAction.prefixRequestId(action.requestId);
         const deferred = new Deferred<ActionMessage<Res>>();
         this.requests.set(action.requestId, deferred as any);
         this.dispatch(action);

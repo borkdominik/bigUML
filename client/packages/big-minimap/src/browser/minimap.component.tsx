@@ -84,7 +84,7 @@ export function Minimap(): ReactElement {
     const isDraggingRef = useRef(false);
     const animationFrameId = useRef<number | null>(null);
 
-    if (!viewPort || !modelBounds || !canvasBounds || !svg) {
+    if (!viewPort || !modelBounds || !canvasBounds || !svg || modelBounds.height === 0 || modelBounds.width === 0) {
         return <></>;
     }
 

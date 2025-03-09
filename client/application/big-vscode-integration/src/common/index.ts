@@ -8,3 +8,4 @@
  **********************************************************************************/
 
 export * from '../vscode/features/webview/webview.messages.js';
+export * from './vscode.action.js';

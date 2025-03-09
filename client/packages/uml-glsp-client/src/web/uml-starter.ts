@@ -23,12 +23,16 @@ import { type MaybePromise } from '@eclipse-glsp/protocol';
 import { GLSPStarter } from '@eclipse-glsp/vscode-integration-webview';
 import '@eclipse-glsp/vscode-integration-webview/css/glsp-vscode.css';
 import { type GLSPDiagramIdentifier } from '@eclipse-glsp/vscode-integration-webview/lib/diagram-identifier.js';
-import { ExtensionActionKind } from '@eclipse-glsp/vscode-integration-webview/lib/features/default/extension-action-handler.js';
+import {
+    ExtensionActionKind,
+    HostExtensionActionHandler
+} from '@eclipse-glsp/vscode-integration-webview/lib/features/default/extension-action-handler.js';
 import { GLSPDiagramWidget } from '@eclipse-glsp/vscode-integration-webview/lib/glsp-diagram-widget.js';
 import { type Container, inject, injectable } from 'inversify';
 import { createUMLDiagramContainer } from '../browser/index.js';
 import { GLSPIsReadyAction } from '../common/index.js';
 import { UMLDiagramWidget } from './diagram.widget.js';
+import { UMLHostExtensionActionHandler } from './vscode-extension-action-handler.js';
 
 class UMLStarter extends GLSPStarter {
     createContainer(...containerConfiguration: ContainerConfiguration): Container {
@@ -40,6 +44,7 @@ class UMLStarter extends GLSPStarter {
     protected override addVscodeBindings(container: Container, _diagramIdentifier: GLSPDiagramIdentifier): void {
         container.bind(UMLDiagramWidget).toSelf().inSingletonScope();
         bindOrRebind(container, GLSPDiagramWidget).toService(UMLDiagramWidget);
+        container.rebind(HostExtensionActionHandler).to(UMLHostExtensionActionHandler).inSingletonScope();
 
         container.bind(ExtensionActionKind).toConstantValue(GLSPIsReadyAction.KIND);
         container.bind(ExtensionActionKind).toConstantValue(ModelResourcesResponseAction.KIND);

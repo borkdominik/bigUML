@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="ASCII"?>
-<uml:Model xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_C7joUPkdEe-ktsb-2DdDPA">
-  <packagedElement xsi:type="uml:Class" xmi:id="_WBPi8PkhEe-ktsb-2DdDPA" name="Class"/>
-  <packagedElement xsi:type="uml:Interface" xmi:id="_pT4zAPq7Ee-DZ_nBT2ItYg" name="Interface"/>
-</uml:Model>

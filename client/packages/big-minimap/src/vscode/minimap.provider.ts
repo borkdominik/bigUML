@@ -61,7 +61,7 @@ export class MinimapProvider extends BIGReactWebview {
 
     protected requestSVG(): void {
         // Wait for updates to be applied
-        setTimeout(() => {
+        setTimeout(async () => {
             this.actionDispatcher.dispatch(RequestMinimapExportSvgAction.create());
         }, 200);
     }

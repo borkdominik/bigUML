@@ -7,8 +7,19 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
-import { GLSPHiddenBoundsUpdater } from '@eclipse-glsp/client';
+import { GLSPHiddenBoundsUpdater, RequestBoundsAction, type Action } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 
 @injectable()
-export class UMLHiddenBoundsUpdater extends GLSPHiddenBoundsUpdater {}
+export class UMLHiddenBoundsUpdater extends GLSPHiddenBoundsUpdater {
+    preUpdate(): void {
+        this.getElement2BoundsData().clear();
+        this.element2route = [];
+    }
+
+    override postUpdate(cause?: Action): void {
+        if (RequestBoundsAction.is(cause)) {
+            super.postUpdate(cause);
+        }
+    }
+}

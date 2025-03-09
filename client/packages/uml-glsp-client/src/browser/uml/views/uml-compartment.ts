@@ -6,11 +6,11 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { containerFeature, type Hoverable } from '@eclipse-glsp/client';
+import { type Hoverable } from '@eclipse-glsp/client';
 import { GUMLCompartment } from '../../views/uml-compartment.js';
 
 export class GCompartmentContainer extends GUMLCompartment implements Hoverable {
-    static override readonly DEFAULT_FEATURES = [...GUMLCompartment.DEFAULT_FEATURES, containerFeature];
+    static override readonly DEFAULT_FEATURES = [...GUMLCompartment.DEFAULT_FEATURES];
 
     hoverFeedback = false;
 }

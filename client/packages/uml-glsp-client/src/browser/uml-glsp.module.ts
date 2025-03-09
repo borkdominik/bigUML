@@ -18,6 +18,7 @@ import '../../css/style.css';
 
 import {
     bindOrRebind,
+    ContainerManager,
     glspFocusTrackerModule,
     glspToastModule,
     initializeDiagramContainer,
@@ -40,6 +41,7 @@ import {
 } from './features/accessibility/uml-accessibility.module.js';
 import { umlBoundsModule } from './features/bounds/uml-bounds.module.js';
 import { umlCopyPasteModule } from './features/copy-paste/uml-copy-paste.module.js';
+import { UMLContainerManager } from './features/creation/uml-container-manager.js';
 import { umlEditModule } from './features/edit/uml-edit.module.js';
 import { umlTypeHintsModule } from './features/hints/uml-type-hints.module.js';
 import { umlLoadingModule } from './features/loading/uml-loading.module.js';
@@ -52,6 +54,7 @@ import { umlBaseViewsModule } from './views/uml-base-views.module.js';
 export function createUMLDiagramContainer(...containerConfiguration: ContainerConfiguration): Container {
     const container = initializeUMLDiagramContainer(new Container(), ...containerConfiguration);
     bindOrRebind(container, TYPES.LogLevel).toConstantValue(LogLevel.info);
+    container.rebind(ContainerManager).to(UMLContainerManager).inSingletonScope();
     return container;
 }
 

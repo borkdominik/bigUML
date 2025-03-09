@@ -18,7 +18,7 @@ export class IDEServer extends SocketGlspVscodeServer {
     constructor(@inject(TYPES.GLSPServerConfig) protected readonly glspServerConfig: GLSPServerConfig) {
         super({
             clientId: IDEServerClientId,
-            clientName: IDEServerClientId,
+            clientName: 'ide',
             connectionOptions: {
                 port: glspServerConfig.port
             }

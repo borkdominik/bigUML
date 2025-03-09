@@ -10,7 +10,7 @@
 import { VSCodeTextField } from '@vscode/webview-ui-toolkit/react/index.js';
 import { throttle } from 'lodash';
 import type React from 'react';
-import { useCallback, useMemo, useState, type ReactElement } from 'react';
+import { useCallback, useEffect, useMemo, useState, type ReactElement } from 'react';
 
 export interface BigTextFieldProps {
     label?: string;
@@ -24,6 +24,10 @@ export function BigTextField(props: BigTextFieldProps): ReactElement {
     const [value, setValue] = useState<string>(props.value);
 
     const notify = useMemo(() => throttle(props.onDidChangeValue, 500, { trailing: true }), [props]);
+
+    useEffect(() => {
+        setValue(props.value);
+    }, [props.value])
 
     const onInput = useCallback<React.KeyboardEventHandler<HTMLElement>>(
         event => {

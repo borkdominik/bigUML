@@ -6,26 +6,11 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-.body {
-    display: flex;
-    flex-direction: column;
-}
 
-.no-data-message {
-    margin-top: 6px;
-}
-
-.svg {
-    width: auto;
-    height: auto;
-}
-
-#navigate-back {
-    position: absolute;
-    left: 0;
-    top: 18px;
-}
-
-#search {
-    margin-bottom: 6px;
+html,
+body {
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    overflow: hidden;
 }

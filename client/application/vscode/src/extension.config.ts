@@ -7,6 +7,8 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import { minimapModule } from '@borkdominik-biguml/big-minimap/vscode';
+import { outlineModule } from '@borkdominik-biguml/big-outline/vscode';
+import { propertyPaletteModule } from '@borkdominik-biguml/big-property-palette/vscode';
 import { createVSCodeCommonContainer, TYPES, type GLSPDiagramSettings } from '@borkdominik-biguml/big-vscode-integration/vscode';
 import { loadVSCodeNodeContainer, type GLSPServerConfig } from '@borkdominik-biguml/big-vscode-integration/vscode-node';
 import { editorModule, themeModule } from '@borkdominik-biguml/uml-glsp-client/vscode';
@@ -35,8 +37,8 @@ export function createContainer(
             diagramType: VSCodeSettings.diagramType,
             viewType: VSCodeSettings.editor.viewType
         }),
-        // outlineModule(VSCodeSettings.outline.viewId),
-        // propertyPaletteModule(VSCodeSettings.propertyPalette.viewId),
+        outlineModule(VSCodeSettings.outline.viewId),
+        propertyPaletteModule(VSCodeSettings.propertyPalette.viewId),
         minimapModule(VSCodeSettings.minimap.viewId),
         themeModule
     );

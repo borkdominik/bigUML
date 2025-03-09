@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { ComputedBoundsAction, GLSPActionDispatcher, RequestAction, type Action, type ResponseAction } from '@eclipse-glsp/client';
+import { GLSPActionDispatcher, RequestAction, type ResponseAction } from '@eclipse-glsp/client';
 
 export class UMLActionDispatcher extends GLSPActionDispatcher {
     override requestUntil<Res extends ResponseAction>(
@@ -39,12 +39,5 @@ export class UMLActionDispatcher extends GLSPActionDispatcher {
         this.timeouts.set(requestId, timeout);
 
         return super.request(action);
-    }
-
-    protected override handleAction(action: Action): Promise<void> {
-        if (ComputedBoundsAction.is(action)) {
-            console.log('Handling ComputedBoundsAction');
-        }
-        return super.handleAction(action);
     }
 }

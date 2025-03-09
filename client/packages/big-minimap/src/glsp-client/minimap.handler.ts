@@ -9,6 +9,7 @@
 import { MinimapExportSvgAction, RequestMinimapExportSvgAction } from '@borkdominik-biguml/big-minimap';
 import {
     type Action,
+    Bounds,
     type CommandExecutionContext,
     type CommandResult,
     EditorContextService,
@@ -19,6 +20,7 @@ import {
     type IVNodePostprocessor,
     type RequestExportSvgAction,
     TYPES,
+    isBoundsAware,
     isExportable,
     isHoverable,
     isSelectable,
@@ -42,18 +44,37 @@ export class MinimapGLSPSvgExporter extends GLSPSvgExporter {
                 svgElement = this.prepareSvgElement(svgElement, root, request);
                 const serializedSvg = this.createSvg(svgElement, root, request?.options ?? {}, request);
                 const svgExport = this.getSvgExport(serializedSvg, svgElement, root, request);
-                const bounds = this.getBounds(root, document);
+                const bounds = this.getBounds(root);
                 // do not give request/response id here as otherwise the action is treated as an unrequested response
                 this.actionDispatcher.dispatch(
-                    MinimapExportSvgAction.create(svgExport, root.id, {
-                        x: bounds.x,
-                        y: bounds.y,
-                        width: bounds.width,
-                        height: bounds.height
+                    MinimapExportSvgAction.create({
+                        svg: svgExport,
+                        elementId: root.id,
+                        bounds: {
+                            x: bounds.x,
+                            y: bounds.y,
+                            width: bounds.width,
+                            height: bounds.height
+                        }
                     })
                 );
             }
         }
+    }
+
+    protected override getBounds(root: GModelRoot) {
+        const svgElement = this.findSvgElement();
+        if (svgElement) {
+            return svgElement.getBBox();
+        }
+
+        const allBounds: Bounds[] = [Bounds.EMPTY];
+        root.children.forEach(element => {
+            if (isBoundsAware(element)) {
+                allBounds.push(element.bounds);
+            }
+        });
+        return allBounds.reduce((one, two) => Bounds.combine(one, two));
     }
 }
 

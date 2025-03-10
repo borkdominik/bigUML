@@ -2,31 +2,45 @@
 
 The bigGLSP Java Server implementation for bigUML.
 
+> **Note:** It is not recommended anymore to implement features within the Java server. We are currently migrating the server to be a Node.js-based server. Therefore, you should try to implement the functionality as much as possible within the client structure by using the experimental server wrapper API.
+
 - **Java 17 JDK**: Java 17 is required
 - **Gradle**: We are using [Gradle](https://gradle.org/)
-- **bigGLSP Framework**: The [bigGLSP - Java Server Framework](https://github.com/glsp-extensions/bigGLSP-framework) needs to be locally build.
+- **bigGLSP Framework**: The [bigGLSP - Java Server Framework](https://github.com/glsp-extensions/bigGLSP-framework) needs to be locally build + installed.
 
 ## Building (CLI)
 
 Execute the command:
 
-- Linux: `./gradlew clean build`
-- Windows: `./gradlew.bat clean build`
+- `./gradlew clean build`
 
 Running (+ building) the application:
 
-- Linux: `./gradlew run`
-- Windows: `./gradlew.bat run`
+- `./gradlew run`
 
 Auto build:
 
-- Linux: `./gradlew -t build`
-- Windows: `./gradlew.bat -t build`
+- `./gradlew -t build`
 
-Refresh Dependencies:
+Refresh Dependencies (reinstalls all dependencies again):
 
-- Linux: `./gradlew --refresh-dependencies`
-- Linux: `./gradlew.bat --refresh-dependencies`
+- `./gradlew --refresh-dependencies`
+
+Windows: Use `./gradlew.bat`.
+
+## VS Code
+
+First install the recommended extensions. Afterward, you can use the Gradle extension to start the application directly from within VS Code.
+
+### Using the Gradle Extension in VS Code
+
+1. Open the Command Palette (`Ctrl+Shift+P`).
+2. Type `Gradle` and select `View: Toggle Gradle`.
+3. In the list of projects, right-click `com.borkdominik.big.glsp.uml` -> `Tasks` -> `application` -> `run`
+4. (Click on `Pin Task`)
+5. Execute `Run / Debug Task`
+
+This will build and run the application using the Gradle tasks defined in the `build.gradle` file. You can monitor the output in the terminal window within VS Code.
 
 ## IDE
 

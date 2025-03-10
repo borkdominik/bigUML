@@ -26,12 +26,20 @@ import type { SelectionService } from '../connector/selection-service.js';
 import type { ExperimentalGLSPServerModelState } from '../glsp/experimental/exp-server-model-state.js';
 import { type WebviewViewConnector } from './glsp-webview.connector.js';
 
+/**
+ * The context of the webview provider.
+ * It can be passed around to other classes.
+ */
 export interface BIGWebviewProviderContext {
     webviewView: WebviewView;
     context: WebviewViewResolveContext<unknown>;
     token: CancellationToken;
 }
 
+/**
+ * Abstract class for webview providers.
+ * It registers the webview with the VSCode extension host and handles the connection to the webview.
+ */
 export abstract class BIGWebviewProvider implements WebviewViewProvider, Disposable {
     abstract viewId: string;
     protected readonly retainContextWhenHidden: boolean = false;
@@ -43,7 +51,7 @@ export abstract class BIGWebviewProvider implements WebviewViewProvider, Disposa
     @inject(EXPERIMENTAL_TYPES.GLSPServerModelState)
     protected readonly modelState: ExperimentalGLSPServerModelState;
 
-    protected toDispose = new DisposableCollection();
+    protected readonly toDispose = new DisposableCollection();
     protected webviewView?: WebviewView;
     protected providerContext?: BIGWebviewProviderContext;
 

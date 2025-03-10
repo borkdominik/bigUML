@@ -22,6 +22,10 @@ import { TYPES } from '../../vscode-common.types.js';
 import type { BIGGLSPVSCodeConnector } from '../connector/glsp-vscode-connector.js';
 import type { ActionDispatcher } from './action-dispatcher.js';
 
+/**
+ * Listens for actions from the GLSP client/server and propagates them to the appropriate handlers.
+ * It is a wrapper around the GLSP connector to simplify the action listening process.
+ */
 @injectable()
 export class ActionListener implements Disposable {
     @inject(TYPES.GLSPVSCodeConnector)
@@ -49,6 +53,10 @@ export class ActionListener implements Disposable {
         this.toDispose.dispose();
     }
 
+    /**
+     * Registers a listener for all actions from the GLSP client.
+     * The listener will be called with the action message when an action is received.
+     */
     registerListener(callback: (action: ActionMessage) => void): Disposable {
         this.clientListeners.push(callback);
         return Disposable.create(() => {
@@ -59,6 +67,10 @@ export class ActionListener implements Disposable {
         });
     }
 
+    /**
+     * Registers a listener for all actions from the GLSP server.
+     * The listener will be called with the action message when an action is received.
+     */
     registerServerListener(callback: (action: ActionMessage) => void): Disposable {
         this.serverListeners.push(callback);
         return Disposable.create(() => {
@@ -69,6 +81,14 @@ export class ActionListener implements Disposable {
         });
     }
 
+    /**
+     * Registers a handler for a specific request action.
+     * The handler will be called with the action message when the action is received.
+     * The handler should return a response action, which will be dispatched back to the GLSP client (server).
+     * The request will be not further propagated.
+     *
+     * (This is a workaround until the GLSP server is migrated to NodeJS)
+     */
     handleRequest<TRequest extends RequestAction<ResponseAction>>(
         kind: TRequest['kind'],
         handler: (action: ActionMessage<TRequest>) => MaybePromise<InferResponseType<TRequest>>
@@ -88,11 +108,21 @@ export class ActionListener implements Disposable {
         return toDispose;
     }
 
+    /**
+     * Creates a cache for action messages of the specified kinds.
+     * The cache will listen for actions from the GLSP client and store them in memory.
+     * The cache can be used to retrieve the last action message of each kind.
+     */
     createCache(cachedActionKinds: string[]): CacheActionListener {
         return new CacheActionListener(this, cachedActionKinds);
     }
 }
 
+/**
+ * Caches action messages of the specified kinds.
+ * It listens for actions from the GLSP client and stores them in memory.
+ * The cache can be used to retrieve the last action message of each kind.
+ */
 export class CacheActionListener implements Disposable {
     protected readonly toDispose = new DisposableCollection();
     protected readonly cache: Record<string, ActionMessage> = {};
@@ -114,10 +144,16 @@ export class CacheActionListener implements Disposable {
         );
     }
 
+    /**
+     * Retrieves the last action message of the specified kind from the cache.
+     */
     getAction(kind: string): ActionMessage | undefined {
         return this.cache[kind];
     }
 
+    /**
+     * Retrieves all cached action messages.
+     */
     getActions(): ActionMessage[] {
         return Object.values(this.cache);
     }

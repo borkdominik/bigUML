@@ -6,6 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
+import { VscodeAction } from '@borkdominik-biguml/big-vscode-integration';
 import { ActionDispatcher, GLSPActionDispatcher, OptionalAction, RequestAction, ResponseAction, type Action } from '@eclipse-glsp/client';
 
 export class UMLActionDispatcher extends GLSPActionDispatcher {
@@ -41,6 +42,9 @@ export class UMLActionDispatcher extends GLSPActionDispatcher {
         return super.request(action);
     }
 
+    /**
+     * Changes: Does not clear the responseId for VSCode requests.
+     */
     protected override handleAction(action: Action): Promise<void> {
         if (ResponseAction.hasValidResponseId(action)) {
             // clear timeout
@@ -53,7 +57,7 @@ export class UMLActionDispatcher extends GLSPActionDispatcher {
             // Check if we have a pending request for the response.
             // If not the  we clear the responseId => action will be dispatched normally
             const deferred = this.requests.get(action.responseId);
-            if (deferred === undefined && !action.responseId.startsWith('_vscode')) {
+            if (deferred === undefined && !VscodeAction.isVSCodeRequestId(action.responseId)) {
                 action.responseId = '';
             }
         }

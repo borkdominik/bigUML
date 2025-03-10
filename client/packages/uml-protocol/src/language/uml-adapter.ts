@@ -11,6 +11,7 @@
 // You may customize it as needed.
 // It doesn't have all information yet, but it will be improved in the future.
 // It is only used for type safety.
+// Check the structure exposed by the ModelState class + read the documentation
 
 export interface UMLIdentifer {
     id: string;

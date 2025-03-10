@@ -9,6 +9,12 @@
 import { type ActionMessage } from '@eclipse-glsp/protocol';
 import { type NotificationType } from 'vscode-messenger-common';
 
-// Notifications that can be used to communicate with the webview
+/**
+ * Notification to send/receive a message from/to the webview.
+ */
 export const ActionMessageNotification: NotificationType<ActionMessage> = { method: 'actionMessage' };
+
+/**
+ * Notification to notify the webview that it is ready.
+ */
 export const WebviewReadyNotification: NotificationType<ActionMessage> = { method: 'webviewReady' };

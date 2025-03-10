@@ -53,10 +53,22 @@ export namespace SetPropertyPaletteAction {
     }
 }
 
+/**
+ * Allows to update a specific property of an element.
+ */
 export interface UpdateElementPropertyAction extends Action {
     kind: typeof UpdateElementPropertyAction.KIND;
+    /**
+     * The ID of the element whose property should be updated.
+     */
     elementId: string;
+    /**
+     * The ID of the property to be updated.
+     */
     propertyId: string;
+    /**
+     * The new value of the property.
+     */
     value: string;
 }
 

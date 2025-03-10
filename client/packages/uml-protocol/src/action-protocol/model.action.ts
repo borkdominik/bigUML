@@ -9,10 +9,20 @@
 
 import { Action, RequestAction, type ResponseAction } from '@eclipse-glsp/protocol';
 
+/**
+ * The type of the model resources.
+ */
 export type ModelResourceFormat = 'json' | 'xml';
 
+/**
+ * The request action to get the model resources.
+ */
 export interface RequestModelResourcesAction extends RequestAction<ModelResourcesResponseAction> {
     kind: typeof RequestModelResourcesAction.KIND;
+    /**
+     * If set, the request will only return the resources with the given formats.
+     * If not set, all formats will be returned.
+     */
     formats?: ModelResourceFormat[];
 }
 export namespace RequestModelResourcesAction {
@@ -27,6 +37,10 @@ export namespace RequestModelResourcesAction {
     }
 }
 
+/**
+ * The model resource represents the conctent of a model in a specific format.
+ * The content is the serialized model in the given format.
+ */
 export interface ModelResource {
     content: string;
     format: ModelResourceFormat;

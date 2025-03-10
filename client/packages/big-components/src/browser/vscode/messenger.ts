@@ -17,11 +17,18 @@ declare global {
 
 export const vscode = acquireVsCodeApi();
 
+/**
+ * A specialized messenger that allows for the registration of multiple handlers for the same notification type.
+ * This is useful when you want to have multiple components listening to the same notification type.
+ *
+ * @see {@link https://github.com/TypeFox/vscode-messenger}
+ */
 export class BigMessenger extends Messenger {
     protected readonly handlers: Map<string, (RequestHandler<unknown, unknown> | NotificationHandler<unknown>)[]> = new Map();
 
     /**
-     * Adds a handler for a notification type.
+     * Adds a handler for the given notification type.
+     * The handler will be called when a request of the given type is received.
      */
     addNotificationHandler<P>(type: NotificationType<P>, handler: NotificationHandler<P>): void {
         if (!this.handlers.has(type.method)) {
@@ -31,7 +38,8 @@ export class BigMessenger extends Messenger {
     }
 
     /**
-     * Removes a handler for a notification type.
+     * Removes a handler for the given request type.
+     * The handler will no longer be called when a request of the given type is received.
      */
     removeNotificationHandler<P>(type: NotificationType<P>, handler: NotificationHandler<P>): void {
         const handlers = this.handlers.get(type.method);
@@ -47,6 +55,13 @@ export class BigMessenger extends Messenger {
         }
     }
 
+    /**
+     * Listens for notifications of the given type.
+     * The handler will be called when a notification of the given type is received.
+     *
+     * This method is preferred over `addNotificationHandler` because it automatically registers the handler
+     * with the messenger and returns a disposable that can be used to remove the handler.
+     */
     listenNotification<P>(type: NotificationType<P>, handler: NotificationHandler<P>): Disposable {
         if (!this.handlers.has(type.method)) {
             this.handlerRegistry.set(type.method, (params, sender) => {

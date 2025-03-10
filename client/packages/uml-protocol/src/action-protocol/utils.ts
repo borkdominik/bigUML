@@ -9,4 +9,7 @@
 
 import type { RequestAction, ResponseAction } from '@eclipse-glsp/protocol';
 
+/**
+ * Utility type to infer the response type from a given RequestAction.
+ */
 export type InferResponseType<T extends RequestAction<ResponseAction>> = T extends RequestAction<infer R> ? R : never;

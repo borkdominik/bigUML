@@ -9,6 +9,11 @@
 
 import { BIGWebviewProvider, getBundleUri, getUri, type BIGWebviewProviderContext } from './webview.provider.js';
 
+/**
+ * A react based webview provider.
+ * The provided jsPath needs to have an entry point for a react based component.
+ * Use `#root` to register the react component in the bundle.
+ */
 export abstract class BIGReactWebview extends BIGWebviewProvider {
     protected override retainContextWhenHidden = true;
 

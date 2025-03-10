@@ -16,11 +16,23 @@ import type { ActionDispatcher } from '../../action/action-dispatcher.js';
 import type { ActionListener } from '../../action/action-listener.js';
 import type { ConnectionManager } from '../../connector/connection-manager.js';
 
+/**
+ * EXPERIMENTAL
+ *
+ * Event emitted when the model state changes.
+ */
 export interface ModelStateChangeEvent {
     clientId: string;
     state: ExperimentalModelState;
 }
 
+/**
+ * EXPERIMENTAL
+ *
+ * This class allows to access the source model and its elements within the VSCode extension.
+ * Usually, this is done by the server, but until we migrate to the NodeJS based server,
+ * we can use this class to access the source model.
+ */
 export class ExperimentalModelState {
     protected readonly elements: Map<string, Readonly<unknown>> = new Map();
 
@@ -44,10 +56,16 @@ export class ExperimentalModelState {
         }
     }
 
+    /**
+     * Returns all resources for a GLSP client.
+     */
     getResources(): ReadonlyArray<ModelResource> {
         return this.resources;
     }
 
+    /**
+     * Returns the source model of the GLSP client.
+     */
     getSourceModel(): Readonly<UMLSourceModel> {
         const resource = this.resources.find(resource => resource.format === 'json' && resource.uri.endsWith('.uml'));
         if (!resource) {
@@ -57,12 +75,24 @@ export class ExperimentalModelState {
         return JSON.parse(resource.content) as any;
     }
 
+    /**
+     * Returns the source model element with the given ID for the GLSP client.
+     */
     getSourceElement<T>(id: string, guard: TypeGuard<T>): Readonly<T> | undefined {
         const sourceModel = this.getSourceModel();
         return sourceModel.packagedElement?.find(element => element.id === id && guard(element)) as any;
     }
 }
 
+/**
+ * EXPERIMENTAL
+ *
+ * This class is used to manage the model state of the GLSP server.
+ * It is used to store the model state of the GLSP server and to notify the clients
+ * about changes in the model state.
+ *
+ * It returns {@link ExperimentalModelState} which contains the source model and its elements.
+ */
 @injectable()
 export class ExperimentalGLSPServerModelState implements Disposable {
     @inject(TYPES.ActionDispatcher)
@@ -109,6 +139,10 @@ export class ExperimentalGLSPServerModelState implements Disposable {
         this.onDidChangeModelStateEmitter.fire({ clientId: response.clientId, state });
     }
 
+    /**
+     * Returns the model state of the active client.
+     * If no client is active, undefined is returned.
+     */
     getModelState(): ExperimentalModelState | undefined {
         if (!this.connectionManager.activeClient) {
             return undefined;

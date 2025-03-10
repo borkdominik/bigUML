@@ -21,6 +21,10 @@ import { VscodeAction } from '../../../common/vscode.action.js';
 import { TYPES } from '../../vscode-common.types.js';
 import type { BIGGLSPVSCodeConnector } from '../connector/glsp-vscode-connector.js';
 
+/**
+ * Dispatches actions to the GLSP client/server and handles responses.
+ * It is a wrapper around the GLSP connector to simplify the action dispatching process.
+ */
 @injectable()
 export class ActionDispatcher implements Disposable {
     @inject(TYPES.GLSPVSCodeConnector)
@@ -56,6 +60,9 @@ export class ActionDispatcher implements Disposable {
         this.toDispose.dispose();
     }
 
+    /**
+     * Dispatches a request action to the GLSP client (server) and returns a promise that resolves with the response action.
+     */
     request<Res extends ResponseAction>(action: RequestAction<Res>): Promise<ActionMessage<Res>> {
         if (!action.requestId || action.requestId === '') {
             action.requestId = RequestAction.generateRequestId();
@@ -67,10 +74,18 @@ export class ActionDispatcher implements Disposable {
         return deferred.promise;
     }
 
+    /**
+     * Dispatches an action to the GLSP client (server).
+     * This method will not wait for a response.
+     */
     dispatch(action: Action | Action[]): void {
         this.dispatchToClient(undefined, action);
     }
 
+    /**
+     * Dispatches an action to a specific GLSP client (server).
+     * This method will not wait for a response.
+     */
     dispatchToClient(clientId: string | undefined, action: Action | Action[]): void {
         if (Array.isArray(action)) {
             action.forEach(a => this.connector.dispatchAction(a, clientId));
@@ -79,6 +94,10 @@ export class ActionDispatcher implements Disposable {
         }
     }
 
+    /**
+     * Broadcasts an action to all GLSP clients (server).
+     * This method will not wait for a response.
+     */
     broadcast(action: Action): void {
         this.connector.clients.forEach(client => {
             client.webviewEndpoint.sendMessage({

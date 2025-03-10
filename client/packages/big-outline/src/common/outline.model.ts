@@ -7,8 +7,17 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
+/**
+ * A node entry for the outline tree.
+ */
 export interface OutlineTreeNode {
+    /**
+     * Label that is displayed in the tree.
+     */
     label: string;
+    /**
+     * Id of the node.
+     */
     semanticUri: string;
     children: OutlineTreeNode[];
     iconClass: string;

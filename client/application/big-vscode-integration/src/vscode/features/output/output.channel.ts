@@ -10,6 +10,10 @@ import { inject, injectable } from 'inversify';
 import * as vscode from 'vscode';
 import { TYPES } from '../../vscode-common.types.js';
 
+/**
+ * OutputChannel is a wrapper around the VSCode OutputChannel API.
+ * It provides a simple interface to log messages and errors to the output channel.
+ */
 @injectable()
 export class OutputChannel {
     protected readonly _channel;

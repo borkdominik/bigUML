@@ -19,6 +19,12 @@ export interface VSCodeConnectorProps {
     children: React.ReactNode;
 }
 
+/**
+ * The VSCodeConnector component provides a context for the VSCode integration.
+ * It listens for messages from the VSCode extension and provides a way to dispatch actions.
+ * 
+ * Use {@link VSCodeContext} to access the context in child components.
+ */
 export function VSCodeConnector(props: VSCodeConnectorProps): ReactElement {
     const [clientId, setClientId] = useState<string | undefined>();
     const [isReady, setIsReady] = useState<boolean>(false);

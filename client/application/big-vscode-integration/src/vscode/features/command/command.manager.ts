@@ -11,6 +11,13 @@ import * as vscode from 'vscode';
 import { TYPES } from '../../vscode-common.types.js';
 import { type VSCodeCommand } from './command.js';
 
+/**
+ * This class is responsible for managing the commands in the VSCode extension by using Dependency Injection.
+ * It registers all commands and handles their execution.
+ * Use {@link TYPES.Command} to register commands in the extension.
+ *
+ * @see {@link VSCodeCommand} for more information.
+ */
 @injectable()
 export class CommandManager {
     constructor(

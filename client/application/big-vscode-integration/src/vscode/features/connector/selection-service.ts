@@ -14,11 +14,19 @@ import { TYPES } from '../../vscode-common.types.js';
 import type { ConnectionManager } from './connection-manager.js';
 import type { BIGGLSPVSCodeConnector } from './glsp-vscode-connector.js';
 
+/**
+ * SelectionMessage is used to communicate selection changes for GLSP clients.
+ */
 export interface SelectionMessage {
     clientId: string;
     state: SelectionState;
 }
 
+/**
+ * SelectionService is responsible for managing selection states of GLSP clients.
+ * It listens to selection updates and view state changes to keep track of the current selection.
+ * It is a wrapper around the GLSP connector to simplify the selection process.
+ */
 @injectable()
 export class SelectionService implements Disposable {
     @inject(TYPES.GLSPVSCodeConnector)
@@ -27,11 +35,18 @@ export class SelectionService implements Disposable {
     protected readonly connectionManager: ConnectionManager;
 
     protected readonly onDidSelectionChangeEmitter = new vscode.EventEmitter<SelectionMessage>();
+    /**
+     * Event emitted when the selection state changes.
+     * This event is fired when the selection state changes or when a new client is registered.
+     */
     readonly onDidSelectionChange = this.onDidSelectionChangeEmitter.event;
 
     protected readonly toDispose = new DisposableCollection();
     protected readonly selectionMap = new Map<string, SelectionState>();
 
+    /**
+     * Returns the current selection state of the active client.
+     */
     get selection(): SelectionState | undefined {
         const clientId = this.connectionManager.activeClient?.clientId;
         if (!clientId) {
@@ -40,6 +55,9 @@ export class SelectionService implements Disposable {
         return this.selectionMap.get(clientId);
     }
 
+    /**
+     * Returns the selection state of a specific client.
+     */
     getSelection(clientId: string): SelectionState | undefined {
         return this.selectionMap.get(clientId);
     }

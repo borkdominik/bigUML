@@ -10,10 +10,18 @@ import { inject, injectable, multiInject, postConstruct } from 'inversify';
 import type * as vscode from 'vscode';
 import { TYPES } from '../../vscode-common.types.js';
 
+/**
+ * A disposable interface that can be used to manage disposables in a consistent way.
+ * Use {@link TYPES.Disposable} to register your disposable.
+ */
 export interface Disposable {
     dispose(): any;
 }
 
+/**
+ * A manager for disposables that registers them to the extension context.
+ * Use {@link TYPES.Disposable} to register your disposable.
+ */
 @injectable()
 export class DisposableManager {
     constructor(

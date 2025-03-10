@@ -10,6 +10,7 @@
 import { Action, hasArrayProp, hasStringProp, type Bounds } from '@eclipse-glsp/protocol';
 
 // Accessibility
+// THE FOLLOWING CODE IS NOT CORRECTLY EXPORTED BY GLSP
 
 export interface FocusDomAction extends Action {
     kind: typeof FocusDomAction.KIND;

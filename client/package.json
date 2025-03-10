@@ -20,7 +20,8 @@
     "package": "npm run build:server && cd packages/uml-vscode-integration/extension && npm vscode:package && mv ./*.vsix ${INIT_CWD}/release/vsix",
     "package:zip": "npm package && cd ${INIT_CWD} && zip -r ./release-$(date +%Y%m%d-%H%M).zip ./release",
     "start:server": "cd ../server && ./gradlew run",
-    "watch": "lerna run --parallel watch"
+    "watch": "lerna run --parallel watch",
+    "win:start:server": "cd ../server && ./gradlew.bat run"
   },
   "devDependencies": {
     "@eslint/js": "^9.20.0",

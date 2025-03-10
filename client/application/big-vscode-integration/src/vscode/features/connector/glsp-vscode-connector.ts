@@ -25,6 +25,20 @@ import * as vscode from 'vscode';
 import { VscodeAction } from '../../../common/vscode.action.js';
 import { TYPES } from '../../vscode-common.types.js';
 
+/**
+ * The `Connector` acts as the bridge between GLSP-Clients and the GLSP-Server
+ * and is at the core of the Glsp-VSCode integration.
+ *
+ * It works by being providing a server that implements the `GlspVscodeServer`
+ * interface and registering clients using the `GlspVscodeConnector.registerClient`
+ * function. Messages sent between the clients and the server are then intercepted
+ * by the connector to provide functionality based on the content of the messages.
+ *
+ * Messages can be intercepted using the interceptor properties in the options
+ * argument.
+ *
+ * Please use the respective wrappers instead of using this class directly.
+ */
 @injectable()
 export class BIGGLSPVSCodeConnector<
     TDocument extends vscode.CustomDocument = vscode.CustomDocument

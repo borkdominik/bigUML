@@ -21,7 +21,7 @@ import type { BIGWebviewProviderContext } from './webview.provider.js';
 /**
  * Connection for the UML webview view.
  *
- * This connection is between the webview provider and the webview view itself.
+ * This connection is between the webview provider (VSCode Extension) and the webview view itself.
  */
 @injectable()
 export class WebviewViewConnector implements Disposable {
@@ -37,15 +37,33 @@ export class WebviewViewConnector implements Disposable {
     protected toDispose = new DisposableCollection();
 
     protected onReadyEmitter = new vscode.EventEmitter<void>();
+    /**
+     * Fires when the webview is ready to receive messages.
+     */
     readonly onReady = this.onReadyEmitter.event;
+
     protected onActionMessageEmitter = new vscode.EventEmitter<ActionMessage>();
+    /**
+     * Fires when an action message is received from the webview.
+     */
     readonly onActionMessage = this.onActionMessageEmitter.event;
 
     protected onDidChangeVisibilityEmitter = new vscode.EventEmitter<vscode.WebviewView>();
+    /**
+     * Fires when the visibility of the webview view changes.
+     */
     readonly onDidChangeVisibility = this.onDidChangeVisibilityEmitter.event;
+
     protected onVisibleEmitter = new vscode.EventEmitter<vscode.WebviewView>();
+    /**
+     * Fires when the webview view becomes visible.
+     */
     readonly onVisible = this.onVisibleEmitter.event;
+
     protected onHideEmitter = new vscode.EventEmitter<vscode.WebviewView>();
+    /**
+     * Fires when the webview view is hidden.
+     */
     readonly onHide = this.onHideEmitter.event;
 
     dispose(): void {
@@ -55,7 +73,7 @@ export class WebviewViewConnector implements Disposable {
     /**
      * Listens for messages from the webview view.
      *
-     * Direction: Webview view -> Webview provider
+     * Direction: Webview view -> VSCode Extension
      */
     listen(context: BIGWebviewProviderContext): void {
         if (this.messageParticipant !== undefined) {
@@ -81,6 +99,11 @@ export class WebviewViewConnector implements Disposable {
         );
     }
 
+    /**
+     * Register custom notification handler for the webview.
+     *
+     * @see {@link https://github.com/TypeFox/vscode-messenger} for more information.
+     */
     registerNotificationListener<P>(type: NotificationType<P>, handler: NotificationHandler<P>): vscode.Disposable {
         return this.messenger.onNotification(type, handler, {
             sender: this.messageParticipant
@@ -90,7 +113,7 @@ export class WebviewViewConnector implements Disposable {
     /**
      * Sends an action to the webview view.
      *
-     * Direction: Webview provider -> Webview view
+     * Direction: VSCode Extension -> Webview view
      */
     dispatch(message: Action | ActionMessage | ActionMessage[]): void {
         if (this.messageParticipant === undefined) {

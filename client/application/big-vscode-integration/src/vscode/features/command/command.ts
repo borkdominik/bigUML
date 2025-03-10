@@ -7,6 +7,10 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
+/**
+ * Wrapper for a VSCodeCommand that can be registered through Dependency Injection.
+ * Use {@link TYPES.Command} to register.
+ */
 export interface VSCodeCommand {
     id: string;
     execute(...args: any[]): any;

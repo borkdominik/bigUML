@@ -10,6 +10,11 @@
 import { HiddenModelViewer, ModelRenderer, type Action, type GModelRoot, type IViewArgs, type IVNodePostprocessor, type RenderingTargetKind, type ViewRegistry } from "@eclipse-glsp/client";
 import { injectable } from "inversify";
 
+/**
+ * The UMLHiddenModelViewer is a specialized version of the HiddenModelViewer
+ * that uses the UMLModelRenderer for rendering.
+ * It allows the renderer to clean up before the model is updated.
+ */
 @injectable()
 export class UMLHiddenModelViewer extends HiddenModelViewer {
     declare hiddenRenderer: UMLModelRenderer;
@@ -21,6 +26,10 @@ export class UMLHiddenModelViewer extends HiddenModelViewer {
     }
 }
 
+/**
+ * The UMLModelRenderer is a specialized version of the ModelRenderer
+ * that allows for pre-processing of the model before rendering.
+ */
 export class UMLModelRenderer extends ModelRenderer {
 
     protected preProcessors: any[];

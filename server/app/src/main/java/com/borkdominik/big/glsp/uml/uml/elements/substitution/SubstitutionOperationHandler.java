@@ -39,7 +39,12 @@ public class SubstitutionOperationHandler extends BGEMFEdgeOperationHandler<Subs
       var argument = UMLCreateEdgeCommand.Argument
          .<Substitution, Classifier, Classifier> createEdgeArgumentBuilder()
          .supplier((s, t) -> {
-            return s.createSubstitution(null, t);
+            var name = "";
+            if (operation.getArgs() != null) {
+               name = operation.getArgs().getOrDefault("name", null);
+
+            }
+            return s.createSubstitution(name, t);
          })
          .build();
 

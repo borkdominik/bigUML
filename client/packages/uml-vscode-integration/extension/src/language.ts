@@ -25,6 +25,9 @@ export const VSCodeSettings = {
     propertyPalette: {
         viewId: 'bigUML.panel.property-palette'
     },
+    textInputPalette: {
+        viewId: 'bigUML.panel.text-input-palette'
+    },
     outline: {
         viewId: 'bigUML.panel.outline'
     },

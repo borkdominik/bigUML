@@ -29,6 +29,7 @@ import { Menu, MenuItem } from './menu/menu.component';
 import { Minimap, MinimapWebview } from './minimap';
 import { PropertyPalette, PropertyPaletteWebview } from './property-palette';
 import { PropertyPaletteReference } from './property-palette/reference/property-palette-reference.component';
+import { TextInputPalette,TextInputPaletteWebview } from './text-input';
 import { Tooltip } from './tooltip/tooltip.component';
 
 declare global {
@@ -56,6 +57,8 @@ declare global {
         'big-property-palette-webview': PropertyPaletteWebview;
         'big-minimap': Minimap;
         'big-minimap-webview': MinimapWebview;
+        'big-text-input-palette': TextInputPalette;
+        'big-text-input-palette-webview': TextInputPaletteWebview;
         'big-menu': Menu;
         'big-menu-item': MenuItem;
         'big-tooltip': Tooltip;

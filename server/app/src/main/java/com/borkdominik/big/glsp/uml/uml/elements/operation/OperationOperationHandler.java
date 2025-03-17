@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.uml2.uml.Operation;
 import org.eclipse.uml2.uml.OperationOwner;
+import org.eclipse.uml2.uml.VisibilityKind;
 
 import com.borkdominik.big.glsp.server.core.commands.semantic.BGCreateNodeSemanticCommand;
 import com.borkdominik.big.glsp.server.core.model.BGTypeProvider;
@@ -42,7 +43,19 @@ public class OperationOperationHandler extends BGEMFNodeOperationHandler<Operati
          .<Operation, EObject> createChildArgumentBuilder()
          .supplier((x) -> {
             if (x instanceof OperationOwner y) {
-               return y.createOwnedOperation(null, null, null);
+
+               String name = null;
+               VisibilityKind visibility = null;
+               if (operation.getArgs() != null) {
+                  name = operation.getArgs().getOrDefault("name", null);
+                  visibility = VisibilityKind.get(operation.getArgs().getOrDefault("visibility", null));
+               }
+
+               var element = y.createOwnedOperation(name, null, null);
+               if (visibility != null) {
+                  element.setVisibility(visibility);
+               }
+               return element;
             }
 
             return null;

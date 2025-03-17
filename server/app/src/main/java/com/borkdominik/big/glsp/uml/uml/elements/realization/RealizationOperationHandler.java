@@ -40,10 +40,16 @@ public class RealizationOperationHandler extends BGEMFEdgeOperationHandler<Reali
       var argument = UMLCreateEdgeCommand.Argument
          .<Realization, NamedElement, NamedElement> createEdgeArgumentBuilder()
          .supplier((s, t) -> {
+             var name = "";
+             if (operation.getArgs() != null) {
+                 name = operation.getArgs().getOrDefault("name", null);
+
+             }
             var element = UMLFactory.eINSTANCE.createRealization();
 
             element.getClients().add(source);
             element.getSuppliers().add(target);
+            element.setName(name);
 
             source.getNearestPackage().getPackagedElements().add(element);
             return element;

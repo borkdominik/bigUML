@@ -9,6 +9,11 @@
 
 import { Action, RequestAction, ResponseAction } from '@eclipse-glsp/protocol';
 
+export interface BGModelResource {
+    uri: string;
+    content: string;
+}
+
 export interface RequestModelResourcesAction extends RequestAction<ModelResourcesResponseAction> {
     kind: typeof RequestModelResourcesAction.KIND;
 }
@@ -25,7 +30,7 @@ export namespace RequestModelResourcesAction {
 
 export interface ModelResourcesResponseAction extends ResponseAction {
     kind: typeof ModelResourcesResponseAction.KIND;
-    resources: Record<string, string>;
+    resources: Record<string, BGModelResource>;
 }
 
 export namespace ModelResourcesResponseAction {

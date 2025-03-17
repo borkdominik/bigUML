@@ -10,7 +10,7 @@ import { createUMLDiagramContainer } from '@borkdominik-biguml/uml-glsp/lib';
 
 import '@eclipse-glsp/vscode-integration-webview/css/glsp-vscode.css';
 
-import { GLSPIsReadyAction, MinimapExportSvgAction, ModelResourcesResponseAction } from '@borkdominik-biguml/uml-protocol';
+import { AudioRecordingCompleteAction, ExportHistoryAction, GLSPIsReadyAction, MinimapExportSvgAction, ModelResourcesResponseAction } from '@borkdominik-biguml/uml-protocol';
 import { IActionDispatcher, IDiagramStartup, InitializeCanvasBoundsAction, TYPES } from '@eclipse-glsp/client';
 import { ContainerConfiguration, MaybePromise, SetViewportAction, bindAsService, bindOrRebind } from '@eclipse-glsp/protocol';
 import { GLSPStarter } from '@eclipse-glsp/vscode-integration-webview';
@@ -35,6 +35,9 @@ class UMLStarter extends GLSPStarter {
         container.bind(ExtensionActionKind).toConstantValue(ModelResourcesResponseAction.KIND);
         container.bind(ExtensionActionKind).toConstantValue(SetViewportAction.KIND); // necessary to have it in the provider loop
         container.bind(ExtensionActionKind).toConstantValue(InitializeCanvasBoundsAction.KIND); // necessary to have it in the provider loop
+        container.bind(ExtensionActionKind).toConstantValue(AudioRecordingCompleteAction.KIND);
+        container.bind(ExtensionActionKind).toConstantValue(ExportHistoryAction.KIND);
+
         bindAsService(container, TYPES.IDiagramStartup, GLSPReadyStartup);
     }
 }

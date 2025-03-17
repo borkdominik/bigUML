@@ -39,7 +39,21 @@ public class InterfaceOperationHandler extends BGEMFNodeOperationHandler<Interfa
       final Package parent) {
       var argument = CreatePackagableElementCommand.Argument
          .<Interface> createPackageableElementArgumentBuilder()
-         .supplier((p) -> parent.createOwnedInterface(null))
+         .supplier((p) -> {
+             var name = "Interface";
+             var isAbstract = false;
+             if (operation.getArgs() != null) {
+                 if (operation.getArgs().containsKey("name")) {
+                     name = operation.getArgs().get("name");
+                 }
+                 if (operation.getArgs().containsKey("is_abstract")) {
+                     isAbstract = Boolean.parseBoolean(operation.getArgs().get("is_abstract"));
+                 }
+             }
+             var ownedInterface = parent.createOwnedInterface(name);
+             ownedInterface.setIsAbstract(isAbstract);
+             return ownedInterface;
+         })
          .build();
 
       return new CreatePackagableElementCommand<>(commandContext, parent, argument);

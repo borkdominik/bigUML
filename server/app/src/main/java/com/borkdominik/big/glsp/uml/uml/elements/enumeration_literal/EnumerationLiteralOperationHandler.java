@@ -39,7 +39,14 @@ public class EnumerationLiteralOperationHandler extends BGEMFNodeOperationHandle
       final Enumeration parent) {
       var argument = UMLCreateNodeCommand.Argument
          .<EnumerationLiteral, Enumeration> createChildArgumentBuilder()
-         .supplier((x) -> x.createOwnedLiteral("EnumerationLiteral"))
+         .supplier((x) -> {
+            var name = "EnumerationLiteral";
+            if (operation.getArgs() != null) {
+               name = operation.getArgs().getOrDefault("name", null);
+
+            }
+            return x.createOwnedLiteral(name);
+         })
          .build();
 
       return new UMLCreateNodeCommand<>(commandContext, parent, argument);

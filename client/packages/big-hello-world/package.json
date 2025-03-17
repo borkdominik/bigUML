@@ -1,7 +1,7 @@
 {
-  "name": "@borkdominik-biguml/uml-glsp-client",
+  "name": "@borkdominik-biguml/big-hello-world",
   "version": "0.6.3",
-  "description": "UML-GLSP",
+  "description": "UML-Hello World",
   "homepage": "https://github.com/borkdominik/bigUML",
   "bugs": "https://github.com/borkdominik/bigUML/issues",
   "repository": {
@@ -30,6 +30,10 @@
       "types": "./lib/common/index.d.ts",
       "default": "./lib/common/index.js"
     },
+    "./glsp-client": {
+      "types": "./lib/glsp-client/index.d.ts",
+      "default": "./lib/glsp-client/index.js"
+    },
     "./vscode": {
       "types": "./lib/vscode/index.d.ts",
       "default": "./lib/vscode/index.js"
@@ -37,10 +41,7 @@
   },
   "types": "lib/common/index.d.ts",
   "files": [
-    "lib",
-    "src",
-    "css",
-    "resources"
+    "dist"
   ],
   "scripts": {
     "build": "npm run clean && npm run compile && npm run bundle && npm run lint",
@@ -53,22 +54,23 @@
     "watch": "concurrently --kill-others 'npm run compile -- --watch' 'npm run bundle -- --watch'"
   },
   "dependencies": {
-    "@borkdominik-biguml/big-hello-world": "*",
-    "@borkdominik-biguml/big-minimap": "*",
-    "@borkdominik-biguml/big-outline": "*",
-    "@borkdominik-biguml/big-property-palette": "*",
+    "@borkdominik-biguml/big-components": "*",
     "@borkdominik-biguml/big-vscode-integration": "*",
     "@borkdominik-biguml/uml-protocol": "*",
     "@eclipse-glsp/client": "*",
     "@eclipse-glsp/protocol": "*",
     "@eclipse-glsp/vscode-integration-webview": "*",
-    "balloon-css": "^0.5.0",
-    "inversify": "6.1.3",
-    "reflect-metadata": "^0.1.13",
-    "snabbdom": "^3.5.1",
-    "sprotty": "*"
+    "vscode-messenger-common": "^0.4.5"
   },
   "devDependencies": {
-    "endent": "^2.1.0"
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "peerDependencies": {
+    "inversify": "^6.1.3",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
   }
 }

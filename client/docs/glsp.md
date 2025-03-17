@@ -28,3 +28,5 @@ The VS Code integration provides a default implementation that allows the GLSP c
 At the core, we have **actions** (essentially a messaging pattern). To communicate between the client and server (and vice versa), you need to dispatch an action: [GLSP Actions Documentation](https://eclipse.dev/glsp/documentation/actionhandler/). The same mechanism also applies if you want to communicate between client-to-client interactions (more details on this later).
 
 It is highly recommended to read the documentation on actions, as they are a crucial aspect of GLSP.
+
+An outline of the most important actions can also be found in the [documentation](https://eclipse.dev/glsp/documentation/protocol/).

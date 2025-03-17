@@ -35,6 +35,7 @@ export class ActionListener implements Disposable {
 
     protected readonly clientListeners: ((action: ActionMessage) => void)[] = [];
     protected readonly serverListeners: ((action: ActionMessage) => void)[] = [];
+    protected readonly vscodeListeners: ((action: ActionMessage) => void)[] = [];
     protected readonly toDispose = new DisposableCollection();
 
     @postConstruct()
@@ -45,6 +46,9 @@ export class ActionListener implements Disposable {
             }),
             this.connector.onServerActionMessage(message => {
                 this.serverListeners.forEach(listener => listener(message));
+            }),
+            this.connector.onVSCodeActionMessage(message => {
+                this.vscodeListeners.forEach(listener => listener(message));
             })
         );
     }
@@ -82,14 +86,32 @@ export class ActionListener implements Disposable {
     }
 
     /**
+     * Registers a listener for all actions from VSCode.
+     * The listener will be called with the action message when an action is received.
+     *
+     * The handler will be only called when there is no other handler registered for the action within GLSP.
+     * So if you have a handler registered within GLSP (either within the server or client),
+     * the handler will not be called.
+     */
+    registerVSCodeListener(callback: (action: ActionMessage) => void): Disposable {
+        this.vscodeListeners.push(callback);
+        return Disposable.create(() => {
+            const index = this.vscodeListeners.indexOf(callback);
+            if (index !== -1) {
+                this.vscodeListeners.splice(index, 1);
+            }
+        });
+    }
+
+    /**
      * Registers a handler for a specific request action.
      * The handler will be called with the action message when the action is received.
-     * The handler should return a response action, which will be dispatched back to the GLSP client (server).
+     * The handler should return a response action, which will be dispatched back to GLSP.
      * The request will be not further propagated.
      *
      * (This is a workaround until the GLSP server is migrated to NodeJS)
      */
-    handleRequest<TRequest extends RequestAction<ResponseAction>>(
+    handleGLSPRequest<TRequest extends RequestAction<ResponseAction>>(
         kind: TRequest['kind'],
         handler: (action: ActionMessage<TRequest>) => MaybePromise<InferResponseType<TRequest>>
     ): Disposable {
@@ -98,6 +120,33 @@ export class ActionListener implements Disposable {
         toDispose.push(
             this.connector.registerVscodeHandledAction(kind),
             this.registerListener(async message => {
+                if (message.action.kind === kind) {
+                    const response = await handler(message as any);
+                    this.actionDispatcher.dispatch(response);
+                }
+            })
+        );
+
+        return toDispose;
+    }
+
+    /**
+     * Registers a handler for a specific request action.
+     * The handler will be called with the action message when the action is received and can not be handled by GLSP.
+     * The handler should return a response action, which will be dispatched back.
+     * The request will be not further propagated.
+     *
+     * (This is a workaround until the GLSP server is migrated to NodeJS)
+     */
+    handleVSCodeRequest<TRequest extends RequestAction<ResponseAction>>(
+        kind: TRequest['kind'],
+        handler: (action: ActionMessage<TRequest>) => MaybePromise<InferResponseType<TRequest>>
+    ): Disposable {
+        const toDispose = new DisposableCollection();
+
+        toDispose.push(
+            this.connector.registerVscodeHandledAction(kind),
+            this.registerVSCodeListener(async message => {
                 if (message.action.kind === kind) {
                     const response = await handler(message as any);
                     this.actionDispatcher.dispatch(response);

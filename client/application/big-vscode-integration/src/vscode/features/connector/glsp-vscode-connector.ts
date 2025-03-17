@@ -64,9 +64,11 @@ export class BIGGLSPVSCodeConnector<
     readonly onServerActionMessage = this.onServerActionMessageEmitter.event;
     protected readonly onClientActionMessageEmitter = new vscode.EventEmitter<ActionMessage>();
     readonly onClientActionMessage = this.onClientActionMessageEmitter.event;
+    protected readonly onVSCodeActionMessageEmitter = new vscode.EventEmitter<ActionMessage>();
+    readonly onVSCodeActionMessage = this.onVSCodeActionMessageEmitter.event;
 
     /**
-     * Set of actions that are handled by the vscode client and should not be propagated to the server.
+     * Set of actions that are handled by vscode and should not be propagated to the server.
      * This is a workaround till the java server has been replaced by a node server.
      */
     protected readonly vscodeHandledActions = new Set<string>();
@@ -87,7 +89,7 @@ export class BIGGLSPVSCodeConnector<
                 }
                 callback(message);
             },
-            onBeforePropagateMessageToClient(_originalMessage, processedMessage, _messageChanged) {
+            onBeforePropagateMessageToClient: (_originalMessage, processedMessage, _messageChanged) => {
                 return processedMessage;
             },
             onBeforePropagateMessageToServer: (_originalMessage, processedMessage, _messageChanged) => {
@@ -169,6 +171,30 @@ export class BIGGLSPVSCodeConnector<
         }
     }
 
+    override dispatchAction(action: Action, clientId?: string): void {
+        const client = clientId ? this.clientMap.get(clientId) : this.getActiveClient();
+        if (!client) {
+            console.warn('Could not dispatch action: No client found for clientId or no active client found.', action);
+            return;
+        }
+        const message = { clientId: client.clientId, action };
+        let dispatched = false;
+        if (client.webviewEndpoint.clientActions?.includes(action.kind)) {
+            client.webviewEndpoint.sendMessage(message);
+            dispatched = true;
+        }
+        if (client.webviewEndpoint.serverActions?.includes(action.kind)) {
+            this.options.server.onSendToServerEmitter.fire(message);
+            dispatched = true;
+        }
+
+        if (!dispatched && this.vscodeHandledActions.has(action.kind)) {
+            this.onVSCodeActionMessageEmitter.fire(message);
+        } else if (!dispatched) {
+            console.warn('Could not dispatch action. No handler found for action kind:', action.kind);
+        }
+    }
+
     protected override handleSetDirtyStateAction(
         message: ActionMessage<SetDirtyStateAction>,
         client: GlspVscodeClient<TDocument> | undefined,
@@ -228,7 +254,10 @@ export class BIGGLSPVSCodeConnector<
             return processed;
         }
 
-        if (ActionMessage.is(message) && VscodeAction.isExtensionOnly(message.action)) {
+        if (
+            ActionMessage.is(message) &&
+            (VscodeAction.isExtensionOnly(message.action) || this.vscodeHandledActions.has(message.action.kind))
+        ) {
             return {
                 processedMessage: undefined,
                 messageChanged: true

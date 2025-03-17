@@ -7,6 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
+import { helloWorldModule } from '@borkdominik-biguml/big-hello-world/glsp-client';
 import { minimapModule } from '@borkdominik-biguml/big-minimap/glsp-client';
 import { outlineModule } from '@borkdominik-biguml/big-outline/glsp-client';
 import { propertyPaletteModule } from '@borkdominik-biguml/big-property-palette/glsp-client';
@@ -36,7 +37,13 @@ import { UMLHostExtensionActionHandler } from './vscode-extension-action-handler
 
 class UMLStarter extends GLSPStarter {
     createContainer(...containerConfiguration: ContainerConfiguration): Container {
-        const container = createUMLDiagramContainer(...containerConfiguration, outlineModule, minimapModule, propertyPaletteModule);
+        const container = createUMLDiagramContainer(
+            ...containerConfiguration,
+            outlineModule,
+            minimapModule,
+            propertyPaletteModule,
+            helloWorldModule
+        );
 
         return container;
     }

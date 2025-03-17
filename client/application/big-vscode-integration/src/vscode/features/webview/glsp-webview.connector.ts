@@ -102,12 +102,28 @@ export class WebviewViewConnector implements Disposable {
     /**
      * Register custom notification handler for the webview.
      *
+     * Direction: Webview view -> VSCode Extension
+     *
      * @see {@link https://github.com/TypeFox/vscode-messenger} for more information.
      */
     registerNotificationListener<P>(type: NotificationType<P>, handler: NotificationHandler<P>): vscode.Disposable {
         return this.messenger.onNotification(type, handler, {
             sender: this.messageParticipant
         });
+    }
+
+    /**
+     * Sends a notification to the webview view.
+     *
+     * Direction: VSCode Extension -> Webview view
+     *
+     * @see {@link https://github.com/TypeFox/vscode-messenger} for more information.
+     */
+    sendNotification<P>(type: NotificationType<P>, payload: P): void {
+        if (this.messageParticipant === undefined) {
+            return;
+        }
+        this.messenger.sendNotification(type, this.messageParticipant, payload);
     }
 
     /**

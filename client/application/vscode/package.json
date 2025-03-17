@@ -262,6 +262,12 @@
           "type": "tree",
           "visibility": "collapsed",
           "when": "bigUML.isRunning"
+        },
+        {
+          "id": "bigUML.panel.hello-world",
+          "name": "Hello World",
+          "type": "webview",
+          "when": "bigUML.isRunning && false"
         }
       ]
     },
@@ -282,6 +288,7 @@
     "onView:bigUML.outlineView"
   ],
   "dependencies": {
+    "@borkdominik-biguml/big-hello-world": "*",
     "@borkdominik-biguml/big-minimap": "*",
     "@borkdominik-biguml/big-outline": "*",
     "@borkdominik-biguml/big-property-palette": "*",
@@ -295,8 +302,8 @@
     "lodash": "^4.17.21",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "scheduler": "^0.25.0",
     "reflect-metadata": "^0.2.2",
+    "scheduler": "^0.25.0",
     "urijs": "^1.19.11",
     "vscode-messenger": "^0.4.5",
     "vscode-messenger-common": "^0.4.5"

@@ -35,7 +35,7 @@ export class ExperimentalOutlineActionHandler implements Disposable {
     @postConstruct()
     protected init(): void {
         this.toDispose.push(
-            this.actionListener.handleRequest<RequestOutlineAction>(RequestOutlineAction.KIND, async () => {
+            this.actionListener.handleGLSPRequest<RequestOutlineAction>(RequestOutlineAction.KIND, async () => {
                 return this.createOutline();
             })
         );

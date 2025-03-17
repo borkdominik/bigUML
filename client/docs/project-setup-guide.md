@@ -114,6 +114,16 @@ Each project follows a specific folder structure designed for modularity, clarit
 
 > **Breaking these rules may lead to significant issues in functionality and stability.**
 
+### Debugging
+
+You can directly debug your **VS Code** backend code within the VS Code debugger by setting breakpoints. However, debugging **Webviews** requires a different [approach](https://code.visualstudio.com/api/extension-guides/webview#inspecting-and-debugging-webviews):
+
+- Open the **Electron DevTools** (via `Help > Toggle Developer Tools`).
+- Go to the **Sources** tab.
+- Use **Ctrl + P** to search for and open the file you want to debug.
+
+> **Important:** While debugging, you may need to add certain files to the **allowed list** for them to appear in the debugger. An alert will prompt you at the bottom of the developer tools when this is required.
+
 ### ESM Modules and Bundlers
 
 Since bigUML operates across different environments (Node.js and browser), the code must be compiled into a single accessible file. This is managed by **esbuild**, which compiles your code and outputs it to the `application/vscode/webviews` folder.

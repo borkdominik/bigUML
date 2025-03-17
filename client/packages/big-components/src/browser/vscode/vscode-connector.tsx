@@ -17,6 +17,7 @@ messenger.start();
 
 export interface VSCodeConnectorProps {
     children: React.ReactNode;
+    debug?: boolean;
 }
 
 /**
@@ -29,6 +30,12 @@ export function VSCodeConnector(props: VSCodeConnectorProps): ReactElement {
     const [clientId, setClientId] = useState<string | undefined>();
     const [isReady, setIsReady] = useState<boolean>(false);
 
+    const debug = useCallback((message: string, ...objects: any) => {
+        if (props.debug) {
+            console.log("[React-VSCodeConnector] ", message, ...objects);
+        }
+    }, [props.debug]);
+
     useEffect(() => {
         if (isReady) {
             return;
@@ -36,25 +43,29 @@ export function VSCodeConnector(props: VSCodeConnectorProps): ReactElement {
 
         setIsReady(true);
         messenger.sendNotification(WebviewReadyNotification, HOST_EXTENSION);
-    }, [isReady]);
+        debug('webview is ready');
+    }, [isReady, debug]);
 
     useEffect(() => {
-        const dispose = messenger.listenNotification<ActionMessage>(ActionMessageNotification, message => {
+        const onActionMessage = messenger.listenNotification<ActionMessage>(ActionMessageNotification, message => {
             setClientId(message.clientId);
         });
         return () => {
-            dispose.dispose();
+            onActionMessage.dispose();
         };
-    }, [props]);
+    }, [props, debug]);
 
     const listenAction = useCallback((handler: (action: Action) => void) => {
         return messenger.listenNotification<ActionMessage>(ActionMessageNotification, message => {
+            debug('new action received', message);
             handler(message.action);
         });
-    }, []);
+    }, [debug]);
 
     const dispatchAction = useCallback(
         (action: Action) => {
+            debug('dispatching action', action);
+
             if (!clientId) {
                 throw new Error('Client ID is not set');
             }
@@ -64,7 +75,7 @@ export function VSCodeConnector(props: VSCodeConnectorProps): ReactElement {
                 action
             });
         },
-        [clientId]
+        [clientId, debug]
     );
 
     return (

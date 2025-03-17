@@ -9,9 +9,7 @@
       <ownedParameter xmi:id="_7XfIQPgmEe6ut-tKD2_jgQ" name="Parameter" type="_bv-H8PgmEe6ut-tKD2_jgQ" direction="return"/>
     </ownedOperation>
   </packagedElement>
-  <packagedElement xsi:type="uml:PrimitiveType" xmi:id="_bv-H8PgmEe6ut-tKD2_jgQ" name="Integer">
-    <ownedOperation xmi:id="_UosOEPHuEe-vY-PZwRg7wA" name="Operation"/>
-  </packagedElement>
+  <packagedElement xsi:type="uml:PrimitiveType" xmi:id="_bv-H8PgmEe6ut-tKD2_jgQ" name="Integer"/>
   <packagedElement xsi:type="uml:PrimitiveType" xmi:id="_b_tNEPgmEe6ut-tKD2_jgQ" name="String"/>
   <packagedElement xsi:type="uml:Enumeration" xmi:id="_ejibwPgmEe6ut-tKD2_jgQ" name="Role">
     <ownedLiteral xmi:id="_f5ilYPgmEe6ut-tKD2_jgQ" name="Student" classifier="_ejibwPgmEe6ut-tKD2_jgQ"/>
@@ -23,7 +21,7 @@
       <ownedParameter xmi:id="__SpWQPgmEe6ut-tKD2_jgQ" name="Parameter" type="_bv-H8PgmEe6ut-tKD2_jgQ" direction="return"/>
     </ownedOperation>
   </packagedElement>
-  <packagedElement xsi:type="uml:Class" xmi:id="_nsWaYPgmEe6ut-tKD2_jgQ" name="LecutreImpl">
+  <packagedElement xsi:type="uml:Class" xmi:id="_nsWaYPgmEe6ut-tKD2_jgQ" name="LectureImpl">
     <interfaceRealization xmi:id="_xR6mcPgmEe6ut-tKD2_jgQ" client="_nsWaYPgmEe6ut-tKD2_jgQ" supplier="_l84A0PgmEe6ut-tKD2_jgQ" contract="_l84A0PgmEe6ut-tKD2_jgQ"/>
   </packagedElement>
   <packagedElement xsi:type="uml:Interface" xmi:id="_o_3QsPgmEe6ut-tKD2_jgQ" name="LectureRepository">

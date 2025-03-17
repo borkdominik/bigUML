@@ -39,5 +39,8 @@ export const VSCodeSettings = {
     },
     minimap: {
         viewId: 'bigUML.panel.minimap'
+    },
+    helloWorld: {
+        viewId: 'bigUML.panel.hello-world'
     }
 } as const;

@@ -66,7 +66,6 @@ public class AssociationOperationHandler extends BGEMFEdgeOperationHandler<Assoc
             } else if (UMLTypes.COMPOSITION.isSame(representation, elementTypeId)) {
                type = AggregationKind.COMPOSITE_LITERAL;
             }
-            // todo check if source and target should be set
             var x = source.createAssociation(true,
                type,
                null,

@@ -7,9 +7,9 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-export * from './reference';
 export * from './text-input-palette.component';
 export * from './text-input-palette.style';
 export * from './web';
 
 export const NLI_SERVER_URL: string = "http://localhost:8000";
+export const SHOW_NLI_UI: boolean = true;

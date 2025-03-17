@@ -23,7 +23,7 @@ import { BigElement } from '../base/component';
 import '../global';
 import { messenger } from '../vscode/messenger';
 import { TextInputPaletteStyle } from './text-input-palette.style';
-import { NLI_SERVER_URL } from './index';
+import { NLI_SERVER_URL, SHOW_NLI_UI } from './index';
 
 const umlTypesMap = new Map<string, string>([
     ["class", "CLASS__Class"],
@@ -69,7 +69,10 @@ export class TextInputPalette extends BigElement {
     protected navigationIds: { [key: string]: { from: string; to: string }[] } = {};
 
     protected override render(): TemplateResult<1> {
-        return html`<div>${this.headerTemplate()} ${this.bodyTemplate()}</div>`;
+        if (SHOW_NLI_UI) {
+            return html`<div>${this.headerTemplate()} ${this.bodyTemplate()}</div>`;
+        }
+        return html`<div></div>`;
     }
 
     protected override updated(changedProperties: PropertyValues<this>): void {
@@ -259,7 +262,6 @@ export class TextInputPalette extends BigElement {
                 break;
             }
             case Intents.UNDO: {
-                // todo not persisted?
                 this.dispatchEvent(
                     new CustomEvent('dispatch-action', {
                         detail: UndoAction.create()
@@ -293,7 +295,6 @@ export class TextInputPalette extends BigElement {
     }
 
     protected async createContainer() {
-        // todo only use root if nothing is selected
         const root_json = await this.findIdByName("root", "root");
 
         const response = await fetch(NLI_SERVER_URL + `/create-container/?user_query=${this.inputText}`, {
@@ -405,7 +406,6 @@ export class TextInputPalette extends BigElement {
 
     protected async addMethod(focusedElement: string) {
         const json = await this.addValue();
-        // no return type
         this.dispatchEvent(
             new CustomEvent('dispatch-action', {
                 detail: CreateNodeOperation.create(`CLASS__Operation`,

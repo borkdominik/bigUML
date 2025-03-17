@@ -11,7 +11,6 @@ import { defineContextMenu } from '../../menu/context-menu.component';
 import { defineMenu } from '../../menu/menu.component';
 import { useToolkit } from '../../toolkit';
 import { defineTooltip } from '../../tooltip/tooltip.component';
-import { defineTextInputPaletteReference } from '../reference';
 import { defineTextInputPalette } from '../text-input-palette.component';
 import { defineTextInputPaletteWebview } from './text-input-palette-webview.component';
 
@@ -21,6 +20,5 @@ export function useTextInputPaletteWebviewDesignSystem(): void {
     defineMenu();
     defineContextMenu();
     defineTextInputPalette();
-    defineTextInputPaletteReference();
     defineTextInputPaletteWebview();
 }

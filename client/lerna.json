@@ -1,14 +1,11 @@
 {
-  "version": "1.0.0",
-  "npmClient": "yarn",
+  "$schema": "node_modules/lerna/schemas/lerna-schema.json",
+  "npmClient": "npm",
+  "version": "0.0.0",
   "command": {
     "run": {
-      "stream": true
-    },
-    "publish": {
-      "forcePublish": true,
-      "skipGit": true,
-      "registry": "https://registry.npmjs.org/"
+      "stream": true,
+      "sort": true
     }
   }
 }

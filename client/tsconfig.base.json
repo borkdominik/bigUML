@@ -1,18 +1,38 @@
 {
-  "extends": "@eclipse-glsp/ts-config/tsconfig.json",
+  "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
-    "baseUrl": ".",
-    "reactNamespace": "JSX",
-    "moduleResolution": "node16",
-    "esModuleInterop": true,
-    "noFallthroughCasesInSwitch": true,
-    "allowSyntheticDefaultImports": true,
-    "forceConsistentCasingInFileNames": true,
-    "paths": {
-      "@borkdominik-biguml/uml-glsp": ["packages/uml-glsp/src/*"]
-    }
-  },
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "module": "NodeNext",
+    "skipLibCheck": true,
+    "emitDecoratorMetadata": true,
+    "sourceMap": true,
 
-  "exclude": ["**/node_modules", "**/.eslintrc.js"],
-  "include": ["**/scripts", "packages/*/src", "packages/uml-vscode-integration/*/src"]
+    "moduleResolution": "nodenext",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "moduleDetection": "force",
+    "incremental": true,
+    "esModuleInterop": true,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "preserveWatchOutput": true,
+
+    /* Linting */
+    "noEmitOnError": false,
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "declaration": true,
+    "declarationMap": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "strictNullChecks": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "forceConsistentCasingInFileNames": true,
+    "strictPropertyInitialization": false
+  }
 }

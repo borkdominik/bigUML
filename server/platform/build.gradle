@@ -4,9 +4,9 @@ plugins {
 
 dependencies {
     constraints {
-        api 'org.eclipse.glsp:org.eclipse.glsp.server:2.0.0'
-        api 'org.eclipse.glsp:org.eclipse.glsp.server.emf:2.0.0'
-        api 'org.eclipse.glsp:org.eclipse.glsp.layout:2.0.0'
+        api 'org.eclipse.glsp:org.eclipse.glsp.server:2.3.0'
+        api 'org.eclipse.glsp:org.eclipse.glsp.server.emf:2.3.0'
+        api 'org.eclipse.glsp:org.eclipse.glsp.layout:2.3.0'
     }
 }
 

@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { Action, JsonMap, RequestAction, ResponseAction } from '@eclipse-glsp/protocol';
+import { Action, type JsonMap, RequestAction, type ResponseAction } from '@eclipse-glsp/protocol';
 
 export interface RequestNewFileAction extends RequestAction<NewFileResponseAction> {
     kind: typeof RequestNewFileAction.KIND;

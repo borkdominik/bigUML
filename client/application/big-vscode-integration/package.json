@@ -1,0 +1,68 @@
+{
+  "name": "@borkdominik-biguml/big-vscode-integration",
+  "version": "0.6.3",
+  "description": "BIG VSCode integration",
+  "homepage": "https://github.com/borkdominik/bigUML",
+  "bugs": "https://github.com/borkdominik/bigUML/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/borkdominik/bigUML.git"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Business Informatics Group (TU Wien)"
+  },
+  "contributors": [
+    {
+      "name": "Business Informatics Group (TU Wien)",
+      "email": "dominik.bork@tuwien.ac.at",
+      "url": "https://me.big.tuwien.ac.at/"
+    },
+    {
+      "name": "Haydar Metin",
+      "email": "dev@haydar.metin.at",
+      "url": "https://me.big.tuwien.ac.at/"
+    }
+  ],
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./lib/common/index.d.ts",
+      "default": "./lib/common/index.js"
+    },
+    "./glsp-client": {
+      "types": "./lib/glsp-client/index.d.ts",
+      "default": "./lib/glsp-client/index.js"
+    },
+    "./vscode": {
+      "types": "./lib/vscode/index.d.ts",
+      "default": "./lib/vscode/index.js"
+    },
+    "./vscode-node": {
+      "types": "./lib/vscode-node/index.d.ts",
+      "default": "./lib/vscode-node/index.js"
+    }
+  },
+  "scripts": {
+    "build": "npm run clean && npm run compile && npm run lint",
+    "clean": "rimraf lib node_modules/.tmp",
+    "compile": "tsc -b",
+    "lint": "eslint -c ./eslint.config.js",
+    "lint:ci": "npm run lint -o eslint.xml -f checkstyle",
+    "lint:fix": "eslint --fix -c ./eslint.config.js",
+    "watch": "npm run compile -- --watch"
+  },
+  "dependencies": {
+    "@borkdominik-biguml/uml-protocol": "*",
+    "@eclipse-glsp/vscode-integration": "*",
+    "@eclipse-glsp/vscode-integration-webview": "*",
+    "@types/vscode": "^1.63.0",
+    "@vscode/codicons": "^0.0.25",
+    "reflect-metadata": "^0.2.2",
+    "vscode-messenger": "^0.4.5",
+    "vscode-messenger-common": "^0.4.5"
+  },
+  "peerDependencies": {
+    "inversify": "^6.1.3"
+  }
+}

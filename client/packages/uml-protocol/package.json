@@ -24,23 +24,28 @@
       "url": "https://me.big.tuwien.ac.at/"
     }
   ],
-  "main": "lib/index",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./lib/index.js",
+      "require": "./lib/index.js"
+    }
+  },
+  "types": "lib/index.d.ts",
   "files": [
     "lib",
     "src"
   ],
   "scripts": {
-    "build": "tsc -b && yarn run lint",
+    "build": "npm run clean && npm run compile",
     "clean": "rimraf lib tsconfig.tsbuildinfo",
-    "lint": "eslint -c ./.eslintrc.js --ext .ts,.tsx ./src",
-    "lint:fix": "eslint --fix -c ./.eslintrc.js --ext .ts,.tsx ./src",
-    "prepare": "yarn run clean && yarn run build",
+    "compile": "tsc -b && npm run lint",
+    "lint": "eslint -c ./eslint.config.js",
+    "lint:fix": "eslint --fix -c ./eslint.config.js",
     "watch": "tsc -w"
   },
   "dependencies": {
-    "@eclipse-glsp/client": "next",
-    "@eclipse-glsp/protocol": "next",
-    "vscode-messenger-common": "^0.4.5"
+    "@eclipse-glsp/protocol": "*"
   },
   "devDependencies": {}
 }

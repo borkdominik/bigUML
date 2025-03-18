@@ -1,18 +1,10 @@
-# Yarn
-.pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/sdks
-!.yarn/versions
-
 # Build
 node_modules
 .browser_modules
 lib
 build
 bundles
+dist
 *.tsbuildinfo
 
 # Project

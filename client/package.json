@@ -3,52 +3,60 @@
   "version": "1.0.0",
   "private": true,
   "license": "MIT",
-  "main": "index.js",
-  "workspaces": {
-    "packages": [
-      "packages/*",
-      "packages/uml-vscode-integration/*"
-    ],
-    "nohoist": [
-      "**/path",
-      "**/path/**",
-      "umldiagram/@vscode/codicons",
-      "umldiagram/@vscode/codicons/**",
-      "umldiagram/@borkdominik-biguml/uml-vscode-integration-webview"
-    ]
-  },
+  "type": "module",
+  "workspaces": [
+    "application/*",
+    "packages/*"
+  ],
   "scripts": {
-    "build:server": "cd ../server && ./gradlew clean shadowJar && cd ../client && yarn copy:server",
+    "build": "lerna run build",
+    "build:server": "cd ../server && ./gradlew clean shadowJar && cd ../client && npm copy:server",
     "check:headers": "glsp checkHeaders .",
+    "clean": "lerna run clean",
     "copy:server": "tsx ./scripts/copy-server.ts",
     "depcheck": "npx depcheck --config .depcheck.yml",
-    "package": "yarn build:server && cd packages/uml-vscode-integration/extension && yarn vscode:package && mv ./*.vsix ${INIT_CWD}/release/vsix",
-    "package:zip": "yarn package && cd ${INIT_CWD} && zip -r ./release-$(date +%Y%m%d-%H%M).zip ./release",
-    "prepare": "lerna run prepare",
-    "watch": "lerna run --parallel watch"
-  },
-  "resolutions": {
-    "**/@eclipse-glsp/client": "2.1.0",
-    "**/@eclipse-glsp/protocol": "2.1.0",
-    "**/@eclipse-glsp/vscode-integration": "2.1.0",
-    "**/@eclipse-glsp/vscode-integration-webview": "2.1.0",
-    "**/inversify": "6.0.1",
-    "**/vscode-jsonrpc": "8.1.0"
+    "lint": "lerna run lint",
+    "lint:fix": "lerna run lint:fix",
+    "package": "npm run build:server && cd packages/uml-vscode-integration/extension && npm vscode:package && mv ./*.vsix ${INIT_CWD}/release/vsix",
+    "package:zip": "npm package && cd ${INIT_CWD} && zip -r ./release-$(date +%Y%m%d-%H%M).zip ./release",
+    "start:server": "cd ../server && ./gradlew run",
+    "watch": "lerna run --parallel watch",
+    "win:start:server": "cd ../server && ./gradlew.bat run"
   },
   "devDependencies": {
-    "@eclipse-glsp/dev": "^2.0.0",
-    "@eclipse-glsp/eslint-config": "^2.0.0",
+    "@eslint/js": "^9.20.0",
     "@types/lodash": "^4.14.195",
     "@types/node": "^20.4.2",
+    "chai": "^5.2.0",
+    "concurrently": "^9.1.2",
     "esbuild": "^0.17.10",
-    "eslint": "^8.56.0",
-    "lerna": "^7.1.1",
-    "tsx": "^3.12.3",
-    "typescript": "^4.9.5"
+    "esbuild-plugin-copy": "^2.1.1",
+    "eslint": "^9.20.1",
+    "eslint-plugin-header": "^3.1.1",
+    "eslint-plugin-n": "^17.15.1",
+    "eslint-plugin-react": "^7.37.4",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "glob": "^11.0.1",
+    "globals": "^15.15.0",
+    "lerna": "^8.1.9",
+    "prettier": "^3.5.1",
+    "prettier-plugin-packagejson": "^2.5.8",
+    "rimraf": "^6.0.1",
+    "tsx": "^4.19.3",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.24.0"
   },
-  "packageManager": "yarn@1.22.19",
   "engines": {
-    "node": ">=16.15.1 < 22",
-    "yarn": ">=1.7.0 <2"
+    "node": ">=20 < 22"
+  },
+  "overrides": {
+    "@eclipse-glsp/client": "2.3.0",
+    "@eclipse-glsp/protocol": "2.3.0",
+    "@eclipse-glsp/vscode-integration": "2.3.0",
+    "@eclipse-glsp/vscode-integration-webview": "2.3.0",
+    "inversify": "6.1.6",
+    "@borkdominik-biguml/uml-glsp-client": {
+      "inversify": "6.1.3"
+    }
   }
 }

@@ -1,0 +1,327 @@
+{
+  "name": "umldiagram",
+  "displayName": "bigUML Modeling Tool",
+  "version": "0.6.3",
+  "description": "Graphical UML Editor",
+  "categories": [
+    "Programming Languages",
+    "Visualization",
+    "Education"
+  ],
+  "keywords": [
+    "UML",
+    "Unified Modeling Language",
+    "UML Diagram",
+    "Modeling Tool"
+  ],
+  "homepage": "https://github.com/borkdominik/bigUML",
+  "bugs": "https://github.com/borkdominik/bigUML/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/borkdominik/bigUML"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Business Informatics Group (TU Wien)"
+  },
+  "contributors": [
+    {
+      "name": "Business Informatics Group (TU Wien)",
+      "email": "dominik.bork@tuwien.ac.at",
+      "url": "https://me.big.tuwien.ac.at/"
+    },
+    {
+      "name": "Haydar Metin",
+      "email": "dev@haydar.metin.at",
+      "url": "https://me.big.tuwien.ac.at/"
+    }
+  ],
+  "publisher": "BIGModelingTools",
+  "type": "module",
+  "main": "./lib/main.cjs",
+  "files": [
+    "lib",
+    "src",
+    "css",
+    "pack"
+  ],
+  "scripts": {
+    "build": "npm run clean && npm run compile",
+    "clean": "rimraf lib tsconfig.tsbuildinfo",
+    "compile": "tsx esbuild.ts",
+    "compile:prod": "npm run clean && npm run compile --minify",
+    "lint": "eslint -c ./eslint.config.js",
+    "lint:ci": "npm lint -o eslint.xml -f checkstyle",
+    "lint:fix": "eslint --fix -c ./eslint.config.js",
+    "lint:ts": "tsc -noEmit",
+    "vscode:package": "vsce package --npm",
+    "vscode:package-pre": "npm vscode:package --pre-release",
+    "vscode:prepublish": "npm run compile:prod",
+    "vscode:release": "vsce publish --npm",
+    "vscode:release-pre": "vsce publish --pre-release --npm",
+    "watch": "npm run compile -- --watch"
+  },
+  "contributes": {
+    "commands": [
+      {
+        "command": "bigUML.model.newEmpty",
+        "title": "New Empty UML Diagram",
+        "category": "bigUML",
+        "enablement": "workspaceFolderCount > 0"
+      },
+      {
+        "command": "bigUML.exportAsSVG",
+        "title": "Export as SVG",
+        "category": "bigUML",
+        "enablement": "activeCustomEditorId == 'bigUML.diagramView'"
+      },
+      {
+        "command": "bigUML.fit",
+        "title": "Fit to Screen",
+        "category": "bigUML",
+        "enablement": "activeCustomEditorId == 'bigUML.diagramView'"
+      },
+      {
+        "command": "bigUML.center",
+        "title": "Center selection",
+        "category": "bigUML",
+        "enablement": "activeCustomEditorId == 'bigUML.diagramView'"
+      },
+      {
+        "command": "bigUML.show.umlPanel",
+        "title": "Show UML panel",
+        "category": "bigUML",
+        "enablement": "activeCustomEditorId == 'bigUML.diagramView'",
+        "icon": "$(symbol-reference)"
+      }
+    ],
+    "configuration": {
+      "title": "bigUML",
+      "properties": {
+        "bigUML.hideUnotation": {
+          "type": "boolean",
+          "default": true,
+          "scope": "resource",
+          "description": "Hide the *.unotation files."
+        }
+      }
+    },
+    "customEditors": [
+      {
+        "viewType": "bigUML.diagramView",
+        "displayName": "bigUML Editor",
+        "selector": [
+          {
+            "filenamePattern": "*.uml"
+          }
+        ]
+      }
+    ],
+    "keybindings": [
+      {
+        "key": "alt+f",
+        "mac": "alt+f",
+        "command": "bigUML.fit",
+        "when": "activeCustomEditorId == 'bigUML.diagramView'"
+      },
+      {
+        "key": "alt+c",
+        "mac": "alt+c",
+        "command": "bigUML.center",
+        "when": "activeCustomEditorId == 'bigUML.diagramView'"
+      },
+      {
+        "key": "ctrl+a",
+        "mac": "ctrl+a",
+        "command": "bigUML.selectAll",
+        "when": "activeCustomEditorId == 'bigUML.diagramView'"
+      },
+      {
+        "key": "alt+a",
+        "mac": "alt+a",
+        "command": "bigUML.editor.activateResizeMode",
+        "when": "activeCustomEditorId == 'bigUML.diagramView'"
+      },
+      {
+        "key": "ctrl+f",
+        "mac": "ctrl+f",
+        "command": "bigUML.editor.showSearch",
+        "when": "activeCustomEditorId == 'bigUML.diagramView'"
+      },
+      {
+        "key": "alt+p",
+        "mac": "alt+p",
+        "command": "bigUML.editor.focusToolPalette",
+        "when": "activeCustomEditorId == 'bigUML.diagramView'"
+      },
+      {
+        "key": "alt+g",
+        "mac": "alt+g",
+        "command": "bigUML.editor.focusDiagram",
+        "when": "activeCustomEditorId == 'bigUML.diagramView'"
+      },
+      {
+        "key": "n",
+        "mac": "n",
+        "command": "bigUML.editor.enablePrimaryElementNavigator",
+        "when": "activeCustomEditorId == 'bigUML.diagramView' && bigUML.editorSelectedElementsAmount == 1"
+      },
+      {
+        "key": "alt+n",
+        "mac": "alt+n",
+        "command": "bigUML.editor.enableSecondaryElementNavigator",
+        "when": "activeCustomEditorId == 'bigUML.diagramView' && bigUML.editorSelectedElementsAmount == 1"
+      }
+    ],
+    "languages": [
+      {
+        "id": "bigUML-uml",
+        "extensions": [
+          ".uml"
+        ],
+        "icon": {
+          "light": "./resources/file_icons/light/uml.svg",
+          "dark": "./resources/file_icons/dark/uml.svg"
+        }
+      },
+      {
+        "id": "bigUML-unotation",
+        "extensions": [
+          ".unotation"
+        ],
+        "mimetypes": [
+          "xml"
+        ],
+        "icon": {
+          "light": "./resources/file_icons/light/unotation.svg",
+          "dark": "./resources/file_icons/dark/unotation.svg"
+        }
+      }
+    ],
+    "menus": {
+      "view/title": [],
+      "webview/context": [],
+      "file/newFile": [
+        {
+          "command": "bigUML.model.newEmpty",
+          "when": "workspaceFolderCount > 0"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "bigUML.show.umlPanel",
+          "when": "activeCustomEditorId == 'bigUML.diagramView'",
+          "group": "navigation"
+        },
+        {
+          "submenu": "bigUML.editor.title",
+          "group": "bookmarks"
+        }
+      ],
+      "bigUML.editor.title": [
+        {
+          "command": "bigUML.fit",
+          "group": "navigation",
+          "when": "activeCustomEditorId == 'bigUML.diagramView'"
+        },
+        {
+          "command": "bigUML.center",
+          "group": "navigation",
+          "when": "activeCustomEditorId == 'bigUML.diagramView'"
+        },
+        {
+          "command": "bigUML.exportAsSVG",
+          "group": "navigation",
+          "when": "activeCustomEditorId == 'bigUML.diagramView'"
+        }
+      ]
+    },
+    "submenus": [
+      {
+        "id": "bigUML.editor.title",
+        "label": "Diagram"
+      }
+    ],
+    "views": {
+      "bigUML-panel": [
+        {
+          "id": "bigUML.panel.property-palette",
+          "name": "Properties",
+          "type": "webview",
+          "when": "bigUML.isRunning"
+        },
+        {
+          "id": "bigUML.panel.minimap",
+          "name": "Minimap",
+          "type": "webview",
+          "when": "bigUML.isRunning"
+        },
+        {
+          "id": "bigUML.panel.outline",
+          "name": "Diagram Outline",
+          "type": "tree",
+          "visibility": "collapsed",
+          "when": "bigUML.isRunning"
+        },
+        {
+          "id": "bigUML.panel.hello-world",
+          "name": "Hello World",
+          "type": "webview",
+          "when": "bigUML.isRunning && false"
+        }
+      ]
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "bigUML-panel",
+          "icon": "./resources/file_icons/dark/uml.svg",
+          "title": "UML"
+        }
+      ]
+    }
+  },
+  "activationEvents": [
+    "onLanguage:bigUML.uml",
+    "onLanguage:bigUML.unotation",
+    "onCommand:bigUML.model.newEmpty",
+    "onView:bigUML.outlineView"
+  ],
+  "dependencies": {
+    "@borkdominik-biguml/big-hello-world": "*",
+    "@borkdominik-biguml/big-minimap": "*",
+    "@borkdominik-biguml/big-outline": "*",
+    "@borkdominik-biguml/big-property-palette": "*",
+    "@borkdominik-biguml/big-vscode-integration": "*",
+    "@borkdominik-biguml/uml-glsp-client": "*",
+    "@borkdominik-biguml/uml-protocol": "*",
+    "@eclipse-glsp/protocol": "*",
+    "@eclipse-glsp/vscode-integration": "*",
+    "@vscode/codicons": "^0.0.25",
+    "inversify": "^6.1.3",
+    "lodash": "^4.17.21",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "reflect-metadata": "^0.2.2",
+    "scheduler": "^0.25.0",
+    "urijs": "^1.19.11",
+    "vscode-messenger": "^0.4.5",
+    "vscode-messenger-common": "^0.4.5"
+  },
+  "devDependencies": {
+    "@eclipse-glsp/vscode-integration-webview": "*",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "@types/urijs": "1.19.11",
+    "@types/vscode": "^1.63.0",
+    "@vscode/vsce": "^2.15.0"
+  },
+  "engines": {
+    "vscode": "^1.63.0"
+  },
+  "icon": "resources/logo.png",
+  "galleryBanner": {
+    "color": "#1d1d1d",
+    "theme": "dark"
+  }
+}

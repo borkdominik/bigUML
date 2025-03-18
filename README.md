@@ -16,7 +16,7 @@
 <br>
 
 <!-- LOGO -->
-<img align="left" src="./client/packages/uml-vscode-integration/extension/resources/logo.png" alt="Logo" width="150" height="150" />
+<img align="left" src="./client/application/vscode/resources/logo.png" alt="Logo" width="150" height="150" />
 
 <!-- TITLE -->
 <h1 align="center">&emsp;bigUML Modeling Tool</h1>
@@ -186,7 +186,12 @@ Coming Soon!
 Get started with bigUML, learn fundamentals, explore advanced topics, or go through tutorials with our documentation.
 
 - [Changelog](./CHANGELOG.md)
-- [Documentation](./docs/README.md)
+- [Documentation](./client/docs/README.md)
+
+**Build steps:**
+
+- [Client](./client/README.md)
+- [Server](./server/README.md)
 
 ## Contributors ✨
 

@@ -9,7 +9,8 @@ Make sure that you have the following tools installed, before you proceed with t
 + [VS Code](https://code.visualstudio.com/)
 + [Java 17 JDK](https://www.oracle.com/java/technologies/javase/jdk14-archive-downloads.html)
 + [Docker](https://www.docker.com/get-started/)
-+ [Sox](https://sourceforge.net/projects/sox/files/sox/14.4.1/) **version 14.4.1** for audio recording
++ [Sox](https://sourceforge.net/projects/sox/files/sox/14.4.1/) **version 14.4.1** for audio recording. Once downloaded, please make sure to add the folder where it is installed to the PATH variable.
+
 
 ## NLI Server
 

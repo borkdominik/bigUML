@@ -269,7 +269,13 @@
           "id": "bigUML.panel.hello-world",
           "name": "Hello World",
           "type": "webview",
-          "when": "bigUML.isRunning && false"
+          "when": "bigUML.isRunning"
+        },
+        {
+          "id": "bigUML.panel.revision-management",
+          "name": "Revision Management",
+          "type": "webview",
+          "when": "bigUML.isRunning"
         }
       ]
     },

@@ -18,7 +18,7 @@ export class RevisionManagementHandler implements IActionHandler {
     handle(action: Action): ICommand | Action | void {
         if (RequestRevisionManagementAction.is(action)) {
             this.count += action.increase;
-            console.log(`Hello World from the GLSP Client: ${this.count}`);
+            console.log(`Revision Management from the GLSP Client: ${this.count}`);
             return RevisionManagementResponse.create({
                 count: this.count
             });

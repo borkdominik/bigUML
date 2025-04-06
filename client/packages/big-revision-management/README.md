@@ -12,8 +12,6 @@ To test, remove `false` in the `when` within `application/vscode/package.json`:
 }
 ```
 
-This is a sample package, that you can copy to create new features!
-Please update all instances where `Hello` / `World` / `hello-world` comes up.
 Then run `npm install` and `npm run build` to update npm.
 
 Don't forget to register the modules within `glsp-client` and `vscode`.

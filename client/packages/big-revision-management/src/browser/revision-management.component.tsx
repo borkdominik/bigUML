@@ -33,7 +33,7 @@ export function RevisionManagement(): ReactElement {
 
     return (
         <div>
-            <span>Hello World! {count}</span>
+            <span>Revision Management {count}</span>
             <button onClick={() => increase1()}>Increase 1</button>
             <button onClick={() => increase5()}>Increase 5</button>
         </div>

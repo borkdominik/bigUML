@@ -37,7 +37,7 @@ export class RevisionManagementHandler implements Disposable {
         this.toDispose.push(
             this.actionListener.handleVSCodeRequest<RequestRevisionManagementAction>(RequestRevisionManagementAction.KIND, async message => {
                 this.count += message.action.increase;
-                console.log(`Hello World from VS Code: ${this.count}`);
+                console.log(`Revision Management from VS Code: ${this.count}`);
                 return RevisionManagementResponse.create({
                     count: this.count
                 });

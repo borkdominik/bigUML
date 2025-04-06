@@ -17,7 +17,7 @@ export interface RequestRevisionManagementAction extends RequestAction<RevisionM
 }
 
 export namespace RequestRevisionManagementAction {
-    export const KIND = 'requestHelloWorld';
+    export const KIND = 'requestRevisionManagement';
 
     export function is(object: unknown): object is RequestRevisionManagementAction {
         return RequestAction.hasKind(object, KIND);

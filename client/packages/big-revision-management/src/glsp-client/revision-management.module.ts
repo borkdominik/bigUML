@@ -13,10 +13,10 @@ import { RevisionManagementHandler } from './revision-management.handler.js';
 
 export const revisionManagementMmodule = new FeatureModule((bind, unbind, isBound, rebind) => {
     const context = { bind, unbind, isBound, rebind };
-    // Register the HelloWorldHandler to handle the RequestHelloWorldAction
+    // Register the RevisionManagementhandler to handle the RequestRevisionManagementAction
     bind(RevisionManagementHandler).toSelf().inSingletonScope();
     configureActionHandler(context, RequestRevisionManagementAction.KIND, RevisionManagementHandler);
 
-    // Allow the HelloWorldActionResponse to propagate to the server
+    // Allow the RevisionmanagementResponse to propagate to the server
     bind(ExtensionActionKind).toConstantValue(RevisionManagementResponse.KIND);
 });

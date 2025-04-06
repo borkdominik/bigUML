@@ -10,7 +10,7 @@ import { BIGReactWebview } from '@borkdominik-biguml/big-vscode-integration/vsco
 import { inject, injectable, postConstruct } from 'inversify';
 import { RevisionManagementResponse, RequestRevisionManagementAction } from '../common/revision-management.action.js';
 
-export const RevisionManagementId = Symbol('HelloWorldViewId');
+export const RevisionManagementId = Symbol('RevisionmanagementViewId');
 
 @injectable()
 export class RevisionManagementProvider extends BIGReactWebview {

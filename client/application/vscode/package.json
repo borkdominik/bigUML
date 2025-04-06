@@ -297,6 +297,7 @@
   ],
   "dependencies": {
     "@borkdominik-biguml/big-hello-world": "*",
+    "@borkdominik-biguml/big-revision-management": "*",
     "@borkdominik-biguml/big-minimap": "*",
     "@borkdominik-biguml/big-outline": "*",
     "@borkdominik-biguml/big-property-palette": "*",

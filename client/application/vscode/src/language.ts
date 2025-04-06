@@ -42,5 +42,8 @@ export const VSCodeSettings = {
     },
     helloWorld: {
         viewId: 'bigUML.panel.hello-world'
+    },
+    revisionManagement: {
+        viewId: 'bigUML.panel.revision-management'
     }
 } as const;

@@ -42,5 +42,8 @@ export const VSCodeSettings = {
     },
     helloWorld: {
         viewId: 'bigUML.panel.hello-world'
+    },
+    codeToClassDiagram: {
+        viewId: 'bigUML.panel.code-to-class-diagram'
     }
 } as const;

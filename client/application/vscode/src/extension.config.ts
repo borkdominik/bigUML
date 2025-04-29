@@ -6,6 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
+import { codeToClassDiagramModule } from '@borkdominik-biguml/big-code-to-class-diagram/vscode';
 import { helloWorldModule } from '@borkdominik-biguml/big-hello-world/vscode';
 import { minimapModule } from '@borkdominik-biguml/big-minimap/vscode';
 import { outlineModule } from '@borkdominik-biguml/big-outline/vscode';
@@ -42,6 +43,7 @@ export function createContainer(
         propertyPaletteModule(VSCodeSettings.propertyPalette.viewId),
         minimapModule(VSCodeSettings.minimap.viewId),
         helloWorldModule(VSCodeSettings.helloWorld.viewId),
+        codeToClassDiagramModule(VSCodeSettings.codeToClassDiagram.viewId),
         themeModule
     );
 

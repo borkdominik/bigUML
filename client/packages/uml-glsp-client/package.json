@@ -50,9 +50,10 @@
     "lint": "eslint -c ./eslint.config.js",
     "lint:fix": "npm run lint -- --fix",
     "tsc": "tsc",
-    "watch": "concurrently --kill-others 'npm run compile -- --watch' 'npm run bundle -- --watch'"
+    "watch": "concurrently --kill-others \"npm run compile -- --watch\" \"npm run bundle -- --watch\""
   },
   "dependencies": {
+    "@borkdominik-biguml/big-code-to-class-diagram": "*",
     "@borkdominik-biguml/big-hello-world": "*",
     "@borkdominik-biguml/big-minimap": "*",
     "@borkdominik-biguml/big-outline": "*",

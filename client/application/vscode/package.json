@@ -269,7 +269,13 @@
           "id": "bigUML.panel.hello-world",
           "name": "Hello World",
           "type": "webview",
-          "when": "bigUML.isRunning && false"
+          "when": "bigUML.isRunning"
+        },
+        {
+          "id": "bigUML.panel.code-to-class-diagram",
+          "name": "Code to Class diagram",
+          "type": "webview",
+          "when": "bigUML.isRunning"
         }
       ]
     },
@@ -290,6 +296,7 @@
     "onView:bigUML.outlineView"
   ],
   "dependencies": {
+    "@borkdominik-biguml/big-code-to-class-diagram": "*",
     "@borkdominik-biguml/big-hello-world": "*",
     "@borkdominik-biguml/big-minimap": "*",
     "@borkdominik-biguml/big-outline": "*",
@@ -306,9 +313,11 @@
     "react-dom": "^18.0.0",
     "reflect-metadata": "^0.2.2",
     "scheduler": "^0.25.0",
+    "tree-sitter-java": "^0.23.5",
     "urijs": "^1.19.11",
     "vscode-messenger": "^0.4.5",
-    "vscode-messenger-common": "^0.4.5"
+    "vscode-messenger-common": "^0.4.5",
+    "web-tree-sitter": "^0.25.3"
   },
   "devDependencies": {
     "@eclipse-glsp/vscode-integration-webview": "*",

@@ -42,5 +42,8 @@ export const VSCodeSettings = {
     },
     helloWorld: {
         viewId: 'bigUML.panel.hello-world'
+    },
+    advancedSearch: {
+        viewId: 'bigUML.panel.advancedsearch'
     }
 } as const;

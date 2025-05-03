@@ -270,6 +270,12 @@
           "name": "Hello World",
           "type": "webview",
           "when": "bigUML.isRunning && false"
+        },
+        {
+          "id": "bigUML.panel.advancedsearch",
+          "name": "Advanced Search",
+          "type": "webview",
+          "when": "bigUML.isRunning"
         }
       ]
     },
@@ -290,6 +296,7 @@
     "onView:bigUML.outlineView"
   ],
   "dependencies": {
+    "@borkdominik-biguml/big-advancedsearch": "*",
     "@borkdominik-biguml/big-hello-world": "*",
     "@borkdominik-biguml/big-minimap": "*",
     "@borkdominik-biguml/big-outline": "*",

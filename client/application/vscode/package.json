@@ -270,6 +270,12 @@
           "name": "Hello World",
           "type": "webview",
           "when": "bigUML.isRunning && false"
+        },
+        {
+          "id": "bigUML.panel.advancedsearch",
+          "name": "Advanced Search",
+          "type": "webview",
+          "when": "bigUML.isRunning"
         }
       ]
     },
@@ -287,9 +293,11 @@
     "onLanguage:bigUML.uml",
     "onLanguage:bigUML.unotation",
     "onCommand:bigUML.model.newEmpty",
-    "onView:bigUML.outlineView"
+    "onView:bigUML.outlineView",
+    "onView:bigUML.panel.advancedsearch"
   ],
   "dependencies": {
+    "@borkdominik-biguml/big-advancedsearch": "*",
     "@borkdominik-biguml/big-hello-world": "*",
     "@borkdominik-biguml/big-minimap": "*",
     "@borkdominik-biguml/big-outline": "*",

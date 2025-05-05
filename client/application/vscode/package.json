@@ -273,7 +273,7 @@
         },
         {
           "id": "bigUML.panel.revision-management",
-          "name": "Revision Management",
+          "name": "Timeline",
           "type": "webview",
           "when": "bigUML.isRunning"
         }

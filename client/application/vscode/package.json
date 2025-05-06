@@ -95,6 +95,16 @@
         "category": "bigUML",
         "enablement": "activeCustomEditorId == 'bigUML.diagramView'",
         "icon": "$(symbol-reference)"
+      },
+      {
+        "command": "timeline.import",
+        "title": "Import Timeline",
+        "icon": "$(cloud-upload)"
+      },
+      {
+        "command": "timeline.export",
+        "title": "Export Timeline",
+        "icon": "$(cloud-download)"
       }
     ],
     "configuration": {
@@ -201,7 +211,18 @@
       }
     ],
     "menus": {
-      "view/title": [],
+      "view/title": [
+        {
+          "command": "timeline.import",
+          "when": "view == bigUML.panel.revision-management",
+          "group": "navigation"
+        },
+        {
+          "command": "timeline.export",
+          "when": "view == bigUML.panel.revision-management",
+          "group": "navigation"
+        }
+      ],
       "webview/context": [],
       "file/newFile": [
         {
@@ -220,6 +241,8 @@
           "group": "bookmarks"
         }
       ],
+
+      
       "bigUML.editor.title": [
         {
           "command": "bigUML.fit",
@@ -293,7 +316,10 @@
     "onLanguage:bigUML.uml",
     "onLanguage:bigUML.unotation",
     "onCommand:bigUML.model.newEmpty",
-    "onView:bigUML.outlineView"
+    "onView:bigUML.outlineView",
+    "onCommand:timeline.import",
+    "onCommand:timeline.export"
+
   ],
   "dependencies": {
     "@borkdominik-biguml/big-hello-world": "*",

@@ -6,8 +6,13 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
+import type { ReactElement } from 'react';
+import { useState, useEffect } from 'react';
+import { ImportTimelineModal } from './ImportTimelineModal.js';
+import { ExportTimelineModal } from './ExportTimelineModal.js';
+import { ConfirmRestoreModal } from './ConfirmRestoreModal.js';
 
-import { ReactElement, useState } from 'react';
+console.log('RevisionManagement component mounted');
 
 interface Snapshot {
     id: string;
@@ -36,6 +41,26 @@ const mockSnapshots: Snapshot[] = [
 
 export function RevisionManagement(): ReactElement {
     const [expandedId, setExpandedId] = useState<string | null>(null);
+    const [showImportModal, setShowImportModal] = useState(false);
+    const [showExportModal, setShowExportModal] = useState(false);
+    const [showRestoreModal, setShowRestoreModal] = useState(false);
+    const [selectedSnapshot, setSelectedSnapshot] = useState<Snapshot | null>(null);
+
+
+    useEffect(() => {
+        const handleMessage = (event: MessageEvent) => {
+            const { data } = event;
+            console.log('[Webview] Received message:', data);
+            if (data?.action === 'import') {
+                setShowImportModal(true);
+            } else if (data?.action === 'export') {
+                setShowExportModal(true);
+            }
+        };
+
+        window.addEventListener('message', handleMessage);
+        return () => window.removeEventListener('message', handleMessage);
+    }, []);
 
     return (
         <div style={{ padding: '0.25rem 0.5rem', fontFamily: 'var(--vscode-font-family)', color: 'var(--vscode-editor-foreground)' }}>
@@ -43,17 +68,17 @@ export function RevisionManagement(): ReactElement {
                 {mockSnapshots.map((snapshot) => {
                     const isExpanded = expandedId === snapshot.id;
 
+                    const handleRestore = (snapshot: Snapshot) => {
+                        setSelectedSnapshot(snapshot);
+                        setShowRestoreModal(true);
+                    };
+                    
                     return (
                         <li
                             key={snapshot.id}
-                            style={{
-                                marginBottom: '0.5rem',
-                                cursor: 'pointer',
-                                position: 'relative'
-                            }}
+                            style={{ marginBottom: '0.5rem', cursor: 'pointer', position: 'relative' }}
                             onClick={() => setExpandedId(isExpanded ? null : snapshot.id)}
                         >
-                            {/* Dot floating in front of text */}
                             <div
                                 style={{
                                     width: '8px',
@@ -72,26 +97,113 @@ export function RevisionManagement(): ReactElement {
                             <div style={{ fontSize: '0.7rem', opacity: 0.6 }}>
                                 {snapshot.author} • {new Date(snapshot.timestamp).toLocaleString()}
                             </div>
-
                             {isExpanded && (
-                                <svg
-                                    width="200"
-                                    height="200"
-                                    viewBox="0 0 200 200"
-                                    style={{
-                                        marginTop: '0.4rem',
-                                        border: '1px solid var(--vscode-editorWidget-border)',
-                                        backgroundColor: 'white'
-                                    }}
-                                >
-                                    <g dangerouslySetInnerHTML={{ __html: snapshot.svg }} />
-                                </svg>
+                                <div style={{ marginTop: '0.4rem' }}>
+                                    <svg
+                                        width="200"
+                                        height="200"
+                                        viewBox="0 0 200 200"
+                                        style={{
+                                            border: '1px solid var(--vscode-editorWidget-border)',
+                                            backgroundColor: 'white',
+                                            display: 'block'
+                                        }}
+                                    >
+                                        <g dangerouslySetInnerHTML={{ __html: snapshot.svg }} />
+                                    </svg>
+
+                                    <div style={buttonRowStyle}>
+                                        <button onClick={() => handleRestore(snapshot)} style={cancelButtonStyle}>
+                                            Restore
+                                        </button>
+                                        <button onClick={() => handleExportSnapshot(snapshot)} style={exportButtonStyle}>
+                                            Export Snapshot
+                                        </button>
+                                    </div>
+                                </div>
                             )}
                         </li>
                     );
                 })}
             </ul>
+
+            {showImportModal && (
+                <ImportTimelineModal
+                    onClose={() => setShowImportModal(false)}
+                    onImport={(file) => {
+                        console.log('Imported file:', file.name);
+                        // TODO: add logic for importing timeline from file
+                    }}
+                />
+            )}
+            {showExportModal && (
+                <ExportTimelineModal onClose={() => setShowExportModal(false)} onExport={() => { /* ... */ }} />
+            )}
+            {showRestoreModal && selectedSnapshot && (
+            <ConfirmRestoreModal
+                onCancel={() => {
+                    setShowRestoreModal(false);
+                    setSelectedSnapshot(null);
+                }}
+                onConfirm={() => {
+                    console.log('[Confirmed Restore] Snapshot:', selectedSnapshot.id);
+                    setShowRestoreModal(false);
+                    setSelectedSnapshot(null);
+                    // TODO: Trigger real restore logic here
+                }}
+            />
+        )}
+
         </div>
     );
 }
 
+
+const handleExportSnapshot = (snapshot: Snapshot) => {
+    const blob = new Blob([snapshot.svg], { type: 'image/svg+xml' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${snapshot.id}.svg`;
+    a.click();
+    URL.revokeObjectURL(url);
+};
+
+
+const buttonRowStyle: React.CSSProperties = {
+    display: 'flex',
+    flexDirection: 'row',              
+    justifyContent: 'flex-end',       
+    alignItems: 'center',
+    gap: '0.4rem',
+    borderTop: '1px solid var(--vscode-panel-border)',
+    paddingTop: '0.75rem',
+    marginTop: '1rem'
+};
+
+const buttonBaseStyle: React.CSSProperties = {
+    fontSize: '13px',                         
+    padding: '0.35rem 1.1rem',              
+    borderRadius: '3px',
+    cursor: 'pointer',
+    minWidth: 'auto',
+    display: 'inline-block',
+    height: 'auto',
+    textAlign: 'center',
+    whiteSpace: 'nowrap',
+    lineHeight: '1.4'
+};
+
+const cancelButtonStyle: React.CSSProperties = {
+    ...buttonBaseStyle,
+    backgroundColor: 'var(--vscode-button-secondaryBackground)',
+    color: 'var(--vscode-button-secondaryForeground)',
+    border: '1px solid var(--vscode-button-secondaryBorder)'
+};
+
+const exportButtonStyle: React.CSSProperties = {
+    ...buttonBaseStyle,
+    backgroundColor: 'var(--vscode-button-background)',
+    color: 'var(--vscode-button-foreground)',
+    border: 'none'
+};

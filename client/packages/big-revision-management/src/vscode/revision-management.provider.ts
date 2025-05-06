@@ -9,8 +9,10 @@
 import { BIGReactWebview } from '@borkdominik-biguml/big-vscode-integration/vscode';
 import { inject, injectable, postConstruct } from 'inversify';
 import { RevisionManagementResponse, RequestRevisionManagementAction } from '../common/revision-management.action.js';
-
+import * as vscode from 'vscode';
 export const RevisionManagementId = Symbol('RevisionmanagementViewId');
+import type { BIGWebviewProviderContext } from '@borkdominik-biguml/big-vscode-integration/vscode';
+
 
 @injectable()
 export class RevisionManagementProvider extends BIGReactWebview {
@@ -24,7 +26,7 @@ export class RevisionManagementProvider extends BIGReactWebview {
     @postConstruct()
     protected override init(): void {
         super.init();
-
+        
         this.toDispose.push(this.actionCache);
     }
 
@@ -51,7 +53,18 @@ export class RevisionManagementProvider extends BIGReactWebview {
             }),
             this.modelState.onDidChangeModelState(() => {
                 this.requestCount();
+            }),
+            vscode.commands.registerCommand('timeline.import', () => {
+                console.log('timeline.import command triggered');
+                this.webviewView?.webview.postMessage({ action: 'import' });
+            }),
+            
+            
+            vscode.commands.registerCommand('timeline.export', () => {
+                console.log('timeline.export command triggered');
+                this.webviewView?.webview.postMessage({ action: 'export' });
             })
+            
         );
     }
 
@@ -62,4 +75,38 @@ export class RevisionManagementProvider extends BIGReactWebview {
             })
         );
     }
+    protected getCssUri(webview: vscode.Webview, ...path: string[]): vscode.Uri {
+        return webview.asWebviewUri(vscode.Uri.joinPath(this.extensionContext.extensionUri, 'webviews', ...path));
+    }
+    
+    protected getJsUri(webview: vscode.Webview, ...path: string[]): vscode.Uri {
+        return webview.asWebviewUri(vscode.Uri.joinPath(this.extensionContext.extensionUri, 'webviews', ...path));
+    }
+    
+
+    protected override resolveHTML(context: BIGWebviewProviderContext): void {
+        const webview = context.webviewView.webview;
+    
+        const cssUri = this.getCssUri(webview, ...this.cssPath);
+        const jsUri = this.getJsUri(webview, ...this.jsPath);
+    
+        const html = /* html */ `
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8" />
+                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                <title>Revision Management</title>
+                <link rel="stylesheet" type="text/css" href="${cssUri}" />
+            </head>
+            <body style="margin:0; position:relative;">
+            <div id="root"></div>
+            <script type="module" src="${jsUri}"></script>
+            </body>
+            </html>
+        `;
+    
+        webview.html = html;
+    }
+    
 }

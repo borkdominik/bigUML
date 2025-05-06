@@ -55,7 +55,7 @@
   },
   "dependencies": {
     "@borkdominik-biguml/big-components": "*",
-    "@borkdominik-biguml/big-vscode-integration": "*",
+    "@borkdominik-biguml/big-vscode-integration": "file:../../client/application/big-vscode-integration",
     "@borkdominik-biguml/uml-protocol": "*",
     "@eclipse-glsp/client": "*",
     "@eclipse-glsp/protocol": "*",

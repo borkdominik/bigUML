@@ -9,3 +9,4 @@
 
 export * from './revision-management.module.js';
 export * from './revision-management.provider.js';
+

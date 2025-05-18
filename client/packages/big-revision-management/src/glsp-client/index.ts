@@ -7,4 +7,4 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
-export * from './revision-management.module.js';
+

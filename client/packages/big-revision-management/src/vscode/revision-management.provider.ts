@@ -6,13 +6,16 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
+import type { BIGWebviewProviderContext } from '@borkdominik-biguml/big-vscode-integration/vscode';
 import { BIGReactWebview, type ExperimentalModelState } from '@borkdominik-biguml/big-vscode-integration/vscode';
 import { inject, injectable, postConstruct } from 'inversify';
+import path from 'path';
 import * as vscode from 'vscode';
 import { FileSaveResponse } from '../common/file-save-action.js';
 import { type Snapshot } from '../common/snapshot.js';
 
 export const RevisionManagementId = Symbol('RevisionmanagementViewId');
+
 
 @injectable()
 export class RevisionManagementProvider extends BIGReactWebview {
@@ -59,6 +62,7 @@ export class RevisionManagementProvider extends BIGReactWebview {
 
             umlWatcher
         );
+        
         this.toDispose.push(this.actionCache);
     }
 
@@ -96,7 +100,18 @@ export class RevisionManagementProvider extends BIGReactWebview {
             this.modelState.onDidChangeModelState((event) => {
                 console.log('Revision Management Provider webviewConnector onDidChangeModelState', event.state);
                 this.currentModelState = event.state;
+            }),
+            vscode.commands.registerCommand('timeline.import', () => {
+                console.log('timeline.import command triggered');
+                this.webviewView?.webview.postMessage({ action: 'import' });
+            }),
+            
+            
+            vscode.commands.registerCommand('timeline.export', () => {
+                console.log('timeline.export command triggered');
+                this.webviewView?.webview.postMessage({ action: 'export' });
             })
+            
         );
     }
 
@@ -109,31 +124,45 @@ export class RevisionManagementProvider extends BIGReactWebview {
         }));
     }
 
-    private matchesUri(uri1: string, uri2: string): boolean {
-        const normalizedUri1 = this.normalizeUri(uri1);
-        const normalizedUri2 = this.normalizeUri(uri2);
+    private matchesUri(vsCodeUri: string, pathUri: string): boolean {
+        const uri1 = vscode.Uri.parse(vsCodeUri).fsPath;
+        const uri2 = path.resolve(pathUri);
 
-        return normalizedUri1 === normalizedUri2;
+        return uri1 === uri2;
     }
+    
+    protected getCssUri(webview: vscode.Webview, ...path: string[]): vscode.Uri {
+        return webview.asWebviewUri(vscode.Uri.joinPath(this.extensionContext.extensionUri, 'webviews', ...path));
+    }
+    
+    protected getJsUri(webview: vscode.Webview, ...path: string[]): vscode.Uri {
+        return webview.asWebviewUri(vscode.Uri.joinPath(this.extensionContext.extensionUri, 'webviews', ...path));
+    }
+    
 
-    private normalizeUri(uri: string): string {
-        // 1. Strip any file:// prefix (with 2 or 3 slashes) in a case-insensitive way
-        let p = uri.replace(/^file:\/\/\/?/i, "");
-      
-        // 2. Replace all backslashes with forward-slashes
-        p = p.replace(/\\/g, "/");
-      
-        // 3. Collapse multiple slashes into one
-        p = p.replace(/\/{2,}/g, "/");
-      
-        // 4. If there’s a leading slash before a Windows drive-letter, drop it:
-        //    "/c:/foo" → "c:/foo"
-        p = p.replace(/^\/([a-zA-Z]:)/, "$1");
-      
-        // 5. Lower-case the drive letter, e.g. "C:/Users" → "c:/Users"
-        p = p.replace(/^([A-Z]):/, (_, d) => d.toLowerCase() + ":");
-      
-        // 6. Re-add exactly one file:/// prefix
-        return "file:///" + p;
-      }
+    protected override resolveHTML(context: BIGWebviewProviderContext): void {
+        const webview = context.webviewView.webview;
+    
+        const cssUri = this.getCssUri(webview, ...this.cssPath);
+        const jsUri = this.getJsUri(webview, ...this.jsPath);
+    
+        const html = /* html */ `
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8" />
+                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                <title>Revision Management</title>
+                <link rel="stylesheet" type="text/css" href="${cssUri}" />
+            </head>
+            <body style="margin:0; position:relative;">
+            <div id="root"></div>
+            <script type="module" src="${jsUri}"></script>
+            </body>
+            </html>
+        `;
+    
+        webview.html = html;
+    }
+    
 }

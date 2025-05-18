@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-import { BIGReactWebview, ExperimentalModelState } from '@borkdominik-biguml/big-vscode-integration/vscode';
+import { BIGReactWebview, type ExperimentalModelState } from '@borkdominik-biguml/big-vscode-integration/vscode';
 import { inject, injectable, postConstruct } from 'inversify';
 import * as vscode from 'vscode';
 import { FileSaveResponse } from '../common/file-save-action.js';

@@ -8,7 +8,7 @@
  *********************************************************************************/
 
 import { Action, type ResponseAction } from '@eclipse-glsp/protocol';
-import { Snapshot } from './snapshot.js';
+import { type Snapshot } from './snapshot.js';
 
 export interface FileSaveResponse extends ResponseAction {
     kind: typeof FileSaveResponse.KIND;

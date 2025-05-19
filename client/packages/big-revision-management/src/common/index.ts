@@ -7,6 +7,6 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
-export * from './file-save-action.js';
-export * from './request-export-snapshot-action.js'
+export * from './actions/request-export-snapshot-action.js';
+export * from './actions/file-save-action.js';
 

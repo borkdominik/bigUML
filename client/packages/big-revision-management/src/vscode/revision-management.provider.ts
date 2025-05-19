@@ -6,18 +6,16 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-import type { BIGWebviewProviderContext } from '@borkdominik-biguml/big-vscode-integration/vscode';
-import { BIGReactWebview, type ExperimentalModelState } from '@borkdominik-biguml/big-vscode-integration/vscode';
+import { MinimapExportSvgAction, RequestMinimapExportSvgAction } from '@borkdominik-biguml/big-minimap';
+import type { BIGGLSPVSCodeConnector, BIGWebviewProviderContext } from '@borkdominik-biguml/big-vscode-integration/vscode';
+import { BIGReactWebview, TYPES, type ExperimentalModelState } from '@borkdominik-biguml/big-vscode-integration/vscode';
+import { RequestExportSvgAction } from '@eclipse-glsp/protocol';
 import { inject, injectable, postConstruct } from 'inversify';
 import path from 'path';
 import * as vscode from 'vscode';
-import { FileSaveResponse } from '../common/file-save-action.js';
+import { RequestExportSnapshotAction } from '../common/actions/request-export-snapshot-action.js';
+import { FileSaveResponse } from '../common/actions/file-save-action.js';
 import { type Snapshot } from '../common/snapshot.js';
-import { RequestMinimapExportSvgAction, MinimapExportSvgAction } from '@borkdominik-biguml/big-minimap';
-import type { BIGGLSPVSCodeConnector } from '@borkdominik-biguml/big-vscode-integration/vscode';
-import { TYPES } from '@borkdominik-biguml/big-vscode-integration/vscode';
-import { RequestExportSnapshotAction } from '../common/request-export-snapshot-action.js';
-import { RequestExportSvgAction } from '@eclipse-glsp/protocol';
 
 
 export const RevisionManagementId = Symbol('RevisionmanagementViewId');

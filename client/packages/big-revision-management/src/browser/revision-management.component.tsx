@@ -3,15 +3,15 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-import type { ReactElement } from 'react';
-import { useState, useEffect, useContext, useMemo, useLayoutEffect } from 'react';
-import { ImportTimelineModal } from './ImportTimelineModal.js';
-import { ExportTimelineModal } from './ExportTimelineModal.js';
-import { ConfirmRestoreModal } from './ConfirmRestoreModal.js';
 import { VSCodeContext } from '@borkdominik-biguml/big-components';
-import { FileSaveResponse } from '../common/file-save-action.js';
+import type { ReactElement } from 'react';
+import { useContext, useEffect, useLayoutEffect, useMemo, useState } from 'react';
+import { RequestExportSnapshotAction } from '../common/actions/request-export-snapshot-action.js';
+import { FileSaveResponse } from '../common/actions/file-save-action.js';
 import { type Snapshot } from '../common/snapshot.js';
-import {RequestExportSnapshotAction} from '../common/request-export-snapshot-action.js';
+import { ConfirmRestoreModal } from './modals/confirm-restore-modal.js';
+import { ExportTimelineModal } from './modals/export-timeline-modal.js';
+import { ImportTimelineModal } from './modals/import-timeline-modal.js';
 
 function useWindowSize() {
     const element = useMemo(() => document.querySelector<HTMLElement>('body')!, []);
@@ -100,11 +100,11 @@ export function RevisionManagement(): ReactElement {
 
                             {isExpanded && (
                                 <div style={{ marginTop: '0.4rem' }}>
-                                    <div style={{ 
+                                    <div style={{
                                         maxHeight: '200px',
                                         minWidth: '150px'
 
-                                     }}>
+                                    }}>
                                         <svg
                                             viewBox={`0 0 ${size.width} ${size.height}`}
                                             style={{ display: 'block', border: '1px solid var(--vscode-panel-border)' }}
@@ -114,7 +114,7 @@ export function RevisionManagement(): ReactElement {
                                             </g>
                                         </svg>
                                     </div>
-                                    
+
 
                                     <div style={buttonRowStyle}>
                                         <button onClick={() => handleRestore(snapshot)} style={cancelButtonStyle}>Restore</button>
@@ -137,7 +137,7 @@ export function RevisionManagement(): ReactElement {
                 />
             )}
             {showExportModal && (
-                <ExportTimelineModal onClose={() => setShowExportModal(false)} onExport={() => {}} />
+                <ExportTimelineModal onClose={() => setShowExportModal(false)} onExport={() => { }} />
             )}
             {showRestoreModal && selectedSnapshot && (
                 <ConfirmRestoreModal

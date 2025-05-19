@@ -78,8 +78,7 @@ export class RevisionManagementProvider extends BIGReactWebview {
         this.toDispose.push(
             this.connector.onClientActionMessage(message => {
                 if (ExportSvgAction.is(message.action)) {
-                    const svg = message.action.svg;
-
+                    const svg = this.patchSvgBackground(message.action.svg ?? "");
                     console.log('[Snapshot] Received SVG. Length:', svg.length);
 
                     this.timeline.push({
@@ -171,6 +170,14 @@ export class RevisionManagementProvider extends BIGReactWebview {
     protected getJsUri(webview: vscode.Webview, ...path: string[]): vscode.Uri {
         return webview.asWebviewUri(vscode.Uri.joinPath(this.extensionContext.extensionUri, 'webviews', ...path));
     }
+
+    private patchSvgBackground(svgString: string): string {
+        const backgroundRect = `<rect x="0" y="0" width="100%" height="100%" fill="black" />`;
+        return svgString
+            .replace('<svg', '<svg style="background:black;"')
+            .replace(/(<g[^>]*>)/, `$1${backgroundRect}`);
+    }
+
     
 
     protected override resolveHTML(context: BIGWebviewProviderContext): void {

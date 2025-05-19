@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 import type { ReactElement } from 'react';
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, useMemo, useLayoutEffect } from 'react';
 import { ImportTimelineModal } from './ImportTimelineModal.js';
 import { ExportTimelineModal } from './ExportTimelineModal.js';
 import { ConfirmRestoreModal } from './ConfirmRestoreModal.js';
@@ -12,15 +12,32 @@ import { VSCodeContext } from '@borkdominik-biguml/big-components';
 import { FileSaveResponse } from '../common/file-save-action.js';
 import { type Snapshot } from '../common/snapshot.js';
 
+function useWindowSize() {
+    const element = useMemo(() => document.querySelector<HTMLElement>('body')!, []);
+    const [size, setSize] = useState({ width: element.clientWidth, height: element.clientHeight });
+
+    useLayoutEffect(() => {
+        const updateSize = () => {
+            setSize({ width: element.clientWidth, height: element.clientHeight });
+        };
+
+        window.addEventListener('resize', updateSize);
+        return () => window.removeEventListener('resize', updateSize);
+    }, [element]);
+
+    return size;
+}
+
 export function RevisionManagement(): ReactElement {
+    const size = useWindowSize();
+    const { listenAction } = useContext(VSCodeContext);
+
     const [expandedId, setExpandedId] = useState<string | null>(null);
     const [timeline, setTimeline] = useState<Snapshot[]>([]);
     const [showImportModal, setShowImportModal] = useState(false);
     const [showExportModal, setShowExportModal] = useState(false);
     const [showRestoreModal, setShowRestoreModal] = useState(false);
     const [selectedSnapshot, setSelectedSnapshot] = useState<Snapshot | null>(null);
-
-    const { listenAction } = useContext(VSCodeContext);
 
     useEffect(() => {
         listenAction(action => {
@@ -52,15 +69,8 @@ export function RevisionManagement(): ReactElement {
                         setShowRestoreModal(true);
                     };
 
-                    let viewBox = '0 0 800 600';
-                    try {
-                        const parser = new DOMParser();
-                        const doc = parser.parseFromString(snapshot.svg, 'image/svg+xml');
-                        const rawViewBox = doc.documentElement?.getAttribute('viewBox');
-                        if (rawViewBox) viewBox = rawViewBox;
-                    } catch {
-                        console.warn('Failed to parse SVG viewBox.');
-                    }
+                    const bounds = snapshot.bounds ?? { x: 0, y: 0, width: 800, height: 600 };
+                    const scale = Math.min(300 / bounds.width, 200 / bounds.height);
 
                     return (
                         <li
@@ -80,40 +90,30 @@ export function RevisionManagement(): ReactElement {
                                     left: '-14px'
                                 }}
                             />
-                            <div style={{ fontSize: '0.85rem', fontWeight: 500, lineHeight: 1.2 }}>
-                                {snapshot.message}
-                            </div>
-                            <div style={{ fontSize: '0.7rem', opacity: 0.6 }}>
-                                {snapshot.author} • {new Date(snapshot.timestamp).toLocaleString()}
-                            </div>
+                            <div style={{ fontSize: '0.85rem', fontWeight: 500, lineHeight: 1.2 }}>{snapshot.message}</div>
+                            <div style={{ fontSize: '0.7rem', opacity: 0.6 }}>{snapshot.author} • {new Date(snapshot.timestamp).toLocaleString()}</div>
+
                             {isExpanded && (
                                 <div style={{ marginTop: '0.4rem' }}>
-                                    <div style={{
-                                        width: '100%',
-                                        aspectRatio: '4 / 3',
-                                        backgroundColor: 'var(--vscode-editor-background)',
-                                        border: '1px solid var(--vscode-editorWidget-border)',
-                                        display: 'flex',
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                        overflow: 'hidden'
-                                    }}>
+                                    <div style={{ 
+                                        maxHeight: '200px',
+                                        minWidth: '150px'
+
+                                     }}>
                                         <svg
-                                            width="100%"
-                                            height="100%"
-                                            preserveAspectRatio="xMidYMid meet"
-                                            viewBox={viewBox}
-                                            dangerouslySetInnerHTML={{ __html: snapshot.svg }}
-                                        />
+                                            viewBox={`0 0 ${size.width} ${size.height}`}
+                                            style={{ display: 'block', border: '1px solid var(--vscode-panel-border)' }}
+                                        >
+                                            <g transform={`scale(${scale})`}>
+                                                <g dangerouslySetInnerHTML={{ __html: snapshot.svg }} />
+                                            </g>
+                                        </svg>
                                     </div>
+                                    
 
                                     <div style={buttonRowStyle}>
-                                        <button onClick={() => handleRestore(snapshot)} style={cancelButtonStyle}>
-                                            Restore
-                                        </button>
-                                        <button onClick={() => handleExportSnapshot(snapshot)} style={exportButtonStyle}>
-                                            Export Snapshot
-                                        </button>
+                                        <button onClick={() => handleRestore(snapshot)} style={cancelButtonStyle}>Restore</button>
+                                        <button onClick={() => handleExportSnapshot(snapshot)} style={exportButtonStyle}>Export Snapshot</button>
                                     </div>
                                 </div>
                             )}
@@ -127,12 +127,12 @@ export function RevisionManagement(): ReactElement {
                     onClose={() => setShowImportModal(false)}
                     onImport={(file) => {
                         console.log('Imported file:', file.name);
-                        // TODO: handle import
+                        // TODO: implement
                     }}
                 />
             )}
             {showExportModal && (
-                <ExportTimelineModal onClose={() => setShowExportModal(false)} onExport={() => { /* ... */ }} />
+                <ExportTimelineModal onClose={() => setShowExportModal(false)} onExport={() => {}} />
             )}
             {showRestoreModal && selectedSnapshot && (
                 <ConfirmRestoreModal
@@ -144,7 +144,7 @@ export function RevisionManagement(): ReactElement {
                         console.log('[Confirmed Restore] Snapshot:', selectedSnapshot.id);
                         setShowRestoreModal(false);
                         setSelectedSnapshot(null);
-                        // TODO: handle restore logic
+                        // TODO: implement
                     }}
                 />
             )}
@@ -164,7 +164,7 @@ const handleExportSnapshot = (snapshot: Snapshot) => {
 
 const buttonRowStyle: React.CSSProperties = {
     display: 'flex',
-    flexDirection: 'row',              
+    flexDirection: 'row',
     justifyContent: 'flex-end',
     alignItems: 'center',
     gap: '0.4rem',
@@ -173,19 +173,17 @@ const buttonRowStyle: React.CSSProperties = {
     marginTop: '1rem'
 };
 
-
 const buttonBaseStyle: React.CSSProperties = {
     fontSize: '13px',
     padding: '0.35rem 1.1rem',
     borderRadius: '3px',
     cursor: 'pointer',
-    minWidth: '100px',        // ensures buttons don’t collapse too much
-    flexGrow: 1,              // allows buttons to take equal space in row
+    minWidth: '100px',
+    flexGrow: 1,
     textAlign: 'center',
     whiteSpace: 'nowrap',
     lineHeight: '1.4'
 };
-
 
 const cancelButtonStyle: React.CSSProperties = {
     ...buttonBaseStyle,

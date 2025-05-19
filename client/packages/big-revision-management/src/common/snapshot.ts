@@ -15,5 +15,11 @@ export interface Snapshot {
     author: string;
     message: string;
     svg: string;
+    bounds?: {
+        x: number;
+        y: number;
+        width: number;
+        height: number;
+    };
     state: ExperimentalModelState;
 }

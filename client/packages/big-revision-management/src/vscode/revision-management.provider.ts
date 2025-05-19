@@ -13,7 +13,7 @@ import path from 'path';
 import * as vscode from 'vscode';
 import { FileSaveResponse } from '../common/file-save-action.js';
 import { type Snapshot } from '../common/snapshot.js';
-import { ExportSvgAction, RequestExportSvgAction } from '@eclipse-glsp/protocol';
+import { RequestMinimapExportSvgAction, MinimapExportSvgAction } from '@borkdominik-biguml/big-minimap';
 import type { BIGGLSPVSCodeConnector } from '@borkdominik-biguml/big-vscode-integration/vscode';
 import { TYPES } from '@borkdominik-biguml/big-vscode-integration/vscode';
 
@@ -37,6 +37,7 @@ export class RevisionManagementProvider extends BIGReactWebview {
     ]);
 
 
+    private lastSnapshotTime = 0;
     private currentModelState: ExperimentalModelState | null = null;
     private timeline: Snapshot[] = [];
 
@@ -61,8 +62,9 @@ export class RevisionManagementProvider extends BIGReactWebview {
                         return;
                     }
 
-                    console.log('[Snapshot] Triggering exportSvg via RequestExportSvgAction');
-                    this.connector.sendActionToActiveClient(RequestExportSvgAction.create());
+                    console.log('[Snapshot] Triggering exportSvg via RequestMinimapExportSvgAction');
+                    this.connector.sendActionToActiveClient(RequestMinimapExportSvgAction.create());
+
                 }
             }),
 
@@ -77,16 +79,29 @@ export class RevisionManagementProvider extends BIGReactWebview {
         // Listen for ExportSvgAction responses
         this.toDispose.push(
             this.connector.onClientActionMessage(message => {
-                if (ExportSvgAction.is(message.action)) {
-                    const svg = this.patchSvgBackground(message.action.svg ?? "");
-                    console.log('[Snapshot] Received SVG. Length:', svg.length);
+                if (MinimapExportSvgAction.is(message.action)) {
+                    const { svg = '', bounds } = message.action;
 
+                    const now = Date.now();
+                    if (now - this.lastSnapshotTime < 1000) {
+                        console.log('[Snapshot] Too soon since last snapshot — skipping.');
+                        return;
+                    }
+                    this.lastSnapshotTime = now;
+
+                    if (this.timeline.length > 0 && this.timeline[this.timeline.length - 1].svg === svg) {
+                        console.log('[Snapshot] Duplicate SVG detected — skipping.');
+                        return;
+                    }
+
+                    console.log('[Snapshot] Received SVG from Minimap Export. Length:', svg.length);
                     this.timeline.push({
                         id: this.timeline.length.toString(),
                         timestamp: new Date().toISOString(),
                         author: 'User',
                         message: 'File saved',
                         svg,
+                        bounds,
                         state: this.currentModelState!
                     });
 
@@ -94,6 +109,7 @@ export class RevisionManagementProvider extends BIGReactWebview {
                 }
             })
         );
+
 
         this.toDispose.push(this.actionCache);
     }
@@ -170,14 +186,6 @@ export class RevisionManagementProvider extends BIGReactWebview {
     protected getJsUri(webview: vscode.Webview, ...path: string[]): vscode.Uri {
         return webview.asWebviewUri(vscode.Uri.joinPath(this.extensionContext.extensionUri, 'webviews', ...path));
     }
-
-    private patchSvgBackground(svgString: string): string {
-        const backgroundRect = `<rect x="0" y="0" width="100%" height="100%" fill="black" />`;
-        return svgString
-            .replace('<svg', '<svg style="background:black;"')
-            .replace(/(<g[^>]*>)/, `$1${backgroundRect}`);
-    }
-
     
 
     protected override resolveHTML(context: BIGWebviewProviderContext): void {

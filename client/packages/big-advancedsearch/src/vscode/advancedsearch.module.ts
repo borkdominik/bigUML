@@ -9,6 +9,7 @@
 
 import { TYPES } from '@borkdominik-biguml/big-vscode-integration/vscode';
 import { ContainerModule } from 'inversify';
+import { AdvancedSearchActionHandler } from './advancedsearch.handler.js';
 import { AdvancedSearchProvider, AdvancedSearchViewId } from './advancedsearch.provider.js';
 
 export function advancedSearchModule(viewId: string) {
@@ -22,8 +23,8 @@ export function advancedSearchModule(viewId: string) {
         // Remember to comment out the the glsp client handler!
         // In AdvancedSearchActionHandler implementation GLSP has priority over vscode
 
-        // bind(AdvancedSearchActionHandler).toSelf().inSingletonScope();
-        // bind(TYPES.Disposable).toService(AdvancedSearchActionHandler);
-        // bind(TYPES.RootInitialization).toService(AdvancedSearchActionHandler);
+        bind(AdvancedSearchActionHandler).toSelf().inSingletonScope();
+        bind(TYPES.Disposable).toService(AdvancedSearchActionHandler);
+        bind(TYPES.RootInitialization).toService(AdvancedSearchActionHandler);
     });
 }

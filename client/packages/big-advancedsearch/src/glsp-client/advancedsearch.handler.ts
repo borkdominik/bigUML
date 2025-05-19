@@ -7,9 +7,8 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import type { Action, IActionHandler, ICommand } from '@eclipse-glsp/client';
+/*import type { Action, IActionHandler, ICommand } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
-import { AdvancedSearchActionResponse, RequestAdvancedSearchAction } from '../common/advancedsearch.action.js';
 
 @injectable()
 export class AdvancedSearchHandler implements IActionHandler {
@@ -25,3 +24,4 @@ export class AdvancedSearchHandler implements IActionHandler {
         }
     }
 }
+*/

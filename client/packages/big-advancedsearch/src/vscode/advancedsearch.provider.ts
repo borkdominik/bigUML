@@ -34,12 +34,12 @@ export class AdvancedSearchProvider extends BIGReactWebview {
         this.toDispose.push(
             this.actionCache.onDidChange(message => this.webviewConnector.dispatch(message)),
             this.webviewConnector.onReady(() => {
-                this.requestCount();
+                this.requestModel();
                 this.webviewConnector.dispatch(this.actionCache.getActions());
             }),
             this.webviewConnector.onVisible(() => this.webviewConnector.dispatch(this.actionCache.getActions())),
             this.connectionManager.onDidActiveClientChange(() => {
-                this.requestCount();
+                this.requestModel();
             }),
             this.connectionManager.onNoActiveClient(() => {
                 // Send a message to the webview when there is no active client
@@ -50,12 +50,12 @@ export class AdvancedSearchProvider extends BIGReactWebview {
                 this.webviewConnector.dispatch(AdvancedSearchActionResponse.create());
             }),
             this.modelState.onDidChangeModelState(() => {
-                this.requestCount();
+                this.requestModel();
             })
         );
     }
 
-    protected requestCount(): void {
+    protected requestModel(): void {
         this.actionDispatcher.dispatch(
             RequestAdvancedSearchAction.create({
                 increase: 0

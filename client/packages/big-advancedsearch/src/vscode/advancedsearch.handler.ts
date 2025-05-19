@@ -30,16 +30,22 @@ export class AdvancedSearchActionHandler implements Disposable {
     protected readonly modelState: ExperimentalGLSPServerModelState;
 
     private readonly toDispose = new DisposableCollection();
-    private count = 0;
 
     @postConstruct()
     protected init(): void {
         this.toDispose.push(
-            this.actionListener.handleVSCodeRequest<RequestAdvancedSearchAction>(RequestAdvancedSearchAction.KIND, async message => {
-                this.count += message.action.increase;
-                console.log(`Advanced Search from VS Code: ${this.count}`);
+            this.actionListener.handleVSCodeRequest<RequestAdvancedSearchAction>(RequestAdvancedSearchAction.KIND, () => {
+                const model = this.modelState.getModelState();
+                if (model) {
+                    const sourceModel = model.getSourceModel();
+                    return AdvancedSearchActionResponse.create({
+                        model: sourceModel
+                    });
+                } else {
+                    console.log('No model state available');
+                }
                 return AdvancedSearchActionResponse.create({
-                    count: this.count
+                    model: null
                 });
             })
         );

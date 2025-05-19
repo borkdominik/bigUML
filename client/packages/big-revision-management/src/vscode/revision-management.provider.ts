@@ -16,6 +16,8 @@ import { type Snapshot } from '../common/snapshot.js';
 import { RequestMinimapExportSvgAction, MinimapExportSvgAction } from '@borkdominik-biguml/big-minimap';
 import type { BIGGLSPVSCodeConnector } from '@borkdominik-biguml/big-vscode-integration/vscode';
 import { TYPES } from '@borkdominik-biguml/big-vscode-integration/vscode';
+import { RequestExportSnapshotAction } from '../common/request-export-snapshot-action.js';
+import { RequestExportSvgAction } from '@eclipse-glsp/protocol';
 
 
 export const RevisionManagementId = Symbol('RevisionmanagementViewId');
@@ -48,6 +50,7 @@ export class RevisionManagementProvider extends BIGReactWebview {
 
         const umlWatcher = vscode.workspace.createFileSystemWatcher('**/*.uml');
 
+    
         this.toDispose.push(
             umlWatcher.onDidChange(uri => {
                 console.log('[fswatcher] File changed (saved):', uri.fsPath);
@@ -72,12 +75,12 @@ export class RevisionManagementProvider extends BIGReactWebview {
                 console.log('[fswatcher] File created:', uri.fsPath);
                 // Optional: handle creation logic
             }),
+            
 
             umlWatcher
         );
 
-        // Listen for ExportSvgAction responses
-        this.toDispose.push(
+       this.toDispose.push(
             this.connector.onClientActionMessage(message => {
                 if (MinimapExportSvgAction.is(message.action)) {
                     const { svg = '', bounds } = message.action;
@@ -110,6 +113,14 @@ export class RevisionManagementProvider extends BIGReactWebview {
             })
         );
 
+        // Handle ExportSnapshot action triggered by webview button
+        this.toDispose.push(
+             this.actionListener.handleVSCodeRequest(RequestExportSnapshotAction.KIND, async message => {
+                console.log('[RevisionManagementProvider] ExportSnapshot action received');
+                this.connector.sendActionToActiveClient(RequestExportSvgAction.create());
+                return { kind: 'noop' } as any;
+            })
+        );
 
         this.toDispose.push(this.actionCache);
     }

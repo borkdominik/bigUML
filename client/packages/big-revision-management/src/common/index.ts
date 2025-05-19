@@ -8,4 +8,5 @@
  **********************************************************************************/
 
 export * from './file-save-action.js';
+export * from './request-export-snapshot-action.js'
 

@@ -11,6 +11,7 @@ import { ConfirmRestoreModal } from './ConfirmRestoreModal.js';
 import { VSCodeContext } from '@borkdominik-biguml/big-components';
 import { FileSaveResponse } from '../common/file-save-action.js';
 import { type Snapshot } from '../common/snapshot.js';
+import {RequestExportSnapshotAction} from '../common/request-export-snapshot-action.js';
 
 function useWindowSize() {
     const element = useMemo(() => document.querySelector<HTMLElement>('body')!, []);
@@ -30,7 +31,7 @@ function useWindowSize() {
 
 export function RevisionManagement(): ReactElement {
     const size = useWindowSize();
-    const { listenAction } = useContext(VSCodeContext);
+    const { listenAction, dispatchAction } = useContext(VSCodeContext);
 
     const [expandedId, setExpandedId] = useState<string | null>(null);
     const [timeline, setTimeline] = useState<Snapshot[]>([]);
@@ -57,6 +58,10 @@ export function RevisionManagement(): ReactElement {
         window.addEventListener('message', handleMessage);
         return () => window.removeEventListener('message', handleMessage);
     }, []);
+
+    const handleExportSnapshot = () => {
+        dispatchAction(RequestExportSnapshotAction.create());
+    };
 
     return (
         <div style={{ padding: '0.25rem 0.5rem', fontFamily: 'var(--vscode-font-family)', color: 'var(--vscode-editor-foreground)' }}>
@@ -113,7 +118,7 @@ export function RevisionManagement(): ReactElement {
 
                                     <div style={buttonRowStyle}>
                                         <button onClick={() => handleRestore(snapshot)} style={cancelButtonStyle}>Restore</button>
-                                        <button onClick={() => handleExportSnapshot(snapshot)} style={exportButtonStyle}>Export Snapshot</button>
+                                        <button onClick={() => handleExportSnapshot()} style={exportButtonStyle}>Export Snapshot</button>
                                     </div>
                                 </div>
                             )}
@@ -152,15 +157,7 @@ export function RevisionManagement(): ReactElement {
     );
 }
 
-const handleExportSnapshot = (snapshot: Snapshot) => {
-    const blob = new Blob([snapshot.svg], { type: 'image/svg+xml' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `${snapshot.id}.svg`;
-    a.click();
-    URL.revokeObjectURL(url);
-};
+
 
 const buttonRowStyle: React.CSSProperties = {
     display: 'flex',

@@ -13,6 +13,10 @@ import path from 'path';
 import * as vscode from 'vscode';
 import { FileSaveResponse } from '../common/file-save-action.js';
 import { type Snapshot } from '../common/snapshot.js';
+import { ExportSvgAction, RequestExportSvgAction } from '@eclipse-glsp/protocol';
+import type { BIGGLSPVSCodeConnector } from '@borkdominik-biguml/big-vscode-integration/vscode';
+import { TYPES } from '@borkdominik-biguml/big-vscode-integration/vscode';
+
 
 export const RevisionManagementId = Symbol('RevisionmanagementViewId');
 
@@ -22,11 +26,16 @@ export class RevisionManagementProvider extends BIGReactWebview {
     @inject(RevisionManagementId)
     viewId: string;
 
+    @inject(TYPES.GLSPVSCodeConnector)
+    protected readonly connector!: BIGGLSPVSCodeConnector;
+
+
     protected override cssPath = ['revision-management', 'bundle.css'];
     protected override jsPath = ['revision-management', 'bundle.js'];
     protected readonly actionCache = this.actionListener.createCache([
         FileSaveResponse.KIND
     ]);
+
 
     private currentModelState: ExperimentalModelState | null = null;
     private timeline: Snapshot[] = [];
@@ -41,28 +50,52 @@ export class RevisionManagementProvider extends BIGReactWebview {
         this.toDispose.push(
             umlWatcher.onDidChange(uri => {
                 console.log('[fswatcher] File changed (saved):', uri.fsPath);
-                const affectedResource = this.currentModelState?.getResources().find(resource => this.matchesUri(resource.uri, uri.fsPath));
+
+                const affectedResource = this.currentModelState?.getResources().find(resource =>
+                    this.matchesUri(resource.uri, uri.fsPath)
+                );
+
                 if (affectedResource && this.currentModelState) {
-                    this.timeline.push({
-                        id: this.timeline.length.toString(),
-                        timestamp: new Date().toISOString(),
-                        author: "User", // todo not necessary
-                        message: "File saved", 
-                        svg: "", // todo add svg
-                        state: this.currentModelState
-                    });
-                    this.updateTimeline();
-                }               
+                    if (!this.connectionManager.hasActiveClient()) {
+                        console.warn('[Snapshot] No active GLSP client available');
+                        return;
+                    }
+
+                    console.log('[Snapshot] Triggering exportSvg via RequestExportSvgAction');
+                    this.connector.sendActionToActiveClient(RequestExportSvgAction.create());
+                }
             }),
 
             umlWatcher.onDidCreate(uri => {
                 console.log('[fswatcher] File created:', uri.fsPath);
-                // todo: maybe handle file creation
+                // Optional: handle creation logic
             }),
 
             umlWatcher
         );
-        
+
+        // Listen for ExportSvgAction responses
+        this.toDispose.push(
+            this.connector.onClientActionMessage(message => {
+                if (ExportSvgAction.is(message.action)) {
+                    const svg = message.action.svg;
+
+                    console.log('[Snapshot] Received SVG. Length:', svg.length);
+
+                    this.timeline.push({
+                        id: this.timeline.length.toString(),
+                        timestamp: new Date().toISOString(),
+                        author: 'User',
+                        message: 'File saved',
+                        svg,
+                        state: this.currentModelState!
+                    });
+
+                    this.updateTimeline();
+                }
+            })
+        );
+
         this.toDispose.push(this.actionCache);
     }
 

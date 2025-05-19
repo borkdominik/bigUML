@@ -12,7 +12,6 @@ import { type ExperimentalModelState } from "@borkdominik-biguml/big-vscode-inte
 export interface Snapshot {
     id: string;
     timestamp: string;
-    author: string;
     message: string;
     svg: string;
     bounds?: {

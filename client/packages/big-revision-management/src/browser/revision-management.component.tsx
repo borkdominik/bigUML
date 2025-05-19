@@ -8,6 +8,7 @@ import type { ReactElement } from 'react';
 import { useContext, useEffect, useLayoutEffect, useMemo, useState } from 'react';
 import { RequestExportSnapshotAction } from '../common/actions/request-export-snapshot-action.js';
 import { FileSaveResponse } from '../common/actions/file-save-action.js';
+import { RequestRestoreSnapshotAction } from '../common/actions/request-restore-snapshot-action.js';
 import { type Snapshot } from '../common/snapshot.js';
 import { ConfirmRestoreModal } from './modals/confirm-restore-modal.js';
 import { ExportTimelineModal } from './modals/export-timeline-modal.js';
@@ -63,16 +64,17 @@ export function RevisionManagement(): ReactElement {
         dispatchAction(RequestExportSnapshotAction.create());
     };
 
+    const handleRestore = (snapshot: Snapshot) => {
+        setSelectedSnapshot(snapshot);
+        setShowRestoreModal(true);
+    };
+
     return (
         <div style={{ padding: '0.25rem 0.5rem', fontFamily: 'var(--vscode-font-family)', color: 'var(--vscode-editor-foreground)' }}>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
                 {timeline.map((snapshot) => {
                     const isExpanded = expandedId === snapshot.id;
 
-                    const handleRestore = (snapshot: Snapshot) => {
-                        setSelectedSnapshot(snapshot);
-                        setShowRestoreModal(true);
-                    };
 
                     const bounds = snapshot.bounds ?? { x: 0, y: 0, width: 800, height: 600 };
                     const scale = Math.min(300 / bounds.width, 200 / bounds.height);
@@ -96,7 +98,7 @@ export function RevisionManagement(): ReactElement {
                                 }}
                             />
                             <div style={{ fontSize: '0.85rem', fontWeight: 500, lineHeight: 1.2 }}>{snapshot.message}</div>
-                            <div style={{ fontSize: '0.7rem', opacity: 0.6 }}>{snapshot.author} • {new Date(snapshot.timestamp).toLocaleString()}</div>
+                            <div style={{ fontSize: '0.7rem', opacity: 0.6 }}>{new Date(snapshot.timestamp).toLocaleString()}</div>
 
                             {isExpanded && (
                                 <div style={{ marginTop: '0.4rem' }}>
@@ -146,12 +148,12 @@ export function RevisionManagement(): ReactElement {
                         setSelectedSnapshot(null);
                     }}
                     onConfirm={() => {
-                        console.log('[Confirmed Restore] Snapshot:', selectedSnapshot.id);
+                        dispatchAction(RequestRestoreSnapshotAction.create(selectedSnapshot.id));
                         setShowRestoreModal(false);
                         setSelectedSnapshot(null);
-                        // TODO: implement
                     }}
                 />
+
             )}
         </div>
     );

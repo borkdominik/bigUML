@@ -16,10 +16,11 @@ import * as vscode from 'vscode';
 import { RequestExportSnapshotAction } from '../common/actions/request-export-snapshot-action.js';
 import { FileSaveResponse } from '../common/actions/file-save-action.js';
 import { type Snapshot } from '../common/snapshot.js';
-
+import { RequestRestoreSnapshotAction } from '../common/actions/request-restore-snapshot-action.js';
+import { RestoreSnapshotResponseAction } from '../common/actions/restore-snapshot-response-action.js';
+import { RestoreModelStateAction } from '../common/actions/restore-model-state-action.js';
 
 export const RevisionManagementId = Symbol('RevisionmanagementViewId');
-
 
 @injectable()
 export class RevisionManagementProvider extends BIGReactWebview {
@@ -28,7 +29,6 @@ export class RevisionManagementProvider extends BIGReactWebview {
 
     @inject(TYPES.GLSPVSCodeConnector)
     protected readonly connector!: BIGGLSPVSCodeConnector;
-
 
     protected override cssPath = ['revision-management', 'bundle.css'];
     protected override jsPath = ['revision-management', 'bundle.js'];
@@ -99,7 +99,6 @@ export class RevisionManagementProvider extends BIGReactWebview {
                     this.timeline.push({
                         id: this.timeline.length.toString(),
                         timestamp: new Date().toISOString(),
-                        author: 'User',
                         message: 'File saved',
                         svg,
                         bounds,
@@ -119,6 +118,27 @@ export class RevisionManagementProvider extends BIGReactWebview {
                 return { kind: 'noop' } as any;
             })
         );
+
+        this.toDispose.push(
+            this.actionListener.handleVSCodeRequest(RequestRestoreSnapshotAction.KIND, async (message) => {
+                const action = message.action as RequestRestoreSnapshotAction;
+                const snapshotId = action.snapshotId;
+
+                console.log(`[RevisionManagementProvider] Restore request received for snapshot ID: ${snapshotId}`);
+
+                const snapshotIndex = this.timeline.findIndex(s => s.id === snapshotId);
+                if (snapshotIndex !== -1) {
+                    this.timeline = this.timeline.slice(0, snapshotIndex + 1);
+                    this.updateTimeline();
+                    // TODO: restore current modelstate to this.timeline[snapshotIndex].state, so it's also updated on the main screen.
+                } else {
+                    console.warn(`[RevisionManagementProvider] Snapshot with ID ${snapshotId} not found.`);
+                }
+
+                return RestoreSnapshotResponseAction.create(action.requestId);
+            })
+        );
+
 
         this.toDispose.push(this.actionCache);
     }
@@ -162,8 +182,6 @@ export class RevisionManagementProvider extends BIGReactWebview {
                 console.log('timeline.import command triggered');
                 this.webviewView?.webview.postMessage({ action: 'import' });
             }),
-            
-            
             vscode.commands.registerCommand('timeline.export', () => {
                 console.log('timeline.export command triggered');
                 this.webviewView?.webview.postMessage({ action: 'export' });

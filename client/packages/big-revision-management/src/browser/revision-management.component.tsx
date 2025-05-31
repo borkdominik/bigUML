@@ -72,7 +72,7 @@ export function RevisionManagement(): ReactElement {
     return (
         <div style={{ padding: '0.25rem 0.5rem', fontFamily: 'var(--vscode-font-family)', color: 'var(--vscode-editor-foreground)' }}>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-                {timeline.map((snapshot) => {
+                {[...timeline].reverse().map((snapshot) => {
                     const isExpanded = expandedId === snapshot.id;
 
 

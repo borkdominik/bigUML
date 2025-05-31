@@ -77,7 +77,6 @@ export function RevisionManagement(): ReactElement {
 
 
                     const bounds = snapshot.bounds ?? { x: 0, y: 0, width: 800, height: 600 };
-                    const scale = Math.min(300 / bounds.width, 200 / bounds.height);
 
                     return (
                         <li
@@ -108,12 +107,10 @@ export function RevisionManagement(): ReactElement {
 
                                     }}>
                                         <svg
-                                            viewBox={`0 0 ${size.width} ${size.height}`}
+                                            viewBox={`0 0 ${bounds.width} ${bounds.height}`}
                                             style={{ display: 'block', border: '1px solid var(--vscode-panel-border)' }}
                                         >
-                                            <g transform={`scale(${scale})`}>
-                                                <g dangerouslySetInnerHTML={{ __html: snapshot.svg }} />
-                                            </g>
+                                           <g dangerouslySetInnerHTML={{ __html: snapshot.svg }} />        
                                         </svg>
                                     </div>
 

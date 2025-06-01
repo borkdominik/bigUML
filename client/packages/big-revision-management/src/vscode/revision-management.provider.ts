@@ -18,7 +18,6 @@ import { FileSaveResponse } from '../common/actions/file-save-action.js';
 import { type Snapshot } from '../common/snapshot.js';
 import { RequestRestoreSnapshotAction } from '../common/actions/request-restore-snapshot-action.js';
 import { RestoreSnapshotResponseAction } from '../common/actions/restore-snapshot-response-action.js';
-import { RestoreModelStateAction } from '../common/actions/restore-model-state-action.js';
 
 export const RevisionManagementId = Symbol('RevisionmanagementViewId');
 
@@ -45,6 +44,9 @@ export class RevisionManagementProvider extends BIGReactWebview {
     protected override init(): void {
         super.init();
         console.log('Revision Management Provider init');
+
+        // Uncomment line below if you wish to clear the VSCode storage
+        //this.clearVSCodeStorage();
 
         const umlWatcher = vscode.workspace.createFileSystemWatcher('**/*.uml');
 
@@ -129,6 +131,10 @@ export class RevisionManagementProvider extends BIGReactWebview {
                 const snapshotIndex = this.timeline.findIndex(s => s.id === snapshotId);
                 if (snapshotIndex !== -1) {
                     this.timeline = this.timeline.slice(0, snapshotIndex + 1);
+                    const key = this.getTimelineKey();
+                    await this.extensionContext.globalState.update(key, this.timeline);
+                    console.log(`[RevisionManagementProvider] Timeline after restore saved for key: ${key} (entries: ${this.timeline.length})`);
+
                     this.updateTimeline();
                     // TODO: restore current modelstate to this.timeline[snapshotIndex].state, so it's also updated on the main screen.
                 } else {
@@ -146,37 +152,54 @@ export class RevisionManagementProvider extends BIGReactWebview {
     protected override handleConnection(): void {
         super.handleConnection();
 
+        const state = this.modelState.getModelState();
+        if (state) {
+            console.log('[RevisionManagementProvider] Initial model state loaded via getModelState');
+            this.currentModelState = state;
+
+            const key = this.getTimelineKey();
+            const stored = this.extensionContext.globalState.get<Snapshot[]>(key) ?? [];
+            console.log('[Timeline] Loaded from globalState for', key, ':', stored.length);
+            this.timeline = stored;
+
+            this.updateTimeline();
+        } else {
+            console.log('[RevisionManagementProvider] No initial model state available');
+        }
+        
         console.log('Revision Management Provider handleConnection');
 
         this.toDispose.push(
             this.actionCache.onDidChange(message => this.webviewConnector.dispatch(message)),
             this.webviewConnector.onReady(() => {
                 console.log('Revision Management Provider webviewConnector onReady');
-                this.timeline = [];
-                this.updateTimeline();
                 this.webviewConnector.dispatch(this.actionCache.getActions());
             }),
-            this.webviewConnector.onVisible(() => this.webviewConnector.dispatch(this.actionCache.getActions())),
+            this.webviewConnector.onVisible(() => {
+                this.webviewConnector.dispatch(this.actionCache.getActions())
+            }),
             this.connectionManager.onDidActiveClientChange(() => {
                 console.log('Revision Management Provider webviewConnector onDidActiveClientChange');
-                this.timeline = [];
                 this.updateTimeline();
             }),
             this.connectionManager.onNoActiveClient(() => {
                 console.log('Revision Management Provider webviewConnector onNoActiveClient');
                 this.currentModelState = null;
-                this.timeline = [];
                 this.updateTimeline();
             }),
             this.connectionManager.onNoConnection(() => {
                 console.log('Revision Management Provider webviewConnector onNoConnection');
                 this.currentModelState = null;
-                this.timeline = [];
                 this.updateTimeline();
             }),
             this.modelState.onDidChangeModelState((event) => {
                 console.log('Revision Management Provider webviewConnector onDidChangeModelState', event.state);
                 this.currentModelState = event.state;
+                const key = this.getTimelineKey();
+                const stored = this.extensionContext.globalState.get<Snapshot[]>(key) ?? [];
+                console.log('[Timeline] Loaded from globalState for', key, ':', stored.length);
+                this.timeline = stored;
+                this.updateTimeline();
             }),
             vscode.commands.registerCommand('timeline.import', () => {
                 console.log('timeline.import command triggered');
@@ -185,14 +208,23 @@ export class RevisionManagementProvider extends BIGReactWebview {
             vscode.commands.registerCommand('timeline.export', () => {
                 console.log('timeline.export command triggered');
                 this.webviewView?.webview.postMessage({ action: 'export' });
-            })
-            
+            }),  
         );
     }
 
 
     protected updateTimeline(): void {
+        if (!this.currentModelState) {
+            console.warn('[Timeline] Skipped update — no model loaded yet');
+            return;
+        }
+
         console.log('Revision Management Provider updateTimeline', this.currentModelState);
+        const key = this.getTimelineKey();
+        this.extensionContext.globalState.update(key, this.timeline).then(() => {
+            console.log('[Timeline] Saved to globalState for', key, ':', this.timeline.length);
+        });
+        
         this.webviewConnector.dispatch(FileSaveResponse.create({
             responseId: '',
             timeline: this.timeline
@@ -240,4 +272,19 @@ export class RevisionManagementProvider extends BIGReactWebview {
         webview.html = html;
     }
     
+    private getTimelineKey(): string {
+        const modelId = this.currentModelState?.getSourceModel().id;
+        return `revisionTimeline:${modelId ?? 'unknown'}`;
+    }
+
+    private async clearVSCodeStorage(): Promise<void> {
+        const keys = this.extensionContext.globalState.keys();
+
+                for (const key of keys) {
+                    await this.extensionContext.globalState.update(key, undefined);
+                    console.log(`[Timeline] Cleared key: ${key}`);
+                }
+
+                console.log('[Timeline] All globalState keys cleared.');
+    }
 }

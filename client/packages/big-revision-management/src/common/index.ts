@@ -11,4 +11,3 @@ export * from './actions/request-export-snapshot-action.js';
 export * from './actions/file-save-action.js';
 export * from './actions/request-restore-snapshot-action.js'
 export * from './actions/restore-snapshot-response-action.js';
-export * from './actions/restore-model-state-action.js';

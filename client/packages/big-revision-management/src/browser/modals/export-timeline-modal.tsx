@@ -9,15 +9,17 @@
 
 import type { ReactElement } from 'react';
 import { useEffect, useState } from 'react';
+import type { Snapshot } from '../../common/snapshot.js';
 
 interface ExportTimelineModalProps {
+    timeline: Snapshot[];
     onClose: () => void;
     onExport: (scope: { type: 'all' | 'last'; count?: number }) => void;
 }
 
-export function ExportTimelineModal({ onClose, onExport }: ExportTimelineModalProps): ReactElement {
+export function ExportTimelineModal({ onClose, onExport, timeline }: ExportTimelineModalProps): ReactElement {
     const [exportType, setExportType] = useState<'all' | 'last'>('last');
-    const [count, setCount] = useState<number | null>(null);
+    const [entryCount, setEntryCount] = useState(1);
 
     useEffect(() => {
         const handleEsc = (e: KeyboardEvent) => {
@@ -27,19 +29,18 @@ export function ExportTimelineModal({ onClose, onExport }: ExportTimelineModalPr
         return () => window.removeEventListener('keydown', handleEsc);
     }, [onClose]);
 
+    const [entryCountText, setEntryCountText] = useState('1');
+
     const handleExport = () => {
-        if (exportType === 'last' && (count === null || count < 1)) {
-            alert("Please enter a valid number.");
-            return;
-        }
-        onExport(exportType === 'last' ? { type: 'last', count: count! } : { type: 'all' });
+        const count = Math.max(1, Number(entryCountText) || 1);
+        const scope = exportType === 'all'
+            ? { type: 'all' as const }
+            : { type: 'last' as const, count };
+    
+        onExport(scope);
         onClose();
     };
-    
-    useEffect(() => {
-        setCount(NaN);
-    }, []);
-    
+
     return (
         <div style={overlayStyle}>
             <div style={modalStyle}>
@@ -72,17 +73,26 @@ export function ExportTimelineModal({ onClose, onExport }: ExportTimelineModalPr
                                 inputMode="numeric"
                                 pattern="[0-9]*"
                                 placeholder="n"
-                                value={count === null ? '' : count}
+                                value={entryCountText}
                                 onChange={(e) => {
                                     const val = e.target.value;
                                     if (/^\d*$/.test(val)) {
-                                        setCount(val === '' ? null : Number(val));
+                                        setEntryCountText(val);
                                     }
                                 }}
                                 style={numberInputStyle}
                             />
                         </span>
                     </label>
+
+                    <span style={{
+                                        display: 'block',
+                                        fontSize: '11px',
+                                        marginLeft: '1.6rem',
+                                        opacity: 0.6
+                                    }}>
+                                        If the number exceeds total entries, the full timeline will be exported.
+                    </span>
                 </div>
 
                 <div style={buttonRowStyle}>
@@ -92,8 +102,8 @@ export function ExportTimelineModal({ onClose, onExport }: ExportTimelineModalPr
             </div>
         </div>
     );
-
 }
+
 
 const overlayStyle: React.CSSProperties = {
     position: 'fixed',

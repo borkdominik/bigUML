@@ -136,8 +136,28 @@ export function RevisionManagement(): ReactElement {
                 />
             )}
             {showExportModal && (
-                <ExportTimelineModal onClose={() => setShowExportModal(false)} onExport={() => { }} />
+                <ExportTimelineModal
+                timeline={timeline}
+                onClose={() => setShowExportModal(false)}
+                onExport={({ type, count }) => {
+                    const toExport = type === 'all'
+                        ? timeline
+                        : timeline.slice(-Math.max(1, count ?? 1));
+
+                    const blob = new Blob([JSON.stringify(toExport, null, 2)], {
+                        type: 'application/json'
+                    });
+
+                    const url = URL.createObjectURL(blob);
+                    const anchor = document.createElement('a');
+                    anchor.href = url;
+                    anchor.download = 'timeline-export.json';
+                    anchor.click();
+                    URL.revokeObjectURL(url);
+                }}
+            />
             )}
+
             {showRestoreModal && selectedSnapshot && (
                 <ConfirmRestoreModal
                     onCancel={() => {
@@ -155,8 +175,6 @@ export function RevisionManagement(): ReactElement {
         </div>
     );
 }
-
-
 
 const buttonRowStyle: React.CSSProperties = {
     display: 'flex',

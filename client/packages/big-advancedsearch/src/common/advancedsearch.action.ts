@@ -9,11 +9,12 @@
 
 import { Action, RequestAction, type ResponseAction } from '@eclipse-glsp/protocol';
 
-// ========= This action will be handled by the GLSP Client =========
-
+/**
+ * Request sent from WebView to backend to initiate an advanced search.
+ */
 export interface RequestAdvancedSearchAction extends RequestAction<AdvancedSearchActionResponse> {
     kind: typeof RequestAdvancedSearchAction.KIND;
-    increase: number;
+    query: string;
 }
 
 export namespace RequestAdvancedSearchAction {
@@ -23,19 +24,29 @@ export namespace RequestAdvancedSearchAction {
         return RequestAction.hasKind(object, KIND);
     }
 
-    export function create(options: Omit<RequestAdvancedSearchAction, 'kind' | 'requestId'>): RequestAdvancedSearchAction {
+    export function create(options: { query: string }): RequestAdvancedSearchAction {
         return {
             kind: KIND,
             requestId: '',
-            ...options
+            query: options.query
         };
     }
 }
 
+/**
+ * Response sent from backend to WebView with search results.
+ */
 export interface AdvancedSearchActionResponse extends ResponseAction {
     kind: typeof AdvancedSearchActionResponse.KIND;
-    model: any;
+    results: {
+        id: string;
+        type: string;
+        name: string;
+        parentName?: string;
+        details?: string;
+    }[];
 }
+
 export namespace AdvancedSearchActionResponse {
     export const KIND = 'advancedSearchResponse';
 
@@ -48,9 +59,8 @@ export namespace AdvancedSearchActionResponse {
     ): AdvancedSearchActionResponse {
         return {
             kind: KIND,
-            responseId: '',
-            model: 0,
-            ...options
+            responseId: options?.responseId ?? '',
+            results: options?.results ?? []
         };
     }
 }

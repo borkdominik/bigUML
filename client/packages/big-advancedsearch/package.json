@@ -60,6 +60,7 @@
     "@eclipse-glsp/client": "*",
     "@eclipse-glsp/protocol": "*",
     "@eclipse-glsp/vscode-integration-webview": "*",
+    "@vscode/webview-ui-toolkit": "^1.4.0",
     "vscode-messenger-common": "^0.4.5"
   },
   "devDependencies": {

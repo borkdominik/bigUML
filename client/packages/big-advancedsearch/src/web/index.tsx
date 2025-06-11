@@ -6,12 +6,13 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-import 'reflect-metadata';
-
 import { VSCodeConnector } from '@borkdominik-biguml/big-components';
+
 import { createRoot } from 'react-dom/client';
+import 'reflect-metadata';
 import { AdvancedSearch } from '../browser/advancedsearch.component.js';
 
+import '@vscode/webview-ui-toolkit';
 import '../../styles/index.css';
 
 const element = document.getElementById('root');

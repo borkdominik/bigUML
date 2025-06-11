@@ -8,106 +8,43 @@
  **********************************************************************************/
 
 import { VSCodeContext } from '@borkdominik-biguml/big-components';
-import { useCallback, useContext, useEffect, useState, type ReactElement } from 'react';
+import { useContext, useEffect, useState, type ReactElement } from 'react';
 import { AdvancedSearchActionResponse, RequestAdvancedSearchAction } from '../common/advancedsearch.action.js';
 
-interface SearchResult {
-    id: string;
-    type: string;
-    name: string;
-    parentName?: string;
-    details?: string;
-}
+
+import type { SearchResult } from '../common/searchresult.js';
 
 export function AdvancedSearch(): ReactElement {
-    const { dispatchAction, listenAction } = useContext(VSCodeContext);
-    const [model, setModel] = useState<any>(null);
+    const { clientId, dispatchAction, listenAction } = useContext(VSCodeContext);
     const [query, setQuery] = useState('');
     const [results, setResults] = useState<SearchResult[]>([]);
 
     useEffect(() => {
-        listenAction(action => {
+        const handler = (action: any) => {
             if (AdvancedSearchActionResponse.is(action)) {
-                console.log('Received model in webview:', action.model);
-                setModel(action.model);
+                console.log('[AdvancedSearch] Received search results:', action.results);
+                setResults(action.results);
             }
-        });
+        };
+    
+        listenAction(handler);
+    
+        return () => {
+            console.warn('[AdvancedSearch] Cannot remove listener — using one-time handler only');
+        };
     }, [listenAction]);
+    
+    
+    
 
-    const handleSearch = useCallback(() => {
-        if (!model?.packagedElement) return;
-
-        const normalized: SearchResult[] = [];
-
-        for (const element of model.packagedElement) {
-            const baseType = element.eClass?.split('#//')[1];
-
-            if (!element.name) continue;
-
-            // Add top-level element
-            normalized.push({
-                id: element.id,
-                type: baseType,
-                name: element.name
-            });
-
-            // Add ownedAttributes
-            if (element.ownedAttribute) {
-                for (const attr of element.ownedAttribute) {
-                    normalized.push({
-                        id: attr.id,
-                        type: 'Attribute',
-                        name: attr.name,
-                        parentName: element.name,
-                        details: `In ${baseType} ${element.name}`
-                    });
-                }
-            }
-
-            // Add ownedOperations
-            if (element.ownedOperation) {
-                for (const op of element.ownedOperation) {
-                    normalized.push({
-                        id: op.id,
-                        type: 'Operation',
-                        name: op.name,
-                        parentName: element.name,
-                        details: `In ${baseType} ${element.name}`
-                    });
-                }
-            }
-
-            // Add Enumeration literals
-            if (element.ownedLiteral) {
-                for (const lit of element.ownedLiteral) {
-                    normalized.push({
-                        id: lit.id,
-                        type: 'Literal',
-                        name: lit.name,
-                        parentName: element.name,
-                        details: `In Enumeration ${element.name}`
-                    });
-                }
-            }
+    const handleSearch = () => {
+        if (!clientId) {
+            console.warn('Client ID not available, skipping dispatch.');
+            return;
         }
 
-        // Parse search query like "Class:Lecture"
-        const [rawType, rawPattern] = query.split(':');
-        const type = rawType?.trim().toLowerCase();
-        const pattern = rawPattern?.trim().toLowerCase();
-
-        const filtered = normalized.filter(item => {
-            const matchesType = !type || item.type.toLowerCase().includes(type);
-            const matchesPattern = !pattern || item.name?.toLowerCase().includes(pattern);
-            return matchesType && matchesPattern;
-        });
-
-        setResults(filtered);
-    }, [query, model]);
-
-    const handleFetchModel = useCallback(() => {
-        dispatchAction(RequestAdvancedSearchAction.create({ increase: 1 }));
-    }, [dispatchAction]);
+        dispatchAction(RequestAdvancedSearchAction.create({ query }));
+    };
 
     return (
         <div style={{ padding: '1rem' }}>
@@ -121,7 +58,6 @@ export function AdvancedSearch(): ReactElement {
                     style={{ width: '60%', marginRight: '0.5rem' }}
                 />
                 <button onClick={handleSearch}>Search</button>
-                <button onClick={handleFetchModel} style={{ marginLeft: '0.5rem' }}>Reload Model</button>
             </div>
 
             <div>
@@ -129,8 +65,8 @@ export function AdvancedSearch(): ReactElement {
                     <ul>
                         {results.map((item, idx) => (
                             <li key={idx}>
-                                <strong>{item.type}</strong>: {item.name}
-                                {item.parentName && <span> (in {item.parentName})</span>}
+                                  <strong>{item.type}</strong>: {item.name}
+                                  {item.parentName && <span> (in {item.parentName})</span>}
                                 {item.details && <div style={{ fontSize: '0.85rem', color: '#666' }}>{item.details}</div>}
                             </li>
                         ))}

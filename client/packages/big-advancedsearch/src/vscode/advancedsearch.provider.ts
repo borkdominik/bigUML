@@ -58,7 +58,7 @@ export class AdvancedSearchProvider extends BIGReactWebview {
     protected requestModel(): void {
         this.actionDispatcher.dispatch(
             RequestAdvancedSearchAction.create({
-                increase: 0
+                query: ''
             })
         );
     }

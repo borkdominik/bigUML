@@ -17,9 +17,8 @@ interface ExportTimelineModalProps {
     onExport: (scope: { type: 'all' | 'last'; count?: number }) => void;
 }
 
-export function ExportTimelineModal({ onClose, onExport, timeline }: ExportTimelineModalProps): ReactElement {
+export function ExportTimelineModal({ onClose, onExport }: ExportTimelineModalProps): ReactElement {
     const [exportType, setExportType] = useState<'all' | 'last'>('last');
-    const [entryCount, setEntryCount] = useState(1);
 
     useEffect(() => {
         const handleEsc = (e: KeyboardEvent) => {
@@ -36,7 +35,7 @@ export function ExportTimelineModal({ onClose, onExport, timeline }: ExportTimel
         const scope = exportType === 'all'
             ? { type: 'all' as const }
             : { type: 'last' as const, count };
-    
+
         onExport(scope);
         onClose();
     };
@@ -86,12 +85,12 @@ export function ExportTimelineModal({ onClose, onExport, timeline }: ExportTimel
                     </label>
 
                     <span style={{
-                                        display: 'block',
-                                        fontSize: '11px',
-                                        marginLeft: '1.6rem',
-                                        opacity: 0.6
-                                    }}>
-                                        If the number exceeds total entries, the full timeline will be exported.
+                        display: 'block',
+                        fontSize: '11px',
+                        marginLeft: '1.6rem',
+                        opacity: 0.6
+                    }}>
+                        If the number exceeds total entries, the full timeline will be exported.
                     </span>
                 </div>
 
@@ -187,8 +186,8 @@ const closeButtonStyle: React.CSSProperties = {
 
 const buttonRowStyle: React.CSSProperties = {
     display: 'flex',
-    flexDirection: 'row',              
-    justifyContent: 'flex-end',       
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
     alignItems: 'center',
     gap: '0.4rem',
     borderTop: '1px solid var(--vscode-panel-border)',
@@ -197,8 +196,8 @@ const buttonRowStyle: React.CSSProperties = {
 };
 
 const buttonBaseStyle: React.CSSProperties = {
-    fontSize: '13px',                         
-    padding: '0.35rem 1.1rem',              
+    fontSize: '13px',
+    padding: '0.35rem 1.1rem',
     borderRadius: '3px',
     cursor: 'pointer',
     minWidth: 'auto',

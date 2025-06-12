@@ -5,33 +5,17 @@
  **********************************************************************************/
 import { VSCodeContext } from '@borkdominik-biguml/big-components';
 import type { ReactElement } from 'react';
-import { useContext, useEffect, useLayoutEffect, useMemo, useState } from 'react';
-import { RequestExportSnapshotAction } from '../common/actions/request-export-snapshot-action.js';
+import { useContext, useEffect, useState } from 'react';
 import { FileSaveResponse } from '../common/actions/file-save-action.js';
+import { RequestExportSnapshotAction } from '../common/actions/request-export-snapshot-action.js';
+import { RequestImportSnapshotAction } from '../common/actions/request-import-snapshot-action.js';
 import { RequestRestoreSnapshotAction } from '../common/actions/request-restore-snapshot-action.js';
 import { type Snapshot } from '../common/snapshot.js';
 import { ConfirmRestoreModal } from './modals/confirm-restore-modal.js';
 import { ExportTimelineModal } from './modals/export-timeline-modal.js';
 import { ImportTimelineModal } from './modals/import-timeline-modal.js';
 
-function useWindowSize() {
-    const element = useMemo(() => document.querySelector<HTMLElement>('body')!, []);
-    const [size, setSize] = useState({ width: element.clientWidth, height: element.clientHeight });
-
-    useLayoutEffect(() => {
-        const updateSize = () => {
-            setSize({ width: element.clientWidth, height: element.clientHeight });
-        };
-
-        window.addEventListener('resize', updateSize);
-        return () => window.removeEventListener('resize', updateSize);
-    }, [element]);
-
-    return size;
-}
-
 export function RevisionManagement(): ReactElement {
-    const size = useWindowSize();
     const { listenAction, dispatchAction } = useContext(VSCodeContext);
 
     const [expandedId, setExpandedId] = useState<string | null>(null);
@@ -110,7 +94,7 @@ export function RevisionManagement(): ReactElement {
                                             viewBox={`0 0 ${bounds.width} ${bounds.height}`}
                                             style={{ display: 'block', border: '1px solid var(--vscode-panel-border)' }}
                                         >
-                                           <g dangerouslySetInnerHTML={{ __html: snapshot.svg }} />        
+                                            <g dangerouslySetInnerHTML={{ __html: snapshot.svg }} />
                                         </svg>
                                     </div>
 
@@ -131,31 +115,51 @@ export function RevisionManagement(): ReactElement {
                     onClose={() => setShowImportModal(false)}
                     onImport={(file) => {
                         console.log('Imported file:', file.name);
-                        // TODO: implement
+                        console.log('Imported file type:', file instanceof File);
+                        const reader = new FileReader();
+
+                        reader.onload = () => {
+                            console.log('onload triggered');
+                            try {
+                                const text = reader.result as string;
+                                console.log('Imported file content:', text);
+                                const importedSnapshots = JSON.parse(text) as Array<Snapshot>;
+                                console.log('Imported file snapshots:', importedSnapshots);
+                                dispatchAction(RequestImportSnapshotAction.create(importedSnapshots));
+                            } catch (error) {
+                                console.error("Error parsing JSON:", error);
+                            }
+                        };
+
+                        reader.onerror = () => {
+                            console.error("File reading error:", reader.error);
+                        };
+
+                        reader.readAsText(file);
                     }}
                 />
             )}
             {showExportModal && (
                 <ExportTimelineModal
-                timeline={timeline}
-                onClose={() => setShowExportModal(false)}
-                onExport={({ type, count }) => {
-                    const toExport = type === 'all'
-                        ? timeline
-                        : timeline.slice(-Math.max(1, count ?? 1));
+                    timeline={timeline}
+                    onClose={() => setShowExportModal(false)}
+                    onExport={({ type, count }) => {
+                        const toExport = type === 'all'
+                            ? timeline
+                            : timeline.slice(-Math.max(1, count ?? 1));
 
-                    const blob = new Blob([JSON.stringify(toExport, null, 2)], {
-                        type: 'application/json'
-                    });
+                        const blob = new Blob([JSON.stringify(toExport, null, 2)], {
+                            type: 'application/json'
+                        });
 
-                    const url = URL.createObjectURL(blob);
-                    const anchor = document.createElement('a');
-                    anchor.href = url;
-                    anchor.download = 'timeline-export.json';
-                    anchor.click();
-                    URL.revokeObjectURL(url);
-                }}
-            />
+                        const url = URL.createObjectURL(blob);
+                        const anchor = document.createElement('a');
+                        anchor.href = url;
+                        anchor.download = 'timeline-export.json';
+                        anchor.click();
+                        URL.revokeObjectURL(url);
+                    }}
+                />
             )}
 
             {showRestoreModal && selectedSnapshot && (

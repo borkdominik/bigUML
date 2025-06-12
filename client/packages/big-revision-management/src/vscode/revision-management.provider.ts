@@ -13,11 +13,12 @@ import { RequestExportSvgAction } from '@eclipse-glsp/protocol';
 import { inject, injectable, postConstruct } from 'inversify';
 import path from 'path';
 import * as vscode from 'vscode';
-import { RequestExportSnapshotAction } from '../common/actions/request-export-snapshot-action.js';
 import { FileSaveResponse } from '../common/actions/file-save-action.js';
-import { type Snapshot } from '../common/snapshot.js';
+import { RequestExportSnapshotAction } from '../common/actions/request-export-snapshot-action.js';
+import { RequestImportSnapshotAction } from '../common/actions/request-import-snapshot-action.js';
 import { RequestRestoreSnapshotAction } from '../common/actions/request-restore-snapshot-action.js';
 import { RestoreSnapshotResponseAction } from '../common/actions/restore-snapshot-response-action.js';
+import { type Snapshot } from '../common/snapshot.js';
 
 export const RevisionManagementId = Symbol('RevisionmanagementViewId');
 
@@ -81,7 +82,7 @@ export class RevisionManagementProvider extends BIGReactWebview {
         );
 
        this.toDispose.push(
-            this.connector.onClientActionMessage(message => {
+            this.connector.onClientActionMessage((message: any) => {
                 if (MinimapExportSvgAction.is(message.action)) {
                     const { svg = '', bounds } = message.action;
 
@@ -114,9 +115,18 @@ export class RevisionManagementProvider extends BIGReactWebview {
 
         // Handle ExportSnapshot action triggered by webview button
         this.toDispose.push(
-             this.actionListener.handleVSCodeRequest(RequestExportSnapshotAction.KIND, async message => {
+             this.actionListener.handleVSCodeRequest(RequestExportSnapshotAction.KIND, async () => {
                 console.log('[RevisionManagementProvider] ExportSnapshot action received');
                 this.connector.sendActionToActiveClient(RequestExportSvgAction.create());
+                return { kind: 'noop' } as any;
+            })
+        );
+
+        this.toDispose.push(
+             this.actionListener.handleVSCodeRequest(RequestImportSnapshotAction.KIND, async (message: any) => {
+                console.log('[RevisionManagementProvider] ImportSnapshot action received');
+                this.timeline = message.action.importedSnapshots;
+                this.updateTimeline();
                 return { kind: 'noop' } as any;
             })
         );

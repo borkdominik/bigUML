@@ -131,6 +131,18 @@ export class RevisionManagementProvider extends BIGReactWebview {
             })
         );
 
+         this.toDispose.push(
+             this.actionListener.handleVSCodeRequest(RequestChangeSnapshotNameAction.KIND, async (message: any) => {
+                console.log('[RevisionManagementProvider] RequestChangeSnapshotNameAction action received');
+                const snapshot = this.timeline.find(s => s.id === message.action.snapshotId);
+                if (snapshot) {
+                    snapshot.message = message.action.name;
+                }
+                this.updateTimeline();
+                return { kind: 'noop' } as any;
+            })
+        );
+
         this.toDispose.push(
             this.actionListener.handleVSCodeRequest(RequestRestoreSnapshotAction.KIND, async (message) => {
                 const action = message.action as RequestRestoreSnapshotAction;

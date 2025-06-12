@@ -1,16 +1,20 @@
-/**********************************************************************************
+/*********************************************************************************
  * Copyright (c) 2025 borkdominik and others.
  *
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at https://opensource.org/licenses/MIT.
+ *
  * SPDX-License-Identifier: MIT
- **********************************************************************************/
+ *********************************************************************************/
 import { VSCodeContext } from '@borkdominik-biguml/big-components';
 import type { ReactElement } from 'react';
 import { useContext, useEffect, useState } from 'react';
 import { FileSaveResponse } from '../common/actions/file-save-action.js';
+import { RequestChangeSnapshotNameAction } from '../common/actions/request-change-snapshot-name-action.js';
 import { RequestExportSnapshotAction } from '../common/actions/request-export-snapshot-action.js';
 import { RequestImportSnapshotAction } from '../common/actions/request-import-snapshot-action.js';
 import { RequestRestoreSnapshotAction } from '../common/actions/request-restore-snapshot-action.js';
-import { type Snapshot } from '../common/snapshot.js';
+import type { Snapshot } from '../common/snapshot.js';
 import { ConfirmRestoreModal } from './modals/confirm-restore-modal.js';
 import { ExportTimelineModal } from './modals/export-timeline-modal.js';
 import { ImportTimelineModal } from './modals/import-timeline-modal.js';
@@ -24,6 +28,8 @@ export function RevisionManagement(): ReactElement {
     const [showExportModal, setShowExportModal] = useState(false);
     const [showRestoreModal, setShowRestoreModal] = useState(false);
     const [selectedSnapshot, setSelectedSnapshot] = useState<Snapshot | null>(null);
+    const [editingId, setEditingId] = useState<string | null>(null);
+    const [editingMessage, setEditingMessage] = useState<string>('');
 
     useEffect(() => {
         listenAction(action => {
@@ -53,51 +59,126 @@ export function RevisionManagement(): ReactElement {
         setShowRestoreModal(true);
     };
 
+    const startEditing = (snapshot: Snapshot) => {
+        setEditingId(snapshot.id);
+        setEditingMessage(snapshot.message);
+    };
+
+    const submitEdit = (id: string) => {
+        dispatchAction(RequestChangeSnapshotNameAction.create(id, editingMessage));
+        setEditingId(null);
+        setEditingMessage('');
+    };
+
+    const cancelEdit = () => {
+        setEditingId(null);
+        setEditingMessage('');
+    };
+
     return (
         <div style={{ padding: '0.25rem 0.5rem', fontFamily: 'var(--vscode-font-family)', color: 'var(--vscode-editor-foreground)' }}>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-                {[...timeline].reverse().map((snapshot) => {
+                {[...timeline].reverse().map(snapshot => {
                     const isExpanded = expandedId === snapshot.id;
-
-
+                    const isEditing = editingId === snapshot.id;
                     const bounds = snapshot.bounds ?? { x: 0, y: 0, width: 800, height: 600 };
 
                     return (
                         <li
                             key={snapshot.id}
-                            style={{ marginBottom: '0.5rem', cursor: 'pointer', position: 'relative' }}
-                            onClick={() => setExpandedId(isExpanded ? null : snapshot.id)}
+                            style={{ marginBottom: '0.5rem', position: 'relative' }}
                         >
                             <div
                                 style={{
-                                    width: '8px',
-                                    height: '8px',
-                                    backgroundColor: 'transparent',
-                                    border: '1px solid var(--vscode-editor-foreground)',
-                                    borderRadius: '50%',
-                                    position: 'absolute',
-                                    top: '4px',
-                                    left: '-14px'
+                                    width: '8px', height: '8px', backgroundColor: 'transparent',
+                                    border: '1px solid var(--vscode-editor-foreground)', borderRadius: '50%',
+                                    position: 'absolute', top: '4px', left: '-14px'
                                 }}
                             />
-                            <div style={{ fontSize: '0.85rem', fontWeight: 500, lineHeight: 1.2 }}>{snapshot.message}</div>
-                            <div style={{ fontSize: '0.7rem', opacity: 0.6 }}>{new Date(snapshot.timestamp).toLocaleString()}</div>
+
+                            <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '0.25rem' }}>
+                                {isEditing ? (
+                                    <input
+                                        type="text"
+                                        value={editingMessage}
+                                        onChange={e => setEditingMessage(e.target.value)}
+                                        onKeyDown={e => {
+                                            if (e.key === 'Enter') {
+                                                submitEdit(snapshot.id);
+                                            }
+                                        }}
+                                        style={{
+                                            fontSize: '0.85rem', fontWeight: 500, lineHeight: 1.2,
+                                            flex: 1, color: 'var(--vscode-editor-foreground)',
+                                            background: 'var(--vscode-input-background)',
+                                            border: '1px solid var(--vscode-panel-border)', borderRadius: '2px', padding: '2px 4px'
+                                        }}
+                                    />
+                                ) : (
+                                    <div
+                                        style={{
+                                            fontSize: '0.85rem', fontWeight: 500, lineHeight: 1.2,
+                                            flex: 1, cursor: 'pointer'
+                                        }}
+                                        onClick={() => setExpandedId(isExpanded ? null : snapshot.id)}
+                                    >
+                                        {snapshot.message}
+                                    </div>
+                                )}
+
+                                <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '0.5rem' }}>
+                                    {isEditing ? (
+                                        <>
+                                            <button
+                                                onClick={() => submitEdit(snapshot.id)}
+                                                style={{
+                                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                                    cursor: 'pointer', background: 'none', border: 'none', padding: 0,
+                                                    color: 'var(--vscode-editor-foreground)'
+                                                }}
+                                            >
+                                                Save
+                                            </button>
+                                            <button
+                                                onClick={cancelEdit}
+                                                style={{
+                                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                                    cursor: 'pointer', background: 'none', border: 'none', padding: 0,
+                                                    color: 'var(--vscode-editor-foreground)'
+                                                }}
+                                            >
+                                                Cancel
+                                            </button>
+                                        </>
+                                    ) : (
+                                        <button
+                                            onClick={() => startEditing(snapshot)}
+                                            style={{
+                                                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                                cursor: 'pointer', background: 'none', border: 'none', padding: 0,
+                                                color: 'var(--vscode-editor-foreground)'
+                                            }}
+                                        >
+                                            Edit
+                                        </button>
+                                    )}
+                                </div>
+                            </div>
+
+                            <div style={{ fontSize: '0.7rem', opacity: 0.6, marginTop: '0.1rem' }}>
+                                {new Date(snapshot.timestamp).toLocaleString()}
+                            </div>
 
                             {isExpanded && (
                                 <div style={{ marginTop: '0.4rem' }}>
-                                    <div style={{
-                                        maxHeight: '200px',
-                                        minWidth: '150px'
-
-                                    }}>
+                                    <div style={{ maxHeight: '200px', minWidth: '150px' }}>
                                         <svg
                                             viewBox={`0 0 ${bounds.width} ${bounds.height}`}
                                             style={{ display: 'block', border: '1px solid var(--vscode-panel-border)' }}
                                         >
-                                            <g dangerouslySetInnerHTML={{ __html: snapshot.svg }} />
+                                            <g dangerouslySetInnerHTML={{ __html: snapshot.svg! }} />
                                         </svg>
                                     </div>
-
 
                                     <div style={buttonRowStyle}>
                                         <button onClick={() => handleRestore(snapshot)} style={cancelButtonStyle}>Restore</button>
@@ -113,28 +194,17 @@ export function RevisionManagement(): ReactElement {
             {showImportModal && (
                 <ImportTimelineModal
                     onClose={() => setShowImportModal(false)}
-                    onImport={(file) => {
-                        console.log('Imported file:', file.name);
-                        console.log('Imported file type:', file instanceof File);
+                    onImport={file => {
                         const reader = new FileReader();
-
                         reader.onload = () => {
-                            console.log('onload triggered');
                             try {
-                                const text = reader.result as string;
-                                console.log('Imported file content:', text);
-                                const importedSnapshots = JSON.parse(text) as Array<Snapshot>;
-                                console.log('Imported file snapshots:', importedSnapshots);
+                                const importedSnapshots = JSON.parse(reader.result as string) as Snapshot[];
                                 dispatchAction(RequestImportSnapshotAction.create(importedSnapshots));
                             } catch (error) {
                                 console.error("Error parsing JSON:", error);
                             }
                         };
-
-                        reader.onerror = () => {
-                            console.error("File reading error:", reader.error);
-                        };
-
+                        reader.onerror = () => console.error("File reading error:", reader.error);
                         reader.readAsText(file);
                     }}
                 />
@@ -147,11 +217,7 @@ export function RevisionManagement(): ReactElement {
                         const toExport = type === 'all'
                             ? timeline
                             : timeline.slice(-Math.max(1, count ?? 1));
-
-                        const blob = new Blob([JSON.stringify(toExport, null, 2)], {
-                            type: 'application/json'
-                        });
-
+                        const blob = new Blob([JSON.stringify(toExport, null, 2)], { type: 'application/json' });
                         const url = URL.createObjectURL(blob);
                         const anchor = document.createElement('a');
                         anchor.href = url;
@@ -164,43 +230,26 @@ export function RevisionManagement(): ReactElement {
 
             {showRestoreModal && selectedSnapshot && (
                 <ConfirmRestoreModal
-                    onCancel={() => {
-                        setShowRestoreModal(false);
-                        setSelectedSnapshot(null);
-                    }}
+                    onCancel={() => { setShowRestoreModal(false); setSelectedSnapshot(null); }}
                     onConfirm={() => {
                         dispatchAction(RequestRestoreSnapshotAction.create(selectedSnapshot.id));
                         setShowRestoreModal(false);
                         setSelectedSnapshot(null);
                     }}
                 />
-
             )}
         </div>
     );
 }
 
 const buttonRowStyle: React.CSSProperties = {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    gap: '0.4rem',
-    borderTop: '1px solid var(--vscode-panel-border)',
-    paddingTop: '0.75rem',
-    marginTop: '1rem'
+    display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center',
+    gap: '0.4rem', borderTop: '1px solid var(--vscode-panel-border)', paddingTop: '0.75rem', marginTop: '1rem'
 };
 
 const buttonBaseStyle: React.CSSProperties = {
-    fontSize: '13px',
-    padding: '0.35rem 1.1rem',
-    borderRadius: '3px',
-    cursor: 'pointer',
-    minWidth: '100px',
-    flexGrow: 1,
-    textAlign: 'center',
-    whiteSpace: 'nowrap',
-    lineHeight: '1.4'
+    fontSize: '13px', padding: '0.35rem 1.1rem', borderRadius: '3px', cursor: 'pointer',
+    minWidth: '100px', flexGrow: 1, textAlign: 'center', whiteSpace: 'nowrap', lineHeight: '1.4'
 };
 
 const cancelButtonStyle: React.CSSProperties = {

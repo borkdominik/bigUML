@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import { Action } from '@eclipse-glsp/protocol';
-import { Snapshot } from '../snapshot.js';
+import { type Snapshot } from '../snapshot.js';
 
 export interface RequestImportSnapshotAction extends Action {
     kind: typeof RequestImportSnapshotAction.KIND;

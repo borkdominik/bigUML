@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { ResponseAction } from '@eclipse-glsp/protocol';
+import type { ResponseAction } from '@eclipse-glsp/protocol';
 
 export interface RestoreSnapshotResponseAction extends ResponseAction {
     kind: typeof RestoreSnapshotResponseAction.KIND;

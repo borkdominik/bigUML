@@ -7,18 +7,21 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { type ExperimentalModelState } from "@borkdominik-biguml/big-vscode-integration/vscode";
-
 export interface Snapshot {
     id: string;
     timestamp: string;
     message: string;
-    svg: string;
+    resources: ResourceSnapshot[];
+    svg?: string;
     bounds?: {
         x: number;
         y: number;
         width: number;
         height: number;
     };
-    state: ExperimentalModelState;
+}
+
+export interface ResourceSnapshot {
+    uri: string;
+    content: string;
 }

@@ -11,9 +11,9 @@ import type { BIGGLSPVSCodeConnector, BIGWebviewProviderContext } from '@borkdom
 import { BIGReactWebview, TYPES, type ExperimentalModelState } from '@borkdominik-biguml/big-vscode-integration/vscode';
 import { RequestExportSvgAction } from '@eclipse-glsp/protocol';
 import { inject, injectable, postConstruct } from 'inversify';
-import path from 'path';
 import * as vscode from 'vscode';
 import { FileSaveResponse } from '../common/actions/file-save-action.js';
+import { RequestChangeSnapshotNameAction } from '../common/actions/request-change-snapshot-name-action.js';
 import { RequestExportSnapshotAction } from '../common/actions/request-export-snapshot-action.js';
 import { RequestImportSnapshotAction } from '../common/actions/request-import-snapshot-action.js';
 import { RequestRestoreSnapshotAction } from '../common/actions/request-restore-snapshot-action.js';
@@ -40,6 +40,7 @@ export class RevisionManagementProvider extends BIGReactWebview {
     private lastSnapshotTime = 0;
     private currentModelState: ExperimentalModelState | null = null;
     private timeline: Snapshot[] = [];
+    private svgRequestId: string | null = null;
 
     @postConstruct()
     protected override init(): void {
@@ -55,36 +56,22 @@ export class RevisionManagementProvider extends BIGReactWebview {
         this.toDispose.push(
             umlWatcher.onDidChange(uri => {
                 console.log('[fswatcher] File changed (saved):', uri.fsPath);
+                const affectedResources = this.currentModelState?.getResources().filter(resource => resource.format === 'xml');
 
-                const affectedResource = this.currentModelState?.getResources().find(resource =>
-                    this.matchesUri(resource.uri, uri.fsPath)
-                );
-
-                if (affectedResource && this.currentModelState) {
+                if (affectedResources) {
+                    const snapshotResources = [];
+                    for (const affectedResource of affectedResources) {
+                        snapshotResources.push({
+                            uri: affectedResource.uri, 
+                            content: affectedResource.content
+                        });
+                    }
                     if (!this.connectionManager.hasActiveClient()) {
                         console.warn('[Snapshot] No active GLSP client available');
                         return;
                     }
 
                     console.log('[Snapshot] Triggering exportSvg via RequestMinimapExportSvgAction');
-                    this.connector.sendActionToActiveClient(RequestMinimapExportSvgAction.create());
-
-                }
-            }),
-
-            umlWatcher.onDidCreate(uri => {
-                console.log('[fswatcher] File created:', uri.fsPath);
-                // Optional: handle creation logic
-            }),
-            
-
-            umlWatcher
-        );
-
-       this.toDispose.push(
-            this.connector.onClientActionMessage((message: any) => {
-                if (MinimapExportSvgAction.is(message.action)) {
-                    const { svg = '', bounds } = message.action;
 
                     const now = Date.now();
                     if (now - this.lastSnapshotTime < 1000) {
@@ -93,22 +80,40 @@ export class RevisionManagementProvider extends BIGReactWebview {
                     }
                     this.lastSnapshotTime = now;
 
-                    if (this.timeline.length > 0 && this.timeline[this.timeline.length - 1].svg === svg) {
-                        console.log('[Snapshot] Duplicate SVG detected — skipping.');
-                        return;
-                    }
-
-                    console.log('[Snapshot] Received SVG from Minimap Export. Length:', svg.length);
+                    const id = this.timeline.length.toString();
                     this.timeline.push({
-                        id: this.timeline.length.toString(),
+                        id,
                         timestamp: new Date().toISOString(),
                         message: 'File saved',
-                        svg,
-                        bounds,
-                        state: this.currentModelState!
+                        resources: snapshotResources,
                     });
-
                     this.updateTimeline();
+                    this.svgRequestId = id;
+                    this.connector.sendActionToActiveClient(RequestMinimapExportSvgAction.create());
+                }
+            }),
+
+            umlWatcher.onDidCreate(uri => {
+                console.log('[fswatcher] File created:', uri.fsPath);
+            }),
+            
+
+            umlWatcher
+        );
+
+       this.toDispose.push(
+            this.connector.onClientActionMessage((message: any) => {
+                if (MinimapExportSvgAction.is(message.action) && this.svgRequestId !== null) {
+                    console.log('[RevisionManagementProvider] Received MinimapExportSvgAction message:', message);
+                    const timelineEntry = this.timeline.find(s => s.id === this.svgRequestId);
+                    if (timelineEntry) {
+                        const { svg = '', bounds } = message.action;
+                        timelineEntry.svg = svg;
+                        timelineEntry.bounds = bounds;
+                        this.svgRequestId = null;
+                        this.updateTimeline();
+                    }
+                    return { kind: 'noop' } as any;
                 }
             })
         );
@@ -158,10 +163,32 @@ export class RevisionManagementProvider extends BIGReactWebview {
                     console.log(`[RevisionManagementProvider] Timeline after restore saved for key: ${key} (entries: ${this.timeline.length})`);
 
                     this.updateTimeline();
-                    // TODO: restore current modelstate to this.timeline[snapshotIndex].state, so it's also updated on the main screen.
-                } else {
-                    console.warn(`[RevisionManagementProvider] Snapshot with ID ${snapshotId} not found.`);
-                }
+                    // TODO: this doesnt work - need server extension
+                    const snapshot = this.timeline[snapshotIndex];
+                    console.log(`[RevisionManagementProvider] Restoring snapshot with ID ${snapshotId}:`, snapshot);
+                    for (const resource of snapshot.resources) {
+                        const uri = vscode.Uri.parse(resource.uri)
+                        const encoded = new TextEncoder().encode(resource.content);
+                        vscode.workspace.fs.writeFile(uri, encoded);
+                    
+                        const openDoc = vscode.workspace.textDocuments.find(doc => doc.uri.toString() === uri.toString());
+                        if (openDoc) {
+                            const editor = vscode.window.visibleTextEditors.find(
+                                e => e.document.uri.toString() === uri.toString()
+                            );
+                            if (editor) {
+                                const fullRange = new vscode.Range(
+                                    openDoc.positionAt(0),
+                                    openDoc.positionAt(openDoc.getText().length)
+                                );
+
+                                await editor.edit(editBuilder => {
+                                    editBuilder.replace(fullRange, resource.content);
+                                });
+                            }
+                        }
+                    }
+                } 
 
                 return RestoreSnapshotResponseAction.create(action.requestId);
             })
@@ -251,13 +278,6 @@ export class RevisionManagementProvider extends BIGReactWebview {
             responseId: '',
             timeline: this.timeline
         }));
-    }
-
-    private matchesUri(vsCodeUri: string, pathUri: string): boolean {
-        const uri1 = vscode.Uri.parse(vsCodeUri).fsPath;
-        const uri2 = path.resolve(pathUri);
-
-        return uri1 === uri2;
     }
     
     protected getCssUri(webview: vscode.Webview, ...path: string[]): vscode.Uri {

@@ -23,6 +23,10 @@ import { AdvancedSearchActionResponse, RequestAdvancedSearchAction } from '../co
 import type { SearchResult } from '../common/searchresult.js';
 import type { IMatcher } from './matchers/IMatcher.js';
 
+import { SelectAllAction } from '@eclipse-glsp/protocol';
+import { SelectAction } from '@eclipse-glsp/vscode-integration';
+import { HighlightElementActionResponse, RequestHighlightElementAction } from '../common/highlight.action.js';
+
 import { ClassDiagramMatcher } from './matchers/classmatcher.js';
 import { CommunicationDiagramMatcher } from './matchers/communicationmatcher.js';
 //import { DeploymentDiagramMatcher } from './matchers/deploymentmatcher.js';
@@ -93,6 +97,15 @@ export class AdvancedSearchActionHandler implements Disposable {
                 }
 
                 return AdvancedSearchActionResponse.create({ results: [] });
+            }),
+            this.actionListener.handleVSCodeRequest<RequestHighlightElementAction>(RequestHighlightElementAction.KIND, message => {
+                const uri = message.action.semanticUri;
+                // translate to GLSP selection
+                this.actionDispatcher.dispatch(SelectAllAction.create(false));
+                this.actionDispatcher.dispatch(SelectAction.create({ selectedElementsIDs: [uri] }));
+
+                // trivial "OK" response so dispatcher is happy
+                return HighlightElementActionResponse.create({ ok: true });
             })
         );
     }

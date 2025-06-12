@@ -10,7 +10,9 @@
 import { VSCodeContext } from '@borkdominik-biguml/big-components';
 import { VSCodeTag, VSCodeTextField } from '@vscode/webview-ui-toolkit/react/index.js';
 import { useContext, useEffect, useState, type ReactElement } from 'react';
+
 import { AdvancedSearchActionResponse, RequestAdvancedSearchAction } from '../common/advancedsearch.action.js';
+import { HighlightElementActionResponse, RequestHighlightElementAction } from '../common/highlight.action.js';
 
 import type { SearchResult } from '../common/searchresult.js';
 
@@ -19,38 +21,35 @@ export function AdvancedSearch(): ReactElement {
     const [query, setQuery] = useState('');
     const [results, setResults] = useState<SearchResult[]>([]);
 
-    /* ────────────────────────────────────────────────────────────────────────── */
-    /*  Live-search helper                                                       */
-    /* ────────────────────────────────────────────────────────────────────────── */
-
     const fireSearch = (value: string) => {
         setQuery(value);
-
         if (clientId) {
             dispatchAction(RequestAdvancedSearchAction.create({ query: value }));
         }
     };
 
-    /* ────────────────────────────────────────────────────────────────────────── */
-    /*  Effect: listen for results coming back                                   */
-    /* ────────────────────────────────────────────────────────────────────────── */
+    const highlight = (semanticUri: string | undefined) => {
+        if (!clientId || !semanticUri) {
+            return;
+        }
+        dispatchAction(RequestHighlightElementAction.create({ semanticUri }));
+    };
 
     useEffect(() => {
         const handler = (action: unknown) => {
             if (AdvancedSearchActionResponse.is(action)) {
-                console.log('[AdvancedSearch] Received search results:', action.results);
                 setResults(action.results);
             }
+            if (HighlightElementActionResponse.is(action)) {
+                if (action.ok) {
+                    console.log('Element highlighted successfully');
+                } else {
+                    console.error('Failed to highlight element');
+                }
+            }
         };
-
         listenAction(handler);
-
-        return () => {
-            console.warn('[AdvancedSearch] Cannot remove listener — using one-time handler only');
-        };
     }, [listenAction]);
-
-    /* ────────────────────────────────────────────────────────────────────────── */
 
     return (
         <div className='advanced-search'>
@@ -61,7 +60,6 @@ export function AdvancedSearch(): ReactElement {
                     placeholder='e.g. Class:Lecture'
                     onInput={e => fireSearch((e.target as HTMLInputElement).value)}
                 >
-                    {/* search icon permanently docked on the left */}
                     <span slot='end' className='codicon codicon-search' />
                 </VSCodeTextField>
             </div>
@@ -70,14 +68,11 @@ export function AdvancedSearch(): ReactElement {
                 {results.length > 0 ? (
                     <ul className='advanced-search__results'>
                         {results.map((item, idx) => (
-                            <li key={idx} className='result-item'>
-                                {/* ── header row ── */}
+                            <li key={idx} className='result-item' onClick={() => highlight((item as any).semanticUri ?? item.id)}>
                                 <div className='result-item__header'>
                                     <VSCodeTag className='result-item__tag'>{item.type}</VSCodeTag>
                                     <span className='result-item__name'>{item.name}</span>
                                 </div>
-
-                                {/* ── details row (optional) ── */}
                                 {item.details && <div className='result-item__details'>{item.details}</div>}
                             </li>
                         ))}

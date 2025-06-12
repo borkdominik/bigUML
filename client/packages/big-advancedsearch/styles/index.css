@@ -7,7 +7,72 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
-div {
+.advanced-search {
     display: flex;
     flex-direction: column;
+    width: 100%;
+}
+.advanced-search__controls {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem; /* keeps some space below the field */
+}
+
+.advanced-search__text {
+    width: 100%;
+} /* fills the whole webview */
+
+/*******************************
+ * Results list
+ *******************************/
+.advanced-search__results {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.result-item {
+    border-bottom: 1px solid var(--vscode-editorWidget-border, #3c3c3c);
+    padding: 0.45rem 0.25rem;
+
+    display: flex;
+    flex-direction: column; /* stack header + details */
+    gap: 0.3rem; /* space between them     */
+
+    transition: padding 120ms ease; /* small smooth grow/shrink */
+}
+
+/* ── HEADER ROW ───────────────────────── */
+.result-item__header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* keep tag fixed-width, name flexible */
+.result-item__tag {
+    flex: 0 0 auto;
+}
+.result-item__name {
+    flex: 1 1 auto;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ── DETAILS ──────────────────────────── */
+.result-item__details {
+    display: none; /* hidden by default    */
+    font-size: 0.85rem;
+    color: var(--vscode-descriptionForeground, #999);
+}
+
+/* ── HOVER BEHAVIOUR ───────────────────── */
+.result-item:hover {
+    background: var(--vscode-list-hoverBackground, rgba(255, 255, 255, 0.04));
+    padding-bottom: 0.8rem; /* more breathing room  */
+}
+
+.result-item:hover .result-item__details {
+    display: block; /* reveal details row   */
 }

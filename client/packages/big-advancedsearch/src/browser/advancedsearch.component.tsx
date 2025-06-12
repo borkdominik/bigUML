@@ -8,9 +8,9 @@
  **********************************************************************************/
 
 import { VSCodeContext } from '@borkdominik-biguml/big-components';
+import { VSCodeTag, VSCodeTextField } from '@vscode/webview-ui-toolkit/react/index.js';
 import { useContext, useEffect, useState, type ReactElement } from 'react';
 import { AdvancedSearchActionResponse, RequestAdvancedSearchAction } from '../common/advancedsearch.action.js';
-
 
 import type { SearchResult } from '../common/searchresult.js';
 
@@ -19,55 +19,66 @@ export function AdvancedSearch(): ReactElement {
     const [query, setQuery] = useState('');
     const [results, setResults] = useState<SearchResult[]>([]);
 
+    /* ────────────────────────────────────────────────────────────────────────── */
+    /*  Live-search helper                                                       */
+    /* ────────────────────────────────────────────────────────────────────────── */
+
+    const fireSearch = (value: string) => {
+        setQuery(value);
+
+        if (clientId) {
+            dispatchAction(RequestAdvancedSearchAction.create({ query: value }));
+        }
+    };
+
+    /* ────────────────────────────────────────────────────────────────────────── */
+    /*  Effect: listen for results coming back                                   */
+    /* ────────────────────────────────────────────────────────────────────────── */
+
     useEffect(() => {
-        const handler = (action: any) => {
+        const handler = (action: unknown) => {
             if (AdvancedSearchActionResponse.is(action)) {
                 console.log('[AdvancedSearch] Received search results:', action.results);
                 setResults(action.results);
             }
         };
-    
+
         listenAction(handler);
-    
+
         return () => {
             console.warn('[AdvancedSearch] Cannot remove listener — using one-time handler only');
         };
     }, [listenAction]);
-    
-    
-    
 
-    const handleSearch = () => {
-        if (!clientId) {
-            console.warn('Client ID not available, skipping dispatch.');
-            return;
-        }
-
-        dispatchAction(RequestAdvancedSearchAction.create({ query }));
-    };
+    /* ────────────────────────────────────────────────────────────────────────── */
 
     return (
-        <div style={{ padding: '1rem' }}>
-            <h2>Advanced Search</h2>
-            <div style={{ marginBottom: '1rem' }}>
-                <input
-                    type="text"
+        <div className='advanced-search'>
+            <div className='advanced-search__controls'>
+                <VSCodeTextField
+                    className='advanced-search__text'
                     value={query}
-                    onChange={e => setQuery(e.target.value)}
-                    placeholder="e.g. Class:Lecture"
-                    style={{ width: '60%', marginRight: '0.5rem' }}
-                />
-                <button onClick={handleSearch}>Search</button>
+                    placeholder='e.g. Class:Lecture'
+                    onInput={e => fireSearch((e.target as HTMLInputElement).value)}
+                >
+                    {/* search icon permanently docked on the left */}
+                    <span slot='end' className='codicon codicon-search' />
+                </VSCodeTextField>
             </div>
 
             <div>
                 {results.length > 0 ? (
-                    <ul>
+                    <ul className='advanced-search__results'>
                         {results.map((item, idx) => (
-                            <li key={idx}>
-                                  <strong>{item.type}</strong>: {item.name}
-                                  {item.parentName && <span> (in {item.parentName})</span>}
-                                {item.details && <div style={{ fontSize: '0.85rem', color: '#666' }}>{item.details}</div>}
+                            <li key={idx} className='result-item'>
+                                {/* ── header row ── */}
+                                <div className='result-item__header'>
+                                    <VSCodeTag className='result-item__tag'>{item.type}</VSCodeTag>
+                                    <span className='result-item__name'>{item.name}</span>
+                                </div>
+
+                                {/* ── details row (optional) ── */}
+                                {item.details && <div className='result-item__details'>{item.details}</div>}
                             </li>
                         ))}
                     </ul>

@@ -52,7 +52,11 @@ export class RevisionManagementProvider extends BIGReactWebview {
         this.toDispose.push(
             umlWatcher.onDidChange(async uri => {
                 console.log('[fswatcher] File changed (saved):', uri.fsPath);
-                const affectedResources = this.currentModelState?.getResources().filter(resource => resource.format === 'xml');
+                if (!this.currentModelState) {
+                    console.warn('[Snapshot] No current model state available');
+                    return;
+                }
+                const affectedResources = this.currentModelState.getResources().filter(resource => resource.format === 'xml');
 
                 if (affectedResources) {
                     const snapshotResources = [];
@@ -81,8 +85,10 @@ export class RevisionManagementProvider extends BIGReactWebview {
                         id,
                         timestamp: new Date().toISOString(),
                         message: 'File saved',
-                        resources: snapshotResources
+                        resources: snapshotResources,
+                        model: this.currentModelState.getSourceModel()
                     });
+                    console.log('[models1]', this.currentModelState.getSourceModel());
                     this.updateTimeline();
                     this.svgRequestId = id;
                     this.connector.sendActionToActiveClient(RequestMinimapExportSvgAction.create());
@@ -153,7 +159,10 @@ export class RevisionManagementProvider extends BIGReactWebview {
                 const snapshotIndex = this.timeline.findIndex(s => s.id === snapshotId);
                 if (snapshotIndex !== -1) {
                     const snapshot = this.timeline[snapshotIndex];
+
                     console.log(`[RevisionManagementProvider] Restoring snapshot with ID ${snapshotId}:`, snapshot);
+
+                    // restore file (does not work properly - to remove)
                     if (snapshot.resources) {
                         for (const resource of snapshot.resources) {
                             const uri = vscode.Uri.parse(resource.uri);
@@ -161,6 +170,12 @@ export class RevisionManagementProvider extends BIGReactWebview {
                             vscode.workspace.fs.writeFile(uri, encoded);
                         }
                     }
+
+                    console.log('[models2]', snapshot.model);
+
+                    // todo: restore snapshot properly by dispatching an action to the server using the saved snapshot.model
+                    // @haydar: add server action
+                    // ... dispatch RestoreModelStateAction(snapshot.model) ...
 
                     this.timeline = this.timeline.slice(0, snapshotIndex + 1);
                     const key = this.getTimelineKey();

@@ -7,11 +7,14 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
+import type { UMLSourceModel } from "@borkdominik-biguml/uml-protocol";
+
 export interface Snapshot {
     id: string;
     timestamp: string;
     message: string;
     resources: ResourceSnapshot[];
+    model: Readonly<UMLSourceModel>;
     svg?: string;
     bounds?: {
         x: number;

@@ -181,7 +181,7 @@ export function RevisionManagement(): ReactElement {
                                     </div>
 
                                     <div style={buttonRowStyle}>
-                                        <button onClick={() => handleRestore(snapshot)} style={cancelButtonStyle}>Restore</button>
+                                        <button onClick={() => handleRestore(snapshot)} style={exportButtonStyle}>Restore</button>
                                         <button onClick={() => handleExportSnapshot()} style={exportButtonStyle}>Export Snapshot</button>
                                     </div>
                                 </div>
@@ -250,13 +250,6 @@ const buttonRowStyle: React.CSSProperties = {
 const buttonBaseStyle: React.CSSProperties = {
     fontSize: '13px', padding: '0.35rem 1.1rem', borderRadius: '3px', cursor: 'pointer',
     minWidth: '100px', flexGrow: 1, textAlign: 'center', whiteSpace: 'nowrap', lineHeight: '1.4'
-};
-
-const cancelButtonStyle: React.CSSProperties = {
-    ...buttonBaseStyle,
-    backgroundColor: 'var(--vscode-button-secondaryBackground)',
-    color: 'var(--vscode-button-secondaryForeground)',
-    border: '1px solid var(--vscode-button-secondaryBorder)'
 };
 
 const exportButtonStyle: React.CSSProperties = {

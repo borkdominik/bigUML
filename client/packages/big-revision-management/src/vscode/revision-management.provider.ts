@@ -88,7 +88,6 @@ export class RevisionManagementProvider extends BIGReactWebview {
                         resources: snapshotResources,
                         model: this.currentModelState.getSourceModel()
                     });
-                    console.log('[models1]', this.currentModelState.getSourceModel());
                     this.updateTimeline();
                     this.svgRequestId = id;
                     this.connector.sendActionToActiveClient(RequestMinimapExportSvgAction.create());
@@ -170,8 +169,6 @@ export class RevisionManagementProvider extends BIGReactWebview {
                             vscode.workspace.fs.writeFile(uri, encoded);
                         }
                     }
-
-                    console.log('[models2]', snapshot.model);
 
                     // todo: restore snapshot properly by dispatching an action to the server using the saved snapshot.model
                     // @haydar: add server action

@@ -11,26 +11,36 @@ import type { IMatcher } from './IMatcher.js';
 import { SharedElementCollector } from './sharedcollector.js';
 
 export class ActivityDiagramMatcher implements IMatcher {
+    private readonly supportedTypes = [
+        'activity',
+        'accepteventaction',
+        'action',
+        'sendsignalaction',
+        'activitypartition',
+        'activityfinalnode',
+        'decisionnode',
+        'flowfinalnode',
+        'forknode',
+        'initialnode',
+        'joinnode',
+        'mergenode',
+        'activityparameternode',
+        'centralbuffernode',
+        'inputpin',
+        'outputpin',
+        'controlflow'
+    ];
+
     supports(type: string): boolean {
-        return [
-            'activity',
-            'accepteventaction',
-            'action',
-            'sendsignalaction',
-            'activitypartition',
-            'activityfinalnode',
-            'decisionnode',
-            'flowfinalnode',
-            'forknode',
-            'initialnode',
-            'joinnode',
-            'mergenode',
-            'activityparameternode',
-            'centralbuffernode',
-            'inputpin',
-            'outputpin',
-            'controlflow'
-        ].includes(type.toLowerCase());
+        return this.supportedTypes.includes(type.toLowerCase());
+    }
+
+    supportsList(): string[] {
+        return this.supportedTypes;
+    }
+
+    supportsPartial(partialType: string): boolean {
+        return this.supportedTypes.some(t => t.startsWith(partialType.toLowerCase()));
     }
 
     match(model: any): SearchResult[] {
@@ -42,7 +52,6 @@ export class ActivityDiagramMatcher implements IMatcher {
         const sourceModel = model.getSourceModel();
         const rootElements = sourceModel?.packagedElement ?? [];
 
-        // 1. Prvo prođemo sve elemente da mapiramo id → name
         SharedElementCollector.collectRecursively({ packagedElement: rootElements }, (element: any) => {
             if (element?.id) {
                 const rawType = element.eClass?.split('#//')[1];
@@ -52,7 +61,6 @@ export class ActivityDiagramMatcher implements IMatcher {
             }
         });
 
-        // 2. Sada idemo na stvarnu obradu
         SharedElementCollector.collectRecursively({ packagedElement: rootElements }, (element: any, parentName?: string) => {
             if (!element?.id) return;
 
@@ -65,10 +73,8 @@ export class ActivityDiagramMatcher implements IMatcher {
 
             const type = rawType;
             const normalizedType = type.toLowerCase();
-
             const name = element.name ?? type;
 
-            // Ako postoji inPartition → koristi njegov naziv kao parentName
             let resolvedParentName = parentName;
             if (element.inPartition?.length > 0) {
                 const refId = element.inPartition[0]?.$ref;
@@ -77,27 +83,7 @@ export class ActivityDiagramMatcher implements IMatcher {
                 }
             }
 
-            const supportedTypes = [
-                'activity',
-                'accepteventaction',
-                'sendsignalaction',
-                'action',
-                'activitypartition',
-                'activityfinalnode',
-                'decisionnode',
-                'flowfinalnode',
-                'forknode',
-                'initialnode',
-                'joinnode',
-                'mergenode',
-                'activityparameternode',
-                'centralbuffernode',
-                'inputpin',
-                'outputpin',
-                'controlflow'
-            ];
-
-            if (!supportedTypes.includes(normalizedType)) return;
+            if (!this.supportedTypes.includes(normalizedType)) return;
 
             if (normalizedType === 'controlflow') {
                 const fromId = element.source?.$ref ?? 'unknown';

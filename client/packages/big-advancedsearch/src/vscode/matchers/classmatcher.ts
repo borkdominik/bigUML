@@ -12,27 +12,37 @@ import type { IMatcher } from './IMatcher.js';
 import { SharedElementCollector } from './sharedcollector.js';
 
 export class ClassDiagramMatcher implements IMatcher {
+    private readonly supportedTypes = [
+        'class',
+        'interface',
+        'enumeration',
+        'primitivetype',
+        'datatype',
+        'attribute',
+        'method',
+        'literal',
+        'association',
+        'generalization',
+        'dependency',
+        'realization',
+        'abstraction',
+        'usage',
+        'interfacerealization',
+        'substitution',
+        'aggregation',
+        'composition'
+    ];
+
     supports(type: string): boolean {
-        return [
-            'class',
-            'interface',
-            'enumeration',
-            'primitivetype',
-            'datatype',
-            'attribute',
-            'method',
-            'literal',
-            'association',
-            'generalization',
-            'dependency',
-            'realization',
-            'abstraction',
-            'usage',
-            'interfaceRealization',
-            'substitution',
-            'aggregation',
-            'composition'
-        ].includes(type.toLowerCase());
+        return this.supportedTypes.includes(type.toLowerCase());
+    }
+
+    supportsPartial(partialType: string): boolean {
+        return this.supportedTypes.some(t => t.startsWith(partialType.toLowerCase()));
+    }
+
+    supportsList(): string[] {
+        return this.supportedTypes;
     }
 
     match(model: any): SearchResult[] {

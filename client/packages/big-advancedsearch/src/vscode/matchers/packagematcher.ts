@@ -12,10 +12,27 @@ import type { IMatcher } from './IMatcher.js';
 import { SharedElementCollector } from './sharedcollector.js';
 
 export class PackageDiagramMatcher implements IMatcher {
+    private readonly supportedTypes = [
+        'package',
+        'class',
+        'elementimport',
+        'packageimport',
+        'packagemerge',
+        'dependency',
+        'usage',
+        'abstraction'
+    ];
+
     supports(type: string): boolean {
-        return ['package', 'class', 'elementimport', 'packageimport', 'packagemerge', 'dependency', 'usage', 'abstraction'].includes(
-            type.toLowerCase()
-        );
+        return this.supportedTypes.includes(type.toLowerCase());
+    }
+
+    supportsPartial(partialType: string): boolean {
+        return this.supportedTypes.some(t => t.startsWith(partialType.toLowerCase()));
+    }
+
+    supportsList(): string[] {
+        return this.supportedTypes;
     }
 
     match(model: any): SearchResult[] {

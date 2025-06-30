@@ -12,21 +12,31 @@ import type { IMatcher } from './IMatcher.js';
 import { SharedElementCollector } from './sharedcollector.js';
 
 export class StateMachineDiagramMatcher implements IMatcher {
+    private readonly supportedTypes = [
+        'statemachine',
+        'region',
+        'state',
+        'pseudostate',
+        'choice',
+        'deephistory',
+        'finalstate',
+        'fork',
+        'initialstate',
+        'join',
+        'shallowhistory',
+        'transition'
+    ];
+
     supports(type: string): boolean {
-        return [
-            'statemachine',
-            'region',
-            'state',
-            'pseudostate',
-            'choice',
-            'deephistory',
-            'finalstate',
-            'fork',
-            'initialstate',
-            'join',
-            'shallowhistory',
-            'transition'
-        ].includes(type.toLowerCase());
+        return this.supportedTypes.includes(type.toLowerCase());
+    }
+
+    supportsPartial(partialType: string): boolean {
+        return this.supportedTypes.some(t => t.startsWith(partialType.toLowerCase()));
+    }
+
+    supportsList(): string[] {
+        return this.supportedTypes;
     }
 
     match(model: any): SearchResult[] {

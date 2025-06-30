@@ -12,8 +12,18 @@ import type { IMatcher } from './IMatcher.js';
 import { SharedElementCollector } from './sharedcollector.js';
 
 export class UseCaseDiagramMatcher implements IMatcher {
+    private readonly supportedTypes = ['usecase', 'actor', 'subject', 'association', 'extend', 'include', 'generalization'];
+
     supports(type: string): boolean {
-        return ['usecase', 'actor', 'subject', 'association', 'extend', 'include', 'generalization'].includes(type.toLowerCase());
+        return this.supportedTypes.includes(type.toLowerCase());
+    }
+
+    supportsPartial(partialType: string): boolean {
+        return this.supportedTypes.some(t => t.startsWith(partialType.toLowerCase()));
+    }
+
+    supportsList(): string[] {
+        return this.supportedTypes;
     }
 
     match(model: any): SearchResult[] {

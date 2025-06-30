@@ -57,7 +57,7 @@ export class AdvancedSearchActionHandler implements Disposable {
         new CommunicationDiagramMatcher(),
         new StateMachineDiagramMatcher(),
         new ActivityDiagramMatcher()
-        //new DeploymentDiagramMatcher()
+        // new DeploymentDiagramMatcher()
     ];
 
     @postConstruct()
@@ -73,21 +73,19 @@ export class AdvancedSearchActionHandler implements Disposable {
                     const type = rawType?.trim();
                     const pattern = rawPattern?.trim();
 
-                    // Run only matchers that support the type (or all if no type specified)
-                    for (const matcher of this.matchers) {
-                        if (!type || matcher.supports(type)) {
-                            results.push(...matcher.match(model));
-                        }
+                    // Pronađi matchere koji podržavaju djelimični unos
+                    const applicableMatchers = !type ? this.matchers : this.matchers.filter(m => m.supportsPartial?.(type));
+
+                    for (const matcher of applicableMatchers) {
+                        results.push(...matcher.match(model));
                     }
 
-                    // Apply filtering by type and pattern (name)
                     const filtered = results.filter(item => {
                         const matchesType = !type || item.type.toLowerCase().includes(type);
                         const matchesPattern = !pattern || item.name.toLowerCase().includes(pattern);
                         return matchesType && matchesPattern;
                     });
 
-                    // Remove duplicates based on (id-type)
                     const unique = new Map<string, SearchResult>();
                     for (const item of filtered) {
                         unique.set(`${item.id}-${item.type}`, item);
@@ -98,13 +96,11 @@ export class AdvancedSearchActionHandler implements Disposable {
 
                 return AdvancedSearchActionResponse.create({ results: [] });
             }),
+
             this.actionListener.handleVSCodeRequest<RequestHighlightElementAction>(RequestHighlightElementAction.KIND, message => {
                 const uri = message.action.semanticUri;
-                // translate to GLSP selection
                 this.actionDispatcher.dispatch(SelectAllAction.create(false));
                 this.actionDispatcher.dispatch(SelectAction.create({ selectedElementsIDs: [uri] }));
-
-                // trivial "OK" response so dispatcher is happy
                 return HighlightElementActionResponse.create({ ok: true });
             })
         );

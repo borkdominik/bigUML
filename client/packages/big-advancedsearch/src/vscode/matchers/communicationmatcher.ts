@@ -20,8 +20,18 @@ import type { SearchResult } from '../../common/searchresult.js';
 import type { IMatcher } from './IMatcher.js';
 
 export class CommunicationDiagramMatcher implements IMatcher {
+    private readonly supportedTypes = ['interaction', 'lifeline', 'message'];
+
     supports(type: string): boolean {
-        return ['interaction', 'lifeline', 'message'].includes(type.toLowerCase());
+        return this.supportedTypes.includes(type.toLowerCase());
+    }
+
+    supportsPartial(partialType: string): boolean {
+        return this.supportedTypes.some(t => t.startsWith(partialType.toLowerCase()));
+    }
+
+    supportsList(): string[] {
+        return this.supportedTypes;
     }
 
     match(model: any): SearchResult[] {
@@ -56,6 +66,7 @@ export class CommunicationDiagramMatcher implements IMatcher {
                     const toId = message.receiveEvent?.$ref ?? 'unknown';
                     const fromName = idToName.get(fromId) ?? fromId;
                     const toName = idToName.get(toId) ?? toId;
+                    console.log('name ', toName);
                     results.push({
                         id: message.id,
                         type: 'Message',

@@ -12,8 +12,18 @@ import type { IMatcher } from './IMatcher.js';
 import { SharedElementCollector } from './sharedcollector.js';
 
 export class InformationFlowDiagramMatcher implements IMatcher {
+    private readonly supportedTypes = ['informationflow', 'actor', 'class'];
+
     supports(type: string): boolean {
-        return ['informationflow', 'actor', 'class'].includes(type.toLowerCase());
+        return this.supportedTypes.includes(type.toLowerCase());
+    }
+
+    supportsPartial(partialType: string): boolean {
+        return this.supportedTypes.some(t => t.startsWith(partialType.toLowerCase()));
+    }
+
+    supportsList(): string[] {
+        return this.supportedTypes;
     }
 
     match(model: any): SearchResult[] {

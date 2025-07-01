@@ -8,6 +8,7 @@
  *********************************************************************************/
 
 import { helloWorldModule } from '@borkdominik-biguml/big-hello-world/glsp-client';
+import { eyeTrackingModule } from '@borkdominik-biguml/big-eye-tracking/glsp-client';
 import { minimapModule } from '@borkdominik-biguml/big-minimap/glsp-client';
 import { outlineModule } from '@borkdominik-biguml/big-outline/glsp-client';
 import { propertyPaletteModule } from '@borkdominik-biguml/big-property-palette/glsp-client';
@@ -42,7 +43,8 @@ class UMLStarter extends GLSPStarter {
             outlineModule,
             minimapModule,
             propertyPaletteModule,
-            helloWorldModule
+            helloWorldModule,
+            eyeTrackingModule
         );
 
         return container;

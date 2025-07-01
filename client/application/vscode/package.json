@@ -93,6 +93,28 @@
         "category": "bigUML",
         "enablement": "activeCustomEditorId == 'bigUML.diagramView'",
         "icon": "$(symbol-reference)"
+      },
+      {
+        "command": "bigUML.startInteractionTracking",
+        "title": "Start Interaction Tracking",
+        "category": "bigUML",
+        "enablement": "activeCustomEditorId == 'bigUML.diagramView'"
+      },
+      {
+        "command": "bigUML.stopInteractionTracking",
+        "title": "Stop Interaction Tracking",
+        "category": "bigUML",
+        "enablement": "activeCustomEditorId == 'bigUML.diagramView'"
+      },
+      {
+        "command": "bigUML.replayInteractionSession",
+        "title": "Replay Interaction Session",
+        "category": "bigUML"
+      },
+      {
+        "command": "bigUML.showSessionSummary",
+        "title": "Show Session Summary",
+        "category": "bigUML"
       }
     ],
     "configuration": {
@@ -103,6 +125,12 @@
           "default": true,
           "scope": "resource",
           "description": "Hide the *.unotation files."
+        },
+        "bigUML.monitoringServerUrl": {
+          "type": "string",
+          "default": "http://localhost:8000",
+          "scope": "resource",
+          "description": "URL of the monitoring server for uploading interaction tracking sessions."
         }
       }
     },
@@ -268,6 +296,12 @@
           "name": "Hello World",
           "type": "webview",
           "when": "bigUML.isRunning && false"
+        },
+        {
+          "id": "bigUML.panel.eye-tracking",
+          "name": "Eye Tracking",
+          "type": "webview",
+          "when": "bigUML.isRunning"
         }
       ]
     },
@@ -288,6 +322,7 @@
     "onView:bigUML.outlineView"
   ],
   "dependencies": {
+    "@borkdominik-biguml/big-eye-tracking": "*",
     "@borkdominik-biguml/big-hello-world": "*",
     "@borkdominik-biguml/big-minimap": "*",
     "@borkdominik-biguml/big-outline": "*",

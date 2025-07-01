@@ -42,5 +42,8 @@ export const VSCodeSettings = {
     },
     helloWorld: {
         viewId: 'bigUML.panel.hello-world'
+    },
+    eyeTracking: {
+        viewId: 'bigUML.panel.eye-tracking'
     }
 } as const;

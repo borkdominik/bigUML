@@ -4,7 +4,8 @@
   "compilerOptions": {
     "tsBuildInfoFile": "node_modules/.tmp/tsconfig.lib.tsbuildinfo",
     "outDir": "lib",
-    "rootDir": "src"
+    "rootDir": "src",
+    "typeRoots": ["node_modules/@types", "src/types"]
   },
-  "include": ["src/browser", "src/glsp-client", "src/web"]
+  "include": ["src/browser", "src/glsp-client", "src/web", "src/types"]
 }

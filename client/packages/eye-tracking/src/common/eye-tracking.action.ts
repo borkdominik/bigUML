@@ -32,6 +32,88 @@ export namespace RequestEyeTrackingAction {
     }
 }
 
+export interface StartEyeTrackingAction extends Action {
+    kind: typeof StartEyeTrackingAction.KIND;
+}
+
+export namespace StartEyeTrackingAction {
+    export const KIND = 'startEyeTracking';
+
+    export function is(object: unknown): object is StartEyeTrackingAction {
+        return Action.hasKind(object, KIND);
+    }
+
+    export function create(): StartEyeTrackingAction {
+        return {
+            kind: KIND
+        };
+    }
+}
+
+
+export interface StopEyeTrackingAction extends Action {
+    kind: typeof StopEyeTrackingAction.KIND;
+}
+
+export namespace StopEyeTrackingAction {
+    export const KIND = 'stopEyeTracking';
+
+    export function is(object: unknown): object is StopEyeTrackingAction {
+        return Action.hasKind(object, KIND);
+    }
+
+    export function create(): StopEyeTrackingAction {
+        return {
+            kind: KIND
+        };
+    }
+}
+
+
+export interface EyeTrackingStatusAction extends Action {
+    kind: typeof EyeTrackingStatusAction.KIND;
+    isActive: boolean;
+    isWebGazerLoaded: boolean;
+    message?: string;
+}
+
+export namespace EyeTrackingStatusAction {
+    export const KIND = 'eyeTrackingStatus';
+
+    export function is(object: unknown): object is EyeTrackingStatusAction {
+        return Action.hasKind(object, KIND);
+    }
+
+    export function create(options: Omit<EyeTrackingStatusAction, 'kind'>): EyeTrackingStatusAction {
+        return {
+            kind: KIND,
+            ...options
+        };
+    }
+}
+
+
+export interface EyeTrackingDataAction extends Action {
+    kind: typeof EyeTrackingDataAction.KIND;
+    gazePoints: Array<{x: number, y: number, timestamp: number}>;
+}
+
+export namespace EyeTrackingDataAction {
+    export const KIND = 'eyeTrackingData';
+
+    export function is(object: unknown): object is EyeTrackingDataAction {
+        return Action.hasKind(object, KIND);
+    }
+
+    export function create(gazePoints: Array<{x: number, y: number, timestamp: number}>): EyeTrackingDataAction {
+        return {
+            kind: KIND,
+            gazePoints
+        };
+    }
+}
+
+
 export interface EyeTrackingActionResponse extends ResponseAction {
     kind: typeof EyeTrackingActionResponse.KIND;
     count: number;

@@ -268,6 +268,12 @@
           "name": "Hello World",
           "type": "webview",
           "when": "bigUML.isRunning && false"
+        },
+        {
+          "id": "bigUML.panel.eye-tracking",
+          "name": "Eye Tracking",
+          "type": "webview",
+          "when": "bigUML.isRunning"
         }
       ]
     },
@@ -288,6 +294,7 @@
     "onView:bigUML.outlineView"
   ],
   "dependencies": {
+    "@borkdominik-biguml/big-eye-tracking": "*",
     "@borkdominik-biguml/big-hello-world": "*",
     "@borkdominik-biguml/big-minimap": "*",
     "@borkdominik-biguml/big-outline": "*",

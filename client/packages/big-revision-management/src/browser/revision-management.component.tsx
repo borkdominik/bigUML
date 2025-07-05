@@ -11,10 +11,12 @@ import type { ReactElement } from 'react';
 import { useContext, useEffect, useState } from 'react';
 import { FileSaveResponse } from '../common/actions/file-save-action.js';
 import { RequestChangeSnapshotNameAction } from '../common/actions/request-change-snapshot-name-action.js';
+import { RequestDeleteSnapshotAction } from '../common/actions/request-delete-snapshot-action.js';
 import { RequestExportSnapshotAction } from '../common/actions/request-export-snapshot-action.js';
 import { RequestImportSnapshotAction } from '../common/actions/request-import-snapshot-action.js';
 import { RequestRestoreSnapshotAction } from '../common/actions/request-restore-snapshot-action.js';
 import type { Snapshot } from '../common/snapshot.js';
+import { ConfirmDeleteModal } from './modals/confirm-delete-modal.js';
 import { ConfirmRestoreModal } from './modals/confirm-restore-modal.js';
 import { ExportTimelineModal } from './modals/export-timeline-modal.js';
 import { ImportTimelineModal } from './modals/import-timeline-modal.js';
@@ -27,7 +29,9 @@ export function RevisionManagement(): ReactElement {
     const [showImportModal, setShowImportModal] = useState(false);
     const [showExportModal, setShowExportModal] = useState(false);
     const [showRestoreModal, setShowRestoreModal] = useState(false);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [selectedSnapshot, setSelectedSnapshot] = useState<Snapshot | null>(null);
+    const [deleting, setDeleting] = useState<Snapshot | null>(null);
     const [editingId, setEditingId] = useState<string | null>(null);
     const [editingMessage, setEditingMessage] = useState<string>('');
 
@@ -151,16 +155,28 @@ export function RevisionManagement(): ReactElement {
                                             </button>
                                         </>
                                     ) : (
-                                        <button
-                                            onClick={() => startEditing(snapshot)}
-                                            style={{
-                                                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                                cursor: 'pointer', background: 'none', border: 'none', padding: 0,
-                                                color: 'var(--vscode-editor-foreground)'
-                                            }}
-                                        >
-                                            Edit
-                                        </button>
+                                        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '0.5rem' }}>
+                                            <button
+                                                onClick={() => startEditing(snapshot)}
+                                                style={{
+                                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                                    cursor: 'pointer', background: 'none', border: 'none', padding: 0,
+                                                    color: 'var(--vscode-editor-foreground)'
+                                                }}
+                                            >
+                                                Edit
+                                            </button>
+                                            <button
+                                                onClick={() => { setDeleting(snapshot); setShowDeleteModal(true); }}
+                                                style={{
+                                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                                    cursor: 'pointer', background: 'none', border: 'none', padding: 0,
+                                                    color: 'var(--vscode-editor-foreground)'
+                                                }}
+                                            >
+                                                Delete
+                                            </button>
+                                        </div>
                                     )}
                                 </div>
                             </div>
@@ -235,6 +251,18 @@ export function RevisionManagement(): ReactElement {
                         dispatchAction(RequestRestoreSnapshotAction.create(selectedSnapshot.id));
                         setShowRestoreModal(false);
                         setSelectedSnapshot(null);
+                    }}
+                />
+            )}
+
+            {showDeleteModal && deleting && (
+                <ConfirmDeleteModal
+                    name={deleting.message}
+                    onCancel={() => { setShowDeleteModal(false); setDeleting(null); }}
+                    onConfirm={() => {
+                        dispatchAction(RequestDeleteSnapshotAction.create(deleting?.id, deleting?.message));
+                        setShowDeleteModal(false);
+                        setDeleting(null);
                     }}
                 />
             )}

@@ -12,8 +12,10 @@ import { BIGReactWebview, TYPES, type ExperimentalModelState } from '@borkdomini
 import { RequestExportSvgAction } from '@eclipse-glsp/protocol';
 import { inject, injectable, postConstruct } from 'inversify';
 import * as vscode from 'vscode';
+import { DeleteSnapshotResponseAction } from '../common/actions/delete-snapshot-response-action.js';
 import { FileSaveResponse } from '../common/actions/file-save-action.js';
 import { RequestChangeSnapshotNameAction } from '../common/actions/request-change-snapshot-name-action.js';
+import { RequestDeleteSnapshotAction } from '../common/actions/request-delete-snapshot-action.js';
 import { RequestExportSnapshotAction } from '../common/actions/request-export-snapshot-action.js';
 import { RequestImportSnapshotAction } from '../common/actions/request-import-snapshot-action.js';
 import { RequestRestoreSnapshotAction } from '../common/actions/request-restore-snapshot-action.js';
@@ -190,8 +192,34 @@ export class RevisionManagementProvider extends BIGReactWebview {
             })
         );
 
+
+        this.toDispose.push(
+            this.actionListener.handleVSCodeRequest(RequestDeleteSnapshotAction.KIND, async message => {
+                const action = message.action as RequestDeleteSnapshotAction;
+                const snapshotId = action.snapshotId;
+
+                console.log(`[RevisionManagementProvider] Delete request received for snapshot ID: ${snapshotId}`);
+
+                const snapshotIndex = this.timeline.findIndex(s => s.id === snapshotId);
+                if (snapshotIndex === -1) {
+                    console.warn(`[RevisionManagementProvider] Snapshot with ID ${snapshotId} not found`);
+                    return { kind: 'noop' } as any;
+                }
+                this.timeline = [
+                    ...this.timeline.slice(0, snapshotIndex),
+                    ...this.timeline.slice(snapshotIndex + 1),
+                ];
+                const key = this.getTimelineKey();
+                await this.extensionContext.globalState.update(key, this.timeline);
+                this.updateTimeline();
+                return DeleteSnapshotResponseAction.create(action.requestId);
+            })
+        );
+
         this.toDispose.push(this.actionCache);
     }
+
+    
 
     protected override handleConnection(): void {
         super.handleConnection();

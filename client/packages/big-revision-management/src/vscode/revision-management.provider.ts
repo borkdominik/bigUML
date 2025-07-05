@@ -47,7 +47,7 @@ export class RevisionManagementProvider extends BIGReactWebview {
         super.init();
         console.log('Revision Management Provider init');
 
-        // Uncomment line below if you wish to clear the VSCode storage
+        // Uncomment line below if you wish to clear the VSCode storage for each session
         this.clearVSCodeStorage();
 
         const umlWatcher = vscode.workspace.createFileSystemWatcher('**/*.uml');

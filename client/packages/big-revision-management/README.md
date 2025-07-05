@@ -82,7 +82,11 @@ With the UI foundation in place, we moved to an incremental, feature-driven impl
 
 Next, we implemented rendering of minimaps for each timeline entry. For this, we used the existing `MiniMap` package to display snapshots of model states. Following that, we added functionality for importing and exporting timeline entries as JSON or exporting a single timeline entry as SVG, enabling users to save and reuse their revision history. We then introduced the ability to rename existing timeline entries to improve traceability.
 
-We completed the core feature set by implementing deletion of timeline entries. This allows users to manage their revision history more effectively by removing outdated or unnecessary snapshots.
+To ensure that timeline snapshots persist across sessions, we used **VSCode's global storage** as a simple and effective way to retain timeline entries even when the BigUML extension is restarted.
+
+We completed the core feature set by implementing deletion of timeline entries. This allows users to manage their revision history more effectively by removing outdated or unnecessary snapshots. In file `big-revision-management/vscode/revision-management.provider.ts`, there is a helper function called `clearVSCodeStorage()` which, during development, is executed automatically on each session load to clear the stored timeline entries. This was useful for testing a clean state but conflicts with persistence testing. Unfortunately, due to TypeScript compiler constraints, we were unable to simply comment out the function or leave it unused—both options resulted in a build error (either from an unused method or an invalid comment syntax depending on placement).
+
+As a result, we chose to leave the method defined and invoked by default for simplicity during development and debugging. If you wish to test the persistence behavior of timeline entries, simply **comment out line 51** (the call to `clearVSCodeStorage()`) in `revision-management.provider.ts`.
 
 ### Encountered Problems
 

@@ -43,7 +43,7 @@ const overlayStyle: React.CSSProperties = {
     left: 0,
     width: '100vw',
     height: '100vh',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: 'rgba(var(--vscode-editor-background-rgb), 0.5)',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -51,13 +51,13 @@ const overlayStyle: React.CSSProperties = {
 };
 
 const modalStyle: React.CSSProperties = {
-    backgroundColor: '#1e1e1e',
+    backgroundColor: 'var(--vscode-editor-background)',
     color: 'var(--vscode-editor-foreground)',
     padding: '1.25rem 1.25rem',
     borderRadius: '6px',
     width: '90%',
     maxWidth: '320px',
-    boxShadow: '0 4px 20px rgba(0,0,0,0.35)',
+    boxShadow: 'var(--vscode-editor-widget-shadow)',
     fontSize: '15px',
     display: 'flex',
     flexDirection: 'column',

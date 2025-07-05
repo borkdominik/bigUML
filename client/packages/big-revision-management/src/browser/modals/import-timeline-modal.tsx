@@ -124,7 +124,7 @@ const overlayStyle: React.CSSProperties = {
     left: 0,
     width: '100vw',
     height: '100vh',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: 'rgba(var(--vscode-editor-background-rgb), 0.5)',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -132,20 +132,19 @@ const overlayStyle: React.CSSProperties = {
 };
 
 const modalStyle: React.CSSProperties = {
-    backgroundColor: '#1e1e1e',
+    backgroundColor: 'var(--vscode-editor-background)',
     color: 'var(--vscode-editor-foreground)',
     padding: '1.25rem 1.25rem',
     borderRadius: '6px',
     width: '90%',
-    maxWidth: '320px',              
-    boxShadow: '0 4px 20px rgba(0,0,0,0.35)',
+    maxWidth: '320px',
+    boxShadow: 'var(--vscode-editor-widget-shadow)',
     fontSize: '14px',
     position: 'relative',
     display: 'flex',
     flexDirection: 'column',
-    minHeight: '240px'             
+    minHeight: '240px'
 };
-
 
 const closeButtonStyle: React.CSSProperties = {
     position: 'absolute',
@@ -194,15 +193,14 @@ const numberInputStyle: React.CSSProperties = {
 
 const buttonRowStyle: React.CSSProperties = {
     display: 'flex',
-    flexDirection: 'row',              
-    justifyContent: 'flex-end',       
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
     alignItems: 'center',
     gap: '0.4rem',
     borderTop: '1px solid var(--vscode-panel-border)',
     paddingTop: '0.75rem',
     marginTop: '1rem'
 };
-
 
 const hiddenFileInputStyle: React.CSSProperties = {
     display: 'none'
@@ -240,8 +238,8 @@ const fileNameStyle: React.CSSProperties = {
 };
 
 const buttonBaseStyle: React.CSSProperties = {
-    fontSize: '13px',                         
-    padding: '0.35rem 1.1rem',              
+    fontSize: '13px',
+    padding: '0.35rem 1.1rem',
     borderRadius: '3px',
     cursor: 'pointer',
     minWidth: 'auto',
@@ -251,7 +249,6 @@ const buttonBaseStyle: React.CSSProperties = {
     whiteSpace: 'nowrap',
     lineHeight: '1.4'
 };
-
 
 const cancelButtonStyle: React.CSSProperties = {
     ...buttonBaseStyle,

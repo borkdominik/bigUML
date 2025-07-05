@@ -6,6 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
+import '@vscode/codicons/dist/codicon.css';
 import 'reflect-metadata';
 
 import { VSCodeConnector } from '@borkdominik-biguml/big-components';

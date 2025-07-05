@@ -141,7 +141,7 @@ export function RevisionManagement(): ReactElement {
                                                     color: 'var(--vscode-editor-foreground)'
                                                 }}
                                             >
-                                                Save
+                                                <span title="Save" className="codicon codicon-save" aria-hidden="true" />
                                             </button>
                                             <button
                                                 onClick={cancelEdit}
@@ -151,7 +151,7 @@ export function RevisionManagement(): ReactElement {
                                                     color: 'var(--vscode-editor-foreground)'
                                                 }}
                                             >
-                                                Cancel
+                                                <span title="Cancel edit" className="codicon codicon-close" aria-hidden="true" />
                                             </button>
                                         </>
                                     ) : (
@@ -164,7 +164,7 @@ export function RevisionManagement(): ReactElement {
                                                     color: 'var(--vscode-editor-foreground)'
                                                 }}
                                             >
-                                                Edit
+                                                <span title="Edit entry name" className="codicon codicon-edit" aria-hidden="true" />
                                             </button>
                                             <button
                                                 onClick={() => { setDeleting(snapshot); setShowDeleteModal(true); }}
@@ -174,7 +174,7 @@ export function RevisionManagement(): ReactElement {
                                                     color: 'var(--vscode-editor-foreground)'
                                                 }}
                                             >
-                                                Delete
+                                                <span title="Delete entry" className="codicon codicon-trash" aria-hidden="true" />
                                             </button>
                                         </div>
                                     )}

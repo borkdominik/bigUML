@@ -51,16 +51,17 @@
     "lint": "eslint -c ./eslint.config.js",
     "lint:fix": "npm run lint -- --fix",
     "tsc": "tsc",
-    "watch": "concurrently --kill-others 'npm run compile -- --watch' 'npm run bundle -- --watch'"
+    "watch": "concurrently --kill-others \"npm run compile -- --watch\" \"npm run bundle -- --watch\""
   },
   "dependencies": {
     "@borkdominik-biguml/big-components": "*",
+    "@borkdominik-biguml/big-minimap": "*",
     "@borkdominik-biguml/big-vscode-integration": "*",
     "@borkdominik-biguml/uml-protocol": "*",
-    "@borkdominik-biguml/big-minimap": "*",
     "@eclipse-glsp/client": "*",
     "@eclipse-glsp/protocol": "*",
     "@eclipse-glsp/vscode-integration-webview": "*",
+    "@vscode/codicons": "^0.0.36",
     "vscode-messenger-common": "^0.4.5"
   },
   "devDependencies": {

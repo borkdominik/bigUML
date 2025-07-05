@@ -6,7 +6,15 @@ The Revision Management (Timeline) feature helps users track and manage changes 
 
 ## System Overview
 
+The Revision Management Feature is structured as a two-part extension inside the BigUML system environment:
 
+- **Frontend (Webview):**  
+  It is defined using React and  it provides the user interface for interacting with the timeline. Users can create, view, rename, delete, import, and export timeline entries. It communicates with the backend via a lightweight action-dispatch mechanism and renders SVG previews of model snapshots.
+
+- **Backend (VSCode Extension):**  
+  Implemented in TypeScript, it handles snapshot generation, persistence, and communication with the modeling infrastructure (GLSP and underlying model state). It listens for file system changes (e.g. UML save events), manages snapshot storage per model, and dispatches updates back to the frontend.
+
+Each time a `.uml` file is saved, a snapshot of the current model state is created, stored, and visually represented on the timeline. Timeline entries include metadata such as timestamp and a minimap (SVG) rendering of the model at that moment. Snapshots can be exported to or imported from JSON files, which allows users to archive and restore entire revision histories. Timeline data is stored per diagram using VSCode's `globalState`, ensuring persistence across sessions.
 
 ## Features
 
@@ -67,14 +75,19 @@ The Revision Management (Timeline) feature helps users track and manage changes 
     - User action: Click on a timeline entry, click on "Export Snapshot", choose a file location
     - Result: SVG export of the selected timeline entry is saved to the selected location
 
-## Implementation
-
-
 # Course Documentation
 
-## Workflow
+## Workflows
 
-### Development Process
+### Save-triggered Timeline Entry Workflow
+
+![Save-triggered Timeline Entry Workflow](images/workflow_save.png)
+
+### Import and Export of Timeline Snapshots Workflow
+
+![Import and Export of Timeline Snapshots](images/workflow_importexport.png)
+
+## Development Process
 
 We began by creating mockups of the key features to explore the user interface and define the visual structure of the package. Once we finalized the design, we focused on implementing the UI in VSCode using mocked data. This allowed us to render the timeline view and integrate modals for import and export without yet connecting any logic.
 
@@ -88,7 +101,7 @@ We completed the core feature set by implementing deletion of timeline entries. 
 
 As a result, we chose to leave the method defined and invoked by default for simplicity during development and debugging. If you wish to test the persistence behavior of timeline entries, simply **comment out line 51** (the call to `clearVSCodeStorage()`) in `revision-management.provider.ts`.
 
-### Encountered Problems
+## Encountered Problems
 
 One of the main challenges we faced during development was navigating the complexity of the BigUML project itself. Since we joined the project without prior experience in its architecture, we needed to invest time into understanding its structure, communication patterns, and extension points.
 

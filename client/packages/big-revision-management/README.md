@@ -80,7 +80,7 @@ We began by creating mockups of the key features to explore the user interface a
 
 With the UI foundation in place, we moved to an incremental, feature-driven implementation. Our first priority was the core functionality of the Revision Management package: capturing timeline entries. We ensured that a new entry is automatically added when a `.uml` file is saved (via `Ctrl+S` or `auto-save`), and also enabled manual creation of entries through a dedicated button.
 
-Next, we implemented rendering of minimaps for each timeline entry. For this, we used the existing `MiniMap` package to display snapshots of model states. Following that, we added functionality for importing and exporting timeline entries as JSON or exporting a single timeline entry as SVG, enabling users to save and reuse their revision history. We then introduced the ability to rename existing timeline entries to improve traceability.
+Next, we implemented rendering of minimaps for each timeline entry. For this, we used the existing `MiniMap` package to display snapshots of model states. Following that, we added functionality for importing and exporting timeline entries as JSON or exporting a single timeline entry as SVG, enabling users to save and reuse their revision history. We then introduced the ability to rename existing timeline entries to improve traceability. Aftwerwards, we also enabled deliting singular timeline entries.
 
 To ensure that timeline snapshots persist across sessions, we used **VSCode's global storage** as a simple and effective way to retain timeline entries even when the BigUML extension is restarted.
 

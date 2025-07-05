@@ -15,6 +15,7 @@ import { RequestDeleteSnapshotAction } from '../common/actions/request-delete-sn
 import { RequestExportSnapshotAction } from '../common/actions/request-export-snapshot-action.js';
 import { RequestImportSnapshotAction } from '../common/actions/request-import-snapshot-action.js';
 import { RequestRestoreSnapshotAction } from '../common/actions/request-restore-snapshot-action.js';
+import { RequestSaveFileAction } from '../common/actions/request-save-file-action.js';
 import type { Snapshot } from '../common/snapshot.js';
 import { ConfirmDeleteModal } from './modals/confirm-delete-modal.js';
 import { ConfirmRestoreModal } from './modals/confirm-restore-modal.js';
@@ -79,8 +80,32 @@ export function RevisionManagement(): ReactElement {
         setEditingMessage('');
     };
 
+    const handleSave = () => {
+        dispatchAction(RequestSaveFileAction.create());
+    };
+
     return (
         <div style={{ padding: '0.25rem 0.5rem', fontFamily: 'var(--vscode-font-family)', color: 'var(--vscode-editor-foreground)' }}>
+            <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '1rem', gap: '0.5rem' }}>
+                <button
+                    onClick={handleSave}
+                    style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.4rem',
+                        background: 'var(--vscode-button-background)',
+                        color: 'var(--vscode-button-foreground)',
+                        border: 'none',
+                        borderRadius: '3px',
+                        padding: '0.4rem 0.8rem',
+                        fontSize: '13px',
+                        cursor: 'pointer'
+                    }}
+                >
+                    <span className="codicon codicon-save" aria-hidden="true" />
+                    Save
+                </button>
+            </div>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
                 {[...timeline].reverse().map(snapshot => {
                     const isExpanded = expandedId === snapshot.id;

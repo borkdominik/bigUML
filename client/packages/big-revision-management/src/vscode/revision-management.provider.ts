@@ -21,6 +21,7 @@ import { RequestImportSnapshotAction } from '../common/actions/request-import-sn
 import { RequestRestoreSnapshotAction } from '../common/actions/request-restore-snapshot-action.js';
 import { RestoreSnapshotResponseAction } from '../common/actions/restore-snapshot-response-action.js';
 import { type Snapshot } from '../common/snapshot.js';
+import { RequestSaveFileAction } from '../common/actions/request-save-file-action.js';
 
 export const RevisionManagementId = Symbol('RevisionmanagementViewId');
 
@@ -54,46 +55,13 @@ export class RevisionManagementProvider extends BIGReactWebview {
         this.toDispose.push(
             umlWatcher.onDidChange(async uri => {
                 console.log('[fswatcher] File changed (saved):', uri.fsPath);
-                if (!this.currentModelState) {
-                    console.warn('[Snapshot] No current model state available');
+                if (!this.connectionManager.hasActiveClient()) {
+                    console.warn('[Snapshot] No active GLSP client available');
                     return;
                 }
-                const affectedResources = this.currentModelState.getResources().filter(resource => resource.format === 'xml');
 
-                if (affectedResources) {
-                    const snapshotResources = [];
-                    for (const affectedResource of affectedResources) {
-                        snapshotResources.push({
-                            uri: affectedResource.uri,
-                            content: affectedResource.content
-                        });
-                    }
-                    if (!this.connectionManager.hasActiveClient()) {
-                        console.warn('[Snapshot] No active GLSP client available');
-                        return;
-                    }
-
-                    console.log('[Snapshot] Triggering exportSvg via RequestMinimapExportSvgAction');
-
-                    const now = Date.now();
-                    if (now - this.lastSnapshotTime < 1000) {
-                        console.log('[Snapshot] Too soon since last snapshot — skipping.');
-                        return;
-                    }
-                    this.lastSnapshotTime = now;
-
-                    const id = this.timeline.length.toString();
-                    this.timeline.push({
-                        id,
-                        timestamp: new Date().toISOString(),
-                        message: 'File saved',
-                        resources: snapshotResources,
-                        model: this.currentModelState.getSourceModel()
-                    });
-                    this.updateTimeline();
-                    this.svgRequestId = id;
-                    this.connector.sendActionToActiveClient(RequestMinimapExportSvgAction.create());
-                }
+                console.log('[Snapshot] Triggering exportSvg via RequestMinimapExportSvgAction');
+                this.createSnapshot('File saved');
             }),
 
             umlWatcher.onDidCreate(uri => {
@@ -129,11 +97,21 @@ export class RevisionManagementProvider extends BIGReactWebview {
             })
         );
 
+
+        this.toDispose.push(
+            this.actionListener.handleVSCodeRequest(RequestSaveFileAction.KIND, async () => {
+                console.log('[RevisionManagementProvider] RequestSaveFileAction received');
+                this.createSnapshot('Manual save');
+                return { kind: 'noop' } as any;
+            })
+        );
+
         this.toDispose.push(
             this.actionListener.handleVSCodeRequest(RequestImportSnapshotAction.KIND, async (message: any) => {
                 console.log('[RevisionManagementProvider] ImportSnapshot action received');
                 this.timeline = message.action.importedSnapshots;
                 this.updateTimeline();
+                 // TODO: needs server extension to update model shown in main window
                 return { kind: 'noop' } as any;
             })
         );
@@ -212,6 +190,7 @@ export class RevisionManagementProvider extends BIGReactWebview {
                 const key = this.getTimelineKey();
                 await this.extensionContext.globalState.update(key, this.timeline);
                 this.updateTimeline();
+                // TODO: needs server extension to update model shown in main window if last snapshot is deleted
                 return DeleteSnapshotResponseAction.create(action.requestId);
             })
         );
@@ -352,4 +331,43 @@ export class RevisionManagementProvider extends BIGReactWebview {
 
         console.log('[Timeline] All globalState keys cleared.');
     }
+
+    private createSnapshot(message: string): void {
+        if (!this.currentModelState) {
+            console.warn('[Snapshot] No current model state available');
+            return;
+        }
+
+        const affectedResources = this.currentModelState.getResources().filter(resource => resource.format === 'xml');
+        if (!affectedResources.length) {
+            console.warn('[Snapshot] No XML resources to snapshot');
+            return;
+        }
+
+        const now = Date.now();
+        if (now - this.lastSnapshotTime < 1000) {
+            console.log('[Snapshot] Too soon since last snapshot — skipping.');
+            return;
+        }
+        this.lastSnapshotTime = now;
+
+        const snapshotResources = affectedResources.map(resource => ({
+            uri: resource.uri,
+            content: resource.content
+        }));
+
+        const id = this.timeline.length.toString();
+        this.timeline.push({
+            id,
+            timestamp: new Date().toISOString(),
+            message,
+            resources: snapshotResources,
+            model: this.currentModelState.getSourceModel()
+        });
+
+        this.svgRequestId = id;
+        this.updateTimeline();
+        this.connector.sendActionToActiveClient(RequestMinimapExportSvgAction.create());
+    }
+
 }

@@ -103,7 +103,7 @@ export function RevisionManagement(): ReactElement {
                     }}
                 >
                     <span className="codicon codicon-save" aria-hidden="true" />
-                    Save
+                    Create New Timeline Entry
                 </button>
             </div>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>

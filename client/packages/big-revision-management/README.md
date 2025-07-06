@@ -18,6 +18,8 @@ Each time a `.uml` file is saved, a snapshot of the current model state is creat
 
 ## Features
 
+Features implemented in the revision management package are described here from a user's perspective.
+
 ### Timeline Core Features
 
 - **Add timline entry automatically on save** 
@@ -78,17 +80,35 @@ Each time a `.uml` file is saved, a snapshot of the current model state is creat
     - Create a new timeline entry on file save (bigUML.timeline.onSave, boolean, default true)
     - Persist timeline entries across restarts (bigUML.timeline.persistent, boolean, default true)
 
-# Course Documentation
+## Implementation
 
-## Workflows
+This section outlines the technical implementation for developers to continue working on the package.
 
-### Save-triggered Timeline Entry Workflow
+### Package Structure
+
+The most relevant parts of the source code under `src` are the following folders:
+
+- `browser`: Frontend with UI components (timeline and modals) to display the timeline.
+- `common`: Data models (timeline snapshot) and action definitions.
+- `vscode`: Backend logic (provider) with action handling and timeline management.
+
+### Actions
+
+![Save-triggered Timeline Entry Workflow](images/actions.png)
+
+### Workflows (Activity Diagrams)
+
+#### Save-triggered Timeline Entry Workflow
 
 ![Save-triggered Timeline Entry Workflow](images/workflow_save.png)
 
-### Import and Export of Timeline Snapshots Workflow
+#### Import and Export of Timeline Snapshots Workflow
 
 ![Import and Export of Timeline Snapshots](images/workflow_importexport.png)
+
+# Course Documentation
+
+The course documentation summarizes the development process, inlcuding decisions, encountered problems, limitations, future work, as well as feedback for the course.
 
 ## Development Process
 
@@ -126,7 +146,7 @@ One of the main challenges we faced during development was navigating the comple
 
 BigUML is a large and modular system with many interconnected parts, which made it initially overwhelming. As we are not model engineering experts—and especially not familiar with developing VSCode extensions—everything from the tooling to the conceptual model was new territory for us. Understanding how the underlying model state is managed, how different layers communicate, and where our extension logic fits in required deep exploration.
 
-A particular learning curve was working with the action system. At first, it wasn’t clear how actions were dispatched, how responses were handled, or how existing components (like the minimap rendering logic) could be reused. We had to carefully inspect and trace existing code to understand how to integrate our own functionality into the system without breaking existing behavior.
+A particular learning curve was working with the action system. At first, it wasn’t sclear how actions were dispatched, how responses were handled, or how existing components (like the minimap rendering logic) could be reused. We had to carefully inspect and trace existing code to understand how to integrate our own functionality into the system without breaking existing behavior.
 
 Despite the challenges, this exploration turned out to be an important learning experience, as it taught us how to extend and reuse complex infrastructure in a structured way.
 

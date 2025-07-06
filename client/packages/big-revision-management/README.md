@@ -163,8 +163,16 @@ In addition to these core improvements, we thought of several enhancements and n
 ## Feedback
 
 ### BigUML Feedback
+BigUML is a large and well-built project with many working packages. It already includes a lot of useful features, but there's still plenty of room to add more and improve the tool. Many of the features developed by other students during this course show how the BigUML VSCode extension can become even more helpful when it comes to managing and creating UML diagrams.
+
+Since the project is so big and split into many modules, it wasn’t easy to get started. As beginners, we first had to spend a lot of time just reading through the code, trying to understand how things work, and figuring out where to add our own logic. It took time to learn how different parts of the system connect and how to avoid breaking existing features.
+
+We think it would really help if each package had its own README file that explains what the package does, how it works, and what features it provides. This would make it much easier for new developers to understand the system and reuse parts of the code without starting from scratch or repeating work that’s already been done.
 
 ### Course Feedback
+We found the course to be very interesting and unique, definitely something we’ve come to appreciate as software engineering students. It introduced us to new territory, combining model engineering and VSCode extension development, which are not typically covered in other university courses and gave us a chance to explore technologies and concepts that are both modern and highly relevant in real-world software tooling.
+
+The workload for the course felt fair and manageable, and the lecture team was always available to answer questions and provide support when needed. One area that could improve the experience even further would be to include a brief introduction to the system architecture at the beginning of the semester. This could be delivered as a pre-recorded video in the TUWEL course or as an in-person workshop. Such an introduction would help students get started more quickly with their assigned features, especially given the size and complexity of the BigUML project.
 
 
 

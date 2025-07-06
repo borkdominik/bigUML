@@ -65,15 +65,17 @@ export class AdvancedSearchActionHandler implements Disposable {
         this.toDispose.push(
             this.actionListener.handleVSCodeRequest<RequestAdvancedSearchAction>(RequestAdvancedSearchAction.KIND, request => {
                 const model = this.modelState.getModelState();
+
                 const results: SearchResult[] = [];
 
                 if (model) {
+                    const sourceModel = model.getSourceModel();
+                    console.log('The model: ', sourceModel);
                     const query = request.action.query.trim().toLowerCase();
                     const [rawType, rawPattern] = query.split(':');
                     const type = rawType?.trim();
                     const pattern = rawPattern?.trim();
 
-                    // Pronađi matchere koji podržavaju djelimični unos
                     const applicableMatchers = !type ? this.matchers : this.matchers.filter(m => m.supportsPartial?.(type));
 
                     for (const matcher of applicableMatchers) {

@@ -62,12 +62,10 @@ export class DeploymentDiagramMatcher implements IMatcher {
 
             const anyElement = element as any;
 
-            // Obrada relacija
             if (['CommunicationPath', 'Dependency', 'Deployment', 'Generalization', 'Manifestation'].includes(type)) {
                 let fromName = '';
                 let toId = '';
 
-                // Pokušaj dohvatiti reference prema tipu relacije
                 switch (type) {
                     case 'CommunicationPath':
                         fromName = idToName.get(anyElement.source?.$ref ?? '') ?? 'unknown';
@@ -98,7 +96,6 @@ export class DeploymentDiagramMatcher implements IMatcher {
             }
         });
 
-        // Dodaj relacije u rezultate
         for (const rel of pendingRelations) {
             const toName = idToName.get(rel.toId) ?? '(unknown)';
             results.push({

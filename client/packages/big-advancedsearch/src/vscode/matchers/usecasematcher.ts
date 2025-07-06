@@ -35,16 +35,15 @@ export class UseCaseDiagramMatcher implements IMatcher {
         const rootElements = sourceModel?.packagedElement ?? [];
 
         SharedElementCollector.collectRecursively({ packagedElement: rootElements }, (element, parentName) => {
-            console.log('Debug element:', {
-                id: element.id,
-                name: element.name,
-                eClass: element.eClass,
-                keys: Object.keys(element)
-            });
+            // console.log('Debug element:', {
+            //     id: element.id,
+            //     name: element.name,
+            //     eClass: element.eClass,
+            //     keys: Object.keys(element)
+            // });
 
             let type = element.eClass?.split('#//')[1];
 
-            // Ako nema eClass, pokušaj prepoznati UseCase ručno
             if (!type) {
                 if (element.name && !element.$ref && !element.x && !element.y && !element.width && !element.height) {
                     type = 'UseCase';
@@ -53,7 +52,6 @@ export class UseCaseDiagramMatcher implements IMatcher {
                 }
             }
 
-            // Spriječi false-positive UseCase unutar StateMachine
             if (parentName?.toLowerCase().includes('statemachine') || parentName?.toLowerCase().includes('region')) {
                 if (!['Actor', 'UseCase', 'Subject'].includes(type)) {
                     return;
@@ -66,12 +64,10 @@ export class UseCaseDiagramMatcher implements IMatcher {
             const allowedTypes = ['usecase', 'actor', 'subject', 'association', 'extend', 'include', 'generalization'];
             if (!allowedTypes.includes(type.toLowerCase())) return;
 
-            // Dodaj osnovne elemente
             if (['Actor', 'Subject', 'UseCase'].includes(type)) {
                 results.push({ id: element.id, type, name, parentName });
             }
 
-            // Relacije
             const anyElement = element as any;
 
             if (anyElement.include) {
@@ -110,7 +106,6 @@ export class UseCaseDiagramMatcher implements IMatcher {
                 }
             }
 
-            // Association (samo ako obje strane imaju reference)
             if (type === 'Association' && anyElement.memberEnd?.length === 2) {
                 const [end1, end2] = anyElement.memberEnd;
                 const name1 = idToName.get(end1?.$ref ?? '') ?? '(unknown)';

@@ -154,7 +154,6 @@ export class ClassDiagramMatcher implements IMatcher {
             }
         });
 
-        // Obrada relacija nakon skupljanja imena
         for (const rel of pendingRelations) {
             if (rel.type === 'Association') {
                 const type1 = propertyIdToTypeId.get(rel.end1);

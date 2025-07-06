@@ -64,23 +64,19 @@ export class StateMachineDiagramMatcher implements IMatcher {
             if (visited.has(uniqueKey)) return;
             visited.add(uniqueKey);
 
-            // Determine type
             let rawType = element.eClass?.split('#//')[1] ?? null;
 
-            // fallback za kind ako nema eClass
             if (!rawType && element.kind) {
                 const kind = element.kind.toLowerCase();
                 rawType = kindToTypeMap[kind] ?? 'Pseudostate';
             }
 
-            // fallback za transition (nema eClass, ali ima source/target)
             if (!rawType && element.source && element.target) {
                 rawType = 'Transition';
             }
 
             if (!rawType) return;
 
-            // Uključi precizne tipove za Pseudostate
             let type = rawType;
             if (type === 'Pseudostate' && element.kind) {
                 const kind = element.kind.toLowerCase();
@@ -131,7 +127,6 @@ export class StateMachineDiagramMatcher implements IMatcher {
             }
         });
 
-        // Dodaj sve transition veze
         for (const rel of pendingTransitions) {
             const toName = idToName.get(rel.toId) ?? '(unknown)';
             results.push({

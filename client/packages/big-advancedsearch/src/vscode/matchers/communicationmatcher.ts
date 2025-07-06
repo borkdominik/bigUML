@@ -41,7 +41,6 @@ export class CommunicationDiagramMatcher implements IMatcher {
         const sourceModel = model.getSourceModel();
         const rootElements = sourceModel?.packagedElement ?? [];
 
-        // Loop through root elements to find Interaction elements
         for (const element of rootElements) {
             const typeFromEClass = element.eClass?.split('#//')[1];
 
@@ -50,27 +49,45 @@ export class CommunicationDiagramMatcher implements IMatcher {
                 const interactionName = interaction.name ?? '<<Interaction>>';
                 idToName.set(interaction.id, interactionName);
 
-                // add interaction node
                 results.push({ id: interaction.id, type: 'Interaction', name: interactionName });
 
-                // Iterate through lifeline elements within the interaction
                 for (const lifeline of interaction.lifeline ?? []) {
                     const lifelineName = lifeline.name ?? '<<Lifeline>>';
                     idToName.set(lifeline.id, lifelineName);
                     results.push({ id: lifeline.id, type: 'Lifeline', name: lifelineName, parentName: interactionName });
                 }
 
-                // Iterate through messages within the interaction
+                console.log(
+                    'idToName map:',
+                    Array.from(idToName.entries())
+                        .map(([id, name]) => `${id}: ${name}`)
+                        .join(', ')
+                );
+
                 for (const message of interaction.message ?? []) {
-                    const fromId = message.sendEvent?.$ref ?? 'unknown';
-                    const toId = message.receiveEvent?.$ref ?? 'unknown';
-                    const fromName = idToName.get(fromId) ?? fromId;
-                    const toName = idToName.get(toId) ?? toId;
-                    console.log('name ', toName);
+                    const messageName = message.name ?? '<<Unnamed Message>>';
+
+                    const fromSpecId = message.sendEvent?.$ref;
+                    const toSpecId = message.receiveEvent?.$ref;
+
+                    const fragmentMap = new Map<string, any>();
+                    for (const frag of interaction.fragment ?? []) {
+                        fragmentMap.set(frag.id, frag);
+                    }
+
+                    const fromSpec = fragmentMap.get(fromSpecId);
+                    const toSpec = fragmentMap.get(toSpecId);
+
+                    const fromLifelineId = fromSpec?.covered?.[0]?.$ref;
+                    const toLifelineId = toSpec?.covered?.[0]?.$ref;
+
+                    const fromName = idToName.get(fromLifelineId) ?? 'Unknown';
+                    const toName = idToName.get(toLifelineId) ?? 'Unknown';
+
                     results.push({
                         id: message.id,
                         type: 'Message',
-                        name: `${fromName} → ${toName}`,
+                        name: messageName,
                         parentName: interactionName,
                         details: `Message from ${fromName} to ${toName}`
                     });

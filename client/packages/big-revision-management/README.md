@@ -2,7 +2,7 @@
 
 The Revision Management (Timeline) feature helps users track and manage changes in the web modeling tool. It automatically records modifications, creating a history of updates that users can review, navigate, and restore if needed. When a file is saved, or when a manual saving action is triggered, a timeline entry is added to the history. This allows the user to see how the model evolves over time, to keep track of and compare different versions, and revert to previous states when necessary. This provides a safety net for experimentation without the risk of losing important work.
 
-[insert demo gif here]
+![Demo (Timeline)](images/demo.gif)
 
 ## System Overview
 
@@ -21,7 +21,7 @@ Each time a `.uml` file is saved, a snapshot of the current model state is creat
 ### Timeline Core Features
 
 - **Add timline entry automatically on save** 
-    - Precondition: Diagram open
+    - Precondition: Diagram open, VSCode setting "bigUML.timeline.onSave" is set to true (default)
     - User action: Save file (CTRL+S or via VSCode auto-save)
     - Result: New timeline entry added ("File Saved") in Timeline window
 - **Add timeline entry manually**
@@ -49,17 +49,6 @@ Each time a `.uml` file is saved, a snapshot of the current model state is creat
     - User action: In Timeline, click on the entry to be restored, click restore
     - Result: Selected timeline entry is restored (**Attention**: The diagram must be re-opened to see the update - see chapter "Limitations" below!), history is cropped (all entries newer than the restored entry are deleted)
 
-### Integration
-
-- **Persistence**
-    - Precondition: Diagram & Timeline open, Timeline is not empty
-    - User action: Close VSCode and re-open
-    - Result: The timeline is automatically persisted on the user's device (localStorage), and still contains the previously added entries
-- **Per-diagram timeline**
-    - Precondition: Two diagrams open, both with non-empty timelines
-    - User action: Switch between diagrams
-    - Result: Timeline changes per diagram
-
 ### Import/Export
 
 - **Export timeline (history)**
@@ -74,6 +63,20 @@ Each time a `.uml` file is saved, a snapshot of the current model state is creat
     - Precondition: Diagram & Timeline open, Timeline is not empty
     - User action: Click on a timeline entry, click on "Export Snapshot", choose a file location
     - Result: SVG export of the selected timeline entry is saved to the selected location
+
+### Integration
+
+- **Persistence**
+    - Precondition: Diagram & Timeline open, Timeline is not empty,  VSCode setting "bigUML.timeline.persistent" is set to true (default)
+    - User action: Close VSCode and re-open
+    - Result: The timeline is automatically persisted on the user's device (localStorage), and still contains the previously added entries
+- **Per-diagram timeline**
+    - Precondition: Two diagrams open, both with non-empty timelines
+    - User action: Switch between diagrams
+    - Result: Timeline changes per diagram
+- **VSCode settings**
+    - Create a new timeline entry on file save (bigUML.timeline.onSave, boolean, default true)
+    - Persist timeline entries across restarts (bigUML.timeline.persistent, boolean, default true)
 
 # Course Documentation
 

@@ -96,13 +96,29 @@ We began by creating mockups of the key features to explore the user interface a
 
 With the UI foundation in place, we moved to an incremental, feature-driven implementation. Our first priority was the core functionality of the Revision Management package: capturing timeline entries. We ensured that a new entry is automatically added when a `.uml` file is saved (via `Ctrl+S` or `auto-save`), and also enabled manual creation of entries through a dedicated button.
 
-Next, we implemented rendering of minimaps for each timeline entry. For this, we used the existing `MiniMap` package to display snapshots of model states. Following that, we added functionality for importing and exporting timeline entries as JSON or exporting a single timeline entry as SVG, enabling users to save and reuse their revision history. We then introduced the ability to rename existing timeline entries to improve traceability. Aftwerwards, we also enabled deleting singular timeline entries.
+Next, we implemented rendering of minimaps for each timeline entry. For this, we used the existing `MiniMap` package to display snapshots of model states. Following that, we added functionality for importing and exporting timeline entries as JSON or exporting a single timeline entry as SVG, enabling users to save and reuse their revision history. We completed the core feature set by implementing deletion of timeline entries, allowing users to manage their revision history more effectively by removing outdated or unnecessary snapshots.
 
-To ensure that timeline snapshots persist across sessions, we used **VSCode's global storage** as a simple and effective way to retain timeline entries even when the BigUML extension is restarted.
+To ensure that timeline snapshots persist across sessions, we use **VSCode's global storage** as a simple and effective mechanism to retain timeline entries even when the BigUML extension is restarted. In the file `client/application/vscode/package.json`, we added the following configuration option:
 
-We completed the core feature set by implementing deletion of timeline entries. This allows users to manage their revision history more effectively by removing outdated or unnecessary snapshots. In file `big-revision-management/vscode/revision-management.provider.ts`, there is a helper function called `clearVSCodeStorage()` which, during development, is executed automatically on each session load to clear the stored timeline entries. This was useful for testing a clean state but conflicts with persistence testing. Unfortunately, due to TypeScript compiler constraints, we were unable to simply comment out the function or leave it unused—both options resulted in a build error (either from an unused method or an invalid comment syntax depending on placement).
+```json
+"bigUML.timeline.persistent": {
+    "type": "boolean",
+    "default": true,
+    "description": "Persist timeline entries across restarts."
+}
+```
 
-As a result, we chose to leave the method defined and invoked by default for simplicity during development and debugging. If you wish to test the persistence behavior of timeline entries, simply **comment out line 51** (the call to `clearVSCodeStorage()`) in `revision-management.provider.ts`.
+When the `default` value is set to `true`, timeline entries are automatically saved and restored between VSCode sessions. If you prefer, for development or debugging purposes, to start each session with a clean timeline, you can set this parameter to `false`.
+
+We also applied a similar configuration to control whether entries are created automatically on file save (e.g., using `Ctrl+S` or auto-save). By default, timeline entries are added for both automatic and manual saves. If you wish to only create timeline entries manually via the "Create new timeline entry" button, you can disable automatic entries by updating the following configuration in the same `package.json` file:
+
+```json
+"bigUML.timeline.onSave": {
+    "type": "boolean",
+    "default": true,
+    "description": "Create a new timeline entry on file save."
+}
+```
 
 ## Encountered Problems
 

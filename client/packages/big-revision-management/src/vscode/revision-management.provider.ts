@@ -19,9 +19,9 @@ import { RequestDeleteSnapshotAction } from '../common/actions/request-delete-sn
 import { RequestExportSnapshotAction } from '../common/actions/request-export-snapshot-action.js';
 import { RequestImportSnapshotAction } from '../common/actions/request-import-snapshot-action.js';
 import { RequestRestoreSnapshotAction } from '../common/actions/request-restore-snapshot-action.js';
+import { RequestSaveFileAction } from '../common/actions/request-save-file-action.js';
 import { RestoreSnapshotResponseAction } from '../common/actions/restore-snapshot-response-action.js';
 import { type Snapshot } from '../common/snapshot.js';
-import { RequestSaveFileAction } from '../common/actions/request-save-file-action.js';
 
 export const RevisionManagementId = Symbol('RevisionmanagementViewId');
 
@@ -47,13 +47,22 @@ export class RevisionManagementProvider extends BIGReactWebview {
         super.init();
         console.log('Revision Management Provider init');
 
-        // Uncomment line below if you wish to clear the VSCode storage for each session
-        this.clearVSCodeStorage();
+        const config = vscode.workspace.getConfiguration('bigUML');
+        const configPersist = config.get<boolean>('timeline.persist');
+    
+        if (configPersist === false) {
+            this.clearVSCodeStorage();
+        }        
 
         const umlWatcher = vscode.workspace.createFileSystemWatcher('**/*.uml');
 
         this.toDispose.push(
             umlWatcher.onDidChange(async uri => {
+                const configOnSave = config.get<boolean>('timeline.onSave');
+                if (configOnSave === false) {
+                    return;
+                }
+
                 console.log('[fswatcher] File changed (saved):', uri.fsPath);
                 if (!this.connectionManager.hasActiveClient()) {
                     console.warn('[Snapshot] No active GLSP client available');
@@ -101,7 +110,7 @@ export class RevisionManagementProvider extends BIGReactWebview {
         this.toDispose.push(
             this.actionListener.handleVSCodeRequest(RequestSaveFileAction.KIND, async () => {
                 console.log('[RevisionManagementProvider] RequestSaveFileAction received');
-                this.createSnapshot('Manual save');
+                this.createSnapshot('Manual entry');
                 return { kind: 'noop' } as any;
             })
         );

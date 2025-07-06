@@ -115,6 +115,16 @@
           "default": true,
           "scope": "resource",
           "description": "Hide the *.unotation files."
+        },
+        "bigUML.timeline.onSave": {
+          "type": "boolean",
+          "default": true,
+          "description": "Create a new timeline entry on file save."
+        },
+        "bigUML.timeline.persistent": {
+          "type": "boolean",
+          "default": true,
+          "description": "Persist timeline entries across restarts."
         }
       }
     },

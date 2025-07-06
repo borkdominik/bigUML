@@ -102,7 +102,7 @@ export function RevisionManagement(): ReactElement {
                         cursor: 'pointer'
                     }}
                 >
-                    <span className="codicon codicon-save" aria-hidden="true" />
+                    <span className="codicon codicon-add" aria-hidden="true" />
                     Create New Timeline Entry
                 </button>
             </div>

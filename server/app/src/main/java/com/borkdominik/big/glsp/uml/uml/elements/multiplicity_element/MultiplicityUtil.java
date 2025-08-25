@@ -48,5 +48,5 @@ public final class MultiplicityUtil {
       return String.format("%s..%s", element.getLower(), element.getUpper() == -1 ? "*" : element.getUpper());
    }
 
-   public static Pattern regex = Pattern.compile("^(\\*|\\d+)\\.\\.(\\*|\\d+)$|^(\\d+)$");
+   public static Pattern regex = Pattern.compile("^(\\*|\\d+)\\.\\.(\\*|\\d+)$|^(\\*|\\d+)$");
 }

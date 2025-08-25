@@ -29,14 +29,16 @@ import {
     HostExtensionActionHandler
 } from '@eclipse-glsp/vscode-integration-webview/lib/features/default/extension-action-handler.js';
 import { GLSPDiagramWidget } from '@eclipse-glsp/vscode-integration-webview/lib/glsp-diagram-widget.js';
-import { type Container, inject, injectable } from 'inversify';
 import { createUMLDiagramContainer } from '../browser/index.js';
 import { GLSPIsReadyAction } from '../common/index.js';
 import { UMLDiagramWidget } from './diagram.widget.js';
 import { UMLHostExtensionActionHandler } from './vscode-extension-action-handler.js';
+// GLSP Uses cjs version of inversify, so we need to use require to import it
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+import inversify = require('inversify');
 
 class UMLStarter extends GLSPStarter {
-    createContainer(...containerConfiguration: ContainerConfiguration): Container {
+    createContainer(...containerConfiguration: ContainerConfiguration): inversify.Container {
         const container = createUMLDiagramContainer(
             ...containerConfiguration,
             outlineModule,
@@ -48,7 +50,7 @@ class UMLStarter extends GLSPStarter {
         return container;
     }
 
-    protected override addVscodeBindings(container: Container, _diagramIdentifier: GLSPDiagramIdentifier): void {
+    protected override addVscodeBindings(container: inversify.Container, _diagramIdentifier: GLSPDiagramIdentifier): void {
         container.bind(UMLDiagramWidget).toSelf().inSingletonScope();
         bindOrRebind(container, GLSPDiagramWidget).toService(UMLDiagramWidget);
         container.rebind(HostExtensionActionHandler).to(UMLHostExtensionActionHandler).inSingletonScope();
@@ -63,9 +65,9 @@ export function launch(): void {
     new UMLStarter();
 }
 
-@injectable()
+@inversify.injectable()
 class GLSPReadyStartup implements IDiagramStartup {
-    @inject(TYPES.IActionDispatcher)
+    @inversify.inject(TYPES.IActionDispatcher)
     protected actionDispatcher: IActionDispatcher;
 
     public postRequestModel(): MaybePromise<void> {

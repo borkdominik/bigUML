@@ -30,7 +30,6 @@ import {
     type ContainerConfiguration
 } from '@eclipse-glsp/client';
 import { keyboardToolPaletteModule } from '@eclipse-glsp/client/lib/features/accessibility/keyboard-tool-palette/keyboard-tool-palette-module.js';
-import { Container } from 'inversify';
 import { umlBaseModule } from './base/uml-base.module.js';
 import {
     umlElementNavigationModule,
@@ -50,15 +49,21 @@ import { umlToolPaletteModule } from './features/tool-palette/uml-tool-palette.m
 import { umlToolManagerModule } from './features/tools/tool-manager/uml-tool-manager.module.js';
 import { umlDiagramModules } from './uml/index.js';
 import { umlBaseViewsModule } from './views/uml-base-views.module.js';
+// GLSP Uses cjs version of inversify, so we need to use require to import it
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+import inversify = require('inversify');
 
-export function createUMLDiagramContainer(...containerConfiguration: ContainerConfiguration): Container {
-    const container = initializeUMLDiagramContainer(new Container(), ...containerConfiguration);
+export function createUMLDiagramContainer(...containerConfiguration: ContainerConfiguration): inversify.Container {
+    const container = initializeUMLDiagramContainer(new inversify.Container(), ...containerConfiguration);
     bindOrRebind(container, TYPES.LogLevel).toConstantValue(LogLevel.info);
     container.rebind(ContainerManager).to(UMLContainerManager).inSingletonScope();
     return container;
 }
 
-export function initializeUMLDiagramContainer(container: Container, ...containerConfiguration: ContainerConfiguration): Container {
+export function initializeUMLDiagramContainer(
+    container: inversify.Container,
+    ...containerConfiguration: ContainerConfiguration
+): inversify.Container {
     const accessibility: ContainerConfiguration = [
         glspToastModule,
         glspFocusTrackerModule,

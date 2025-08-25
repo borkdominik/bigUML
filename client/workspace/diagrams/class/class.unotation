@@ -106,4 +106,12 @@
     <position xmi:id="_bluxYfgnEe6ut-tKD2_jgQ"/>
     <size xmi:id="_bluxYvgnEe6ut-tKD2_jgQ" width="60.0" height="45.0"/>
   </elements>
+  <elements xsi:type="notation:Shape" xmi:id="_JPCDEYGJEfCT-94z8GrH9A">
+    <semanticElement xmi:id="_JPCDEoGJEfCT-94z8GrH9A" elementId="_JPCDEIGJEfCT-94z8GrH9A"/>
+    <position xmi:id="_PsrUkYGMEfC0fqIwzAs5KQ" x="1045.8586448400506" y="701.6620645745362"/>
+    <size xmi:id="_PsrUkoGMEfC0fqIwzAs5KQ" width="66.6875" height="45.0"/>
+  </elements>
+  <elements xsi:type="notation:Edge" xmi:id="_J1e_EIGJEfCT-94z8GrH9A">
+    <semanticElement xmi:id="_J1e_EYGJEfCT-94z8GrH9A" elementId="_J1WcMIGJEfCT-94z8GrH9A"/>
+  </elements>
 </unotation:UMLDiagram>

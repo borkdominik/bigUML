@@ -16,6 +16,10 @@
     <ownedLiteral xmi:id="_gG8vQPgmEe6ut-tKD2_jgQ" name="Teacher" visibility="public" classifier="_ejibwPgmEe6ut-tKD2_jgQ"/>
   </packagedElement>
   <packagedElement xsi:type="uml:Interface" xmi:id="_l84A0PgmEe6ut-tKD2_jgQ" name="LectureService">
+    <ownedAttribute xmi:id="_J1dJ4IGJEfCT-94z8GrH9A" name="Class" type="_JPCDEIGJEfCT-94z8GrH9A" association="_J1WcMIGJEfCT-94z8GrH9A">
+      <lowerValue xsi:type="uml:LiteralInteger" xmi:id="_J1dw8IGJEfCT-94z8GrH9A" value="2"/>
+      <upperValue xsi:type="uml:LiteralUnlimitedNatural" xmi:id="_J1dw8YGJEfCT-94z8GrH9A" value="2"/>
+    </ownedAttribute>
     <ownedOperation xmi:id="_u7pSoPgmEe6ut-tKD2_jgQ" name="studentsCountInLecture">
       <ownedParameter xmi:id="__O--QPgmEe6ut-tKD2_jgQ" name="lectureId" type="_b_tNEPgmEe6ut-tKD2_jgQ"/>
       <ownedParameter xmi:id="__SpWQPgmEe6ut-tKD2_jgQ" name="Parameter" type="_bv-H8PgmEe6ut-tKD2_jgQ" direction="return"/>
@@ -33,4 +37,11 @@
   </packagedElement>
   <packagedElement xsi:type="uml:Usage" xmi:id="_wm2QMPgmEe6ut-tKD2_jgQ" client="_e2z_wO0zEe6ONuorAhNLBg" supplier="_l84A0PgmEe6ut-tKD2_jgQ"/>
   <packagedElement xsi:type="uml:Usage" xmi:id="_yLTFgPgmEe6ut-tKD2_jgQ" client="_nsWaYPgmEe6ut-tKD2_jgQ" supplier="_o_3QsPgmEe6ut-tKD2_jgQ"/>
+  <packagedElement xsi:type="uml:Class" xmi:id="_JPCDEIGJEfCT-94z8GrH9A" name="Class">
+    <ownedAttribute xmi:id="_J1eYAIGJEfCT-94z8GrH9A" name="LectureService" type="_l84A0PgmEe6ut-tKD2_jgQ" association="_J1WcMIGJEfCT-94z8GrH9A">
+      <lowerValue xsi:type="uml:LiteralInteger" xmi:id="_J1eYAYGJEfCT-94z8GrH9A" value="-1"/>
+      <upperValue xsi:type="uml:LiteralUnlimitedNatural" xmi:id="_J1eYAoGJEfCT-94z8GrH9A" value="*"/>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xsi:type="uml:Association" xmi:id="_J1WcMIGJEfCT-94z8GrH9A" memberEnd="_J1dJ4IGJEfCT-94z8GrH9A _J1eYAIGJEfCT-94z8GrH9A"/>
 </uml:Model>

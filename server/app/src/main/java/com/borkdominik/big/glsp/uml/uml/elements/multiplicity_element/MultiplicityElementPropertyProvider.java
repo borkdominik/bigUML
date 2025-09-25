@@ -34,7 +34,7 @@ public class MultiplicityElementPropertyProvider extends BGEMFElementPropertyPro
 
    @Inject
    public MultiplicityElementPropertyProvider(@Assisted final Enumerator representation,
-      @Assisted final Set<BGTypeProvider> elementTypes) {
+         @Assisted final Set<BGTypeProvider> elementTypes) {
       super(representation, elementTypes, Set.of(IS_ORDERED, IS_UNIQUE, MULTIPLICITY));
    }
 
@@ -42,9 +42,9 @@ public class MultiplicityElementPropertyProvider extends BGEMFElementPropertyPro
    public List<ElementPropertyItem> doProvide(final MultiplicityElement element) {
       var elementId = providerContext.idGenerator().getOrCreateId(element);
       var builder = new ElementPropertyBuilder(elementId)
-         .bool(IS_ORDERED, "Is Ordered", element.isOrdered())
-         .bool(IS_UNIQUE, "Is Unique", element.isUnique())
-         .text(MULTIPLICITY, "Multiplicity", MultiplicityUtil.getMultiplicity(element));
+            .bool(IS_ORDERED, "Is Ordered", element.isOrdered())
+            .bool(IS_UNIQUE, "Is Unique", element.isUnique())
+            .text(MULTIPLICITY, "Multiplicity", MultiplicityUtil.getMultiplicity(element));
 
       return builder.items();
    }
@@ -53,22 +53,22 @@ public class MultiplicityElementPropertyProvider extends BGEMFElementPropertyPro
    public Command doHandle(final BGUpdateElementPropertyAction action, final MultiplicityElement element) {
       var value = action.getValue();
       var argument = UMLUpdateElementCommand.Argument
-         .<MultiplicityElement> updateElementArgumentBuilder()
-         .consumer(e -> {
-            switch (action.getPropertyId()) {
-               case IS_ORDERED:
-                  e.setIsOrdered(Boolean.parseBoolean(value));
-                  break;
-               case IS_UNIQUE:
-                  e.setIsUnique(Boolean.parseBoolean(value));
-                  break;
-               case MULTIPLICITY:
-                  e.setUpper(MultiplicityUtil.getUpper(action.getValue()));
-                  e.setLower(MultiplicityUtil.getLower(action.getValue()));
-                  break;
-            }
-         })
-         .build();
+            .<MultiplicityElement>updateElementArgumentBuilder()
+            .consumer(e -> {
+               switch (action.getPropertyId()) {
+                  case IS_ORDERED:
+                     e.setIsOrdered(Boolean.parseBoolean(value));
+                     break;
+                  case IS_UNIQUE:
+                     e.setIsUnique(Boolean.parseBoolean(value));
+                     break;
+                  case MULTIPLICITY:
+                     e.setUpper(MultiplicityUtil.getUpper(action.getValue()));
+                     e.setLower(MultiplicityUtil.getLower(action.getValue()));
+                     break;
+               }
+            })
+            .build();
 
       return new UMLUpdateElementCommand<>(context, modelState.getSemanticModel(), element, argument);
    }

@@ -46,7 +46,7 @@ import {
     TYPES
 } from '@eclipse-glsp/client';
 import { SetAccessibleKeyShortcutAction } from '@eclipse-glsp/client/lib/features/accessibility/key-shortcut/accessible-key-shortcut.js';
-import { type Action, SelectAction, TriggerEdgeCreationAction, TriggerNodeCreationAction } from '@eclipse-glsp/protocol';
+import { type Action, CenterAction, SelectAction, TriggerEdgeCreationAction, TriggerNodeCreationAction } from '@eclipse-glsp/protocol';
 import { inject, injectable } from 'inversify';
 
 export const umlFallbackActionModule = new FeatureModule((bind, unbind, isBound, rebind) => {
@@ -159,7 +159,6 @@ export class UMLResizeKeyListener extends KeyListener {
 import {
     RevealEdgeElementAutocompleteSuggestionProvider,
     RevealNamedElementAutocompleteSuggestionProvider,
-    RevealNodesWithoutNameAutocompleteSuggestionProvider,
     SearchAutocompletePalette
 } from '@eclipse-glsp/client/lib/features/accessibility/search/search-palette.js';
 
@@ -190,12 +189,32 @@ export class UMLRevealEdgeElementAutocompleteSuggestionProvider extends RevealEd
         }));
     }
 }
+
+export class UMLRevealNodesWithoutNameAutocompleteSuggestionProvider implements IAutocompleteSuggestionProvider {
+    async retrieveSuggestions(root: Readonly<GModelRoot>, text: string): Promise<AutocompleteSuggestion[]> {
+        const nodes = toArray(root.index.all().filter(element => !isNameable(element) && element instanceof GNode));
+
+        return nodes.map(node => ({
+            element: node,
+            action: {
+                label: `[${node.type}]`,
+                actions: this.getActions(node),
+                icon: codiconCSSString('symbol-namespace')
+            }
+        }));
+    }
+
+    protected getActions(nameable: GModelElement): Action[] {
+        return [SelectAction.create({ selectedElementsIDs: [nameable.id] }), CenterAction.create([nameable.id], { retainZoom: true })];
+    }
+}
+
 export class UMLSearchAutocompletePalette extends SearchAutocompletePalette {
     protected override getSuggestionProviders(_root: Readonly<GModelRoot>, _input: string): IAutocompleteSuggestionProvider[] {
         return [
             new UMLRevealNamedElementAutocompleteSuggestionProvider(),
             new UMLRevealEdgeElementAutocompleteSuggestionProvider(),
-            new RevealNodesWithoutNameAutocompleteSuggestionProvider()
+            new UMLRevealNodesWithoutNameAutocompleteSuggestionProvider()
         ];
     }
 
@@ -212,15 +231,12 @@ export class UMLSearchAutocompletePalette extends SearchAutocompletePalette {
                 let element = h;
                 while (element.parent !== undefined) {
                     if (hidden.includes(element.parent)) {
-                        console.log('IT CONTAINS', element.parent, hidden);
                         return false;
                     }
 
                     if (element.parent instanceof GChildElement) {
-                        console.log('PARENT', element.parent);
                         element = element.parent;
                     } else {
-                        console.log('BREAK', element);
                         break;
                     }
                 }

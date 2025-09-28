@@ -13,6 +13,7 @@ import {
     type EditableLabel,
     type GChildElement,
     GCompartment,
+    GLabel,
     hasArgs,
     isEditableLabel,
     layoutableChildFeature,
@@ -42,6 +43,18 @@ export class NamedElement extends GLabeledNode implements ArgsAware {
     }
 
     args: Args = {};
+
+    override get name(): string {
+        if (this.editableLabel) {
+            return this.editableLabel.text;
+        }
+
+        const labels = filter(this.children, (pred): pred is GLabel => pred instanceof GLabel);
+        if (labels.length > 0) {
+            return labels.map(l => l.text).join(' ');
+        }
+        return this.id;
+    }
 }
 
 function find<T extends GChildElement>(items: ReadonlyArray<GChildElement>, pred: (item: GChildElement) => item is T): T | undefined {
@@ -58,6 +71,22 @@ function find<T extends GChildElement>(items: ReadonlyArray<GChildElement>, pred
     }
 
     return undefined;
+}
+
+function filter<T extends GChildElement>(items: ReadonlyArray<GChildElement>, pred: (item: GChildElement) => item is T): T[] {
+    const foundItems: T[] = [];
+
+    for (let i = 0; i < items.length; i++) {
+        const item = items[i];
+        if (pred(item)) {
+            foundItems.push(item);
+        }
+
+        const found = filter(item.children, pred);
+        foundItems.push(...found);
+    }
+
+    return foundItems;
 }
 
 @injectable()

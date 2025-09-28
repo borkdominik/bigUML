@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "build": "lerna run build",
-    "build:server": "cd ../server && ./gradlew clean shadowJar && cd ../client && npm copy:server",
+    "build:server": "cd ../server && ./gradlew clean shadowJar && cd ../client && npm run copy:server",
     "check:headers": "glsp checkHeaders .",
     "clean": "lerna run clean",
     "copy:server": "tsx ./scripts/copy-server.ts",

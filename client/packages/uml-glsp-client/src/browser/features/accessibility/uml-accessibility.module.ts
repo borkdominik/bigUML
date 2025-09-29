@@ -191,7 +191,7 @@ export class UMLRevealEdgeElementAutocompleteSuggestionProvider extends RevealEd
 }
 
 export class UMLRevealNodesWithoutNameAutocompleteSuggestionProvider implements IAutocompleteSuggestionProvider {
-    async retrieveSuggestions(root: Readonly<GModelRoot>, text: string): Promise<AutocompleteSuggestion[]> {
+    async retrieveSuggestions(root: Readonly<GModelRoot>, _text: string): Promise<AutocompleteSuggestion[]> {
         const nodes = toArray(root.index.all().filter(element => !isNameable(element) && element instanceof GNode));
 
         return nodes.map(node => ({
@@ -316,20 +316,34 @@ export class UMLPrimaryElementNavigatorTool implements Tool {
     @inject(TYPES.IElementNavigator) readonly elementNavigator: ElementNavigator;
     @inject(TYPES.IActionDispatcher) readonly actionDispatcher: GLSPActionDispatcher;
 
+    private enabled = false;
     enable(): void {
-        this.elementNavigatorKeyListener = new PrimaryElementNavigatorKeyListener(this.elementNavigator);
-        this.actionDispatcher.dispatch(
-            ShowToastMessageAction.create({
-                id: Symbol.for(PrimaryElementNavigatorKeyListener.name),
-                message:
-                    'Primary Navigation On: Use arrow keys to select preceding (←) or succeding (→) elements.' +
-                    "Use the up (↑) and down (↓) arrows to navigate paths. Press 'ESC' to exit."
-            })
-        );
-        this.keytool.register(this.elementNavigatorKeyListener);
+        if (this.enabled) {
+            return;
+        }
+
+        const editLabelUi = document.querySelector('[id$=editLabelUi]');
+        if (!editLabelUi || editLabelUi?.classList.contains('hidden')) {
+            this.enabled = true;
+            this.elementNavigatorKeyListener = new PrimaryElementNavigatorKeyListener(this.elementNavigator);
+            this.actionDispatcher.dispatch(
+                ShowToastMessageAction.create({
+                    id: Symbol.for(PrimaryElementNavigatorKeyListener.name),
+                    message:
+                        'Primary Navigation On: Use arrow keys to select preceding (←) or succeding (→) elements.' +
+                        "Use the up (↑) and down (↓) arrows to navigate paths. Press 'ESC' to exit."
+                })
+            );
+            this.keytool.register(this.elementNavigatorKeyListener);
+        }
     }
 
     disable(): void {
+        if (!this.enabled) {
+            return;
+        }
+
+        this.enabled = false;
         this.actionDispatcher.dispatch(
             ShowToastMessageAction.createWithTimeout({
                 id: Symbol.for(PrimaryElementNavigatorKeyListener.name),
@@ -356,20 +370,35 @@ export class UMLSecondaryElementNavigatorTool implements Tool {
     @inject(TYPES.ILocalElementNavigator) readonly elementNavigator: ElementNavigator;
     @inject(TYPES.IActionDispatcher) readonly actionDispatcher: GLSPActionDispatcher;
 
+    private enabled = false;
     enable(): void {
-        this.elementNavigatorKeyListener = new PrimaryElementNavigatorKeyListener(this.elementNavigator);
-        this.actionDispatcher.dispatch(
-            ShowToastMessageAction.create({
-                id: Symbol.for(PrimaryElementNavigatorKeyListener.name),
-                message:
-                    'Secondary Navigation On: Navigate nearest elements using arrow keys: (↑) for above,' +
-                    "(↓) for below, (←) for previous, (→) for next element. Press 'ESC' to exit."
-            })
-        );
-        this.keytool.register(this.elementNavigatorKeyListener);
+        if (this.enabled) {
+            return;
+        }
+
+        const editLabelUi = document.querySelector('[id$=editLabelUi]');
+        if (!editLabelUi || editLabelUi?.classList.contains('hidden')) {
+            this.enabled = true;
+            this.elementNavigatorKeyListener = new PrimaryElementNavigatorKeyListener(this.elementNavigator);
+            this.actionDispatcher.dispatch(
+                ShowToastMessageAction.create({
+                    id: Symbol.for(PrimaryElementNavigatorKeyListener.name),
+                    message:
+                        'Secondary Navigation On: Navigate nearest elements using arrow keys: (↑) for above,' +
+                        "(↓) for below, (←) for previous, (→) for next element. Press 'ESC' to exit."
+                })
+            );
+            this.keytool.register(this.elementNavigatorKeyListener);
+        }
     }
 
     disable(): void {
+        if (!this.enabled) {
+            return;
+        }
+
+        this.enabled = false;
+
         this.actionDispatcher.dispatch(
             ShowToastMessageAction.createWithTimeout({
                 id: Symbol.for(PrimaryElementNavigatorKeyListener.name),

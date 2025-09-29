@@ -34,7 +34,6 @@ import { umlBaseModule } from './base/uml-base.module.js';
 import {
     umlElementNavigationModule,
     umlFallbackActionModule,
-    umlKeyboardControlToolsModule,
     umlResizeElementModule,
     umlSearchPaletteModule
 } from './features/accessibility/uml-accessibility.module.js';
@@ -72,7 +71,7 @@ export function initializeUMLDiagramContainer(
         keyboardToolPaletteModule,
         umlResizeElementModule,
         umlSearchPaletteModule,
-        umlKeyboardControlToolsModule,
+        // umlKeyboardControlToolsModule, // broken for now
         umlElementNavigationModule
     ];
 

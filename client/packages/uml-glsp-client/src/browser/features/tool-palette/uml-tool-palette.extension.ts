@@ -10,6 +10,8 @@ import {
     type Action,
     changeCodiconClass,
     createIcon,
+    EnableToolPaletteAction,
+    FocusDomAction,
     type GModelRoot,
     type ICommand,
     type KeyCode,
@@ -19,7 +21,8 @@ import {
     type PaletteItem,
     RequestContextActions,
     RequestMarkersAction,
-    type SetContextActions,
+    SetContextActions,
+    SetUIExtensionVisibilityAction,
     ToolPalette
 } from '@eclipse-glsp/client';
 import { KeyboardToolPalette } from '@eclipse-glsp/client/lib/features/accessibility/keyboard-tool-palette/keyboard-tool-palette.js';
@@ -73,8 +76,27 @@ export class UMLToolPalette extends KeyboardToolPalette {
         this.modelRootId = root.id;
     }
 
-    override handle(action: Action): void | Action | ICommand {
-        return super.handle(action);
+    override handle(action: Action): ICommand | Action | void {
+        if (EnableToolPaletteAction.is(action)) {
+            const requestAction = RequestContextActions.create({
+                contextId: ToolPalette.ID,
+                editorContext: {
+                    selectedElementIds: []
+                }
+            });
+            this.actionDispatcher.requestUntil(requestAction).then(response => {
+                if (SetContextActions.is(response)) {
+                    this.paletteItems = response.actions.map(e => e as PaletteItem);
+                    this.actionDispatcher.dispatchAll([
+                        SetUIExtensionVisibilityAction.create({ extensionId: ToolPalette.ID, visible: !this.editorContext.isReadonly })
+                    ]);
+                }
+            });
+        } else if (FocusDomAction.is(action) && action.id === ToolPalette.ID) {
+            this.containerElement.focus();
+        } else {
+            super.handle(action);
+        }
     }
 
     override changeActiveButton(button?: HTMLElement): void {

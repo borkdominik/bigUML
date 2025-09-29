@@ -1,6 +1,6 @@
 {
   "name": "@borkdominik-biguml/big-vscode-integration",
-  "version": "0.6.3",
+  "version": "0.6.4",
   "description": "BIG VSCode integration",
   "homepage": "https://github.com/borkdominik/bigUML",
   "bugs": "https://github.com/borkdominik/bigUML/issues",
@@ -63,6 +63,6 @@
     "vscode-messenger-common": "^0.4.5"
   },
   "peerDependencies": {
-    "inversify": "^6.1.3"
+    "inversify": "6.1.3"
   }
 }

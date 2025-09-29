@@ -17,8 +17,8 @@
     "depcheck": "npx depcheck --config .depcheck.yml",
     "lint": "lerna run lint",
     "lint:fix": "lerna run lint:fix",
-    "package": "npm run build:server && cd packages/uml-vscode-integration/extension && npm vscode:package && mv ./*.vsix ${INIT_CWD}/release/vsix",
-    "package:zip": "npm package && cd ${INIT_CWD} && zip -r ./release-$(date +%Y%m%d-%H%M).zip ./release",
+    "package": "npm run build:server && cd application/vscode && npm run vscode:package && mv ./*.vsix ${INIT_CWD}/release/vsix",
+    "package:zip": "npm run package && cd ${INIT_CWD} && zip -r ./release-$(date +%Y%m%d-%H%M).zip ./release",
     "start:server": "cd ../server && ./gradlew run",
     "watch": "lerna run --parallel watch",
     "win:start:server": "cd ../server && ./gradlew.bat run"
@@ -53,10 +53,6 @@
     "@eclipse-glsp/client": "2.3.0",
     "@eclipse-glsp/protocol": "2.3.0",
     "@eclipse-glsp/vscode-integration": "2.3.0",
-    "@eclipse-glsp/vscode-integration-webview": "2.3.0",
-    "inversify": "6.1.6",
-    "@borkdominik-biguml/uml-glsp-client": {
-      "inversify": "6.1.3"
-    }
+    "@eclipse-glsp/vscode-integration-webview": "2.3.0"
   }
 }

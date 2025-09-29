@@ -1,5 +1,0 @@
-*.vsix
-
-# Dependencies
-node_modules/uml-vscode-integration-webview
-!node_modules/uml-vscode-integration-webview/bundle

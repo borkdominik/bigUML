@@ -4,13 +4,28 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [v0.6.4 - 2025-09-29](https://github.com/borkdominik/bigUML/releases/tag/v0.6.4)
+
+## What's Changed
+
+- Streamline client architecture and update dependencies by @haydar-metin in https://github.com/borkdominik/bigUML/pull/182
+- Fix multiplicity regex by @haydar-metin in https://github.com/borkdominik/bigUML/pull/183
+- Use label names for search and fix property multiplicity direct edit by @haydar-metin in https://github.com/borkdominik/bigUML/pull/184
+- Accessibility and copy-paste fixes by @haydar-metin in https://github.com/borkdominik/bigUML/pull/185
+
+## [v0.6.3 - 2025-01-28](https://github.com/borkdominik/bigUML/releases/tag/v0.6.3)
+
+## What's Changed
+
+- Fix space in URI parsing by @haydar-metin in https://github.com/borkdominik/bigUML/pull/177
+
 ## [v0.6.2 - 2025-01-09](https://github.com/borkdominik/bigUML/releases/tag/v0.6.2)
 
 ## What's Changed
 
 - Fix UMLModelMigrator.java by @sschwantler in https://github.com/borkdominik/bigUML/pull/175
 
-## [v0.6.1 - 2025-01-03](https://github.com/borkdominik/bigUML/releases/tag/v0.6.2)
+## [v0.6.1 - 2025-01-03](https://github.com/borkdominik/bigUML/releases/tag/v0.6.1)
 
 ## What's Changed
 

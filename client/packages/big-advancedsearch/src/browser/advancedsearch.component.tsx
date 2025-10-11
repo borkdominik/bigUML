@@ -35,14 +35,6 @@ export function AdvancedSearch(): ReactElement {
         dispatchAction(RequestHighlightElementAction.create({ semanticUri }));
     };
 
-    const unhighlight = (semanticUri: string | undefined) => {
-        if (!clientId || !semanticUri) {
-            return;
-        }
-        dispatchAction(RequestHighlightElementAction.create({ semanticUri: '' })); 
-    };
-    
-
     useEffect(() => {
         const handler = (action: unknown) => {
             if (AdvancedSearchActionResponse.is(action)) {
@@ -76,13 +68,7 @@ export function AdvancedSearch(): ReactElement {
                 {results.length > 0 ? (
                     <ul className='advanced-search__results'>
                         {results.map((item, idx) => (
-                            <li
-                            key={idx}
-                            className='result-item'
-                            onMouseEnter={() => highlight((item as any).semanticUri ?? item.id)}
-                            onMouseLeave={() => unhighlight((item as any).semanticUri ?? item.id)}
-                        >
-                        
+                            <li key={idx} className='result-item' onClick={() => highlight((item as any).semanticUri ?? item.id)}>
                                 <div className='result-item__header'>
                                     <VSCodeTag className='result-item__tag'>{item.type}</VSCodeTag>
                                     <span className='result-item__name'>{item.name}</span>

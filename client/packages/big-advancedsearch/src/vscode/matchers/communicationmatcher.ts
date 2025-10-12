@@ -57,13 +57,6 @@ export class CommunicationDiagramMatcher implements IMatcher {
                     results.push({ id: lifeline.id, type: 'Lifeline', name: lifelineName, parentName: interactionName });
                 }
 
-                console.log(
-                    'idToName map:',
-                    Array.from(idToName.entries())
-                        .map(([id, name]) => `${id}: ${name}`)
-                        .join(', ')
-                );
-
                 for (const message of interaction.message ?? []) {
                     const messageName = message.name ?? '<<Unnamed Message>>';
 

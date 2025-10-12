@@ -42,9 +42,7 @@ export function AdvancedSearch(): ReactElement {
             }
             if (HighlightElementActionResponse.is(action)) {
                 if (action.ok) {
-                    console.log('Element highlighted successfully');
-                } else {
-                    console.error('Failed to highlight element');
+                    return;
                 }
             }
         };

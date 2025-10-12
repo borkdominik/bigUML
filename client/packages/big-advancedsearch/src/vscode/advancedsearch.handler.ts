@@ -69,8 +69,6 @@ export class AdvancedSearchActionHandler implements Disposable {
                 const results: SearchResult[] = [];
 
                 if (model) {
-                    const sourceModel = model.getSourceModel();
-                    console.log('The model: ', sourceModel);
                     const query = request.action.query.trim().toLowerCase();
                     const [rawType, rawPattern] = query.split(':');
                     const type = rawType?.trim();

@@ -35,13 +35,6 @@ export class UseCaseDiagramMatcher implements IMatcher {
         const rootElements = sourceModel?.packagedElement ?? [];
 
         SharedElementCollector.collectRecursively({ packagedElement: rootElements }, (element, parentName) => {
-            // console.log('Debug element:', {
-            //     id: element.id,
-            //     name: element.name,
-            //     eClass: element.eClass,
-            //     keys: Object.keys(element)
-            // });
-
             let type = element.eClass?.split('#//')[1];
 
             if (!type) {

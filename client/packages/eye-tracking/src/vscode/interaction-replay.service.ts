@@ -31,7 +31,11 @@ export class InteractionReplayService {
     private isReplaying = false;
     private replayAbortController?: AbortController;
     private idMapping: Map<string, string> = new Map(); // Maps old IDs to new IDs
+    private knownElementIds: Set<string> = new Set(); // Track all element IDs we've seen
     private pendingElementCreation: { resolve: (id: string) => void; elementType: string } | null = null;
+    private lastSelectedClassId: string | null = null; // Track the last selected class for property containment
+    private autoCreatedChildrenQueue: string[] | null = null; // Queue of auto-created child IDs to map
+    private elementTypes: Map<string, string> = new Map(); // Track element types (old ID -> element type)
 
     /**
      * Load and replay a session from a CSV file
@@ -48,6 +52,8 @@ export class InteractionReplayService {
             this.isReplaying = true;
             this.replayAbortController = new AbortController();
             this.idMapping.clear(); // Clear ID mapping for new replay session
+            this.knownElementIds.clear(); // Clear known elements for new replay session
+            this.lastSelectedClassId = null; // Clear last selected class
 
             // Set up model listener to capture new element IDs
             modelListener = this.setupModelListener();
@@ -63,6 +69,9 @@ export class InteractionReplayService {
                 vscode.window.showWarningMessage('No events found in the selected time range');
                 return;
             }
+
+            // Pre-process events to build creation-to-ID map
+            this.buildCreationIdMap(filteredEvents);
 
             // Show replay progress
             await vscode.window.withProgress(
@@ -155,7 +164,7 @@ export class InteractionReplayService {
      */
     private findElementIdAfterCreation(events: InteractionEvent[], creationIndex: number): string | null {
         // Look at the next few events
-        for (let i = creationIndex + 1; i < Math.min(creationIndex + 5, events.length); i++) {
+        for (let i = creationIndex + 1; i < Math.min(creationIndex + 10, events.length); i++) {
             const event = events[i];
             
             // Check selection events
@@ -176,6 +185,10 @@ export class InteractionReplayService {
                         return elementId;
                     }
                 }
+                // check updateElementProperty actions (from property palette)
+                if (event.data.kind === 'updateElementProperty' && event.data.elementId) {
+                    return event.data.elementId;
+                }
             }
         }
         
@@ -191,10 +204,11 @@ export class InteractionReplayService {
             return;
         }
 
-        // If we have a pending element creation, try to match it
+        // Get all elements from the model
+        const allElements = this.getAllElements(root);
+
+        // If we have a pending element creation, try to match it BEFORE updating known elements
         if (this.pendingElementCreation) {
-            // Get all shape elements (nodes), not labels
-            const allElements = this.getAllElements(root);
             console.log(`Total elements found: ${allElements.length}`);
             
             // Log all element types to see what we're actually getting
@@ -202,41 +216,122 @@ export class InteractionReplayService {
                 console.log(`  Element ${idx}: id=${el.id}, type=${el.type}`);
             });
             
-            // Look for UML nodes - they use patterns like CLASS__Class, PACKAGE__Package, etc.
-            const shapeElements = allElements.filter(el => {
-                if (!el.type) return false;
+            // Get the expected element type we're waiting for
+            const expectedType = this.pendingElementCreation.elementType;
+            console.log(`Looking for elements of type: ${expectedType}`);
+            
+            // Filter elements by matching the expected type AND not already known
+            const matchingElements = allElements.filter(el => {
+                if (!el.type || !el.id) return false;
                 
-                const typeUpper = el.type.toUpperCase();
-                const isNode = (
-                    typeUpper.startsWith('CLASS') || 
-                    typeUpper.startsWith('PACKAGE') ||
-                    typeUpper.startsWith('INTERFACE') ||
-                    typeUpper.startsWith('NODE:') ||
-                    typeUpper.includes('__')
-                ) && !typeUpper.includes('LABEL') && !typeUpper.includes('COMP');
+                // Match the exact element type
+                const matches = el.type === expectedType;
                 
-                if (isNode) {
-                    console.log(`✓ Found node element: ${el.id} (type: ${el.type})`);
+                // Exclude labels and composite elements
+                const isValidElement = !el.type.includes('label') && 
+                                      !el.type.includes('comp') &&
+                                      !el.type.includes('_context_');
+                
+                // Must be a new element we didnt see before
+                const isNew = !this.knownElementIds.has(el.id);
+                
+                if (matches && isValidElement && isNew) {
+                    console.log(`✓ Found NEW matching element: ${el.id} (type: ${el.type})`);
                 }
-                return isNode;
+                return matches && isValidElement && isNew;
             });
             
-            console.log(`Shape elements found: ${shapeElements.length}`);
+            console.log(`New matching elements found: ${matchingElements.length}`);
             
-            if (shapeElements.length > 0) {
-                // Get the last shape element (most recently created)
-                const newElement = shapeElements[shapeElements.length - 1];
+            if (matchingElements.length > 0) {
+                // Get the first new matching element (most recently created)
+                const newElement = matchingElements[0];
                 if (newElement && newElement.id) {
                     console.log(`✓ Captured new element ID: ${newElement.id}`);
                     this.pendingElementCreation.resolve(newElement.id);
                     this.pendingElementCreation = null;
+                    
+                    // Map auto-created children
+                    // When a Class is created, it could come with auto-created properties
+                    // We need to map these too so property updates work during replay
+                    this.mapAutoCreatedChildren(newElement, allElements);
                 }
             } else {
-                console.log('No shape elements found matching criteria');
+                console.log(`No matching elements found for type: ${expectedType}`);
             }
         } else {
             console.log('No pending element creation');
         }
+
+        // Now update our known elements set with all current elements
+        allElements.forEach(el => {
+            if (el.id) {
+                this.knownElementIds.add(el.id);
+            }
+        });
+    }
+
+    /**
+     * Map auto-created child elements (like default properties in a Class)
+     * Finds all new child elements and maps them in creation order
+     */
+    private mapAutoCreatedChildren(parentElement: any, allElements: any[]): void {
+        // Find all NEW child elements that weren't already known
+        const newChildren = allElements.filter(el => {
+            if (!el.id || !el.type) return false;
+            
+            // Must be a new element
+            if (this.knownElementIds.has(el.id)) return false;
+            
+            // Look for property-like elements (but not the parent itself)
+            // These are typically auto-created children
+            // Check for various property types: Property, CLASS__Property, etc.
+            const isProperty = el.type.includes('Property') || 
+                              el.type.includes('property') ||
+                              el.type.includes('PROPERTY');
+            const isNotParent = el.id !== parentElement.id;
+            
+            // Also exclude labels and composite elements
+            const isNotLabel = !el.type.includes('label') && 
+                              !el.type.includes('Label');
+            
+            const isChild = isProperty && isNotParent && isNotLabel;
+            
+            if (isChild) {
+                console.log(`  -> Potential auto-created child: ${el.id} (type: ${el.type})`);
+            }
+            
+            return isChild;
+        });
+        
+        if (newChildren.length === 0) {
+            console.log(`No auto-created children found for ${parentElement.id}`);
+            console.log(`Parent type: ${parentElement.type}`);
+            console.log(`Total new elements: ${allElements.filter(el => !this.knownElementIds.has(el.id)).length}`);
+            return;
+        }
+        
+        console.log(`✓ Found ${newChildren.length} auto-created children for ${parentElement.id}:`);
+        newChildren.forEach(child => {
+            console.log(`  - ${child.id} (type: ${child.type})`);
+        });
+        
+        // Now we need to map these to the corresponding children from the recording
+        // We'll do this by looking at the next few property_change events in the recording
+        // and matching them by order
+        
+        // Store these children for later matching when we see property updates
+        if (!this.autoCreatedChildrenQueue) {
+            this.autoCreatedChildrenQueue = [];
+        }
+        
+        // Add these children to the queue
+        newChildren.forEach(child => {
+            this.autoCreatedChildrenQueue!.push(child.id);
+            console.log(`✓ Queued auto-created child: ${child.id}`);
+        });
+        
+        console.log(`Queue now has ${this.autoCreatedChildrenQueue.length} children waiting to be mapped`);
     }
 
     /**
@@ -331,7 +426,9 @@ export class InteractionReplayService {
             // Calculate delay until next event
             if (!instantReplay && nextEvent) {
                 const delay = (nextEvent.timestamp - event.timestamp) / speed;
-                await this.sleep(delay);
+                // Ensure minimum 100ms delay between events to prevent overwhelming the server
+                const actualDelay = Math.max(delay, 100);
+                await this.sleep(actualDelay);
             }
         }
     }
@@ -347,25 +444,54 @@ export class InteractionReplayService {
                 // Check if this is a creation with an old ID
                 const oldElementId = (event.data as any)._oldElementId;
                 
+                console.log(`Dispatching ${action.kind}${oldElementId ? ` (old ID: ${oldElementId})` : ''}`);
+                
                 // Dispatch the action
                 await this.actionDispatcher.dispatch(action);
                 
                 // If we have an old ID, wait for the new ID and build mapping
                 if (action.kind === 'createNode' && oldElementId) {
+                    console.log(`Waiting for new ID to map ${oldElementId}...`);
                     const newElementId = await this.waitForNewElementId(action.elementTypeId);
                     if (newElementId) {
                         this.idMapping.set(oldElementId, newElementId);
+                        // Track the element type so we know what kind of element this is
+                        this.elementTypes.set(oldElementId, action.elementTypeId);
                         // Also map the label ID
                         this.idMapping.set(`${oldElementId}_name_label`, `${newElementId}_name_label`);
-                        console.log(`✓ ID mapping: ${oldElementId} -> ${newElementId}`);
+                        console.log(`ID mapping: ${oldElementId} -> ${newElementId}`);
+                        console.log(`Label mapping: ${oldElementId}_name_label -> ${newElementId}_name_label`);
+                        console.log(`Current ID mappings:`, Array.from(this.idMapping.entries()));
                     }
                 }
                 
-                // Longer delay to ensure action is fully processed
-                await this.sleep(150);
+                // Dynamic delay based on action type to ensure server has time to process
+                // Creation and edge actions need more time than selections
+                const delay = this.getActionProcessingDelay(action.kind);
+                await this.sleep(delay);
             }
         } catch (error) {
             console.error('Error dispatching event:', event, error);
+        }
+    }
+
+    /**
+     * Get the minimum delay needed for an action to be processed by the server
+     * Different actions require different processing times
+     */
+    private getActionProcessingDelay(actionKind: string): number {
+        switch (actionKind) {
+            case 'createNode':
+            case 'createEdge':
+                return 300; // Creation actions need more time
+            case 'applyLabelEdit':
+            case 'updateElementProperty':
+                return 200; // Property updates need moderate time
+            case 'elementSelected':
+            case 'setViewport':
+                return 50; // Selections and viewport changes are fast
+            default:
+                return 150; // Default delay for other actions
         }
     }
 
@@ -379,14 +505,14 @@ export class InteractionReplayService {
                 elementType
             };
             
-            // Timeout after 2 seconds
+            // Increased timeout to 5 seconds to handle slow servers
             setTimeout(() => {
                 if (this.pendingElementCreation) {
                     console.warn('Timeout waiting for new element ID');
                     this.pendingElementCreation = null;
                     resolve('');
                 }
-            }, 2000);
+            }, 5000);
         });
     }
 
@@ -401,17 +527,24 @@ export class InteractionReplayService {
         switch (event.type) {
             case InteractionEventType.ELEMENT_CREATE:
                 if (data.kind === 'createNode') {
-                    // For $ROOT, omit the containerId - let the server use the default root
                     const action: any = {
                         kind: 'createNode',
                         elementTypeId: data.elementTypeId,
                         location: data.location,
                         isOperation: true
                     };
-                    // Only include containerId if it's not $ROOT
-                    if (data.containerId !== '$ROOT') {
-                        action.containerId = data.containerId;
+                    
+                    // Special handling for properties - they should be inside a class
+                    if (data.elementTypeId === 'CLASS__Property' && this.lastSelectedClassId) {
+                        // Use the last selected class as the container
+                        action.containerId = this.lastSelectedClassId;
+                        console.log(`Creating property inside class: ${this.lastSelectedClassId}`);
+                    } else if (data.containerId && data.containerId !== '$ROOT') {
+                        // Use mapped containerId if available
+                        action.containerId = this.idMapping.get(data.containerId) || data.containerId;
                     }
+                    // If no containerId is set, server will use default root
+                    
                     return action;
                 } else if (data.kind === 'createEdge') {
                     // Use ID mapping for source and target
@@ -435,12 +568,29 @@ export class InteractionReplayService {
                 }
                 break;
 
-            case InteractionEventType.ELEMENT_DELETE:
-                return {
-                    kind: 'deleteElement',
-                    elementIds: data.elementIds,
-                    isOperation: true
-                };
+            case InteractionEventType.ELEMENT_DELETE: {
+                // Map element IDs for deletion
+                const mappedElementIds = data.elementIds?.map((id: string) => 
+                    this.idMapping.get(id) || id
+                );
+                
+                // Only delete if we have all the mappings
+                const allMapped = data.elementIds?.every((id: string) => 
+                    this.idMapping.has(id)
+                );
+                
+                if (allMapped) {
+                    console.log(`Deleting elements: ${mappedElementIds}`);
+                    return {
+                        kind: 'deleteElement',
+                        elementIds: mappedElementIds,
+                        isOperation: true
+                    };
+                } else {
+                    console.log(`Skipping delete - waiting for ID mapping (${data.elementIds})`);
+                    return null;
+                }
+            }
 
             case InteractionEventType.ELEMENT_MOVE:
                 return {
@@ -450,6 +600,24 @@ export class InteractionReplayService {
                 };
 
             case InteractionEventType.ELEMENT_SELECT:
+                // Track the last selected class for property containment
+                // We need to check if the selected element is actually a CLASS
+                if (data.selectedElementsIDs && data.selectedElementsIDs.length > 0) {
+                    const selectedId = data.selectedElementsIDs[0];
+                    // Map the old ID to the new ID
+                    const mappedId = this.idMapping.get(selectedId);
+                    if (mappedId) {
+                        // Only update lastSelectedClassId if this is actually a CLASS
+                        const elementType = this.elementTypes.get(selectedId);
+                        if (elementType === 'CLASS__Class') {
+                            this.lastSelectedClassId = mappedId;
+                            console.log(`Tracking last selected class: ${mappedId}`);
+                        } else {
+                            console.log(`Selected ${elementType}, not updating lastSelectedClassId`);
+                        }
+                    }
+                }
+                
                 return {
                     kind: 'elementSelected',
                     selectedElementsIDs: data.selectedElementsIDs || [],
@@ -474,19 +642,34 @@ export class InteractionReplayService {
                         return null;
                     }
                 } else if (data.kind === 'updateElementProperty') {
-                    const elementId = this.idMapping.get(data.elementId) || data.elementId;
+                    // Try direct ID mapping first
+                    let elementId = this.idMapping.get(data.elementId);
                     
-                    if (this.idMapping.has(data.elementId)) {
-                        return {
-                            kind: 'updateElementProperty',
-                            elementId: elementId,
-                            propertyId: data.propertyId,
-                            value: data.value
-                        };
-                    } else {
-                        console.log(`Skipping property update - waiting for ID mapping (${data.elementId})`);
-                        return null;
+                    if (!elementId) {
+                        // No mapping exists - this might be an auto-created child element
+                        // Check if we have any queued auto-created children waiting to be mapped
+                        if (this.autoCreatedChildrenQueue && this.autoCreatedChildrenQueue.length > 0) {
+                            // Map the first unmapped property update to the first queued child
+                            const newChildId = this.autoCreatedChildrenQueue.shift()!;
+                            this.idMapping.set(data.elementId, newChildId);
+                            elementId = newChildId;
+                            console.log(`Auto-mapped property: ${data.elementId} -> ${newChildId}`);
+                        } else {
+                            // No children available to map - skip this update
+                            console.log(`Skipping property update for unmapped element ${data.elementId} (no children in queue)`);
+                            console.log(`  Property: ${data.propertyId} = "${data.value}"`);
+                            return null;
+                        }
                     }
+                    
+                    console.log(`Sending property update: ${elementId}.${data.propertyId} = "${data.value}"`);
+                    return {
+                        kind: 'updateElementProperty',
+                        elementId: elementId,
+                        propertyId: data.propertyId,
+                        value: data.value,
+                        isOperation: true  // Mark as server operation
+                    };
                 }
                 break;
 

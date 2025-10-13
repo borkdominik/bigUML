@@ -213,16 +213,42 @@ export class InteractionTracker {
         if (this.actionListener) {
             // Listen to CLIENT actions (from diagram webview)
             const glspClientDisposable = this.actionListener.registerListener((message: any) => {
+                console.log('ActionListener received CLIENT action:', message.action?.kind);
                 this.processGLSPAction(message.action);
             });
             this.disposables.push(glspClientDisposable);
 
             // Listen to SERVER responses (including property updates)
             const glspServerDisposable = (this.actionListener as any).registerServerListener?.((message: any) => {
+                console.log('ActionListener received SERVER action:', message.action?.kind);
                 this.processGLSPAction(message.action);
             });
             if (glspServerDisposable) {
                 this.disposables.push(glspServerDisposable);
+            }
+            
+            // Also listen to actions being SENT to the server (client-to-server)
+            // This catches property palette actions that go directly to the server
+            const glspSendDisposable = (this.actionListener as any).registerSendListener?.((message: any) => {
+                console.log('ActionListener SEND to server:', message.action?.kind);
+                this.processGLSPAction(message.action);
+            });
+            if (glspSendDisposable) {
+                this.disposables.push(glspSendDisposable);
+            }
+        }
+
+        // Also listen for updateElementProperty actions that bypass the ActionListener
+        // These actions come from the property palette and go directly to the server
+        if (this.actionListener && (this.actionListener as any).onAction) {
+            const actionDisposable = (this.actionListener as any).onAction((action: any) => {
+                if (action && action.kind === 'updateElementProperty') {
+                    console.log('Captured updateElementProperty via onAction:', action);
+                    this.processGLSPAction(action);
+                }
+            });
+            if (actionDisposable) {
+                this.disposables.push(actionDisposable);
             }
         }
 
@@ -230,7 +256,12 @@ export class InteractionTracker {
     }
 
     private processGLSPAction(action: any): void {
-        if (!action || !action.kind) return;
+        if (!action || !action.kind) {
+            console.log('processGLSPAction called with invalid action:', action);
+            return;
+        }
+        
+        console.log('Processing GLSP action:', action.kind, action);
 
         // Track different GLSP action types
         if (action.kind === 'createNode') {
@@ -391,5 +422,17 @@ export class InteractionTracker {
             this.stopSession();
         }
         this.disposeTracking();
+    }
+
+    /**
+     * Public method to manually track an action
+     * This can be called from anywhere in the codebase when an action is detected
+     */
+    public trackAction(action: any): void {
+        if (!this.isTracking) {
+            return;
+        }
+        console.log('Manual tracking of action:', action.kind, action);
+        this.processGLSPAction(action);
     }
 }

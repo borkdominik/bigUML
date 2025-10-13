@@ -19,6 +19,8 @@ export function eyeTrackingModule(viewId: string) {
     return new ContainerModule(bind => {
         bind(EyeTrackingViewId).toConstantValue(viewId);
         bind(EYE_TYPES.InteractionTracker).to(InteractionTracker).inSingletonScope();
+        // Also bind as string so other modules can inject it optionally
+        bind('InteractionTracker').toService(EYE_TYPES.InteractionTracker);
         bind(EYE_TYPES.InteractionReplayService).to(InteractionReplayService).inSingletonScope();
         bind(EYE_TYPES.EyeTrackingCommandHandler).to(EyeTrackingCommandHandler).inSingletonScope();
         bind(EyeTrackingProvider).toSelf().inSingletonScope();

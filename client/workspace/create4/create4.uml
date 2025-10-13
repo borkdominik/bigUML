@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="ASCII"?>
-<uml:Model xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_EZiIoKgpEfC5J7RBJLYmJw">
-  <packagedElement xsi:type="uml:Class" xmi:id="_FilbYKgpEfC5J7RBJLYmJw" name="Person"/>
-  <packagedElement xsi:type="uml:Class" xmi:id="_Glr3IKgpEfC5J7RBJLYmJw" name="Male">
-    <generalization xmi:id="_IWxaQKgpEfC5J7RBJLYmJw" general="_FilbYKgpEfC5J7RBJLYmJw"/>
-  </packagedElement>
-</uml:Model>

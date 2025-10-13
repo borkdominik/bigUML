@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 import { BIGReactWebview } from '@borkdominik-biguml/big-vscode-integration/vscode';
-import { inject, injectable, postConstruct } from 'inversify';
+import { inject, injectable, optional, postConstruct } from 'inversify';
 import { RequestPropertyPaletteAction, SetPropertyPaletteAction, UpdateElementPropertyAction } from '../common/index.js';
 import { SetNavigationIdNotification } from '../common/protocol.js';
 
@@ -17,6 +17,10 @@ export const PropertyPaletteViewId = Symbol('PropertyPaletteViewId');
 export class PropertyPaletteProvider extends BIGReactWebview {
     @inject(PropertyPaletteViewId)
     viewId: string;
+
+    // Optional injection of InteractionTracker - won't fail if not available
+    @inject('InteractionTracker') @optional()
+    protected interactionTracker?: any;
 
     protected override cssPath = ['property-palette', 'bundle.css'];
     protected override jsPath = ['property-palette', 'bundle.js'];
@@ -59,9 +63,37 @@ export class PropertyPaletteProvider extends BIGReactWebview {
             // Track property changes from webview
             this.webviewConnector.onActionMessage(message => {
                 if (UpdateElementPropertyAction.is(message.action)) {
-                    console.log('🎯 Property UPDATE detected:', JSON.stringify(message.action, null, 2));
-                    // Forward to ActionDispatcher so ActionListener can pick it up
-                    this.actionDispatcher.dispatch(message.action);
+
+                    
+                    // Track this action for interaction logging
+                    if (this.interactionTracker && typeof this.interactionTracker.trackAction === 'function') {
+                        console.log('Tracking updateElementProperty action');
+                        this.interactionTracker.trackAction(message.action);
+                    } else {
+                        console.log('InteractionTracker not available or trackAction method missing');
+                    }
+                    
+                    // Mark as operation and dispatch to server
+                    const serverAction = {
+                        ...message.action,
+                        isOperation: true  // Mark as server operation
+                    };
+                    console.log('Sending updateElementProperty to server:', serverAction);
+                    this.actionDispatcher.dispatch(serverAction);
+                } else if (message.action?.kind === 'createNode') {
+                    console.log('Property CREATE detected:', JSON.stringify(message.action, null, 2));
+                    
+                    // Track createNode actions from property palette
+                    // But DON'T dispatch again - it's already being dispatched elsewhere
+                    if (this.interactionTracker && typeof this.interactionTracker.trackAction === 'function') {
+                        console.log('Tracking createNode action from property palette');
+                        this.interactionTracker.trackAction(message.action);
+                    }
+                    
+                    // DO NOT dispatch - the action is already being sent through normal channels
+                    // this.actionDispatcher.dispatch(message.action); // REMOVED to prevent double creation
+                } else {
+                    console.log('Not an UpdateElementPropertyAction or createNode, got:', message?.action?.kind);
                 }
             })
         );

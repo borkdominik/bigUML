@@ -7,6 +7,8 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
-export * from './eye-tracking.action.js';
-export * from './interaction-tracking.action.js';
-export * from './interaction-tracking.types.js';
+export const TYPES = {
+    InteractionTracker: Symbol('InteractionTracker'),
+    InteractionReplayService: Symbol('InteractionReplayService'),
+    EyeTrackingCommandHandler: Symbol('EyeTrackingCommandHandler')
+};

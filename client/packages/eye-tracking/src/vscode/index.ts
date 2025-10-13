@@ -9,3 +9,7 @@
 
 export * from './eye-tracking.module.js';
 export * from './eye-tracking.provider.js';
+export * from './interaction-tracker.service.js';
+export * from './interaction-replay.service.js';
+export * from './eye-tracking-commands.handler.js';
+export * from './eye-tracking.types.js';

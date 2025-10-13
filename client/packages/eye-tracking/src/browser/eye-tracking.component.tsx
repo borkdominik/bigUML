@@ -9,11 +9,14 @@
 import { VSCodeContext } from '@borkdominik-biguml/big-components';
 import { useCallback, useContext, useEffect, useRef, useState, type ReactElement } from 'react';
 import webgazer from 'webgazer';
-import { 
-    StartEyeTrackingAction, 
-    StopEyeTrackingAction, 
-    EyeTrackingStatusAction, 
-    EyeTrackingDataAction 
+import {
+    EyeTrackingDataAction,
+    EyeTrackingStatusAction,
+    StartEyeTrackingAction,
+    StopEyeTrackingAction,
+    StartTrackingSessionAction,
+    StopTrackingSessionAction,
+    ExportInteractionDataAction
 } from '../common/index.js';
 
 export function EyeTracking(): ReactElement {
@@ -21,6 +24,7 @@ export function EyeTracking(): ReactElement {
     const [isActive, setIsActive] = useState(false);
     const [isWebGazerLoaded, setIsWebGazerLoaded] = useState(true);
     const [isCalibrating, setIsCalibrating] = useState(false);
+    const [isTrackingSession, setIsTrackingSession] = useState(false);
     const [gazeData, setGazeData] = useState<Array<{x: number, y: number, timestamp: number}>>([]);
     const [statusMessage, setStatusMessage] = useState<string>('WebGazer ready');
     
@@ -46,6 +50,11 @@ export function EyeTracking(): ReactElement {
 
         try {
             setStatusMessage('Starting eye tracking...');
+            // Add this diagnostic code
+            console.log('Is in iframe:', window.self !== window.top);
+            //setStatusMessage('Requesting camera permission...');
+            //const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+            //stream.getTracks().forEach(track => track.stop());
             
             await webgazer
                 .setRegression('ridge')
@@ -154,6 +163,33 @@ export function EyeTracking(): ReactElement {
         setStatusMessage(`Exported ${gazeDataRef.current.length} gaze points`);
     }, [dispatchAction]);
 
+    // Interaction tracking functions
+    const startTrackingSession = useCallback(() => {
+        if (!clientId) {
+            setStatusMessage('Client not ready, please wait...');
+            return;
+        }
+
+        dispatchAction(StartTrackingSessionAction.create());
+        setIsTrackingSession(true);
+        setStatusMessage('Interaction tracking session started');
+    }, [clientId, dispatchAction]);
+
+    const stopTrackingSession = useCallback(() => {
+        if (!clientId) return;
+
+        dispatchAction(StopTrackingSessionAction.create());
+        setIsTrackingSession(false);
+        setStatusMessage('Interaction tracking session stopped');
+    }, [clientId, dispatchAction]);
+
+    const exportInteractionData = useCallback(() => {
+        if (!clientId) return;
+
+        dispatchAction(ExportInteractionDataAction.create());
+        setStatusMessage('Interaction data export requested');
+    }, [clientId, dispatchAction]);
+
     return (
         <div style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
             {/* Status Section */}
@@ -252,6 +288,72 @@ export function EyeTracking(): ReactElement {
                 >
                     Export Data
                 </button>
+            </div>
+
+            {/* Interaction Tracking Section */}
+            <div style={{ 
+                padding: '12px', 
+                border: '2px solid var(--vscode-charts-blue)', 
+                borderRadius: '4px',
+                backgroundColor: 'var(--vscode-editor-background)'
+            }}>
+                <h3 style={{ margin: '0 0 12px 0', fontSize: '16px', color: 'var(--vscode-charts-blue)' }}>
+                    🎯 Interaction Tracking
+                </h3>
+                <div style={{ fontSize: '13px', color: 'var(--vscode-descriptionForeground)', marginBottom: '12px' }}>
+                    Track all VS Code interactions (file edits, selections, clicks) for UX research.
+                    <br />
+                    <strong>Status:</strong> 
+                    <span style={{ 
+                        marginLeft: '8px',
+                        padding: '2px 8px',
+                        borderRadius: '10px',
+                        fontSize: '11px',
+                        backgroundColor: isTrackingSession ? 'var(--vscode-testing-iconPassed)' : 'var(--vscode-testing-iconFailed)',
+                        color: 'white'
+                    }}>
+                        {isTrackingSession ? 'Recording' : 'Inactive'}
+                    </span>
+                </div>
+                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                    <button 
+                        onClick={isTrackingSession ? stopTrackingSession : startTrackingSession}
+                        disabled={!clientId}
+                        style={{
+                            padding: '8px 16px',
+                            backgroundColor: isTrackingSession 
+                                ? 'var(--vscode-button-secondaryBackground)' 
+                                : 'var(--vscode-button-background)',
+                            color: 'var(--vscode-button-foreground)',
+                            border: 'none',
+                            borderRadius: '4px',
+                            cursor: clientId ? 'pointer' : 'not-allowed',
+                            opacity: !clientId ? 0.6 : 1
+                        }}
+                    >
+                        {isTrackingSession ? '⏹ Stop Session' : '▶ Start Session'}
+                    </button>
+                    <button 
+                        onClick={exportInteractionData}
+                        disabled={!isTrackingSession}
+                        style={{
+                            padding: '8px 16px',
+                            backgroundColor: 'var(--vscode-button-secondaryBackground)',
+                            color: 'var(--vscode-button-foreground)',
+                            border: 'none',
+                            borderRadius: '4px',
+                            cursor: isTrackingSession ? 'pointer' : 'not-allowed',
+                            opacity: !isTrackingSession ? 0.6 : 1
+                        }}
+                    >
+                        📊 View Stats
+                    </button>
+                </div>
+                <div style={{ marginTop: '12px', fontSize: '12px', color: 'var(--vscode-descriptionForeground)' }}>
+                    💡 <strong>Tip:</strong> Start a session before using the diagram editor to capture all interactions.
+                    <br />
+                    Data is automatically saved to: <code>workspace/interaction-logs/</code>
+                </div>
             </div>
 
             {/* Calibration Grid */}

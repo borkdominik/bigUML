@@ -8,7 +8,7 @@
  **********************************************************************************/
 import { BIGReactWebview } from '@borkdominik-biguml/big-vscode-integration/vscode';
 import { inject, injectable, postConstruct } from 'inversify';
-import { RequestPropertyPaletteAction, SetPropertyPaletteAction } from '../common/index.js';
+import { RequestPropertyPaletteAction, SetPropertyPaletteAction, UpdateElementPropertyAction } from '../common/index.js';
 import { SetNavigationIdNotification } from '../common/protocol.js';
 
 export const PropertyPaletteViewId = Symbol('PropertyPaletteViewId');
@@ -55,6 +55,14 @@ export class PropertyPaletteProvider extends BIGReactWebview {
             }),
             this.modelState.onDidChangeModelState(() => {
                 this.requestPropertyPalette();
+            }),
+            // Track property changes from webview
+            this.webviewConnector.onActionMessage(message => {
+                if (UpdateElementPropertyAction.is(message.action)) {
+                    console.log('🎯 Property UPDATE detected:', JSON.stringify(message.action, null, 2));
+                    // Forward to ActionDispatcher so ActionListener can pick it up
+                    this.actionDispatcher.dispatch(message.action);
+                }
             })
         );
     }

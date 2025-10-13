@@ -60,10 +60,12 @@
     "@eclipse-glsp/client": "*",
     "@eclipse-glsp/protocol": "*",
     "@eclipse-glsp/vscode-integration-webview": "*",
+    "csv-parse": "^5.5.6",
     "vscode-messenger-common": "^0.4.5",
     "webgazer": "^3.3.0"  
   },
   "devDependencies": {
+    "@types/node": "^20.0.0",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
     "react": "^18.0.0",

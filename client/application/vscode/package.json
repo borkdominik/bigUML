@@ -95,10 +95,6 @@
         "category": "bigUML",
         "enablement": "activeCustomEditorId == 'bigUML.diagramView'",
         "icon": "$(symbol-reference)"
-      },
-      {
-        "command": "bigUML.panel.hello-world",
-        "title": "Show Hello World"
       }
     ],
     "configuration": {
@@ -273,7 +269,7 @@
           "id": "bigUML.panel.hello-world",
           "name": "Hello World",
           "type": "webview",
-          "when": "bigUML.isRunning"
+          "when": "bigUML.isRunning && false"
         },
         {
           "id": "bigUML.panel.advancedsearch",
@@ -298,7 +294,6 @@
     "onLanguage:bigUML.unotation",
     "onCommand:bigUML.model.newEmpty",
     "onView:bigUML.outlineView",
-    "onView:bigUML.panel.hello-world",
     "onView:bigUML.panel.advancedsearch"
   ],
   "dependencies": {

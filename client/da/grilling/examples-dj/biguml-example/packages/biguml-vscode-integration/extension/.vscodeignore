@@ -1,0 +1,5 @@
+*.vsix
+
+# Dependencies
+node_modules/biguml-vscode-integration-webview
+!node_modules/biguml-vscode-integration-webview/bundle

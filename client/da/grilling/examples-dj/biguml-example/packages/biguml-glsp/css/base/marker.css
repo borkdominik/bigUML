@@ -1,0 +1,47 @@
+.marker-triangle-start {
+    marker-start: var(--svg-def-marker-triangle);
+}
+
+.marker-triangle-end {
+    marker-end: var(--svg-def-marker-triangle);
+}
+
+.marker-triangle-empty-start {
+    marker-start: var(--svg-def-marker-triangle-empty);
+}
+
+.marker-triangle-empty-end {
+    marker-end: var(--svg-def-marker-triangle-empty);
+}
+
+.marker-tent-start {
+    marker-start: var(--svg-def-marker-tent);
+}
+
+.marker-tent-end {
+    marker-end: var(--svg-def-marker-tent);
+}
+
+.marker-diamond-start {
+    marker-start: var(--svg-def-marker-diamond);
+}
+
+.marker-diamond-end {
+    marker-end: var(--svg-def-marker-diamond);
+}
+
+.marker-diamond-empty-start {
+    marker-start: var(--svg-def-marker-diamond-empty);
+}
+
+.marker-diamond-empty-end {
+    marker-end: var(--svg-def-marker-diamond-empty);
+}
+
+.marker-circle-start {
+    marker-start: url('#marker-circle');
+}
+
+.marker-circle-end {
+    marker-end: url('#marker-circle');
+}

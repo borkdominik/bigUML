@@ -1,0 +1,29 @@
+# Yarn
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
+# Build
+node_modules
+.browser_modules
+lib
+build
+bundles
+*.tsbuildinfo
+
+# Project
+/environments/*-app/*
+!/environments/*-app/package.json
+
+# Files
+*.log
+.DS_Store
+
+# Local
+*.vsix
+*.zip
+/.idea/

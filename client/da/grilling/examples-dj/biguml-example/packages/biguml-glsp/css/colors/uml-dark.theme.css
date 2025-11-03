@@ -1,0 +1,6 @@
+.uml-dark-theme {
+    --uml-border: var(--uml-light-blue);
+    --uml-edge: var(--uml-light-blue);
+    --uml-selection-border: rgba(255, 255, 255, 0.3);
+    --uml-graph-grid: rgba(255, 255, 255, 0.3);
+}

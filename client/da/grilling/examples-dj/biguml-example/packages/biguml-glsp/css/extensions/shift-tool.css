@@ -1,0 +1,8 @@
+line.shift-tool {
+    stroke: LightSlateGrey;
+}
+line.shift-tool-direction {
+    stroke: LightSlateGrey;
+    marker-end: url('#marker-triangle-shift-tool');
+}
+/* styling of marker is in view.tsx file */

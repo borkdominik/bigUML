@@ -1,0 +1,31 @@
+.uml-theme .uml-text-underline {
+    text-decoration: underline;
+}
+
+.uml-theme .uml-font-bold {
+    font-weight: bold;
+}
+
+.uml-theme .uml-font-italic {
+    font-style: italic;
+}
+
+.uml-theme .uml-divider-subtitle {
+    fill: var(--uml-divider-subtitle);
+    font-size: small;
+}
+
+.uml-theme .editable-label:hover,
+.uml-theme .uml-text-highlight:hover,
+.uml-theme .uml-text-interactable:hover {
+    cursor: pointer;
+}
+
+.uml-theme .selected.uml-text-highlight,
+.uml-theme .uml-text-highlight:hover {
+    fill: var(--uml-medium-blue);
+}
+
+.uml-theme .uml-text-interactable:hover {
+    fill: var(--uml-label-hoverForeground);
+}

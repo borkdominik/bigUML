@@ -1,0 +1,63 @@
+.editor-panel {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    bottom: var(--uml-scrollbar-rail-width);
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 600px;
+    outline: none;
+    box-shadow: 0px 1px 6px var(--uml-widget-shadow);
+}
+
+.editor-panel-header {
+    border-top: 1px solid var(--uml-tab-unfocusedActiveBorderTop);
+    background: var(--uml-titleBar-activeBackground);
+    color: var(--uml-titleBar-activeForeground);
+    display: flex;
+    flex-direction: row;
+}
+
+.editor-panel-header:hover {
+    cursor: pointer;
+}
+
+.editor-panel:focus-within .editor-panel-header {
+    border-top-color: var(--uml-focusBorder);
+}
+
+.editor-panel-tab-header {
+    width: 4rem;
+    padding: 0.4rem;
+    display: flex;
+    align-items: center;
+}
+
+.editor-panel-tab-header.active {
+    background: var(--uml-secondaryBar-background);
+}
+
+.editor-panel-tab-header:hover {
+    background: var(--uml-menubar-selectionBackground);
+}
+
+.editor-panel-collapse {
+    border: none;
+    margin-left: auto;
+    padding: 0.4rem;
+    background: inherit;
+    color: inherit;
+    cursor: pointer;
+}
+
+.editor-panel-collapse:hover {
+    background: var(--uml-menubar-selectionBackground);
+}
+
+.editor-panel-content {
+    outline: none;
+    flex: 1;
+}

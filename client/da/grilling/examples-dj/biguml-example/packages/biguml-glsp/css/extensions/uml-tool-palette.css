@@ -1,0 +1,21 @@
+/* Override */
+.uml-theme .tool-palette {
+    max-height: 80%;
+    width: 200px !important;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.uml-theme .tool-palette .palette-header {
+    overflow: visible;
+}
+
+.uml-theme .tool-palette .palette-body {
+    overflow-y: auto;
+    height: 100%;
+}
+
+.uml-theme .uml-tool-button {
+    display: flex;
+}

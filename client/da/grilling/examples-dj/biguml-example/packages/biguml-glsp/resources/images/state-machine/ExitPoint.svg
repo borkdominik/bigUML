@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="26px" height="27px" viewBox="0 0 26 27" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>ExitPoint</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="ExitPoint" transform="translate(1.000000, 1.000000)" stroke="#4E81B4">
+            <circle id="Oval" cx="12.0966667" cy="12.56" r="12.0966667"></circle>
+            <line x1="4.12166667" y1="4.035" x2="20.3433333" y2="21.3566667" id="Path"></line>
+            <line x1="20.6216667" y1="4.035" x2="3.5" y2="21.5" id="Path"></line>
+        </g>
+    </g>
+</svg>

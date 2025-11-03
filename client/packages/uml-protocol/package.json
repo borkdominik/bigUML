@@ -37,9 +37,9 @@
     "src"
   ],
   "scripts": {
-    "build": "npm run clean && npm run compile",
+    "build": "npm run clean && npm run compile && npm run lint",
     "clean": "rimraf lib tsconfig.tsbuildinfo",
-    "compile": "tsc -b && npm run lint",
+    "compile": "tsc -b",
     "lint": "eslint -c ./eslint.config.js",
     "lint:fix": "eslint --fix -c ./eslint.config.js",
     "watch": "tsc -w"

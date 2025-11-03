@@ -1,0 +1,3 @@
+Our icon source is the papyrus git repository:
+https://git.eclipse.org/c/papyrus/org.eclipse.papyrus.git/tree/plugins/uml/diagram/org.eclipse.papyrus.uml.diagram.common/icons
+(For the dark icons, we use GIMP to edit copies of the original icons)

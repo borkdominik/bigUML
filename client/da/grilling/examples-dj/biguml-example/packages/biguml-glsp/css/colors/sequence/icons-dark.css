@@ -1,0 +1,8 @@
+:root {
+    --uml-icon-lifeline: url(../../../../../resources/icons/dark/sequence/Lifeline.gif);
+    --uml-icon-interaction: url(../../../../../resources/icons/dark/sequence/Interaction.gif);
+    --uml-icon-message: url(../../../../../resources/icons/dark/sequence/Message.gif);
+    --uml-icon-message-async: url(../../../../../resources/icons/dark/sequence/Message_asynchCall.gif);
+    --uml-icon-message-sync: url(../../../../../resources/icons/dark/sequence/Message_synchCall.gif);
+
+}

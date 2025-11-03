@@ -1,0 +1,25 @@
+{
+  "name": "@borkdominik-biguml/model-common",
+  "version": "1.0.0",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./lib/index.js",
+      "require": "./lib/index.js"
+    }
+  },
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "build": "npm run clean && npm run compile && npm run lint",
+    "clean": "rimraf lib tsconfig.tsbuildinfo",
+    "compile": "tsc -b",
+    "lint": "eslint -c ./eslint.config.js",
+    "lint:fix": "eslint --fix -c ./eslint.config.js",
+    "watch": "tsc -w"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "typescript": "^5.8.3"
+  }
+}

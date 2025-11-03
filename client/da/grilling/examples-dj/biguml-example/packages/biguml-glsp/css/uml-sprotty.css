@@ -1,0 +1,21 @@
+.sprotty text {
+    fill: var(--uml-label);
+    font-size: 100%;
+}
+
+.sprotty-missing {
+    stroke-width: 1;
+    stroke: var(--uml-error);
+    fill: var(--uml-error);
+    font-size: 14pt;
+    text-anchor: middle;
+}
+
+.sprotty-popup-title {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.sprotty-popup-body > p {
+    margin-bottom: 2px;
+}

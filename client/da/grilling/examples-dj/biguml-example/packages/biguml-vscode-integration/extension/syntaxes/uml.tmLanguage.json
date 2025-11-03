@@ -1,0 +1,45 @@
+{
+  "name": "uml",
+  "scopeName": "source.uml",
+  "fileTypes": [".uml", ".umld"],
+  "patterns": [
+    {
+      "include": "#comments"
+    },
+    {
+      "name": "keyword.control.uml",
+      "match": "\\b(ABSTRACTION|AGGREGATION|ASSOCIATION|CLASS|COMPOSITE|COMPOSITION|CONCURRENT|CREATE|DELETE|DEPENDENCY|ELEMENT_IMPORT|GENERALIZATION|GUARDED|IN|INOUT|INTERFACE_REALIZATION|NONE|OUT|PACKAGE|PACKAGE_IMPORT|PACKAGE_MERGE|PRIVATE|PROTECTED|PUBLIC|READ|REALIZATION|RETURN|SEQUENTIAL|SHARED|STATE_MACHINE|SUBSTITUTION|UPDATE|USAGE)\\b|\\B(\"Abstraction\"|\"Association\"|\"Class\"|\"ClassDiagram\"|\"DataType\"|\"DataTypeReference\"|\"Dependency\"|\"ElementWithSizeAndPosition\"|\"Entity\"|\"Enumeration\"|\"EnumerationLiteral\"|\"Generalization\"|\"InstanceSpecification\"|\"Interface\"|\"InterfaceRealization\"|\"LiteralSpecification\"|\"Operation\"|\"Package\"|\"PackageDiagram\"|\"PackageImport\"|\"PackageMerge\"|\"Parameter\"|\"Position\"|\"PrimitiveType\"|\"Property\"|\"Realization\"|\"Reference\"|\"Relation\"|\"Size\"|\"Slot\"|\"SlotDefiningFeature\"|\"StateMachineDiagram\"|\"Substitution\"|\"Usage\"|\"__id\"|\"__refType\"|\"__type\"|\"__value\"|\"aggregation\"|\"concurrency\"|\"definingFeature\"|\"diagram\"|\"diagramType\"|\"direction\"|\"effect\"|\"element\"|\"entities\"|\"height\"|\"isAbstract\"|\"isActive\"|\"isDerived\"|\"isDerivedUnion\"|\"isException\"|\"isOrdered\"|\"isQuery\"|\"isReadOnly\"|\"isStatic\"|\"isStream\"|\"isSubstitutable\"|\"isUnique\"|\"metaInfos\"|\"multiplicity\"|\"name\"|\"operations\"|\"parameterType\"|\"parameters\"|\"properties\"|\"propertyType\"|\"relationType\"|\"relations\"|\"slots\"|\"source\"|\"sourceAggregation\"|\"sourceMultiplicity\"|\"sourceName\"|\"target\"|\"targetAggregation\"|\"targetMultiplicity\"|\"targetName\"|\"uri\"|\"value\"|\"values\"|\"visibility\"|\"width\"|\"x\"|\"y\")\\B"
+    }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.block.uml",
+          "begin": "/\\*",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.comment.uml"
+            }
+          },
+          "end": "\\*/",
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.comment.uml"
+            }
+          }
+        },
+        {
+          "begin": "//",
+          "beginCaptures": {
+            "1": {
+              "name": "punctuation.whitespace.comment.leading.uml"
+            }
+          },
+          "end": "(?=$)",
+          "name": "comment.line.uml"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,38 @@
+.uml-node {
+    fill: var(--uml-node);
+    stroke-width: 1;
+    stroke: var(--uml-border);
+}
+
+svg .uml-node .uml-node-background {
+    /* Inefficient the SVGs */
+    /* filter: var(--svg-def-filter-drop-shadow); */
+    filter: drop-shadow(2px 4px 4px var(--uml-drop-shadow));
+}
+
+.uml-node.mouseover:not(.selected) {
+    stroke-width: 2;
+}
+
+.uml-node.selected {
+    stroke-width: 3;
+}
+
+.uml-node .sprotty-node {
+    fill: inherit;
+    stroke: var(--uml-border);
+}
+
+.uml-node-container {
+    border-radius: 20;
+}
+
+.uml-comp-separator {
+    stroke-width: 1;
+    stroke: var(--uml-edge);
+}
+
+.uml-packageable-node > .struct {
+    fill: none;
+    stroke: none;
+}

@@ -94,13 +94,13 @@ export const coreConfig = tseslint.config(
                     {
                         pattern: '[\n\r]+ \\* Copyright \\([cC]\\) \\d{4}(-\\d{4})? .*[\n\r]+',
                         template: `*********************************************************************************
-* Copyright (c) ${new Date().getFullYear()} borkdominik and others.
-*
-* This program and the accompanying materials are made available under the
-* terms of the MIT License which is available at https://opensource.org/licenses/MIT.
-*
-* SPDX-License-Identifier: MIT
-*********************************************************************************`
+ * Copyright (c) ${new Date().getFullYear()} borkdominik and others.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at https://opensource.org/licenses/MIT.
+ *
+ * SPDX-License-Identifier: MIT
+ *********************************************************************************`
                     }
                 ]
             ]

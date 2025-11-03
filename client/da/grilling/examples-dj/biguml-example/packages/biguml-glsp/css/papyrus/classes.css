@@ -1,0 +1,761 @@
+/* THIS FILE IS GENERATED */
+
+.uml-activity-icon {
+    background-image: var(--uml-activity-icon);
+}
+.uml-class-icon {
+    background-image: var(--uml-class-icon);
+}
+.uml-collaboration-icon {
+    background-image: var(--uml-collaboration-icon);
+}
+.uml-data-type-icon {
+    background-image: var(--uml-data-type-icon);
+}
+.uml-enumeration-icon {
+    background-image: var(--uml-enumeration-icon);
+}
+.uml-enumeration-literal-icon {
+    background-image: var(--uml-enumeration-literal-icon);
+}
+.uml-generalization-15x15-icon {
+    background-image: var(--uml-generalization-15x15-icon);
+}
+.uml-interface-icon {
+    background-image: var(--uml-interface-icon);
+}
+.uml-literal-boolean-icon {
+    background-image: var(--uml-literal-boolean-icon);
+}
+.uml-literal-integer-icon {
+    background-image: var(--uml-literal-integer-icon);
+}
+.uml-literal-real-icon {
+    background-image: var(--uml-literal-real-icon);
+}
+.uml-literal-string-icon {
+    background-image: var(--uml-literal-string-icon);
+}
+.uml-literal-unlimited-natural-icon {
+    background-image: var(--uml-literal-unlimited-natural-icon);
+}
+.uml-metaclass-icon {
+    background-image: var(--uml-metaclass-icon);
+}
+.uml-operation-icon {
+    background-image: var(--uml-operation-icon);
+}
+.uml-port-icon {
+    background-image: var(--uml-port-icon);
+}
+.uml-property-icon {
+    background-image: var(--uml-property-icon);
+}
+.uml-autosize-icon {
+    background-image: var(--uml-autosize-icon);
+}
+.uml-none-comp-vis-icon {
+    background-image: var(--uml-none-comp-vis-icon);
+}
+.uml-abstraction-icon {
+    background-image: var(--uml-abstraction-icon);
+}
+.uml-accept-call-action-icon {
+    background-image: var(--uml-accept-call-action-icon);
+}
+.uml-accept-event-action-icon {
+    background-image: var(--uml-accept-event-action-icon);
+}
+.uml-action-execution-specification-icon {
+    background-image: var(--uml-action-execution-specification-icon);
+}
+.uml-action-input-pin-icon {
+    background-image: var(--uml-action-input-pin-icon);
+}
+.uml-activity-final-node-icon {
+    background-image: var(--uml-activity-final-node-icon);
+}
+.uml-activity-parameter-node-icon {
+    background-image: var(--uml-activity-parameter-node-icon);
+}
+.uml-activity-partition-icon {
+    background-image: var(--uml-activity-partition-icon);
+}
+.uml-actor-icon {
+    background-image: var(--uml-actor-icon);
+}
+.uml-add-structural-feature-value-action-icon {
+    background-image: var(--uml-add-structural-feature-value-action-icon);
+}
+.uml-add-variable-value-action-icon {
+    background-image: var(--uml-add-variable-value-action-icon);
+}
+.uml-add-16x16-icon {
+    background-image: var(--uml-add-16x16-icon);
+}
+.uml-any-receive-event-icon {
+    background-image: var(--uml-any-receive-event-icon);
+}
+.uml-arrow-down-16x16-icon {
+    background-image: var(--uml-arrow-down-16x16-icon);
+}
+.uml-arrow-left-16x16-icon {
+    background-image: var(--uml-arrow-left-16x16-icon);
+}
+.uml-arrow-right-16x16-icon {
+    background-image: var(--uml-arrow-right-16x16-icon);
+}
+.uml-arrow-up-16x16-icon {
+    background-image: var(--uml-arrow-up-16x16-icon);
+}
+.uml-artifact-icon {
+    background-image: var(--uml-artifact-icon);
+}
+.uml-association-icon {
+    background-image: var(--uml-association-icon);
+}
+.uml-association-class-icon {
+    background-image: var(--uml-association-class-icon);
+}
+.uml-association-composite-icon {
+    background-image: var(--uml-association-composite-icon);
+}
+.uml-association-none-icon {
+    background-image: var(--uml-association-none-icon);
+}
+.uml-association-shared-icon {
+    background-image: var(--uml-association-shared-icon);
+}
+.uml-behavior-execution-specification-icon {
+    background-image: var(--uml-behavior-execution-specification-icon);
+}
+.uml-broadcast-signal-action-icon {
+    background-image: var(--uml-broadcast-signal-action-icon);
+}
+.uml-call-behavior-action-icon {
+    background-image: var(--uml-call-behavior-action-icon);
+}
+.uml-call-event-icon {
+    background-image: var(--uml-call-event-icon);
+}
+.uml-call-operation-action-icon {
+    background-image: var(--uml-call-operation-action-icon);
+}
+.uml-central-buffer-node-icon {
+    background-image: var(--uml-central-buffer-node-icon);
+}
+.uml-change-event-icon {
+    background-image: var(--uml-change-event-icon);
+}
+.uml-classifier-template-parameter-icon {
+    background-image: var(--uml-classifier-template-parameter-icon);
+}
+.uml-clause-icon {
+    background-image: var(--uml-clause-icon);
+}
+.uml-clear-association-action-icon {
+    background-image: var(--uml-clear-association-action-icon);
+}
+.uml-clear-structural-feature-action-icon {
+    background-image: var(--uml-clear-structural-feature-action-icon);
+}
+.uml-clear-variable-action-icon {
+    background-image: var(--uml-clear-variable-action-icon);
+}
+.uml-collaboration-use-icon {
+    background-image: var(--uml-collaboration-use-icon);
+}
+.uml-combined-fragment-icon {
+    background-image: var(--uml-combined-fragment-icon);
+}
+.uml-comment-icon {
+    background-image: var(--uml-comment-icon);
+}
+.uml-communication-path-icon {
+    background-image: var(--uml-communication-path-icon);
+}
+.uml-component-icon {
+    background-image: var(--uml-component-icon);
+}
+.uml-component-realization-icon {
+    background-image: var(--uml-component-realization-icon);
+}
+.uml-conditional-node-icon {
+    background-image: var(--uml-conditional-node-icon);
+}
+.uml-connectable-element-template-parameter-icon {
+    background-image: var(--uml-connectable-element-template-parameter-icon);
+}
+.uml-connection-point-reference-icon {
+    background-image: var(--uml-connection-point-reference-icon);
+}
+.uml-connector-icon {
+    background-image: var(--uml-connector-icon);
+}
+.uml-connector-end-icon {
+    background-image: var(--uml-connector-end-icon);
+}
+.uml-connector-assembly-icon {
+    background-image: var(--uml-connector-assembly-icon);
+}
+.uml-connector-delegation-icon {
+    background-image: var(--uml-connector-delegation-icon);
+}
+.uml-consider-ignore-fragment-icon {
+    background-image: var(--uml-consider-ignore-fragment-icon);
+}
+.uml-constraint-icon {
+    background-image: var(--uml-constraint-icon);
+}
+.uml-continuation-icon {
+    background-image: var(--uml-continuation-icon);
+}
+.uml-control-flow-icon {
+    background-image: var(--uml-control-flow-icon);
+}
+.uml-create-link-action-icon {
+    background-image: var(--uml-create-link-action-icon);
+}
+.uml-create-link-object-action-icon {
+    background-image: var(--uml-create-link-object-action-icon);
+}
+.uml-create-object-action-icon {
+    background-image: var(--uml-create-object-action-icon);
+}
+.uml-creation-event-icon {
+    background-image: var(--uml-creation-event-icon);
+}
+.uml-data-store-node-icon {
+    background-image: var(--uml-data-store-node-icon);
+}
+.uml-decision-node-icon {
+    background-image: var(--uml-decision-node-icon);
+}
+.uml-delete-16x16-icon {
+    background-image: var(--uml-delete-16x16-icon);
+}
+.uml-dependency-icon {
+    background-image: var(--uml-dependency-icon);
+}
+.uml-deployment-icon {
+    background-image: var(--uml-deployment-icon);
+}
+.uml-deployment-specification-icon {
+    background-image: var(--uml-deployment-specification-icon);
+}
+.uml-destroy-link-action-icon {
+    background-image: var(--uml-destroy-link-action-icon);
+}
+.uml-destroy-object-action-icon {
+    background-image: var(--uml-destroy-object-action-icon);
+}
+.uml-destruction-event-icon {
+    background-image: var(--uml-destruction-event-icon);
+}
+.uml-device-icon {
+    background-image: var(--uml-device-icon);
+}
+.uml-duration-icon {
+    background-image: var(--uml-duration-icon);
+}
+.uml-duration-constraint-icon {
+    background-image: var(--uml-duration-constraint-icon);
+}
+.uml-duration-interval-icon {
+    background-image: var(--uml-duration-interval-icon);
+}
+.uml-duration-observation-icon {
+    background-image: var(--uml-duration-observation-icon);
+}
+.uml-element-import-icon {
+    background-image: var(--uml-element-import-icon);
+}
+.uml-exception-handler-icon {
+    background-image: var(--uml-exception-handler-icon);
+}
+.uml-execution-environment-icon {
+    background-image: var(--uml-execution-environment-icon);
+}
+.uml-execution-event-icon {
+    background-image: var(--uml-execution-event-icon);
+}
+.uml-execution-occurrence-specification-icon {
+    background-image: var(--uml-execution-occurrence-specification-icon);
+}
+.uml-expansion-node-icon {
+    background-image: var(--uml-expansion-node-icon);
+}
+.uml-expansion-region-icon {
+    background-image: var(--uml-expansion-region-icon);
+}
+.uml-export-icon {
+    background-image: var(--uml-export-icon);
+}
+.uml-expression-icon {
+    background-image: var(--uml-expression-icon);
+}
+.uml-extend-icon {
+    background-image: var(--uml-extend-icon);
+}
+.uml-extension-icon {
+    background-image: var(--uml-extension-icon);
+}
+.uml-extension-end-icon {
+    background-image: var(--uml-extension-end-icon);
+}
+.uml-extension-point-icon {
+    background-image: var(--uml-extension-point-icon);
+}
+.uml-final-state-icon {
+    background-image: var(--uml-final-state-icon);
+}
+.uml-flow-final-node-icon {
+    background-image: var(--uml-flow-final-node-icon);
+}
+.uml-fork-node-icon {
+    background-image: var(--uml-fork-node-icon);
+}
+.uml-function-behavior-icon {
+    background-image: var(--uml-function-behavior-icon);
+}
+.uml-gate-icon {
+    background-image: var(--uml-gate-icon);
+}
+.uml-general-ordering-icon {
+    background-image: var(--uml-general-ordering-icon);
+}
+.uml-generalization-icon {
+    background-image: var(--uml-generalization-icon);
+}
+.uml-generalization-set-icon {
+    background-image: var(--uml-generalization-set-icon);
+}
+.uml-image-icon {
+    background-image: var(--uml-image-icon);
+}
+.uml-include-icon {
+    background-image: var(--uml-include-icon);
+}
+.uml-information-flow-icon {
+    background-image: var(--uml-information-flow-icon);
+}
+.uml-information-item-icon {
+    background-image: var(--uml-information-item-icon);
+}
+.uml-initial-node-icon {
+    background-image: var(--uml-initial-node-icon);
+}
+.uml-input-pin-icon {
+    background-image: var(--uml-input-pin-icon);
+}
+.uml-instance-specification-icon {
+    background-image: var(--uml-instance-specification-icon);
+}
+.uml-instance-value-icon {
+    background-image: var(--uml-instance-value-icon);
+}
+.uml-interaction-icon {
+    background-image: var(--uml-interaction-icon);
+}
+.uml-interaction-constraint-icon {
+    background-image: var(--uml-interaction-constraint-icon);
+}
+.uml-interaction-operand-icon {
+    background-image: var(--uml-interaction-operand-icon);
+}
+.uml-interaction-use-icon {
+    background-image: var(--uml-interaction-use-icon);
+}
+.uml-interface-realization-icon {
+    background-image: var(--uml-interface-realization-icon);
+}
+.uml-interruptible-activity-region-icon {
+    background-image: var(--uml-interruptible-activity-region-icon);
+}
+.uml-interval-icon {
+    background-image: var(--uml-interval-icon);
+}
+.uml-interval-constraint-icon {
+    background-image: var(--uml-interval-constraint-icon);
+}
+.uml-join-node-icon {
+    background-image: var(--uml-join-node-icon);
+}
+.uml-lifeline-icon {
+    background-image: var(--uml-lifeline-icon);
+}
+.uml-link-end-creation-data-icon {
+    background-image: var(--uml-link-end-creation-data-icon);
+}
+.uml-link-end-data-icon {
+    background-image: var(--uml-link-end-data-icon);
+}
+.uml-link-end-destruction-data-icon {
+    background-image: var(--uml-link-end-destruction-data-icon);
+}
+.uml-literal-null-icon {
+    background-image: var(--uml-literal-null-icon);
+}
+.uml-load-resource-icon {
+    background-image: var(--uml-load-resource-icon);
+}
+.uml-loop-node-icon {
+    background-image: var(--uml-loop-node-icon);
+}
+.uml-manifestation-icon {
+    background-image: var(--uml-manifestation-icon);
+}
+.uml-merge-node-icon {
+    background-image: var(--uml-merge-node-icon);
+}
+.uml-message-icon {
+    background-image: var(--uml-message-icon);
+}
+.uml-message-occurrence-specification-icon {
+    background-image: var(--uml-message-occurrence-specification-icon);
+}
+.uml-message-asynch-call-icon {
+    background-image: var(--uml-message-asynch-call-icon);
+}
+.uml-message-asynch-signal-icon {
+    background-image: var(--uml-message-asynch-signal-icon);
+}
+.uml-message-create-message-icon {
+    background-image: var(--uml-message-create-message-icon);
+}
+.uml-message-delete-message-icon {
+    background-image: var(--uml-message-delete-message-icon);
+}
+.uml-message-reply-icon {
+    background-image: var(--uml-message-reply-icon);
+}
+.uml-message-synch-call-icon {
+    background-image: var(--uml-message-synch-call-icon);
+}
+.uml-model-icon {
+    background-image: var(--uml-model-icon);
+}
+.uml-modify-icon {
+    background-image: var(--uml-modify-icon);
+}
+.uml-node-icon {
+    background-image: var(--uml-node-icon);
+}
+.uml-object-flow-icon {
+    background-image: var(--uml-object-flow-icon);
+}
+.uml-occurrence-specification-icon {
+    background-image: var(--uml-occurrence-specification-icon);
+}
+.uml-opaque-action-icon {
+    background-image: var(--uml-opaque-action-icon);
+}
+.uml-opaque-behavior-icon {
+    background-image: var(--uml-opaque-behavior-icon);
+}
+.uml-opaque-expression-icon {
+    background-image: var(--uml-opaque-expression-icon);
+}
+.uml-operation-template-parameter-icon {
+    background-image: var(--uml-operation-template-parameter-icon);
+}
+.uml-output-pin-icon {
+    background-image: var(--uml-output-pin-icon);
+}
+.uml-package-icon {
+    background-image: var(--uml-package-icon);
+}
+.uml-package-import-icon {
+    background-image: var(--uml-package-import-icon);
+}
+.uml-package-merge-icon {
+    background-image: var(--uml-package-merge-icon);
+}
+.uml-parameter-icon {
+    background-image: var(--uml-parameter-icon);
+}
+.uml-parameter-set-icon {
+    background-image: var(--uml-parameter-set-icon);
+}
+.uml-parameter-in-icon {
+    background-image: var(--uml-parameter-in-icon);
+}
+.uml-parameter-inout-icon {
+    background-image: var(--uml-parameter-inout-icon);
+}
+.uml-parameter-out-icon {
+    background-image: var(--uml-parameter-out-icon);
+}
+.uml-parameter-return-icon {
+    background-image: var(--uml-parameter-return-icon);
+}
+.uml-part-decomposition-icon {
+    background-image: var(--uml-part-decomposition-icon);
+}
+.uml-pin-icon {
+    background-image: var(--uml-pin-icon);
+}
+.uml-plus-icon {
+    background-image: var(--uml-plus-icon);
+}
+.uml-primitive-type-icon {
+    background-image: var(--uml-primitive-type-icon);
+}
+.uml-profile-icon {
+    background-image: var(--uml-profile-icon);
+}
+.uml-profile-application-icon {
+    background-image: var(--uml-profile-application-icon);
+}
+.uml-protocol-conformance-icon {
+    background-image: var(--uml-protocol-conformance-icon);
+}
+.uml-protocol-state-machine-icon {
+    background-image: var(--uml-protocol-state-machine-icon);
+}
+.uml-protocol-transition-icon {
+    background-image: var(--uml-protocol-transition-icon);
+}
+.uml-pseudostate-icon {
+    background-image: var(--uml-pseudostate-icon);
+}
+.uml-pseudostate-choice-icon {
+    background-image: var(--uml-pseudostate-choice-icon);
+}
+.uml-pseudostate-deep-history-icon {
+    background-image: var(--uml-pseudostate-deep-history-icon);
+}
+.uml-pseudostate-entry-point-icon {
+    background-image: var(--uml-pseudostate-entry-point-icon);
+}
+.uml-pseudostate-exit-point-icon {
+    background-image: var(--uml-pseudostate-exit-point-icon);
+}
+.uml-pseudostate-fork-icon {
+    background-image: var(--uml-pseudostate-fork-icon);
+}
+.uml-pseudostate-initial-icon {
+    background-image: var(--uml-pseudostate-initial-icon);
+}
+.uml-pseudostate-join-icon {
+    background-image: var(--uml-pseudostate-join-icon);
+}
+.uml-pseudostate-junction-icon {
+    background-image: var(--uml-pseudostate-junction-icon);
+}
+.uml-pseudostate-shallow-history-icon {
+    background-image: var(--uml-pseudostate-shallow-history-icon);
+}
+.uml-pseudostate-terminate-icon {
+    background-image: var(--uml-pseudostate-terminate-icon);
+}
+.uml-qualifier-value-icon {
+    background-image: var(--uml-qualifier-value-icon);
+}
+.uml-raise-exception-action-icon {
+    background-image: var(--uml-raise-exception-action-icon);
+}
+.uml-read-extent-action-icon {
+    background-image: var(--uml-read-extent-action-icon);
+}
+.uml-read-is-classified-object-action-icon {
+    background-image: var(--uml-read-is-classified-object-action-icon);
+}
+.uml-read-link-action-icon {
+    background-image: var(--uml-read-link-action-icon);
+}
+.uml-read-link-object-end-action-icon {
+    background-image: var(--uml-read-link-object-end-action-icon);
+}
+.uml-read-link-object-end-qualifier-action-icon {
+    background-image: var(--uml-read-link-object-end-qualifier-action-icon);
+}
+.uml-read-self-action-icon {
+    background-image: var(--uml-read-self-action-icon);
+}
+.uml-read-structural-feature-action-icon {
+    background-image: var(--uml-read-structural-feature-action-icon);
+}
+.uml-read-variable-action-icon {
+    background-image: var(--uml-read-variable-action-icon);
+}
+.uml-realization-icon {
+    background-image: var(--uml-realization-icon);
+}
+.uml-receive-operation-event-icon {
+    background-image: var(--uml-receive-operation-event-icon);
+}
+.uml-receive-signal-event-icon {
+    background-image: var(--uml-receive-signal-event-icon);
+}
+.uml-reception-icon {
+    background-image: var(--uml-reception-icon);
+}
+.uml-reclassify-object-action-icon {
+    background-image: var(--uml-reclassify-object-action-icon);
+}
+.uml-redefinable-template-signature-icon {
+    background-image: var(--uml-redefinable-template-signature-icon);
+}
+.uml-reduce-action-icon {
+    background-image: var(--uml-reduce-action-icon);
+}
+.uml-region-icon {
+    background-image: var(--uml-region-icon);
+}
+.uml-remove-structural-feature-value-action-icon {
+    background-image: var(--uml-remove-structural-feature-value-action-icon);
+}
+.uml-remove-variable-value-action-icon {
+    background-image: var(--uml-remove-variable-value-action-icon);
+}
+.uml-reply-action-icon {
+    background-image: var(--uml-reply-action-icon);
+}
+.uml-send-object-action-icon {
+    background-image: var(--uml-send-object-action-icon);
+}
+.uml-send-operation-event-icon {
+    background-image: var(--uml-send-operation-event-icon);
+}
+.uml-send-signal-action-icon {
+    background-image: var(--uml-send-signal-action-icon);
+}
+.uml-send-signal-event-icon {
+    background-image: var(--uml-send-signal-event-icon);
+}
+.uml-sequence-node-icon {
+    background-image: var(--uml-sequence-node-icon);
+}
+.uml-signal-icon {
+    background-image: var(--uml-signal-icon);
+}
+.uml-signal-event-icon {
+    background-image: var(--uml-signal-event-icon);
+}
+.uml-slot-icon {
+    background-image: var(--uml-slot-icon);
+}
+.uml-start-classifier-behavior-action-icon {
+    background-image: var(--uml-start-classifier-behavior-action-icon);
+}
+.uml-state-icon {
+    background-image: var(--uml-state-icon);
+}
+.uml-state-invariant-icon {
+    background-image: var(--uml-state-invariant-icon);
+}
+.uml-state-machine-icon {
+    background-image: var(--uml-state-machine-icon);
+}
+.uml-stereotype-icon {
+    background-image: var(--uml-stereotype-icon);
+}
+.uml-string-expression-icon {
+    background-image: var(--uml-string-expression-icon);
+}
+.uml-structured-activity-node-icon {
+    background-image: var(--uml-structured-activity-node-icon);
+}
+.uml-substitution-icon {
+    background-image: var(--uml-substitution-icon);
+}
+.uml-template-binding-icon {
+    background-image: var(--uml-template-binding-icon);
+}
+.uml-template-parameter-icon {
+    background-image: var(--uml-template-parameter-icon);
+}
+.uml-template-parameter-substitution-icon {
+    background-image: var(--uml-template-parameter-substitution-icon);
+}
+.uml-template-signature-icon {
+    background-image: var(--uml-template-signature-icon);
+}
+.uml-test-identity-action-icon {
+    background-image: var(--uml-test-identity-action-icon);
+}
+.uml-time-constraint-icon {
+    background-image: var(--uml-time-constraint-icon);
+}
+.uml-time-event-icon {
+    background-image: var(--uml-time-event-icon);
+}
+.uml-time-expression-icon {
+    background-image: var(--uml-time-expression-icon);
+}
+.uml-time-interval-icon {
+    background-image: var(--uml-time-interval-icon);
+}
+.uml-time-observation-icon {
+    background-image: var(--uml-time-observation-icon);
+}
+.uml-transition-icon {
+    background-image: var(--uml-transition-icon);
+}
+.uml-transition-external-icon {
+    background-image: var(--uml-transition-external-icon);
+}
+.uml-transition-internal-icon {
+    background-image: var(--uml-transition-internal-icon);
+}
+.uml-transition-local-icon {
+    background-image: var(--uml-transition-local-icon);
+}
+.uml-trigger-icon {
+    background-image: var(--uml-trigger-icon);
+}
+.uml-u-m-l-diagram-file-icon {
+    background-image: var(--uml-u-m-l-diagram-file-icon);
+}
+.uml-unload-resource-icon {
+    background-image: var(--uml-unload-resource-icon);
+}
+.uml-unmarshall-action-icon {
+    background-image: var(--uml-unmarshall-action-icon);
+}
+.uml-usage-icon {
+    background-image: var(--uml-usage-icon);
+}
+.uml-use-case-icon {
+    background-image: var(--uml-use-case-icon);
+}
+.uml-value-pin-icon {
+    background-image: var(--uml-value-pin-icon);
+}
+.uml-value-specification-action-icon {
+    background-image: var(--uml-value-specification-action-icon);
+}
+.uml-variable-icon {
+    background-image: var(--uml-variable-icon);
+}
+.uml-call-icon {
+    background-image: var(--uml-call-icon);
+}
+.uml-eraser-icon {
+    background-image: var(--uml-eraser-icon);
+}
+.uml-file-icon {
+    background-image: var(--uml-file-icon);
+}
+.uml-hyperlink-icon {
+    background-image: var(--uml-hyperlink-icon);
+}
+.uml-insp-sbook-icon {
+    background-image: var(--uml-insp-sbook-icon);
+}
+.uml-message-info-icon {
+    background-image: var(--uml-message-info-icon);
+}
+.uml-profile-icon {
+    background-image: var(--uml-profile-icon);
+}
+.uml-stereotype-icon {
+    background-image: var(--uml-stereotype-icon);
+}
+.uml-stereotype-display-icon {
+    background-image: var(--uml-stereotype-display-icon);
+}
+.uml-values-icon {
+    background-image: var(--uml-values-icon);
+}

@@ -1,0 +1,26 @@
+@import 'colors/colors.css';
+@import 'colors/uml-dark.theme.css';
+@import 'colors/uml-light.theme.css';
+
+@import 'papyrus/variables.css';
+@import 'papyrus/classes.css';
+
+@import 'common.css';
+@import 'uml-sprotty.css';
+
+@import 'base/graph.css';
+@import 'base/animations.css';
+@import 'base/edge.css';
+@import 'base/node.css';
+@import 'base/text.css';
+@import 'base/marker.css';
+@import 'base/processors.css';
+
+@import 'extensions/uml-edit-label.css';
+@import 'extensions/uml-tool-palette.css';
+@import 'extensions/uml-editor-panel.css';
+@import 'extensions/uml-property-palette.css';
+@import 'extensions/shift-tool.css';
+
+@import 'diagram/package/style.css';
+@import 'diagram//sequence/sequence-diagram.css';

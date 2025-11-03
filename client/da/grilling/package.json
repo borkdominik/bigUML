@@ -1,0 +1,34 @@
+{
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "packages/*",
+      "examples-dj/biguml-example",
+      "examples-dj/biguml-example/packages/*",
+      "examples-dj/biguml-example/packages/biguml-vscode-integration/*"
+    ],
+    "nohoist": [
+      "**/path",
+      "**/path/**",
+      "umldiagram/@vscode/codicons",
+      "umldiagram/@vscode/codicons/**",
+      "umldiagram/@borkdominik-biguml/biguml-vscode-integration-webview"
+    ]
+  },
+  "scripts": {
+    "full-build": "yarn workspace @borkdominik-biguml/outline build && yarn workspace @borkdominik-biguml/property-palette build && yarn workspace @borkdominik-biguml/model-common build && yarn workspace @borkdominik-biguml/model-langium-generator build && yarn workspace @borkdominik-biguml/biguml-server build && yarn workspace @borkdominik-biguml/biguml-server generate"
+  },
+  "resolutions": {
+    "**/@eclipse-glsp/client": "2.0.0",
+    "**/@eclipse-glsp/layout-elk": "2.0.0",
+    "**/@eclipse-glsp/protocol": "2.0.0",
+    "**/@eclipse-glsp/server": "2.0.0",
+    "**/@eclipse-glsp/vscode-integration": "2.0.0",
+    "**/@eclipse-glsp/vscode-integration-webview": "2.0.0",
+    "**/inversify": "6.0.2",
+    "**/sprotty": "1.0.0"
+  },
+  "devDependencies": {
+    "@types/diff": "^8.0.0"
+  }
+}

@@ -10,6 +10,7 @@
   ],
   "scripts": {
     "build": "lerna run build",
+    "compile": "lerna run compile",
     "build:server": "cd ../server && ./gradlew clean shadowJar && cd ../client && npm run copy:server",
     "check:headers": "glsp checkHeaders .",
     "clean": "lerna run clean",

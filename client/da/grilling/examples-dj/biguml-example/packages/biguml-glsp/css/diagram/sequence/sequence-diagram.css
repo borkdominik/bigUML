@@ -1,0 +1,65 @@
+/* SEQUENCE DIAGRAM */
+
+.abstract {
+    font-style: italic;
+}
+
+/* .sequence__Interaction rect {
+    fill-opacity: 0;
+} */
+
+.uml-node .sequence__Lifeline line {
+    stroke-dasharray: 8;
+}
+
+.uml-node .sequence__InteractionOperand line {
+    stroke-dasharray: 16;
+}
+
+.uml-node .sequence__DestructionOccurrenceSpecification line {
+    stroke-dasharray: none;
+    stroke-width: 2;
+}
+
+.uml-node .sequence__CombinedFragment {
+    fill: rgba(8, 255, 177, 0.5);
+}
+
+.uml-node .sequence__BehaviorExecutionSpecification {
+    fill: var(--uml-border);
+}
+
+.uml-node .sequence__InteractionUse {
+    fill: rgb(249, 254, 153);
+}
+
+.uml-node .sequence__InteractionOperand rect {
+    stroke-width: 1;
+    /* stroke-dasharray: 6; */
+    border-right: 0;
+    fill: rgba(8, 255, 177, 0.5);
+}
+
+.uml-node .sequence__MessageAnchor {
+    fill: var(--uml-border);
+}
+.uml-port {
+    stroke-width: 3;
+    stroke: transparent;
+    fill: #d4d4d49b;
+}
+
+.uml-port:hover {
+    stroke-width: 3;
+    stroke: #17fc2685;
+    fill: #00c40dcb;
+}
+
+.clickbound {
+    fill: #00c40dcb;
+    opacity: 0;
+}
+
+.uml-edge-dashed {
+    stroke-dasharray: 15 10;
+}

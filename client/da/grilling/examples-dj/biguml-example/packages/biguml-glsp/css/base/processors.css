@@ -1,0 +1,9 @@
+.selection-border {
+    fill: none;
+    stroke-width: 1;
+    stroke: var(--uml-selection-border);
+}
+
+.selection-border.hover {
+    stroke-width: 0.75;
+}

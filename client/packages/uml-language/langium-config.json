@@ -1,0 +1,14 @@
+{
+  "projectName": "Uml",
+  "languages": [
+    {
+      "id": "uml",
+      "grammar": "generated/language-server/yo-generated/uml.langium",
+      "fileExtensions": [".uml"],
+      "textMate": {
+        "out": "syntaxes/uml.tmLanguage.json"
+      }
+    }
+  ],
+  "out": "generated/language-server/generated"
+}

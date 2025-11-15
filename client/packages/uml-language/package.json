@@ -1,0 +1,79 @@
+{
+  "name": "uml-language",
+  "displayName": "uml-language-server",
+  "version": "0.0.1",
+  "description": "Please enter a brief description here",
+  "categories": [
+    "Programming Languages"
+  ],
+  "type": "module",
+  "main": "./out/extension.cjs",
+  "bin": {
+    "generator-language-server": "./src/cli/cli.ts"
+  },
+  "files": [
+    "bin"
+  ],
+  "scripts": {
+    "build": "tsc -b tsconfig.json && node esbuild.mjs",
+    "generate": "generator-language-server generate",
+    "langium:generate": "langium generate",
+    "langium:watch": "langium generate --watch",
+    "lint": "eslint src --ext ts",
+    "vscode:prepublish": "npm run build && npm run lint",
+    "watch": "tsc -b tsconfig.json --watch"
+  },
+  "contributes": {
+    "grammars": [
+      {
+        "language": "uml",
+        "scopeName": "source.uml",
+        "path": "./syntaxes/uml.tmLanguage.json"
+      }
+    ],
+    "languages": [
+      {
+        "id": "uml",
+        "aliases": [
+          "UML",
+          "uml"
+        ],
+        "extensions": [
+          ".uml"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ]
+  },
+  "activationEvents": [
+    "onLanguage:uml"
+  ],
+  "dependencies": {
+    "@borkdominik-biguml/generator-language": "*",
+    "@borkdominik-biguml/model-service": "*",
+    "chalk": "~4.1.2",
+    "commander": "~10.0.0",
+    "langium": "^2.1.3",
+    "reflect-metadata": "^0.1.13",
+    "vscode-languageclient": "9.0.1",
+    "vscode-languageserver": "9.0.1",
+    "vscode-languageserver-protocol": "^3.17.5",
+    "vscode-languageserver-textdocument": "^1.0.11",
+    "vscode-uri": "^3.0.2"
+  },
+  "devDependencies": {
+    "@types/node": "~16.18.41",
+    "@types/reflect-metadata": "^0.1.0",
+    "@types/vscode": "~1.67.0",
+    "@typescript-eslint/eslint-plugin": "~6.4.1",
+    "@typescript-eslint/parser": "~6.4.1",
+    "@vscode/vsce": "^2.17.0",
+    "esbuild": "~0.19.2",
+    "eslint": "~8.47.0",
+    "langium-cli": "^2.1.0"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "vscode": "^1.67.0"
+  }
+}

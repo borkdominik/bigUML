@@ -6,14 +6,15 @@
   "type": "module",
   "workspaces": [
     "application/*",
-    "packages/*"
+    "packages/*",
+    "generators/*"
   ],
   "scripts": {
     "build": "lerna run build",
-    "compile": "lerna run compile",
     "build:server": "cd ../server && ./gradlew clean shadowJar && cd ../client && npm run copy:server",
     "check:headers": "glsp checkHeaders .",
     "clean": "lerna run clean",
+    "compile": "lerna run compile",
     "copy:server": "tsx ./scripts/copy-server.ts",
     "depcheck": "npx depcheck --config .depcheck.yml",
     "lint": "lerna run lint",
@@ -23,6 +24,12 @@
     "start:server": "cd ../server && ./gradlew run",
     "watch": "lerna run --parallel watch",
     "win:start:server": "cd ../server && ./gradlew.bat run"
+  },
+  "overrides": {
+    "@eclipse-glsp/client": "2.3.0",
+    "@eclipse-glsp/protocol": "2.3.0",
+    "@eclipse-glsp/vscode-integration": "2.3.0",
+    "@eclipse-glsp/vscode-integration-webview": "2.3.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.20.0",
@@ -49,11 +56,5 @@
   },
   "engines": {
     "node": ">=20 < 22"
-  },
-  "overrides": {
-    "@eclipse-glsp/client": "2.3.0",
-    "@eclipse-glsp/protocol": "2.3.0",
-    "@eclipse-glsp/vscode-integration": "2.3.0",
-    "@eclipse-glsp/vscode-integration-webview": "2.3.0"
   }
 }

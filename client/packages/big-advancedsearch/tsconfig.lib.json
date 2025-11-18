@@ -4,7 +4,10 @@
   "compilerOptions": {
     "tsBuildInfoFile": "node_modules/.tmp/tsconfig.lib.tsbuildinfo",
     "outDir": "lib",
-    "rootDir": "src"
+    "rootDir": "src",
+    "jsx": "react-jsx",
+    "types": ["vitest/globals", "node"],
+    "lib": ["es2022", "dom"]
   },
   "include": ["src/browser", "src/glsp-client", "src/web"]
 }

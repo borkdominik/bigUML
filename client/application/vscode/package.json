@@ -324,7 +324,10 @@
     "@types/react-dom": "^18.0.0",
     "@types/urijs": "1.19.11",
     "@types/vscode": "^1.63.0",
-    "@vscode/vsce": "^3.6.2"
+    "@vscode/test-cli": "^0.0.12",
+    "@vscode/test-electron": "^2.5.2",
+    "@vscode/vsce": "^3.6.2",
+    "mocha": "^11.7.4"
   },
   "engines": {
     "vscode": "^1.63.0"

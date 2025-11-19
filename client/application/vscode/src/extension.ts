@@ -17,7 +17,7 @@ import { VSCodeSettings } from './language.js';
 
 let diContainer: Container | undefined;
 
-export async function activate(context: vscode.ExtensionContext): Promise<void> {
+export async function activate(context: vscode.ExtensionContext): Promise<{ getContainer: () => Container | undefined }> {
     const glspServerConfig = await createGLSPServerConfig();
 
     diContainer = createContainer(context, {
@@ -33,6 +33,11 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     diContainer.get<GLSPServer>(TYPES.GLSPServer).start();
 
     vscode.commands.executeCommand('setContext', `${VSCodeSettings.name}.isRunning`, true);
+
+    // <-- this is what the test reads via extension.exports
+    return {
+        getContainer: () => diContainer
+    };
 }
 
 export async function deactivate(_context: vscode.ExtensionContext): Promise<any> {

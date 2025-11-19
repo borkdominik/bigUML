@@ -44,6 +44,23 @@
         "UML_MODEL_SERVER_DEBUG": "false",
         "UML_MODEL_SERVER_LOGGING": "false"
       }
-    }
+    },
+    {
+  "name": "Run Advanced Search Integration Tests",
+  "type": "extensionHost",
+  "request": "launch",
+  "runtimeExecutable": "${execPath}",
+  "args": [
+    // no workspace path argument, just run tests
+    "--extensionDevelopmentPath=${workspaceFolder}/application/vscode",
+    "--extensionTestsPath=${workspaceFolder}/application/vscode/lib/test/test/suite/index.cjs"
+  ],
+  "outFiles": [
+    "${workspaceFolder}/application/vscode/lib/**/*.cjs",
+    "${workspaceFolder}/packages/**/*.js"
+  ],
+  "preLaunchTask": "Compile VSCode extension (umldiagram)"
+}
+
   ]
 }

@@ -21,7 +21,6 @@ const extensionConfig: es.BuildOptions = {
     outfile: './lib/main.cjs',
     platform: 'node',
     mainFields: ['module', 'main'],
-    // VSCode uses CJS
     format: 'cjs',
     outExtension: {
         '.js': '.cjs'
@@ -40,5 +39,26 @@ const extensionConfig: es.BuildOptions = {
     ]
 };
 
-const runner = new ESBuildRunner(extensionConfig);
-await runner.run();
+/**
+ * 2) Test bundle (runTest + mocha suite)
+ */
+const testConfig: es.BuildOptions = {
+    ...rootConfig,
+    minify: false,
+    sourcemap: true,
+    entryPoints: ['./src/test/runTest.ts', './src/test/suite/index.ts', './src/test/suite/advancedSearch.test.ts'],
+    outdir: './lib/test',
+    platform: 'node',
+    mainFields: ['module', 'main'],
+    format: 'cjs',
+    outExtension: {
+        '.js': '.cjs'
+    },
+    external: ['vscode', '@vscode/test-electron', 'mocha']
+};
+
+const extensionRunner = new ESBuildRunner(extensionConfig);
+await extensionRunner.run();
+
+const testRunner = new ESBuildRunner(testConfig);
+await testRunner.run();

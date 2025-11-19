@@ -48,6 +48,20 @@
         "panel": "new"
       },
       "problemMatcher": []
-    }
+    },
+    {
+  "label": "Compile VSCode extension (umldiagram)",
+  "type": "shell",
+  "command": "npm run compile",
+  "options": {
+    "cwd": "${workspaceFolder}/application/vscode"
+  },
+  "group": "build",
+  "presentation": {
+    "reveal": "always",
+    "panel": "new"
+  },
+  "problemMatcher": []
+}
   ]
 }

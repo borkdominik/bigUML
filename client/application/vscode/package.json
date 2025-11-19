@@ -56,6 +56,7 @@
     "lint:ci": "npm run lint -o eslint.xml -f checkstyle",
     "lint:fix": "eslint --fix -c ./eslint.config.js",
     "lint:ts": "tsc -noEmit",
+    "test": "npm run compile && node ./lib/test/test/runTest.cjs",
     "vscode:package": "vsce package --no-dependencies",
     "vscode:package-pre": "npm run vscode:package -- --pre-release",
     "vscode:prepublish": "npm run compile:prod",

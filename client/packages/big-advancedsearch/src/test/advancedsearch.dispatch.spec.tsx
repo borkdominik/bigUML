@@ -18,7 +18,7 @@ function renderWithCtx(ui: JSX.Element, ctx: any) {
     return render(<VSCodeContext.Provider value={ctx}>{ui}</VSCodeContext.Provider>);
 }
 
-describe('AdvancedSearch – dispatches search on typing', () => {
+describe('AdvancedSearch - dispatches search on typing', () => {
     test('fires search action with the typed query', async () => {
         const dispatchAction = vi.fn();
         const listenAction = vi.fn();

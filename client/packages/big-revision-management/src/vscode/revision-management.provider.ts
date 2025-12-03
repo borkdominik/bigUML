@@ -48,11 +48,11 @@ export class RevisionManagementProvider extends BIGReactWebview {
         console.log('Revision Management Provider init');
 
         const config = vscode.workspace.getConfiguration('bigUML');
-        const configPersist = config.get<boolean>('timeline.persist');
-    
+        const configPersist = config.get<boolean>('timeline.persistent');
+
         if (configPersist === false) {
             this.clearVSCodeStorage();
-        }        
+        }
 
         const umlWatcher = vscode.workspace.createFileSystemWatcher('**/*.uml');
 
@@ -106,7 +106,6 @@ export class RevisionManagementProvider extends BIGReactWebview {
             })
         );
 
-
         this.toDispose.push(
             this.actionListener.handleVSCodeRequest(RequestSaveFileAction.KIND, async () => {
                 console.log('[RevisionManagementProvider] RequestSaveFileAction received');
@@ -120,7 +119,7 @@ export class RevisionManagementProvider extends BIGReactWebview {
                 console.log('[RevisionManagementProvider] ImportSnapshot action received');
                 this.timeline = message.action.importedSnapshots;
                 this.updateTimeline();
-                 // TODO: needs server extension to update model shown in main window
+                // TODO: needs server extension to update model shown in main window
                 return { kind: 'noop' } as any;
             })
         );
@@ -179,7 +178,6 @@ export class RevisionManagementProvider extends BIGReactWebview {
             })
         );
 
-
         this.toDispose.push(
             this.actionListener.handleVSCodeRequest(RequestDeleteSnapshotAction.KIND, async message => {
                 const action = message.action as RequestDeleteSnapshotAction;
@@ -192,10 +190,7 @@ export class RevisionManagementProvider extends BIGReactWebview {
                     console.warn(`[RevisionManagementProvider] Snapshot with ID ${snapshotId} not found`);
                     return { kind: 'noop' } as any;
                 }
-                this.timeline = [
-                    ...this.timeline.slice(0, snapshotIndex),
-                    ...this.timeline.slice(snapshotIndex + 1),
-                ];
+                this.timeline = [...this.timeline.slice(0, snapshotIndex), ...this.timeline.slice(snapshotIndex + 1)];
                 const key = this.getTimelineKey();
                 await this.extensionContext.globalState.update(key, this.timeline);
                 this.updateTimeline();
@@ -206,8 +201,6 @@ export class RevisionManagementProvider extends BIGReactWebview {
 
         this.toDispose.push(this.actionCache);
     }
-
-    
 
     protected override handleConnection(): void {
         super.handleConnection();
@@ -332,13 +325,18 @@ export class RevisionManagementProvider extends BIGReactWebview {
 
     private async clearVSCodeStorage(): Promise<void> {
         const keys = this.extensionContext.globalState.keys();
+        const prefix = 'revisionTimeline:';
 
         for (const key of keys) {
+            if (!key.startsWith(prefix)) {
+                continue;
+            }
+
             await this.extensionContext.globalState.update(key, undefined);
             console.log(`[Timeline] Cleared key: ${key}`);
         }
 
-        console.log('[Timeline] All globalState keys cleared.');
+        console.log('[Timeline] All revisionTimeline keys cleared.');
     }
 
     private createSnapshot(message: string): void {
@@ -378,5 +376,4 @@ export class RevisionManagementProvider extends BIGReactWebview {
         this.updateTimeline();
         this.connector.sendActionToActiveClient(RequestMinimapExportSvgAction.create());
     }
-
 }

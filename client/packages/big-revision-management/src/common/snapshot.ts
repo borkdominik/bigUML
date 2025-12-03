@@ -1,5 +1,5 @@
 /*********************************************************************************
- * Copyright (c) 2023 borkdominik and others.
+ * Copyright (c) 2025 borkdominik and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the MIT License which is available at https://opensource.org/licenses/MIT.
@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import type { UMLSourceModel } from "@borkdominik-biguml/uml-protocol";
+import type { UMLSourceModel } from '@borkdominik-biguml/uml-protocol';
 
 export interface Snapshot {
     id: string;

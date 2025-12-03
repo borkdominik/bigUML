@@ -1,5 +1,5 @@
 /*********************************************************************************
- * Copyright (c) 2023 borkdominik and others.
+ * Copyright (c) 2025 borkdominik and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the MIT License which is available at https://opensource.org/licenses/MIT.
@@ -21,9 +21,7 @@ export namespace FileSaveResponse {
         return Action.hasKind(object, KIND);
     }
 
-    export function create(
-        options?: Omit<FileSaveResponse, 'kind' | 'responseId'> & { responseId?: string }
-    ): FileSaveResponse {
+    export function create(options?: Omit<FileSaveResponse, 'kind' | 'responseId'> & { responseId?: string }): FileSaveResponse {
         return {
             kind: KIND,
             responseId: '',

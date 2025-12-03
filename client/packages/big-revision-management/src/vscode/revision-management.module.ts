@@ -1,5 +1,5 @@
 /*********************************************************************************
- * Copyright (c) 2023 borkdominik and others.
+ * Copyright (c) 2025 borkdominik and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the MIT License which is available at https://opensource.org/licenses/MIT.
@@ -21,7 +21,5 @@ export function revisionManagementModule(viewId: string) {
         // This will prevent the glsp to handle the request
         // Remember to comment out the the glsp client handler!
         // In HelloWorldActionHandler implementation GLSP has priority over vscode
-
-
     });
 }

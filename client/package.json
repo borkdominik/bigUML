@@ -54,5 +54,9 @@
     "@eclipse-glsp/protocol": "2.3.0",
     "@eclipse-glsp/vscode-integration": "2.3.0",
     "@eclipse-glsp/vscode-integration-webview": "2.3.0"
+  },
+  "dependencies": {
+    "@vscode/codicons": "^0.0.36",
+    "@vscode/webview-ui-toolkit": "^1.4.0"
   }
 }

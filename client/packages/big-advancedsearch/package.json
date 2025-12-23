@@ -1,7 +1,7 @@
 {
-  "name": "@borkdominik-biguml/big-outline",
-  "version": "0.6.4",
-  "description": "UML-Outline",
+  "name": "@borkdominik-biguml/big-advancedsearch",
+  "version": "0.6.3",
+  "description": "UML-Advanced Search",
   "homepage": "https://github.com/borkdominik/bigUML",
   "bugs": "https://github.com/borkdominik/bigUML/issues",
   "repository": {
@@ -44,19 +44,23 @@
     "dist"
   ],
   "scripts": {
-    "build": "npm run clean && npm run compile && npm run lint",
+    "build": "npm run clean && npm run compile && npm run bundle && npm run lint",
+    "bundle": "tsx esbuild.ts",
     "clean": "rimraf lib dist node_modules/.tmp",
     "compile": "tsc -b",
     "lint": "eslint -c ./eslint.config.js",
     "lint:fix": "npm run lint -- --fix",
     "tsc": "tsc",
-    "watch": "concurrently --kill-others 'npm run compile -- --watch'"
+    "watch": "concurrently --kill-others 'npm run compile -- --watch' 'npm run bundle -- --watch'"
   },
   "dependencies": {
     "@borkdominik-biguml/big-components": "*",
-    "@borkdominik-biguml/big-vscode-integration": "*",
+    "@borkdominik-biguml/big-vscode-integration": "file:../../client/application/big-vscode-integration",
     "@borkdominik-biguml/uml-protocol": "*",
+    "@eclipse-glsp/client": "*",
     "@eclipse-glsp/protocol": "*",
+    "@eclipse-glsp/vscode-integration-webview": "*",
+    "@vscode/webview-ui-toolkit": "^1.4.0",
     "vscode-messenger-common": "^0.4.5"
   },
   "devDependencies": {
@@ -66,7 +70,7 @@
     "react-dom": "^18.0.0"
   },
   "peerDependencies": {
-    "inversify": "^6.2.1",
+    "inversify": "^6.1.3",
     "react": "^18.0.0",
     "react-dom": "^18.0.0"
   }

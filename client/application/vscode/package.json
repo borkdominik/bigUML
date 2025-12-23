@@ -270,6 +270,12 @@
           "name": "Hello World",
           "type": "webview",
           "when": "bigUML.isRunning && false"
+        },
+        {
+          "id": "bigUML.panel.advancedsearch",
+          "name": "Advanced Search",
+          "type": "webview",
+          "when": "bigUML.isRunning"
         }
       ]
     },
@@ -287,9 +293,11 @@
     "onLanguage:bigUML.uml",
     "onLanguage:bigUML.unotation",
     "onCommand:bigUML.model.newEmpty",
-    "onView:bigUML.outlineView"
+    "onView:bigUML.outlineView",
+    "onView:bigUML.panel.advancedsearch"
   ],
   "dependencies": {
+    "@borkdominik-biguml/big-advancedsearch": "*",
     "@borkdominik-biguml/big-hello-world": "*",
     "@borkdominik-biguml/big-minimap": "*",
     "@borkdominik-biguml/big-outline": "*",
@@ -300,7 +308,7 @@
     "@eclipse-glsp/protocol": "*",
     "@eclipse-glsp/vscode-integration": "*",
     "@vscode/codicons": "^0.0.25",
-    "inversify": "6.1.3",
+    "inversify": "^6.2.1",
     "lodash": "^4.17.21",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",

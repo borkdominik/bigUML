@@ -10,11 +10,16 @@
 import { TYPES } from '@borkdominik-biguml/big-vscode-integration/vscode';
 import { ContainerModule } from 'inversify';
 import { RevisionManagementId, RevisionManagementProvider } from './revision-management.provider.js';
+import { RevisionManagementService } from './revision-management.service.js';
 
 export function revisionManagementModule(viewId: string) {
     return new ContainerModule(bind => {
         bind(RevisionManagementId).toConstantValue(viewId);
         bind(RevisionManagementProvider).toSelf().inSingletonScope();
+        bind(RevisionManagementService).toSelf().inSingletonScope();
+
+        // Bind service to RootInitialization to ensure it starts tracking immediately
+        bind(TYPES.RootInitialization).toService(RevisionManagementService);
         bind(TYPES.RootInitialization).toService(RevisionManagementProvider);
 
         // Handle the request vscode side

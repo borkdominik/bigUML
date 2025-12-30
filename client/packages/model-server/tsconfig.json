@@ -4,8 +4,7 @@
   "compilerOptions": {
     "tsBuildInfoFile": "node_modules/.tmp/tsconfig.node.tsbuildinfo",
     "outDir": "lib",
-    "rootDir": "src",
-    "noEmit": true
+    "rootDir": "./"
   },
-  "include": ["src/language"]
+  "include": ["src", "gen", "bin"]
 }

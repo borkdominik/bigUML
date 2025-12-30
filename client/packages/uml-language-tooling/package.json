@@ -1,5 +1,5 @@
 {
-  "name": "@borkdominik-biguml/uml-language",
+  "name": "@borkdominik-biguml/uml-language-tooling",
   "version": "0.6.4",
   "description": "UML-Hello World",
   "homepage": "https://github.com/borkdominik/bigUML",
@@ -27,13 +27,17 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./lib/language/index.d.ts",
-      "default": "./lib/language/index.js"
-    },
-    "./definition": "./src/language/def.ts"
+      "types": "./lib/index.d.ts",
+      "default": "./lib/index.js"
+    }
+  },
+  "types": "lib/common/index.d.ts",
+  "bin": {
+    "uml-language-tooling": "bin/index.ts"
   },
   "files": [
-    "dist"
+    "bin",
+    "lib"
   ],
   "scripts": {
     "build": "npm run clean && npm run compile && npm run lint",
@@ -44,5 +48,13 @@
     "tsc": "tsc",
     "watch": "concurrently --kill-others 'npm run compile -- --watch'"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@borkdominik-biguml/model-common": "*",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.2"
+  },
+  "devDependencies": {
+    "@types/yargs": "^17.0.35",
+    "yargs": "^18.0.0"
+  }
 }

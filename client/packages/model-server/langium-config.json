@@ -1,0 +1,14 @@
+{
+  "projectName": "UmlDiagram",
+  "languages": [
+    {
+      "id": "uml-diagram",
+      "grammar": "gen/langium/uml-diagram.langium",
+      "fileExtensions": [".uml"],
+      "textMate": {
+        "out": "syntaxes/uml-diagram.tmLanguage.json"
+      }
+    }
+  ],
+  "out": "gen/langium/language"
+}

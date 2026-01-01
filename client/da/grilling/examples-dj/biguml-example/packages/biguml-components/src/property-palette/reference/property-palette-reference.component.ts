@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { ElementReferenceProperty } from '@borkdominik-biguml/biguml-protocol';
+import { ElementReferenceProperty } from '@borkdominik-biguml/uml-protocol';
 import { Combobox as FCombobox } from '@microsoft/fast-components';
 import { html, nothing, TemplateResult } from 'lit';
 import { property, query } from 'lit/decorators.js';

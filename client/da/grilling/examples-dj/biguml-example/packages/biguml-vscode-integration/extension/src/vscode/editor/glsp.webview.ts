@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { GLSPIsReadyAction } from '@borkdominik-biguml/biguml-protocol/lib/index';
+import { GLSPIsReadyAction } from '@borkdominik-biguml/uml-protocol/lib/index';
 import { GlspVscodeClient, GlspVscodeConnector } from '@eclipse-glsp/vscode-integration';
 import * as vscode from 'vscode';
 import { ThemeIntegration } from '../../features/theme/theme-integration';

@@ -41,7 +41,7 @@ export function writeRequestOutlineActionHandlers(
         const nodes = allEntities.filter(e => members.includes(e.name!));
 
         const guardNames = nodes.map(d => `is${d.name}`).join(', ');
-        const astImport = `import { ${guardNames} } from '../../../language-server/generated/ast.js';`;
+        const astImport = `import { ${guardNames} } from '@borkdominik-biguml/model-server/grammar';`;
 
         const cases = nodes
             .map(d => {
@@ -78,7 +78,7 @@ export function writeRequestOutlineActionHandlers(
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { RequestOutlineAction, SetOutlineAction } from '@borkdominik-biguml/biguml-protocol';
+import { RequestOutlineAction, SetOutlineAction } from '@borkdominik-biguml/uml-protocol';
 import { ActionHandler, MaybePromise } from '@eclipse-glsp/server';
 import { inject, injectable } from 'inversify';
 ${astImport}

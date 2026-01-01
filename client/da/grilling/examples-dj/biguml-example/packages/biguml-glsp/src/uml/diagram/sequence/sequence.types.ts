@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { UmlDiagramType } from '@borkdominik-biguml/biguml-protocol';
+import { UmlDiagramType } from '@borkdominik-biguml/uml-protocol';
 import { DefaultTypes } from '@eclipse-glsp/client';
 import { QualifiedUtil } from '../../qualified.utils';
 export namespace UmlSequenceTypes {

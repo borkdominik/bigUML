@@ -30,8 +30,8 @@ cd ../..
 echo "Building BigUML example packages (clean + build)..."
 
 # 1) protocol first
-yarn workspace @biguml/biguml-protocol clean
-yarn workspace @biguml/biguml-protocol build
+yarn workspace @biguml/uml-protocol clean
+yarn workspace @biguml/uml-protocol build
 
 # 2) libs that depend on protocol
 yarn workspace @biguml/biguml-glsp clean

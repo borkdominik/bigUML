@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { RefreshPropertyPaletteAction, RequestPropertyPaletteAction, SetPropertyPaletteAction } from '@borkdominik-biguml/biguml-protocol';
+import { RefreshPropertyPaletteAction, RequestPropertyPaletteAction, SetPropertyPaletteAction } from '@borkdominik-biguml/uml-protocol';
 import {
   Action,
   ActionDispatcher,

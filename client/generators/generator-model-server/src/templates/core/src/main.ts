@@ -11,7 +11,7 @@ import {
 } from "vscode-languageserver/node.js";
 // import { startGLSPServer } from "./glsp-server/launch.js";
 import { create<%= LanguageName %>Services } from "./language-server/yo-generated/<%= language-id %>-module.js";
-import { startModelServer } from "@borkdominik-biguml/model-service";
+import { startModelServer } from "@borkdominik-biguml/model-server";
 
 /**
  * This module will be spawned as a separate language server process by the 'extension.ts'.

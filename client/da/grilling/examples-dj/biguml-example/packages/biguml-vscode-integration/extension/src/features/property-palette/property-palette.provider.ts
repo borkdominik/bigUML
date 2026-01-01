@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { RefreshPropertyPaletteAction, SetPropertyPaletteAction } from '@borkdominik-biguml/biguml-protocol';
+import { RefreshPropertyPaletteAction, SetPropertyPaletteAction } from '@borkdominik-biguml/uml-protocol';
 import type { Action } from '@eclipse-glsp/protocol';
 import { inject, injectable, postConstruct } from 'inversify';
 import { TYPES } from '../../di.types';

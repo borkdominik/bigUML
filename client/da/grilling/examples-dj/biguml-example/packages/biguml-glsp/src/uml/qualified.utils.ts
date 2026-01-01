@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { UmlDiagramType } from '@borkdominik-biguml/biguml-protocol';
+import { UmlDiagramType } from '@borkdominik-biguml/uml-protocol';
 
 export namespace QualifiedUtil {
     export function representationTypeId(representation: UmlDiagramType, type: string, name: string): string {

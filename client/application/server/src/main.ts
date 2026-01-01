@@ -3,11 +3,11 @@
  ********************************************************************************/
 import 'reflect-metadata';
 
-import { startModelServer } from '@borkdominik-biguml/model-service';
+import { startModelServer } from '@borkdominik-biguml/model-server';
+import { startGLSPServer } from '@borkdominik-biguml/uml-glsp-server';
 import { startLanguageServer } from 'langium';
 import { NodeFileSystem } from 'langium/node';
 import { createConnection, ProposedFeatures } from 'vscode-languageserver/node.js';
-import { startGLSPServer } from './glsp-server/launch.js';
 import { createUmlServices } from './language-server/yo-generated/uml-module.js';
 
 /**

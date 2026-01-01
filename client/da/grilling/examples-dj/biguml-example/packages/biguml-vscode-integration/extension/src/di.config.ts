@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { SetOutlineAction, SetPropertyPaletteAction } from '@borkdominik-biguml/biguml-protocol';
+import { SetOutlineAction, SetPropertyPaletteAction } from '@borkdominik-biguml/uml-protocol';
 import { Container, ContainerModule } from 'inversify';
 import * as vscode from 'vscode';
 import { TYPES } from './di.types';

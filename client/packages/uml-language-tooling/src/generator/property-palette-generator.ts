@@ -67,8 +67,8 @@ function renderHandler(decl: LangiumDeclaration): string {
 
     return `// AUTO-GENERATED – DO NOT EDIT
 
-import { SetPropertyPaletteAction } from '@borkdominik-biguml/biguml-protocol';${glspImport}
-import { ${name} } from '../../../../language-server/generated/ast.js';${modelTypesImport}
+import { SetPropertyPaletteAction } from '@borkdominik-biguml/uml-protocol';${glspImport}
+import { ${name} } from '@borkdominik-biguml/model-server/grammar';${modelTypesImport}
 import { PropertyPalette } from '../../../util/property-palette-util.js';
 
 export namespace ${name}PropertyPaletteHandler {
@@ -194,7 +194,7 @@ export function writeRequestPropertyPaletteHandlers(extensionPath: string, decla
             .map(d => `is${d.name}`)
             .sort()
             .join(', ');
-        const astImport = `import { ${guardNames} } from '../../../language-server/generated/ast.js';`;
+        const astImport = `import { ${guardNames} } from '@borkdominik-biguml/model-server/grammar';`;
 
         // ─── build imports for each per-type handler ───────────────────────────────
         const handlerImports = nodes
@@ -255,7 +255,7 @@ export function writeRequestPropertyPaletteHandlers(extensionPath: string, decla
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { RequestPropertyPaletteAction, SetPropertyPaletteAction } from '@borkdominik-biguml/biguml-protocol';
+import { RequestPropertyPaletteAction, SetPropertyPaletteAction } from '@borkdominik-biguml/uml-protocol';
 import { ActionHandler, MaybePromise } from '@eclipse-glsp/server';
 import { inject, injectable } from 'inversify';
 ${astImport}

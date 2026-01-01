@@ -16,7 +16,7 @@ import {
   ElementTextProperty,
   RefreshPropertyPaletteAction,
   UpdateElementPropertyAction
-} from '@borkdominik-biguml/biguml-protocol';
+} from '@borkdominik-biguml/uml-protocol';
 import { Action } from '@eclipse-glsp/protocol';
 import { Checkbox as VSCodeCheckbox, Dropdown as VSCodeDropdown, TextField as VSCodeTextField } from '@vscode/webview-ui-toolkit';
 import { html, nothing, PropertyValues, TemplateResult } from 'lit';

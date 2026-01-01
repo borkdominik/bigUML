@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { SetOutlineAction } from '@borkdominik-biguml/biguml-protocol';
+import { SetOutlineAction } from '@borkdominik-biguml/uml-protocol';
 import { configureActionHandler } from '@eclipse-glsp/client';
 import { ContainerModule } from 'inversify';
 import { OutlineActionHandler } from './outline.handlers';

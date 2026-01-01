@@ -20,7 +20,7 @@ export function generateSerializer(rules: LangiumGrammar, languageId: string, la
      * Copyright (c) 2023 CrossBreeze.
      ********************************************************************************/
 
-    import { DiagramSerializer, Serializer } from "@borkdominik-biguml/model-service";
+    import { DiagramSerializer, Serializer } from "@borkdominik-biguml/model-server";
     import { ${rules.entryRule.name}, is${rules.entryRule.name}, ${rules.parserRules
         .map(ruleElement => ruleElement.name + ',' + 'is' + ruleElement.name)
         .concat(rules.typeRules.map(ruleElement => ruleElement.name + ',' + 'is' + ruleElement.name).flat())

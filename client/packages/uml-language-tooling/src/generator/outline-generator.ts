@@ -40,7 +40,7 @@ export function writeRequestOutlineActionHandlers(extensionPath: string, declara
         const nodes = allEntities.filter(e => members.includes(e.name!));
         // build the import of isX guards
         const guardNames = nodes.map(d => `is${d.name}`).join(', ');
-        const astImport = `import { ${guardNames} } from '../../../language-server/generated/ast.js';`;
+        const astImport = `import { ${guardNames} } from '@borkdominik-biguml/model-server/grammar';`;
 
         // build the per-class cases
         const cases = nodes
@@ -80,7 +80,7 @@ export function writeRequestOutlineActionHandlers(extensionPath: string, declara
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { RequestOutlineAction, SetOutlineAction } from '@borkdominik-biguml/biguml-protocol';
+import { RequestOutlineAction, SetOutlineAction } from '@borkdominik-biguml/uml-protocol';
 import { ActionHandler, MaybePromise } from '@eclipse-glsp/server';
 import { inject, injectable } from 'inversify';
 ${astImport}

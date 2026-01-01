@@ -9,31 +9,43 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./lib/vscode/index.d.ts",
-      "default": "./lib/vscode/index.js"
+      "types": "./lib/src/vscode/index.d.ts",
+      "default": "./lib/src/vscode/index.js"
+    },
+    "./extension": {
+      "types": "./lib/gen/extension.d.ts",
+      "default": "./lib/gen/extension.js"
+    },
+    "./main": {
+      "types": "./lib/gen/main.d.ts",
+      "default": "./lib/gen/main.js"
+    },
+    "./integration": {
+      "types": "./lib/gen/integration.d.ts",
+      "default": "./lib/gen/integration.js"
     },
     "./grammar": {
       "types": "./lib/gen/langium/language/index.d.ts",
       "default": "./lib/gen/langium/language/index.js"
     }
   },
-  "bin": {
-    "uml-diagram-cli": "./bin/cli.js"
-  },
   "files": [
-    "bin",
     "lib"
   ],
   "scripts": {
-    "build": "tsc -b tsconfig.json",
+    "build": "npm run clean && npm run compile && npm run lint",
+    "clean": "rimraf lib dist node_modules/.tmp",
+    "compile": "tsc -b",
     "generate": "generator-language-server generate && langium generate",
     "generate:ecore": "generator-language-server generate --from=ecore && langium generate",
     "langium:generate": "langium generate",
     "langium:watch": "langium generate --watch",
     "language:generate": "uml-language-tooling generate -d @borkdominik-biguml/uml-language/definition -g ./gen",
-    "lint": "eslint src --ext ts",
+    "lint": "eslint -c ./eslint.config.js",
+    "lint:fix": "npm run lint -- --fix",
+    "tsc": "tsc",
     "vscode:prepublish": "npm run build && npm run lint",
-    "watch": "tsc -b tsconfig.json --watch"
+    "watch": "concurrently --kill-others 'npm run compile -- --watch'"
   },
   "contributes": {
     "grammars": [

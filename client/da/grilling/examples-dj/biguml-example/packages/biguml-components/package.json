@@ -38,7 +38,7 @@
     "watch": "tsc -w"
   },
   "dependencies": {
-    "@borkdominik-biguml/biguml-protocol": "*",
+    "@borkdominik-biguml/uml-protocol": "*",
     "@eclipse-glsp/protocol": "next",
     "@floating-ui/dom": "^1.4.1",
     "@microsoft/fast-components": "^2.30.6",

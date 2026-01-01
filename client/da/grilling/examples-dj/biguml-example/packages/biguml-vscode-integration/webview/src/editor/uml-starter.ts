@@ -10,7 +10,7 @@ import { createUmlDiagramContainer } from '@borkdominik-biguml/biguml-glsp/lib';
 
 import '@eclipse-glsp/vscode-integration-webview/css/glsp-vscode.css';
 
-import { GLSPIsReadyAction } from '@borkdominik-biguml/biguml-protocol';
+import { GLSPIsReadyAction } from '@borkdominik-biguml/uml-protocol';
 import { IActionDispatcher, IDiagramStartup, TYPES } from '@eclipse-glsp/client';
 import { ContainerConfiguration, MaybePromise, bindAsService, bindOrRebind } from '@eclipse-glsp/protocol';
 import { GLSPStarter } from '@eclipse-glsp/vscode-integration-webview';

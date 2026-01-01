@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { RefreshPropertyPaletteAction } from '@borkdominik-biguml/biguml-protocol';
+import { RefreshPropertyPaletteAction } from '@borkdominik-biguml/uml-protocol';
 import { configureActionHandler, FeatureModule, SelectAction, SetDirtyStateAction } from '@eclipse-glsp/client';
 import { PropertyPaletteHandler } from './property-palette.handler';
 

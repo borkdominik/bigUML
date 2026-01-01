@@ -247,7 +247,7 @@
   ],
   "dependencies": {
     "@borkdominik-biguml/biguml-glsp": "*",
-    "@borkdominik-biguml/biguml-protocol": "*",
+    "@borkdominik-biguml/uml-protocol": "*",
     "@borkdominik-biguml/biguml-server": "*",
     "@eclipse-glsp/client": "next",
     "@eclipse-glsp/vscode-integration": "next",

@@ -28,8 +28,9 @@
   },
   "dependencies": {
     "@borkdominik-biguml/model-langium-generator": "*",
-    "@borkdominik-biguml/model-service": "*",
+    "@borkdominik-biguml/model-server": "*",
     "@borkdominik-biguml/uml-glsp-client": "*",
+    "@borkdominik-biguml/uml-glsp-server": "*",
     "@borkdominik-biguml/uml-protocol": "*",
     "@eclipse-glsp/client": "2.0.0",
     "@eclipse-glsp/layout-elk": "2.0.0",

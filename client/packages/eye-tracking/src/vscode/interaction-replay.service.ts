@@ -33,12 +33,19 @@ export class InteractionReplayService {
     private idMapping: Map<string, string> = new Map();
     private knownElementIds: Set<string> = new Set();
     private pendingElementCreation: { resolve: (id: string) => void; elementType: string } | null = null;
-    private lastSelectedClassId: string | null = null;
-    private lastSelectedActivityId: string | null = null;
     private autoCreatedChildrenQueue: string[] | null = null;
     private elementTypes: Map<string, string> = new Map();
     private elementTypeMap: Map<string, string> = new Map();
     private graphRootId: string | null = null;
+
+    // Container tracking for different diagram types
+    private lastSelectedActivityId: string | null = null;
+    private lastSelectedClassId: string | null = null;
+    private lastSelectedInteractionId: string | null = null;
+    private lastSelectedStateMachineId: string | null = null;
+    private lastSelectedRegionId: string | null = null;
+    private lastSelectedEnumerationId: string | null = null;
+    private lastSelectedNodeId: string | null = null;
 
     // Activity node types that must be created inside an Activity container
     private static readonly ACTIVITY_NODE_TYPES = [
@@ -53,7 +60,40 @@ export class InteractionReplayService {
         'ACTIVITY__ForkNode',
         'ACTIVITY__JoinNode',
         'ACTIVITY__CentralBufferNode',
-        'ACTIVITY__ActivityParameterNode'
+        'ACTIVITY__ActivityParameterNode',
+        'ACTIVITY__ActivityPartition'
+    ];
+
+    // State Machine elements that need Region container
+    private static readonly STATE_MACHINE_REGION_TYPES = [
+        'STATE_MACHINE__State',
+        'STATE_MACHINE__FinalState',
+        'STATE_MACHINE__InitialState',
+        'STATE_MACHINE__Choice',
+        'STATE_MACHINE__Fork',
+        'STATE_MACHINE__Join',
+        'STATE_MACHINE__DeepHistory',
+        'STATE_MACHINE__ShallowHistory'
+    ];
+
+    // Communication elements that need Interaction container
+    private static readonly COMMUNICATION_INTERACTION_TYPES = [
+        'COMMUNICATION__Lifeline'
+    ];
+
+    // Class/Deployment/InformationFlow elements that need classifier container
+    private static readonly CLASS_MEMBER_TYPES = [
+        'CLASS__Property',
+        'CLASS__Operation',
+        'DEPLOYMENT__Property',
+        'DEPLOYMENT__Operation',
+        'INFORMATION_FLOW__Property',
+        'INFORMATION_FLOW__Operation'
+    ];
+
+    // Enumeration literal needs Enumeration container
+    private static readonly ENUMERATION_MEMBER_TYPES = [
+        'CLASS__EnumerationLiteral'
     ];
 
     /**
@@ -73,8 +113,7 @@ export class InteractionReplayService {
             this.idMapping.clear();
             this.knownElementIds.clear();
             this.elementTypeMap.clear();
-            this.lastSelectedClassId = null;
-            this.lastSelectedActivityId = null;
+            this.resetContainerTracking();
             this.graphRootId = null;
 
             modelListener = this.setupModelListener();
@@ -119,6 +158,19 @@ export class InteractionReplayService {
     }
 
     /**
+     * Reset all container tracking variables
+     */
+    private resetContainerTracking(): void {
+        this.lastSelectedActivityId = null;
+        this.lastSelectedClassId = null;
+        this.lastSelectedInteractionId = null;
+        this.lastSelectedStateMachineId = null;
+        this.lastSelectedRegionId = null;
+        this.lastSelectedEnumerationId = null;
+        this.lastSelectedNodeId = null;
+    }
+
+    /**
      * Stop the current replay
      */
     public stopReplay(): void {
@@ -149,72 +201,68 @@ export class InteractionReplayService {
     }
 
     /**
-     * Build a map of old element IDs from the recording using two-pass algorithm
+     * Build a map of old element IDs from the recording.
+     * Uses a smarter algorithm that matches IDs to createNodes based on first occurrence order.
      */
     private buildCreationIdMap(events: InteractionEvent[]): void {
-        const assignedIds = new Set<string>();
-        const unmappedCreations: { index: number; elementType: string }[] = [];
-        
-        // First pass: Find IDs that appear immediately after creation
+        // Step 1: Find all createNode events
+        const createNodes: { index: number; elementType: string; event: InteractionEvent }[] = [];
         for (let i = 0; i < events.length; i++) {
             const event = events[i];
-            
             if (event.type === InteractionEventType.ELEMENT_CREATE && event.data.kind === 'createNode') {
-                const oldId = this.findElementIdAfterCreation(events, i, assignedIds);
-                if (oldId) {
-                    (event.data as any)._oldElementId = oldId;
-                    assignedIds.add(oldId);
-                } else {
-                    unmappedCreations.push({ index: i, elementType: event.data.elementTypeId });
+                createNodes.push({ index: i, elementType: event.data.elementTypeId, event });
+            }
+        }
+        
+        // Step 2: Find first occurrence of each ID (from selections, edges, property changes)
+        const idFirstOccurrence: Map<string, number> = new Map();
+        for (let i = 0; i < events.length; i++) {
+            const ids = this.extractIdsFromEvent(events[i]);
+            for (const id of ids) {
+                if (!idFirstOccurrence.has(id)) {
+                    idFirstOccurrence.set(id, i);
                 }
             }
         }
         
-        // Second pass: For unmapped creations, search ALL events to find their IDs
-        if (unmappedCreations.length > 0) {
-            const allIds = this.collectAllReferencedIds(events);
-            const unassignedIds = Array.from(allIds).filter(id => !assignedIds.has(id));
+        // Step 3: Sort IDs by their first occurrence
+        const sortedIds = Array.from(idFirstOccurrence.entries())
+            .sort((a, b) => a[1] - b[1]);
+        
+        // Step 4: Assign each ID to the oldest unassigned createNode that precedes it
+        const assignedCreateNodes = new Set<number>();
+        
+        for (const [id, firstOccurrence] of sortedIds) {
+            // Find the oldest unassigned createNode that was created BEFORE this ID first appeared
+            let bestCreateNode: { index: number; elementType: string; event: InteractionEvent } | null = null;
             
-            for (const creation of unmappedCreations) {
-                for (let i = creation.index + 1; i < events.length; i++) {
-                    const event = events[i];
-                    const idsInEvent = this.extractIdsFromEvent(event);
-                    
-                    for (const id of idsInEvent) {
-                        if (unassignedIds.includes(id) && !assignedIds.has(id)) {
-                            const creationEvent = events[creation.index];
-                            (creationEvent.data as any)._oldElementId = id;
-                            assignedIds.add(id);
-                            break;
-                        }
-                    }
-                    
-                    if ((events[creation.index].data as any)._oldElementId) {
-                        break;
-                    }
-                }
+            for (const cn of createNodes) {
+                // Skip if already assigned
+                if (assignedCreateNodes.has(cn.index)) continue;
                 
-                if (!(events[creation.index].data as any)._oldElementId) {
-                    console.warn(`[Replay] No ID found for ${creation.elementType} at index ${creation.index}`);
+                // The createNode must be BEFORE the ID's first occurrence
+                if (cn.index >= firstOccurrence) continue;
+                
+                // Take the oldest (first) unassigned createNode
+                if (!bestCreateNode || cn.index < bestCreateNode.index) {
+                    bestCreateNode = cn;
                 }
+            }
+            
+            if (bestCreateNode) {
+                (bestCreateNode.event.data as any)._oldElementId = id;
+                assignedCreateNodes.add(bestCreateNode.index);
+            }
+        }
+        
+        // Log any createNodes that couldn't be assigned
+        for (const cn of createNodes) {
+            if (!assignedCreateNodes.has(cn.index)) {
+                console.warn(`[Replay] No ID found for ${cn.elementType} at index ${cn.index}`);
             }
         }
     }
-    
-    /**
-     * Collect all element IDs that are referenced anywhere in the events
-     */
-    private collectAllReferencedIds(events: InteractionEvent[]): Set<string> {
-        const ids = new Set<string>();
-        
-        for (const event of events) {
-            const eventIds = this.extractIdsFromEvent(event);
-            eventIds.forEach(id => ids.add(id));
-        }
-        
-        return ids;
-    }
-    
+
     /**
      * Extract all element IDs from a single event
      */
@@ -256,77 +304,6 @@ export class InteractionReplayService {
         }
         
         return ids;
-    }
-
-    /**
-     * Find the element ID by looking at events following a creation
-     */
-    private findElementIdAfterCreation(events: InteractionEvent[], creationIndex: number, assignedIds: Set<string>): string | null {
-        const seenIds = new Set<string>();
-        for (let i = 0; i < creationIndex; i++) {
-            const event = events[i];
-            if (event.type === InteractionEventType.ELEMENT_SELECT) {
-                const selectedIds = event.data.selectedElementsIDs;
-                if (selectedIds) {
-                    selectedIds.forEach((id: string) => seenIds.add(id));
-                }
-            }
-            if (event.type === InteractionEventType.PROPERTY_CHANGE) {
-                if (event.data.kind === 'applyLabelEdit' && event.data.labelId) {
-                    const elementId = event.data.labelId.replace(/_name_label$/, '');
-                    if (elementId) {
-                        seenIds.add(elementId);
-                    }
-                }
-            }
-            if (event.type === InteractionEventType.ELEMENT_CREATE && event.data.kind === 'createEdge') {
-                if (event.data.sourceElementId) seenIds.add(event.data.sourceElementId);
-                if (event.data.targetElementId) seenIds.add(event.data.targetElementId);
-            }
-        }
-        
-        for (let i = creationIndex + 1; i < Math.min(creationIndex + 30, events.length); i++) {
-            const event = events[i];
-            
-            // Stop at next createNode event
-            if (event.type === InteractionEventType.ELEMENT_CREATE && event.data.kind === 'createNode') {
-                break;
-            }
-            
-            if (event.type === InteractionEventType.ELEMENT_SELECT) {
-                const selectedIds = event.data.selectedElementsIDs;
-                if (selectedIds && selectedIds.length > 0) {
-                    for (const id of selectedIds) {
-                        if (!seenIds.has(id) && !assignedIds.has(id)) {
-                            return id;
-                        }
-                    }
-                }
-            }
-            
-            if (event.type === InteractionEventType.ELEMENT_CREATE && event.data.kind === 'createEdge') {
-                const sourceId = event.data.sourceElementId;
-                const targetId = event.data.targetElementId;
-                
-                if (sourceId && !seenIds.has(sourceId) && !assignedIds.has(sourceId)) {
-                    return sourceId;
-                }
-                if (targetId && !seenIds.has(targetId) && !assignedIds.has(targetId)) {
-                    return targetId;
-                }
-            }
-            
-            if (event.type === InteractionEventType.PROPERTY_CHANGE) {
-                if (event.data.kind === 'applyLabelEdit' && event.data.labelId) {
-                    const elementId = event.data.labelId.replace(/_name_label$/, '');
-                    if (elementId && elementId !== event.data.labelId && !seenIds.has(elementId) && !assignedIds.has(elementId)) {
-                        return elementId;
-                    }
-                }
-            }
-        }
-        
-        return null;
     }
 
     /**
@@ -440,12 +417,24 @@ export class InteractionReplayService {
             .filter((record: any) => {
                 return !['session_start', 'session_end', 'eye_tracking_start'].includes(record.type);
             })
-            .map((record: any) => ({
-                timestamp: parseInt(record.timestamp),
-                type: record.type as InteractionEventType,
-                sessionId: record.sessionId,
-                data: JSON.parse(record.data)
-            }));
+            .map((record: any) => {
+                // Parse timestamp - support both ISO format and Unix epoch
+                let timestamp: number;
+                if (typeof record.timestamp === 'string' && record.timestamp.includes('T')) {
+                    // ISO format (e.g., "2026-01-04T18:14:37.659Z")
+                    timestamp = new Date(record.timestamp).getTime();
+                } else {
+                    // Unix epoch milliseconds
+                    timestamp = parseInt(record.timestamp);
+                }
+                
+                return {
+                    timestamp,
+                    type: record.type as InteractionEventType,
+                    sessionId: record.sessionId,
+                    data: JSON.parse(record.data)
+                };
+            });
     }
 
     /**
@@ -567,6 +556,79 @@ export class InteractionReplayService {
     }
 
     /**
+     * Update container tracking based on selected element type
+     */
+    private updateContainerTracking(elementType: string, mappedId: string): void {
+        // Activity diagram
+        if (elementType === 'ACTIVITY__Activity' || (elementType.includes('Activity') && !elementType.includes('Node') && !elementType.includes('Partition'))) {
+            this.lastSelectedActivityId = mappedId;
+        }
+        
+        // Class diagram
+        if (elementType === 'CLASS__Class' || elementType === 'CLASS__Interface' || elementType === 'CLASS__DataType') {
+            this.lastSelectedClassId = mappedId;
+        }
+        if (elementType === 'CLASS__Enumeration') {
+            this.lastSelectedEnumerationId = mappedId;
+        }
+        
+        // Communication diagram
+        if (elementType === 'COMMUNICATION__Interaction') {
+            this.lastSelectedInteractionId = mappedId;
+        }
+        
+        // State Machine diagram
+        if (elementType === 'STATE_MACHINE__StateMachine') {
+            this.lastSelectedStateMachineId = mappedId;
+        }
+        if (elementType === 'STATE_MACHINE__Region') {
+            this.lastSelectedRegionId = mappedId;
+        }
+        
+        // Deployment diagram
+        if (elementType === 'DEPLOYMENT__Node' || elementType === 'DEPLOYMENT__Device' || elementType === 'DEPLOYMENT__ExecutionEnvironment') {
+            this.lastSelectedNodeId = mappedId;
+        }
+    }
+
+    /**
+     * Get the appropriate container ID for an element type
+     */
+    private getContainerIdForElementType(elementTypeId: string): string | null {
+        // Activity nodes need Activity container
+        if (InteractionReplayService.ACTIVITY_NODE_TYPES.includes(elementTypeId)) {
+            return this.lastSelectedActivityId;
+        }
+        
+        // State Machine elements need Region container
+        if (InteractionReplayService.STATE_MACHINE_REGION_TYPES.includes(elementTypeId)) {
+            return this.lastSelectedRegionId;
+        }
+        
+        // Region needs StateMachine container
+        if (elementTypeId === 'STATE_MACHINE__Region') {
+            return this.lastSelectedStateMachineId;
+        }
+        
+        // Communication Lifeline needs Interaction container
+        if (InteractionReplayService.COMMUNICATION_INTERACTION_TYPES.includes(elementTypeId)) {
+            return this.lastSelectedInteractionId;
+        }
+        
+        // Class members need Class/Interface/DataType container
+        if (InteractionReplayService.CLASS_MEMBER_TYPES.includes(elementTypeId)) {
+            return this.lastSelectedClassId || this.lastSelectedNodeId;
+        }
+        
+        // Enumeration literals need Enumeration container
+        if (InteractionReplayService.ENUMERATION_MEMBER_TYPES.includes(elementTypeId)) {
+            return this.lastSelectedEnumerationId;
+        }
+        
+        return null;
+    }
+
+    /**
      * Convert interaction event to GLSP action
      */
     private convertEventToAction(event: InteractionEvent): any | null {
@@ -582,12 +644,10 @@ export class InteractionReplayService {
                         isOperation: true
                     };
                     
-                    const isActivityNode = InteractionReplayService.ACTIVITY_NODE_TYPES.includes(data.elementTypeId);
-                    
-                    if (isActivityNode && this.lastSelectedActivityId) {
-                        action.containerId = this.lastSelectedActivityId;
-                    } else if (data.elementTypeId === 'CLASS__Property' && this.lastSelectedClassId) {
-                        action.containerId = this.lastSelectedClassId;
+                    // Get the appropriate container for this element type
+                    const containerId = this.getContainerIdForElementType(data.elementTypeId);
+                    if (containerId) {
+                        action.containerId = containerId;
                     } else if (data.containerId && data.containerId !== '$ROOT') {
                         action.containerId = this.idMapping.get(data.containerId) || data.containerId;
                     }
@@ -654,11 +714,7 @@ export class InteractionReplayService {
                     const elementType = elementTypeFromOld || elementTypeFromNew;
                     
                     if (elementType) {
-                        if (elementType === 'ACTIVITY__Activity' || elementType.includes('Activity') && !elementType.includes('Node')) {
-                            this.lastSelectedActivityId = mappedId;
-                        } else if (elementType === 'CLASS__Class') {
-                            this.lastSelectedClassId = mappedId;
-                        }
+                        this.updateContainerTracking(elementType, mappedId);
                     }
                 }
                 

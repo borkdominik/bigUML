@@ -108,4 +108,7 @@ export interface SessionData {
     user?: string;
     workspace?: string;
     totalEvents?: number;
+    umlFile?: string;
+    umlFilePath?: string;
+    diagramType?: string;
 }

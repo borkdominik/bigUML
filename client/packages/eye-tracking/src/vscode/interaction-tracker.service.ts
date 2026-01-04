@@ -52,11 +52,18 @@ export class InteractionTracker {
             return;
         }
 
+        // Detect diagram type and file path from active editor
+        const diagramType = this.detectDiagramType();
+        const umlFilePath = this.getActiveUmlFilePath();
+
         this.currentSession = {
-            sessionId: sessionId || this.generateSessionId(),
+            sessionId: sessionId || this.generateSessionId(diagramType),
             startTime: Date.now(),
             user: process.env.USER || process.env.USERNAME || 'unknown',
-            workspace: vscode.workspace.workspaceFolders?.[0]?.name || 'unknown'
+            workspace: vscode.workspace.workspaceFolders?.[0]?.name || 'unknown',
+            umlFile: umlFilePath ? path.basename(umlFilePath) : undefined,
+            umlFilePath: umlFilePath || undefined,
+            diagramType: diagramType
         };
 
         this.events = [];
@@ -451,11 +458,37 @@ export class InteractionTracker {
 
         const sessionId = this.currentSession.sessionId;
 
+        // Convert session timestamps to ISO format
+        const sessionWithIsoTimestamps = {
+            ...this.currentSession,
+            startTime: new Date(this.currentSession.startTime).toISOString(),
+            endTime: this.currentSession.endTime ? new Date(this.currentSession.endTime).toISOString() : undefined
+        };
+
+        // Convert events to use ISO timestamps for export
+        const eventsWithIsoTimestamps = this.events.map(event => {
+            const eventCopy = {
+                ...event,
+                timestamp: new Date(event.timestamp).toISOString()
+            };
+            
+            // Also convert timestamps inside session_start and session_end data
+            if (event.type === InteractionEventType.SESSION_START || event.type === InteractionEventType.SESSION_END) {
+                eventCopy.data = {
+                    ...event.data,
+                    startTime: event.data.startTime ? new Date(event.data.startTime).toISOString() : undefined,
+                    endTime: event.data.endTime ? new Date(event.data.endTime).toISOString() : undefined
+                };
+            }
+            
+            return eventCopy;
+        });
+
         // Export as JSON
         const jsonFilePath = path.join(this.logDir, `${sessionId}.json`);
         fs.writeFile(jsonFilePath, JSON.stringify({
-            session: this.currentSession,
-            events: this.events
+            session: sessionWithIsoTimestamps,
+            events: eventsWithIsoTimestamps
         }, null, 2), 'utf-8', err => {
             if (err) {
                 console.error('Failed to export JSON:', err);
@@ -487,16 +520,204 @@ export class InteractionTracker {
     private convertToCSV(): string {
         const header = 'timestamp,type,sessionId,data\n';
         const rows = this.events.map(event => {
-            const dataStr = JSON.stringify(event.data).replace(/"/g, '""');
-            return `${event.timestamp},${event.type},${event.sessionId},"${dataStr}"`;
+            // Convert Unix timestamp to ISO format with milliseconds
+            const isoTimestamp = new Date(event.timestamp).toISOString();
+            
+            // For session events, convert timestamps in data too
+            let data = event.data;
+            if (event.type === InteractionEventType.SESSION_START || event.type === InteractionEventType.SESSION_END) {
+                data = {
+                    ...event.data,
+                    startTime: event.data.startTime ? new Date(event.data.startTime).toISOString() : undefined,
+                    endTime: event.data.endTime ? new Date(event.data.endTime).toISOString() : undefined
+                };
+            }
+            
+            const dataStr = JSON.stringify(data).replace(/"/g, '""');
+            return `${isoTimestamp},${event.type},${event.sessionId},"${dataStr}"`;
         });
         return header + rows.join('\n');
     }
 
-    private generateSessionId(): string {
+    private generateSessionId(diagramType: string): string {
         const date = new Date();
-        const timestamp = date.toISOString().replace(/[:.]/g, '-');
-        return `interaction_${timestamp}`;
+        // Format: YYYY-MM-DDTHH-MM-SS.mmmZ (ISO with dashes instead of colons for filesystem compatibility)
+        const year = date.getUTCFullYear();
+        const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+        const day = String(date.getUTCDate()).padStart(2, '0');
+        const hours = String(date.getUTCHours()).padStart(2, '0');
+        const minutes = String(date.getUTCMinutes()).padStart(2, '0');
+        const seconds = String(date.getUTCSeconds()).padStart(2, '0');
+        const milliseconds = String(date.getUTCMilliseconds()).padStart(3, '0');
+        
+        const timestamp = `${year}-${month}-${day}T${hours}-${minutes}-${seconds}.${milliseconds}Z`;
+        return `${diagramType}_${timestamp}`;
+    }
+
+    /**
+     * Detect the diagram type from the active editor's file
+     */
+    private detectDiagramType(): string {
+        // First try: Check active text editor (for text-based files)
+        const activeEditor = vscode.window.activeTextEditor;
+        if (activeEditor) {
+            const fileName = activeEditor.document.fileName;
+            const match = fileName.match(/\.(activity|class|communication|deployment|information_flow|package|state_machine|use_case|sequence)\.uml$/i);
+            if (match) {
+                return match[1].toLowerCase();
+            }
+        }
+        
+        // Second try: Check active tab for custom editors (like UML diagrams)
+        const activeTab = vscode.window.tabGroups.activeTabGroup?.activeTab;
+        if (activeTab?.input) {
+            const input = activeTab.input as any;
+            
+            // Try to get URI from various possible properties
+            let uri: vscode.Uri | undefined;
+            if (input.uri) {
+                uri = input.uri;
+            } else if (input.viewType && input.resource) {
+                uri = input.resource;
+            }
+            
+            if (uri) {
+                const fileName = uri.fsPath || uri.path || '';
+                
+                // First check filename pattern
+                const filenameMatch = fileName.match(/\.(activity|class|communication|deployment|information_flow|package|state_machine|use_case|sequence)\.uml$/i);
+                if (filenameMatch) {
+                    return filenameMatch[1].toLowerCase();
+                }
+                
+                // If filename doesn't have diagram type, try to read the notation file
+                if (fileName.endsWith('.uml')) {
+                    const detectedType = this.detectDiagramTypeFromFile(fileName);
+                    if (detectedType) {
+                        return detectedType;
+                    }
+                }
+            }
+            
+            // Try to extract from tab label
+            const tabLabel = activeTab.label;
+            if (tabLabel) {
+                const match = tabLabel.match(/\.(activity|class|communication|deployment|information_flow|package|state_machine|use_case|sequence)\.uml$/i);
+                if (match) {
+                    return match[1].toLowerCase();
+                }
+            }
+        }
+        
+        // Third try: Check all visible tabs
+        for (const tabGroup of vscode.window.tabGroups.all) {
+            for (const tab of tabGroup.tabs) {
+                if (tab.isActive) {
+                    const tabLabel = tab.label;
+                    if (tabLabel) {
+                        const match = tabLabel.match(/\.(activity|class|communication|deployment|information_flow|package|state_machine|use_case|sequence)\.uml$/i);
+                        if (match) {
+                            return match[1].toLowerCase();
+                        }
+                    }
+                }
+            }
+        }
+        
+        // Default fallback
+        return 'unknown';
+    }
+
+    /**
+     * Get the UML file path from the active editor
+     */
+    private getActiveUmlFilePath(): string | null {
+        const activeTab = vscode.window.tabGroups.activeTabGroup?.activeTab;
+        if (activeTab?.input) {
+            const input = activeTab.input as any;
+            if (input.uri) {
+                return input.uri.fsPath || input.uri.path || null;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Detect diagram type by reading the UML notation file
+     */
+    private detectDiagramTypeFromFile(filePath: string): string | null {
+        try {
+            // First try: Read the .unotation file (companion file with diagram type)
+            const notationFilePath = filePath.replace(/\.uml$/, '.unotation');
+            
+            if (fs.existsSync(notationFilePath)) {
+                const notationContent = fs.readFileSync(notationFilePath, 'utf-8');
+                
+                // Look for diagramType attribute
+                const diagramTypeMatch = notationContent.match(/diagramType="(\w+)"/i);
+                if (diagramTypeMatch) {
+                    const type = diagramTypeMatch[1].toLowerCase();
+                    return this.normalizeDiagramType(type);
+                }
+            }
+            
+            // Fallback: Try to read the UML file content
+            const content = fs.readFileSync(filePath, 'utf-8');
+            
+            // Check for UML element types that indicate diagram type
+            if (content.includes('uml:Activity') || content.includes('Activity"')) {
+                return 'activity';
+            }
+            if (content.includes('uml:StateMachine') || content.includes('StateMachine"')) {
+                return 'state_machine';
+            }
+            if (content.includes('uml:Interaction') && content.includes('uml:Lifeline')) {
+                return 'communication';
+            }
+            if (content.includes('uml:UseCase') || content.includes('uml:Actor')) {
+                return 'use_case';
+            }
+            if (content.includes('uml:Node') || content.includes('uml:Device') || content.includes('uml:ExecutionEnvironment')) {
+                return 'deployment';
+            }
+            if (content.includes('uml:InformationFlow')) {
+                return 'information_flow';
+            }
+            if (content.includes('uml:Package') && !content.includes('uml:Class')) {
+                return 'package';
+            }
+            if (content.includes('uml:Class') || content.includes('uml:Interface') || content.includes('uml:Enumeration')) {
+                return 'class';
+            }
+            
+            return null;
+        } catch (error) {
+            console.error('[DiagramType] Error reading file:', error);
+            return null;
+        }
+    }
+
+    /**
+     * Normalize diagram type to consistent snake_case format
+     */
+    private normalizeDiagramType(type: string): string {
+        const typeMap: { [key: string]: string } = {
+            'class': 'class',
+            'activity': 'activity',
+            'communication': 'communication',
+            'deployment': 'deployment',
+            'informationflow': 'information_flow',
+            'information_flow': 'information_flow',
+            'package': 'package',
+            'statemachine': 'state_machine',
+            'state_machine': 'state_machine',
+            'usecase': 'use_case',
+            'use_case': 'use_case',
+            'sequence': 'sequence'
+        };
+        
+        const normalized = typeMap[type.toLowerCase()];
+        return normalized || type.toLowerCase();
     }
 
     private ensureLogDirectoryExists(): void {

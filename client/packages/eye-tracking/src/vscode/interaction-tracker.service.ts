@@ -12,6 +12,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { TYPES } from '@borkdominik-biguml/big-vscode-integration/vscode';
 import { InteractionEventType } from '../common/interaction-tracking.types.js';
+import { ViewportTrackingAction } from '../common/interaction-tracking.action.js';
 import type { 
     InteractionEvent, 
     SessionData 
@@ -24,6 +25,11 @@ export class InteractionTracker {
     private isTracking = false;
     private logDir: string;
     private disposables: vscode.Disposable[] = [];
+    
+    // Viewport debouncing
+    private lastViewportEvent: { timestamp: number; data: any } | null = null;
+    private viewportDebounceTimeout: NodeJS.Timeout | null = null;
+    private readonly VIEWPORT_DEBOUNCE_MS = 100; // Debounce viewport events to max 10 per second
 
     // Inject ActionListener to track GLSP actions
     @inject(TYPES.ActionListener)
@@ -73,6 +79,16 @@ export class InteractionTracker {
             return;
         }
 
+        // Flush any pending viewport event
+        if (this.viewportDebounceTimeout) {
+            clearTimeout(this.viewportDebounceTimeout);
+            if (this.lastViewportEvent) {
+                this.trackEvent(InteractionEventType.VIEWPORT_CHANGE, this.lastViewportEvent.data);
+                this.lastViewportEvent = null;
+            }
+            this.viewportDebounceTimeout = null;
+        }
+
         // Track session end
         this.currentSession.endTime = Date.now();
         this.currentSession.totalEvents = this.events.length;
@@ -108,6 +124,37 @@ export class InteractionTracker {
         if (this.events.length % 100 === 0) {
             this.autoSave();
         }
+    }
+
+    /**
+     * Track viewport changes with debouncing to prevent flooding
+     * Only records the final viewport state after user stops panning/zooming
+     */
+    private trackViewportEvent(data: any): void {
+        if (!this.isTracking || !this.currentSession) {
+            return;
+        }
+
+        // Clear any pending debounce timeout
+        if (this.viewportDebounceTimeout) {
+            clearTimeout(this.viewportDebounceTimeout);
+        }
+
+        // Store the latest viewport data
+        this.lastViewportEvent = {
+            timestamp: Date.now(),
+            data
+        };
+
+        // Set a debounce timeout to record the event
+        this.viewportDebounceTimeout = setTimeout(() => {
+            if (this.lastViewportEvent) {
+                this.trackEvent(InteractionEventType.VIEWPORT_CHANGE, this.lastViewportEvent.data);
+                console.log('Viewport change recorded (debounced):', this.lastViewportEvent.data);
+                this.lastViewportEvent = null;
+            }
+            this.viewportDebounceTimeout = null;
+        }, this.VIEWPORT_DEBOUNCE_MS);
     }
 
     private setupTracking(): void {
@@ -310,9 +357,63 @@ export class InteractionTracker {
                 value: action.value
             });
         } else if (action.kind === 'setViewport') {
-            this.trackEvent(InteractionEventType.VIEWPORT_CHANGE, {
+            // SetViewportAction - contains newViewport with scroll and zoom
+            const viewport = action.newViewport || action.viewport;
+            this.trackViewportEvent({
                 kind: action.kind,
-                newViewport: action.newViewport
+                scroll: viewport?.scroll,
+                zoom: viewport?.zoom,
+                elementId: action.elementId,
+                animate: action.animate
+            });
+        } else if (action.kind === 'center') {
+            // Center action - centers on specific elements
+            this.trackViewportEvent({
+                kind: action.kind,
+                elementIds: action.elementIds,
+                animate: action.animate,
+                retainZoom: action.retainZoom
+            });
+        } else if (action.kind === 'fit') {
+            // Fit to screen action
+            this.trackViewportEvent({
+                kind: action.kind,
+                elementIds: action.elementIds,
+                padding: action.padding,
+                maxZoom: action.maxZoom,
+                animate: action.animate
+            });
+        } else if (action.kind === 'viewport' || action.kind === 'setViewportAction') {
+            // Generic viewport action - try multiple property locations
+            const viewport = action.newViewport || action.viewport;
+            const scroll = viewport?.scroll || action.scroll || { x: action.scrollX, y: action.scrollY };
+            const zoom = viewport?.zoom ?? action.zoom ?? action.zoomLevel;
+            
+            // Only track if we have actual viewport data
+            if (scroll?.x !== undefined || scroll?.y !== undefined || zoom !== undefined) {
+                this.trackViewportEvent({
+                    kind: action.kind,
+                    scroll: scroll,
+                    zoom: zoom
+                });
+            } else {
+                // Log the full action to debug what properties are available
+                console.log('Viewport action without coordinates, full action:', JSON.stringify(action));
+            }
+        } else if (action.kind === 'updateModel' && action.newRoot) {
+            // UpdateModel might contain viewport changes in the canvas bounds
+            // Skip - this is handled elsewhere
+        } else if (action.kind === 'setModel' || action.kind === 'requestModel') {
+            // Model actions - skip
+        } else if (action.kind === 'setDirtyState' || action.kind === 'setEditMode') {
+            // State actions - skip
+        } else if (action.kind === 'viewportTracking' || ViewportTrackingAction.is(action)) {
+            // ViewportTrackingAction from GLSP client with actual viewport data
+            this.trackViewportEvent({
+                kind: 'setViewport',
+                scroll: action.scroll,
+                zoom: action.zoom,
+                canvasBounds: action.canvasBounds
             });
         } else if (action.kind === 'compound') {
             // Compound operations contain multiple actions

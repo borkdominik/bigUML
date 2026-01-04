@@ -84,3 +84,35 @@ export namespace ExportInteractionDataAction {
         };
     }
 }
+
+/**
+ * Action sent from GLSP client to VSCode extension when viewport changes
+ * Contains the actual viewport state (scroll position and zoom level)
+ */
+export interface ViewportTrackingAction extends Action {
+    kind: typeof ViewportTrackingAction.KIND;
+    scroll: { x: number; y: number };
+    zoom: number;
+    canvasBounds?: { x: number; y: number; width: number; height: number };
+}
+
+export namespace ViewportTrackingAction {
+    export const KIND = 'viewportTracking';
+
+    export function is(object: any): object is ViewportTrackingAction {
+        return Action.hasKind(object, KIND);
+    }
+
+    export function create(
+        scroll: { x: number; y: number },
+        zoom: number,
+        canvasBounds?: { x: number; y: number; width: number; height: number }
+    ): ViewportTrackingAction {
+        return {
+            kind: KIND,
+            scroll,
+            zoom,
+            canvasBounds
+        };
+    }
+}

@@ -34,8 +34,27 @@ export class InteractionReplayService {
     private knownElementIds: Set<string> = new Set(); // Track all element IDs we've seen
     private pendingElementCreation: { resolve: (id: string) => void; elementType: string } | null = null;
     private lastSelectedClassId: string | null = null; // Track the last selected class for property containment
+    private lastSelectedActivityId: string | null = null; // Track the last selected activity for activity node containment
     private autoCreatedChildrenQueue: string[] | null = null; // Queue of auto-created child IDs to map
     private elementTypes: Map<string, string> = new Map(); // Track element types (old ID -> element type)
+    private elementTypeMap: Map<string, string> = new Map(); // Track element types by new ID (for selection tracking)
+    private graphRootId: string | null = null; // Track the graph root element ID for viewport actions
+
+    // Activity node types that must be created inside an Activity container
+    private static readonly ACTIVITY_NODE_TYPES = [
+        'ACTIVITY__InitialNode',
+        'ACTIVITY__ActivityFinalNode',
+        'ACTIVITY__FlowFinalNode',
+        'ACTIVITY__OpaqueAction',
+        'ACTIVITY__AcceptEventAction',
+        'ACTIVITY__SendSignalAction',
+        'ACTIVITY__DecisionNode',
+        'ACTIVITY__MergeNode',
+        'ACTIVITY__ForkNode',
+        'ACTIVITY__JoinNode',
+        'ACTIVITY__CentralBufferNode',
+        'ACTIVITY__ActivityParameterNode'
+    ];
 
     /**
      * Load and replay a session from a CSV file
@@ -53,7 +72,10 @@ export class InteractionReplayService {
             this.replayAbortController = new AbortController();
             this.idMapping.clear(); // Clear ID mapping for new replay session
             this.knownElementIds.clear(); // Clear known elements for new replay session
+            this.elementTypeMap.clear(); // Clear element type map for new replay session
             this.lastSelectedClassId = null; // Clear last selected class
+            this.lastSelectedActivityId = null; // Clear last selected activity
+            this.graphRootId = null; // Clear graph root ID
 
             // Set up model listener to capture new element IDs
             modelListener = this.setupModelListener();
@@ -138,60 +160,228 @@ export class InteractionReplayService {
 
     /**
      * Build a map of old element IDs from the recording by analyzing the event sequence
-     * After creation, elements are typically selected or edited, revealing their IDs
+     * Uses a two-pass algorithm:
+     * 1. First pass: Find IDs that appear between a creation and the next createNode of the same type
+     * 2. Second pass: For creations without IDs, find remaining unassigned IDs
      */
     private buildCreationIdMap(events: InteractionEvent[]): void {
         console.log('Building creation-to-ID map from event sequence...');
         
+        // Track IDs that have already been assigned to previous creations
+        const assignedIds = new Set<string>();
+        
+        // Track creations that couldn't find their ID in the first pass
+        const unmappedCreations: { index: number; elementType: string }[] = [];
+        
+        // First pass: Find IDs that appear immediately after creation
         for (let i = 0; i < events.length; i++) {
             const event = events[i];
             
-            // Find element_create events
+            // Find element_create events for nodes (not edges)
             if (event.type === InteractionEventType.ELEMENT_CREATE && event.data.kind === 'createNode') {
                 // Look ahead to find the next selection or property change for this element
-                const oldId = this.findElementIdAfterCreation(events, i);
+                const oldId = this.findElementIdAfterCreation(events, i, assignedIds);
                 if (oldId) {
                     // Store the old ID with index so we can map it during replay
                     (event.data as any)._oldElementId = oldId;
-                    console.log(`Found old ID for creation at index ${i}: ${oldId}`);
-                }
-            }
-        }
-    }
-
-    /**
-     * Find the element ID by looking at events following a creation
-     */
-    private findElementIdAfterCreation(events: InteractionEvent[], creationIndex: number): string | null {
-        // Look at the next few events
-        for (let i = creationIndex + 1; i < Math.min(creationIndex + 10, events.length); i++) {
-            const event = events[i];
-            
-            // Check selection events
-            if (event.type === InteractionEventType.ELEMENT_SELECT) {
-                const selectedIds = event.data.selectedElementsIDs;
-                if (selectedIds && selectedIds.length > 0) {
-                    return selectedIds[0]; // Return the first selected ID
-                }
-            }
-            
-            // Check property change events (label edits)
-            if (event.type === InteractionEventType.PROPERTY_CHANGE) {
-                if (event.data.kind === 'applyLabelEdit' && event.data.labelId) {
-                    // Extract element ID from label ID (format: elementId_name_label)
-                    const labelId = event.data.labelId;
-                    const elementId = labelId.replace(/_name_label$/, ''); // Remove the suffix
-                    if (elementId && elementId !== labelId) { // Make sure we actually removed something
-                        return elementId;
-                    }
-                }
-                // check updateElementProperty actions (from property palette)
-                if (event.data.kind === 'updateElementProperty' && event.data.elementId) {
-                    return event.data.elementId;
+                    // Mark this ID as assigned so it won't be used for subsequent creations
+                    assignedIds.add(oldId);
+                    console.log(`[Pass 1] Found old ID for creation at index ${i}: ${oldId}`);
+                } else {
+                    // Couldn't find ID - track for second pass
+                    unmappedCreations.push({ index: i, elementType: event.data.elementTypeId });
+                    console.log(`[Pass 1] No ID found for ${event.data.elementTypeId} at index ${i}, will try pass 2`);
                 }
             }
         }
         
+        // Second pass: For unmapped creations, search ALL events to find their IDs
+        if (unmappedCreations.length > 0) {
+            console.log(`[Pass 2] Searching for ${unmappedCreations.length} unmapped creations...`);
+            
+            // Collect all IDs that appear anywhere in the recording but aren't assigned yet
+            const allIds = this.collectAllReferencedIds(events);
+            const unassignedIds = Array.from(allIds).filter(id => !assignedIds.has(id));
+            
+            console.log(`[Pass 2] Found ${unassignedIds.length} unassigned IDs: ${unassignedIds.join(', ')}`);
+            
+            // For each unmapped creation, try to find a matching ID
+            for (const creation of unmappedCreations) {
+                // Find the first unassigned ID that appears AFTER this creation
+                for (let i = creation.index + 1; i < events.length; i++) {
+                    const event = events[i];
+                    const idsInEvent = this.extractIdsFromEvent(event);
+                    
+                    for (const id of idsInEvent) {
+                        if (unassignedIds.includes(id) && !assignedIds.has(id)) {
+                            // Found an unassigned ID - assign it to this creation
+                            const creationEvent = events[creation.index];
+                            (creationEvent.data as any)._oldElementId = id;
+                            assignedIds.add(id);
+                            console.log(`[Pass 2] Assigned ID ${id} to ${creation.elementType} at index ${creation.index}`);
+                            break;
+                        }
+                    }
+                    
+                    // Check if we found an ID
+                    if ((events[creation.index].data as any)._oldElementId) {
+                        break;
+                    }
+                }
+                
+                // Check if still no ID found
+                if (!(events[creation.index].data as any)._oldElementId) {
+                    console.warn(`[Pass 2] Still no ID found for ${creation.elementType} at index ${creation.index}`);
+                }
+            }
+        }
+    }
+    
+    /**
+     * Collect all element IDs that are referenced anywhere in the events
+     */
+    private collectAllReferencedIds(events: InteractionEvent[]): Set<string> {
+        const ids = new Set<string>();
+        
+        for (const event of events) {
+            const eventIds = this.extractIdsFromEvent(event);
+            eventIds.forEach(id => ids.add(id));
+        }
+        
+        return ids;
+    }
+    
+    /**
+     * Extract all element IDs from a single event
+     */
+    private extractIdsFromEvent(event: InteractionEvent): string[] {
+        const ids: string[] = [];
+        
+        if (event.type === InteractionEventType.ELEMENT_SELECT) {
+            const selectedIds = event.data.selectedElementsIDs;
+            if (selectedIds) {
+                ids.push(...selectedIds);
+            }
+        }
+        
+        if (event.type === InteractionEventType.ELEMENT_CREATE && event.data.kind === 'createEdge') {
+            if (event.data.sourceElementId) ids.push(event.data.sourceElementId);
+            if (event.data.targetElementId) ids.push(event.data.targetElementId);
+        }
+        
+        if (event.type === InteractionEventType.PROPERTY_CHANGE) {
+            if (event.data.kind === 'applyLabelEdit' && event.data.labelId) {
+                const elementId = event.data.labelId.replace(/_name_label$/, '');
+                if (elementId && elementId !== event.data.labelId) {
+                    ids.push(elementId);
+                }
+            }
+            if (event.data.kind === 'updateElementProperty' && event.data.elementId) {
+                ids.push(event.data.elementId);
+            }
+        }
+        
+        if (event.type === InteractionEventType.ELEMENT_MOVE && event.data.newBounds) {
+            for (const bound of event.data.newBounds) {
+                if (bound.elementId) ids.push(bound.elementId);
+            }
+        }
+        
+        if (event.type === InteractionEventType.ELEMENT_DELETE && event.data.elementIds) {
+            ids.push(...event.data.elementIds);
+        }
+        
+        return ids;
+    }
+
+    /**
+     * Find the element ID by looking at events following a creation
+     * Looks for a NEW element ID (one not seen before and not already assigned)
+     * STOPS searching when another element_create node event is encountered
+     * Also checks edge creation events for source/target IDs
+     */
+    private findElementIdAfterCreation(events: InteractionEvent[], creationIndex: number, assignedIds: Set<string>): string | null {
+        // Collect all element IDs that have been seen in selections before this creation
+        const seenIds = new Set<string>();
+        for (let i = 0; i < creationIndex; i++) {
+            const event = events[i];
+            if (event.type === InteractionEventType.ELEMENT_SELECT) {
+                const selectedIds = event.data.selectedElementsIDs;
+                if (selectedIds) {
+                    selectedIds.forEach((id: string) => seenIds.add(id));
+                }
+            }
+            // Also track IDs from property changes
+            if (event.type === InteractionEventType.PROPERTY_CHANGE) {
+                if (event.data.kind === 'applyLabelEdit' && event.data.labelId) {
+                    const elementId = event.data.labelId.replace(/_name_label$/, '');
+                    if (elementId) {
+                        seenIds.add(elementId);
+                    }
+                }
+            }
+            // Also track IDs from edge creations
+            if (event.type === InteractionEventType.ELEMENT_CREATE && event.data.kind === 'createEdge') {
+                if (event.data.sourceElementId) seenIds.add(event.data.sourceElementId);
+                if (event.data.targetElementId) seenIds.add(event.data.targetElementId);
+            }
+        }
+        
+        // Look at the next few events for a NEW element ID being selected
+        // STOP when we hit another createNode event (that ID belongs to the next creation)
+        for (let i = creationIndex + 1; i < Math.min(creationIndex + 30, events.length); i++) {
+            const event = events[i];
+            
+            // STOP if we hit another createNode event - any IDs after this belong to the next creation
+            if (event.type === InteractionEventType.ELEMENT_CREATE && event.data.kind === 'createNode') {
+                console.log(`Stopping search at index ${i} - hit another createNode event`);
+                break;
+            }
+            
+            // Check selection events for a new ID
+            if (event.type === InteractionEventType.ELEMENT_SELECT) {
+                const selectedIds = event.data.selectedElementsIDs;
+                if (selectedIds && selectedIds.length > 0) {
+                    // Find the first selected ID that:
+                    // 1. We haven't seen before this creation
+                    // 2. Hasn't already been assigned to a previous creation
+                    for (const id of selectedIds) {
+                        if (!seenIds.has(id) && !assignedIds.has(id)) {
+                            console.log(`Found NEW element ID after creation (from selection): ${id}`);
+                            return id; // This is the newly created element
+                        }
+                    }
+                }
+            }
+            
+            // Check edge creation events - source or target might be the newly created element
+            if (event.type === InteractionEventType.ELEMENT_CREATE && event.data.kind === 'createEdge') {
+                const sourceId = event.data.sourceElementId;
+                const targetId = event.data.targetElementId;
+                
+                if (sourceId && !seenIds.has(sourceId) && !assignedIds.has(sourceId)) {
+                    console.log(`Found NEW element ID after creation (from edge source): ${sourceId}`);
+                    return sourceId;
+                }
+                if (targetId && !seenIds.has(targetId) && !assignedIds.has(targetId)) {
+                    console.log(`Found NEW element ID after creation (from edge target): ${targetId}`);
+                    return targetId;
+                }
+            }
+            
+            // Check property change events for new IDs (label edits)
+            if (event.type === InteractionEventType.PROPERTY_CHANGE) {
+                if (event.data.kind === 'applyLabelEdit' && event.data.labelId) {
+                    const elementId = event.data.labelId.replace(/_name_label$/, '');
+                    if (elementId && elementId !== event.data.labelId && !seenIds.has(elementId) && !assignedIds.has(elementId)) {
+                        console.log(`Found NEW element ID after creation (from label edit): ${elementId}`);
+                        return elementId;
+                    }
+                }
+            }
+        }
+        
+        console.log(`No ID found for creation at index ${creationIndex} - element may not have been referenced`);
         return null;
     }
 
@@ -202,6 +392,12 @@ export class InteractionReplayService {
         if (!root || !root.children) {
             console.log('No root or no children in updateModel');
             return;
+        }
+
+        // Capture the graph root ID for viewport actions
+        if (root.id && (root.type === 'graph' || !root.type)) {
+            this.graphRootId = root.id;
+            console.log(`Captured graph root ID: ${this.graphRootId}`);
         }
 
         // Get all elements from the model
@@ -264,9 +460,13 @@ export class InteractionReplayService {
         }
 
         // Now update our known elements set with all current elements
+        // Also track element types for selection handling
         allElements.forEach(el => {
             if (el.id) {
                 this.knownElementIds.add(el.id);
+                if (el.type) {
+                    this.elementTypeMap.set(el.id, el.type);
+                }
             }
         });
     }
@@ -534,8 +734,16 @@ export class InteractionReplayService {
                         isOperation: true
                     };
                     
+                    // Check if this is an Activity node type that needs to be inside an Activity
+                    const isActivityNode = InteractionReplayService.ACTIVITY_NODE_TYPES.includes(data.elementTypeId);
+                    
+                    if (isActivityNode && this.lastSelectedActivityId) {
+                        // Activity nodes must be created inside an Activity container
+                        action.containerId = this.lastSelectedActivityId;
+                        console.log(`Creating activity node ${data.elementTypeId} inside activity: ${this.lastSelectedActivityId}`);
+                    }
                     // Special handling for properties - they should be inside a class
-                    if (data.elementTypeId === 'CLASS__Property' && this.lastSelectedClassId) {
+                    else if (data.elementTypeId === 'CLASS__Property' && this.lastSelectedClassId) {
                         // Use the last selected class as the container
                         action.containerId = this.lastSelectedClassId;
                         console.log(`Creating property inside class: ${this.lastSelectedClassId}`);
@@ -592,28 +800,55 @@ export class InteractionReplayService {
                 }
             }
 
-            case InteractionEventType.ELEMENT_MOVE:
+            case InteractionEventType.ELEMENT_MOVE: {
+                // Map element IDs in newBounds to use the new IDs
+                const mappedBounds = data.newBounds.map((bound: any) => ({
+                    ...bound,
+                    elementId: this.idMapping.get(bound.elementId) || bound.elementId
+                }));
+                
+                // Check if all IDs are mapped
+                const allBoundsMapped = data.newBounds.every((bound: any) => 
+                    this.idMapping.has(bound.elementId)
+                );
+                
+                if (!allBoundsMapped) {
+                    console.log(`Some bounds IDs not mapped yet, original IDs: ${data.newBounds.map((b: any) => b.elementId).join(', ')}`);
+                }
+                
+                console.log(`ChangeBounds with mapped IDs: ${mappedBounds.map((b: any) => b.elementId).join(', ')}`);
+                
                 return {
                     kind: 'changeBounds',
-                    newBounds: data.newBounds,
+                    newBounds: mappedBounds,
                     isOperation: true
                 };
+            }
 
             case InteractionEventType.ELEMENT_SELECT:
-                // Track the last selected class for property containment
-                // We need to check if the selected element is actually a CLASS
+                // Track the last selected class/activity for containment
                 if (data.selectedElementsIDs && data.selectedElementsIDs.length > 0) {
                     const selectedId = data.selectedElementsIDs[0];
                     // Map the old ID to the new ID
-                    const mappedId = this.idMapping.get(selectedId);
-                    if (mappedId) {
-                        // Only update lastSelectedClassId if this is actually a CLASS
-                        const elementType = this.elementTypes.get(selectedId);
-                        if (elementType === 'CLASS__Class') {
+                    const mappedId = this.idMapping.get(selectedId) || selectedId;
+                    
+                    // Check element type from both old ID mapping and new ID mapping
+                    const elementTypeFromOld = this.elementTypes.get(selectedId);
+                    const elementTypeFromNew = this.elementTypeMap.get(mappedId);
+                    const elementType = elementTypeFromOld || elementTypeFromNew;
+                    
+                    if (elementType) {
+                        // Track Activity for activity node containment
+                        if (elementType === 'ACTIVITY__Activity' || elementType.includes('Activity') && !elementType.includes('Node')) {
+                            this.lastSelectedActivityId = mappedId;
+                            console.log(`Tracking last selected activity: ${mappedId} (type: ${elementType})`);
+                        }
+                        // Track Class for property containment
+                        else if (elementType === 'CLASS__Class') {
                             this.lastSelectedClassId = mappedId;
                             console.log(`Tracking last selected class: ${mappedId}`);
                         } else {
-                            console.log(`Selected ${elementType}, not updating lastSelectedClassId`);
+                            console.log(`Selected ${elementType}, not updating container tracking`);
                         }
                     }
                 }
@@ -673,14 +908,67 @@ export class InteractionReplayService {
                 }
                 break;
 
-            case InteractionEventType.VIEWPORT_CHANGE:
-                if (data.newViewport) {
+            case InteractionEventType.VIEWPORT_CHANGE: {
+                // Handle different viewport action types
+                const scroll = data.scroll || data.newViewport?.scroll;
+                const zoom = data.zoom ?? data.newViewport?.zoom;
+                
+                // Use the captured graph root ID, fall back to 'GRAPH' if not available
+                const graphElementId = this.graphRootId || 'GRAPH';
+                
+                if (data.kind === 'setViewport' && (scroll || zoom !== undefined)) {
+                    console.log(`Setting viewport: scroll=(${scroll?.x}, ${scroll?.y}), zoom=${zoom}, elementId=${graphElementId}`);
                     return {
-                        kind: 'setViewport',
-                        newViewport: data.newViewport
+                        kind: 'viewport',  // GLSP/Sprotty uses 'viewport' as the action kind
+                        newViewport: {
+                            scroll: scroll || { x: 0, y: 0 },
+                            zoom: zoom ?? 1
+                        },
+                        elementId: graphElementId,
+                        animate: data.animate ?? false
+                    };
+                } else if (data.kind === 'center' && data.elementIds) {
+                    // Map element IDs for center action
+                    const mappedIds = data.elementIds.map((id: string) => 
+                        this.idMapping.get(id) || id
+                    );
+                    console.log(`Centering on elements: ${mappedIds.join(', ')}`);
+                    return {
+                        kind: 'center',
+                        elementIds: mappedIds,
+                        animate: data.animate ?? false,
+                        retainZoom: data.retainZoom ?? true
+                    };
+                } else if (data.kind === 'fit') {
+                    // Map element IDs for fit action if specified
+                    const mappedIds = data.elementIds?.map((id: string) => 
+                        this.idMapping.get(id) || id
+                    );
+                    console.log(`Fitting to screen${mappedIds ? `: ${mappedIds.join(', ')}` : ''}`);
+                    return {
+                        kind: 'fit',
+                        elementIds: mappedIds || [],
+                        padding: data.padding,
+                        maxZoom: data.maxZoom,
+                        animate: data.animate ?? false
+                    };
+                } else if (scroll || zoom !== undefined) {
+                    // Generic viewport with scroll/zoom data
+                    console.log(`Viewport change: scroll=(${scroll?.x}, ${scroll?.y}), zoom=${zoom}, elementId=${graphElementId}`);
+                    return {
+                        kind: 'viewport',  // GLSP/Sprotty uses 'viewport' as the action kind
+                        newViewport: {
+                            scroll: scroll || { x: 0, y: 0 },
+                            zoom: zoom ?? 1
+                        },
+                        elementId: graphElementId,
+                        animate: false
                     };
                 }
-                break;
+                // No valid viewport data - skip
+                console.log('Viewport change without valid data, skipping');
+                return null;
+            }
 
             default:
                 // Unsupported event type

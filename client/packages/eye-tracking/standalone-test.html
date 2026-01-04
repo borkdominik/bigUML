@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eye Tracking Test - Standalone</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            background-color: #007acc;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        button:hover {
+            background-color: #005a9e;
+        }
+        button:disabled {
+            background-color: #666;
+            cursor: not-allowed;
+        }
+        .status {
+            padding: 15px;
+            background-color: #2d2d2d;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        .active {
+            background-color: #4caf50;
+            color: white;
+        }
+        .inactive {
+            background-color: #f44336;
+            color: white;
+        }
+        #video-container {
+            position: relative;
+            margin: 20px 0;
+        }
+        .data-display {
+            background-color: #2d2d2d;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+        .calibration-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            height: 200px;
+            margin: 20px 0;
+        }
+        .calibration-point {
+            background-color: #f44336;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .calibration-point:hover {
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Eye Tracking Test - Standalone Mode</h1>
+        <p>This page has full camera access. Use it to test WebGazer functionality.</p>
+
+        <div class="status">
+            <strong>Status:</strong>
+            <span class="status-badge" id="status-badge">Inactive</span>
+            <div id="status-message" style="margin-top: 10px; font-size: 12px; font-style: italic;">
+                Ready to start
+            </div>
+        </div>
+
+        <div>
+            <button id="startBtn" onclick="startTracking()">Start Eye Tracking</button>
+            <button id="stopBtn" onclick="stopTracking()" disabled>Stop Eye Tracking</button>
+            <button id="calibrateBtn" onclick="startCalibration()" disabled>Calibrate</button>
+            <button id="clearBtn" onclick="clearData()">Clear Data</button>
+        </div>
+
+        <div id="calibration-section" style="display: none;">
+            <h3>Calibration - Look at and click each red dot:</h3>
+            <div class="calibration-grid" id="calibrationGrid"></div>
+            <button onclick="endCalibration()">Finish Calibration</button>
+        </div>
+
+        <div class="data-display">
+            <strong>Gaze Points Collected:</strong> <span id="dataCount">0</span><br>
+            <span id="latestData" style="font-size: 12px;"></span>
+        </div>
+
+        <div id="video-container"></div>
+    </div>
+
+    <!-- Include WebGazer from CDN -->
+    <script src="https://webgazer.cs.brown.edu/webgazer.js"></script>
+    
+    <script>
+        let gazeData = [];
+        let isActive = false;
+        let isCalibrating = false;
+
+        async function startTracking() {
+            try {
+                updateStatus('Starting eye tracking...', false);
+                
+                await webgazer
+                    .setRegression('ridge')
+                    .setTracker('TFFacemesh')
+                    .setGazeListener((data) => {
+                        if (data && typeof data.x === 'number' && typeof data.y === 'number') {
+                            const gazePoint = {
+                                x: data.x,
+                                y: data.y,
+                                timestamp: Date.now()
+                            };
+                            
+                            gazeData.push(gazePoint);
+                            
+                            // Limit data points
+                            if (gazeData.length > 10000) {
+                                gazeData.shift();
+                            }
+                            
+                            // Update display
+                            if (gazeData.length % 10 === 0) {
+                                updateDataDisplay();
+                            }
+                        }
+                    })
+                    .begin();
+
+                // Configure WebGazer
+                webgazer.params
+                    .showVideo(true)
+                    .showPredictions(true)
+                    .showFaceOverlay(true)
+                    .showFaceFeedbackBox(true);
+
+                isActive = true;
+                updateStatus('Eye tracking active ✓', true);
+                document.getElementById('startBtn').disabled = true;
+                document.getElementById('stopBtn').disabled = false;
+                document.getElementById('calibrateBtn').disabled = false;
+                
+            } catch (error) {
+                updateStatus(`Error: ${error.message}`, false);
+                console.error('Failed to start:', error);
+            }
+        }
+
+        async function stopTracking() {
+            try {
+                await webgazer.end();
+                isActive = false;
+                updateStatus('Eye tracking stopped', false);
+                document.getElementById('startBtn').disabled = false;
+                document.getElementById('stopBtn').disabled = true;
+                document.getElementById('calibrateBtn').disabled = true;
+                
+                // Export data
+                exportData();
+            } catch (error) {
+                updateStatus(`Error stopping: ${error.message}`, false);
+            }
+        }
+
+        function startCalibration() {
+            if (!isActive) return;
+            
+            isCalibrating = true;
+            updateStatus('Calibration mode - click the red dots', true);
+            document.getElementById('calibration-section').style.display = 'block';
+            
+            // Create calibration grid
+            const grid = document.getElementById('calibrationGrid');
+            grid.innerHTML = '';
+            
+            for (let i = 0; i < 9; i++) {
+                const point = document.createElement('div');
+                point.className = 'calibration-point';
+                point.onclick = () => calibratePoint(i, point);
+                grid.appendChild(point);
+            }
+            
+            webgazer.clearData();
+        }
+
+        function calibratePoint(index, element) {
+            const rect = element.getBoundingClientRect();
+            const x = rect.left + rect.width / 2;
+            const y = rect.top + rect.height / 2;
+            
+            webgazer.recordScreenPosition(x, y, 'click');
+            element.style.backgroundColor = '#4caf50';
+            updateStatus(`Calibrated point ${index + 1}/9`, true);
+        }
+
+        function endCalibration() {
+            isCalibrating = false;
+            document.getElementById('calibration-section').style.display = 'none';
+            updateStatus('Calibration completed', true);
+        }
+
+        function clearData() {
+            gazeData = [];
+            webgazer.clearData();
+            updateDataDisplay();
+            updateStatus('Data cleared', isActive);
+        }
+
+        function updateStatus(message, active) {
+            const badge = document.getElementById('status-badge');
+            const statusMsg = document.getElementById('status-message');
+            
+            badge.textContent = active ? 'Active' : 'Inactive';
+            badge.className = 'status-badge ' + (active ? 'active' : 'inactive');
+            statusMsg.textContent = message;
+        }
+
+        function updateDataDisplay() {
+            document.getElementById('dataCount').textContent = gazeData.length;
+            
+            if (gazeData.length > 0) {
+                const latest = gazeData[gazeData.length - 1];
+                document.getElementById('latestData').textContent = 
+                    `Latest: x=${Math.round(latest.x)}, y=${Math.round(latest.y)}`;
+            }
+        }
+
+        function exportData() {
+            if (gazeData.length === 0) {
+                alert('No data to export');
+                return;
+            }
+
+            // Create CSV
+            const csv = 'timestamp,x,y\n' + gazeData.map(p => 
+                `${p.timestamp},${p.x},${p.y}`
+            ).join('\n');
+
+            // Download
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `eye_tracking_${Date.now()}.csv`;
+            a.click();
+            URL.revokeObjectURL(url);
+
+            alert(`Exported ${gazeData.length} gaze points`);
+        }
+
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', () => {
+            if (isActive) {
+                webgazer.end();
+            }
+        });
+    </script>
+</body>
+</html>

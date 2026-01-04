@@ -1,7 +1,7 @@
 {
   "name": "@borkdominik-biguml/big-eye-tracking",
   "version": "0.6.3",
-  "description": "UML-Eye Tracking",
+  "description": "Interaction Tracking",
   "homepage": "https://github.com/borkdominik/bigUML",
   "bugs": "https://github.com/borkdominik/bigUML/issues",
   "repository": {
@@ -61,8 +61,7 @@
     "@eclipse-glsp/protocol": "*",
     "@eclipse-glsp/vscode-integration-webview": "*",
     "csv-parse": "^5.5.6",
-    "vscode-messenger-common": "^0.4.5",
-    "webgazer": "^3.3.0"  
+    "vscode-messenger-common": "^0.4.5"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",

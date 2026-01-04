@@ -116,3 +116,48 @@ export namespace ViewportTrackingAction {
         };
     }
 }
+
+/**
+ * Action to open the standalone eye tracking demo in the default browser
+ */
+export interface OpenStandaloneEyeTrackingAction extends Action {
+    kind: typeof OpenStandaloneEyeTrackingAction.KIND;
+}
+
+export namespace OpenStandaloneEyeTrackingAction {
+    export const KIND = 'openStandaloneEyeTracking';
+
+    export function is(object: any): object is OpenStandaloneEyeTrackingAction {
+        return Action.hasKind(object, KIND);
+    }
+
+    export function create(): OpenStandaloneEyeTrackingAction {
+        return {
+            kind: KIND
+        };
+    }
+}
+
+/**
+ * Status action sent from extension to webview to establish connection and provide status
+ */
+export interface InteractionTrackingStatusAction extends Action {
+    kind: typeof InteractionTrackingStatusAction.KIND;
+    isSessionActive: boolean;
+    message?: string;
+}
+
+export namespace InteractionTrackingStatusAction {
+    export const KIND = 'interactionTrackingStatus';
+
+    export function is(object: any): object is InteractionTrackingStatusAction {
+        return Action.hasKind(object, KIND);
+    }
+
+    export function create(options: Omit<InteractionTrackingStatusAction, 'kind'>): InteractionTrackingStatusAction {
+        return {
+            kind: KIND,
+            ...options
+        };
+    }
+}

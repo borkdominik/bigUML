@@ -53,17 +53,32 @@ export class InteractionTracker {
         }
 
         // Detect diagram type and file path from active editor
-        const diagramType = this.detectDiagramType();
-        const umlFilePath = this.getActiveUmlFilePath();
+        const editorType = this.detectDiagramType();
+        const modelFilePath = this.getActiveUmlFilePath();
+        const modelFile = modelFilePath ? path.basename(modelFilePath) : undefined;
+
+        // Get tool version from package.json (hardcoded for now)
+        const toolVersion = '0.6.3';
 
         this.currentSession = {
-            sessionId: sessionId || this.generateSessionId(diagramType),
+            sessionId: sessionId || this.generateSessionId(editorType),
             startTime: Date.now(),
+            
+            // New generic GLSP fields
+            toolId: 'bigUML',
+            toolVersion: toolVersion,
+            editorType: editorType,
+            modelFile: modelFile,
+            modelFilePath: modelFilePath || undefined,
+            
+            // User info
             user: process.env.USER || process.env.USERNAME || 'unknown',
             workspace: vscode.workspace.workspaceFolders?.[0]?.name || 'unknown',
-            umlFile: umlFilePath ? path.basename(umlFilePath) : undefined,
-            umlFilePath: umlFilePath || undefined,
-            diagramType: diagramType
+            
+            // Legacy fields (for backward compatibility)
+            umlFile: modelFile,
+            umlFilePath: modelFilePath || undefined,
+            diagramType: editorType
         };
 
         this.events = [];

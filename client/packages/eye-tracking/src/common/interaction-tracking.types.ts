@@ -105,10 +105,23 @@ export interface SessionData {
     sessionId: string;
     startTime: number;
     endTime?: number;
+    
+    // Tool identification (generic GLSP support)
+    toolId: string;  // e.g., "bigUML", "bpmn-glsp"
+    toolVersion?: string;
+    
+    // Editor/Model information (generic names)
+    editorType?: string;  // e.g., "activity", "class", "bpmn"
+    modelFile?: string;  // Filename
+    modelFilePath?: string;  // Full path
+    
+    // User information
     user?: string;
     workspace?: string;
     totalEvents?: number;
-    umlFile?: string;
-    umlFilePath?: string;
-    diagramType?: string;
+    
+    // Legacy field names (for backward compatibility - still populated)
+    umlFile?: string;  // Same as modelFile
+    umlFilePath?: string;  // Same as modelFilePath
+    diagramType?: string;  // Same as editorType
 }

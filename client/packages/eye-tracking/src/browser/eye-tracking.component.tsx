@@ -13,7 +13,8 @@ import {
     StopTrackingSessionAction,
     ExportInteractionDataAction,
     OpenStandaloneEyeTrackingAction,
-    InteractionTrackingStatusAction
+    InteractionTrackingStatusAction,
+    UploadSessionToServerAction
 } from '../common/index.js';
 
 export function EyeTracking(): ReactElement {
@@ -70,6 +71,16 @@ export function EyeTracking(): ReactElement {
 
         dispatchAction(OpenStandaloneEyeTrackingAction.create());
         setStatusMessage('Opening standalone eye tracking demo...');
+    }, [clientId, dispatchAction]);
+
+    const uploadSessionToServer = useCallback(() => {
+        if (!clientId) {
+            setStatusMessage('Client not ready, please wait...');
+            return;
+        }
+
+        dispatchAction(UploadSessionToServerAction.create());
+        setStatusMessage('Opening file selector...');
     }, [clientId, dispatchAction]);
 
     const isConnected = isReady && !!clientId;
@@ -148,6 +159,21 @@ export function EyeTracking(): ReactElement {
                         }}
                     >
                         👁 Eye Tracking
+                    </button>
+                    <button 
+                        onClick={uploadSessionToServer}
+                        disabled={!isConnected}
+                        style={{
+                            padding: '8px 16px',
+                            backgroundColor: 'var(--vscode-button-secondaryBackground)',
+                            color: 'var(--vscode-button-foreground)',
+                            border: 'none',
+                            borderRadius: '4px',
+                            cursor: isConnected ? 'pointer' : 'not-allowed',
+                            opacity: !isConnected ? 0.6 : 1
+                        }}
+                    >
+                        ☁️ Upload to Server
                     </button>
                 </div>
                 <div style={{ marginTop: '12px', fontSize: '12px', color: 'var(--vscode-descriptionForeground)' }}>

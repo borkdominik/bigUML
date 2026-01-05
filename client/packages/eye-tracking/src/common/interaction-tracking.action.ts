@@ -161,3 +161,24 @@ export namespace InteractionTrackingStatusAction {
         };
     }
 }
+
+/**
+ * Action to upload a session JSON file to the monitoring server
+ */
+export interface UploadSessionToServerAction extends Action {
+    kind: typeof UploadSessionToServerAction.KIND;
+}
+
+export namespace UploadSessionToServerAction {
+    export const KIND = 'uploadSessionToServer';
+
+    export function is(object: any): object is UploadSessionToServerAction {
+        return Action.hasKind(object, KIND);
+    }
+
+    export function create(): UploadSessionToServerAction {
+        return {
+            kind: KIND
+        };
+    }
+}

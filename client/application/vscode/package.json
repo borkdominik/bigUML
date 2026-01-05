@@ -125,6 +125,12 @@
           "default": true,
           "scope": "resource",
           "description": "Hide the *.unotation files."
+        },
+        "bigUML.monitoringServerUrl": {
+          "type": "string",
+          "default": "http://localhost:8000",
+          "scope": "resource",
+          "description": "URL of the monitoring server for uploading interaction tracking sessions."
         }
       }
     },

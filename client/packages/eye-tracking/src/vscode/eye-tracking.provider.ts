@@ -18,7 +18,8 @@ import {
     ExportInteractionDataAction,
     OpenStandaloneEyeTrackingAction,
     InteractionTrackingStatusAction,
-    InteractionEventType
+    InteractionEventType,
+    UploadSessionToServerAction
 } from '../common/index.js';
 import { TYPES as EYE_TYPES } from './eye-tracking.types.js';
 import type { InteractionTracker } from './interaction-tracker.service.js';
@@ -125,6 +126,8 @@ export class EyeTrackingProvider extends BIGReactWebview {
                     this.handleTrackInteraction(message.action);
                 } else if (OpenStandaloneEyeTrackingAction.is(message.action)) {
                     this.handleOpenStandaloneEyeTracking();
+                } else if (UploadSessionToServerAction.is(message.action)) {
+                    this.handleUploadSessionToServer();
                 }
             })
         );
@@ -213,5 +216,92 @@ export class EyeTrackingProvider extends BIGReactWebview {
                 vscode.window.showErrorMessage(`Failed to open eye tracking demo: ${error}`);
             }
         );
+    }
+
+    private async handleUploadSessionToServer(): Promise<void> {
+        // Get the default interaction-logs folder
+        const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
+        const defaultUri = workspaceFolder 
+            ? vscode.Uri.file(path.join(workspaceFolder.uri.fsPath, 'interaction-logs'))
+            : undefined;
+
+        // Open file dialog to select JSON file
+        const fileUris = await vscode.window.showOpenDialog({
+            canSelectFiles: true,
+            canSelectFolders: false,
+            canSelectMany: false,
+            defaultUri: defaultUri,
+            filters: {
+                'JSON Files': ['json'],
+                'All Files': ['*']
+            },
+            title: 'Select Session JSON File to Upload'
+        });
+
+        if (!fileUris || fileUris.length === 0) {
+            return; // User cancelled
+        }
+
+        const selectedFile = fileUris[0];
+        
+        try {
+            // Read the file content
+            const fileContent = fs.readFileSync(selectedFile.fsPath, 'utf-8');
+            const sessionData = JSON.parse(fileContent);
+
+            // Validate the file has the expected structure
+            if (!sessionData.session || !sessionData.events) {
+                vscode.window.showErrorMessage('Invalid session file format. Expected { session: {...}, events: [...] }');
+                return;
+            }
+
+            // Send to the API
+            const serverUrl = vscode.workspace.getConfiguration('bigUML').get<string>('monitoringServerUrl') || 'http://localhost:8000';
+            
+            vscode.window.withProgress(
+                {
+                    location: vscode.ProgressLocation.Notification,
+                    title: 'Uploading session to server...',
+                    cancellable: false
+                },
+                async (_progress) => {
+                    try {
+                        const response = await fetch(`${serverUrl}/sessions`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: fileContent
+                        });
+
+                        if (response.ok) {
+                            const result = await response.json() as { events_stored: number; session_id: string };
+                            vscode.window.showInformationMessage(
+                                `✅ Session uploaded successfully! ${result.events_stored} events stored.`
+                            );
+                            
+                            // Update status in webview
+                            this.webviewConnector.dispatch(InteractionTrackingStatusAction.create({
+                                isSessionActive: this.interactionTracker.isSessionActive(),
+                                message: `Session uploaded: ${result.session_id}`
+                            }));
+                        } else if (response.status === 409) {
+                            vscode.window.showWarningMessage('Session already exists on the server.');
+                        } else {
+                            const errorData = await response.json().catch(() => ({})) as { detail?: string };
+                            vscode.window.showErrorMessage(
+                                `Failed to upload session: ${response.status} - ${errorData.detail || response.statusText}`
+                            );
+                        }
+                    } catch (fetchError: any) {
+                        vscode.window.showErrorMessage(
+                            `Failed to connect to server at ${serverUrl}: ${fetchError.message}`
+                        );
+                    }
+                }
+            );
+        } catch (error: any) {
+            vscode.window.showErrorMessage(`Failed to read or parse file: ${error.message}`);
+        }
     }
 }

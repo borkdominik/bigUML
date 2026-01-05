@@ -145,6 +145,15 @@ export class InteractionReplayService {
             );
 
             vscode.window.showInformationMessage('Replay completed successfully');
+            
+            // Log summary of ID mappings
+            console.log('[Replay] === Replay Summary ===');
+            console.log(`[Replay] Total ID mappings created: ${this.idMapping.size}`);
+            this.idMapping.forEach((newId, oldId) => {
+                if (!oldId.includes('_name_label')) {
+                    console.log(`  ${oldId} -> ${newId}`);
+                }
+            });
         } catch (error) {
             vscode.window.showErrorMessage(`Replay failed: ${error}`);
             console.error('[Replay] Error:', error);
@@ -252,6 +261,7 @@ export class InteractionReplayService {
             if (bestCreateNode) {
                 (bestCreateNode.event.data as any)._oldElementId = id;
                 assignedCreateNodes.add(bestCreateNode.index);
+                console.log(`[Replay] Pre-mapped ID ${id} to createNode ${bestCreateNode.elementType} at index ${bestCreateNode.index}`);
             }
         }
         
@@ -326,20 +336,32 @@ export class InteractionReplayService {
             
             const matchingElements = allElements.filter(el => {
                 if (!el.type || !el.id) return false;
-                const matches = el.type === expectedType;
+                
+                // Use flexible type matching
+                const typeMatches = this.elementTypesMatch(el.type, expectedType);
+                
                 const isValidElement = !el.type.includes('label') && 
                                       !el.type.includes('comp') &&
                                       !el.type.includes('_context_');
                 const isNew = !this.knownElementIds.has(el.id);
-                return matches && isValidElement && isNew;
+                
+                return typeMatches && isValidElement && isNew;
             });
             
             if (matchingElements.length > 0) {
                 const newElement = matchingElements[0];
                 if (newElement && newElement.id) {
+                    console.log(`[Replay] Mapped new element: type=${newElement.type}, id=${newElement.id}`);
                     this.pendingElementCreation.resolve(newElement.id);
                     this.pendingElementCreation = null;
                     this.mapAutoCreatedChildren(newElement, allElements);
+                }
+            } else {
+                // Log what elements we found for debugging
+                const newElements = allElements.filter(el => el.id && !this.knownElementIds.has(el.id));
+                if (newElements.length > 0) {
+                    console.log(`[Replay] No match for ${expectedType}. New elements found:`, 
+                        newElements.map(e => ({ type: e.type, id: e.id?.substring(0, 20) })));
                 }
             }
         }
@@ -382,6 +404,39 @@ export class InteractionReplayService {
         newChildren.forEach(child => {
             this.autoCreatedChildrenQueue!.push(child.id);
         });
+    }
+
+    /**
+     * Normalize element type for comparison (handle different formats)
+     */
+    private normalizeElementType(type: string): string {
+        // Remove common prefixes and convert to lowercase
+        return type
+            .replace(/^(CLASS__|ACTIVITY__|STATE_MACHINE__|COMMUNICATION__|DEPLOYMENT__|PACKAGE__|USE_CASE__|INFORMATION_FLOW__|node:|edge:)/, '')
+            .replace(/^.*:/, '') // Remove any remaining prefix before colon
+            .toLowerCase();
+    }
+
+    /**
+     * Check if two element types match (handles different formats)
+     */
+    private elementTypesMatch(serverType: string, expectedType: string): boolean {
+        // Exact match
+        if (serverType === expectedType) return true;
+        
+        // Contains match
+        if (serverType.includes(expectedType) || expectedType.includes(serverType)) return true;
+        
+        // Normalized match
+        const normalizedServer = this.normalizeElementType(serverType);
+        const normalizedExpected = this.normalizeElementType(expectedType);
+        if (normalizedServer === normalizedExpected) return true;
+        
+        // Check if server type ends with expected element name
+        // e.g., "node:Class" should match "CLASS__Class"
+        if (normalizedServer.endsWith(normalizedExpected) || normalizedExpected.endsWith(normalizedServer)) return true;
+        
+        return false;
     }
 
     /**
@@ -463,8 +518,6 @@ export class InteractionReplayService {
         const speed = options.speed ?? 1;
         const instantReplay = speed === 0;
 
-        this.buildCreationIdMap(events);
-
         for (let i = 0; i < events.length; i++) {
             if (this.replayAbortController?.signal.aborted) {
                 return;
@@ -502,9 +555,17 @@ export class InteractionReplayService {
                 if (action.kind === 'createNode' && oldElementId) {
                     const newElementId = await this.waitForNewElementId(action.elementTypeId);
                     if (newElementId) {
+                        console.log(`[Replay] ID Mapping created: ${oldElementId} -> ${newElementId}`);
                         this.idMapping.set(oldElementId, newElementId);
                         this.elementTypes.set(oldElementId, action.elementTypeId);
-                        this.idMapping.set(`${oldElementId}_name_label`, `${newElementId}_name_label`);
+                        
+                        // Also map the label ID
+                        const oldLabelId = `${oldElementId}_name_label`;
+                        const newLabelId = `${newElementId}_name_label`;
+                        this.idMapping.set(oldLabelId, newLabelId);
+                        console.log(`[Replay] Label ID Mapping created: ${oldLabelId} -> ${newLabelId}`);
+                    } else {
+                        console.warn(`[Replay] Failed to get new element ID for ${action.elementTypeId} (old ID: ${oldElementId})`);
                     }
                 }
                 
@@ -540,18 +601,21 @@ export class InteractionReplayService {
      */
     private waitForNewElementId(elementType: string): Promise<string> {
         return new Promise((resolve) => {
+            console.log(`[Replay] Waiting for new element of type: ${elementType}`);
+            
             this.pendingElementCreation = {
                 resolve,
                 elementType
             };
             
+            // Timeout after 10 seconds (increased from 5s for slower servers)
             setTimeout(() => {
                 if (this.pendingElementCreation) {
-                    console.warn('[Replay] Timeout waiting for new element ID');
+                    console.warn(`[Replay] Timeout waiting for new element ID of type ${elementType}`);
                     this.pendingElementCreation = null;
                     resolve('');
                 }
-            }, 5000);
+            }, 10000);
         });
     }
 
@@ -564,9 +628,10 @@ export class InteractionReplayService {
             this.lastSelectedActivityId = mappedId;
         }
         
-        // Class diagram
-        if (elementType === 'CLASS__Class' || elementType === 'CLASS__Interface' || elementType === 'CLASS__DataType') {
+        // Class diagram - include AbstractClass
+        if (elementType === 'CLASS__Class' || elementType === 'CLASS__AbstractClass' || elementType === 'CLASS__Interface' || elementType === 'CLASS__DataType') {
             this.lastSelectedClassId = mappedId;
+            console.log(`[Replay] Updated lastSelectedClassId to ${mappedId} (type: ${elementType})`);
         }
         if (elementType === 'CLASS__Enumeration') {
             this.lastSelectedEnumerationId = mappedId;
@@ -648,8 +713,12 @@ export class InteractionReplayService {
                     const containerId = this.getContainerIdForElementType(data.elementTypeId);
                     if (containerId) {
                         action.containerId = containerId;
+                        console.log(`[Replay] createNode ${data.elementTypeId} in container ${containerId}`);
                     } else if (data.containerId && data.containerId !== '$ROOT') {
                         action.containerId = this.idMapping.get(data.containerId) || data.containerId;
+                        console.log(`[Replay] createNode ${data.elementTypeId} in mapped container ${action.containerId}`);
+                    } else {
+                        console.log(`[Replay] createNode ${data.elementTypeId} at root`);
                     }
                     
                     return action;
@@ -657,7 +726,14 @@ export class InteractionReplayService {
                     const sourceId = this.idMapping.get(data.sourceElementId) || data.sourceElementId;
                     const targetId = this.idMapping.get(data.targetElementId) || data.targetElementId;
                     
-                    if (this.idMapping.has(data.sourceElementId) && this.idMapping.has(data.targetElementId)) {
+                    const sourceHasMapping = this.idMapping.has(data.sourceElementId);
+                    const targetHasMapping = this.idMapping.has(data.targetElementId);
+                    
+                    console.log(`[Replay] createEdge: ${data.elementTypeId}`);
+                    console.log(`  source: ${data.sourceElementId} -> ${sourceId} (mapped: ${sourceHasMapping})`);
+                    console.log(`  target: ${data.targetElementId} -> ${targetId} (mapped: ${targetHasMapping})`);
+                    
+                    if (sourceHasMapping && targetHasMapping) {
                         return {
                             kind: 'createEdge',
                             elementTypeId: data.elementTypeId,
@@ -666,6 +742,8 @@ export class InteractionReplayService {
                             isOperation: true
                         };
                     } else {
+                        console.warn(`[Replay] Skipping edge - missing ID mapping. Source mapped: ${sourceHasMapping}, Target mapped: ${targetHasMapping}`);
+                        console.warn(`  Available mappings: ${Array.from(this.idMapping.keys()).join(', ')}`);
                         return null;
                     }
                 }
@@ -713,6 +791,8 @@ export class InteractionReplayService {
                     const elementTypeFromNew = this.elementTypeMap.get(mappedId);
                     const elementType = elementTypeFromOld || elementTypeFromNew;
                     
+                    console.log(`[Replay] Selection: old=${selectedId}, mapped=${mappedId}, type=${elementType || 'unknown'}`);
+                    
                     if (elementType) {
                         this.updateContainerTracking(elementType, mappedId);
                     }
@@ -727,14 +807,20 @@ export class InteractionReplayService {
             case InteractionEventType.PROPERTY_CHANGE:
                 if (data.kind === 'applyLabelEdit') {
                     const labelId = this.idMapping.get(data.labelId) || data.labelId;
+                    const hasMapping = this.idMapping.has(data.labelId);
                     
-                    if (this.idMapping.has(data.labelId)) {
+                    console.log(`[Replay] applyLabelEdit: "${data.text}"`);
+                    console.log(`  labelId: ${data.labelId} -> ${labelId} (mapped: ${hasMapping})`);
+                    
+                    if (hasMapping) {
                         return {
                             kind: 'applyLabelEdit',
                             labelId: labelId,
                             text: data.text
                         };
                     } else {
+                        console.warn(`[Replay] Skipping label edit - no mapping for ${data.labelId}`);
+                        console.warn(`  Available mappings: ${Array.from(this.idMapping.keys()).join(', ')}`);
                         return null;
                     }
                 } else if (data.kind === 'updateElementProperty') {

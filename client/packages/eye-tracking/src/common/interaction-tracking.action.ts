@@ -182,3 +182,37 @@ export namespace UploadSessionToServerAction {
         };
     }
 }
+
+/**
+ * Action sent from GLSP client to VSCode extension when element bounds change (move/resize)
+ * This captures nested element moves that may not go through the VS Code action listener
+ */
+export interface ElementBoundsTrackingAction extends Action {
+    kind: typeof ElementBoundsTrackingAction.KIND;
+    newBounds: Array<{
+        elementId: string;
+        newPosition: { x: number; y: number };
+        newSize: { width: number; height: number };
+    }>;
+}
+
+export namespace ElementBoundsTrackingAction {
+    export const KIND = 'elementBoundsTracking';
+
+    export function is(object: any): object is ElementBoundsTrackingAction {
+        return Action.hasKind(object, KIND);
+    }
+
+    export function create(
+        newBounds: Array<{
+            elementId: string;
+            newPosition: { x: number; y: number };
+            newSize: { width: number; height: number };
+        }>
+    ): ElementBoundsTrackingAction {
+        return {
+            kind: KIND,
+            newBounds
+        };
+    }
+}

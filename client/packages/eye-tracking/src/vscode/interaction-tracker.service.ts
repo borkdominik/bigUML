@@ -12,7 +12,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { TYPES } from '@borkdominik-biguml/big-vscode-integration/vscode';
 import { InteractionEventType } from '../common/interaction-tracking.types.js';
-import { ViewportTrackingAction } from '../common/interaction-tracking.action.js';
+import { ViewportTrackingAction, ElementBoundsTrackingAction } from '../common/interaction-tracking.action.js';
 import type { 
     InteractionEvent, 
     SessionData 
@@ -172,7 +172,6 @@ export class InteractionTracker {
         this.viewportDebounceTimeout = setTimeout(() => {
             if (this.lastViewportEvent) {
                 this.trackEvent(InteractionEventType.VIEWPORT_CHANGE, this.lastViewportEvent.data);
-                console.log('Viewport change recorded (debounced):', this.lastViewportEvent.data);
                 this.lastViewportEvent = null;
             }
             this.viewportDebounceTimeout = null;
@@ -282,14 +281,12 @@ export class InteractionTracker {
         if (this.actionListener) {
             // Listen to CLIENT actions (from diagram webview)
             const glspClientDisposable = this.actionListener.registerListener((message: any) => {
-                console.log('ActionListener received CLIENT action:', message.action?.kind);
                 this.processGLSPAction(message.action);
             });
             this.disposables.push(glspClientDisposable);
 
             // Listen to SERVER responses (including property updates)
             const glspServerDisposable = (this.actionListener as any).registerServerListener?.((message: any) => {
-                console.log('ActionListener received SERVER action:', message.action?.kind);
                 this.processGLSPAction(message.action);
             });
             if (glspServerDisposable) {
@@ -299,7 +296,6 @@ export class InteractionTracker {
             // Also listen to actions being SENT to the server (client-to-server)
             // This catches property palette actions that go directly to the server
             const glspSendDisposable = (this.actionListener as any).registerSendListener?.((message: any) => {
-                console.log('ActionListener SEND to server:', message.action?.kind);
                 this.processGLSPAction(message.action);
             });
             if (glspSendDisposable) {
@@ -312,7 +308,6 @@ export class InteractionTracker {
         if (this.actionListener && (this.actionListener as any).onAction) {
             const actionDisposable = (this.actionListener as any).onAction((action: any) => {
                 if (action && action.kind === 'updateElementProperty') {
-                    console.log('Captured updateElementProperty via onAction:', action);
                     this.processGLSPAction(action);
                 }
             });
@@ -320,17 +315,12 @@ export class InteractionTracker {
                 this.disposables.push(actionDisposable);
             }
         }
-
-        console.log('Interaction tracking listeners set up');
     }
 
     private processGLSPAction(action: any): void {
         if (!action || !action.kind) {
-            console.log('processGLSPAction called with invalid action:', action);
             return;
         }
-        
-        console.log('Processing GLSP action:', action.kind, action);
 
         // Track different GLSP action types
         if (action.kind === 'createNode') {
@@ -352,10 +342,23 @@ export class InteractionTracker {
                 kind: action.kind,
                 elementIds: action.elementIds
             });
-        } else if (action.kind === 'changeBounds') {
+        } else if (action.kind === 'changeBounds' || action.kind === 'changeBoundsOperation') {
+            this.trackEvent(InteractionEventType.ELEMENT_MOVE, {
+                kind: 'changeBounds',
+                newBounds: action.newBounds
+            });
+        } else if (action.kind === 'moveElement' || action.kind === 'moveElements') {
             this.trackEvent(InteractionEventType.ELEMENT_MOVE, {
                 kind: action.kind,
-                newBounds: action.newBounds
+                elementIds: action.elementIds || [action.elementId],
+                newPosition: action.newPosition || action.targetPosition,
+                delta: action.delta
+            });
+        } else if (action.kind === 'setBounds') {
+            this.trackEvent(InteractionEventType.ELEMENT_MOVE, {
+                kind: action.kind,
+                elementId: action.elementId,
+                newBounds: action.newBounds || { position: action.position, size: action.size }
             });
         } else if (action.kind === 'elementSelected') {
             this.trackEvent(InteractionEventType.ELEMENT_SELECT, {
@@ -418,9 +421,6 @@ export class InteractionTracker {
                     scroll: scroll,
                     zoom: zoom
                 });
-            } else {
-                // Log the full action to debug what properties are available
-                console.log('Viewport action without coordinates, full action:', JSON.stringify(action));
             }
         } else if (action.kind === 'updateModel' && action.newRoot) {
             // UpdateModel might contain viewport changes in the canvas bounds
@@ -437,11 +437,24 @@ export class InteractionTracker {
                 zoom: action.zoom,
                 canvasBounds: action.canvasBounds
             });
+        } else if (action.kind === 'elementBoundsTracking' || ElementBoundsTrackingAction.is(action)) {
+            // ElementBoundsTrackingAction from GLSP client - captures nested element moves
+            this.trackEvent(InteractionEventType.ELEMENT_MOVE, {
+                kind: 'changeBounds',
+                newBounds: action.newBounds,
+                source: 'glsp-client' // Mark that this came from the GLSP client handler
+            });
         } else if (action.kind === 'compound') {
-            // Compound operations contain multiple actions
+            // Compound operations contain multiple actions (uses operationList property)
+            const operations = action.operations || action.operationList || action.actions || [];
+            if (operations && Array.isArray(operations) && operations.length > 0) {
+                for (const op of operations) {
+                    this.processGLSPAction(op);
+                }
+            }
             this.trackEvent(InteractionEventType.ELEMENT_EDIT, {
                 kind: action.kind,
-                operationCount: action.operations?.length || 0
+                operationCount: operations?.length || 0
             });
         }
     }
@@ -769,7 +782,6 @@ export class InteractionTracker {
         if (!this.isTracking) {
             return;
         }
-        console.log('Manual tracking of action:', action.kind, action);
         this.processGLSPAction(action);
     }
 }

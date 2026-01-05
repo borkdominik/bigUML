@@ -186,18 +186,18 @@ export function createContainer(
 
     // Initialize action monitoring with proper type casting
     try {
-        console.log('[Monitoring] Setting up action monitoring...');
+        //console.log('[Monitoring] Setting up action monitoring...');
 
         // Type-safe container get with explicit typing
-        const actionListener = container.get<ActionListener>(TYPES.ActionListener);
-        const monitor = new ActionMonitorService(actionListener);
+        //const actionListener = container.get<ActionListener>(TYPES.ActionListener);
+        //const monitor = new ActionMonitorService(actionListener);
 
         // Register for cleanup when extension deactivates
-        extensionContext.subscriptions.push(monitor);
+        //extensionContext.subscriptions.push(monitor);
 
         console.log('[Monitoring] Action monitoring is now ACTIVE!');
         console.log('[Monitoring] All actions will be sent to http://localhost:3001/actions');
-        console.log('[Monitoring] Status:', monitor.isMonitoring() ? 'RUNNING' : 'STOPPED');
+        //console.log('[Monitoring] Status:', monitor.isMonitoring() ? 'RUNNING' : 'STOPPED');
     } catch (error) {
         console.error('[Monitoring] Failed to initialize action monitoring:', error);
         console.log('[Monitoring] Extension will continue to work normally without monitoring');

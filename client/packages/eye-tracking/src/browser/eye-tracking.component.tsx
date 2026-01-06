@@ -95,7 +95,7 @@ export function EyeTracking(): ReactElement {
                 backgroundColor: 'var(--vscode-editor-background)'
             }}>
                 <h3 style={{ margin: '0 0 12px 0', fontSize: '16px', color: 'var(--vscode-charts-blue)' }}>
-                    🎯 Interaction Tracking
+                    Interaction Tracking
                 </h3>
                 <div style={{ fontSize: '13px', color: 'var(--vscode-descriptionForeground)', marginBottom: '12px' }}>
                     Track all VS Code interactions (file edits, selections, clicks) for UX research.
@@ -143,7 +143,7 @@ export function EyeTracking(): ReactElement {
                             opacity: (!isConnected || !isTrackingSession) ? 0.6 : 1
                         }}
                     >
-                        📊 View Stats
+                        View Stats
                     </button>
                     <button 
                         onClick={openStandaloneEyeTracking}
@@ -158,7 +158,7 @@ export function EyeTracking(): ReactElement {
                             opacity: !isConnected ? 0.6 : 1
                         }}
                     >
-                        👁 Eye Tracking
+                        Eye Tracking
                     </button>
                     <button 
                         onClick={uploadSessionToServer}
@@ -173,7 +173,7 @@ export function EyeTracking(): ReactElement {
                             opacity: !isConnected ? 0.6 : 1
                         }}
                     >
-                        ☁️ Upload to Server
+                        Upload to Server
                     </button>
                 </div>
                 <div style={{ marginTop: '12px', fontSize: '12px', color: 'var(--vscode-descriptionForeground)' }}>

@@ -28,13 +28,5 @@ export function eyeTrackingModule(viewId: string) {
         bind(TYPES.RootInitialization).toService(EYE_TYPES.EyeTrackingCommandHandler);
         bind(TYPES.Disposable).toService(EYE_TYPES.EyeTrackingCommandHandler);
 
-        // Handle the request vscode side
-        // This will prevent the glsp to handle the request
-        // Remember to comment out the the glsp client handler!
-        // In EyeTrackingActionHandler implementation GLSP has priority over vscode
-
-        // bind(EyeTrackingActionHandler).toSelf().inSingletonScope();
-        // bind(TYPES.Disposable).toService(EyeTrackingActionHandler);
-        // bind(TYPES.RootInitialization).toService(EyeTrackingActionHandler);
     });
 }

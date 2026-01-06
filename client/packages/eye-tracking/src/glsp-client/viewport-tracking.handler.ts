@@ -48,7 +48,7 @@ export class ViewportTrackingHandler implements IActionHandler {
             }
         }
         
-        // Don't consume the action - let it propagate to other handlers
+        // Note: Dont consume the action - let it propagate to other handlers
         return undefined;
     }
 

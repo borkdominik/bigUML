@@ -24,7 +24,7 @@ import { ElementBoundsTrackingAction } from '../common/interaction-tracking.acti
  * and dispatches them to the VSCode extension for tracking.
  * 
  * This is needed because nested element moves (e.g., actions inside an Activity)
- * may not be captured by the VS Code action listener.
+ * somehow arent captured by the VS Code action listener.
  */
 @injectable()
 export class ElementBoundsTrackingHandler implements IActionHandler {
@@ -67,7 +67,7 @@ export class ElementBoundsTrackingHandler implements IActionHandler {
             }
         }
         
-        // Don't consume the action - let it propagate to other handlers
+        // Note: Dont consume the action - let it propagate to other handlers
         return undefined;
     }
 

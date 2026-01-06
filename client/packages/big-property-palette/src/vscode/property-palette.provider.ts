@@ -84,14 +84,12 @@ export class PropertyPaletteProvider extends BIGReactWebview {
                     console.log('Property CREATE detected:', JSON.stringify(message.action, null, 2));
                     
                     // Track createNode actions from property palette
-                    // But DON'T dispatch again - it's already being dispatched elsewhere
+                    // Try not to dispatch again - it's already being dispatched somewhere else
                     if (this.interactionTracker && typeof this.interactionTracker.trackAction === 'function') {
                         console.log('Tracking createNode action from property palette');
                         this.interactionTracker.trackAction(message.action);
                     }
                     
-                    // DO NOT dispatch - the action is already being sent through normal channels
-                    // this.actionDispatcher.dispatch(message.action); // REMOVED to prevent double creation
                 } else {
                     console.log('Not an UpdateElementPropertyAction or createNode, got:', message?.action?.kind);
                 }

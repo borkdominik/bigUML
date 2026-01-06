@@ -71,7 +71,7 @@ export class InteractionTracker {
             modelFile: modelFile,
             modelFilePath: modelFilePath || undefined,
             
-            // User info
+            // User Info TODO check if we should probably hash this
             user: process.env.USER || process.env.USERNAME || 'unknown',
             workspace: vscode.workspace.workspaceFolders?.[0]?.name || 'unknown',
             
@@ -367,7 +367,7 @@ export class InteractionTracker {
                 deselectedElementsIDs: action.deselectedElementsIDs
             });
         } else if (action.kind === 'applyLabelEdit') {
-            // This captures direct label editing (renaming on the diagram)!
+            // This captures direct label editing (renaming on the diagram!!)
             this.trackEvent(InteractionEventType.PROPERTY_CHANGE, {
                 kind: action.kind,
                 labelId: action.labelId,
@@ -586,7 +586,7 @@ export class InteractionTracker {
      * Detect the diagram type from the active editor's file
      */
     private detectDiagramType(): string {
-        // First try: Check active text editor (for text-based files)
+        // 1: Check active text editor (for text-based files)
         const activeEditor = vscode.window.activeTextEditor;
         if (activeEditor) {
             const fileName = activeEditor.document.fileName;
@@ -596,7 +596,7 @@ export class InteractionTracker {
             }
         }
         
-        // Second try: Check active tab for custom editors (like UML diagrams)
+        // 2: Check active tab for custom editors (like UML diagrams)
         const activeTab = vscode.window.tabGroups.activeTabGroup?.activeTab;
         if (activeTab?.input) {
             const input = activeTab.input as any;
@@ -637,7 +637,7 @@ export class InteractionTracker {
             }
         }
         
-        // Third try: Check all visible tabs
+        // 3: Check all visible tabs
         for (const tabGroup of vscode.window.tabGroups.all) {
             for (const tab of tabGroup.tabs) {
                 if (tab.isActive) {
@@ -671,11 +671,12 @@ export class InteractionTracker {
     }
 
     /**
-     * Detect diagram type by reading the UML notation file
+     * Detect diagram type by reading the UML notation file - this was kind of stupid, because when we start tracking, the file is empty
+     * kept because it may be usefull in the future
      */
     private detectDiagramTypeFromFile(filePath: string): string | null {
         try {
-            // First try: Read the .unotation file (companion file with diagram type)
+            // Read the .unotation file (companion file with diagram type)
             const notationFilePath = filePath.replace(/\.uml$/, '.unotation');
             
             if (fs.existsSync(notationFilePath)) {
@@ -776,7 +777,6 @@ export class InteractionTracker {
 
     /**
      * Public method to manually track an action
-     * This can be called from anywhere in the codebase when an action is detected
      */
     public trackAction(action: any): void {
         if (!this.isTracking) {

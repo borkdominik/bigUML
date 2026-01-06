@@ -433,7 +433,7 @@ export class InteractionReplayService {
         if (normalizedServer === normalizedExpected) return true;
         
         // Check if server type ends with expected element name
-        // e.g., "node:Class" should match "CLASS__Class"
+        // something like "node:Class" should match "CLASS__Class"
         if (normalizedServer.endsWith(normalizedExpected) || normalizedExpected.endsWith(normalizedServer)) return true;
         
         return false;
@@ -608,7 +608,7 @@ export class InteractionReplayService {
                 elementType
             };
             
-            // Timeout after 10 seconds (increased from 5s for slower servers)
+            // Timeout after 10 seconds (increased from 5s because there were issues)
             setTimeout(() => {
                 if (this.pendingElementCreation) {
                     console.warn(`[Replay] Timeout waiting for new element ID of type ${elementType}`);

@@ -115,7 +115,7 @@ export interface SessionData {
     modelFile?: string;  // Filename
     modelFilePath?: string;  // Full path
     
-    // User information
+    // User TODO check if we should probably hash this
     user?: string;
     workspace?: string;
     totalEvents?: number;

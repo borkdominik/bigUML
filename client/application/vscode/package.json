@@ -252,7 +252,7 @@
         }
       ],
 
-      
+
       "bigUML.editor.title": [
         {
           "command": "bigUML.fit",
@@ -309,6 +309,12 @@
           "name": "Timeline",
           "type": "webview",
           "when": "bigUML.isRunning"
+        },
+        {
+          "id": "bigUML.panel.advancedsearch",
+          "name": "Advanced Search",
+          "type": "webview",
+          "when": "bigUML.isRunning"
         }
       ]
     },
@@ -327,11 +333,14 @@
     "onLanguage:bigUML.unotation",
     "onCommand:bigUML.model.newEmpty",
     "onView:bigUML.outlineView",
+    "onView:bigUML.panel.advancedsearch"
+    "onView:bigUML.outlineView",
     "onCommand:timeline.import",
     "onCommand:timeline.export"
 
   ],
   "dependencies": {
+    "@borkdominik-biguml/big-advancedsearch": "*",
     "@borkdominik-biguml/big-hello-world": "*",
     "@borkdominik-biguml/big-revision-management": "*",
     "@borkdominik-biguml/big-minimap": "*",

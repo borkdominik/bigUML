@@ -45,5 +45,8 @@ export const VSCodeSettings = {
     },
     revisionManagement: {
         viewId: 'bigUML.panel.revision-management'
+    },
+    advancedSearch: {
+        viewId: 'bigUML.panel.advancedsearch'
     }
 } as const;

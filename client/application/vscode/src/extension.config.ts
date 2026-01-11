@@ -15,9 +15,9 @@ import { loadVSCodeNodeContainer, type GLSPServerConfig } from '@borkdominik-big
 import { editorModule, themeModule } from '@borkdominik-biguml/uml-glsp-client/vscode';
 import { type Container } from 'inversify';
 import type * as vscode from 'vscode';
+import { DefaultCommandsProvider } from './features/command/default-commands.js';
+import { vscodeModule } from './features/vscode.module.js';
 import { VSCodeSettings } from './language.js';
-import { DefaultCommandsProvider } from './vscode/command/default-commands.js';
-import { vscodeModule } from './vscode/vscode.module.js';
 
 export function createContainer(
     extensionContext: vscode.ExtensionContext,

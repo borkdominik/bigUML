@@ -7,7 +7,15 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import { VscodeAction } from '@borkdominik-biguml/big-vscode-integration';
-import { ActionDispatcher, GLSPActionDispatcher, OptionalAction, RequestAction, ResponseAction, type Action } from '@eclipse-glsp/client';
+import {
+    ActionDispatcher,
+    GLSPActionDispatcher,
+    OptionalAction,
+    RequestAction,
+    ResponseAction,
+    StatusAction,
+    type Action
+} from '@eclipse-glsp/client';
 
 export class UMLActionDispatcher extends GLSPActionDispatcher {
     override requestUntil<Res extends ResponseAction>(
@@ -46,6 +54,10 @@ export class UMLActionDispatcher extends GLSPActionDispatcher {
      * Changes: Does not clear the responseId for VSCode requests.
      */
     protected override handleAction(action: Action): Promise<void> {
+        if (StatusAction.is(action)) {
+            console.log('Status Action received:', action);
+        }
+
         if (ResponseAction.hasValidResponseId(action)) {
             // clear timeout
             const timeout = this.timeouts.get(action.responseId);

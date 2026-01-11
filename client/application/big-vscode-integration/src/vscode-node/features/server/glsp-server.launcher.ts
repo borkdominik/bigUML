@@ -20,7 +20,7 @@ export class GLSPServerLauncher extends BIGServerLauncher {
     }
 
     constructor(
-        @inject(TYPES.GLSPServerLaunchOptions) options: ServerLauncherOptions,
+        @inject('TYPES.GLSPServerLaunchOptions') options: ServerLauncherOptions,
         @inject(TYPES.OutputChannel) outputChannel: OutputChannel
     ) {
         super(options, outputChannel);

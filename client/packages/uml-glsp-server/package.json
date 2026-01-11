@@ -27,19 +27,10 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./lib/common/index.d.ts",
-      "default": "./lib/common/index.js"
-    },
-    "./glsp-client": {
-      "types": "./lib/glsp-client/index.d.ts",
-      "default": "./lib/glsp-client/index.js"
-    },
-    "./vscode": {
       "types": "./lib/vscode/index.d.ts",
       "default": "./lib/vscode/index.js"
     }
   },
-  "types": "lib/common/index.d.ts",
   "files": [
     "dist"
   ],
@@ -58,10 +49,10 @@
     "@borkdominik-biguml/model-server": "*",
     "@borkdominik-biguml/uml-glsp-client": "*",
     "@borkdominik-biguml/uml-protocol": "*",
-    "@eclipse-glsp/client": "2.0.0",
-    "@eclipse-glsp/layout-elk": "2.0.0",
+    "@eclipse-glsp/client": "*",
+    "@eclipse-glsp/layout-elk": "*",
     "@eclipse-glsp/protocol": "*",
-    "@eclipse-glsp/server": "2.0.0"
+    "@eclipse-glsp/server": "*"
   },
   "devDependencies": {},
   "peerDependencies": {}

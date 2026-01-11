@@ -32,8 +32,8 @@ export const TYPES = {
     // GLSP Server
     GLSPServer: Symbol('GLSPServer'),
     GLSPServerConfig: Symbol('GLSPServerConfig'),
-    GLSPServerLauncher: Symbol('GLSPServerLauncher'),
-    GLSPServerLaunchOptions: Symbol('GLSPServerLaunchOptions'),
+    // GLSPServerLauncher: Symbol('GLSPServerLauncher'),
+    // GLSPServerLaunchOptions: Symbol('GLSPServerLaunchOptions'),
     IDEServer: Symbol('IDEServer'),
     IDESessionClient: Symbol('IDESessionClient'),
 

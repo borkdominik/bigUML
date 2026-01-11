@@ -139,7 +139,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           },
           {
             "$type": "Keyword",
-            "value": "\\"\\"__\\"type\\""
+            "value": "\\"__type\\""
           },
           {
             "$type": "Keyword",
@@ -175,7 +175,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -208,7 +208,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@50"
+                    "$ref": "#/rules@52"
                   },
                   "arguments": []
                 }
@@ -237,7 +237,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@50"
+                    "$ref": "#/rules@52"
                   },
                   "arguments": []
                 }
@@ -319,7 +319,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@51"
+                      "$ref": "#/rules@53"
                     },
                     "arguments": []
                   },
@@ -361,7 +361,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           },
           {
             "$type": "Keyword",
-            "value": "\\"\\"__\\"type\\""
+            "value": "\\"__type\\""
           },
           {
             "$type": "Keyword",
@@ -397,7 +397,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -430,7 +430,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@50"
+                    "$ref": "#/rules@52"
                   },
                   "arguments": []
                 }
@@ -459,7 +459,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@50"
+                    "$ref": "#/rules@52"
                   },
                   "arguments": []
                 }
@@ -541,7 +541,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@51"
+                      "$ref": "#/rules@53"
                     },
                     "arguments": []
                   },
@@ -583,7 +583,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           },
           {
             "$type": "Keyword",
-            "value": "\\"\\"__\\"type\\""
+            "value": "\\"__type\\""
           },
           {
             "$type": "Keyword",
@@ -619,7 +619,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -821,7 +821,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           },
           {
             "$type": "Keyword",
-            "value": "\\"\\"__\\"type\\""
+            "value": "\\"__type\\""
           },
           {
             "$type": "Keyword",
@@ -857,7 +857,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -894,7 +894,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -996,7 +996,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           },
           {
             "$type": "Keyword",
-            "value": "\\"\\"__\\"type\\""
+            "value": "\\"__type\\""
           },
           {
             "$type": "Keyword",
@@ -1032,7 +1032,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -1069,7 +1069,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -1106,7 +1106,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -1191,7 +1191,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
               },
               {
                 "$type": "Keyword",
-                "value": "\\"\\"__\\"type\\""
+                "value": "\\"__type\\""
               },
               {
                 "$type": "Keyword",
@@ -1227,7 +1227,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                     "terminal": {
                       "$type": "RuleCall",
                       "rule": {
-                        "$ref": "#/rules@51"
+                        "$ref": "#/rules@53"
                       },
                       "arguments": []
                     }
@@ -1264,7 +1264,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                     "terminal": {
                       "$type": "RuleCall",
                       "rule": {
-                        "$ref": "#/rules@51"
+                        "$ref": "#/rules@53"
                       },
                       "arguments": []
                     }
@@ -1297,7 +1297,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                     "terminal": {
                       "$type": "RuleCall",
                       "rule": {
-                        "$ref": "#/rules@49"
+                        "$ref": "#/rules@51"
                       },
                       "arguments": []
                     }
@@ -1458,7 +1458,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                     "terminal": {
                       "$type": "RuleCall",
                       "rule": {
-                        "$ref": "#/rules@49"
+                        "$ref": "#/rules@51"
                       },
                       "arguments": []
                     }
@@ -1526,7 +1526,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                     "terminal": {
                       "$type": "RuleCall",
                       "rule": {
-                        "$ref": "#/rules@49"
+                        "$ref": "#/rules@51"
                       },
                       "arguments": []
                     }
@@ -1561,7 +1561,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           },
           {
             "$type": "Keyword",
-            "value": "\\"\\"__\\"type\\""
+            "value": "\\"__type\\""
           },
           {
             "$type": "Keyword",
@@ -1597,7 +1597,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -1634,7 +1634,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -1670,7 +1670,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           },
           {
             "$type": "Keyword",
-            "value": "\\"\\"__\\"type\\""
+            "value": "\\"__type\\""
           },
           {
             "$type": "Keyword",
@@ -1706,7 +1706,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -1739,7 +1739,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@49"
+                    "$ref": "#/rules@51"
                   },
                   "arguments": []
                 }
@@ -1772,7 +1772,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -1847,7 +1847,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -1880,7 +1880,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@49"
+                    "$ref": "#/rules@51"
                   },
                   "arguments": []
                 }
@@ -2041,7 +2041,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@49"
+                    "$ref": "#/rules@51"
                   },
                   "arguments": []
                 }
@@ -2109,7 +2109,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@49"
+                    "$ref": "#/rules@51"
                   },
                   "arguments": []
                 }
@@ -2142,7 +2142,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           },
           {
             "$type": "Keyword",
-            "value": "\\"\\"__\\"type\\""
+            "value": "\\"__type\\""
           },
           {
             "$type": "Keyword",
@@ -2178,7 +2178,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -2215,7 +2215,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -2383,7 +2383,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           },
           {
             "$type": "Keyword",
-            "value": "\\"\\"__\\"type\\""
+            "value": "\\"__type\\""
           },
           {
             "$type": "Keyword",
@@ -2419,7 +2419,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -2456,7 +2456,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -2489,7 +2489,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@49"
+                    "$ref": "#/rules@51"
                   },
                   "arguments": []
                 }
@@ -2519,7 +2519,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@49"
+                    "$ref": "#/rules@51"
                   },
                   "arguments": []
                 }
@@ -2549,7 +2549,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@49"
+                    "$ref": "#/rules@51"
                   },
                   "arguments": []
                 }
@@ -2579,7 +2579,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@49"
+                    "$ref": "#/rules@51"
                   },
                   "arguments": []
                 }
@@ -2609,7 +2609,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@49"
+                    "$ref": "#/rules@51"
                   },
                   "arguments": []
                 }
@@ -2639,7 +2639,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@49"
+                    "$ref": "#/rules@51"
                   },
                   "arguments": []
                 }
@@ -2711,7 +2711,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -2798,7 +2798,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@51"
+                      "$ref": "#/rules@53"
                     },
                     "arguments": []
                   },
@@ -2879,7 +2879,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           },
           {
             "$type": "Keyword",
-            "value": "\\"\\"__\\"type\\""
+            "value": "\\"__type\\""
           },
           {
             "$type": "Keyword",
@@ -2915,7 +2915,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -2952,7 +2952,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -2985,7 +2985,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@49"
+                    "$ref": "#/rules@51"
                   },
                   "arguments": []
                 }
@@ -3015,7 +3015,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@49"
+                    "$ref": "#/rules@51"
                   },
                   "arguments": []
                 }
@@ -3045,7 +3045,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@49"
+                    "$ref": "#/rules@51"
                   },
                   "arguments": []
                 }
@@ -3220,7 +3220,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           },
           {
             "$type": "Keyword",
-            "value": "\\"\\"__\\"type\\""
+            "value": "\\"__type\\""
           },
           {
             "$type": "Keyword",
@@ -3256,7 +3256,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -3293,7 +3293,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -3326,7 +3326,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@49"
+                    "$ref": "#/rules@51"
                   },
                   "arguments": []
                 }
@@ -3356,7 +3356,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@49"
+                    "$ref": "#/rules@51"
                   },
                   "arguments": []
                 }
@@ -3386,7 +3386,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@49"
+                    "$ref": "#/rules@51"
                   },
                   "arguments": []
                 }
@@ -3416,7 +3416,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@49"
+                    "$ref": "#/rules@51"
                   },
                   "arguments": []
                 }
@@ -3613,7 +3613,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@51"
+                      "$ref": "#/rules@53"
                     },
                     "arguments": []
                   },
@@ -3657,7 +3657,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -3694,7 +3694,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           },
           {
             "$type": "Keyword",
-            "value": "\\"\\"__\\"type\\""
+            "value": "\\"__type\\""
           },
           {
             "$type": "Keyword",
@@ -3730,7 +3730,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -3767,7 +3767,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -3932,7 +3932,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@49"
+                    "$ref": "#/rules@51"
                   },
                   "arguments": []
                 }
@@ -4003,7 +4003,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           },
           {
             "$type": "Keyword",
-            "value": "\\"\\"__\\"type\\""
+            "value": "\\"__type\\""
           },
           {
             "$type": "Keyword",
@@ -4039,7 +4039,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -4076,7 +4076,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -4112,7 +4112,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           },
           {
             "$type": "Keyword",
-            "value": "\\"\\"__\\"type\\""
+            "value": "\\"__type\\""
           },
           {
             "$type": "Keyword",
@@ -4148,7 +4148,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -4185,7 +4185,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -4325,7 +4325,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           },
           {
             "$type": "Keyword",
-            "value": "\\"\\"__\\"type\\""
+            "value": "\\"__type\\""
           },
           {
             "$type": "Keyword",
@@ -4361,7 +4361,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -4398,7 +4398,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -4484,7 +4484,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@51"
+                      "$ref": "#/rules@53"
                     },
                     "arguments": []
                   },
@@ -4593,7 +4593,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           },
           {
             "$type": "Keyword",
-            "value": "\\"\\"__\\"type\\""
+            "value": "\\"__type\\""
           },
           {
             "$type": "Keyword",
@@ -4629,7 +4629,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -4666,7 +4666,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -4703,7 +4703,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -4826,7 +4826,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
               },
               {
                 "$type": "Keyword",
-                "value": "\\"\\"__\\"type\\""
+                "value": "\\"__type\\""
               },
               {
                 "$type": "Keyword",
@@ -4862,7 +4862,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                     "terminal": {
                       "$type": "RuleCall",
                       "rule": {
-                        "$ref": "#/rules@51"
+                        "$ref": "#/rules@53"
                       },
                       "arguments": []
                     }
@@ -4948,7 +4948,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                       "terminal": {
                         "$type": "RuleCall",
                         "rule": {
-                          "$ref": "#/rules@51"
+                          "$ref": "#/rules@53"
                         },
                         "arguments": []
                       },
@@ -5040,7 +5040,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                       "terminal": {
                         "$type": "RuleCall",
                         "rule": {
-                          "$ref": "#/rules@51"
+                          "$ref": "#/rules@53"
                         },
                         "arguments": []
                       },
@@ -5121,7 +5121,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           },
           {
             "$type": "Keyword",
-            "value": "\\"\\"__\\"type\\""
+            "value": "\\"__type\\""
           },
           {
             "$type": "Keyword",
@@ -5157,7 +5157,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -5194,7 +5194,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -5319,7 +5319,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@51"
+                      "$ref": "#/rules@53"
                     },
                     "arguments": []
                   },
@@ -5411,7 +5411,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@51"
+                      "$ref": "#/rules@53"
                     },
                     "arguments": []
                   },
@@ -5490,7 +5490,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           },
           {
             "$type": "Keyword",
-            "value": "\\"\\"__\\"type\\""
+            "value": "\\"__type\\""
           },
           {
             "$type": "Keyword",
@@ -5526,7 +5526,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -5563,7 +5563,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -5688,7 +5688,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@51"
+                      "$ref": "#/rules@53"
                     },
                     "arguments": []
                   },
@@ -5780,7 +5780,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@51"
+                      "$ref": "#/rules@53"
                     },
                     "arguments": []
                   },
@@ -5859,7 +5859,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           },
           {
             "$type": "Keyword",
-            "value": "\\"\\"__\\"type\\""
+            "value": "\\"__type\\""
           },
           {
             "$type": "Keyword",
@@ -5895,7 +5895,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -5932,7 +5932,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -5970,7 +5970,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -6008,7 +6008,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -6046,7 +6046,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -6084,7 +6084,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -6285,7 +6285,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@51"
+                      "$ref": "#/rules@53"
                     },
                     "arguments": []
                   },
@@ -6377,7 +6377,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@51"
+                      "$ref": "#/rules@53"
                     },
                     "arguments": []
                   },
@@ -6456,7 +6456,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           },
           {
             "$type": "Keyword",
-            "value": "\\"\\"__\\"type\\""
+            "value": "\\"__type\\""
           },
           {
             "$type": "Keyword",
@@ -6492,7 +6492,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -6529,7 +6529,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -6567,7 +6567,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -6605,7 +6605,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -6643,7 +6643,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -6681,7 +6681,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -6882,7 +6882,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@51"
+                      "$ref": "#/rules@53"
                     },
                     "arguments": []
                   },
@@ -6974,7 +6974,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@51"
+                      "$ref": "#/rules@53"
                     },
                     "arguments": []
                   },
@@ -7053,7 +7053,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           },
           {
             "$type": "Keyword",
-            "value": "\\"\\"__\\"type\\""
+            "value": "\\"__type\\""
           },
           {
             "$type": "Keyword",
@@ -7089,7 +7089,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -7126,7 +7126,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -7164,7 +7164,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -7202,7 +7202,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -7240,7 +7240,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -7278,7 +7278,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -7479,7 +7479,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@51"
+                      "$ref": "#/rules@53"
                     },
                     "arguments": []
                   },
@@ -7571,7 +7571,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@51"
+                      "$ref": "#/rules@53"
                     },
                     "arguments": []
                   },
@@ -7650,7 +7650,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           },
           {
             "$type": "Keyword",
-            "value": "\\"\\"__\\"type\\""
+            "value": "\\"__type\\""
           },
           {
             "$type": "Keyword",
@@ -7686,7 +7686,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -7723,7 +7723,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -7848,7 +7848,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@51"
+                      "$ref": "#/rules@53"
                     },
                     "arguments": []
                   },
@@ -7940,7 +7940,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@51"
+                      "$ref": "#/rules@53"
                     },
                     "arguments": []
                   },
@@ -8019,7 +8019,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           },
           {
             "$type": "Keyword",
-            "value": "\\"\\"__\\"type\\""
+            "value": "\\"__type\\""
           },
           {
             "$type": "Keyword",
@@ -8055,7 +8055,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -8088,7 +8088,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@49"
+                    "$ref": "#/rules@51"
                   },
                   "arguments": []
                 }
@@ -8170,7 +8170,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@51"
+                      "$ref": "#/rules@53"
                     },
                     "arguments": []
                   },
@@ -8262,7 +8262,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@51"
+                      "$ref": "#/rules@53"
                     },
                     "arguments": []
                   },
@@ -8341,7 +8341,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           },
           {
             "$type": "Keyword",
-            "value": "\\"\\"__\\"type\\""
+            "value": "\\"__type\\""
           },
           {
             "$type": "Keyword",
@@ -8377,7 +8377,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -8501,7 +8501,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@51"
+                      "$ref": "#/rules@53"
                     },
                     "arguments": []
                   },
@@ -8593,7 +8593,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@51"
+                      "$ref": "#/rules@53"
                     },
                     "arguments": []
                   },
@@ -8672,7 +8672,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           },
           {
             "$type": "Keyword",
-            "value": "\\"\\"__\\"type\\""
+            "value": "\\"__type\\""
           },
           {
             "$type": "Keyword",
@@ -8708,7 +8708,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -8794,7 +8794,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@51"
+                      "$ref": "#/rules@53"
                     },
                     "arguments": []
                   },
@@ -8886,7 +8886,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@51"
+                      "$ref": "#/rules@53"
                     },
                     "arguments": []
                   },
@@ -8965,7 +8965,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           },
           {
             "$type": "Keyword",
-            "value": "\\"\\"__\\"type\\""
+            "value": "\\"__type\\""
           },
           {
             "$type": "Keyword",
@@ -9001,7 +9001,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -9038,7 +9038,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -9163,7 +9163,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@51"
+                      "$ref": "#/rules@53"
                     },
                     "arguments": []
                   },
@@ -9255,7 +9255,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@51"
+                      "$ref": "#/rules@53"
                     },
                     "arguments": []
                   },
@@ -9334,7 +9334,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           },
           {
             "$type": "Keyword",
-            "value": "\\"\\"__\\"type\\""
+            "value": "\\"__type\\""
           },
           {
             "$type": "Keyword",
@@ -9370,7 +9370,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -9407,7 +9407,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -9532,7 +9532,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@51"
+                      "$ref": "#/rules@53"
                     },
                     "arguments": []
                   },
@@ -9624,7 +9624,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@51"
+                      "$ref": "#/rules@53"
                     },
                     "arguments": []
                   },
@@ -9703,7 +9703,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           },
           {
             "$type": "Keyword",
-            "value": "\\"\\"__\\"type\\""
+            "value": "\\"__type\\""
           },
           {
             "$type": "Keyword",
@@ -9739,7 +9739,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -9776,7 +9776,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -9901,7 +9901,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@51"
+                      "$ref": "#/rules@53"
                     },
                     "arguments": []
                   },
@@ -9993,7 +9993,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                   "terminal": {
                     "$type": "RuleCall",
                     "rule": {
-                      "$ref": "#/rules@51"
+                      "$ref": "#/rules@53"
                     },
                     "arguments": []
                   },
@@ -10072,7 +10072,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           },
           {
             "$type": "Keyword",
-            "value": "\\"\\"__\\"type\\""
+            "value": "\\"__type\\""
           },
           {
             "$type": "Keyword",
@@ -10108,7 +10108,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -10178,7 +10178,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           },
           {
             "$type": "Keyword",
-            "value": "\\"\\"__\\"type\\""
+            "value": "\\"__type\\""
           },
           {
             "$type": "Keyword",
@@ -10214,7 +10214,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -10416,7 +10416,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           },
           {
             "$type": "Keyword",
-            "value": "\\"\\"__\\"type\\""
+            "value": "\\"__type\\""
           },
           {
             "$type": "Keyword",
@@ -10452,7 +10452,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -10489,7 +10489,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -10526,7 +10526,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
                 "terminal": {
                   "$type": "RuleCall",
                   "rule": {
-                    "$ref": "#/rules@51"
+                    "$ref": "#/rules@53"
                   },
                   "arguments": []
                 }
@@ -11382,6 +11382,26 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
       "definition": {
         "$type": "RegexToken",
         "regex": "/\\\\s+/"
+      },
+      "fragment": false
+    },
+    {
+      "$type": "TerminalRule",
+      "hidden": true,
+      "name": "NEW_LINE",
+      "definition": {
+        "$type": "RegexToken",
+        "regex": "/\\\\n+/"
+      },
+      "fragment": false
+    },
+    {
+      "$type": "TerminalRule",
+      "hidden": true,
+      "name": "TAB",
+      "definition": {
+        "$type": "RegexToken",
+        "regex": "/\\\\t+/"
       },
       "fragment": false
     },

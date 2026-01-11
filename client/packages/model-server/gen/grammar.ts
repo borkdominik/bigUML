@@ -1,15 +1,11 @@
 /**********************************************************************************
- * Copyright (c) 2025 borkdominik and others.
+ * Copyright (c) 2026 borkdominik and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the MIT License which is available at https://opensource.org/licenses/MIT.
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-
-import { ContainerModule } from 'inversify';
-
-export const serverModule = new ContainerModule(_bind => {
-    // bind(ServerManager).toSelf().inSingletonScope();
-    // bind(TYPES.ServerManager).toService(ServerManager);
-});
+export * from './langium/language/ast.js';
+export * from './langium/language/grammar.js';
+export * from './langium/language/module.js';

@@ -1,11 +1,19 @@
+/**********************************************************************************
+ * Copyright (c) 2026 borkdominik and others.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at https://opensource.org/licenses/MIT.
+ *
+ * SPDX-License-Identifier: MIT
+ **********************************************************************************/
 import {
     createDefaultModule,
     createDefaultSharedModule,
-    DefaultSharedModuleContext,
     inject,
-    Module,
-    PartialLangiumServices,
-    PartialLangiumSharedServices
+    type DefaultSharedModuleContext,
+    type Module,
+    type PartialLangiumServices,
+    type PartialLangiumSharedServices
 } from 'langium';
 import { TextDocument } from 'vscode-languageserver-textdocument';
 import { ModelService, OpenableTextDocuments, OpenTextDocumentManager } from '../../src/vscode/index.js';

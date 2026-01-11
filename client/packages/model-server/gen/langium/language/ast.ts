@@ -9,6 +9,8 @@ import { AbstractAstReflection } from 'langium';
 
 export const UmlDiagramTerminals = {
     WS: /\s+/,
+    NEW_LINE: /\n+/,
+    TAB: /\t+/,
     LANGIUM_BOOL: /true|false/,
     LANGIUM_INT: /(-)?[0-9]+(\.[0-9]*)?/,
     LANGIUM_ID: /[\w_-]+/,

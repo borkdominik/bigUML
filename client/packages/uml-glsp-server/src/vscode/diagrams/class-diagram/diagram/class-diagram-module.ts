@@ -66,7 +66,7 @@ import { ClassDiagramConfiguration } from './class-diagram-configuration.js';
 
 @injectable()
 export class ClassDiagramModule extends DiagramModule {
-    readonly diagramType = 'uml';
+    readonly diagramType = 'uml-diagram';
 
     protected override configure(
         bind: interfaces.Bind,

@@ -9,12 +9,15 @@
 import 'reflect-metadata';
 
 import type * as vscode from 'vscode';
-import { activate as extensionActivate, deactivate as extensionDeactivate } from './extension.js';
+import { activateClient, deactivateClient } from './extension.client.js';
+import { activateServer, deactivateServer } from './extension.server.js';
 
-export function activate(context: vscode.ExtensionContext): Promise<void> {
-    return extensionActivate(context);
+export async function activate(context: vscode.ExtensionContext): Promise<void> {
+    await activateServer(context);
+    await activateClient(context);
 }
 
-export function deactivate(context: vscode.ExtensionContext): Promise<void> {
-    return extensionDeactivate(context);
+export async function deactivate(context: vscode.ExtensionContext): Promise<void> {
+    await deactivateClient(context);
+    await deactivateServer();
 }

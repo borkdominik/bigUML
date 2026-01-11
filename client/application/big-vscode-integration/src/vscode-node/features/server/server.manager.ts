@@ -17,6 +17,8 @@ export interface ServerManagerStateListener {
     serverManagerStateChanged(manager: ServerManager, state: ServerManager.State): void | Promise<void>;
 }
 
+// TODO: Haydar
+
 @injectable()
 export class ServerManager {
     protected _state: ServerManager.State = {

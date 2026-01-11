@@ -1,4 +1,6 @@
 hidden terminal WS: /\s+/;
+hidden terminal NEW_LINE: /\n+/;
+hidden terminal TAB: /\t+/;
 terminal LANGIUM_BOOL returns boolean: /true|false/;
 terminal LANGIUM_INT returns number: /(-)?[0-9]+(\.[0-9]*)?/;
 terminal LANGIUM_ID: /[\w_-]+/;

@@ -116,10 +116,13 @@ export class BIGGLSPVSCodeConnector<
                 this.clientMap.delete(client.clientId);
                 this.documentMap.delete(client.document);
                 this.clientSelectionMap.delete(client.clientId);
+                this.clientProgressMap.get(client.clientId)?.forEach(reporter => reporter.deferred.resolve());
+                this.clientProgressMap.delete(client.clientId);
             })
         ];
         this.clientMap.set(client.clientId, client);
         this.documentMap.set(client.document, client.clientId);
+        this.clientProgressMap.set(client.clientId, new Map());
 
         // Cleanup when client panel is closed
         const panelOnDisposeListener = client.webviewEndpoint.webviewPanel.onDidDispose(async () => {

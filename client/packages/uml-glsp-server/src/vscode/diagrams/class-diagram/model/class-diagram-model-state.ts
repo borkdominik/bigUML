@@ -100,6 +100,7 @@ export class ClassDiagramModelState extends BaseDiagramModelState implements Jso
             this._semanticRoot = await this.modelService.patch(this.semanticUri, patch, 'glsp');
             this.index.indexSemanticRoot(this.semanticRoot);
         } catch (ex: unknown) {
+            console.error('Error applying model patch:', ex);
             const message = ex instanceof Error ? ex.message : String(ex);
 
             this.actionDispatcher.dispatch(MessageAction.create(message, { severity: 'ERROR' as SeverityLevel }));

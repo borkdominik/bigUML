@@ -64,7 +64,7 @@ import { PackageDiagramConfiguration } from './package-diagram-configuration.js'
 
 @injectable()
 export class PackageDiagramModule extends DiagramModule {
-    readonly diagramType = 'uml';
+    readonly diagramType = 'uml-diagram';
 
     protected bindDiagramConfiguration(): BindingTarget<DiagramConfiguration> {
         return PackageDiagramConfiguration;

@@ -2,30 +2,31 @@
  * Copyright (c) 2023 CrossBreeze.
  ********************************************************************************/
 
+import { type DiagramSerializer, type Serializer } from '@borkdominik-biguml/model-server';
 import {
-    AbstractClass,
-    Abstraction,
-    Aggregation,
-    AggregationType,
-    Association,
-    Class,
-    ClassDiagram,
-    ClassDiagramElements,
-    Composition,
-    Concurrency,
-    DataType,
-    DataTypeReference,
-    Dependency,
-    Diagram,
-    EffectType,
-    ElementWithSizeAndPosition,
-    Entity,
-    Enumeration,
-    EnumerationLiteral,
-    Generalization,
-    InstanceSpecification,
-    Interface,
-    InterfaceRealization,
+    type AbstractClass,
+    type Abstraction,
+    type Aggregation,
+    type AggregationType,
+    type Association,
+    type Class,
+    type ClassDiagram,
+    type ClassDiagramElements,
+    type Composition,
+    type Concurrency,
+    type DataType,
+    type DataTypeReference,
+    type Dependency,
+    type Diagram,
+    type EffectType,
+    type ElementWithSizeAndPosition,
+    type Entity,
+    type Enumeration,
+    type EnumerationLiteral,
+    type Generalization,
+    type InstanceSpecification,
+    type Interface,
+    type InterfaceRealization,
     isAbstractClass,
     isAbstraction,
     isAggregation,
@@ -60,35 +61,34 @@ import {
     isStateMachineDiagram,
     isSubstitution,
     isUsage,
-    LiteralSpecification,
-    MetaInfo,
-    Operation,
-    Package,
-    PackageDiagram,
-    PackageDiagramElements,
-    PackageImport,
-    PackageMerge,
-    Parameter,
-    ParameterDirection,
-    Position,
-    PrimitiveType,
-    Property,
-    Realization,
-    Relation,
-    RelationType,
-    Size,
-    Slot,
-    SlotDefiningFeature,
-    StateMachineDiagram,
-    Substitution,
-    Test,
-    UnionType_0,
-    Usage,
-    Visibility
+    type LiteralSpecification,
+    type MetaInfo,
+    type Operation,
+    type Package,
+    type PackageDiagram,
+    type PackageDiagramElements,
+    type PackageImport,
+    type PackageMerge,
+    type Parameter,
+    type ParameterDirection,
+    type Position,
+    type PrimitiveType,
+    type Property,
+    type Realization,
+    type Relation,
+    type RelationType,
+    type Size,
+    type Slot,
+    type SlotDefiningFeature,
+    type StateMachineDiagram,
+    type Substitution,
+    type Test,
+    type UnionType_0,
+    type Usage,
+    type Visibility
 } from '@borkdominik-biguml/model-server/grammar';
-import { AstNode } from 'langium';
-import type { DiagramSerializer, Serializer } from '../../src/vscode/index.js';
-import { UmlDiagramServices } from './uml-diagram-module.js';
+import { type AstNode } from 'langium';
+import { type UmlDiagramServices } from './uml-diagram-module.js';
 
 export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSerializer<Diagram> {
     constructor(protected services: UmlDiagramServices) {}
@@ -105,7 +105,7 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
     }
 
     serializeSize(element: Size): string {
-        let str: Array<string> = [];
+        const str: Array<string> = [];
         str.push('"__type": "Size"');
         if (element.__id !== undefined && element.__id !== null) {
             str.push('"__id": ' + '"' + element.__id + '"');
@@ -129,7 +129,7 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
     }
 
     serializePosition(element: Position): string {
-        let str: Array<string> = [];
+        const str: Array<string> = [];
         str.push('"__type": "Position"');
         if (element.__id !== undefined && element.__id !== null) {
             str.push('"__id": ' + '"' + element.__id + '"');
@@ -153,7 +153,7 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
     }
 
     serializeClassDiagram(element: ClassDiagram): string {
-        let str: Array<string> = [];
+        const str: Array<string> = [];
         str.push('"__type": "ClassDiagram"');
         if (element.__id !== undefined && element.__id !== null) {
             str.push('"__id": ' + '"' + element.__id + '"');
@@ -171,7 +171,7 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
     }
 
     serializeEnumeration(element: Enumeration): string {
-        let str: Array<string> = [];
+        const str: Array<string> = [];
         str.push('"__type": "Enumeration"');
         if (element.__id !== undefined && element.__id !== null) {
             str.push('"__id": ' + '"' + element.__id + '"');
@@ -186,7 +186,7 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
     }
 
     serializeEnumerationLiteral(element: EnumerationLiteral): string {
-        let str: Array<string> = [];
+        const str: Array<string> = [];
         str.push('"__type": "EnumerationLiteral"');
         if (element.__id !== undefined && element.__id !== null) {
             str.push('"__id": ' + '"' + element.__id + '"');
@@ -204,7 +204,7 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
     }
 
     serializeClass(element: Class): string {
-        let str: Array<string> = [];
+        const str: Array<string> = [];
         if (isAbstractClass(element)) {
             return this.serializeAbstractClass(element);
         }
@@ -237,7 +237,7 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
     }
 
     serializeTest(element: Test): string {
-        let str: Array<string> = [];
+        const str: Array<string> = [];
         str.push('"__type": "Test"');
         if (element.__id !== undefined && element.__id !== null) {
             str.push('"__id": ' + '"' + element.__id + '"');
@@ -249,7 +249,7 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
     }
 
     serializeAbstractClass(element: AbstractClass): string {
-        let str: Array<string> = [];
+        const str: Array<string> = [];
         str.push('"__type": "AbstractClass"');
         if (element.__id !== undefined && element.__id !== null) {
             str.push('"__id": ' + '"' + element.__id + '"');
@@ -288,7 +288,7 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
     }
 
     serializeInterface(element: Interface): string {
-        let str: Array<string> = [];
+        const str: Array<string> = [];
         str.push('"__type": "Interface"');
         if (element.__id !== undefined && element.__id !== null) {
             str.push('"__id": ' + '"' + element.__id + '"');
@@ -306,7 +306,7 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
     }
 
     serializeProperty(element: Property): string {
-        let str: Array<string> = [];
+        const str: Array<string> = [];
         str.push('"__type": "Property"');
         if (element.__id !== undefined && element.__id !== null) {
             str.push('"__id": ' + '"' + element.__id + '"');
@@ -354,7 +354,7 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
     }
 
     serializeOperation(element: Operation): string {
-        let str: Array<string> = [];
+        const str: Array<string> = [];
         str.push('"__type": "Operation"');
         if (element.__id !== undefined && element.__id !== null) {
             str.push('"__id": ' + '"' + element.__id + '"');
@@ -384,7 +384,7 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
     }
 
     serializeParameter(element: Parameter): string {
-        let str: Array<string> = [];
+        const str: Array<string> = [];
         str.push('"__type": "Parameter"');
         if (element.__id !== undefined && element.__id !== null) {
             str.push('"__id": ' + '"' + element.__id + '"');
@@ -429,7 +429,7 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
     }
 
     serializeDataType(element: DataType): string {
-        let str: Array<string> = [];
+        const str: Array<string> = [];
         str.push('"__type": "DataType"');
         if (element.__id !== undefined && element.__id !== null) {
             str.push('"__id": ' + '"' + element.__id + '"');
@@ -453,7 +453,7 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
     }
 
     serializePrimitiveType(element: PrimitiveType): string {
-        let str: Array<string> = [];
+        const str: Array<string> = [];
         str.push('"__type": "PrimitiveType"');
         if (element.__id !== undefined && element.__id !== null) {
             str.push('"__id": ' + '"' + element.__id + '"');
@@ -465,7 +465,7 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
     }
 
     serializeInstanceSpecification(element: InstanceSpecification): string {
-        let str: Array<string> = [];
+        const str: Array<string> = [];
         str.push('"__type": "InstanceSpecification"');
         if (element.__id !== undefined && element.__id !== null) {
             str.push('"__id": ' + '"' + element.__id + '"');
@@ -483,7 +483,7 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
     }
 
     serializeSlot(element: Slot): string {
-        let str: Array<string> = [];
+        const str: Array<string> = [];
         str.push('"__type": "Slot"');
         if (element.__id !== undefined && element.__id !== null) {
             str.push('"__id": ' + '"' + element.__id + '"');
@@ -507,7 +507,7 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
     }
 
     serializeLiteralSpecification(element: LiteralSpecification): string {
-        let str: Array<string> = [];
+        const str: Array<string> = [];
         str.push('"__type": "LiteralSpecification"');
         if (element.__id !== undefined && element.__id !== null) {
             str.push('"__id": ' + '"' + element.__id + '"');
@@ -522,7 +522,7 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
     }
 
     serializeRelation(element: Relation): string {
-        let str: Array<string> = [];
+        const str: Array<string> = [];
         if (isAbstraction(element)) {
             return this.serializeAbstraction(element);
         }
@@ -588,7 +588,7 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
     }
 
     serializeAbstraction(element: Abstraction): string {
-        let str: Array<string> = [];
+        const str: Array<string> = [];
         str.push('"__type": "Abstraction"');
         if (element.__id !== undefined && element.__id !== null) {
             str.push('"__id": ' + '"' + element.__id + '"');
@@ -624,7 +624,7 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
     }
 
     serializeDependency(element: Dependency): string {
-        let str: Array<string> = [];
+        const str: Array<string> = [];
         str.push('"__type": "Dependency"');
         if (element.__id !== undefined && element.__id !== null) {
             str.push('"__id": ' + '"' + element.__id + '"');
@@ -660,7 +660,7 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
     }
 
     serializeAssociation(element: Association): string {
-        let str: Array<string> = [];
+        const str: Array<string> = [];
         str.push('"__type": "Association"');
         if (element.__id !== undefined && element.__id !== null) {
             str.push('"__id": ' + '"' + element.__id + '"');
@@ -714,7 +714,7 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
     }
 
     serializeAggregation(element: Aggregation): string {
-        let str: Array<string> = [];
+        const str: Array<string> = [];
         str.push('"__type": "Aggregation"');
         if (element.__id !== undefined && element.__id !== null) {
             str.push('"__id": ' + '"' + element.__id + '"');
@@ -768,7 +768,7 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
     }
 
     serializeComposition(element: Composition): string {
-        let str: Array<string> = [];
+        const str: Array<string> = [];
         str.push('"__type": "Composition"');
         if (element.__id !== undefined && element.__id !== null) {
             str.push('"__id": ' + '"' + element.__id + '"');
@@ -822,7 +822,7 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
     }
 
     serializeInterfaceRealization(element: InterfaceRealization): string {
-        let str: Array<string> = [];
+        const str: Array<string> = [];
         str.push('"__type": "InterfaceRealization"');
         if (element.__id !== undefined && element.__id !== null) {
             str.push('"__id": ' + '"' + element.__id + '"');
@@ -858,7 +858,7 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
     }
 
     serializeGeneralization(element: Generalization): string {
-        let str: Array<string> = [];
+        const str: Array<string> = [];
         str.push('"__type": "Generalization"');
         if (element.__id !== undefined && element.__id !== null) {
             str.push('"__id": ' + '"' + element.__id + '"');
@@ -891,7 +891,7 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
     }
 
     serializePackageImport(element: PackageImport): string {
-        let str: Array<string> = [];
+        const str: Array<string> = [];
         str.push('"__type": "PackageImport"');
         if (element.__id !== undefined && element.__id !== null) {
             str.push('"__id": ' + '"' + element.__id + '"');
@@ -924,7 +924,7 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
     }
 
     serializePackageMerge(element: PackageMerge): string {
-        let str: Array<string> = [];
+        const str: Array<string> = [];
         str.push('"__type": "PackageMerge"');
         if (element.__id !== undefined && element.__id !== null) {
             str.push('"__id": ' + '"' + element.__id + '"');
@@ -954,7 +954,7 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
     }
 
     serializeRealization(element: Realization): string {
-        let str: Array<string> = [];
+        const str: Array<string> = [];
         str.push('"__type": "Realization"');
         if (element.__id !== undefined && element.__id !== null) {
             str.push('"__id": ' + '"' + element.__id + '"');
@@ -990,7 +990,7 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
     }
 
     serializeSubstitution(element: Substitution): string {
-        let str: Array<string> = [];
+        const str: Array<string> = [];
         str.push('"__type": "Substitution"');
         if (element.__id !== undefined && element.__id !== null) {
             str.push('"__id": ' + '"' + element.__id + '"');
@@ -1026,7 +1026,7 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
     }
 
     serializeUsage(element: Usage): string {
-        let str: Array<string> = [];
+        const str: Array<string> = [];
         str.push('"__type": "Usage"');
         if (element.__id !== undefined && element.__id !== null) {
             str.push('"__id": ' + '"' + element.__id + '"');
@@ -1062,7 +1062,7 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
     }
 
     serializeStateMachineDiagram(element: StateMachineDiagram): string {
-        let str: Array<string> = [];
+        const str: Array<string> = [];
         str.push('"__type": "StateMachineDiagram"');
         if (element.__id !== undefined && element.__id !== null) {
             str.push('"__id": ' + '"' + element.__id + '"');
@@ -1074,7 +1074,7 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
     }
 
     serializePackageDiagram(element: PackageDiagram): string {
-        let str: Array<string> = [];
+        const str: Array<string> = [];
         str.push('"__type": "PackageDiagram"');
         if (element.__id !== undefined && element.__id !== null) {
             str.push('"__id": ' + '"' + element.__id + '"');
@@ -1092,7 +1092,7 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
     }
 
     serializePackage(element: Package): string {
-        let str: Array<string> = [];
+        const str: Array<string> = [];
         str.push('"__type": "Package"');
         if (element.__id !== undefined && element.__id !== null) {
             str.push('"__id": ' + '"' + element.__id + '"');
@@ -1113,7 +1113,7 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
     }
 
     serializeDiagram(element: Diagram): string {
-        let str: Array<string> = [];
+        const str: Array<string> = [];
         if (element.diagram !== undefined && element.diagram !== null) {
             str.push('"diagram": ' + this.serializeUnionType_0(element.diagram));
         }

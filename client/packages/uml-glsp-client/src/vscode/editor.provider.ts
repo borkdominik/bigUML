@@ -12,9 +12,7 @@ import { WebviewEndpoint, type GLSPDiagramIdentifier, type GlspVscodeClient } fr
 import { inject, injectable, postConstruct } from 'inversify';
 import * as vscode from 'vscode';
 import { type ThemeIntegration } from './features/theme/theme-integration.js';
-import { ErrorStageResolver } from './features/webview/error.stage.js';
 import { GLSPStageResolver } from './features/webview/glsp.stage.js';
-import { InitializingStageResolver } from './features/webview/initializing.webview.js';
 import type { EditorStageResolver, StageContext } from './features/webview/stage.js';
 
 export const UMLDiagramEditorSettings = Symbol('UMLDiagramEditorSettings');
@@ -34,7 +32,7 @@ export class UMLDiagramEditorProvider implements vscode.CustomEditorProvider, Se
     } = {};
 
     protected viewCounter = 0;
-    protected serverManagerState: ServerManager.State;
+    protected serverManagerState?: ServerManager.State;
 
     onDidChangeCustomDocument: vscode.Event<vscode.CustomDocumentContentChangeEvent<vscode.CustomDocument>>;
 
@@ -120,75 +118,73 @@ export class UMLDiagramEditorProvider implements vscode.CustomEditorProvider, Se
     async serverManagerStateChanged(_manager: ServerManager, state: ServerManager.State): Promise<void> {
         this.serverManagerState = state;
 
-        if (state.state === 'error') {
-            for (const key of Object.keys(this.editors)) {
-                const active = this.editors[key];
-                const context = active.context;
+        // if (state.state === 'error') {
+        //     for (const key of Object.keys(this.editors)) {
+        //         const active = this.editors[key];
+        //         const context = active.context;
 
-                const webview = this.createErrorResolver(context);
-                await webview.resolve(context);
-                this.editors[key].stage = webview;
-            }
-        } else if (state.state === 'launching-server') {
-            for (const key of Object.keys(this.editors)) {
-                const active = this.editors[key];
-                const webview = active.stage;
+        //         const webview = this.createErrorResolver(context);
+        //         await webview.resolve(context);
+        //         this.editors[key].stage = webview;
+        //     }
+        // } else if (state.state === 'launching-server') {
+        //     for (const key of Object.keys(this.editors)) {
+        //         const active = this.editors[key];
+        //         const webview = active.stage;
 
-                if (webview instanceof InitializingStageResolver) {
-                    await webview.progress(active.context, `Starting ${state.launcher.serverName}`);
-                }
-            }
-        } else if (state.state === 'servers-launched') {
-            for (const key of Object.keys(this.editors)) {
-                const active = this.editors[key];
-                const context = active.context;
+        //         if (webview instanceof InitializingStageResolver) {
+        //             await webview.progress(active.context, `Starting ${state.launcher.serverName}`);
+        //         }
+        //     }
+        // } else if (state.state === 'servers-launched') {
+        //     for (const key of Object.keys(this.editors)) {
+        //         const active = this.editors[key];
+        //         const context = active.context;
 
-                if (active.stage instanceof InitializingStageResolver) {
-                    active.stage.finish(context);
-                }
+        //         if (active.stage instanceof InitializingStageResolver) {
+        //             active.stage.finish(context);
+        //         }
 
-                const webview = this.createGLSPResolver(active.client);
-                await webview.resolve(context);
-                this.editors[key].stage = webview;
-            }
-        }
+        //         const webview = this.createGLSPResolver(active.client);
+        //         await webview.resolve(context);
+        //         this.editors[key].stage = webview;
+        //     }
+        // }
     }
 
     protected generateClientId(): string {
         return `${this.settings.diagramType}_${this.viewCounter++}`;
     }
 
-    protected createEditorBasedOnState(context: StageContext, client: GlspVscodeClient): EditorStageResolver {
-        let resolver: EditorStageResolver;
-
-        if (this.serverManagerState.state === 'servers-launched') {
-            resolver = this.createGLSPResolver(client);
-        } else if (this.serverManagerState.state === 'error') {
-            resolver = this.createErrorResolver(context);
-        } else {
-            resolver = this.createInitializingEnvironmentResolver(context);
-        }
+    protected createEditorBasedOnState(_context: StageContext, client: GlspVscodeClient): EditorStageResolver {
+        // if (this.serverManagerState.state === 'servers-launched') {
+        const resolver = this.createGLSPResolver(client);
+        // } else if (this.serverManagerState.state === 'error') {
+        //     resolver = this.createErrorResolver(context);
+        // } else {
+        //     resolver = this.createInitializingEnvironmentResolver(context);
+        // }
 
         return resolver;
     }
 
-    protected createInitializingEnvironmentResolver(context: StageContext): InitializingStageResolver {
-        const resolver = new InitializingStageResolver();
-        const state = this.serverManagerState;
-        if (state.state === 'launching-server') {
-            resolver.progress(context, `Starting ${state.launcher.serverName}`);
-        }
-        return resolver;
-    }
+    // protected createInitializingEnvironmentResolver(context: StageContext): InitializingStageResolver {
+    //     const resolver = new InitializingStageResolver();
+    //     const state = this.serverManagerState;
+    //     if (state.state === 'launching-server') {
+    //         resolver.progress(context, `Starting ${state.launcher.serverName}`);
+    //     }
+    //     return resolver;
+    // }
 
-    protected createErrorResolver(context: StageContext): ErrorStageResolver {
-        const resolver = new ErrorStageResolver();
-        const state = this.serverManagerState;
-        if (state.state === 'error') {
-            resolver.error(context, state.reason, state.details);
-        }
-        return resolver;
-    }
+    // protected createErrorResolver(context: StageContext): ErrorStageResolver {
+    //     const resolver = new ErrorStageResolver();
+    //     const state = this.serverManagerState;
+    //     if (state.state === 'error') {
+    //         resolver.error(context, state.reason, state.details);
+    //     }
+    //     return resolver;
+    // }
 
     protected createGLSPResolver(client: GlspVscodeClient): GLSPStageResolver {
         return new GLSPStageResolver({

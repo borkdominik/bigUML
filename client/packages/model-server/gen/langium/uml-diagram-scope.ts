@@ -2,11 +2,18 @@
  * Copyright (c) 2023 CrossBreeze.
  ********************************************************************************/
 
-import { AstNode, AstNodeDescription, DefaultScopeComputation, LangiumDocument, PrecomputedScopes, streamAllContents } from 'langium';
+import {
+    type AstNode,
+    type AstNodeDescription,
+    DefaultScopeComputation,
+    type LangiumDocument,
+    type PrecomputedScopes,
+    streamAllContents
+} from 'langium';
 import { CancellationToken } from 'vscode-jsonrpc';
-import { UmlDiagramServices } from './uml-diagram-module.js';
-import { QualifiedNameProvider } from './uml-diagram-naming.js';
-import { UmlDiagramPackageManager, UNKNOWN_PROJECT_ID, UNKNOWN_PROJECT_REFERENCE } from './uml-diagram-package-manager.js';
+import { type UmlDiagramServices } from './uml-diagram-module.js';
+import { type QualifiedNameProvider } from './uml-diagram-naming.js';
+import { type UmlDiagramPackageManager, UNKNOWN_PROJECT_ID, UNKNOWN_PROJECT_REFERENCE } from './uml-diagram-package-manager.js';
 
 /**
  * Custom node description that wraps a given description under a potentially new name and also stores the package id for faster access.

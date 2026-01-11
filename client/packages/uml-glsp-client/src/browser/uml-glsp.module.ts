@@ -23,7 +23,6 @@ import {
     glspToastModule,
     initializeDiagramContainer,
     LogLevel,
-    moveZoomModule,
     toolPaletteModule,
     TYPES,
     viewKeyToolsModule,
@@ -31,12 +30,6 @@ import {
 } from '@eclipse-glsp/client';
 import { keyboardToolPaletteModule } from '@eclipse-glsp/client/lib/features/accessibility/keyboard-tool-palette/keyboard-tool-palette-module.js';
 import { umlBaseModule } from './base/uml-base.module.js';
-import {
-    umlElementNavigationModule,
-    umlFallbackActionModule,
-    umlResizeElementModule,
-    umlSearchPaletteModule
-} from './features/accessibility/uml-accessibility.module.js';
 import { umlBoundsModule } from './features/bounds/uml-bounds.module.js';
 import { umlCopyPasteModule } from './features/copy-paste/uml-copy-paste.module.js';
 import { UMLContainerManager } from './features/creation/uml-container-manager.js';
@@ -54,7 +47,7 @@ import inversify = require('inversify');
 
 export function createUMLDiagramContainer(...containerConfiguration: ContainerConfiguration): inversify.Container {
     const container = initializeUMLDiagramContainer(new inversify.Container(), ...containerConfiguration);
-    bindOrRebind(container, TYPES.LogLevel).toConstantValue(LogLevel.info);
+    bindOrRebind(container, TYPES.LogLevel).toConstantValue(LogLevel.log);
     container.rebind(ContainerManager).to(UMLContainerManager).inSingletonScope();
     return container;
 }
@@ -66,13 +59,9 @@ export function initializeUMLDiagramContainer(
     const accessibility: ContainerConfiguration = [
         glspToastModule,
         glspFocusTrackerModule,
-        moveZoomModule,
         viewKeyToolsModule,
-        keyboardToolPaletteModule,
-        umlResizeElementModule,
-        umlSearchPaletteModule,
+        keyboardToolPaletteModule
         // umlKeyboardControlToolsModule, // broken for now
-        umlElementNavigationModule
     ];
 
     return initializeDiagramContainer(
@@ -82,7 +71,6 @@ export function initializeUMLDiagramContainer(
         // UML
         umlBaseModule,
         umlBaseViewsModule,
-        umlFallbackActionModule,
         umlBoundsModule,
         umlCopyPasteModule,
         umlEditModule,

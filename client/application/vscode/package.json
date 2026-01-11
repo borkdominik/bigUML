@@ -38,7 +38,7 @@
   ],
   "publisher": "BIGModelingTools",
   "type": "module",
-  "main": "./lib/main.cjs",
+  "main": "./lib/index.cjs",
   "files": [
     "lib",
     "server",
@@ -119,6 +119,13 @@
         ]
       }
     ],
+    "grammars": [
+      {
+        "language": "uml-diagram",
+        "scopeName": "source.uml-diagram",
+        "path": "./syntaxes/uml-diagram.tmLanguage.json"
+      }
+    ],
     "keybindings": [
       {
         "key": "alt+f",
@@ -177,27 +184,19 @@
     ],
     "languages": [
       {
-        "id": "bigUML-uml",
-        "extensions": [
-          ".uml"
+        "id": "uml-diagram",
+        "aliases": [
+          "UML Diagram",
+          "uml-diagram"
         ],
         "icon": {
           "light": "./resources/file_icons/light/uml.svg",
           "dark": "./resources/file_icons/dark/uml.svg"
-        }
-      },
-      {
-        "id": "bigUML-unotation",
+        },
         "extensions": [
-          ".unotation"
+          ".uml"
         ],
-        "mimetypes": [
-          "xml"
-        ],
-        "icon": {
-          "light": "./resources/file_icons/light/unotation.svg",
-          "dark": "./resources/file_icons/dark/unotation.svg"
-        }
+        "configuration": "./language-configuration.json"
       }
     ],
     "menus": {
@@ -287,7 +286,7 @@
     "onLanguage:bigUML.uml",
     "onLanguage:bigUML.unotation",
     "onCommand:bigUML.model.newEmpty",
-    "onView:bigUML.outlineView"
+    "*"
   ],
   "dependencies": {
     "@borkdominik-biguml/big-hello-world": "*",
@@ -295,7 +294,9 @@
     "@borkdominik-biguml/big-outline": "*",
     "@borkdominik-biguml/big-property-palette": "*",
     "@borkdominik-biguml/big-vscode-integration": "*",
+    "@borkdominik-biguml/model-server": "*",
     "@borkdominik-biguml/uml-glsp-client": "*",
+    "@borkdominik-biguml/uml-glsp-server": "*",
     "@borkdominik-biguml/uml-protocol": "*",
     "@eclipse-glsp/protocol": "*",
     "@eclipse-glsp/vscode-integration": "*",
@@ -307,6 +308,10 @@
     "reflect-metadata": "^0.2.2",
     "scheduler": "^0.25.0",
     "urijs": "^1.19.11",
+    "vscode-languageclient": "9.0.1",
+    "vscode-languageserver": "9.0.1",
+    "vscode-languageserver-protocol": "^3.17.5",
+    "vscode-languageserver-textdocument": "^1.0.11",
     "vscode-messenger": "^0.4.5",
     "vscode-messenger-common": "^0.4.5"
   },

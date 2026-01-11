@@ -12,21 +12,13 @@
       "types": "./lib/src/vscode/index.d.ts",
       "default": "./lib/src/vscode/index.js"
     },
-    "./extension": {
-      "types": "./lib/gen/extension.d.ts",
-      "default": "./lib/gen/extension.js"
-    },
-    "./main": {
-      "types": "./lib/gen/main.d.ts",
-      "default": "./lib/gen/main.js"
-    },
     "./integration": {
       "types": "./lib/gen/integration.d.ts",
       "default": "./lib/gen/integration.js"
     },
     "./grammar": {
-      "types": "./lib/gen/langium/language/index.d.ts",
-      "default": "./lib/gen/langium/language/index.js"
+      "types": "./lib/gen/grammar.d.ts",
+      "default": "./lib/gen/grammar.js"
     }
   },
   "files": [
@@ -36,8 +28,7 @@
     "build": "npm run clean && npm run compile && npm run lint",
     "clean": "rimraf lib dist node_modules/.tmp",
     "compile": "tsc -b",
-    "generate": "generator-language-server generate && langium generate",
-    "generate:ecore": "generator-language-server generate --from=ecore && langium generate",
+    "generate": "npm run language:generate && npm run langium:generate",
     "langium:generate": "langium generate",
     "langium:watch": "langium generate --watch",
     "language:generate": "uml-language-tooling generate -d @borkdominik-biguml/uml-language/definition -g ./gen",
@@ -47,33 +38,10 @@
     "vscode:prepublish": "npm run build && npm run lint",
     "watch": "concurrently --kill-others 'npm run compile -- --watch'"
   },
-  "contributes": {
-    "grammars": [
-      {
-        "language": "uml-diagram",
-        "scopeName": "source.uml-diagram",
-        "path": "./syntaxes/uml-diagram.tmLanguage.json"
-      }
-    ],
-    "languages": [
-      {
-        "id": "uml-diagram",
-        "aliases": [
-          "UML Diagram",
-          "uml-diagram"
-        ],
-        "extensions": [
-          ".uml"
-        ],
-        "configuration": "./language-configuration.json"
-      }
-    ]
-  },
-  "activationEvents": [
-    "onLanguage:uml-diagram"
-  ],
+  "contributes": {},
   "dependencies": {
     "@apidevtools/json-schema-ref-parser": "^11.1.0",
+    "@borkdominik-biguml/uml-language-tooling": "*",
     "chalk": "~4.1.2",
     "commander": "~10.0.0",
     "fast-json-patch": "3.1.1",
@@ -90,16 +58,7 @@
     "vscode-uri": "^3.0.2"
   },
   "devDependencies": {
-    "@types/node": "~16.18.41",
-    "@types/reflect-metadata": "^0.1.0",
-    "@types/vscode": "~1.67.0",
-    "@typescript-eslint/eslint-plugin": "~6.4.1",
-    "@typescript-eslint/parser": "~6.4.1",
-    "@vscode/vsce": "^2.17.0",
-    "esbuild": "~0.19.2",
-    "eslint": "~8.47.0",
-    "langium-cli": "^2.1.0",
-    "typescript": "~5.1.6"
+    "langium-cli": "^2.1.0"
   },
   "engines": {
     "node": ">=16.0.0",

@@ -115,11 +115,12 @@ export class ExperimentalGLSPServerModelState implements Disposable {
                 this.modelStates.delete(client.clientId);
             }),
             this.connectionManager.onDidActiveClientChange(async () => {
-                await this.refreshModelState();
+                // TODO: Haydar
+                // await this.refreshModelState();
             }),
             this.actionListener.registerServerListener(async message => {
                 if (UpdateModelAction.is(message.action)) {
-                    await this.refreshModelState();
+                    // await this.refreshModelState();
                 }
             })
         );

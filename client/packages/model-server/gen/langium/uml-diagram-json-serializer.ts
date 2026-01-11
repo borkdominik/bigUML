@@ -1,15 +1,23 @@
-import { CrossReference } from '@borkdominik-biguml/uml-language-tooling';
+/**********************************************************************************
+ * Copyright (c) 2025 borkdominik and others.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at https://opensource.org/licenses/MIT.
+ *
+ * SPDX-License-Identifier: MIT
+ **********************************************************************************/
+import { type CrossReference } from '@borkdominik-biguml/uml-language-tooling';
 import {
-    AstNode,
-    AstNodeLocator,
-    CstNode,
-    DocumentSegment,
-    GenericAstNode,
-    LangiumDocuments,
-    LangiumServices,
-    Mutable,
-    NameProvider,
-    Reference,
+    type AstNode,
+    type AstNodeLocator,
+    type CstNode,
+    type DocumentSegment,
+    type GenericAstNode,
+    type LangiumDocuments,
+    type LangiumServices,
+    type Mutable,
+    type NameProvider,
+    type Reference,
     findNodesForProperty,
     getDocument,
     isAstNode,

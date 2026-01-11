@@ -11,7 +11,8 @@
       "runtimeExecutable": "${execPath}",
       "args": [
         "${workspaceFolder}/workspace",
-        "--extensionDevelopmentPath=${workspaceFolder}/application/vscode"
+        "--extensionDevelopmentPath=${workspaceFolder}/application/vscode",
+        "--disable-extensions"
       ],
       "sourceMaps": true,
       "smartStep": true,
@@ -33,7 +34,8 @@
       "runtimeExecutable": "${execPath}",
       "args": [
         "${workspaceFolder}/workspace",
-        "--extensionDevelopmentPath=${workspaceFolder}/application/vscode"
+        "--extensionDevelopmentPath=${workspaceFolder}/application/vscode",
+        "--disable-extensions"
       ],
       "sourceMaps": true,
       "smartStep": true,
@@ -44,6 +46,27 @@
         "UML_MODEL_SERVER_DEBUG": "false",
         "UML_MODEL_SERVER_LOGGING": "false"
       }
+    },
+    {
+      "name": "(Attach) LSP Server",
+      "type": "node",
+      "request": "attach",
+      "address": "localhost",
+      "port": 6009,
+      "restart": true,
+      "protocol": "inspector",
+      "timeout": 30000
+      // Optional if you need source maps/path mapping:
+      // "localRoot": "${workspaceFolder}",
+      // "remoteRoot": "${workspaceFolder}",
+      // "sourceMaps": true,
+      // "outFiles": ["${workspaceFolder}/**/*.js"]
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Debug Extension",
+      "configurations": ["(Debug) UML GLSP VSCode Extension", "(Attach) LSP Server"]
     }
   ]
 }

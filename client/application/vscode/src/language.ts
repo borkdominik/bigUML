@@ -23,7 +23,7 @@ export const UMLLangugageEnvironment = {
 
 export const VSCodeSettings = {
     name: 'bigUML',
-    diagramType: 'umldiagram',
+    diagramType: 'uml-diagram',
     commands: {
         prefix: 'bigUML'
     },

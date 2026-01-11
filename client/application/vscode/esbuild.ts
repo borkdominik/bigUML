@@ -17,16 +17,19 @@ const extensionConfig: es.BuildOptions = {
     ...rootConfig,
     minify: process.env.NODE_ENV === 'production' || minify,
     sourcemap: process.env.NODE_ENV !== 'production' || !minify,
-    entryPoints: ['./src/index.ts'],
-    outfile: './lib/main.cjs',
+    entryPoints: ['./src/index.ts', './src/main.ts'],
     platform: 'node',
     mainFields: ['module', 'main'],
+    outdir: 'lib',
     // VSCode uses CJS
     format: 'cjs',
     outExtension: {
         '.js': '.cjs'
     },
     external: ['vscode'],
+    logOverride: {
+        'duplicate-case': 'silent'
+    },
     plugins: [
         copy({
             resolveFrom: 'cwd',

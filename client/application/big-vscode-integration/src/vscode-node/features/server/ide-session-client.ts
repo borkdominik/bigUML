@@ -48,6 +48,7 @@ export class IDESessionClient implements Disposable {
             (this._client as any)['id'] = IDEServerClientId;
             this.readyDeferred.resolve();
         } catch (error) {
+            console.error('IDE Session client errored', error);
             this.readyDeferred.reject(error);
         }
     }

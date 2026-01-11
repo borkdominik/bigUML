@@ -16,6 +16,8 @@
 
 import { DefaultTypes } from '@eclipse-glsp/server';
 
+// TODO: Haydar
+
 export namespace ModelTypes {
     export const LABEL_HEADING = 'label:heading';
     export const LABEL_NAME = 'label:name';
@@ -62,12 +64,12 @@ export namespace ModelTypes {
     export const MISSING_NODE = 'missingNode';
 }
 
-function representationTypeId(representation: string, type: string, name: string): string {
-    return `${type}:${representation.toLowerCase()}__${name}`;
+function representationTypeId(representation: string, _type: string, name: string): string {
+    return `${representation.toLowerCase()}__${name}`;
 }
 
-function representationTemplateTypeId(representation: string, type: string, template: string, name: string): string {
-    return `${type}:${representation.toLowerCase()}__${template}__${name}`;
+function representationTemplateTypeId(representation: string, _type: string, template: string, name: string): string {
+    return `${representation.toLowerCase()}__${template}__${name}`;
 }
 
 export namespace astTypes {

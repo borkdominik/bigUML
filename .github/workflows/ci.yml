@@ -21,7 +21,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: "20"
 
       - name: Install dependencies
         working-directory: ./client
@@ -38,11 +38,21 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Checkout bigGLSP-framework
+        uses: actions/checkout@v4
+        with:
+          repository: glsp-extensions/bigGLSP-framework
+          path: bigGLSP-framework
+
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
-          java-version: '17'
+          distribution: "temurin"
+          java-version: "17"
+
+      - name: Install bigGLSP-framework
+        working-directory: ./bigGLSP-framework
+        run: ./gradlew clean publishToMavenLocal
 
       - name: Build with Gradle
         working-directory: ./server

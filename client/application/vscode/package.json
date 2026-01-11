@@ -333,7 +333,7 @@
     "onLanguage:bigUML.unotation",
     "onCommand:bigUML.model.newEmpty",
     "onView:bigUML.outlineView",
-    "onView:bigUML.panel.advancedsearch"
+    "onView:bigUML.panel.advancedsearch",
     "onView:bigUML.outlineView",
     "onCommand:timeline.import",
     "onCommand:timeline.export"

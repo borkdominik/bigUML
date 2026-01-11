@@ -51,8 +51,10 @@ jobs:
           java-version: "17"
 
       - name: Install bigGLSP-framework
-        working-directory: ./bigGLSP-framework
-        run: ./gradlew clean publishToMavenLocal
+        working-directory: ./bigGLSP-framework/plugins/bigGLSP-server-java
+        run: |
+          chmod +x gradlew
+          ./gradlew prepare
 
       - name: Build with Gradle
         working-directory: ./server

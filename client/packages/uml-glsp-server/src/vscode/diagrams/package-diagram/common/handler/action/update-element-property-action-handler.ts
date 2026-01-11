@@ -7,10 +7,10 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import { UpdateElementPropertyAction } from '@borkdominik-biguml/big-property-palette';
+import { UpdateOperation } from '@borkdominik-biguml/uml-glsp-server';
 import { type ActionHandler, type MaybePromise, type Operation } from '@eclipse-glsp/server';
 import { inject, injectable } from 'inversify';
 import { PackageDiagramModelState } from '../../../model/package-diagram-model-state.js';
-import { UpdateOperation } from '../old-update-operation-handler.js';
 
 @injectable()
 export class UpdateElementPropertyActionHandler implements ActionHandler {

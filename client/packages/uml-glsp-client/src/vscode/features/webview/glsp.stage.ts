@@ -13,6 +13,8 @@ import type * as vscode from 'vscode';
 import { type ThemeIntegration } from '../theme/theme-integration.js';
 import { type EditorStageResolver, type StageContext } from './stage.js';
 
+// TODO: Haydar
+
 export interface GLSPWebviewData {
     readonly diagramType: string;
     readonly client: GlspVscodeClient;
@@ -33,8 +35,7 @@ export class GLSPStageResolver implements EditorStageResolver {
 
         const webview = resource.webviewPanel.webview;
         const extensionUri = this.data.context.extensionUri;
-        const codiconsCSSUri = getUri(webview, extensionUri, ['css', 'codicon.css']);
-        const mainCSSUri = getUri(webview, extensionUri, ['lib', 'main.css']);
+        const codiconsCSSUri = getUri(webview, extensionUri, ['css', 'index.css']);
 
         const bundleJSUri = getBundleUri(webview, extensionUri, ['glsp-client', 'bundle.js']);
         const bundleCSSUri = getBundleUri(webview, extensionUri, ['glsp-client', 'bundle.css']);
@@ -53,7 +54,6 @@ export class GLSPStageResolver implements EditorStageResolver {
                     default-src http://*.fontawesome.com  ${webview.cspSource} data: 'unsafe-inline' 'unsafe-eval';
                     ">
                     <link href="${codiconsCSSUri}" rel="stylesheet" />
-                    <link href="${mainCSSUri}" rel="stylesheet" />
                     <link href="${bundleCSSUri}" rel="stylesheet" />
                     </head>
                     <body style="overflow: hidden;">

@@ -8,7 +8,7 @@
  **********************************************************************************/
 import { type GModelElement } from '@eclipse-glsp/server';
 import { injectable } from 'inversify';
-import { AbstractDiagramModelValidator } from '../../../../common/validator/abstract-diagram-model-validator.js';
+import { AbstractDiagramModelValidator } from '../../../../features/index.js';
 import { GPackageClassNode } from '../../model/elements/class.graph-extension.js';
 
 @injectable()

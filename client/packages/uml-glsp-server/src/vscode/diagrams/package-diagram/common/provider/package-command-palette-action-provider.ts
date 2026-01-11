@@ -8,7 +8,7 @@
  **********************************************************************************/
 import { CreateNodeOperation, type LabeledAction, type Point } from '@eclipse-glsp/server';
 import { inject, injectable } from 'inversify';
-import { AbstractDiagramCommandPaletteActionProvider } from '../../../../common/provider/abstract-diagram-command-palette.js';
+import { AbstractDiagramCommandPaletteActionProvider } from '../../../../features/index.js';
 import { GPackageClassNode } from '../../model/elements/class.graph-extension.js';
 import { PackageDiagramModelState } from '../../model/package-diagram-model-state.js';
 import { ModelTypes } from '../util/model-types.js';

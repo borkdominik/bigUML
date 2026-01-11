@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 import { inject, injectable } from 'inversify';
-import { AbstractCreateEdgeOperationHandler } from '../../../../common/handler/abstract-create-edge-operation-handler.js';
+import { AbstractCreateEdgeOperationHandler } from '../../../../features/mutation/handler/abstract-create-edge-operation-handler.js';
 import { PackageDiagramModelState } from '../../model/package-diagram-model-state.js';
 import { ModelTypes } from '../util/model-types.js';
 

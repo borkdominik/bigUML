@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 import { inject, injectable } from 'inversify';
-import { AbstractDiagramContextMenuItemProvider, type CreateNodeDescriptor } from '../../../../common/provider/abstract-context-menu.js';
+import { AbstractDiagramContextMenuItemProvider, type CreateNodeDescriptor } from '../../../../features/index.js';
 import { PackageDiagramModelState } from '../../model/package-diagram-model-state.js';
 import { ModelTypes } from '../util/model-types.js';
 

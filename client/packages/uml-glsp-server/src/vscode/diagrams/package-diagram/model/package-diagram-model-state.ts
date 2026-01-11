@@ -19,7 +19,7 @@ import { UmlDiagramLSPServices } from '@borkdominik-biguml/model-server/integrat
 import { type JsonModelState } from '@eclipse-glsp/server';
 import { inject, injectable } from 'inversify';
 import { URI } from 'vscode-uri';
-import { BaseDiagramModelState } from '../../../common/model/base-diagram-model-state.js';
+import { BaseDiagramModelState } from '../../../features/model/base-diagram-model-state.js';
 import { PackageDiagramModelIndex } from './package-diagram-model-index.js';
 
 export interface PackageDiagramSourceModel {

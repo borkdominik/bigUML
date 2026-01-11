@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 import { inject, injectable } from 'inversify';
-import { AbstractDeleteOperationHandler } from '../../../../common/handler/abstract-delete-operation-handler.js';
+import { AbstractDeleteOperationHandler } from '../../../../features/mutation/handler/abstract-delete-operation-handler.js';
 import { PackageDiagramModelState } from '../../model/package-diagram-model-state.js';
 
 @injectable()

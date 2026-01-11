@@ -13,7 +13,7 @@ export const UmlDiagramTerminals = {
     TAB: /\t+/,
     LANGIUM_BOOL: /true|false/,
     LANGIUM_INT: /(-)?[0-9]+(\.[0-9]*)?/,
-    LANGIUM_ID: /[\w_-]+/,
+    LANGIUM_ID: /[\w_\*-]+/,
     ML_COMMENT: /\/\*[\s\S]*?\*\//,
     SL_COMMENT: /\/\/[^\n\r]*/,
 };

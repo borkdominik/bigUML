@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 import { injectable } from 'inversify';
-import { AbstractPopupFactory } from '../../../common/provider/abstract-popup-factory.js';
+import { AbstractPopupFactory } from '../../../features/index.js';
 import { GPackageClassNode } from '../model/elements/class.graph-extension.js';
 
 @injectable()

@@ -4,7 +4,7 @@
 import 'reflect-metadata';
 
 import { createUmlDiagramServices, startModelServer } from '@borkdominik-biguml/model-server';
-import { startGLSPServer } from '@borkdominik-biguml/uml-glsp-server';
+import { startGLSPServer } from '@borkdominik-biguml/uml-glsp-server/vscode';
 import { startLanguageServer } from 'langium';
 import { NodeFileSystem } from 'langium/node';
 import { createConnection, ProposedFeatures } from 'vscode-languageserver/node.js';

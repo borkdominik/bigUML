@@ -8,6 +8,8 @@
  *********************************************************************************/
 import 'reflect-metadata';
 
+import '../css/colors.css';
+
 import type * as vscode from 'vscode';
 import { activateClient, deactivateClient } from './extension.client.js';
 import { activateServer, deactivateServer } from './extension.server.js';

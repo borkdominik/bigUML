@@ -16,7 +16,7 @@
 import { ApplyLabelEditOperation, type Command, OperationHandler } from '@eclipse-glsp/server';
 import { inject, injectable } from 'inversify';
 import { isAstNode } from 'langium';
-import { BigUmlCommand } from '../../../../biguml/common/handler/big-uml-command.js';
+import { ModelPatchCommand } from '../../../../features/command/model-patch-command.js';
 import { PackageDiagramModelState } from '../../model/package-diagram-model-state.js';
 
 @injectable()
@@ -26,7 +26,7 @@ export class PackageLabelEditOperationHandler extends OperationHandler {
     @inject(PackageDiagramModelState) protected state: PackageDiagramModelState;
 
     createCommand(operation: ApplyLabelEditOperation): Command {
-        return new BigUmlCommand(this.state, this.editLabel(operation));
+        return new ModelPatchCommand(this.state, this.editLabel(operation));
     }
 
     protected editLabel(operation: ApplyLabelEditOperation): string | undefined {

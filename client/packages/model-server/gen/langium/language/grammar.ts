@@ -11438,7 +11438,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
       "name": "LANGIUM_ID",
       "definition": {
         "$type": "RegexToken",
-        "regex": "/[\\\\w_-]+/"
+        "regex": "/[\\\\w_\\\\*-]+/"
       },
       "fragment": false,
       "hidden": false

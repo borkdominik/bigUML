@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 import { inject, injectable } from 'inversify';
-import { AbstractUpdateElementPropertyActionHandler } from '../../../../common/handler/abstract-element-property-action-handler.js';
+import { AbstractUpdateElementPropertyActionHandler } from '../../../../features/mutation/handler/abstract-element-property-action-handler.js';
 import { PackageDiagramModelState } from '../../model/package-diagram-model-state.js';
 
 @injectable()

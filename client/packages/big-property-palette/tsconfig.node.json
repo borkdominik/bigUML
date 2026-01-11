@@ -6,5 +6,5 @@
     "outDir": "lib",
     "rootDir": "src"
   },
-  "include": ["src/common", "src/vscode", "src/server"]
+  "include": ["src/common", "src/language", "src/vscode"]
 }

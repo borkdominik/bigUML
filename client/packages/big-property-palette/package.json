@@ -38,9 +38,9 @@
       "types": "./lib/vscode/index.d.ts",
       "default": "./lib/vscode/index.js"
     },
-    "./server": {
-      "types": "./lib/server/index.d.ts",
-      "default": "./lib/server/index.js"
+    "./language": {
+      "types": "./lib/language/index.d.ts",
+      "default": "./lib/language/index.js"
     }
   },
   "types": "lib/common/index.d.ts",

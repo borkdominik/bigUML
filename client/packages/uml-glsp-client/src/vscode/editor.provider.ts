@@ -21,6 +21,8 @@ export interface UMLDiagramEditorSettings {
     diagramType: string;
 }
 
+// TODO: Haydar
+
 @injectable()
 export class UMLDiagramEditorProvider implements vscode.CustomEditorProvider, ServerManagerStateListener {
     protected editors: {

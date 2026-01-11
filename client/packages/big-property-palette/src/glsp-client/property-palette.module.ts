@@ -10,6 +10,8 @@ import { FeatureModule } from '@eclipse-glsp/client';
 import { ExtensionActionKind } from '@eclipse-glsp/vscode-integration-webview/lib/features/default/extension-action-handler.js';
 import { SetPropertyPaletteAction } from '../common/index.js';
 
+// TODO: Haydar why?
+
 export const propertyPaletteModule = new FeatureModule((bind, _unbind, _isBound, _rebind) => {
     bind(ExtensionActionKind).toConstantValue(SetPropertyPaletteAction.KIND);
 });

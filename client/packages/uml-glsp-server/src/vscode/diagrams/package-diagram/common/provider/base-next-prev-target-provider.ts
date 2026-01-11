@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 import { inject, injectable } from 'inversify';
-import { AbstractNextOrPreviousNavigationTargetProvider } from '../../../../common/provider/next-prev-target-provider.js';
+import { AbstractNextOrPreviousNavigationTargetProvider } from '../../../../features/index.js';
 import { GPackageClassNode } from '../../model/elements/class.graph-extension.js';
 import { PackageDiagramModelState } from '../../model/package-diagram-model-state.js';
 

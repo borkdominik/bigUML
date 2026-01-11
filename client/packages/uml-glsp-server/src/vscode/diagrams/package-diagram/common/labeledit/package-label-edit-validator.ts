@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 import { inject, injectable } from 'inversify';
-import { AbstractLabelEditValidator } from '../../../../common/labeledit/abstract-label-edit-validator.js';
+import { AbstractLabelEditValidator } from '../../../../features/index.js';
 import { GPackageClassNode } from '../../model/elements/class.graph-extension.js';
 import { PackageDiagramModelState } from '../../model/package-diagram-model-state.js';
 

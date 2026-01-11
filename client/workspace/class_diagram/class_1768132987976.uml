@@ -6,22 +6,23 @@
 		"entities": [
 			{
 				"__type": "Class",
-				"__id": "ab289175e-059a-4ca0-b03b-1922cc6a7bdc",
-				"name": "NewClass1",
+				"__id": "a93da97ce-caa3-439f-ba7b-1b88641d4fc4",
+				"name": "asd",
 				"isAbstract": false,
 				"properties": [],
-				"operations": [],
-				"isActive": false,
-				"visibility": "PUBLIC",
-				"skip": false
-			},
-			{
-				"__type": "Class",
-				"__id": "afd17a735-22b9-42b7-8007-cb007c1208e8",
-				"name": "NewClass2",
-				"isAbstract": false,
-				"properties": [],
-				"operations": [],
+				"operations": [
+					{
+						"__type": "Operation",
+						"__id": "a81640b09-0edf-49aa-82b2-719b7b0db590",
+						"name": "NewOperation1",
+						"isAbstract": false,
+						"isStatic": false,
+						"isQuery": false,
+						"visibility": "PUBLIC",
+						"concurrency": "SEQUENTIAL",
+						"parameters": []
+					}
+				],
 				"isActive": false,
 				"visibility": "PUBLIC",
 				"skip": false
@@ -32,46 +33,24 @@
 	"metaInfos": [
 		{
 			"__type": "Size",
-			"__id": "size_ab289175e-059a-4ca0-b03b-1922cc6a7bdc",
-			"height": 30,
-			"width": 80,
+			"__id": "size_a93da97ce-caa3-439f-ba7b-1b88641d4fc4",
+			"height": 84.45714664459229,
+			"width": 207.59101175691626,
 			"element": {
 				"__type": "Reference",
 				"__refType": "ElementWithSizeAndPosition",
-				"__value": "ab289175e-059a-4ca0-b03b-1922cc6a7bdc"
+				"__value": "a93da97ce-caa3-439f-ba7b-1b88641d4fc4"
 			}
 		},
 		{
 			"__type": "Position",
-			"__id": "pos_ab289175e-059a-4ca0-b03b-1922cc6a7bdc",
-			"x": 510,
-			"y": 200,
+			"__id": "pos_a93da97ce-caa3-439f-ba7b-1b88641d4fc4",
+			"x": 119.39346932823673,
+			"y": 179.1804079847101,
 			"element": {
 				"__type": "Reference",
 				"__refType": "ElementWithSizeAndPosition",
-				"__value": "ab289175e-059a-4ca0-b03b-1922cc6a7bdc"
-			}
-		},
-		{
-			"__type": "Size",
-			"__id": "size_afd17a735-22b9-42b7-8007-cb007c1208e8",
-			"height": 30,
-			"width": 80,
-			"element": {
-				"__type": "Reference",
-				"__refType": "ElementWithSizeAndPosition",
-				"__value": "afd17a735-22b9-42b7-8007-cb007c1208e8"
-			}
-		},
-		{
-			"__type": "Position",
-			"__id": "pos_afd17a735-22b9-42b7-8007-cb007c1208e8",
-			"x": 790,
-			"y": 210,
-			"element": {
-				"__type": "Reference",
-				"__refType": "ElementWithSizeAndPosition",
-				"__value": "afd17a735-22b9-42b7-8007-cb007c1208e8"
+				"__value": "a93da97ce-caa3-439f-ba7b-1b88641d4fc4"
 			}
 		}
 	]

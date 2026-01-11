@@ -7,9 +7,9 @@ import { configureELKLayoutModule } from '@eclipse-glsp/layout-elk';
 import { LogLevel, LoggerFactory, type MaybePromise } from '@eclipse-glsp/server';
 import { SocketServerLauncher, createAppModule, defaultLaunchOptions } from '@eclipse-glsp/server/node.js';
 import { Container, ContainerModule } from 'inversify';
-import { BigUmlServerModule } from './biguml-glsp-server.js';
-import { LayeredLayoutConfigurator } from './common/layout/layered-layout-configurator.js';
-import { ClassDiagramModule } from './diagrams/class-diagram/diagram/class-diagram-module.js';
+import { ClassDiagramModule } from './diagrams/class/class-diagram-module.js';
+import { LayeredLayoutConfigurator } from './features/layout/layered-layout-configurator.js';
+import { UmlServerModule } from './module.js';
 
 const GLSP_SERVER_PORT = 5007;
 const GLSP_SERVER_HOST = '127.0.0.1';
@@ -37,7 +37,7 @@ export function startGLSPServer(services: UmlDiagramLSPServices, _workspaceFolde
         layoutConfigurator: LayeredLayoutConfigurator
     });
     //     // create server module with our workflow model diagram
-    const serverModule = new BigUmlServerModule().configureDiagramModule(new ClassDiagramModule(), elkLayoutModule);
+    const serverModule = new UmlServerModule().configureDiagramModule(new ClassDiagramModule(), elkLayoutModule);
     launcher.configure(serverModule);
     try {
         return launcher.start({

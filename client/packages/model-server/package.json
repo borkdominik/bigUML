@@ -31,7 +31,7 @@
     "generate": "npm run language:generate && npm run langium:generate",
     "langium:generate": "langium generate",
     "langium:watch": "langium generate --watch",
-    "language:generate": "uml-language-tooling generate -d @borkdominik-biguml/uml-language/definition -g ./gen",
+    "language:generate": "uml-language-tooling generate -d @borkdominik-biguml/uml-language/definition",
     "lint": "eslint -c ./eslint.config.js",
     "lint:fix": "npm run lint -- --fix",
     "tsc": "tsc",

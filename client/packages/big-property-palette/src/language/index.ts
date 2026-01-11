@@ -7,4 +7,5 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
+export * from './contribution.js';
 export * from './decorators.js';

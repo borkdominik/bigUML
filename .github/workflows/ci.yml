@@ -11,7 +11,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
+  build-client:
+    name: Build Client
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -20,7 +21,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: '20'
 
       - name: Install dependencies
         working-directory: ./client
@@ -29,3 +30,20 @@ jobs:
       - name: Build
         working-directory: ./client
         run: npm run build
+
+  build-server:
+    name: Build Server
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Build with Gradle
+        working-directory: ./server
+        run: ./gradlew clean build

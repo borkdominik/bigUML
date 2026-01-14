@@ -1,0 +1,61 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-client:
+    name: Build Client
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        working-directory: ./client
+        run: npm install
+
+      - name: Build
+        working-directory: ./client
+        run: npm run build
+
+  build-server:
+    name: Build Server
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Checkout bigGLSP-framework
+        uses: actions/checkout@v4
+        with:
+          repository: glsp-extensions/bigGLSP-framework
+          path: bigGLSP-framework
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "17"
+
+      - name: Install bigGLSP-framework
+        working-directory: ./bigGLSP-framework/plugins/bigGLSP-server-java
+        run: |
+          chmod +x gradlew
+          ./gradlew prepare
+
+      - name: Build with Gradle
+        working-directory: ./server
+        run: ./gradlew clean build

@@ -95,6 +95,16 @@
         "category": "bigUML",
         "enablement": "activeCustomEditorId == 'bigUML.diagramView'",
         "icon": "$(symbol-reference)"
+      },
+      {
+        "command": "timeline.import",
+        "title": "Import Timeline",
+        "icon": "$(cloud-upload)"
+      },
+      {
+        "command": "timeline.export",
+        "title": "Export Timeline",
+        "icon": "$(cloud-download)"
       }
     ],
     "configuration": {
@@ -105,6 +115,16 @@
           "default": true,
           "scope": "resource",
           "description": "Hide the *.unotation files."
+        },
+        "bigUML.timeline.onSave": {
+          "type": "boolean",
+          "default": true,
+          "description": "Create a new timeline entry on file save."
+        },
+        "bigUML.timeline.persistent": {
+          "type": "boolean",
+          "default": true,
+          "description": "Persist timeline entries across restarts."
         }
       }
     },
@@ -201,7 +221,18 @@
       }
     ],
     "menus": {
-      "view/title": [],
+      "view/title": [
+        {
+          "command": "timeline.import",
+          "when": "view == bigUML.panel.revision-management",
+          "group": "navigation"
+        },
+        {
+          "command": "timeline.export",
+          "when": "view == bigUML.panel.revision-management",
+          "group": "navigation"
+        }
+      ],
       "webview/context": [],
       "file/newFile": [
         {
@@ -220,6 +251,8 @@
           "group": "bookmarks"
         }
       ],
+
+
       "bigUML.editor.title": [
         {
           "command": "bigUML.fit",
@@ -272,6 +305,12 @@
           "when": "bigUML.isRunning && false"
         },
         {
+          "id": "bigUML.panel.revision-management",
+          "name": "Timeline",
+          "type": "webview",
+          "when": "bigUML.isRunning"
+        },
+        {
           "id": "bigUML.panel.advancedsearch",
           "name": "Advanced Search",
           "type": "webview",
@@ -294,11 +333,16 @@
     "onLanguage:bigUML.unotation",
     "onCommand:bigUML.model.newEmpty",
     "onView:bigUML.outlineView",
-    "onView:bigUML.panel.advancedsearch"
+    "onView:bigUML.panel.advancedsearch",
+    "onView:bigUML.outlineView",
+    "onCommand:timeline.import",
+    "onCommand:timeline.export"
+
   ],
   "dependencies": {
     "@borkdominik-biguml/big-advancedsearch": "*",
     "@borkdominik-biguml/big-hello-world": "*",
+    "@borkdominik-biguml/big-revision-management": "*",
     "@borkdominik-biguml/big-minimap": "*",
     "@borkdominik-biguml/big-outline": "*",
     "@borkdominik-biguml/big-property-palette": "*",

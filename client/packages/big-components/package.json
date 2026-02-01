@@ -27,18 +27,16 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./lib/browser/index.d.ts",
-      "default": "./lib/browser/index.js"
+      "types": "./build/env/browser/index.d.ts",
+      "default": "./build/env/browser/index.js"
     }
   },
-  "types": "./lib/browser/index.d.ts",
   "files": [
-    "lib",
-    "src"
+    "build"
   ],
   "scripts": {
     "build": "npm run clean && npm run compile && npm run lint",
-    "clean": "rimraf lib node_modules/.tmp",
+    "clean": "rimraf build dist node_modules/.tmp",
     "compile": "tsc -b",
     "lint": "eslint -c ./eslint.config.js",
     "lint:fix": "npm run lint -- --fix",

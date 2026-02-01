@@ -27,34 +27,44 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./lib/common/index.d.ts",
-      "default": "./lib/common/index.js"
+      "types": "./build/env/common/index.d.ts",
+      "default": "./build/env/common/index.js"
     },
     "./glsp-client": {
-      "types": "./lib/glsp-client/index.d.ts",
-      "default": "./lib/glsp-client/index.js"
+      "types": "./build/env/glsp-client/index.d.ts",
+      "default": "./build/env/glsp-client/index.js"
+    },
+    "./glsp-server": {
+      "types": "./build/env/glsp-server/index.d.ts",
+      "default": "./build/env/glsp-server/index.js"
     },
     "./vscode": {
-      "types": "./lib/vscode/index.d.ts",
-      "default": "./lib/vscode/index.js"
+      "types": "./build/env/vscode/index.d.ts",
+      "default": "./build/env/vscode/index.js"
+    },
+    "./generator": {
+      "types": "./build/env/generator/index.d.ts",
+      "default": "./build/env/generator/index.js"
     }
   },
-  "types": "lib/common/index.d.ts",
   "files": [
     "dist"
   ],
   "scripts": {
     "build": "npm run clean && npm run compile && npm run lint",
-    "clean": "rimraf lib dist node_modules/.tmp",
+    "clean": "rimraf build dist node_modules/.tmp",
     "compile": "tsc -b",
+    "generate": "npm run language:generate",
+    "language:generate": "uml-language-tooling extension generate -d @borkdominik-biguml/uml-language/definition -c ./generator/index.ts",
     "lint": "eslint -c ./eslint.config.js",
     "lint:fix": "npm run lint -- --fix",
-    "tsc": "tsc",
     "watch": "concurrently --kill-others 'npm run compile -- --watch'"
   },
   "dependencies": {
     "@borkdominik-biguml/big-components": "*",
     "@borkdominik-biguml/big-vscode-integration": "*",
+    "@borkdominik-biguml/uml-glsp-server": "*",
+    "@borkdominik-biguml/uml-language-tooling": "*",
     "@borkdominik-biguml/uml-protocol": "*",
     "@eclipse-glsp/protocol": "*",
     "vscode-messenger-common": "^0.4.5"

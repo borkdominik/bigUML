@@ -27,21 +27,21 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./lib/common/index.d.ts",
-      "default": "./lib/common/index.js"
+      "types": "./build/env/common/index.d.ts",
+      "default": "./build/env/common/index.js"
     },
     "./glsp-client": {
-      "types": "./lib/glsp-client/index.d.ts",
-      "default": "./lib/glsp-client/index.js"
+      "types": "./build/env/glsp-client/index.d.ts",
+      "default": "./build/env/glsp-client/index.js"
     },
     "./vscode": {
-      "types": "./lib/vscode/index.d.ts",
-      "default": "./lib/vscode/index.js"
+      "types": "./build/env/vscode/index.d.ts",
+      "default": "./build/env/vscode/index.js"
     }
   },
-  "types": "lib/common/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "build"
   ],
   "scripts": {
     "build": "npm run clean && npm run compile && npm run bundle && npm run lint",

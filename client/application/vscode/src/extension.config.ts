@@ -12,14 +12,18 @@ import { revisionManagementModule } from '@borkdominik-biguml/big-revision-manag
 import { minimapModule } from '@borkdominik-biguml/big-minimap/vscode';
 import { outlineModule } from '@borkdominik-biguml/big-outline/vscode';
 import { propertyPaletteModule } from '@borkdominik-biguml/big-property-palette/vscode';
-import { createVSCodeCommonContainer, TYPES, type GLSPDiagramSettings } from '@borkdominik-biguml/big-vscode-integration/vscode';
-import { loadVSCodeNodeContainer, type GLSPServerConfig } from '@borkdominik-biguml/big-vscode-integration/vscode-node';
+import {
+    createVSCodeCommonContainer,
+    TYPES,
+    type GLSPDiagramSettings,
+    type GLSPServerConfig
+} from '@borkdominik-biguml/big-vscode-integration/vscode';
 import { editorModule, themeModule } from '@borkdominik-biguml/uml-glsp-client/vscode';
 import { type Container } from 'inversify';
 import type * as vscode from 'vscode';
+import { DefaultCommandsProvider } from './features/command/default-commands.js';
+import { vscodeModule } from './features/vscode.module.js';
 import { VSCodeSettings } from './language.js';
-import { DefaultCommandsProvider } from './vscode/command/default-commands.js';
-import { vscodeModule } from './vscode/vscode.module.js';
 
 export function createContainer(
     extensionContext: vscode.ExtensionContext,
@@ -29,7 +33,6 @@ export function createContainer(
     }
 ): Container {
     const container = createVSCodeCommonContainer(extensionContext, options);
-    loadVSCodeNodeContainer(container, options);
 
     container.bind(DefaultCommandsProvider).toSelf().inSingletonScope();
     container.bind(TYPES.RootInitialization).toService(DefaultCommandsProvider);

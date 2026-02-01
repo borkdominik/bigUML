@@ -27,25 +27,21 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./lib/common/index.d.ts",
-      "default": "./lib/common/index.js"
+      "types": "./build/env/common/index.d.ts",
+      "default": "./build/env/common/index.js"
     },
     "./glsp-client": {
-      "types": "./lib/glsp-client/index.d.ts",
-      "default": "./lib/glsp-client/index.js"
+      "types": "./build/env/glsp-client/index.d.ts",
+      "default": "./build/env/glsp-client/index.js"
     },
     "./vscode": {
-      "types": "./lib/vscode/index.d.ts",
-      "default": "./lib/vscode/index.js"
-    },
-    "./vscode-node": {
-      "types": "./lib/vscode-node/index.d.ts",
-      "default": "./lib/vscode-node/index.js"
+      "types": "./build/env/vscode/index.d.ts",
+      "default": "./build/env/vscode/index.js"
     }
   },
   "scripts": {
     "build": "npm run clean && npm run compile && npm run lint",
-    "clean": "rimraf lib node_modules/.tmp",
+    "clean": "rimraf build dist node_modules/.tmp",
     "compile": "tsc -b",
     "lint": "eslint -c ./eslint.config.js",
     "lint:ci": "npm run lint -o eslint.xml -f checkstyle",

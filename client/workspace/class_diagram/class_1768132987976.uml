@@ -1,0 +1,86 @@
+{
+	"diagram": {
+		"__type": "ClassDiagram",
+		"__id": "ClassDiagram1",
+		"diagramType": "CLASS",
+		"entities": [
+			{
+				"__type": "Class",
+				"__id": "a93da97ce-caa3-439f-ba7b-1b88641d4fc4",
+				"name": "asd",
+				"isAbstract": false,
+				"properties": [],
+				"operations": [
+					{
+						"__type": "Operation",
+						"__id": "a81640b09-0edf-49aa-82b2-719b7b0db590",
+						"name": "NewOperation1",
+						"isAbstract": false,
+						"isStatic": false,
+						"isQuery": false,
+						"visibility": "PUBLIC",
+						"concurrency": "SEQUENTIAL",
+						"parameters": []
+					}
+				],
+				"isActive": false,
+				"visibility": "PUBLIC",
+				"skip": false
+			},
+			{
+				"__type": "Package",
+				"__id": "a17513720-685e-41a6-83bc-1d7881425db3",
+				"name": "NewPackage1",
+				"visibility": "PUBLIC",
+				"entities": []
+			}
+		],
+		"relations": []
+	},
+	"metaInfos": [
+		{
+			"__type": "Size",
+			"__id": "size_a93da97ce-caa3-439f-ba7b-1b88641d4fc4",
+			"height": 84.45714664459229,
+			"width": 207.59101175691626,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "a93da97ce-caa3-439f-ba7b-1b88641d4fc4"
+			}
+		},
+		{
+			"__type": "Position",
+			"__id": "pos_a93da97ce-caa3-439f-ba7b-1b88641d4fc4",
+			"x": 119.39346932823673,
+			"y": 179.1804079847101,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "a93da97ce-caa3-439f-ba7b-1b88641d4fc4"
+			}
+		},
+		{
+			"__type": "Size",
+			"__id": "size_a17513720-685e-41a6-83bc-1d7881425db3",
+			"height": 30,
+			"width": 80,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "a17513720-685e-41a6-83bc-1d7881425db3"
+			}
+		},
+		{
+			"__type": "Position",
+			"__id": "pos_a17513720-685e-41a6-83bc-1d7881425db3",
+			"x": 380,
+			"y": 130,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "a17513720-685e-41a6-83bc-1d7881425db3"
+			}
+		}
+	]
+}

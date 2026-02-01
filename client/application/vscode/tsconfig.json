@@ -2,8 +2,8 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "rootDir": "src",
-    "outDir": "lib",
+    "outDir": "build",
     "resolveJsonModule": true
   },
-  "include": ["src", "server", "pack", "./*.config.json"]
+  "include": ["src", "./*.config.json"]
 }

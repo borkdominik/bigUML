@@ -1,5 +1,5 @@
 /*********************************************************************************
- * Copyright (c) 2023 borkdominik and others.
+ * Copyright (c) 2025 borkdominik and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the MIT License which is available at https://opensource.org/licenses/MIT.
@@ -39,6 +39,7 @@ export namespace RequestCodeGenerationAction {
 export interface CodeGenerationActionResponse extends ResponseAction {
     kind: typeof CodeGenerationActionResponse.KIND;
     success: boolean;
+    message?: string;
 }
 
 export namespace CodeGenerationActionResponse {
@@ -55,6 +56,7 @@ export namespace CodeGenerationActionResponse {
             kind: KIND,
             responseId: '',
             success: false,
+            message: '',
             ...options
         };
     }

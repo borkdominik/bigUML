@@ -1,5 +1,5 @@
 /*********************************************************************************
- * Copyright (c) 2023 borkdominik and others.
+ * Copyright (c) 2025 borkdominik and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the MIT License which is available at https://opensource.org/licenses/MIT.
@@ -17,11 +17,6 @@ export function codeGenerationModule(viewId: string) {
         bind(CodeGenerationViewId).toConstantValue(viewId);
         bind(CodeGenerationProvider).toSelf().inSingletonScope();
         bind(TYPES.RootInitialization).toService(CodeGenerationProvider);
-
-        // Handle the request vscode side
-        // This will prevent the glsp to handle the request
-        // Remember to comment out the the glsp client handler found [here](../glsp-client/code-generation.module.ts)!
-        // In CodeGenerationActionHandler implementation GLSP has priority over vscode
 
         bind(CodeGenerationActionHandler).toSelf().inSingletonScope();
         bind(TYPES.Disposable).toService(CodeGenerationActionHandler);

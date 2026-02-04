@@ -1,7 +1,7 @@
 {
   "name": "@borkdominik-biguml/big-code-generation",
   "version": "0.6.3",
-  "description": "UML-Hello World",
+  "description": "UML-Code Generation",
   "homepage": "https://github.com/borkdominik/bigUML",
   "bugs": "https://github.com/borkdominik/bigUML/issues",
   "repository": {
@@ -47,7 +47,7 @@
     "build": "npm run clean && npm run compile && npm run bundle && npm run lint",
     "bundle": "tsx esbuild.ts",
     "clean": "rimraf lib dist node_modules/.tmp",
-    "compile": "tsc -b && npx cpx \"src/**/*.hbs\" lib",
+    "compile": "tsc -b && npx cpx \"src/**/*.{hbs,eta}\" lib",
     "lint": "eslint -c ./eslint.config.js",
     "lint:fix": "npm run lint -- --fix",
     "tsc": "tsc",
@@ -60,6 +60,7 @@
     "@eclipse-glsp/client": "*",
     "@eclipse-glsp/protocol": "*",
     "@eclipse-glsp/vscode-integration-webview": "*",
+    "eta": "^4.5.0",
     "vscode-messenger-common": "^0.4.5"
   },
   "devDependencies": {

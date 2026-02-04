@@ -50,8 +50,8 @@
   "scripts": {
     "build": "npm run clean && npm run compile",
     "clean": "rimraf lib tsconfig.tsbuildinfo",
-    "compile": "tsx esbuild.ts && npx cpx \"../../packages/big-code-generation/src/vscode/**/*.hbs\" lib",
-    "compile:prod": "npm run clean && npm run compile --minify",
+    "compile": "tsx esbuild.ts && npx cpx \"../../packages/big-code-generation/src/vscode/**/*.{hbs,eta}\" lib",
+    "compile:prod": "npm run clean && npm run compile -- --minify",
     "lint": "eslint -c ./eslint.config.js",
     "lint:ci": "npm run lint -o eslint.xml -f checkstyle",
     "lint:fix": "eslint --fix -c ./eslint.config.js",

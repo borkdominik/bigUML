@@ -15,3 +15,8 @@ export interface JavaCodeGenerationOptions {
     folder: string | null;
     multiple: boolean;
 }
+
+export interface TypescriptCodeGenerationOptions {
+    folder: string | null;
+    multiple: boolean;
+}

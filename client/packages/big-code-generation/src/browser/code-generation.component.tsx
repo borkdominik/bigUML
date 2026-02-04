@@ -9,13 +9,18 @@
 import { VSCodeContext } from '@borkdominik-biguml/big-components';
 import { useCallback, useContext, useEffect, useState, type ReactElement } from 'react';
 import { RequestCodeGenerationAction, RequestSelectTemplateFileAction, SelectTemplateFileActionResponse } from '../common/index.js';
-import { type CodeGenerationOptions, type JavaCodeGenerationOptions } from '../types/config.js';
+import { type CodeGenerationOptions, type JavaCodeGenerationOptions, type TypescriptCodeGenerationOptions } from '../types/config.js';
 import { JavaCodeGenerationConfig } from './config-java.component.js';
+import { TypescriptCodeGenerationConfig } from './config-typescript.component.js';
 
 export function CodeGeneration(): ReactElement {
     const { listenAction, dispatchAction } = useContext(VSCodeContext);
     const [language, setLanguage] = useState<string>('java');
     const [javaOptions, setJavaOptions] = useState<JavaCodeGenerationOptions>({
+        folder: null,
+        multiple: false
+    });
+    const [typescriptOptions, setTypescriptOptions] = useState<TypescriptCodeGenerationOptions>({
         folder: null,
         multiple: false
     });
@@ -41,10 +46,10 @@ export function CodeGeneration(): ReactElement {
             RequestCodeGenerationAction.create({
                 options: options,
                 language,
-                languageOptions: javaOptions,
+                languageOptions: language === 'java' ? javaOptions : typescriptOptions,
             })
         );
-    }, [dispatchAction, language, javaOptions, options]);
+    }, [dispatchAction, language, javaOptions, typescriptOptions, options]);
 
     const handleLanguageChange = useCallback((event: React.ChangeEvent<HTMLSelectElement>) => {
         setLanguage(event.target.value);
@@ -56,6 +61,7 @@ export function CodeGeneration(): ReactElement {
                 <label htmlFor="language-select" style={{ marginRight: '8px' }}>Language:</label>
                 <select id="language-select" value={language} onChange={handleLanguageChange}>
                     <option value="java">Java</option>
+                    <option value="typescript">TypeScript</option>
                 </select>
             </div>
             <div style={{ marginBottom: '8px' }}>
@@ -66,6 +72,13 @@ export function CodeGeneration(): ReactElement {
                 <JavaCodeGenerationConfig
                     options={javaOptions}
                     setOptions={setJavaOptions}
+                    setIsGenerationDisabled={setIsGenerationDisabled}
+                />
+            )}
+            {language === 'typescript' && (
+                <TypescriptCodeGenerationConfig
+                    options={typescriptOptions}
+                    setOptions={setTypescriptOptions}
                     setIsGenerationDisabled={setIsGenerationDisabled}
                 />
             )}

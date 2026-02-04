@@ -27,12 +27,13 @@ import {
 } from '../common/code-generation.action.js';
 
 import { UMLClass, UMLEnumeration, UMLInterface, UMLPrimitiveType, type UMLSourceModel } from '@borkdominik-biguml/uml-protocol';
+import { Eta } from 'eta';
 import { readFileSync } from 'fs';
 import Handlebars from 'handlebars';
 import _, { type Dictionary } from 'lodash';
 import { join } from 'path';
 import * as vscode from 'vscode';
-import { type CodeGenerationOptions, type JavaCodeGenerationOptions } from '../types/config.js';
+import { type CodeGenerationOptions, type JavaCodeGenerationOptions, type TypescriptCodeGenerationOptions } from '../types/config.js';
 
 // Handle the action within the server and not the glsp client / server
 @injectable()
@@ -52,22 +53,35 @@ export class CodeGenerationActionHandler implements Disposable {
             this.actionListener.handleVSCodeRequest<RequestCodeGenerationAction>(RequestCodeGenerationAction.KIND, async message => {
                 const model = this.modelState.getModelState();
                 if (!model) {
-                    return CodeGenerationActionResponse.create({ success: false });
+                    return CodeGenerationActionResponse.create({ success: false, message: 'Model state is not available.' });
                 }
                 if (!message.action.language) {
-                    return CodeGenerationActionResponse.create({ success: false });
+                    return CodeGenerationActionResponse.create({ success: false, message: 'Language is not specified.' });
                 }
                 if (!message.action.languageOptions) {
-                    return CodeGenerationActionResponse.create({ success: false });
+                    return CodeGenerationActionResponse.create({ success: false, message: 'Language options are missing.' });
                 }
 
                 const sourceModel = model.getSourceModel();
+                console.log(sourceModel);
 
                 const typeNames = this.getTypeNames(sourceModel);
                 const addedSourceModel = this.addTypeNames(sourceModel, typeNames);
 
                 if (message.action.language == 'java') {
-                    this.generateJavaCode(addedSourceModel, typeNames, message.action.options, message.action.languageOptions);
+                    this.generateJavaCode(
+                        addedSourceModel,
+                        typeNames,
+                        message.action.options,
+                        message.action.languageOptions as JavaCodeGenerationOptions
+                    );
+                } else if (message.action.language == 'typescript') {
+                    this.generateTypeScriptCode(
+                        addedSourceModel,
+                        typeNames,
+                        message.action.options,
+                        message.action.languageOptions as TypescriptCodeGenerationOptions
+                    );
                 } else {
                     return CodeGenerationActionResponse.create({ success: false });
                 }
@@ -104,7 +118,8 @@ export class CodeGenerationActionHandler implements Disposable {
                     canSelectMany: false,
                     openLabel: 'Select Template File',
                     filters: {
-                        'HandleBar Templates': ['hbs']
+                        'HandleBar Templates': ['hbs'],
+                        'Eta Templates': ['eta']
                     }
                 });
 
@@ -143,6 +158,46 @@ export class CodeGenerationActionHandler implements Disposable {
 
             vscode.workspace.fs.writeFile(vscode.Uri.file(languageOptions?.folder + '/output.java'), new TextEncoder().encode(code));
         }
+    }
+
+    private generateTypeScriptCode(
+        sourceModel: any,
+        typeNames: Map<string, string>,
+        options: CodeGenerationOptions,
+        languageOptions: TypescriptCodeGenerationOptions
+    ): void {
+        const eta = new Eta({ views: join(__dirname, 'templates') });
+
+        if (languageOptions?.multiple) {
+            for (const [typeId, typeName] of typeNames) {
+                const sourceModelForType: UMLSourceModel = this.getTypeFromModel(typeId, sourceModel);
+
+                if (UMLPrimitiveType.is(sourceModelForType.packagedElement![0])) continue;
+
+                // For multiple files, we might need a way to filter the template or assume valid input
+                // But for now, using the same template logic as java, iterating over packagedElement (which is filtered to 1 item)
+                const code = this.renderTemplate(eta, 'typescript', sourceModelForType, options.templateFile);
+
+                vscode.workspace.fs.writeFile(
+                    vscode.Uri.file(languageOptions.folder + '/' + typeName + '.ts'),
+                    new TextEncoder().encode(code)
+                );
+            }
+        } else {
+            const code = this.renderTemplate(eta, 'typescript', sourceModel, options.templateFile);
+            vscode.workspace.fs.writeFile(vscode.Uri.file(languageOptions?.folder + '/output.ts'), new TextEncoder().encode(code));
+        }
+    }
+
+    private renderTemplate(eta: Eta, language: string, data: any, customTemplateFile: string | null): string {
+        let templateString = '';
+        if (customTemplateFile) {
+            templateString = readFileSync(customTemplateFile, { encoding: 'utf8' });
+        } else {
+            const templatePath = CodeGenerationActionHandler.templateFiles[language];
+            templateString = readFileSync(templatePath, { encoding: 'utf8' });
+        }
+        return eta.renderString(templateString, data);
     }
 
     private getTypeFromModel(typeId: string, sourceModel: any): any {
@@ -187,7 +242,8 @@ export class CodeGenerationActionHandler implements Disposable {
         return _.reduce(
             CodeGenerationActionHandler.languages,
             (acc: Dictionary<string>, lang: string) => {
-                acc[lang] = join(__dirname, 'templates', `${lang}.hbs`);
+                const ext = lang === 'typescript' ? 'eta' : 'hbs';
+                acc[lang] = join(__dirname, 'templates', `${lang}.${ext}`);
                 return acc;
             },
             {}
@@ -205,14 +261,15 @@ export class CodeGenerationActionHandler implements Disposable {
         return Handlebars.compile(source);
     }
 
-    private static get languages(): string[] {
-        return _.keys(CodeGenerationActionHandler.extensions);
-    }
-
     private static get extensions(): Dictionary<string> {
         return {
-            java: 'java'
+            java: 'java',
+            typescript: 'ts'
         };
+    }
+
+    private static get languages(): string[] {
+        return _.keys(CodeGenerationActionHandler.extensions);
     }
 
     static getExtension(lang: string): string {

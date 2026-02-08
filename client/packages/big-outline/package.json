@@ -67,6 +67,7 @@
     "@borkdominik-biguml/uml-language-tooling": "*",
     "@borkdominik-biguml/uml-protocol": "*",
     "@eclipse-glsp/protocol": "*",
+    "eta": "^3.5.0",
     "vscode-messenger-common": "^0.4.5"
   },
   "devDependencies": {

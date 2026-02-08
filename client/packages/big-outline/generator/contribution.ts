@@ -7,11 +7,23 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 import type { LangiumDeclaration } from '@borkdominik-biguml/uml-language-tooling';
+import { Eta } from 'eta';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export function umlToolingContribution(extensionPath: string, declarations: LangiumDeclaration[]): { path: string; content: string }[] {
     const generatedFiles: { path: string; content: string }[] = [];
 
-    // ─── make sure the output dir exists ──────────────────────────────────────────
+    // Initialize Eta with the templates directory
+    const eta = new Eta({ views: path.join(__dirname, 'templates') });
+
+    // Load the template
+    const templatePath = path.join(__dirname, 'templates', 'outline-action-handler.eta');
+    const templateContent = fs.readFileSync(templatePath, 'utf-8');
 
     // ─── helper: find all type-aliases ending with "DiagramElements" ─────────────
     const diagramAliases = declarations.filter(d => d.type === 'type' && d.name?.endsWith('DiagramElements'));
@@ -66,61 +78,15 @@ export function umlToolingContribution(extensionPath: string, declarations: Lang
             })
             .join('\n\n');
 
-        // assemble the handler source
-        const content = `// AUTO-GENERATED – DO NOT EDIT
-/*********************************************************************************
- * Copyright (c) 2025 borkdominik and others.
- *
- * This program and the accompanying materials are made available under the
- * terms of the MIT License which is available at https://opensource.org/licenses/MIT.
- *
- * SPDX-License-Identifier: MIT
- *********************************************************************************/
-import { RequestOutlineAction, SetOutlineAction } from '@borkdominik-biguml/big-outline';
-import { ActionHandler, MaybePromise } from '@eclipse-glsp/server';
-import { inject, injectable } from 'inversify';
-${astImport}
-import { ${shortKey}DiagramModelState } from '@borkdominik-biguml/uml-glsp-server/vscode';
-
-@injectable()
-export class ${className} implements ActionHandler {
-  actionKinds = [RequestOutlineAction.KIND];
-
-  @inject(${shortKey}DiagramModelState)
-  protected modelState!: ${shortKey}DiagramModelState;
-
-  execute(_action: RequestOutlineAction): MaybePromise<any[]> {
-    // only ${fullKey} outlines
-    if (this.modelState.semanticRoot.diagram.diagramType !== '${typeValue}') {
-      return [ SetOutlineAction.create({ outlineTreeNodes: [] }) ];
-    }
-    const root = this.modelState.semanticRoot.diagram;
-    const outlineTreeNodes = [
-      {
-        label: 'Model',
-        semanticUri: root.__id,
-        children: [],
-        iconClass: 'model',
-        isRoot: true
-      }
-    ];
-    const entities = root.entities ?? [];
-    entities.forEach(entity => {
-      const node: any = {
-        label: entity.name,
-        semanticUri: entity.__id,
-        children: [],
-        iconClass: 'element'
-      };
-
-${cases}
-
-      (outlineTreeNodes[0].children as any).push(node);
-    });
-    return [ SetOutlineAction.create({ outlineTreeNodes }) ];
-  }
-}
-`;
+        // Render the template with Eta
+        const content = eta.renderString(templateContent, {
+            shortKey,
+            className,
+            typeValue,
+            fullKey,
+            astImport,
+            cases
+        });
 
         generatedFiles.push({ path: extensionPath + `/glsp-server/handlers/${fileName}`, content });
     }

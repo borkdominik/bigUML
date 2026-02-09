@@ -8,10 +8,22 @@
  *********************************************************************************/
 
 import { type LangiumDeclaration } from '@borkdominik-biguml/uml-language-tooling';
+import { Eta } from 'eta';
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const prefixPath = ['glsp-server', 'handlers'];
+
+// Initialize Eta with the templates directory
+const eta = new Eta({ views: path.join(__dirname, 'templates') });
+
+// Load templates
+const elementTemplateContent = fs.readFileSync(path.join(__dirname, 'templates', 'element-property-palette-handler.eta'), 'utf-8');
+const requestTemplateContent = fs.readFileSync(path.join(__dirname, 'templates', 'request-property-palette-action-handler.eta'), 'utf-8');
 
 export function umlToolingContribution(extensionPath: string, declarations: LangiumDeclaration[]): { path: string; content: string }[] {
     const results: { path: string; content: string }[] = [];
@@ -72,28 +84,14 @@ function renderHandler(decl: LangiumDeclaration): string {
     const glspImport = usesCreateDelete ? `\nimport { CreateNodeOperation, DeleteElementOperation } from '@eclipse-glsp/server';` : '';
     const modelTypesImport = usesModelTypes ? `\nimport { ModelTypes } from '@borkdominik-biguml/uml-glsp-server/vscode';` : '';
 
-    return `// AUTO-GENERATED – DO NOT EDIT
-
-import { SetPropertyPaletteAction } from '@borkdominik-biguml/big-property-palette';${glspImport}
-import { ${name} } from '@borkdominik-biguml/model-server/grammar';${modelTypesImport}
-import { PropertyPalette } from '@borkdominik-biguml/big-property-palette/glsp-server';
-
-export namespace ${name}PropertyPaletteHandler {
-  export function getPropertyPalette(
-    semanticElement: ${name}${sigExtras}
-  ): SetPropertyPaletteAction[] {
-    return [
-      SetPropertyPaletteAction.create(
-        PropertyPalette.builder()
-          .elementId(semanticElement.__id)
-          .label((semanticElement as any).name ?? semanticElement.$type)
-${body}
-          .build()
-      )
-    ];
-  }
-}
-`;
+    // Render the template with Eta
+    return eta.renderString(elementTemplateContent, {
+        name,
+        sigExtras,
+        body,
+        glspImport,
+        modelTypesImport
+    });
 }
 
 function emitBuilderLine(prop: any, _decl: LangiumDeclaration): string | undefined {
@@ -249,59 +247,16 @@ export function writeRequestPropertyPaletteHandlers(
             })
             .join('');
 
-        const content = `// AUTO-GENERATED – DO NOT EDIT
-/*********************************************************************************
- * Copyright (c) 2025 borkdominik and others.
- *
- * This program and the accompanying materials are made available under the
- * terms of the MIT License which is available at https://opensource.org/licenses/MIT.
- *
- * SPDX-License-Identifier: MIT
- *********************************************************************************/
-import { RequestPropertyPaletteAction, SetPropertyPaletteAction } from '@borkdominik-biguml/big-property-palette';
-import { ActionHandler, MaybePromise } from '@eclipse-glsp/server';
-import { inject, injectable } from 'inversify';
-${astImport}
-import { ${modelStateClass} } from '${modelStateImportPath}';
-${handlerImports}
-
-@injectable()
-export class ${className} implements ActionHandler {
-  actionKinds = [RequestPropertyPaletteAction.KIND];
-
-  @inject(${modelStateClass})
-  protected modelState!: ${modelStateClass};
-
-  execute(action: RequestPropertyPaletteAction): MaybePromise<any[]> {
-    try {
-      if (!action.elementId) {
-        return [SetPropertyPaletteAction.create()];
-      }
-      if (typeof action.elementId !== 'string' || action.elementId.endsWith('_refValue')) {
-        return [SetPropertyPaletteAction.create()];
-      }
-
-      let semanticElement: any | undefined;
-      try {
-        semanticElement = this.modelState.index.findIdElement(action.elementId);
-      } catch {
-        return [SetPropertyPaletteAction.create()];
-      }
-      if (!semanticElement) {
-        return [SetPropertyPaletteAction.create()];
-      }
-
-  ${dynamicBuilders}
-
-      if (false) {
-  ${dispatchChain}    }
-        return [SetPropertyPaletteAction.create()];
-      } catch (_e: unknown) { 
-        return [SetPropertyPaletteAction.create()];
-      }
-    }
-  }
-`;
+        // Render the template with Eta
+        const content = eta.renderString(requestTemplateContent, {
+            className,
+            modelStateClass,
+            modelStateImportPath,
+            astImport,
+            handlerImports,
+            dynamicBuilders,
+            dispatchChain
+        });
 
         results.push({ path: path.join(outDir, fileName), content });
         console.log(`Generated ${fileName}`);

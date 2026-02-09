@@ -1,0 +1,21 @@
+// AUTO-GENERATED – DO NOT EDIT
+
+import { SetPropertyPaletteAction } from '@borkdominik-biguml/big-property-palette';<%~ it.glspImport %>
+import { <%~ it.name %> } from '@borkdominik-biguml/model-server/grammar';<%~ it.modelTypesImport %>
+import { PropertyPalette } from '@borkdominik-biguml/big-property-palette/glsp-server';
+
+export namespace <%~ it.name %>PropertyPaletteHandler {
+  export function getPropertyPalette(
+    semanticElement: <%~ it.name %><%~ it.sigExtras %>
+  ): SetPropertyPaletteAction[] {
+    return [
+      SetPropertyPaletteAction.create(
+        PropertyPalette.builder()
+          .elementId(semanticElement.__id)
+          .label((semanticElement as any).name ?? semanticElement.$type)
+<%~ it.body %>
+          .build()
+      )
+    ];
+  }
+}

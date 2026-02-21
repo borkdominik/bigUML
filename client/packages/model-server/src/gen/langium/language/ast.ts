@@ -32,12 +32,12 @@ export function isClassDiagramEdges(item: unknown): item is ClassDiagramEdges {
     return reflection.isInstance(item, ClassDiagramEdges);
 }
 
-export type ClassDiagramElement = ClassDiagramEdges | ClassDiagramNodes;
+export type ClassDiagramElements = ClassDiagramEdges | ClassDiagramNodes;
 
-export const ClassDiagramElement = 'ClassDiagramElement';
+export const ClassDiagramElements = 'ClassDiagramElements';
 
-export function isClassDiagramElement(item: unknown): item is ClassDiagramElement {
-    return reflection.isInstance(item, ClassDiagramElement);
+export function isClassDiagramElements(item: unknown): item is ClassDiagramElements {
+    return reflection.isInstance(item, ClassDiagramElements);
 }
 
 export type ClassDiagramNodes = AbstractClass | Class | DataType | Enumeration | EnumerationLiteral | InstanceSpecification | Interface | LiteralSpecification | Operation | Package | Parameter | PrimitiveType | Property | Slot;
@@ -677,7 +677,7 @@ export type UmlDiagramAstType = {
     Class: Class
     ClassDiagram: ClassDiagram
     ClassDiagramEdges: ClassDiagramEdges
-    ClassDiagramElement: ClassDiagramElement
+    ClassDiagramElements: ClassDiagramElements
     ClassDiagramNodes: ClassDiagramNodes
     Composition: Composition
     DataType: DataType
@@ -717,7 +717,7 @@ export type UmlDiagramAstType = {
 export class UmlDiagramAstReflection extends AbstractAstReflection {
 
     getAllTypes(): string[] {
-        return ['AbstractClass', 'Abstraction', 'Aggregation', 'Association', 'Class', 'ClassDiagram', 'ClassDiagramEdges', 'ClassDiagramElement', 'ClassDiagramNodes', 'Composition', 'DataType', 'DataTypeReference', 'Dependency', 'Diagram', 'Edge', 'Element', 'ElementWithSizeAndPosition', 'Enumeration', 'EnumerationLiteral', 'Generalization', 'InstanceSpecification', 'Interface', 'InterfaceRealization', 'LiteralSpecification', 'MetaInfo', 'Node', 'Operation', 'Package', 'PackageImport', 'PackageMerge', 'Parameter', 'Position', 'PrimitiveType', 'Property', 'Realization', 'Relation', 'Size', 'Slot', 'SlotDefiningFeature', 'Substitution', 'Unbounded', 'Usage'];
+        return ['AbstractClass', 'Abstraction', 'Aggregation', 'Association', 'Class', 'ClassDiagram', 'ClassDiagramEdges', 'ClassDiagramElements', 'ClassDiagramNodes', 'Composition', 'DataType', 'DataTypeReference', 'Dependency', 'Diagram', 'Edge', 'Element', 'ElementWithSizeAndPosition', 'Enumeration', 'EnumerationLiteral', 'Generalization', 'InstanceSpecification', 'Interface', 'InterfaceRealization', 'LiteralSpecification', 'MetaInfo', 'Node', 'Operation', 'Package', 'PackageImport', 'PackageMerge', 'Parameter', 'Position', 'PrimitiveType', 'Property', 'Realization', 'Relation', 'Size', 'Slot', 'SlotDefiningFeature', 'Substitution', 'Unbounded', 'Usage'];
     }
 
     protected override computeIsSubtype(subtype: string, supertype: string): boolean {
@@ -745,7 +745,7 @@ export class UmlDiagramAstReflection extends AbstractAstReflection {
             }
             case ClassDiagramEdges:
             case ClassDiagramNodes: {
-                return this.isSubtype(ClassDiagramElement, supertype);
+                return this.isSubtype(ClassDiagramElements, supertype);
             }
             case DataType:
             case Enumeration:

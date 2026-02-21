@@ -168,7 +168,7 @@ function buildPropertyDescriptor(prop: any): PropertyDescriptor | undefined {
                 `    deleteActions: [DeleteElementOperation.create([e.__id])]`,
                 `}))`
             ].join('\n                            '),
-            createsExpr: `[{ label: 'Create ${label}', action: CreateNodeOperation.create(ModelTypes.${modelConst}, { containerId: semanticElement.__id }) }]`
+            createsExpr: `[{ label: 'Create ${label}', action: CreateNodeOperation.create(ClassDiagramNodeTypes.${modelConst}, { containerId: semanticElement.__id }) }]`
         };
     }
 

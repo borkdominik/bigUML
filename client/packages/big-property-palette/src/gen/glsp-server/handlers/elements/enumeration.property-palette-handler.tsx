@@ -6,7 +6,7 @@ import {
   DeleteElementOperation,
 } from '@eclipse-glsp/server';
 import { type Enumeration } from '@borkdominik-biguml/model-server/grammar';
-import { ModelTypes } from '@borkdominik-biguml/uml-glsp-server/vscode';
+import { ClassDiagramNodeTypes } from '@borkdominik-biguml/uml-glsp-server';
 import {
   PropertyPalette,
   ReferenceProperty,
@@ -45,7 +45,7 @@ export namespace EnumerationPropertyPaletteHandler {
               {
                 label: 'Create Enumeration Literal',
                 action: CreateNodeOperation.create(
-                  ModelTypes.ENUMERATION_LITERAL,
+                  ClassDiagramNodeTypes.ENUMERATION_LITERAL,
                   { containerId: semanticElement.__id },
                 ),
               },

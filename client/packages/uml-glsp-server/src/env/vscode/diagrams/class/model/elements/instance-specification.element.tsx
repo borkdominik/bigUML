@@ -9,13 +9,13 @@
 import type { InstanceSpecification } from '@borkdominik-biguml/model-server/grammar';
 import type { GlspNode } from '@borkdominik-biguml/uml-glsp-jsx';
 import { normalizeChildren } from '@borkdominik-biguml/uml-glsp-jsx';
+import { ClassDiagramNodeTypes } from '@borkdominik-biguml/uml-glsp-server';
 import { type Dimension, type Point } from '@eclipse-glsp/protocol';
 import { GNode, type GModelElement } from '@eclipse-glsp/server';
-import { ModelTypes } from '../model-types.js';
 import { CompartmentHeader } from './shared-components.js';
 
 export class GInstanceSpecificationNode extends GNode {
-    override type = ModelTypes.INSTANCE_SPECIFICATION;
+    override type = ClassDiagramNodeTypes.INSTANCE_SPECIFICATION;
     override layout = 'vbox';
     name: string = 'UNDEFINED CLASS NAME';
 }

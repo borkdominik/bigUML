@@ -9,9 +9,9 @@
 
 import type { GlspNode } from '@borkdominik-biguml/uml-glsp-jsx';
 import { DividerElement, GCompartmentElement, GLabelElement } from '@borkdominik-biguml/uml-glsp-jsx';
+import { CommonModelTypes } from '@borkdominik-biguml/uml-glsp-server';
 import { DefaultTypes } from '@eclipse-glsp/protocol';
 import type { GModelElement } from '@eclipse-glsp/server';
-import { ModelTypes } from '../model-types.js';
 
 // ============================================================================
 // CompartmentHeader — shared header pattern for Class, Interface, DataType, etc.
@@ -40,11 +40,11 @@ export function CompartmentHeader(props: CompartmentHeaderProps): GModelElement 
             layout='vbox'
             layoutOptions={{ hAlign: 'center' }}
         >
-            {isAbstract && !stereotype && <GLabelElement type={ModelTypes.LABEL_TEXT} text='<<abstract>>' />}
+            {isAbstract && !stereotype && <GLabelElement type={CommonModelTypes.LABEL_TEXT} text='<<abstract>>' />}
             {stereotype && (
                 <GLabelElement
                     id={id + '_annotation_label'}
-                    type={ModelTypes.LABEL_TEXT}
+                    type={CommonModelTypes.LABEL_TEXT}
                     text={`<<${stereotype}>>`}
                     cssClasses={stereotypeCssClasses}
                 />
@@ -85,7 +85,7 @@ export function getVisibilitySymbol(visibility: string): string {
 }
 
 export function VisibilityLabel(props: VisibilityLabelProps): GModelElement {
-    return <GLabelElement id={props.id} type={ModelTypes.LABEL_TEXT} text={getVisibilitySymbol(props.visibility)} />;
+    return <GLabelElement id={props.id} type={CommonModelTypes.LABEL_TEXT} text={getVisibilitySymbol(props.visibility)} />;
 }
 
 // ============================================================================
@@ -107,7 +107,7 @@ export function SectionCompartment(props: SectionCompartmentProps): GModelElemen
             layout='vbox'
             layoutOptions={{ hAlign: 'left', resizeContainer: true, hGrab: true }}
         >
-            {props.dividerText && <DividerElement type={props.dividerType ?? ModelTypes.DIVIDER} text={props.dividerText} />}
+            {props.dividerText && <DividerElement type={props.dividerType ?? CommonModelTypes.DIVIDER} text={props.dividerText} />}
             {props.children}
         </GCompartmentElement>
     );

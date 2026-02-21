@@ -6,7 +6,7 @@ import { CreateNodeOperation, DeleteElementOperation } from '@eclipse-glsp/serve
 <% } %>
 import { type <%~ it.name %> } from '@borkdominik-biguml/model-server/grammar';
 <% if (it.needsModelTypes) { %>
-import { ModelTypes } from '@borkdominik-biguml/uml-glsp-server/vscode';
+import { ClassDiagramNodeTypes } from '@borkdominik-biguml/uml-glsp-server';
 <% } %>
 import { <%~ it.componentImports.join(', ') %> } from '@borkdominik-biguml/big-property-palette/glsp-server';
 

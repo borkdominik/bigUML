@@ -14,73 +14,60 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 
-import { DefaultTypes } from '@eclipse-glsp/server';
+import {
+    ClassAstTypes,
+    ClassDiagramEdgeTypes,
+    ClassDiagramModelTypes,
+    ClassDiagramNodeTypes,
+    CommonModelTypes
+} from '@borkdominik-biguml/uml-glsp-server';
 
-// TODO: Haydar
-
+/**
+ * Backwards-compatible `ModelTypes` namespace that merges common model types
+ * with the generated class-diagram-specific node and edge types.
+ */
 export namespace ModelTypes {
-    export const LABEL_HEADING = 'label:heading';
-    export const LABEL_NAME = 'label:name';
-    export const LABEL_TEXT = 'label:text';
-    export const COMP_HEADER = 'comp:header';
-    export const LABEL_ICON = 'label:icon';
-    export const EDGE = 'edge';
-    export const ICON = 'icon';
-    export const DIVIDER = 'divider';
+    // common types
+    export const LABEL_HEADING = CommonModelTypes.LABEL_HEADING;
+    export const LABEL_NAME = CommonModelTypes.LABEL_NAME;
+    export const LABEL_TEXT = CommonModelTypes.LABEL_TEXT;
+    export const COMP_HEADER = CommonModelTypes.COMP_HEADER;
+    export const LABEL_ICON = CommonModelTypes.LABEL_ICON;
+    export const EDGE = CommonModelTypes.EDGE;
+    export const ICON = CommonModelTypes.ICON;
+    export const DIVIDER = CommonModelTypes.DIVIDER;
+    export const STRUCTURE = CommonModelTypes.STRUCTURE;
+    export const MISSING_NODE = CommonModelTypes.MISSING_NODE;
 
-    // container types
-    export const CLASS = representationTypeId('Class', DefaultTypes.NODE, 'Class');
-    export const ABSTRACT_CLASS = representationTypeId('Class', DefaultTypes.NODE, 'AbstractClass'); // class die abstract ist
-    export const DATA_TYPE = representationTypeId('Class', DefaultTypes.NODE, 'DataType');
-    export const ENUMERATION = representationTypeId('Class', DefaultTypes.NODE, 'Enumeration');
-    export const INSTANCE_SPECIFICATION = representationTypeId('Class', DefaultTypes.NODE, 'InstanceSpecification');
-    export const INTERFACE = representationTypeId('Class', DefaultTypes.NODE, 'Interface');
-    export const PACKAGE = representationTypeId('Class', DefaultTypes.NODE, 'Package');
-    export const PRIMITIVE_TYPE = representationTypeId('Class', DefaultTypes.NODE, 'PrimitiveType');
-    // feature types
-    export const PROPERTY = representationTypeId('Class', DefaultTypes.NODE, 'Property');
-    export const OPERATION = representationTypeId('Class', DefaultTypes.NODE, 'Operation');
-    export const PARAMETER = representationTypeId('Class', DefaultTypes.NODE, 'Parameter');
-    export const ENUMERATION_LITERAL = representationTypeId('Class', DefaultTypes.NODE, 'EnumerationLiteral');
-    export const SLOT = representationTypeId('Class', DefaultTypes.NODE, 'Slot');
-    export const LITERAL_SPECIFICATION = representationTypeId('Class', DefaultTypes.NODE, 'LiteralSpecification');
-    // relation types
-    export const ABSTRACTION = representationTypeId('Class', DefaultTypes.EDGE, 'Abstraction');
-    export const AGGREGATION = representationTemplateTypeId('Class', DefaultTypes.EDGE, 'aggregation', 'Association');
-    export const ASSOCIATION = representationTypeId('Class', DefaultTypes.EDGE, 'Association');
-    export const COMPOSITION = representationTemplateTypeId('Class', DefaultTypes.EDGE, 'composition', 'Association');
-    export const DEPENDENCY = representationTypeId('Class', DefaultTypes.EDGE, 'Dependency');
-    export const GENERALIZATION = representationTypeId('Class', DefaultTypes.EDGE, 'Generalization');
-    export const INTERFACE_REALIZATION = representationTypeId('Class', DefaultTypes.EDGE, 'InterfaceRealization');
-    export const INHERITANCE = representationTypeId('Class', DefaultTypes.EDGE, 'Inheritance');
-    export const PACKAGE_IMPORT = representationTypeId('Class', DefaultTypes.EDGE, 'PackageImport');
-    export const PACKAGE_MERGE = representationTypeId('Class', DefaultTypes.EDGE, 'PackageMerge');
-    export const REALIZATION = representationTypeId('Class', DefaultTypes.EDGE, 'Realization');
-    export const SUBSTITUTION = representationTypeId('Class', DefaultTypes.EDGE, 'Substitution');
-    export const USAGE = representationTypeId('Class', DefaultTypes.EDGE, 'Usage');
-
-    export const STRUCTURE = 'struct';
-
-    export const MISSING_NODE = 'missingNode';
+    // container types (nodes)
+    export const CLASS = ClassDiagramNodeTypes.CLASS;
+    export const ABSTRACT_CLASS = ClassDiagramNodeTypes.ABSTRACT_CLASS;
+    export const DATA_TYPE = ClassDiagramNodeTypes.DATA_TYPE;
+    export const ENUMERATION = ClassDiagramNodeTypes.ENUMERATION;
+    export const INSTANCE_SPECIFICATION = ClassDiagramNodeTypes.INSTANCE_SPECIFICATION;
+    export const INTERFACE = ClassDiagramNodeTypes.INTERFACE;
+    export const PACKAGE = ClassDiagramNodeTypes.PACKAGE;
+    export const PRIMITIVE_TYPE = ClassDiagramNodeTypes.PRIMITIVE_TYPE;
+    // feature types (nodes)
+    export const PROPERTY = ClassDiagramNodeTypes.PROPERTY;
+    export const OPERATION = ClassDiagramNodeTypes.OPERATION;
+    export const PARAMETER = ClassDiagramNodeTypes.PARAMETER;
+    export const ENUMERATION_LITERAL = ClassDiagramNodeTypes.ENUMERATION_LITERAL;
+    export const SLOT = ClassDiagramNodeTypes.SLOT;
+    export const LITERAL_SPECIFICATION = ClassDiagramNodeTypes.LITERAL_SPECIFICATION;
+    // relation types (edges)
+    export const ABSTRACTION = ClassDiagramEdgeTypes.ABSTRACTION;
+    export const AGGREGATION = ClassDiagramEdgeTypes.AGGREGATION;
+    export const ASSOCIATION = ClassDiagramEdgeTypes.ASSOCIATION;
+    export const COMPOSITION = ClassDiagramEdgeTypes.COMPOSITION;
+    export const DEPENDENCY = ClassDiagramEdgeTypes.DEPENDENCY;
+    export const GENERALIZATION = ClassDiagramEdgeTypes.GENERALIZATION;
+    export const INTERFACE_REALIZATION = ClassDiagramEdgeTypes.INTERFACE_REALIZATION;
+    export const PACKAGE_IMPORT = ClassDiagramEdgeTypes.PACKAGE_IMPORT;
+    export const PACKAGE_MERGE = ClassDiagramEdgeTypes.PACKAGE_MERGE;
+    export const REALIZATION = ClassDiagramEdgeTypes.REALIZATION;
+    export const SUBSTITUTION = ClassDiagramEdgeTypes.SUBSTITUTION;
+    export const USAGE = ClassDiagramEdgeTypes.USAGE;
 }
 
-function representationTypeId(representation: string, _type: string, name: string): string {
-    return `${representation.toLowerCase()}__${name}`;
-}
-
-function representationTemplateTypeId(representation: string, _type: string, template: string, name: string): string {
-    return `${representation.toLowerCase()}__${template}__${name}`;
-}
-
-export namespace astTypes {
-    export function convertToAst(elementId: string): string {
-        if (elementId === ModelTypes.CLASS || elementId === ModelTypes.ABSTRACT_CLASS) {
-            return 'Class';
-        }
-        return stripPrefix(elementId);
-    }
-
-    function stripPrefix(name: string): string {
-        return name.replace(/^.*?__/, '');
-    }
-}
+export { ClassAstTypes as astTypes, ClassDiagramEdgeTypes, ClassDiagramModelTypes, ClassDiagramNodeTypes };

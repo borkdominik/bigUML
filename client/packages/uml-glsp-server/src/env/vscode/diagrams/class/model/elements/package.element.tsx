@@ -8,13 +8,13 @@
  **********************************************************************************/
 import type { Package } from '@borkdominik-biguml/model-server/grammar';
 import { GCompartmentElement } from '@borkdominik-biguml/uml-glsp-jsx';
+import { ClassDiagramNodeTypes } from '@borkdominik-biguml/uml-glsp-server';
 import { DefaultTypes, type Dimension, type Point } from '@eclipse-glsp/protocol';
 import { GNode, type GModelElement } from '@eclipse-glsp/server';
-import { ModelTypes } from '../model-types.js';
 import { CompartmentHeader } from './shared-components.js';
 
 export class GPackageNode extends GNode {
-    override type = ModelTypes.PACKAGE;
+    override type = ClassDiagramNodeTypes.PACKAGE;
     override layout = 'vbox';
     name: string = 'UNDEFINED CLASS NAME';
     uri: string = 'UNDEFINED URI';

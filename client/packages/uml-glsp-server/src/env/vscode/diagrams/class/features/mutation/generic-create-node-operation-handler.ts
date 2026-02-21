@@ -6,27 +6,27 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
+import { ClassDiagramNodeTypes } from '@borkdominik-biguml/uml-glsp-server';
 import { injectable } from 'inversify';
 import { GenericCreateNodeOperationHandler } from '../../../../features/mutation/handler/generic-create-node-opertation-handler.js';
-import { ModelTypes } from '../../model/model-types.js';
 
 // TODO: Haydar will be removed
 @injectable()
 export class ClassCreateNodeOperationHandler extends GenericCreateNodeOperationHandler {
     readonly elementTypeIds = [
-        ModelTypes.ABSTRACT_CLASS,
-        ModelTypes.CLASS,
-        ModelTypes.DATA_TYPE,
-        ModelTypes.ENUMERATION,
-        ModelTypes.ENUMERATION_LITERAL,
-        ModelTypes.INSTANCE_SPECIFICATION,
-        ModelTypes.INTERFACE,
-        ModelTypes.LITERAL_SPECIFICATION,
-        ModelTypes.OPERATION,
-        ModelTypes.PACKAGE,
-        ModelTypes.PARAMETER,
-        ModelTypes.PRIMITIVE_TYPE,
-        ModelTypes.PROPERTY,
-        ModelTypes.SLOT
+        ClassDiagramNodeTypes.ABSTRACT_CLASS,
+        ClassDiagramNodeTypes.CLASS,
+        ClassDiagramNodeTypes.DATA_TYPE,
+        ClassDiagramNodeTypes.ENUMERATION,
+        ClassDiagramNodeTypes.ENUMERATION_LITERAL,
+        ClassDiagramNodeTypes.INSTANCE_SPECIFICATION,
+        ClassDiagramNodeTypes.INTERFACE,
+        ClassDiagramNodeTypes.LITERAL_SPECIFICATION,
+        ClassDiagramNodeTypes.OPERATION,
+        ClassDiagramNodeTypes.PACKAGE,
+        ClassDiagramNodeTypes.PARAMETER,
+        ClassDiagramNodeTypes.PRIMITIVE_TYPE,
+        ClassDiagramNodeTypes.PROPERTY,
+        ClassDiagramNodeTypes.SLOT
     ];
 }

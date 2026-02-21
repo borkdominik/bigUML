@@ -9,11 +9,11 @@
  ********************************************************************************/
 import type { Slot } from '@borkdominik-biguml/model-server/grammar';
 import { GLabelElement } from '@borkdominik-biguml/uml-glsp-jsx';
+import { ClassDiagramNodeTypes, CommonModelTypes } from '@borkdominik-biguml/uml-glsp-server';
 import { GNode, type GModelElement } from '@eclipse-glsp/server';
-import { ModelTypes } from '../model-types.js';
 
 export class GSlotNode extends GNode {
-    override type = ModelTypes.SLOT;
+    override type = ClassDiagramNodeTypes.SLOT;
     override layout = 'hbox';
 }
 
@@ -32,11 +32,13 @@ export function GSlotNodeElement(props: GSlotNodeElementProps): GModelElement {
     slotNode.cssClasses = [];
     slotNode.children = [];
 
-    const featureLabel = <GLabelElement type={ModelTypes.LABEL_TEXT} text={node.definingFeature?.ref?.name ?? ''} />;
+    const featureLabel = <GLabelElement type={CommonModelTypes.LABEL_TEXT} text={node.definingFeature?.ref?.name ?? ''} />;
     featureLabel.parent = slotNode;
     slotNode.children.push(featureLabel);
 
-    const valuesLabel = <GLabelElement type={ModelTypes.LABEL_TEXT} text={`[${node.values?.map(value => value.value).join(',') ?? ''}]`} />;
+    const valuesLabel = (
+        <GLabelElement type={CommonModelTypes.LABEL_TEXT} text={`[${node.values?.map(value => value.value).join(',') ?? ''}]`} />
+    );
     valuesLabel.parent = slotNode;
     slotNode.children.push(valuesLabel);
 

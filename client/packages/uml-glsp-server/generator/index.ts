@@ -8,3 +8,4 @@
  **********************************************************************************/
 
 export * from './contribution.js';
+export * from './model-types-generator.js';

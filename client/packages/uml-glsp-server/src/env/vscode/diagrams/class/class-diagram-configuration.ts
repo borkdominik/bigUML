@@ -13,6 +13,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
+import { ClassDiagramNodeTypes, CommonModelTypes } from '@borkdominik-biguml/uml-glsp-server';
 import { DefaultTypes, type EdgeTypeHint, type ShapeTypeHint } from '@eclipse-glsp/protocol';
 import {
     type DiagramConfiguration,
@@ -29,88 +30,87 @@ import { GInterfaceNode } from './model/elements/interface.element.js';
 import { GOperationNode } from './model/elements/operation.element.js';
 import { GPackageNode } from './model/elements/package.element.js';
 import { GPropertyNode } from './model/elements/property.element.js';
-import { ModelTypes as types } from './model/model-types.js';
 
 @injectable()
 export class ClassDiagramConfiguration implements DiagramConfiguration {
     get typeMapping(): Map<string, GModelElementConstructor> {
         const mapping = getDefaultMapping();
-        mapping.set(types.LABEL_HEADING, GLabel);
-        mapping.set(types.LABEL_TEXT, GLabel);
-        mapping.set(types.COMP_HEADER, GCompartment);
-        mapping.set(types.LABEL_ICON, GLabel);
-        mapping.set(types.ICON, GCompartment);
-        mapping.set(types.CLASS, GClassNode);
-        mapping.set(types.ABSTRACT_CLASS, GClassNode);
-        mapping.set(types.PROPERTY, GPropertyNode);
-        mapping.set(types.OPERATION, GOperationNode);
-        mapping.set(types.INTERFACE, GInterfaceNode);
-        mapping.set(types.ENUMERATION, GEnumerationNode);
-        mapping.set(types.ENUMERATION_LITERAL, GEnumerationNode);
-        mapping.set(types.PACKAGE, GPackageNode);
+        mapping.set(CommonModelTypes.LABEL_HEADING, GLabel);
+        mapping.set(CommonModelTypes.LABEL_TEXT, GLabel);
+        mapping.set(CommonModelTypes.COMP_HEADER, GCompartment);
+        mapping.set(CommonModelTypes.LABEL_ICON, GLabel);
+        mapping.set(CommonModelTypes.ICON, GCompartment);
+        mapping.set(ClassDiagramNodeTypes.CLASS, GClassNode);
+        mapping.set(ClassDiagramNodeTypes.ABSTRACT_CLASS, GClassNode);
+        mapping.set(ClassDiagramNodeTypes.PROPERTY, GPropertyNode);
+        mapping.set(ClassDiagramNodeTypes.OPERATION, GOperationNode);
+        mapping.set(ClassDiagramNodeTypes.INTERFACE, GInterfaceNode);
+        mapping.set(ClassDiagramNodeTypes.ENUMERATION, GEnumerationNode);
+        mapping.set(ClassDiagramNodeTypes.ENUMERATION_LITERAL, GEnumerationNode);
+        mapping.set(ClassDiagramNodeTypes.PACKAGE, GPackageNode);
         return mapping;
     }
 
     get shapeTypeHints(): ShapeTypeHint[] {
         return [
             {
-                elementTypeId: types.CLASS,
+                elementTypeId: ClassDiagramNodeTypes.CLASS,
                 repositionable: true,
                 deletable: true,
                 resizable: true,
                 reparentable: false,
-                containableElementTypeIds: [types.PROPERTY, types.OPERATION]
+                containableElementTypeIds: [ClassDiagramNodeTypes.PROPERTY, ClassDiagramNodeTypes.OPERATION]
             },
             {
-                elementTypeId: types.PACKAGE,
+                elementTypeId: ClassDiagramNodeTypes.PACKAGE,
                 repositionable: true,
                 deletable: true,
                 resizable: true,
                 reparentable: false,
                 containableElementTypeIds: [
-                    types.ABSTRACT_CLASS,
-                    types.CLASS,
-                    types.DATA_TYPE,
-                    types.ENUMERATION,
-                    types.INTERFACE,
-                    types.PACKAGE,
-                    types.PRIMITIVE_TYPE
+                    ClassDiagramNodeTypes.ABSTRACT_CLASS,
+                    ClassDiagramNodeTypes.CLASS,
+                    ClassDiagramNodeTypes.DATA_TYPE,
+                    ClassDiagramNodeTypes.ENUMERATION,
+                    ClassDiagramNodeTypes.INTERFACE,
+                    ClassDiagramNodeTypes.PACKAGE,
+                    ClassDiagramNodeTypes.PRIMITIVE_TYPE
                 ]
             },
             {
-                elementTypeId: types.ABSTRACT_CLASS,
+                elementTypeId: ClassDiagramNodeTypes.ABSTRACT_CLASS,
                 repositionable: true,
                 deletable: true,
                 resizable: true,
                 reparentable: false,
-                containableElementTypeIds: [types.PROPERTY, types.OPERATION]
+                containableElementTypeIds: [ClassDiagramNodeTypes.PROPERTY, ClassDiagramNodeTypes.OPERATION]
             },
             {
-                elementTypeId: types.INTERFACE,
+                elementTypeId: ClassDiagramNodeTypes.INTERFACE,
                 repositionable: true,
                 deletable: true,
                 resizable: true,
                 reparentable: false,
-                containableElementTypeIds: [types.PROPERTY, types.OPERATION]
+                containableElementTypeIds: [ClassDiagramNodeTypes.PROPERTY, ClassDiagramNodeTypes.OPERATION]
             },
             {
-                elementTypeId: types.ENUMERATION,
+                elementTypeId: ClassDiagramNodeTypes.ENUMERATION,
                 repositionable: true,
                 deletable: true,
                 resizable: true,
                 reparentable: false,
-                containableElementTypeIds: [types.ENUMERATION_LITERAL]
+                containableElementTypeIds: [ClassDiagramNodeTypes.ENUMERATION_LITERAL]
             },
             {
-                elementTypeId: types.INSTANCE_SPECIFICATION,
+                elementTypeId: ClassDiagramNodeTypes.INSTANCE_SPECIFICATION,
                 repositionable: true,
                 deletable: true,
                 resizable: true,
                 reparentable: false,
-                containableElementTypeIds: [types.SLOT]
+                containableElementTypeIds: [ClassDiagramNodeTypes.SLOT]
             },
             {
-                elementTypeId: types.PRIMITIVE_TYPE,
+                elementTypeId: ClassDiagramNodeTypes.PRIMITIVE_TYPE,
                 repositionable: true,
                 deletable: true,
                 resizable: true,
@@ -118,7 +118,7 @@ export class ClassDiagramConfiguration implements DiagramConfiguration {
                 containableElementTypeIds: []
             },
             {
-                elementTypeId: types.SLOT,
+                elementTypeId: ClassDiagramNodeTypes.SLOT,
                 repositionable: false,
                 deletable: true,
                 resizable: true,
@@ -126,7 +126,7 @@ export class ClassDiagramConfiguration implements DiagramConfiguration {
                 containableElementTypeIds: []
             },
             {
-                elementTypeId: types.ENUMERATION_LITERAL,
+                elementTypeId: ClassDiagramNodeTypes.ENUMERATION_LITERAL,
                 repositionable: false,
                 deletable: true,
                 resizable: true,
@@ -134,7 +134,7 @@ export class ClassDiagramConfiguration implements DiagramConfiguration {
                 containableElementTypeIds: []
             },
             {
-                elementTypeId: types.OPERATION,
+                elementTypeId: ClassDiagramNodeTypes.OPERATION,
                 repositionable: false,
                 deletable: true,
                 resizable: true,
@@ -142,7 +142,7 @@ export class ClassDiagramConfiguration implements DiagramConfiguration {
                 containableElementTypeIds: []
             },
             {
-                elementTypeId: types.PROPERTY,
+                elementTypeId: ClassDiagramNodeTypes.PROPERTY,
                 repositionable: false,
                 deletable: true,
                 resizable: true,
@@ -177,7 +177,7 @@ export function createDefaultEdgeTypeHint(elementId: string): EdgeTypeHint {
         repositionable: true,
         deletable: true,
         routable: true,
-        sourceElementTypeIds: [types.CLASS, types.ABSTRACT_CLASS, types.INTERFACE],
-        targetElementTypeIds: [types.CLASS, types.ABSTRACT_CLASS, types.INTERFACE]
+        sourceElementTypeIds: [ClassDiagramNodeTypes.CLASS, ClassDiagramNodeTypes.ABSTRACT_CLASS, ClassDiagramNodeTypes.INTERFACE],
+        targetElementTypeIds: [ClassDiagramNodeTypes.CLASS, ClassDiagramNodeTypes.ABSTRACT_CLASS, ClassDiagramNodeTypes.INTERFACE]
     };
 }

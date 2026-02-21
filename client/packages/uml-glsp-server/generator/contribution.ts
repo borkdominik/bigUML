@@ -11,6 +11,7 @@ import { type LangiumDeclaration } from '@borkdominik-biguml/uml-language-toolin
 import path from 'path';
 import { buildCreationPathMapping, writeCreationPathFile } from './creation-path-generator.js';
 import { buildDefaultValueMapping, writeDefaultValueFile } from './default-value-generator.js';
+import { buildModelTypes } from './model-types-generator.js';
 
 export function umlToolingContribution(extensionPath: string, declarations: LangiumDeclaration[]): { path: string; content: string }[] {
     const results: { path: string; content: string }[] = [];
@@ -24,6 +25,9 @@ export function umlToolingContribution(extensionPath: string, declarations: Lang
     const defaultMapping = buildDefaultValueMapping(declarations);
     const defaultValueContent = writeDefaultValueFile(defaultMapping);
     results.push({ path: path.join(glspRoot, 'getDefaultValue.ts'), content: defaultValueContent });
+
+    const modelTypesFiles = buildModelTypes(extensionPath, declarations);
+    results.push(...modelTypesFiles);
 
     return results;
 }

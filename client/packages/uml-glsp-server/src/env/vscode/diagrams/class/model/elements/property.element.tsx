@@ -9,13 +9,13 @@
  ********************************************************************************/
 import type { Property } from '@borkdominik-biguml/model-server/grammar';
 import { GCompartmentElement, GLabelElement } from '@borkdominik-biguml/uml-glsp-jsx';
+import { ClassDiagramNodeTypes, CommonModelTypes } from '@borkdominik-biguml/uml-glsp-server';
 import { DefaultTypes } from '@eclipse-glsp/protocol';
 import { GNode, type GModelElement } from '@eclipse-glsp/server';
-import { ModelTypes } from '../model-types.js';
 import { getVisibilitySymbol, InlineCompartment } from './shared-components.js';
 
 export class GPropertyNode extends GNode {
-    override type = ModelTypes.PROPERTY;
+    override type = ClassDiagramNodeTypes.PROPERTY;
     name: string = 'UNDEFINED PROPERTY NAME';
     propertyType?: string;
     visibility: string = 'PUBLIC';
@@ -49,8 +49,8 @@ export function GPropertyNodeElement(props: GPropertyNodeElementProps): GModelEl
     // Left side: visibility + name
     const leftSide = (
         <InlineCompartment id={id + '_count_context_1'}>
-            <GLabelElement id={id + '_count_context_2'} type={ModelTypes.LABEL_TEXT} text={getVisibilitySymbol(visibility)} />
-            <GLabelElement id={id + '_name_label'} type={ModelTypes.LABEL_NAME} text={node.name!} args={{ highlight: true }} />
+            <GLabelElement id={id + '_count_context_2'} type={CommonModelTypes.LABEL_TEXT} text={getVisibilitySymbol(visibility)} />
+            <GLabelElement id={id + '_name_label'} type={CommonModelTypes.LABEL_NAME} text={node.name!} args={{ highlight: true }} />
         </InlineCompartment>
     );
     leftSide.parent = propNode;
@@ -59,7 +59,7 @@ export function GPropertyNodeElement(props: GPropertyNodeElementProps): GModelEl
     // Right side: : type multiplicity (only if type exists)
     const rightSideChildren: GModelElement[] = [];
     if (propertyTypeName) {
-        const colonLabel = <GLabelElement type={ModelTypes.LABEL_TEXT} text=':' />;
+        const colonLabel = <GLabelElement type={CommonModelTypes.LABEL_TEXT} text=':' />;
         const detailComp = (
             <GCompartmentElement
                 type={DefaultTypes.COMPARTMENT}
@@ -73,8 +73,8 @@ export function GPropertyNodeElement(props: GPropertyNodeElementProps): GModelEl
                     resizeContainer: true
                 }}
             >
-                <GLabelElement type={ModelTypes.LABEL_TEXT} text={propertyTypeName} />
-                {multiplicity !== '1' ? <GLabelElement type={ModelTypes.LABEL_TEXT} text={multiplicity} /> : null}
+                <GLabelElement type={CommonModelTypes.LABEL_TEXT} text={propertyTypeName} />
+                {multiplicity !== '1' ? <GLabelElement type={CommonModelTypes.LABEL_TEXT} text={multiplicity} /> : null}
             </GCompartmentElement>
         );
         rightSideChildren.push(colonLabel, detailComp);

@@ -9,13 +9,13 @@
  ********************************************************************************/
 import type { Operation } from '@borkdominik-biguml/model-server/grammar';
 import { GCompartmentElement, GLabelElement } from '@borkdominik-biguml/uml-glsp-jsx';
+import { ClassDiagramNodeTypes, CommonModelTypes } from '@borkdominik-biguml/uml-glsp-server';
 import { DefaultTypes } from '@eclipse-glsp/protocol';
 import { GNode, type GModelElement } from '@eclipse-glsp/server';
-import { ModelTypes } from '../model-types.js';
 import { getVisibilitySymbol, InlineCompartment } from './shared-components.js';
 
 export class GOperationNode extends GNode {
-    override type = ModelTypes.OPERATION;
+    override type = ClassDiagramNodeTypes.OPERATION;
     name: string = 'UNDEFINED PROPERTY NAME';
     returnType: string = 'UNDEFINED';
     visibility: string = 'PUBLIC';
@@ -54,10 +54,10 @@ export function GOperationNodeElement(props: GOperationNodeElementProps): GModel
     // Left side: visibility + name(params)
     const leftSide = (
         <InlineCompartment id={id + '_count_context_4'}>
-            <GLabelElement id={id + '_count_context_5'} type={ModelTypes.LABEL_TEXT} text={getVisibilitySymbol(visibility)} />
+            <GLabelElement id={id + '_count_context_5'} type={CommonModelTypes.LABEL_TEXT} text={getVisibilitySymbol(visibility)} />
             <GLabelElement
                 id={id + '_name_label'}
-                type={ModelTypes.LABEL_NAME}
+                type={CommonModelTypes.LABEL_NAME}
                 text={node.name + '(' + formatParamList(parameterList) + ')'}
                 args={{ highlight: true }}
             />

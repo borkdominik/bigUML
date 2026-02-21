@@ -9,6 +9,7 @@
 
 import { createRandomUUID, findAvailableNodeName, type SerializedPatchValue } from '@borkdominik-biguml/model-server';
 import type { MetaInfo, Node } from '@borkdominik-biguml/model-server/grammar';
+import { ClassAstTypes } from '@borkdominik-biguml/uml-glsp-server';
 import {
     type Command,
     CreateNodeOperation,
@@ -21,7 +22,6 @@ import type * as jsonpatch from 'fast-json-patch';
 import { URI } from 'vscode-uri';
 import { getCreationPath } from '../../../../../gen/vscode/getCreationPath.js';
 import { getProperties, isNoBounds } from '../../../../../gen/vscode/getDefaultValue.js';
-import { astTypes } from '../../../diagrams/class/model/model-types.js';
 import { ModelPatchCommand } from '../../command/model-patch-command.js';
 import { GridSnapper } from '../../grid/grid-snapper.js';
 import { type BaseDiagramModelState } from '../../model/base-diagram-model-state.js';
@@ -51,7 +51,7 @@ export abstract class GenericCreateNodeOperationHandler extends OperationHandler
         const newName = findAvailableNodeName(this.modelState.semanticRoot, 'New' + this.stripPrefix(operation.elementTypeId));
         const id = createRandomUUID();
         const containerPath = this.resolveContainerPath(operation);
-        const astType = astTypes.convertToAst(operation.elementTypeId) as Node['$type'];
+        const astType = ClassAstTypes.convertToAst(operation.elementTypeId) as Node['$type'];
 
         const nodeValue: any = {
             $type: astType,

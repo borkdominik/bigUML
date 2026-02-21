@@ -6,9 +6,9 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
+import { UpdateOperation } from '@borkdominik-biguml/uml-glsp-server';
 import { type Command, OperationHandler } from '@eclipse-glsp/server';
 import { injectable } from 'inversify';
-import { UpdateOperation } from '../../../../common/operations/update-operation.js';
 import { ModelPatchCommand } from '../../command/model-patch-command.js';
 import { type BaseDiagramModelState } from '../../model/base-diagram-model-state.js';
 

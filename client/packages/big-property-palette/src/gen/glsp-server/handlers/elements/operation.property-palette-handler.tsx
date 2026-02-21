@@ -6,7 +6,7 @@ import {
   DeleteElementOperation,
 } from '@eclipse-glsp/server';
 import { type Operation } from '@borkdominik-biguml/model-server/grammar';
-import { ModelTypes } from '@borkdominik-biguml/uml-glsp-server/vscode';
+import { ClassDiagramNodeTypes } from '@borkdominik-biguml/uml-glsp-server';
 import {
   BoolProperty,
   ChoiceProperty,
@@ -79,9 +79,10 @@ export namespace OperationPropertyPaletteHandler {
             creates={[
               {
                 label: 'Create Parameter',
-                action: CreateNodeOperation.create(ModelTypes.PARAMETER, {
-                  containerId: semanticElement.__id,
-                }),
+                action: CreateNodeOperation.create(
+                  ClassDiagramNodeTypes.PARAMETER,
+                  { containerId: semanticElement.__id },
+                ),
               },
             ]}
           />

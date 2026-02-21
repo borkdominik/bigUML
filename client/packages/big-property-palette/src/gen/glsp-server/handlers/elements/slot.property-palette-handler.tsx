@@ -6,7 +6,7 @@ import {
   DeleteElementOperation,
 } from '@eclipse-glsp/server';
 import { type Slot } from '@borkdominik-biguml/model-server/grammar';
-import { ModelTypes } from '@borkdominik-biguml/uml-glsp-server/vscode';
+import { ClassDiagramNodeTypes } from '@borkdominik-biguml/uml-glsp-server';
 import {
   ChoiceProperty,
   PropertyPalette,
@@ -59,7 +59,7 @@ export namespace SlotPropertyPaletteHandler {
               {
                 label: 'Create Literal Specification',
                 action: CreateNodeOperation.create(
-                  ModelTypes.LITERAL_SPECIFICATION,
+                  ClassDiagramNodeTypes.LITERAL_SPECIFICATION,
                   { containerId: semanticElement.__id },
                 ),
               },

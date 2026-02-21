@@ -6,10 +6,10 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
+import { ClassDiagramNodeTypes } from '@borkdominik-biguml/uml-glsp-server';
 import { inject, injectable } from 'inversify';
 import { AbstractDiagramContextMenuItemProvider, type CreateNodeDescriptor } from '../../../../features/index.js';
 import { ClassDiagramModelState } from '../../model/class-diagram-model-state.js';
-import { ModelTypes } from '../../model/model-types.js';
 
 // TODO: Remove
 @injectable()
@@ -19,7 +19,7 @@ export class ClassDiagramContextMenuItemProvider extends AbstractDiagramContextM
 
     protected getCreateNodeDescriptors(): CreateNodeDescriptor[] {
         return [
-            { id: 'newClass', label: 'Class', elementTypeId: ModelTypes.CLASS, icon: 'fa-class' }
+            { id: 'newClass', label: 'Class', elementTypeId: ClassDiagramNodeTypes.CLASS, icon: 'fa-class' }
             // Add more later if needed
         ];
     }

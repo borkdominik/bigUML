@@ -7,13 +7,13 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 import type { PrimitiveType } from '@borkdominik-biguml/model-server/grammar';
+import { ClassDiagramNodeTypes } from '@borkdominik-biguml/uml-glsp-server';
 import { type Dimension, type Point } from '@eclipse-glsp/protocol';
 import { GNode, type GModelElement } from '@eclipse-glsp/server';
-import { ModelTypes } from '../model-types.js';
 import { CompartmentHeader } from './shared-components.js';
 
 export class GPrimitiveTypeNode extends GNode {
-    override type = ModelTypes.PRIMITIVE_TYPE;
+    override type = ClassDiagramNodeTypes.PRIMITIVE_TYPE;
     override layout = 'vbox';
     name: string = 'UNDEFINED DataType NAME';
 }

@@ -244,7 +244,7 @@
       }
     ],
     "extends": [],
-    "name": "ClassDiagramElement"
+    "name": "ClassDiagramElements"
   },
   {
     "type": "type",

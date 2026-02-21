@@ -6,7 +6,7 @@ import {
   DeleteElementOperation,
 } from '@eclipse-glsp/server';
 import { type InstanceSpecification } from '@borkdominik-biguml/model-server/grammar';
-import { ModelTypes } from '@borkdominik-biguml/uml-glsp-server/vscode';
+import { ClassDiagramNodeTypes } from '@borkdominik-biguml/uml-glsp-server';
 import {
   ChoiceProperty,
   PropertyPalette,
@@ -53,7 +53,7 @@ export namespace InstanceSpecificationPropertyPaletteHandler {
             creates={[
               {
                 label: 'Create Slot',
-                action: CreateNodeOperation.create(ModelTypes.SLOT, {
+                action: CreateNodeOperation.create(ClassDiagramNodeTypes.SLOT, {
                   containerId: semanticElement.__id,
                 }),
               },

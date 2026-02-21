@@ -8,5 +8,5 @@
     "jsx": "react-jsx",
     "jsxImportSource": "@borkdominik-biguml/uml-glsp-jsx"
   },
-  "include": ["../src/env/common", "../src/env/vscode", "../src/gen/vscode"]
+  "include": ["../src/env/common", "../src/env/vscode", "../src/gen/common", "../src/gen/vscode"]
 }

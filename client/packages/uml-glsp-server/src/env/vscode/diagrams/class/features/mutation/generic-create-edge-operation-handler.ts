@@ -6,25 +6,25 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
+import { ClassDiagramEdgeTypes } from '@borkdominik-biguml/uml-glsp-server';
 import { injectable } from 'inversify';
 import { GenericCreateEdgeOperationHandler } from '../../../../features/mutation/handler/generic-create-edge-operation-handler.js';
-import { ModelTypes } from '../../model/model-types.js';
 
 // TODO: Haydar will be removed
 @injectable()
 export class ClassCreateEdgeOperationHandler extends GenericCreateEdgeOperationHandler {
     readonly elementTypeIds = [
-        ModelTypes.ABSTRACTION,
-        ModelTypes.AGGREGATION,
-        ModelTypes.ASSOCIATION,
-        ModelTypes.COMPOSITION,
-        ModelTypes.DEPENDENCY,
-        ModelTypes.GENERALIZATION,
-        ModelTypes.INTERFACE_REALIZATION,
-        ModelTypes.PACKAGE_IMPORT,
-        ModelTypes.PACKAGE_MERGE,
-        ModelTypes.REALIZATION,
-        ModelTypes.SUBSTITUTION,
-        ModelTypes.USAGE
+        ClassDiagramEdgeTypes.ABSTRACTION,
+        ClassDiagramEdgeTypes.AGGREGATION,
+        ClassDiagramEdgeTypes.ASSOCIATION,
+        ClassDiagramEdgeTypes.COMPOSITION,
+        ClassDiagramEdgeTypes.DEPENDENCY,
+        ClassDiagramEdgeTypes.GENERALIZATION,
+        ClassDiagramEdgeTypes.INTERFACE_REALIZATION,
+        ClassDiagramEdgeTypes.PACKAGE_IMPORT,
+        ClassDiagramEdgeTypes.PACKAGE_MERGE,
+        ClassDiagramEdgeTypes.REALIZATION,
+        ClassDiagramEdgeTypes.SUBSTITUTION,
+        ClassDiagramEdgeTypes.USAGE
     ];
 }

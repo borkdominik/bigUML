@@ -70,8 +70,8 @@ import {
   isUsage,
   Package,
   isPackage,
-  ClassDiagramElement,
-  isClassDiagramElement,
+  ClassDiagramElements,
+  isClassDiagramElements,
   ClassDiagramNodes,
   isClassDiagramNodes,
   ClassDiagramEdges,
@@ -1310,7 +1310,7 @@ export class UmlDiagramSerializer
     return "{" + str.join(",\n") + "}";
   }
 
-  serializeClassDiagramElement(element: ClassDiagramElement): any {
+  serializeClassDiagramElements(element: ClassDiagramElements): any {
     if (isClassDiagramNodes(element)) {
       return this.serializeClassDiagramNodes(element);
     }

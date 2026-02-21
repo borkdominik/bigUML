@@ -10204,7 +10204,7 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
     },
     {
       "$type": "ParserRule",
-      "name": "ClassDiagramElement",
+      "name": "ClassDiagramElements",
       "definition": {
         "$type": "Alternatives",
         "elements": [

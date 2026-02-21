@@ -8,11 +8,11 @@
  **********************************************************************************/
 import type { EnumerationLiteral } from '@borkdominik-biguml/model-server/grammar';
 import { GLabelElement } from '@borkdominik-biguml/uml-glsp-jsx';
+import { ClassDiagramNodeTypes, CommonModelTypes } from '@borkdominik-biguml/uml-glsp-server';
 import { GNode, type GModelElement } from '@eclipse-glsp/server';
-import { ModelTypes } from '../model-types.js';
 
 export class GEnumerationLiteralNode extends GNode {
-    override type = ModelTypes.ENUMERATION_LITERAL;
+    override type = ClassDiagramNodeTypes.ENUMERATION_LITERAL;
     override layout = 'hbox';
     name: string = 'UNDEFINED ENUMERATION LITERAL NAME';
 }
@@ -33,7 +33,9 @@ export function GEnumerationLiteralNodeElement(props: GEnumerationLiteralNodeEle
     litNode.cssClasses = [];
     litNode.children = [];
 
-    const nameLabel = <GLabelElement id={id + '_name_label'} type={ModelTypes.LABEL_NAME} text={node.name} args={{ highlight: true }} />;
+    const nameLabel = (
+        <GLabelElement id={id + '_name_label'} type={CommonModelTypes.LABEL_NAME} text={node.name} args={{ highlight: true }} />
+    );
     nameLabel.parent = litNode;
     litNode.children.push(nameLabel);
 

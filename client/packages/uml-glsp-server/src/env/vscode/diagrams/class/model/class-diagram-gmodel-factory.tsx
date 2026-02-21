@@ -24,6 +24,7 @@ import {
     isPackage
 } from '@borkdominik-biguml/model-server/grammar';
 import { GEdgeElement, GGraphElement, GLabelElement } from '@borkdominik-biguml/uml-glsp-jsx';
+import { ClassDiagramEdgeTypes, CommonModelTypes } from '@borkdominik-biguml/uml-glsp-server';
 import { type GEdge, type GGraph, type GModelElement, type GModelFactory } from '@eclipse-glsp/server';
 import { inject, injectable } from 'inversify';
 import { ClassDiagramModelIndex } from './class-diagram-model-index.js';
@@ -40,7 +41,6 @@ import { GPrimitiveTypeNodeElement } from './elements/primitive-type.element.js'
 import { GPropertyNodeElement } from './elements/property.element.js';
 import { SectionCompartment } from './elements/shared-components.js';
 import { GSlotNodeElement } from './elements/slot.element.js';
-import { ModelTypes } from './model-types.js';
 
 @injectable()
 export class ClassDiagramGModelFactory implements GModelFactory {
@@ -289,7 +289,7 @@ export class ClassDiagramGModelFactory implements GModelFactory {
         } else {
             cssClasses.push('uml-edge-dashed', 'marker-tent-end');
             args.edgePadding = 10;
-            labelChild = <GLabelElement type={ModelTypes.LABEL_TEXT} text='<<abstraction>>' />;
+            labelChild = <GLabelElement type={CommonModelTypes.LABEL_TEXT} text='<<abstraction>>' />;
         }
 
         return (
@@ -309,31 +309,31 @@ export class ClassDiagramGModelFactory implements GModelFactory {
     private getElementTypeIdFromRelationType(relationType: string): string {
         switch (relationType) {
             case 'ABSRACTION':
-                return ModelTypes.ABSTRACTION;
+                return ClassDiagramEdgeTypes.ABSTRACTION;
             case 'AGGREGRATION':
-                return ModelTypes.AGGREGATION;
+                return ClassDiagramEdgeTypes.AGGREGATION;
             case 'ASSOCIATION':
-                return ModelTypes.ASSOCIATION;
+                return ClassDiagramEdgeTypes.ASSOCIATION;
             case 'COMPOSITION':
-                return ModelTypes.COMPOSITION;
+                return ClassDiagramEdgeTypes.COMPOSITION;
             case 'DEPENDENCY':
-                return ModelTypes.DEPENDENCY;
+                return ClassDiagramEdgeTypes.DEPENDENCY;
             case 'GENERALIZATION':
-                return ModelTypes.GENERALIZATION;
+                return ClassDiagramEdgeTypes.GENERALIZATION;
             case 'INTERFACE_REALIZATION':
-                return ModelTypes.INTERFACE_REALIZATION;
+                return ClassDiagramEdgeTypes.INTERFACE_REALIZATION;
             case 'PACKAGE_IMPORT':
-                return ModelTypes.PACKAGE_IMPORT;
+                return ClassDiagramEdgeTypes.PACKAGE_IMPORT;
             case 'PACKAGE_MERGE':
-                return ModelTypes.PACKAGE_MERGE;
+                return ClassDiagramEdgeTypes.PACKAGE_MERGE;
             case 'REALIZATION':
-                return ModelTypes.REALIZATION;
+                return ClassDiagramEdgeTypes.REALIZATION;
             case 'SUBSTITUTION':
-                return ModelTypes.SUBSTITUTION;
+                return ClassDiagramEdgeTypes.SUBSTITUTION;
             case 'USAGE':
-                return ModelTypes.USAGE;
+                return ClassDiagramEdgeTypes.USAGE;
             default:
-                return ModelTypes.ASSOCIATION;
+                return ClassDiagramEdgeTypes.ASSOCIATION;
         }
     }
 }

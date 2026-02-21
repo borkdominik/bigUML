@@ -6,7 +6,7 @@ import {
   DeleteElementOperation,
 } from '@eclipse-glsp/server';
 import { type DataType } from '@borkdominik-biguml/model-server/grammar';
-import { ModelTypes } from '@borkdominik-biguml/uml-glsp-server/vscode';
+import { ClassDiagramNodeTypes } from '@borkdominik-biguml/uml-glsp-server';
 import {
   BoolProperty,
   ChoiceProperty,
@@ -47,9 +47,10 @@ export namespace DataTypePropertyPaletteHandler {
             creates={[
               {
                 label: 'Create Property',
-                action: CreateNodeOperation.create(ModelTypes.PROPERTY, {
-                  containerId: semanticElement.__id,
-                }),
+                action: CreateNodeOperation.create(
+                  ClassDiagramNodeTypes.PROPERTY,
+                  { containerId: semanticElement.__id },
+                ),
               },
             ]}
           />
@@ -68,9 +69,10 @@ export namespace DataTypePropertyPaletteHandler {
             creates={[
               {
                 label: 'Create Operation',
-                action: CreateNodeOperation.create(ModelTypes.OPERATION, {
-                  containerId: semanticElement.__id,
-                }),
+                action: CreateNodeOperation.create(
+                  ClassDiagramNodeTypes.OPERATION,
+                  { containerId: semanticElement.__id },
+                ),
               },
             ]}
           />

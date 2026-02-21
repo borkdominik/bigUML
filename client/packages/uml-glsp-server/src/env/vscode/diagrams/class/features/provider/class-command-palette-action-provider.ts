@@ -6,12 +6,12 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
+import { ClassDiagramNodeTypes } from '@borkdominik-biguml/uml-glsp-server';
 import { CreateNodeOperation, type LabeledAction, type Point } from '@eclipse-glsp/server';
 import { inject, injectable } from 'inversify';
 import { AbstractDiagramCommandPaletteActionProvider } from '../../../../features/index.js';
 import { ClassDiagramModelState } from '../../model/class-diagram-model-state.js';
 import { GClassNode } from '../../model/elements/class.element.js';
-import { ModelTypes } from '../../model/model-types.js';
 
 // TODO: Remove
 @injectable()
@@ -28,17 +28,17 @@ export class ClassDiagramCommandPaletteActionProvider extends AbstractDiagramCom
         return [
             {
                 label: 'Create Class',
-                actions: [CreateNodeOperation.create(ModelTypes.CLASS, { location })],
+                actions: [CreateNodeOperation.create(ClassDiagramNodeTypes.CLASS, { location })],
                 icon: 'fa-plus-square'
             },
             {
                 label: 'Create Abstract Class',
-                actions: [CreateNodeOperation.create(ModelTypes.ABSTRACT_CLASS, { location })],
+                actions: [CreateNodeOperation.create(ClassDiagramNodeTypes.ABSTRACT_CLASS, { location })],
                 icon: 'fa-plus-square'
             },
             {
                 label: 'Create Property',
-                actions: [CreateNodeOperation.create(ModelTypes.PROPERTY, { location })],
+                actions: [CreateNodeOperation.create(ClassDiagramNodeTypes.PROPERTY, { location })],
                 icon: 'fa-plus-square'
             }
         ];

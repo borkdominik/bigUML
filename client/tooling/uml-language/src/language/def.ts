@@ -69,7 +69,7 @@ class ClassDiagram {
   relations?: Array<ClassDiagramEdges>;
 }
 
-type ClassDiagramElement = ClassDiagramNodes | ClassDiagramEdges;
+type ClassDiagramElements = ClassDiagramNodes | ClassDiagramEdges;
 
 type ClassDiagramNodes =
   | Enumeration

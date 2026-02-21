@@ -24,12 +24,28 @@ export function isAggregationType(item: unknown): item is AggregationType {
     return item === 'NONE' || item === 'SHARED' || item === 'COMPOSITE';
 }
 
-export type ClassDiagramElements = AbstractClass | Abstraction | Aggregation | Association | Class | Composition | DataType | Dependency | Enumeration | EnumerationLiteral | Generalization | InstanceSpecification | Interface | InterfaceRealization | LiteralSpecification | Operation | Package | PackageImport | PackageMerge | Parameter | PrimitiveType | Property | Realization | Relation | Slot | Substitution | Usage;
+export type ClassDiagramEdges = Abstraction | Aggregation | Association | Composition | Dependency | Generalization | InterfaceRealization | PackageImport | PackageMerge | Realization | Relation | Substitution | Usage;
 
-export const ClassDiagramElements = 'ClassDiagramElements';
+export const ClassDiagramEdges = 'ClassDiagramEdges';
 
-export function isClassDiagramElements(item: unknown): item is ClassDiagramElements {
-    return reflection.isInstance(item, ClassDiagramElements);
+export function isClassDiagramEdges(item: unknown): item is ClassDiagramEdges {
+    return reflection.isInstance(item, ClassDiagramEdges);
+}
+
+export type ClassDiagramElement = ClassDiagramEdges | ClassDiagramNodes;
+
+export const ClassDiagramElement = 'ClassDiagramElement';
+
+export function isClassDiagramElement(item: unknown): item is ClassDiagramElement {
+    return reflection.isInstance(item, ClassDiagramElement);
+}
+
+export type ClassDiagramNodes = AbstractClass | Class | DataType | Enumeration | EnumerationLiteral | InstanceSpecification | Interface | LiteralSpecification | Operation | Package | Parameter | PrimitiveType | Property | Slot;
+
+export const ClassDiagramNodes = 'ClassDiagramNodes';
+
+export function isClassDiagramNodes(item: unknown): item is ClassDiagramNodes {
+    return reflection.isInstance(item, ClassDiagramNodes);
 }
 
 export type Concurrency = 'CONCURRENT' | 'GUARDED' | 'SEQUENTIAL';
@@ -92,14 +108,6 @@ export function isNode(item: unknown): item is Node {
     return reflection.isInstance(item, Node);
 }
 
-export type PackageDiagramElements = Abstraction | Class | Dependency | Package | PackageImport | PackageMerge | Usage;
-
-export const PackageDiagramElements = 'PackageDiagramElements';
-
-export function isPackageDiagramElements(item: unknown): item is PackageDiagramElements {
-    return reflection.isInstance(item, PackageDiagramElements);
-}
-
 export type ParameterDirection = 'IN' | 'INOUT' | 'OUT' | 'RETURN';
 
 export function isParameterDirection(item: unknown): item is ParameterDirection {
@@ -128,14 +136,6 @@ export function isUnbounded(item: unknown): item is Unbounded {
     return reflection.isInstance(item, Unbounded);
 }
 
-export type UnionType_0 = ClassDiagram | PackageDiagram | StateMachineDiagram;
-
-export const UnionType_0 = 'UnionType_0';
-
-export function isUnionType_0(item: unknown): item is UnionType_0 {
-    return reflection.isInstance(item, UnionType_0);
-}
-
 export type Visibility = 'PACKAGE' | 'PRIVATE' | 'PROTECTED' | 'PUBLIC';
 
 export function isVisibility(item: unknown): item is Visibility {
@@ -143,6 +143,7 @@ export function isVisibility(item: unknown): item is Visibility {
 }
 
 export interface Class extends AstNode {
+    readonly $container: ClassDiagram | Package;
     readonly $type: 'AbstractClass' | 'Class';
     __id: string
     isAbstract: boolean
@@ -165,8 +166,8 @@ export interface ClassDiagram extends AstNode {
     readonly $type: 'ClassDiagram';
     __id: string
     diagramType: 'CLASS'
-    entities: Array<Element>
-    relations: Array<Relation>
+    entities: Array<ClassDiagramNodes>
+    relations: Array<ClassDiagramEdges>
 }
 
 export const ClassDiagram = 'ClassDiagram';
@@ -176,7 +177,7 @@ export function isClassDiagram(item: unknown): item is ClassDiagram {
 }
 
 export interface DataType extends AstNode {
-    readonly $container: ClassDiagram | Package | PackageDiagram;
+    readonly $container: ClassDiagram | Package;
     readonly $type: 'DataType';
     __id: string
     isAbstract: boolean
@@ -194,7 +195,7 @@ export function isDataType(item: unknown): item is DataType {
 
 export interface Diagram extends AstNode {
     readonly $type: 'Diagram';
-    diagram: UnionType_0
+    diagram: ClassDiagram
     metaInfos: Array<MetaInfo>
 }
 
@@ -205,7 +206,7 @@ export function isDiagram(item: unknown): item is Diagram {
 }
 
 export interface Enumeration extends AstNode {
-    readonly $container: ClassDiagram | Package | PackageDiagram;
+    readonly $container: ClassDiagram | Package;
     readonly $type: 'Enumeration';
     __id: string
     name: string
@@ -234,7 +235,7 @@ export function isEnumerationLiteral(item: unknown): item is EnumerationLiteral 
 }
 
 export interface InstanceSpecification extends AstNode {
-    readonly $container: ClassDiagram | Package | PackageDiagram;
+    readonly $container: ClassDiagram | Package;
     readonly $type: 'InstanceSpecification';
     __id: string
     name: string
@@ -249,7 +250,7 @@ export function isInstanceSpecification(item: unknown): item is InstanceSpecific
 }
 
 export interface Interface extends AstNode {
-    readonly $container: ClassDiagram | Package | PackageDiagram;
+    readonly $container: ClassDiagram | Package;
     readonly $type: 'Interface';
     __id: string
     name: string
@@ -297,7 +298,7 @@ export function isOperation(item: unknown): item is Operation {
 }
 
 export interface Package extends AstNode {
-    readonly $container: ClassDiagram | Package | PackageDiagram;
+    readonly $container: ClassDiagram | Package;
     readonly $type: 'Package';
     __id: string
     entities: Array<Node>
@@ -310,21 +311,6 @@ export const Package = 'Package';
 
 export function isPackage(item: unknown): item is Package {
     return reflection.isInstance(item, Package);
-}
-
-export interface PackageDiagram extends AstNode {
-    readonly $container: Diagram;
-    readonly $type: 'PackageDiagram';
-    __id: string
-    diagramType: 'PACKAGE'
-    entities: Array<Node>
-    relations: Array<Relation>
-}
-
-export const PackageDiagram = 'PackageDiagram';
-
-export function isPackageDiagram(item: unknown): item is PackageDiagram {
-    return reflection.isInstance(item, PackageDiagram);
 }
 
 export interface Parameter extends AstNode {
@@ -365,7 +351,7 @@ export function isPosition(item: unknown): item is Position {
 }
 
 export interface PrimitiveType extends AstNode {
-    readonly $container: ClassDiagram | Package | PackageDiagram;
+    readonly $container: ClassDiagram | Package;
     readonly $type: 'PrimitiveType';
     __id: string
     name: string
@@ -401,6 +387,7 @@ export function isProperty(item: unknown): item is Property {
 }
 
 export interface Relation extends AstNode {
+    readonly $container: ClassDiagram;
     readonly $type: 'Abstraction' | 'Aggregation' | 'Association' | 'Composition' | 'Dependency' | 'Generalization' | 'InterfaceRealization' | 'PackageImport' | 'PackageMerge' | 'Realization' | 'Relation' | 'Substitution' | 'Usage';
     __id: string
     relationType: RelationType
@@ -430,7 +417,7 @@ export function isSize(item: unknown): item is Size {
 }
 
 export interface Slot extends AstNode {
-    readonly $container: ClassDiagram | InstanceSpecification | Package | PackageDiagram;
+    readonly $container: ClassDiagram | InstanceSpecification | Package;
     readonly $type: 'Slot';
     __id: string
     definingFeature?: Reference<SlotDefiningFeature>
@@ -444,20 +431,8 @@ export function isSlot(item: unknown): item is Slot {
     return reflection.isInstance(item, Slot);
 }
 
-export interface StateMachineDiagram extends AstNode {
-    readonly $container: Diagram;
-    readonly $type: 'StateMachineDiagram';
-    __id: string
-    diagramType: 'STATE_MACHINE'
-}
-
-export const StateMachineDiagram = 'StateMachineDiagram';
-
-export function isStateMachineDiagram(item: unknown): item is StateMachineDiagram {
-    return reflection.isInstance(item, StateMachineDiagram);
-}
-
 export interface AbstractClass extends Class {
+    readonly $container: ClassDiagram;
     readonly $type: 'AbstractClass';
     __id: string
     isAbstract: boolean
@@ -477,6 +452,7 @@ export function isAbstractClass(item: unknown): item is AbstractClass {
 }
 
 export interface Abstraction extends Relation {
+    readonly $container: ClassDiagram;
     readonly $type: 'Abstraction';
     __id: string
     name?: string
@@ -493,6 +469,7 @@ export function isAbstraction(item: unknown): item is Abstraction {
 }
 
 export interface Aggregation extends Relation {
+    readonly $container: ClassDiagram;
     readonly $type: 'Aggregation';
     __id: string
     name?: string
@@ -515,6 +492,7 @@ export function isAggregation(item: unknown): item is Aggregation {
 }
 
 export interface Association extends Relation {
+    readonly $container: ClassDiagram;
     readonly $type: 'Association';
     __id: string
     name?: string
@@ -537,6 +515,7 @@ export function isAssociation(item: unknown): item is Association {
 }
 
 export interface Composition extends Relation {
+    readonly $container: ClassDiagram;
     readonly $type: 'Composition';
     __id: string
     name?: string
@@ -559,6 +538,7 @@ export function isComposition(item: unknown): item is Composition {
 }
 
 export interface Dependency extends Relation {
+    readonly $container: ClassDiagram;
     readonly $type: 'Dependency';
     __id: string
     name?: string
@@ -575,6 +555,7 @@ export function isDependency(item: unknown): item is Dependency {
 }
 
 export interface Generalization extends Relation {
+    readonly $container: ClassDiagram;
     readonly $type: 'Generalization';
     __id: string
     isSubstitutable: boolean
@@ -590,6 +571,7 @@ export function isGeneralization(item: unknown): item is Generalization {
 }
 
 export interface InterfaceRealization extends Relation {
+    readonly $container: ClassDiagram;
     readonly $type: 'InterfaceRealization';
     __id: string
     name?: string
@@ -606,6 +588,7 @@ export function isInterfaceRealization(item: unknown): item is InterfaceRealizat
 }
 
 export interface PackageImport extends Relation {
+    readonly $container: ClassDiagram;
     readonly $type: 'PackageImport';
     __id: string
     relationType: RelationType
@@ -621,6 +604,7 @@ export function isPackageImport(item: unknown): item is PackageImport {
 }
 
 export interface PackageMerge extends Relation {
+    readonly $container: ClassDiagram;
     readonly $type: 'PackageMerge';
     __id: string
     relationType: RelationType
@@ -635,6 +619,7 @@ export function isPackageMerge(item: unknown): item is PackageMerge {
 }
 
 export interface Realization extends Relation {
+    readonly $container: ClassDiagram;
     readonly $type: 'Realization';
     __id: string
     name?: string
@@ -651,6 +636,7 @@ export function isRealization(item: unknown): item is Realization {
 }
 
 export interface Substitution extends Relation {
+    readonly $container: ClassDiagram;
     readonly $type: 'Substitution';
     __id: string
     name?: string
@@ -667,6 +653,7 @@ export function isSubstitution(item: unknown): item is Substitution {
 }
 
 export interface Usage extends Relation {
+    readonly $container: ClassDiagram;
     readonly $type: 'Usage';
     __id: string
     name?: string
@@ -689,7 +676,9 @@ export type UmlDiagramAstType = {
     Association: Association
     Class: Class
     ClassDiagram: ClassDiagram
-    ClassDiagramElements: ClassDiagramElements
+    ClassDiagramEdges: ClassDiagramEdges
+    ClassDiagramElement: ClassDiagramElement
+    ClassDiagramNodes: ClassDiagramNodes
     Composition: Composition
     DataType: DataType
     DataTypeReference: DataTypeReference
@@ -709,8 +698,6 @@ export type UmlDiagramAstType = {
     Node: Node
     Operation: Operation
     Package: Package
-    PackageDiagram: PackageDiagram
-    PackageDiagramElements: PackageDiagramElements
     PackageImport: PackageImport
     PackageMerge: PackageMerge
     Parameter: Parameter
@@ -722,52 +709,48 @@ export type UmlDiagramAstType = {
     Size: Size
     Slot: Slot
     SlotDefiningFeature: SlotDefiningFeature
-    StateMachineDiagram: StateMachineDiagram
     Substitution: Substitution
     Unbounded: Unbounded
-    UnionType_0: UnionType_0
     Usage: Usage
 }
 
 export class UmlDiagramAstReflection extends AbstractAstReflection {
 
     getAllTypes(): string[] {
-        return ['AbstractClass', 'Abstraction', 'Aggregation', 'Association', 'Class', 'ClassDiagram', 'ClassDiagramElements', 'Composition', 'DataType', 'DataTypeReference', 'Dependency', 'Diagram', 'Edge', 'Element', 'ElementWithSizeAndPosition', 'Enumeration', 'EnumerationLiteral', 'Generalization', 'InstanceSpecification', 'Interface', 'InterfaceRealization', 'LiteralSpecification', 'MetaInfo', 'Node', 'Operation', 'Package', 'PackageDiagram', 'PackageDiagramElements', 'PackageImport', 'PackageMerge', 'Parameter', 'Position', 'PrimitiveType', 'Property', 'Realization', 'Relation', 'Size', 'Slot', 'SlotDefiningFeature', 'StateMachineDiagram', 'Substitution', 'Unbounded', 'UnionType_0', 'Usage'];
+        return ['AbstractClass', 'Abstraction', 'Aggregation', 'Association', 'Class', 'ClassDiagram', 'ClassDiagramEdges', 'ClassDiagramElement', 'ClassDiagramNodes', 'Composition', 'DataType', 'DataTypeReference', 'Dependency', 'Diagram', 'Edge', 'Element', 'ElementWithSizeAndPosition', 'Enumeration', 'EnumerationLiteral', 'Generalization', 'InstanceSpecification', 'Interface', 'InterfaceRealization', 'LiteralSpecification', 'MetaInfo', 'Node', 'Operation', 'Package', 'PackageImport', 'PackageMerge', 'Parameter', 'Position', 'PrimitiveType', 'Property', 'Realization', 'Relation', 'Size', 'Slot', 'SlotDefiningFeature', 'Substitution', 'Unbounded', 'Usage'];
     }
 
     protected override computeIsSubtype(subtype: string, supertype: string): boolean {
         switch (subtype) {
             case AbstractClass: {
-                return this.isSubtype(Class, supertype) || this.isSubtype(ClassDiagramElements, supertype);
+                return this.isSubtype(Class, supertype) || this.isSubtype(ClassDiagramNodes, supertype);
             }
             case Abstraction:
-            case Dependency:
-            case PackageImport:
-            case PackageMerge:
-            case Usage: {
-                return this.isSubtype(ClassDiagramElements, supertype) || this.isSubtype(PackageDiagramElements, supertype) || this.isSubtype(Relation, supertype);
-            }
             case Aggregation:
             case Association:
             case Composition:
+            case Dependency:
             case Generalization:
             case InterfaceRealization:
+            case PackageImport:
+            case PackageMerge:
             case Realization:
-            case Substitution: {
-                return this.isSubtype(ClassDiagramElements, supertype) || this.isSubtype(Relation, supertype);
+            case Substitution:
+            case Usage: {
+                return this.isSubtype(ClassDiagramEdges, supertype) || this.isSubtype(Relation, supertype);
             }
-            case Class: {
-                return this.isSubtype(ClassDiagramElements, supertype) || this.isSubtype(DataTypeReference, supertype) || this.isSubtype(Node, supertype) || this.isSubtype(PackageDiagramElements, supertype) || this.isSubtype(SlotDefiningFeature, supertype);
+            case Class:
+            case Interface: {
+                return this.isSubtype(ClassDiagramNodes, supertype) || this.isSubtype(DataTypeReference, supertype) || this.isSubtype(Node, supertype) || this.isSubtype(SlotDefiningFeature, supertype);
             }
-            case ClassDiagram:
-            case PackageDiagram:
-            case StateMachineDiagram: {
-                return this.isSubtype(UnionType_0, supertype);
+            case ClassDiagramEdges:
+            case ClassDiagramNodes: {
+                return this.isSubtype(ClassDiagramElement, supertype);
             }
             case DataType:
             case Enumeration:
             case PrimitiveType: {
-                return this.isSubtype(ClassDiagramElements, supertype) || this.isSubtype(DataTypeReference, supertype) || this.isSubtype(Node, supertype);
+                return this.isSubtype(ClassDiagramNodes, supertype) || this.isSubtype(DataTypeReference, supertype) || this.isSubtype(Node, supertype);
             }
             case Edge:
             case ElementWithSizeAndPosition:
@@ -778,30 +761,25 @@ export class UmlDiagramAstReflection extends AbstractAstReflection {
             case LiteralSpecification:
             case Operation:
             case Parameter: {
-                return this.isSubtype(ClassDiagramElements, supertype) || this.isSubtype(Unbounded, supertype);
+                return this.isSubtype(ClassDiagramNodes, supertype) || this.isSubtype(Unbounded, supertype);
             }
             case InstanceSpecification:
+            case Package:
             case Slot: {
-                return this.isSubtype(ClassDiagramElements, supertype) || this.isSubtype(Node, supertype);
-            }
-            case Interface: {
-                return this.isSubtype(ClassDiagramElements, supertype) || this.isSubtype(DataTypeReference, supertype) || this.isSubtype(Node, supertype) || this.isSubtype(SlotDefiningFeature, supertype);
+                return this.isSubtype(ClassDiagramNodes, supertype) || this.isSubtype(Node, supertype);
             }
             case Node: {
                 return this.isSubtype(ElementWithSizeAndPosition, supertype);
-            }
-            case Package: {
-                return this.isSubtype(ClassDiagramElements, supertype) || this.isSubtype(Node, supertype) || this.isSubtype(PackageDiagramElements, supertype);
             }
             case Position:
             case Size: {
                 return this.isSubtype(MetaInfo, supertype);
             }
             case Property: {
-                return this.isSubtype(ClassDiagramElements, supertype) || this.isSubtype(SlotDefiningFeature, supertype) || this.isSubtype(Unbounded, supertype);
+                return this.isSubtype(ClassDiagramNodes, supertype) || this.isSubtype(SlotDefiningFeature, supertype) || this.isSubtype(Unbounded, supertype);
             }
             case Relation: {
-                return this.isSubtype(ClassDiagramElements, supertype) || this.isSubtype(Edge, supertype);
+                return this.isSubtype(ClassDiagramEdges, supertype) || this.isSubtype(Edge, supertype);
             }
             default: {
                 return false;
@@ -963,15 +941,6 @@ export class UmlDiagramAstReflection extends AbstractAstReflection {
                     name: 'Package',
                     mandatory: [
                         { name: 'entities', type: 'array' }
-                    ]
-                };
-            }
-            case 'PackageDiagram': {
-                return {
-                    name: 'PackageDiagram',
-                    mandatory: [
-                        { name: 'entities', type: 'array' },
-                        { name: 'relations', type: 'array' }
                     ]
                 };
             }

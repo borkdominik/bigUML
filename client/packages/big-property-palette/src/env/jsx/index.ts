@@ -7,6 +7,6 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
-export * from './components.js';
-export * from './property-palette-util.js';
-export * from './property-palette.module.js';
+export * from './jsx-namespace.js';
+export * from './jsx-runtime.js';
+export * from './utils.js';

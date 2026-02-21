@@ -5,9 +5,13 @@ import {
   CreateNodeOperation,
   DeleteElementOperation,
 } from '@eclipse-glsp/server';
-import { Enumeration } from '@borkdominik-biguml/model-server/grammar';
+import { type Enumeration } from '@borkdominik-biguml/model-server/grammar';
 import { ModelTypes } from '@borkdominik-biguml/uml-glsp-server/vscode';
-import { PropertyPalette } from '@borkdominik-biguml/big-property-palette/glsp-server';
+import {
+  PropertyPalette,
+  ReferenceProperty,
+  TextProperty,
+} from '@borkdominik-biguml/big-property-palette/glsp-server';
 
 export namespace EnumerationPropertyPaletteHandler {
   export function getPropertyPalette(
@@ -15,23 +19,29 @@ export namespace EnumerationPropertyPaletteHandler {
   ): SetPropertyPaletteAction[] {
     return [
       SetPropertyPaletteAction.create(
-        PropertyPalette.builder()
-          .elementId(semanticElement.__id)
-          .label((semanticElement as any).name ?? semanticElement.$type)
-          .text(semanticElement.__id, 'name', semanticElement.name!, 'Name')
-          .reference(
-            semanticElement.__id,
-            'values',
-            'Values',
-            (semanticElement.values ?? [])
+        <PropertyPalette
+          elementId={semanticElement.__id}
+          label={(semanticElement as any).name ?? semanticElement.$type}
+        >
+          <TextProperty
+            elementId={semanticElement.__id}
+            propertyId="name"
+            text={semanticElement.name!}
+            label="Name"
+          />
+          <ReferenceProperty
+            elementId={semanticElement.__id}
+            propertyId="values"
+            label="Values"
+            references={(semanticElement.values ?? [])
               .filter((e: any) => !!e && !!e.__id)
               .map((e: any) => ({
                 elementId: e.__id,
                 label: e.name ?? '(unnamed enumeration_literal)',
                 name: e.name ?? '',
                 deleteActions: [DeleteElementOperation.create([e.__id])],
-              })),
-            [
+              }))}
+            creates={[
               {
                 label: 'Create Enumeration Literal',
                 action: CreateNodeOperation.create(
@@ -39,9 +49,9 @@ export namespace EnumerationPropertyPaletteHandler {
                   { containerId: semanticElement.__id },
                 ),
               },
-            ],
-          )
-          .build(),
+            ]}
+          />
+        </PropertyPalette>,
       ),
     ];
   }

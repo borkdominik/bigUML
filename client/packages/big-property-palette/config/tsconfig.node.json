@@ -4,10 +4,13 @@
   "compilerOptions": {
     "tsBuildInfoFile": "../node_modules/.tmp/tsconfig.node.tsbuildinfo",
     "outDir": "../build",
-    "rootDir": "../src"
+    "rootDir": "../src",
+    "jsx": "react-jsx",
+    "jsxImportSource": "@borkdominik-biguml/big-property-palette/jsx"
   },
   "include": [
     "../src/env/common",
+    "../src/env/jsx",
     "../src/env/glsp-server",
     "../src/env/vscode",
     "../src/gen/glsp-server"

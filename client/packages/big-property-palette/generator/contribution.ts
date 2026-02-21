@@ -18,35 +18,56 @@ const __dirname = path.dirname(__filename);
 
 const prefixPath = ['glsp-server', 'handlers'];
 
-// Initialize Eta with the templates directory
 const eta = new Eta({ views: path.join(__dirname, 'templates') });
 
-// Load templates
-const elementTemplateContent = fs.readFileSync(path.join(__dirname, 'templates', 'element-property-palette-handler.eta'), 'utf-8');
-const requestTemplateContent = fs.readFileSync(path.join(__dirname, 'templates', 'request-property-palette-action-handler.eta'), 'utf-8');
+// ============================================================================
+// Property descriptor — structured data passed to Eta templates
+// ============================================================================
+
+interface PropertyDescriptor {
+    type: 'text' | 'bool' | 'choice' | 'reference';
+    id: string;
+    label: string;
+    /** Expression string for text/bool value */
+    valueExpr?: string;
+    /** Expression string for choices array (choice type) */
+    choicesExpr?: string;
+    /** Expression string for current choice value */
+    choiceExpr?: string;
+    /** Expression string for reference array */
+    referencesExpr?: string;
+    /** Expression string for create actions array */
+    createsExpr?: string;
+}
+
+// ============================================================================
+// Main entry point
+// ============================================================================
 
 export function umlToolingContribution(extensionPath: string, declarations: LangiumDeclaration[]): { path: string; content: string }[] {
     const results: { path: string; content: string }[] = [];
 
-    // ─── generate individual handlers ─────────────────────────────
     const elemsOut = path.join(extensionPath, ...prefixPath, 'elements');
     if (!fs.existsSync(elemsOut)) fs.mkdirSync(elemsOut, { recursive: true });
 
     const nodes = getNodeDecls(declarations);
-    nodes.forEach(decl => {
-        const fp = path.join(elemsOut, `${decl.name}PropertyPaletteHandler.ts`);
+    for (const decl of nodes) {
+        const fp = path.join(elemsOut, `${toKebab(decl.name!)}.property-palette-handler.tsx`);
         const content = renderHandler(decl);
         results.push({ path: fp, content });
-    });
+    }
 
-    // ─── generate the central dispatchers ─────────────────────────
-    const requestFiles = writeRequestPropertyPaletteHandlers(extensionPath, declarations);
+    const requestFiles = renderRequestHandlers(extensionPath, declarations);
     results.push(...requestFiles);
 
     return results;
 }
 
-function getNodeDecls(decls: LangiumDeclaration[]) {
+// ============================================================================
+// Filter node declarations
+// ============================================================================
+
+function getNodeDecls(decls: LangiumDeclaration[]): LangiumDeclaration[] {
     return decls.filter(
         d =>
             d.type === 'class' &&
@@ -61,6 +82,10 @@ function getNodeDecls(decls: LangiumDeclaration[]) {
     );
 }
 
+// ============================================================================
+// Render individual element handlers (JSX)
+// ============================================================================
+
 function renderHandler(decl: LangiumDeclaration): string {
     const name = decl.name!;
 
@@ -72,45 +97,49 @@ function renderHandler(decl: LangiumDeclaration): string {
 
     const sigExtras = dynamicTypes.map(t => `, ${lcFirst(t)}Choices: any`).join('');
 
-    const body =
-        decl.properties
-            ?.map(p => emitBuilderLine(p, decl))
-            .filter(Boolean)
-            .join('\n') ?? '';
+    const properties = (decl.properties ?? []).map(p => buildPropertyDescriptor(p)).filter((p): p is PropertyDescriptor => p !== undefined);
 
-    const usesCreateDelete = /CreateNodeOperation|DeleteElementOperation/.test(body);
-    const usesModelTypes = /ModelTypes\./.test(body);
+    const needsGlspImport = properties.some(p => p.type === 'reference');
+    const needsModelTypes = properties.some(p => p.type === 'reference');
+    const needsPropertyPaletteChoices = properties.some(p => p.type === 'choice' && p.choicesExpr?.startsWith('PropertyPaletteChoices.'));
 
-    const glspImport = usesCreateDelete ? `\nimport { CreateNodeOperation, DeleteElementOperation } from '@eclipse-glsp/server';` : '';
-    const modelTypesImport = usesModelTypes ? `\nimport { ModelTypes } from '@borkdominik-biguml/uml-glsp-server/vscode';` : '';
+    const componentImports = new Set<string>(['PropertyPalette']);
+    for (const prop of properties) {
+        if (prop.type === 'text') componentImports.add('TextProperty');
+        else if (prop.type === 'bool') componentImports.add('BoolProperty');
+        else if (prop.type === 'choice') componentImports.add('ChoiceProperty');
+        else if (prop.type === 'reference') componentImports.add('ReferenceProperty');
+    }
+    if (needsPropertyPaletteChoices) componentImports.add('PropertyPaletteChoices');
 
-    // Render the template with Eta
-    return eta.renderString(elementTemplateContent, {
+    return eta.render('./element-property-palette-handler', {
         name,
         sigExtras,
-        body,
-        glspImport,
-        modelTypesImport
+        properties,
+        needsGlspImport,
+        needsModelTypes,
+        componentImports: Array.from(componentImports).sort()
     });
 }
 
-function emitBuilderLine(prop: any, _decl: LangiumDeclaration): string | undefined {
+// ============================================================================
+// Build a property descriptor from a declaration property
+// ============================================================================
+
+function buildPropertyDescriptor(prop: any): PropertyDescriptor | undefined {
     if (prop.decorators?.includes('skipPropertyPP')) return;
 
     const dyn = prop.decorators?.find((d: string) => d.startsWith('dynamicProperty:'));
     if (dyn) {
         const typeName = dyn.split(':')[1];
-        const id = prop.name;
         const choicesVar = `${lcFirst(typeName)}Choices`;
-        return `    .choice(
-            semanticElement.__id,
-            '${id}',
-            ${choicesVar},
-            ((semanticElement.${id} as any)?.ref?.__id
-            ? (semanticElement.${id} as any).ref.__id + '_refValue'
-            : ''),
-            '${human(id)}'
-          )`;
+        return {
+            type: 'choice',
+            id: prop.name,
+            label: human(prop.name),
+            choicesExpr: choicesVar,
+            choiceExpr: `(semanticElement.${prop.name} as any)?.ref?.__id ? (semanticElement.${prop.name} as any).ref.__id + '_refValue' : ''`
+        };
     }
 
     if (prop.decorators?.includes('crossReference')) return;
@@ -125,52 +154,52 @@ function emitBuilderLine(prop: any, _decl: LangiumDeclaration): string | undefin
         const typeName = first?.typeName ?? 'Element';
         const modelConst = toConst(typeName);
         const label = human(typeName);
-        return `      .reference(
-            semanticElement.__id,
-            '${id}',
-            '${human(id)}',
-            (semanticElement.${id} ?? [])
-              .filter((e: any) => !!e && !!e.__id)
-              .map((e: any) => ({
-                elementId: e.__id,
-                label: e.name ?? '(unnamed ${toConst(first?.typeName ?? 'Element').toLowerCase()})',
-                name:  e.name ?? '',
-                deleteActions: [DeleteElementOperation.create([e.__id])]
-              })),
-            [{
-              label: 'Create ${label}',
-              action: CreateNodeOperation.create(ModelTypes.${modelConst}, { containerId: semanticElement.__id })
-            }]
-          )`;
+        return {
+            type: 'reference',
+            id,
+            label: human(id),
+            referencesExpr: [
+                `(semanticElement.${id} ?? [])`,
+                `.filter((e: any) => !!e && !!e.__id)`,
+                `.map((e: any) => ({`,
+                `    elementId: e.__id,`,
+                `    label: e.name ?? '(unnamed ${toConst(typeName).toLowerCase()})',`,
+                `    name: e.name ?? '',`,
+                `    deleteActions: [DeleteElementOperation.create([e.__id])]`,
+                `}))`
+            ].join('\n                            '),
+            createsExpr: `[{ label: 'Create ${label}', action: CreateNodeOperation.create(ModelTypes.${modelConst}, { containerId: semanticElement.__id }) }]`
+        };
     }
 
     if (first?.typeName === 'boolean') {
-        return `          .bool(semanticElement.__id, '${id}', !!semanticElement.${id}, '${id}')`;
+        return { type: 'bool', id, label: id, valueExpr: `!!semanticElement.${id}` };
     }
 
     if (first?.typeName === 'string' || first?.typeName === 'number') {
         const val = first.typeName === 'number' ? `String(semanticElement.${id})` : `semanticElement.${id}`;
-        return `          .text(semanticElement.__id, '${id}', ${val}!, '${human(id)}')`;
+        return { type: 'text', id, label: human(id), valueExpr: `${val}!` };
     }
 
     const constant = optionConstant(first?.typeName ?? '');
     if (constant) {
-        return `        .choice(
-            semanticElement.__id,
-            '${id}',
-            PropertyPalette.${constant},
-            semanticElement.${id}!,
-            '${human(first!.typeName)}'
-          )`;
+        return {
+            type: 'choice',
+            id,
+            label: human(first!.typeName),
+            choicesExpr: `PropertyPaletteChoices.${constant}`,
+            choiceExpr: `semanticElement.${id}!`
+        };
     }
 
     return;
 }
 
-export function writeRequestPropertyPaletteHandlers(
-    extensionPath: string,
-    declarations: LangiumDeclaration[]
-): { path: string; content: string }[] {
+// ============================================================================
+// Render request handler dispatchers
+// ============================================================================
+
+export function renderRequestHandlers(extensionPath: string, declarations: LangiumDeclaration[]): { path: string; content: string }[] {
     const results: { path: string; content: string }[] = [];
 
     const outDir = path.join(extensionPath, ...prefixPath);
@@ -179,19 +208,17 @@ export function writeRequestPropertyPaletteHandlers(
     }
 
     const diagramAliases = declarations.filter(d => d.type === 'type' && d.name?.endsWith('DiagramElements'));
-
     const allEntities = getNodeDecls(declarations);
 
     for (const alias of diagramAliases) {
-        const fullKey = alias.name!.replace(/Elements$/, ''); // e.g. "ClassDiagram"
-        const shortKey = fullKey.replace(/Diagram$/, ''); // → "Class"
+        const fullKey = alias.name!.replace(/Elements$/, '');
+        const shortKey = fullKey.replace(/Diagram$/, '');
         const fileName = `request-${lcFirst(shortKey)}-property-palette-action-handler.ts`;
         const className = `Request${shortKey}PropertyPaletteActionHandler`;
         const modelStateClass = `${shortKey}DiagramModelState`;
         const modelStateImportPath = `@borkdominik-biguml/uml-glsp-server/vscode`;
 
         const members = alias.properties?.[0]?.types.map(t => t.typeName).filter(Boolean) as string[];
-
         const nodes = allEntities.filter(e => members.includes(e.name!));
 
         const guardNames = nodes
@@ -203,7 +230,7 @@ export function writeRequestPropertyPaletteHandlers(
         const handlerImports = nodes
             .map(d => d.name!)
             .sort()
-            .map(n => `import { ${n}PropertyPaletteHandler } from './elements/${n}PropertyPaletteHandler.js';`)
+            .map(n => `import { ${n}PropertyPaletteHandler } from './elements/${toKebab(n)}.property-palette-handler.js';`)
             .join('\n');
 
         const allDyn = Array.from(
@@ -221,41 +248,42 @@ export function writeRequestPropertyPaletteHandlers(
             .map(typeName => {
                 const varName = `${lcFirst(typeName)}Choices`;
                 const indexCall = `getAll${typeName}s`;
-                return `    const ${varName} = (this.modelState.index.${indexCall}?.() ?? [])
-          .filter((item: any) => !!item && !!item.__id && !!item.name)
-          .map((item: any) => ({
-            label: item.name,
-            value: item.__id + '_refValue',
-            secondaryText: item.$type
-          }));`;
+                return [
+                    `            const ${varName} = (this.modelState.index.${indexCall}?.() ?? [])`,
+                    `                .filter((item: any) => !!item && !!item.__id && !!item.name)`,
+                    `                .map((item: any) => ({`,
+                    `                    label: item.name,`,
+                    `                    value: item.__id + '_refValue',`,
+                    `                    secondaryText: item.$type`,
+                    `                }));`
+                ].join('\n');
             })
             .join('\n');
 
-        const dispatchChain = nodes
-            .map(d => {
-                const dynForDecl = Array.from(
-                    new Set(
-                        d.properties?.flatMap(
-                            p => p.decorators?.filter(d => d.startsWith('dynamicProperty:')).map(d => d.split(':')[1]) ?? []
-                        ) ?? []
-                    )
-                );
-                const args = ['semanticElement'].concat(dynForDecl.map(t => lcFirst(t) + 'Choices')).join(', ');
-                return `    } else if (is${d.name}(semanticElement)) {
-      return ${d.name}PropertyPaletteHandler.getPropertyPalette(${args});
-`;
-            })
-            .join('');
+        const dispatchEntries = nodes.map(d => {
+            const dynForDecl = Array.from(
+                new Set(
+                    d.properties?.flatMap(
+                        p => p.decorators?.filter(d => d.startsWith('dynamicProperty:')).map(d => d.split(':')[1]) ?? []
+                    ) ?? []
+                )
+            );
+            const args = ['semanticElement'].concat(dynForDecl.map(t => lcFirst(t) + 'Choices')).join(', ');
+            return {
+                guard: `is${d.name}`,
+                handler: `${d.name}PropertyPaletteHandler`,
+                args
+            };
+        });
 
-        // Render the template with Eta
-        const content = eta.renderString(requestTemplateContent, {
+        const content = eta.render('./request-property-palette-action-handler', {
             className,
             modelStateClass,
             modelStateImportPath,
             astImport,
             handlerImports,
             dynamicBuilders,
-            dispatchChain
+            dispatchEntries
         });
 
         results.push({ path: path.join(outDir, fileName), content });
@@ -264,18 +292,23 @@ export function writeRequestPropertyPaletteHandlers(
     return results;
 }
 
+// ============================================================================
+// Helpers
+// ============================================================================
+
 function optionConstant(typeName: string): string | undefined {
     const map: Record<string, string> = {
-        Visibility: 'DEFAULT_VISIBILITY_CHOICES',
-        AggregationType: 'DEFAULT_AGGREGATION_CHOICES',
-        Concurrency: 'DEFAULT_CONCURRENCY_CHOICES',
-        ParameterDirection: 'DEFAULT_PARAMETER_DIRECTION_CHOICES',
-        EffectType: 'DEFAULT_EFFECT_CHOICES'
+        Visibility: 'VISIBILITY',
+        AggregationType: 'AGGREGATION',
+        Concurrency: 'CONCURRENCY',
+        ParameterDirection: 'PARAMETER_DIRECTION',
+        EffectType: 'EFFECT'
     };
     return map[typeName];
 }
 
 const WORD_BREAK = /([a-z0-9])([A-Z])/g;
 const toConst = (s: string) => s.replace(WORD_BREAK, '$1_$2').toUpperCase();
+const toKebab = (s: string) => s.replace(WORD_BREAK, '$1-$2').toLowerCase();
 const human = (s: string) => s.replace(WORD_BREAK, '$1 $2').replace(/^\w/, c => c.toUpperCase());
 const lcFirst = (s: string) => s.charAt(0).toLowerCase() + s.slice(1);

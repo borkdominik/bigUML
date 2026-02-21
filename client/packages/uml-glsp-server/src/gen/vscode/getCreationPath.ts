@@ -68,38 +68,6 @@ const mapping: Record<
       allowedChildTypes: ['LiteralSpecification'],
     },
   ],
-  PackageDiagram: [
-    {
-      property: 'entities',
-      allowedChildTypes: [
-        'Enumeration',
-        'Class',
-        'Interface',
-        'DataType',
-        'PrimitiveType',
-        'InstanceSpecification',
-        'Slot',
-        'Package',
-      ],
-    },
-    {
-      property: 'relations',
-      allowedChildTypes: [
-        'Abstraction',
-        'Dependency',
-        'Association',
-        'Aggregation',
-        'Composition',
-        'InterfaceRealization',
-        'Generalization',
-        'PackageImport',
-        'PackageMerge',
-        'Realization',
-        'Substitution',
-        'Usage',
-      ],
-    },
-  ],
   Package: [
     {
       property: 'entities',

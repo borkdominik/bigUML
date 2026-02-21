@@ -14,14 +14,6 @@
           {
             "type": "complex",
             "typeName": "ClassDiagram"
-          },
-          {
-            "type": "complex",
-            "typeName": "StateMachineDiagram"
-          },
-          {
-            "type": "complex",
-            "typeName": "PackageDiagram"
           }
         ],
         "multiplicity": "1"
@@ -209,7 +201,7 @@
         "types": [
           {
             "type": "complex",
-            "typeName": "Element"
+            "typeName": "ClassDiagramNodes"
           }
         ],
         "multiplicity": "*"
@@ -221,7 +213,7 @@
         "types": [
           {
             "type": "complex",
-            "typeName": "Relation"
+            "typeName": "ClassDiagramEdges"
           }
         ],
         "multiplicity": "*"
@@ -229,6 +221,30 @@
     ],
     "extends": [],
     "name": "ClassDiagram"
+  },
+  {
+    "type": "type",
+    "isAbstract": true,
+    "decorators": [],
+    "properties": [
+      {
+        "decorators": [],
+        "isOptional": true,
+        "types": [
+          {
+            "type": "complex",
+            "typeName": "ClassDiagramNodes"
+          },
+          {
+            "type": "complex",
+            "typeName": "ClassDiagramEdges"
+          }
+        ],
+        "multiplicity": "1"
+      }
+    ],
+    "extends": [],
+    "name": "ClassDiagramElement"
   },
   {
     "type": "type",
@@ -294,7 +310,23 @@
           {
             "type": "complex",
             "typeName": "LiteralSpecification"
-          },
+          }
+        ],
+        "multiplicity": "1"
+      }
+    ],
+    "extends": [],
+    "name": "ClassDiagramNodes"
+  },
+  {
+    "type": "type",
+    "isAbstract": true,
+    "decorators": [],
+    "properties": [
+      {
+        "decorators": [],
+        "isOptional": true,
+        "types": [
           {
             "type": "complex",
             "typeName": "Relation"
@@ -352,7 +384,7 @@
       }
     ],
     "extends": [],
-    "name": "ClassDiagramElements"
+    "name": "ClassDiagramEdges"
   },
   {
     "type": "class",
@@ -2031,122 +2063,6 @@
       "Relation"
     ],
     "name": "Usage"
-  },
-  {
-    "type": "class",
-    "isAbstract": false,
-    "decorators": [],
-    "properties": [
-      {
-        "name": "diagramType",
-        "isOptional": false,
-        "decorators": [],
-        "types": [
-          {
-            "type": "constant",
-            "typeName": "\"\\\"STATE_MACHINE\\\"\""
-          }
-        ],
-        "multiplicity": "1"
-      }
-    ],
-    "extends": [],
-    "name": "StateMachineDiagram"
-  },
-  {
-    "type": "class",
-    "isAbstract": false,
-    "decorators": [
-      "withDefaults"
-    ],
-    "properties": [
-      {
-        "name": "diagramType",
-        "isOptional": false,
-        "decorators": [],
-        "types": [
-          {
-            "type": "constant",
-            "typeName": "\"\\\"PACKAGE\\\"\""
-          }
-        ],
-        "multiplicity": "1"
-      },
-      {
-        "name": "entities",
-        "isOptional": true,
-        "decorators": [
-          "path"
-        ],
-        "types": [
-          {
-            "type": "complex",
-            "typeName": "Node"
-          }
-        ],
-        "multiplicity": "*"
-      },
-      {
-        "name": "relations",
-        "isOptional": true,
-        "decorators": [
-          "path"
-        ],
-        "types": [
-          {
-            "type": "complex",
-            "typeName": "Relation"
-          }
-        ],
-        "multiplicity": "*"
-      }
-    ],
-    "extends": [],
-    "name": "PackageDiagram"
-  },
-  {
-    "type": "type",
-    "isAbstract": true,
-    "decorators": [],
-    "properties": [
-      {
-        "decorators": [],
-        "isOptional": true,
-        "types": [
-          {
-            "type": "complex",
-            "typeName": "Class"
-          },
-          {
-            "type": "complex",
-            "typeName": "Package"
-          },
-          {
-            "type": "complex",
-            "typeName": "Abstraction"
-          },
-          {
-            "type": "complex",
-            "typeName": "Dependency"
-          },
-          {
-            "type": "complex",
-            "typeName": "PackageImport"
-          },
-          {
-            "type": "complex",
-            "typeName": "PackageMerge"
-          },
-          {
-            "type": "complex",
-            "typeName": "Usage"
-          }
-        ],
-        "multiplicity": "1"
-      }
-    ],
-    "extends": [],
-    "name": "PackageDiagramElements"
   },
   {
     "type": "class",

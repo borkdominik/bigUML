@@ -65,11 +65,13 @@ class Position extends MetaInfo {
 @withDefaults
 class ClassDiagram {
   diagramType: "CLASS";
-  entities?: Array<Element>;
-  relations?: Array<Relation>;
+  entities?: Array<ClassDiagramNodes>;
+  relations?: Array<ClassDiagramEdges>;
 }
 
-type ClassDiagramElements =
+type ClassDiagramElement = ClassDiagramNodes | ClassDiagramEdges;
+
+type ClassDiagramNodes =
   | Enumeration
   | EnumerationLiteral
   | Class
@@ -83,7 +85,9 @@ type ClassDiagramElements =
   | PrimitiveType
   | InstanceSpecification
   | Slot
-  | LiteralSpecification
+  | LiteralSpecification;
+
+type ClassDiagramEdges =
   | Relation
   | Abstraction
   | Dependency

@@ -55,11 +55,11 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
     },
     {
       property: 'entities',
-      propertyType: 'Element',
+      propertyType: 'ClassDiagramNodes',
     },
     {
       property: 'relations',
-      propertyType: 'Relation',
+      propertyType: 'ClassDiagramEdges',
     },
   ],
   Enumeration: [
@@ -678,26 +678,6 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
     {
       property: 'relationType',
       propertyType: 'RelationType',
-    },
-  ],
-  StateMachineDiagram: [
-    {
-      property: 'diagramType',
-      propertyType: '"\\"STATE_MACHINE\\""',
-    },
-  ],
-  PackageDiagram: [
-    {
-      property: 'diagramType',
-      propertyType: '"\\"PACKAGE\\""',
-    },
-    {
-      property: 'entities',
-      propertyType: 'Node',
-    },
-    {
-      property: 'relations',
-      propertyType: 'Relation',
     },
   ],
   Package: [

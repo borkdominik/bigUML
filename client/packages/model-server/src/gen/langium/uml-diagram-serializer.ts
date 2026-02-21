@@ -68,20 +68,18 @@ import {
   isSubstitution,
   Usage,
   isUsage,
-  StateMachineDiagram,
-  isStateMachineDiagram,
-  PackageDiagram,
-  isPackageDiagram,
   Package,
   isPackage,
-  ClassDiagramElements,
-  isClassDiagramElements,
+  ClassDiagramElement,
+  isClassDiagramElement,
+  ClassDiagramNodes,
+  isClassDiagramNodes,
+  ClassDiagramEdges,
+  isClassDiagramEdges,
   DataTypeReference,
   isDataTypeReference,
   SlotDefiningFeature,
   isSlotDefiningFeature,
-  PackageDiagramElements,
-  isPackageDiagramElements,
   AggregationType,
   isAggregationType,
   ParameterDirection,
@@ -106,8 +104,6 @@ import {
   isUnbounded,
   MetaInfo,
   isMetaInfo,
-  UnionType_0,
-  isUnionType_0,
 } from "../langium/language/ast.js";
 import { UmlDiagramServices } from "../../src/langium/uml-diagram-module.js";
 import { AstNode } from "langium";
@@ -120,7 +116,7 @@ export class UmlDiagramSerializer
   serialize(root: AstNode): string {
     let str: Array<string> = [];
     if (isDiagram(root)) {
-      str.push('"diagram": ' + this.serializeUnionType_0(root.diagram));
+      str.push('"diagram": ' + this.serializeClassDiagram(root.diagram));
       str.push(
         '"metaInfos": [\n' +
           root.metaInfos
@@ -195,7 +191,7 @@ export class UmlDiagramSerializer
       str.push(
         '"entities": [' +
           element.entities
-            .map((property) => this.serializeElement(property))
+            .map((property) => this.serializeClassDiagramNodes(property))
             .join(",") +
           "]"
       );
@@ -204,7 +200,7 @@ export class UmlDiagramSerializer
       str.push(
         '"relations": [' +
           element.relations
-            .map((property) => this.serializeRelation(property))
+            .map((property) => this.serializeClassDiagramEdges(property))
             .join(",") +
           "]"
       );
@@ -1270,48 +1266,6 @@ export class UmlDiagramSerializer
     return "{" + str.join(",\n") + "}";
   }
 
-  serializeStateMachineDiagram(element: StateMachineDiagram): string {
-    let str: Array<string> = [];
-    str.push('"__type": "StateMachineDiagram"');
-    if (element.__id !== undefined && element.__id !== null) {
-      str.push('"__id": ' + '"' + element.__id + '"');
-    }
-    if (element.diagramType !== undefined && element.diagramType !== null) {
-      str.push('"diagramType": ' + '"' + element.diagramType + '"');
-    }
-    return "{" + str.join(",\n") + "}";
-  }
-
-  serializePackageDiagram(element: PackageDiagram): string {
-    let str: Array<string> = [];
-    str.push('"__type": "PackageDiagram"');
-    if (element.__id !== undefined && element.__id !== null) {
-      str.push('"__id": ' + '"' + element.__id + '"');
-    }
-    if (element.diagramType !== undefined && element.diagramType !== null) {
-      str.push('"diagramType": ' + '"' + element.diagramType + '"');
-    }
-    if (element.entities !== undefined && element.entities !== null) {
-      str.push(
-        '"entities": [' +
-          element.entities
-            .map((property) => this.serializeNode(property))
-            .join(",") +
-          "]"
-      );
-    }
-    if (element.relations !== undefined && element.relations !== null) {
-      str.push(
-        '"relations": [' +
-          element.relations
-            .map((property) => this.serializeRelation(property))
-            .join(",") +
-          "]"
-      );
-    }
-    return "{" + str.join(",\n") + "}";
-  }
-
   serializePackage(element: Package): string {
     let str: Array<string> = [];
     str.push('"__type": "Package"');
@@ -1342,7 +1296,7 @@ export class UmlDiagramSerializer
   serializeDiagram(element: Diagram): string {
     let str: Array<string> = [];
     if (element.diagram !== undefined && element.diagram !== null) {
-      str.push('"diagram": ' + this.serializeUnionType_0(element.diagram));
+      str.push('"diagram": ' + this.serializeClassDiagram(element.diagram));
     }
     if (element.metaInfos !== undefined && element.metaInfos !== null) {
       str.push(
@@ -1356,7 +1310,16 @@ export class UmlDiagramSerializer
     return "{" + str.join(",\n") + "}";
   }
 
-  serializeClassDiagramElements(element: ClassDiagramElements): any {
+  serializeClassDiagramElement(element: ClassDiagramElement): any {
+    if (isClassDiagramNodes(element)) {
+      return this.serializeClassDiagramNodes(element);
+    }
+    if (isClassDiagramEdges(element)) {
+      return this.serializeClassDiagramEdges(element);
+    }
+  }
+
+  serializeClassDiagramNodes(element: ClassDiagramNodes): any {
     if (isEnumeration(element)) {
       return this.serializeEnumeration(element);
     }
@@ -1399,6 +1362,9 @@ export class UmlDiagramSerializer
     if (isLiteralSpecification(element)) {
       return this.serializeLiteralSpecification(element);
     }
+  }
+
+  serializeClassDiagramEdges(element: ClassDiagramEdges): any {
     if (isRelation(element)) {
       return this.serializeRelation(element);
     }
@@ -1467,30 +1433,6 @@ export class UmlDiagramSerializer
     }
     if (isInterface(element)) {
       return this.serializeInterface(element);
-    }
-  }
-
-  serializePackageDiagramElements(element: PackageDiagramElements): any {
-    if (isClass(element)) {
-      return this.serializeClass(element);
-    }
-    if (isPackage(element)) {
-      return this.serializePackage(element);
-    }
-    if (isAbstraction(element)) {
-      return this.serializeAbstraction(element);
-    }
-    if (isDependency(element)) {
-      return this.serializeDependency(element);
-    }
-    if (isPackageImport(element)) {
-      return this.serializePackageImport(element);
-    }
-    if (isPackageMerge(element)) {
-      return this.serializePackageMerge(element);
-    }
-    if (isUsage(element)) {
-      return this.serializeUsage(element);
     }
   }
 
@@ -1595,18 +1537,6 @@ export class UmlDiagramSerializer
     }
     if (isPosition(element)) {
       return this.serializePosition(element);
-    }
-  }
-
-  serializeUnionType_0(element: UnionType_0): any {
-    if (isClassDiagram(element)) {
-      return this.serializeClassDiagram(element);
-    }
-    if (isStateMachineDiagram(element)) {
-      return this.serializeStateMachineDiagram(element);
-    }
-    if (isPackageDiagram(element)) {
-      return this.serializePackageDiagram(element);
     }
   }
 

@@ -26,13 +26,6 @@
 				"isActive": false,
 				"visibility": "PUBLIC",
 				"skip": false
-			},
-			{
-				"__type": "Package",
-				"__id": "a17513720-685e-41a6-83bc-1d7881425db3",
-				"name": "NewPackage1",
-				"visibility": "PUBLIC",
-				"entities": []
 			}
 		],
 		"relations": []
@@ -58,28 +51,6 @@
 				"__type": "Reference",
 				"__refType": "ElementWithSizeAndPosition",
 				"__value": "a93da97ce-caa3-439f-ba7b-1b88641d4fc4"
-			}
-		},
-		{
-			"__type": "Size",
-			"__id": "size_a17513720-685e-41a6-83bc-1d7881425db3",
-			"height": 30,
-			"width": 80,
-			"element": {
-				"__type": "Reference",
-				"__refType": "ElementWithSizeAndPosition",
-				"__value": "a17513720-685e-41a6-83bc-1d7881425db3"
-			}
-		},
-		{
-			"__type": "Position",
-			"__id": "pos_a17513720-685e-41a6-83bc-1d7881425db3",
-			"x": 380,
-			"y": 130,
-			"element": {
-				"__type": "Reference",
-				"__refType": "ElementWithSizeAndPosition",
-				"__value": "a17513720-685e-41a6-83bc-1d7881425db3"
 			}
 		}
 	]

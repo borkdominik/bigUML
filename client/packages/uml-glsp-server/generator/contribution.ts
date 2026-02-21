@@ -11,6 +11,7 @@ import { type LangiumDeclaration } from '@borkdominik-biguml/uml-language-toolin
 import path from 'path';
 import { buildCreationPathMapping, writeCreationPathFile } from './creation-path-generator.js';
 import { buildDefaultValueMapping, writeDefaultValueFile } from './default-value-generator.js';
+import { buildDiagramLanguageMetadata } from './diagram-language-metadata-generator.js';
 import { buildModelTypes } from './model-types-generator.js';
 
 export function umlToolingContribution(extensionPath: string, declarations: LangiumDeclaration[]): { path: string; content: string }[] {
@@ -28,6 +29,9 @@ export function umlToolingContribution(extensionPath: string, declarations: Lang
 
     const modelTypesFiles = buildModelTypes(extensionPath, declarations);
     results.push(...modelTypesFiles);
+
+    const metadataFiles = buildDiagramLanguageMetadata(extensionPath, declarations);
+    results.push(...metadataFiles);
 
     return results;
 }

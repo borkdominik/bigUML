@@ -16,20 +16,27 @@ import {
     OperationHandler,
     TriggerEdgeCreationAction
 } from '@eclipse-glsp/server';
+import { inject, injectable } from 'inversify';
 import { getProperties, getRelationTypeFromElementId } from '../../../../../gen/vscode/getDefaultValue.js';
 import { ModelPatchCommand } from '../../command/model-patch-command.js';
 import { type BaseDiagramModelState } from '../../model/base-diagram-model-state.js';
+import { DiagramLanguageMetadata } from '../../model/diagram-language-metadata.js';
 
-export abstract class GenericCreateEdgeOperationHandler extends OperationHandler implements CreateEdgeOperationHandler {
+@injectable()
+export class GenericCreateEdgeOperationHandler extends OperationHandler implements CreateEdgeOperationHandler {
     readonly operationType = CreateEdgeOperation.KIND;
 
     declare readonly modelState: BaseDiagramModelState;
 
-    abstract readonly elementTypeIds: string[];
+    @inject(DiagramLanguageMetadata)
+    protected readonly metadata: DiagramLanguageMetadata;
+
+    get elementTypeIds(): string[] {
+        return this.metadata.edgeTypeIds;
+    }
 
     override label = 'Relation';
 
-    // TODO: HAYDAR Read from meta model
     getTriggerActions(): TriggerEdgeCreationAction[] {
         return this.elementTypeIds.map(typeId => TriggerEdgeCreationAction.create(typeId));
     }

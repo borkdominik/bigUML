@@ -7,5 +7,10 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
-export * from './generic-create-edge-operation-handler.js';
-export * from './generic-create-node-operation-handler.js';
+export interface DiagramLanguageMetadata {
+    readonly nodeTypeIds: string[];
+    readonly edgeTypeIds: string[];
+    convertToAst(elementTypeId: string): string;
+}
+
+export const DiagramLanguageMetadata = Symbol('DiagramLanguageMetadata');

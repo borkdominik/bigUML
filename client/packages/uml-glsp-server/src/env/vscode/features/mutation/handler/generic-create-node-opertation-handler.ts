@@ -9,7 +9,6 @@
 
 import { createRandomUUID, findAvailableNodeName, type SerializedPatchValue } from '@borkdominik-biguml/model-server';
 import type { MetaInfo, Node } from '@borkdominik-biguml/model-server/grammar';
-import { ClassAstTypes } from '@borkdominik-biguml/uml-glsp-server';
 import {
     type Command,
     CreateNodeOperation,
@@ -19,23 +18,30 @@ import {
     TriggerNodeCreationAction
 } from '@eclipse-glsp/server';
 import type * as jsonpatch from 'fast-json-patch';
+import { inject, injectable } from 'inversify';
 import { URI } from 'vscode-uri';
 import { getCreationPath } from '../../../../../gen/vscode/getCreationPath.js';
 import { getProperties, isNoBounds } from '../../../../../gen/vscode/getDefaultValue.js';
 import { ModelPatchCommand } from '../../command/model-patch-command.js';
 import { GridSnapper } from '../../grid/grid-snapper.js';
 import { type BaseDiagramModelState } from '../../model/base-diagram-model-state.js';
+import { DiagramLanguageMetadata } from '../../model/diagram-language-metadata.js';
 
-export abstract class GenericCreateNodeOperationHandler extends OperationHandler implements CreateNodeOperationHandler {
+@injectable()
+export class GenericCreateNodeOperationHandler extends OperationHandler implements CreateNodeOperationHandler {
     readonly operationType = CreateNodeOperation.KIND;
 
     declare readonly modelState: BaseDiagramModelState;
 
-    abstract get elementTypeIds(): string[];
+    @inject(DiagramLanguageMetadata)
+    protected readonly metadata: DiagramLanguageMetadata;
+
+    get elementTypeIds(): string[] {
+        return this.metadata.nodeTypeIds;
+    }
 
     override label: string = '';
 
-    // TODO: HAYDAR Read from meta model
     getTriggerActions(): TriggerNodeCreationAction[] {
         return this.elementTypeIds.map(typeId => TriggerNodeCreationAction.create(typeId));
     }
@@ -51,7 +57,7 @@ export abstract class GenericCreateNodeOperationHandler extends OperationHandler
         const newName = findAvailableNodeName(this.modelState.semanticRoot, 'New' + this.stripPrefix(operation.elementTypeId));
         const id = createRandomUUID();
         const containerPath = this.resolveContainerPath(operation);
-        const astType = ClassAstTypes.convertToAst(operation.elementTypeId) as Node['$type'];
+        const astType = this.metadata.convertToAst(operation.elementTypeId) as Node['$type'];
 
         const nodeValue: any = {
             $type: astType,

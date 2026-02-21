@@ -7,3 +7,4 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 export * from './base-diagram-model-state.js';
+export * from './diagram-language-metadata.js';

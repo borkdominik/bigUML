@@ -55,7 +55,7 @@
     "bundle": "tsx esbuild.ts",
     "clean": "rimraf build dist node_modules/.tmp",
     "compile": "tsc -b",
-    "generate": "npm run language:generate",
+    "generate": "rimraf src/gen && npm run language:generate",
     "language:generate": "uml-language-tooling extension generate -d @borkdominik-biguml/uml-language/definition -c ./generator/index.ts",
     "lint": "eslint -c ./eslint.config.js",
     "lint:fix": "npm run lint -- --fix",

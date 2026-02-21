@@ -14,8 +14,11 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
       propertyType: 'ClassDiagram',
     },
   ],
+  Element: [],
   ElementWithSizeAndPosition: [],
-  Entity: [],
+  Node: [],
+  Edge: [],
+  Unbounded: [],
   MetaInfo: [],
   Size: [
     {
@@ -52,7 +55,7 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
     },
     {
       property: 'entities',
-      propertyType: 'Entity',
+      propertyType: 'Element',
     },
     {
       property: 'relations',
@@ -342,11 +345,11 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
   Relation: [
     {
       property: 'source',
-      propertyType: 'Entity',
+      propertyType: 'Node',
     },
     {
       property: 'target',
-      propertyType: 'Entity',
+      propertyType: 'Node',
     },
     {
       property: 'relationType',
@@ -364,11 +367,11 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
     },
     {
       property: 'source',
-      propertyType: 'Entity',
+      propertyType: 'Node',
     },
     {
       property: 'target',
-      propertyType: 'Entity',
+      propertyType: 'Node',
     },
     {
       property: 'relationType',
@@ -386,11 +389,11 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
     },
     {
       property: 'source',
-      propertyType: 'Entity',
+      propertyType: 'Node',
     },
     {
       property: 'target',
-      propertyType: 'Entity',
+      propertyType: 'Node',
     },
     {
       property: 'relationType',
@@ -436,11 +439,11 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
     },
     {
       property: 'source',
-      propertyType: 'Entity',
+      propertyType: 'Node',
     },
     {
       property: 'target',
-      propertyType: 'Entity',
+      propertyType: 'Node',
     },
     {
       property: 'relationType',
@@ -486,11 +489,11 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
     },
     {
       property: 'source',
-      propertyType: 'Entity',
+      propertyType: 'Node',
     },
     {
       property: 'target',
-      propertyType: 'Entity',
+      propertyType: 'Node',
     },
     {
       property: 'relationType',
@@ -536,11 +539,11 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
     },
     {
       property: 'source',
-      propertyType: 'Entity',
+      propertyType: 'Node',
     },
     {
       property: 'target',
-      propertyType: 'Entity',
+      propertyType: 'Node',
     },
     {
       property: 'relationType',
@@ -558,11 +561,11 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
     },
     {
       property: 'source',
-      propertyType: 'Entity',
+      propertyType: 'Node',
     },
     {
       property: 'target',
-      propertyType: 'Entity',
+      propertyType: 'Node',
     },
     {
       property: 'relationType',
@@ -576,11 +579,11 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
     },
     {
       property: 'source',
-      propertyType: 'Entity',
+      propertyType: 'Node',
     },
     {
       property: 'target',
-      propertyType: 'Entity',
+      propertyType: 'Node',
     },
     {
       property: 'relationType',
@@ -594,11 +597,11 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
     },
     {
       property: 'source',
-      propertyType: 'Entity',
+      propertyType: 'Node',
     },
     {
       property: 'target',
-      propertyType: 'Entity',
+      propertyType: 'Node',
     },
     {
       property: 'relationType',
@@ -608,11 +611,11 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
   PackageMerge: [
     {
       property: 'source',
-      propertyType: 'Entity',
+      propertyType: 'Node',
     },
     {
       property: 'target',
-      propertyType: 'Entity',
+      propertyType: 'Node',
     },
     {
       property: 'relationType',
@@ -622,11 +625,11 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
   Realization: [
     {
       property: 'source',
-      propertyType: 'Entity',
+      propertyType: 'Node',
     },
     {
       property: 'target',
-      propertyType: 'Entity',
+      propertyType: 'Node',
     },
     {
       property: 'relationType',
@@ -644,11 +647,11 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
     },
     {
       property: 'source',
-      propertyType: 'Entity',
+      propertyType: 'Node',
     },
     {
       property: 'target',
-      propertyType: 'Entity',
+      propertyType: 'Node',
     },
     {
       property: 'relationType',
@@ -666,11 +669,11 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
     },
     {
       property: 'source',
-      propertyType: 'Entity',
+      propertyType: 'Node',
     },
     {
       property: 'target',
-      propertyType: 'Entity',
+      propertyType: 'Node',
     },
     {
       property: 'relationType',
@@ -690,7 +693,7 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
     },
     {
       property: 'entities',
-      propertyType: 'Entity',
+      propertyType: 'Node',
     },
     {
       property: 'relations',
@@ -712,7 +715,7 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
     },
     {
       property: 'entities',
-      propertyType: 'Entity',
+      propertyType: 'Node',
     },
   ],
 };

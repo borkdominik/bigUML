@@ -117,7 +117,7 @@ export const reactConfig = tseslint.config(
                 version: 'detect'
             }
         },
-        ignores: ['**/big-components/**/*.*', '**/uml-glsp-client/**/*.*']
+        ignores: ['**/big-components/**/*.*', '**/uml-glsp-client/**/*.*', '**/src/env/vscode/**/*.*']
     },
     {
         name: 'jsx-runtime',
@@ -129,7 +129,7 @@ export const reactConfig = tseslint.config(
             'react-hooks': reactHooks
         },
         rules: { ...reactHooks.configs.recommended.rules, 'react-hooks/exhaustive-deps': 'error' },
-        ignores: ['**/big-components/**/*.*', '**/uml-glsp-client/**/*.*']
+        ignores: ['**/big-components/**/*.*', '**/uml-glsp-client/**/*.*', '**/src/env/vscode/**/*.*']
     }
 );
 

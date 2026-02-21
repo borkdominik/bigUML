@@ -36,7 +36,7 @@ export class <%~ it.className %> implements ActionHandler {
       }
     ];
     const entities = root.entities ?? [];
-    entities.forEach(entity => {
+    entities.forEach((entity: any) => {
       const node: any = {
         label: entity.name,
         semanticUri: entity.__id,

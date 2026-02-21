@@ -44,7 +44,6 @@ import { ParameterPropertyPaletteHandler } from './elements/ParameterPropertyPal
 import { PrimitiveTypePropertyPaletteHandler } from './elements/PrimitiveTypePropertyPaletteHandler.js';
 import { PropertyPropertyPaletteHandler } from './elements/PropertyPropertyPaletteHandler.js';
 import { SlotPropertyPaletteHandler } from './elements/SlotPropertyPaletteHandler.js';
-
 @injectable()
 export class RequestClassPropertyPaletteActionHandler implements ActionHandler {
   actionKinds = [RequestPropertyPaletteAction.KIND];
@@ -90,7 +89,6 @@ export class RequestClassPropertyPaletteActionHandler implements ActionHandler {
           value: item.__id + '_refValue',
           secondaryText: item.$type,
         }));
-
       if (false) {
       } else if (isEnumeration(semanticElement)) {
         return EnumerationPropertyPaletteHandler.getPropertyPalette(

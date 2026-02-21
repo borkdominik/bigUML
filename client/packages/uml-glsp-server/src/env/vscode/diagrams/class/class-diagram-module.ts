@@ -16,6 +16,7 @@ import {
     type DiagramConfiguration,
     type GModelFactory,
     type GModelIndex,
+    type GModelSerializer,
     type InstanceMultiBinding,
     type LabelEditValidator,
     type ModelState,
@@ -45,6 +46,7 @@ import {
     ClassLabelEditValidator
 } from './features/index.js';
 import { ClassDiagramGModelFactory } from './model/class-diagram-gmodel-factory.js';
+import { ClassDiagramGModelSerializer } from './model/class-diagram-gmodel-serializer.js';
 import { ClassDiagramModelIndex } from './model/class-diagram-model-index.js';
 import { ClassDiagramModelState } from './model/class-diagram-model-state.js';
 import { ClassDiagramModelStorage } from './model/class-diagram-model-storage.js';
@@ -77,6 +79,10 @@ export class ClassDiagramModule extends BigDiagramModule {
 
     protected bindGModelFactory(): BindingTarget<GModelFactory> {
         return ClassDiagramGModelFactory;
+    }
+
+    protected override bindGModelSerializer(): BindingTarget<GModelSerializer> {
+        return ClassDiagramGModelSerializer;
     }
 
     protected override configureOperationHandlers(binding: InstanceMultiBinding<OperationHandlerConstructor>): void {

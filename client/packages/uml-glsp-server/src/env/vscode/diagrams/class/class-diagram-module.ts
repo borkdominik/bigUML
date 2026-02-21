@@ -28,17 +28,19 @@ import {
     type ToolPaletteItemProvider
 } from '@eclipse-glsp/server';
 import { injectable, type interfaces } from 'inversify';
+import { ClassDiagramLanguageMetadata } from '../../../../gen/common/model-types/class-diagram-language-metadata.js';
 import {
     GenericChangeBoundsOperationHandler,
+    GenericCreateEdgeOperationHandler,
+    GenericCreateNodeOperationHandler,
     GenericDeleteOperationHandler,
     GenericLabelEditOperationHandler,
     GenericUpdateOperationHandler
 } from '../../features/index.js';
+import { DiagramLanguageMetadata } from '../../features/model/diagram-language-metadata.js';
 import { BigDiagramModule } from '../../features/module/module.js';
 import { ClassDiagramConfiguration } from './class-diagram-configuration.js';
 import {
-    ClassCreateEdgeOperationHandler,
-    ClassCreateNodeOperationHandler,
     ClassDiagramCommandPaletteActionProvider,
     ClassDiagramContextMenuItemProvider,
     ClassDiagramModelValidator,
@@ -62,6 +64,7 @@ export class ClassDiagramModule extends BigDiagramModule {
         rebind: interfaces.Rebind
     ): void {
         super.configure(bind, unbind, isBound, rebind);
+        bind(DiagramLanguageMetadata).to(ClassDiagramLanguageMetadata).inSingletonScope();
     }
 
     protected bindDiagramConfiguration(): BindingTarget<DiagramConfiguration> {
@@ -87,8 +90,8 @@ export class ClassDiagramModule extends BigDiagramModule {
 
     protected override configureOperationHandlers(binding: InstanceMultiBinding<OperationHandlerConstructor>): void {
         super.configureOperationHandlers(binding);
-        binding.add(ClassCreateNodeOperationHandler);
-        binding.add(ClassCreateEdgeOperationHandler);
+        binding.add(GenericCreateNodeOperationHandler);
+        binding.add(GenericCreateEdgeOperationHandler);
         binding.add(GenericChangeBoundsOperationHandler);
         binding.add(GenericLabelEditOperationHandler);
         binding.add(GenericUpdateOperationHandler);

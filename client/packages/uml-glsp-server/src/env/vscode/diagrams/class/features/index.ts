@@ -7,6 +7,5 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 export * from './labeledit/index.js';
-export * from './mutation/index.js';
 export * from './provider/index.js';
 export * from './validator/index.js';

@@ -23,7 +23,9 @@ export * from './langium/uml-diagram-scope-provider.js';
 export * from './langium/uml-diagram-scope.js';
 export * from './langium/uml-diagram-validator.js';
 export * from './langium/uml-diagram-workspace-manager.js';
+export * from './langium/util/dimension.js';
 export * from './langium/util/name-util.js';
+export * from './langium/util/position.js';
 export * from './langium/util/uri-util.js';
 
 // Generated

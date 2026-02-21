@@ -10,7 +10,7 @@ import { CreateNodeOperation, type LabeledAction, type Point } from '@eclipse-gl
 import { inject, injectable } from 'inversify';
 import { AbstractDiagramCommandPaletteActionProvider } from '../../../../features/index.js';
 import { ClassDiagramModelState } from '../../model/class-diagram-model-state.js';
-import { GClassNode } from '../../model/elements/class.graph-extension.js';
+import { GClassNode } from '../../model/elements/class.element.js';
 import { ModelTypes } from '../../model/model-types.js';
 
 // TODO: Remove

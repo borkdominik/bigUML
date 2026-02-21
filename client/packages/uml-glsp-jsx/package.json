@@ -1,7 +1,7 @@
 {
-  "name": "@borkdominik-biguml/uml-glsp-server",
+  "name": "@borkdominik-biguml/uml-glsp-jsx",
   "version": "0.6.4",
-  "description": "UML-Hello World",
+  "description": "JSX runtime for GLSP graphical model construction",
   "homepage": "https://github.com/borkdominik/bigUML",
   "bugs": "https://github.com/borkdominik/bigUML/issues",
   "repository": {
@@ -27,40 +27,27 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./build/env/common/index.d.ts",
-      "default": "./build/env/common/index.js"
+      "types": "./build/index.d.ts",
+      "default": "./build/index.js"
     },
-    "./vscode": {
-      "types": "./build/env/vscode/index.d.ts",
-      "default": "./build/env/vscode/index.js"
+    "./jsx-runtime": {
+      "types": "./build/jsx-runtime.d.ts",
+      "default": "./build/jsx-runtime.js"
     }
   },
   "files": [
-    "dist"
+    "build"
   ],
   "scripts": {
     "build": "npm run clean && npm run compile && npm run lint",
     "clean": "rimraf build dist node_modules/.tmp",
     "compile": "tsc -b",
-    "generate": "npm run language:generate",
-    "language:generate": "uml-language-tooling extension generate -d @borkdominik-biguml/uml-language/definition -c ./generator/index.ts",
     "lint": "eslint -c ./eslint.config.js",
     "lint:fix": "npm run lint -- --fix",
     "tsc": "tsc",
     "watch": "concurrently --kill-others 'npm run compile -- --watch'"
   },
   "dependencies": {
-    "@borkdominik-biguml/model-server": "*",
-    "@borkdominik-biguml/uml-glsp-jsx": "*",
-    "@borkdominik-biguml/uml-language-tooling": "*",
-    "@eclipse-glsp/client": "*",
-    "@eclipse-glsp/layout-elk": "*",
-    "@eclipse-glsp/protocol": "*",
-    "@eclipse-glsp/server": "*",
-    "fast-json-patch": "^3.1.1"
-  },
-  "devDependencies": {},
-  "peerDependencies": {
-    "inversify": "^6.2.1"
+    "@eclipse-glsp/server": "*"
   }
 }

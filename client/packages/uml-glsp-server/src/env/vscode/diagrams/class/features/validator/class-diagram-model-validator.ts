@@ -9,7 +9,7 @@
 import { type GModelElement } from '@eclipse-glsp/server';
 import { injectable } from 'inversify';
 import { AbstractDiagramModelValidator } from '../../../../features/index.js';
-import { GClassNode } from '../../model/elements/class.graph-extension.js';
+import { GClassNode } from '../../model/elements/class.element.js';
 
 // TODO: Haydar remove
 @injectable()

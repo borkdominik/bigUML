@@ -29,7 +29,7 @@ import "reflect-metadata";
  */
 @root
 class Diagram {
-  diagram: ClassDiagram | StateMachineDiagram | PackageDiagram;
+  diagram: ClassDiagram;
   metaInfos?: Array<MetaInfo>;
 }
 
@@ -323,31 +323,6 @@ export class Usage extends Relation {
   name?: string;
   visibility?: Visibility;
 }
-/**
- * STATE_MACHINE
- */
-export class StateMachineDiagram {
-  diagramType: "STATE_MACHINE";
-}
-
-/**
- * PACKAGE_DIAGRAM
- */
-@withDefaults
-export class PackageDiagram {
-  diagramType: "PACKAGE";
-  @path entities?: Array<Node>;
-  @path relations?: Array<Relation>;
-}
-
-type PackageDiagramElements =
-  | Class
-  | Package
-  | Abstraction
-  | Dependency
-  | PackageImport
-  | PackageMerge
-  | Usage;
 
 @withDefaults
 export class Package extends Node {

@@ -23,12 +23,12 @@ import {
     getDefaultMapping
 } from '@eclipse-glsp/server';
 import { injectable } from 'inversify';
-import { GClassNode } from './model/elements/class.graph-extension.js';
-import { GEnumerationNode } from './model/elements/enumeration.graph-extension.js';
-import { GInterfaceNode } from './model/elements/interface.graph-extension.js';
-import { GOperationNode } from './model/elements/operation.graph-extension.js';
-import { GPackageNode } from './model/elements/package.graph-extension.js';
-import { GPropertyNode } from './model/elements/property.graph-extension.js';
+import { GClassNode } from './model/elements/class.element.js';
+import { GEnumerationNode } from './model/elements/enumeration.element.js';
+import { GInterfaceNode } from './model/elements/interface.element.js';
+import { GOperationNode } from './model/elements/operation.element.js';
+import { GPackageNode } from './model/elements/package.element.js';
+import { GPropertyNode } from './model/elements/property.element.js';
 import { ModelTypes as types } from './model/model-types.js';
 
 @injectable()

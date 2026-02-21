@@ -9,7 +9,7 @@
 import { inject, injectable } from 'inversify';
 import { AbstractLabelEditValidator } from '../../../../features/index.js';
 import { ClassDiagramModelState } from '../../model/class-diagram-model-state.js';
-import { GClassNode } from '../../model/elements/class.graph-extension.js';
+import { GClassNode } from '../../model/elements/class.element.js';
 
 // TODO: HAYDAR Remove
 @injectable()

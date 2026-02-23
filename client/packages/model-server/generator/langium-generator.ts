@@ -6,8 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-import { type Definition, type EntryRule, type LangiumGrammar, Multiplicity, type ParserRule, type TypeRule } from '../types/index.js';
-import { getReturnTypeFromDefinitions, isString } from '../util.js';
+import { type Definition, type EntryRule, getReturnTypeFromDefinitions, isString, type LangiumGrammar, Multiplicity, type ParserRule, type TypeRule } from '@borkdominik-biguml/uml-language-tooling';
 
 export function generateLangiumText(grammar: LangiumGrammar, _languageId: string = 'grammar', languageName: string = 'NewGrammar') {
     const text = [`grammar ${languageName.replace(/ /g, '')}\n\n`];
@@ -41,9 +40,11 @@ function typeRuleToLangiumText(typeRules: Array<TypeRule>) {
         })
         .join('\n');
 }
+
 function parserRuleToLangiumText(parserRules: Array<ParserRule>, langiumGrammar: LangiumGrammar) {
     return parserRules.map(parserRuleElement => getJsonRule(parserRuleElement, langiumGrammar)).join('\n');
 }
+
 function getJsonRule(rule: ParserRule | EntryRule, rules: LangiumGrammar, entry: boolean = false): string {
     const text = [];
     text.push(`${entry ? 'entry ' : ''}` + `${rule.name}`);
@@ -68,6 +69,7 @@ function getJsonRule(rule: ParserRule | EntryRule, rules: LangiumGrammar, entry:
     text.push(" '}' ;");
     return text.join(' ');
 }
+
 function getProperty(property: Definition, rules: LangiumGrammar): string {
     const text: string[] = [];
     text.push(`'"` + property.name + `"'`);
@@ -151,6 +153,7 @@ function getReference(property: Definition): string[] {
     text.push(`'}'`);
     return text;
 }
+
 function getLangiumType(type: string) {
     return type === 'string' ? 'LANGIUM_ID' : type === 'number' ? 'LANGIUM_INT' : type === 'boolean' ? 'LANGIUM_BOOL' : type;
 }

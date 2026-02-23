@@ -6,6 +6,8 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
+export * from './transformer.js';
 export * from './types/index.js';
 export * from './util.js';
 export * from './validation/custom-validators/length-between-validator.js';
+

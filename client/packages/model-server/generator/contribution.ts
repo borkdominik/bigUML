@@ -7,11 +7,31 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { type LangiumDeclaration } from '@borkdominik-biguml/uml-language-tooling';
+import { type LangiumDeclaration, transformLangiumDeclarationsToLangiumGrammar } from '@borkdominik-biguml/uml-language-tooling';
+import path from 'path';
+import { generateLangiumText } from './langium-generator.js';
+import { generateSerializer } from './serializer-generator.js';
 
-// TODO: Haydar
 export function umlToolingContribution(extensionPath: string, declarations: LangiumDeclaration[]): { path: string; content: string }[] {
     const results: { path: string; content: string }[] = [];
+
+    const generatorConfig = { referenceProperty: '__id' };
+    const languageId = 'uml-diagram';
+    const languageName = 'UmlDiagram';
+
+    const langiumGrammar = transformLangiumDeclarationsToLangiumGrammar(declarations, generatorConfig);
+
+    const grammarText = generateLangiumText(langiumGrammar, languageId, languageName);
+    results.push({
+        path: path.join(extensionPath, 'langium', `${languageId}.langium`),
+        content: grammarText
+    });
+
+    const serializerText = generateSerializer(langiumGrammar, languageId, languageName, generatorConfig);
+    results.push({
+        path: path.join(extensionPath, 'langium', `${languageId}-serializer.ts`),
+        content: serializerText
+    });
 
     return results;
 }

@@ -13,20 +13,12 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import path from 'path';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
-import { generateLangiumText } from '../src/generator/langium-generator.js';
-import { generateSerializer } from '../src/generator/serializer-generator.js';
-import { parseDefinitionFile, parseGeneratorConfigFile, parseLangiumConfigFile } from '../src/parser/parser.js';
-import { transformDeclaration, transformLangiumDeclarationsToLangiumGrammar } from '../src/transformer.js';
-import { type LangiumDeclaration, type Paths } from '../src/types/index.js';
+import { parseDefinitionFile } from '../src/parser/parser.js';
+import { transformDeclaration } from '../src/transformer.js';
+import { type LangiumDeclaration } from '../src/types/index.js';
 import { format } from '../src/util.js';
-import { checkDeclarationValidity, checkGeneratorConfigValidity, checkLangiumGrammar } from '../src/validators/index.js';
+import { checkDeclarationValidity } from '../src/validators/index.js';
 
-interface GenerateArgs {
-    def: string;
-    gen: string;
-    langiumConfig?: string;
-    generatorConfig?: string;
-}
 
 interface ExtensionGenerateArgs {
     def: string;
@@ -55,64 +47,6 @@ function resolvePath(inputPath: string): string {
 }
 
 yargs(hideBin(process.argv))
-    .command<GenerateArgs>(
-        'generate',
-        'Generate Langium language files from TypeScript definitions',
-        yargs => {
-            return yargs
-                .option('def', {
-                    alias: 'd',
-                    type: 'string',
-                    description: 'Path to the language definition file',
-                    demandOption: true
-                })
-                .option('gen', {
-                    alias: 'g',
-                    type: 'string',
-                    description: 'Path to the generated output directory',
-                    default: './src/gen'
-                })
-                .option('langiumConfig', {
-                    type: 'string',
-                    description: 'Path to langium-config.json (file path or node module)',
-                    default: './langium-config.json'
-                })
-                .option('generatorConfig', {
-                    type: 'string',
-                    description: 'Path to generator-config.ts (file path or node module)',
-                    default: './generator-config.ts'
-                });
-        },
-        async argv => {
-            const srcPath = resolvePath(argv.def);
-            const genPath = path.resolve(argv.gen);
-            const configPath = resolvePath(argv.langiumConfig ?? './langium-config.json');
-            const generatorConfigPath = resolvePath(argv.generatorConfig ?? './generator-config.ts');
-
-            const config = parseLangiumConfigFile(configPath);
-            const generatorConfig = parseGeneratorConfigFile(generatorConfigPath);
-            checkGeneratorConfigValidity(generatorConfig);
-
-            console.log('Generating Langium files from TypeScript definitions at', srcPath);
-
-            const tsDeclarations = await parseDefinitionFile(srcPath);
-            const output = JSON.stringify(tsDeclarations, null, 2);
-
-            const outputFolder = path.join(genPath, 'langium');
-            if (!fs.existsSync(outputFolder)) {
-                fs.mkdirSync(outputFolder, { recursive: true });
-            }
-            const testFilePath = path.join(outputFolder, 'testkarol.ts');
-
-            fs.writeFileSync(testFilePath, output, { encoding: 'utf8' });
-            console.log('DEBUG: Raw declarations have been written to', testFilePath);
-
-            await generateLangiumFiles(tsDeclarations, generatorConfig, config, {
-                def: srcPath,
-                gen: genPath
-            });
-        }
-    )
     .command(
         'extension',
         'Extension-related commands',
@@ -174,23 +108,7 @@ yargs(hideBin(process.argv))
     })
     .parse();
 
-/**
- * Generates Langium language files (grammar, serializer, creation paths, default values, validations)
- */
-async function generateLangiumFiles(tsDeclarations: any, generatorConfig: any, config: any, paths: Paths) {
-    const langiumDeclarations = transformDeclaration(tsDeclarations);
-    checkDeclarationValidity(langiumDeclarations);
-    const langiumGrammar = transformLangiumDeclarationsToLangiumGrammar(langiumDeclarations, generatorConfig);
-    checkLangiumGrammar(langiumGrammar);
-    const grammarText = generateLangiumText(langiumGrammar, config.languageId, config.languageName);
 
-    fs.writeFileSync(path.join(paths.gen, 'langium', `${config.languageId}.langium`), grammarText, { encoding: 'utf8', flag: 'w' });
-    generateSerializer(langiumGrammar, config.languageId, config.languageName, generatorConfig).then(text =>
-        fs.writeFileSync(path.join(paths.gen, 'langium', `${config.languageId}-serializer.ts`), text, { encoding: 'utf8', flag: 'w' })
-    );
-
-    console.log('Langium files generated successfully.');
-}
 
 /**
  * Generates extension files using a dynamically loaded contribution module

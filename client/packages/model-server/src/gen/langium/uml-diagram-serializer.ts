@@ -6,7 +6,7 @@
 import {
   DiagramSerializer,
   Serializer,
-} from "../../src/langium-connector/serializer.js";
+} from '../../src/langium-connector/serializer.js';
 import {
   Diagram,
   isDiagram,
@@ -104,9 +104,9 @@ import {
   isUnbounded,
   MetaInfo,
   isMetaInfo,
-} from "../langium/language/ast.js";
-import { UmlDiagramServices } from "../../src/langium/uml-diagram-module.js";
-import { AstNode } from "langium";
+} from '../langium/language/ast.js';
+import { UmlDiagramServices } from '../../src/langium/uml-diagram-module.js';
+import { AstNode } from 'langium';
 
 export class UmlDiagramSerializer
   implements Serializer<Diagram>, DiagramSerializer<Diagram>
@@ -120,14 +120,14 @@ export class UmlDiagramSerializer
       str.push(
         '"metaInfos": [\n' +
           root.metaInfos
-            .map((element) => "" + this.serializeMetaInfo(element))
-            .join(",\n") +
-          "\n]"
+            .map((element) => '' + this.serializeMetaInfo(element))
+            .join(',\n') +
+          '\n]',
       );
     }
     str = str.filter((element) => !!element);
-    const json = JSON.parse("{\n" + str.join(",\n") + "\n}");
-    return JSON.stringify(json, undefined, "\t");
+    const json = JSON.parse('{\n' + str.join(',\n') + '\n}');
+    return JSON.stringify(json, undefined, '\t');
   }
 
   serializeSize(element: Size): string {
@@ -137,21 +137,21 @@ export class UmlDiagramSerializer
       str.push('"__id": ' + '"' + element.__id + '"');
     }
     if (element.height !== undefined && element.height !== null) {
-      str.push('"height": ' + element.height + "");
+      str.push('"height": ' + element.height + '');
     }
     if (element.width !== undefined && element.width !== null) {
-      str.push('"width": ' + element.width + "");
+      str.push('"width": ' + element.width + '');
     }
     if (element.element !== undefined && element.element !== null) {
       str.push(
         '"element": ' +
-          "{" +
+          '{' +
           ' "__type": "Reference", "__refType": "ElementWithSizeAndPosition", "__value": "' +
-          (element.element.ref?.__id ?? "undefined") +
-          '"}'
+          (element.element.ref?.__id ?? 'undefined') +
+          '"}',
       );
     }
-    return "{" + str.join(",\n") + "}";
+    return '{' + str.join(',\n') + '}';
   }
 
   serializePosition(element: Position): string {
@@ -161,21 +161,21 @@ export class UmlDiagramSerializer
       str.push('"__id": ' + '"' + element.__id + '"');
     }
     if (element.x !== undefined && element.x !== null) {
-      str.push('"x": ' + element.x + "");
+      str.push('"x": ' + element.x + '');
     }
     if (element.y !== undefined && element.y !== null) {
-      str.push('"y": ' + element.y + "");
+      str.push('"y": ' + element.y + '');
     }
     if (element.element !== undefined && element.element !== null) {
       str.push(
         '"element": ' +
-          "{" +
+          '{' +
           ' "__type": "Reference", "__refType": "ElementWithSizeAndPosition", "__value": "' +
-          (element.element.ref?.__id ?? "undefined") +
-          '"}'
+          (element.element.ref?.__id ?? 'undefined') +
+          '"}',
       );
     }
-    return "{" + str.join(",\n") + "}";
+    return '{' + str.join(',\n') + '}';
   }
 
   serializeClassDiagram(element: ClassDiagram): string {
@@ -192,8 +192,8 @@ export class UmlDiagramSerializer
         '"entities": [' +
           element.entities
             .map((property) => this.serializeClassDiagramNodes(property))
-            .join(",") +
-          "]"
+            .join(',') +
+          ']',
       );
     }
     if (element.relations !== undefined && element.relations !== null) {
@@ -201,11 +201,11 @@ export class UmlDiagramSerializer
         '"relations": [' +
           element.relations
             .map((property) => this.serializeClassDiagramEdges(property))
-            .join(",") +
-          "]"
+            .join(',') +
+          ']',
       );
     }
-    return "{" + str.join(",\n") + "}";
+    return '{' + str.join(',\n') + '}';
   }
 
   serializeEnumeration(element: Enumeration): string {
@@ -222,11 +222,11 @@ export class UmlDiagramSerializer
         '"values": [' +
           element.values
             .map((property) => this.serializeEnumerationLiteral(property))
-            .join(",") +
-          "]"
+            .join(',') +
+          ']',
       );
     }
-    return "{" + str.join(",\n") + "}";
+    return '{' + str.join(',\n') + '}';
   }
 
   serializeEnumerationLiteral(element: EnumerationLiteral): string {
@@ -244,7 +244,7 @@ export class UmlDiagramSerializer
     if (element.visibility !== undefined && element.visibility !== null) {
       str.push('"visibility": ' + this.serializeVisibility(element.visibility));
     }
-    return "{" + str.join(",\n") + "}";
+    return '{' + str.join(',\n') + '}';
   }
 
   serializeClass(element: Class): string {
@@ -260,15 +260,15 @@ export class UmlDiagramSerializer
       str.push('"name": ' + '"' + element.name + '"');
     }
     if (element.isAbstract !== undefined && element.isAbstract !== null) {
-      str.push('"isAbstract": ' + element.isAbstract + "");
+      str.push('"isAbstract": ' + element.isAbstract + '');
     }
     if (element.properties !== undefined && element.properties !== null) {
       str.push(
         '"properties": [' +
           element.properties
             .map((property) => this.serializeProperty(property))
-            .join(",") +
-          "]"
+            .join(',') +
+          ']',
       );
     }
     if (element.operations !== undefined && element.operations !== null) {
@@ -276,20 +276,20 @@ export class UmlDiagramSerializer
         '"operations": [' +
           element.operations
             .map((property) => this.serializeOperation(property))
-            .join(",") +
-          "]"
+            .join(',') +
+          ']',
       );
     }
     if (element.isActive !== undefined && element.isActive !== null) {
-      str.push('"isActive": ' + element.isActive + "");
+      str.push('"isActive": ' + element.isActive + '');
     }
     if (element.visibility !== undefined && element.visibility !== null) {
       str.push('"visibility": ' + this.serializeVisibility(element.visibility));
     }
     if (element.skip !== undefined && element.skip !== null) {
-      str.push('"skip": ' + element.skip + "");
+      str.push('"skip": ' + element.skip + '');
     }
-    return "{" + str.join(",\n") + "}";
+    return '{' + str.join(',\n') + '}';
   }
 
   serializeAbstractClass(element: AbstractClass): string {
@@ -299,7 +299,7 @@ export class UmlDiagramSerializer
       str.push('"__id": ' + '"' + element.__id + '"');
     }
     if (element.isAbstract !== undefined && element.isAbstract !== null) {
-      str.push('"isAbstract": ' + element.isAbstract + "");
+      str.push('"isAbstract": ' + element.isAbstract + '');
     }
     if (element.label !== undefined && element.label !== null) {
       str.push('"label": ' + '"' + element.label + '"');
@@ -311,15 +311,15 @@ export class UmlDiagramSerializer
       str.push('"name": ' + '"' + element.name + '"');
     }
     if (element.isAbstract !== undefined && element.isAbstract !== null) {
-      str.push('"isAbstract": ' + element.isAbstract + "");
+      str.push('"isAbstract": ' + element.isAbstract + '');
     }
     if (element.properties !== undefined && element.properties !== null) {
       str.push(
         '"properties": [' +
           element.properties
             .map((property) => this.serializeProperty(property))
-            .join(",") +
-          "]"
+            .join(',') +
+          ']',
       );
     }
     if (element.operations !== undefined && element.operations !== null) {
@@ -327,20 +327,20 @@ export class UmlDiagramSerializer
         '"operations": [' +
           element.operations
             .map((property) => this.serializeOperation(property))
-            .join(",") +
-          "]"
+            .join(',') +
+          ']',
       );
     }
     if (element.isActive !== undefined && element.isActive !== null) {
-      str.push('"isActive": ' + element.isActive + "");
+      str.push('"isActive": ' + element.isActive + '');
     }
     if (element.visibility !== undefined && element.visibility !== null) {
       str.push('"visibility": ' + this.serializeVisibility(element.visibility));
     }
     if (element.skip !== undefined && element.skip !== null) {
-      str.push('"skip": ' + element.skip + "");
+      str.push('"skip": ' + element.skip + '');
     }
-    return "{" + str.join(",\n") + "}";
+    return '{' + str.join(',\n') + '}';
   }
 
   serializeInterface(element: Interface): string {
@@ -357,8 +357,8 @@ export class UmlDiagramSerializer
         '"properties": [' +
           element.properties
             .map((property) => this.serializeProperty(property))
-            .join(",") +
-          "]"
+            .join(',') +
+          ']',
       );
     }
     if (element.operations !== undefined && element.operations !== null) {
@@ -366,11 +366,11 @@ export class UmlDiagramSerializer
         '"operations": [' +
           element.operations
             .map((property) => this.serializeOperation(property))
-            .join(",") +
-          "]"
+            .join(',') +
+          ']',
       );
     }
-    return "{" + str.join(",\n") + "}";
+    return '{' + str.join(',\n') + '}';
   }
 
   serializeProperty(element: Property): string {
@@ -383,25 +383,25 @@ export class UmlDiagramSerializer
       str.push('"name": ' + '"' + element.name + '"');
     }
     if (element.isDerived !== undefined && element.isDerived !== null) {
-      str.push('"isDerived": ' + element.isDerived + "");
+      str.push('"isDerived": ' + element.isDerived + '');
     }
     if (element.isOrdered !== undefined && element.isOrdered !== null) {
-      str.push('"isOrdered": ' + element.isOrdered + "");
+      str.push('"isOrdered": ' + element.isOrdered + '');
     }
     if (element.isStatic !== undefined && element.isStatic !== null) {
-      str.push('"isStatic": ' + element.isStatic + "");
+      str.push('"isStatic": ' + element.isStatic + '');
     }
     if (
       element.isDerivedUnion !== undefined &&
       element.isDerivedUnion !== null
     ) {
-      str.push('"isDerivedUnion": ' + element.isDerivedUnion + "");
+      str.push('"isDerivedUnion": ' + element.isDerivedUnion + '');
     }
     if (element.isReadOnly !== undefined && element.isReadOnly !== null) {
-      str.push('"isReadOnly": ' + element.isReadOnly + "");
+      str.push('"isReadOnly": ' + element.isReadOnly + '');
     }
     if (element.isUnique !== undefined && element.isUnique !== null) {
-      str.push('"isUnique": ' + element.isUnique + "");
+      str.push('"isUnique": ' + element.isUnique + '');
     }
     if (element.visibility !== undefined && element.visibility !== null) {
       str.push('"visibility": ' + this.serializeVisibility(element.visibility));
@@ -412,18 +412,18 @@ export class UmlDiagramSerializer
     if (element.propertyType !== undefined && element.propertyType !== null) {
       str.push(
         '"propertyType": ' +
-          "{" +
+          '{' +
           ' "__type": "Reference", "__refType": "DataTypeReference", "__value": "' +
-          (element.propertyType.ref?.__id ?? "undefined") +
-          '"}'
+          (element.propertyType.ref?.__id ?? 'undefined') +
+          '"}',
       );
     }
     if (element.aggregation !== undefined && element.aggregation !== null) {
       str.push(
-        '"aggregation": ' + this.serializeAggregationType(element.aggregation)
+        '"aggregation": ' + this.serializeAggregationType(element.aggregation),
       );
     }
-    return "{" + str.join(",\n") + "}";
+    return '{' + str.join(',\n') + '}';
   }
 
   serializeOperation(element: Operation): string {
@@ -436,20 +436,20 @@ export class UmlDiagramSerializer
       str.push('"name": ' + '"' + element.name + '"');
     }
     if (element.isAbstract !== undefined && element.isAbstract !== null) {
-      str.push('"isAbstract": ' + element.isAbstract + "");
+      str.push('"isAbstract": ' + element.isAbstract + '');
     }
     if (element.isStatic !== undefined && element.isStatic !== null) {
-      str.push('"isStatic": ' + element.isStatic + "");
+      str.push('"isStatic": ' + element.isStatic + '');
     }
     if (element.isQuery !== undefined && element.isQuery !== null) {
-      str.push('"isQuery": ' + element.isQuery + "");
+      str.push('"isQuery": ' + element.isQuery + '');
     }
     if (element.visibility !== undefined && element.visibility !== null) {
       str.push('"visibility": ' + this.serializeVisibility(element.visibility));
     }
     if (element.concurrency !== undefined && element.concurrency !== null) {
       str.push(
-        '"concurrency": ' + this.serializeConcurrency(element.concurrency)
+        '"concurrency": ' + this.serializeConcurrency(element.concurrency),
       );
     }
     if (element.parameters !== undefined && element.parameters !== null) {
@@ -457,11 +457,11 @@ export class UmlDiagramSerializer
         '"parameters": [' +
           element.parameters
             .map((property) => this.serializeParameter(property))
-            .join(",") +
-          "]"
+            .join(',') +
+          ']',
       );
     }
-    return "{" + str.join(",\n") + "}";
+    return '{' + str.join(',\n') + '}';
   }
 
   serializeParameter(element: Parameter): string {
@@ -474,20 +474,20 @@ export class UmlDiagramSerializer
       str.push('"name": ' + '"' + element.name + '"');
     }
     if (element.isException !== undefined && element.isException !== null) {
-      str.push('"isException": ' + element.isException + "");
+      str.push('"isException": ' + element.isException + '');
     }
     if (element.isStream !== undefined && element.isStream !== null) {
-      str.push('"isStream": ' + element.isStream + "");
+      str.push('"isStream": ' + element.isStream + '');
     }
     if (element.isOrdered !== undefined && element.isOrdered !== null) {
-      str.push('"isOrdered": ' + element.isOrdered + "");
+      str.push('"isOrdered": ' + element.isOrdered + '');
     }
     if (element.isUnique !== undefined && element.isUnique !== null) {
-      str.push('"isUnique": ' + element.isUnique + "");
+      str.push('"isUnique": ' + element.isUnique + '');
     }
     if (element.direction !== undefined && element.direction !== null) {
       str.push(
-        '"direction": ' + this.serializeParameterDirection(element.direction)
+        '"direction": ' + this.serializeParameterDirection(element.direction),
       );
     }
     if (element.effect !== undefined && element.effect !== null) {
@@ -499,16 +499,16 @@ export class UmlDiagramSerializer
     if (element.parameterType !== undefined && element.parameterType !== null) {
       str.push(
         '"parameterType": ' +
-          "{" +
+          '{' +
           ' "__type": "Reference", "__refType": "DataTypeReference", "__value": "' +
-          (element.parameterType.ref?.__id ?? "undefined") +
-          '"}'
+          (element.parameterType.ref?.__id ?? 'undefined') +
+          '"}',
       );
     }
     if (element.multiplicity !== undefined && element.multiplicity !== null) {
       str.push('"multiplicity": ' + '"' + element.multiplicity + '"');
     }
-    return "{" + str.join(",\n") + "}";
+    return '{' + str.join(',\n') + '}';
   }
 
   serializeDataType(element: DataType): string {
@@ -525,8 +525,8 @@ export class UmlDiagramSerializer
         '"properties": [' +
           element.properties
             .map((property) => this.serializeProperty(property))
-            .join(",") +
-          "]"
+            .join(',') +
+          ']',
       );
     }
     if (element.operations !== undefined && element.operations !== null) {
@@ -534,17 +534,17 @@ export class UmlDiagramSerializer
         '"operations": [' +
           element.operations
             .map((property) => this.serializeOperation(property))
-            .join(",") +
-          "]"
+            .join(',') +
+          ']',
       );
     }
     if (element.isAbstract !== undefined && element.isAbstract !== null) {
-      str.push('"isAbstract": ' + element.isAbstract + "");
+      str.push('"isAbstract": ' + element.isAbstract + '');
     }
     if (element.visibility !== undefined && element.visibility !== null) {
       str.push('"visibility": ' + this.serializeVisibility(element.visibility));
     }
-    return "{" + str.join(",\n") + "}";
+    return '{' + str.join(',\n') + '}';
   }
 
   serializePrimitiveType(element: PrimitiveType): string {
@@ -556,7 +556,7 @@ export class UmlDiagramSerializer
     if (element.name !== undefined && element.name !== null) {
       str.push('"name": ' + '"' + element.name + '"');
     }
-    return "{" + str.join(",\n") + "}";
+    return '{' + str.join(',\n') + '}';
   }
 
   serializeInstanceSpecification(element: InstanceSpecification): string {
@@ -576,11 +576,11 @@ export class UmlDiagramSerializer
         '"slots": [' +
           element.slots
             .map((property) => this.serializeSlot(property))
-            .join(",") +
-          "]"
+            .join(',') +
+          ']',
       );
     }
-    return "{" + str.join(",\n") + "}";
+    return '{' + str.join(',\n') + '}';
   }
 
   serializeSlot(element: Slot): string {
@@ -598,10 +598,10 @@ export class UmlDiagramSerializer
     ) {
       str.push(
         '"definingFeature": ' +
-          "{" +
+          '{' +
           ' "__type": "Reference", "__refType": "SlotDefiningFeature", "__value": "' +
-          (element.definingFeature.ref?.__id ?? "undefined") +
-          '"}'
+          (element.definingFeature.ref?.__id ?? 'undefined') +
+          '"}',
       );
     }
     if (element.values !== undefined && element.values !== null) {
@@ -609,11 +609,11 @@ export class UmlDiagramSerializer
         '"values": [' +
           element.values
             .map((property) => this.serializeLiteralSpecification(property))
-            .join(",") +
-          "]"
+            .join(',') +
+          ']',
       );
     }
-    return "{" + str.join(",\n") + "}";
+    return '{' + str.join(',\n') + '}';
   }
 
   serializeLiteralSpecification(element: LiteralSpecification): string {
@@ -628,7 +628,7 @@ export class UmlDiagramSerializer
     if (element.value !== undefined && element.value !== null) {
       str.push('"value": ' + '"' + element.value + '"');
     }
-    return "{" + str.join(",\n") + "}";
+    return '{' + str.join(',\n') + '}';
   }
 
   serializeRelation(element: Relation): string {
@@ -676,27 +676,27 @@ export class UmlDiagramSerializer
     if (element.source !== undefined && element.source !== null) {
       str.push(
         '"source": ' +
-          "{" +
+          '{' +
           ' "__type": "Reference", "__refType": "Node", "__value": "' +
-          (element.source.ref?.__id ?? "undefined") +
-          '"}'
+          (element.source.ref?.__id ?? 'undefined') +
+          '"}',
       );
     }
     if (element.target !== undefined && element.target !== null) {
       str.push(
         '"target": ' +
-          "{" +
+          '{' +
           ' "__type": "Reference", "__refType": "Node", "__value": "' +
-          (element.target.ref?.__id ?? "undefined") +
-          '"}'
+          (element.target.ref?.__id ?? 'undefined') +
+          '"}',
       );
     }
     if (element.relationType !== undefined && element.relationType !== null) {
       str.push(
-        '"relationType": ' + this.serializeRelationType(element.relationType)
+        '"relationType": ' + this.serializeRelationType(element.relationType),
       );
     }
-    return "{" + str.join(",\n") + "}";
+    return '{' + str.join(',\n') + '}';
   }
 
   serializeAbstraction(element: Abstraction): string {
@@ -714,27 +714,27 @@ export class UmlDiagramSerializer
     if (element.source !== undefined && element.source !== null) {
       str.push(
         '"source": ' +
-          "{" +
+          '{' +
           ' "__type": "Reference", "__refType": "Node", "__value": "' +
-          (element.source.ref?.__id ?? "undefined") +
-          '"}'
+          (element.source.ref?.__id ?? 'undefined') +
+          '"}',
       );
     }
     if (element.target !== undefined && element.target !== null) {
       str.push(
         '"target": ' +
-          "{" +
+          '{' +
           ' "__type": "Reference", "__refType": "Node", "__value": "' +
-          (element.target.ref?.__id ?? "undefined") +
-          '"}'
+          (element.target.ref?.__id ?? 'undefined') +
+          '"}',
       );
     }
     if (element.relationType !== undefined && element.relationType !== null) {
       str.push(
-        '"relationType": ' + this.serializeRelationType(element.relationType)
+        '"relationType": ' + this.serializeRelationType(element.relationType),
       );
     }
-    return "{" + str.join(",\n") + "}";
+    return '{' + str.join(',\n') + '}';
   }
 
   serializeDependency(element: Dependency): string {
@@ -752,27 +752,27 @@ export class UmlDiagramSerializer
     if (element.source !== undefined && element.source !== null) {
       str.push(
         '"source": ' +
-          "{" +
+          '{' +
           ' "__type": "Reference", "__refType": "Node", "__value": "' +
-          (element.source.ref?.__id ?? "undefined") +
-          '"}'
+          (element.source.ref?.__id ?? 'undefined') +
+          '"}',
       );
     }
     if (element.target !== undefined && element.target !== null) {
       str.push(
         '"target": ' +
-          "{" +
+          '{' +
           ' "__type": "Reference", "__refType": "Node", "__value": "' +
-          (element.target.ref?.__id ?? "undefined") +
-          '"}'
+          (element.target.ref?.__id ?? 'undefined') +
+          '"}',
       );
     }
     if (element.relationType !== undefined && element.relationType !== null) {
       str.push(
-        '"relationType": ' + this.serializeRelationType(element.relationType)
+        '"relationType": ' + this.serializeRelationType(element.relationType),
       );
     }
-    return "{" + str.join(",\n") + "}";
+    return '{' + str.join(',\n') + '}';
   }
 
   serializeAssociation(element: Association): string {
@@ -789,7 +789,7 @@ export class UmlDiagramSerializer
       element.sourceMultiplicity !== null
     ) {
       str.push(
-        '"sourceMultiplicity": ' + '"' + element.sourceMultiplicity + '"'
+        '"sourceMultiplicity": ' + '"' + element.sourceMultiplicity + '"',
       );
     }
     if (
@@ -797,7 +797,7 @@ export class UmlDiagramSerializer
       element.targetMultiplicity !== null
     ) {
       str.push(
-        '"targetMultiplicity": ' + '"' + element.targetMultiplicity + '"'
+        '"targetMultiplicity": ' + '"' + element.targetMultiplicity + '"',
       );
     }
     if (element.sourceName !== undefined && element.sourceName !== null) {
@@ -812,7 +812,7 @@ export class UmlDiagramSerializer
     ) {
       str.push(
         '"sourceAggregation": ' +
-          this.serializeAggregationType(element.sourceAggregation)
+          this.serializeAggregationType(element.sourceAggregation),
       );
     }
     if (
@@ -821,7 +821,7 @@ export class UmlDiagramSerializer
     ) {
       str.push(
         '"targetAggregation": ' +
-          this.serializeAggregationType(element.targetAggregation)
+          this.serializeAggregationType(element.targetAggregation),
       );
     }
     if (element.visibility !== undefined && element.visibility !== null) {
@@ -830,27 +830,27 @@ export class UmlDiagramSerializer
     if (element.source !== undefined && element.source !== null) {
       str.push(
         '"source": ' +
-          "{" +
+          '{' +
           ' "__type": "Reference", "__refType": "Node", "__value": "' +
-          (element.source.ref?.__id ?? "undefined") +
-          '"}'
+          (element.source.ref?.__id ?? 'undefined') +
+          '"}',
       );
     }
     if (element.target !== undefined && element.target !== null) {
       str.push(
         '"target": ' +
-          "{" +
+          '{' +
           ' "__type": "Reference", "__refType": "Node", "__value": "' +
-          (element.target.ref?.__id ?? "undefined") +
-          '"}'
+          (element.target.ref?.__id ?? 'undefined') +
+          '"}',
       );
     }
     if (element.relationType !== undefined && element.relationType !== null) {
       str.push(
-        '"relationType": ' + this.serializeRelationType(element.relationType)
+        '"relationType": ' + this.serializeRelationType(element.relationType),
       );
     }
-    return "{" + str.join(",\n") + "}";
+    return '{' + str.join(',\n') + '}';
   }
 
   serializeAggregation(element: Aggregation): string {
@@ -867,7 +867,7 @@ export class UmlDiagramSerializer
       element.sourceMultiplicity !== null
     ) {
       str.push(
-        '"sourceMultiplicity": ' + '"' + element.sourceMultiplicity + '"'
+        '"sourceMultiplicity": ' + '"' + element.sourceMultiplicity + '"',
       );
     }
     if (
@@ -875,7 +875,7 @@ export class UmlDiagramSerializer
       element.targetMultiplicity !== null
     ) {
       str.push(
-        '"targetMultiplicity": ' + '"' + element.targetMultiplicity + '"'
+        '"targetMultiplicity": ' + '"' + element.targetMultiplicity + '"',
       );
     }
     if (element.sourceName !== undefined && element.sourceName !== null) {
@@ -890,7 +890,7 @@ export class UmlDiagramSerializer
     ) {
       str.push(
         '"sourceAggregation": ' +
-          this.serializeAggregationType(element.sourceAggregation)
+          this.serializeAggregationType(element.sourceAggregation),
       );
     }
     if (
@@ -899,7 +899,7 @@ export class UmlDiagramSerializer
     ) {
       str.push(
         '"targetAggregation": ' +
-          this.serializeAggregationType(element.targetAggregation)
+          this.serializeAggregationType(element.targetAggregation),
       );
     }
     if (element.visibility !== undefined && element.visibility !== null) {
@@ -908,27 +908,27 @@ export class UmlDiagramSerializer
     if (element.source !== undefined && element.source !== null) {
       str.push(
         '"source": ' +
-          "{" +
+          '{' +
           ' "__type": "Reference", "__refType": "Node", "__value": "' +
-          (element.source.ref?.__id ?? "undefined") +
-          '"}'
+          (element.source.ref?.__id ?? 'undefined') +
+          '"}',
       );
     }
     if (element.target !== undefined && element.target !== null) {
       str.push(
         '"target": ' +
-          "{" +
+          '{' +
           ' "__type": "Reference", "__refType": "Node", "__value": "' +
-          (element.target.ref?.__id ?? "undefined") +
-          '"}'
+          (element.target.ref?.__id ?? 'undefined') +
+          '"}',
       );
     }
     if (element.relationType !== undefined && element.relationType !== null) {
       str.push(
-        '"relationType": ' + this.serializeRelationType(element.relationType)
+        '"relationType": ' + this.serializeRelationType(element.relationType),
       );
     }
-    return "{" + str.join(",\n") + "}";
+    return '{' + str.join(',\n') + '}';
   }
 
   serializeComposition(element: Composition): string {
@@ -945,7 +945,7 @@ export class UmlDiagramSerializer
       element.sourceMultiplicity !== null
     ) {
       str.push(
-        '"sourceMultiplicity": ' + '"' + element.sourceMultiplicity + '"'
+        '"sourceMultiplicity": ' + '"' + element.sourceMultiplicity + '"',
       );
     }
     if (
@@ -953,7 +953,7 @@ export class UmlDiagramSerializer
       element.targetMultiplicity !== null
     ) {
       str.push(
-        '"targetMultiplicity": ' + '"' + element.targetMultiplicity + '"'
+        '"targetMultiplicity": ' + '"' + element.targetMultiplicity + '"',
       );
     }
     if (element.sourceName !== undefined && element.sourceName !== null) {
@@ -968,7 +968,7 @@ export class UmlDiagramSerializer
     ) {
       str.push(
         '"sourceAggregation": ' +
-          this.serializeAggregationType(element.sourceAggregation)
+          this.serializeAggregationType(element.sourceAggregation),
       );
     }
     if (
@@ -977,7 +977,7 @@ export class UmlDiagramSerializer
     ) {
       str.push(
         '"targetAggregation": ' +
-          this.serializeAggregationType(element.targetAggregation)
+          this.serializeAggregationType(element.targetAggregation),
       );
     }
     if (element.visibility !== undefined && element.visibility !== null) {
@@ -986,27 +986,27 @@ export class UmlDiagramSerializer
     if (element.source !== undefined && element.source !== null) {
       str.push(
         '"source": ' +
-          "{" +
+          '{' +
           ' "__type": "Reference", "__refType": "Node", "__value": "' +
-          (element.source.ref?.__id ?? "undefined") +
-          '"}'
+          (element.source.ref?.__id ?? 'undefined') +
+          '"}',
       );
     }
     if (element.target !== undefined && element.target !== null) {
       str.push(
         '"target": ' +
-          "{" +
+          '{' +
           ' "__type": "Reference", "__refType": "Node", "__value": "' +
-          (element.target.ref?.__id ?? "undefined") +
-          '"}'
+          (element.target.ref?.__id ?? 'undefined') +
+          '"}',
       );
     }
     if (element.relationType !== undefined && element.relationType !== null) {
       str.push(
-        '"relationType": ' + this.serializeRelationType(element.relationType)
+        '"relationType": ' + this.serializeRelationType(element.relationType),
       );
     }
-    return "{" + str.join(",\n") + "}";
+    return '{' + str.join(',\n') + '}';
   }
 
   serializeInterfaceRealization(element: InterfaceRealization): string {
@@ -1024,27 +1024,27 @@ export class UmlDiagramSerializer
     if (element.source !== undefined && element.source !== null) {
       str.push(
         '"source": ' +
-          "{" +
+          '{' +
           ' "__type": "Reference", "__refType": "Node", "__value": "' +
-          (element.source.ref?.__id ?? "undefined") +
-          '"}'
+          (element.source.ref?.__id ?? 'undefined') +
+          '"}',
       );
     }
     if (element.target !== undefined && element.target !== null) {
       str.push(
         '"target": ' +
-          "{" +
+          '{' +
           ' "__type": "Reference", "__refType": "Node", "__value": "' +
-          (element.target.ref?.__id ?? "undefined") +
-          '"}'
+          (element.target.ref?.__id ?? 'undefined') +
+          '"}',
       );
     }
     if (element.relationType !== undefined && element.relationType !== null) {
       str.push(
-        '"relationType": ' + this.serializeRelationType(element.relationType)
+        '"relationType": ' + this.serializeRelationType(element.relationType),
       );
     }
-    return "{" + str.join(",\n") + "}";
+    return '{' + str.join(',\n') + '}';
   }
 
   serializeGeneralization(element: Generalization): string {
@@ -1057,32 +1057,32 @@ export class UmlDiagramSerializer
       element.isSubstitutable !== undefined &&
       element.isSubstitutable !== null
     ) {
-      str.push('"isSubstitutable": ' + element.isSubstitutable + "");
+      str.push('"isSubstitutable": ' + element.isSubstitutable + '');
     }
     if (element.source !== undefined && element.source !== null) {
       str.push(
         '"source": ' +
-          "{" +
+          '{' +
           ' "__type": "Reference", "__refType": "Node", "__value": "' +
-          (element.source.ref?.__id ?? "undefined") +
-          '"}'
+          (element.source.ref?.__id ?? 'undefined') +
+          '"}',
       );
     }
     if (element.target !== undefined && element.target !== null) {
       str.push(
         '"target": ' +
-          "{" +
+          '{' +
           ' "__type": "Reference", "__refType": "Node", "__value": "' +
-          (element.target.ref?.__id ?? "undefined") +
-          '"}'
+          (element.target.ref?.__id ?? 'undefined') +
+          '"}',
       );
     }
     if (element.relationType !== undefined && element.relationType !== null) {
       str.push(
-        '"relationType": ' + this.serializeRelationType(element.relationType)
+        '"relationType": ' + this.serializeRelationType(element.relationType),
       );
     }
-    return "{" + str.join(",\n") + "}";
+    return '{' + str.join(',\n') + '}';
   }
 
   serializePackageImport(element: PackageImport): string {
@@ -1097,27 +1097,27 @@ export class UmlDiagramSerializer
     if (element.source !== undefined && element.source !== null) {
       str.push(
         '"source": ' +
-          "{" +
+          '{' +
           ' "__type": "Reference", "__refType": "Node", "__value": "' +
-          (element.source.ref?.__id ?? "undefined") +
-          '"}'
+          (element.source.ref?.__id ?? 'undefined') +
+          '"}',
       );
     }
     if (element.target !== undefined && element.target !== null) {
       str.push(
         '"target": ' +
-          "{" +
+          '{' +
           ' "__type": "Reference", "__refType": "Node", "__value": "' +
-          (element.target.ref?.__id ?? "undefined") +
-          '"}'
+          (element.target.ref?.__id ?? 'undefined') +
+          '"}',
       );
     }
     if (element.relationType !== undefined && element.relationType !== null) {
       str.push(
-        '"relationType": ' + this.serializeRelationType(element.relationType)
+        '"relationType": ' + this.serializeRelationType(element.relationType),
       );
     }
-    return "{" + str.join(",\n") + "}";
+    return '{' + str.join(',\n') + '}';
   }
 
   serializePackageMerge(element: PackageMerge): string {
@@ -1129,27 +1129,27 @@ export class UmlDiagramSerializer
     if (element.source !== undefined && element.source !== null) {
       str.push(
         '"source": ' +
-          "{" +
+          '{' +
           ' "__type": "Reference", "__refType": "Node", "__value": "' +
-          (element.source.ref?.__id ?? "undefined") +
-          '"}'
+          (element.source.ref?.__id ?? 'undefined') +
+          '"}',
       );
     }
     if (element.target !== undefined && element.target !== null) {
       str.push(
         '"target": ' +
-          "{" +
+          '{' +
           ' "__type": "Reference", "__refType": "Node", "__value": "' +
-          (element.target.ref?.__id ?? "undefined") +
-          '"}'
+          (element.target.ref?.__id ?? 'undefined') +
+          '"}',
       );
     }
     if (element.relationType !== undefined && element.relationType !== null) {
       str.push(
-        '"relationType": ' + this.serializeRelationType(element.relationType)
+        '"relationType": ' + this.serializeRelationType(element.relationType),
       );
     }
-    return "{" + str.join(",\n") + "}";
+    return '{' + str.join(',\n') + '}';
   }
 
   serializeRealization(element: Realization): string {
@@ -1167,27 +1167,27 @@ export class UmlDiagramSerializer
     if (element.source !== undefined && element.source !== null) {
       str.push(
         '"source": ' +
-          "{" +
+          '{' +
           ' "__type": "Reference", "__refType": "Node", "__value": "' +
-          (element.source.ref?.__id ?? "undefined") +
-          '"}'
+          (element.source.ref?.__id ?? 'undefined') +
+          '"}',
       );
     }
     if (element.target !== undefined && element.target !== null) {
       str.push(
         '"target": ' +
-          "{" +
+          '{' +
           ' "__type": "Reference", "__refType": "Node", "__value": "' +
-          (element.target.ref?.__id ?? "undefined") +
-          '"}'
+          (element.target.ref?.__id ?? 'undefined') +
+          '"}',
       );
     }
     if (element.relationType !== undefined && element.relationType !== null) {
       str.push(
-        '"relationType": ' + this.serializeRelationType(element.relationType)
+        '"relationType": ' + this.serializeRelationType(element.relationType),
       );
     }
-    return "{" + str.join(",\n") + "}";
+    return '{' + str.join(',\n') + '}';
   }
 
   serializeSubstitution(element: Substitution): string {
@@ -1205,27 +1205,27 @@ export class UmlDiagramSerializer
     if (element.source !== undefined && element.source !== null) {
       str.push(
         '"source": ' +
-          "{" +
+          '{' +
           ' "__type": "Reference", "__refType": "Node", "__value": "' +
-          (element.source.ref?.__id ?? "undefined") +
-          '"}'
+          (element.source.ref?.__id ?? 'undefined') +
+          '"}',
       );
     }
     if (element.target !== undefined && element.target !== null) {
       str.push(
         '"target": ' +
-          "{" +
+          '{' +
           ' "__type": "Reference", "__refType": "Node", "__value": "' +
-          (element.target.ref?.__id ?? "undefined") +
-          '"}'
+          (element.target.ref?.__id ?? 'undefined') +
+          '"}',
       );
     }
     if (element.relationType !== undefined && element.relationType !== null) {
       str.push(
-        '"relationType": ' + this.serializeRelationType(element.relationType)
+        '"relationType": ' + this.serializeRelationType(element.relationType),
       );
     }
-    return "{" + str.join(",\n") + "}";
+    return '{' + str.join(',\n') + '}';
   }
 
   serializeUsage(element: Usage): string {
@@ -1243,27 +1243,27 @@ export class UmlDiagramSerializer
     if (element.source !== undefined && element.source !== null) {
       str.push(
         '"source": ' +
-          "{" +
+          '{' +
           ' "__type": "Reference", "__refType": "Node", "__value": "' +
-          (element.source.ref?.__id ?? "undefined") +
-          '"}'
+          (element.source.ref?.__id ?? 'undefined') +
+          '"}',
       );
     }
     if (element.target !== undefined && element.target !== null) {
       str.push(
         '"target": ' +
-          "{" +
+          '{' +
           ' "__type": "Reference", "__refType": "Node", "__value": "' +
-          (element.target.ref?.__id ?? "undefined") +
-          '"}'
+          (element.target.ref?.__id ?? 'undefined') +
+          '"}',
       );
     }
     if (element.relationType !== undefined && element.relationType !== null) {
       str.push(
-        '"relationType": ' + this.serializeRelationType(element.relationType)
+        '"relationType": ' + this.serializeRelationType(element.relationType),
       );
     }
-    return "{" + str.join(",\n") + "}";
+    return '{' + str.join(',\n') + '}';
   }
 
   serializePackage(element: Package): string {
@@ -1286,11 +1286,11 @@ export class UmlDiagramSerializer
         '"entities": [' +
           element.entities
             .map((property) => this.serializeNode(property))
-            .join(",") +
-          "]"
+            .join(',') +
+          ']',
       );
     }
-    return "{" + str.join(",\n") + "}";
+    return '{' + str.join(',\n') + '}';
   }
 
   serializeDiagram(element: Diagram): string {
@@ -1303,11 +1303,11 @@ export class UmlDiagramSerializer
         '"metaInfos": [' +
           element.metaInfos
             .map((property) => this.serializeMetaInfo(property))
-            .join(",") +
-          "]"
+            .join(',') +
+          ']',
       );
     }
-    return "{" + str.join(",\n") + "}";
+    return '{' + str.join(',\n') + '}';
   }
 
   serializeClassDiagramElements(element: ClassDiagramElements): any {
@@ -1473,7 +1473,7 @@ export class UmlDiagramSerializer
   }
 
   serializeElementWithSizeAndPosition(
-    element: ElementWithSizeAndPosition
+    element: ElementWithSizeAndPosition,
   ): any {
     if (isNode(element)) {
       return this.serializeNode(element);
@@ -1541,6 +1541,6 @@ export class UmlDiagramSerializer
   }
 
   public asDiagram(root: Diagram): string {
-    return "";
+    return '';
   }
 }

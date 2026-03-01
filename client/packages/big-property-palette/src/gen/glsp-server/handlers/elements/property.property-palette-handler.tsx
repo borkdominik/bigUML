@@ -1,6 +1,7 @@
 // AUTO-GENERATED – DO NOT EDIT
 
 import { SetPropertyPaletteAction } from '@borkdominik-biguml/big-property-palette';
+import { type Property } from '@borkdominik-biguml/uml-model-server/grammar';
 import {
     BoolProperty,
     ChoiceProperty,
@@ -8,7 +9,6 @@ import {
     PropertyPaletteChoices,
     TextProperty
 } from '@borkdominik-biguml/big-property-palette/glsp-server';
-import { type Property } from '@borkdominik-biguml/uml-model-server/grammar';
 
 export namespace PropertyPropertyPaletteHandler {
     export function getPropertyPalette(semanticElement: Property, dataTypeChoices: any): SetPropertyPaletteAction[] {

@@ -52,10 +52,10 @@ export function isString(langiumGrammar: LangiumGrammar, _type: Type): any {
 
 export async function format(content: string): Promise<string> {
   try {
+    const config = await prettier.resolveConfig(process.cwd());
     return await prettier.format(content, {
+      ...config,
       parser: "typescript",
-      semi: true,
-      singleQuote: true,
     });
   } catch {
     console.warn("Prettier formatting failed. Writing raw output.");

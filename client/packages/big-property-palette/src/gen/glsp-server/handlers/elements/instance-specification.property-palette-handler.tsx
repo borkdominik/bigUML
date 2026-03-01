@@ -1,6 +1,9 @@
 // AUTO-GENERATED – DO NOT EDIT
 
 import { SetPropertyPaletteAction } from '@borkdominik-biguml/big-property-palette';
+import { CreateNodeOperation, DeleteElementOperation } from '@eclipse-glsp/server';
+import { type InstanceSpecification } from '@borkdominik-biguml/uml-model-server/grammar';
+import { ClassDiagramNodeTypes } from '@borkdominik-biguml/uml-glsp-server';
 import {
     ChoiceProperty,
     PropertyPalette,
@@ -8,9 +11,6 @@ import {
     ReferenceProperty,
     TextProperty
 } from '@borkdominik-biguml/big-property-palette/glsp-server';
-import { ClassDiagramNodeTypes } from '@borkdominik-biguml/uml-glsp-server';
-import { type InstanceSpecification } from '@borkdominik-biguml/uml-model-server/grammar';
-import { CreateNodeOperation, DeleteElementOperation } from '@eclipse-glsp/server';
 
 export namespace InstanceSpecificationPropertyPaletteHandler {
     export function getPropertyPalette(semanticElement: InstanceSpecification): SetPropertyPaletteAction[] {
@@ -40,9 +40,7 @@ export namespace InstanceSpecificationPropertyPaletteHandler {
                         creates={[
                             {
                                 label: 'Create Slot',
-                                action: CreateNodeOperation.create(ClassDiagramNodeTypes.SLOT, {
-                                    containerId: semanticElement.__id
-                                })
+                                action: CreateNodeOperation.create(ClassDiagramNodeTypes.SLOT, { containerId: semanticElement.__id })
                             }
                         ]}
                     />

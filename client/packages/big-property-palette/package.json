@@ -50,13 +50,13 @@
       "types": "./build/env/jsx/jsx-runtime.d.ts",
       "default": "./build/env/jsx/jsx-runtime.js"
     },
-    "./gen/glsp-server": {
-      "types": "./build/gen/glsp-server/index.d.ts",
-      "default": "./build/gen/glsp-server/index.js"
-    },
     "./generator": {
       "types": "./generator/index.ts",
       "default": "./generator/index.ts"
+    },
+    "./gen/glsp-server": {
+      "types": "./build/gen/glsp-server/index.d.ts",
+      "default": "./build/gen/glsp-server/index.js"
     }
   },
   "files": [

@@ -1,10 +1,10 @@
 // AUTO-GENERATED – DO NOT EDIT
 
 import { SetPropertyPaletteAction } from '@borkdominik-biguml/big-property-palette';
-import { PropertyPalette, ReferenceProperty, TextProperty } from '@borkdominik-biguml/big-property-palette/glsp-server';
-import { ClassDiagramNodeTypes } from '@borkdominik-biguml/uml-glsp-server';
-import { type Interface } from '@borkdominik-biguml/uml-model-server/grammar';
 import { CreateNodeOperation, DeleteElementOperation } from '@eclipse-glsp/server';
+import { type Interface } from '@borkdominik-biguml/uml-model-server/grammar';
+import { ClassDiagramNodeTypes } from '@borkdominik-biguml/uml-glsp-server';
+import { PropertyPalette, ReferenceProperty, TextProperty } from '@borkdominik-biguml/big-property-palette/glsp-server';
 
 export namespace InterfacePropertyPaletteHandler {
     export function getPropertyPalette(semanticElement: Interface): SetPropertyPaletteAction[] {

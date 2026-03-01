@@ -8,10 +8,10 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import { RequestOutlineAction, SetOutlineAction } from '@borkdominik-biguml/big-outline';
-import { ClassDiagramModelState } from '@borkdominik-biguml/uml-glsp-server/vscode';
-import {} from '@borkdominik-biguml/uml-model-server/grammar';
 import { ActionHandler, MaybePromise } from '@eclipse-glsp/server';
 import { inject, injectable } from 'inversify';
+import {} from '@borkdominik-biguml/uml-model-server/grammar';
+import { ClassDiagramModelState } from '@borkdominik-biguml/uml-glsp-server/vscode';
 
 @injectable()
 export class RequestClassOutlineActionHandler implements ActionHandler {

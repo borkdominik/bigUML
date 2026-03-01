@@ -1,8 +1,8 @@
 // AUTO-GENERATED – DO NOT EDIT
 
 import { SetPropertyPaletteAction } from '@borkdominik-biguml/big-property-palette';
-import { PropertyPalette, TextProperty } from '@borkdominik-biguml/big-property-palette/glsp-server';
 import { type PrimitiveType } from '@borkdominik-biguml/uml-model-server/grammar';
+import { PropertyPalette, TextProperty } from '@borkdominik-biguml/big-property-palette/glsp-server';
 
 export namespace PrimitiveTypePropertyPaletteHandler {
     export function getPropertyPalette(semanticElement: PrimitiveType): SetPropertyPaletteAction[] {

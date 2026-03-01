@@ -1,13 +1,13 @@
 // AUTO-GENERATED – DO NOT EDIT
 
 import { SetPropertyPaletteAction } from '@borkdominik-biguml/big-property-palette';
+import { type Package } from '@borkdominik-biguml/uml-model-server/grammar';
 import {
     ChoiceProperty,
     PropertyPalette,
     PropertyPaletteChoices,
     TextProperty
 } from '@borkdominik-biguml/big-property-palette/glsp-server';
-import { type Package } from '@borkdominik-biguml/uml-model-server/grammar';
 
 export namespace PackagePropertyPaletteHandler {
     export function getPropertyPalette(semanticElement: Package): SetPropertyPaletteAction[] {

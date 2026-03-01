@@ -46,6 +46,7 @@
   },
   "devDependencies": {
     "@borkdominik-biguml/big-property-palette": "*",
+    "@borkdominik-biguml/uml-glsp-server": "*",
     "@borkdominik-biguml/uml-language-tooling": "*",
     "class-validator": "^0.14.3"
   }

@@ -8,10 +8,10 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import { RequestPropertyPaletteAction, SetPropertyPaletteAction } from '@borkdominik-biguml/big-property-palette';
-import { ClassDiagramModelState } from '@borkdominik-biguml/uml-glsp-server/vscode';
-import {} from '@borkdominik-biguml/uml-model-server/grammar';
 import { type ActionHandler, type MaybePromise } from '@eclipse-glsp/server';
 import { inject, injectable } from 'inversify';
+import {} from '@borkdominik-biguml/uml-model-server/grammar';
+import { ClassDiagramModelState } from '@borkdominik-biguml/uml-glsp-server/vscode';
 
 @injectable()
 export class RequestClassPropertyPaletteActionHandler implements ActionHandler {

@@ -1,9 +1,9 @@
 /**********************************************************************************
- * Copyright (c) 2025 borkdominik and others.
+ * Copyright (c) 2026 borkdominik and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the MIT License which is available at https://opensource.org/licenses/MIT.
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-export * from './declaration.validator.js';
+export * from './length-between-validator.js';

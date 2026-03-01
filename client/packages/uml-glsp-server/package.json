@@ -42,6 +42,7 @@
       "types": "./build/env/jsx/jsx-runtime.d.ts",
       "default": "./build/env/jsx/jsx-runtime.js"
     },
+    "./generator": "./generator/index.ts",
     "./gen/common": {
       "types": "./build/gen/common/index.d.ts",
       "default": "./build/gen/common/index.js"

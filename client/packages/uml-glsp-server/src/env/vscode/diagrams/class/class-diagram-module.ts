@@ -33,13 +33,14 @@ import {
     GenericCreateEdgeOperationHandler,
     GenericCreateNodeOperationHandler,
     GenericDeleteOperationHandler,
+    GenericDiagramModelValidator,
     GenericLabelEditOperationHandler,
     GenericUpdateOperationHandler
 } from '../../features/index.js';
 import { DiagramLanguageMetadata } from '../../features/model/diagram-language-metadata.js';
 import { BigDiagramModule } from '../../features/module/module.js';
 import { ClassDiagramConfiguration } from './class-diagram-configuration.js';
-import { ClassDiagramModelValidator, ClassLabelEditValidator } from './features/index.js';
+import { ClassLabelEditValidator } from './features/index.js';
 import { ClassDiagramGModelFactory } from './model/class-diagram-gmodel-factory.js';
 import { ClassDiagramGModelSerializer } from './model/class-diagram-gmodel-serializer.js';
 import { ClassDiagramModelIndex } from './model/class-diagram-model-index.js';
@@ -109,7 +110,7 @@ export class ClassDiagramModule extends BigDiagramModule {
     }
 
     protected override bindModelValidator(): BindingTarget<ModelValidator> | undefined {
-        return ClassDiagramModelValidator;
+        return GenericDiagramModelValidator;
     }
 
     protected override configureContextActionProviders(binding: MultiBinding<ContextActionsProvider>): void {

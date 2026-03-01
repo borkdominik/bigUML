@@ -6,4 +6,4 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-export * from './abstract-diagram-model-validator.js';
+export * from './generic-diagram-model-validator.js';

@@ -19,6 +19,10 @@
     "./grammar": {
       "types": "./build/env/grammar.d.ts",
       "default": "./build/env/grammar.js"
+    },
+    "./validation": {
+      "types": "./build/env/validation.d.ts",
+      "default": "./build/env/validation.js"
     }
   },
   "files": [

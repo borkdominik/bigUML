@@ -7,7 +7,7 @@
 			{
 				"__type": "Class",
 				"__id": "a93da97ce-caa3-439f-ba7b-1b88641d4fc4",
-				"name": "asd",
+				"name": "Foobar",
 				"isAbstract": false,
 				"properties": [],
 				"operations": [
@@ -34,7 +34,7 @@
 		{
 			"__type": "Size",
 			"__id": "size_a93da97ce-caa3-439f-ba7b-1b88641d4fc4",
-			"height": 84.45714664459229,
+			"height": 84.49999809265137,
 			"width": 207.59101175691626,
 			"element": {
 				"__type": "Reference",

@@ -48,7 +48,7 @@ export function umlToolingContribution(extensionPath: string, declarations: Lang
         const nodes = allEntities.filter(e => members.includes(e.name!));
         // build the import of isX guards
         const guardNames = nodes.map(d => `is${d.name}`).join(', ');
-        const astImport = `import { ${guardNames} } from '@borkdominik-biguml/model-server/grammar';`;
+        const astImport = `import { ${guardNames} } from '@borkdominik-biguml/uml-model-server/grammar';`;
 
         // build the per-class cases
         const cases = nodes

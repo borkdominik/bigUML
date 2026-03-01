@@ -6,10 +6,10 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-import type { EnumerationLiteral } from '@borkdominik-biguml/model-server/grammar';
-import { GLabelElement } from '../../../../../jsx/index.js';
 import { ClassDiagramNodeTypes, CommonModelTypes } from '@borkdominik-biguml/uml-glsp-server';
+import type { EnumerationLiteral } from '@borkdominik-biguml/uml-model-server/grammar';
 import { GNode, type GModelElement } from '@eclipse-glsp/server';
+import { GLabelElement } from '../../../../../jsx/index.js';
 
 export class GEnumerationLiteralNode extends GNode {
     override type = ClassDiagramNodeTypes.ENUMERATION_LITERAL;

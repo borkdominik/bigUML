@@ -6,8 +6,8 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-import { isIdAstNode, type IdAstNode } from '@borkdominik-biguml/model-server';
-import { validateNode } from '@borkdominik-biguml/model-server/validation';
+import { isIdAstNode, type IdAstNode } from '@borkdominik-biguml/uml-model-server';
+import { validateNode } from '@borkdominik-biguml/uml-model-server/validation';
 import { MarkerKind, ModelState, type GModelElement, type Marker, type ModelValidator } from '@eclipse-glsp/server';
 import { inject, injectable } from 'inversify';
 import { streamAst } from 'langium';

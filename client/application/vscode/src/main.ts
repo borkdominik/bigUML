@@ -5,8 +5,8 @@ import 'reflect-metadata';
 
 import { outlineModule } from '@borkdominik-biguml/big-outline/glsp-server';
 import { propertyPaletteModule } from '@borkdominik-biguml/big-property-palette/glsp-server';
-import { createUmlDiagramServices, startModelServer } from '@borkdominik-biguml/model-server';
 import { startGLSPServer } from '@borkdominik-biguml/uml-glsp-server/vscode';
+import { createUmlDiagramServices, startModelServer } from '@borkdominik-biguml/uml-model-server';
 import { startLanguageServer } from 'langium';
 import { NodeFileSystem } from 'langium/node';
 import { createConnection, ProposedFeatures } from 'vscode-languageserver/node.js';

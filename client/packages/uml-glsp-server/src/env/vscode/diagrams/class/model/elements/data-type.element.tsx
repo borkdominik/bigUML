@@ -6,12 +6,12 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-import type { DataType } from '@borkdominik-biguml/model-server/grammar';
-import type { GlspNode } from '../../../../../jsx/index.js';
-import { normalizeChildren } from '../../../../../jsx/index.js';
 import { ClassDiagramNodeTypes } from '@borkdominik-biguml/uml-glsp-server';
+import type { DataType } from '@borkdominik-biguml/uml-model-server/grammar';
 import { type Dimension, type Point } from '@eclipse-glsp/protocol';
 import { GNode, type GModelElement } from '@eclipse-glsp/server';
+import type { GlspNode } from '../../../../../jsx/index.js';
+import { normalizeChildren } from '../../../../../jsx/index.js';
 import { CompartmentHeader } from './shared-components.js';
 
 export class GDataTypeNode extends GNode {

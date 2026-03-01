@@ -7,10 +7,10 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import type { Slot } from '@borkdominik-biguml/model-server/grammar';
-import { GLabelElement } from '../../../../../jsx/index.js';
 import { ClassDiagramNodeTypes, CommonModelTypes } from '@borkdominik-biguml/uml-glsp-server';
+import type { Slot } from '@borkdominik-biguml/uml-model-server/grammar';
 import { GNode, type GModelElement } from '@eclipse-glsp/server';
+import { GLabelElement } from '../../../../../jsx/index.js';
 
 export class GSlotNode extends GNode {
     override type = ClassDiagramNodeTypes.SLOT;

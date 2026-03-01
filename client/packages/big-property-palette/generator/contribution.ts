@@ -226,7 +226,7 @@ export function renderRequestHandlers(extensionPath: string, declarations: Langi
             .map(d => `is${d.name}`)
             .sort()
             .join(', ');
-        const astImport = `import { ${guardNames} } from '@borkdominik-biguml/model-server/grammar';`;
+        const astImport = `import { ${guardNames} } from '@borkdominik-biguml/uml-model-server/grammar';`;
 
         const handlerImports = nodes
             .map(d => d.name!)

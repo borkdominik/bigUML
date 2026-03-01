@@ -1,8 +1,8 @@
 /********************************************************************************
  * Copyright (c) 2023 CrossBreeze.
  ********************************************************************************/
-import { UmlDiagramServices, UmlDiagramSharedServices } from '@borkdominik-biguml/model-server';
-import { UmlDiagramLSPServices } from '@borkdominik-biguml/model-server/integration';
+import { UmlDiagramServices, UmlDiagramSharedServices } from '@borkdominik-biguml/uml-model-server';
+import { UmlDiagramLSPServices } from '@borkdominik-biguml/uml-model-server/integration';
 import { configureELKLayoutModule } from '@eclipse-glsp/layout-elk';
 import { LogLevel, LoggerFactory, type MaybePromise } from '@eclipse-glsp/server';
 import { SocketServerLauncher, createAppModule, defaultLaunchOptions } from '@eclipse-glsp/server/node.js';

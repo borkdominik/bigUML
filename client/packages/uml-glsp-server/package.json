@@ -66,8 +66,8 @@
     "watch": "concurrently --kill-others 'npm run compile -- --watch'"
   },
   "dependencies": {
-    "@borkdominik-biguml/model-server": "*",
     "@borkdominik-biguml/uml-language-tooling": "*",
+    "@borkdominik-biguml/uml-model-server": "*",
     "@eclipse-glsp/client": "*",
     "@eclipse-glsp/layout-elk": "*",
     "@eclipse-glsp/protocol": "*",

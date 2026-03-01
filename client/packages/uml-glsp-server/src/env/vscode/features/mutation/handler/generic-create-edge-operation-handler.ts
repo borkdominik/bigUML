@@ -7,9 +7,9 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { createRandomUUID, type jsonPatch, type SerializedPatchValue } from '@borkdominik-biguml/model-server';
-import type { Edge } from '@borkdominik-biguml/model-server/grammar';
 import { getDefaultProperties, getRelationTypeFromElementId } from '@borkdominik-biguml/uml-glsp-server/gen/vscode';
+import { createRandomUUID, type jsonPatch, type SerializedPatchValue } from '@borkdominik-biguml/uml-model-server';
+import type { Edge } from '@borkdominik-biguml/uml-model-server/grammar';
 import {
     type Command,
     CreateEdgeOperation,

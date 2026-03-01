@@ -7,9 +7,9 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { createRandomUUID, findAvailableNodeName, type SerializedPatchValue } from '@borkdominik-biguml/model-server';
-import type { MetaInfo, Node } from '@borkdominik-biguml/model-server/grammar';
 import { getCreationPath, getDefaultProperties, isNoBounds } from '@borkdominik-biguml/uml-glsp-server/gen/vscode';
+import { createRandomUUID, findAvailableNodeName, type SerializedPatchValue } from '@borkdominik-biguml/uml-model-server';
+import type { MetaInfo, Node } from '@borkdominik-biguml/uml-model-server/grammar';
 import {
     type Command,
     CreateNodeOperation,

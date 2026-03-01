@@ -7,6 +7,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
+import { ClassDiagramEdgeTypes, CommonModelTypes } from '@borkdominik-biguml/uml-glsp-server';
 import {
     type Class,
     type ClassDiagram,
@@ -22,11 +23,10 @@ import {
     isClassDiagram,
     isGeneralization,
     isPackage
-} from '@borkdominik-biguml/model-server/grammar';
-import { GEdgeElement, GGraphElement, GLabelElement } from '../../../../jsx/index.js';
-import { ClassDiagramEdgeTypes, CommonModelTypes } from '@borkdominik-biguml/uml-glsp-server';
+} from '@borkdominik-biguml/uml-model-server/grammar';
 import { type GEdge, type GGraph, type GModelElement, type GModelFactory } from '@eclipse-glsp/server';
 import { inject, injectable } from 'inversify';
+import { GEdgeElement, GGraphElement, GLabelElement } from '../../../../jsx/index.js';
 import { ClassDiagramModelIndex } from './class-diagram-model-index.js';
 import { ClassDiagramModelState } from './class-diagram-model-state.js';
 import { GClassNodeElement } from './elements/class.element.js';

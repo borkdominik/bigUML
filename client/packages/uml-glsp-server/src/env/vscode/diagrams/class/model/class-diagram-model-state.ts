@@ -13,9 +13,9 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { type DiagramSerializer, type ModelService, type QualifiedNameProvider } from '@borkdominik-biguml/model-server';
-import { type Diagram } from '@borkdominik-biguml/model-server/grammar';
-import { UmlDiagramLSPServices } from '@borkdominik-biguml/model-server/integration';
+import { type DiagramSerializer, type ModelService, type QualifiedNameProvider } from '@borkdominik-biguml/uml-model-server';
+import { type Diagram } from '@borkdominik-biguml/uml-model-server/grammar';
+import { UmlDiagramLSPServices } from '@borkdominik-biguml/uml-model-server/integration';
 import { ActionDispatcher, type JsonModelState, MessageAction, type SeverityLevel } from '@eclipse-glsp/server';
 import { inject, injectable } from 'inversify';
 import { URI } from 'vscode-uri';

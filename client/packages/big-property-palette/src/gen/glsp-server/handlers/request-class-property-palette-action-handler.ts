@@ -7,47 +7,41 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import {
-  RequestPropertyPaletteAction,
-  SetPropertyPaletteAction,
-} from '@borkdominik-biguml/big-property-palette';
+import { RequestPropertyPaletteAction, SetPropertyPaletteAction } from '@borkdominik-biguml/big-property-palette';
+import { ClassDiagramModelState } from '@borkdominik-biguml/uml-glsp-server/vscode';
+import {} from '@borkdominik-biguml/uml-model-server/grammar';
 import { type ActionHandler, type MaybePromise } from '@eclipse-glsp/server';
 import { inject, injectable } from 'inversify';
-import {} from '@borkdominik-biguml/model-server/grammar';
-import { ClassDiagramModelState } from '@borkdominik-biguml/uml-glsp-server/vscode';
 
 @injectable()
 export class RequestClassPropertyPaletteActionHandler implements ActionHandler {
-  actionKinds = [RequestPropertyPaletteAction.KIND];
+    actionKinds = [RequestPropertyPaletteAction.KIND];
 
-  @inject(ClassDiagramModelState)
-  protected modelState!: ClassDiagramModelState;
+    @inject(ClassDiagramModelState)
+    protected modelState!: ClassDiagramModelState;
 
-  execute(action: RequestPropertyPaletteAction): MaybePromise<any[]> {
-    try {
-      if (!action.elementId) {
-        return [SetPropertyPaletteAction.create()];
-      }
-      if (
-        typeof action.elementId !== 'string' ||
-        action.elementId.endsWith('_refValue')
-      ) {
-        return [SetPropertyPaletteAction.create()];
-      }
+    execute(action: RequestPropertyPaletteAction): MaybePromise<any[]> {
+        try {
+            if (!action.elementId) {
+                return [SetPropertyPaletteAction.create()];
+            }
+            if (typeof action.elementId !== 'string' || action.elementId.endsWith('_refValue')) {
+                return [SetPropertyPaletteAction.create()];
+            }
 
-      let semanticElement: any | undefined;
-      try {
-        semanticElement = this.modelState.index.findIdElement(action.elementId);
-      } catch {
-        return [SetPropertyPaletteAction.create()];
-      }
-      if (!semanticElement) {
-        return [SetPropertyPaletteAction.create()];
-      }
+            let semanticElement: any | undefined;
+            try {
+                semanticElement = this.modelState.index.findIdElement(action.elementId);
+            } catch {
+                return [SetPropertyPaletteAction.create()];
+            }
+            if (!semanticElement) {
+                return [SetPropertyPaletteAction.create()];
+            }
 
-      return [SetPropertyPaletteAction.create()];
-    } catch (_e: unknown) {
-      return [SetPropertyPaletteAction.create()];
+            return [SetPropertyPaletteAction.create()];
+        } catch (_e: unknown) {
+            return [SetPropertyPaletteAction.create()];
+        }
     }
-  }
 }

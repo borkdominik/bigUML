@@ -7,11 +7,11 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import type { Operation } from '@borkdominik-biguml/model-server/grammar';
-import { GCompartmentElement, GLabelElement } from '../../../../../jsx/index.js';
 import { ClassDiagramNodeTypes, CommonModelTypes } from '@borkdominik-biguml/uml-glsp-server';
+import type { Operation } from '@borkdominik-biguml/uml-model-server/grammar';
 import { DefaultTypes } from '@eclipse-glsp/protocol';
 import { GNode, type GModelElement } from '@eclipse-glsp/server';
+import { GCompartmentElement, GLabelElement } from '../../../../../jsx/index.js';
 import { getVisibilitySymbol, InlineCompartment } from './shared-components.js';
 
 export class GOperationNode extends GNode {

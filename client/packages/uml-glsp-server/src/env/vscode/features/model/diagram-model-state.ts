@@ -6,8 +6,8 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-import type { DiagramSerializer, ModelService, QualifiedNameProvider } from '@borkdominik-biguml/model-server';
-import type { Diagram } from '@borkdominik-biguml/model-server/grammar';
+import type { DiagramSerializer, ModelService, QualifiedNameProvider } from '@borkdominik-biguml/uml-model-server';
+import type { Diagram } from '@borkdominik-biguml/uml-model-server/grammar';
 import { DefaultModelState, type GModelIndex } from '@eclipse-glsp/server';
 import { type AstNode } from 'langium';
 

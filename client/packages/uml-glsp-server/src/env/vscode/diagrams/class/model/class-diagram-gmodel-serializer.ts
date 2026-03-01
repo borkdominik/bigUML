@@ -7,8 +7,8 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
-import { positionToPoint, sizeToDimension } from '@borkdominik-biguml/model-server';
-import { isPosition, isSize } from '@borkdominik-biguml/model-server/grammar';
+import { positionToPoint, sizeToDimension } from '@borkdominik-biguml/uml-model-server';
+import { isPosition, isSize } from '@borkdominik-biguml/uml-model-server/grammar';
 import { type GModelElement, type GModelElementSchema, DefaultGModelSerializer } from '@eclipse-glsp/server';
 import { injectable } from 'inversify';
 

@@ -4,7 +4,7 @@ import { SetPropertyPaletteAction } from '@borkdominik-biguml/big-property-palet
 <% if (it.needsGlspImport) { %>
 import { CreateNodeOperation, DeleteElementOperation } from '@eclipse-glsp/server';
 <% } %>
-import { type <%~ it.name %> } from '@borkdominik-biguml/model-server/grammar';
+import { type <%~ it.name %> } from '@borkdominik-biguml/uml-model-server/grammar';
 <% if (it.needsModelTypes) { %>
 import { ClassDiagramNodeTypes } from '@borkdominik-biguml/uml-glsp-server';
 <% } %>

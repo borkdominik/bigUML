@@ -16,7 +16,7 @@
 import { GModelIndex } from '@eclipse-glsp/server';
 import { inject, injectable } from 'inversify';
 
-import { type IdAstNode, isIdAstNode } from '@borkdominik-biguml/model-server';
+import { type IdAstNode, isIdAstNode } from '@borkdominik-biguml/uml-model-server';
 import {
     type Class,
     type DataType,
@@ -37,8 +37,8 @@ import {
     isProperty,
     isRelation,
     isSize
-} from '@borkdominik-biguml/model-server/grammar';
-import { UmlDiagramLSPServices } from '@borkdominik-biguml/model-server/integration';
+} from '@borkdominik-biguml/uml-model-server/grammar';
+import { UmlDiagramLSPServices } from '@borkdominik-biguml/uml-model-server/integration';
 import { type AstNode, streamAst } from 'langium';
 
 type JSONValue = string | number | boolean | null | JSONObject | JSONArray;

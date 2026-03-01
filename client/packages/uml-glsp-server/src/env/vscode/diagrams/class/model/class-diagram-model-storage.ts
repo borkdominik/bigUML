@@ -14,7 +14,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 
-import { type Diagram, isDiagram } from '@borkdominik-biguml/model-server/grammar';
+import { type Diagram, isDiagram } from '@borkdominik-biguml/uml-model-server/grammar';
 import {
     ActionDispatcher,
     type ClientSession,

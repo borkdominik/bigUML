@@ -9,7 +9,7 @@ import {
     type Relation,
     isElementWithSizeAndPosition,
     isRelation
-} from '@borkdominik-biguml/model-server/grammar';
+} from '@borkdominik-biguml/uml-model-server/grammar';
 import { type Command, DeleteElementOperation, OperationHandler } from '@eclipse-glsp/server';
 import { injectable } from 'inversify';
 import { ModelPatchCommand } from '../../command/model-patch-command.js';

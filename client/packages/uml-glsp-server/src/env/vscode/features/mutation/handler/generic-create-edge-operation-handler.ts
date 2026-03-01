@@ -17,7 +17,7 @@ import {
     TriggerEdgeCreationAction
 } from '@eclipse-glsp/server';
 import { inject, injectable } from 'inversify';
-import { getProperties, getRelationTypeFromElementId } from '../../../../../gen/vscode/getDefaultValue.js';
+import { getDefaultProperties, getRelationTypeFromElementId } from '../../../../../gen/vscode/get-default-value.js';
 import { ModelPatchCommand } from '../../command/model-patch-command.js';
 import { type BaseDiagramModelState } from '../../model/base-diagram-model-state.js';
 import { DiagramLanguageMetadata } from '../../model/diagram-language-metadata.js';
@@ -72,7 +72,7 @@ export class GenericCreateEdgeOperationHandler extends OperationHandler implemen
             relationType
         };
 
-        for (const { property, defaultValue } of getProperties(operation.elementTypeId)) {
+        for (const { property, defaultValue } of getDefaultProperties(operation.elementTypeId)) {
             if (value[property] === undefined) {
                 value[property] = defaultValue;
             }

@@ -1,4 +1,13 @@
-// THIS FILE IS GENERATED — DO NOT EDIT
+// AUTO-GENERATED – DO NOT EDIT
+/**********************************************************************************
+ * Copyright (c) 2025 borkdominik and others.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at https://opensource.org/licenses/MIT.
+ *
+ * SPDX-License-Identifier: MIT
+ **********************************************************************************/
+
 // @ts-nocheck
 
 interface DefaultMappingEntry {
@@ -717,7 +726,9 @@ export function isNoBounds(typeId: string): boolean {
   return noBoundsClasses.has(stripPrefix(typeId));
 }
 
-export function getProperties(elementTypeId: string): DefaultMappingEntry[] {
+export function getDefaultProperties(
+  elementTypeId: string,
+): DefaultMappingEntry[] {
   const parentType = elementTypeId.startsWith('edge')
     ? (() => {
         const s = getRelationTypeFromElementId(

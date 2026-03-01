@@ -1,3 +1,13 @@
+// AUTO-GENERATED – DO NOT EDIT
+/**********************************************************************************
+ * Copyright (c) 2025 borkdominik and others.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at https://opensource.org/licenses/MIT.
+ *
+ * SPDX-License-Identifier: MIT
+ **********************************************************************************/
+
 // @ts-nocheck
 
 const mapping: Record<
@@ -97,7 +107,6 @@ export function getCreationPath(
   const childKey = stripPrefix(childType);
 
   if (mapping[parentKey]) {
-    console.log('parentKey ', parentKey);
     for (const entry of mapping[parentKey]) {
       if (
         entry.allowedChildTypes &&

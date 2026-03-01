@@ -20,8 +20,8 @@ import {
 import type * as jsonpatch from 'fast-json-patch';
 import { inject, injectable } from 'inversify';
 import { URI } from 'vscode-uri';
-import { getCreationPath } from '../../../../../gen/vscode/getCreationPath.js';
-import { getProperties, isNoBounds } from '../../../../../gen/vscode/getDefaultValue.js';
+import { getCreationPath } from '../../../../../gen/vscode/get-creation-path.js';
+import { getDefaultProperties, isNoBounds } from '../../../../../gen/vscode/get-default-value.js';
 import { ModelPatchCommand } from '../../command/model-patch-command.js';
 import { GridSnapper } from '../../grid/grid-snapper.js';
 import { type BaseDiagramModelState } from '../../model/base-diagram-model-state.js';
@@ -65,7 +65,7 @@ export class GenericCreateNodeOperationHandler extends OperationHandler implemen
             name: newName
         };
 
-        const allProps = getProperties(operation.elementTypeId);
+        const allProps = getDefaultProperties(operation.elementTypeId);
         for (const { property, defaultValue } of allProps) {
             if (property !== 'name' && nodeValue[property] === undefined) {
                 nodeValue[property] = defaultValue;

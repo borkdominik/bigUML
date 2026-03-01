@@ -7,14 +7,44 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 import { type LangiumDeclaration } from '@borkdominik-biguml/uml-language-tooling';
+import { Eta } from 'eta';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-export function buildCreationPathMapping(
-    langiumDeclarations: Array<LangiumDeclaration>
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const eta = new Eta({ views: path.join(__dirname, 'templates') });
+
+// ============================================================================
+// Main entry point
+// ============================================================================
+
+export function buildCreationPath(extensionPath: string, declarations: LangiumDeclaration[]): { path: string; content: string }[] {
+    const mapping = buildCreationPathMapping(declarations);
+    const content = eta.render('./get-creation-path', { mapping });
+
+    return [
+        {
+            path: path.join(extensionPath, 'vscode', 'get-creation-path.ts'),
+            content
+        }
+    ];
+}
+
+// ============================================================================
+// Helpers
+// ============================================================================
+
+function buildCreationPathMapping(
+    langiumDeclarations: LangiumDeclaration[]
 ): Record<string, Array<{ property: string; allowedChildTypes?: string[] }>> {
     const mapping: Record<string, Array<{ property: string; allowedChildTypes?: string[] }>> = {};
 
     langiumDeclarations.forEach(parentDecl => {
-        if (!parentDecl.properties) return;
+        if (!parentDecl.properties) {
+            return;
+        }
         parentDecl.properties.forEach(prop => {
             if (prop.decorators && prop.decorators.includes('path')) {
                 if (!mapping[parentDecl.name!]) {
@@ -23,46 +53,16 @@ export function buildCreationPathMapping(
                 const allowedType = prop.types[0].typeName;
                 let allowedChildTypes = langiumDeclarations
                     .filter(childDecl => childDecl.extends && childDecl.extends.includes(allowedType))
-                    .map(childDecl => childDecl.name);
+                    .map(childDecl => childDecl.name!);
                 if (allowedChildTypes.length === 0) {
                     allowedChildTypes = [allowedType];
                 }
                 mapping[parentDecl.name!].push({
                     property: prop.name,
-                    allowedChildTypes: allowedChildTypes as any
+                    allowedChildTypes
                 });
             }
         });
     });
     return mapping;
-}
-
-export function writeCreationPathFile(mapping: Record<string, Array<{ property: string; allowedChildTypes?: string[] }>>): string {
-    const rawContent = `
-
-    // @ts-nocheck
-
-const mapping: Record<string, Array<{ property: string; allowedChildTypes?: string[] }>> = ${JSON.stringify(mapping, null, 2)};
-
-function stripPrefix(name: string): string {
-  return name.replace(/^.*?__/, '');
-}
-
-export function getCreationPath(parentType: string, childType: string): string | undefined {
-  const parentKey = stripPrefix(parentType);
-  const childKey = stripPrefix(childType);
-
-  if (mapping[parentKey]) {
-    console.log('parentKey ', parentKey);
-    for (const entry of mapping[parentKey]) {
-      if (entry.allowedChildTypes && entry.allowedChildTypes.includes(childKey)) {
-        return entry.property;
-      }
-    }
-  }
-  return undefined;
-}
-`;
-
-    return rawContent;
 }

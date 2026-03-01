@@ -8,9 +8,8 @@
  *********************************************************************************/
 
 import { type LangiumDeclaration } from '@borkdominik-biguml/uml-language-tooling';
-import path from 'path';
-import { buildCreationPathMapping, writeCreationPathFile } from './creation-path-generator.js';
-import { buildDefaultValueMapping, writeDefaultValueFile } from './default-value-generator.js';
+import { buildCreationPath } from './creation-path-generator.js';
+import { buildDefaultValue } from './default-value-generator.js';
 import { buildDiagramLanguageMetadata } from './diagram-language-metadata-generator.js';
 import { buildModelTypes } from './model-types-generator.js';
 import { buildToolPaletteItemProvider } from './tool-palette-generator.js';
@@ -18,24 +17,11 @@ import { buildToolPaletteItemProvider } from './tool-palette-generator.js';
 export function umlToolingContribution(extensionPath: string, declarations: LangiumDeclaration[]): { path: string; content: string }[] {
     const results: { path: string; content: string }[] = [];
 
-    const glspRoot = path.join(extensionPath, 'vscode');
-
-    const creationPathMapping = buildCreationPathMapping(declarations);
-    const creationPathContent = writeCreationPathFile(creationPathMapping);
-    results.push({ path: path.join(glspRoot, 'getCreationPath.ts'), content: creationPathContent });
-
-    const defaultMapping = buildDefaultValueMapping(declarations);
-    const defaultValueContent = writeDefaultValueFile(defaultMapping);
-    results.push({ path: path.join(glspRoot, 'getDefaultValue.ts'), content: defaultValueContent });
-
-    const modelTypesFiles = buildModelTypes(extensionPath, declarations);
-    results.push(...modelTypesFiles);
-
-    const metadataFiles = buildDiagramLanguageMetadata(extensionPath, declarations);
-    results.push(...metadataFiles);
-
-    const toolPaletteFiles = buildToolPaletteItemProvider(extensionPath, declarations);
-    results.push(...toolPaletteFiles);
+    results.push(...buildCreationPath(extensionPath, declarations));
+    results.push(...buildDefaultValue(extensionPath, declarations));
+    results.push(...buildModelTypes(extensionPath, declarations));
+    results.push(...buildDiagramLanguageMetadata(extensionPath, declarations));
+    results.push(...buildToolPaletteItemProvider(extensionPath, declarations));
 
     return results;
 }

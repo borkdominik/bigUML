@@ -13,7 +13,7 @@ import {
 import { type Command, DeleteElementOperation, OperationHandler } from '@eclipse-glsp/server';
 import { injectable } from 'inversify';
 import { ModelPatchCommand } from '../../command/model-patch-command.js';
-import { type BaseDiagramModelState } from '../../model/base-diagram-model-state.js';
+import { type UmlDiagramModelState } from '../../model/diagram-model-state.js';
 
 type RemoveOp = { op: 'remove'; path: string };
 
@@ -21,7 +21,7 @@ type RemoveOp = { op: 'remove'; path: string };
 export class GenericDeleteOperationHandler extends OperationHandler {
     readonly operationType = DeleteElementOperation.KIND;
 
-    declare readonly modelState: BaseDiagramModelState;
+    declare readonly modelState: UmlDiagramModelState;
 
     override createCommand(operation: DeleteElementOperation): Command | undefined {
         if (!operation.elementIds || operation.elementIds.length === 0) return;

@@ -10,13 +10,13 @@ import { UpdateOperation } from '@borkdominik-biguml/uml-glsp-server';
 import { type Command, OperationHandler } from '@eclipse-glsp/server';
 import { injectable } from 'inversify';
 import { ModelPatchCommand } from '../../command/model-patch-command.js';
-import { type BaseDiagramModelState } from '../../model/base-diagram-model-state.js';
+import { type UmlDiagramModelState } from '../../model/diagram-model-state.js';
 
 @injectable()
 export class GenericUpdateOperationHandler extends OperationHandler {
     override operationType = UpdateOperation.KIND;
 
-    declare modelState: BaseDiagramModelState;
+    declare modelState: UmlDiagramModelState;
 
     override createCommand(op: UpdateOperation): Command | undefined {
         const patch = this.createUpdatePatch(op);

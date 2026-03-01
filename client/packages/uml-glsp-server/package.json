@@ -33,6 +33,14 @@
     "./vscode": {
       "types": "./build/env/vscode/index.d.ts",
       "default": "./build/env/vscode/index.js"
+    },
+    "./jsx": {
+      "types": "./build/env/jsx/index.d.ts",
+      "default": "./build/env/jsx/index.js"
+    },
+    "./jsx/jsx-runtime": {
+      "types": "./build/env/jsx/jsx-runtime.d.ts",
+      "default": "./build/env/jsx/jsx-runtime.js"
     }
   },
   "files": [
@@ -51,14 +59,14 @@
   },
   "dependencies": {
     "@borkdominik-biguml/model-server": "*",
-    "@borkdominik-biguml/uml-glsp-jsx": "*",
     "@borkdominik-biguml/uml-language-tooling": "*",
     "@eclipse-glsp/client": "*",
     "@eclipse-glsp/layout-elk": "*",
     "@eclipse-glsp/protocol": "*",
     "@eclipse-glsp/server": "*",
     "eta": "^3.5.0",
-    "fast-json-patch": "^3.1.1"
+    "fast-json-patch": "^3.1.1",
+    "uuid": "^10.0.0"
   },
   "devDependencies": {},
   "peerDependencies": {

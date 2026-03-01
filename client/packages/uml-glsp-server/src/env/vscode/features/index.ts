@@ -15,5 +15,4 @@ export * from './layout/index.js';
 export * from './model/index.js';
 export * from './module/index.js';
 export * from './mutation/index.js';
-export * from './navigation/index.js';
 export * from './validator/index.js';

@@ -23,7 +23,7 @@ import {
     isGeneralization,
     isPackage
 } from '@borkdominik-biguml/model-server/grammar';
-import { GEdgeElement, GGraphElement, GLabelElement } from '@borkdominik-biguml/uml-glsp-jsx';
+import { GEdgeElement, GGraphElement, GLabelElement } from '../../../../jsx/index.js';
 import { ClassDiagramEdgeTypes, CommonModelTypes } from '@borkdominik-biguml/uml-glsp-server';
 import { type GEdge, type GGraph, type GModelElement, type GModelFactory } from '@eclipse-glsp/server';
 import { inject, injectable } from 'inversify';

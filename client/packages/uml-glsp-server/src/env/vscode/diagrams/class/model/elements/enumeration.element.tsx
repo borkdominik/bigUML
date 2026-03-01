@@ -7,8 +7,8 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 import type { Enumeration } from '@borkdominik-biguml/model-server/grammar';
-import type { GlspNode } from '@borkdominik-biguml/uml-glsp-jsx';
-import { normalizeChildren } from '@borkdominik-biguml/uml-glsp-jsx';
+import type { GlspNode } from '../../../../../jsx/index.js';
+import { normalizeChildren } from '../../../../../jsx/index.js';
 import { ClassDiagramNodeTypes } from '@borkdominik-biguml/uml-glsp-server';
 import { type Dimension, type Point } from '@eclipse-glsp/protocol';
 import { GNode, type GModelElement } from '@eclipse-glsp/server';

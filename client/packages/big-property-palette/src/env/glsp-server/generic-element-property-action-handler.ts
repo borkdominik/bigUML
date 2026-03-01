@@ -8,7 +8,7 @@
  **********************************************************************************/
 import { UpdateElementPropertyAction } from '@borkdominik-biguml/big-property-palette';
 import { UpdateOperation } from '@borkdominik-biguml/uml-glsp-server';
-import type { BaseDiagramModelState } from '@borkdominik-biguml/uml-glsp-server/vscode';
+import type { UmlDiagramModelState } from '@borkdominik-biguml/uml-glsp-server/vscode';
 import { ModelState, type ActionHandler, type MaybePromise, type Operation } from '@eclipse-glsp/server';
 import { inject, injectable } from 'inversify';
 
@@ -17,7 +17,7 @@ export class GenericUpdateElementPropertyActionHandler implements ActionHandler 
     actionKinds = [UpdateElementPropertyAction.KIND];
 
     @inject(ModelState)
-    readonly modelState: BaseDiagramModelState;
+    readonly modelState: UmlDiagramModelState;
 
     execute(action: UpdateElementPropertyAction): MaybePromise<Operation[]> {
         if (!action.elementId) {

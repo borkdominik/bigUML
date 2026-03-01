@@ -7,8 +7,8 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
-import type { GlspNode } from '@borkdominik-biguml/uml-glsp-jsx';
-import { DividerElement, GCompartmentElement, GLabelElement } from '@borkdominik-biguml/uml-glsp-jsx';
+import type { GlspNode } from '../../../../../jsx/index.js';
+import { DividerElement, GCompartmentElement, GLabelElement } from '../../../../../jsx/index.js';
 import { CommonModelTypes } from '@borkdominik-biguml/uml-glsp-server';
 import { DefaultTypes } from '@eclipse-glsp/protocol';
 import type { GModelElement } from '@eclipse-glsp/server';

@@ -10,13 +10,13 @@ import { ApplyLabelEditOperation, type Command, OperationHandler } from '@eclips
 import { injectable } from 'inversify';
 import { isAstNode } from 'langium';
 import { ModelPatchCommand } from '../command/model-patch-command.js';
-import { type BaseDiagramModelState } from '../model/base-diagram-model-state.js';
+import { type UmlDiagramModelState } from '../model/diagram-model-state.js';
 
 @injectable()
 export class GenericLabelEditOperationHandler extends OperationHandler {
     override operationType = ApplyLabelEditOperation.KIND;
 
-    declare readonly modelState: BaseDiagramModelState;
+    declare readonly modelState: UmlDiagramModelState;
 
     override createCommand(operation: ApplyLabelEditOperation): Command {
         const patch = this.buildPatch(operation);

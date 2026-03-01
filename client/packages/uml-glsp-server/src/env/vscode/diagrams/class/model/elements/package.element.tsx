@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 import type { Package } from '@borkdominik-biguml/model-server/grammar';
-import { GCompartmentElement } from '@borkdominik-biguml/uml-glsp-jsx';
+import { GCompartmentElement } from '../../../../../jsx/index.js';
 import { ClassDiagramNodeTypes } from '@borkdominik-biguml/uml-glsp-server';
 import { DefaultTypes, type Dimension, type Point } from '@eclipse-glsp/protocol';
 import { GNode, type GModelElement } from '@eclipse-glsp/server';

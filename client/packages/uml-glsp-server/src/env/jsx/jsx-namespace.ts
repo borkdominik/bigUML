@@ -19,7 +19,7 @@ export type GlspNode = GModelElement | GlspNode[] | string | number | boolean | 
 /**
  * JSX namespace for TypeScript's automatic JSX transform.
  *
- * When `"jsx": "react-jsx"` and `"jsxImportSource": "@borkdominik-biguml/uml-glsp-jsx"` are set,
+ * When `"jsx": "react-jsx"` and `"jsxImportSource": "@borkdominik-biguml/uml-glsp-server/jsx"` are set,
  * TypeScript looks for the `JSX` namespace exported from the `jsx-runtime` module.
  */
 export namespace JSX {

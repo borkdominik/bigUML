@@ -24,14 +24,14 @@ import { getCreationPath } from '../../../../../gen/vscode/get-creation-path.js'
 import { getDefaultProperties, isNoBounds } from '../../../../../gen/vscode/get-default-value.js';
 import { ModelPatchCommand } from '../../command/model-patch-command.js';
 import { GridSnapper } from '../../grid/grid-snapper.js';
-import { type BaseDiagramModelState } from '../../model/base-diagram-model-state.js';
 import { DiagramLanguageMetadata } from '../../model/diagram-language-metadata.js';
+import { type UmlDiagramModelState } from '../../model/diagram-model-state.js';
 
 @injectable()
 export class GenericCreateNodeOperationHandler extends OperationHandler implements CreateNodeOperationHandler {
     readonly operationType = CreateNodeOperation.KIND;
 
-    declare readonly modelState: BaseDiagramModelState;
+    declare readonly modelState: UmlDiagramModelState;
 
     @inject(DiagramLanguageMetadata)
     protected readonly metadata: DiagramLanguageMetadata;

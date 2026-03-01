@@ -11,7 +11,7 @@ import type { Diagram } from '@borkdominik-biguml/model-server/grammar';
 import { DefaultModelState, type GModelIndex } from '@eclipse-glsp/server';
 import { type AstNode } from 'langium';
 
-export interface BigUmlModelIndex extends GModelIndex {
+export interface UmlModelIndex extends GModelIndex {
     findSemanticElement<T extends AstNode>(id: string, guard: (item: unknown) => item is T): T;
 
     findSemanticElement<T extends AstNode = AstNode>(id: string, guard?: (item: unknown) => item is T): T | undefined;
@@ -25,8 +25,8 @@ export interface BigUmlModelIndex extends GModelIndex {
     findSizePath(id: string): string | undefined;
 }
 
-export abstract class BaseDiagramModelState extends DefaultModelState {
-    abstract override index: BigUmlModelIndex;
+export abstract class UmlDiagramModelState extends DefaultModelState {
+    abstract override index: UmlModelIndex;
     abstract semanticUri: string;
     abstract semanticRoot: Diagram;
     abstract modelService: ModelService;

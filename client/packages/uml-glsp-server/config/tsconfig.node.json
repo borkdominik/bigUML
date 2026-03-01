@@ -6,7 +6,13 @@
     "outDir": "../build",
     "rootDir": "../src",
     "jsx": "react-jsx",
-    "jsxImportSource": "@borkdominik-biguml/uml-glsp-jsx"
+    "jsxImportSource": "@borkdominik-biguml/uml-glsp-server/jsx"
   },
-  "include": ["../src/env/common", "../src/env/vscode", "../src/gen/common", "../src/gen/vscode"]
+  "include": [
+    "../src/env/common",
+    "../src/env/jsx",
+    "../src/env/vscode",
+    "../src/gen/common",
+    "../src/gen/vscode"
+  ]
 }

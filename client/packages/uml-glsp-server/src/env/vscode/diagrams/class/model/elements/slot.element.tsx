@@ -8,7 +8,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 import type { Slot } from '@borkdominik-biguml/model-server/grammar';
-import { GLabelElement } from '@borkdominik-biguml/uml-glsp-jsx';
+import { GLabelElement } from '../../../../../jsx/index.js';
 import { ClassDiagramNodeTypes, CommonModelTypes } from '@borkdominik-biguml/uml-glsp-server';
 import { GNode, type GModelElement } from '@eclipse-glsp/server';
 

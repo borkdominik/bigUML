@@ -6,5 +6,4 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-export * from './abstract-label-edit-validator.js';
 export * from './generic-label-edit-operation-handler.js';

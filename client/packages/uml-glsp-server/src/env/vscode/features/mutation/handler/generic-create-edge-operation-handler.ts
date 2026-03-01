@@ -19,14 +19,14 @@ import {
 import { inject, injectable } from 'inversify';
 import { getDefaultProperties, getRelationTypeFromElementId } from '../../../../../gen/vscode/get-default-value.js';
 import { ModelPatchCommand } from '../../command/model-patch-command.js';
-import { type BaseDiagramModelState } from '../../model/base-diagram-model-state.js';
 import { DiagramLanguageMetadata } from '../../model/diagram-language-metadata.js';
+import { type UmlDiagramModelState } from '../../model/diagram-model-state.js';
 
 @injectable()
 export class GenericCreateEdgeOperationHandler extends OperationHandler implements CreateEdgeOperationHandler {
     readonly operationType = CreateEdgeOperation.KIND;
 
-    declare readonly modelState: BaseDiagramModelState;
+    declare readonly modelState: UmlDiagramModelState;
 
     @inject(DiagramLanguageMetadata)
     protected readonly metadata: DiagramLanguageMetadata;

@@ -40,7 +40,6 @@ import {
 import { DiagramLanguageMetadata } from '../../features/model/diagram-language-metadata.js';
 import { BigDiagramModule } from '../../features/module/module.js';
 import { ClassDiagramConfiguration } from './class-diagram-configuration.js';
-import { ClassLabelEditValidator } from './features/index.js';
 import { ClassDiagramGModelFactory } from './model/class-diagram-gmodel-factory.js';
 import { ClassDiagramGModelSerializer } from './model/class-diagram-gmodel-serializer.js';
 import { ClassDiagramModelIndex } from './model/class-diagram-model-index.js';
@@ -102,7 +101,7 @@ export class ClassDiagramModule extends BigDiagramModule {
     }
 
     protected override bindLabelEditValidator(): BindingTarget<LabelEditValidator> | undefined {
-        return ClassLabelEditValidator;
+        return undefined;
     }
 
     protected override bindPopupModelFactory(): BindingTarget<PopupModelFactory> | undefined {

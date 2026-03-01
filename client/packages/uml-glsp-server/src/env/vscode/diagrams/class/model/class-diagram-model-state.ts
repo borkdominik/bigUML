@@ -19,7 +19,7 @@ import { UmlDiagramLSPServices } from '@borkdominik-biguml/model-server/integrat
 import { ActionDispatcher, type JsonModelState, MessageAction, type SeverityLevel } from '@eclipse-glsp/server';
 import { inject, injectable } from 'inversify';
 import { URI } from 'vscode-uri';
-import { BaseDiagramModelState } from '../../../features/model/base-diagram-model-state.js';
+import { UmlDiagramModelState } from '../../../features/model/diagram-model-state.js';
 import { ClassDiagramModelIndex } from './class-diagram-model-index.js';
 
 export interface ClassDiagramSourceModel {
@@ -31,7 +31,7 @@ export interface ClassDiagramSourceModel {
  * It also provides convenience methods for accessing specific language services.
  */
 @injectable()
-export class ClassDiagramModelState extends BaseDiagramModelState implements JsonModelState<ClassDiagramSourceModel> {
+export class ClassDiagramModelState extends UmlDiagramModelState implements JsonModelState<ClassDiagramSourceModel> {
     @inject(ClassDiagramModelIndex)
     declare index: ClassDiagramModelIndex;
     @inject(UmlDiagramLSPServices)

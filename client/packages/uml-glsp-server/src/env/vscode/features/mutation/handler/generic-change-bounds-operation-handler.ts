@@ -10,13 +10,13 @@ import { ChangeBoundsOperation, type Command, OperationHandler } from '@eclipse-
 import { injectable } from 'inversify';
 import { URI } from 'vscode-uri';
 import { ModelPatchCommand } from '../../command/model-patch-command.js';
-import { type BaseDiagramModelState } from '../../model/base-diagram-model-state.js';
+import { type UmlDiagramModelState } from '../../model/diagram-model-state.js';
 
 @injectable()
 export class GenericChangeBoundsOperationHandler extends OperationHandler {
     readonly operationType = ChangeBoundsOperation.KIND;
 
-    declare readonly modelState: BaseDiagramModelState;
+    declare readonly modelState: UmlDiagramModelState;
 
     override createCommand(operation: ChangeBoundsOperation): Command {
         return new ModelPatchCommand(this.modelState, this.changeBounds(operation));

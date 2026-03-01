@@ -6,6 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
+export * from '@borkdominik-biguml/uml-glsp-server/gen/vscode';
 export * from './diagrams/index.js';
 export * from './features/index.js';
 export * from './launch.js';

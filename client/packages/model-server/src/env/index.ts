@@ -27,9 +27,3 @@ export * from './langium/util/dimension.js';
 export * from './langium/util/name-util.js';
 export * from './langium/util/position.js';
 export * from './langium/util/uri-util.js';
-
-// Generated
-// Haydar
-// export * from './langium/uml-diagram-serializer.js';
-// export * from '../../gen/glsp-server/getCreationPath.js';
-// export * from '../../gen/glsp-server/getDefaultValue.js';

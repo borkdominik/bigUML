@@ -6,6 +6,4 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-export * from '../gen/langium/language/ast.js';
-export * from '../gen/langium/language/grammar.js';
-export * from '../gen/langium/language/module.js';
+export * from '@borkdominik-biguml/model-server/gen/langium';

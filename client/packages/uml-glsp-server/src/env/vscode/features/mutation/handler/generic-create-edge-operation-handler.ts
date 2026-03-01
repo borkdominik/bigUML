@@ -9,6 +9,7 @@
 
 import { createRandomUUID, type jsonPatch, type SerializedPatchValue } from '@borkdominik-biguml/model-server';
 import type { Edge } from '@borkdominik-biguml/model-server/grammar';
+import { getDefaultProperties, getRelationTypeFromElementId } from '@borkdominik-biguml/uml-glsp-server/gen/vscode';
 import {
     type Command,
     CreateEdgeOperation,
@@ -17,7 +18,6 @@ import {
     TriggerEdgeCreationAction
 } from '@eclipse-glsp/server';
 import { inject, injectable } from 'inversify';
-import { getDefaultProperties, getRelationTypeFromElementId } from '../../../../../gen/vscode/get-default-value.js';
 import { ModelPatchCommand } from '../../command/model-patch-command.js';
 import { DiagramLanguageMetadata } from '../../model/diagram-language-metadata.js';
 import { type UmlDiagramModelState } from '../../model/diagram-model-state.js';

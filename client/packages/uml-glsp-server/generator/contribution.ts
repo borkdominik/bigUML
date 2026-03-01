@@ -7,6 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
+import type { UmlToolingContributionResult } from '@borkdominik-biguml/uml-language-tooling';
 import { type LangiumDeclaration } from '@borkdominik-biguml/uml-language-tooling';
 import { buildCreationPath } from './creation-path-generator.js';
 import { buildDefaultValue } from './default-value-generator.js';
@@ -14,7 +15,7 @@ import { buildDiagramLanguageMetadata } from './diagram-language-metadata-genera
 import { buildModelTypes } from './model-types-generator.js';
 import { buildToolPaletteItemProvider } from './tool-palette-generator.js';
 
-export function umlToolingContribution(extensionPath: string, declarations: LangiumDeclaration[]): { path: string; content: string }[] {
+export function umlToolingContribution(extensionPath: string, declarations: LangiumDeclaration[]): UmlToolingContributionResult {
     const results: { path: string; content: string }[] = [];
 
     results.push(...buildCreationPath(extensionPath, declarations));
@@ -23,5 +24,5 @@ export function umlToolingContribution(extensionPath: string, declarations: Lang
     results.push(...buildDiagramLanguageMetadata(extensionPath, declarations));
     results.push(...buildToolPaletteItemProvider(extensionPath, declarations));
 
-    return results;
+    return { files: results };
 }

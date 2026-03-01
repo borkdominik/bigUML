@@ -9,6 +9,7 @@
 
 import { createRandomUUID, findAvailableNodeName, type SerializedPatchValue } from '@borkdominik-biguml/model-server';
 import type { MetaInfo, Node } from '@borkdominik-biguml/model-server/grammar';
+import { getCreationPath, getDefaultProperties, isNoBounds } from '@borkdominik-biguml/uml-glsp-server/gen/vscode';
 import {
     type Command,
     CreateNodeOperation,
@@ -20,8 +21,6 @@ import {
 import type * as jsonpatch from 'fast-json-patch';
 import { inject, injectable } from 'inversify';
 import { URI } from 'vscode-uri';
-import { getCreationPath } from '../../../../../gen/vscode/get-creation-path.js';
-import { getDefaultProperties, isNoBounds } from '../../../../../gen/vscode/get-default-value.js';
 import { ModelPatchCommand } from '../../command/model-patch-command.js';
 import { GridSnapper } from '../../grid/grid-snapper.js';
 import { DiagramLanguageMetadata } from '../../model/diagram-language-metadata.js';

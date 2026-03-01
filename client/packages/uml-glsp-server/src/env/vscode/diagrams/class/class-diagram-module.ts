@@ -6,6 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
+import { ClassDiagramLanguageMetadata, ClassDiagramToolPaletteItemProvider } from '@borkdominik-biguml/uml-glsp-server/gen/vscode';
 import {
     type ActionHandlerConstructor,
     type BindingTarget,
@@ -26,8 +27,6 @@ import {
     type ToolPaletteItemProvider
 } from '@eclipse-glsp/server';
 import { injectable, type interfaces } from 'inversify';
-import { ClassDiagramLanguageMetadata } from '../../../../gen/vscode/diagram/class/class-diagram-language-metadata.js';
-import { ClassDiagramToolPaletteItemProvider } from '../../../../gen/vscode/diagram/class/class-diagram-tool-palette-item-provider.js';
 import {
     GenericChangeBoundsOperationHandler,
     GenericCreateEdgeOperationHandler,

@@ -7,6 +7,7 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
+import { UmlDiagramSerializer } from '@borkdominik-biguml/model-server/gen/langium';
 import {
     createDefaultModule,
     createDefaultSharedModule,
@@ -17,7 +18,6 @@ import {
     type PartialLangiumSharedServices
 } from 'langium';
 import { TextDocument } from 'vscode-languageserver-textdocument';
-import { UmlDiagramSerializer } from '../../gen/langium/uml-diagram-serializer.js';
 import { UmlDiagramGeneratedModule, UmlDiagramGeneratedSharedModule } from '../grammar.js';
 import { ModelService, OpenableTextDocuments, OpenTextDocumentManager } from '../index.js';
 import {

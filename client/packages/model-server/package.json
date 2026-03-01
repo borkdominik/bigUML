@@ -22,6 +22,14 @@
     "./validation": {
       "types": "./build/env/validation.d.ts",
       "default": "./build/env/validation.js"
+    },
+    "./gen/langium": {
+      "types": "./build/gen/langium/index.d.ts",
+      "default": "./build/gen/langium/index.js"
+    },
+    "./gen/validation": {
+      "types": "./build/gen/validation/index.d.ts",
+      "default": "./build/gen/validation/index.js"
     }
   },
   "files": [

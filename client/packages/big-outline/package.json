@@ -42,6 +42,10 @@
       "types": "./build/env/vscode/index.d.ts",
       "default": "./build/env/vscode/index.js"
     },
+    "./gen/glsp-server": {
+      "types": "./build/gen/glsp-server/index.d.ts",
+      "default": "./build/gen/glsp-server/index.js"
+    },
     "./generator": {
       "types": "./build/env/generator/index.d.ts",
       "default": "./build/env/generator/index.js"

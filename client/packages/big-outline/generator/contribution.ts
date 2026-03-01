@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-import type { LangiumDeclaration } from '@borkdominik-biguml/uml-language-tooling';
+import type { LangiumDeclaration, UmlToolingContributionResult } from '@borkdominik-biguml/uml-language-tooling';
 import { Eta } from 'eta';
 import fs from 'fs';
 import path from 'path';
@@ -15,7 +15,7 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-export function umlToolingContribution(extensionPath: string, declarations: LangiumDeclaration[]): { path: string; content: string }[] {
+export function umlToolingContribution(extensionPath: string, declarations: LangiumDeclaration[]): UmlToolingContributionResult {
     const generatedFiles: { path: string; content: string }[] = [];
 
     // Initialize Eta with the templates directory
@@ -91,7 +91,7 @@ export function umlToolingContribution(extensionPath: string, declarations: Lang
         generatedFiles.push({ path: extensionPath + `/glsp-server/handlers/${fileName}`, content });
     }
 
-    return generatedFiles;
+    return { files: generatedFiles };
 }
 
 /**

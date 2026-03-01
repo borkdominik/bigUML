@@ -18,3 +18,8 @@ export * from './reference.js';
 export interface ABSTRACT_ELEMENT {}
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface ROOT_ELEMENT {}
+
+export interface UmlToolingContributionResult {
+    files: { path: string; content: string }[];
+    additionalIndexPaths?: string[];
+}

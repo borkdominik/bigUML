@@ -6,5 +6,4 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-export * from '../gen/validation/validation-elements.js';
-export * from '../gen/validation/validator.js';
+export * from '@borkdominik-biguml/model-server/gen/validation';

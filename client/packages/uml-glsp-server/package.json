@@ -41,6 +41,14 @@
     "./jsx/jsx-runtime": {
       "types": "./build/env/jsx/jsx-runtime.d.ts",
       "default": "./build/env/jsx/jsx-runtime.js"
+    },
+    "./gen/common": {
+      "types": "./build/gen/common/index.d.ts",
+      "default": "./build/gen/common/index.js"
+    },
+    "./gen/vscode": {
+      "types": "./build/gen/vscode/index.d.ts",
+      "default": "./build/gen/vscode/index.js"
     }
   },
   "files": [

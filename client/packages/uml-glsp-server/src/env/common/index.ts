@@ -6,6 +6,6 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-export * from '../../gen/common/model-types/class-diagram-model-types.js';
+export * from '@borkdominik-biguml/uml-glsp-server/gen/common';
 export * from './model/index.js';
 export * from './operations/index.js';

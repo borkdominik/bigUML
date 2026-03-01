@@ -7,6 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
+import type { UmlToolingContributionResult } from '@borkdominik-biguml/uml-language-tooling';
 import { type LangiumDeclaration, type Property } from '@borkdominik-biguml/uml-language-tooling';
 import { Eta } from 'eta';
 import fs from 'fs';
@@ -44,7 +45,7 @@ interface PropertyDescriptor {
 // Main entry point
 // ============================================================================
 
-export function umlToolingContribution(extensionPath: string, declarations: LangiumDeclaration[]): { path: string; content: string }[] {
+export function umlToolingContribution(extensionPath: string, declarations: LangiumDeclaration[]): UmlToolingContributionResult {
     const results: { path: string; content: string }[] = [];
 
     const elemsOut = path.join(extensionPath, ...prefixPath, 'elements');
@@ -60,7 +61,7 @@ export function umlToolingContribution(extensionPath: string, declarations: Lang
     const requestFiles = renderRequestHandlers(extensionPath, declarations);
     results.push(...requestFiles);
 
-    return results;
+    return { files: results };
 }
 
 // ============================================================================

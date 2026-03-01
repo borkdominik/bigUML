@@ -7,4 +7,4 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
-export function skipPropertyPP(_target: any, _propertyKey?: any) {}
+export function skipPropertyPP(_target: object, _propertyKey?: string | symbol) {}

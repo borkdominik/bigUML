@@ -48,7 +48,6 @@
   },
   "dependencies": {
     "class-transformer": "^0.5.1",
-    "class-validator": "^0.14.2",
     "ts-morph": "^27.0.2",
     "typescript-graph": "^0.3.0"
   },

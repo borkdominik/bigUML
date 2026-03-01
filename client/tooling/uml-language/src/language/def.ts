@@ -19,6 +19,7 @@ import {
   path,
   root,
   skipPropertyPP,
+  toolPaletteItem,
   withDefaults,
 } from "@borkdominik-biguml/uml-language-tooling";
 import { ArrayMaxSize, Matches, MinLength, ValidateIf } from "class-validator";
@@ -102,6 +103,11 @@ type ClassDiagramEdges =
   | Substitution
   | Usage;
 
+@toolPaletteItem({
+  section: "Container",
+  label: "Enumeration",
+  icon: "uml-enumeration-icon",
+})
 @withDefaults
 export class Enumeration extends Node {
   @LengthBetween(3, 10, { message: "Enumeration.name must be 3–10 characters" })
@@ -109,6 +115,11 @@ export class Enumeration extends Node {
   @path values?: Array<EnumerationLiteral>;
 }
 
+@toolPaletteItem({
+  section: "Feature",
+  label: "Enumeration Literal",
+  icon: "uml-enumeration-literal-icon",
+})
 @noBounds
 @withDefaults
 export class EnumerationLiteral extends Unbounded {
@@ -117,6 +128,11 @@ export class EnumerationLiteral extends Unbounded {
   visibility?: Visibility;
 }
 
+@toolPaletteItem({
+  section: "Container",
+  label: "Class",
+  icon: "uml-class-icon",
+})
 @withDefaults
 export class Class extends Node {
   @Matches(/^[A-Z]/, {
@@ -137,6 +153,11 @@ export class Class extends Node {
   @skipPropertyPP skip?: boolean;
 }
 
+@toolPaletteItem({
+  section: "Container",
+  label: "Abstract Class",
+  icon: "uml-class-icon",
+})
 @withDefaults
 export class AbstractClass extends Class {
   override isAbstract: boolean = true;
@@ -144,6 +165,11 @@ export class AbstractClass extends Class {
   declare visibility?: Visibility;
 }
 
+@toolPaletteItem({
+  section: "Container",
+  label: "Interface",
+  icon: "uml-interface-icon",
+})
 @withDefaults
 export class Interface extends Node {
   @LengthBetween(3, 10, { message: "Interface.name must be 3–10 characters" })
@@ -152,6 +178,11 @@ export class Interface extends Node {
   @path operations?: Array<Operation>;
 }
 
+@toolPaletteItem({
+  section: "Feature",
+  label: "Property",
+  icon: "uml-property-icon",
+})
 @noBounds
 export class Property extends Unbounded {
   name: string;
@@ -167,6 +198,11 @@ export class Property extends Unbounded {
   aggregation?: AggregationType;
 }
 
+@toolPaletteItem({
+  section: "Feature",
+  label: "Operation",
+  icon: "uml-operation-icon",
+})
 @noBounds
 @withDefaults
 export class Operation extends Unbounded {
@@ -202,6 +238,11 @@ type DataTypeReference =
   | Interface
   | PrimitiveType;
 
+@toolPaletteItem({
+  section: "Container",
+  label: "DataType",
+  icon: "uml-data-type-icon",
+})
 @withDefaults
 export class DataType extends Node {
   @MinLength(5)
@@ -211,10 +252,20 @@ export class DataType extends Node {
   isAbstract?: boolean;
   visibility?: Visibility;
 }
+@toolPaletteItem({
+  section: "Container",
+  label: "Primitive Type",
+  icon: "uml-primitive-type-icon",
+})
 export class PrimitiveType extends Node {
   name: string;
 }
 
+@toolPaletteItem({
+  section: "Container",
+  label: "Instance Specification",
+  icon: "uml-instance-specification-icon",
+})
 @withDefaults
 export class InstanceSpecification extends Node {
   name: string;
@@ -222,6 +273,7 @@ export class InstanceSpecification extends Node {
   @path slots?: Array<Slot>;
 }
 
+@toolPaletteItem({ section: "Feature", label: "Slot", icon: "uml-slot-icon" })
 @noBounds
 export class Slot extends Node {
   name: string;
@@ -243,18 +295,33 @@ export class Relation extends Edge {
   relationType: RelationType;
 }
 
+@toolPaletteItem({
+  section: "Relations",
+  label: "Abstraction",
+  icon: "uml-abstraction-icon",
+})
 @withDefaults
 export class Abstraction extends Relation {
   name?: string;
   visibility?: Visibility;
 }
 
+@toolPaletteItem({
+  section: "Relations",
+  label: "Dependency",
+  icon: "uml-dependency-icon",
+})
 @withDefaults
 export class Dependency extends Relation {
   name?: string;
   visibility?: Visibility;
 }
 
+@toolPaletteItem({
+  section: "Relations",
+  label: "Association",
+  icon: "uml-association-icon",
+})
 @withDefaults
 export class Association extends Relation {
   name?: string;
@@ -267,6 +334,11 @@ export class Association extends Relation {
   visibility?: Visibility;
 }
 
+@toolPaletteItem({
+  section: "Relations",
+  label: "Aggregation",
+  icon: "uml-association-shared-icon",
+})
 @withDefaults
 @astType("Association")
 export class Aggregation extends Relation {
@@ -280,6 +352,11 @@ export class Aggregation extends Relation {
   visibility?: Visibility;
 }
 
+@toolPaletteItem({
+  section: "Relations",
+  label: "Composition",
+  icon: "uml-association-composite-icon",
+})
 @withDefaults
 @astType("Association")
 export class Composition extends Relation {
@@ -293,41 +370,82 @@ export class Composition extends Relation {
   visibility?: Visibility;
 }
 
+@toolPaletteItem({
+  section: "Relations",
+  label: "Interface Realization",
+  icon: "uml-interface-realization-icon",
+})
 @withDefaults
 export class InterfaceRealization extends Relation {
   name?: string;
   visibility?: Visibility;
 }
 
+@toolPaletteItem({
+  section: "Relations",
+  label: "Generalization",
+  icon: "uml-generalization-icon",
+})
 @withDefaults
 export class Generalization extends Relation {
   isSubstitutable: boolean;
 }
 
+@toolPaletteItem({
+  section: "Relations",
+  label: "Package Import",
+  icon: "uml-package-import-icon",
+})
 @withDefaults
 export class PackageImport extends Relation {
   visibility?: Visibility;
 }
 
+@toolPaletteItem({
+  section: "Relations",
+  label: "Package Merge",
+  icon: "uml-package-merge-icon",
+})
 @withDefaults
 export class PackageMerge extends Relation {}
+
+@toolPaletteItem({
+  section: "Relations",
+  label: "Realization",
+  icon: "uml-realization-icon",
+})
 export class Realization extends Relation {
   name?: string;
   visibility?: Visibility;
 }
 
+@toolPaletteItem({
+  section: "Relations",
+  label: "Substitution",
+  icon: "uml-substitution-icon",
+})
 @withDefaults
 export class Substitution extends Relation {
   name?: string;
   visibility?: Visibility;
 }
 
+@toolPaletteItem({
+  section: "Relations",
+  label: "Usage",
+  icon: "uml-usage-icon",
+})
 @withDefaults
 export class Usage extends Relation {
   name?: string;
   visibility?: Visibility;
 }
 
+@toolPaletteItem({
+  section: "Container",
+  label: "Package",
+  icon: "uml-package-icon",
+})
 @withDefaults
 export class Package extends Node {
   name: string;

@@ -48,7 +48,7 @@ export function buildDiagramLanguageMetadata(
 
         const content = eta.render('./diagram-language-metadata', data);
 
-        const outDir = path.join(extensionPath, 'common', 'model-types');
+        const outDir = path.join(extensionPath, 'vscode', 'diagram', toKebab(diagramName));
         const fileName = `${toKebab(diagramName)}-diagram-language-metadata.ts`;
         results.push({ path: path.join(outDir, fileName), content });
     }

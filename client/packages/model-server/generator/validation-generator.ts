@@ -6,10 +6,21 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-import { format, type Paths } from '@borkdominik-biguml/uml-language-tooling';
-import fs from 'fs';
+import { Eta } from 'eta';
 import path from 'path';
 import { Project } from 'ts-morph';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const eta = new Eta({ views: path.join(__dirname, 'templates') });
+
+// ============================================================================
+// Types
+// ============================================================================
+
+const BUILTIN_TYPE_NAMES = new Set(['Array', 'Readonly', 'Partial', 'Record', 'unknown', 'any', 'string', 'number', 'boolean']);
 
 interface PropertyInfo {
     name: string;
@@ -19,8 +30,8 @@ interface PropertyInfo {
 }
 
 interface EntityInfo {
-    name: string; // AST type name, e.g. Class, Enumeration, …
-    dtoClassName: string; // e.g. ClassValidationElement
+    name: string;
+    dtoClassName: string;
     props: PropertyInfo[];
 }
 
@@ -29,7 +40,66 @@ interface ValidationInfo {
     decoratorImports: Array<{ from: string; names: string[] }>;
 }
 
-function collectDecoratorImports(defPath: string) {
+// ============================================================================
+// Main entry point
+// ============================================================================
+
+export function buildValidationFiles(extensionPath: string, defPath: string): { path: string; content: string }[] {
+    const results: { path: string; content: string }[] = [];
+
+    const info = buildValidationInfo(defPath);
+
+    const elementsContent = renderValidationElements(extensionPath, defPath, info);
+    results.push({
+        path: path.join(extensionPath, 'validation', 'validation-elements.ts'),
+        content: elementsContent
+    });
+
+    const validatorContent = renderValidator(info);
+    results.push({
+        path: path.join(extensionPath, 'validation', 'validator.ts'),
+        content: validatorContent
+    });
+
+    return results;
+}
+
+// ============================================================================
+// Template rendering
+// ============================================================================
+
+function renderValidationElements(extPath: string, defPath: string, info: ValidationInfo): string {
+    const outDir = path.join(extPath, 'validation');
+
+    const resolvedImports = info.decoratorImports.map(i => ({
+        from: i.from.startsWith('.') ? path.relative(outDir, path.resolve(path.dirname(defPath), i.from)).replace(/\\/g, '/') : i.from,
+        names: i.names
+    }));
+
+    const astTypeNames = collectAstTypeNames(info);
+    const astImportPath = path.relative(outDir, path.join(extPath, 'langium', 'language', 'ast.js')).replace(/\\/g, '/');
+
+    return eta.render('./validation-elements', {
+        decoratorImports: resolvedImports,
+        astTypeNames: [...astTypeNames].sort(),
+        astImportPath,
+        entities: info.entities
+    });
+}
+
+function renderValidator(info: ValidationInfo): string {
+    return eta.render('./validator', {
+        astGuards: info.entities.map(e => `is${e.name}`),
+        dtoNames: info.entities.map(e => e.dtoClassName),
+        entities: info.entities
+    });
+}
+
+// ============================================================================
+// Validation info extraction (ts-morph)
+// ============================================================================
+
+function collectDecoratorImports(defPath: string): ValidationInfo['decoratorImports'] {
     const proj = new Project({
         tsConfigFilePath: path.join(process.cwd(), 'tsconfig.json')
     });
@@ -41,7 +111,9 @@ function collectDecoratorImports(defPath: string) {
         const mod = imp.getModuleSpecifierValue();
         if (mod === 'class-validator' || mod.includes('/validation/custom-validators')) {
             const names = imp.getNamedImports().map(n => n.getName());
-            if (names.length) res.push({ from: mod, names });
+            if (names.length) {
+                res.push({ from: mod, names });
+            }
         }
     });
 
@@ -74,7 +146,6 @@ function buildValidationInfo(defPath: string): ValidationInfo {
                     isOptional: prop.hasQuestionToken()
                 });
 
-                // capture flags from ValidateIf lambdas
                 decos
                     .filter(d => d.getName() === 'ValidateIf')
                     .forEach(d => {
@@ -84,7 +155,6 @@ function buildValidationInfo(defPath: string): ValidationInfo {
             }
         });
 
-        // include referenced flags even without decorators
         validateIfRefs.forEach(n => {
             if (!props.find(p => p.name === n)) {
                 const decl = cls.getProperty(n)!;
@@ -110,105 +180,25 @@ function buildValidationInfo(defPath: string): ValidationInfo {
     return { entities, decoratorImports };
 }
 
-async function writeValidationElementsFile(extPath: string, defPath: string, info: ValidationInfo) {
-    const out = path.join(extPath, 'validation', 'validation-elements.ts');
-    fs.mkdirSync(path.dirname(out), { recursive: true });
+// ============================================================================
+// Helpers
+// ============================================================================
 
-    const imports: string[] = [];
-
-    // 1) Re-emit any decorator imports
-    info.decoratorImports.forEach(i => {
-        const importPath = i.from.startsWith('.')
-            ? path.relative(path.dirname(out), path.resolve(path.dirname(defPath), i.from)).replace(/\\/g, '/')
-            : i.from;
-        imports.push(`import { ${i.names.join(', ')} } from '${importPath}';`);
-    });
-
-    // 2) Collect all AST types we actually use
+function collectAstTypeNames(info: ValidationInfo): Set<string> {
     const astTypeNames = new Set<string>();
-    // a) ctor source types
+
     info.entities.forEach(e => astTypeNames.add(e.name));
-    // b) every PascalCase identifier in prop.typeText
+
     info.entities.forEach(e => {
         e.props.forEach(p => {
-            const ids = p.typeText.match(/\b[A-Z][A-Za-z0-9_]*\b/g) || [];
+            const ids = p.typeText.match(/\b[A-Z][A-Za-z0-9_]*\b/g) ?? [];
             ids.forEach(id => {
-                if (!['Array', 'Readonly', 'Partial', 'Record', 'unknown', 'any', 'string', 'number', 'boolean'].includes(id)) {
+                if (!BUILTIN_TYPE_NAMES.has(id)) {
                     astTypeNames.add(id);
                 }
             });
         });
     });
 
-    // 3) Emit a single import for all AST types
-    const astImportPath = path.relative(path.dirname(out), path.join(extPath, 'langium', 'language', 'ast.js')).replace(/\\/g, '/');
-    imports.push(`import { ${[...astTypeNames].sort().join(', ')} } from '${astImportPath}';`);
-
-    // 4) Generate DTO classes without extra blank lines
-    const classes = info.entities
-        .map(ent => {
-            const body = ent.props
-                .map(p => {
-                    const decos = p.decoratorTexts.length ? '    ' + p.decoratorTexts.join('\n    ') + '\n' : '';
-                    const optionalMark = p.isOptional ? '?' : '';
-                    return `${decos}    ${p.name}${optionalMark}: ${p.typeText};`;
-                })
-                .join('\n');
-
-            return `
-export class ${ent.dtoClassName} {
-    constructor(src: ${ent.name}) { Object.assign(this, src); }
-
-${body}
-}
-`;
-        })
-        .join('\n');
-
-    const rawContent = `${imports.join('\n')}\n\n${classes}`;
-    const formatted = await format(rawContent);
-
-    fs.writeFileSync(out, formatted, 'utf8');
-    console.log('Generated validation-elements file:', out);
-}
-
-async function writeValidatorFile(extPath: string, info: ValidationInfo) {
-    const out = path.join(extPath, 'validation', 'validator.ts');
-    fs.mkdirSync(path.dirname(out), { recursive: true });
-
-    const astGuards = info.entities.map(e => `is${e.name}`).join(', ');
-    const dtoNames = info.entities.map(e => e.dtoClassName).join(', ');
-
-    const cases = info.entities
-        .map(
-            e => `
-    if (is${e.name}(node)) {
-        errors = validateSync(new ${e.dtoClassName}(node));
-    }`
-        )
-        .join('');
-
-    const rawContent = `import { validateSync } from 'class-validator';
-import type { AstNode } from 'langium';
-import { ${astGuards} } from '../langium/language/ast.js';
-import { ${dtoNames} } from './validation-elements.js';
-
-export function validateNode(node: AstNode): void {
-    let errors: any[] = [];${cases}
-
-    if (errors.length) {
-        const msg = errors.flatMap(e => Object.values(e.constraints ?? {})).join(', ');
-        throw new Error('Validation error: ' + msg);
-    }
-}
-`;
-    const formatted = await format(rawContent);
-    fs.writeFileSync(out, formatted, 'utf8');
-    console.log('Generated validator file:', out);
-}
-
-export function generateValidationFiles(paths: Paths) {
-    const info = buildValidationInfo(paths.def);
-    writeValidationElementsFile(paths.gen, paths.def, info);
-    writeValidatorFile(paths.gen, info);
+    return astTypeNames;
 }

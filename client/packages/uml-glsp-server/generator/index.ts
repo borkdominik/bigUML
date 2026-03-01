@@ -8,5 +8,7 @@
  **********************************************************************************/
 
 export * from './contribution.js';
+export * from './decorators/tool-palette.decorator.js';
 export * from './diagram-language-metadata-generator.js';
 export * from './model-types-generator.js';
+export * from './tool-palette-generator.js';

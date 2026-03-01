@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { type LangiumDeclaration } from '@borkdominik-biguml/uml-language-tooling';
+import { type LangiumDeclaration, type Property } from '@borkdominik-biguml/uml-language-tooling';
 import { Eta } from 'eta';
 import fs from 'fs';
 import path from 'path';
@@ -126,7 +126,7 @@ function renderHandler(decl: LangiumDeclaration): string {
 // Build a property descriptor from a declaration property
 // ============================================================================
 
-function buildPropertyDescriptor(prop: any): PropertyDescriptor | undefined {
+function buildPropertyDescriptor(prop: Property): PropertyDescriptor | undefined {
     if (prop.decorators?.includes('skipPropertyPP')) return;
 
     const dyn = prop.decorators?.find((d: string) => d.startsWith('dynamicProperty:'));

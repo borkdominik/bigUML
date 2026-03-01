@@ -9,8 +9,8 @@
  **********************************************************************************/
 
 import { injectable } from 'inversify';
-import type { DiagramLanguageMetadata } from '../../../env/vscode/features/model/diagram-language-metadata.js';
-import { <%~ it.diagramName %>AstTypes, <%~ it.diagramName %>DiagramEdgeTypes, <%~ it.diagramName %>DiagramNodeTypes } from './<%~ it.modelTypesFileName %>.js';
+import type { DiagramLanguageMetadata } from '../../../../env/vscode/features/model/diagram-language-metadata.js';
+import { <%~ it.diagramName %>AstTypes, <%~ it.diagramName %>DiagramEdgeTypes, <%~ it.diagramName %>DiagramNodeTypes } from '../../../common/model-types/<%~ it.modelTypesFileName %>.js';
 
 @injectable()
 export class <%~ it.diagramName %>DiagramLanguageMetadata implements DiagramLanguageMetadata {

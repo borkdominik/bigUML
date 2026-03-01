@@ -9,10 +9,8 @@
 import {
     type ActionHandlerConstructor,
     type BindingTarget,
-    type CommandPaletteActionProvider,
     type ContextActionsProvider,
     type ContextEditValidator,
-    type ContextMenuItemProvider,
     type DiagramConfiguration,
     type GModelFactory,
     type GModelIndex,
@@ -28,7 +26,8 @@ import {
     type ToolPaletteItemProvider
 } from '@eclipse-glsp/server';
 import { injectable, type interfaces } from 'inversify';
-import { ClassDiagramLanguageMetadata } from '../../../../gen/common/model-types/class-diagram-language-metadata.js';
+import { ClassDiagramLanguageMetadata } from '../../../../gen/vscode/diagram/class/class-diagram-language-metadata.js';
+import { ClassDiagramToolPaletteItemProvider } from '../../../../gen/vscode/diagram/class/class-diagram-tool-palette-item-provider.js';
 import {
     GenericChangeBoundsOperationHandler,
     GenericCreateEdgeOperationHandler,
@@ -40,13 +39,7 @@ import {
 import { DiagramLanguageMetadata } from '../../features/model/diagram-language-metadata.js';
 import { BigDiagramModule } from '../../features/module/module.js';
 import { ClassDiagramConfiguration } from './class-diagram-configuration.js';
-import {
-    ClassDiagramCommandPaletteActionProvider,
-    ClassDiagramContextMenuItemProvider,
-    ClassDiagramModelValidator,
-    ClassDiagramToolPaletteItemProvider,
-    ClassLabelEditValidator
-} from './features/index.js';
+import { ClassDiagramModelValidator, ClassLabelEditValidator } from './features/index.js';
 import { ClassDiagramGModelFactory } from './model/class-diagram-gmodel-factory.js';
 import { ClassDiagramGModelSerializer } from './model/class-diagram-gmodel-serializer.js';
 import { ClassDiagramModelIndex } from './model/class-diagram-model-index.js';
@@ -103,16 +96,8 @@ export class ClassDiagramModule extends BigDiagramModule {
         return { service: ClassDiagramModelIndex };
     }
 
-    protected override bindContextMenuItemProvider(): BindingTarget<ContextMenuItemProvider> | undefined {
-        return ClassDiagramContextMenuItemProvider;
-    }
-
     protected override bindToolPaletteItemProvider(): BindingTarget<ToolPaletteItemProvider> {
         return ClassDiagramToolPaletteItemProvider;
-    }
-
-    protected override bindCommandPaletteActionProvider(): BindingTarget<CommandPaletteActionProvider> | undefined {
-        return ClassDiagramCommandPaletteActionProvider;
     }
 
     protected override bindLabelEditValidator(): BindingTarget<LabelEditValidator> | undefined {

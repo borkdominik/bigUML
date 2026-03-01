@@ -13,6 +13,7 @@ import { buildCreationPathMapping, writeCreationPathFile } from './creation-path
 import { buildDefaultValueMapping, writeDefaultValueFile } from './default-value-generator.js';
 import { buildDiagramLanguageMetadata } from './diagram-language-metadata-generator.js';
 import { buildModelTypes } from './model-types-generator.js';
+import { buildToolPaletteItemProvider } from './tool-palette-generator.js';
 
 export function umlToolingContribution(extensionPath: string, declarations: LangiumDeclaration[]): { path: string; content: string }[] {
     const results: { path: string; content: string }[] = [];
@@ -32,6 +33,9 @@ export function umlToolingContribution(extensionPath: string, declarations: Lang
 
     const metadataFiles = buildDiagramLanguageMetadata(extensionPath, declarations);
     results.push(...metadataFiles);
+
+    const toolPaletteFiles = buildToolPaletteItemProvider(extensionPath, declarations);
+    results.push(...toolPaletteFiles);
 
     return results;
 }

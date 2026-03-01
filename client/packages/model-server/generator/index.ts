@@ -10,4 +10,4 @@
 export * from './contribution.js';
 export * from './langium-generator.js';
 export * from './serializer-generator.js';
-
+export * from './validation-generator.js';

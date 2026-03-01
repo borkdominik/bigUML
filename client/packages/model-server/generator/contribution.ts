@@ -9,8 +9,10 @@
 
 import { type LangiumDeclaration, transformLangiumDeclarationsToLangiumGrammar } from '@borkdominik-biguml/uml-language-tooling';
 import path from 'path';
+import { fileURLToPath } from 'url';
 import { generateLangiumText } from './langium-generator.js';
 import { generateSerializer } from './serializer-generator.js';
+import { buildValidationFiles } from './validation-generator.js';
 
 export function umlToolingContribution(extensionPath: string, declarations: LangiumDeclaration[]): { path: string; content: string }[] {
     const results: { path: string; content: string }[] = [];
@@ -32,6 +34,10 @@ export function umlToolingContribution(extensionPath: string, declarations: Lang
         path: path.join(extensionPath, 'langium', `${languageId}-serializer.ts`),
         content: serializerText
     });
+
+    const defPath = fileURLToPath(import.meta.resolve('@borkdominik-biguml/uml-language/definition'));
+    const validationFiles = buildValidationFiles(extensionPath, defPath);
+    results.push(...validationFiles);
 
     return results;
 }

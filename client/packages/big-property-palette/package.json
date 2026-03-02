@@ -84,11 +84,13 @@
     "@eclipse-glsp/server": "*",
     "@eclipse-glsp/vscode-integration-webview": "*",
     "eta": "^3.5.0",
+    "sortablejs": "^1.15.0",
     "vscode-messenger-common": "^0.4.5"
   },
   "devDependencies": {
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
+    "@types/sortablejs": "^1.15.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0"
   },

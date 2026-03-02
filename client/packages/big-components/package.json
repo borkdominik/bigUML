@@ -47,25 +47,16 @@
     "@borkdominik-biguml/big-vscode-integration": "*",
     "@borkdominik-biguml/uml-protocol": "*",
     "@eclipse-glsp/protocol": "*",
-    "@floating-ui/dom": "^1.4.1",
-    "@microsoft/fast-components": "^2.30.6",
-    "@microsoft/fast-foundation": "^2.49.1",
-    "@vscode/webview-ui-toolkit": "^1.2.2",
-    "lit": "^2.7.4",
+    "@vscode-elements/react-elements": "^2.4.0",
     "lodash": "^4.17.21",
-    "sortablejs": "^1.15.0",
-    "uuid": "^9.0.0",
     "vscode-messenger-common": "^0.4.5",
     "vscode-messenger-webview": "^0.4.5"
   },
   "devDependencies": {
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
-    "@types/sortablejs": "1.15.1",
-    "@types/uuid": "^9.0.0",
     "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "ts-lit-plugin": "^1.2.1"
+    "react-dom": "^18.0.0"
   },
   "peerDependencies": {
     "react": "^18.0.0",

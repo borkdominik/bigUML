@@ -7,36 +7,11 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
-import { VSCodeCheckbox } from '@vscode/webview-ui-toolkit/react/index.js';
-import { useCallback, useState, type ReactElement } from 'react';
+import { VscodeCheckbox } from '@vscode-elements/react-elements';
+import type { ComponentProps } from 'react';
 
-export interface BigCheckboxProps {
-    label: string;
-    value: boolean;
-    disabled?: boolean;
+export type BCheckboxProps = ComponentProps<typeof VscodeCheckbox>;
 
-    onDidChangeValue: (value: boolean) => void;
-}
-
-export function BigCheckbox(props: BigCheckboxProps): ReactElement {
-    const [value, setValue] = useState<boolean>(props.value);
-
-    const onChange = useCallback<((e: Event) => unknown) & React.FormEventHandler<HTMLElement>>(
-        event => {
-            const target = event.target as HTMLInputElement;
-            setValue(target.checked);
-            props.onDidChangeValue?.(target.checked);
-        },
-        [props]
-    );
-
-    return (
-        <>
-            <div className='grid-label'>{props.label}</div>
-
-            <div className='grid-value'>
-                <VSCodeCheckbox checked={value} className='bool-item' disabled={props.disabled} onChange={onChange as any} />
-            </div>
-        </>
-    );
+export function BCheckbox(props: BCheckboxProps) {
+    return <VscodeCheckbox {...props} />;
 }

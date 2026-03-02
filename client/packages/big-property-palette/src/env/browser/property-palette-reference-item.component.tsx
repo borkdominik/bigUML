@@ -7,10 +7,18 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
-import { BigMenu, BigMenuItem, BigTextField, BigTooltip, classNames, VSCodeContext } from '@borkdominik-biguml/big-components';
+import {
+    BButton,
+    BCheckbox,
+    BContextMenu,
+    BContextMenuItem,
+    BOption,
+    BTextfield,
+    classNames,
+    VSCodeContext
+} from '@borkdominik-biguml/big-components';
 import { UpdateElementPropertyAction, type ElementReferenceProperty } from '@borkdominik-biguml/big-property-palette';
 import { CompoundOperation } from '@eclipse-glsp/protocol';
-import { VSCodeButton, VSCodeCheckbox, VSCodeOption } from '@vscode/webview-ui-toolkit/react/index.js';
 import { useCallback, useContext, useEffect, useRef, useState, type ChangeEvent, type ReactElement } from 'react';
 import Sortable from 'sortablejs';
 
@@ -171,16 +179,11 @@ export function PropertyPaletteReferenceItem(props: PropertyPaletteReferenceItem
             };
 
             return (
-                <VSCodeCheckbox
-                    className='autocomplete'
-                    ariaAutoComplete='both'
-                    ariaPlaceholder={item.label}
-                    onChange={handleChange as any}
-                >
+                <BCheckbox className='autocomplete' onChange={handleChange as any}>
                     {item.creates.map(c => (
-                        <VSCodeOption key={c.label}>{c.label}</VSCodeOption>
+                        <BOption key={c.label}>{c.label}</BOption>
                     ))}
-                </VSCodeCheckbox>
+                </BCheckbox>
             );
         },
         [onCreate]
@@ -196,24 +199,18 @@ export function PropertyPaletteReferenceItem(props: PropertyPaletteReferenceItem
                             <div className='reference-item-label'>{ref.label}</div>
                         ) : (
                             <div className='reference-item-name'>
-                                <BigTextField value={ref.name} onDidChangeValue={event => onNameChange(ref, event)} />
+                                <BTextfield
+                                    value={ref.name}
+                                    onInput={() => {}}
+                                    onBlur={(e: any) => onNameChange(ref, (e.target as HTMLInputElement).value)}
+                                />
                             </div>
                         )}
                         <div className='reference-item-actions'>
                             {ref.deleteActions.length > 0 && (
-                                <BigTooltip>
-                                    <VSCodeButton slot='anchor' className='action-delete' appearance='icon' onClick={() => onDelete([ref])}>
-                                        <div className='codicon codicon-trash'></div>
-                                    </VSCodeButton>
-                                    <span slot='text'>Delete</span>
-                                </BigTooltip>
+                                <BButton icon='trash' className='action-delete' title='Delete' onClick={() => onDelete([ref])} />
                             )}
-                            <BigTooltip>
-                                <VSCodeButton slot='anchor' appearance='icon' onClick={() => onNavigate(ref)}>
-                                    <div className='codicon codicon-chevron-right'></div>
-                                </VSCodeButton>
-                                <span slot='text'>Navigate</span>
-                            </BigTooltip>
+                            <BButton icon='chevron-right' title='Navigate' onClick={() => onNavigate(ref)} />
                         </div>
                     </div>
                     {ref.hint !== undefined && (
@@ -232,14 +229,7 @@ export function PropertyPaletteReferenceItem(props: PropertyPaletteReferenceItem
                     <h4 className='reference-header-title'>{item.label}</h4>
                     {item.references.some(r => r.deleteActions.length > 0) && (
                         <div className='reference-header-actions'>
-                            <BigMenu>
-                                <BigMenuItem
-                                    icon='codicon-trash'
-                                    onClick={() => onDelete(item.references.filter(r => r.deleteActions.length > 0))}
-                                >
-                                    Delete all
-                                </BigMenuItem>
-                            </BigMenu>
+                            <BButton icon='trash' onClick={() => onDelete(item.references.filter(r => r.deleteActions.length > 0))} />
                         </div>
                     )}
                 </div>
@@ -257,20 +247,15 @@ export function PropertyPaletteReferenceItem(props: PropertyPaletteReferenceItem
                     {item.creates.length > 0 && !item.isAutocomplete && (
                         <div className='reference-body-actions'>
                             {item.creates.length === 1 ? (
-                                <VSCodeButton appearance='primary' onClick={() => onCreate(item.creates[0])}>
-                                    Add
-                                </VSCodeButton>
+                                <BButton onClick={() => onCreate(item.creates[0])}>Add</BButton>
                             ) : (
-                                <BigMenu>
+                                <BContextMenu>
                                     {item.creates.map(c => (
-                                        <BigMenuItem key={c.label} onClick={() => onCreate(c)}>
+                                        <BContextMenuItem key={c.label} onClick={() => onCreate(c)}>
                                             {c.label}
-                                        </BigMenuItem>
+                                        </BContextMenuItem>
                                     ))}
-                                    <VSCodeButton slot='menu-trigger' appearance='primary'>
-                                        Add
-                                    </VSCodeButton>
-                                </BigMenu>
+                                </BContextMenu>
                             )}
                         </div>
                     )}

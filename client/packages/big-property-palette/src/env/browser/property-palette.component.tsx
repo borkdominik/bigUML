@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
-import { BigCheckbox, BigDropdown, BigTextField, VSCodeContext } from '@borkdominik-biguml/big-components';
+import { BButton, BCheckbox, BDivider, BOption, BSingleSelect, BTextfield, VSCodeContext } from '@borkdominik-biguml/big-components';
 import {
     ElementBoolProperty,
     ElementChoiceProperty,
@@ -21,7 +21,6 @@ import {
     type ElementProperty
 } from '@borkdominik-biguml/big-property-palette';
 import { type Action } from '@eclipse-glsp/protocol';
-import { VSCodeButton, VSCodeDivider, VSCodeTextField } from '@vscode/webview-ui-toolkit/react/index.js';
 import { groupBy } from 'lodash';
 import { useCallback, useContext, useEffect, useState, type ChangeEvent, type ReactElement } from 'react';
 import { PropertyPaletteReferenceItem } from './property-palette-reference-item.component.js';
@@ -164,9 +163,7 @@ export function PropertyPalette(): ReactElement {
         if (clientId && navigationIds[clientId]?.length > 0) {
             return (
                 <header>
-                    <VSCodeButton appearance='icon' id='navigate-back' onClick={onNavigateBack}>
-                        <span className='codicon codicon-chevron-left' />
-                    </VSCodeButton>
+                    <BButton icon='chevron-left' id='navigate-back' onClick={onNavigateBack} />
                     <h3 className='title'>{properties?.label}</h3>
                 </header>
             );
@@ -196,32 +193,43 @@ export function PropertyPalette(): ReactElement {
         const gridTemplates = gridItems.map((item: any) => {
             if (ElementTextProperty.is(item)) {
                 return (
-                    <BigTextField
-                        key={`${item.elementId}-${item.propertyId}`}
-                        label={item.label}
-                        value={item.text}
-                        onDidChangeValue={value => onPropertyChange(item, value)}
-                    />
+                    <div key={`${item.elementId}-${item.propertyId}`}>
+                        <div className='grid-label'>{item.label}</div>
+                        <div className='grid-value grid-flex'>
+                            <BTextfield
+                                value={item.text}
+                                onBlur={(e: any) => onPropertyChange(item, (e.target as HTMLInputElement).value)}
+                            />
+                        </div>
+                    </div>
                 );
             } else if (ElementBoolProperty.is(item)) {
                 return (
-                    <BigCheckbox
-                        key={`${item.elementId}-${item.propertyId}`}
-                        label={item.label}
-                        value={item.value}
-                        onDidChangeValue={value => onPropertyChange(item, value + '')}
-                    />
+                    <div key={`${item.elementId}-${item.propertyId}`}>
+                        <div className='grid-label'>{item.label}</div>
+                        <div className='grid-value'>
+                            <BCheckbox checked={item.value} onChange={() => onPropertyChange(item, !item.value + '')} />
+                        </div>
+                    </div>
                 );
             } else if (ElementChoiceProperty.is(item)) {
                 return (
-                    <BigDropdown
-                        key={`${item.elementId}-${item.propertyId}`}
-                        label={item.label}
-                        disabled={item.disabled}
-                        choice={item.choice}
-                        choices={item.choices}
-                        onDidChangeValue={value => onPropertyChange(item, value)}
-                    ></BigDropdown>
+                    <div key={`${item.elementId}-${item.propertyId}`}>
+                        <div className='grid-label'>{item.label}</div>
+                        <div className='grid-value grid-flex'>
+                            <BSingleSelect
+                                disabled={item.disabled}
+                                value={item.choice}
+                                onChange={(e: any) => onPropertyChange(item, (e.target as HTMLSelectElement).value)}
+                            >
+                                {item.choices.map(choice => (
+                                    <BOption key={choice.value} value={choice.value}>
+                                        {choice.label}
+                                    </BOption>
+                                ))}
+                            </BSingleSelect>
+                        </div>
+                    </div>
                 );
             }
 
@@ -238,20 +246,20 @@ export function PropertyPalette(): ReactElement {
 
         return (
             <div className='body'>
-                <VSCodeTextField
+                <BTextfield
                     id='search'
                     onInput={((event: ChangeEvent<HTMLInputElement>) => setSearchText(event.target.value)) as any}
                     placeholder='Search'
                     value={searchText}
                 >
                     <span className='codicon codicon-search' slot='start' />
-                </VSCodeTextField>
+                </BTextfield>
 
-                <VSCodeDivider />
+                <BDivider />
 
                 {gridTemplates.length > 0 && <div className='grid'>{gridTemplates}</div>}
 
-                {gridTemplates.length > 0 && referenceTemplates.length > 0 && <VSCodeDivider />}
+                {gridTemplates.length > 0 && referenceTemplates.length > 0 && <BDivider />}
 
                 {referenceTemplates}
             </div>

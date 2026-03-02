@@ -21,7 +21,7 @@ import {
     type ConnectionManager,
     type ExperimentalGLSPServerModelState,
     type SelectionService
-} from '@borkdominik-biguml/big-vscode-integration/vscode';
+} from '@borkdominik-biguml/big-vscode/vscode';
 import { SelectAllAction } from '@eclipse-glsp/protocol';
 import { SelectAction } from '@eclipse-glsp/vscode-integration';
 import { inject, injectable, postConstruct } from 'inversify';

@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { TYPES, type BIGGLSPVSCodeConnector, type GLSPDiagramSettings } from '@borkdominik-biguml/big-vscode-integration/vscode';
+import { TYPES, type BIGGLSPVSCodeConnector, type GLSPDiagramSettings } from '@borkdominik-biguml/big-vscode/vscode';
 import { EnableToolsAction, FocusDomAction } from '@borkdominik-biguml/uml-protocol';
 import { CenterAction, FitToScreenAction, RequestExportSvgAction, SelectAllAction } from '@eclipse-glsp/protocol';
 import { inject, injectable, postConstruct } from 'inversify';

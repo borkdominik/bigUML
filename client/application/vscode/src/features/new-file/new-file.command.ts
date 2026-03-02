@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { type VSCodeCommand } from '@borkdominik-biguml/big-vscode-integration/vscode';
+import { type VSCodeCommand } from '@borkdominik-biguml/big-vscode/vscode';
 import { inject, injectable } from 'inversify';
 import * as vscode from 'vscode';
 import { type Uri } from 'vscode';

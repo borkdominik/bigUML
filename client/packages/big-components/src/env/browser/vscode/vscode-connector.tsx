@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 import { messenger } from '@borkdominik-biguml/big-components';
-import { ActionMessageNotification, WebviewReadyNotification } from '@borkdominik-biguml/big-vscode-integration';
+import { ActionMessageNotification, WebviewReadyNotification } from '@borkdominik-biguml/big-vscode';
 import type { Action, ActionMessage } from '@eclipse-glsp/protocol';
 import { useCallback, useEffect, useState, type ReactElement } from 'react';
 import { HOST_EXTENSION } from 'vscode-messenger-common';
@@ -23,18 +23,21 @@ export interface VSCodeConnectorProps {
 /**
  * The VSCodeConnector component provides a context for the VSCode integration.
  * It listens for messages from the VSCode extension and provides a way to dispatch actions.
- * 
+ *
  * Use {@link VSCodeContext} to access the context in child components.
  */
 export function VSCodeConnector(props: VSCodeConnectorProps): ReactElement {
     const [clientId, setClientId] = useState<string | undefined>();
     const [isReady, setIsReady] = useState<boolean>(false);
 
-    const debug = useCallback((message: string, ...objects: any) => {
-        if (props.debug) {
-            console.log("[React-VSCodeConnector] ", message, ...objects);
-        }
-    }, [props.debug]);
+    const debug = useCallback(
+        (message: string, ...objects: any) => {
+            if (props.debug) {
+                console.log('[React-VSCodeConnector] ', message, ...objects);
+            }
+        },
+        [props.debug]
+    );
 
     useEffect(() => {
         if (isReady) {
@@ -55,12 +58,15 @@ export function VSCodeConnector(props: VSCodeConnectorProps): ReactElement {
         };
     }, [props, debug]);
 
-    const listenAction = useCallback((handler: (action: Action) => void) => {
-        return messenger.listenNotification<ActionMessage>(ActionMessageNotification, message => {
-            debug('new action received', message);
-            handler(message.action);
-        });
-    }, [debug]);
+    const listenAction = useCallback(
+        (handler: (action: Action) => void) => {
+            return messenger.listenNotification<ActionMessage>(ActionMessageNotification, message => {
+                debug('new action received', message);
+                handler(message.action);
+            });
+        },
+        [debug]
+    );
 
     const dispatchAction = useCallback(
         (action: Action) => {

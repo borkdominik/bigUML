@@ -6,8 +6,8 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import type { IDESessionClient } from '@borkdominik-biguml/big-vscode-integration/vscode';
-import { TYPES } from '@borkdominik-biguml/big-vscode-integration/vscode';
+import type { IDESessionClient } from '@borkdominik-biguml/big-vscode/vscode';
+import { TYPES } from '@borkdominik-biguml/big-vscode/vscode';
 import type { UMLDiagramEditorProvider } from '@borkdominik-biguml/uml-glsp-client/vscode';
 import { NewFileResponseAction, RequestNewFileAction, type UMLDiagramType } from '@borkdominik-biguml/uml-protocol';
 import { type Disposable, DisposableCollection } from '@eclipse-glsp/protocol';

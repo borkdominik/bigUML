@@ -44,7 +44,7 @@
     "watch": "npm run compile -- --watch"
   },
   "dependencies": {
-    "@borkdominik-biguml/big-vscode-integration": "*",
+    "@borkdominik-biguml/big-vscode": "*",
     "@borkdominik-biguml/uml-protocol": "*",
     "@eclipse-glsp/protocol": "*",
     "@vscode-elements/react-elements": "^2.4.0",

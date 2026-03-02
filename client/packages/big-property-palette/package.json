@@ -75,7 +75,7 @@
   },
   "dependencies": {
     "@borkdominik-biguml/big-components": "*",
-    "@borkdominik-biguml/big-vscode-integration": "*",
+    "@borkdominik-biguml/big-vscode": "*",
     "@borkdominik-biguml/uml-glsp-server": "*",
     "@borkdominik-biguml/uml-language-tooling": "*",
     "@borkdominik-biguml/uml-protocol": "*",

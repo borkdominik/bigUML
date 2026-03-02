@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { TYPES, type BIGGLSPVSCodeConnector } from '@borkdominik-biguml/big-vscode-integration/vscode';
+import { TYPES, type BIGGLSPVSCodeConnector } from '@borkdominik-biguml/big-vscode/vscode';
 import { WebviewEndpoint, type GLSPDiagramIdentifier, type GlspVscodeClient } from '@eclipse-glsp/vscode-integration';
 import { inject, injectable, postConstruct } from 'inversify';
 import * as vscode from 'vscode';

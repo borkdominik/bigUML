@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { TYPES, type ActionDispatcher } from '@borkdominik-biguml/big-vscode-integration/vscode';
+import { TYPES, type ActionDispatcher } from '@borkdominik-biguml/big-vscode/vscode';
 import { SetUMLThemeAction, type UMLTheme } from '@borkdominik-biguml/uml-glsp-client';
 import { type GlspVscodeClient } from '@eclipse-glsp/vscode-integration';
 import { inject, injectable, postConstruct } from 'inversify';

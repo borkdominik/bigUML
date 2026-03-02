@@ -56,7 +56,7 @@
     "@borkdominik-biguml/big-minimap": "*",
     "@borkdominik-biguml/big-outline": "*",
     "@borkdominik-biguml/big-property-palette": "*",
-    "@borkdominik-biguml/big-vscode-integration": "*",
+    "@borkdominik-biguml/big-vscode": "*",
     "@borkdominik-biguml/uml-glsp-server": "*",
     "@borkdominik-biguml/uml-protocol": "*",
     "@eclipse-glsp/client": "*",

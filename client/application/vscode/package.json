@@ -335,6 +335,7 @@
     "@borkdominik-biguml/big-outline": "*",
     "@borkdominik-biguml/big-property-palette": "*",
     "@borkdominik-biguml/big-revision-management": "*",
+    "@borkdominik-biguml/big-vscode": "*",
     "@borkdominik-biguml/big-vscode-integration": "*",
     "@borkdominik-biguml/uml-glsp-client": "*",
     "@borkdominik-biguml/uml-glsp-server": "*",

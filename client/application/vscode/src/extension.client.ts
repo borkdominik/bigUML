@@ -8,7 +8,7 @@
  *********************************************************************************/
 import '../css/colors.css';
 
-import { TYPES, type GLSPServer } from '@borkdominik-biguml/big-vscode-integration/vscode';
+import { TYPES, type GLSPServer } from '@borkdominik-biguml/big-vscode/vscode';
 import { type Container } from 'inversify';
 import * as vscode from 'vscode';
 import { createContainer } from './extension.config.js';

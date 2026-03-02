@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { TYPES } from '@borkdominik-biguml/big-vscode-integration/vscode';
+import { TYPES } from '@borkdominik-biguml/big-vscode/vscode';
 import { ContainerModule } from 'inversify';
 import { NewFileCommand } from './new-file/new-file.command.js';
 import { NewFileCreator } from './new-file/new-file.creator.js';

@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-import { BIGReactWebview } from '@borkdominik-biguml/big-vscode-integration/vscode';
+import { BIGReactWebview } from '@borkdominik-biguml/big-vscode/vscode';
 import { inject, injectable, postConstruct } from 'inversify';
 import { HelloWorldActionResponse, RequestHelloWorldAction } from '../common/hello-world.action.js';
 

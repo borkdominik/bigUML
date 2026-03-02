@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { getBundleUri, getUri } from '@borkdominik-biguml/big-vscode-integration/vscode';
+import { getBundleUri, getUri } from '@borkdominik-biguml/big-vscode/vscode';
 import { GLSPIsReadyAction } from '@borkdominik-biguml/uml-glsp-client';
 import { type GlspVscodeClient, type GlspVscodeConnector } from '@eclipse-glsp/vscode-integration';
 import type * as vscode from 'vscode';

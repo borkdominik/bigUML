@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { VscodeAction } from '@borkdominik-biguml/big-vscode-integration';
+import { VscodeAction } from '@borkdominik-biguml/big-vscode';
 import {
     ActionDispatcher,
     GLSPActionDispatcher,

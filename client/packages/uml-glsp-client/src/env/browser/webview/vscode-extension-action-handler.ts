@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
-import { VscodeAction } from '@borkdominik-biguml/big-vscode-integration';
+import { VscodeAction } from '@borkdominik-biguml/big-vscode';
 import { type ICommand } from '@eclipse-glsp/client';
 import type { Action } from '@eclipse-glsp/protocol';
 import { HostExtensionActionHandler } from '@eclipse-glsp/vscode-integration-webview';

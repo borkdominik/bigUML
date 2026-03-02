@@ -14,7 +14,7 @@ import {
     type ActionListener,
     type Disposable,
     type ExperimentalGLSPServerModelState
-} from '@borkdominik-biguml/big-vscode-integration/vscode';
+} from '@borkdominik-biguml/big-vscode/vscode';
 import { getUMLObjectType, UMLEObjectReference, UMLSourceModel } from '@borkdominik-biguml/uml-protocol';
 import { DisposableCollection } from '@eclipse-glsp/protocol';
 import { inject, injectable, postConstruct } from 'inversify';

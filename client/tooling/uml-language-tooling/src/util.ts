@@ -6,59 +6,45 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-import prettier from "prettier";
-import { type LangiumGrammar } from "./types/index.js";
-import { type Type } from "./types/types.js";
+import prettier from 'prettier';
+import { type LangiumGrammar } from './types/index.js';
+import { type Type } from './types/types.js';
 
 export function getReturnTypeFromDefinitions(definitions: Array<Type>): any {
-  if (definitions.every((definition) => definition.type === "simple")) {
-    if (definitions.every((definition) => definition.typeName === "number")) {
-      return "number";
-    } else if (
-      definitions.every((definition) => definition.typeName === "boolean")
-    ) {
-      return "boolean";
+    if (definitions.every(definition => definition.type === 'simple')) {
+        if (definitions.every(definition => definition.typeName === 'number')) {
+            return 'number';
+        } else if (definitions.every(definition => definition.typeName === 'boolean')) {
+            return 'boolean';
+        }
+    } else if (definitions.every(definition => definition.type === 'constant')) {
+        let type = 'string';
+        if (definitions.every(definition => typeof JSON.parse(definition.typeName) === 'number')) {
+            type = 'number';
+        } else if (definitions.every(definition => typeof JSON.parse(definition.typeName) === 'boolean')) {
+            type = 'boolean';
+        }
+        return type;
     }
-  } else if (
-    definitions.every((definition) => definition.type === "constant")
-  ) {
-    let type = "string";
-    if (
-      definitions.every(
-        (definition) => typeof JSON.parse(definition.typeName) === "number"
-      )
-    ) {
-      type = "number";
-    } else if (
-      definitions.every(
-        (definition) => typeof JSON.parse(definition.typeName) === "boolean"
-      )
-    ) {
-      type = "boolean";
-    }
-    return type;
-  }
 }
 
 export function isString(langiumGrammar: LangiumGrammar, _type: Type): any {
-  if (_type.typeName === "string") return true;
-  const typeRule = langiumGrammar.typeRules.find(
-    (ruleElement) => ruleElement.name === _type.typeName
-  );
-  if (typeRule) {
-    return getReturnTypeFromDefinitions(typeRule.definitions) === "string";
-  }
+    if (_type.typeName === 'string') return true;
+    const typeRule = langiumGrammar.typeRules.find(ruleElement => ruleElement.name === _type.typeName);
+    if (typeRule) {
+        return getReturnTypeFromDefinitions(typeRule.definitions) === 'string';
+    }
 }
 
 export async function format(content: string): Promise<string> {
-  try {
-    const config = await prettier.resolveConfig(process.cwd());
-    return await prettier.format(content, {
-      ...config,
-      parser: "typescript",
-    });
-  } catch {
-    console.warn("Prettier formatting failed. Writing raw output.");
-    return content;
-  }
+    try {
+        const config = await prettier.resolveConfig(process.cwd());
+        return await prettier.format(content, {
+            ...config,
+            parser: 'typescript'
+        });
+    } catch {
+        console.warn('Prettier formatting failed. Writing raw output.');
+        return content;
+    }
 }

@@ -7,47 +7,36 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
+import { representationTypeId } from '@borkdominik-biguml/uml-glsp-server';
 import { UMLDiagramType } from '@borkdominik-biguml/uml-protocol';
 import { DefaultTypes } from '@eclipse-glsp/client';
-import { QualifiedUtil } from '../../qualified.utils.js';
+
 export namespace UMLSequenceTypes {
-    export const INTERACTION = QualifiedUtil.representationTypeId(UMLDiagramType.SEQUENCE, DefaultTypes.NODE, 'Interaction');
-    export const LIFELINE = QualifiedUtil.representationTypeId(UMLDiagramType.SEQUENCE, DefaultTypes.NODE, 'Lifeline');
-    export const MESSAGE_OCCURRENCE = QualifiedUtil.representationTypeId(
-        UMLDiagramType.SEQUENCE,
-        DefaultTypes.NODE,
-        'MessageOccurrenceSpecification'
-    );
+    export const INTERACTION = representationTypeId(UMLDiagramType.SEQUENCE, DefaultTypes.NODE, 'Interaction');
+    export const LIFELINE = representationTypeId(UMLDiagramType.SEQUENCE, DefaultTypes.NODE, 'Lifeline');
+    export const MESSAGE_OCCURRENCE = representationTypeId(UMLDiagramType.SEQUENCE, DefaultTypes.NODE, 'MessageOccurrenceSpecification');
 
-    export const MESSAGE_ANCHOR = QualifiedUtil.representationTypeId(UMLDiagramType.SEQUENCE, DefaultTypes.NODE, 'MessageAnchor');
+    export const MESSAGE_ANCHOR = representationTypeId(UMLDiagramType.SEQUENCE, DefaultTypes.NODE, 'MessageAnchor');
 
-    export const EXECUTION_OCCURRENCE = QualifiedUtil.representationTypeId(
+    export const EXECUTION_OCCURRENCE = representationTypeId(
         UMLDiagramType.SEQUENCE,
         DefaultTypes.NODE,
         'ExecutionOccurrenceSpecification'
     );
 
-    export const DESTRUCTION_OCCURRENCE = QualifiedUtil.representationTypeId(
+    export const DESTRUCTION_OCCURRENCE = representationTypeId(
         UMLDiagramType.SEQUENCE,
         DefaultTypes.NODE,
         'DestructionOccurrenceSpecification'
     );
 
-    export const BEHAVIOR_EXECUTION = QualifiedUtil.representationTypeId(
-        UMLDiagramType.SEQUENCE,
-        DefaultTypes.NODE,
-        'BehaviorExecutionSpecification'
-    );
-    export const MESSAGE = QualifiedUtil.representationTypeId(UMLDiagramType.SEQUENCE, DefaultTypes.EDGE, 'Message');
+    export const BEHAVIOR_EXECUTION = representationTypeId(UMLDiagramType.SEQUENCE, DefaultTypes.NODE, 'BehaviorExecutionSpecification');
+    export const MESSAGE = representationTypeId(UMLDiagramType.SEQUENCE, DefaultTypes.EDGE, 'Message');
 
-    export const COMBINED_FRAGMENT = QualifiedUtil.representationTypeId(UMLDiagramType.SEQUENCE, DefaultTypes.NODE, 'CombinedFragment');
+    export const COMBINED_FRAGMENT = representationTypeId(UMLDiagramType.SEQUENCE, DefaultTypes.NODE, 'CombinedFragment');
 
-    export const INTERACTION_USE = QualifiedUtil.representationTypeId(UMLDiagramType.SEQUENCE, DefaultTypes.NODE, 'InteractionUse');
+    export const INTERACTION_USE = representationTypeId(UMLDiagramType.SEQUENCE, DefaultTypes.NODE, 'InteractionUse');
 
-    export const INTERACTIO_OPERAND = QualifiedUtil.representationTypeId(
-        UMLDiagramType.SEQUENCE,
-        DefaultTypes.COMPARTMENT,
-        'InteractionOperand'
-    );
+    export const INTERACTIO_OPERAND = representationTypeId(UMLDiagramType.SEQUENCE, DefaultTypes.COMPARTMENT, 'InteractionOperand');
     // export const MESSAGE_LABEL_ARROW_EDGE_NAME = `${DefaultTypes.LABEL}:message-arrow-edge-name`;
 }

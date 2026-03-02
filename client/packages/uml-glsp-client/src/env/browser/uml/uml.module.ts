@@ -6,9 +6,9 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
+import { CommonModelTypes } from '@borkdominik-biguml/uml-glsp-server';
 import { configureModelElement, FeatureModule, GCompartmentView, GLabel, GLabelView } from '@eclipse-glsp/client';
 import { GUMLCompartment } from '../views/uml-compartment.js';
-import { UMLGModelTypes } from './uml.types.js';
 import { GCompartmentContainer } from './views/uml-compartment.js';
 import { GDivider, GDividerView } from './views/uml-divider.view.js';
 import { GIconCSS, GIconCSSView } from './views/uml-icon.view.js';
@@ -17,12 +17,12 @@ import { GEditableLabel, GEditableLabelView } from './views/uml-label.view.js';
 export const umlModule = new FeatureModule((bind, unbind, isBound, rebind) => {
     const context = { bind, unbind, isBound, rebind };
 
-    configureModelElement(context, UMLGModelTypes.LABEL_NAME, GEditableLabel, GEditableLabelView);
-    configureModelElement(context, UMLGModelTypes.LABEL_EDGE_NAME, GEditableLabel, GEditableLabelView);
-    configureModelElement(context, UMLGModelTypes.LABEL_TEXT, GLabel, GLabelView);
-    configureModelElement(context, UMLGModelTypes.ICON_CSS, GIconCSS, GIconCSSView);
-    configureModelElement(context, UMLGModelTypes.DIVIDER, GDivider, GDividerView);
-    configureModelElement(context, UMLGModelTypes.COMPARTMENT_HEADER, GUMLCompartment, GCompartmentView);
-    configureModelElement(context, UMLGModelTypes.COMPARTMENT_ROOT_COMPONENT, GUMLCompartment, GCompartmentView);
-    configureModelElement(context, UMLGModelTypes.COMPARTMENT_CONTAINER, GCompartmentContainer, GCompartmentView);
+    configureModelElement(context, CommonModelTypes.LABEL_NAME, GEditableLabel, GEditableLabelView);
+    configureModelElement(context, CommonModelTypes.LABEL_EDGE_NAME, GEditableLabel, GEditableLabelView);
+    configureModelElement(context, CommonModelTypes.LABEL_TEXT, GLabel, GLabelView);
+    configureModelElement(context, CommonModelTypes.ICON_CSS, GIconCSS, GIconCSSView);
+    configureModelElement(context, CommonModelTypes.DIVIDER, GDivider, GDividerView);
+    configureModelElement(context, CommonModelTypes.COMP_HEADER, GUMLCompartment, GCompartmentView);
+    configureModelElement(context, CommonModelTypes.COMP_ROOT_COMPONENT, GUMLCompartment, GCompartmentView);
+    configureModelElement(context, CommonModelTypes.COMP_CONTAINER, GCompartmentContainer, GCompartmentView);
 });

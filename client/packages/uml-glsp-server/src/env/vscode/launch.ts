@@ -7,7 +7,7 @@ import { configureELKLayoutModule } from '@eclipse-glsp/layout-elk';
 import { LogLevel, LoggerFactory, type MaybePromise } from '@eclipse-glsp/server';
 import { SocketServerLauncher, createAppModule, defaultLaunchOptions } from '@eclipse-glsp/server/node.js';
 import { Container, ContainerModule } from 'inversify';
-import { ClassDiagramModule } from './diagrams/class/class-diagram-module.js';
+import { ClassDiagramModule } from './diagram/class/class-diagram-module.js';
 import { FeatureDiagramModule } from './features/index.js';
 import { LayeredLayoutConfigurator } from './features/layout/layered-layout-configurator.js';
 import { UmlServerModule } from './module.js';

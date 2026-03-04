@@ -1,5 +1,5 @@
 /*********************************************************************************
- * Copyright (c) 2023 borkdominik and others.
+ * Copyright (c) 2025 borkdominik and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the MIT License which is available at https://opensource.org/licenses/MIT.
@@ -9,14 +9,12 @@
 
 import { TYPES } from '@borkdominik-biguml/big-vscode/vscode';
 import { ContainerModule } from 'inversify';
-import { OutlineTreeProvider, OutlineViewId } from './outline-tree.provider.js';
+import { AdvancedSearchProvider, AdvancedSearchViewId } from './advancedsearch.provider.js';
 
-export function outlineModule(viewId: string) {
+export function advancedSearchModule(viewId: string) {
     return new ContainerModule(bind => {
-        bind(OutlineViewId).toConstantValue(viewId);
-        bind(OutlineTreeProvider).toSelf().inSingletonScope();
-        bind(TYPES.Outline).to(OutlineTreeProvider);
-        bind(TYPES.Disposable).toService(OutlineTreeProvider);
-        bind(TYPES.RootInitialization).toService(OutlineTreeProvider);
+        bind(AdvancedSearchViewId).toConstantValue(viewId);
+        bind(AdvancedSearchProvider).toSelf().inSingletonScope();
+        bind(TYPES.RootInitialization).toService(AdvancedSearchProvider);
     });
 }

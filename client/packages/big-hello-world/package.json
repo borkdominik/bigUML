@@ -34,6 +34,10 @@
       "types": "./build/env/glsp-client/index.d.ts",
       "default": "./build/env/glsp-client/index.js"
     },
+    "./glsp-server": {
+      "types": "./build/env/glsp-server/index.d.ts",
+      "default": "./build/env/glsp-server/index.js"
+    },
     "./vscode": {
       "types": "./build/env/vscode/index.d.ts",
       "default": "./build/env/vscode/index.js"
@@ -56,9 +60,11 @@
   "dependencies": {
     "@borkdominik-biguml/big-components": "*",
     "@borkdominik-biguml/big-vscode": "*",
+    "@borkdominik-biguml/uml-glsp-server": "*",
     "@borkdominik-biguml/uml-protocol": "*",
     "@eclipse-glsp/client": "*",
     "@eclipse-glsp/protocol": "*",
+    "@eclipse-glsp/server": "*",
     "@eclipse-glsp/vscode-integration-webview": "*",
     "vscode-messenger-common": "^0.4.5"
   },

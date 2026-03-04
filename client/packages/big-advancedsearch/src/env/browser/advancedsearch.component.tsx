@@ -7,8 +7,7 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
-import { VSCodeContext } from '@borkdominik-biguml/big-components';
-import { VSCodeTag, VSCodeTextField } from '@vscode/webview-ui-toolkit/react/index.js';
+import { BBadge, BTextfield, VSCodeContext } from '@borkdominik-biguml/big-components';
 import { useContext, useEffect, useState, type ReactElement } from 'react';
 
 import { AdvancedSearchActionResponse, RequestAdvancedSearchAction } from '../common/advancedsearch.action.js';
@@ -52,14 +51,14 @@ export function AdvancedSearch(): ReactElement {
     return (
         <div className='advanced-search'>
             <div className='advanced-search__controls'>
-                <VSCodeTextField
+                <BTextfield
                     className='advanced-search__text'
                     value={query}
                     placeholder='e.g. Class:Lecture'
                     onInput={e => fireSearch((e.target as HTMLInputElement).value)}
                 >
                     <span slot='end' className='codicon codicon-search' />
-                </VSCodeTextField>
+                </BTextfield>
             </div>
 
             <div>
@@ -68,7 +67,7 @@ export function AdvancedSearch(): ReactElement {
                         {results.map((item, idx) => (
                             <li key={idx} className='result-item' onClick={() => highlight((item as any).semanticUri ?? item.id)}>
                                 <div className='result-item__header'>
-                                    <VSCodeTag className='result-item__tag'>{item.type}</VSCodeTag>
+                                    <BBadge className='result-item__tag'>{item.type}</BBadge>
                                     <span className='result-item__name'>{item.name}</span>
                                 </div>
                                 {item.details && <div className='result-item__details'>{item.details}</div>}

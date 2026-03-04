@@ -8,7 +8,7 @@
  *********************************************************************************/
 import { CircularNode, DiamondNode } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
-import { NamedElement, NamedElementView } from '../index.js';
+import { NamedElement, NamedElementView } from '../named-element/index.js';
 import { AcceptEventActionView } from './actions/accept_event_action_view.js';
 import { SendSignalActionView } from './actions/send_signal_action_view.js';
 import { ActivityFinalNodeView } from './control-nodes/activity_final_node_view.js';

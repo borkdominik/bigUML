@@ -11,9 +11,9 @@ import 'reflect-metadata';
 
 import { VSCodeConnector } from '@borkdominik-biguml/big-components';
 import { createRoot } from 'react-dom/client';
-import { RevisionManagement } from '../browser/revision-management.component.js';
+import { RevisionManagement } from '../revision-management.component.js';
 
-import '../../styles/index.css';
+import '../../../../styles/index.css';
 
 const element = document.getElementById('root');
 if (!element) {

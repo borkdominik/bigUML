@@ -14,7 +14,7 @@ const runner = new ESBuildRunner({
     ...reactConfig,
     outdir: 'dist',
     entryNames: 'bundle',
-    entryPoints: ['./src/web/index.tsx'],
+    entryPoints: ['./src/env/browser/webview/revision-management.webview.tsx'],
     tsconfig: './tsconfig.json',
     plugins: [
         copy({

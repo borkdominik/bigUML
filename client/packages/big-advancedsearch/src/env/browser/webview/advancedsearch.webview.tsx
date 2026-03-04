@@ -10,10 +10,9 @@ import { VSCodeConnector } from '@borkdominik-biguml/big-components';
 
 import { createRoot } from 'react-dom/client';
 import 'reflect-metadata';
-import { AdvancedSearch } from '../browser/advancedsearch.component.js';
+import { AdvancedSearch } from '../advancedsearch.component.js';
 
-import '@vscode/webview-ui-toolkit';
-import '../../styles/index.css';
+import '../../../../styles/index.css';
 
 const element = document.getElementById('root');
 if (!element) {

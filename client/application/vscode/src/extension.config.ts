@@ -8,10 +8,10 @@
  *********************************************************************************/
 import { advancedSearchModule } from '@borkdominik-biguml/big-advancedsearch/vscode';
 import { helloWorldModule } from '@borkdominik-biguml/big-hello-world/vscode';
-import { revisionManagementModule } from '@borkdominik-biguml/big-revision-management/vscode'
 import { minimapModule } from '@borkdominik-biguml/big-minimap/vscode';
 import { outlineModule } from '@borkdominik-biguml/big-outline/vscode';
 import { propertyPaletteModule } from '@borkdominik-biguml/big-property-palette/vscode';
+import { revisionManagementModule } from '@borkdominik-biguml/big-revision-management/vscode';
 import { createVSCodeCommonContainer, TYPES, type GLSPDiagramSettings, type GLSPServerConfig } from '@borkdominik-biguml/big-vscode/vscode';
 import { editorModule, themeModule } from '@borkdominik-biguml/uml-glsp-client/vscode';
 import { type Container } from 'inversify';

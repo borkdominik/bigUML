@@ -30,12 +30,12 @@ import {
 } from '@eclipse-glsp/server';
 import { inject, injectable, postConstruct } from 'inversify';
 import { findRootNode, streamReferences } from 'langium';
-import { ClassDiagramModelState } from './class-diagram-model-state.js';
+import { DiagramModelState } from './diagram-model-state.js';
 
 @injectable()
-export class ClassDiagramModelStorage implements SourceModelStorage, ClientSessionListener {
+export class DiagramModelStorage implements SourceModelStorage, ClientSessionListener {
     @inject(Logger) protected logger: Logger;
-    @inject(ClassDiagramModelState) protected state: ClassDiagramModelState;
+    @inject(DiagramModelState) protected state: DiagramModelState;
     @inject(ClientSessionManager) protected sessionManager: ClientSessionManager;
     @inject(ActionDispatcher) protected actionDispatcher: ActionDispatcher;
 

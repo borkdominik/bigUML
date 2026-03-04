@@ -8,10 +8,10 @@
  **********************************************************************************/
 
 import { ContainerModule } from 'inversify';
-import { EXPERIMENTAL_TYPES, TYPES } from '../../../vscode-common.types.js';
-import { ExperimentalGLSPServerModelState } from './exp-server-model-state.js';
+import { TYPES } from '../../vscode-common.types.js';
+import { GLSPServerModelState } from './server-model-state.js';
 
 export const experimentalServerModule = new ContainerModule(bind => {
-    bind(EXPERIMENTAL_TYPES.GLSPServerModelState).to(ExperimentalGLSPServerModelState).inSingletonScope();
-    bind(TYPES.RootInitialization).toService(EXPERIMENTAL_TYPES.GLSPServerModelState);
+    bind(TYPES.GLSPServerModelState).to(GLSPServerModelState).inSingletonScope();
+    bind(TYPES.RootInitialization).toService(TYPES.GLSPServerModelState);
 });

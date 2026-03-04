@@ -13,7 +13,7 @@ import { type GModelElement, type GModelElementSchema, DefaultGModelSerializer }
 import { injectable } from 'inversify';
 
 @injectable()
-export class ClassDiagramGModelSerializer extends DefaultGModelSerializer {
+export class DiagramGModelSerializer extends DefaultGModelSerializer {
     override createSchema(element: GModelElement): GModelElementSchema {
         const schema: Record<string, any> = {};
 

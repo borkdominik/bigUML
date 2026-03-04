@@ -7,3 +7,4 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
+export * from './class-diagram-gmodel-factory.js';

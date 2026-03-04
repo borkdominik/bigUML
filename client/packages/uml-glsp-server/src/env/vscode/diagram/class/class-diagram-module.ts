@@ -14,16 +14,12 @@ import {
     type ContextEditValidator,
     type DiagramConfiguration,
     type GModelFactory,
-    type GModelIndex,
-    type GModelSerializer,
     type InstanceMultiBinding,
     type LabelEditValidator,
-    type ModelState,
     type ModelValidator,
     type MultiBinding,
     type OperationHandlerConstructor,
     type PopupModelFactory,
-    type SourceModelStorage,
     type ToolPaletteItemProvider
 } from '@eclipse-glsp/server';
 import { injectable, type interfaces } from 'inversify';
@@ -40,10 +36,6 @@ import { DiagramLanguageMetadata } from '../../features/model/diagram-language-m
 import { BigDiagramModule } from '../../features/module/module.js';
 import { ClassDiagramConfiguration } from './class-diagram-configuration.js';
 import { ClassDiagramGModelFactory } from './model/class-diagram-gmodel-factory.js';
-import { ClassDiagramGModelSerializer } from './model/class-diagram-gmodel-serializer.js';
-import { ClassDiagramModelIndex } from './model/class-diagram-model-index.js';
-import { ClassDiagramModelState } from './model/class-diagram-model-state.js';
-import { ClassDiagramModelStorage } from './model/class-diagram-model-storage.js';
 
 @injectable()
 export class ClassDiagramModule extends BigDiagramModule {
@@ -63,21 +55,8 @@ export class ClassDiagramModule extends BigDiagramModule {
         return ClassDiagramConfiguration;
     }
 
-    protected bindSourceModelStorage(): BindingTarget<SourceModelStorage> {
-        return ClassDiagramModelStorage;
-    }
-
-    protected bindModelState(): BindingTarget<ModelState> {
-        this.context.bind(ClassDiagramModelState).toSelf().inSingletonScope();
-        return { service: ClassDiagramModelState };
-    }
-
     protected bindGModelFactory(): BindingTarget<GModelFactory> {
         return ClassDiagramGModelFactory;
-    }
-
-    protected override bindGModelSerializer(): BindingTarget<GModelSerializer> {
-        return ClassDiagramGModelSerializer;
     }
 
     protected override configureOperationHandlers(binding: InstanceMultiBinding<OperationHandlerConstructor>): void {
@@ -88,11 +67,6 @@ export class ClassDiagramModule extends BigDiagramModule {
         binding.add(GenericLabelEditOperationHandler);
         binding.add(GenericUpdateOperationHandler);
         binding.add(GenericDeleteOperationHandler);
-    }
-
-    protected override bindGModelIndex(): BindingTarget<GModelIndex> {
-        this.context.bind(ClassDiagramModelIndex).toSelf().inSingletonScope();
-        return { service: ClassDiagramModelIndex };
     }
 
     protected override bindToolPaletteItemProvider(): BindingTarget<ToolPaletteItemProvider> {

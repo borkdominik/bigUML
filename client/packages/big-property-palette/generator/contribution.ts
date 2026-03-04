@@ -216,7 +216,7 @@ export function renderRequestHandlers(extensionPath: string, declarations: Langi
         const shortKey = fullKey.replace(/Diagram$/, '');
         const fileName = `request-${lcFirst(shortKey)}-property-palette-action-handler.ts`;
         const className = `Request${shortKey}PropertyPaletteActionHandler`;
-        const modelStateClass = `${shortKey}DiagramModelState`;
+        const modelStateClass = `DiagramModelState`;
         const modelStateImportPath = `@borkdominik-biguml/uml-glsp-server/vscode`;
 
         const members = alias.properties?.[0]?.types.map(t => t.typeName).filter(Boolean) as string[];

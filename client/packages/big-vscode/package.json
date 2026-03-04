@@ -49,6 +49,7 @@
     "watch": "npm run compile -- --watch"
   },
   "dependencies": {
+    "@borkdominik-biguml/uml-glsp-server": "*",
     "@borkdominik-biguml/uml-protocol": "*",
     "@eclipse-glsp/vscode-integration": "*",
     "@eclipse-glsp/vscode-integration-webview": "*",

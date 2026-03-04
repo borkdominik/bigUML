@@ -11,12 +11,12 @@ import { validateNode } from '@borkdominik-biguml/uml-model-server/validation';
 import { MarkerKind, ModelState, type GModelElement, type Marker, type ModelValidator } from '@eclipse-glsp/server';
 import { inject, injectable } from 'inversify';
 import { streamAst } from 'langium';
-import type { UmlDiagramModelState } from '../model/diagram-model-state.js';
+import type { DiagramModelState } from '../model/diagram-model-state.js';
 
 @injectable()
 export class GenericDiagramModelValidator implements ModelValidator {
     @inject(ModelState)
-    protected readonly modelState: UmlDiagramModelState;
+    protected readonly modelState: DiagramModelState;
 
     validate(_elements: GModelElement[]): Marker[] {
         const markers: Marker[] = [];

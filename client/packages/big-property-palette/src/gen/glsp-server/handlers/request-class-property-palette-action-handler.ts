@@ -11,14 +11,14 @@ import { RequestPropertyPaletteAction, SetPropertyPaletteAction } from '@borkdom
 import { type ActionHandler, type MaybePromise } from '@eclipse-glsp/server';
 import { inject, injectable } from 'inversify';
 import {} from '@borkdominik-biguml/uml-model-server/grammar';
-import { ClassDiagramModelState } from '@borkdominik-biguml/uml-glsp-server/vscode';
+import { DiagramModelState } from '@borkdominik-biguml/uml-glsp-server/vscode';
 
 @injectable()
 export class RequestClassPropertyPaletteActionHandler implements ActionHandler {
     actionKinds = [RequestPropertyPaletteAction.KIND];
 
-    @inject(ClassDiagramModelState)
-    protected modelState!: ClassDiagramModelState;
+    @inject(DiagramModelState)
+    protected modelState!: DiagramModelState;
 
     execute(action: RequestPropertyPaletteAction): MaybePromise<any[]> {
         try {

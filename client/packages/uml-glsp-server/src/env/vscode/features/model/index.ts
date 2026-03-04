@@ -8,3 +8,4 @@
  **********************************************************************************/
 export * from './diagram-language-metadata.js';
 export * from './diagram-model-state.js';
+export * from './request-semantic-model-action-handler.js';

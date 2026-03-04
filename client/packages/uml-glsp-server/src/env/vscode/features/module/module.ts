@@ -8,10 +8,20 @@
  **********************************************************************************/
 import {
     type ActionHandlerConstructor,
+    type BindingTarget,
     DiagramModule,
+    type GModelIndex,
+    type GModelSerializer,
     type InstanceMultiBinding,
-    type OperationHandlerConstructor
+    type ModelState,
+    type OperationHandlerConstructor,
+    type SourceModelStorage
 } from '@eclipse-glsp/server';
+import { DiagramGModelSerializer } from '../model/diagram-gmodel-serializer.js';
+import { DiagramModelIndex } from '../model/diagram-model-index.js';
+import { DiagramModelState } from '../model/diagram-model-state.js';
+import { DiagramModelStorage } from '../model/diagram-model-storage.js';
+import { RequestSemanticModelActionHandler } from '../model/index.js';
 
 export class FeatureDiagramModule {
     configureOperationHandlers?(binding: InstanceMultiBinding<OperationHandlerConstructor>): void;
@@ -25,6 +35,24 @@ export abstract class BigDiagramModule extends DiagramModule {
         this.featureDiagramModules.push(module);
     }
 
+    protected bindSourceModelStorage(): BindingTarget<SourceModelStorage> {
+        return DiagramModelStorage;
+    }
+
+    protected bindModelState(): BindingTarget<ModelState> {
+        this.context.bind(DiagramModelState).toSelf().inSingletonScope();
+        return { service: DiagramModelState };
+    }
+
+    protected override bindGModelSerializer(): BindingTarget<GModelSerializer> {
+        return DiagramGModelSerializer;
+    }
+
+    protected override bindGModelIndex(): BindingTarget<GModelIndex> {
+        this.context.bind(DiagramModelIndex).toSelf().inSingletonScope();
+        return { service: DiagramModelIndex };
+    }
+
     protected override configureOperationHandlers(binding: InstanceMultiBinding<OperationHandlerConstructor>): void {
         super.configureOperationHandlers(binding);
 
@@ -35,6 +63,7 @@ export abstract class BigDiagramModule extends DiagramModule {
 
     protected override configureActionHandlers(binding: InstanceMultiBinding<ActionHandlerConstructor>): void {
         super.configureActionHandlers(binding);
+        binding.add(RequestSemanticModelActionHandler);
 
         for (const module of this.featureDiagramModules) {
             module.configureActionHandlers?.(binding);

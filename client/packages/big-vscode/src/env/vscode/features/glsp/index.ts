@@ -7,6 +7,6 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
-export * from './experimental/exp-server-model-state.js';
-export * from './experimental/exp-server.module.js';
+export * from './server-model-state.js';
+export * from './server.module.js';
 export * from './settings.js';

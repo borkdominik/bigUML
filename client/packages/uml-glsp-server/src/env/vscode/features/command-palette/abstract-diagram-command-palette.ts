@@ -19,13 +19,13 @@ import {
     Point
 } from '@eclipse-glsp/server';
 import { injectable } from 'inversify';
-import { type UmlDiagramModelState } from '../model/diagram-model-state.js';
+import { type DiagramModelState } from '../model/diagram-model-state.js';
 
 // TODO: Haydar Use metadata
 @injectable()
 export abstract class AbstractDiagramCommandPaletteActionProvider<
     NodeT extends GNode,
-    StateT extends UmlDiagramModelState
+    StateT extends DiagramModelState
 > extends CommandPaletteActionProvider {
     abstract override readonly modelState: StateT;
 

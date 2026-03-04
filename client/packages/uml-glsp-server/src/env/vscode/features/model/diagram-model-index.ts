@@ -51,7 +51,7 @@ type JSONArray = JSONValue[];
  * Custom model index that not only indexes the GModel elements but also the semantic elements (AstNodes) they represent.
  */
 @injectable()
-export class ClassDiagramModelIndex extends GModelIndex {
+export class DiagramModelIndex extends GModelIndex {
     @inject(UmlDiagramLSPServices) services: UmlDiagramLSPServices;
 
     protected idToSemanticNode = new Map<string, AstNode>();

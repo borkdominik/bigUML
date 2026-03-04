@@ -11,14 +11,14 @@ import { RequestOutlineAction, SetOutlineAction } from '@borkdominik-biguml/big-
 import { ActionHandler, MaybePromise } from '@eclipse-glsp/server';
 import { inject, injectable } from 'inversify';
 import {} from '@borkdominik-biguml/uml-model-server/grammar';
-import { ClassDiagramModelState } from '@borkdominik-biguml/uml-glsp-server/vscode';
+import { DiagramModelState } from '@borkdominik-biguml/uml-glsp-server/vscode';
 
 @injectable()
 export class RequestClassOutlineActionHandler implements ActionHandler {
     actionKinds = [RequestOutlineAction.KIND];
 
-    @inject(ClassDiagramModelState)
-    protected modelState!: ClassDiagramModelState;
+    @inject(DiagramModelState)
+    protected modelState!: DiagramModelState;
 
     execute(_action: RequestOutlineAction): MaybePromise<any[]> {
         // only ClassDiagram outlines

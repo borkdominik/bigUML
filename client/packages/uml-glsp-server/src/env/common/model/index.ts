@@ -8,3 +8,4 @@
  **********************************************************************************/
 export * from './common-model-types.js';
 export * from './model-type-utils.js';
+export * from './model.action.js';

@@ -18,12 +18,12 @@ import {
     type WebviewViewProvider,
     type WebviewViewResolveContext
 } from 'vscode';
-import { EXPERIMENTAL_TYPES, TYPES } from '../../vscode-common.types.js';
+import { TYPES } from '../../vscode-common.types.js';
 import type { ActionDispatcher } from '../action/action-dispatcher.js';
 import type { ActionListener } from '../action/action-listener.js';
 import type { ConnectionManager } from '../connector/connection-manager.js';
 import type { SelectionService } from '../connector/selection-service.js';
-import type { ExperimentalGLSPServerModelState } from '../glsp/experimental/exp-server-model-state.js';
+import type { GLSPServerModelState } from '../glsp/server-model-state.js';
 import { type WebviewViewConnector } from './glsp-webview.connector.js';
 
 /**
@@ -48,8 +48,8 @@ export abstract class BIGWebviewProvider implements WebviewViewProvider, Disposa
     protected readonly extensionContext: ExtensionContext;
     @inject(TYPES.WebviewViewConnector)
     protected readonly webviewConnector: WebviewViewConnector;
-    @inject(EXPERIMENTAL_TYPES.GLSPServerModelState)
-    protected readonly modelState: ExperimentalGLSPServerModelState;
+    @inject(TYPES.GLSPServerModelState)
+    protected readonly modelState: GLSPServerModelState;
 
     protected readonly toDispose = new DisposableCollection();
     protected webviewView?: WebviewView;

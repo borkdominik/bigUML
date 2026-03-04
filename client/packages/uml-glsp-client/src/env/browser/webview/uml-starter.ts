@@ -12,7 +12,7 @@ import { helloWorldModule } from '@borkdominik-biguml/big-hello-world/glsp-clien
 import { minimapModule } from '@borkdominik-biguml/big-minimap/glsp-client';
 import { outlineModule } from '@borkdominik-biguml/big-outline/glsp-client';
 import { propertyPaletteModule } from '@borkdominik-biguml/big-property-palette/glsp-client';
-import { ModelResourcesResponseAction } from '@borkdominik-biguml/uml-protocol';
+import { SemanticModelResponseAction } from '@borkdominik-biguml/uml-glsp-server';
 import {
     type ContainerConfiguration,
     type IActionDispatcher,
@@ -58,7 +58,7 @@ class UMLStarter extends GLSPStarter {
         container.rebind(HostExtensionActionHandler).to(UMLHostExtensionActionHandler).inSingletonScope();
 
         container.bind(ExtensionActionKind).toConstantValue(GLSPIsReadyAction.KIND);
-        container.bind(ExtensionActionKind).toConstantValue(ModelResourcesResponseAction.KIND);
+        container.bind(ExtensionActionKind).toConstantValue(SemanticModelResponseAction.KIND);
         bindAsService(container, TYPES.IDiagramStartup, GLSPReadyStartup);
     }
 }

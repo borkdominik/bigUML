@@ -14,12 +14,11 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 import {
-    EXPERIMENTAL_TYPES,
     TYPES,
     type ActionDispatcher,
     type ActionListener,
     type ConnectionManager,
-    type ExperimentalGLSPServerModelState,
+    type GLSPServerModelState,
     type SelectionService
 } from '@borkdominik-biguml/big-vscode/vscode';
 import { SelectAllAction } from '@eclipse-glsp/protocol';
@@ -43,8 +42,8 @@ export class OutlineTreeProvider implements vscode.TreeDataProvider<OutlineTreeN
     protected readonly connectionManager: ConnectionManager;
     @inject(TYPES.SelectionService)
     protected readonly selectionService: SelectionService;
-    @inject(EXPERIMENTAL_TYPES.GLSPServerModelState)
-    protected readonly modelState: ExperimentalGLSPServerModelState;
+    @inject(TYPES.GLSPServerModelState)
+    protected readonly modelState: GLSPServerModelState;
 
     protected readonly iconMap = new Map<string, vscode.ThemeIcon>([
         ['model', vscode.ThemeIcon.Folder],

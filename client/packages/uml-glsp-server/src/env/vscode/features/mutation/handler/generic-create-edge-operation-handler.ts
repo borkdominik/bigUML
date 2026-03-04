@@ -20,13 +20,13 @@ import {
 import { inject, injectable } from 'inversify';
 import { ModelPatchCommand } from '../../command/model-patch-command.js';
 import { DiagramLanguageMetadata } from '../../model/diagram-language-metadata.js';
-import { type UmlDiagramModelState } from '../../model/diagram-model-state.js';
+import { type DiagramModelState } from '../../model/diagram-model-state.js';
 
 @injectable()
 export class GenericCreateEdgeOperationHandler extends OperationHandler implements CreateEdgeOperationHandler {
     readonly operationType = CreateEdgeOperation.KIND;
 
-    declare readonly modelState: UmlDiagramModelState;
+    declare readonly modelState: DiagramModelState;
 
     @inject(DiagramLanguageMetadata)
     protected readonly metadata: DiagramLanguageMetadata;

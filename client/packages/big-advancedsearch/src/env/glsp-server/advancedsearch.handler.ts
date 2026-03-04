@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
-import type { UmlDiagramModelState } from '@borkdominik-biguml/uml-glsp-server/vscode';
+import type { DiagramModelState } from '@borkdominik-biguml/uml-glsp-server/vscode';
 import { SelectAction, SelectAllAction } from '@eclipse-glsp/protocol';
 import { ModelState, type ActionHandler, type MaybePromise } from '@eclipse-glsp/server';
 import { inject, injectable } from 'inversify';
@@ -28,7 +28,7 @@ export class AdvancedSearchActionHandler implements ActionHandler {
     actionKinds = [RequestAdvancedSearchAction.KIND, RequestHighlightElementAction.KIND];
 
     @inject(ModelState)
-    readonly modelState: UmlDiagramModelState;
+    readonly modelState: DiagramModelState;
 
     private readonly matchers: IMatcher[] = [
         new ClassDiagramMatcher(),

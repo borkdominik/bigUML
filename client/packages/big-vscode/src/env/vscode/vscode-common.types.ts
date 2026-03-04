@@ -25,6 +25,7 @@ export const TYPES = {
     // GLSP
     GLSPDiagramSettings: Symbol('GLSPDiagramSettings'),
     GLSPVSCodeConnector: Symbol('GLSPVSCodeConnector'),
+    GLSPServerModelState: Symbol('GLSPServerModelState'),
     ConnectionManager: Symbol('ConnectionManager'),
     SelectionService: Symbol('SelectionService'),
     WebviewViewConnector: Symbol('WebviewViewConnector'),
@@ -41,8 +42,4 @@ export const TYPES = {
     ServerLauncher: Symbol('ServerLauncher'),
     ServerManager: Symbol('ServerManager'),
     ServerManagerStateListener: Symbol('ServerManagerStateListener')
-};
-
-export const EXPERIMENTAL_TYPES = {
-    GLSPServerModelState: Symbol('GLSPServerModelState')
 };

@@ -39,16 +39,16 @@ import { GPrimitiveTypeNodeElement } from '../../../elements/primitive-type.elem
 import { GPropertyNodeElement } from '../../../elements/property.element.js';
 import { SectionCompartment } from '../../../elements/shared-components.js';
 import { GSlotNodeElement } from '../../../elements/slot.element.js';
-import { ClassDiagramModelIndex } from './class-diagram-model-index.js';
-import { ClassDiagramModelState } from './class-diagram-model-state.js';
+import { DiagramModelState } from '../../../features/index.js';
+import { DiagramModelIndex } from '../../../features/model/diagram-model-index.js';
 
 @injectable()
 export class ClassDiagramGModelFactory implements GModelFactory {
-    @inject(ClassDiagramModelState)
-    protected readonly modelState: ClassDiagramModelState;
+    @inject(DiagramModelState)
+    protected readonly modelState: DiagramModelState;
 
-    @inject(ClassDiagramModelIndex)
-    protected readonly modelIndex: ClassDiagramModelIndex;
+    @inject(DiagramModelIndex)
+    protected readonly modelIndex: DiagramModelIndex;
 
     createModel(): void {
         const newRoot = this.createGraph();

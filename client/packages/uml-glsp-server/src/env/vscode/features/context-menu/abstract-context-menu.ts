@@ -9,7 +9,7 @@
 import { type Args, ContextMenuItemProvider, CreateNodeOperation, type MenuItem, type Point } from '@eclipse-glsp/server';
 import { injectable } from 'inversify';
 import { GridSnapper } from '../../features/grid/grid-snapper.js';
-import { type UmlDiagramModelState } from '../model/diagram-model-state.js';
+import { type DiagramModelState } from '../model/diagram-model-state.js';
 
 export interface CreateNodeDescriptor {
     id: string;
@@ -20,7 +20,7 @@ export interface CreateNodeDescriptor {
 
 // TODO: Use metadata
 @injectable()
-export abstract class AbstractDiagramContextMenuItemProvider<StateT extends UmlDiagramModelState> extends ContextMenuItemProvider {
+export abstract class AbstractDiagramContextMenuItemProvider<StateT extends DiagramModelState> extends ContextMenuItemProvider {
     abstract readonly modelState: StateT;
 
     protected abstract getCreateNodeDescriptors(): CreateNodeDescriptor[];

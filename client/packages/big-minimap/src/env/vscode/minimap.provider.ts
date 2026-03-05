@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 import { BIGReactWebview } from '@borkdominik-biguml/big-vscode/vscode';
-import { InitializeCanvasBoundsAction } from '@borkdominik-biguml/uml-protocol';
+import { InitializeCanvasBoundsAction } from '@borkdominik-biguml/uml-glsp-server';
 import { SetViewportAction } from '@eclipse-glsp/protocol';
 import { inject, injectable, postConstruct } from 'inversify';
 import { MinimapExportSvgAction, RequestMinimapExportSvgAction } from '../common/index.js';

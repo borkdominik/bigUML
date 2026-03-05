@@ -7,5 +7,7 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 export * from './common-model-types.js';
+export * from './language.js';
 export * from './model-type-utils.js';
-export * from './model.action.js';
+export * from './new-file.action.js';
+export * from './semantic-model.action.js';

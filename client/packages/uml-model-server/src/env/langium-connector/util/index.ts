@@ -6,8 +6,6 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-export * from '@borkdominik-biguml/uml-glsp-server/gen/common';
-export * from './model/index.js';
-export * from './operations/index.js';
-export * from './reexport.js';
-export * from './utils.js';
+export * from './id-util.js';
+export * from './json-types.js';
+export * from './json-util.js';

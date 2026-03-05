@@ -8,4 +8,3 @@
  **********************************************************************************/
 export * from './patch-manager.js';
 export * from './patch-manager.util.js';
-export * from './patch-types.js';

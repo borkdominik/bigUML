@@ -8,7 +8,7 @@
  *********************************************************************************/
 
 import { getDefaultProperties, getRelationTypeFromElementId } from '@borkdominik-biguml/uml-glsp-server/gen/vscode';
-import { createRandomUUID, type jsonPatch, type SerializedPatchValue } from '@borkdominik-biguml/uml-model-server';
+import { createRandomUUID, type jsonPatch, type SerializeAstNode } from '@borkdominik-biguml/uml-model-server';
 import type { Edge } from '@borkdominik-biguml/uml-model-server/grammar';
 import {
     type Command,
@@ -46,7 +46,7 @@ export class GenericCreateEdgeOperationHandler extends OperationHandler implemen
         return new ModelPatchCommand(this.modelState, JSON.stringify(patch));
     }
 
-    protected createSemantic(operation: CreateEdgeOperation): jsonPatch.AddOperation<SerializedPatchValue<Edge>> {
+    protected createSemantic(operation: CreateEdgeOperation): jsonPatch.AddOperation<SerializeAstNode<Edge>> {
         const sourceNode = this.modelState.index.findIdElement(operation.sourceElementId);
         const targetNode = this.modelState.index.findIdElement(operation.targetElementId);
         if (!sourceNode || !targetNode) {

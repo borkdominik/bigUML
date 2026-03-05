@@ -6,18 +6,18 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { UMLDiagramType } from '@borkdominik-biguml/uml-protocol';
+import { UMLDiagramType } from '@borkdominik-biguml/uml-glsp-server';
 
 export const UMLLangugageEnvironment = {
     supportedTypes: [
-        UMLDiagramType.ACTIVITY,
-        UMLDiagramType.CLASS,
-        UMLDiagramType.COMMUNICATION,
-        UMLDiagramType.DEPLOYMENT,
-        UMLDiagramType.INFORMATION_FLOW,
-        UMLDiagramType.PACKAGE,
-        UMLDiagramType.STATE_MACHINE,
-        UMLDiagramType.USE_CASE
+        // UMLDiagramType.ACTIVITY,
+        UMLDiagramType.CLASS
+        // UMLDiagramType.COMMUNICATION,
+        // UMLDiagramType.DEPLOYMENT,
+        // UMLDiagramType.INFORMATION_FLOW,
+        // UMLDiagramType.PACKAGE,
+        // UMLDiagramType.STATE_MACHINE,
+        // UMLDiagramType.USE_CASE
     ]
 };
 

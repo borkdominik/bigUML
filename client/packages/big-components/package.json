@@ -45,7 +45,6 @@
   },
   "dependencies": {
     "@borkdominik-biguml/big-vscode": "*",
-    "@borkdominik-biguml/uml-protocol": "*",
     "@eclipse-glsp/protocol": "*",
     "@vscode-elements/react-elements": "^2.4.0",
     "lodash": "^4.17.21",

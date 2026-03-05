@@ -10,6 +10,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import { URI } from 'vscode-uri';
 import { type SharedServices } from '../model-module.js';
+import { jsonPatch } from '../util/json-types.js';
 import {
     addUUID,
     cleanJSON,
@@ -19,7 +20,6 @@ import {
     removeUUID,
     updateReferences
 } from './patch-manager.util.js';
-import { jsonPatch } from './patch-types.js';
 
 interface RedoUndo {
     next?: RedoUndo;

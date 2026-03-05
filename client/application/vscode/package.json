@@ -339,7 +339,6 @@
     "@borkdominik-biguml/uml-glsp-client": "*",
     "@borkdominik-biguml/uml-glsp-server": "*",
     "@borkdominik-biguml/uml-model-server": "*",
-    "@borkdominik-biguml/uml-protocol": "*",
     "@eclipse-glsp/protocol": "*",
     "@eclipse-glsp/vscode-integration": "*",
     "@vscode/codicons": "^0.0.25",

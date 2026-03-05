@@ -9,7 +9,7 @@
 import type { IDESessionClient } from '@borkdominik-biguml/big-vscode/vscode';
 import { TYPES } from '@borkdominik-biguml/big-vscode/vscode';
 import type { UMLDiagramEditorProvider } from '@borkdominik-biguml/uml-glsp-client/vscode';
-import { NewFileResponseAction, RequestNewFileAction, type UMLDiagramType } from '@borkdominik-biguml/uml-protocol';
+import { CreateNewFileAction, CreateNewFileResponseAction, type UMLDiagramType } from '@borkdominik-biguml/uml-glsp-server';
 import { type Disposable, DisposableCollection } from '@eclipse-glsp/protocol';
 import { inject, injectable } from 'inversify';
 import URIJS from 'urijs';
@@ -88,11 +88,11 @@ export class NewFileCreator implements Disposable {
 
         const client = await this.session.client();
         client.sendActionMessage({
-            action: RequestNewFileAction.create(diagramType, modelUri.path()),
+            action: CreateNewFileAction.create(diagramType, modelUri.path()),
             clientId: client.id
         });
         const dispose = client.onActionMessage(async message => {
-            if (NewFileResponseAction.is(message.action)) {
+            if (CreateNewFileResponseAction.is(message.action)) {
                 dispose.dispose();
 
                 vscode.window.showInformationMessage(

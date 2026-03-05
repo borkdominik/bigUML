@@ -8,7 +8,12 @@
  *********************************************************************************/
 
 import { getCreationPath, getDefaultProperties, isNoBounds } from '@borkdominik-biguml/uml-glsp-server/gen/vscode';
-import { createRandomUUID, findAvailableNodeName, type SerializedPatchValue } from '@borkdominik-biguml/uml-model-server';
+import {
+    createRandomUUID,
+    findAvailableNodeName,
+    type SerializeAstNode,
+    type SerializedRecordNode
+} from '@borkdominik-biguml/uml-model-server';
 import type { MetaInfo, Node } from '@borkdominik-biguml/uml-model-server/grammar';
 import {
     type Command,
@@ -52,13 +57,13 @@ export class GenericCreateNodeOperationHandler extends OperationHandler implemen
         return new ModelPatchCommand(this.modelState, JSON.stringify([semanticPatch, ...metaPPatch]));
     }
 
-    protected createSemantic(operation: CreateNodeOperation): jsonpatch.AddOperation<SerializedPatchValue<Node>> {
+    protected createSemantic(operation: CreateNodeOperation): jsonpatch.AddOperation<SerializeAstNode<Node>> {
         const newName = findAvailableNodeName(this.modelState.semanticRoot, 'New' + this.stripPrefix(operation.elementTypeId));
         const id = createRandomUUID();
         const containerPath = this.resolveContainerPath(operation);
         const astType = this.metadata.convertToAst(operation.elementTypeId) as Node['$type'];
 
-        const nodeValue: any = {
+        const nodeValue: SerializedRecordNode = {
             $type: astType,
             __id: id,
             name: newName
@@ -74,7 +79,7 @@ export class GenericCreateNodeOperationHandler extends OperationHandler implemen
         return {
             op: 'add',
             path: containerPath,
-            value: nodeValue as Node
+            value: nodeValue as SerializeAstNode<Node>
         };
     }
 
@@ -82,9 +87,9 @@ export class GenericCreateNodeOperationHandler extends OperationHandler implemen
         operation: CreateNodeOperation,
         id: string,
         nodeDocumentUri: string
-    ): jsonpatch.AddOperation<SerializedPatchValue<MetaInfo>>[] {
+    ): jsonpatch.AddOperation<SerializeAstNode<MetaInfo>>[] {
         const location = this.getLocation(operation);
-        const patch: jsonpatch.AddOperation<SerializedPatchValue<MetaInfo>>[] = [
+        const patch: jsonpatch.AddOperation<SerializeAstNode<MetaInfo>>[] = [
             {
                 op: 'add',
                 path: '/metaInfos/-',

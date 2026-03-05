@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
-import type { InferResponseType } from '@borkdominik-biguml/uml-protocol';
+import type { InferResponseType } from '@borkdominik-biguml/uml-glsp-server';
 import {
     Disposable,
     DisposableCollection,

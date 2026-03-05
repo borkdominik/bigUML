@@ -7,6 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
+import { CreateNewFileResponseAction } from '@borkdominik-biguml/uml-glsp-server';
 import { Deferred, type Disposable, type GLSPClient } from '@eclipse-glsp/protocol';
 import { inject, injectable } from 'inversify';
 import type { GLSPDiagramSettings } from '../../../vscode/features/glsp/settings.js';
@@ -42,7 +43,7 @@ export class IDESessionClient implements Disposable {
             await this._client.start();
             await this._client.initializeClientSession({
                 clientSessionId: IDEServerClientId,
-                clientActionKinds: ['newFileResponse'],
+                clientActionKinds: [CreateNewFileResponseAction.KIND],
                 diagramType: this.diagramSettings.diagramType
             });
             (this._client as any)['id'] = IDEServerClientId;

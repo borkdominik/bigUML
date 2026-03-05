@@ -55,7 +55,6 @@
   "dependencies": {
     "@borkdominik-biguml/big-components": "*",
     "@borkdominik-biguml/big-vscode": "*",
-    "@borkdominik-biguml/uml-protocol": "*",
     "@eclipse-glsp/protocol": "*",
     "@eclipse-glsp/vscode-integration-webview": "*",
     "vscode-messenger-common": "^0.4.5"

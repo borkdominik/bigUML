@@ -14,5 +14,4 @@ export * from './open-text-document-manager.js';
 export * from './openable-text-documents.js';
 export * from './patch/index.js';
 export * from './serializer.js';
-export * from './util/id-util.js';
-export * from './util/json-util.js';
+export * from './util/index.js';

@@ -21,6 +21,7 @@ import { DiagramGModelSerializer } from '../model/diagram-gmodel-serializer.js';
 import { DiagramModelIndex } from '../model/diagram-model-index.js';
 import { DiagramModelState } from '../model/diagram-model-state.js';
 import { DiagramModelStorage } from '../model/diagram-model-storage.js';
+import { CreateNewFileActionHandler } from '../model/handler/create-new-file-action-handler.js';
 import { RequestSemanticModelActionHandler } from '../model/index.js';
 
 export class FeatureDiagramModule {
@@ -63,6 +64,7 @@ export abstract class BigDiagramModule extends DiagramModule {
 
     protected override configureActionHandlers(binding: InstanceMultiBinding<ActionHandlerConstructor>): void {
         super.configureActionHandlers(binding);
+        binding.add(CreateNewFileActionHandler);
         binding.add(RequestSemanticModelActionHandler);
 
         for (const module of this.featureDiagramModules) {

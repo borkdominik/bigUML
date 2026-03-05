@@ -6,10 +6,10 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-import { ModelState, type ActionHandler, type MaybePromise } from '@eclipse-glsp/server';
+import { RequestSemanticModelAction, SemanticModelResponseAction } from '@borkdominik-biguml/uml-glsp-server';
+import { ModelState, type Action, type ActionHandler, type MaybePromise } from '@eclipse-glsp/server';
 import { inject, injectable } from 'inversify';
-import { RequestSemanticModelAction, SemanticModelResponseAction } from '../../../common/index.js';
-import type { DiagramModelState } from './diagram-model-state.js';
+import type { DiagramModelState } from '../diagram-model-state.js';
 
 @injectable()
 export class RequestSemanticModelActionHandler implements ActionHandler {
@@ -18,7 +18,7 @@ export class RequestSemanticModelActionHandler implements ActionHandler {
     @inject(ModelState)
     readonly modelState: DiagramModelState;
 
-    execute(action: RequestSemanticModelAction): MaybePromise<SemanticModelResponseAction[]> {
+    execute(action: RequestSemanticModelAction): MaybePromise<Action[]> {
         return [SemanticModelResponseAction.create(JSON.parse(this.modelState.semanticText()), action.requestId)];
     }
 }

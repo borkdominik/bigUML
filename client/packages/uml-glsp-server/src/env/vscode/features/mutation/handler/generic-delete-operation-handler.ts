@@ -7,11 +7,14 @@
 import {
     type ElementWithSizeAndPosition,
     type Relation,
+    isElement,
     isElementWithSizeAndPosition,
-    isRelation
+    isRelation,
+    isUnbounded
 } from '@borkdominik-biguml/uml-model-server/grammar';
 import { type Command, DeleteElementOperation, OperationHandler } from '@eclipse-glsp/server';
 import { injectable } from 'inversify';
+import { streamAst } from 'langium';
 import { ModelPatchCommand } from '../../command/model-patch-command.js';
 import { type DiagramModelState } from '../../model/diagram-model-state.js';
 
@@ -49,6 +52,8 @@ export class GenericDeleteOperationHandler extends OperationHandler {
                 removes.push(...extras.removes);
                 metaRemoves.push(...extras.metaRemoves);
 
+                metaRemoves.push(...this.deleteDescendantSizeAndPosition(element));
+
                 const nodePath = this.modelState.index.findPath(semanticId);
                 if (nodePath) removes.push({ op: 'remove', path: nodePath });
 
@@ -57,6 +62,9 @@ export class GenericDeleteOperationHandler extends OperationHandler {
                 const relPath = this.modelState.index.findPath(semanticId);
                 if (relPath) removes.push({ op: 'remove', path: relPath });
                 metaRemoves.push(...this.deleteSizeAndPosition(semanticId));
+            } else if (isUnbounded(element)) {
+                const relPath = this.modelState.index.findPath(semanticId);
+                if (relPath) removes.push({ op: 'remove', path: relPath });
             }
         }
 
@@ -103,6 +111,18 @@ export class GenericDeleteOperationHandler extends OperationHandler {
         return { removes: [], metaRemoves: [] };
     }
 
+    protected deleteDescendantSizeAndPosition(element: ElementWithSizeAndPosition): RemoveOp[] {
+        const ops: RemoveOp[] = [];
+        for (const child of streamAst(element)) {
+            if (child === element) continue;
+            if (!isElementWithSizeAndPosition(child)) continue;
+            const childId: string | undefined = (child as any).__id;
+            if (!childId) continue;
+            ops.push(...this.deleteSizeAndPosition(childId));
+        }
+        return ops;
+    }
+
     protected deleteSizeAndPosition(elementId: string): Array<{ op: 'remove'; path: string }> {
         const ops: Array<{ op: 'remove'; path: string }> = [];
         const p = this.modelState.index.findPositionPath(elementId);
@@ -114,7 +134,7 @@ export class GenericDeleteOperationHandler extends OperationHandler {
 }
 
 function isDiagramElement(item: unknown): item is Relation | ElementWithSizeAndPosition {
-    return isRelation(item) || isElementWithSizeAndPosition(item);
+    return isElement(item);
 }
 
 //sorts relations, nodes, metaInfos etc. to be removed in the correct order

@@ -10353,13 +10353,6 @@ export const UmlDiagramGrammar = (): Grammar => loadedUmlDiagramGrammar ?? (load
           {
             "$type": "RuleCall",
             "rule": {
-              "$ref": "#/rules@17"
-            },
-            "arguments": []
-          },
-          {
-            "$type": "RuleCall",
-            "rule": {
               "$ref": "#/rules@18"
             },
             "arguments": []

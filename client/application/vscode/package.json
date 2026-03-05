@@ -302,12 +302,6 @@
           "when": "bigUML.isRunning && false"
         },
         {
-          "id": "bigUML.panel.revision-management",
-          "name": "Timeline",
-          "type": "webview",
-          "when": "bigUML.isRunning"
-        },
-        {
           "id": "bigUML.panel.advancedsearch",
           "name": "Advanced Search",
           "type": "webview",

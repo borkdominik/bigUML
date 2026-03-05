@@ -19,8 +19,10 @@ import {
     type Command,
     CreateNodeOperation,
     type CreateNodeOperationHandler,
+    getRelativeLocation,
+    type GModelElement,
     OperationHandler,
-    type Point,
+    Point,
     TriggerNodeCreationAction
 } from '@eclipse-glsp/server';
 import type * as jsonpatch from 'fast-json-patch';
@@ -52,9 +54,9 @@ export class GenericCreateNodeOperationHandler extends OperationHandler implemen
 
     override createCommand(operation: CreateNodeOperation): Command {
         const semanticPatch = this.createSemantic(operation);
-        const metaPPatch = this.createMeta(operation, semanticPatch.value.__id, URI.parse(this.modelState.semanticUri).path);
+        const metaPatch = this.createMeta(operation, semanticPatch.value.__id, URI.parse(this.modelState.semanticUri).path);
 
-        return new ModelPatchCommand(this.modelState, JSON.stringify([semanticPatch, ...metaPPatch]));
+        return new ModelPatchCommand(this.modelState, JSON.stringify([semanticPatch, ...metaPatch]));
     }
 
     protected createSemantic(operation: CreateNodeOperation): jsonpatch.AddOperation<SerializeAstNode<Node>> {
@@ -88,7 +90,7 @@ export class GenericCreateNodeOperationHandler extends OperationHandler implemen
         id: string,
         nodeDocumentUri: string
     ): jsonpatch.AddOperation<SerializeAstNode<MetaInfo>>[] {
-        const location = this.getLocation(operation);
+        const location = GridSnapper.snap(this.getRelativeLocation(operation));
         const patch: jsonpatch.AddOperation<SerializeAstNode<MetaInfo>>[] = [
             {
                 op: 'add',
@@ -118,7 +120,18 @@ export class GenericCreateNodeOperationHandler extends OperationHandler implemen
     }
 
     protected getLocation(operation: CreateNodeOperation): Point | undefined {
-        return GridSnapper.snap(operation.location);
+        return operation.location;
+    }
+
+    protected getRelativeLocation(operation: CreateNodeOperation): Point | undefined {
+        const container = this.getContainer(operation) ?? this.modelState.root;
+        const absoluteLocation = this.getLocation(operation) ?? Point.ORIGIN;
+        return getRelativeLocation(absoluteLocation, container);
+    }
+
+    protected getContainer(operation: CreateNodeOperation): GModelElement | undefined {
+        const index = this.modelState.index;
+        return operation.containerId ? index.get(operation.containerId) : undefined;
     }
 
     protected resolveContainerPath(operation: CreateNodeOperation): string {

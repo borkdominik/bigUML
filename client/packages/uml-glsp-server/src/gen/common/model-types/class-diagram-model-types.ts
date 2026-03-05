@@ -79,18 +79,8 @@ export namespace ClassDiagramModelTypes {
 export namespace ClassAstTypes {
     const aliases: Record<string, string> = {
         [ClassDiagramModelTypes.ABSTRACT_CLASS]: 'Class',
-        [ClassDiagramModelTypes.ABSTRACTION]: 'Relation',
-        [ClassDiagramModelTypes.DEPENDENCY]: 'Relation',
-        [ClassDiagramModelTypes.ASSOCIATION]: 'Relation',
         [ClassDiagramModelTypes.AGGREGATION]: 'Association',
-        [ClassDiagramModelTypes.COMPOSITION]: 'Association',
-        [ClassDiagramModelTypes.INTERFACE_REALIZATION]: 'Relation',
-        [ClassDiagramModelTypes.GENERALIZATION]: 'Relation',
-        [ClassDiagramModelTypes.PACKAGE_IMPORT]: 'Relation',
-        [ClassDiagramModelTypes.PACKAGE_MERGE]: 'Relation',
-        [ClassDiagramModelTypes.REALIZATION]: 'Relation',
-        [ClassDiagramModelTypes.SUBSTITUTION]: 'Relation',
-        [ClassDiagramModelTypes.USAGE]: 'Relation'
+        [ClassDiagramModelTypes.COMPOSITION]: 'Association'
     };
 
     export function convertToAst(elementId: string): string {

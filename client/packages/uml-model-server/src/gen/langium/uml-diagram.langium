@@ -35,7 +35,7 @@ Usage :   '{'  '"__type"' ':' '"Usage"'   ( ','  '"__id"' ':' '"' __id = LANGIUM
 Package :   '{'  '"__type"' ':' '"Package"'   ( ','  '"__id"' ':' '"' __id = LANGIUM_ID '"' ) ( ','  '"name"' ':' '"' name = LANGIUM_ID '"' ) ( ','  '"uri"' ':' '"' uri = LANGIUM_ID '"' )? ( ','  '"visibility"' ':' '"' visibility = Visibility '"' )? ( ','  '"entities"' ':' '[' ( (  entities += Node  ) (  ','   entities += Node  )* )? ']' )?   '}' ;
 ClassDiagramElements  : ClassDiagramNodes | ClassDiagramEdges ;
 ClassDiagramNodes  : Enumeration | EnumerationLiteral | Class | AbstractClass | Interface | Package | Property | Operation | Parameter | DataType | PrimitiveType | InstanceSpecification | Slot | LiteralSpecification ;
-ClassDiagramEdges  : Relation | Abstraction | Dependency | Association | Aggregation | Composition | InterfaceRealization | Generalization | PackageImport | PackageMerge | Realization | Substitution | Usage ;
+ClassDiagramEdges  : Abstraction | Dependency | Association | Aggregation | Composition | InterfaceRealization | Generalization | PackageImport | PackageMerge | Realization | Substitution | Usage ;
 DataTypeReference  : DataType | Enumeration | Class | Interface | PrimitiveType ;
 SlotDefiningFeature  : Property | Class | Interface ;
 AggregationType  returns string : "NONE" | "SHARED" | "COMPOSITE" ;

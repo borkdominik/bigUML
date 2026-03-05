@@ -21,7 +21,7 @@ if (!element) {
 }
 const root = createRoot(element);
 root.render(
-    <VSCodeConnector debug={true}>
+    <VSCodeConnector debug={false}>
         <RevisionManagement></RevisionManagement>
     </VSCodeConnector>
 );

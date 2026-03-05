@@ -35,7 +35,7 @@ export abstract class BIGReactWebview extends BIGWebviewProvider {
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <meta http-equiv="Content-Security-Policy" 
                 content="default-src http://*.fontawesome.com  ${webview.cspSource} data: 'unsafe-inline' 'unsafe-eval';">
-            <link id="codicon-css" href="${codiconsCSSUri}" rel="stylesheet" type="text/css" />
+            <link id="vscode-codicon-stylesheet" href="${codiconsCSSUri}" rel="stylesheet" type="text/css" />
             <link id="bundle-css" href="${cssUri}" rel="stylesheet" type="text/css" />
             <title>Property Palette</title>
         </head>

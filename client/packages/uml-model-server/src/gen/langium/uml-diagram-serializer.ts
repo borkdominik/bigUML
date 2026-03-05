@@ -1151,9 +1151,6 @@ export class UmlDiagramSerializer implements Serializer<Diagram>, DiagramSeriali
     }
 
     serializeClassDiagramEdges(element: ClassDiagramEdges): any {
-        if (isRelation(element)) {
-            return this.serializeRelation(element);
-        }
         if (isAbstraction(element)) {
             return this.serializeAbstraction(element);
         }

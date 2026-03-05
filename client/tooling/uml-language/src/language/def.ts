@@ -90,7 +90,6 @@ type ClassDiagramNodes =
   | LiteralSpecification;
 
 type ClassDiagramEdges =
-  | Relation
   | Abstraction
   | Dependency
   | Association

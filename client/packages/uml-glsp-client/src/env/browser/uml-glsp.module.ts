@@ -47,7 +47,7 @@ import inversify = require('inversify');
 
 export function createUMLDiagramContainer(...containerConfiguration: ContainerConfiguration): inversify.Container {
     const container = initializeUMLDiagramContainer(new inversify.Container(), ...containerConfiguration);
-    bindOrRebind(container, TYPES.LogLevel).toConstantValue(LogLevel.log);
+    bindOrRebind(container, TYPES.LogLevel).toConstantValue(LogLevel.info);
     container.rebind(ContainerManager).to(UMLContainerManager).inSingletonScope();
     return container;
 }

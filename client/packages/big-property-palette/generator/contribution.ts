@@ -209,6 +209,7 @@ export function renderRequestHandlers(extensionPath: string, declarations: Langi
     }
 
     const diagramAliases = declarations.filter(d => d.type === 'type' && d.name?.endsWith('DiagramElements'));
+    const typeAliasMap = new Map(declarations.filter(d => d.type === 'type').map(d => [d.name!, d]));
     const allEntities = getNodeDecls(declarations);
 
     for (const alias of diagramAliases) {
@@ -219,7 +220,7 @@ export function renderRequestHandlers(extensionPath: string, declarations: Langi
         const modelStateClass = `DiagramModelState`;
         const modelStateImportPath = `@borkdominik-biguml/uml-glsp-server/vscode`;
 
-        const members = alias.properties?.[0]?.types.map(t => t.typeName).filter(Boolean) as string[];
+        const members = resolveTypeAliasMembers(alias, typeAliasMap);
         const nodes = allEntities.filter(e => members.includes(e.name!));
 
         const guardNames = nodes
@@ -291,6 +292,26 @@ export function renderRequestHandlers(extensionPath: string, declarations: Langi
         console.log(`Generated ${fileName}`);
     }
     return results;
+}
+
+// ============================================================================
+// Resolve type alias members
+// ============================================================================
+
+function resolveTypeAliasMembers(alias: LangiumDeclaration, typeAliasMap: Map<string, LangiumDeclaration>): string[] {
+    const directMembers = alias.properties?.[0]?.types.map(t => t.typeName).filter(Boolean) ?? [];
+    const resolved: string[] = [];
+
+    for (const name of directMembers) {
+        const nested = typeAliasMap.get(name);
+        if (nested) {
+            resolved.push(...resolveTypeAliasMembers(nested, typeAliasMap));
+        } else {
+            resolved.push(name);
+        }
+    }
+
+    return resolved;
 }
 
 // ============================================================================

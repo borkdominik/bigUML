@@ -16,22 +16,12 @@ import {
     type GModelFactory,
     type InstanceMultiBinding,
     type LabelEditValidator,
-    type ModelValidator,
     type MultiBinding,
     type OperationHandlerConstructor,
     type PopupModelFactory,
     type ToolPaletteItemProvider
 } from '@eclipse-glsp/server';
 import { injectable, type interfaces } from 'inversify';
-import {
-    GenericChangeBoundsOperationHandler,
-    GenericCreateEdgeOperationHandler,
-    GenericCreateNodeOperationHandler,
-    GenericDeleteOperationHandler,
-    GenericDiagramModelValidator,
-    GenericLabelEditOperationHandler,
-    GenericUpdateOperationHandler
-} from '../../features/index.js';
 import { DiagramLanguageMetadata } from '../../features/model/diagram-language-metadata.js';
 import { BigDiagramModule } from '../../features/module/module.js';
 import { ClassDiagramConfiguration } from './class-diagram-configuration.js';
@@ -59,16 +49,6 @@ export class ClassDiagramModule extends BigDiagramModule {
         return ClassDiagramGModelFactory;
     }
 
-    protected override configureOperationHandlers(binding: InstanceMultiBinding<OperationHandlerConstructor>): void {
-        super.configureOperationHandlers(binding);
-        binding.add(GenericCreateNodeOperationHandler);
-        binding.add(GenericCreateEdgeOperationHandler);
-        binding.add(GenericChangeBoundsOperationHandler);
-        binding.add(GenericLabelEditOperationHandler);
-        binding.add(GenericUpdateOperationHandler);
-        binding.add(GenericDeleteOperationHandler);
-    }
-
     protected override bindToolPaletteItemProvider(): BindingTarget<ToolPaletteItemProvider> {
         return ClassDiagramToolPaletteItemProvider;
     }
@@ -81,16 +61,16 @@ export class ClassDiagramModule extends BigDiagramModule {
         return undefined;
     }
 
-    protected override bindModelValidator(): BindingTarget<ModelValidator> | undefined {
-        return GenericDiagramModelValidator;
-    }
-
     protected override configureContextActionProviders(binding: MultiBinding<ContextActionsProvider>): void {
         super.configureContextActionProviders(binding);
     }
 
     protected override configureContextEditValidators(binding: MultiBinding<ContextEditValidator>): void {
         super.configureContextEditValidators(binding);
+    }
+
+    protected override configureOperationHandlers(binding: InstanceMultiBinding<OperationHandlerConstructor>): void {
+        super.configureOperationHandlers(binding);
     }
 
     protected override configureActionHandlers(binding: InstanceMultiBinding<ActionHandlerConstructor>): void {

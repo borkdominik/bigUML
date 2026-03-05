@@ -163,7 +163,7 @@ export function PropertyPalette(): ReactElement {
         if (clientId && navigationIds[clientId]?.length > 0) {
             return (
                 <header>
-                    <BButton icon='chevron-left' id='navigate-back' onClick={onNavigateBack} />
+                    <BButton secondary icon='chevron-left' id='navigate-back' onClick={onNavigateBack} />
                     <h3 className='title'>{properties?.label}</h3>
                 </header>
             );

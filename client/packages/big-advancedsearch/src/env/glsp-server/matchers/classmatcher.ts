@@ -14,23 +14,31 @@ import { SharedElementCollector } from './sharedcollector.js';
 export class ClassDiagramMatcher implements IMatcher {
     private readonly supportedTypes = [
         'class',
+        'abstractclass',
         'interface',
         'enumeration',
+        'enumerationliteral',
         'primitivetype',
         'datatype',
-        'attribute',
-        'method',
-        'literal',
+        'package',
+        'instancespecification',
+        'slot',
+        'literalspecification',
+        'property',
+        'operation',
+        'parameter',
         'association',
+        'aggregation',
+        'composition',
         'generalization',
         'dependency',
-        'realization',
         'abstraction',
         'usage',
+        'realization',
         'interfacerealization',
         'substitution',
-        'aggregation',
-        'composition'
+        'packageimport',
+        'packagemerge'
     ];
 
     supports(type: string): boolean {
@@ -45,141 +53,116 @@ export class ClassDiagramMatcher implements IMatcher {
         return this.supportedTypes;
     }
 
-    match(model: any): SearchResult[] {
+    match(diagram: any): SearchResult[] {
         const results: SearchResult[] = [];
         const idToName = new Map<string, string>();
-        const propertyIdToTypeId = new Map<string, string>();
-        const pendingRelations: any[] = [];
 
-        const sourceModel = model.getSourceModel();
-        const rootElements = sourceModel?.packagedElement ?? [];
-
-        SharedElementCollector.collectRecursively({ packagedElement: rootElements }, (element, parentName) => {
-            const type = element.eClass?.split('#//')[1];
-            if (!type) return;
-
-            const name = element.name ?? `<<${type}>>`;
-            idToName.set(element.id, name);
-
-            const relevantTypes = ['Class', 'Interface', 'Enumeration', 'PrimitiveType', 'DataType'];
-            if (relevantTypes.includes(type)) {
-                results.push({ id: element.id, type, name, parentName });
-            }
-
-            const anyElement = element as any;
-
-            if (anyElement.ownedAttribute) {
-                for (const attr of anyElement.ownedAttribute) {
-                    if (attr.type?.$ref) {
-                        propertyIdToTypeId.set(attr.id, attr.type.$ref);
-                    }
-                    results.push({
-                        id: attr.id,
-                        type: 'Attribute',
-                        name: attr.name ?? 'Unnamed',
-                        parentName: name,
-                        details: `In ${type} ${name}`
-                    });
-                }
-            }
-
-            if (anyElement.ownedOperation) {
-                for (const op of anyElement.ownedOperation) {
-                    results.push({
-                        id: op.id,
-                        type: 'Method',
-                        name: op.name ?? 'Unnamed',
-                        parentName: name,
-                        details: `In ${type} ${name}`
-                    });
-                }
-            }
-
-            if (anyElement.ownedLiteral) {
-                for (const lit of anyElement.ownedLiteral) {
-                    results.push({
-                        id: lit.id,
-                        type: 'Literal',
-                        name: lit.name ?? 'Unnamed',
-                        parentName: name,
-                        details: `In Enumeration ${name}`
-                    });
-                }
-            }
-
-            if (anyElement.generalization) {
-                for (const gen of anyElement.generalization) {
-                    pendingRelations.push({
-                        id: gen.id ?? `gen-${element.id}`,
-                        type: 'Generalization',
-                        from: name,
-                        toId: gen.general?.$ref ?? 'unknown',
-                        parentName
-                    });
-                }
-            }
-
-            if (type === 'Association' && anyElement.memberEnd?.length === 2) {
-                const [end1Id, end2Id] = anyElement.memberEnd.map((m: any) => m.$ref ?? 'unknown');
-                pendingRelations.push({
-                    id: element.id,
-                    type: 'Association',
-                    end1: end1Id,
-                    end2: end2Id,
-                    parentName
-                });
-            }
-
-            const binaryRelations = [
-                'Abstraction',
-                'Dependency',
-                'Usage',
-                'Realization',
-                'InterfaceRealization',
-                'Substitution',
-                'Aggregation',
-                'Composition'
-            ];
-
-            if (binaryRelations.includes(type) && anyElement.client?.length && anyElement.supplier?.length) {
-                const clientId = anyElement.client[0]?.$ref ?? 'unknown';
-                const supplierId = anyElement.supplier[0]?.$ref ?? 'unknown';
-                pendingRelations.push({
-                    id: element.id,
-                    type,
-                    from: idToName.get(clientId) ?? clientId,
-                    toId: supplierId,
-                    parentName
-                });
+        // First pass: collect all names for cross-reference resolution
+        SharedElementCollector.collectRecursively(diagram, element => {
+            if (element.__id && element.__type) {
+                idToName.set(element.__id, element.name ?? `<<${element.__type}>>`);
             }
         });
 
-        for (const rel of pendingRelations) {
-            if (rel.type === 'Association') {
-                const type1 = propertyIdToTypeId.get(rel.end1);
-                const type2 = propertyIdToTypeId.get(rel.end2);
-                const name1 = type1 ? (idToName.get(type1) ?? '(unknown)') : '(unknown)';
-                const name2 = type2 ? (idToName.get(type2) ?? '(unknown)') : '(unknown)';
-                results.push({
-                    id: rel.id,
-                    type: 'Association',
-                    name: `${name1} — ${name2}`,
-                    parentName: rel.parentName,
-                    details: `Association between ${name1} and ${name2}`
-                });
-                continue;
-            }
+        // Second pass: build search results from entities
+        SharedElementCollector.collectRecursively(diagram, (element, parentName) => {
+            const type = element.__type as string;
+            if (!type || !element.__id) return;
 
-            const toName = idToName.get(rel.toId) ?? '(unknown)';
-            const arrow = `${rel.from} → ${toName}`;
-            const details = `${rel.type} from ${rel.from} to ${toName}`;
+            const name = element.name ?? `<<${type}>>`;
+            const id = element.__id;
+
+            switch (type) {
+                case 'Class':
+                case 'AbstractClass':
+                case 'Interface':
+                case 'DataType':
+                    results.push({ id, type, name, parentName });
+                    break;
+                case 'Property': {
+                    const typeName = element.propertyType?.$refText;
+                    results.push({
+                        id,
+                        type,
+                        name: name ?? 'Unnamed',
+                        parentName,
+                        details: typeName ? `${typeName} in ${parentName ?? ''}` : parentName ? `In ${parentName}` : undefined
+                    });
+                    break;
+                }
+                case 'Operation':
+                    results.push({
+                        id,
+                        type,
+                        name: name ?? 'Unnamed',
+                        parentName,
+                        details: parentName ? `In ${parentName}` : undefined
+                    });
+                    break;
+                case 'Parameter': {
+                    const paramTypeName = element.parameterType?.$refText;
+                    results.push({
+                        id,
+                        type,
+                        name: name ?? 'Unnamed',
+                        parentName,
+                        details: paramTypeName ? `${paramTypeName} in ${parentName ?? ''}` : parentName ? `In ${parentName}` : undefined
+                    });
+                    break;
+                }
+                case 'Enumeration':
+                    results.push({ id, type, name, parentName });
+                    break;
+                case 'EnumerationLiteral':
+                    results.push({
+                        id,
+                        type,
+                        name: name ?? 'Unnamed',
+                        parentName,
+                        details: parentName ? `In Enumeration ${parentName}` : undefined
+                    });
+                    break;
+                case 'PrimitiveType':
+                case 'Package':
+                    results.push({ id, type, name, parentName });
+                    break;
+                case 'InstanceSpecification':
+                    results.push({ id, type, name, parentName });
+                    break;
+                case 'Slot': {
+                    const featureName = element.definingFeature?.$refText;
+                    results.push({
+                        id,
+                        type,
+                        name: name ?? 'Unnamed',
+                        parentName,
+                        details: featureName ? `Feature: ${featureName}` : undefined
+                    });
+                    break;
+                }
+                case 'LiteralSpecification':
+                    results.push({ id, type, name: name ?? 'Unnamed', parentName });
+                    break;
+            }
+        });
+
+        // Collect relations
+        for (const relation of diagram.relations ?? []) {
+            const type = relation.__type as string;
+            if (!type) continue;
+
+            const sourceId = relation.source?.$ref?.__id;
+            const targetId = relation.target?.$ref?.__id;
+            const sourceName = relation.source?.$refText ?? idToName.get(sourceId) ?? '(unknown)';
+            const targetName = relation.target?.$refText ?? idToName.get(targetId) ?? '(unknown)';
+
+            const relationName = relation.name ? `${relation.name}: ${sourceName} → ${targetName}` : `${sourceName} → ${targetName}`;
 
             results.push({
-                id: rel.id,
-                type: rel.type,
-                name: arrow,
-                parentName: rel.parentName,
-                details
+                id: relation.__id,
+                type,
+                name: relationName,
+                details: `${type} from ${sourceName} to ${targetName}`
             });
         }
 

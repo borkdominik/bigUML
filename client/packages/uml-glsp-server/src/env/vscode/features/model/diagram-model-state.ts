@@ -13,7 +13,12 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { type DiagramSerializer, type ModelService, type QualifiedNameProvider } from '@borkdominik-biguml/uml-model-server';
+import {
+    type DiagramSerializer,
+    type ModelService,
+    type QualifiedNameProvider,
+    type SerializeAstNode
+} from '@borkdominik-biguml/uml-model-server';
 import { type Diagram } from '@borkdominik-biguml/uml-model-server/grammar';
 import { UmlDiagramLSPServices } from '@borkdominik-biguml/uml-model-server/integration';
 import { ActionDispatcher, DefaultModelState, type JsonModelState, MessageAction, type SeverityLevel } from '@eclipse-glsp/server';
@@ -117,6 +122,10 @@ export class DiagramModelState extends DefaultModelState implements JsonModelSta
     /** Textual representation of the current semantic root. */
     semanticText(): string {
         return this.services.language.serializer.Serializer.serialize(this.semanticRoot);
+    }
+
+    serializedSemanticRoot(): SerializeAstNode<Diagram> {
+        return JSON.parse(this.services.language.serializer.Serializer.serialize(this.semanticRoot))?.diagram;
     }
 
     async undo() {

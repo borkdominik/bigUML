@@ -45,7 +45,7 @@ export class RevisionManagementService {
 
     @postConstruct()
     protected init(): void {
-        console.log('RevisionManagementService init');
+        // console.log('RevisionManagementService init');
 
         const config = vscode.workspace.getConfiguration('bigUML');
         const configPersist = config.get<boolean>('timeline.persistent');
@@ -63,18 +63,18 @@ export class RevisionManagementService {
                     return;
                 }
 
-                console.log('[fswatcher] File changed (saved):', uri.fsPath);
+                // console.log('[fswatcher] File changed (saved):', uri.fsPath);
                 if (!this.connectionManager.hasActiveClient()) {
                     console.warn('[Snapshot] No active GLSP client available');
                     return;
                 }
 
-                console.log('[Snapshot] Triggering exportSvg via RequestMinimapExportSvgAction');
+                // console.log('[Snapshot] Triggering exportSvg via RequestMinimapExportSvgAction');
                 this.createSnapshot('File saved');
             }),
 
             umlWatcher.onDidCreate(uri => {
-                console.log('[fswatcher] File created:', uri.fsPath);
+                // console.log('[fswatcher] File created:', uri.fsPath);
             }),
 
             umlWatcher
@@ -83,7 +83,7 @@ export class RevisionManagementService {
         this.toDispose.push(
             this.connector.onClientActionMessage((message: any) => {
                 if (MinimapExportSvgAction.is(message.action) && this.svgRequestId !== null) {
-                    console.log('[RevisionManagementService] Received MinimapExportSvgAction message:', message);
+                    // console.log('[RevisionManagementService] Received MinimapExportSvgAction message:', message);
                     const timelineEntry = this.timeline.find(s => s.id === this.svgRequestId);
                     if (timelineEntry) {
                         const { svg = '', bounds } = message.action;
@@ -103,40 +103,40 @@ export class RevisionManagementService {
     protected handleConnection(): void {
         const state = this.modelState.getModelState();
         if (state) {
-            console.log('[RevisionManagementService] Initial model state loaded via getModelState');
+            // console.log('[RevisionManagementService] Initial model state loaded via getModelState');
             this.currentModelState = state;
 
             const key = this.getTimelineKey();
             const stored = this.extensionContext.globalState.get<Snapshot[]>(key) ?? [];
-            console.log('[Timeline] Loaded from globalState for', key, ':', stored.length);
+            // console.log('[Timeline] Loaded from globalState for', key, ':', stored.length);
             this.timeline = stored;
 
             this.updateTimeline();
         } else {
-            console.log('[RevisionManagementService] No initial model state available');
+            // console.log('[RevisionManagementService] No initial model state available');
         }
 
         this.toDispose.push(
             this.connectionManager.onDidActiveClientChange(() => {
-                console.log('RevisionManagementService onDidActiveClientChange');
+                // console.log('RevisionManagementService onDidActiveClientChange');
                 this.updateTimeline();
             }),
             this.connectionManager.onNoActiveClient(() => {
-                console.log('RevisionManagementService onNoActiveClient');
+                // console.log('RevisionManagementService onNoActiveClient');
                 this.currentModelState = null;
                 this.updateTimeline();
             }),
             this.connectionManager.onNoConnection(() => {
-                console.log('RevisionManagementService onNoConnection');
+                // console.log('RevisionManagementService onNoConnection');
                 this.currentModelState = null;
                 this.updateTimeline();
             }),
             this.modelState.onDidChangeModelState(event => {
-                console.log('RevisionManagementService onDidChangeModelState', event.state);
+                // console.log('RevisionManagementService onDidChangeModelState', event.state);
                 this.currentModelState = event.state;
                 const key = this.getTimelineKey();
                 const stored = this.extensionContext.globalState.get<Snapshot[]>(key) ?? [];
-                console.log('[Timeline] Loaded from globalState for', key, ':', stored.length);
+                // console.log('[Timeline] Loaded from globalState for', key, ':', stored.length);
                 this.timeline = stored;
                 this.updateTimeline();
             })
@@ -177,7 +177,7 @@ export class RevisionManagementService {
         if (snapshotIndex !== -1) {
             const snapshot = this.timeline[snapshotIndex];
 
-            console.log(`[RevisionManagementService] Restoring snapshot with ID ${snapshotId}:`, snapshot);
+            // console.log(`[RevisionManagementService] Restoring snapshot with ID ${snapshotId}:`, snapshot);
 
             // restore file (does not work properly - to remove)
             if (snapshot.resources) {
@@ -195,7 +195,7 @@ export class RevisionManagementService {
             this.timeline = this.timeline.slice(0, snapshotIndex + 1);
             const key = this.getTimelineKey();
             await this.extensionContext.globalState.update(key, this.timeline);
-            console.log(`[RevisionManagementService] Timeline after restore saved for key: ${key} (entries: ${this.timeline.length})`);
+            // console.log(`[RevisionManagementService] Timeline after restore saved for key: ${key} (entries: ${this.timeline.length})`);
 
             this.updateTimeline();
         }
@@ -215,7 +215,7 @@ export class RevisionManagementService {
 
         const now = Date.now();
         if (now - this.lastSnapshotTime < 1000) {
-            console.log('[Snapshot] Too soon since last snapshot — skipping.');
+            // console.log('[Snapshot] Too soon since last snapshot — skipping.');
             return;
         }
         this.lastSnapshotTime = now;
@@ -247,10 +247,10 @@ export class RevisionManagementService {
             return;
         }
 
-        console.log('RevisionManagementService updateTimeline', this.currentModelState);
+        // console.log('RevisionManagementService updateTimeline', this.currentModelState);
         const key = this.getTimelineKey();
         this.extensionContext.globalState.update(key, this.timeline).then(() => {
-            console.log('[Timeline] Saved to globalState for', key, ':', this.timeline.length);
+            // console.log('[Timeline] Saved to globalState for', key, ':', this.timeline.length);
         });
 
         this.onDidChangeTimelineEmitter.fire(this.timeline);
@@ -271,10 +271,10 @@ export class RevisionManagementService {
             }
 
             await this.extensionContext.globalState.update(key, undefined);
-            console.log(`[Timeline] Cleared key: ${key}`);
+            // console.log(`[Timeline] Cleared key: ${key}`);
         }
 
-        console.log('[Timeline] All revisionTimeline keys cleared.');
+        // console.log('[Timeline] All revisionTimeline keys cleared.');
     }
 
     dispose(): void {

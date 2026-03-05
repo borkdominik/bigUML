@@ -208,9 +208,9 @@ export function PropertyPaletteReferenceItem(props: PropertyPaletteReferenceItem
                         )}
                         <div className='reference-item-actions'>
                             {ref.deleteActions.length > 0 && (
-                                <BButton icon='trash' className='action-delete' title='Delete' onClick={() => onDelete([ref])} />
+                                <BButton secondary icon='trash' className='action-delete' title='Delete' onClick={() => onDelete([ref])} />
                             )}
-                            <BButton icon='chevron-right' title='Navigate' onClick={() => onNavigate(ref)} />
+                            <BButton secondary icon='chevron-right' title='Navigate' onClick={() => onNavigate(ref)} />
                         </div>
                     </div>
                     {ref.hint !== undefined && (
@@ -229,7 +229,11 @@ export function PropertyPaletteReferenceItem(props: PropertyPaletteReferenceItem
                     <h4 className='reference-header-title'>{item.label}</h4>
                     {item.references.some(r => r.deleteActions.length > 0) && (
                         <div className='reference-header-actions'>
-                            <BButton icon='trash' onClick={() => onDelete(item.references.filter(r => r.deleteActions.length > 0))} />
+                            <BButton
+                                secondary
+                                icon='trash'
+                                onClick={() => onDelete(item.references.filter(r => r.deleteActions.length > 0))}
+                            />
                         </div>
                     )}
                 </div>

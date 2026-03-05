@@ -45,10 +45,6 @@
     "./gen/glsp-server": {
       "types": "./build/gen/glsp-server/index.d.ts",
       "default": "./build/gen/glsp-server/index.js"
-    },
-    "./generator": {
-      "types": "./build/env/generator/index.d.ts",
-      "default": "./build/env/generator/index.js"
     }
   },
   "files": [
@@ -58,8 +54,6 @@
     "build": "npm run clean && npm run compile && npm run lint",
     "clean": "rimraf build dist node_modules/.tmp",
     "compile": "tsc -b",
-    "generate": "rimraf src/gen && npm run language:generate",
-    "language:generate": "uml-language-tooling extension generate -d @borkdominik-biguml/uml-language/definition -c ./generator/index.ts",
     "lint": "eslint -c ./eslint.config.js",
     "lint:fix": "npm run lint -- --fix",
     "watch": "concurrently --kill-others 'npm run compile -- --watch'"

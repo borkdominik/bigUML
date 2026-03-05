@@ -7,11 +7,9 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import { advancedSearchModule } from '@borkdominik-biguml/big-advancedsearch/vscode';
-import { helloWorldModule } from '@borkdominik-biguml/big-hello-world/vscode';
 import { minimapModule } from '@borkdominik-biguml/big-minimap/vscode';
 import { outlineModule } from '@borkdominik-biguml/big-outline/vscode';
 import { propertyPaletteModule } from '@borkdominik-biguml/big-property-palette/vscode';
-import { revisionManagementModule } from '@borkdominik-biguml/big-revision-management/vscode';
 import { createVSCodeCommonContainer, TYPES, type GLSPDiagramSettings, type GLSPServerConfig } from '@borkdominik-biguml/big-vscode/vscode';
 import { editorModule, themeModule } from '@borkdominik-biguml/uml-glsp-client/vscode';
 import { type Container } from 'inversify';
@@ -41,9 +39,15 @@ export function createContainer(
         outlineModule(VSCodeSettings.outline.viewId),
         propertyPaletteModule(VSCodeSettings.propertyPalette.viewId),
         minimapModule(VSCodeSettings.minimap.viewId),
-        helloWorldModule(VSCodeSettings.helloWorld.viewId),
+        // helloWorldModule(VSCodeSettings.helloWorld.viewId),
         advancedSearchModule(VSCodeSettings.advancedSearch.viewId),
-        revisionManagementModule(VSCodeSettings.revisionManagement.viewId),
+        // {
+        //   "id": "bigUML.panel.revision-management",
+        //   "name": "Timeline",
+        //   "type": "webview",
+        //   "when": "bigUML.isRunning"
+        // },
+        // revisionManagementModule(VSCodeSettings.revisionManagement.viewId),
         themeModule
     );
 

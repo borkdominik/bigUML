@@ -24,7 +24,7 @@ export function isAggregationType(item: unknown): item is AggregationType {
     return item === 'NONE' || item === 'SHARED' || item === 'COMPOSITE';
 }
 
-export type ClassDiagramEdges = Abstraction | Aggregation | Association | Composition | Dependency | Generalization | InterfaceRealization | PackageImport | PackageMerge | Realization | Relation | Substitution | Usage;
+export type ClassDiagramEdges = Abstraction | Aggregation | Association | Composition | Dependency | Generalization | InterfaceRealization | PackageImport | PackageMerge | Realization | Substitution | Usage;
 
 export const ClassDiagramEdges = 'ClassDiagramEdges';
 
@@ -779,7 +779,7 @@ export class UmlDiagramAstReflection extends AbstractAstReflection {
                 return this.isSubtype(ClassDiagramNodes, supertype) || this.isSubtype(SlotDefiningFeature, supertype) || this.isSubtype(Unbounded, supertype);
             }
             case Relation: {
-                return this.isSubtype(ClassDiagramEdges, supertype) || this.isSubtype(Edge, supertype);
+                return this.isSubtype(Edge, supertype);
             }
             default: {
                 return false;

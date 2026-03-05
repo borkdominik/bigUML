@@ -52,9 +52,7 @@ export class AdvancedSearchActionHandler implements ActionHandler {
     }
 
     protected handleSearch(action: RequestAdvancedSearchAction): any[] {
-        const text = this.modelState.semanticSerializer.serialize(this.modelState.semanticRoot);
-        const sourceModel = JSON.parse(text);
-        const modelAdapter = { getSourceModel: () => sourceModel };
+        const diagram = this.modelState.serializedSemanticRoot();
         const results: SearchResult[] = [];
         const rawQuery = action.query.trim();
 
@@ -73,7 +71,7 @@ export class AdvancedSearchActionHandler implements ActionHandler {
         const applicableMatchers = !type ? this.matchers : this.matchers.filter(m => m.supportsPartial?.(type as string));
 
         for (const matcher of applicableMatchers) {
-            results.push(...matcher.match(modelAdapter));
+            results.push(...matcher.match(diagram));
         }
 
         const filtered = results.filter(item => {

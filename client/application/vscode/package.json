@@ -50,7 +50,7 @@
   "scripts": {
     "build": "npm run clean && npm run compile",
     "clean": "rimraf lib tsconfig.tsbuildinfo",
-    "compile": "tsx esbuild.ts",
+    "compile": "tsx esbuild.ts && npx cpx \"../../packages/big-code-generation/src/vscode/**/*.{hbs,eta}\" lib",
     "compile:prod": "npm run clean && npm run compile -- --minify",
     "lint": "eslint -c ./eslint.config.js",
     "lint:ci": "npm run lint -o eslint.xml -f checkstyle",
@@ -305,6 +305,11 @@
           "when": "bigUML.isRunning && false"
         },
         {
+          "id": "bigUML.panel.code-generation",
+          "name": "Code Generation",
+          "when": "bigUML.isRunning && false"
+        },
+        {
           "id": "bigUML.panel.revision-management",
           "name": "Timeline",
           "type": "webview",
@@ -340,6 +345,7 @@
 
   ],
   "dependencies": {
+    "@borkdominik-biguml/big-code-generation": "*",
     "@borkdominik-biguml/big-advancedsearch": "*",
     "@borkdominik-biguml/big-hello-world": "*",
     "@borkdominik-biguml/big-revision-management": "*",

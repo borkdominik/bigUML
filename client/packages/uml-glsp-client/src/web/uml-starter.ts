@@ -7,6 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
+import { codeGenerationModule } from '@borkdominik-biguml/big-code-generation/glsp-client';
 import { advancedSearchModule } from '@borkdominik-biguml/big-advancedsearch/glsp-client';
 import { helloWorldModule } from '@borkdominik-biguml/big-hello-world/glsp-client';
 import { minimapModule } from '@borkdominik-biguml/big-minimap/glsp-client';
@@ -46,6 +47,7 @@ class UMLStarter extends GLSPStarter {
             minimapModule,
             propertyPaletteModule,
             helloWorldModule,
+            codeGenerationModule,
             advancedSearchModule
         );
 

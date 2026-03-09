@@ -47,7 +47,7 @@ class UMLStarter extends GLSPStarter {
             minimapModule,
             propertyPaletteModule,
             helloWorldModule,
-            codeGenerationModule
+            codeGenerationModule,
             advancedSearchModule
         );
 

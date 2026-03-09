@@ -45,5 +45,11 @@ export const VSCodeSettings = {
     },
     codeGeneration: {
         viewId: 'bigUML.panel.code-generation'
+    },
+    revisionManagement: {
+        viewId: 'bigUML.panel.revision-management'
+    },
+    advancedSearch: {
+        viewId: 'bigUML.panel.advancedsearch'
     }
 } as const;

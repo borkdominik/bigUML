@@ -1,0 +1,71 @@
+/**********************************************************************************
+ * Copyright (c) 2025 borkdominik and others.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at https://opensource.org/licenses/MIT.
+ *
+ * SPDX-License-Identifier: MIT
+ **********************************************************************************/
+
+.advanced-search {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.advanced-search__controls {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.advanced-search__text {
+    width: 100%;
+}
+
+.advanced-search__results {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.result-item {
+    border-bottom: 1px solid var(--vscode-editorWidget-border, #3c3c3c);
+    padding: 0.45rem 0.25rem;
+
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+
+    transition: padding 120ms ease;
+}
+
+.result-item__header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.result-item__tag {
+    flex: 0 0 auto;
+}
+.result-item__name {
+    flex: 1 1 auto;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.result-item__details {
+    display: none;
+    font-size: 0.85rem;
+    color: var(--vscode-descriptionForeground, #999);
+}
+
+.result-item:hover {
+    background: var(--vscode-list-hoverBackground, rgba(255, 255, 255, 0.04));
+    padding-bottom: 0.8rem;
+}
+
+.result-item:hover .result-item__details {
+    display: block;
+}

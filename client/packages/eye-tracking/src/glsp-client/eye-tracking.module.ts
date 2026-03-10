@@ -13,7 +13,8 @@ import {
     SetViewportAction, 
     ViewportResult,
     ChangeBoundsOperation,
-    SetBoundsAction
+    SetBoundsAction,
+    TYPES
 } from '@eclipse-glsp/client';
 import { ExtensionActionKind } from '@eclipse-glsp/vscode-integration-webview/lib/features/default/extension-action-handler.js';
 
@@ -24,9 +25,15 @@ import {
     EyeTrackingDataAction 
 } from '../common/eye-tracking.action.js';
 
-import { ViewportTrackingAction, ElementBoundsTrackingAction } from '../common/interaction-tracking.action.js';
+import { 
+    ViewportTrackingAction, 
+    ElementBoundsTrackingAction,
+    MouseClickTrackingAction,
+    MousePositionTrackingAction
+} from '../common/interaction-tracking.action.js';
 import { ViewportTrackingHandler } from './viewport-tracking.handler.js';
 import { ElementBoundsTrackingHandler } from './element-bounds-tracking.handler.js';
+import { MouseClickTrackingHandler } from './mouse-click-tracking.handler.js';
 
 export const eyeTrackingModule = new FeatureModule((bind, unbind, isBound, rebind) => {
     const context = { bind, unbind, isBound, rebind };
@@ -49,6 +56,10 @@ export const eyeTrackingModule = new FeatureModule((bind, unbind, isBound, rebin
     configureActionHandler(context, 'changeBounds', ElementBoundsTrackingHandler);
     configureActionHandler(context, 'setBounds', ElementBoundsTrackingHandler);
 
+    // Register the MouseClickTrackingHandler to capture mouse clicks
+    bind(MouseClickTrackingHandler).toSelf().inSingletonScope();
+    bind(TYPES.MouseListener).toService(MouseClickTrackingHandler);
+
     // Allow actions to propagate to the VSCode extension
     bind(ExtensionActionKind).toConstantValue(StartEyeTrackingAction.KIND);
     bind(ExtensionActionKind).toConstantValue(StopEyeTrackingAction.KIND);
@@ -56,4 +67,6 @@ export const eyeTrackingModule = new FeatureModule((bind, unbind, isBound, rebin
     bind(ExtensionActionKind).toConstantValue(EyeTrackingDataAction.KIND);
     bind(ExtensionActionKind).toConstantValue(ViewportTrackingAction.KIND);
     bind(ExtensionActionKind).toConstantValue(ElementBoundsTrackingAction.KIND);
+    bind(ExtensionActionKind).toConstantValue(MouseClickTrackingAction.KIND);
+    bind(ExtensionActionKind).toConstantValue(MousePositionTrackingAction.KIND);
 });

@@ -8,3 +8,6 @@
  **********************************************************************************/
 
 export * from './eye-tracking.module.js';
+export * from './mouse-click-tracking.handler.js';
+export * from './viewport-tracking.handler.js';
+export * from './element-bounds-tracking.handler.js';

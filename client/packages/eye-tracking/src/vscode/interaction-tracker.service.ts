@@ -10,9 +10,15 @@ import { inject, injectable, postConstruct } from 'inversify';
 import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
+import { exec } from 'child_process';
 import { TYPES } from '@borkdominik-biguml/big-vscode-integration/vscode';
 import { InteractionEventType } from '../common/interaction-tracking.types.js';
-import { ViewportTrackingAction, ElementBoundsTrackingAction } from '../common/interaction-tracking.action.js';
+import { 
+    ViewportTrackingAction, 
+    ElementBoundsTrackingAction,
+    MouseClickTrackingAction,
+    MousePositionTrackingAction
+} from '../common/interaction-tracking.action.js';
 import type { 
     InteractionEvent, 
     SessionData 
@@ -30,6 +36,16 @@ export class InteractionTracker {
     private lastViewportEvent: { timestamp: number; data: any } | null = null;
     private viewportDebounceTimeout: NodeJS.Timeout | null = null;
     private readonly VIEWPORT_DEBOUNCE_MS = 100; // Debounce viewport events to max 10 per second
+
+    // Mouse position tracking - stores the last known mouse position with all coordinate types
+    private lastMousePosition: { 
+        canvasX: number; 
+        canvasY: number; 
+        screenX: number;
+        screenY: number;
+        elementId?: string; 
+        timestamp: number 
+    } | null = null;
 
     // Inject ActionListener to track GLSP actions
     @inject(TYPES.ActionListener)
@@ -119,13 +135,209 @@ export class InteractionTracker {
         // Clean up listeners
         this.disposeTracking();
 
-        // Export data
-        this.exportSession();
+        // Capture screenshot before exporting
+        const sessionId = this.currentSession.sessionId;
+        this.captureScreenshot(sessionId).then(screenshotPath => {
+            if (screenshotPath) {
+                console.log('Screenshot saved:', screenshotPath);
+            }
+            
+            // Export data after screenshot attempt
+            this.exportSession();
+            
+            this.isTracking = false;
+            vscode.window.showInformationMessage(
+                `Interaction tracking stopped. Events: ${this.events.length}${screenshotPath ? ' (screenshot saved)' : ''}`
+            );
+        }).catch(err => {
+            console.error('Screenshot capture failed:', err);
+            // Still export data even if screenshot fails
+            this.exportSession();
+            
+            this.isTracking = false;
+            vscode.window.showInformationMessage(
+                `Interaction tracking stopped. Events: ${this.events.length}`
+            );
+        });
+    }
 
-        this.isTracking = false;
-        vscode.window.showInformationMessage(
-            `Interaction tracking stopped. Events: ${this.events.length}`
-        );
+    /**
+     * Capture a screenshot of the entire screen and save it as PNG
+     * Uses PowerShell on Windows to capture the screen
+     * @param sessionId The session ID to use for the filename
+     * @returns Promise with the screenshot file path, or null if capture failed
+     */
+    private async captureScreenshot(sessionId: string): Promise<string | null> {
+        const screenshotPath = path.join(this.logDir, `${sessionId}_screenshot.png`);
+        
+        // Check platform
+        if (process.platform === 'win32') {
+            return this.captureScreenshotWindows(screenshotPath);
+        } else if (process.platform === 'darwin') {
+            return this.captureScreenshotMac(screenshotPath);
+        } else if (process.platform === 'linux') {
+            return this.captureScreenshotLinux(screenshotPath);
+        } else {
+            console.warn('Screenshot capture not supported on this platform:', process.platform);
+            return null;
+        }
+    }
+
+    /**
+     * Capture screenshot on Windows using PowerShell
+     */
+    private captureScreenshotWindows(outputPath: string): Promise<string | null> {
+        return new Promise((resolve) => {
+            // Create a temporary PowerShell script file to avoid escaping issues
+            const tempScriptPath = path.join(this.logDir, '_screenshot_temp.ps1');
+            
+            // PowerShell script to capture primary screen only
+            const psScript = `
+Add-Type -AssemblyName System.Windows.Forms
+Add-Type -AssemblyName System.Drawing
+
+$screen = [System.Windows.Forms.Screen]::PrimaryScreen
+$bounds = $screen.Bounds
+
+$bitmap = New-Object System.Drawing.Bitmap($bounds.Width, $bounds.Height)
+$graphics = [System.Drawing.Graphics]::FromImage($bitmap)
+$graphics.CopyFromScreen($bounds.X, $bounds.Y, 0, 0, $bitmap.Size)
+$bitmap.Save('${outputPath}')
+$graphics.Dispose()
+$bitmap.Dispose()
+`;
+            
+            try {
+                // Write the script to a temp file
+                fs.writeFileSync(tempScriptPath, psScript, 'utf-8');
+                
+                // Execute the script file
+                exec(`powershell -ExecutionPolicy Bypass -File "${tempScriptPath}"`, 
+                    { timeout: 15000 },
+                    (error, _stdout, stderr) => {
+                        // Clean up temp script
+                        try {
+                            if (fs.existsSync(tempScriptPath)) {
+                                fs.unlinkSync(tempScriptPath);
+                            }
+                        } catch (cleanupErr) {
+                            console.warn('Failed to clean up temp script:', cleanupErr);
+                        }
+                        
+                        if (error) {
+                            console.error('PowerShell screenshot error:', error.message);
+                            if (stderr) {
+                                console.error('PowerShell stderr:', stderr);
+                            }
+                            resolve(null);
+                        } else {
+                            // Verify the file was created
+                            if (fs.existsSync(outputPath)) {
+                                resolve(outputPath);
+                            } else {
+                                console.error('Screenshot file was not created');
+                                resolve(null);
+                            }
+                        }
+                    }
+                );
+            } catch (err) {
+                console.error('Failed to create temp script:', err);
+                resolve(null);
+            }
+        });
+    }
+
+    /**
+     * Capture screenshot on macOS using screencapture
+     * Uses -m flag to capture only the main display
+     */
+    private captureScreenshotMac(outputPath: string): Promise<string | null> {
+        return new Promise((resolve) => {
+            // -m captures main monitor only, -x suppresses sound
+            exec(`screencapture -m -x "${outputPath}"`, 
+                { timeout: 10000 },
+                (error) => {
+                    if (error) {
+                        console.error('macOS screenshot error:', error.message);
+                        resolve(null);
+                    } else if (fs.existsSync(outputPath)) {
+                        resolve(outputPath);
+                    } else {
+                        resolve(null);
+                    }
+                }
+            );
+        });
+    }
+
+    /**
+     * Capture screenshot on Linux using various tools
+     * Attempts to capture only the primary monitor
+     */
+    private captureScreenshotLinux(outputPath: string): Promise<string | null> {
+        return new Promise((resolve) => {
+            // First, try to get primary monitor geometry using xrandr
+            exec('xrandr --query | grep " connected primary" | grep -oP "\\d+x\\d+\\+\\d+\\+\\d+"', 
+                { timeout: 5000 },
+                (error, stdout) => {
+                    if (!error && stdout.trim()) {
+                        // Parse geometry: WIDTHxHEIGHT+X+Y
+                        const geometry = stdout.trim();
+                        // Use ImageMagick import with geometry
+                        exec(`import -window root -crop ${geometry} +repage "${outputPath}"`,
+                            { timeout: 10000 },
+                            (importError) => {
+                                if (!importError && fs.existsSync(outputPath)) {
+                                    resolve(outputPath);
+                                } else {
+                                    // Fallback to other methods
+                                    this.captureScreenshotLinuxFallback(outputPath, resolve);
+                                }
+                            }
+                        );
+                    } else {
+                        // Fallback to other methods
+                        this.captureScreenshotLinuxFallback(outputPath, resolve);
+                    }
+                }
+            );
+        });
+    }
+
+    /**
+     * Fallback screenshot methods for Linux
+     */
+    private captureScreenshotLinuxFallback(
+        outputPath: string, 
+        resolve: (value: string | null) => void
+    ): void {
+        // Try gnome-screenshot (captures current screen), then scrot, then full import
+        const commands = [
+            `gnome-screenshot -f "${outputPath}"`,
+            `scrot -m "${outputPath}"`,  // -m captures focused monitor
+            `import -window root "${outputPath}"`
+        ];
+        
+        const tryCommand = (index: number): void => {
+            if (index >= commands.length) {
+                console.error('No screenshot tool available on Linux');
+                resolve(null);
+                return;
+            }
+            
+            exec(commands[index], { timeout: 10000 }, (error) => {
+                if (error) {
+                    tryCommand(index + 1);
+                } else if (fs.existsSync(outputPath)) {
+                    resolve(outputPath);
+                } else {
+                    tryCommand(index + 1);
+                }
+            });
+        };
+        
+        tryCommand(0);
     }
 
     public trackEvent(type: InteractionEventType, data: any): void {
@@ -133,10 +345,14 @@ export class InteractionTracker {
             return;
         }
 
+        // Include last known mouse position with the event data (if available and recent)
+        // This associates a mouse position with every tracked action
+        const eventData = this.enrichWithMousePosition(data);
+
         const event: InteractionEvent = {
             timestamp: Date.now(),
             type,
-            data,
+            data: eventData,
             sessionId: this.currentSession.sessionId
         };
 
@@ -146,6 +362,38 @@ export class InteractionTracker {
         if (this.events.length % 100 === 0) {
             this.autoSave();
         }
+    }
+
+    /**
+     * Enriches event data with the last known mouse position if it's recent enough
+     * Mouse position is considered stale after 2 seconds
+     */
+    private enrichWithMousePosition(data: any): any {
+        // Don't add mouse position to mouse events (they already have coordinates)
+        // or to session start/end events
+        if (data?.screenX !== undefined && data?.screenY !== undefined) {
+            return data;
+        }
+
+        // Check if we have a recent mouse position (within last 2 seconds)
+        const MOUSE_POSITION_STALENESS_MS = 2000;
+        if (this.lastMousePosition) {
+            const age = Date.now() - this.lastMousePosition.timestamp;
+            if (age < MOUSE_POSITION_STALENESS_MS) {
+                return {
+                    ...data,
+                    mousePosition: {
+                        canvasX: this.lastMousePosition.canvasX,
+                        canvasY: this.lastMousePosition.canvasY,
+                        screenX: this.lastMousePosition.screenX,
+                        screenY: this.lastMousePosition.screenY,
+                        elementId: this.lastMousePosition.elementId
+                    }
+                };
+            }
+        }
+
+        return data;
     }
 
     /**
@@ -444,6 +692,33 @@ export class InteractionTracker {
                 newBounds: action.newBounds,
                 source: 'glsp-client' // Mark that this came from the GLSP client handler
             });
+        } else if (action.kind === 'mouseClickTracking' || MouseClickTrackingAction.is(action)) {
+            // MouseClickTrackingAction from GLSP client - captures mouse clicks on diagram
+            this.trackEvent(InteractionEventType.MOUSE_CLICK, {
+                canvasX: action.canvasX,
+                canvasY: action.canvasY,
+                screenX: action.screenX,
+                screenY: action.screenY,
+                clientX: action.clientX,
+                clientY: action.clientY,
+                button: action.button,
+                elementId: action.elementId,
+                elementType: action.elementType,
+                isDoubleClick: action.isDoubleClick,
+                modifiers: action.modifiers,
+                canvasBounds: action.canvasBounds
+            });
+        } else if (action.kind === 'mousePositionTracking' || MousePositionTrackingAction.is(action)) {
+            // MousePositionTrackingAction from GLSP client - update last known mouse position
+            // Store the position but don't create an event (to avoid flooding)
+            this.lastMousePosition = {
+                canvasX: action.canvasX,
+                canvasY: action.canvasY,
+                screenX: action.screenX,
+                screenY: action.screenY,
+                elementId: action.elementId,
+                timestamp: Date.now()
+            };
         } else if (action.kind === 'compound') {
             // Compound operations contain multiple actions (uses operationList property)
             const operations = action.operations || action.operationList || action.actions || [];

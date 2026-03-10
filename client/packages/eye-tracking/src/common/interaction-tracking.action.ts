@@ -216,3 +216,93 @@ export namespace ElementBoundsTrackingAction {
         };
     }
 }
+
+/**
+ * Action sent from GLSP client to VSCode extension when a mouse click occurs
+ * Captures click coordinates and optional element information
+ */
+export interface MouseClickTrackingAction extends Action {
+    kind: typeof MouseClickTrackingAction.KIND;
+    /** X coordinate relative to the diagram canvas */
+    canvasX: number;
+    /** Y coordinate relative to the diagram canvas */
+    canvasY: number;
+    /** X coordinate relative to the entire screen (for eye-tracking correlation) */
+    screenX: number;
+    /** Y coordinate relative to the entire screen (for eye-tracking correlation) */
+    screenY: number;
+    /** X coordinate relative to the browser viewport */
+    clientX: number;
+    /** Y coordinate relative to the browser viewport */
+    clientY: number;
+    /** Mouse button: 'left', 'right', or 'middle' */
+    button: 'left' | 'right' | 'middle';
+    /** ID of the element that was clicked (if any) */
+    elementId?: string;
+    /** Type of the element that was clicked (if any) */
+    elementType?: string;
+    /** Whether this was a double-click */
+    isDoubleClick?: boolean;
+    /** Modifier keys held during click */
+    modifiers?: {
+        ctrl: boolean;
+        shift: boolean;
+        alt: boolean;
+        meta: boolean;
+    };
+    /** Canvas bounds on screen (for coordinate conversion) */
+    canvasBounds?: {
+        screenX: number;
+        screenY: number;
+        width: number;
+        height: number;
+    };
+}
+
+export namespace MouseClickTrackingAction {
+    export const KIND = 'mouseClickTracking';
+
+    export function is(object: any): object is MouseClickTrackingAction {
+        return Action.hasKind(object, KIND);
+    }
+
+    export function create(options: Omit<MouseClickTrackingAction, 'kind'>): MouseClickTrackingAction {
+        return {
+            kind: KIND,
+            ...options
+        };
+    }
+}
+
+/**
+ * Action sent from GLSP client to VSCode extension for mouse position tracking
+ * Used to track current mouse position that can be associated with other events
+ */
+export interface MousePositionTrackingAction extends Action {
+    kind: typeof MousePositionTrackingAction.KIND;
+    /** X coordinate relative to the diagram canvas */
+    canvasX: number;
+    /** Y coordinate relative to the diagram canvas */
+    canvasY: number;
+    /** X coordinate relative to the entire screen (for eye-tracking correlation) */
+    screenX: number;
+    /** Y coordinate relative to the entire screen (for eye-tracking correlation) */
+    screenY: number;
+    /** Element under the cursor (if any) */
+    elementId?: string;
+}
+
+export namespace MousePositionTrackingAction {
+    export const KIND = 'mousePositionTracking';
+
+    export function is(object: any): object is MousePositionTrackingAction {
+        return Action.hasKind(object, KIND);
+    }
+
+    export function create(options: Omit<MousePositionTrackingAction, 'kind'>): MousePositionTrackingAction {
+        return {
+            kind: KIND,
+            ...options
+        };
+    }
+}

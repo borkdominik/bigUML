@@ -25,6 +25,7 @@ import type { ConnectionManager } from '../connector/connection-manager.js';
 import type { SelectionService } from '../connector/selection-service.js';
 import type { ExperimentalGLSPServerModelState } from '../glsp/experimental/exp-server-model-state.js';
 import { type WebviewViewConnector } from './glsp-webview.connector.js';
+import { SetupWebviewNotification } from './webview.messages.js';
 
 /**
  * The context of the webview provider.
@@ -116,6 +117,16 @@ export abstract class BIGWebviewProvider implements WebviewViewProvider, Disposa
     protected handleConnection(): void {
         // Per default, forward all messages from the webview to the extension host
         this.toDispose.push(
+            this.webviewConnector.onReady(() => {
+                this.webviewConnector.sendNotification(SetupWebviewNotification, {
+                    clientId: this.connectionManager.activeClient?.clientId
+                });
+            }),
+            this.connectionManager.onDidActiveClientChange(client => {
+                this.webviewConnector.sendNotification(SetupWebviewNotification, {
+                    clientId: client.clientId
+                });
+            }),
             this.webviewConnector.onActionMessage(message => {
                 this.actionDispatcher.dispatch(message.action);
             })

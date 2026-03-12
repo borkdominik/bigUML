@@ -17,7 +17,8 @@ import org.eclipse.uml2.uml.NamedElement;
 import com.borkdominik.big.glsp.server.core.commands.emf.BGEMFCommandContext;
 import com.borkdominik.big.glsp.server.core.commands.semantic.BGCreateNodeSemanticCommand;
 
-public class UMLCreateNodeCommand<TElement extends EObject, TParent extends EObject, TArgument extends UMLCreateNodeCommand.Argument<TElement, TParent>> extends BGCreateNodeSemanticCommand<TElement, TParent, TArgument> {
+public class UMLCreateNodeCommand<TElement extends EObject, TParent extends EObject, TArgument extends UMLCreateNodeCommand.Argument<TElement, TParent>>
+      extends BGCreateNodeSemanticCommand<TElement, TParent, TArgument> {
 
    public static class Argument<TElement, TParent> {
       protected Function<TParent, TElement> supplier;
@@ -49,11 +50,13 @@ public class UMLCreateNodeCommand<TElement extends EObject, TParent extends EObj
 
          @Override
          public java.lang.String toString() {
-            return "UMLCreateNodeCommand.Argument.ArgumentBuilder(supplier=" + this.supplier + ", initName$value=" + this.initName$value + ")";
+            return "UMLCreateNodeCommand.Argument.ArgumentBuilder(supplier=" + this.supplier + ", initName$value="
+                  + this.initName$value + ")";
          }
       }
 
-      private static final class ArgumentBuilderImpl<TElement, TParent> extends UMLCreateNodeCommand.Argument.ArgumentBuilder<TElement, TParent, UMLCreateNodeCommand.Argument<TElement, TParent>, UMLCreateNodeCommand.Argument.ArgumentBuilderImpl<TElement, TParent>> {
+      private static final class ArgumentBuilderImpl<TElement, TParent> extends
+            UMLCreateNodeCommand.Argument.ArgumentBuilder<TElement, TParent, UMLCreateNodeCommand.Argument<TElement, TParent>, UMLCreateNodeCommand.Argument.ArgumentBuilderImpl<TElement, TParent>> {
          private ArgumentBuilderImpl() {
          }
 
@@ -70,8 +73,10 @@ public class UMLCreateNodeCommand<TElement extends EObject, TParent extends EObj
 
       protected Argument(final UMLCreateNodeCommand.Argument.ArgumentBuilder<TElement, TParent, ?, ?> b) {
          this.supplier = b.supplier;
-         if (b.initName$set) this.initName = b.initName$value;
-          else this.initName = UMLCreateNodeCommand.Argument.<TElement, TParent>$default$initName();
+         if (b.initName$set)
+            this.initName = b.initName$value;
+         else
+            this.initName = UMLCreateNodeCommand.Argument.<TElement, TParent>$default$initName();
       }
 
       public static <TElement, TParent> UMLCreateNodeCommand.Argument.ArgumentBuilder<TElement, TParent, ?, ?> createChildArgumentBuilder() {
@@ -95,11 +100,17 @@ public class UMLCreateNodeCommand<TElement extends EObject, TParent extends EObj
    protected TElement createElement(final TParent parent, final TArgument argument) {
       var element = argument.getSupplier().apply(parent);
       if (element == null) {
-         throw new GLSPServerException(String.format("[%s] Failed to create child for parent %s", this.getClass().getSimpleName(), parent.getClass().getSimpleName()));
+         throw new GLSPServerException(String.format("[%s] Failed to create child for parent %s",
+               this.getClass().getSimpleName(), parent.getClass().getSimpleName()));
       }
-      if (argument.initName && (element instanceof NamedElement ne && (ne.getName() == null || ne.getName().isEmpty()))) {
+      if (argument.initName
+            && (element instanceof NamedElement ne && (ne.getName() == null || ne.getName().isEmpty()))) {
          ne.setName(element.getClass().getSimpleName().replace("Impl", ""));
       }
       return element;
+   }
+
+   public TElement getElement() {
+      return this.element;
    }
 }

@@ -6,6 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
+export * from './action-protocol/batch-create.operation.js';
 export * from './action-protocol/model.action.js';
 export * from './action-protocol/new-file.action.js';
 export * from './action-protocol/reexport.js';

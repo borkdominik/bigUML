@@ -27,7 +27,18 @@ export class PropertyPaletteProvider extends BIGReactWebview {
     protected override init(): void {
         super.init();
 
-        this.toDispose.push(this.actionCache);
+        this.toDispose.push(
+            this.actionCache,
+            this.actionCache.onDidChange(message => {
+                // Output the property palette actions to the console for debugging purposes
+                // Check the propertyId of the items to identify which ones can be updated
+                // message.action.palette.items <-- Those are the items in the property palette and their properties
+                // e.g., Is Abstract has the propertyId 'isAbstract'
+                // e.g., Visibility has the propertyId 'visibility'
+                // e.g., Multiplicity has the propertyId 'multiplicity'
+                console.log('PropertyPaletteProvider: Action cache changed', message);
+            })
+        );
     }
 
     protected override handleConnection(): void {

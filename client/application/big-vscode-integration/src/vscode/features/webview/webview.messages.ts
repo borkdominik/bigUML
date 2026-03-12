@@ -18,3 +18,12 @@ export const ActionMessageNotification: NotificationType<ActionMessage> = { meth
  * Notification to notify the webview that it is ready.
  */
 export const WebviewReadyNotification: NotificationType<ActionMessage> = { method: 'webviewReady' };
+
+export interface WebviewOptions {
+    clientId: string;
+}
+
+/**
+ * Notification to initialize the webview after it is ready.
+ */
+export const SetupWebviewNotification: NotificationType<WebviewOptions> = { method: 'setupWebview' };

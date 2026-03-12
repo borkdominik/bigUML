@@ -8,7 +8,9 @@
  **********************************************************************************/
 import type * as es from 'esbuild';
 import { copy } from 'esbuild-plugin-copy';
+import { createRequire } from 'module';
 import { ESBuildRunner, rootConfig } from '../../esbuild.config.mjs';
+const require = createRequire(import.meta.url);
 
 const args = process.argv.slice(2);
 const minify = args.includes('--minify');
@@ -34,9 +36,27 @@ const extensionConfig: es.BuildOptions = {
                 {
                     from: '../../node_modules/@vscode/codicons/dist/*',
                     to: 'webviews/assets'
+                },
+                {
+                    from: ['./wasm/tree-sitter-java.wasm'],
+                    to: ['./lib']
+                },
+                {
+                    from: ['./wasm/tree-sitter.wasm'],
+                    to: ['./lib']
                 }
             ]
-        })
+        }),
+        {
+            name: 'alias-web-tree-sitter-to-cjs',
+            setup(build) {
+                build.onResolve({ filter: /^web-tree-sitter$/ }, args => {
+                    // Resolve the path to the CJS entry manually
+                    const cjsPath = require.resolve('web-tree-sitter');
+                    return { path: cjsPath };
+                });
+            }
+        }
     ]
 };
 

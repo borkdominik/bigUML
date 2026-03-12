@@ -6,6 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
+import { codeToClassDiagramModule } from '@borkdominik-biguml/big-code-to-class-diagram/vscode';
 import { codeGenerationModule } from '@borkdominik-biguml/big-code-generation/vscode';
 import { advancedSearchModule } from '@borkdominik-biguml/big-advancedsearch/vscode';
 import { helloWorldModule } from '@borkdominik-biguml/big-hello-world/vscode';
@@ -45,6 +46,7 @@ export function createContainer(
         propertyPaletteModule(VSCodeSettings.propertyPalette.viewId),
         minimapModule(VSCodeSettings.minimap.viewId),
         helloWorldModule(VSCodeSettings.helloWorld.viewId),
+        codeToClassDiagramModule(VSCodeSettings.codeToClassDiagram.viewId),
         codeGenerationModule(VSCodeSettings.codeGeneration.viewId),
         advancedSearchModule(VSCodeSettings.advancedSearch.viewId),
         revisionManagementModule(VSCodeSettings.revisionManagement.viewId),

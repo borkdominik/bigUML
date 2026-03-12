@@ -10,18 +10,16 @@
  ********************************************************************************/
 package com.borkdominik.big.glsp.uml.core;
 
+import org.eclipse.glsp.server.actions.ActionHandler;
 import org.eclipse.glsp.server.di.MultiBinding;
 import org.eclipse.glsp.server.features.core.model.GModelFactory;
 import org.eclipse.glsp.server.operations.OperationHandler;
 
 import com.borkdominik.big.glsp.server.core.BGEMFDiagramModule;
-import com.borkdominik.big.glsp.server.core.handler.operation.change_bounds.BGEMFChangeBoundsOperationHandler;
-import com.borkdominik.big.glsp.server.core.handler.operation.copy_paste.BGEMFPasteOperationHandler;
 import com.borkdominik.big.glsp.server.core.model.BGModelRepresentation;
 import com.borkdominik.big.glsp.server.core.model.integrations.BGEMFSourceModelStorage;
 import com.borkdominik.big.glsp.uml.core.gmodel.UMLGModelFactory;
-import com.borkdominik.big.glsp.uml.core.handler.UMLChangeBoundsOperationHandler;
-import com.borkdominik.big.glsp.uml.core.handler.operation.copy_paste.UMLPasteOperationHandler;
+import com.borkdominik.big.glsp.uml.core.handler.UMLBatchCreateOperationHandler;
 import com.borkdominik.big.glsp.uml.core.model.UMLModelMigrator;
 import com.borkdominik.big.glsp.uml.core.model.UMLModelRepresentation;
 import com.borkdominik.big.glsp.uml.core.model.UMLSourceModelStorage;
@@ -37,6 +35,14 @@ public class UMLDiagramModule extends BGEMFDiagramModule {
    }
 
    @Override
+   protected void configureActionHandlers(MultiBinding<ActionHandler> bindings) {
+      super.configureActionHandlers(bindings);
+
+      bindings.add(UMLBatchCreateOperationHandler.class);
+
+   }
+
+   @Override
    protected Class<? extends BGModelRepresentation> bindBGModelStateRepresentation() {
       return UMLModelRepresentation.class;
    }
@@ -49,13 +55,6 @@ public class UMLDiagramModule extends BGEMFDiagramModule {
    @Override
    protected Class<? extends BGEMFSourceModelStorage> bindSourceModelStorage() {
       return UMLSourceModelStorage.class;
-   }
-
-   @Override
-   protected void configureOperationHandlers(MultiBinding<OperationHandler<?>> bindings) {
-      super.configureOperationHandlers(bindings);
-      bindings.rebind(BGEMFChangeBoundsOperationHandler.class, UMLChangeBoundsOperationHandler.class);
-      bindings.rebind(BGEMFPasteOperationHandler.class, UMLPasteOperationHandler.class);
    }
 
    @Override

@@ -54,6 +54,8 @@
   },
   "dependencies": {
     "@borkdominik-biguml/big-code-to-class-diagram": "*",
+    "@borkdominik-biguml/big-code-generation": "*",
+    "@borkdominik-biguml/big-advancedsearch": "*",
     "@borkdominik-biguml/big-hello-world": "*",
     "@borkdominik-biguml/big-minimap": "*",
     "@borkdominik-biguml/big-outline": "*",

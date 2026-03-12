@@ -1,0 +1,78 @@
+{
+  "name": "@borkdominik-biguml/big-revision-management",
+  "version": "0.6.3",
+  "description": "UML-Revision Management",
+  "homepage": "https://github.com/borkdominik/bigUML",
+  "bugs": "https://github.com/borkdominik/bigUML/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/borkdominik/bigUML.git"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Business Informatics Group (TU Wien)"
+  },
+  "contributors": [
+    {
+      "name": "Business Informatics Group (TU Wien)",
+      "email": "dominik.bork@tuwien.ac.at",
+      "url": "https://me.big.tuwien.ac.at/"
+    },
+    {
+      "name": "Haydar Metin",
+      "email": "dev@haydar.metin.at",
+      "url": "https://me.big.tuwien.ac.at/"
+    }
+  ],
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./lib/common/index.d.ts",
+      "default": "./lib/common/index.js"
+    },
+    "./glsp-client": {
+      "types": "./lib/glsp-client/index.d.ts",
+      "default": "./lib/glsp-client/index.js"
+    },
+    "./vscode": {
+      "types": "./lib/vscode/index.d.ts",
+      "default": "./lib/vscode/index.js"
+    }
+  },
+  "types": "lib/common/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "npm run clean && npm run compile && npm run bundle && npm run lint",
+    "bundle": "tsx esbuild.ts",
+    "clean": "rimraf lib dist node_modules/.tmp",
+    "compile": "tsc -b",
+    "lint": "eslint -c ./eslint.config.js",
+    "lint:fix": "npm run lint -- --fix",
+    "tsc": "tsc",
+    "watch": "concurrently --kill-others \"npm run compile -- --watch\" \"npm run bundle -- --watch\""
+  },
+  "dependencies": {
+    "@borkdominik-biguml/big-components": "*",
+    "@borkdominik-biguml/big-minimap": "*",
+    "@borkdominik-biguml/big-vscode-integration": "*",
+    "@borkdominik-biguml/uml-protocol": "*",
+    "@eclipse-glsp/client": "*",
+    "@eclipse-glsp/protocol": "*",
+    "@eclipse-glsp/vscode-integration-webview": "*",
+    "@vscode/codicons": "^0.0.36",
+    "vscode-messenger-common": "^0.4.5"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "peerDependencies": {
+    "inversify": "^6.1.3",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  }
+}

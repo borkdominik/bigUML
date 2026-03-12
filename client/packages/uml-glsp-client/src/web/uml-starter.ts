@@ -8,6 +8,8 @@
  *********************************************************************************/
 
 import { codeToClassDiagramModule } from '@borkdominik-biguml/big-code-to-class-diagram/glsp-client';
+import { codeGenerationModule } from '@borkdominik-biguml/big-code-generation/glsp-client';
+import { advancedSearchModule } from '@borkdominik-biguml/big-advancedsearch/glsp-client';
 import { helloWorldModule } from '@borkdominik-biguml/big-hello-world/glsp-client';
 import { minimapModule } from '@borkdominik-biguml/big-minimap/glsp-client';
 import { outlineModule } from '@borkdominik-biguml/big-outline/glsp-client';
@@ -47,6 +49,8 @@ class UMLStarter extends GLSPStarter {
             propertyPaletteModule,
             helloWorldModule,
             codeToClassDiagramModule
+            codeGenerationModule,
+            advancedSearchModule
         );
 
         return container;

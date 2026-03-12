@@ -1,0 +1,32 @@
+{{#each packagedElement}}
+{{#if (isInterface this)}}
+public interface {{name}} {
+    {{#each ownedOperation}}
+
+    {{#if (isPackagePrivateModifier visibility)}}{{else}}{{visibility}} {{/if}}{{returnType ownedParameter}} {{name}}({{#each (parameters ownedParameter)}}{{type.name}} {{name}}{{#if @last}}{{else}},{{/if}}{{/each}});
+    {{/each}}
+}
+
+{{/if}}
+{{#if (isClass this)}}
+{{#if (isPackagePrivateModifier visibility)}}{{else}}{{visibility}} {{/if}}{{#if isAbstract}}abstract {{/if}}class {{name}}{{#if generalization}} extends {{generalization.[0].general.name}}{{/if}}{{#if interfaceRealization}} implements{{#each interfaceRealization}} {{contract.name}}{{#if @last}}{{else}},{{/if}}{{/each}}{{/if}} {
+    {{#each ownedAttribute}}
+
+    {{#if (isPackagePrivateModifier visibility)}}{{else}}{{visibility}} {{/if}}{{type.name}} {{name}};
+    {{/each}}
+    {{#each ownedOperation}}
+
+    {{#if (isPackagePrivateModifier visibility)}}{{else}}{{visibility}} {{/if}}{{returnType ownedParameter}} {{name}}({{#each (parameters ownedParameter)}}{{type.name}} {{name}}{{#if @last}}{{else}},{{/if}}{{/each}});
+    {{/each}}
+}
+
+{{/if}}
+{{#if (isEnumeration this)}}
+public enum {{name}} {
+    {{#each ownedLiteral}}
+    {{name}}{{#if @last}}{{else}},{{/if}}
+    {{/each}}
+}
+
+{{/if}}
+{{/each}}

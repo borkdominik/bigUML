@@ -5,7 +5,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "(Debug) UML GLSP VSCode Extension",
+      "name": "Launch Extension",
       "type": "extensionHost",
       "request": "launch",
       "runtimeExecutable": "${execPath}",
@@ -21,20 +21,6 @@
         "${workspaceFolder}/application/**/*.js",
         "${workspaceFolder}/packages/**/*.js"
       ]
-    },
-    {
-      "name": "(Production) UML GLSP VSCode Extension",
-      "type": "extensionHost",
-      "request": "launch",
-      "runtimeExecutable": "${execPath}",
-      "args": [
-        "${workspaceFolder}/workspace",
-        "--extensionDevelopmentPath=${workspaceFolder}/application/vscode",
-        "--disable-extensions"
-      ],
-      "sourceMaps": true,
-      "smartStep": true,
-      "outFiles": ["${workspaceFolder}/application/**/*.js", "${workspaceFolder}/packages/**/*.js"]
     },
     {
       "name": "(Attach) LSP Server",
@@ -55,7 +41,7 @@
   "compounds": [
     {
       "name": "Debug Extension",
-      "configurations": ["(Debug) UML GLSP VSCode Extension", "(Attach) LSP Server"]
+      "configurations": ["Launch Extension", "(Attach) LSP Server"]
     }
   ]
 }

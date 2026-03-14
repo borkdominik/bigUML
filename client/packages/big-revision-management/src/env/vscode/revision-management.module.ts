@@ -7,27 +7,29 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { TYPES } from "@borkdominik-biguml/big-vscode/vscode";
-import { ContainerModule } from "inversify";
-import {
-  RevisionManagementId,
-  RevisionManagementProvider,
-} from "./revision-management.provider.js";
-import { RevisionManagementService } from "./revision-management.service.js";
+import { bindWebviewViewFactory, TYPES } from '@borkdominik-biguml/big-vscode/vscode';
+import { ContainerModule } from 'inversify';
+import { RevisionManagementProvider } from './revision-management.provider.js';
+import { RevisionManagementService } from './revision-management.service.js';
 
 export function revisionManagementModule(viewId: string) {
-  return new ContainerModule((bind) => {
-    bind(RevisionManagementId).toConstantValue(viewId);
-    bind(RevisionManagementProvider).toSelf().inSingletonScope();
-    bind(RevisionManagementService).toSelf().inSingletonScope();
+    return new ContainerModule(bind => {
+        bind(RevisionManagementService).toSelf().inSingletonScope();
+        // Bind service to RootInitialization to ensure it starts tracking immediately
+        bind(TYPES.RootInitialization).toService(RevisionManagementService);
 
-    // Bind service to RootInitialization to ensure it starts tracking immediately
-    bind(TYPES.RootInitialization).toService(RevisionManagementService);
-    bind(TYPES.RootInitialization).toService(RevisionManagementProvider);
-
-    // Handle the request vscode side
-    // This will prevent the glsp to handle the request
-    // Remember to comment out the the glsp client handler!
-    // In HelloWorldActionHandler implementation GLSP has priority over vscode
-  });
+        bindWebviewViewFactory(bind, {
+            provider: RevisionManagementProvider,
+            configure: childBind => {
+                childBind(TYPES.WebviewViewOptions).toConstantValue({
+                    viewId,
+                    viewType: viewId,
+                    files: {
+                        js: [['revision-management', 'bundle.js']],
+                        css: [['revision-management', 'bundle.css']]
+                    }
+                });
+            }
+        });
+    });
 }

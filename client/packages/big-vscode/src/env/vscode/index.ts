@@ -7,7 +7,6 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
-export * from './base/index.js';
 export * from './features/index.js';
-export * from './vscode-common.config.js';
+export * from './vscode-common.module.js';
 export * from './vscode-common.types.js';

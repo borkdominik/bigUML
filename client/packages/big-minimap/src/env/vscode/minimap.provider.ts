@@ -6,57 +6,70 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-import { BIGReactWebview } from '@borkdominik-biguml/big-vscode/vscode';
+import type { WebviewMessenger } from '@borkdominik-biguml/big-vscode/vscode';
+import {
+    type ActionDispatcher,
+    type BWebviewViewOptions,
+    type CacheActionListener,
+    type ConnectionManager,
+    type GLSPServerModelState,
+    TYPES,
+    WebviewViewProvider
+} from '@borkdominik-biguml/big-vscode/vscode';
 import { InitializeCanvasBoundsAction } from '@borkdominik-biguml/uml-glsp-server';
 import { SetViewportAction } from '@eclipse-glsp/protocol';
+import { DisposableCollection } from '@eclipse-glsp/vscode-integration';
 import { inject, injectable, postConstruct } from 'inversify';
+import type { Disposable } from 'vscode';
 import { MinimapExportSvgAction, RequestMinimapExportSvgAction } from '../common/index.js';
 
-export const MinimapViewId = Symbol('MinimapViewId');
-
 @injectable()
-export class MinimapProvider extends BIGReactWebview {
-    @inject(MinimapViewId)
-    viewId: string;
+export class MinimapProvider extends WebviewViewProvider {
+    @inject(TYPES.ConnectionManager)
+    protected readonly connectionManager: ConnectionManager;
 
-    protected override cssPath = ['minimap', 'bundle.css'];
-    protected override jsPath = ['minimap', 'bundle.js'];
-    protected readonly actionCache = this.actionListener.createCache([
-        InitializeCanvasBoundsAction.KIND,
-        SetViewportAction.KIND,
-        MinimapExportSvgAction.KIND
-    ]);
+    @inject(TYPES.GLSPServerModelState)
+    protected readonly modelState: GLSPServerModelState;
+
+    @inject(TYPES.ActionDispatcher)
+    protected readonly actionDispatcher: ActionDispatcher;
+
+    protected actionCache: CacheActionListener;
+
+    constructor(@inject(TYPES.WebviewViewOptions) options: BWebviewViewOptions) {
+        super(options);
+    }
 
     @postConstruct()
-    protected override init(): void {
-        super.init();
-
+    protected init(): void {
+        this.actionCache = this.actionListener.createCache([
+            InitializeCanvasBoundsAction.KIND,
+            SetViewportAction.KIND,
+            MinimapExportSvgAction.KIND
+        ]);
         this.toDispose.push(this.actionCache);
     }
 
-    protected override handleConnection(): void {
-        super.handleConnection();
-
-        this.toDispose.push(
-            this.actionCache.onDidChange(message => this.webviewConnector.dispatch(message)),
-            this.webviewConnector.onReady(() => {
-                this.requestSVG();
-                this.webviewConnector.dispatch(this.actionCache.getActions());
-            }),
-            this.webviewConnector.onVisible(() => this.webviewConnector.dispatch(this.actionCache.getActions())),
-            this.connectionManager.onDidActiveClientChange(() => {
-                this.requestSVG();
-            }),
-            this.connectionManager.onNoActiveClient(() => {
-                this.webviewConnector.dispatch(MinimapExportSvgAction.create());
-            }),
-            this.connectionManager.onNoConnection(() => {
-                this.webviewConnector.dispatch(MinimapExportSvgAction.create());
-            }),
-            this.modelState.onDidChangeModelState(() => {
-                this.requestSVG();
-            })
+    protected override resolveWebviewProtocol(messenger: WebviewMessenger): Disposable {
+        const disposables = new DisposableCollection();
+        disposables.push(
+            super.resolveWebviewProtocol(messenger),
+            this.actionCache.onDidChange(message => this.actionMessenger.dispatch(message)),
+            this.connectionManager.onDidActiveClientChange(() => this.requestSVG()),
+            this.connectionManager.onNoActiveClient(() => this.actionMessenger.dispatch(MinimapExportSvgAction.create())),
+            this.connectionManager.onNoConnection(() => this.actionMessenger.dispatch(MinimapExportSvgAction.create())),
+            this.modelState.onDidChangeModelState(() => this.requestSVG())
         );
+        return disposables;
+    }
+
+    protected override handleOnReady(): void {
+        this.requestSVG();
+        this.actionMessenger.dispatch(this.actionCache.getActions());
+    }
+
+    protected override handleOnVisible(): void {
+        this.actionMessenger.dispatch(this.actionCache.getActions());
     }
 
     protected requestSVG(): void {

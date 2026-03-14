@@ -32,7 +32,6 @@ export namespace JSX {
      * Props that can be passed to any GModelElement class used as a JSX intrinsic.
      * Since we don't use string-based intrinsic elements, this is empty.
      */
-    // eslint-disable-next-line @typescript-eslint/no-empty-object-type
     export interface IntrinsicElements {}
 
     /**
@@ -40,7 +39,6 @@ export namespace JSX {
      * TypeScript uses this to type-check props when a class constructor is used as a JSX tag.
      */
     export interface ElementChildrenAttribute {
-        // eslint-disable-next-line @typescript-eslint/no-empty-object-type
         children: {};
     }
 

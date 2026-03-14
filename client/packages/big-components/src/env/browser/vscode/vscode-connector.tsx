@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 import { messenger } from '@borkdominik-biguml/big-components';
-import { ActionMessageNotification, WebviewReadyNotification } from '@borkdominik-biguml/big-vscode';
+import { ActionWebviewProtocol, WebviewProtocol } from '@borkdominik-biguml/big-vscode';
 import type { Action, ActionMessage } from '@eclipse-glsp/protocol';
 import { useCallback, useEffect, useState, type ReactElement } from 'react';
 import { HOST_EXTENSION } from 'vscode-messenger-common';
@@ -45,12 +45,12 @@ export function VSCodeConnector(props: VSCodeConnectorProps): ReactElement {
         }
 
         setIsReady(true);
-        messenger.sendNotification(WebviewReadyNotification, HOST_EXTENSION);
+        messenger.sendNotification(WebviewProtocol.Ready, HOST_EXTENSION);
         debug('webview is ready');
     }, [isReady, debug]);
 
     useEffect(() => {
-        const onActionMessage = messenger.listenNotification<ActionMessage>(ActionMessageNotification, message => {
+        const onActionMessage = messenger.listenNotification<ActionMessage>(ActionWebviewProtocol.Message, message => {
             setClientId(message.clientId);
         });
         return () => {
@@ -60,7 +60,7 @@ export function VSCodeConnector(props: VSCodeConnectorProps): ReactElement {
 
     const listenAction = useCallback(
         (handler: (action: Action) => void) => {
-            return messenger.listenNotification<ActionMessage>(ActionMessageNotification, message => {
+            return messenger.listenNotification<ActionMessage>(ActionWebviewProtocol.Message, message => {
                 debug('new action received', message);
                 handler(message.action);
             });
@@ -76,7 +76,7 @@ export function VSCodeConnector(props: VSCodeConnectorProps): ReactElement {
                 throw new Error('Client ID is not set');
             }
 
-            messenger.sendNotification(ActionMessageNotification, HOST_EXTENSION, {
+            messenger.sendNotification(ActionWebviewProtocol.Message, HOST_EXTENSION, {
                 clientId,
                 action
             });

@@ -31,7 +31,7 @@ export function resolveLogLevel(name: string): LogLevel {
             return level;
         }
     }
-    return LogLevel.Log;
+    return LogLevel.Info;
 }
 
 /**

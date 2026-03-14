@@ -11,42 +11,54 @@ import {
     SetNavigationIdNotification,
     SetPropertyPaletteAction
 } from '@borkdominik-biguml/big-property-palette';
-import { BIGReactWebview } from '@borkdominik-biguml/big-vscode/vscode';
+import type { WebviewMessenger } from '@borkdominik-biguml/big-vscode/vscode';
+import {
+    type ActionDispatcher,
+    type BWebviewViewOptions,
+    type CacheActionListener,
+    type ConnectionManager,
+    type GLSPServerModelState,
+    type SelectionService,
+    TYPES,
+    WebviewViewProvider
+} from '@borkdominik-biguml/big-vscode/vscode';
+import { DisposableCollection } from '@eclipse-glsp/vscode-integration';
 import { inject, injectable, postConstruct } from 'inversify';
-
-export const PropertyPaletteViewId = Symbol('PropertyPaletteViewId');
+import type { Disposable } from 'vscode';
 
 @injectable()
-export class PropertyPaletteProvider extends BIGReactWebview {
-    @inject(PropertyPaletteViewId)
-    viewId: string;
+export class PropertyPaletteProvider extends WebviewViewProvider {
+    @inject(TYPES.ConnectionManager)
+    protected readonly connectionManager: ConnectionManager;
 
-    protected override cssPath = ['property-palette', 'bundle.css'];
-    protected override jsPath = ['property-palette', 'bundle.js'];
-    protected readonly actionCache = this.actionListener.createCache([SetPropertyPaletteAction.KIND]);
+    @inject(TYPES.GLSPServerModelState)
+    protected readonly modelState: GLSPServerModelState;
+
+    @inject(TYPES.ActionDispatcher)
+    protected readonly actionDispatcher: ActionDispatcher;
+
+    @inject(TYPES.SelectionService)
+    protected readonly selectionService: SelectionService;
+
+    protected actionCache: CacheActionListener;
     protected selectedId?: string;
 
-    @postConstruct()
-    protected override init(): void {
-        super.init();
+    constructor(@inject(TYPES.WebviewViewOptions) options: BWebviewViewOptions) {
+        super(options);
+    }
 
+    @postConstruct()
+    protected init(): void {
+        this.actionCache = this.actionListener.createCache([SetPropertyPaletteAction.KIND]);
         this.toDispose.push(this.actionCache);
     }
 
-    protected override handleConnection(): void {
-        super.handleConnection();
-
-        this.toDispose.push(
-            this.actionCache.onDidChange(message => this.webviewConnector.dispatch(message)),
-            this.webviewConnector.onReady(async () => {
-                const selection = this.selectionService.selection;
-                if (selection && selection.selectedElementsIDs.length > 0) {
-                    this.selectedId = selection.selectedElementsIDs[0];
-                    this.requestPropertyPalette();
-                }
-            }),
-            this.webviewConnector.onVisible(() => this.webviewConnector.dispatch(this.actionCache.getActions())),
-            this.webviewConnector.registerNotificationListener(SetNavigationIdNotification, id => {
+    protected override resolveWebviewProtocol(messenger: WebviewMessenger): Disposable {
+        const disposables = new DisposableCollection();
+        disposables.push(
+            super.resolveWebviewProtocol(messenger),
+            this.actionCache.onDidChange(message => this.actionMessenger.dispatch(message)),
+            messenger.onNotification(SetNavigationIdNotification, id => {
                 this.selectedId = id ?? this.selectionService.selection?.selectedElementsIDs[0];
             }),
             this.selectionService.onDidSelectionChange(event => {
@@ -54,12 +66,25 @@ export class PropertyPaletteProvider extends BIGReactWebview {
                 this.requestPropertyPalette();
             }),
             this.connectionManager.onNoConnection(() => {
-                this.webviewConnector.dispatch(SetPropertyPaletteAction.create());
+                this.actionMessenger.dispatch(SetPropertyPaletteAction.create());
             }),
             this.modelState.onDidChangeModelState(() => {
                 this.requestPropertyPalette();
             })
         );
+        return disposables;
+    }
+
+    protected override handleOnReady(): void {
+        const selection = this.selectionService.selection;
+        if (selection && selection.selectedElementsIDs.length > 0) {
+            this.selectedId = selection.selectedElementsIDs[0];
+            this.requestPropertyPalette();
+        }
+    }
+
+    protected override handleOnVisible(): void {
+        this.actionMessenger.dispatch(this.actionCache.getActions());
     }
 
     protected requestPropertyPalette(elementId = this.selectedId): void {

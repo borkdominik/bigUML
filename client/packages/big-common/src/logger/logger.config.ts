@@ -6,10 +6,14 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-import type { LogLevel } from './log-level.js';
+import { LogLevel } from './log-level.js';
 
 export interface LoggerConfig {
     loggers: Record<string, LogLevel>;
+    thirdParty: {
+        glspServer: LogLevel;
+        glspClient: LogLevel;
+    };
 }
 
 /**
@@ -24,5 +28,9 @@ export interface LoggerConfig {
  * };
  */
 export const LOGGER_CONFIG: LoggerConfig = {
-    loggers: {}
+    loggers: {},
+    thirdParty: {
+        glspServer: LogLevel.Info,
+        glspClient: LogLevel.Debug
+    }
 };

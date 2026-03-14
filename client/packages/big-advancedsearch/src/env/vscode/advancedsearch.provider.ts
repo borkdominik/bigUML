@@ -6,69 +6,71 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-import { BIGReactWebview } from "@borkdominik-biguml/big-vscode/vscode";
-import { inject, injectable, postConstruct } from "inversify";
+import type { WebviewMessenger } from '@borkdominik-biguml/big-vscode/vscode';
 import {
-  AdvancedSearchActionResponse,
-  RequestAdvancedSearchAction,
-} from "../common/advancedsearch.action.js";
-
-export const AdvancedSearchViewId = Symbol("AdvancedSearchViewId");
+    type ActionDispatcher,
+    type BWebviewViewOptions,
+    type CacheActionListener,
+    type ConnectionManager,
+    type GLSPServerModelState,
+    TYPES,
+    WebviewViewProvider
+} from '@borkdominik-biguml/big-vscode/vscode';
+import { DisposableCollection } from '@eclipse-glsp/vscode-integration';
+import { inject, injectable, postConstruct } from 'inversify';
+import type { Disposable } from 'vscode';
+import { AdvancedSearchActionResponse, RequestAdvancedSearchAction } from '../common/advancedsearch.action.js';
 
 @injectable()
-export class AdvancedSearchProvider extends BIGReactWebview {
-  @inject(AdvancedSearchViewId)
-  viewId: string;
+export class AdvancedSearchProvider extends WebviewViewProvider {
+    @inject(TYPES.ConnectionManager)
+    protected readonly connectionManager: ConnectionManager;
 
-  protected override cssPath = ["advancedsearch", "bundle.css"];
-  protected override jsPath = ["advancedsearch", "bundle.js"];
-  protected readonly actionCache = this.actionListener.createCache([
-    AdvancedSearchActionResponse.KIND,
-  ]);
+    @inject(TYPES.GLSPServerModelState)
+    protected readonly modelState: GLSPServerModelState;
 
-  @postConstruct()
-  protected override init(): void {
-    super.init();
+    @inject(TYPES.ActionDispatcher)
+    protected readonly actionDispatcher: ActionDispatcher;
 
-    this.toDispose.push(this.actionCache);
-  }
+    protected actionCache: CacheActionListener;
 
-  protected override handleConnection(): void {
-    super.handleConnection();
+    constructor(@inject(TYPES.WebviewViewOptions) options: BWebviewViewOptions) {
+        super(options);
+    }
 
-    this.toDispose.push(
-      this.actionCache.onDidChange((message) =>
-        this.webviewConnector.dispatch(message),
-      ),
-      this.webviewConnector.onReady(() => {
+    @postConstruct()
+    protected init(): void {
+        this.actionCache = this.actionListener.createCache([AdvancedSearchActionResponse.KIND]);
+        this.toDispose.push(this.actionCache);
+    }
+
+    protected override resolveWebviewProtocol(messenger: WebviewMessenger): Disposable {
+        const disposables = new DisposableCollection();
+        disposables.push(
+            super.resolveWebviewProtocol(messenger),
+            this.actionCache.onDidChange(message => this.actionMessenger.dispatch(message)),
+            this.connectionManager.onDidActiveClientChange(() => this.requestModel()),
+            this.connectionManager.onNoActiveClient(() => this.actionMessenger.dispatch(AdvancedSearchActionResponse.create())),
+            this.connectionManager.onNoConnection(() => this.actionMessenger.dispatch(AdvancedSearchActionResponse.create())),
+            this.modelState.onDidChangeModelState(() => this.requestModel())
+        );
+        return disposables;
+    }
+
+    protected override handleOnReady(): void {
         this.requestModel();
-        this.webviewConnector.dispatch(this.actionCache.getActions());
-      }),
-      this.webviewConnector.onVisible(() =>
-        this.webviewConnector.dispatch(this.actionCache.getActions()),
-      ),
-      this.connectionManager.onDidActiveClientChange(() => {
-        this.requestModel();
-      }),
-      this.connectionManager.onNoActiveClient(() => {
-        // Send a message to the webview when there is no active client
-        this.webviewConnector.dispatch(AdvancedSearchActionResponse.create());
-      }),
-      this.connectionManager.onNoConnection(() => {
-        // Send a message to the webview when there is no glsp client
-        this.webviewConnector.dispatch(AdvancedSearchActionResponse.create());
-      }),
-      this.modelState.onDidChangeModelState(() => {
-        this.requestModel();
-      }),
-    );
-  }
+        this.actionMessenger.dispatch(this.actionCache.getActions());
+    }
 
-  protected requestModel(): void {
-    this.actionDispatcher.dispatch(
-      RequestAdvancedSearchAction.create({
-        query: "",
-      }),
-    );
-  }
+    protected override handleOnVisible(): void {
+        this.actionMessenger.dispatch(this.actionCache.getActions());
+    }
+
+    protected requestModel(): void {
+        this.actionDispatcher.dispatch(
+            RequestAdvancedSearchAction.create({
+                query: ''
+            })
+        );
+    }
 }

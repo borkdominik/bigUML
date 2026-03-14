@@ -16,13 +16,14 @@ import '@eclipse-glsp/client/css/glsp-sprotty.css';
 
 import '../../../css/style.css';
 
+import { LOGGER_CONFIG, LogLevel } from '@borkdominik-biguml/big-common';
 import {
     bindOrRebind,
     ContainerManager,
     glspFocusTrackerModule,
+    LogLevel as GlspLogLevel,
     glspToastModule,
     initializeDiagramContainer,
-    LogLevel,
     toolPaletteModule,
     TYPES,
     viewKeyToolsModule,
@@ -45,9 +46,27 @@ import { umlBaseViewsModule } from './views/uml-base-views.module.js';
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 import inversify = require('inversify');
 
+export function fromCommonLogLevel(level: LogLevel): GlspLogLevel {
+    switch (level) {
+        case LogLevel.None:
+            return GlspLogLevel.none;
+        case LogLevel.Error:
+            return GlspLogLevel.error;
+        case LogLevel.Warn:
+            return GlspLogLevel.warn;
+        case LogLevel.Info:
+            return GlspLogLevel.info;
+        case LogLevel.Debug:
+            return GlspLogLevel.log;
+        default:
+            return GlspLogLevel.log;
+    }
+}
+const logLevel = fromCommonLogLevel(LOGGER_CONFIG.thirdParty.glspClient);
+
 export function createUMLDiagramContainer(...containerConfiguration: ContainerConfiguration): inversify.Container {
     const container = initializeUMLDiagramContainer(new inversify.Container(), ...containerConfiguration);
-    bindOrRebind(container, TYPES.LogLevel).toConstantValue(LogLevel.info);
+    bindOrRebind(container, TYPES.LogLevel).toConstantValue(logLevel);
     container.rebind(ContainerManager).to(UMLContainerManager).inSingletonScope();
     return container;
 }

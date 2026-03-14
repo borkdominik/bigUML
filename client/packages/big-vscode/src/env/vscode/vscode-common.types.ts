@@ -14,7 +14,6 @@ export const TYPES = {
     CommandManager: Symbol('CommandManager'),
     Disposable: Symbol('Disposable'),
     DisposableManager: Symbol('DisposableManager'),
-    EditorProvider: Symbol('EditorProvider'),
     ExtensionContext: Symbol('ExtensionContext'),
     Outline: Symbol('Outline'),
     OutputChannel: Symbol('OutputChannel'),
@@ -28,7 +27,6 @@ export const TYPES = {
     GLSPServerModelState: Symbol('GLSPServerModelState'),
     ConnectionManager: Symbol('ConnectionManager'),
     SelectionService: Symbol('SelectionService'),
-    WebviewViewConnector: Symbol('WebviewViewConnector'),
 
     // GLSP Server
     GLSPServer: Symbol('GLSPServer'),
@@ -41,5 +39,19 @@ export const TYPES = {
     // Server
     ServerLauncher: Symbol('ServerLauncher'),
     ServerManager: Symbol('ServerManager'),
-    ServerManagerStateListener: Symbol('ServerManagerStateListener')
+    ServerManagerStateListener: Symbol('ServerManagerStateListener'),
+
+    // Webview
+    WebviewMessenger: Symbol('WebviewMessenger'),
+    ActionWebviewMessenger: Symbol('ActionWebviewMessenger'),
+
+    // Webview Editor
+    WebviewEditorOptions: Symbol('WebviewEditorOptions'),
+    WebviewEditorFactory: Symbol('WebviewEditorProvider'),
+    WebviewEditorManager: Symbol('WebviewEditorManager'),
+
+    // Webview View
+    WebviewViewOptions: Symbol('WebviewViewOptions'),
+    WebviewViewFactory: Symbol('WebviewViewFactory'),
+    WebviewViewManager: Symbol('WebviewViewManager')
 };

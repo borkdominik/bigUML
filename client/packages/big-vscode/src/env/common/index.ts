@@ -7,5 +7,7 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
-export * from '../vscode/features/webview/webview.messages.js';
+export * from './language/index.js';
+export * from './protocol/index.js';
+export * from './settings/index.js';
 export * from './vscode.action.js';

@@ -48,14 +48,12 @@ export namespace JSX {
     /**
      * Since we don't use string-based intrinsic elements, this is empty.
      */
-    // eslint-disable-next-line @typescript-eslint/no-empty-object-type
     export interface IntrinsicElements {}
 
     /**
      * Tells TypeScript which prop holds children.
      */
     export interface ElementChildrenAttribute {
-        // eslint-disable-next-line @typescript-eslint/no-empty-object-type
         children: {};
     }
 

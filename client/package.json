@@ -6,7 +6,6 @@
   "type": "module",
   "workspaces": [
     "application/*",
-    "examples/*",
     "packages/*",
     "tooling/*"
   ],
@@ -26,7 +25,7 @@
     "package:zip": "npm run package && cd ${INIT_CWD} && zip -r ./release-$(date +%Y%m%d-%H%M).zip ./release",
     "setup": "npm ci && npm run build:tooling && npm run generate && npm run build",
     "start:server": "cd ../server && ./gradlew run",
-    "watch": "lerna run --parallel watch",
+    "watch": "lerna run --parallel --stream watch",
     "win:start:server": "cd ../server && ./gradlew.bat run"
   },
   "overrides": {
@@ -52,7 +51,7 @@
     "eslint-plugin-react-hooks": "^5.1.0",
     "glob": "^11.0.1",
     "globals": "^15.15.0",
-    "lerna": "^8.1.9",
+    "lerna": "^9.0.0",
     "prettier": "^3.5.1",
     "prettier-plugin-packagejson": "^2.5.8",
     "rimraf": "^6.0.1",

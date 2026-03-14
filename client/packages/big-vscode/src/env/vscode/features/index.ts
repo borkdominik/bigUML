@@ -10,6 +10,7 @@
 export * from './action/index.js';
 export * from './command/index.js';
 export * from './connector/index.js';
+export * from './container/index.js';
 export * from './glsp/index.js';
 export * from './output/index.js';
 export * from './server/index.js';

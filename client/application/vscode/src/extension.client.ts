@@ -8,33 +8,38 @@
  *********************************************************************************/
 import '../css/colors.css';
 
+import { VSCodeSettings } from '@borkdominik-biguml/big-vscode';
 import { TYPES, type GLSPServer } from '@borkdominik-biguml/big-vscode/vscode';
 import { type Container } from 'inversify';
 import * as vscode from 'vscode';
 import { createContainer } from './extension.config.js';
-import { VSCodeSettings } from './language.js';
 
 let diContainer: Container | undefined;
 
 export async function activateClient(context: vscode.ExtensionContext): Promise<void> {
-    diContainer = createContainer(context, {
-        glspServerConfig: {
-            port: 5007
-        },
-        diagram: {
-            diagramType: VSCodeSettings.diagramType,
-            name: VSCodeSettings.name
-        }
-    });
+    try {
+        diContainer = createContainer(context, {
+            glspServerConfig: {
+                port: 5007
+            },
+            diagram: {
+                diagramType: VSCodeSettings.diagramType,
+                name: VSCodeSettings.name
+            }
+        });
 
-    diContainer.getAll<any>(TYPES.RootInitialization);
-    // await diContainer.get<ServerManager>(TYPES.ServerManager).start();
+        diContainer.getAll<any>(TYPES.RootInitialization);
+        // await diContainer.get<ServerManager>(TYPES.ServerManager).start();
 
-    setTimeout(() => {
-        diContainer!.get<GLSPServer>(TYPES.GLSPServer).start();
-    }, 2000);
+        setTimeout(() => {
+            diContainer!.get<GLSPServer>(TYPES.GLSPServer).start();
+        }, 2000);
 
-    vscode.commands.executeCommand('setContext', `${VSCodeSettings.name}.isRunning`, true);
+        vscode.commands.executeCommand('setContext', `${VSCodeSettings.name}.isRunning`, true);
+    } catch (error) {
+        console.error('Failed to activate the extension:', error);
+        vscode.window.showErrorMessage('Failed to activate the extension. Please check the console for details.');
+    }
 }
 
 export async function deactivateClient(_context: vscode.ExtensionContext): Promise<any> {

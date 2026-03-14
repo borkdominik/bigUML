@@ -7,14 +7,24 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { TYPES } from '@borkdominik-biguml/big-vscode/vscode';
+import { bindWebviewViewFactory, TYPES } from '@borkdominik-biguml/big-vscode/vscode';
 import { ContainerModule } from 'inversify';
-import { MinimapProvider, MinimapViewId } from './minimap.provider.js';
+import { MinimapProvider } from './minimap.provider.js';
 
 export function minimapModule(viewId: string) {
     return new ContainerModule(bind => {
-        bind(MinimapViewId).toConstantValue(viewId);
-        bind(MinimapProvider).toSelf().inSingletonScope();
-        bind(TYPES.RootInitialization).toService(MinimapProvider);
+        bindWebviewViewFactory(bind, {
+            provider: MinimapProvider,
+            configure: childBind => {
+                childBind(TYPES.WebviewViewOptions).toConstantValue({
+                    viewId,
+                    viewType: viewId,
+                    files: {
+                        js: [['minimap', 'bundle.js']],
+                        css: [['minimap', 'bundle.css']]
+                    }
+                });
+            }
+        });
     });
 }

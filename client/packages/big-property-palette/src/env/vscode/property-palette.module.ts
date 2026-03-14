@@ -7,14 +7,24 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { TYPES } from '@borkdominik-biguml/big-vscode/vscode';
+import { bindWebviewViewFactory, TYPES } from '@borkdominik-biguml/big-vscode/vscode';
 import { ContainerModule } from 'inversify';
-import { PropertyPaletteProvider, PropertyPaletteViewId } from './property-palette.provider.js';
+import { PropertyPaletteProvider } from './property-palette.provider.js';
 
 export function propertyPaletteModule(viewId: string) {
     return new ContainerModule(bind => {
-        bind(PropertyPaletteViewId).toConstantValue(viewId);
-        bind(PropertyPaletteProvider).toSelf().inSingletonScope();
-        bind(TYPES.RootInitialization).toService(PropertyPaletteProvider);
+        bindWebviewViewFactory(bind, {
+            provider: PropertyPaletteProvider,
+            configure: childBind => {
+                childBind(TYPES.WebviewViewOptions).toConstantValue({
+                    viewId,
+                    viewType: viewId,
+                    files: {
+                        js: [['property-palette', 'bundle.js']],
+                        css: [['property-palette', 'bundle.css']]
+                    }
+                });
+            }
+        });
     });
 }

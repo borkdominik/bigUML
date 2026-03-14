@@ -7,16 +7,15 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
-import { TYPES } from '@borkdominik-biguml/big-vscode/vscode';
-import { FeatureModule } from '@eclipse-glsp/client';
+import { bindWebviewEditorFactory, FeatureModule } from '@borkdominik-biguml/big-vscode/vscode';
 import { UMLDiagramEditorProvider, UMLDiagramEditorSettings } from './editor.provider.js';
 
 export function editorModule(settings: UMLDiagramEditorSettings) {
-    return new FeatureModule(bind => {
-        bind(UMLDiagramEditorSettings).toConstantValue(settings);
-        bind(UMLDiagramEditorProvider).toSelf().inSingletonScope();
-        bind(TYPES.EditorProvider).toService(UMLDiagramEditorProvider);
-        bind(TYPES.RootInitialization).toService(UMLDiagramEditorProvider);
-        bind(TYPES.ServerManagerStateListener).toService(UMLDiagramEditorProvider);
+    return new FeatureModule(context => {
+        context.bind(UMLDiagramEditorSettings).toConstantValue(settings);
+
+        bindWebviewEditorFactory(context.bind, {
+            provider: UMLDiagramEditorProvider
+        });
     });
 }

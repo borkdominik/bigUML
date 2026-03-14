@@ -24,7 +24,7 @@ export class Logger {
     ) {}
 
     log(...args: unknown[]): void {
-        if (this.level >= LogLevel.Log) {
+        if (this.level >= LogLevel.Info) {
             console.log(`[${this.name}]`, ...args);
         }
     }
@@ -44,8 +44,7 @@ export class Logger {
     child(name: string | string[], options?: ChildLoggerOptions): Logger {
         const segment = Array.isArray(name) ? name.join('/') : name;
         const childName = `${this.name}/${segment}`;
-        const childLevel =
-            options?.logLevel ?? (this.applyToChildren ? this.level : this.resolver(childName));
+        const childLevel = options?.logLevel ?? (this.applyToChildren ? this.level : this.resolver(childName));
         return new Logger(childName, childLevel, this.applyToChildren, this.resolver);
     }
 }

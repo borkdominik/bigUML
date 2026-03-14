@@ -6,13 +6,46 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { TYPES, type BIGGLSPVSCodeConnector } from '@borkdominik-biguml/big-vscode/vscode';
-import { WebviewEndpoint, type GLSPDiagramIdentifier, type GlspVscodeClient } from '@eclipse-glsp/vscode-integration';
-import { inject, injectable, postConstruct } from 'inversify';
-import * as vscode from 'vscode';
-import { type ThemeIntegration } from './features/theme/theme-integration.js';
-import { GLSPStageResolver } from './features/webview/glsp.stage.js';
-import type { EditorStageResolver, StageContext } from './features/webview/stage.js';
+import { ReactHtmlProvider, TYPES, WebviewEditorProvider } from '@borkdominik-biguml/big-vscode/vscode';
+import {
+    ActionMessageNotification,
+    ClientStateChangeNotification,
+    Deferred,
+    DisposableCollection,
+    DisposeClientSessionRequest,
+    InitializeClientSessionRequest,
+    InitializeNotification,
+    InitializeServerRequest,
+    ShutdownServerNotification,
+    StartRequest,
+    StopRequest,
+    WebviewReadyNotification,
+    type ActionMessage,
+    type Disposable,
+    type GLSPClient,
+    type GLSPDiagramIdentifier,
+    type GlspVscodeClient,
+    type WebviewEndpoint,
+    type WebviewEndpointOptions
+} from '@eclipse-glsp/vscode-integration';
+import { inject, injectable } from 'inversify';
+import {
+    EventEmitter,
+    type CancellationToken,
+    type CustomDocument,
+    type CustomDocumentBackup,
+    type CustomDocumentBackupContext,
+    type CustomDocumentEditEvent,
+    type Event,
+    type Uri,
+    type Webview,
+    type WebviewPanel,
+    type WebviewView
+} from 'vscode';
+import { Messenger } from 'vscode-messenger';
+import type { MessageParticipant } from 'vscode-messenger-common';
+import { GLSPIsReadyAction } from '../common/actions/editor.actions.js';
+import type { ThemeIntegration } from './features/theme/theme-integration.js';
 
 export const UMLDiagramEditorSettings = Symbol('UMLDiagramEditorSettings');
 export interface UMLDiagramEditorSettings {
@@ -20,178 +53,263 @@ export interface UMLDiagramEditorSettings {
     diagramType: string;
 }
 
-// TODO: Haydar
-
 @injectable()
-export class UMLDiagramEditorProvider implements vscode.CustomEditorProvider {
-    protected editors: {
-        [key: string]: {
-            client: GlspVscodeClient;
-            context: StageContext;
-            stage: EditorStageResolver;
-        };
-    } = {};
+export class UMLDiagramEditorProvider extends WebviewEditorProvider {
+    @inject(TYPES.Theme)
+    protected readonly themeIntegration: ThemeIntegration;
 
+    protected clients = new Map<string, GlspVscodeClient>();
     protected viewCounter = 0;
 
-    onDidChangeCustomDocument: vscode.Event<vscode.CustomDocumentContentChangeEvent<vscode.CustomDocument>>;
-
-    constructor(
-        @inject(UMLDiagramEditorSettings) protected readonly settings: UMLDiagramEditorSettings,
-        @inject(TYPES.ExtensionContext) protected readonly context: vscode.ExtensionContext,
-        @inject(TYPES.Theme) protected readonly themeIntegration: ThemeIntegration,
-        @inject(TYPES.GLSPVSCodeConnector) protected readonly connector: BIGGLSPVSCodeConnector
-    ) {
-        this.onDidChangeCustomDocument = this.connector.onDidChangeCustomDocument;
-    }
-
-    @postConstruct()
-    initialize(): void {
-        const disposable = vscode.window.registerCustomEditorProvider(this.settings.viewType, this, {
-            webviewOptions: { retainContextWhenHidden: true },
-            supportsMultipleEditorsPerDocument: false
+    constructor(@inject(UMLDiagramEditorSettings) protected readonly settings: UMLDiagramEditorSettings) {
+        super({
+            viewId: settings.viewType,
+            viewType: settings.viewType,
+            htmlOptions: {
+                files: {
+                    js: [['glsp-client', 'bundle.js']],
+                    css: [['glsp-client', 'bundle.css']]
+                }
+            }
         });
-        this.context.subscriptions.push(disposable);
     }
 
-    saveCustomDocument(document: vscode.CustomDocument, _cancellation: vscode.CancellationToken): Thenable<void> {
+    override get onDidChangeCustomDocument(): Event<CustomDocumentEditEvent<CustomDocument>> {
+        return this.connector.onDidChangeCustomDocument as Event<CustomDocumentEditEvent<CustomDocument>>;
+    }
+
+    override async resolveCustomEditor(document: CustomDocument, webviewPanel: WebviewPanel, token: CancellationToken): Promise<void> {
+        const client = await this.prepareGLSPClient(document, webviewPanel);
+        this.clients.set(document.uri.toString(), client);
+        return super.resolveCustomEditor(document, webviewPanel, token);
+    }
+
+    protected override resolveMessenger(webview: WebviewView | WebviewPanel): void {
+        this.actionMessenger.resolve();
+
+        this.toDispose.push(
+            this.webviewMessenger,
+            this.actionMessenger,
+            this.resolveWebviewProtocol(this.webviewMessenger),
+            this.resolveActionProtocol(this.actionMessenger),
+            this.resolveWebviewEvents(webview)
+        );
+    }
+
+    protected override resolveHtml(webview: Webview, context: CustomDocument): string {
+        const clientId = this.clients.get(context.uri.toString())?.clientId ?? 'unknown';
+        return new ReactHtmlProvider({
+            rootProvider: () => `<div id="${clientId}_container" style="height: 100%;"></div>`,
+            ...this.options.htmlOptions
+        }).createHtml(this.extensionContext, webview);
+    }
+
+    override saveCustomDocument(document: CustomDocument, _cancellation: CancellationToken): Thenable<void> {
         return this.connector.saveDocument(document);
     }
 
-    saveCustomDocumentAs(
-        document: vscode.CustomDocument,
-        destination: vscode.Uri,
-        _cancellation: vscode.CancellationToken
-    ): Thenable<void> {
+    override saveCustomDocumentAs(document: CustomDocument, destination: Uri, _cancellation: CancellationToken): Thenable<void> {
         return this.connector.saveDocument(document, destination);
     }
 
-    revertCustomDocument(document: vscode.CustomDocument, _cancellation: vscode.CancellationToken): Thenable<void> {
+    override revertCustomDocument(document: CustomDocument, _cancellation: CancellationToken): Thenable<void> {
         return this.connector.revertDocument(document, this.settings.diagramType);
     }
 
-    backupCustomDocument(
-        _document: vscode.CustomDocument,
-        context: vscode.CustomDocumentBackupContext,
-        _cancellation: vscode.CancellationToken
-    ): Thenable<vscode.CustomDocumentBackup> {
-        // Basically do the bare minimum - which is nothing
+    override backupCustomDocument(
+        _document: CustomDocument,
+        context: CustomDocumentBackupContext,
+        _cancellation: CancellationToken
+    ): Thenable<CustomDocumentBackup> {
         return Promise.resolve({ id: context.destination.toString(), delete: () => undefined });
-    }
-
-    openCustomDocument(
-        uri: vscode.Uri,
-        _openContext: vscode.CustomDocumentOpenContext,
-        _token: vscode.CancellationToken
-    ): vscode.CustomDocument | Thenable<vscode.CustomDocument> {
-        // Return the most basic implementation possible.
-        return { uri, dispose: () => undefined };
-    }
-
-    async resolveCustomEditor(
-        document: vscode.CustomDocument,
-        webviewPanel: vscode.WebviewPanel,
-        token: vscode.CancellationToken
-    ): Promise<void> {
-        const context: StageContext = {
-            document,
-            webviewPanel,
-            token
-        };
-        const clientId = this.generateClientId();
-        const client = await this.prepareGLSPClient(clientId, context);
-        const webview = this.createEditorBasedOnState(context, client);
-
-        this.editors[document.uri.toString()] = {
-            client,
-            context: context,
-            stage: webview
-        };
-
-        context.webviewPanel.onDidDispose(() => {
-            delete this.editors[context.document.uri.toString()];
-        });
-
-        await webview.resolve(context);
     }
 
     protected generateClientId(): string {
         return `${this.settings.diagramType}_${this.viewCounter++}`;
     }
 
-    protected createEditorBasedOnState(_context: StageContext, client: GlspVscodeClient): EditorStageResolver {
-        // if (this.serverManagerState.state === 'servers-launched') {
-        const resolver = this.createGLSPResolver(client);
-        // } else if (this.serverManagerState.state === 'error') {
-        //     resolver = this.createErrorResolver(context);
-        // } else {
-        //     resolver = this.createInitializingEnvironmentResolver(context);
-        // }
-
-        return resolver;
-    }
-
-    // protected createInitializingEnvironmentResolver(context: StageContext): InitializingStageResolver {
-    //     const resolver = new InitializingStageResolver();
-    //     const state = this.serverManagerState;
-    //     if (state.state === 'launching-server') {
-    //         resolver.progress(context, `Starting ${state.launcher.serverName}`);
-    //     }
-    //     return resolver;
-    // }
-
-    // protected createErrorResolver(context: StageContext): ErrorStageResolver {
-    //     const resolver = new ErrorStageResolver();
-    //     const state = this.serverManagerState;
-    //     if (state.state === 'error') {
-    //         resolver.error(context, state.reason, state.details);
-    //     }
-    //     return resolver;
-    // }
-
-    protected createGLSPResolver(client: GlspVscodeClient): GLSPStageResolver {
-        return new GLSPStageResolver({
-            client,
-            context: this.context,
-            diagramType: this.settings.diagramType,
-            connector: this.connector,
-            themeIntegration: this.themeIntegration
-        });
-    }
-
-    protected async prepareGLSPClient(clientId: string, context: StageContext): Promise<GlspVscodeClient> {
-        // This is used to initialize GLSP for our diagram
+    protected async prepareGLSPClient(document: CustomDocument, webviewPanel: WebviewPanel): Promise<GlspVscodeClient> {
+        const clientId = this.generateClientId();
         const diagramIdentifier: GLSPDiagramIdentifier = {
             diagramType: this.settings.diagramType,
-            uri: EditorProvider.serializeUri(context.document.uri),
+            uri: EditorProvider.serializeUri(document.uri),
             clientId
         };
 
-        const endpoint = new WebviewEndpoint({
+        const endpoint = new UmlWebviewEndpoint({
             diagramIdentifier,
             messenger: this.connector.messenger,
-            webviewPanel: context.webviewPanel
+            webviewPanel
         });
 
         const client: GlspVscodeClient = {
             clientId: diagramIdentifier.clientId,
             diagramType: diagramIdentifier.diagramType,
-            document: context.document,
-            webviewEndpoint: endpoint
+            document,
+            webviewEndpoint: endpoint as any as WebviewEndpoint
         };
-        await this.connector.registerClient(client);
 
+        endpoint.onActionMessage(m => {
+            if (GLSPIsReadyAction.is(m.action)) {
+                this.themeIntegration.updateTheme(client);
+            }
+        });
+
+        this.webviewMessenger.reuse(this.connector.messenger, endpoint.messageParticipant);
+        await this.connector.registerClient(client);
         return client;
     }
 }
 
 export namespace EditorProvider {
-    export function serializeUri(uri: vscode.Uri): string {
+    export function serializeUri(uri: Uri): string {
         let uriString = uri.toString();
         const match = uriString.match(/file:\/\/\/([a-z])%3A/i);
         if (match) {
             uriString = 'file:///' + match[1] + ':' + uriString.substring(match[0].length);
         }
         return uriString;
+    }
+}
+
+type PublicOf<T> = {
+    [K in keyof T]: T[K];
+};
+
+// Workaround as the WebviewEndpoint is not designed for webview reloads
+class UmlWebviewEndpoint implements PublicOf<WebviewEndpoint>, Disposable {
+    readonly webviewPanel: WebviewPanel;
+    readonly messenger: Messenger;
+    readonly messageParticipant: MessageParticipant;
+    readonly diagramIdentifier: GLSPDiagramIdentifier;
+
+    protected _readyDeferred = new Deferred<void>();
+    protected toDispose = new DisposableCollection();
+
+    protected onActionMessageEmitter = new EventEmitter<ActionMessage>();
+    get onActionMessage(): Event<ActionMessage> {
+        return this.onActionMessageEmitter.event;
+    }
+
+    protected _serverActions?: string[];
+    get serverActions(): string[] | undefined {
+        return this._serverActions;
+    }
+
+    protected _clientActions?: string[];
+    get clientActions(): string[] | undefined {
+        return this._clientActions;
+    }
+
+    constructor(options: WebviewEndpointOptions) {
+        this.webviewPanel = options.webviewPanel;
+        this.messenger = options.messenger ?? new Messenger();
+        this.diagramIdentifier = options.diagramIdentifier;
+        this.messageParticipant = this.messenger.registerWebviewPanel(this.webviewPanel);
+
+        this.toDispose.push(
+            this.webviewPanel.onDidDispose(() => {
+                this.dispose();
+            }),
+            this.messenger.onNotification(
+                WebviewReadyNotification,
+                () => {
+                    // When the webview is reloaded, it will send the WebviewReadyNotification again.
+                    // In this case, we need to resend the diagram identifier to re-initialize the webview.
+                    if (this._readyDeferred.state === 'resolved') {
+                        this.sendDiagramIdentifier();
+                    } else {
+                        this._readyDeferred.resolve();
+                    }
+                },
+                {
+                    sender: this.messageParticipant
+                }
+            ),
+            this.onActionMessageEmitter
+        );
+    }
+
+    protected async sendDiagramIdentifier(): Promise<void> {
+        await this.ready;
+        if (this.diagramIdentifier) {
+            this.messenger.sendNotification(InitializeNotification, this.messageParticipant, this.diagramIdentifier);
+        }
+    }
+
+    /**
+     * Hooks up a {@link GLSPClient} with the underlying webview and send the `initialize` message to the webview
+     * (once its ready)
+     * The GLSP client is called remotely from the webview context via the `vscode-messenger` RPC
+     * protocol.
+     * @param glspClient The client that should be connected
+     * @returns A {@link Disposable} to dispose the remote connection and all attached listeners
+     */
+    initialize(glspClient: GLSPClient): Disposable {
+        const toDispose = new DisposableCollection();
+        toDispose.push(
+            this.messenger.onNotification(
+                ActionMessageNotification,
+                msg => {
+                    this.onActionMessageEmitter.fire(msg);
+                },
+                {
+                    sender: this.messageParticipant
+                }
+            ),
+            this.messenger.onRequest(StartRequest, () => glspClient.start(), { sender: this.messageParticipant }),
+            this.messenger.onRequest(
+                InitializeServerRequest,
+                async params => {
+                    const result = await glspClient.initializeServer(params);
+                    if (!this._serverActions) {
+                        this._serverActions = result.serverActions[this.diagramIdentifier.diagramType];
+                    }
+                    return result;
+                },
+                {
+                    sender: this.messageParticipant
+                }
+            ),
+            this.messenger.onRequest(
+                InitializeClientSessionRequest,
+                params => {
+                    if (!this._clientActions) {
+                        this._clientActions = params.clientActionKinds;
+                    }
+                    glspClient.initializeClientSession(params);
+                },
+                {
+                    sender: this.messageParticipant
+                }
+            ),
+            this.messenger.onRequest(DisposeClientSessionRequest, params => glspClient.disposeClientSession(params), {
+                sender: this.messageParticipant
+            }),
+            this.messenger.onRequest(ShutdownServerNotification, () => glspClient.shutdownServer(), {
+                sender: this.messageParticipant
+            }),
+            this.messenger.onRequest(StopRequest, () => glspClient.stop(), {
+                sender: this.messageParticipant
+            }),
+            glspClient.onCurrentStateChanged(state =>
+                this.messenger.sendNotification(ClientStateChangeNotification, this.messageParticipant, state)
+            )
+        );
+        this.toDispose.push(toDispose);
+        this.sendDiagramIdentifier();
+        return toDispose;
+    }
+
+    sendMessage(actionMessage: ActionMessage): void {
+        this.messenger.sendNotification(ActionMessageNotification, this.messageParticipant, actionMessage);
+    }
+
+    get ready(): Promise<void> {
+        return this._readyDeferred.promise;
+    }
+
+    dispose(): void {
+        this.toDispose.dispose();
     }
 }

@@ -7,14 +7,24 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { TYPES } from '@borkdominik-biguml/big-vscode/vscode';
+import { bindWebviewViewFactory, TYPES } from '@borkdominik-biguml/big-vscode/vscode';
 import { ContainerModule } from 'inversify';
-import { AdvancedSearchProvider, AdvancedSearchViewId } from './advancedsearch.provider.js';
+import { AdvancedSearchProvider } from './advancedsearch.provider.js';
 
 export function advancedSearchModule(viewId: string) {
     return new ContainerModule(bind => {
-        bind(AdvancedSearchViewId).toConstantValue(viewId);
-        bind(AdvancedSearchProvider).toSelf().inSingletonScope();
-        bind(TYPES.RootInitialization).toService(AdvancedSearchProvider);
+        bindWebviewViewFactory(bind, {
+            provider: AdvancedSearchProvider,
+            configure: bind => {
+                bind(TYPES.WebviewViewOptions).toConstantValue({
+                    viewId,
+                    viewType: viewId,
+                    files: {
+                        js: [['advancedsearch', 'bundle.js']],
+                        css: [['advancedsearch', 'bundle.css']]
+                    }
+                });
+            }
+        });
     });
 }

@@ -10,13 +10,11 @@ import { advancedSearchModule } from '@borkdominik-biguml/big-advancedsearch/vsc
 import { minimapModule } from '@borkdominik-biguml/big-minimap/vscode';
 import { outlineModule } from '@borkdominik-biguml/big-outline/vscode';
 import { propertyPaletteModule } from '@borkdominik-biguml/big-property-palette/vscode';
-import { createVSCodeCommonContainer, TYPES, type GLSPDiagramSettings, type GLSPServerConfig } from '@borkdominik-biguml/big-vscode/vscode';
+import { VSCodeSettings } from '@borkdominik-biguml/big-vscode';
+import { vscodeModule, type GLSPDiagramSettings, type GLSPServerConfig } from '@borkdominik-biguml/big-vscode/vscode';
 import { editorModule, themeModule } from '@borkdominik-biguml/uml-glsp-client/vscode';
 import { type Container } from 'inversify';
 import type * as vscode from 'vscode';
-import { DefaultCommandsProvider } from './features/command/default-commands.js';
-import { vscodeModule } from './features/vscode.module.js';
-import { VSCodeSettings } from './language.js';
 
 export function createContainer(
     extensionContext: vscode.ExtensionContext,
@@ -25,13 +23,9 @@ export function createContainer(
         glspServerConfig: GLSPServerConfig;
     }
 ): Container {
-    const container = createVSCodeCommonContainer(extensionContext, options);
-
-    container.bind(DefaultCommandsProvider).toSelf().inSingletonScope();
-    container.bind(TYPES.RootInitialization).toService(DefaultCommandsProvider);
+    const container = vscodeModule(extensionContext, options);
 
     container.load(
-        vscodeModule,
         editorModule({
             diagramType: VSCodeSettings.diagramType,
             viewType: VSCodeSettings.editor.viewType
@@ -39,7 +33,6 @@ export function createContainer(
         outlineModule(VSCodeSettings.outline.viewId),
         propertyPaletteModule(VSCodeSettings.propertyPalette.viewId),
         minimapModule(VSCodeSettings.minimap.viewId),
-        // helloWorldModule(VSCodeSettings.helloWorld.viewId),
         advancedSearchModule(VSCodeSettings.advancedSearch.viewId),
         // {
         //   "id": "bigUML.panel.revision-management",

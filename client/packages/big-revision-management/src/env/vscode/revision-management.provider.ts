@@ -6,8 +6,11 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-import { BIGReactWebview, type BIGWebviewProviderContext } from '@borkdominik-biguml/big-vscode/vscode';
+import type { WebviewMessenger } from '@borkdominik-biguml/big-vscode/vscode';
+import { type BWebviewViewOptions, type CacheActionListener, TYPES, WebviewViewProvider } from '@borkdominik-biguml/big-vscode/vscode';
+import { DisposableCollection } from '@eclipse-glsp/vscode-integration';
 import { inject, injectable, postConstruct } from 'inversify';
+import type { Disposable } from 'vscode';
 import * as vscode from 'vscode';
 import { DeleteSnapshotResponseAction } from '../common/actions/delete-snapshot-response-action.js';
 import { FileSaveResponse } from '../common/actions/file-save-action.js';
@@ -23,24 +26,24 @@ import { RevisionManagementService } from './revision-management.service.js';
 export const RevisionManagementId = Symbol('RevisionmanagementViewId');
 
 @injectable()
-export class RevisionManagementProvider extends BIGReactWebview {
-    @inject(RevisionManagementId)
-    viewId: string;
-
+export class RevisionManagementProvider extends WebviewViewProvider {
     @inject(RevisionManagementService)
     protected readonly service: RevisionManagementService;
 
-    protected override cssPath = ['revision-management', 'bundle.css'];
-    protected override jsPath = ['revision-management', 'bundle.js'];
-    protected readonly actionCache = this.actionListener.createCache([FileSaveResponse.KIND]);
+    protected actionCache: CacheActionListener;
+
+    constructor(@inject(TYPES.WebviewViewOptions) options: BWebviewViewOptions) {
+        super(options);
+    }
 
     @postConstruct()
-    protected override init(): void {
-        super.init();
+    protected init(): void {
+        this.actionCache = this.actionListener.createCache([FileSaveResponse.KIND]);
+        this.toDispose.push(this.actionCache);
 
         this.toDispose.push(
             this.service.onDidChangeTimeline(timeline => {
-                this.webviewConnector.dispatch(
+                this.actionMessenger.dispatch(
                     FileSaveResponse.create({
                         responseId: '',
                         timeline
@@ -107,38 +110,13 @@ export class RevisionManagementProvider extends BIGReactWebview {
                 return DeleteSnapshotResponseAction.create(action.requestId);
             })
         );
-
-        this.toDispose.push(this.actionCache);
     }
 
-    protected override handleConnection(): void {
-        super.handleConnection();
-
-        // console.log('Revision Management Provider handleConnection');
-
-        this.toDispose.push(
-            this.actionCache.onDidChange(message => this.webviewConnector.dispatch(message)),
-            this.webviewConnector.onReady(() => {
-                // console.log('Revision Management Provider webviewConnector onReady');
-                this.webviewConnector.dispatch(this.actionCache.getActions());
-                // Send initial state
-                this.webviewConnector.dispatch(
-                    FileSaveResponse.create({
-                        responseId: '',
-                        timeline: this.service.getTimeline()
-                    })
-                );
-            }),
-            this.webviewConnector.onVisible(() => {
-                this.webviewConnector.dispatch(this.actionCache.getActions());
-                // Send initial state
-                this.webviewConnector.dispatch(
-                    FileSaveResponse.create({
-                        responseId: '',
-                        timeline: this.service.getTimeline()
-                    })
-                );
-            }),
+    protected override resolveWebviewProtocol(messenger: WebviewMessenger): Disposable {
+        const disposables = new DisposableCollection();
+        disposables.push(
+            super.resolveWebviewProtocol(messenger),
+            this.actionCache.onDidChange(message => this.actionMessenger.dispatch(message)),
             vscode.commands.registerCommand('timeline.import', () => {
                 // console.log('timeline.import command triggered');
                 this.webviewView?.webview.postMessage({ action: 'import' });
@@ -148,23 +126,36 @@ export class RevisionManagementProvider extends BIGReactWebview {
                 this.webviewView?.webview.postMessage({ action: 'export' });
             })
         );
+        return disposables;
     }
 
-    protected getCssUri(webview: vscode.Webview, ...path: string[]): vscode.Uri {
-        return webview.asWebviewUri(vscode.Uri.joinPath(this.extensionContext.extensionUri, 'webviews', ...path));
+    protected override handleOnReady(): void {
+        this.actionMessenger.dispatch(this.actionCache.getActions());
+        // Send initial state
+        this.actionMessenger.dispatch(
+            FileSaveResponse.create({
+                responseId: '',
+                timeline: this.service.getTimeline()
+            })
+        );
     }
 
-    protected getJsUri(webview: vscode.Webview, ...path: string[]): vscode.Uri {
-        return webview.asWebviewUri(vscode.Uri.joinPath(this.extensionContext.extensionUri, 'webviews', ...path));
+    protected override handleOnVisible(): void {
+        this.actionMessenger.dispatch(this.actionCache.getActions());
+        // Send initial state
+        this.actionMessenger.dispatch(
+            FileSaveResponse.create({
+                responseId: '',
+                timeline: this.service.getTimeline()
+            })
+        );
     }
 
-    protected override resolveHTML(context: BIGWebviewProviderContext): void {
-        const webview = context.webviewView.webview;
+    protected override resolveHtml(webview: vscode.Webview): string {
+        const cssUri = webview.asWebviewUri(vscode.Uri.joinPath(this.extensionContext.extensionUri, 'webviews', ...this.options.files.css[0]));
+        const jsUri = webview.asWebviewUri(vscode.Uri.joinPath(this.extensionContext.extensionUri, 'webviews', ...this.options.files.js[0]));
 
-        const cssUri = this.getCssUri(webview, ...this.cssPath);
-        const jsUri = this.getJsUri(webview, ...this.jsPath);
-
-        const html = /* html */ `
+        return /* html */ `
             <!DOCTYPE html>
             <html lang="en">
             <head>
@@ -179,7 +170,5 @@ export class RevisionManagementProvider extends BIGReactWebview {
             </body>
             </html>
         `;
-
-        webview.html = html;
     }
 }

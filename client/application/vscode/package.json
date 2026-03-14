@@ -61,7 +61,8 @@
     "vscode:prepublish": "npm run compile:prod",
     "vscode:release": "vsce publish --no-dependencies",
     "vscode:release-pre": "npm run vscode:release -- --pre-release",
-    "watch": "npm run compile -- --watch"
+    "watch": "concurrently --kill-others 'npm run watch:compile'",
+    "watch:compile": "npm run compile -- --watch --preserveWatchOutput"
   },
   "contributes": {
     "commands": [
@@ -296,12 +297,6 @@
           "when": "bigUML.isRunning"
         },
         {
-          "id": "bigUML.panel.hello-world",
-          "name": "Hello World",
-          "type": "webview",
-          "when": "bigUML.isRunning && false"
-        },
-        {
           "id": "bigUML.panel.advancedsearch",
           "name": "Advanced Search",
           "type": "webview",
@@ -324,7 +319,6 @@
   ],
   "dependencies": {
     "@borkdominik-biguml/big-advancedsearch": "*",
-    "@borkdominik-biguml/big-hello-world": "*",
     "@borkdominik-biguml/big-minimap": "*",
     "@borkdominik-biguml/big-outline": "*",
     "@borkdominik-biguml/big-property-palette": "*",

@@ -8,9 +8,5 @@
  **********************************************************************************/
 
 import { ContainerModule } from 'inversify';
-import { TYPES } from '../../vscode-common.types.js';
-import { WebviewViewConnector } from './glsp-webview.connector.js';
 
-export const webviewModule = new ContainerModule(bind => {
-    bind(TYPES.WebviewViewConnector).to(WebviewViewConnector);
-});
+export const webviewModule = new ContainerModule(_bind => {});

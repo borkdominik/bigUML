@@ -48,11 +48,13 @@
     "lint": "eslint -c ./eslint.config.js",
     "lint:fix": "npm run lint -- --fix",
     "tsc": "tsc",
-    "watch": "concurrently --kill-others 'npm run compile -- --watch' 'npm run bundle -- --watch'"
+    "watch": "concurrently --kill-others 'npm run watch:compile' 'npm run watch:bundle'",
+    "watch:bundle": "npm run bundle -- --watch",
+    "watch:compile": "npm run compile -- --watch --preserveWatchOutput"
   },
   "dependencies": {
     "@borkdominik-biguml/big-advancedsearch": "*",
-    "@borkdominik-biguml/big-hello-world": "*",
+    "@borkdominik-biguml/big-common": "*",
     "@borkdominik-biguml/big-minimap": "*",
     "@borkdominik-biguml/big-outline": "*",
     "@borkdominik-biguml/big-property-palette": "*",
@@ -64,7 +66,9 @@
     "balloon-css": "^0.5.0",
     "reflect-metadata": "^0.1.13",
     "snabbdom": "^3.5.1",
-    "sprotty": "*"
+    "sprotty": "*",
+    "vscode-messenger": "^0.4.5",
+    "vscode-messenger-common": "^0.4.5"
   },
   "devDependencies": {
     "endent": "^2.1.0",

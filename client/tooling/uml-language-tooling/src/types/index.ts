@@ -14,9 +14,7 @@ export * from './path.js';
 export * from './property.js';
 export * from './reference.js';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface ABSTRACT_ELEMENT {}
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface ROOT_ELEMENT {}
 
 export interface UmlToolingContributionResult {

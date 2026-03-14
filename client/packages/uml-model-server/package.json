@@ -47,7 +47,8 @@
     "lint:fix": "npm run lint -- --fix",
     "tsc": "tsc",
     "vscode:prepublish": "npm run build && npm run lint",
-    "watch": "concurrently --kill-others 'npm run compile -- --watch'"
+    "watch": "concurrently --kill-others 'npm run watch:compile'",
+    "watch:compile": "npm run compile -- --watch --preserveWatchOutput"
   },
   "contributes": {},
   "dependencies": {

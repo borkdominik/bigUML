@@ -7,8 +7,8 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
-export * from './glsp-webview.connector.js';
-export * from './react-webview.provide.js';
-export * from './webview.messages.js';
+export * from './base/index.js';
+export * from './editor/index.js';
+export * from './view/index.js';
 export * from './webview.module.js';
-export * from './webview.provider.js';
+export * from './webview.types.js';

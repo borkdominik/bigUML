@@ -1,10 +1,11 @@
 /********************************************************************************
  * Copyright (c) 2023 CrossBreeze.
  ********************************************************************************/
+import { LOGGER_CONFIG, LogLevel } from '@borkdominik-biguml/big-common';
 import { UmlDiagramServices, UmlDiagramSharedServices } from '@borkdominik-biguml/uml-model-server';
 import { UmlDiagramLSPServices } from '@borkdominik-biguml/uml-model-server/integration';
 import { configureELKLayoutModule } from '@eclipse-glsp/layout-elk';
-import { LogLevel, LoggerFactory, type MaybePromise } from '@eclipse-glsp/server';
+import { LogLevel as GlspLogLevel, LoggerFactory, type MaybePromise } from '@eclipse-glsp/server';
 import { SocketServerLauncher, createAppModule, defaultLaunchOptions } from '@eclipse-glsp/server/node.js';
 import { Container, ContainerModule } from 'inversify';
 import { ClassDiagramModule } from './diagram/class/class-diagram-module.js';
@@ -15,6 +16,23 @@ import { UmlServerModule } from './module.js';
 const GLSP_SERVER_PORT = 5007;
 const GLSP_SERVER_HOST = '127.0.0.1';
 
+export function fromCommonLogLevel(level: LogLevel): GlspLogLevel {
+    switch (level) {
+        case LogLevel.None:
+            return GlspLogLevel.none;
+        case LogLevel.Error:
+            return GlspLogLevel.error;
+        case LogLevel.Warn:
+            return GlspLogLevel.warn;
+        case LogLevel.Info:
+            return GlspLogLevel.info;
+        case LogLevel.Debug:
+            return GlspLogLevel.debug;
+        default:
+            return GlspLogLevel.info;
+    }
+}
+
 /**
  * Launches a GLSP server with access to the given language services on the default port.
  *
@@ -22,7 +40,7 @@ const GLSP_SERVER_HOST = '127.0.0.1';
  * @returns a promise that is resolved as soon as the server is shut down or rejects if an error occurs
  */
 export function startGLSPServer(services: UmlDiagramLSPServices, modules: (ContainerModule | FeatureDiagramModule)[]): MaybePromise<void> {
-    const launchOptions = { ...defaultLaunchOptions, logLevel: LogLevel.debug };
+    const launchOptions = { ...defaultLaunchOptions, logLevel: fromCommonLogLevel(LOGGER_CONFIG.thirdParty.glspServer) };
     //     // create module based on launch options, e.g., logging etc.
     const appModule = createAppModule(launchOptions);
     //     // create custom module to bind language services to support injection within GLSP classes

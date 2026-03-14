@@ -77,6 +77,7 @@ export const coreConfig = tseslint.config(
             //         ignoreRestSiblings: true
             //     }
             // ],
+            '@typescript-eslint/no-empty-object-type': 'off',
             '@typescript-eslint/consistent-type-imports': ['error', { prefer: 'type-imports', fixStyle: 'inline-type-imports' }]
         }
     },

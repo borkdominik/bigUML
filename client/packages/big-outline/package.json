@@ -52,7 +52,8 @@
     "compile": "tsc -b",
     "lint": "eslint -c ./eslint.config.js",
     "lint:fix": "npm run lint -- --fix",
-    "watch": "concurrently --kill-others 'npm run compile -- --watch'"
+    "watch": "concurrently --kill-others 'npm run watch:compile'",
+    "watch:compile": "npm run compile -- --watch --preserveWatchOutput"
   },
   "dependencies": {
     "@borkdominik-biguml/big-components": "*",

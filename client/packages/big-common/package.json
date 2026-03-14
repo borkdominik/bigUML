@@ -1,0 +1,53 @@
+{
+  "name": "@borkdominik-biguml/big-common",
+  "version": "0.6.4",
+  "description": "Common utilities and components for bigUML",
+  "homepage": "https://github.com/borkdominik/bigUML",
+  "bugs": "https://github.com/borkdominik/bigUML/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/borkdominik/bigUML.git"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Business Informatics Group (TU Wien)"
+  },
+  "contributors": [
+    {
+      "name": "Business Informatics Group (TU Wien)",
+      "email": "dominik.bork@tuwien.ac.at",
+      "url": "https://me.big.tuwien.ac.at/"
+    },
+    {
+      "name": "Haydar Metin",
+      "email": "dev@haydar.metin.at",
+      "url": "https://me.big.tuwien.ac.at/"
+    }
+  ],
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./build/index.d.ts",
+      "default": "./build/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "build"
+  ],
+  "scripts": {
+    "build": "npm run clean && npm run compile && npm run lint",
+    "clean": "rimraf lib dist node_modules/.tmp",
+    "compile": "tsc -b",
+    "lint": "eslint -c ./eslint.config.js",
+    "lint:fix": "npm run lint -- --fix",
+    "tsc": "tsc",
+    "watch": "concurrently --kill-others 'npm run compile -- --watch' 'npm run bundle -- --watch'"
+  },
+  "dependencies": {
+    "minimatch": "^10.2.4",
+    "vscode-messenger-common": "^0.4.5"
+  },
+  "devDependencies": {},
+  "peerDependencies": {}
+}

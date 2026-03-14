@@ -6,26 +6,23 @@
 		"entities": [
 			{
 				"__type": "Class",
-				"__id": "a93da97ce-caa3-439f-ba7b-1b88641d4fc4",
-				"name": "Foobar",
+				"__id": "a04550825-ad6d-45ed-ab8a-e3df7c58cf03",
+				"name": "NewClass1",
 				"isAbstract": false,
 				"properties": [],
-				"operations": [
-					{
-						"__type": "Operation",
-						"__id": "a81640b09-0edf-49aa-82b2-719b7b0db590",
-						"name": "NewOperation1",
-						"isAbstract": false,
-						"isStatic": false,
-						"isQuery": false,
-						"visibility": "PUBLIC",
-						"concurrency": "SEQUENTIAL",
-						"parameters": []
-					}
-				],
+				"operations": [],
 				"isActive": false,
 				"visibility": "PUBLIC",
 				"skip": false
+			},
+			{
+				"__type": "DataType",
+				"__id": "af330f6c4-2874-41cf-9786-aced6eb99ae8",
+				"name": "NewDataType1",
+				"properties": [],
+				"operations": [],
+				"isAbstract": false,
+				"visibility": "PUBLIC"
 			}
 		],
 		"relations": []
@@ -33,24 +30,46 @@
 	"metaInfos": [
 		{
 			"__type": "Size",
-			"__id": "size_a93da97ce-caa3-439f-ba7b-1b88641d4fc4",
-			"height": 84.49999809265137,
-			"width": 207.59101175691626,
+			"__id": "size_a04550825-ad6d-45ed-ab8a-e3df7c58cf03",
+			"height": 30,
+			"width": 80,
 			"element": {
 				"__type": "Reference",
 				"__refType": "ElementWithSizeAndPosition",
-				"__value": "a93da97ce-caa3-439f-ba7b-1b88641d4fc4"
+				"__value": "a04550825-ad6d-45ed-ab8a-e3df7c58cf03"
 			}
 		},
 		{
 			"__type": "Position",
-			"__id": "pos_a93da97ce-caa3-439f-ba7b-1b88641d4fc4",
-			"x": 119.39346932823673,
-			"y": 179.1804079847101,
+			"__id": "pos_a04550825-ad6d-45ed-ab8a-e3df7c58cf03",
+			"x": 150,
+			"y": 10,
 			"element": {
 				"__type": "Reference",
 				"__refType": "ElementWithSizeAndPosition",
-				"__value": "a93da97ce-caa3-439f-ba7b-1b88641d4fc4"
+				"__value": "a04550825-ad6d-45ed-ab8a-e3df7c58cf03"
+			}
+		},
+		{
+			"__type": "Size",
+			"__id": "size_af330f6c4-2874-41cf-9786-aced6eb99ae8",
+			"height": 30,
+			"width": 80,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "af330f6c4-2874-41cf-9786-aced6eb99ae8"
+			}
+		},
+		{
+			"__type": "Position",
+			"__id": "pos_af330f6c4-2874-41cf-9786-aced6eb99ae8",
+			"x": 170,
+			"y": 160,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "af330f6c4-2874-41cf-9786-aced6eb99ae8"
 			}
 		}
 	]

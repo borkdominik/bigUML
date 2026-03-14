@@ -57,7 +57,7 @@ export class RevisionManagementService {
         const umlWatcher = vscode.workspace.createFileSystemWatcher('**/*.uml');
 
         this.toDispose.push(
-            umlWatcher.onDidChange(async uri => {
+            umlWatcher.onDidChange(async _uri => {
                 const configOnSave = config.get<boolean>('timeline.onSave');
                 if (configOnSave === false) {
                     return;
@@ -73,7 +73,7 @@ export class RevisionManagementService {
                 this.createSnapshot('File saved');
             }),
 
-            umlWatcher.onDidCreate(uri => {
+            umlWatcher.onDidCreate(_uri => {
                 // console.log('[fswatcher] File created:', uri.fsPath);
             }),
 

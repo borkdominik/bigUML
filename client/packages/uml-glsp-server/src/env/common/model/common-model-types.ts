@@ -11,18 +11,18 @@
  * Common model type constants shared across all diagram types.
  */
 export namespace CommonModelTypes {
-    export const LABEL_HEADING = 'label:heading';
-    export const LABEL_NAME = 'label:name';
-    export const LABEL_TEXT = 'label:text';
-    export const LABEL_EDGE_NAME = 'label:edge-name';
-    export const COMP_HEADER = 'comp:header';
-    export const COMP_ROOT_COMPONENT = 'comp:root-component';
-    export const COMP_CONTAINER = 'comp:container';
-    export const LABEL_ICON = 'label:icon';
-    export const EDGE = 'edge';
-    export const ICON = 'icon';
-    export const ICON_CSS = 'icon:css';
-    export const DIVIDER = 'divider';
-    export const STRUCTURE = 'struct';
-    export const MISSING_NODE = 'missingNode';
+    export const LABEL_HEADING = 'uml-label:heading';
+    export const LABEL_NAME = 'uml-label:name';
+    export const LABEL_TEXT = 'uml-label:text';
+    export const LABEL_EDGE_NAME = 'uml-label:edge-name';
+    export const COMP_HEADER = 'uml-comp:header';
+    export const COMP_ROOT_COMPONENT = 'uml-comp:root-component';
+    export const COMP_CONTAINER = 'uml-comp:container';
+    export const LABEL_ICON = 'uml-label:icon';
+    export const EDGE = 'uml-edge';
+    export const ICON = 'uml-icon';
+    export const ICON_CSS = 'uml-icon:css';
+    export const DIVIDER = 'uml-divider';
+    export const STRUCTURE = 'uml-struct';
+    export const MISSING_NODE = 'uml-missingNode';
 }

@@ -51,7 +51,7 @@ export function CompartmentHeader(props: CompartmentHeaderProps): GModelElement 
             )}
             <GLabelElement
                 id={id + '_name_label'}
-                type={DefaultTypes.LABEL + ':name'}
+                type={CommonModelTypes.LABEL_NAME}
                 text={name}
                 args={{ highlight: true }}
                 cssClasses={nameLabelCssClasses}

@@ -7,39 +7,33 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-import { AbstractFormatter, type AstNode, Formatting } from 'langium';
-
-const ROOT_KEYWORDS = ['entity', 'relationship', 'diagram'];
-const OTHER_KEYWORDS = [
-    'description',
-    'attributes',
-    'source',
-    'target',
-    'type',
-    'properties',
-    ':=',
-    'node',
-    'edge',
-    'for',
-    'x',
-    'y',
-    'width',
-    'height',
-    'source',
-    'target'
-];
+import { AbstractFormatter, type AstNode, type LangiumDocument } from 'langium';
+import type { DocumentFormattingParams, DocumentRangeFormattingParams, TextEdit } from 'vscode-languageserver';
+import { Range } from 'vscode-languageserver-types';
 
 export class UmlDiagramModelFormatter extends AbstractFormatter {
-    protected format(node: AstNode): void {
-        const formatter = this.getNodeFormatter(node);
-        formatter.keywords(...ROOT_KEYWORDS).prepend(Formatting.noSpace({ allowLess: false, allowMore: false, priority: 1 }));
-        formatter.keywords(...OTHER_KEYWORDS).surround(Formatting.oneSpace({ allowLess: false, allowMore: false, priority: 1 }));
-        formatter
-            .interior(formatter.keyword('{'), formatter.keyword('}'))
-            .prepend(Formatting.indent({ allowLess: false, allowMore: false, priority: 1 }));
-        formatter
-            .keywords(';')
-            .prepend(Formatting.noSpace({ allowLess: false, allowMore: false, priority: 1 }))
-            .append(Formatting.newLine());
+    override formatDocument(document: LangiumDocument, _params: DocumentFormattingParams): TextEdit[] {
+        return this.formatAsJson(document);
+    }
+
+    override formatDocumentRange(document: LangiumDocument, _params: DocumentRangeFormattingParams): TextEdit[] {
+        return this.formatAsJson(document);
+    }
+
+    protected format(_node: AstNode): void {
+        // Formatting is handled at the document level via JSON.stringify
+    }
+
+    private formatAsJson(document: LangiumDocument): TextEdit[] {
+        const text = document.textDocument.getText();
+        try {
+            const parsed = JSON.parse(text);
+            const formatted = JSON.stringify(parsed, null, '\t') + '\n';
+            if (text === formatted) return [];
+            const end = document.textDocument.positionAt(text.length);
+            return [{ range: Range.create(0, 0, end.line, end.character), newText: formatted }];
+        } catch {
+            return [];
+        }
     }
 }

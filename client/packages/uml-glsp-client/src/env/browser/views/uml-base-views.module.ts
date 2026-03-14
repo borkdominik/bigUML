@@ -9,11 +9,11 @@
 
 import {
     configureDefaultModelElements,
-    configureModelElement,
     DefaultTypes,
     FeatureModule,
     GCompartmentView,
     GGraph,
+    overrideModelElement,
     TYPES
 } from '@eclipse-glsp/client';
 import { CompartmentSelectionFeedback } from './processors/feedback.postprocessor.js';
@@ -29,6 +29,6 @@ export const umlBaseViewsModule = new FeatureModule((bind, unbind, isBound, rebi
 
     configureDefaultModelElements(context);
 
-    configureModelElement(context, DefaultTypes.GRAPH, GGraph, UMLGraphProjectionView);
-    configureModelElement(context, DefaultTypes.COMPARTMENT, GUMLCompartment, GCompartmentView);
+    overrideModelElement(context, DefaultTypes.GRAPH, GGraph, UMLGraphProjectionView);
+    overrideModelElement(context, DefaultTypes.COMPARTMENT, GUMLCompartment, GCompartmentView);
 });

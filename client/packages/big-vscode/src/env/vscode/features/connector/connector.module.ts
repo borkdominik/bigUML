@@ -7,17 +7,16 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
-import { ContainerModule } from 'inversify';
 import { TYPES } from '../../vscode-common.types.js';
+import { bindLifecycle } from '../container/bindings.js';
+import { VscodeFeatureModule } from '../container/container.js';
 import { ConnectionManager } from './connection-manager.js';
 import { BIGGLSPVSCodeConnector } from './glsp-vscode-connector.js';
 import { SelectionService } from './selection-service.js';
 
-export const connectorModule = new ContainerModule(bind => {
-    bind(BIGGLSPVSCodeConnector).toSelf().inSingletonScope();
-    bind(TYPES.GLSPVSCodeConnector).toService(BIGGLSPVSCodeConnector);
-    bind(TYPES.Disposable).toService(BIGGLSPVSCodeConnector);
+export const connectorModule = new VscodeFeatureModule(context => {
+    bindLifecycle(context, TYPES.GLSPVSCodeConnector, BIGGLSPVSCodeConnector);
 
-    bind(TYPES.ConnectionManager).to(ConnectionManager).inSingletonScope();
-    bind(TYPES.SelectionService).to(SelectionService).inSingletonScope();
+    context.bind(TYPES.ConnectionManager).to(ConnectionManager).inSingletonScope();
+    context.bind(TYPES.SelectionService).to(SelectionService).inSingletonScope();
 });

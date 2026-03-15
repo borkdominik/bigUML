@@ -7,8 +7,10 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
-import { ContainerModule } from 'inversify';
+import { type ContainerModule } from 'inversify';
 import { TYPES } from '../../../vscode/vscode-common.types.js';
+import { bindLifecycle } from '../container/bindings.js';
+import { VscodeFeatureModule } from '../container/container.js';
 import { GLSPServer } from './glsp-server.js';
 
 export interface GLSPServerConfig {
@@ -16,11 +18,9 @@ export interface GLSPServerConfig {
 }
 
 export function glspServerModule(config: GLSPServerConfig): ContainerModule {
-    return new ContainerModule(bind => {
-        bind(TYPES.GLSPServerConfig).toConstantValue(config);
+    return new VscodeFeatureModule(context => {
+        context.bind(TYPES.GLSPServerConfig).toConstantValue(config);
 
-        bind(GLSPServer).toSelf().inSingletonScope();
-        bind(TYPES.GLSPServer).toService(GLSPServer);
-        bind(TYPES.Disposable).toService(TYPES.GLSPServer);
+        bindLifecycle(context, TYPES.GLSPServer, GLSPServer);
     });
 }

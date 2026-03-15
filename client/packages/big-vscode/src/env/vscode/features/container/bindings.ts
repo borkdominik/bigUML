@@ -27,11 +27,20 @@ export function ensureBound<T>(
     return undefined;
 }
 
+export interface OnActivate {
+    onActivate?(): void;
+}
+
+export interface OnDispose {
+    dispose?(): any;
+}
+
 export function bindLifecycle(
     context: BindingContext,
     serviceIdentifier: interfaces.ServiceIdentifier<unknown>,
     newable?: interfaces.Newable<unknown>
 ) {
     ensureBound(context, serviceIdentifier, newable)?.inSingletonScope();
-    context.bind(TYPES.RootInitialization).toService(serviceIdentifier);
+    context.bind(TYPES.OnActivate).toService(serviceIdentifier);
+    context.bind(TYPES.OnDispose).toService(serviceIdentifier);
 }

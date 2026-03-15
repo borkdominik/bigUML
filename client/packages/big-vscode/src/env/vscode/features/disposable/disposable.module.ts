@@ -7,10 +7,10 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
-import { bindLifecycle } from '../container/bindings.js';
-import { FeatureModule } from '../container/container.js';
+import { TYPES } from '../../vscode-common.types.js';
+import { VscodeFeatureModule } from '../container/container.js';
 import { DisposableManager } from './disposable.manager.js';
 
-export const disposableModule = new FeatureModule(context => {
-    bindLifecycle(context, DisposableManager);
+export const disposableModule = new VscodeFeatureModule(context => {
+    context.bind(TYPES.OnActivate).to(DisposableManager).inSingletonScope();
 });

@@ -6,23 +6,24 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-import type { WebviewMessenger } from '@borkdominik-biguml/big-vscode/vscode';
+import type { WebviewMessenger, WebviewViewProviderOptions } from '@borkdominik-biguml/big-vscode/vscode';
 import {
     type ActionDispatcher,
-    type BWebviewViewOptions,
     type CacheActionListener,
     type ConnectionManager,
     type GLSPServerModelState,
     TYPES,
     WebviewViewProvider
 } from '@borkdominik-biguml/big-vscode/vscode';
+import { InitializeCanvasBoundsAction } from '@borkdominik-biguml/uml-glsp-server';
+import { SetViewportAction } from '@eclipse-glsp/protocol';
 import { DisposableCollection } from '@eclipse-glsp/vscode-integration';
 import { inject, injectable, postConstruct } from 'inversify';
 import type { Disposable } from 'vscode';
-import { AdvancedSearchActionResponse, RequestAdvancedSearchAction } from '../common/advancedsearch.action.js';
+import { MinimapExportSvgAction, RequestMinimapExportSvgAction } from '../common/index.js';
 
 @injectable()
-export class AdvancedSearchProvider extends WebviewViewProvider {
+export class MinimapWebviewViewProvider extends WebviewViewProvider {
     @inject(TYPES.ConnectionManager)
     protected readonly connectionManager: ConnectionManager;
 
@@ -34,13 +35,26 @@ export class AdvancedSearchProvider extends WebviewViewProvider {
 
     protected actionCache: CacheActionListener;
 
-    constructor(@inject(TYPES.WebviewViewOptions) options: BWebviewViewOptions) {
-        super(options);
+    constructor(@inject(TYPES.WebviewViewOptions) options: WebviewViewProviderOptions) {
+        super({
+            viewId: options.viewType,
+            viewType: options.viewType,
+            htmlOptions: {
+                files: {
+                    js: [['minimap', 'bundle.js']],
+                    css: [['minimap', 'bundle.css']]
+                }
+            }
+        });
     }
 
     @postConstruct()
     protected init(): void {
-        this.actionCache = this.actionListener.createCache([AdvancedSearchActionResponse.KIND]);
+        this.actionCache = this.actionListener.createCache([
+            InitializeCanvasBoundsAction.KIND,
+            SetViewportAction.KIND,
+            MinimapExportSvgAction.KIND
+        ]);
         this.toDispose.push(this.actionCache);
     }
 
@@ -49,16 +63,16 @@ export class AdvancedSearchProvider extends WebviewViewProvider {
         disposables.push(
             super.resolveWebviewProtocol(messenger),
             this.actionCache.onDidChange(message => this.actionMessenger.dispatch(message)),
-            this.connectionManager.onDidActiveClientChange(() => this.requestModel()),
-            this.connectionManager.onNoActiveClient(() => this.actionMessenger.dispatch(AdvancedSearchActionResponse.create())),
-            this.connectionManager.onNoConnection(() => this.actionMessenger.dispatch(AdvancedSearchActionResponse.create())),
-            this.modelState.onDidChangeModelState(() => this.requestModel())
+            this.connectionManager.onDidActiveClientChange(() => this.requestSVG()),
+            this.connectionManager.onNoActiveClient(() => this.actionMessenger.dispatch(MinimapExportSvgAction.create())),
+            this.connectionManager.onNoConnection(() => this.actionMessenger.dispatch(MinimapExportSvgAction.create())),
+            this.modelState.onDidChangeModelState(() => this.requestSVG())
         );
         return disposables;
     }
 
     protected override handleOnReady(): void {
-        this.requestModel();
+        this.requestSVG();
         this.actionMessenger.dispatch(this.actionCache.getActions());
     }
 
@@ -66,11 +80,10 @@ export class AdvancedSearchProvider extends WebviewViewProvider {
         this.actionMessenger.dispatch(this.actionCache.getActions());
     }
 
-    protected requestModel(): void {
-        this.actionDispatcher.dispatch(
-            RequestAdvancedSearchAction.create({
-                query: ''
-            })
-        );
+    protected requestSVG(): void {
+        // Wait for updates to be applied
+        setTimeout(async () => {
+            this.actionDispatcher.dispatch(RequestMinimapExportSvgAction.create());
+        }, 200);
     }
 }

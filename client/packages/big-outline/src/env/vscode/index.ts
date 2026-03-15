@@ -7,5 +7,5 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
-export * from './outline-tree.provider.js';
 export * from './outline.module.js';
+export * from './outline.tree-provider.js';

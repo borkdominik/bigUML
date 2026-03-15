@@ -7,15 +7,14 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
-import { ContainerModule } from 'inversify';
 import { TYPES } from '../../../vscode/vscode-common.types.js';
+import { bindLifecycle } from '../container/bindings.js';
+import { VscodeFeatureModule } from '../container/container.js';
 import { IDEServer } from './ide-server.js';
 import { IDESessionClient } from './ide-session-client.js';
 
-export const ideServerModule = new ContainerModule(bind => {
-    bind(IDEServer).toSelf().inSingletonScope();
-    bind(TYPES.IDEServer).toService(IDEServer);
-    bind(TYPES.Disposable).toService(TYPES.IDEServer);
+export const ideServerModule = new VscodeFeatureModule(context => {
+    bindLifecycle(context, TYPES.IDEServer, IDEServer);
 
-    bind(TYPES.IDESessionClient).to(IDESessionClient).inSingletonScope();
+    context.bind(TYPES.IDESessionClient).to(IDESessionClient).inSingletonScope();
 });

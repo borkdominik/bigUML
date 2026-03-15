@@ -13,5 +13,5 @@ import { GLSPServerModelState } from './server-model-state.js';
 
 export const experimentalServerModule = new ContainerModule(bind => {
     bind(TYPES.GLSPServerModelState).to(GLSPServerModelState).inSingletonScope();
-    bind(TYPES.RootInitialization).toService(TYPES.GLSPServerModelState);
+    bind(TYPES.OnActivate).toService(TYPES.GLSPServerModelState);
 });

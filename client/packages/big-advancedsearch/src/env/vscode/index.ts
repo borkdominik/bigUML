@@ -8,4 +8,4 @@
  **********************************************************************************/
 
 export * from './advancedsearch.module.js';
-export * from './advancedsearch.provider.js';
+export * from './advancedsearch.webview-view-provider.js';

@@ -13,5 +13,5 @@ import { WebviewEditorManager } from './webview-editor.manager.js';
 
 export const webviewEditorModule = new ContainerModule(bind => {
     bind(TYPES.WebviewEditorManager).to(WebviewEditorManager).inSingletonScope();
-    bind(TYPES.RootInitialization).toService(TYPES.WebviewEditorManager);
+    bind(TYPES.OnActivate).toService(TYPES.WebviewEditorManager);
 });

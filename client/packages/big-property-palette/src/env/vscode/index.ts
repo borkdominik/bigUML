@@ -8,4 +8,4 @@
  **********************************************************************************/
 
 export * from './property-palette.module.js';
-export * from './property-palette.provider.js';
+export * from './property-palette.webview-view-provider.js';

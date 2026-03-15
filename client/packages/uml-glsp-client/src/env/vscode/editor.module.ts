@@ -7,11 +7,11 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
-import { bindWebviewEditorFactory, FeatureModule } from '@borkdominik-biguml/big-vscode/vscode';
+import { bindWebviewEditorFactory, VscodeFeatureModule } from '@borkdominik-biguml/big-vscode/vscode';
 import { UMLDiagramEditorProvider, UMLDiagramEditorSettings } from './editor.provider.js';
 
 export function editorModule(settings: UMLDiagramEditorSettings) {
-    return new FeatureModule(context => {
+    return new VscodeFeatureModule(context => {
         context.bind(UMLDiagramEditorSettings).toConstantValue(settings);
 
         bindWebviewEditorFactory(context.bind, {

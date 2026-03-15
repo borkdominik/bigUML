@@ -6,28 +6,22 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-import {
-    RequestPropertyPaletteAction,
-    SetNavigationIdNotification,
-    SetPropertyPaletteAction
-} from '@borkdominik-biguml/big-property-palette';
-import type { WebviewMessenger } from '@borkdominik-biguml/big-vscode/vscode';
+import type { WebviewMessenger, WebviewViewProviderOptions } from '@borkdominik-biguml/big-vscode/vscode';
 import {
     type ActionDispatcher,
-    type BWebviewViewOptions,
     type CacheActionListener,
     type ConnectionManager,
     type GLSPServerModelState,
-    type SelectionService,
     TYPES,
     WebviewViewProvider
 } from '@borkdominik-biguml/big-vscode/vscode';
 import { DisposableCollection } from '@eclipse-glsp/vscode-integration';
 import { inject, injectable, postConstruct } from 'inversify';
 import type { Disposable } from 'vscode';
+import { AdvancedSearchActionResponse, RequestAdvancedSearchAction } from '../common/advancedsearch.action.js';
 
 @injectable()
-export class PropertyPaletteProvider extends WebviewViewProvider {
+export class AdvancedSearchWebviewViewProvider extends WebviewViewProvider {
     @inject(TYPES.ConnectionManager)
     protected readonly connectionManager: ConnectionManager;
 
@@ -37,19 +31,24 @@ export class PropertyPaletteProvider extends WebviewViewProvider {
     @inject(TYPES.ActionDispatcher)
     protected readonly actionDispatcher: ActionDispatcher;
 
-    @inject(TYPES.SelectionService)
-    protected readonly selectionService: SelectionService;
-
     protected actionCache: CacheActionListener;
-    protected selectedId?: string;
 
-    constructor(@inject(TYPES.WebviewViewOptions) options: BWebviewViewOptions) {
-        super(options);
+    constructor(@inject(TYPES.WebviewViewOptions) options: WebviewViewProviderOptions) {
+        super({
+            viewId: options.viewType,
+            viewType: options.viewType,
+            htmlOptions: {
+                files: {
+                    js: [['advancedsearch', 'bundle.js']],
+                    css: [['advancedsearch', 'bundle.css']]
+                }
+            }
+        });
     }
 
     @postConstruct()
     protected init(): void {
-        this.actionCache = this.actionListener.createCache([SetPropertyPaletteAction.KIND]);
+        this.actionCache = this.actionListener.createCache([AdvancedSearchActionResponse.KIND]);
         this.toDispose.push(this.actionCache);
     }
 
@@ -58,39 +57,27 @@ export class PropertyPaletteProvider extends WebviewViewProvider {
         disposables.push(
             super.resolveWebviewProtocol(messenger),
             this.actionCache.onDidChange(message => this.actionMessenger.dispatch(message)),
-            messenger.onNotification(SetNavigationIdNotification, id => {
-                this.selectedId = id ?? this.selectionService.selection?.selectedElementsIDs[0];
-            }),
-            this.selectionService.onDidSelectionChange(event => {
-                this.selectedId = event.state.selectedElementsIDs[0];
-                this.requestPropertyPalette();
-            }),
-            this.connectionManager.onNoConnection(() => {
-                this.actionMessenger.dispatch(SetPropertyPaletteAction.create());
-            }),
-            this.modelState.onDidChangeModelState(() => {
-                this.requestPropertyPalette();
-            })
+            this.connectionManager.onDidActiveClientChange(() => this.requestModel()),
+            this.connectionManager.onNoActiveClient(() => this.actionMessenger.dispatch(AdvancedSearchActionResponse.create())),
+            this.connectionManager.onNoConnection(() => this.actionMessenger.dispatch(AdvancedSearchActionResponse.create())),
+            this.modelState.onDidChangeModelState(() => this.requestModel())
         );
         return disposables;
     }
 
     protected override handleOnReady(): void {
-        const selection = this.selectionService.selection;
-        if (selection && selection.selectedElementsIDs.length > 0) {
-            this.selectedId = selection.selectedElementsIDs[0];
-            this.requestPropertyPalette();
-        }
+        this.requestModel();
+        this.actionMessenger.dispatch(this.actionCache.getActions());
     }
 
     protected override handleOnVisible(): void {
         this.actionMessenger.dispatch(this.actionCache.getActions());
     }
 
-    protected requestPropertyPalette(elementId = this.selectedId): void {
+    protected requestModel(): void {
         this.actionDispatcher.dispatch(
-            RequestPropertyPaletteAction.create({
-                elementId
+            RequestAdvancedSearchAction.create({
+                query: ''
             })
         );
     }

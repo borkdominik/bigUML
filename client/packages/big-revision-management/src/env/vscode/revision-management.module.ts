@@ -7,28 +7,19 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { bindWebviewViewFactory, TYPES } from '@borkdominik-biguml/big-vscode/vscode';
-import { ContainerModule } from 'inversify';
-import { RevisionManagementProvider } from './revision-management.provider.js';
+import { bindWebviewViewFactory, TYPES, VscodeFeatureModule } from '@borkdominik-biguml/big-vscode/vscode';
 import { RevisionManagementService } from './revision-management.service.js';
+import { RevisionManagementWebviewViewProvider } from './revision-management.webview-view-provider.js';
 
-export function revisionManagementModule(viewId: string) {
-    return new ContainerModule(bind => {
-        bind(RevisionManagementService).toSelf().inSingletonScope();
-        // Bind service to RootInitialization to ensure it starts tracking immediately
-        bind(TYPES.RootInitialization).toService(RevisionManagementService);
+export function revisionManagementModule(viewType: string) {
+    return new VscodeFeatureModule(context => {
+        context.bind(RevisionManagementService).toSelf().inSingletonScope();
+        context.bind(TYPES.OnActivate).toService(RevisionManagementService);
 
-        bindWebviewViewFactory(bind, {
-            provider: RevisionManagementProvider,
-            configure: childBind => {
-                childBind(TYPES.WebviewViewOptions).toConstantValue({
-                    viewId,
-                    viewType: viewId,
-                    files: {
-                        js: [['revision-management', 'bundle.js']],
-                        css: [['revision-management', 'bundle.css']]
-                    }
-                });
+        bindWebviewViewFactory(context, {
+            provider: RevisionManagementWebviewViewProvider,
+            options: {
+                viewType
             }
         });
     });

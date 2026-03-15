@@ -19,8 +19,8 @@ import {
 export function transformDeclaration(declarations: Array<Declaration>): Array<LangiumDeclaration> {
     declarations.forEach(decl => {
         if (decl.properties) {
-            decl.properties.forEach(prop => {
-                console.log(`DEBUG: Declaration "${decl.name}" property "${prop.name}" decorators:`, prop.decorators);
+            decl.properties.forEach(_prop => {
+                // console.log(`DEBUG: Declaration "${decl.name}" property "${prop.name}" decorators:`, prop.decorators);
             });
         }
     });

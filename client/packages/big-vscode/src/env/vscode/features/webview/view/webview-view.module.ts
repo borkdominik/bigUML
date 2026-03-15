@@ -13,5 +13,5 @@ import { WebviewViewManager } from './webview-view.manager.js';
 
 export const webviewViewModule = new ContainerModule(bind => {
     bind(TYPES.WebviewViewManager).to(WebviewViewManager).inSingletonScope();
-    bind(TYPES.RootInitialization).toService(TYPES.WebviewViewManager);
+    bind(TYPES.OnActivate).toService(TYPES.WebviewViewManager);
 });

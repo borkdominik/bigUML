@@ -8,5 +8,5 @@
  **********************************************************************************/
 
 export * from './revision-management.module.js';
-export * from './revision-management.provider.js';
 export * from './revision-management.service.js';
+export * from './revision-management.webview-view-provider.js';

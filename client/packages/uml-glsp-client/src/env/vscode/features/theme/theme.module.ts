@@ -6,13 +6,9 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { TYPES } from '@borkdominik-biguml/big-vscode/vscode';
-import { FeatureModule } from '@eclipse-glsp/client';
+import { bindLifecycle, TYPES, VscodeFeatureModule } from '@borkdominik-biguml/big-vscode/vscode';
 import { ThemeIntegration } from './theme-integration.js';
 
-export const themeModule = new FeatureModule(bind => {
-    bind(ThemeIntegration).toSelf().inSingletonScope();
-    bind(TYPES.Theme).toService(ThemeIntegration);
-    bind(TYPES.Disposable).toService(ThemeIntegration);
-    bind(TYPES.RootInitialization).toService(ThemeIntegration);
+export const themeModule = new VscodeFeatureModule(context => {
+    bindLifecycle(context, TYPES.Theme, ThemeIntegration);
 });

@@ -8,9 +8,9 @@
  **********************************************************************************/
 import { TYPES } from '../../vscode-common.types.js';
 import { bindLifecycle } from '../container/bindings.js';
-import { FeatureModule } from '../container/container.js';
+import { VscodeFeatureModule } from '../container/container.js';
 import { Settings } from './settings.js';
 
-export const settingsModule = new FeatureModule(context => {
+export const settingsModule = new VscodeFeatureModule(context => {
     bindLifecycle(context, TYPES.Settings, Settings);
 });

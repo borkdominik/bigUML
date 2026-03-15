@@ -9,4 +9,8 @@
 
 import type { WebviewProviderOptions } from '../webview.types.js';
 
-export interface BWebviewViewOptions extends WebviewProviderOptions {}
+export interface WebviewViewProviderOptions {
+    viewType: string;
+}
+
+export interface WebviewViewOptions extends WebviewProviderOptions {}

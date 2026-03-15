@@ -7,16 +7,12 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { TYPES } from '@borkdominik-biguml/big-vscode/vscode';
-import { ContainerModule } from 'inversify';
-import { OutlineTreeProvider, OutlineViewId } from './outline-tree.provider.js';
+import { bindLifecycle, TYPES, VscodeFeatureModule } from '@borkdominik-biguml/big-vscode/vscode';
+import { OutlineTreeProvider, OutlineViewId } from './outline.tree-provider.js';
 
 export function outlineModule(viewId: string) {
-    return new ContainerModule(bind => {
-        bind(OutlineViewId).toConstantValue(viewId);
-        bind(OutlineTreeProvider).toSelf().inSingletonScope();
-        bind(TYPES.Outline).to(OutlineTreeProvider);
-        bind(TYPES.Disposable).toService(OutlineTreeProvider);
-        bind(TYPES.RootInitialization).toService(OutlineTreeProvider);
+    return new VscodeFeatureModule(context => {
+        context.bind(OutlineViewId).toConstantValue(viewId);
+        bindLifecycle(context, TYPES.Outline, OutlineTreeProvider);
     });
 }

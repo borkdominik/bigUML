@@ -8,4 +8,4 @@
  **********************************************************************************/
 
 export * from './minimap.module.js';
-export * from './minimap.provider.js';
+export * from './minimap.webview-view-provider.js';

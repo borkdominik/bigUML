@@ -16,7 +16,7 @@ export interface BindingContext {
     rebind: interfaces.Rebind;
 }
 
-export class FeatureModule extends ContainerModule {
+export class VscodeFeatureModule extends ContainerModule {
     constructor(load: (context: BindingContext) => void) {
         super((bind, unbind, isBound, rebind) => {
             load({ bind, unbind, isBound, rebind });

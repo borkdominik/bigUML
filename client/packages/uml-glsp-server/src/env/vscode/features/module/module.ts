@@ -34,16 +34,16 @@ import {
 } from '../mutation/index.js';
 import { GenericDiagramModelValidator } from '../validator/generic-diagram-model-validator.js';
 
-export class FeatureDiagramModule {
+export class DiagramFeatureModule {
     configureOperationHandlers?(binding: InstanceMultiBinding<OperationHandlerConstructor>): void;
     configureActionHandlers?(binding: InstanceMultiBinding<ActionHandlerConstructor>): void;
 }
 
 export abstract class BigDiagramModule extends DiagramModule {
-    protected featureDiagramModules: FeatureDiagramModule[] = [];
+    protected featureModules: DiagramFeatureModule[] = [];
 
-    addFeatureDiagramModule(module: FeatureDiagramModule): void {
-        this.featureDiagramModules.push(module);
+    addDiagramFeatureModule(module: DiagramFeatureModule): void {
+        this.featureModules.push(module);
     }
 
     protected bindSourceModelStorage(): BindingTarget<SourceModelStorage> {
@@ -77,7 +77,7 @@ export abstract class BigDiagramModule extends DiagramModule {
         binding.add(GenericUpdateOperationHandler);
         binding.add(GenericDeleteOperationHandler);
 
-        for (const module of this.featureDiagramModules) {
+        for (const module of this.featureModules) {
             module.configureOperationHandlers?.(binding);
         }
     }
@@ -87,7 +87,7 @@ export abstract class BigDiagramModule extends DiagramModule {
         binding.add(CreateNewFileActionHandler);
         binding.add(RequestSemanticModelActionHandler);
 
-        for (const module of this.featureDiagramModules) {
+        for (const module of this.featureModules) {
             module.configureActionHandlers?.(binding);
         }
     }

@@ -7,14 +7,14 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
-import { FeatureDiagramModule } from '@borkdominik-biguml/uml-glsp-server/vscode';
+import { DiagramFeatureModule } from '@borkdominik-biguml/uml-glsp-server/vscode';
 import type { ActionHandlerConstructor, InstanceMultiBinding } from '@eclipse-glsp/server';
 import { RequestOutlineActionHandler } from './request-outline-action-handler.js';
 
-class OutlineFeatureDiagramModule extends FeatureDiagramModule {
+class OutlineDiagramFeatureModule extends DiagramFeatureModule {
     override configureActionHandlers(binding: InstanceMultiBinding<ActionHandlerConstructor>): void {
         binding.add(RequestOutlineActionHandler);
     }
 }
 
-export const outlineModule = new OutlineFeatureDiagramModule();
+export const outlineModule = new OutlineDiagramFeatureModule();

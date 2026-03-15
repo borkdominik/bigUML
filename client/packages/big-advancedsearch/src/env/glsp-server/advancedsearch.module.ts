@@ -7,14 +7,14 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
-import { FeatureDiagramModule } from '@borkdominik-biguml/uml-glsp-server/vscode';
+import { DiagramFeatureModule } from '@borkdominik-biguml/uml-glsp-server/vscode';
 import type { ActionHandlerConstructor, InstanceMultiBinding } from '@eclipse-glsp/server';
 import { AdvancedSearchActionHandler } from './advancedsearch.handler.js';
 
-class AdvancedSearchFeatureDiagramModule extends FeatureDiagramModule {
+class AdvancedSearchDiagramFeatureModule extends DiagramFeatureModule {
     override configureActionHandlers(binding: InstanceMultiBinding<ActionHandlerConstructor>): void {
         binding.add(AdvancedSearchActionHandler);
     }
 }
 
-export const advancedSearchGlspModule = new AdvancedSearchFeatureDiagramModule();
+export const advancedSearchGlspModule = new AdvancedSearchDiagramFeatureModule();

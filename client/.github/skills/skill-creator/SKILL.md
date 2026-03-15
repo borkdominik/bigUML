@@ -33,7 +33,7 @@ The skill creator is liable to be used by people across a wide range of familiar
 
 Start by understanding the user's intent. The current conversation might already contain a workflow the user wants to capture (e.g., they say "turn this into a skill"). If so, extract answers from the conversation history first — the tools used, the sequence of steps, corrections the user made, input/output formats observed. The user may need to fill the gaps, and should confirm before proceeding to the next step.
 
-1. What should this skill enable Claude to do?
+1. What should this skill enable the agent to do?
 2. When should this skill trigger? (what user phrases/contexts)
 3. What's the expected output format?
 
@@ -46,8 +46,9 @@ Proactively ask questions about edge cases, input/output formats, example files,
 Based on the user interview, fill in these components:
 
 - **name**: Skill identifier
-- **description**: When to trigger, what it does. This is the primary triggering mechanism - include both what the skill does AND specific contexts for when to use it. All "when to use" info goes here, not in the body. Note: currently Claude has a tendency to "undertrigger" skills — to not use them when they'd be useful. To combat this, make the skill descriptions a little bit "pushy". So for instance, instead of "How to build a simple fast dashboard to display internal Anthropic data.", you might write "How to build a simple fast dashboard to display internal Anthropic data. Make sure to use this skill whenever the user mentions dashboards, data visualization, internal metrics, or wants to display any kind of company data, even if they don't explicitly ask for a 'dashboard.'"
+- **description**: When to trigger, what it does. This is the primary triggering mechanism - include both what the skill does AND specific contexts for when to use it. All "when to use" info goes here, not in the body. Note: currently agent has a tendency to "undertrigger" skills — to not use them when they'd be useful. To combat this, make the skill descriptions a little bit "pushy". So for instance, instead of "How to build a simple fast dashboard to display internal Anthropic data.", you might write "How to build a simple fast dashboard to display internal Anthropic data. Make sure to use this skill whenever the user mentions dashboards, data visualization, internal metrics, or wants to display any kind of company data, even if they don't explicitly ask for a 'dashboard.'"
 - **compatibility**: Required tools, dependencies (optional, rarely needed)
+- **task list**: A bullet-point checklist of concrete tasks that need to be worked through to finish the skill. This gives the agent (and the user) a clear picture of what's left to do and helps track progress. Each bullet should be a self-contained, actionable step.
 - **the rest of the skill :)**
 
 ### Skill Writing Guide
@@ -67,6 +68,7 @@ skill-name/
 #### Progressive Disclosure
 
 Skills use a three-level loading system:
+
 1. **Metadata** (name + description) - Always in context (~100 words)
 2. **SKILL.md body** - In context whenever skill triggers (<500 lines ideal)
 3. **Bundled resources** - As needed (unlimited)
@@ -74,11 +76,13 @@ Skills use a three-level loading system:
 These word counts are approximate and you can feel free to go longer if needed.
 
 **Key patterns:**
+
 - Keep SKILL.md under 500 lines; if you're approaching this limit, add an additional layer of hierarchy along with clear pointers about where the model using the skill should go next to follow up.
 - Reference files clearly from SKILL.md with guidance on when to read them
 - For large reference files (>300 lines), include a table of contents
 
 **Domain organization**: When a skill supports multiple domains/frameworks, organize by variant:
+
 ```
 cloud-deploy/
 ├── SKILL.md (workflow + selection)
@@ -87,7 +91,8 @@ cloud-deploy/
     ├── gcp.md
     └── azure.md
 ```
-Claude reads only the relevant reference file.
+
+The agent reads only the relevant reference file.
 
 #### Principle of Lack of Surprise
 
@@ -98,18 +103,26 @@ Skills must not contain malware, exploit code, or any content that could comprom
 Prefer using the imperative form in instructions.
 
 **Defining output formats** - You can do it like this:
+
 ```markdown
 ## Report structure
+
 ALWAYS use this exact template:
+
 # [Title]
+
 ## Executive summary
+
 ## Key findings
+
 ## Recommendations
 ```
 
 **Examples pattern** - It's useful to include examples. You can format them like this (but if "Input" and "Output" are in the examples you might want to deviate a little):
+
 ```markdown
 ## Commit message format
+
 **Example 1:**
 Input: Added user authentication with JWT tokens
 Output: feat(auth): implement JWT-based authentication
@@ -131,7 +144,7 @@ This is the heart of the loop. You've drafted or reviewed a skill, the user has 
 
 2. **Keep the prompt lean.** Remove things that aren't pulling their weight. If something in the skill is making the model waste time on unproductive work, try getting rid of it and seeing what happens.
 
-3. **Explain the why.** Try hard to explain the **why** behind everything you're asking the model to do. Today's LLMs are *smart*. They have good theory of mind and when given a good harness can go beyond rote instructions and really make things happen. If you find yourself writing ALWAYS or NEVER in all caps, or using super rigid structures, that's a yellow flag — if possible, reframe and explain the reasoning so that the model understands why the thing you're asking for is important. That's a more humane, powerful, and effective approach.
+3. **Explain the why.** Try hard to explain the **why** behind everything you're asking the model to do. Today's LLMs are _smart_. They have good theory of mind and when given a good harness can go beyond rote instructions and really make things happen. If you find yourself writing ALWAYS or NEVER in all caps, or using super rigid structures, that's a yellow flag — if possible, reframe and explain the reasoning so that the model understands why the thing you're asking for is important. That's a more humane, powerful, and effective approach.
 
 ### The iteration loop
 
@@ -142,5 +155,6 @@ After improving the skill:
 3. Gather feedback and repeat
 
 Keep going until:
+
 - The user says they're happy
 - You're not making meaningful progress

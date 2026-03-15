@@ -1,33 +1,58 @@
 ---
 name: 'Typescript Standards'
-description: 'Coding conventions for TypeScript files'
-applyTo: '**/*.ts'
+description: 'Coding conventions and architecture rules for TypeScript files'
+applyTo: '**/*.ts,**/*.tsx'
 ---
 
 # TypeScript coding standards
 
-- Follow the TypeScript style guide.
-- Always use `export * from` syntax for re-exports.
-- Use `import type` for type-only imports.
+- Use `import type { ... }` for type-only imports (`@typescript-eslint/consistent-type-imports`).
 - Use `import` for value imports.
+- Always use `export * from` syntax for re-exports in barrel index files.
+- Include file extensions in all relative imports, e.g., `import { Foo } from './foo.js'` (`n/file-extension-in-import`).
+- Every source file must start with the copyright header:
 
-# Project architecture
+```typescript
+/**********************************************************************************
+ * Copyright (c) <CURRENT_YEAR> borkdominik and others.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at https://opensource.org/licenses/MIT.
+ *
+ * SPDX-License-Identifier: MIT
+ **********************************************************************************/
+```
 
-## VSCode extension process (`application/vscode/src/extension.config.ts`)
+# InversifyJS dependency injection
 
-- Registers InversifyJS `ContainerModule` instances for the **VSCode extension host** process.
-- Contains: webview providers (`BIGReactWebview`), VSCode-side action handlers, services using `TYPES` / `EXPERIMENTAL_TYPES` from `@borkdominik-biguml/big-vscode/vscode`.
-- Each package exposes a `*Module(viewId)` factory returning a `ContainerModule` under the `./vscode` export.
+- Use `@injectable()` on every class that is bound in a DI container.
+- Use `@inject(SYMBOL)` for constructor or property injection.
+- Use `@postConstruct()` for initialization logic after injection.
+- Use `@multiInject(SYMBOL)` when collecting multiple implementations of a binding.
+- DI symbols live in `packages/<package>/src/env/vscode/<package>.types.ts` (exported as `TYPES`).
+    - e.g., `packages/big-vscode/src/env/vscode/vscode-common.types.ts`
 
-## GLSP server process (`application/vscode/src/main.ts`)
+# Environment boundaries
 
-- Registers `FeatureDiagramModule` instances passed to `startGLSPServer(...)`.
-- Contains: GLSP protocol action handlers (`ActionHandlerConstructor` from `@eclipse-glsp/server`), operation handlers for the diagram server.
-- Each package exposes a module constant under the `./glsp-server` export.
+Each package splits source into `src/env/<environment>/` folders. Respect these boundaries:
 
-## Folder organisation within a package
+- `src/env/common/` - Shared types, actions, protocols. No Node.js or browser-specific APIs.
+- `src/env/vscode/` - Extension host code. Can import `vscode` and Node.js APIs. Bound in `extension.config.ts`.
+- `src/env/glsp-server/` - GLSP server code. Can import `@eclipse-glsp/server`. Registered in `server.main.ts`.
+- `src/env/glsp-client/` - Browser-side GLSP client. Can import `@eclipse-glsp/client`. No Node.js APIs.
+- `src/env/browser/` - React webview components. Can import `react`, `@vscode/webview-ui-toolkit`. No Node.js APIs.
+- `src/env/jsx/` - Custom JSX runtime for GModel construction.
 
-- `src/env/vscode/` — VSCode extension-side code (providers, services, VSCode container modules). Bound in `extension.config.ts`.
-- `src/env/glsp-server/` — GLSP server-side code (action/operation handlers registered on the GLSP server, `FeatureDiagramModule`). Referenced from `main.ts`.
-- A handler that uses `TYPES.ActionDispatcher`, `TYPES.ActionListener`, or `EXPERIMENTAL_TYPES.*` from `@borkdominik-biguml/big-vscode/vscode` is a **VSCode-side** handler — it belongs in `src/env/glsp-server/` for organisational clarity but is still **bound in the VSCode container** (`extension.config.ts`), not in `main.ts`.
-- A handler that implements `@eclipse-glsp/server` action/operation handler interfaces is a **GLSP server-side** handler — it goes in `src/env/glsp-server/` and is registered via `FeatureDiagramModule` in `main.ts`.
+Never import across environment boundaries (e.g., never import `vscode` in `glsp-server/` code).
+
+## Generated code
+
+- Files in `src/gen/` are machine-generated from `tooling/uml-language/src/language/def.ts`. Never edit them manually.
+- Regenerate with `npm run generate`.
+- Each package with generated code has a `generator/` directory containing `contribution.ts` and Eta templates.
+
+## Documentation
+
+Read only when you need deeper context:
+
+- `docs/architecture-overview.md` - System-wide architecture, startup sequence, environment model, package layers

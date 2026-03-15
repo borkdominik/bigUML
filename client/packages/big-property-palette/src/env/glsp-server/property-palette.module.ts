@@ -8,15 +8,15 @@
  **********************************************************************************/
 
 import { RequestClassPropertyPaletteActionHandler } from '@borkdominik-biguml/big-property-palette/gen/glsp-server';
-import { FeatureDiagramModule } from '@borkdominik-biguml/uml-glsp-server/vscode';
+import { DiagramFeatureModule } from '@borkdominik-biguml/uml-glsp-server/vscode';
 import type { ActionHandlerConstructor, InstanceMultiBinding } from '@eclipse-glsp/server';
 import { GenericUpdateElementPropertyActionHandler } from './generic-element-property-action-handler.js';
 
-class PropertyPaletteFeatureDiagramModule extends FeatureDiagramModule {
+class PropertyPaletteDiagramFeatureModule extends DiagramFeatureModule {
     override configureActionHandlers(binding: InstanceMultiBinding<ActionHandlerConstructor>): void {
         binding.add(RequestClassPropertyPaletteActionHandler);
         binding.add(GenericUpdateElementPropertyActionHandler);
     }
 }
 
-export const propertyPaletteModule = new PropertyPaletteFeatureDiagramModule();
+export const propertyPaletteModule = new PropertyPaletteDiagramFeatureModule();

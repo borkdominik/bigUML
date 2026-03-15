@@ -9,7 +9,7 @@ import { LogLevel as GlspLogLevel, LoggerFactory, type MaybePromise } from '@ecl
 import { SocketServerLauncher, createAppModule, defaultLaunchOptions } from '@eclipse-glsp/server/node.js';
 import { Container, ContainerModule } from 'inversify';
 import { UmlDiagramModule } from './diagram/diagram-module.js';
-import { FeatureDiagramModule } from './features/index.js';
+import { DiagramFeatureModule } from './features/index.js';
 import { LayeredLayoutConfigurator } from './features/layout/layered-layout-configurator.js';
 import { UmlServerModule } from './module.js';
 
@@ -39,7 +39,7 @@ export function fromCommonLogLevel(level: LogLevel): GlspLogLevel {
  * @param services language services
  * @returns a promise that is resolved as soon as the server is shut down or rejects if an error occurs
  */
-export function startGLSPServer(services: UmlDiagramLSPServices, modules: (ContainerModule | FeatureDiagramModule)[]): MaybePromise<void> {
+export function startGLSPServer(services: UmlDiagramLSPServices, modules: (ContainerModule | DiagramFeatureModule)[]): MaybePromise<void> {
     const launchOptions = { ...defaultLaunchOptions, logLevel: GlspLogLevel.debug };
     // create module based on launch options, e.g., logging etc.
     const appModule = createAppModule(launchOptions);
@@ -60,8 +60,8 @@ export function startGLSPServer(services: UmlDiagramLSPServices, modules: (Conta
     const classDiagramModule = new UmlDiagramModule();
     const containerModules: ContainerModule[] = [];
     for (const module of modules) {
-        if (module instanceof FeatureDiagramModule) {
-            classDiagramModule.addFeatureDiagramModule(module);
+        if (module instanceof DiagramFeatureModule) {
+            classDiagramModule.addDiagramFeatureModule(module);
         } else {
             containerModules.push(module);
         }

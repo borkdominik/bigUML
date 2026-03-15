@@ -18,10 +18,10 @@ import type { ConnectionManager } from '../connector/connection-manager.js';
 
 export interface ModelStateChangeEvent {
     clientId: string;
-    state: GLSPModelState;
+    state: GlspModelStateResource;
 }
 
-export class GLSPModelState {
+export class GlspModelStateResource {
     constructor(protected readonly semanticRoot: Readonly<SemanticModelResource>) {}
 
     /**
@@ -39,10 +39,10 @@ export class GLSPModelState {
  * It is used to store the model state of the GLSP server and to notify the clients
  * about changes in the model state.
  *
- * It returns {@link GLSPModelState} which contains the source model and its elements.
+ * It returns {@link GlspModelStateResource} which contains the source model and its elements.
  */
 @injectable()
-export class GLSPServerModelState implements Disposable {
+export class GlspModelState implements Disposable {
     @inject(TYPES.ActionDispatcher)
     protected readonly actionDispatcher: ActionDispatcher;
     @inject(TYPES.ActionListener)
@@ -53,14 +53,14 @@ export class GLSPServerModelState implements Disposable {
     protected readonly onDidChangeModelStateEmitter = new vscode.EventEmitter<ModelStateChangeEvent>();
     readonly onDidChangeModelState = this.onDidChangeModelStateEmitter.event;
 
-    protected readonly modelStates: Map<string, GLSPModelState> = new Map();
+    protected readonly resources: Map<string, GlspModelStateResource> = new Map();
     protected readonly toDispose = new DisposableCollection();
 
     @postConstruct()
     protected init(): void {
         this.toDispose.push(
             this.connectionManager.onDidDispose(client => {
-                this.modelStates.delete(client.clientId);
+                this.resources.delete(client.clientId);
             }),
             this.connectionManager.onDidActiveClientChange(async () => {
                 await this.refreshModelState();
@@ -81,8 +81,8 @@ export class GLSPServerModelState implements Disposable {
     async refreshModelState(): Promise<void> {
         const response = await this.actionDispatcher.request(RequestSemanticModelAction.create());
 
-        const state = new GLSPModelState(response.action.resource);
-        this.modelStates.set(response.clientId, state);
+        const state = new GlspModelStateResource(response.action.resource);
+        this.resources.set(response.clientId, state);
         this.onDidChangeModelStateEmitter.fire({ clientId: response.clientId, state });
     }
 
@@ -90,11 +90,11 @@ export class GLSPServerModelState implements Disposable {
      * Returns the model state of the active client.
      * If no client is active, undefined is returned.
      */
-    getModelState(): GLSPModelState | undefined {
+    getModelState(): GlspModelStateResource | undefined {
         if (!this.connectionManager.activeClient) {
             return undefined;
         }
 
-        return this.modelStates.get(this.connectionManager.activeClient.clientId);
+        return this.resources.get(this.connectionManager.activeClient.clientId);
     }
 }

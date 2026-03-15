@@ -6,11 +6,5 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-import { TYPES } from '../../vscode-common.types.js';
-import { bindLifecycle } from '../container/bindings.js';
-import { VscodeFeatureModule } from '../container/container.js';
-import { Settings } from './settings.js';
 
-export const settingsModule = new VscodeFeatureModule(context => {
-    bindLifecycle(context, TYPES.Settings, Settings);
-});
+export * from './diagram-gmodel-factory.js';

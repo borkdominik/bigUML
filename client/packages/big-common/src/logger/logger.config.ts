@@ -30,7 +30,7 @@ export interface LoggerConfig {
 export const LOGGER_CONFIG: LoggerConfig = {
     loggers: {},
     thirdParty: {
-        glspServer: LogLevel.Info,
+        glspServer: LogLevel.Debug,
         glspClient: LogLevel.Debug
     }
 };

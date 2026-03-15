@@ -26,24 +26,24 @@ import {
 } from '@borkdominik-biguml/uml-model-server/grammar';
 import { type GEdge, type GGraph, type GModelElement, type GModelFactory } from '@eclipse-glsp/server';
 import { inject, injectable } from 'inversify';
-import { GEdgeElement, GGraphElement, GLabelElement } from '../../../../jsx/index.js';
-import { GClassNodeElement } from '../../../elements/class.element.js';
-import { GDataTypeNodeElement } from '../../../elements/data-type.element.js';
-import { GEnumerationLiteralNodeElement } from '../../../elements/enumeration-literal.element.js';
-import { GEnumerationNodeElement } from '../../../elements/enumeration.element.js';
-import { GInstanceSpecificationNodeElement } from '../../../elements/instance-specification.element.js';
-import { GInterfaceNodeElement } from '../../../elements/interface.element.js';
-import { GOperationNodeElement } from '../../../elements/operation.element.js';
-import { GPackageNodeElement } from '../../../elements/package.element.js';
-import { GPrimitiveTypeNodeElement } from '../../../elements/primitive-type.element.js';
-import { GPropertyNodeElement } from '../../../elements/property.element.js';
-import { SectionCompartment } from '../../../elements/shared-components.js';
-import { GSlotNodeElement } from '../../../elements/slot.element.js';
-import { DiagramModelState } from '../../../features/index.js';
-import { DiagramModelIndex } from '../../../features/model/diagram-model-index.js';
+import { GEdgeElement, GGraphElement, GLabelElement } from '../../../jsx/index.js';
+import { GClassNodeElement } from '../../elements/class.element.js';
+import { GDataTypeNodeElement } from '../../elements/data-type.element.js';
+import { GEnumerationLiteralNodeElement } from '../../elements/enumeration-literal.element.js';
+import { GEnumerationNodeElement } from '../../elements/enumeration.element.js';
+import { GInstanceSpecificationNodeElement } from '../../elements/instance-specification.element.js';
+import { GInterfaceNodeElement } from '../../elements/interface.element.js';
+import { GOperationNodeElement } from '../../elements/operation.element.js';
+import { GPackageNodeElement } from '../../elements/package.element.js';
+import { GPrimitiveTypeNodeElement } from '../../elements/primitive-type.element.js';
+import { GPropertyNodeElement } from '../../elements/property.element.js';
+import { SectionCompartment } from '../../elements/shared-components.js';
+import { GSlotNodeElement } from '../../elements/slot.element.js';
+import { DiagramModelState } from '../../features/index.js';
+import { DiagramModelIndex } from '../../features/model/diagram-model-index.js';
 
 @injectable()
-export class ClassDiagramGModelFactory implements GModelFactory {
+export class UmlDiagramGModelFactory implements GModelFactory {
     @inject(DiagramModelState)
     protected readonly modelState: DiagramModelState;
 

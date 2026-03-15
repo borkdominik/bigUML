@@ -11,7 +11,7 @@ import { Deferred, type Disposable, DisposableCollection, type GlspVscodeClient 
 import { inject, injectable, postConstruct, preDestroy } from 'inversify';
 import * as vscode from 'vscode';
 import { TYPES } from '../../vscode-common.types.js';
-import type { BIGGLSPVSCodeConnector } from './glsp-vscode-connector.js';
+import type { BigGlspVSCodeConnector } from './glsp-vscode-connector.js';
 
 /**
  * Event emitted when the view state of a webview panel changes.
@@ -29,8 +29,8 @@ export interface ViewStateChangeEvent extends vscode.WebviewPanelOnDidChangeView
  */
 @injectable()
 export class ConnectionManager implements Disposable {
-    @inject(TYPES.GLSPVSCodeConnector)
-    protected readonly connector: BIGGLSPVSCodeConnector;
+    @inject(TYPES.GlspVSCodeConnector)
+    protected readonly connector: BigGlspVSCodeConnector;
 
     protected readonly onDidActiveClientChangeEmitter = new vscode.EventEmitter<GlspVscodeClient>();
     /**

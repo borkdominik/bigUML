@@ -30,16 +30,16 @@ import {
 } from '@eclipse-glsp/vscode-integration-webview/lib/features/default/extension-action-handler.js';
 import { GLSPDiagramWidget } from '@eclipse-glsp/vscode-integration-webview/lib/glsp-diagram-widget.js';
 import { GLSPIsReadyAction } from '../../common/index.js';
-import { createUMLDiagramContainer } from '../index.js';
-import { UMLDiagramWidget } from './diagram.widget.js';
-import { UMLHostExtensionActionHandler } from './vscode-extension-action-handler.js';
+import { createUmlDiagramContainer } from '../index.js';
+import { UmlDiagramWidget } from './diagram.widget.js';
+import { UmlHostExtensionActionHandler } from './vscode-extension-action-handler.js';
 // GLSP Uses cjs version of inversify, so we need to use require to import it
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 import inversify = require('inversify');
 
-class UMLStarter extends GLSPStarter {
+class UmlStarter extends GLSPStarter {
     createContainer(...containerConfiguration: ContainerConfiguration): inversify.Container {
-        const container = createUMLDiagramContainer(
+        const container = createUmlDiagramContainer(
             ...containerConfiguration,
             outlineModule,
             minimapModule,
@@ -51,9 +51,9 @@ class UMLStarter extends GLSPStarter {
     }
 
     protected override addVscodeBindings(container: inversify.Container, _diagramIdentifier: GLSPDiagramIdentifier): void {
-        container.bind(UMLDiagramWidget).toSelf().inSingletonScope();
-        bindOrRebind(container, GLSPDiagramWidget).toService(UMLDiagramWidget);
-        container.rebind(HostExtensionActionHandler).to(UMLHostExtensionActionHandler).inSingletonScope();
+        container.bind(UmlDiagramWidget).toSelf().inSingletonScope();
+        bindOrRebind(container, GLSPDiagramWidget).toService(UmlDiagramWidget);
+        container.rebind(HostExtensionActionHandler).to(UmlHostExtensionActionHandler).inSingletonScope();
 
         container.bind(ExtensionActionKind).toConstantValue(GLSPIsReadyAction.KIND);
         container.bind(ExtensionActionKind).toConstantValue(SemanticModelResponseAction.KIND);
@@ -62,7 +62,7 @@ class UMLStarter extends GLSPStarter {
 }
 
 export function launch(): void {
-    new UMLStarter();
+    new UmlStarter();
 }
 
 @inversify.injectable()

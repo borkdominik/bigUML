@@ -121,7 +121,6 @@ export class ModelService {
     }
 
     async patch<T extends AstNode>(uri: string, patchOp: string | jsonpatch.Operation | Array<jsonpatch.Operation>, client?: string) {
-        console.log('[ModelService] PATCH', { patchOp, client });
         const patch = typeof patchOp === 'string' ? JSON.parse(patchOp) : patchOp;
         return (await this.patchManager.applyPatch(patch, uri, client)) as T;
     }

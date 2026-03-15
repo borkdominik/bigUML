@@ -8,14 +8,14 @@
  **********************************************************************************/
 
 import { bindWebviewEditorFactory, VscodeFeatureModule } from '@borkdominik-biguml/big-vscode/vscode';
-import { UMLDiagramEditorProvider, UMLDiagramEditorSettings } from './editor.provider.js';
+import { UmlDiagramEditorProvider, UmlDiagramEditorSettings } from './editor.provider.js';
 
-export function editorModule(settings: UMLDiagramEditorSettings) {
+export function editorModule(settings: UmlDiagramEditorSettings) {
     return new VscodeFeatureModule(context => {
-        context.bind(UMLDiagramEditorSettings).toConstantValue(settings);
+        context.bind(UmlDiagramEditorSettings).toConstantValue(settings);
 
         bindWebviewEditorFactory(context.bind, {
-            provider: UMLDiagramEditorProvider
+            provider: UmlDiagramEditorProvider
         });
     });
 }

@@ -11,22 +11,17 @@
   ],
   "scripts": {
     "build": "lerna run build",
-    "build:server": "cd ../server && ./gradlew clean shadowJar && cd ../client && npm run copy:server",
     "build:tooling": "lerna run build --scope @borkdominik-biguml/uml-language-tooling",
-    "check:headers": "glsp checkHeaders .",
     "clean": "lerna run clean",
     "compile": "lerna run compile",
-    "copy:server": "tsx ./scripts/copy-server.ts",
     "depcheck": "npx depcheck --config .depcheck.yml",
     "generate": "lerna run generate",
     "lint": "lerna run lint",
     "lint:fix": "lerna run lint:fix",
-    "package": "npm run build:server && cd application/vscode && npm run vscode:package && mv ./*.vsix ${INIT_CWD}/release/vsix",
+    "package": "cd application/vscode && npm run vscode:package && mv ./*.vsix ${INIT_CWD}/release/vsix",
     "package:zip": "npm run package && cd ${INIT_CWD} && zip -r ./release-$(date +%Y%m%d-%H%M).zip ./release",
     "setup": "npm ci && npm run build:tooling && npm run generate && npm run build",
-    "start:server": "cd ../server && ./gradlew run",
-    "watch": "lerna run --parallel --stream watch",
-    "win:start:server": "cd ../server && ./gradlew.bat run"
+    "watch": "lerna run --parallel --stream watch"
   },
   "overrides": {
     "@eclipse-glsp/client": "2.5.0",

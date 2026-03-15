@@ -2,10 +2,8 @@
 
 ## Requirements
 
-Use the IDE of your choice, but **VSCode** is recommended.
-
 - **VSCode**: <https://code.visualstudio.com/download>
-- **Node v20.10.0**: <https://nodejs.org/en/download/releases/>
+- **Node v24.14.0**: <https://nodejs.org/en/download/releases/>
     - Or use NVM, see below
 
 ### Recommended (not necessary!)

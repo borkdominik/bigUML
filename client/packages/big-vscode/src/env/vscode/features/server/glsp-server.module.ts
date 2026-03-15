@@ -11,16 +11,16 @@ import { type ContainerModule } from 'inversify';
 import { TYPES } from '../../../vscode/vscode-common.types.js';
 import { bindLifecycle } from '../container/bindings.js';
 import { VscodeFeatureModule } from '../container/container.js';
-import { GLSPServer } from './glsp-server.js';
+import { GlspServer } from './glsp-server.js';
 
-export interface GLSPServerConfig {
+export interface GlspServerConfig {
     port: number;
 }
 
-export function glspServerModule(config: GLSPServerConfig): ContainerModule {
+export function glspServerModule(config: GlspServerConfig): ContainerModule {
     return new VscodeFeatureModule(context => {
-        context.bind(TYPES.GLSPServerConfig).toConstantValue(config);
+        context.bind(TYPES.GlspServerConfig).toConstantValue(config);
 
-        bindLifecycle(context, TYPES.GLSPServer, GLSPServer);
+        bindLifecycle(context, TYPES.GlspServer, GlspServer);
     });
 }

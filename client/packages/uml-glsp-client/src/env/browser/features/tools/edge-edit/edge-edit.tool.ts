@@ -46,20 +46,20 @@ import {
 } from '@eclipse-glsp/client/lib/features/tools/edge-creation/dangling-edge-feedback.js';
 import { ChangeToolsStateAction } from '../tool-manager/uml-tool-manager.js';
 
-export class UMLEdgeEditTool extends EdgeEditTool {
+export class UmlEdgeEditTool extends EdgeEditTool {
     static override ID = 'uml.edge-edit-tool';
 
     override get id(): string {
-        return UMLEdgeEditTool.ID;
+        return UmlEdgeEditTool.ID;
     }
 
     override enable(): void {
-        this.edgeEditListener = new UMLEdgeEditListener(this);
+        this.edgeEditListener = new UmlEdgeEditListener(this);
 
         // install feedback move mouse listener for client-side move updates
-        this.feedbackEdgeSourceMovingListener = new UMLFeedbackEdgeSourceMovingMouseListener(this.anchorRegistry, this.feedbackDispatcher);
-        this.feedbackEdgeTargetMovingListener = new UMLFeedbackEdgeTargetMovingMouseListener(this.anchorRegistry, this.feedbackDispatcher);
-        this.feedbackMovingListener = new UMLFeedbackEdgeRouteMovingMouseListener(this.positionSnapper, this.edgeRouterRegistry);
+        this.feedbackEdgeSourceMovingListener = new UmlFeedbackEdgeSourceMovingMouseListener(this.anchorRegistry, this.feedbackDispatcher);
+        this.feedbackEdgeTargetMovingListener = new UmlFeedbackEdgeTargetMovingMouseListener(this.anchorRegistry, this.feedbackDispatcher);
+        this.feedbackMovingListener = new UmlFeedbackEdgeRouteMovingMouseListener(this.positionSnapper, this.edgeRouterRegistry);
 
         this.toDisposeOnDisable.push(
             Disposable.create(() => this.edgeEditListener.reset()),
@@ -71,7 +71,7 @@ export class UMLEdgeEditTool extends EdgeEditTool {
     }
 }
 
-class UMLFeedbackEdgeTargetMovingMouseListener extends FeedbackEdgeTargetMovingMouseListener {
+class UmlFeedbackEdgeTargetMovingMouseListener extends FeedbackEdgeTargetMovingMouseListener {
     override mouseMove(target: GModelElement, event: MouseEvent): Action[] {
         const root = target.root;
         const edgeEnd = root.index.getById(feedbackEdgeEndId(root));
@@ -102,7 +102,7 @@ class UMLFeedbackEdgeTargetMovingMouseListener extends FeedbackEdgeTargetMovingM
     }
 }
 
-class UMLFeedbackEdgeSourceMovingMouseListener extends FeedbackEdgeSourceMovingMouseListener {
+class UmlFeedbackEdgeSourceMovingMouseListener extends FeedbackEdgeSourceMovingMouseListener {
     override mouseMove(target: GModelElement, event: MouseEvent): Action[] {
         const root = target.root;
         const edgeEnd = root.index.getById(feedbackEdgeEndId(root));
@@ -132,9 +132,9 @@ class UMLFeedbackEdgeSourceMovingMouseListener extends FeedbackEdgeSourceMovingM
     }
 }
 
-class UMLFeedbackEdgeRouteMovingMouseListener extends FeedbackEdgeRouteMovingMouseListener {}
+class UmlFeedbackEdgeRouteMovingMouseListener extends FeedbackEdgeRouteMovingMouseListener {}
 
-class UMLEdgeEditListener extends EdgeEditListener implements ISelectionListener {
+class UmlEdgeEditListener extends EdgeEditListener implements ISelectionListener {
     protected disableToolList: string[] = [ChangeBoundsTool.ID];
 
     protected override setReconnectHandleSelected(edge: GRoutableElement, reconnectHandle: GReconnectHandle): void {

@@ -26,7 +26,7 @@ import {
 import { inject, injectable } from 'inversify';
 
 @injectable()
-export class UMLDrawFeedbackEdgeSourceCommand extends DrawFeedbackEdgeSourceCommand {
+export class UmlDrawFeedbackEdgeSourceCommand extends DrawFeedbackEdgeSourceCommand {
     constructor(@inject(TYPES.Action) action: DrawFeedbackEdgeSourceAction) {
         super(action);
     }

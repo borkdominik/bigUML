@@ -18,8 +18,8 @@ import {
 } from '@eclipse-glsp/client';
 import { CompartmentSelectionFeedback } from './processors/feedback.postprocessor.js';
 import { SVGIdCreatorService } from './services/svg-id-creator.service.js';
-import { GUMLCompartment } from './uml-compartment.js';
-import { UMLGraphProjectionView } from './uml-graph-projection.view.js';
+import { GUmlCompartment } from './uml-compartment.js';
+import { UmlGraphProjectionView } from './uml-graph-projection.view.js';
 
 export const umlBaseViewsModule = new FeatureModule((bind, unbind, isBound, rebind) => {
     const context = { bind, unbind, isBound, rebind };
@@ -29,6 +29,6 @@ export const umlBaseViewsModule = new FeatureModule((bind, unbind, isBound, rebi
 
     configureDefaultModelElements(context);
 
-    overrideModelElement(context, DefaultTypes.GRAPH, GGraph, UMLGraphProjectionView);
-    overrideModelElement(context, DefaultTypes.COMPARTMENT, GUMLCompartment, GCompartmentView);
+    overrideModelElement(context, DefaultTypes.GRAPH, GGraph, UmlGraphProjectionView);
+    overrideModelElement(context, DefaultTypes.COMPARTMENT, GUmlCompartment, GCompartmentView);
 });

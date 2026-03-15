@@ -7,17 +7,26 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
-import { HiddenModelViewer, ModelRenderer, type Action, type GModelRoot, type IViewArgs, type IVNodePostprocessor, type RenderingTargetKind, type ViewRegistry } from "@eclipse-glsp/client";
-import { injectable } from "inversify";
+import {
+    HiddenModelViewer,
+    ModelRenderer,
+    type Action,
+    type GModelRoot,
+    type IViewArgs,
+    type IVNodePostprocessor,
+    type RenderingTargetKind,
+    type ViewRegistry
+} from '@eclipse-glsp/client';
+import { injectable } from 'inversify';
 
 /**
- * The UMLHiddenModelViewer is a specialized version of the HiddenModelViewer
- * that uses the UMLModelRenderer for rendering.
+ * The UmlHiddenModelViewer is a specialized version of the HiddenModelViewer
+ * that uses the UmlModelRenderer for rendering.
  * It allows the renderer to clean up before the model is updated.
  */
 @injectable()
-export class UMLHiddenModelViewer extends HiddenModelViewer {
-    declare hiddenRenderer: UMLModelRenderer;
+export class UmlHiddenModelViewer extends HiddenModelViewer {
+    declare hiddenRenderer: UmlModelRenderer;
 
     override update(hiddenModel: Readonly<GModelRoot>, cause?: Action): void {
         this.hiddenRenderer.preUpdate(cause);
@@ -27,21 +36,16 @@ export class UMLHiddenModelViewer extends HiddenModelViewer {
 }
 
 /**
- * The UMLModelRenderer is a specialized version of the ModelRenderer
+ * The UmlModelRenderer is a specialized version of the ModelRenderer
  * that allows for pre-processing of the model before rendering.
  */
-export class UMLModelRenderer extends ModelRenderer {
-
+export class UmlModelRenderer extends ModelRenderer {
     protected preProcessors: any[];
 
-    constructor(viewRegistry: ViewRegistry,
-        targetKind: RenderingTargetKind,
-        postprocessors: IVNodePostprocessor[],
-        args: IViewArgs = {}) {
+    constructor(viewRegistry: ViewRegistry, targetKind: RenderingTargetKind, postprocessors: IVNodePostprocessor[], args: IViewArgs = {}) {
         super(viewRegistry, targetKind, postprocessors, args);
-        this.preProcessors = postprocessors
+        this.preProcessors = postprocessors;
     }
-
 
     preUpdate(cause?: Action) {
         this.preProcessors.forEach(processor => {

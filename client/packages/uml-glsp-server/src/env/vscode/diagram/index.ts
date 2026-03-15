@@ -6,4 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
-export * from './class/index.js';
+export * from './diagram-configuration.js';
+export * from './diagram-module.js';
+export * from './model/index.js';
+export * from './provider/diagram-tool-palette-item-provider.js';

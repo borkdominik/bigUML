@@ -40,7 +40,7 @@ import { TYPES } from '../../vscode-common.types.js';
  * Please use the respective wrappers instead of using this class directly.
  */
 @injectable()
-export class BIGGLSPVSCodeConnector<
+export class BigGlspVSCodeConnector<
     TDocument extends vscode.CustomDocument = vscode.CustomDocument
 > extends GlspVscodeConnector<TDocument> {
     get documents(): TDocument[] {
@@ -73,7 +73,7 @@ export class BIGGLSPVSCodeConnector<
      */
     protected readonly vscodeHandledActions = new Set<string>();
 
-    constructor(@inject(TYPES.GLSPServer) glspServer: GlspVscodeServer) {
+    constructor(@inject(TYPES.GlspServer) glspServer: GlspVscodeServer) {
         super({
             server: glspServer,
             logging: false,

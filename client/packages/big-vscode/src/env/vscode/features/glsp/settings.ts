@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
-export interface GLSPDiagramSettings {
+export interface GlspDiagramSettings {
     name: string;
     diagramType: string;
 }

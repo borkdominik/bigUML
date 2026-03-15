@@ -12,10 +12,10 @@ import { actionModule } from './features/action/action.module.js';
 import { commandModule } from './features/command/command.module.js';
 import { connectorModule } from './features/connector/connector.module.js';
 import { disposableModule } from './features/disposable/disposable.module.js';
-import type { GLSPDiagramSettings } from './features/glsp/settings.js';
-import { experimentalServerModule, webviewEditorModule, webviewViewModule } from './features/index.js';
+import type { GlspDiagramSettings } from './features/glsp/settings.js';
+import { glspModule, webviewEditorModule, webviewViewModule } from './features/index.js';
 import { outputModule } from './features/output/output.module.js';
-import { glspServerModule, type GLSPServerConfig } from './features/server/glsp-server.module.js';
+import { glspServerModule, type GlspServerConfig } from './features/server/glsp-server.module.js';
 import { ideServerModule } from './features/server/ide-server.module.js';
 import { webviewModule } from './features/webview/webview.module.js';
 import { TYPES } from './vscode-common.types.js';
@@ -23,8 +23,8 @@ import { TYPES } from './vscode-common.types.js';
 export function vscodeModule(
     extensionContext: vscode.ExtensionContext,
     options: {
-        glspServerConfig: GLSPServerConfig;
-        diagram: GLSPDiagramSettings;
+        glspServerConfig: GlspServerConfig;
+        diagram: GlspDiagramSettings;
     }
 ): Container {
     const container = new Container({
@@ -32,7 +32,7 @@ export function vscodeModule(
     });
 
     container.bind(TYPES.ExtensionContext).toConstantValue(extensionContext);
-    container.bind(TYPES.GLSPDiagramSettings).toConstantValue(options.diagram);
+    container.bind(TYPES.GlspDiagramSettings).toConstantValue(options.diagram);
 
     container.load(
         disposableModule,
@@ -43,8 +43,7 @@ export function vscodeModule(
         webviewModule,
         webviewEditorModule,
         webviewViewModule,
-        // TODO: Haydar
-        experimentalServerModule,
+        glspModule,
         glspServerModule(options.glspServerConfig),
         ideServerModule
     );

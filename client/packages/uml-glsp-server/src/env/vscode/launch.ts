@@ -1,14 +1,14 @@
 /********************************************************************************
  * Copyright (c) 2023 CrossBreeze.
  ********************************************************************************/
-import { LOGGER_CONFIG, LogLevel } from '@borkdominik-biguml/big-common';
+import { LogLevel } from '@borkdominik-biguml/big-common';
 import { UmlDiagramServices, UmlDiagramSharedServices } from '@borkdominik-biguml/uml-model-server';
 import { UmlDiagramLSPServices } from '@borkdominik-biguml/uml-model-server/integration';
 import { configureELKLayoutModule } from '@eclipse-glsp/layout-elk';
 import { LogLevel as GlspLogLevel, LoggerFactory, type MaybePromise } from '@eclipse-glsp/server';
 import { SocketServerLauncher, createAppModule, defaultLaunchOptions } from '@eclipse-glsp/server/node.js';
 import { Container, ContainerModule } from 'inversify';
-import { ClassDiagramModule } from './diagram/class/class-diagram-module.js';
+import { UmlDiagramModule } from './diagram/diagram-module.js';
 import { FeatureDiagramModule } from './features/index.js';
 import { LayeredLayoutConfigurator } from './features/layout/layered-layout-configurator.js';
 import { UmlServerModule } from './module.js';
@@ -40,25 +40,24 @@ export function fromCommonLogLevel(level: LogLevel): GlspLogLevel {
  * @returns a promise that is resolved as soon as the server is shut down or rejects if an error occurs
  */
 export function startGLSPServer(services: UmlDiagramLSPServices, modules: (ContainerModule | FeatureDiagramModule)[]): MaybePromise<void> {
-    const launchOptions = { ...defaultLaunchOptions, logLevel: fromCommonLogLevel(LOGGER_CONFIG.thirdParty.glspServer) };
-    //     // create module based on launch options, e.g., logging etc.
+    const launchOptions = { ...defaultLaunchOptions, logLevel: GlspLogLevel.debug };
+    // create module based on launch options, e.g., logging etc.
     const appModule = createAppModule(launchOptions);
-    //     // create custom module to bind language services to support injection within GLSP classes
+    // create custom module to bind language services to support injection within GLSP classes
     const lspModule = createLSPModule(services);
-    //     // create app container will all necessary modules and retrieve launcher
+
+    // create app container will all necessary modules and retrieve launcher
     const appContainer = new Container();
     appContainer.load(appModule, lspModule);
     const logger = appContainer.get<LoggerFactory>(LoggerFactory)('BigUmlServer');
     const launcher = appContainer.resolve<SocketServerLauncher>(SocketServerLauncher);
-    //     // use Eclipse Layout Kernel with our custom layered layout configuration
+    // use Eclipse Layout Kernel with our custom layered layout configuration
     const elkLayoutModule = configureELKLayoutModule({
         algorithms: ['layered'],
         layoutConfigurator: LayeredLayoutConfigurator
     });
-    //     // create server module with our workflow model diagram
 
-    const classDiagramModule = new ClassDiagramModule();
-
+    const classDiagramModule = new UmlDiagramModule();
     const containerModules: ContainerModule[] = [];
     for (const module of modules) {
         if (module instanceof FeatureDiagramModule) {
@@ -80,12 +79,12 @@ export function startGLSPServer(services: UmlDiagramLSPServices, modules: (Conta
         logger.error('Error in GLSP server launcher:', error);
     }
 }
-// /**
-//  * Custom module to bind language services so that they can be injected in other classes created through DI.
-//  *
-//  * @param services language services
-//  * @returns container module
-//  */
+/**
+ * Custom module to bind language services so that they can be injected in other classes created through DI.
+ *
+ * @param services language services
+ * @returns container module
+ */
 export function createLSPModule(services: UmlDiagramLSPServices): ContainerModule {
     return new ContainerModule(bind => {
         bind(UmlDiagramLSPServices).toConstantValue(services);

@@ -8,21 +8,21 @@
  *********************************************************************************/
 import { Action, hasStringProp } from '@eclipse-glsp/protocol';
 
-export type UMLTheme = 'dark' | 'light';
+export type UmlTheme = 'dark' | 'light';
 
-export interface SetUMLThemeAction extends Action {
-    kind: typeof SetUMLThemeAction.KIND;
-    theme: UMLTheme;
+export interface SetUmlThemeAction extends Action {
+    kind: typeof SetUmlThemeAction.KIND;
+    theme: UmlTheme;
 }
 
-export namespace SetUMLThemeAction {
-    export const KIND = 'setUMLTheme';
+export namespace SetUmlThemeAction {
+    export const KIND = 'setUmlTheme';
 
-    export function is(object: any): object is SetUMLThemeAction {
+    export function is(object: any): object is SetUmlThemeAction {
         return Action.hasKind(object, KIND) && hasStringProp(object, 'theme');
     }
 
-    export function create(theme: UMLTheme): SetUMLThemeAction {
+    export function create(theme: UmlTheme): SetUmlThemeAction {
         return { kind: KIND, theme };
     }
 }

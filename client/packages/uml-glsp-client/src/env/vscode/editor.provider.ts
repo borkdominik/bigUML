@@ -47,21 +47,21 @@ import type { MessageParticipant } from 'vscode-messenger-common';
 import { GLSPIsReadyAction } from '../common/actions/editor.actions.js';
 import type { ThemeIntegration } from './features/theme/theme-integration.js';
 
-export const UMLDiagramEditorSettings = Symbol('UMLDiagramEditorSettings');
-export interface UMLDiagramEditorSettings {
+export const UmlDiagramEditorSettings = Symbol('UmlDiagramEditorSettings');
+export interface UmlDiagramEditorSettings {
     viewType: string;
     diagramType: string;
 }
 
 @injectable()
-export class UMLDiagramEditorProvider extends WebviewEditorProvider {
+export class UmlDiagramEditorProvider extends WebviewEditorProvider {
     @inject(TYPES.Theme)
     protected readonly themeIntegration: ThemeIntegration;
 
     protected clients = new Map<string, GlspVscodeClient>();
     protected viewCounter = 0;
 
-    constructor(@inject(UMLDiagramEditorSettings) protected readonly settings: UMLDiagramEditorSettings) {
+    constructor(@inject(UmlDiagramEditorSettings) protected readonly settings: UmlDiagramEditorSettings) {
         super({
             viewId: settings.viewType,
             viewType: settings.viewType,

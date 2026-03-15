@@ -48,9 +48,10 @@
     "README.md"
   ],
   "scripts": {
-    "build": "npm run clean && npm run compile",
+    "build": "npm run clean && npm run compile && npm run bundle",
+    "bundle": "tsx esbuild.ts",
     "clean": "rimraf build dist node_modules/.tmp",
-    "compile": "tsx esbuild.ts",
+    "compile": "tsc -p tsconfig.json",
     "compile:prod": "npm run clean && npm run compile -- --minify",
     "lint": "eslint -c ./eslint.config.js",
     "lint:ci": "npm run lint -o eslint.xml -f checkstyle",
@@ -61,7 +62,8 @@
     "vscode:prepublish": "npm run compile:prod",
     "vscode:release": "vsce publish --no-dependencies",
     "vscode:release-pre": "npm run vscode:release -- --pre-release",
-    "watch": "concurrently --kill-others 'npm run watch:compile'",
+    "watch": "concurrently --kill-others 'npm run watch:compile' 'npm run watch:bundle'",
+    "watch:bundle": "npm run bundle -- --watch --preserveWatchOutput",
     "watch:compile": "npm run compile -- --watch --preserveWatchOutput"
   },
   "contributes": {
@@ -110,24 +112,7 @@
     ],
     "configuration": {
       "title": "bigUML",
-      "properties": {
-        "bigUML.hideUnotation": {
-          "type": "boolean",
-          "default": true,
-          "scope": "resource",
-          "description": "Hide the *.unotation files."
-        },
-        "bigUML.timeline.onSave": {
-          "type": "boolean",
-          "default": true,
-          "description": "Create a new timeline entry on file save."
-        },
-        "bigUML.timeline.persistent": {
-          "type": "boolean",
-          "default": true,
-          "description": "Persist timeline entries across restarts."
-        }
-      }
+      "properties": {}
     },
     "customEditors": [
       {
@@ -319,6 +304,7 @@
   ],
   "dependencies": {
     "@borkdominik-biguml/big-advancedsearch": "*",
+    "@borkdominik-biguml/big-common": "*",
     "@borkdominik-biguml/big-minimap": "*",
     "@borkdominik-biguml/big-outline": "*",
     "@borkdominik-biguml/big-property-palette": "*",

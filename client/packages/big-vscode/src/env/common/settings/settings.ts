@@ -18,18 +18,18 @@ export const VSCodeSettings = {
         viewType: 'bigUML.diagramView'
     },
     propertyPalette: {
-        viewId: 'bigUML.panel.property-palette'
+        viewType: 'bigUML.panel.property-palette'
     },
     outline: {
-        viewId: 'bigUML.panel.outline'
+        viewType: 'bigUML.panel.outline'
     },
     minimap: {
-        viewId: 'bigUML.panel.minimap'
+        viewType: 'bigUML.panel.minimap'
     },
     revisionManagement: {
-        viewId: 'bigUML.panel.revision-management'
+        viewType: 'bigUML.panel.revision-management'
     },
     advancedSearch: {
-        viewId: 'bigUML.panel.advancedsearch'
+        viewType: 'bigUML.panel.advancedsearch'
     }
 } as const;

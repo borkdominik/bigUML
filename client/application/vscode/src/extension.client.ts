@@ -9,7 +9,7 @@
 import '../css/colors.css';
 
 import { VSCodeSettings } from '@borkdominik-biguml/big-vscode';
-import { TYPES, type GLSPServer, type OnActivate } from '@borkdominik-biguml/big-vscode/vscode';
+import { TYPES, type GlspServer, type OnActivate } from '@borkdominik-biguml/big-vscode/vscode';
 import { type Container } from 'inversify';
 import * as vscode from 'vscode';
 import { createContainer } from './extension.config.js';
@@ -31,7 +31,7 @@ export async function activateClient(context: vscode.ExtensionContext): Promise<
         diContainer.getAll<OnActivate>(TYPES.OnActivate).forEach(service => service.onActivate?.());
 
         setTimeout(() => {
-            diContainer!.get<GLSPServer>(TYPES.GLSPServer).start();
+            diContainer!.get<GlspServer>(TYPES.GlspServer).start();
         }, 2000);
 
         vscode.commands.executeCommand('setContext', `${VSCodeSettings.name}.isRunning`, true);

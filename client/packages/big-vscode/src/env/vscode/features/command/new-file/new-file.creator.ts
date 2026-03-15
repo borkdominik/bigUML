@@ -8,12 +8,12 @@
  *********************************************************************************/
 import type { IDESessionClient } from '@borkdominik-biguml/big-vscode/vscode';
 import { TYPES } from '@borkdominik-biguml/big-vscode/vscode';
-import { CreateNewFileAction, CreateNewFileResponseAction, type UMLDiagramType } from '@borkdominik-biguml/uml-glsp-server';
+import { CreateNewFileAction, CreateNewFileResponseAction, type UmlDiagramType } from '@borkdominik-biguml/uml-glsp-server';
 import { type Disposable, DisposableCollection } from '@eclipse-glsp/protocol';
 import { inject, injectable } from 'inversify';
 import URIJS from 'urijs';
 import * as vscode from 'vscode';
-import { UMLLangugageEnvironment, VSCodeSettings } from '../../../../common/index.js';
+import { UmlLangugageEnvironment, VSCodeSettings } from '../../../../common/index.js';
 import { newDiagramWizard } from './wizard.js';
 
 const nameRegex = /^([\w_-]+\/?)*[\w_-]+$/;
@@ -23,7 +23,7 @@ export class NewFileCreator implements Disposable {
     protected toDispose = new DisposableCollection();
 
     constructor(
-        @inject(TYPES.IDESessionClient)
+        @inject(TYPES.IdeSessionClient)
         protected readonly session: IDESessionClient,
         @inject(TYPES.ExtensionContext)
         protected readonly context: vscode.ExtensionContext
@@ -43,7 +43,7 @@ export class NewFileCreator implements Disposable {
         const rootUri = targetUri ?? workspace.uri;
 
         const wizard = await newDiagramWizard(this.context, {
-            diagramTypes: UMLLangugageEnvironment.supportedTypes,
+            diagramTypes: UmlLangugageEnvironment.supportedTypes,
             nameValidator: async input => {
                 if (!input || input.trim().length === 0) {
                     return 'Name can not be empty';
@@ -75,11 +75,11 @@ export class NewFileCreator implements Disposable {
         });
 
         if (wizard !== undefined) {
-            await this.createUMLDiagram(rootUri, wizard.name.trim(), wizard.diagramPick.diagramType);
+            await this.createUmlDiagram(rootUri, wizard.name.trim(), wizard.diagramPick.diagramType);
         }
     }
 
-    protected async createUMLDiagram(rootUri: vscode.Uri, diagramName: string, diagramType: UMLDiagramType): Promise<void> {
+    protected async createUmlDiagram(rootUri: vscode.Uri, diagramName: string, diagramType: UmlDiagramType): Promise<void> {
         const workspaceRoot = new URIJS(decodeURIComponent(this.rootDestination(rootUri)));
         const modelUri = new URIJS(workspaceRoot + '/' + this.diagramDestination(diagramName));
 
@@ -93,7 +93,7 @@ export class NewFileCreator implements Disposable {
                 dispose.dispose();
 
                 vscode.window.showInformationMessage(
-                    'Thank you for testing bigUML. We want to remind you that bigUML is at an early stage of development.',
+                    'Thank you for testing bigUml. We want to remind you that bigUml is at an early stage of development.',
                     'Close'
                 );
                 await vscode.commands.executeCommand('workbench.files.action.refreshFilesExplorer');

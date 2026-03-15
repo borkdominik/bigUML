@@ -19,7 +19,7 @@ import { injectable } from 'inversify';
  * to the vscode API.
  */
 @injectable()
-export class UMLHostExtensionActionHandler extends HostExtensionActionHandler {
+export class UmlHostExtensionActionHandler extends HostExtensionActionHandler {
     override handle(action: Action): void | Action | ICommand {
         if (this.actionKinds.includes(action.kind)) {
             const message = {

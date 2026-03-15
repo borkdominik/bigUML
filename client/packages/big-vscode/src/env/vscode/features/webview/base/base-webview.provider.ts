@@ -14,7 +14,7 @@ import * as vscode from 'vscode';
 import { WebviewProtocol } from '../../../../common/index.js';
 import { TYPES } from '../../../vscode-common.types.js';
 import type { ActionListener } from '../../action/action-listener.js';
-import type { BIGGLSPVSCodeConnector } from '../../connector/glsp-vscode-connector.js';
+import type { BigGlspVSCodeConnector } from '../../connector/glsp-vscode-connector.js';
 import type { WebviewProviderOptions } from '../webview.types.js';
 import type { ActionWebviewMessenger } from './webview-action-messenger.js';
 import { ReactHtmlProvider } from './webview-html-provider.js';
@@ -22,8 +22,8 @@ import type { WebviewMessenger } from './webview-messenger.js';
 
 @injectable()
 export abstract class BaseWebviewProvider implements Disposable {
-    @inject(TYPES.GLSPVSCodeConnector)
-    protected readonly connector: BIGGLSPVSCodeConnector;
+    @inject(TYPES.GlspVSCodeConnector)
+    protected readonly connector: BigGlspVSCodeConnector;
 
     @inject(TYPES.ExtensionContext)
     protected readonly extensionContext: vscode.ExtensionContext;

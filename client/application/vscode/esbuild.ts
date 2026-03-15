@@ -17,7 +17,7 @@ const extensionConfig: es.BuildOptions = {
     ...rootConfig,
     minify: process.env.NODE_ENV === 'production' || minify,
     sourcemap: process.env.NODE_ENV === 'production' ? false : 'inline',
-    entryPoints: ['./src/index.ts', './src/main.ts'],
+    entryPoints: ['./src/index.ts', './src/server.main.ts'],
     platform: 'node',
     mainFields: ['module', 'main'],
     outdir: 'build',

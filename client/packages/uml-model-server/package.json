@@ -53,6 +53,7 @@
   "contributes": {},
   "dependencies": {
     "@apidevtools/json-schema-ref-parser": "^11.1.0",
+    "@borkdominik-biguml/big-common": "*",
     "@borkdominik-biguml/uml-language-tooling": "*",
     "chalk": "~4.1.2",
     "class-validator": "^0.14.2",

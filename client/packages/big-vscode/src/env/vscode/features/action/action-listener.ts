@@ -19,7 +19,7 @@ import {
 import { inject, injectable, postConstruct } from 'inversify';
 import * as vscode from 'vscode';
 import { TYPES } from '../../vscode-common.types.js';
-import type { BIGGLSPVSCodeConnector } from '../connector/glsp-vscode-connector.js';
+import type { BigGlspVSCodeConnector } from '../connector/glsp-vscode-connector.js';
 import type { ActionDispatcher } from './action-dispatcher.js';
 
 /**
@@ -28,8 +28,8 @@ import type { ActionDispatcher } from './action-dispatcher.js';
  */
 @injectable()
 export class ActionListener implements Disposable {
-    @inject(TYPES.GLSPVSCodeConnector)
-    protected readonly connector: BIGGLSPVSCodeConnector;
+    @inject(TYPES.GlspVSCodeConnector)
+    protected readonly connector: BigGlspVSCodeConnector;
     @inject(TYPES.ActionDispatcher)
     protected readonly actionDispatcher: ActionDispatcher;
 

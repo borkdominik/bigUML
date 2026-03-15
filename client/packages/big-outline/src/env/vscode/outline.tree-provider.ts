@@ -18,7 +18,7 @@ import {
     type ActionDispatcher,
     type ActionListener,
     type ConnectionManager,
-    type GLSPServerModelState,
+    type GlspModelState,
     type SelectionService
 } from '@borkdominik-biguml/big-vscode/vscode';
 import { SelectAllAction } from '@eclipse-glsp/protocol';
@@ -42,8 +42,8 @@ export class OutlineTreeProvider implements vscode.TreeDataProvider<OutlineTreeN
     protected readonly connectionManager: ConnectionManager;
     @inject(TYPES.SelectionService)
     protected readonly selectionService: SelectionService;
-    @inject(TYPES.GLSPServerModelState)
-    protected readonly modelState: GLSPServerModelState;
+    @inject(TYPES.GlspModelState)
+    protected readonly modelState: GlspModelState;
 
     protected readonly iconMap = new Map<string, vscode.ThemeIcon>([
         ['model', vscode.ThemeIcon.Folder],

@@ -1,6 +1,12 @@
-/********************************************************************************
+/**********************************************************************************
+ * Copyright (c) 2026 borkdominik and others.
  * Copyright (c) 2023 CrossBreeze.
- ********************************************************************************/
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at https://opensource.org/licenses/MIT.
+ *
+ * SPDX-License-Identifier: MIT
+ **********************************************************************************/
 import 'reflect-metadata';
 
 import { advancedSearchGlspModule } from '@borkdominik-biguml/big-advancedsearch/glsp-server';
@@ -14,7 +20,7 @@ import { createConnection, ProposedFeatures } from 'vscode-languageserver/node.j
 
 /**
  * This module will be spawned as a separate language server process by the 'extension.ts'.
- * In the extension it is declared as 'server-main' (see webpack.config.js for the packaging).
+ * In the extension it is declared as 'server.main'.
  *
  * This module does the following:
  * - Establishing the connection with the language client that is running in the extension

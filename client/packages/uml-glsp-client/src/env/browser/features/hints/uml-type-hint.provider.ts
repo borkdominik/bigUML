@@ -7,11 +7,17 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { ApplyTypeHintsCommand, getElementTypeId, type GModelElement, type GModelElementSchema, type ShapeTypeHint } from '@eclipse-glsp/client';
+import {
+    ApplyTypeHintsCommand,
+    getElementTypeId,
+    type GModelElement,
+    type GModelElementSchema,
+    type ShapeTypeHint
+} from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 
 @injectable()
-export class UMLApplyTypeHintsCommand extends ApplyTypeHintsCommand {
+export class UmlApplyTypeHintsCommand extends ApplyTypeHintsCommand {
     protected override isContainableElement(input: GModelElement | GModelElementSchema | string, hint: ShapeTypeHint): boolean {
         const elementType = getElementTypeId(input);
         return hint.containableElementTypeIds?.some(type => elementType === type) ?? false;

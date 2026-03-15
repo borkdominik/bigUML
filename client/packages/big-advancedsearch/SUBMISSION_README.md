@@ -125,7 +125,7 @@ At the core of the backend logic is the `AdvancedSearchActionHandler` class, whi
 
 - Query Parsing – The input string (e.g., `Class:User`) is split into two parts: a type segment (Class) and a name pattern segment (User). Both parts are normalized to ensure case-insensitive matching.
 - Matcher Selection – The handler maintains a list of registered diagram-specific matchers, each implementing the IMatcher interface. If a type is provided, only matchers that support that type (including partial matches) are used.
-- Element Matching – The selected matchers receive the current UML model via the `ExperimentalGLSPServerModelState` and return a list of `SearchResult` objects that satisfy the query pattern.
+- Element Matching – The selected matchers receive the current UML model via the `ExperimentalGlspModelState` and return a list of `SearchResult` objects that satisfy the query pattern.
 - Filtering and Deduplication – All results are filtered by type and name pattern, then deduplicated using a combination of element ID and type.
 - Result Dispatching – The filtered search results are returned to the frontend in the form of an `AdvancedSearchActionResponse`.
 

@@ -19,7 +19,7 @@ import {
 import { inject, injectable, postConstruct, preDestroy } from 'inversify';
 import { VscodeAction } from '../../../common/vscode.action.js';
 import { TYPES } from '../../vscode-common.types.js';
-import type { BIGGLSPVSCodeConnector } from '../connector/glsp-vscode-connector.js';
+import type { BigGlspVSCodeConnector } from '../connector/glsp-vscode-connector.js';
 
 /**
  * Dispatches actions to the GLSP client/server and handles responses.
@@ -27,8 +27,8 @@ import type { BIGGLSPVSCodeConnector } from '../connector/glsp-vscode-connector.
  */
 @injectable()
 export class ActionDispatcher implements Disposable {
-    @inject(TYPES.GLSPVSCodeConnector)
-    protected readonly connector: BIGGLSPVSCodeConnector;
+    @inject(TYPES.GlspVSCodeConnector)
+    protected readonly connector: BigGlspVSCodeConnector;
 
     protected readonly requests: Map<string, Deferred<ActionMessage>> = new Map();
     protected toDispose = new DisposableCollection();

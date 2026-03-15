@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { type UMLDiagramType } from '@borkdominik-biguml/uml-glsp-server';
+import { type UmlDiagramType } from '@borkdominik-biguml/uml-glsp-server';
 import {
     type CancellationToken,
     type Disposable,
@@ -28,7 +28,7 @@ import {
 export async function newDiagramWizard(
     _context: ExtensionContext,
     options: {
-        diagramTypes: UMLDiagramType[];
+        diagramTypes: UmlDiagramType[];
         nameValidator: (name: string) => Promise<string | undefined>;
     }
 ): Promise<State> {
@@ -110,7 +110,7 @@ interface QuickPickParameters<T extends QuickPickItem> {
 }
 
 interface DiagramTypeQuickPick extends QuickPickItem {
-    diagramType: UMLDiagramType;
+    diagramType: UmlDiagramType;
 }
 
 interface InputBoxParameters {

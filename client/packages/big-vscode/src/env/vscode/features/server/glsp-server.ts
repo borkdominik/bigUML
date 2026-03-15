@@ -9,11 +9,11 @@
 import { SocketGlspVscodeServer, type InitializeParameters } from '@eclipse-glsp/vscode-integration';
 import { inject, injectable } from 'inversify';
 import { TYPES } from '../../../vscode/vscode-common.types.js';
-import type { GLSPServerConfig } from './glsp-server.module.js';
+import type { GlspServerConfig } from './glsp-server.module.js';
 
 @injectable()
-export class GLSPServer extends SocketGlspVscodeServer {
-    constructor(@inject(TYPES.GLSPServerConfig) protected readonly glspServerConfig: GLSPServerConfig) {
+export class GlspServer extends SocketGlspVscodeServer {
+    constructor(@inject(TYPES.GlspServerConfig) protected readonly glspServerConfig: GlspServerConfig) {
         super({
             clientId: 'glsp.uml',
             clientName: 'uml',

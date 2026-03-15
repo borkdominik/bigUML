@@ -16,7 +16,7 @@ import {
     type ActionDispatcher,
     type CacheActionListener,
     type ConnectionManager,
-    type GLSPServerModelState,
+    type GlspModelState,
     type SelectionService,
     TYPES,
     WebviewViewProvider
@@ -30,8 +30,8 @@ export class PropertyPaletteWebviewViewProvider extends WebviewViewProvider {
     @inject(TYPES.ConnectionManager)
     protected readonly connectionManager: ConnectionManager;
 
-    @inject(TYPES.GLSPServerModelState)
-    protected readonly modelState: GLSPServerModelState;
+    @inject(TYPES.GlspModelState)
+    protected readonly modelState: GlspModelState;
 
     @inject(TYPES.ActionDispatcher)
     protected readonly actionDispatcher: ActionDispatcher;

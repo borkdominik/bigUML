@@ -29,7 +29,7 @@ export namespace ChangeToolsStateAction {
 }
 
 @injectable()
-export class UMLToolManager extends ToolManager {
+export class UmlToolManager extends ToolManager {
     change(toolIds: string[], enabled: boolean): void {
         const tools = toolIds.map(id => this.tool(id));
         tools.forEach(tool => {
@@ -51,8 +51,8 @@ export class UMLToolManager extends ToolManager {
 }
 
 @injectable()
-export class UMLToolManagerActionHandler extends ToolManagerActionHandler {
-    declare toolManager: UMLToolManager;
+export class UmlToolManagerActionHandler extends ToolManagerActionHandler {
+    declare toolManager: UmlToolManager;
 
     override handle(action: Action): void | ICommand | Action {
         if (ChangeToolsStateAction.is(action)) {

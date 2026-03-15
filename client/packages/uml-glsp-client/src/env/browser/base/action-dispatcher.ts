@@ -9,7 +9,7 @@
 import { VscodeAction } from '@borkdominik-biguml/big-vscode';
 import { ActionDispatcher, GLSPActionDispatcher, OptionalAction, RequestAction, ResponseAction, type Action } from '@eclipse-glsp/client';
 
-export class UMLActionDispatcher extends GLSPActionDispatcher {
+export class UmlActionDispatcher extends GLSPActionDispatcher {
     override requestUntil<Res extends ResponseAction>(
         action: RequestAction<Res>,
         timeoutMs = 10000,

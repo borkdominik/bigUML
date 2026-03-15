@@ -10,10 +10,10 @@
 import { MinimapExportSvgAction, RequestMinimapExportSvgAction } from '@borkdominik-biguml/big-minimap';
 import {
     TYPES,
-    type BIGGLSPVSCodeConnector,
+    type BigGlspVSCodeConnector,
     type ConnectionManager,
-    type GLSPModelState,
-    type GLSPServerModelState
+    type GlspModelState,
+    type GlspModelStateResource
 } from '@borkdominik-biguml/big-vscode/vscode';
 import { RequestExportSvgAction } from '@eclipse-glsp/protocol';
 import { inject, injectable, postConstruct } from 'inversify';
@@ -22,14 +22,14 @@ import { type Snapshot } from '../common/snapshot.js';
 
 @injectable()
 export class RevisionManagementService {
-    @inject(TYPES.GLSPVSCodeConnector)
-    protected readonly connector!: BIGGLSPVSCodeConnector;
+    @inject(TYPES.GlspVSCodeConnector)
+    protected readonly connector!: BigGlspVSCodeConnector;
 
     @inject(TYPES.ConnectionManager)
     protected readonly connectionManager!: ConnectionManager;
 
-    @inject(TYPES.GLSPServerModelState)
-    protected readonly modelState!: GLSPServerModelState;
+    @inject(TYPES.GlspModelState)
+    protected readonly modelState!: GlspModelState;
 
     @inject(TYPES.ExtensionContext)
     protected readonly extensionContext!: vscode.ExtensionContext;
@@ -38,7 +38,7 @@ export class RevisionManagementService {
     readonly onDidChangeTimeline = this.onDidChangeTimelineEmitter.event;
 
     private lastSnapshotTime = 0;
-    private currentModelState: GLSPModelState | null = null;
+    private currentModelState: GlspModelStateResource | null = null;
     private timeline: Snapshot[] = [];
     private svgRequestId: string | null = null;
     protected toDispose: vscode.Disposable[] = [];

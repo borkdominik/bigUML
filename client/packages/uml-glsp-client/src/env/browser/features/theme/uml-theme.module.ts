@@ -7,12 +7,12 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import { configureActionHandler, FeatureModule } from '@eclipse-glsp/client';
-import { SetUMLThemeAction } from '../../../common/features/theme/theme.actions.js';
+import { SetUmlThemeAction } from '../../../common/features/theme/theme.actions.js';
 import { ThemeManager } from './theme.manager.js';
 
 export const umlThemeModule = new FeatureModule((bind, _unbind, isBound, rebind) => {
     const context = { bind, _unbind, isBound, rebind };
 
     bind(ThemeManager).toSelf().inSingletonScope();
-    configureActionHandler(context, SetUMLThemeAction.KIND, ThemeManager);
+    configureActionHandler(context, SetUmlThemeAction.KIND, ThemeManager);
 });

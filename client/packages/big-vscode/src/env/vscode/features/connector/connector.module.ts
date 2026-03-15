@@ -11,11 +11,11 @@ import { TYPES } from '../../vscode-common.types.js';
 import { bindLifecycle } from '../container/bindings.js';
 import { VscodeFeatureModule } from '../container/container.js';
 import { ConnectionManager } from './connection-manager.js';
-import { BIGGLSPVSCodeConnector } from './glsp-vscode-connector.js';
+import { BigGlspVSCodeConnector } from './glsp-vscode-connector.js';
 import { SelectionService } from './selection-service.js';
 
 export const connectorModule = new VscodeFeatureModule(context => {
-    bindLifecycle(context, TYPES.GLSPVSCodeConnector, BIGGLSPVSCodeConnector);
+    bindLifecycle(context, TYPES.GlspVSCodeConnector, BigGlspVSCodeConnector);
 
     context.bind(TYPES.ConnectionManager).to(ConnectionManager).inSingletonScope();
     context.bind(TYPES.SelectionService).to(SelectionService).inSingletonScope();

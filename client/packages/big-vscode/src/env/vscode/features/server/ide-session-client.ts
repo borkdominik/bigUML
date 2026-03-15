@@ -10,7 +10,7 @@
 import { CreateNewFileResponseAction } from '@borkdominik-biguml/uml-glsp-server';
 import { Deferred, type Disposable, type GLSPClient } from '@eclipse-glsp/protocol';
 import { inject, injectable } from 'inversify';
-import type { GLSPDiagramSettings } from '../../../vscode/features/glsp/settings.js';
+import type { GlspDiagramSettings } from '../../../vscode/features/glsp/settings.js';
 import { TYPES } from '../../../vscode/vscode-common.types.js';
 import { type IDEServer, IDEServerClientId } from './ide-server.js';
 
@@ -25,8 +25,8 @@ export class IDESessionClient implements Disposable {
     }
 
     constructor(
-        @inject(TYPES.IDEServer) protected readonly server: IDEServer,
-        @inject(TYPES.GLSPDiagramSettings) protected readonly diagramSettings: GLSPDiagramSettings
+        @inject(TYPES.IdeServer) protected readonly server: IDEServer,
+        @inject(TYPES.GlspDiagramSettings) protected readonly diagramSettings: GlspDiagramSettings
     ) {}
 
     dispose(): void {}

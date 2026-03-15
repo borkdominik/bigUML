@@ -7,17 +7,24 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
-import { type BoundsData, type GModelElement, type GParentElement, isLayoutContainer, type LayoutContainer, Layouter } from '@eclipse-glsp/client';
+import {
+    type BoundsData,
+    type GModelElement,
+    type GParentElement,
+    isLayoutContainer,
+    type LayoutContainer,
+    Layouter
+} from '@eclipse-glsp/client';
 import { StatefulLayouterExt } from '@eclipse-glsp/client/lib/features/bounds/layouter.js';
 import { isEqual } from 'lodash';
 
-export class UMLLayouterExt extends Layouter {
+export class UmlLayouterExt extends Layouter {
     override layout(element2boundsData: Map<GModelElement, BoundsData>): void {
-        new UMLStatefulLayouterExt(element2boundsData, this.layoutRegistry, this.logger).layout();
+        new UmlStatefulLayouterExt(element2boundsData, this.layoutRegistry, this.logger).layout();
     }
 }
 
-export class UMLStatefulLayouterExt extends StatefulLayouterExt {
+export class UmlStatefulLayouterExt extends StatefulLayouterExt {
     override layout(): void {
         // First pass: apply layout with cleared container data. Will get
         // preferred size for all elements (Children first, then parents)

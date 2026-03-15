@@ -22,19 +22,17 @@ export const TYPES = {
     Settings: Symbol('Settings'),
 
     // GLSP
-    GLSPDiagramSettings: Symbol('GLSPDiagramSettings'),
-    GLSPVSCodeConnector: Symbol('GLSPVSCodeConnector'),
-    GLSPServerModelState: Symbol('GLSPServerModelState'),
+    GlspDiagramSettings: Symbol('GlspDiagramSettings'),
+    GlspVSCodeConnector: Symbol('GlspVSCodeConnector'),
+    GlspModelState: Symbol('GlspModelState'),
     ConnectionManager: Symbol('ConnectionManager'),
     SelectionService: Symbol('SelectionService'),
 
     // GLSP Server
-    GLSPServer: Symbol('GLSPServer'),
-    GLSPServerConfig: Symbol('GLSPServerConfig'),
-    // GLSPServerLauncher: Symbol('GLSPServerLauncher'),
-    // GLSPServerLaunchOptions: Symbol('GLSPServerLaunchOptions'),
-    IDEServer: Symbol('IDEServer'),
-    IDESessionClient: Symbol('IDESessionClient'),
+    GlspServer: Symbol('GlspServer'),
+    GlspServerConfig: Symbol('GlspServerConfig'),
+    IdeServer: Symbol('IdeServer'),
+    IdeSessionClient: Symbol('IdeSessionClient'),
 
     // Server
     ServerLauncher: Symbol('ServerLauncher'),

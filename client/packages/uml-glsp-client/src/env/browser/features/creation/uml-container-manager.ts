@@ -20,7 +20,7 @@ import {
 import { injectable } from 'inversify';
 
 @injectable()
-export class UMLContainerManager extends ContainerManager {
+export class UmlContainerManager extends ContainerManager {
     override findContainer(location: Point, ctx: GModelElement, _evt?: MouseEvent): ContainerElement | undefined {
         const childrenAtPosition = findChildrenAtPosition(ctx.root, location).filter(child => !(child instanceof InsertIndicator));
         let elements: GModelElement[] = [];

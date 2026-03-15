@@ -8,7 +8,7 @@
  *********************************************************************************/
 // TODO: Haydar
 
-export enum UMLDiagramType {
+export enum UmlDiagramType {
     NONE = '',
     ACTIVITY = 'activity',
     CLASS = 'class',

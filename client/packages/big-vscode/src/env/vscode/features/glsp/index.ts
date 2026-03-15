@@ -7,6 +7,6 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
-export * from './server-model-state.js';
-export * from './server.module.js';
+export * from './glsp-model-state.js';
+export * from './glsp.module.js';
 export * from './settings.js';

@@ -1,6 +1,12 @@
-/********************************************************************************
+/**********************************************************************************
+ * Copyright (c) 2026 borkdominik and others.
  * Copyright (c) 2023 CrossBreeze.
- ********************************************************************************/
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at https://opensource.org/licenses/MIT.
+ *
+ * SPDX-License-Identifier: MIT
+ **********************************************************************************/
 import * as path from 'path';
 import * as vscode from 'vscode';
 import { LanguageClient, type LanguageClientOptions, type ServerOptions, TransportKind } from 'vscode-languageclient/node.js';
@@ -23,8 +29,8 @@ export function deactivateServer(): Thenable<void> | undefined {
 }
 
 function launchLanguageClient(context: vscode.ExtensionContext): LanguageClient {
-    const serverOptions: ServerOptions = createServerOptions(context);
-    const clientOptions: LanguageClientOptions = createClientOptions(context);
+    const serverOptions = createServerOptions(context);
+    const clientOptions = createClientOptions(context);
 
     // Start the client. This will also launch the server
     const languageClient = new LanguageClient('uml-diagram', 'uml-diagram', serverOptions, clientOptions);
@@ -33,8 +39,8 @@ function launchLanguageClient(context: vscode.ExtensionContext): LanguageClient 
 }
 
 function createServerOptions(context: vscode.ExtensionContext): ServerOptions {
-    // needs to match the configuration in tsconfig.json and webpack.config.js
-    const serverModule = context.asAbsolutePath(path.join('build', 'main.cjs'));
+    // needs to match the configuration in tsconfig.json
+    const serverModule = context.asAbsolutePath(path.join('build', 'server.main.cjs'));
     // The debug options for the server
     // --inspect=6009: runs the server in Node's Inspector mode so VS Code can attach to the server for debugging.
     // By setting `process.env.DEBUG_BREAK` to a truthy value, the language server will wait until a debugger is attached.

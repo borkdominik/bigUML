@@ -10,7 +10,7 @@ import { type Action, FeedbackActionDispatcher, type IFeedbackEmitter } from '@e
 import { injectable } from 'inversify';
 
 @injectable()
-export class UMLFeedbackActionDispatcher extends FeedbackActionDispatcher {
+export class UmlFeedbackActionDispatcher extends FeedbackActionDispatcher {
     constructor() {
         super();
     }

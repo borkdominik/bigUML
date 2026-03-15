@@ -13,7 +13,7 @@ import { type AbstractLayoutOptions } from '@eclipse-glsp/sprotty';
 import { injectable } from 'inversify';
 
 @injectable()
-export class UMLFreeFormLayouter extends FreeFormLayouter {
+export class UmlFreeFormLayouter extends FreeFormLayouter {
     static override KIND = 'uml-freeform';
 
     // Only sizeable children will be returned

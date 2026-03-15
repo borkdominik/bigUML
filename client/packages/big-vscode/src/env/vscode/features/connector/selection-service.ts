@@ -12,7 +12,7 @@ import { inject, injectable, postConstruct, preDestroy } from 'inversify';
 import * as vscode from 'vscode';
 import { TYPES } from '../../vscode-common.types.js';
 import type { ConnectionManager } from './connection-manager.js';
-import type { BIGGLSPVSCodeConnector } from './glsp-vscode-connector.js';
+import type { BigGlspVSCodeConnector } from './glsp-vscode-connector.js';
 
 /**
  * SelectionMessage is used to communicate selection changes for GLSP clients.
@@ -29,8 +29,8 @@ export interface SelectionMessage {
  */
 @injectable()
 export class SelectionService implements Disposable {
-    @inject(TYPES.GLSPVSCodeConnector)
-    protected readonly connector: BIGGLSPVSCodeConnector;
+    @inject(TYPES.GlspVSCodeConnector)
+    protected readonly connector: BigGlspVSCodeConnector;
     @inject(TYPES.ConnectionManager)
     protected readonly connectionManager: ConnectionManager;
 

@@ -11,7 +11,7 @@ import {
     type ActionDispatcher,
     type CacheActionListener,
     type ConnectionManager,
-    type GLSPServerModelState,
+    type GlspModelState,
     TYPES,
     WebviewViewProvider
 } from '@borkdominik-biguml/big-vscode/vscode';
@@ -25,8 +25,8 @@ export class AdvancedSearchWebviewViewProvider extends WebviewViewProvider {
     @inject(TYPES.ConnectionManager)
     protected readonly connectionManager: ConnectionManager;
 
-    @inject(TYPES.GLSPServerModelState)
-    protected readonly modelState: GLSPServerModelState;
+    @inject(TYPES.GlspModelState)
+    protected readonly modelState: GlspModelState;
 
     @inject(TYPES.ActionDispatcher)
     protected readonly actionDispatcher: ActionDispatcher;

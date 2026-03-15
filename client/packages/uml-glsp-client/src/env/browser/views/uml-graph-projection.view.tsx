@@ -20,7 +20,7 @@ const MARKER_DIAMONG_EMPTY_ID = 'marker-diamond-empty';
 const FILTER_DROP_SHADOW_ID = 'filter-drop-shadow';
 
 @injectable()
-export class UMLGraphProjectionView extends GLSPProjectionView {
+export class UmlGraphProjectionView extends GLSPProjectionView {
     @inject(SVGIdCreatorService)
     protected svgIdCreator: SVGIdCreatorService;
 

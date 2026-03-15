@@ -1,2 +1,2 @@
 ignores: ['eslint-*']
-ignorePatterns: ['src-old', 'lib']
+ignorePatterns: ['src-old', 'lib', 'build', 'dist']

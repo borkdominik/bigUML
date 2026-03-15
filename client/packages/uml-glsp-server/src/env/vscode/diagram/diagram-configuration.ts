@@ -24,15 +24,15 @@ import {
     getDefaultMapping
 } from '@eclipse-glsp/server';
 import { injectable } from 'inversify';
-import { GClassNode } from '../../elements/class.element.js';
-import { GEnumerationNode } from '../../elements/enumeration.element.js';
-import { GInterfaceNode } from '../../elements/interface.element.js';
-import { GOperationNode } from '../../elements/operation.element.js';
-import { GPackageNode } from '../../elements/package.element.js';
-import { GPropertyNode } from '../../elements/property.element.js';
+import { GClassNode } from '../elements/class.element.js';
+import { GEnumerationNode } from '../elements/enumeration.element.js';
+import { GInterfaceNode } from '../elements/interface.element.js';
+import { GOperationNode } from '../elements/operation.element.js';
+import { GPackageNode } from '../elements/package.element.js';
+import { GPropertyNode } from '../elements/property.element.js';
 
 @injectable()
-export class ClassDiagramConfiguration implements DiagramConfiguration {
+export class UmlDiagramConfiguration implements DiagramConfiguration {
     get typeMapping(): Map<string, GModelElementConstructor> {
         const mapping = getDefaultMapping();
         mapping.set(CommonModelTypes.LABEL_HEADING, GLabel);

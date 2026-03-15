@@ -14,7 +14,7 @@ import { IDEServer } from './ide-server.js';
 import { IDESessionClient } from './ide-session-client.js';
 
 export const ideServerModule = new VscodeFeatureModule(context => {
-    bindLifecycle(context, TYPES.IDEServer, IDEServer);
+    bindLifecycle(context, TYPES.IdeServer, IDEServer);
 
-    context.bind(TYPES.IDESessionClient).to(IDESessionClient).inSingletonScope();
+    context.bind(TYPES.IdeSessionClient).to(IDESessionClient).inSingletonScope();
 });

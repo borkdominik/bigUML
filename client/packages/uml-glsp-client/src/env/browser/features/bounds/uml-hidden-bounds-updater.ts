@@ -11,7 +11,7 @@ import { GLSPHiddenBoundsUpdater, RequestBoundsAction, type Action } from '@ecli
 import { injectable } from 'inversify';
 
 @injectable()
-export class UMLHiddenBoundsUpdater extends GLSPHiddenBoundsUpdater {
+export class UmlHiddenBoundsUpdater extends GLSPHiddenBoundsUpdater {
     preUpdate(): void {
         this.getElement2BoundsData().clear();
         this.element2route = [];

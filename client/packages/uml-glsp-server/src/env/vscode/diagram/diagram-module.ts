@@ -22,13 +22,14 @@ import {
     type ToolPaletteItemProvider
 } from '@eclipse-glsp/server';
 import { injectable, type interfaces } from 'inversify';
-import { DiagramLanguageMetadata } from '../../features/model/diagram-language-metadata.js';
-import { BigDiagramModule } from '../../features/module/module.js';
-import { ClassDiagramConfiguration } from './class-diagram-configuration.js';
-import { ClassDiagramGModelFactory } from './model/class-diagram-gmodel-factory.js';
+import { DiagramLanguageMetadata } from '../features/model/diagram-language-metadata.js';
+import { BigDiagramModule } from '../features/module/module.js';
+import { UmlDiagramConfiguration } from './diagram-configuration.js';
+import { UmlDiagramGModelFactory } from './model/diagram-gmodel-factory.js';
+import { UmlDiagramToolPaletteItemProvider } from './provider/diagram-tool-palette-item-provider.js';
 
 @injectable()
-export class ClassDiagramModule extends BigDiagramModule {
+export class UmlDiagramModule extends BigDiagramModule {
     readonly diagramType = 'uml-diagram';
 
     protected override configure(
@@ -39,18 +40,19 @@ export class ClassDiagramModule extends BigDiagramModule {
     ): void {
         super.configure(bind, unbind, isBound, rebind);
         bind(DiagramLanguageMetadata).to(ClassDiagramLanguageMetadata).inSingletonScope();
+        bind(ClassDiagramToolPaletteItemProvider).toSelf().inSingletonScope();
     }
 
     protected bindDiagramConfiguration(): BindingTarget<DiagramConfiguration> {
-        return ClassDiagramConfiguration;
+        return UmlDiagramConfiguration;
     }
 
     protected bindGModelFactory(): BindingTarget<GModelFactory> {
-        return ClassDiagramGModelFactory;
+        return UmlDiagramGModelFactory;
     }
 
     protected override bindToolPaletteItemProvider(): BindingTarget<ToolPaletteItemProvider> {
-        return ClassDiagramToolPaletteItemProvider;
+        return UmlDiagramToolPaletteItemProvider;
     }
 
     protected override bindLabelEditValidator(): BindingTarget<LabelEditValidator> | undefined {

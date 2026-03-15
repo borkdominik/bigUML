@@ -7,7 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import { TYPES, type ActionDispatcher } from '@borkdominik-biguml/big-vscode/vscode';
-import { SetUMLThemeAction, type UMLTheme } from '@borkdominik-biguml/uml-glsp-client';
+import { SetUmlThemeAction, type UmlTheme } from '@borkdominik-biguml/uml-glsp-client';
 import { type GlspVscodeClient } from '@eclipse-glsp/vscode-integration';
 import { inject, injectable, postConstruct } from 'inversify';
 import * as vscode from 'vscode';
@@ -43,12 +43,12 @@ export class ThemeIntegration {
         this.disposables.push(vscode.window.onDidChangeActiveColorTheme(cb));
     }
 
-    protected createAction(): SetUMLThemeAction {
-        return SetUMLThemeAction.create(mapTheme(vscode.window.activeColorTheme));
+    protected createAction(): SetUmlThemeAction {
+        return SetUmlThemeAction.create(mapTheme(vscode.window.activeColorTheme));
     }
 }
 
-function mapTheme(theme: vscode.ColorTheme): UMLTheme {
+function mapTheme(theme: vscode.ColorTheme): UmlTheme {
     switch (theme.kind) {
         case vscode.ColorThemeKind.Dark:
         case vscode.ColorThemeKind.HighContrast:

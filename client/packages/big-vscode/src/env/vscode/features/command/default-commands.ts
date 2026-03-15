@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { TYPES, type BIGGLSPVSCodeConnector, type GLSPDiagramSettings } from '@borkdominik-biguml/big-vscode/vscode';
+import { TYPES, type BigGlspVSCodeConnector, type GlspDiagramSettings } from '@borkdominik-biguml/big-vscode/vscode';
 import { EnableToolsAction, FocusDomAction } from '@borkdominik-biguml/uml-glsp-server';
 import { CenterAction, FitToScreenAction, RequestExportSvgAction, SelectAllAction } from '@eclipse-glsp/protocol';
 import { inject, injectable, postConstruct } from 'inversify';
@@ -17,8 +17,8 @@ import * as vscode from 'vscode';
 export class DefaultCommandsProvider {
     constructor(
         @inject(TYPES.ExtensionContext) protected readonly extensionContext: vscode.ExtensionContext,
-        @inject(TYPES.GLSPDiagramSettings) protected readonly diagramSettings: GLSPDiagramSettings,
-        @inject(TYPES.GLSPVSCodeConnector) protected readonly connector: BIGGLSPVSCodeConnector
+        @inject(TYPES.GlspDiagramSettings) protected readonly diagramSettings: GlspDiagramSettings,
+        @inject(TYPES.GlspVSCodeConnector) protected readonly connector: BigGlspVSCodeConnector
     ) {}
 
     @postConstruct()
@@ -40,7 +40,7 @@ export class DefaultCommandsProvider {
                 this.connector.sendActionToActiveClient(SelectAllAction.create());
             }),
             vscode.commands.registerCommand(`${this.diagramSettings.name}.show.umlPanel`, () => {
-                vscode.commands.executeCommand('bigUML.panel.property-palette.focus');
+                vscode.commands.executeCommand('bigUml.panel.property-palette.focus');
             }),
             vscode.commands.registerCommand(`${this.diagramSettings.name}.exportAsSVG`, () => {
                 this.connector.sendActionToActiveClient(RequestExportSvgAction.create());

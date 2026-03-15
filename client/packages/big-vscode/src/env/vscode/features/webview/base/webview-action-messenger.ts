@@ -14,7 +14,7 @@ import * as vscode from 'vscode';
 import type { NotificationType } from 'vscode-messenger-common';
 import { ActionWebviewProtocol } from '../../../../common/index.js';
 import { TYPES } from '../../../vscode-common.types.js';
-import type { BIGGLSPVSCodeConnector } from '../../connector/glsp-vscode-connector.js';
+import type { BigGlspVSCodeConnector } from '../../connector/glsp-vscode-connector.js';
 import { type WebviewMessenger } from './webview-messenger.js';
 
 @injectable()
@@ -27,8 +27,8 @@ export class ActionWebviewMessenger implements Disposable {
     @inject(TYPES.WebviewMessenger)
     protected readonly messenger: WebviewMessenger;
 
-    @inject(TYPES.GLSPVSCodeConnector)
-    protected readonly connector: BIGGLSPVSCodeConnector;
+    @inject(TYPES.GlspVSCodeConnector)
+    protected readonly connector: BigGlspVSCodeConnector;
 
     resolve(): void {
         this.toDispose.push(

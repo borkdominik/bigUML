@@ -9,12 +9,12 @@
 import { bindOrRebind, FeatureModule } from '@eclipse-glsp/client';
 import { keyboardToolPaletteModule } from '@eclipse-glsp/client/lib/features/accessibility/keyboard-tool-palette/keyboard-tool-palette-module.js';
 import { KeyboardToolPalette } from '@eclipse-glsp/client/lib/features/accessibility/keyboard-tool-palette/keyboard-tool-palette.js';
-import { UMLToolPalette } from './uml-tool-palette.extension.js';
+import { UmlToolPalette } from './uml-tool-palette.extension.js';
 
 export const umlToolPaletteModule = new FeatureModule(
     (bind, unbind, isBound, rebind) => {
         const context = { bind, unbind, isBound, rebind };
-        bindOrRebind(context, KeyboardToolPalette).to(UMLToolPalette).inSingletonScope();
+        bindOrRebind(context, KeyboardToolPalette).to(UmlToolPalette).inSingletonScope();
     },
     {
         requires: keyboardToolPaletteModule

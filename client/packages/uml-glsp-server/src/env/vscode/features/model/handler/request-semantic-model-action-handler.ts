@@ -19,6 +19,14 @@ export class RequestSemanticModelActionHandler implements ActionHandler {
     readonly modelState: DiagramModelState;
 
     execute(action: RequestSemanticModelAction): MaybePromise<Action[]> {
-        return [SemanticModelResponseAction.create(JSON.parse(this.modelState.semanticText()), action.requestId)];
+        return [
+            SemanticModelResponseAction.create(
+                {
+                    uri: this.modelState.semanticUri,
+                    content: this.modelState.serializedSemanticRoot()
+                },
+                action.requestId
+            )
+        ];
     }
 }

@@ -89,6 +89,11 @@ export abstract class BaseWebviewProvider implements Disposable {
 
     protected resolveActionProtocol(_messenger: ActionWebviewMessenger): Disposable {
         const disposables = new DisposableCollection();
+        disposables.push(
+            this.actionMessenger.onActionMessage(message => {
+                this.connector.dispatchAction(message.action, message.clientId);
+            })
+        );
         return disposables;
     }
 

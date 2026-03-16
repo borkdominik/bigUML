@@ -8,7 +8,7 @@
  **********************************************************************************/
 import { CreateNewFileAction, CreateNewFileResponseAction } from '@borkdominik-biguml/uml-glsp-server';
 import type { SerializeAstNode } from '@borkdominik-biguml/uml-model-server';
-import type { Diagram } from '@borkdominik-biguml/uml-model-server/grammar';
+import type { ClassDiagram, Diagram } from '@borkdominik-biguml/uml-model-server/grammar';
 import { UmlDiagramLSPServices } from '@borkdominik-biguml/uml-model-server/integration';
 import { type Action, type ActionHandler, type MaybePromise } from '@eclipse-glsp/server';
 import * as fs from 'fs';
@@ -29,15 +29,17 @@ export class CreateNewFileActionHandler implements ActionHandler {
 
         fs.mkdirSync(dirPath, { recursive: true });
 
+        const diagram: SerializeAstNode<ClassDiagram> = {
+            $type: 'ClassDiagram',
+            __id: 'ClassDiagram1',
+            diagramType: 'CLASS',
+            entities: [],
+            relations: []
+        };
+
         const minimalModel: SerializeAstNode<Diagram> = {
             $type: 'Diagram',
-            diagram: {
-                $type: 'ClassDiagram',
-                __id: 'ClassDiagram1',
-                diagramType: 'CLASS',
-                entities: [],
-                relations: []
-            },
+            diagram,
             metaInfos: []
         };
 

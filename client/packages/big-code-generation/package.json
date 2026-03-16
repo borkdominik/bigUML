@@ -1,0 +1,78 @@
+{
+  "name": "@borkdominik-biguml/big-code-generation",
+  "version": "0.6.4",
+  "description": "UML-Code Generation",
+  "homepage": "https://github.com/borkdominik/bigUML",
+  "bugs": "https://github.com/borkdominik/bigUML/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/borkdominik/bigUML.git"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Business Informatics Group (TU Wien)"
+  },
+  "contributors": [
+    {
+      "name": "Business Informatics Group (TU Wien)",
+      "email": "dominik.bork@tuwien.ac.at",
+      "url": "https://me.big.tuwien.ac.at/"
+    },
+    {
+      "name": "Haydar Metin",
+      "email": "dev@haydar.metin.at",
+      "url": "https://me.big.tuwien.ac.at/"
+    }
+  ],
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./build/env/common/index.d.ts",
+      "default": "./build/env/common/index.js"
+    },
+    "./glsp-client": {
+      "types": "./build/env/glsp-client/index.d.ts",
+      "default": "./build/env/glsp-client/index.js"
+    },
+    "./vscode": {
+      "types": "./build/env/vscode/index.d.ts",
+      "default": "./build/env/vscode/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "npm run clean && npm run compile && npm run bundle && npm run lint && npm run copy",
+    "bundle": "tsx esbuild.ts",
+    "clean": "rimraf build dist node_modules/.tmp",
+    "compile": "tsc -b",
+    "copy": "npx cpx \"./templates/*\" ../../application/vscode/templates -v",
+    "lint": "eslint -c ./eslint.config.js",
+    "lint:fix": "npm run lint -- --fix",
+    "watch": "concurrently --kill-others 'npm run watch:compile' 'npm run watch:bundle'",
+    "watch:bundle": "npm run bundle -- --watch",
+    "watch:compile": "npm run compile -- --watch --preserveWatchOutput"
+  },
+  "dependencies": {
+    "@borkdominik-biguml/big-components": "*",
+    "@borkdominik-biguml/big-vscode": "*",
+    "@borkdominik-biguml/uml-model-server": "*",
+    "@eclipse-glsp/client": "*",
+    "@eclipse-glsp/protocol": "*",
+    "@eclipse-glsp/vscode-integration-webview": "*",
+    "eta": "^3.5.0",
+    "vscode-messenger-common": "^0.4.5"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "peerDependencies": {
+    "inversify": "^6.2.1",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  }
+}

@@ -29,6 +29,9 @@ export const VSCodeSettings = {
     revisionManagement: {
         viewType: 'bigUML.panel.revision-management'
     },
+    codeGeneration: {
+        viewType: 'bigUML.panel.code-generation'
+    },
     advancedSearch: {
         viewType: 'bigUML.panel.advancedsearch'
     }

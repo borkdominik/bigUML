@@ -350,37 +350,6 @@ The generation is triggered by `npm run generate`, which runs both `language:gen
 
 ## Usage Examples
 
-### Connecting to the model server from the GLSP server
-
-The GLSP server connects to the model server as a JSON-RPC client over TCP. The connection is established during GLSP server startup:
-
-```typescript
-// In the GLSP server, a JSON-RPC connection to localhost:5999 is created
-const socket = net.connect({ port: 5999, host: 'localhost' });
-const connection = rpc.createMessageConnection(new rpc.SocketMessageReader(socket), new rpc.SocketMessageWriter(socket));
-connection.listen();
-
-// Open a document for the GLSP client
-await connection.sendRequest(new rpc.RequestType2('server/open'), documentUri, 'glsp');
-
-// Request the current AST
-const model = await connection.sendRequest(new rpc.RequestType2('server/request'), documentUri, 'glsp');
-
-// Apply a JSON patch (e.g., add a new class)
-await connection.sendRequest(
-    new rpc.RequestType3('server/patch'),
-    documentUri,
-    JSON.stringify([
-        {
-            op: 'add',
-            path: '/nodes/-',
-            value: { $type: 'Class', __id: 'new-class-1', name: 'MyClass' }
-        }
-    ]),
-    'glsp'
-);
-```
-
 ### Listening for text editor changes
 
 The GLSP server subscribes to model updates so it can refresh the diagram when the user edits the `.uml` file in the text editor:

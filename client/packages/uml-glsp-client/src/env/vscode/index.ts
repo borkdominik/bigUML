@@ -8,6 +8,5 @@
  **********************************************************************************/
 
 export * from './editor.module.js';
-export * from './editor.provider.js';
+export * from './editor.webview-editor-provider.js';
 export * from './features/theme/index.js';
-

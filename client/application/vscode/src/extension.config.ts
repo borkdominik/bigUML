@@ -7,6 +7,7 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 import { advancedSearchModule } from '@borkdominik-biguml/big-advancedsearch/vscode';
+import { codeGenerationModule } from '@borkdominik-biguml/big-code-generation/vscode';
 import { minimapModule } from '@borkdominik-biguml/big-minimap/vscode';
 import { outlineModule } from '@borkdominik-biguml/big-outline/vscode';
 import { propertyPaletteModule } from '@borkdominik-biguml/big-property-palette/vscode';
@@ -34,6 +35,7 @@ export function createContainer(
         propertyPaletteModule(VSCodeSettings.propertyPalette.viewType),
         minimapModule(VSCodeSettings.minimap.viewType),
         advancedSearchModule(VSCodeSettings.advancedSearch.viewType),
+        codeGenerationModule(VSCodeSettings.codeGeneration.viewType),
         // {
         //   "id": "bigUML.panel.revision-management",
         //   "name": "Timeline",

@@ -7,11 +7,13 @@
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
 
+import type { SourceAstNode } from '@borkdominik-biguml/uml-model-server';
+import type { Diagram } from '@borkdominik-biguml/uml-model-server/grammar';
 import { Action, RequestAction, type ResponseAction } from '@eclipse-glsp/protocol';
 
 export interface SemanticModelResource {
     uri: string;
-    content: string;
+    content: SourceAstNode<Diagram>;
 }
 
 /**

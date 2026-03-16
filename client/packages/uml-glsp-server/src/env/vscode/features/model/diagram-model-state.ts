@@ -17,7 +17,7 @@ import {
     type DiagramSerializer,
     type ModelService,
     type QualifiedNameProvider,
-    type SerializeAstNode
+    type SourceAstNode
 } from '@borkdominik-biguml/uml-model-server';
 import { type Diagram } from '@borkdominik-biguml/uml-model-server/grammar';
 import { UmlDiagramLSPServices } from '@borkdominik-biguml/uml-model-server/integration';
@@ -124,8 +124,8 @@ export class DiagramModelState extends DefaultModelState implements JsonModelSta
         return this.services.language.serializer.Serializer.serialize(this.semanticRoot);
     }
 
-    serializedSemanticRoot(): SerializeAstNode<Diagram> {
-        return JSON.parse(this.services.language.serializer.Serializer.serialize(this.semanticRoot))?.diagram;
+    serializedSemanticRoot(): SourceAstNode<Diagram> {
+        return JSON.parse(this.semanticText());
     }
 
     async undo() {

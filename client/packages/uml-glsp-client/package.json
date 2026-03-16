@@ -53,6 +53,7 @@
     "watch:compile": "npm run compile -- --watch --preserveWatchOutput"
   },
   "dependencies": {
+    "@borkdominik-biguml/big-code-generation": "*",
     "@borkdominik-biguml/big-advancedsearch": "*",
     "@borkdominik-biguml/big-common": "*",
     "@borkdominik-biguml/big-minimap": "*",

@@ -8,6 +8,8 @@
  **********************************************************************************/
 
 import { RequestSemanticModelAction, type SemanticModelResource } from '@borkdominik-biguml/uml-glsp-server';
+import type { SourceAstNode } from '@borkdominik-biguml/uml-model-server';
+import type { Diagram } from '@borkdominik-biguml/uml-model-server/grammar';
 import { DisposableCollection, UpdateModelAction, type Disposable } from '@eclipse-glsp/vscode-integration';
 import { inject, injectable, postConstruct, preDestroy } from 'inversify';
 import * as vscode from 'vscode';
@@ -22,13 +24,21 @@ export interface ModelStateChangeEvent {
 }
 
 export class GlspModelStateResource {
-    constructor(protected readonly semanticRoot: Readonly<SemanticModelResource>) {}
+    constructor(protected readonly resource: Readonly<SemanticModelResource>) {}
 
     /**
      * Returns the semantic root of the model.
      */
     getResource(): Readonly<SemanticModelResource> {
-        return this.semanticRoot;
+        return this.resource;
+    }
+
+    getUri(): string {
+        return this.resource.uri;
+    }
+
+    getModel(): SourceAstNode<Diagram> {
+        return this.resource.content;
     }
 }
 

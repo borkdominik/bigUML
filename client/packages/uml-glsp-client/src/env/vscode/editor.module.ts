@@ -8,7 +8,7 @@
  **********************************************************************************/
 
 import { bindWebviewEditorFactory, VscodeFeatureModule } from '@borkdominik-biguml/big-vscode/vscode';
-import { UmlDiagramEditorProvider, UmlDiagramEditorSettings } from './editor.provider.js';
+import { UmlDiagramEditorProvider, UmlDiagramEditorSettings } from './editor.webview-editor-provider.js';
 
 export function editorModule(settings: UmlDiagramEditorSettings) {
     return new VscodeFeatureModule(context => {

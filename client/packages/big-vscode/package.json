@@ -52,6 +52,7 @@
   "dependencies": {
     "@borkdominik-biguml/big-common": "*",
     "@borkdominik-biguml/uml-glsp-server": "*",
+    "@borkdominik-biguml/uml-model-server": "*",
     "@eclipse-glsp/vscode-integration": "*",
     "@eclipse-glsp/vscode-integration-webview": "*",
     "@types/vscode": "^1.63.0",

@@ -31,13 +31,16 @@
     "@eclipse-glsp/vscode-integration": "2.5.0",
     "@eclipse-glsp/vscode-integration-webview": "2.5.0"
   },
+  "dependencies": {
+    "handlebars": "^4.7.8"
+  },
   "devDependencies": {
     "@eslint/js": "^9.20.0",
     "@types/lodash": "^4.14.195",
     "@types/node": "^20.4.2",
     "chai": "^5.2.0",
     "concurrently": "^9.1.2",
-    "esbuild": "^0.17.10",
+    "esbuild": "^0.17.19",
     "esbuild-plugin-copy": "^2.1.1",
     "eslint": "^9.20.1",
     "eslint-plugin-header": "^3.1.1",

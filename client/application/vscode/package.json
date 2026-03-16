@@ -282,6 +282,12 @@
           "when": "bigUML.isRunning"
         },
         {
+          "id": "bigUML.panel.code-generation",
+          "name": "Code Generation",
+          "type": "webview",
+          "when": "bigUML.isRunning"
+        },
+        {
           "id": "bigUML.panel.advancedsearch",
           "name": "Advanced Search",
           "type": "webview",
@@ -304,6 +310,7 @@
   ],
   "dependencies": {
     "@borkdominik-biguml/big-advancedsearch": "*",
+    "@borkdominik-biguml/big-code-generation": "*",
     "@borkdominik-biguml/big-common": "*",
     "@borkdominik-biguml/big-minimap": "*",
     "@borkdominik-biguml/big-outline": "*",

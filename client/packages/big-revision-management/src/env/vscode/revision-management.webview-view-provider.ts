@@ -49,7 +49,22 @@ export class RevisionManagementWebviewViewProvider extends WebviewViewProvider {
     protected init(): void {
         this.actionCache = this.actionListener.createCache([FileSaveResponse.KIND]);
         this.toDispose.push(this.actionCache);
+    }
 
+    protected override resolveWebviewProtocol(messenger: WebviewMessenger): Disposable {
+        const disposables = new DisposableCollection();
+        disposables.push(
+            super.resolveWebviewProtocol(messenger),
+            this.actionCache.onDidChange(message => this.actionMessenger.dispatch(message)),
+            vscode.commands.registerCommand('timeline.import', () => {
+                // console.log('timeline.import command triggered');
+                this.webviewView?.webview.postMessage({ action: 'import' });
+            }),
+            vscode.commands.registerCommand('timeline.export', () => {
+                // console.log('timeline.export command triggered');
+                this.webviewView?.webview.postMessage({ action: 'export' });
+            })
+        );
         this.toDispose.push(
             this.service.onDidChangeTimeline(timeline => {
                 this.actionMessenger.dispatch(
@@ -119,22 +134,7 @@ export class RevisionManagementWebviewViewProvider extends WebviewViewProvider {
                 return DeleteSnapshotResponseAction.create(action.requestId);
             })
         );
-    }
 
-    protected override resolveWebviewProtocol(messenger: WebviewMessenger): Disposable {
-        const disposables = new DisposableCollection();
-        disposables.push(
-            super.resolveWebviewProtocol(messenger),
-            this.actionCache.onDidChange(message => this.actionMessenger.dispatch(message)),
-            vscode.commands.registerCommand('timeline.import', () => {
-                // console.log('timeline.import command triggered');
-                this.webviewView?.webview.postMessage({ action: 'import' });
-            }),
-            vscode.commands.registerCommand('timeline.export', () => {
-                // console.log('timeline.export command triggered');
-                this.webviewView?.webview.postMessage({ action: 'export' });
-            })
-        );
         return disposables;
     }
 

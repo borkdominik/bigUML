@@ -23,7 +23,7 @@ export class RequestOutlineActionHandler implements ActionHandler {
         if (this.modelState.semanticRoot.diagram.diagramType !== 'CLASS') {
             return [SetOutlineAction.create({ outlineTreeNodes: [] })];
         }
-        const root = this.modelState.serializedSemanticRoot();
+        const root = this.modelState.sourceSemanticRoot();
         const outlineTreeNodes = this.collectChildren(root);
         return [SetOutlineAction.create({ outlineTreeNodes })];
     }

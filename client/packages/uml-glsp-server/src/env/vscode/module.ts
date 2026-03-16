@@ -14,14 +14,17 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 import {
+    type ActionMessage,
     type Args,
     ArgsUtil,
     type BindingTarget,
     DefaultGLSPServer,
     type GLSPServer,
+    GLSPServerError,
     type InitializeResult,
     Logger,
     type MaybePromise,
+    MessageAction,
     ServerModule
 } from '@eclipse-glsp/server';
 import { inject, injectable } from 'inversify';
@@ -50,5 +53,18 @@ export class UmlGLSPServer extends DefaultGLSPServer {
 
         this.logger.debug(`${timestamp}: ${message}`);
         return result;
+    }
+
+    protected override handleProcessError(message: ActionMessage, reason: any): void | PromiseLike<void> {
+        let errorMsg = `Could not process action: '${message.action.kind}`;
+        this.logger.error(errorMsg);
+        this.logger.error(reason);
+        let details: string | undefined = reason?.toString?.();
+        if (reason instanceof GLSPServerError) {
+            details = reason.cause?.toString?.();
+            errorMsg = reason.message;
+        }
+        const errorAction = MessageAction.create(errorMsg, { severity: 'ERROR', details });
+        this.sendToClient({ clientId: message.clientId, action: errorAction });
     }
 }

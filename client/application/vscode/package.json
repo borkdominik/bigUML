@@ -112,7 +112,18 @@
     ],
     "configuration": {
       "title": "bigUML",
-      "properties": {}
+      "properties": {
+        "bigUML.timeline.onSave": {
+          "type": "boolean",
+          "default": false,
+          "description": "Create a new timeline entry on file save."
+        },
+        "bigUML.timeline.persistent": {
+          "type": "boolean",
+          "default": false,
+          "description": "Persist timeline entries across restarts."
+        }
+      }
     },
     "customEditors": [
       {
@@ -290,6 +301,12 @@
         {
           "id": "bigUML.panel.advancedsearch",
           "name": "Advanced Search",
+          "type": "webview",
+          "when": "bigUML.isRunning"
+        },
+        {
+          "id": "bigUML.panel.revision-management",
+          "name": "Timeline",
           "type": "webview",
           "when": "bigUML.isRunning"
         }

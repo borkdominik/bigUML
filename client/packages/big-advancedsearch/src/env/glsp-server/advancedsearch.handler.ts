@@ -15,13 +15,7 @@ import { AdvancedSearchActionResponse, RequestAdvancedSearchAction } from '../co
 import { HighlightElementActionResponse, RequestHighlightElementAction } from '../common/highlight.action.js';
 import type { SearchResult } from '../common/searchresult.js';
 import type { IMatcher } from './matchers/IMatcher.js';
-import { ActivityDiagramMatcher } from './matchers/activitymatcher.js';
 import { ClassDiagramMatcher } from './matchers/classmatcher.js';
-import { CommunicationDiagramMatcher } from './matchers/communicationmatcher.js';
-import { InformationFlowDiagramMatcher } from './matchers/informationflowmatcher.js';
-import { PackageDiagramMatcher } from './matchers/packagematcher.js';
-import { StateMachineDiagramMatcher } from './matchers/statemachinematcher.js';
-import { UseCaseDiagramMatcher } from './matchers/usecasematcher.js';
 
 @injectable()
 export class AdvancedSearchActionHandler implements ActionHandler {
@@ -30,16 +24,7 @@ export class AdvancedSearchActionHandler implements ActionHandler {
     @inject(ModelState)
     readonly modelState: DiagramModelState;
 
-    private readonly matchers: IMatcher[] = [
-        new ClassDiagramMatcher(),
-        new UseCaseDiagramMatcher(),
-        new PackageDiagramMatcher(),
-        new InformationFlowDiagramMatcher(),
-        new CommunicationDiagramMatcher(),
-        new StateMachineDiagramMatcher(),
-        new ActivityDiagramMatcher()
-        // new DeploymentDiagramMatcher()
-    ];
+    private readonly matchers: IMatcher[] = [new ClassDiagramMatcher()];
 
     execute(action: RequestAdvancedSearchAction | RequestHighlightElementAction): MaybePromise<any[]> {
         if (RequestAdvancedSearchAction.is(action)) {
@@ -52,7 +37,7 @@ export class AdvancedSearchActionHandler implements ActionHandler {
     }
 
     protected handleSearch(action: RequestAdvancedSearchAction): any[] {
-        const diagram = this.modelState.serializedSemanticRoot();
+        const diagram = this.modelState.semanticRoot.diagram;
         const results: SearchResult[] = [];
         const rawQuery = action.query.trim();
 

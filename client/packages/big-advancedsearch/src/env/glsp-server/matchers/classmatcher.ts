@@ -7,6 +7,7 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
+import type { ClassDiagram } from '@borkdominik-biguml/uml-model-server/grammar';
 import type { SearchResult } from '../../common/searchresult.js';
 import type { IMatcher } from './IMatcher.js';
 import { SharedElementCollector } from './sharedcollector.js';
@@ -53,20 +54,20 @@ export class ClassDiagramMatcher implements IMatcher {
         return this.supportedTypes;
     }
 
-    match(diagram: any): SearchResult[] {
+    match(diagram: ClassDiagram): SearchResult[] {
         const results: SearchResult[] = [];
         const idToName = new Map<string, string>();
 
         // First pass: collect all names for cross-reference resolution
-        SharedElementCollector.collectRecursively(diagram, element => {
-            if (element.__id && element.__type) {
-                idToName.set(element.__id, element.name ?? `<<${element.__type}>>`);
+        SharedElementCollector.collectRecursively(diagram as any, element => {
+            if (element.__id && element.$type) {
+                idToName.set(element.__id, element.name ?? `<<${element.$type}>>`);
             }
         });
 
         // Second pass: build search results from entities
-        SharedElementCollector.collectRecursively(diagram, (element, parentName) => {
-            const type = element.__type as string;
+        SharedElementCollector.collectRecursively(diagram as any, (element, parentName) => {
+            const type = element.$type;
             if (!type || !element.__id) return;
 
             const name = element.name ?? `<<${type}>>`;
@@ -148,15 +149,20 @@ export class ClassDiagramMatcher implements IMatcher {
 
         // Collect relations
         for (const relation of diagram.relations ?? []) {
-            const type = relation.__type as string;
+            const type = relation.$type;
             if (!type) continue;
 
-            const sourceId = relation.source?.$ref?.__id;
-            const targetId = relation.target?.$ref?.__id;
-            const sourceName = relation.source?.$refText ?? idToName.get(sourceId) ?? '(unknown)';
-            const targetName = relation.target?.$refText ?? idToName.get(targetId) ?? '(unknown)';
+            const sourceId = relation.source?.ref?.__id;
+            const targetId = relation.target?.ref?.__id;
+            const sourceName = relation.source?.$refText ?? idToName.get(sourceId!) ?? '(unknown)';
+            const targetName = relation.target?.$refText ?? idToName.get(targetId!) ?? '(unknown)';
 
-            const relationName = relation.name ? `${relation.name}: ${sourceName} → ${targetName}` : `${sourceName} → ${targetName}`;
+            let name: string | undefined = undefined;
+            if ('name' in relation) {
+                name = `${relation.name}: ${sourceName} → ${targetName}`;
+            }
+
+            const relationName = name ?? `${sourceName} → ${targetName}`;
 
             results.push({
                 id: relation.__id,

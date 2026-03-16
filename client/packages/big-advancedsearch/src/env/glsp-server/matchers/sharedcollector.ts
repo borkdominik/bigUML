@@ -7,6 +7,8 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
+import type { GenericAstNode } from '@borkdominik-biguml/uml-model-server';
+
 /**
  * Array-valued property keys that may contain nested AST children
  * in serialized Langium diagram nodes.
@@ -20,14 +22,17 @@ export class SharedElementCollector {
      * with the element and the name of its closest named ancestor.
      * The traversal automatically recurses into all known array properties.
      */
-    static collectRecursively(element: any, callback: (el: any, parentName?: string) => void, parentName?: string): void {
+    static collectRecursively(element: GenericAstNode, callback: (el: any, parentName?: string) => void, parentName?: string): void {
         if (!element || typeof element !== 'object') return;
 
-        if (element.__type) {
+        if (element.$type) {
             callback(element, parentName);
         }
 
-        const name = element.name ?? parentName;
+        let name = parentName;
+        if ('name' in element) {
+            name = element.name as string;
+        }
 
         for (const key of NESTED_KEYS) {
             const nested = element[key];

@@ -124,7 +124,7 @@ export class DiagramModelState extends DefaultModelState implements JsonModelSta
         return this.services.language.serializer.Serializer.serialize(this.semanticRoot);
     }
 
-    serializedSemanticRoot(): SourceAstNode<Diagram> {
+    sourceSemanticRoot(): SourceAstNode<Diagram> {
         return JSON.parse(this.semanticText());
     }
 

@@ -23,7 +23,7 @@ export class RequestSemanticModelActionHandler implements ActionHandler {
             SemanticModelResponseAction.create(
                 {
                     uri: this.modelState.semanticUri,
-                    content: this.modelState.serializedSemanticRoot()
+                    content: this.modelState.sourceSemanticRoot()
                 },
                 action.requestId
             )

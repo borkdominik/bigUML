@@ -7,10 +7,10 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 import * as jsonPatch from 'fast-json-patch';
-import type { AstNode, Reference } from 'langium';
+import type { AstNode, GenericAstNode, Reference } from 'langium';
 import type { IntermediatePatchReference } from '../patch/patch-manager.util.js';
 
-export { jsonPatch };
+export { GenericAstNode, jsonPatch };
 
 /**
  * A type that represents a serializable version of an AST node, where all references are replaced with intermediate patch references.

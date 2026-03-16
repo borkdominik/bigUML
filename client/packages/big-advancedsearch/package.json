@@ -62,6 +62,7 @@
     "@borkdominik-biguml/big-components": "*",
     "@borkdominik-biguml/big-vscode": "*",
     "@borkdominik-biguml/uml-glsp-server": "*",
+    "@borkdominik-biguml/uml-model-server": "*",
     "@eclipse-glsp/client": "*",
     "@eclipse-glsp/protocol": "*",
     "@eclipse-glsp/server": "*",

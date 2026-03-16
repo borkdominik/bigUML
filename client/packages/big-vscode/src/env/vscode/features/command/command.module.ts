@@ -11,11 +11,13 @@ import { TYPES } from '../../vscode-common.types.js';
 import { bindLifecycle } from '../container/bindings.js';
 import { VscodeFeatureModule } from '../container/container.js';
 import { CommandManager } from './command.manager.js';
+import { DefaultCommandsProvider } from './default-commands.js';
 import { NewFileCommand } from './new-file/new-file.command.js';
 import { NewFileCreator } from './new-file/new-file.creator.js';
 
 export const commandModule = new VscodeFeatureModule(context => {
     bindLifecycle(context, TYPES.CommandManager, CommandManager);
+    bindLifecycle(context, DefaultCommandsProvider);
 
     context.bind(NewFileCreator).toSelf().inSingletonScope();
     context.bind(TYPES.Command).to(NewFileCommand);

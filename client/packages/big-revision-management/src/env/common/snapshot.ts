@@ -25,5 +25,5 @@ export interface Snapshot {
 
 export interface ResourceSnapshot {
     uri: string;
-    content: string;
+    content: any;
 }

@@ -6,48 +6,38 @@
  *
  * SPDX-License-Identifier: MIT
  *********************************************************************************/
-import { codeGenerationModule } from '@borkdominik-biguml/big-code-generation/vscode';
 import { advancedSearchModule } from '@borkdominik-biguml/big-advancedsearch/vscode';
-import { helloWorldModule } from '@borkdominik-biguml/big-hello-world/vscode';
-import { revisionManagementModule } from '@borkdominik-biguml/big-revision-management/vscode'
+import { codeGenerationModule } from '@borkdominik-biguml/big-code-generation/vscode';
 import { minimapModule } from '@borkdominik-biguml/big-minimap/vscode';
 import { outlineModule } from '@borkdominik-biguml/big-outline/vscode';
 import { propertyPaletteModule } from '@borkdominik-biguml/big-property-palette/vscode';
-import { createVSCodeCommonContainer, TYPES, type GLSPDiagramSettings } from '@borkdominik-biguml/big-vscode-integration/vscode';
-import { loadVSCodeNodeContainer, type GLSPServerConfig } from '@borkdominik-biguml/big-vscode-integration/vscode-node';
+import { revisionManagementModule } from '@borkdominik-biguml/big-revision-management/vscode';
+import { VSCodeSettings } from '@borkdominik-biguml/big-vscode';
+import { vscodeModule, type GlspDiagramSettings, type GlspServerConfig } from '@borkdominik-biguml/big-vscode/vscode';
 import { editorModule, themeModule } from '@borkdominik-biguml/uml-glsp-client/vscode';
 import { type Container } from 'inversify';
 import type * as vscode from 'vscode';
-import { VSCodeSettings } from './language.js';
-import { DefaultCommandsProvider } from './vscode/command/default-commands.js';
-import { vscodeModule } from './vscode/vscode.module.js';
 
 export function createContainer(
     extensionContext: vscode.ExtensionContext,
     options: {
-        diagram: GLSPDiagramSettings;
-        glspServerConfig: GLSPServerConfig;
+        diagram: GlspDiagramSettings;
+        glspServerConfig: GlspServerConfig;
     }
 ): Container {
-    const container = createVSCodeCommonContainer(extensionContext, options);
-    loadVSCodeNodeContainer(container, options);
-
-    container.bind(DefaultCommandsProvider).toSelf().inSingletonScope();
-    container.bind(TYPES.RootInitialization).toService(DefaultCommandsProvider);
+    const container = vscodeModule(extensionContext, options);
 
     container.load(
-        vscodeModule,
         editorModule({
             diagramType: VSCodeSettings.diagramType,
             viewType: VSCodeSettings.editor.viewType
         }),
-        outlineModule(VSCodeSettings.outline.viewId),
-        propertyPaletteModule(VSCodeSettings.propertyPalette.viewId),
-        minimapModule(VSCodeSettings.minimap.viewId),
-        helloWorldModule(VSCodeSettings.helloWorld.viewId),
-        codeGenerationModule(VSCodeSettings.codeGeneration.viewId),
-        advancedSearchModule(VSCodeSettings.advancedSearch.viewId),
-        revisionManagementModule(VSCodeSettings.revisionManagement.viewId),
+        outlineModule(VSCodeSettings.outline.viewType),
+        propertyPaletteModule(VSCodeSettings.propertyPalette.viewType),
+        minimapModule(VSCodeSettings.minimap.viewType),
+        advancedSearchModule(VSCodeSettings.advancedSearch.viewType),
+        codeGenerationModule(VSCodeSettings.codeGeneration.viewType),
+        revisionManagementModule(VSCodeSettings.revisionManagement.viewType),
         themeModule
     );
 

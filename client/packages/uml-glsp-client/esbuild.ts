@@ -13,7 +13,7 @@ const runner = new ESBuildRunner({
     ...rootConfig,
     outdir: 'dist',
     entryNames: 'bundle',
-    entryPoints: ['./src/web/index.ts'],
+    entryPoints: ['./src/env/browser/webview/glsp.webview.ts'],
     tsconfig: './tsconfig.json',
     plugins: [
         copy({

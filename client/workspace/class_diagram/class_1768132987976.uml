@@ -1,0 +1,76 @@
+{
+	"diagram": {
+		"__type": "ClassDiagram",
+		"__id": "ClassDiagram1",
+		"diagramType": "CLASS",
+		"entities": [
+			{
+				"__type": "Class",
+				"__id": "a04550825-ad6d-45ed-ab8a-e3df7c58cf03",
+				"name": "NewClass1",
+				"isAbstract": false,
+				"properties": [],
+				"operations": [],
+				"isActive": false,
+				"visibility": "PUBLIC",
+				"skip": false
+			},
+			{
+				"__type": "DataType",
+				"__id": "af330f6c4-2874-41cf-9786-aced6eb99ae8",
+				"name": "NewDataType1",
+				"properties": [],
+				"operations": [],
+				"isAbstract": false,
+				"visibility": "PUBLIC"
+			}
+		],
+		"relations": []
+	},
+	"metaInfos": [
+		{
+			"__type": "Size",
+			"__id": "size_a04550825-ad6d-45ed-ab8a-e3df7c58cf03",
+			"height": 30,
+			"width": 80,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "a04550825-ad6d-45ed-ab8a-e3df7c58cf03"
+			}
+		},
+		{
+			"__type": "Position",
+			"__id": "pos_a04550825-ad6d-45ed-ab8a-e3df7c58cf03",
+			"x": 150,
+			"y": 10,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "a04550825-ad6d-45ed-ab8a-e3df7c58cf03"
+			}
+		},
+		{
+			"__type": "Size",
+			"__id": "size_af330f6c4-2874-41cf-9786-aced6eb99ae8",
+			"height": 30,
+			"width": 80,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "af330f6c4-2874-41cf-9786-aced6eb99ae8"
+			}
+		},
+		{
+			"__type": "Position",
+			"__id": "pos_af330f6c4-2874-41cf-9786-aced6eb99ae8",
+			"x": 170,
+			"y": 160,
+			"element": {
+				"__type": "Reference",
+				"__refType": "ElementWithSizeAndPosition",
+				"__value": "af330f6c4-2874-41cf-9786-aced6eb99ae8"
+			}
+		}
+	]
+}

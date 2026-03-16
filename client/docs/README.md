@@ -1,25 +1,24 @@
-# Introduction
+# Documentation
 
-**bigUML** is a web modeling tool designed to provide an interactive UML modeling experience within **VS Code**. As a VS Code extension, bigUML is currently in its early development stage, and its features, structure, and functionality may evolve over time.
+Technical documentation for the bigUML project — a graphical UML modeling tool built as a VSCode extension.
 
-This documentation aims to provide comprehensive technical insights into bigUML's development, including:
+## Architecture
 
-## Theoretical Aspects
+Reference material covering the system design, runtime processes, and core subsystems.
 
-- **VS Code Extension**: Understanding how VS Code works. The following topics should be read and completed:
+| Document                                                | Topic                                                                             |
+| ------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| [Architecture Overview](architecture-overview.md)       | System-wide architecture, startup sequence, environment model, and package layers |
+| [GLSP Server Architecture](glsp-server-architecture.md) | GLSP server internals, operation handlers, GModel creation, and JSON patch flow   |
+| [Model Server](model-server.md)                         | Langium model server, RPC protocol, multi-client coordination, and undo/redo      |
 
-    - [Extension Overview](https://code.visualstudio.com/api)
-    - [Getting Started](https://code.visualstudio.com/api/get-started/your-first-extension)
-        - [Webview](https://code.visualstudio.com/api/extension-guides/webview)
-        - [Tree View](https://code.visualstudio.com/api/extension-guides/tree-view)
+## Guides
 
-- [Graphical Language Server Platform (GLSP)](./glsp.md): Exploring GLSP's architecture and its role in visual modeling.
+Task-oriented how-tos for common development scenarios.
 
-- [Communication Workflow](./communication.md): Explaining how bigUML's client-server communication operates, including messaging mechanisms.
-
-## Technical Development Insights
-
-- Project structure, setup, and package relationships.
-    - [Project Setup and Architecture Guide](#project-setup-guide)
-
-This guide is intended for developers looking to contribute to or understand the inner workings of bigUML.
+| Guide                                                                | Topic                                                          |
+| -------------------------------------------------------------------- | -------------------------------------------------------------- |
+| [Command Registration](guides/command-registration.md)               | How to register VSCode commands via DI                         |
+| [Webview Registration](guides/webview-registration.md)               | How to register webviews, messaging, and bundling              |
+| [GLSP Server Feature Modules](guides/glsp-server-feature-modules.md) | How feature packages extend the GLSP server                    |
+| [Code Generation Pipeline](guides/property-palette-generator.md)     | Code generation pipeline using the property palette as example |

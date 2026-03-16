@@ -27,44 +27,71 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./lib/common/index.d.ts",
-      "default": "./lib/common/index.js"
+      "types": "./build/env/common/index.d.ts",
+      "default": "./build/env/common/index.js"
     },
     "./glsp-client": {
-      "types": "./lib/glsp-client/index.d.ts",
-      "default": "./lib/glsp-client/index.js"
+      "types": "./build/env/glsp-client/index.d.ts",
+      "default": "./build/env/glsp-client/index.js"
+    },
+    "./glsp-server": {
+      "types": "./build/env/glsp-server/index.d.ts",
+      "default": "./build/env/glsp-server/index.js"
     },
     "./vscode": {
-      "types": "./lib/vscode/index.d.ts",
-      "default": "./lib/vscode/index.js"
+      "types": "./build/env/vscode/index.d.ts",
+      "default": "./build/env/vscode/index.js"
+    },
+    "./jsx": {
+      "types": "./build/env/jsx/index.d.ts",
+      "default": "./build/env/jsx/index.js"
+    },
+    "./jsx/jsx-runtime": {
+      "types": "./build/env/jsx/jsx-runtime.d.ts",
+      "default": "./build/env/jsx/jsx-runtime.js"
+    },
+    "./generator": {
+      "types": "./generator/index.ts",
+      "default": "./generator/index.ts"
+    },
+    "./gen/glsp-server": {
+      "types": "./build/gen/glsp-server/index.d.ts",
+      "default": "./build/gen/glsp-server/index.js"
     }
   },
-  "types": "lib/common/index.d.ts",
   "files": [
     "dist"
   ],
   "scripts": {
     "build": "npm run clean && npm run compile && npm run bundle && npm run lint",
     "bundle": "tsx esbuild.ts",
-    "clean": "rimraf lib dist node_modules/.tmp",
+    "clean": "rimraf build dist node_modules/.tmp",
     "compile": "tsc -b",
+    "generate": "rimraf src/gen && npm run language:generate",
+    "language:generate": "uml-language-tooling extension generate -d @borkdominik-biguml/uml-language/definition -c ./generator/index.ts",
     "lint": "eslint -c ./eslint.config.js",
     "lint:fix": "npm run lint -- --fix",
-    "tsc": "tsc",
-    "watch": "concurrently --kill-others 'npm run compile -- --watch' 'npm run bundle -- --watch'"
+    "watch": "concurrently --kill-others 'npm run watch:compile' 'npm run watch:bundle'",
+    "watch:bundle": "npm run bundle -- --watch",
+    "watch:compile": "npm run compile -- --watch --preserveWatchOutput"
   },
   "dependencies": {
     "@borkdominik-biguml/big-components": "*",
-    "@borkdominik-biguml/big-vscode-integration": "*",
-    "@borkdominik-biguml/uml-protocol": "*",
+    "@borkdominik-biguml/big-vscode": "*",
+    "@borkdominik-biguml/uml-glsp-server": "*",
+    "@borkdominik-biguml/uml-language-tooling": "*",
     "@eclipse-glsp/client": "*",
     "@eclipse-glsp/protocol": "*",
+    "@eclipse-glsp/server": "*",
     "@eclipse-glsp/vscode-integration-webview": "*",
+    "eta": "^3.5.0",
+    "sortablejs": "^1.15.0",
     "vscode-messenger-common": "^0.4.5"
   },
   "devDependencies": {
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
+    "@types/sortablejs": "^1.15.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0"
   },

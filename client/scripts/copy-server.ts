@@ -20,7 +20,7 @@ const targetDirs = [join(__dirname, '..', 'application', 'vscode', 'server')];
 
 // Backend Java CLI
 const path = join(__dirname, '..', '..', 'server', 'app', 'build', 'libs');
-const executable = `bigUML-${BACKEND_VERSION}-all.jar`;
+const executable = `bigUml-${BACKEND_VERSION}-all.jar`;
 const jarPath = join(path, executable);
 
 log('### Start copying server JAR.. ###');

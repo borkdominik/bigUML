@@ -6,22 +6,30 @@
   "type": "module",
   "workspaces": [
     "application/*",
-    "packages/*"
+    "packages/*",
+    "tooling/*"
   ],
   "scripts": {
     "build": "lerna run build",
-    "build:server": "cd ../server && ./gradlew clean shadowJar && cd ../client && npm run copy:server",
-    "check:headers": "glsp checkHeaders .",
+    "build:tooling": "lerna run build --scope @borkdominik-biguml/uml-language-tooling",
     "clean": "lerna run clean",
-    "copy:server": "tsx ./scripts/copy-server.ts",
+    "compile": "lerna run compile",
     "depcheck": "npx depcheck --config .depcheck.yml",
+    "generate": "lerna run generate",
     "lint": "lerna run lint",
     "lint:fix": "lerna run lint:fix",
-    "package": "npm run build:server && cd application/vscode && npm run vscode:package && mv ./*.vsix ${INIT_CWD}/release/vsix",
+    "package": "cd application/vscode && npm run vscode:package && mv ./*.vsix ${INIT_CWD}/release/vsix",
     "package:zip": "npm run package && cd ${INIT_CWD} && zip -r ./release-$(date +%Y%m%d-%H%M).zip ./release",
-    "start:server": "cd ../server && ./gradlew run",
-    "watch": "lerna run --parallel watch",
-    "win:start:server": "cd ../server && ./gradlew.bat run"
+    "setup": "npm ci && npm run build:tooling && npm run generate && npm run build",
+    "watch": "lerna run --parallel --stream watch"
+  },
+  "overrides": {
+    "@eclipse-glsp/client": "2.5.0",
+    "@eclipse-glsp/layout-elk": "2.5.0",
+    "@eclipse-glsp/protocol": "2.5.0",
+    "@eclipse-glsp/server": "2.5.0",
+    "@eclipse-glsp/vscode-integration": "2.5.0",
+    "@eclipse-glsp/vscode-integration-webview": "2.5.0"
   },
   "dependencies": {
     "handlebars": "^4.7.8"
@@ -41,7 +49,7 @@
     "eslint-plugin-react-hooks": "^5.1.0",
     "glob": "^11.0.1",
     "globals": "^15.15.0",
-    "lerna": "^8.1.9",
+    "lerna": "^9.0.0",
     "prettier": "^3.5.1",
     "prettier-plugin-packagejson": "^2.5.8",
     "rimraf": "^6.0.1",
@@ -50,16 +58,6 @@
     "typescript-eslint": "^8.24.0"
   },
   "engines": {
-    "node": ">=20 < 22"
-  },
-  "overrides": {
-    "@eclipse-glsp/client": "2.3.0",
-    "@eclipse-glsp/protocol": "2.3.0",
-    "@eclipse-glsp/vscode-integration": "2.3.0",
-    "@eclipse-glsp/vscode-integration-webview": "2.3.0"
-  },
-  "dependencies": {
-    "@vscode/codicons": "^0.0.36",
-    "@vscode/webview-ui-toolkit": "^1.4.0"
+    "node": ">=24.14.0"
   }
 }

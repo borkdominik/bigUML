@@ -1,15 +1,9 @@
 # Build
 node_modules
 .browser_modules
-lib
 build
-bundles
 dist
 *.tsbuildinfo
-
-# Project
-/environments/*-app/*
-!/environments/*-app/package.json
 
 # Files
 *.log

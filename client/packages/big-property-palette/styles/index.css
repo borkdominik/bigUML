@@ -35,6 +35,10 @@
     margin: 6px 0;
 }
 
+.grid > div {
+    display: contents;
+}
+
 .grid-label {
     grid-column-start: label-start;
 }

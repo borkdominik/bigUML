@@ -1,0 +1,44 @@
+<% it.packagedElement.forEach(function(element) { %>
+<% if (element.__type === 'Interface') { %>
+export interface <%= element.name %> {
+<% if (element.ownedAttribute) { %>
+    <% element.ownedAttribute.forEach(function(attr) { %>
+    <%= attr.name %>: <%= attr.type ? attr.type.name : 'any' %>;
+    <% }) %>
+<% } %>
+<% if (element.ownedOperation) { %>
+    <% element.ownedOperation.forEach(function(op) { %>
+    <%= op.name %>(<%= op.ownedParameter ? op.ownedParameter.filter(p => p.direction !== 'return').map(p => p.name + ': ' + (p.type ? p.type.name : 'any')).join(', ') : '' %>): <%= op.ownedParameter && op.ownedParameter.find(p => p.direction === 'return') && op.ownedParameter.find(p => p.direction === 'return').type ? op.ownedParameter.find(p => p.direction === 'return').type.name : 'void' %>;
+    <% }) %>
+<% } %>
+}
+
+<% } else if (element.__type === 'Class') { %>
+export class <%= element.name %><%= element.interfaceRealization ? ' implements ' + element.interfaceRealization.map(i => i.contract.name).join(', ') : '' %> {
+<% if (element.ownedAttribute) { %>
+    <% element.ownedAttribute.forEach(function(attr) { %>
+    <%= attr.visibility === 'public' ? 'public ' : (attr.visibility === 'private' ? 'private ' : (attr.visibility === 'protected' ? 'protected ' : '')) %><%= attr.name %>: <%= attr.type ? attr.type.name : 'any' %>;
+    <% }) %>
+<% } %>
+
+<% if (element.ownedOperation) { %>
+    <% element.ownedOperation.forEach(function(op) { %>
+    <%= op.visibility === 'public' ? 'public ' : (op.visibility === 'private' ? 'private ' : (op.visibility === 'protected' ? 'protected ' : '')) %><%= op.name %>(<%= op.ownedParameter ? op.ownedParameter.filter(p => p.direction !== 'return').map(p => p.name + ': ' + (p.type ? p.type.name : 'any')).join(', ') : '' %>): <%= op.ownedParameter && op.ownedParameter.find(p => p.direction === 'return') && op.ownedParameter.find(p => p.direction === 'return').type ? op.ownedParameter.find(p => p.direction === 'return').type.name : 'void' %> {
+        // TODO: Implement
+        throw new Error("Method not implemented.");
+    }
+    <% }) %>
+<% } %>
+}
+
+<% } else if (element.__type === 'Enumeration') { %>
+export enum <%= element.name %> {
+<% if (element.ownedLiteral) { %>
+    <% element.ownedLiteral.forEach(function(lit, index) { %>
+    <%= lit.name %><%= index < element.ownedLiteral.length - 1 ? ',' : '' %>
+    <% }) %>
+<% } %>
+}
+
+<% } %>
+<% }) %>

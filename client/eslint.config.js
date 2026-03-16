@@ -21,7 +21,7 @@ pluginHeader.rules.header.meta.schema = false;
 export const coreConfig = tseslint.config(
     {
         name: 'ignore-global',
-        ignores: ['**/lib/**/*', '**/dist/**/*', '**/node_modules/**/*']
+        ignores: ['**/build/**/*', '**/dist/**/*', '**/node_modules/**/*', '**/src/gen/**/*']
     },
     {
         name: 'match-global',
@@ -77,6 +77,7 @@ export const coreConfig = tseslint.config(
             //         ignoreRestSiblings: true
             //     }
             // ],
+            '@typescript-eslint/no-empty-object-type': 'off',
             '@typescript-eslint/consistent-type-imports': ['error', { prefer: 'type-imports', fixStyle: 'inline-type-imports' }]
         }
     },
@@ -94,13 +95,13 @@ export const coreConfig = tseslint.config(
                     {
                         pattern: '[\n\r]+ \\* Copyright \\([cC]\\) \\d{4}(-\\d{4})? .*[\n\r]+',
                         template: `*********************************************************************************
-* Copyright (c) ${new Date().getFullYear()} borkdominik and others.
-*
-* This program and the accompanying materials are made available under the
-* terms of the MIT License which is available at https://opensource.org/licenses/MIT.
-*
-* SPDX-License-Identifier: MIT
-*********************************************************************************`
+ * Copyright (c) ${new Date().getFullYear()} borkdominik and others.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at https://opensource.org/licenses/MIT.
+ *
+ * SPDX-License-Identifier: MIT
+ *********************************************************************************`
                     }
                 ]
             ]
@@ -117,7 +118,7 @@ export const reactConfig = tseslint.config(
                 version: 'detect'
             }
         },
-        ignores: ['**/big-components/**/*.*', '**/uml-glsp-client/**/*.*']
+        ignores: ['**/big-components/**/*.*', '**/uml-glsp-client/**/*.*', '**/src/env/vscode/**/*.*']
     },
     {
         name: 'jsx-runtime',
@@ -129,7 +130,7 @@ export const reactConfig = tseslint.config(
             'react-hooks': reactHooks
         },
         rules: { ...reactHooks.configs.recommended.rules, 'react-hooks/exhaustive-deps': 'error' },
-        ignores: ['**/big-components/**/*.*', '**/uml-glsp-client/**/*.*']
+        ignores: ['**/big-components/**/*.*', '**/uml-glsp-client/**/*.*', '**/src/env/vscode/**/*.*']
     }
 );
 

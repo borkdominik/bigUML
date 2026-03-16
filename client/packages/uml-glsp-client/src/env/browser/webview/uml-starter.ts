@@ -1,0 +1,78 @@
+/*********************************************************************************
+ * Copyright (c) 2023 borkdominik and others.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the MIT License which is available at https://opensource.org/licenses/MIT.
+ *
+ * SPDX-License-Identifier: MIT
+ *********************************************************************************/
+
+import { advancedSearchModule } from '@borkdominik-biguml/big-advancedsearch/glsp-client';
+import { codeGenerationModule } from '@borkdominik-biguml/big-code-generation/glsp-client';
+import { minimapModule } from '@borkdominik-biguml/big-minimap/glsp-client';
+import { outlineModule } from '@borkdominik-biguml/big-outline/glsp-client';
+import { propertyPaletteModule } from '@borkdominik-biguml/big-property-palette/glsp-client';
+import { SemanticModelResponseAction } from '@borkdominik-biguml/uml-glsp-server';
+import {
+    type ContainerConfiguration,
+    type IActionDispatcher,
+    type IDiagramStartup,
+    TYPES,
+    bindAsService,
+    bindOrRebind
+} from '@eclipse-glsp/client';
+import { type MaybePromise } from '@eclipse-glsp/protocol';
+import { GLSPStarter } from '@eclipse-glsp/vscode-integration-webview';
+import '@eclipse-glsp/vscode-integration-webview/css/glsp-vscode.css';
+import { type GLSPDiagramIdentifier } from '@eclipse-glsp/vscode-integration-webview/lib/diagram-identifier.js';
+import {
+    ExtensionActionKind,
+    HostExtensionActionHandler
+} from '@eclipse-glsp/vscode-integration-webview/lib/features/default/extension-action-handler.js';
+import { GLSPDiagramWidget } from '@eclipse-glsp/vscode-integration-webview/lib/glsp-diagram-widget.js';
+import { GLSPIsReadyAction } from '../../common/index.js';
+import { createUmlDiagramContainer } from '../index.js';
+import { UmlDiagramWidget } from './diagram.widget.js';
+import { UmlHostExtensionActionHandler } from './vscode-extension-action-handler.js';
+// GLSP Uses cjs version of inversify, so we need to use require to import it
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+import inversify = require('inversify');
+
+class UmlStarter extends GLSPStarter {
+    createContainer(...containerConfiguration: ContainerConfiguration): inversify.Container {
+        const container = createUmlDiagramContainer(
+            ...containerConfiguration,
+            outlineModule,
+            minimapModule,
+            propertyPaletteModule,
+            codeGenerationModule,
+            advancedSearchModule
+        );
+
+        return container;
+    }
+
+    protected override addVscodeBindings(container: inversify.Container, _diagramIdentifier: GLSPDiagramIdentifier): void {
+        container.bind(UmlDiagramWidget).toSelf().inSingletonScope();
+        bindOrRebind(container, GLSPDiagramWidget).toService(UmlDiagramWidget);
+        container.rebind(HostExtensionActionHandler).to(UmlHostExtensionActionHandler).inSingletonScope();
+
+        container.bind(ExtensionActionKind).toConstantValue(GLSPIsReadyAction.KIND);
+        container.bind(ExtensionActionKind).toConstantValue(SemanticModelResponseAction.KIND);
+        bindAsService(container, TYPES.IDiagramStartup, GLSPReadyStartup);
+    }
+}
+
+export function launch(): void {
+    new UmlStarter();
+}
+
+@inversify.injectable()
+class GLSPReadyStartup implements IDiagramStartup {
+    @inversify.inject(TYPES.IActionDispatcher)
+    protected actionDispatcher: IActionDispatcher;
+
+    public postRequestModel(): MaybePromise<void> {
+        this.actionDispatcher.dispatch(GLSPIsReadyAction.create());
+    }
+}

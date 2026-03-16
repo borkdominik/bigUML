@@ -38,9 +38,9 @@
   ],
   "publisher": "BIGModelingTools",
   "type": "module",
-  "main": "./lib/main.cjs",
+  "main": "./build/index.cjs",
   "files": [
-    "lib",
+    "build",
     "server",
     "webviews",
     "resources",
@@ -48,9 +48,10 @@
     "README.md"
   ],
   "scripts": {
-    "build": "npm run clean && npm run compile",
-    "clean": "rimraf lib tsconfig.tsbuildinfo",
-    "compile": "tsx esbuild.ts && npx cpx \"../../packages/big-code-generation/src/vscode/**/*.{hbs,eta}\" lib",
+    "build": "npm run clean && npm run compile && npm run bundle",
+    "bundle": "tsx esbuild.ts",
+    "clean": "rimraf build dist node_modules/.tmp",
+    "compile": "tsc -p tsconfig.json",
     "compile:prod": "npm run clean && npm run compile -- --minify",
     "lint": "eslint -c ./eslint.config.js",
     "lint:ci": "npm run lint -o eslint.xml -f checkstyle",
@@ -61,7 +62,9 @@
     "vscode:prepublish": "npm run compile:prod",
     "vscode:release": "vsce publish --no-dependencies",
     "vscode:release-pre": "npm run vscode:release -- --pre-release",
-    "watch": "npm run compile -- --watch"
+    "watch": "concurrently --kill-others 'npm run watch:compile' 'npm run watch:bundle'",
+    "watch:bundle": "npm run bundle -- --watch --preserveWatchOutput",
+    "watch:compile": "npm run compile -- --watch --preserveWatchOutput"
   },
   "contributes": {
     "commands": [
@@ -110,20 +113,14 @@
     "configuration": {
       "title": "bigUML",
       "properties": {
-        "bigUML.hideUnotation": {
-          "type": "boolean",
-          "default": true,
-          "scope": "resource",
-          "description": "Hide the *.unotation files."
-        },
         "bigUML.timeline.onSave": {
           "type": "boolean",
-          "default": true,
+          "default": false,
           "description": "Create a new timeline entry on file save."
         },
         "bigUML.timeline.persistent": {
           "type": "boolean",
-          "default": true,
+          "default": false,
           "description": "Persist timeline entries across restarts."
         }
       }
@@ -137,6 +134,13 @@
             "filenamePattern": "*.uml"
           }
         ]
+      }
+    ],
+    "grammars": [
+      {
+        "language": "uml-diagram",
+        "scopeName": "source.uml-diagram",
+        "path": "./syntaxes/uml-diagram.tmLanguage.json"
       }
     ],
     "keybindings": [
@@ -197,27 +201,19 @@
     ],
     "languages": [
       {
-        "id": "bigUML-uml",
-        "extensions": [
-          ".uml"
+        "id": "uml-diagram",
+        "aliases": [
+          "UML Diagram",
+          "uml-diagram"
         ],
         "icon": {
           "light": "./resources/file_icons/light/uml.svg",
           "dark": "./resources/file_icons/dark/uml.svg"
-        }
-      },
-      {
-        "id": "bigUML-unotation",
+        },
         "extensions": [
-          ".unotation"
+          ".uml"
         ],
-        "mimetypes": [
-          "xml"
-        ],
-        "icon": {
-          "light": "./resources/file_icons/light/unotation.svg",
-          "dark": "./resources/file_icons/dark/unotation.svg"
-        }
+        "configuration": "./language-configuration.json"
       }
     ],
     "menus": {
@@ -251,8 +247,6 @@
           "group": "bookmarks"
         }
       ],
-
-
       "bigUML.editor.title": [
         {
           "command": "bigUML.fit",
@@ -299,25 +293,20 @@
           "when": "bigUML.isRunning"
         },
         {
-          "id": "bigUML.panel.hello-world",
-          "name": "Hello World",
-          "type": "webview",
-          "when": "bigUML.isRunning && false"
-        },
-        {
           "id": "bigUML.panel.code-generation",
           "name": "Code Generation",
-          "when": "bigUML.isRunning && false"
-        },
-        {
-          "id": "bigUML.panel.revision-management",
-          "name": "Timeline",
           "type": "webview",
           "when": "bigUML.isRunning"
         },
         {
           "id": "bigUML.panel.advancedsearch",
           "name": "Advanced Search",
+          "type": "webview",
+          "when": "bigUML.isRunning"
+        },
+        {
+          "id": "bigUML.panel.revision-management",
+          "name": "Timeline",
           "type": "webview",
           "when": "bigUML.isRunning"
         }
@@ -334,27 +323,20 @@
     }
   },
   "activationEvents": [
-    "onLanguage:bigUML.uml",
-    "onLanguage:bigUML.unotation",
-    "onCommand:bigUML.model.newEmpty",
-    "onView:bigUML.outlineView",
-    "onView:bigUML.panel.advancedsearch",
-    "onView:bigUML.outlineView",
-    "onCommand:timeline.import",
-    "onCommand:timeline.export"
-
+    "onStartupFinished"
   ],
   "dependencies": {
-    "@borkdominik-biguml/big-code-generation": "*",
     "@borkdominik-biguml/big-advancedsearch": "*",
-    "@borkdominik-biguml/big-hello-world": "*",
-    "@borkdominik-biguml/big-revision-management": "*",
+    "@borkdominik-biguml/big-code-generation": "*",
+    "@borkdominik-biguml/big-common": "*",
     "@borkdominik-biguml/big-minimap": "*",
     "@borkdominik-biguml/big-outline": "*",
     "@borkdominik-biguml/big-property-palette": "*",
-    "@borkdominik-biguml/big-vscode-integration": "*",
+    "@borkdominik-biguml/big-revision-management": "*",
+    "@borkdominik-biguml/big-vscode": "*",
     "@borkdominik-biguml/uml-glsp-client": "*",
-    "@borkdominik-biguml/uml-protocol": "*",
+    "@borkdominik-biguml/uml-glsp-server": "*",
+    "@borkdominik-biguml/uml-model-server": "*",
     "@eclipse-glsp/protocol": "*",
     "@eclipse-glsp/vscode-integration": "*",
     "@vscode/codicons": "^0.0.25",
@@ -365,6 +347,10 @@
     "reflect-metadata": "^0.2.2",
     "scheduler": "^0.25.0",
     "urijs": "^1.19.11",
+    "vscode-languageclient": "9.0.1",
+    "vscode-languageserver": "9.0.1",
+    "vscode-languageserver-protocol": "^3.17.5",
+    "vscode-languageserver-textdocument": "^1.0.11",
     "vscode-messenger": "^0.4.5",
     "vscode-messenger-common": "^0.4.5"
   },

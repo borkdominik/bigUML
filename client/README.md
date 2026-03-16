@@ -40,6 +40,13 @@ npm run setup
 
 3. After making code changes, reload the extension window with `Ctrl+R`. If the changes are only within a webview (e.g., property palette, minimap), you can use the `Reload Webview` command from the Command Palette instead of a full reload.
 
+### Creating a new UML diagram
+
+You can create a new `.uml` file in two ways:
+
+- **Command Palette**: Open the Command Palette (`Ctrl+Shift+P`) and run `bigUML: New Empty UML Diagram`.
+- **New File view**: Use the VSCode _New File…_ menu entry — bigUML registers as a file creation provider, so you can pick a UML diagram directly from the new-file view.
+
 ## Scripts
 
 Key scripts defined in the root `package.json`:

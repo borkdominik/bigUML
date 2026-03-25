@@ -135,20 +135,21 @@ export class GenericCreateNodeOperationHandler extends OperationHandler implemen
     }
 
     protected resolveContainerPath(operation: CreateNodeOperation): string {
-        if (operation.containerId) {
-            const container = this.modelState.index.find(operation.containerId);
-            const containerPath = this.modelState.index.findPath(operation.containerId);
-            if (container?.type === 'graph') {
-                return '/diagram/entities/-';
-            }
+        const containerId = operation.containerId ?? this.modelState.root.id;
 
-            if (container?.type) {
-                const creationProperty = getCreationPath(container.type, operation.elementTypeId);
-                if (creationProperty) {
-                    return containerPath + '/' + creationProperty + '/-';
-                }
+        const container = this.modelState.index.find(containerId);
+        const containerPath = this.modelState.index.findPath(containerId);
+        if (container?.type === 'graph') {
+            return '/diagram/entities/-';
+        }
+
+        if (container?.type) {
+            const creationProperty = getCreationPath(container.type, operation.elementTypeId);
+            if (creationProperty) {
+                return containerPath + '/' + creationProperty + '/-';
             }
         }
+
         return '';
     }
 

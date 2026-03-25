@@ -25,6 +25,7 @@ import { injectable, type interfaces } from 'inversify';
 import { DiagramLanguageMetadata } from '../features/model/diagram-language-metadata.js';
 import { BigDiagramModule } from '../features/module/module.js';
 import { UmlDiagramConfiguration } from './diagram-configuration.js';
+import { HttpEndpoint } from './http-endpoint.js';
 import { UmlDiagramGModelFactory } from './model/diagram-gmodel-factory.js';
 import { UmlDiagramToolPaletteItemProvider } from './provider/diagram-tool-palette-item-provider.js';
 
@@ -41,6 +42,7 @@ export class UmlDiagramModule extends BigDiagramModule {
         super.configure(bind, unbind, isBound, rebind);
         bind(DiagramLanguageMetadata).to(ClassDiagramLanguageMetadata).inSingletonScope();
         bind(ClassDiagramToolPaletteItemProvider).toSelf().inSingletonScope();
+        bind(HttpEndpoint).toSelf().inSingletonScope();
     }
 
     protected bindDiagramConfiguration(): BindingTarget<DiagramConfiguration> {

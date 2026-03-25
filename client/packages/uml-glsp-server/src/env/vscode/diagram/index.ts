@@ -8,5 +8,6 @@
  **********************************************************************************/
 export * from './diagram-configuration.js';
 export * from './diagram-module.js';
+export * from './http-endpoint.js';
 export * from './model/index.js';
 export * from './provider/diagram-tool-palette-item-provider.js';

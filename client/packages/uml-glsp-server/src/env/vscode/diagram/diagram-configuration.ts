@@ -23,16 +23,22 @@ import {
     ServerLayoutKind,
     getDefaultMapping
 } from '@eclipse-glsp/server';
-import { injectable } from 'inversify';
+import { inject, injectable } from 'inversify';
 import { GClassNode } from '../elements/class.element.js';
 import { GEnumerationNode } from '../elements/enumeration.element.js';
 import { GInterfaceNode } from '../elements/interface.element.js';
 import { GOperationNode } from '../elements/operation.element.js';
 import { GPackageNode } from '../elements/package.element.js';
 import { GPropertyNode } from '../elements/property.element.js';
+import { HttpEndpoint } from './http-endpoint.js';
 
 @injectable()
 export class UmlDiagramConfiguration implements DiagramConfiguration {
+    // inject HttpEndpoint to ensure it is initialized when the diagram configuration is loaded
+    // Only for demo purposes
+    @inject(HttpEndpoint)
+    protected httpEndpoint: HttpEndpoint;
+
     get typeMapping(): Map<string, GModelElementConstructor> {
         const mapping = getDefaultMapping();
         mapping.set(CommonModelTypes.LABEL_HEADING, GLabel);

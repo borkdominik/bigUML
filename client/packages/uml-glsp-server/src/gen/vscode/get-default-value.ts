@@ -244,6 +244,10 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
         {
             property: 'parameters',
             propertyType: 'Parameter'
+        },
+        {
+            property: 'returnType',
+            propertyType: 'DataTypeReference'
         }
     ],
     Parameter: [

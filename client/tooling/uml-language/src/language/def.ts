@@ -203,6 +203,7 @@ export class Operation extends Unbounded {
     visibility?: Visibility;
     concurrency?: Concurrency;
     @path parameters?: Array<Parameter>;
+    @dynamicProperty('DataType') @crossReference returnType?: DataTypeReference;
 }
 
 @noBounds

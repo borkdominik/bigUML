@@ -51,5 +51,3 @@ export function configureUmlMcpModule(): ContainerModule {
         bindAsService(bind, McpToolHandler, ModifyMembersMcpToolHandler);
     });
 }
-
-// TODO new create- and modify-handlers for operations/properties

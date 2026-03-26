@@ -5,12 +5,14 @@ import { UmlDiagramServices, UmlDiagramSharedServices } from '@borkdominik-bigum
 import { UmlDiagramLSPServices } from '@borkdominik-biguml/uml-model-server/integration';
 import { configureELKLayoutModule } from '@eclipse-glsp/layout-elk';
 import { LoggerFactory, type MaybePromise } from '@eclipse-glsp/server';
+import { configureMcpInitModule, configureMcpServerModule } from '@eclipse-glsp/server-mcp';
 import { SocketServerLauncher } from '@eclipse-glsp/server/node.js';
 import { Container, ContainerModule } from 'inversify';
 import { createBigAppModule } from './app-module.js';
 import { UmlDiagramModule } from './diagram/diagram-module.js';
 import { DiagramFeatureModule } from './features/index.js';
 import { LayeredLayoutConfigurator } from './features/layout/layered-layout-configurator.js';
+import { configureUmlMcpModule } from './features/mcp/mcp-module.js';
 import { UmlServerModule } from './module.js';
 
 const GLSP_SERVER_PORT = 5007;
@@ -49,8 +51,16 @@ export function startGLSPServer(services: UmlDiagramLSPServices, modules: (Conta
         }
     }
 
-    const serverModule = new UmlServerModule().configureDiagramModule(classDiagramModule, elkLayoutModule, ...containerModules);
-    launcher.configure(serverModule);
+    const mcpInitModule = configureMcpInitModule();
+    const serverModule = new UmlServerModule().configureDiagramModule(
+        classDiagramModule,
+        elkLayoutModule,
+        mcpInitModule,
+        ...containerModules
+    );
+    const mcpServerModule = configureMcpServerModule();
+    const umlMcpModule = configureUmlMcpModule();
+    launcher.configure(serverModule, mcpServerModule, umlMcpModule);
     try {
         return launcher.start({
             port: GLSP_SERVER_PORT,

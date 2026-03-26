@@ -51,7 +51,7 @@ export class ReactHtmlProvider implements WebviewHtmlProvider {
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <meta http-equiv="Content-Security-Policy" 
-                content="default-src http://*.fontawesome.com  ${webview.cspSource} data: 'unsafe-inline' 'unsafe-eval';">
+                content="default-src http://*.fontawesome.com  ${webview.cspSource} data: 'unsafe-inline' 'unsafe-eval'; img-src 'self' data: blob: vscode-webview-resource: https:;">
             <link id="vscode-codicon-stylesheet" href="${codiconsCSSUri}" rel="stylesheet" type="text/css" />
             <link href="${mainCSSUri}" rel="stylesheet" type="text/css" />
             ${cssLinks}

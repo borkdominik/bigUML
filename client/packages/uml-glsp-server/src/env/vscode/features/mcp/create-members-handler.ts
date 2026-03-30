@@ -21,7 +21,7 @@ import { type CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { inject, injectable } from 'inversify';
 import * as z from 'zod/v4';
 import { ClassDiagramNodeTypes, CommonModelTypes, UpdateOperation } from '../../../common/index.js';
-import { type DiagramModelIndex } from '../model/diagram-model-index.js';
+import { type DiagramModelState } from '../model/diagram-model-state.js';
 
 /**
  * Creates one or multiple new members in the given session's model.
@@ -131,14 +131,12 @@ export class CreateMembersMcpToolHandler implements McpToolHandler {
             return createToolResult('Session not found', true);
         }
 
-        const modelState = session.container.get<ModelState>(ModelState);
+        const modelState = session.container.get<DiagramModelState>(ModelState);
         if (modelState.isReadonly) {
             return createToolResult('Model is read-only', true);
         }
 
         const mcpIdAliasService = session.container.get<McpIdAliasService>(McpIdAliasService);
-
-        let beforeIds = modelState.index.allIds();
 
         const errors: string[] = [];
         const successIds: string[] = [];
@@ -146,6 +144,8 @@ export class CreateMembersMcpToolHandler implements McpToolHandler {
         for (const member of members) {
             const { elementTypeId, name, operationDetails, propertyDetails } = member;
             const containerId = mcpIdAliasService.lookup(sessionId, member.containerId);
+
+            const beforeIds = modelState.index.allIds();
 
             // Each member element is still technically a node and is created as such
             const operation = CreateNodeOperation.create(elementTypeId, { containerId });
@@ -161,11 +161,15 @@ export class CreateMembersMcpToolHandler implements McpToolHandler {
                 this.logger.warn('More than 1 new element created');
             }
 
-            beforeIds = afterIds;
-
             if (!newElementId) {
                 errors.push(`Member creation likely failed because no new element ID was found for input: ${JSON.stringify(member)}`);
                 continue;
+            }
+
+            // The element was created but not yet indexed by the semantic tree
+            // Thus, we must wait
+            while (!modelState.index.findIdElement(newElementId)) {
+                await new Promise(resolve => setTimeout(resolve, 10));
             }
 
             if (elementTypeId === ClassDiagramNodeTypes.ENUMERATION_LITERAL) {
@@ -180,7 +184,9 @@ export class CreateMembersMcpToolHandler implements McpToolHandler {
                 // The property's label/name and other attributes have to be set using `UpdateOperation`
                 propertyDetails.propertyTypeId = mcpIdAliasService.lookup(sessionId, propertyDetails.propertyTypeId);
 
-                await session.actionDispatcher.dispatch(UpdateOperation.create(newElementId, 'name', name));
+                // There seems to be some kind of hard check against the string "name", which causes the model state index to reset
+                const escapedName = name === 'name' ? 'name_' : name;
+                await session.actionDispatcher.dispatch(UpdateOperation.create(newElementId, 'name', escapedName));
                 dispatchedOperations++;
                 await session.actionDispatcher.dispatch(
                     UpdateOperation.create(newElementId, 'propertyType', propertyDetails.propertyTypeId + '_refValue')
@@ -192,7 +198,9 @@ export class CreateMembersMcpToolHandler implements McpToolHandler {
                 // The operation's label/name and other attributes have to be set using `UpdateOperation`
                 operationDetails.returnTypeId = mcpIdAliasService.lookup(sessionId, operationDetails.returnTypeId);
 
-                await session.actionDispatcher.dispatch(UpdateOperation.create(newElementId, 'name', name));
+                // There seems to be some kind of hard check against the string "name", which causes the model state index to reset
+                const escapedName = name === 'name' ? 'name_' : name;
+                await session.actionDispatcher.dispatch(UpdateOperation.create(newElementId, 'name', escapedName));
                 dispatchedOperations++;
                 await session.actionDispatcher.dispatch(
                     UpdateOperation.create(newElementId, 'returnType', operationDetails.returnTypeId + '_refValue')
@@ -201,14 +209,8 @@ export class CreateMembersMcpToolHandler implements McpToolHandler {
                 await session.actionDispatcher.dispatch(UpdateOperation.create(newElementId, 'visibility', operationDetails.visibility));
                 dispatchedOperations++;
 
-                // Additionally, the parameters of the operation have to be set as well.
-                // However, parameters are complicated, because they are created via typical `CreateNodeOperation`, but they only
-                // appear in the semantic tree. Thus, a somewhat hacky solution is required that reads the semantic ids to find
-                // the newly created parameter to be able to set its name and type. Otherwise, only default parameters would be
-                // possible.
-                // This is a weakness in the bigUML architecture
                 for (const parameter of operationDetails.parameterList) {
-                    const beforeIdsParam: string[] = Array.from((modelState.index as any).idToSemanticNode.keys());
+                    const beforeIdsParam: string[] = modelState.index.allSemanticIds();
 
                     const operation = CreateNodeOperation.create(ClassDiagramNodeTypes.PARAMETER, { containerId: newElementId });
                     await session.actionDispatcher.dispatch(operation);
@@ -219,11 +221,11 @@ export class CreateMembersMcpToolHandler implements McpToolHandler {
                     // Therefore, a tiny delay is added to prevent this issue
                     await new Promise(resolve => setTimeout(resolve, 10));
 
-                    const afterIdsParam: string[] = Array.from((modelState.index as any).idToSemanticNode.keys());
+                    const afterIdsParam: string[] = modelState.index.allSemanticIds();
 
                     const newIdsParam = afterIdsParam.filter(id => !beforeIdsParam.includes(id));
                     const newElementsParam = newIdsParam
-                        .map(id => (modelState.index as DiagramModelIndex).findSemanticElement(id, isParameter))
+                        .map(id => modelState.index.findSemanticElement(id, isParameter))
                         .filter(element => element);
                     const newElementIdParam = newElementsParam.length > 0 ? newElementsParam[0]?.__id : undefined;
                     if (newElementsParam.length > 1) {
@@ -239,7 +241,8 @@ export class CreateMembersMcpToolHandler implements McpToolHandler {
 
                     parameter.parameterTypeId = mcpIdAliasService.lookup(sessionId, parameter.parameterTypeId);
 
-                    await session.actionDispatcher.dispatch(UpdateOperation.create(newElementIdParam, 'name', parameter.name));
+                    const escapedName = parameter.name === 'name' ? 'name_' : parameter.name;
+                    await session.actionDispatcher.dispatch(UpdateOperation.create(newElementIdParam, 'name', escapedName));
                     dispatchedOperations++;
                     await session.actionDispatcher.dispatch(
                         UpdateOperation.create(newElementIdParam, 'parameterType', parameter.parameterTypeId + '_refValue')

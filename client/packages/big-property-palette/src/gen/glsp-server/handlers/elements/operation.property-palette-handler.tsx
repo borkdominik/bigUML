@@ -1,6 +1,9 @@
 // AUTO-GENERATED – DO NOT EDIT
 
 import { SetPropertyPaletteAction } from '@borkdominik-biguml/big-property-palette';
+import { CreateNodeOperation, DeleteElementOperation } from '@eclipse-glsp/server';
+import { type Operation } from '@borkdominik-biguml/uml-model-server/grammar';
+import { ClassDiagramNodeTypes } from '@borkdominik-biguml/uml-glsp-server';
 import {
     BoolProperty,
     ChoiceProperty,
@@ -9,9 +12,6 @@ import {
     ReferenceProperty,
     TextProperty
 } from '@borkdominik-biguml/big-property-palette/glsp-server';
-import { ClassDiagramNodeTypes } from '@borkdominik-biguml/uml-glsp-server';
-import { type Operation } from '@borkdominik-biguml/uml-model-server/grammar';
-import { CreateNodeOperation, DeleteElementOperation } from '@eclipse-glsp/server';
 
 export namespace OperationPropertyPaletteHandler {
     export function getPropertyPalette(semanticElement: Operation, dataTypeChoices: any): SetPropertyPaletteAction[] {

@@ -68,6 +68,10 @@ export class DiagramModelIndex extends GModelIndex {
         return this._root;
     }
 
+    allSemanticIds(): string[] {
+        return Array.from(this.idToSemanticNode.keys());
+    }
+
     indexSemanticRoot(root: Diagram): void {
         this._root = root;
         this.idToSemanticNode.clear();

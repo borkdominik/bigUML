@@ -30,6 +30,7 @@ import { inject, injectable } from 'inversify';
 import * as z from 'zod/v4';
 import { ClassDiagramNodeTypes, CommonModelTypes, UpdateOperation } from '../../../common/index.js';
 import { type DiagramModelIndex } from '../model/diagram-model-index.js';
+import { type DiagramModelState } from '../model/diagram-model-state.js';
 
 /**
  * Modifies one or multiple new members in the given session's model.
@@ -140,7 +141,7 @@ export class ModifyMembersMcpToolHandler implements McpToolHandler {
             return createToolResult('Session not found', true);
         }
 
-        const modelState = session.container.get<ModelState>(ModelState);
+        const modelState = session.container.get<DiagramModelState>(ModelState);
         if (modelState.isReadonly) {
             return createToolResult('Model is read-only', true);
         }
@@ -176,7 +177,9 @@ export class ModifyMembersMcpToolHandler implements McpToolHandler {
                     : undefined;
 
                 if (name !== undefined) {
-                    await session.actionDispatcher.dispatch(UpdateOperation.create(elementId, 'name', name));
+                    // There seems to be some kind of hard check against the string "name", which causes the model state index to reset
+                    const escapedName = name === 'name' ? 'name_' : name;
+                    await session.actionDispatcher.dispatch(UpdateOperation.create(elementId, 'name', escapedName));
                     dispatchedOperations++;
                 }
                 if (propertyDetails.propertyTypeId !== undefined) {
@@ -195,7 +198,9 @@ export class ModifyMembersMcpToolHandler implements McpToolHandler {
                     : undefined;
 
                 if (name !== undefined) {
-                    await session.actionDispatcher.dispatch(UpdateOperation.create(elementId, 'name', name));
+                    // There seems to be some kind of hard check against the string "name", which causes the model state index to reset
+                    const escapedName = name === 'name' ? 'name_' : name;
+                    await session.actionDispatcher.dispatch(UpdateOperation.create(elementId, 'name', escapedName));
                     dispatchedOperations++;
                 }
                 if (operationDetails.returnTypeId !== undefined) {
@@ -218,7 +223,7 @@ export class ModifyMembersMcpToolHandler implements McpToolHandler {
                     dispatchedOperations++;
 
                     for (const parameter of operationDetails.parameterList) {
-                        const beforeIdsParam: string[] = Array.from((modelState.index as any).idToSemanticNode.keys());
+                        const beforeIdsParam: string[] = modelState.index.allSemanticIds();
 
                         const operation = CreateNodeOperation.create(ClassDiagramNodeTypes.PARAMETER, { containerId: elementId });
                         await session.actionDispatcher.dispatch(operation);
@@ -229,11 +234,11 @@ export class ModifyMembersMcpToolHandler implements McpToolHandler {
                         // Therefore, a tiny delay is added to prevent this issue
                         await new Promise(resolve => setTimeout(resolve, 10));
 
-                        const afterIdsParam: string[] = Array.from((modelState.index as any).idToSemanticNode.keys());
+                        const afterIdsParam: string[] = modelState.index.allSemanticIds();
 
                         const newIdsParam = afterIdsParam.filter(id => !beforeIdsParam.includes(id));
                         const newElementsParam = newIdsParam
-                            .map(id => (modelState.index as DiagramModelIndex).findSemanticElement(id, isParameter))
+                            .map(id => modelState.index.findSemanticElement(id, isParameter))
                             .filter(element => element);
                         const newElementIdParam = newElementsParam.length > 0 ? newElementsParam[0]?.__id : undefined;
                         if (newElementsParam.length > 1) {
@@ -247,7 +252,8 @@ export class ModifyMembersMcpToolHandler implements McpToolHandler {
 
                         parameter.parameterTypeId = mcpIdAliasService.lookup(sessionId, parameter.parameterTypeId);
 
-                        await session.actionDispatcher.dispatch(UpdateOperation.create(newElementIdParam, 'name', parameter.name));
+                        const escapedName = parameter.name === 'name' ? 'name_' : parameter.name;
+                        await session.actionDispatcher.dispatch(UpdateOperation.create(newElementIdParam, 'name', escapedName));
                         dispatchedOperations++;
                         await session.actionDispatcher.dispatch(
                             UpdateOperation.create(newElementIdParam, 'parameterType', parameter.parameterTypeId + '_refValue')

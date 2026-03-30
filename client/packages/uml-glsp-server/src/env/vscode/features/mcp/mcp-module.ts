@@ -16,6 +16,7 @@
 
 import { bindAsService } from '@eclipse-glsp/server';
 import {
+    CreateEdgesMcpToolHandler,
     CreateNodesMcpToolHandler,
     ElementTypesMcpResourceHandler,
     McpModelSerializer,
@@ -24,6 +25,7 @@ import {
     ModifyNodesMcpToolHandler
 } from '@eclipse-glsp/server-mcp';
 import { ContainerModule } from 'inversify';
+import { UmlCreateEdgesMcpToolHandler } from './create-edges-handler.js';
 import { CreateMembersMcpToolHandler } from './create-members-handler.js';
 import { UmlCreateNodesMcpToolHandler } from './create-nodes-handler.js';
 import { UmlElementTypesMcpResourceHandler } from './element-types-handler.js';
@@ -38,8 +40,7 @@ export function configureUmlMcpModule(): ContainerModule {
         rebind(ElementTypesMcpResourceHandler).to(UmlElementTypesMcpResourceHandler).inSingletonScope();
         rebind(CreateNodesMcpToolHandler).to(UmlCreateNodesMcpToolHandler).inSingletonScope();
         rebind(ModifyNodesMcpToolHandler).to(UmlModifyNodesMcpToolHandler).inSingletonScope();
-
-        // Empty handler to effectively prevent the registration of the generic handler
+        rebind(CreateEdgesMcpToolHandler).to(UmlCreateEdgesMcpToolHandler).inSingletonScope();
         rebind(ModifyEdgesMcpToolHandler).to(UmlModifyEdgesMcpToolHandler).inSingletonScope();
 
         // Theoretically, the `elkLayoutModule` is registered, but it doesn't seem to work for bigUML.

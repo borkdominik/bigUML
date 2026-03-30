@@ -18,8 +18,9 @@ import { type GModelElement } from '@eclipse-glsp/graph';
 import { DefaultTypes } from '@eclipse-glsp/server';
 import { DefaultMcpModelSerializer } from '@eclipse-glsp/server-mcp';
 import { type GLabel } from '@eclipse-glsp/sprotty';
-import { injectable } from 'inversify';
+import { inject, injectable } from 'inversify';
 import { ClassDiagramEdgeTypes, ClassDiagramNodeTypes, CommonModelTypes } from '../../../common/index.js';
+import { DiagramModelIndex } from '../model/diagram-model-index.js';
 
 // TODO create via code generation (out of scope)
 // since the generated keys are the result of code generation, it likely makes sense to include this
@@ -34,6 +35,9 @@ import { ClassDiagramEdgeTypes, ClassDiagramNodeTypes, CommonModelTypes } from '
  */
 @injectable()
 export class UmlMcpModelSerializer extends DefaultMcpModelSerializer {
+    @inject(DiagramModelIndex)
+    protected readonly modelIndex: DiagramModelIndex;
+
     override prepareElement(element: GModelElement): Record<string, Record<string, any>[]> {
         const elements = this.flattenStructure(element);
 
@@ -88,7 +92,13 @@ export class UmlMcpModelSerializer extends DefaultMcpModelSerializer {
         return result;
     }
 
+    private universalGuard(_item: unknown): _item is any {
+        return true;
+    }
+
     private adjustElement(element: Record<string, any>): Record<string, any> | undefined {
+        const semanticElement = this.modelIndex.findSemanticElement(element.id, item => this.universalGuard(item));
+        element = { ...semanticElement, ...element };
         switch (element.type) {
             case DefaultTypes.GRAPH: {
                 return {
@@ -181,10 +191,19 @@ export class UmlMcpModelSerializer extends DefaultMcpModelSerializer {
                     bounds: element.bounds
                 };
             }
-            case ClassDiagramEdgeTypes.ABSTRACTION:
             case ClassDiagramEdgeTypes.AGGREGATION:
             case ClassDiagramEdgeTypes.ASSOCIATION:
-            case ClassDiagramEdgeTypes.COMPOSITION:
+            case ClassDiagramEdgeTypes.COMPOSITION: {
+                return {
+                    id: element.id,
+                    parentId: element.parentId,
+                    sourceId: element.sourceId,
+                    targetId: element.targetId,
+                    sourceMultiplicity: element.sourceMultiplicity,
+                    targetMultiplicity: element.targetMultiplicity
+                };
+            }
+            case ClassDiagramEdgeTypes.ABSTRACTION:
             case ClassDiagramEdgeTypes.DEPENDENCY:
             case ClassDiagramEdgeTypes.GENERALIZATION:
             case ClassDiagramEdgeTypes.INTERFACE_REALIZATION:

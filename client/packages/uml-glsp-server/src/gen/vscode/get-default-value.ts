@@ -8,6 +8,8 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
+import { ClassDiagramEdgeTypes } from '../common/index.js';
+
 // @ts-nocheck
 
 interface DefaultMappingEntry {
@@ -713,6 +715,21 @@ const defaultMapping: Record<string, DefaultMappingEntry[]> = {
     ]
 };
 
+const edgeTypes: string[] = [
+    ClassDiagramEdgeTypes.ABSTRACTION,
+    ClassDiagramEdgeTypes.DEPENDENCY,
+    ClassDiagramEdgeTypes.ASSOCIATION,
+    ClassDiagramEdgeTypes.AGGREGATION,
+    ClassDiagramEdgeTypes.COMPOSITION,
+    ClassDiagramEdgeTypes.INTERFACE_REALIZATION,
+    ClassDiagramEdgeTypes.GENERALIZATION,
+    ClassDiagramEdgeTypes.PACKAGE_IMPORT,
+    ClassDiagramEdgeTypes.PACKAGE_MERGE,
+    ClassDiagramEdgeTypes.REALIZATION,
+    ClassDiagramEdgeTypes.SUBSTITUTION,
+    ClassDiagramEdgeTypes.USAGE
+];
+
 export const noBoundsClasses = new Set<string>(['EnumerationLiteral', 'Property', 'Operation', 'Parameter', 'Slot']);
 
 export const astTypeMapping: Record<string, string> = {
@@ -725,7 +742,7 @@ export function isNoBounds(typeId: string): boolean {
 }
 
 export function getDefaultProperties(elementTypeId: string): DefaultMappingEntry[] {
-    const parentType = elementTypeId.startsWith('edge')
+    const parentType = edgeTypes.includes(elementTypeId)
         ? (() => {
               const s = getRelationTypeFromElementId(elementTypeId, true).toLowerCase();
               return s.charAt(0).toUpperCase() + s.slice(1);

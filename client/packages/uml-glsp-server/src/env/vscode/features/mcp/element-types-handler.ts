@@ -102,6 +102,7 @@ const UML_EDGE_ELEMENT_TYPES: {
     description: string;
     sourceTypes: string[];
     targetTypes: string[];
+    hasMultiplicity: boolean;
 }[] = [
     {
         id: ClassDiagramEdgeTypes.ASSOCIATION,
@@ -122,56 +123,64 @@ const UML_EDGE_ELEMENT_TYPES: {
             ClassDiagramNodeTypes.ENUMERATION,
             ClassDiagramNodeTypes.DATA_TYPE,
             ClassDiagramNodeTypes.PRIMITIVE_TYPE
-        ]
+        ],
+        hasMultiplicity: true
     },
     {
         id: ClassDiagramEdgeTypes.AGGREGATION,
         label: 'Aggregation',
         description: 'Aggregation — "has-a" (weak ownership, hollow diamond)',
         sourceTypes: [ClassDiagramNodeTypes.ABSTRACT_CLASS, ClassDiagramNodeTypes.CLASS],
-        targetTypes: [ClassDiagramNodeTypes.ABSTRACT_CLASS, ClassDiagramNodeTypes.CLASS]
+        targetTypes: [ClassDiagramNodeTypes.ABSTRACT_CLASS, ClassDiagramNodeTypes.CLASS],
+        hasMultiplicity: true
     },
     {
         id: ClassDiagramEdgeTypes.COMPOSITION,
         label: 'Composition',
         description: 'Composition — "owns-a" (strong ownership, filled diamond)',
         sourceTypes: [ClassDiagramNodeTypes.ABSTRACT_CLASS, ClassDiagramNodeTypes.CLASS],
-        targetTypes: [ClassDiagramNodeTypes.ABSTRACT_CLASS, ClassDiagramNodeTypes.CLASS]
+        targetTypes: [ClassDiagramNodeTypes.ABSTRACT_CLASS, ClassDiagramNodeTypes.CLASS],
+        hasMultiplicity: true
     },
     {
         id: ClassDiagramEdgeTypes.GENERALIZATION,
         label: 'Generalization',
         description: 'Inheritance — "is-a" (child extends parent)',
         sourceTypes: [ClassDiagramNodeTypes.INTERFACE, ClassDiagramNodeTypes.ABSTRACT_CLASS, ClassDiagramNodeTypes.CLASS],
-        targetTypes: [ClassDiagramNodeTypes.INTERFACE, ClassDiagramNodeTypes.ABSTRACT_CLASS, ClassDiagramNodeTypes.CLASS]
+        targetTypes: [ClassDiagramNodeTypes.INTERFACE, ClassDiagramNodeTypes.ABSTRACT_CLASS, ClassDiagramNodeTypes.CLASS],
+        hasMultiplicity: false
     },
     {
         id: ClassDiagramEdgeTypes.INTERFACE_REALIZATION,
         label: 'Interface Realization',
         description: 'A class implements an interface',
         sourceTypes: [ClassDiagramNodeTypes.ABSTRACT_CLASS, ClassDiagramNodeTypes.CLASS],
-        targetTypes: [ClassDiagramNodeTypes.INTERFACE]
+        targetTypes: [ClassDiagramNodeTypes.INTERFACE],
+        hasMultiplicity: false
     },
     {
         id: ClassDiagramEdgeTypes.REALIZATION,
         label: 'Realization',
         description: 'A realization between a specification and its implementation',
         sourceTypes: [ClassDiagramNodeTypes.ABSTRACT_CLASS, ClassDiagramNodeTypes.CLASS],
-        targetTypes: [ClassDiagramNodeTypes.INTERFACE, ClassDiagramNodeTypes.ABSTRACT_CLASS, ClassDiagramNodeTypes.DATA_TYPE]
+        targetTypes: [ClassDiagramNodeTypes.INTERFACE, ClassDiagramNodeTypes.ABSTRACT_CLASS, ClassDiagramNodeTypes.DATA_TYPE],
+        hasMultiplicity: false
     },
     {
         id: ClassDiagramEdgeTypes.ABSTRACTION,
         label: 'Abstraction',
         description: 'Maps a more concrete element to a more abstract one',
         sourceTypes: [ClassDiagramNodeTypes.ABSTRACT_CLASS, ClassDiagramNodeTypes.CLASS],
-        targetTypes: [ClassDiagramNodeTypes.INTERFACE, ClassDiagramNodeTypes.ABSTRACT_CLASS]
+        targetTypes: [ClassDiagramNodeTypes.INTERFACE, ClassDiagramNodeTypes.ABSTRACT_CLASS],
+        hasMultiplicity: false
     },
     {
         id: ClassDiagramEdgeTypes.SUBSTITUTION,
         label: 'Substitution',
         description: 'One class can substitute for another',
         sourceTypes: [ClassDiagramNodeTypes.CLASS],
-        targetTypes: [ClassDiagramNodeTypes.CLASS]
+        targetTypes: [ClassDiagramNodeTypes.CLASS],
+        hasMultiplicity: false
     },
     {
         id: ClassDiagramEdgeTypes.DEPENDENCY,
@@ -192,7 +201,8 @@ const UML_EDGE_ELEMENT_TYPES: {
             ClassDiagramNodeTypes.ENUMERATION,
             ClassDiagramNodeTypes.DATA_TYPE,
             ClassDiagramNodeTypes.PRIMITIVE_TYPE
-        ]
+        ],
+        hasMultiplicity: false
     },
     {
         id: ClassDiagramEdgeTypes.USAGE,
@@ -204,7 +214,8 @@ const UML_EDGE_ELEMENT_TYPES: {
             ClassDiagramNodeTypes.ABSTRACT_CLASS,
             ClassDiagramNodeTypes.CLASS,
             ClassDiagramNodeTypes.DATA_TYPE
-        ]
+        ],
+        hasMultiplicity: false
     }
 ];
 

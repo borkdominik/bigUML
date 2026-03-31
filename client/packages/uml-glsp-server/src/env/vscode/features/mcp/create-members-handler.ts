@@ -22,6 +22,7 @@ import { inject, injectable } from 'inversify';
 import * as z from 'zod/v4';
 import { ClassDiagramNodeTypes, CommonModelTypes, UpdateOperation } from '../../../common/index.js';
 import { type DiagramModelState } from '../model/diagram-model-state.js';
+import { FORBIDDEN_KEYWORD_NAMES } from './keywords.js';
 
 /**
  * Creates one or multiple new members in the given session's model.
@@ -185,7 +186,7 @@ export class CreateMembersMcpToolHandler implements McpToolHandler {
                 propertyDetails.propertyTypeId = mcpIdAliasService.lookup(sessionId, propertyDetails.propertyTypeId);
 
                 // There seems to be some kind of hard check against the string "name", which causes the model state index to reset
-                const escapedName = name === 'name' ? 'name_' : name;
+                const escapedName = FORBIDDEN_KEYWORD_NAMES.includes(name) ? name + '_' : name;
                 await session.actionDispatcher.dispatch(UpdateOperation.create(newElementId, 'name', escapedName));
                 dispatchedOperations++;
                 await session.actionDispatcher.dispatch(
@@ -199,7 +200,7 @@ export class CreateMembersMcpToolHandler implements McpToolHandler {
                 operationDetails.returnTypeId = mcpIdAliasService.lookup(sessionId, operationDetails.returnTypeId);
 
                 // There seems to be some kind of hard check against the string "name", which causes the model state index to reset
-                const escapedName = name === 'name' ? 'name_' : name;
+                const escapedName = FORBIDDEN_KEYWORD_NAMES.includes(name) ? name + '_' : name;
                 await session.actionDispatcher.dispatch(UpdateOperation.create(newElementId, 'name', escapedName));
                 dispatchedOperations++;
                 await session.actionDispatcher.dispatch(
@@ -241,7 +242,7 @@ export class CreateMembersMcpToolHandler implements McpToolHandler {
 
                     parameter.parameterTypeId = mcpIdAliasService.lookup(sessionId, parameter.parameterTypeId);
 
-                    const escapedName = parameter.name === 'name' ? 'name_' : parameter.name;
+                    const escapedName = FORBIDDEN_KEYWORD_NAMES.includes(parameter.name) ? parameter.name + '_' : parameter.name;
                     await session.actionDispatcher.dispatch(UpdateOperation.create(newElementIdParam, 'name', escapedName));
                     dispatchedOperations++;
                     await session.actionDispatcher.dispatch(

@@ -31,6 +31,7 @@ import * as z from 'zod/v4';
 import { ClassDiagramNodeTypes, CommonModelTypes, UpdateOperation } from '../../../common/index.js';
 import { type DiagramModelIndex } from '../model/diagram-model-index.js';
 import { type DiagramModelState } from '../model/diagram-model-state.js';
+import { FORBIDDEN_KEYWORD_NAMES } from './keywords.js';
 
 /**
  * Modifies one or multiple new members in the given session's model.
@@ -178,7 +179,7 @@ export class ModifyMembersMcpToolHandler implements McpToolHandler {
 
                 if (name !== undefined) {
                     // There seems to be some kind of hard check against the string "name", which causes the model state index to reset
-                    const escapedName = name === 'name' ? 'name_' : name;
+                    const escapedName = FORBIDDEN_KEYWORD_NAMES.includes(name) ? name + '_' : name;
                     await session.actionDispatcher.dispatch(UpdateOperation.create(elementId, 'name', escapedName));
                     dispatchedOperations++;
                 }
@@ -199,7 +200,7 @@ export class ModifyMembersMcpToolHandler implements McpToolHandler {
 
                 if (name !== undefined) {
                     // There seems to be some kind of hard check against the string "name", which causes the model state index to reset
-                    const escapedName = name === 'name' ? 'name_' : name;
+                    const escapedName = FORBIDDEN_KEYWORD_NAMES.includes(name) ? name + '_' : name;
                     await session.actionDispatcher.dispatch(UpdateOperation.create(elementId, 'name', escapedName));
                     dispatchedOperations++;
                 }
@@ -252,7 +253,7 @@ export class ModifyMembersMcpToolHandler implements McpToolHandler {
 
                         parameter.parameterTypeId = mcpIdAliasService.lookup(sessionId, parameter.parameterTypeId);
 
-                        const escapedName = parameter.name === 'name' ? 'name_' : parameter.name;
+                        const escapedName = FORBIDDEN_KEYWORD_NAMES.includes(parameter.name) ? parameter.name + '_' : parameter.name;
                         await session.actionDispatcher.dispatch(UpdateOperation.create(newElementIdParam, 'name', escapedName));
                         dispatchedOperations++;
                         await session.actionDispatcher.dispatch(

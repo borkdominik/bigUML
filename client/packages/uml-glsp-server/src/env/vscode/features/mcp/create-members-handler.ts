@@ -49,7 +49,11 @@ export class CreateMembersMcpToolHandler implements McpToolHandler {
                         .array(
                             z.object({
                                 elementTypeId: z.string().describe('Element type ID. Use element-types resource to discover valid IDs.'),
-                                name: z.string().describe('Name of the member.'),
+                                name: z
+                                    .string()
+                                    .describe(
+                                        'Name of the member. Must only consist of the actual name without visibility or type details.'
+                                    ),
                                 containerId: z.string().describe('ID of the container classifier node.'),
                                 propertyDetails: z
                                     .object({

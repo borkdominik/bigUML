@@ -57,7 +57,11 @@ export class ModifyMembersMcpToolHandler implements McpToolHandler {
                         .array(
                             z.object({
                                 elementId: z.string().describe('Element ID that should be modified.'),
-                                name: z.string().optional().describe('New name of the member.'),
+                                name: z
+                                    .string()
+                                    .describe(
+                                        'Name of the member. Must only consist of the actual name without visibility or type details.'
+                                    ),
                                 propertyDetails: z
                                     .object({
                                         propertyTypeId: z

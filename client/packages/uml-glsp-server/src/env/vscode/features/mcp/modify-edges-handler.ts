@@ -38,11 +38,11 @@ export class UmlModifyEdgesMcpToolHandler extends ModifyEdgesMcpToolHandler {
                                 elementId: z.string().describe('Element ID that should be modified.'),
                                 sourceMultiplicity: z
                                     // for some reason are neither numbers nor . allowed in label strings, which means we need alternatives
-                                    .enum(['O--I', 'O--*', 'I', 'I--*', '*'])
+                                    .enum(['O--I', 'I', 'I--*', '*'])
                                     .optional()
                                     .describe('Source multiplicity for associative relationships'),
                                 targetMultiplicity: z
-                                    .enum(['O--I', 'O--*', 'I', 'I--*', '*'])
+                                    .enum(['O--I', 'I', 'I--*', '*'])
                                     .optional()
                                     .describe('Target multiplicity for associative relationships')
                             })

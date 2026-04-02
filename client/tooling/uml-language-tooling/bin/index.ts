@@ -184,7 +184,11 @@ function generateEnvIndexFiles(
         const envDir = path.join(extensionPath, env);
         const exportPaths = files
             .map(f => {
-                const rel = path.relative(envDir, f).replace(/\.tsx?$/, '.js');
+                const rel = path
+                    .relative(envDir, f)
+                    .replace(/\.tsx?$/, '.js')
+                    .split(path.sep)
+                    .join('/');
                 return `./${rel}`;
             })
             .sort();

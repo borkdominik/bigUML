@@ -8,6 +8,8 @@
  * SPDX-License-Identifier: MIT
  **********************************************************************************/
 
+import { <%~ Object.keys(it.edges).map(diagram => `${diagram}DiagramEdgeTypes`).join(', ') %> } from "../common/index.js";
+
 // @ts-nocheck
 
 interface DefaultMappingEntry {
@@ -18,6 +20,14 @@ interface DefaultMappingEntry {
 
 const defaultMapping: Record<string, DefaultMappingEntry[]> = <%~ JSON.stringify(it.defaultMapping, null, 2) %>;
 
+const edgeTypes: string[] = [
+<% Object.entries(it.edges).forEach(function([diagram, edges]) { %>
+<% edges.forEach(function(edge) { %>
+    <%~ diagram %>DiagramEdgeTypes.<%~ edge %>,
+<% }) %>
+<% }) %>
+];
+
 export const noBoundsClasses = new Set<string>(<%~ JSON.stringify(it.noBoundsClasses, null, 2) %>);
 
 export const astTypeMapping: Record<string, string> = <%~ JSON.stringify(it.astTypeMap, null, 2) %>;
@@ -27,7 +37,7 @@ export function isNoBounds(typeId: string): boolean {
 }
 
 export function getDefaultProperties(elementTypeId: string): DefaultMappingEntry[] {
-    const parentType = elementTypeId.startsWith('edge')
+    const parentType = edgeTypes.includes(elementTypeId)
         ? (() => {
               const s = getRelationTypeFromElementId(elementTypeId, true).toLowerCase();
               return s.charAt(0).toUpperCase() + s.slice(1);

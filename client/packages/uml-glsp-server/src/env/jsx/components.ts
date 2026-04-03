@@ -8,7 +8,7 @@
  **********************************************************************************/
 
 import { type Args, DefaultTypes, type Dimension, type Point } from '@eclipse-glsp/protocol';
-import { GCompartment, GEdge, GGraph, GLabel, GNode } from '@eclipse-glsp/server';
+import { GCompartment, GEdge, type GEdgePlacement, GGraph, GLabel, GNode } from '@eclipse-glsp/server';
 import * as uuid from 'uuid';
 import type { GlspNode } from './jsx-namespace.js';
 import { normalizeChildren, wireParent } from './utils.js';
@@ -50,6 +50,7 @@ export interface GLabelElementProps {
     cssClasses?: string[];
     args?: Args;
     alignment?: Point;
+    edgePlacement?: GEdgePlacement;
 }
 
 export function GLabelElement(props: GLabelElementProps): GLabel {
@@ -62,6 +63,7 @@ export function GLabelElement(props: GLabelElementProps): GLabel {
     if (props.alignment) {
         label.alignment = props.alignment;
     }
+    label.edgePlacement = props.edgePlacement;
     label.children = [];
     return label;
 }

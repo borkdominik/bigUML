@@ -94,7 +94,7 @@ export class RequestClassPropertyPaletteActionHandler implements ActionHandler {
             } else if (isProperty(semanticElement)) {
                 return PropertyPropertyPaletteHandler.getPropertyPalette(semanticElement, dataTypeChoices);
             } else if (isOperation(semanticElement)) {
-                return OperationPropertyPaletteHandler.getPropertyPalette(semanticElement);
+                return OperationPropertyPaletteHandler.getPropertyPalette(semanticElement, dataTypeChoices);
             } else if (isParameter(semanticElement)) {
                 return ParameterPropertyPaletteHandler.getPropertyPalette(semanticElement, dataTypeChoices);
             } else if (isDataType(semanticElement)) {

@@ -271,7 +271,7 @@ export class UmlDiagramGModelFactory implements GModelFactory {
 
         const cssClasses = ['uml-edge'];
         const args: Record<string, any> = {};
-        let labelChild: GModelElement | undefined;
+        const labelChildren: GModelElement[] = [];
 
         if (isAssociation(edge)) {
             if (edge.sourceAggregation === 'COMPOSITE') {
@@ -284,12 +284,26 @@ export class UmlDiagramGModelFactory implements GModelFactory {
             } else if (edge.targetAggregation === 'SHARED') {
                 cssClasses.push('marker-diamond-empty-end');
             }
+            labelChildren.push(
+                <GLabelElement
+                    type={CommonModelTypes.LABEL_TEXT}
+                    edgePlacement={{ side: 'top', offset: 10, position: 0.1, rotate: false }}
+                    text={edge.sourceMultiplicity ?? ''}
+                />
+            );
+            labelChildren.push(
+                <GLabelElement
+                    type={CommonModelTypes.LABEL_TEXT}
+                    edgePlacement={{ side: 'top', offset: 10, position: 0.9, rotate: false }}
+                    text={edge.targetMultiplicity ?? ''}
+                />
+            );
         } else if (isGeneralization(edge)) {
             cssClasses.push('marker-triangle-empty-end');
         } else {
             cssClasses.push('uml-edge-dashed', 'marker-tent-end');
             args.edgePadding = 10;
-            labelChild = <GLabelElement type={CommonModelTypes.LABEL_TEXT} text='<<abstraction>>' />;
+            labelChildren.push(<GLabelElement type={CommonModelTypes.LABEL_TEXT} text={`<<${edge.relationType.toLowerCase()}>>`} />);
         }
 
         return (
@@ -301,7 +315,7 @@ export class UmlDiagramGModelFactory implements GModelFactory {
                 cssClasses={cssClasses}
                 args={Object.keys(args).length > 0 ? args : undefined}
             >
-                {labelChild}
+                {labelChildren}
             </GEdgeElement>
         ) as GEdge;
     }
@@ -310,7 +324,7 @@ export class UmlDiagramGModelFactory implements GModelFactory {
         switch (relationType) {
             case 'ABSRACTION':
                 return ClassDiagramEdgeTypes.ABSTRACTION;
-            case 'AGGREGRATION':
+            case 'AGGREGATION':
                 return ClassDiagramEdgeTypes.AGGREGATION;
             case 'ASSOCIATION':
                 return ClassDiagramEdgeTypes.ASSOCIATION;

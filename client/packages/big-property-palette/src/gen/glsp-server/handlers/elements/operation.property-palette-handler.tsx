@@ -14,7 +14,7 @@ import {
 } from '@borkdominik-biguml/big-property-palette/glsp-server';
 
 export namespace OperationPropertyPaletteHandler {
-    export function getPropertyPalette(semanticElement: Operation): SetPropertyPaletteAction[] {
+    export function getPropertyPalette(semanticElement: Operation, dataTypeChoices: any): SetPropertyPaletteAction[] {
         return [
             SetPropertyPaletteAction.create(
                 <PropertyPalette elementId={semanticElement.__id} label={(semanticElement as any).name ?? semanticElement.$type}>
@@ -64,6 +64,15 @@ export namespace OperationPropertyPaletteHandler {
                                 action: CreateNodeOperation.create(ClassDiagramNodeTypes.PARAMETER, { containerId: semanticElement.__id })
                             }
                         ]}
+                    />
+                    <ChoiceProperty
+                        elementId={semanticElement.__id}
+                        propertyId='returnType'
+                        choices={dataTypeChoices}
+                        choice={
+                            (semanticElement.returnType as any)?.ref?.__id ? (semanticElement.returnType as any).ref.__id + '_refValue' : ''
+                        }
+                        label='Return Type'
                     />
                 </PropertyPalette>
             )

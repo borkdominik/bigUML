@@ -53,12 +53,22 @@ function buildDefaultValueMapping(langiumDeclarations: LangiumDeclaration[]): {
     defaultMapping: DefaultMapping;
     noBoundsClasses: string[];
     astTypeMap: Record<string, string>;
+    edges: Record<string, string[]>;
 } {
     const mapping: DefaultMapping = {};
     const noBoundsClasses: string[] = [];
     const astTypeMap: Record<string, string> = {};
+    const edges: Record<string, string[]> = {};
 
     for (const decl of langiumDeclarations) {
+        const diagramName = decl.name!.replace(/Diagram$/, '');
+        const edgeTypeAlias = langiumDeclarations.find(d => d.type === 'type' && d.name === `${diagramName}DiagramEdges`);
+        const edgeNames = (edgeTypeAlias?.properties?.[0]?.types.map(t => t.typeName).filter(Boolean) as string[]) ?? [];
+
+        if (edgeNames.length) {
+            edges[diagramName] = edgeNames.map(edgeName => edgeName.replace(/([a-z0-9])([A-Z])/g, '$1_$2').toUpperCase());
+        }
+
         if (decl.decorators?.includes('noBounds')) {
             noBoundsClasses.push(decl.name!);
         }
@@ -111,6 +121,7 @@ function buildDefaultValueMapping(langiumDeclarations: LangiumDeclaration[]): {
     return {
         defaultMapping: mapping,
         noBoundsClasses,
-        astTypeMap
+        astTypeMap,
+        edges
     };
 }

@@ -13,11 +13,12 @@ import {
     type ICommand,
     type IActionDispatcher,
     ChangeBoundsOperation,
+    ChangeRoutingPointsOperation,
     SetBoundsAction,
     TYPES
 } from '@eclipse-glsp/client';
 import { inject, injectable } from 'inversify';
-import { ElementBoundsTrackingAction } from '../common/interaction-tracking.action.js';
+import { ElementBoundsTrackingAction, RoutingPointsTrackingAction } from '../common/interaction-tracking.action.js';
 
 /**
  * Handler that captures element move/resize operations in the GLSP client
@@ -67,6 +68,18 @@ export class ElementBoundsTrackingHandler implements IActionHandler {
             }
         }
         
+        // Handle ChangeRoutingPointsOperation (edge bend-point moves sent to server)
+        if (ChangeRoutingPointsOperation.is(action)) {
+            if (action.newRoutingPoints && action.newRoutingPoints.length > 0) {
+                const routingPoints = action.newRoutingPoints.map((rp: any) => ({
+                    elementId: rp.elementId,
+                    newRoutingPoints: (rp.newRoutingPoints ?? []).map((p: any) => ({ x: p.x, y: p.y }))
+                }));
+                const trackingAction = RoutingPointsTrackingAction.create(routingPoints);
+                this.actionDispatcher.dispatch(trackingAction);
+            }
+        }
+
         // Note: Dont consume the action - let it propagate to other handlers
         return undefined;
     }

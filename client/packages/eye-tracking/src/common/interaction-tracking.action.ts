@@ -306,3 +306,35 @@ export namespace MousePositionTrackingAction {
         };
     }
 }
+
+/**
+ * Action sent from GLSP client to VSCode extension when edge routing points change
+ * (i.e. when the user bends/moves an association or other edge)
+ */
+export interface RoutingPointsTrackingAction extends Action {
+    kind: typeof RoutingPointsTrackingAction.KIND;
+    routingPoints: Array<{
+        elementId: string;
+        newRoutingPoints: Array<{ x: number; y: number }>;
+    }>;
+}
+
+export namespace RoutingPointsTrackingAction {
+    export const KIND = 'routingPointsTracking';
+
+    export function is(object: any): object is RoutingPointsTrackingAction {
+        return Action.hasKind(object, KIND);
+    }
+
+    export function create(
+        routingPoints: Array<{
+            elementId: string;
+            newRoutingPoints: Array<{ x: number; y: number }>;
+        }>
+    ): RoutingPointsTrackingAction {
+        return {
+            kind: KIND,
+            routingPoints
+        };
+    }
+}

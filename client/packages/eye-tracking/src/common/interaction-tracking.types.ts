@@ -31,6 +31,7 @@ export enum InteractionEventType {
     ELEMENT_MOVE = 'element_move',
     ELEMENT_RESIZE = 'element_resize',
     ELEMENT_EDIT = 'element_edit',
+    ELEMENT_ROUTE_CHANGE = 'element_route_change',
     
     // Editor interactions
     TEXT_EDIT = 'text_edit',

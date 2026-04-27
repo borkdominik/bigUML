@@ -17,7 +17,8 @@ import {
     ViewportTrackingAction, 
     ElementBoundsTrackingAction,
     MouseClickTrackingAction,
-    MousePositionTrackingAction
+    MousePositionTrackingAction,
+    RoutingPointsTrackingAction
 } from '../common/interaction-tracking.action.js';
 import type { 
     InteractionEvent, 
@@ -691,6 +692,18 @@ $bitmap.Dispose()
                 kind: 'changeBounds',
                 newBounds: action.newBounds,
                 source: 'glsp-client' // Mark that this came from the GLSP client handler
+            });
+        } else if (action.kind === 'changeRoutingPoints') {
+            // Direct changeRoutingPoints operation (may arrive via server/send listener)
+            this.trackEvent(InteractionEventType.ELEMENT_ROUTE_CHANGE, {
+                kind: 'changeRoutingPoints',
+                newRoutingPoints: action.newRoutingPoints
+            });
+        } else if (action.kind === 'routingPointsTracking' || RoutingPointsTrackingAction.is(action)) {
+            // RoutingPointsTrackingAction from GLSP client - captures edge routing point moves
+            this.trackEvent(InteractionEventType.ELEMENT_ROUTE_CHANGE, {
+                kind: 'changeRoutingPoints',
+                newRoutingPoints: action.routingPoints
             });
         } else if (action.kind === 'mouseClickTracking' || MouseClickTrackingAction.is(action)) {
             // MouseClickTrackingAction from GLSP client - captures mouse clicks on diagram

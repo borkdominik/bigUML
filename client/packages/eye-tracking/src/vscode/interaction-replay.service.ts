@@ -214,11 +214,12 @@ export class InteractionReplayService {
      * Uses a smarter algorithm that matches IDs to createNodes based on first occurrence order.
      */
     private buildCreationIdMap(events: InteractionEvent[]): void {
-        // Step 1: Find all createNode events
+        // Step 1: Find all createNode AND createEdge events
         const createNodes: { index: number; elementType: string; event: InteractionEvent }[] = [];
         for (let i = 0; i < events.length; i++) {
             const event = events[i];
-            if (event.type === InteractionEventType.ELEMENT_CREATE && event.data.kind === 'createNode') {
+            if (event.type === InteractionEventType.ELEMENT_CREATE &&
+                (event.data.kind === 'createNode' || event.data.kind === 'createEdge')) {
                 createNodes.push({ index: i, elementType: event.data.elementTypeId, event });
             }
         }
@@ -252,8 +253,11 @@ export class InteractionReplayService {
                 // The createNode must be BEFORE the ID's first occurrence
                 if (cn.index >= firstOccurrence) continue;
                 
-                // Take the oldest (first) unassigned createNode
-                if (!bestCreateNode || cn.index < bestCreateNode.index) {
+                // Take the MOST RECENT (closest preceding) unassigned create event.
+                // "Oldest" caused cascading mismatches: when an edge has no ID in any
+                // element_select, its slot stays unassigned and the next node's ID gets
+                // stolen by the older edge slot, shifting everything downstream.
+                if (!bestCreateNode || cn.index > bestCreateNode.index) {
                     bestCreateNode = cn;
                 }
             }
@@ -268,7 +272,7 @@ export class InteractionReplayService {
         // Log any createNodes that couldn't be assigned
         for (const cn of createNodes) {
             if (!assignedCreateNodes.has(cn.index)) {
-                console.warn(`[Replay] No ID found for ${cn.elementType} at index ${cn.index}`);
+                console.warn(`[Replay] No ID found for ${cn.elementType} (${(cn.event.data as any).kind}) at index ${cn.index}`);
             }
         }
     }
@@ -306,6 +310,12 @@ export class InteractionReplayService {
         if (event.type === InteractionEventType.ELEMENT_MOVE && event.data.newBounds) {
             for (const bound of event.data.newBounds) {
                 if (bound.elementId) ids.push(bound.elementId);
+            }
+        }
+        
+        if (event.type === InteractionEventType.ELEMENT_ROUTE_CHANGE && event.data.newRoutingPoints) {
+            for (const rp of event.data.newRoutingPoints) {
+                if (rp.elementId) ids.push(rp.elementId);
             }
         }
         
@@ -569,6 +579,17 @@ export class InteractionReplayService {
                     }
                 }
                 
+                if (action.kind === 'createEdge' && oldElementId) {
+                    const newElementId = await this.waitForNewElementId(action.elementTypeId);
+                    if (newElementId) {
+                        console.log(`[Replay] Edge ID Mapping created: ${oldElementId} -> ${newElementId}`);
+                        this.idMapping.set(oldElementId, newElementId);
+                        this.elementTypes.set(oldElementId, action.elementTypeId);
+                    } else {
+                        console.warn(`[Replay] Failed to get new edge ID for ${action.elementTypeId} (old ID: ${oldElementId})`);
+                    }
+                }
+                
                 const delay = this.getActionProcessingDelay(action.kind);
                 await this.sleep(delay);
             }
@@ -591,6 +612,8 @@ export class InteractionReplayService {
             case 'elementSelected':
             case 'setViewport':
                 return 50;
+            case 'changeRoutingPoints':
+                return 150;
             default:
                 return 150;
         }
@@ -778,6 +801,28 @@ export class InteractionReplayService {
                 return {
                     kind: 'changeBounds',
                     newBounds: mappedBounds,
+                    isOperation: true
+                };
+            }
+
+            case InteractionEventType.ELEMENT_ROUTE_CHANGE: {
+                if (!data.newRoutingPoints || data.newRoutingPoints.length === 0) {
+                    return null;
+                }
+                const mappedRoutingPoints = data.newRoutingPoints.map((rp: any) => {
+                    const mappedId = this.idMapping.get(rp.elementId) || rp.elementId;
+                    const hasMapped = this.idMapping.has(rp.elementId);
+                    if (!hasMapped) {
+                        console.warn(`[Replay] changeRoutingPoints: no ID mapping for edge ${rp.elementId}`);
+                    }
+                    return {
+                        elementId: mappedId,
+                        newRoutingPoints: rp.newRoutingPoints ?? []
+                    };
+                });
+                return {
+                    kind: 'changeRoutingPoints',
+                    newRoutingPoints: mappedRoutingPoints,
                     isOperation: true
                 };
             }
